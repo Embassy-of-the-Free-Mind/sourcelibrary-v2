@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>105</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<image-desc>Decorative woodcut headpiece featuring elaborate scrolling foliage and a central grotesque face or mask.</image-desc>
+
+<margin>11. cap:</margin>
+
+### Das Eylfte Capittel.
+
+## Von der Schach-Tabel insonderheit / wie die Steine/darinnen loßieret werden/von ihrer Abtheilung/Feldern/auch wie man sich dieselben/fest einbilden/und außwendig behalten könne.
+
+Das sey genug/von den Steinen insonderheit. Nuhn müssen wir auch / die Schach-Tabel/ wider fur uns nehmen/und/wie darinnen/die Steine/einloßieret werden / welcher massen Sie / ihre Feld-Läger beschützen/und dan/wie die Tabel/wesgen angedeuteter Feld-Läger/und des raumes/darauf sie/ein ander angreiffen/abgetheilet werde/beschawen. Welches uns dan/zum folgenden wercke/bessere richtigkeit machen/auch denen/so dasselbe ihnen fleissig eingebildet/umb dieses Spiel/im Sinne/ohne die Tabel und Steine/(wiewol es nicht eines jeglichen seyn wird) auf gutsch-en/im Reiten/und spatzieren gehen/zu spielen/fürstendig seyn kan.
+
+Auf daß nuhn/die einloßierung der Steine / auf das Schach-Bret/recht geschehe/so ist vonnöten/daß die Tabel / auf der seiten/da der Weisse König/im schwartzen felde/stehen sol/auf dessen rechten seite/ein weisses feld/zu eüßerst der Zwerch-linie / darauf sein Rochen; da aber/seiner Königin-Roche/stehen sol/auf seiner/und der Königin lincken seite/ein schwartzes feld habe: Hinkegen wil folgen/daß der Schwartze König/auf seiner Königin rechten seite/ein weisses feld/für dero Rochen : aber auf seiner eigenen lincken seite/für seinem Rochen/ein schwartzes feld/müsse haben. Summa / welcher die Steine führet/der sol die Tafel also stellen/daß das eüßerste feld/in der nächsten Zwerch-linie/zu seiner rechten hand/weiß sey. Dan sonsten/das Schach-Bret/wan das schwartze eüßerste feld/nach der rechten seite/gekehret wehre/ehe breyter dan lenger / und also nicht vierecket/(wie es etliche dafür halten wollen) scheinen möchte: So hat es auch/den lieben Alten/also gefallen/und ist dahero/eine geraume zeit/üblich und im gebrauch gewesen. Andere ursachen/seynd am ende des 9. Cap: des letzten Buches / und des 3. Cap: der Rythmomachiae, weyter zu befinden.
+
+<sig>G ij</sig>
+<meta>catchword: Wie</meta>
+
+<vocab>Schach-Spiel, Schach-Tabel, Steine, Feld-Läger, Zwerch-linie, Rochen, Königin-Roche, Rythmomachiae</vocab>

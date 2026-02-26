@@ -1,0 +1,14 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>27</page-num>
+<header>2.cap: Vom Schach-Spiel.</header>
+<sig>D 3</sig>
+<meta>catchword: ἐν δὲ</meta>
+
+Mycil: in Explic: Ovid: dafür / daß weder den Griechen / noch den Lateinern / besondern / nach ihnen / andern Barbarischen Völckern / die erfindung dieses Spieles / zu zuschrieben. Ob man nuhn gleich zugibt / daß ein Zusatz mit der zeit / bey diesen oder jenen Völckern / demselben geschehen / die Züge / auf eine andere art / zu wercke gerichtet / die Steine gemindert und gemehret / auch ihnen andere nahmen / gegeben wordẽ: so bleibet doch wahr / daß die Römer und Griechen / ein solches Spiel gehabt / in welchem / einer dem andern / mit erdichteten Krieges-Männelein / gleichsam eine schlacht gelieffert.
+
+Das sey also genug / von den Erfindern dieses Spieles. Nuhn wollen wir / mit wenigem / Der fürnehmsten Authorum, so von dem Schach-Spiele / was dasselbe sey / oder wie es gespielet werde / geschrieben / auch / und zwar zu dem ende / gedencken: daß wir mögen / ob dieses heutige Schach-Spiel / mit dem Spiele / welches die Griechen / πεττείαν, die Lateiner / Ludum Latrunculorum genennet / in etwas / (wie kurtz erwehnet) überein komme: hierauß sehen.
+
+Was nuhn der Griechen πεττείαν, oder Stein-Spiel / anlanget / so wird dasselbe / von vielen angezogen: Damit wir aber / gewisser verfahren mögen / so ist von nöten / die beede Spiele / κυβείαν und πεττείαν, recht zu unterscheide: dieweil solches / von den Dolmetschern / nicht allezeit in acht genommen. Zwar / daß Palamedes, die zwey unterschiedene Spiele / (deren eines / nemlich das Würffels-Spiel / Er hernacher / wie Pausanias lib: 2. p. 120. wil: dem Glücke / alß einer aufgeworffenen oder erdichteten Göttin / dadurch / daß das Ander / dahin nicht gehöre / vielleicht zu verstehen gebend / geheiliget und zugeeignet) erfunden / ist droben / auß dem Eustathio, dargethan und erwiesen. Plato, redet auch / lib: 2. de Rep: hievon unterschiedlich: πεττευτικὸς καὶ ἢ κυβευτικὸς ἱκανῶς ἔση᾽ ἂν εἰς πολ. Das ist: Es sol Niemand / des Stein- noch des Würffels-Spieles / kündig seyn. Aristot: lib: 1. Rhet: c. 11. gedencket derselben auch mit unterscheide. Es ist aber derselbe / wie Hesychius, ein Alter Grammaticus und Historicus setzet / folgender gestalt / zu verstehen: ἐν ἧ μὲν γὰρ τοὺς κύβους ἀναρρίπτουσιν, Das ist: Daß in dem Würffel-Spiel / die Würffel / in die höhe / zum glücke / etwa geworffen: (was aber κύβοι, Tesseræ, oder würffele / eigentlich geheissen: wie man damit gespielet / πλειστοβαλεῖν, zum meisten Augen / καὶ ταβλίζειν, oder auf dem Brete: was für Instrumente, oder Zeug / darzu gebrauchet / dessen hat man sich / auß dem Polluce, lib: 9. c. 7. circ: pr: & lib: 10. c. 31. in f. zu ersehen)
+
+<vocab>Schach-Spiel, Petteia, Kybeia, Palamedes, Plato, Aristoteles, Hesychius, Pollux, Ludum Latrunculorum, Krieges-Männelein</vocab>

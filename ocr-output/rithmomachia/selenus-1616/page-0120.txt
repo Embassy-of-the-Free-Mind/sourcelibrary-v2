@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>90</page-num>
+<header>Das Erste Buch/ 10. cap:</header>
+
+Sonsten wollen auch etliche / (welches dan ebenmessig / in Engelland / wie Arthur Saul, wil / gebreuchlich seyn sol) daß man einem Soldaten / eines Rochens- Reuters- oder Schützens gang / wan Er in derselben felder / auf des feindes seiten / kommet / wegen seines wol-verhaltens / vergönnen / Ihn nach dero aigenschafften / gebrauchen / und auß demselben / auch eine Königin / da es die noth erfodert / machen könne.
+
+Ihr schlagen und rauben / ist auß dem vorigen Bericht / abzunehmen: daß Sie nemlich / die Haupt- und gemeine Steine / auf welche sie / an der nechsten linien und felde / nach der Schräge / oder den ecken / es sey / nach der rechten oder lincken seiten / für sich treffen / hinweg nehmen können. Welche aber neben / oder hinter ihnen / auf den nechsten linien / und feldern stehen / müssen Sie / es sey dan / auf gewisse masse / (davon droben albereit gedacht / und drunten weiterer Bericht erfolgen sol) in denselben verbleiben lassen.
+
+Sie volführen aber / dieselben Streiche / folgender gestalt:
+
+<image-desc>A logical diagram using text and vertical braces to map the capture paths of "Der Soldat" (the Soldier). The diagram is divided into two main horizontal sections. The upper section tracks the Soldier on the King's side (des Königs), showing how it targets specific pieces (Rook/Rochen, Knight/Reuter, Bishop/Schützen) and reaches the third field of other specific pieces on the King's side. The lower section replicates this logic for the Queen's side (der Königin).</image-desc>
+
+Der Soldat
+*   des Königs { Rochens / Reuters / Schützens / Eigene / } trift ins dritte feld / des { Reuters / Rochens und Schützens / Reuters und Königes / Schützens und Der Königin. } des Königes.
+*   der Königin { Eigene / Schützens / Reuters / Rochens / } trift ins dritte feld / des { Königes und Schützens / Der Königin und Reuters / Schützens und Rochens / Reuters / } der Königin.
+
+Sonst dörffen Sie auch / dem Könige / (weyl ein jeder / so wol einen geringern / alsz höhern Feind / in einer offenen feld-Schlacht / zu verletzen / und zu beschedigen / zun zeiten / gelegenheit erlanget) Schach- bieten / Jah machen ihm oftmaln / so fern Er ihnen / (dieweyl man denselben / einen andern Stein / wegen kein feld / in welches man / einen Stein / oder Soldaten könte rucken / sich dazwischen findet / nicht fürziehen kan) entweder zu weichen / oder durch seine Steine / dieselbe / füglich / auf die seiten / bringen zu lassen / oder selber zu nehmen / nicht vermag: den garaus.
+
+<meta>catchword: Ihre</meta>
+
+<vocab>Soldat, Schach, Arthur Saul, König, Königin, Rochen, Reuter, Schützen, Schach-bieten, Engelland</vocab>

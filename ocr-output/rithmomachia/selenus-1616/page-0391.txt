@@ -1,0 +1,36 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>357</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Das</meta>
+
+<margin>9. cap:</margin>
+ſo nimt/ der Schwarze/ mit des K. Soldaten/ des W. K. Schü-
+tzens-Soldaten: Der Weiſſe/ denſelben/ mit der K. Schützen:
+Der Schwarze/ (umb/ keine urſache/ zur verwechslung der
+Schützen/ und Reuter/ zu geben) rucket der K. Schützen/ auf vier
+und vierzig/ und iſt/ das Spiel/ auf beeden ſeiten/ in ziemlicher
+ordnung und verſatzung.
+
+<margin>53.</margin>
+Wan aber der Weiſſe/ die Königin/ nicht auf 25, ziehet/
+(n. 2.) beſondern/ mit ſeines K. Schützen/ des S. K. Schü-
+tzens-Soldaten/ nimt/ und Schach-beut: ſo ſol ihn der
+Schwarze/ nicht/ mit des K. Reuter/ (umb/ der K. Schü-
+tzen/ zu vertheidigen) beſondern mit der Königin/ hinwegnehmen:
+Der Weiſſe/ raubet ſie/ mit des K. Reuter/ und rucket ihn/
+auf des S. K. Rochen: Der Schwarze/ nimt/ die W. Kö-
+nigin mit ſeiner K. Schützen: Der Weiſſe/ des S. K. Rochen/
+mit des K. Reuter: Der Schwarze/ dieweyl Er/ den itzt-
+gedachten W. Reuter/ mit ſeinem Könige/ und alſo zween Haupt-
+Steine/ wol kan erlangen/ hat ein gutes Spiel. Sol demnach
+der Weiſſe/ die Königin/ ehe zu rücke auf 25. (d. n. 2.) ziehen/
+als in des Schwarzen hauffen/ hineindringen.
+
+->Dieſes ſey nun alſo/ von den fünf manieren und weyſen/<-
+->mit welchen man/ des S. K. Soldaten/ beſchät-<-
+->zen mag/ genug erinnert.<-
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mask or face with a beard and foliage headpiece, surrounded by symmetrical ornate scrollwork, stylized leaves, and floral motifs.</image-desc>
+
+<vocab>Schach-Spiel, Königin, Reuter, Rochen, Soldaten, Schützen, Schach-beut</vocab>

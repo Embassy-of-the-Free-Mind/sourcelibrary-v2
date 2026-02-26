@@ -1,0 +1,29 @@
+<language>Italian</language>
+<page-type>title-page</page-type>
+<meta>Text is mirrored show-through (bleed-through) from the recto side of the leaf.</meta>
+<warning>The image is flipped horizontally; the transcription provides the text in its intended reading orientation.</warning>
+
+# IL NOBILISSIMO
+# ET ANTICHISSIMO
+## GIOCO PITAGORICO
+## NOMINATO
+# RYTHMOMACHIA
+## CIOÈ BATTAGLIA
+### DI CONSONANTIE
+### DI NUMERI
+
+->Insieme con un'altra di nuovo inventata.<-
+
+->Tradotta per Francesco Barozzi Gentil'huomo<-
+->Venetiano in lingua volgare in modo che<-
+->ogni uno la puo intendere.<-
+
+<image-desc>A woodcut printer's device featuring a winged caduceus (the staff of Hermes) with two entwined serpents, rising from clouds at the base.</image-desc>
+
+->IN VENETIA<-
+
+->Appresso Gratioso Perchacino<-
+
+->1572<-
+
+<vocab>Rythmomachia, Francesco Barozzi, Pythagoras, game, mathematics, music theory, Venice, Gratioso Perchacino, 16th century</vocab>

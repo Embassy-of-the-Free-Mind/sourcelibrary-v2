@@ -1,0 +1,45 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>i</page-num>
+<sig>f2</sig>
+
+# ¶ Jacobi Fabri Stapulensis Elementorū musicaliū ad clarissimum virum Nicolaum de haqueuille presidentem parisiensem liber primus.
+
+Intervallum est soni gravis / acutiqʒ spaciorum habitudo.
+Spacium vocamus neruū / chordam / expiratum aerem / et quicquid simile est: a quo sonum elicimus.
+Multiplex intervallū est quoties maius spaciū continet minus pluries. vt bis: et duplex intervallum dicitur. vt tertio: et dicitur triplex. vt quarto et quadruplex nuncupať. & hoc pacto deīceps.
+Intervallum superparticulare est cum maius continet minus: et partem eius aliquam.
+Pars est que metitur totum : ipsum aliquoties sumpta restituens.
+Si maius continet minus et eiusdē dimidium: sesqualterū nominatur intervallum.
+Si maius continet minus et minoris partem tertiam : dicitur sesquitertium.
+Si vero cōtinet minus et eiusdē minoris partem octauā: epogdoum / sesquioctauūqʒ nominatur. Et ita reliqua superparticularia iterualla: perfacile est diffinire: sed parū musico conducunt proposito.
+Superpartiens autem diceretur intervallum : si maius contineret minus et minoris partes aliquot : que partē vnam non efficiunt.
+Numeri sunt adinuicem primi : quos sola metitur unitas.
+
+## ¶ Dignitates.
+<margin>1</margin> Quidquid metitur alterum : metitur et omne mensuratū ab illo.
+<margin>2</margin> Compositum in ea resoluitur simplicia : ex quibus componitur.
+<margin>3</margin> Cuiuslibet numeri pars est unitas : ab eo denominata.
+<margin>4</margin> Unitas in quemcunqʒ numerum ducta: ipsum producit.
+<margin>5</margin> Quidquid metitur detractum et residuum: metitur & totum.
+<margin>6</margin> Quecunqʒ uni et eidem equa sunt: & ea inter se sunt equa.
+<margin>7</margin> Et que inter se sunt equa: eiusdem sunt eque multiplicia aut submultiplicia.
+<margin>8</margin> Eorum quorum tota sunt equa: et dimidia sunt equa.
+<margin>9</margin> Quidquid bis auctum aliquid transcendit : id ultra illius dimidiū esse necesse est.
+<margin>10</margin> Et quod duplicatum non implet integrum: id profecto non continet dimidium.
+<margin>11</margin> Omne totum est maius sua parte.
+
+## ¶ Petitiones.
+<margin>1</margin> Data equali chorda: que spaciū ad spaciū proportio est: eam esse & soni ad sonum.
+<margin>2</margin> Inter numeros sola unitate distantes: nullum intercipi posse medium.
+<margin>3</margin> Spacium quodlibet in quotlibet equas partes diuidere.
+<margin>4</margin> Totum ad suam partem / et laxius ad se tensum: grauiorem sonum edere.
+<margin>5</margin> Omnem proportionem esse tanqʒ numeri ad numerum.
+<margin>6</margin> Si numerus numerū datum multiplicet: idēqʒ productū diuidat: numerū datū redire.
+<margin>7</margin> Si numerū datū numer⁹ diuidat: & qđ puenit rursus multiplicet: numerū datū redire.
+<margin>8</margin> Extremorū proportioē ex mediozū proportionib⁹ ut suis partibus esse compositā.
+Extremi ordinatarū proportionū: maximus / minimusqʒ terminus intelliguntur.
+
+¶ Scientia subalternata qualis ad Arithmeticā Musica est: principiis et demōstratis scientie prioris subalternatisqʒ utitur. at studuimus ut qđ fieri potest rarissime id in hac disciplina fiat. verum plerūqʒ ubi opportunū videbitur alioqʒ in arithmeticis factū est utemur demōstrandi mō: quo singula magis ex propriis facta videātur Quis arithmetico suffragio atqʒ iis que in arithmeticis monstrata sunt eadem prōptius faciliusqʒ fierent: attamen quando id fiet & quando nō sequentibus demōstrationibus cuilibet per se perspicuum euadere poterit.
+
+<vocab>Musica, Arithmetica, Intervallum, Spacium, Dignitates, Petitiones, Jacobus Faber Stapulensis, Nicolaus de Haqueville, sesquioctauum, epogdoum, subalternata</vocab>

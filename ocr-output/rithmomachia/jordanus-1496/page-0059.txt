@@ -1,0 +1,51 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIII</page-num>
+
+sequens tetragonum scz n. additis ergo iterum n ꝛ p tetragono scz et sequēte altera parte longiore hexāgulo equilāgulo o p vicesimātertiā huius puenit octogon⁹ totus postvnitatē quotus post vnitatē erat hexāgulus equilāgulus o. quare octogonus proueniēs qui sit q erit octogon⁹ lateris dati a atq₃ summā petitā ostendēs. Sed esto rursus a latus datū numerus ipar et b c circūpositi pares b minor c maior et medietas b sit d et medietas c sit e: per secundā primi d ꝛ e simul cōstituent a. addo d super a et fiat f: ꝛ super f et fiat g: ꝛ duco a in e ꝛ pueniat h qui ea ratione qua superius erit triāgularis a. et duco a in f ꝛ proueniat k: qui erit eius tetragonus et a in f ꝛ pueniat l: qui ea ratione qua prius erit pentagonus a et duco a in g ꝛ proueniat m qui etiā per decimāquartam huius erit hexagonus tetragonicus lateris dati a: sed et hexagonū equilāgulum et octogonū a quere vt paulo ante monstratū est.
+
+<image-desc>
+A vertical scale on the right margin with horizontal lines and corresponding numbers:
+o — 19
+n — 19
+m — 15
+l — 12
+k — 9
+h — 6
+g [symbol, possibly representing 3]
+f — 4
+
+Below the scale is a geometric figure consisting of a semicircle atop a horizontal line. The line is marked with points c, e, a, d, b. Between points 'a' and 'd' is the number '2', and between 'd' and 'b' is '1'. Between 'e' and 'a' is '3'. Inside the outer semicircle are two inner arcs labeled with numbers '4', '2', and '2'.
+</image-desc>
+
+<margin>26</margin>
+¶ **Omnis pyramis cui⁹ basis triāgula est: quattuor triāgularibus et equalib⁹ iūnct.**
+¶ Nā tres a tribus laterib⁹ basis triāculares erigūtur q̃ simul applicātur atq₃ cōueniunt ꝛ basis est quartus triāgularis. Et qm̄ duo et duo latus habent cōmune: erunt omnes inter se equilateri: quare et equales. quod igitur asseritur per diffinitionē ratum est.
+
+<margin>27</margin>
+¶ **Si triāculares ab vnitate in altum sibi continue adaptentur: proueniēt omnes ab vnitate pyramides: ꝛ cuiuslibet basis erit triāgulorum suorū maximus.**
+¶ Sint a b c d e f ad f usq₃ vnitatē scz quotlibet sumpti triāculares cōtinue vno minores q̃ sibiinuicē eo ordine aptētur applicēturq₃: ita vt b supponaꝛ a: et c supponaꝛ b: et d ipsi c: ꝛ e ipsi d: et f itidē ipsi e dico pyramides ab vnitate esse sumptas oēs ꝛ cuiuslibet basim suorū triāguloz esse maximū. cum enī numeri illi in altū constituti invnitatē cōueniāt per diffinitionē constituūt pyramidē: erūtq₃ p coꝛrelariū prime huius oēs ab vnitate sumpti triāculares. si itaq₃ vnitatē consideras eadē est et prima potentia pyramis. si primū triācularē cuius latus est binari⁹ cū ipsi supꝛaposita coaptataq₃ vnitate ap positū appareāt equales simulq₃ cōueniētes triāculares: erit cōstituta scda pyramis cui⁹ latus erit secundus triācularis. et cū sint in altū continue accepti triāculares erit ꝛ tertia pyramis cōstituta cui⁹ latus erit tertius triācularis: et quarta cuius quartus triācularis erit latus atq₃ ita deinceps. sed q₂ cuiuslibet basis sit suoz triāgulariū maximus hoc iō est q₂ p pꝛecedētē basis ē triāgularis cuilibet triāgulariū laterum equalis. si itaq₃ latus sit quintus triāgulus p coꝛrelariū prime huius ex oībus pꝛecedētibus triāgulis cōstitutus ita et basis quintus erit triāgulus ꝛ ex oībus inferioꝛib⁹ cōstitutus qui erit illius pyramidis maximus: et ita de quacūq₃ altera sicq₃ cōstare potest propositū
+
+<image-desc>
+A diagram of a triangular number represented by dots. The rows are labeled from bottom to top as a, b, c, d, e, f. To the right of the diagram are the numbers '15 b' and '21 a'.
+</image-desc>
+
+<margin>28</margin>
+¶ **Si cuilibet numero equaliū laterum oēs ab vnitate sibi similes in altū apponātur: qui cōponetur erit pyramis basemq₃ ipsius eādem esse cōueniet. si vero citra vnitatē huiusmodi eiusdē generis foꝛmariū in altum suppositio erectioq₃ deficiat: quot ab vni tate illius generis relicte fuerint: toties curta pyramis nascetur.**
+¶ Hec docet tetragonice basis/pentagone/hexagone/heptagone/octogone/ennagone/decagone: et quotquot anguloz volueris eodē ingenio quo ꝛ pꝛecedēs de triāgularibus pyramides foꝛmare. nam si hoc pacto tetragoni ab aliquo dato ad vnitatē vsq₃ suppofiti aptentur: oīa latera (que p coꝛrelariū pme huius erūt triāculares numeri ab vnitate cōtinue sumpti sunt) invnū verticē concurrēt totāq₃ py ramidē cōstituent cui⁹ basis erit datus tetragon⁹ sup cuius latera sunt erecta latera pyramidis invnū cacumen conueniētia imo oēs tetragonice pyramides infra illā essent foꝛmate. ꝛ ita si pētagoni hexagone et sequētes hunc in modū aptētur pētagonas hexagonas/octogonas/ēnagonas: reliquasq₃ oēs foꝛmabis pyramidas. Scda pars stati nota est nā si detur quotuscūq₃ triāgularis vt sextus ab vnitate cui supponātur mō ātedicto p ordine quintus quart⁹ tertius et scdus. at desit vnitas qūis latera illi⁹ simul tendāt nōn tñ conueniūt: ideo figura illa p diffinitionē erit curta pyramis. q₂ si quitus quartus ꝛ tertius soli supꝛapositi in altū fuissent: defuissētq₃ duo scdus et vnitas hēc biscurta pyramis dicereꝛ q₂ si omissi fuissent tres diceretur tricurta. et ita quotquot omitterētur toties curta dicereꝛ. et ita de curtis pyramidibus que a quadratis pentagonis hexagonis ꝛ sequētibus figuris nascūtur sentiendu est. est itaq₃ notum quod proponitur.
+
+<margin>29</margin>
+¶ **Si due pyramides quarum bases sunt triāculares proximi coniungātur: efficietur pyramis cuius basis erit tetragonus maiori triāgularium equilaterus.**
+¶ Nā quelibet earū erit cōposita ex oībus triāgularibus q̃ sunt a triāgulari basis sueiq₃ ad vnitatē at basis minoꝛis pꝛimus est triāgularis post basem maioꝛis. cōiuncti igit simul p quintā hui⁹ faciūt tetragonū et scdus vnius ꝛ scdus alteri⁹ sequentē tetragonū. et sic cousq₃ dū extrema vnitas mioꝛis cū penultimo alterius triāgulari pꝛimū post vnitatē cōficiat tetragonū. vnitas igitur si apponaꝛ oēs ad ipsāusq₃ tetragonos supꝛapositos habebim⁹ ab illo scz tetragono cui⁹ latus est equale lateri triāgularis basis maioꝛis pyramidis. at per pmissam ex oīb⁹ ab vnitate tetragonis cōponitur pyramis cuius basis est quadrāgula ꝛ coniunctozū vltimus tetragonus. effectū est igitur qd proponebaꝛ.
+
+<margin>30</margin>
+¶ **Si quotlibet triāculares equales in altū cōponātur: fiet ex eis numerus serratilis.**
+¶ Nam qz equales erunt poterūt directe cōtinue in altum latera vnius super latera alterius aptari applicariq₃: vt latus d e supꝛa latus a b ꝛ d f: et f e supꝛa latera a c ꝛ c b: et latus g h supꝛa latus d e: et latera g k et k h supꝛa latera d f et f e: ꝛ ita de consequentibus vsq₃ ad vltimū. et quoniā omniū latera sunt equalia: erit vt supꝛa posita directe latera que supꝛemū locum optinent extremis equalia sint et equidistātia. patet itaq₃ per diffinitionē factum esse serratilē quod proponebatur.
+
+<image-desc>
+A diagram showing a "numerus serratilis" represented by stacked dots forming a three-dimensional prism. The dots are labeled with letters: a and b at the front base, c behind; d and e at the next level front, f behind; g and h at the third level front, i behind; and a single dot l at the top.
+</image-desc>
+
+<sig>D 4</sig>
+
+<vocab>tetragonus, hexāgulus, octogonus, pyramis, triāgulares, numerus serratilis, pentagonus, curta pyramis, basis, latus, equilateri</vocab>

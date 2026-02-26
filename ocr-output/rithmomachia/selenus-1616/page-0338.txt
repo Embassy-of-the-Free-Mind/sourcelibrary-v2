@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>304</page-num>
+<header>Das Dritte Buch / 5. cap.</header>
+<meta>catchword: denſel</meta>
+
+Weiſſe/rucket den König/auf dreyſſig : Der Schwartze/ der K.
+Rochen/auf neun und dreyſſig/und beut / von der K. Schützen / Ab-
+Schach : Der Weiſſe/muß den König / mit der K. Soldaten / auf
+ſieben und dreyſſig/bedecken : Der Schwartze/ nimt ihn / mit der
+K. Rochen: Der Weiſſe/rucket/den König / auf ein und dreyſſig :
+Der Schwartze/beut/mit der K. Rochen/auf neun und dreyſſig/
+Schach : Der Weiſſe/muß / den König / auf zwey und dreyſſig /
+ſetzen: Der Schwartze/beut/ mit des K. Rochen/auß acht und
+zwantzig/Schach : Rucket nun der Weiſſe/den König/auf vier
+und zwantzig: ſo gibt/der Schwartze/mit der K. Rochen/auß
+viertzig/Schach-Mat : Bedecket Er ihn aber/ mit der K. Reu-
+ters - Soldaten / auf ein und dreyſſig : ſo nimt der Schwartze/
+denſelben/mit des K. Rochen/und beut Schach : Er/ muß den Kö-
+nig/auf vier und zwantzig/rucken : Der Schwartze/der K. Sol-
+daten/auf acht und dreyſſig : und gibt folgendes auß viertzig / mit
+der K. Rochen/Schach-Mat.
+
+<margin>31.</margin>
+Rucket aber der Weiſſe/den König/nicht auf 30. (n. 30.) be-
+ſondern/auf ein und dreyſſig : ſo nimt der Schwartze/mit ſeiner K.
+Rochen/der W. K. Soldaten/und beut Schach : Der Weiſſe/zie-
+het den König/auf viertzig/oder acht und dreyſſig: Der Schwartze/
+gibt mit des K. Rochen / auß ſechs und dreyſſig/ oder / mit der K.
+Rochen/auß dreyſſig/Schach-Mat.
+
+<margin>32.</margin>
+Wan aber der Weiſſe/den König/nicht auf 30. (n. 29.) beſon-
+dern auf des S. K. Rochen / auf dreyzehen / ziehet : ſo rucket /
+der Schwartze / denſelben / auf der W. K. Soldaten / auf acht und
+zwantzig : Der Weiſſe / (umb denſelben zu beſchützen) des K. Reu-
+ter / auf neunzehen : Der Schwartze / ferner auf den W. Soldaten /
+der K. Soldaten / auf acht und dreyſſig : Der Weiſſe / auf denſelben /
+und auf der S. K. Schützens-Soldaten / der K. Rochen / auf ſechs :
+Der Schwartze / nimt / mit der K. Soldaten / der W. K. Sol-
+daten : Der Weiſſe / mit der K. Rochen / der S. K. Schützens-
+Soldaten / und rucket ihn / auf der S. K. Reuters-Soldaten :
+Der Schwartze / (auf daß Jhm / auß der Königin quartier / nicht
+mehr Soldaten / von der W. K. Rochen genommen werden) auf den-
+ſelben / ſeiner K. Rochen / auf drey und funfzig : Der Weiſſe / denſel-
+ben / auf der S. K. Soldaten / auf dreyſſig : Der Schwartze / auf ihn /
+der K. Schützen / auf vier und viertzig : Der Weiſſe / denſelben / auf
+der S. K. Rochens-Soldaten / (umb / ſeiner K. Rochens-Soldaten / zu
+beſchützen) auf zwey und dreyſſig : Der Schwartze / (umb /
+denſel
+
+<vocab>Schach, Schach-Mat, König, Rochen, Soldaten, Reuter, Schützen, Weiſſe, Schwartze</vocab>

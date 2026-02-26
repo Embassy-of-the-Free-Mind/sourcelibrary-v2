@@ -1,0 +1,6 @@
+<language>None</language>
+<page-type>blank</page-type>
+
+<image-desc>A full-page decorative marbled paper pattern, commonly used for book covers or endpapers. The design features a "shell" or "stone" pattern with large, irregular dark brown and black spots outlined by veins of lighter tan, muted yellow, and dark red. The overall appearance is dark and textured, resembling polished stone or minerals.</image-desc>
+
+<vocab>marbled paper, endpaper, bookbinding</vocab>

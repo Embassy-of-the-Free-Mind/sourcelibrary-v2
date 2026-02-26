@@ -1,0 +1,40 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>31</page-num>
+<header>mv</header>
+<meta>image quality: clear; blackletter typeface; proposition numbers in right margin</meta>
+
+<image-desc>A triangular arrangement of ten dots (tetractys), with four dots at the base, tapering to one at the apex.</image-desc>
+
+# Omnis serratilis pyramide sue basis vno altior: addit super eam: pyramidē cuius basis tetragona est: basi alterius equilatera. <margin>31</margin>
+
+¶ Nam depta triangula pyramide: ita videlicet vt basis in basi tollatur et de secūdo equalium trianguloꝝ secundus pyramidis detrahat̄ et de tertio tertius: sicqꝫ deinceps. qꝫ serratilis vno altior pyramide sue basis positus est de penultimo triāgulariū equaliū auferet̄ suprema vnitas atqꝫ pyramidis vertex: sicqꝫ totus vltimus triāgularis serratilis integer relinq̄tur. at qꝫ in basi serratilis fuit ablata basis triāgule pyramidis. ideo per secundā huius: secundi triāgularis relictū est latus τ in omnibus superiorib⁹ similiter qui qm̄ tot sunt quot in illo latere vnitates: constat latus ipsum cū sequētium lateribus summā quadrati pficere. preterea qꝫ tertij triangularis serratilis remanet latus suū τ minor sequēs et in sequētibus similiter: erit vt illa sint sequētis quadrati latera. et hoc pacto ad vnitatē vsqꝫ quadratoꝝ numerus excrescit. erit ergo vt in supremo triangulari residua sit vnitas et que est primus tetragonus. ergo per vicesimāoctauam huius constat relictam esse tetragonā pyramidē. et qꝫ latus basis eiusdē est latus triāgulariū equaliū et latus basis pyramidis triāgule ablate idē: constat pyramidē relictam esse pyramidi basis serratilis equilaterā atqꝫ ipsum serratilē eam super pyramidem basis sue addere: quod est propositum.
+
+<image-desc>Two triangular dot patterns. The top is a standard triangle of ten dots. The bottom appears to be a different arrangement, possibly representing a decomposition or a square base viewed in perspective.</image-desc>
+
+# Omnis serratilis pyramide sue basis duobus altior: eidē triplus esse probat̃ <margin>32</margin>
+
+¶ Substraho enī ab ipso serratili extremū triāgulariū relinquet̄qꝫ serratilis vno altior pyramide: q̄ per precedentē in duas secabilis est pyramidas: quarū vna est triangula pyramis basis serratilis τ altera tetragonica cuius basis tetragona est et basi alterius equilatera. sed τ haec eadē tetragonica pyramis per vicesimānonam huius in duas rursus secabilis est triāgulas pyramides: quarū vna triāgule priori est equalis et altera ea minor q̄tum est basis triāgule prioris. addito igitur prius dēpto triāgulari eidē basi prioris triāgule pyramidis equali ad minorē: illa fiet alteri equalis. sic fiēt tres equales triāgule pyramides totum serratilem constituentes. constat itaqꝫ totum huiusmodi serratilem pyramidi sue basis esse triplum: quod est propositum.
+
+<image-desc>A triangular arrangement of fifteen dots (five dots at the base).</image-desc>
+
+# Latere basis triāgularis dato: triāgule pyramidis sup̄ cōstitutē summā rep̄ire. <margin>33</margin>
+
+¶ Reperiatur triāgularis lateris dati per sextā huius: in quē latus ipsum ducatur τ habebimus serratilē equē altū pyramidi cui addito duos equales triāgulares puenietqꝫ serratilis duob⁹ pyramide sue basis altior cuius tertiā partem accipe p̄ precedētē habes pyramidis sup̄ latus cōstitutē summā atqꝫ qd̄ ex triāgulari lateris dati vna cū oibus suis inferio rib⁹ triāgularib⁹ coaceruat: qd̄ ē p̄positū.
+
+# Pyramidis totius summā reperire: cuius basis tetragona: eiusdemqꝫ basis latus datum fuerit. <margin>34</margin>
+
+¶ Ut precedēs docuit dato triāgularis latere qd̄ ex ipso τ oibus sub eo cōtentis coaceruat̄ inuenire ita quoqꝫ et p̄sens nos instruit dato tetragoni latere qd̄ ex ipso et omnibus sub eo p̄tentis tetragonis coaceruat̄ reperire. hoc enī est tetragone pyramidis summā reperire quod ostēditur. nam dato latere quero per sextā huius eius triāgularem in quē vt in precedēti factū est duco latus propositū et proueniet serratilis eque atqꝫ eius pyramis altus cui addo vnū consimiliū triāgulorum et pueniet serratilis vno pyramide sue basis altior. detracta igitur p̄ precedētē inuenta basis pyramide: per tricesimā primā huius relinquetur tetragona pyramis cuius quidē basis tetragona est atqꝫ triangulari equilatera que scz est summa petita et propositum.
+
+<image-desc>Two identical small triangular dot arrangements placed side-by-side, each with six dots (three at the base).</image-desc>
+
+# Si duo serratiles quorum bases triāgulares proximi cristant: et quorum altitudo vna: et lateri maioris equa fuerit: coniungantur: efficietur cubus. <margin>35</margin>
+
+¶ Nam bases in ipsis equaliter scz secūdum numerū lateris maioris serratilis sunt multiplicatę τ basis vnius et basis alterius cōiuncte per quintā huius tetragonū efficiūt cuius latus lateri maioris est equale τ secūdus triāgulus vnius secūdo alterius cōiunctus per eandē tetragonū consimilē. τ ita cōsequenter vt tot tetragoni equales superponātur sibiqꝫ inuicē aptētur quot in latere sunt vnitates at cum ex illis figura sit constituta basim quadrangulā habens in longum latum et altum equaliter distensa per diffinitionem concluditur esse cubus.
+
+# Si cuilibet cubo adiungatur basis sua et triāgularis basi sue equilaterus: efficietur triplus sue pyramidi. <margin>36</margin>
+
+¶ Sumo duos triāgulares proximos quoꝝ maior sit equilaterus tetragono cubi assignati et constituo per tricesimā huius super eos serratiles quoꝝ altitudo sit equalis lateri basis maioris qui duo serratiles cōiuncti per p̄cedentē equabūtur cubo assignato. τ qꝫ maioꝝ illoꝝ serratiliū est eq̄ altū sue pyramidi: duplo ergo sue basis sibi addito per tricesimāsecundā hui⁹ fiet pyramidi sue basis triplus. at qꝫ alter serratilis est alteri eque altus: erit vno altior sua pyramide. basi igitur ipsi semel addita fiet eidē sue pyramidi triplus. at basis sua cum basi alterius per quintā huius faciūt tetragonū cubi: quare si p̄dicto cubo addatur basis sua cū basi maioris serratilis que est triāgularis basi sue equilaterus: efficietur numerus pyramidi sue triplus: qd̄ erat demonstrandū. ¶ Sunt p̄terea cōllūe que vt serratiles per tricesimā huius facile formabūtur et quarti summa ducendo basim in costā cognoscitur que qꝫ facilia sūt autoꝝ omisit. sunt etiā numeri circulares qui proprij sem̄p principiij reuersione formātur. et eadē ratione sphere sphericiqꝫ cubi vt vigintiquinqꝫ et trigintaseptem qui a radicibus
+
+---
+<vocab>serratilis, pyramis, basis tetragona, basis equilatera, triangularis, cubus, coaceruare, tetragonus, demonstrandum</vocab>

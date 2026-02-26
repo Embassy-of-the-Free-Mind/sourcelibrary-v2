@@ -1,0 +1,14 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>11</page-num>
+<header>DES PHILOSOPHES.</header>
+<sig>B iij</sig>
+
+Icy peux considerer cefte tant noble aliance, comme les parties des nombres pair procedent tousiours par progression du nombre impair : au contraire les parties du nombre impair, ont leur progression selon le nombre pair.
+Maintenant as-tu tous les nõbres particuliers respõdãt à leur proportiõ, pour marquer les 16 tables triãgulaires, reste que venions à la proportion troisiesme, dicte superpatiente.
+
+## Des superpartientes.
+
+Proportiõ superpartiẽte est, quãd vn nõbre cõtiẽt vn autre & plus d'vne de ses parties, cõe vn blãc cõtient vn liard & deux de ses parties troisiesmes, qui sont deux tournois. Et pource que cefte proportiõ superpartiẽte outre vn entier cõtiẽt plus q' d'vne partie, biẽ luy sera conuẽãte la forme du quarré: car il a plus de costez q' le triãgle, desia attribué aux particuliers. Apres dõc auoir separé les quarrées d'vne couleur des autres, les huict premiers nõbres requerãs, qu'il leur faudra selon leur ordre & couleur par l'additiõ des deux nõbres cõtenuz en vne chacune des precedẽtes proportiõs particulieres des tables triangulaires, cõe parauãt tu as faict les huict premieres regrãtes des tables triãgulaires particulieres pair. L'additiõ des rãdes multiplies. Obseruãt toutes fois & apliquãt les vnes tables aux autres de mesme couleur & liurée.
+
+<vocab>nombres pair, nombre impair, progression, tables triangulaires, proportion troisiesme, superpatiente, superpartientes, blanc, liard, tournois, quarré, triangle, regrantes, randes</vocab>

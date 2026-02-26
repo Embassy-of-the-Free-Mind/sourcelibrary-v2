@@ -1,0 +1,108 @@
+<language>Latin</language>
+<page-type>index</page-type>
+<columns>2</columns>
+<meta>Catchword: C. Plin</meta>
+
+## E.
+Empedocles, Agrigentinus.
+Desiderius Erasmus, Roterodamus.
+Euripides.
+Eustathius.
+
+## F.
+Jacobus Faber, Stapulensis.
+Sextus Pompejus Festus.
+Orontius Finæus, Delphinas.
+Matthias Flacius, Illyricus.
+Marquardus Freherus.
+Nicodemus Frischlinus.
+Sextus Julius Frontinus.
+
+## G.
+Galenus.
+Gilbertus Papa.
+Cosmo Gracino, Fiorentino.
+Cosmas Guimier, Parisinus.
+
+## H.
+Petrus Heigius.
+Herodotus, Halicarnassæus.
+Hesychius, Grammaticus & Histori-
+cus.
+Eusebius Hieronymus, Stridonensis.
+Hippocrates.
+Homerus.
+Horatius.
+Jacobus Horstius.
+Celsus Hugo.
+
+## I.
+JACOBUS I. Rex Magnæ Bry-
+tanniæ.
+Innocentius IV.
+Paulus Jovius, Episcopus Nuceri-
+nus.
+Hadrianus Junius.
+Pascasius Justus, Ecloviensis.
+
+## K.
+Henricus Knaustinus.
+Albertus Krantzius.
+
+## L.
+Dionysius Lambinus.
+Joannes Langius.
+
+<column-break/>
+
+Bernhardus Laurentius.
+Levinus Lemnius.
+Licinius, Mutianus.
+Justus Lipsius.
+Livius.
+Gregorius Lopez, à Touar.
+Rui Lopez.
+Lutherus.
+
+## M.
+Macrobius.
+Johannes Magnus, } Archiepiscopi
+Olaus Magnus, } Upsalenses.
+Mahometh.
+Simon Majolus, Episcopus Vultura-
+riensis.
+Martialis.
+Petrus Martyr, de Angleria.
+Valerius Maximus.
+Melanchton.
+Jacobus Mennel.
+Bartholomæus Merula.
+Johannes Petrus Mesmius, Marsa-
+nus.
+Metellus, Tegerfeensis.
+Jacobus Micyllus.
+Johannes Thomas Minadous.
+Thomas Morus.
+
+## N.
+Jacobus Navarrus, Hispanus.
+
+## O.
+Paulus Oderbornius.
+Nicolaus Orestinus.
+Garcias ab Orta.
+Ovidius.
+
+## P.
+Felix Paciottus.
+Pausanias.
+Petronius Arbiter.
+Caspar Peucerus.
+Franciscus Philelphus.
+Franciscus Piccolomineus.
+Achilles Pirminius, Gassarus.
+Plato.
+Plautus.
+C. Plinius Cæcilius.
+
+<vocab>Empedocles, Erasmus, Euripides, Jacobus I Rex, Lutherus, Johannes Magnus, Melanchton, Plato, Plautus, Plinius</vocab>

@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>395</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Ddd iij</sig>
+<meta>catchword: Ob dies</meta>
+
+<margin>4. cap:</margin> seiner K. Schützen / und ziehet ihn / auf des W. K. Rochen : ,,
+Der Weisse / denselben / auf zwey : (dan / wan Er ihn / auf ein ,,
+weisses feld / setzete / so würde / der Schwartze / von seiner Köni- ,,
+gin / durch dero Schützen / Ab-Schach bieten / und denselben / ,,
+auf ihn ziehen ) der Schwartze / beut / von der Königin / mit ihrem ,,
+Schützen / auf ein und zwanzig / Ab-Schach : Der Weisse / se- ,,
+tzet / den König / auf eylfe : Der Schwartze / beut / mit der Köni- ,,
+gin / auß zwelfe / Schach : Der Weisse / muß den König / auf ,,
+achtzehen / stellen : Der Schwartze / (auf daß / des K. Schütze / ,,
+auf die W. Königin / auf funf und vierzig / folgendes gerucket ,,
+<margin>12.</margin> werde) ziehet / die Königin / auf vier und vierzig : * Der Weisse / ,,
+nimt / der S. K. Schützen / mit seiner K. Schützens-Solda- ,,
+ten : Der Schwartze / ziehet / auf die W. Königin / des K. Schü- ,,
+tzen / auf funf und vierzig / und erlanget dieselbe / mit gewalt. ,,
+
+<margin>13.</margin> Wan aber der Weisse / (obgerührter ursachen halber) den ,,
+S. Schützen / nicht nimt / (n. 12.) besondern die Königin / (umb ,,
+dieselbe / mit der S. Königin / zu verwechslen) auf sechs und ,,
+zwanzig / oder wohin ihn geliebet / ziehet : so ist Er doch / ent- ,,
+weder Mat / oder hat die Königin / verloren : Dan / wan der ,,
+Schwartze / (so fern Er / die Königin auf 26. gezogen) mit des ,,
+<margin>14.</margin> K. Schützen / auß funf und vierzig / Schach-beut : * Er / den ,,
+König / auf siebenzehen / ziehet : Der Schwartze / der K. Schü- ,,
+tzen / auf seine Königin / auf fünf und dreyssig / und bringet die- ,,
+selbe / hiemit / in seine gewalt. ,,
+
+<margin>15.</margin> Wan aber der Weisse / den König / nicht auf 17. (n. 14.) be- ,,
+sondern auf funf und zwanzig / spielet : so ziehet der Schwartze / ,,
+gleichwol / der K. Schützen / auf die W. Königin / auf fünf ,,
+und dreyssig. ,,
+
+->Dieses vorgehende / handelt nuhn der *Damianus*, ohne jehnige<-
+->ordnung / und so dunckel / daß auch dieselben / welche dieses Spiel /<-
+->gnugsam verstehen / schwerlich / (wollen geschweigen / die erst anges-<-
+->hende) seine meynung / fassen oder begreiffen mögen.<-
+
+<margin>16.</margin> Wan dan / schreibet Er weiter / * Der Weisse / vom Schwar- ,,
+tzen / (n. 15. inf.) genötiget wird / die Königin / auf neunzehen / zu ,,
+ziehen : so spielet / der Schwartze / auf dieselbe / des K. Rochen / auf ,,
+<margin>17.</margin> neun und funfzig : * Der Weisse / dieselbe / (umb sie nicht zu verlie- ,,
+<margin>18.</margin> ren) auf eine andere stelle : * Der Schwartze / gibt / mit der Königin / ,,
+auf sechs und dreyssig / Schach / und bald darauf Schach-Mat. ,,
+
+<vocab>Schach, Damianus, Königin, Rochen, Schütze, Ab-Schach, Schach-Mat</vocab>

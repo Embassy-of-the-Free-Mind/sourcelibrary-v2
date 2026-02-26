@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>109</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>II. cap:</margin> übrigen sieben weissen / und sieben schwartzen Haupt-Steinen / verstehen.
+
+Diese Quartier / wan man sie hinwider an ein ander setzet / werden ferner / in acht gerade / auffsteigende linien / getheilet : deren die erste / der Königes-Rochen : die andere / der Königes-Reuter : die dritte / der Königes-Schützen : die vierte / der Königes : die fünfte / der Königinne : die sechste / der Königinne-Schützen : die siebende / der Königinne-Reuter : die achte / der Königinne-Rochen linie / genennet wird.
+
+Ob nuhn wol / diese Abtheilunge der Schach-Tafel / in die unterschiedene quartier / linien und felder / denjenigen / welche dieses Spiel / außwendig / (das ist / im Sinne) Spielen wolten / dienen möchten / so seynd sie doch / für dieselben nicht gnugsam. Dan sie müssen / nebest einer guten gedächtnus / langem gebrauch und übung / entweder auf eines jeden Haupt-quartieres / oder auf des ganzen platzes felder zähle / auch achtung geben.
+
+Was die zahle der Felder / in eines jeden Haupt-Quartier / antreffen / so muß man / von des Königes-Rochen / biß an den halben theil / der Schach-tabel / (nemlich ins vierte feld / der Königins-Rochens) die rechnung anfahen / auch in guter gedächtnus behalten / welches feld weiß / welches schwartz sey / und das folgender massen.
+
+<image-desc>A square woodcut diagram representing a chessboard. It is an 8x8 grid of squares. The squares are numbered with Western Arabic numerals (1, 2, 3...) starting from the top right and proceeding in a right-to-left, then downward zig-zag or boustrophedon-like pattern according to the text description. There are faint annotations above the grid including a cross, a small circle, and the letter 'e'.</image-desc>
+
+Gebrauchet einer / die weissen Schach-Steine / so ist auf der linie / der Haupt-Steine / von der rechten / nach der lincken seiten / (auf weyse der Hebräer) angerechnet / des Königes-Rochens feld / das Erste / und weiß : dessen Reuters / das ander / und schwartz : dessen Schützens / das dritte / und weiß : des Königes / das vierte / und schwartz : der Königin / das funfte / und weiß : dero Schützens / das sechste / und schwartz : dero Reuters / das siebende / und weiß : dero Rochens / das achte / und schwartz : In der andern Zwerch-reige / des Königes-Rochens ander feld / das neunte / und schwartz : dessen Reuters ander / das zehend / und weiß : dessen Schützens / ander / das eylfte / und schwartz : des Königes ander / das zwelfte / und weiß : der Königin ander / das dreyzehend / und schwartz : dero Schützens / ander / das vierzehend / und weiß : dero Reuters ander / das funfzehend / und schwartz : dero Rochens ander / das sechszehend / und weiß : In der dritten Zwerch-linie / des Königes-Rochens dritte feld / das siebenzehend / und weiß : dessen Reuters dritte / das achtzehend / und schwartz : dessen Schützens / dritte / das neunzehend / und weiß : des Königes dritte / das zwanzigste / und schwartz : der Königin dritte / das ein und zwanzigste / und
+
+<vocab>Schach-Spiel, Haupt-Steine, Rochen, Reuter, Schützen, Quartier, Zwerch-reige, Hebräer</vocab>

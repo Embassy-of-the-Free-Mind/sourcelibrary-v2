@@ -1,0 +1,44 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>322</page-num>
+<header>Das Dritte Buch/ 5. cap:</header>
+<meta>catchword: Könis</meta>
+
+denſelben/auf des W. K. Schützen / auf ſieben und dreyſſig : **Der**
+**Weiſſe** / denſelben / auf ihn / auf dreyſſig : **Der Schwartze** / den-
+ſelben / auf der W. K. Schützen / auf funf und dreyſſig : **Der Weiſ-**
+<margin>99.</margin> **ſe** / (umb denſelben zu beſchützen) die Königin / auf zwantzig : * **Der**
+**Schwartze** / nimt / der W. K. Schützen-Soldaten / mit der K.
+Reuter / und ziehet ihn / auf des W. K. Rochen : **Der Weiſſe** /
+nimt denſelben / mit der K. Rochen / auſſ fünfe / gefangen : **Der**
+**Schwartze** / darf ihn / mit der K. Schützens-Soldaten / auf acht
+und dreyſſig / nicht beſchützen / (dan ſonſten / der **Weiſſe** / des K. Ro-
+chen / auf funf und vierzig / ziehen / und ſeine Königin / erhaſchen
+würde) beſondern ziehet / des K. Reuters-Soldaten / auf der W.
+K. Schützen / auf vier und dreyſſig : **Der Weiſſe** / nimt / der S. K.
+Reuter / mit ſeines K. Reuter / und ziehet / auf der S. K. Rochen :
+**Der Schwartze** / nimt / mit des K. Reuters-Soldaten / der W.
+K. Schützen / und rucket ihn / auf die W. Königin : **Der Weiſſe** /
+beut / mit des K. Reuter / auſſ ſechs und vierzig / Schach / und entblö-
+<margin>100.</margin> ſet / ſeiner K. Rochen / gegen die S. Königin : * **Der Schwartze** /
+nimt ihn / mit der K. Reuters-Soldaten : **Der Weiſſe** / die
+S. Königin / mit ſeiner K. Rochen / und beut Schach : **Der Schwar-**
+<margin>101.</margin> **tze** / nimt ihn / mit dem Könige : * **Der Weiſſe** / beut / mit
+<margin>102.</margin> des K. Rochen / auſſ zwey und funfzig / Schach : * **Der Schwar-**
+**tze** / rucket den König / auf zwey und ſechſſzig : **Der Weiſſe** /
+beut / mit der Königin / auſſ vier und vierzig / Schach / und ziehet
+dieſelbe / auf der S. K. Rochen : **Der Schwartze** / den König /
+auf drey und ſechſſzig / oder funf und funfzig : (dan / ſo er / auf ein
+und ſechſſzig / gezogen würde : **Der Weiſſe** / mit der Königin /
+auſſ 53. n. 104. Schach-Mat gebe) der **Weiſſe** / nimt der S. K.
+Rochen / mit der Königin : rucket auch / des K. Rochens-Solda-
+ten / (umb / dem Könige / luft zu machen) auf ſiebenzehen : und kan
+dem **Schwartzen** / ferner leichtlich abgewinnen.
+<margin>103.</margin> Stellet aber der **Schwartze** / den König / nicht auf 62, (n. 102.)
+beſondern / auf funf und vierzig : ſo beut / der **Weiſſe** / mit der
+Königin / auſſ vier und vierzig / Schach / und ziehet ſie / auf der S. K.
+Rochen : **Der Schwartze** / den König / auf acht und dreyſſig :
+**Der Weiſſe** / nimt / der S. K. Rochen / mit der Königin / und beut
+Schach : **Der Schwartze** / nimt / des W. K. Schützen / mit dem
+
+<vocab>Schach, Schach-Mat, König, Königin, Rochen, Schütze, Reuter, Soldat, Weiſſe, Schwartze</vocab>

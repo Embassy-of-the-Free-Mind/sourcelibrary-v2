@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>314</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+
+Der Weiſſe / die Königin / auf zwelfe: Der Schwarze / (umb /
+der K. Reuter / zu entfreyen) den König / auf neun und funfzig:
+Der Weiſſe / der K. Rochen / auf viere: Der Schwarze / der
+K. Rochen / auf ſechszig: Der Weiſſe / nimt / der S. K. Schü-
+tzens-Soldaten / mit ſeiner K. Schützens-Soldaten / und zie-
+het ihn / auf des S. K. Schützen: Der Schwarze / nimt ihn /
+mit demſelben: Der Weiſſe / ziehet / auf denſelben / der K. Reu-
+<margin>69.</margin>ters-Soldaten / auf ein und dreyſſig: * Der Schwarze / den-
+ſelben / auf funf und viertzig: Der Weiſſe / des K. Reuter / auf
+neun und zwanzig: Der Schwarze / (umb das fünf und dreyſ-
+figſte feld / für demſelben zu verhüten) des K. Reuters-Solda-
+ten / auf zwey und vierzig: Der Weiſſe / (ſo fern Er / mit des
+K. Rochen / des S. K. Schützens-Soldaten / nicht nehmen / noch
+Schach-bieten wil: Auf welchen fahl / der Schwarze / den
+König / auf funfzig / muſſ rucken: Er / gibt / mit des K. Rochen /
+auß ein funfzig / Schach: Der Schwarze / muſſ den König / auf
+acht und funfzig / rucken: Er / nimt / mit des K. Rochen / der S.
+K. Reuter / ziehet ihn / auf die S. Königin / und gibt Ab-Schach /
+von des K. Schützen: Der Schwarze / rucket / den König / auf
+neun und funfzig: Er / gibt / mit der K. Schützen / auß ein und
+viertzig / Schach-Mat: Stellet aber der Schwarze / nicht den
+König / auf 59, beſondern die Königin / auf vier und viertzig: So
+nimt Er ſie / mit ſeiner Königin / und gibt Schach: Der Schwar-
+ze / muſſ den König / auf neun und funfzig / rucken: Er / gibt / ent-
+weder mit der Königin / auß ein und funfzig: oder mit dero Schü-
+tzen / auß ein und viertzig / Schach-Mat) des K. Schützen / auf die
+S. Königin / und dero Rochen / auf neun und dreyſſig: Der
+Schwarze / darf die Königin / mit ihrem Reuter / auf ſechs und
+viertzig / nicht bedecken / (dan ſonſten der Weiſſe / die S. Königin /
+oder die beede ſchwartze Rochen / bald erlangen / und des Schwar-
+zen Steine / von der Schach-Tabel / jagen würde) beſondern / ru-
+cket ſie / auf ein und ſechſzig: Der Weiſſe / nimt / der S. K. Ro-
+chen / mit des K. Schützen: Der Schwarze / denſelben / mit dem
+Könige / und nicht mit der Königin: (dan ſonſten / des W. K. Ro-
+che / ſeines K. Schützen / umbſonſt wegnehme) Der Weiſſe / ziehet
+der K. Schützen / auf ein und viertzig: Der Schwarze / nimt /
+mit des K. Schützen / der W. K. Reuters-Soldaten / ziehet
+ihn / auf der W. K. Rochen / und entblöſet ſeine Königin / auf
+
+<meta>des W.</meta>
+
+<vocab>Schach, König, Königin, Reuter, Rochen, Schützen, Soldaten, Schach-Mat, Schach-Tabel</vocab>

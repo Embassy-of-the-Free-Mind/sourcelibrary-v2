@@ -1,0 +1,14 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>Catchword: men</meta>
+
+## Victorie of honour.
+
+Victorie of honour, is when a determined number is made in a determined number of men, as if it be determined that he whiche first cometh to.100.in.8.men, shall winne the game. As in these.2. 4. 6. 8. 4. 16. 45. 15. And though there were somewhat more then 100.so it be in.8.men, it skilleth not.
+
+## Of victorie of honour and quarell.
+
+The victorie of honour and quarell, is when one obteyneth the decreed number, in the decreed number of men and the decreed number of characters : as let.100.be the decreed number 8.the determined number of men, and 9.the determined number of characters. He that obteyneth.2.4. 6. 8. 4. 6. 9. 64. obteineth the victorie of honour and quarell. It shalbe no hinderance though.8. men
+
+<vocab>Victorie of honour, Victorie of quarell, determined number, Philosophers game, Rythmomachia</vocab>

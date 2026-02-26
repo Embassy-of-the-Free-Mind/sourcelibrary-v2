@@ -1,0 +1,67 @@
+<language>French</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>46</page-num>
+<header>DES PHILOSOPHES.</header>
+
+<image-desc>The page contains two columns of numerical data separated by a double vertical line. Each column has a heading framed by decorative brackets at the top and categorical labels framed by brackets and dividers at the bottom.</image-desc>
+
+->Pair contre Impair<-
+
+| | | |
+|---|---|---|
+| 15 | cōtiẽt 5 | fois 3 |
+| 9 | 3 | 3 |
+| 15 | 3 | 5 |
+| 15 | 5 | 3 |
+| 20 | 4 | 5 |
+| 25 | 5 | 5 |
+| 36 | 4 | 9 |
+| 36 | 3 | 12 |
+| 36 | 12 | 3 |
+| 42 | 14 | 3 |
+| 45 | 5 | 9 |
+| 45 | 9 | 5 |
+| 49 | 7 | 7 |
+| 64 | 4 | 16 |
+| 72 | 2 | 36 |
+| 72 | 6 | 12 |
+| 81 | 9 | 9 |
+
+| | | |
+|---|---|---|
+| Les pairs | les loges d'entre deux | les impairs |
+
+<column-break/>
+
+->Impair contre les Pair<-
+
+| | | |
+|---|---|---|
+| 12 | cōtiẽt 3 | fois 4 |
+| 12 | 2 | 6 |
+| 12 | 6 | 2 |
+| 16 | 4 | 4 |
+| 16 | 2 | 8 |
+| 16 | 8 | 2 |
+| 30 | 5 | 6 |
+| 30 | 2 | 15 |
+| 28 | 7 | 4 |
+| 36 | 4 | 9 |
+| 36 | 9 | 4 |
+| 56 | 7 | 8 |
+| 64 | 8 | 8 |
+| 64 | 4 | 16 |
+| 81 | 9 | 9 |
+| 90 | 2 | 45 |
+| 90 | 6 | 15 |
+| 90 | 10 | 9 |
+| 100 | 4 | 25 |
+| 120 | 6 | 20 |
+| 125 | 5 | 25 |
+
+| | | |
+|---|---|---|
+| les im-pairs | les loges d'entre deux | les pairs |
+
+<vocab>arithmétique, pairs, impairs, loges, philosophes, contient</vocab>

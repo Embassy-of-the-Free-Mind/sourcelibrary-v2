@@ -1,0 +1,40 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>30</page-num>
+<header>DES PHILOSOPHES</header>
+
+d'hõneur & proces ensemble, à egard aux quan-
+titez des tables des characteres & des valeurs
+ensemble. En premier donc dirons des victoires
+de corps.
+
+### Victoire de corps.
+
+C'Est chose aisée à veoir que comme le corps,
+est celuy duquel despend le bien, aussi des ta-
+bles de ce ieu despendent les nombres. Parquoy
+qui plustost aura gaigné par les reigles ou par les
+combats precedens quelque quantité de tables
+determinées & proposées au plaisir des ioueurs
+sans avoir egard aux characteres ou valeurs d'i-
+celles, aura victoire de corps.
+
+### Exemple.
+
+Deux ioueurs ont proposé que quiconque au-
+ra plustost gaigné quatre tables par les bateries
+precedentes, aura gaigné le ieu. Quiconques donc
+aura plustost quatre tables quelles quelles soient,
+aura victoire de corps.
+
+### Victoire de biens.
+
+AInsi comme les biens de plusieurs souvent
+peuvent estre possédez par vn ou plus, aussi
+les nombres de plusieurs tables peuvent estre con-
+tenus en vne ou plus. qui plus tost donc aura la
+somme du nombre proposé & determiné au plai
+sir des ioueurs, sans avoir egard à la quantité des
+tables, aura victoire de biens.
+
+<vocab>Victoire de corps, Victoire de biens, tables, characteres, valeurs, ioueurs, gaigné, nombres, bateries</vocab>

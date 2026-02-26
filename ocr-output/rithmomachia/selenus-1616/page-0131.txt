@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>101</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>6. cap:</margin>
+Ritter/ in solcher gestalt: Eß sol sein ein Man/ der hab in der
+rechten hand ein schlüssel/ und in der lincken ein stab/ alß ein elen:
+der bedeut amtleute/ und pfleger der Stäte/ die der maß/ und
+des gewichtes pflegent/ und an der gürtel ein grossen beutel mit
+pfenningen/ der bezeichet Zöller und Kramer: der stet ze recht
+vor dem Ritter/ wan die Ritter sollent das Volck ordinieren
+und schicken/ wie sie hietent und pflegent/ alß in empfolen ist/
+dieselben lütt/ sollen herzickliche lieb haben/ was die gemein an-
+gehört/ und sollen besichtig und flysig seyn/ das sie beschawen
+und betrachten/ alle die freiß/ die einer stat beschehen mag: Sy
+sollent auch/ an der gewissen sein lauter/ das sie Gott/ mit
+forchten ehren/ daß sie jemand on sein schuld icht aufsetzen/ vor-
+neynd/ vor haß/ oder vor veintschaft/ nur das recht sey/ und das
+man/ das gemein gut/ in henden sech aufnehmen/ das man sie/
+von jeren Ampten/ dester minder stos. Under allen ubelen din-
+gen/ ist das das wierschet/ das ein Man/ mit ander leut scha-
+den/ oder unleumt/ ihm selbs gut und nahmen/ machen/ meh-
+ren und breiten wil. Die Amtluet der gemein/ die sollent auch
+gerecht/ und bescheiden sein/ und nit geitig/ noch sundercheit ha-
+ben/ an den Personen/ das sie von denen/ die da kauffen/ und
+verkauffen/ icht mehr nehmen/ dan sy von recht thun sollent/ son-
+der das sy sich erzeigen/ minner und fordrer seint: wan sich in
+underkauffen/ viel wunderlich ding habent/ desselben sy sich zu
+aller zyt/ gedultecklichen flysen sollen: wan ayn rechter minne-
+rer/ der gerechtikeit und erbarkeit lieb hat/ dem sol versmachen/
+das er/ versmechter rede/ alle stunde antwurt: wan wer den an-
+dern/ ungerechtickeit ansuchet/ das ist des schand/ der ungerecht
+ist. Sich sollent auch die mautner und Zölner hüten/ daß sie nit
+new recht vinden/ an den Zollsteten/ do mit man die leut/ zu un-
+recht beschwert/ noch nicht Zolle haben/ dan die belehent seint/
+von dem Reich/ und durch des Reichs willen/ gesetzet seint: noch
+sollent nichtes mindern/ was mit recht gesetzet ist: und wan sie
+ihr recht innehmen/ das sollen sy senftmütiglich und tugentlich
+vorderen und einnehmen/ daß sie jemand unrecht thund/ also
+das sy in gemein icht forderen/ mit schaden irer gewissen/ wan
+wer raubet/ der wirt beraubet. Die Schätzer oder beschlisser/ sol-
+len purgersam sein/ und sollen sich lossen genügen jeres lohnes/
+
+<meta>und jes</meta>
+
+<vocab>Ritter, Schach-Spiel, Amtleute, Zöller, Kramer, Mautner, Schätzer, Beschlisser, Gemeingut</vocab>

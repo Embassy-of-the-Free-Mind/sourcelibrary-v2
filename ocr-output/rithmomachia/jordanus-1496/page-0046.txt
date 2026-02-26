@@ -1,0 +1,79 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>114</header>
+
+quadratum. at vnitas cū portionibus b 7 portionibus a equatur vnitati a et b simul: igitur vnitas a 7 b
+si aggregata cōstituūt quadratū. Sin aut si diuidas c in duas portiões vnitate distātes: cū c supet b solo
+binario maioz ei? portio sola vnitate maioz erit maioze portione b / 7 minoz ēqlis maiozi. Statuā ergo
+eas iuxta portiões b. et tūc erūt duo ordies ab vnitate vsq; ad nūeros vnitate distātes dispositi. ergo
+illi sit aggregati per eādem tricesimātertiam certi efficient quadratum. at vnitas et ille portiones sil'
+eqūatur vnitati a / b / 7 c. igitur illa simul aggregata sil'iter cōstituūt quadratum. 7 ita de quolibet alio
+argumētabere: ordinādo portiones vnitate distātes vt inceptum est p duos ordines. Nā quia sequēs
+impar ab inferioze sqz binario distat: ideo eius miōz portio maiozi inferiozis equabit: 7 maioz sequēt
+eādem inferiozis maiorem vnitate supgrediet. sicqz clarum habebis ppositū. Et ex hac cognoscit qđ
+in tertio auditiōis phisice ex Pithagora adducit aristoteles suis quadratis cōsequēter adiūctos im=
+pares nunq̄ mutare spēm: sed sqz q̄dratos relinqre. hincqz impares quadratoȝ gnomonas appellari.
+
+<image-desc>A vertical diagram depicting pairs of numbers and letters connected by horizontal lines. The left column lists even numbers (12, 10, 8, 6, 4, 2) labeled f through a, while the right column lists their halves (6, 5, 4, 3, 2, 1) labeled n through i. Below the left column are the ordinal numbers 1 through 6.</image-desc>
+
+## ¶ Si pares ab vnitate sibi coaceruētur: coaceruatus ab oibus erit altera pte lōgioz. 27
+
+¶ Dispono pares ab vnitate a / b / c / d / e / f: 7 quotquot voluero: dicoqz a 7 b simul: eē altera pte lōgiozē
+et a / b / et c. sil'iter a / b / c / 7 d. et ita sēquēter. nam ipsos p equalia diuido: quoz vnas medietates hinc
+et alias illinc ordino. et quia p decimāoctauam huius illi erant dupli numeroz ab vnitate seriatim p
+cedentū: ordines illi abvnitate fm naturalem numeroz seriem pcedunt: ergo per tricesimāquartam
+terti: duo prima media 7 duo secūda simul coaceruata cōstituūt altera parte longiozem. at illa equant
+a 7 b simul 7 p eādem tricesimāquartam duo tertia media cū mediÿs prius positis cōstituūt altera pte
+longiozem: et illa equātur a b et c: et ita sēquēter. sicqz constat propositum.
+
+## ¶ Si dispositis imparibus ab vnitate duo pzimi post vnitatem pīūgant: ac post illos 28 tres: post quos xo quattuoz sicqz deinceps scđm naturale numerozum augmentum: qui pducētur erunt cubi. latusqz cuiuslibet pīunctoz imparium numerus.
+
+<image-desc>A diagram illustrating the summation of consecutive odd numbers to form cubes. Five distinct groupings are shown, separated by horizontal lines and labeled with letters k, g, f, a. The groups consist of: (21, 23, 25, 27, 29) summing to 125 (side 5, square 25); (13, 15, 17, 19) summing to 64 (side 4, square 16); (7, 9, 11) summing to 27 (side 3, square 9); (3, 5) summing to 8 (side 2, square 4); and the number 1 (side 1, square 1).</image-desc>
+
+¶ Disponātur ab vnitate impares: pmo vnitas p se que est cubus 7 cubi ei? latus. deinde primi duo
+impares vt a. post quos tres sequētes p se vt b. post quos quattuoz vt c. dehinc quinqz. postea sex. et ita
+sēquēter fm naturale augmentū numeroz dico duos pmos aggregatos facere cubum: cuius latus
+est numerus imparium: id est binarius. Sil'iter tres alios aggregatos cōstituere cubum: cui? latus est
+nūerus illoz impariū pīunctoz. i. snari?. et ita deinceps. capio primo aliqūē nūerum fm quē sumūtur
+impares ad cubum cōstituendū: sitqz pmo par vt c: cuius quadratus sit g. qz enī c per pceptiōem totus
+est ab vnitate quota ps eius est vnitas: erit vt ipse et vnitas et omnis infra eum numeri vt a et b tot sint
+numeri quot in ipso sunt vnitates. et cū numeri fm naturale nūeroz augmentum sint capti: ipe totus
+erit parium quot sub ipso sūt impares vnitatem enī imparem voco: tor igitur impares sub eo sunt qđ
+in eius dimidio sunt vnitates. disponātur ergo duo ordines ab vnitate: quoz vnus terminetur in c / 7
+alter in b: sitqz b minoz c vnitate. quia enim per tricesimātertiam terti illi simul aggregati cōstituūt
+quadratum: cuius latus est c. qui quē quadratus positus est eē g 7 c ē par: quare p decimā huius / 7 g
+eius q̄dratus est par. Et hinc q̄qz euenit vt medietas c cū b 7 inferioribus b sint tanq̄ medietas q̄drati
+g. ideo quot vnitates in b et inferiozibus eius et dimidio tot erūt impares vsq; g: qz numeris p ordinē
+dispositis qlibet par tot impares sub se hēt: quot in eius medietate ntinet vnitates. Sumo item tot
+impares vltra g: quot sunt vnitates in reliqua medietate c: sitqz vltim? h. erit ergo h totus imparium
+ab vnitate quot vnitates sunt in c 7 in inferiozibus eius: sed prius sumptorum imparium vltim vt k
+totum abvnitate eē manifestum est. erit igitur k idem cū h. et qm imparium fm se sumptoz medietas
+est supra g sumpta: reliqua medietas erit infra g locata. et q̄a g per scđam primi duoz circūstārium
+primozū est medietas: vt in figuratiōe l et m. et per eādē duoȝ alioȝ: vt h et n medietas. et ita quotqt
+fuerint. ergo adiuuante vndecima primi eueniet vt numerus ex illis imparibus aggregatus sit tanq̄
+numerus ex c imparium nūero in g. pductus. erit igitur pductus ex illis imparibus cubus atqz nūe=
+rus imparium latus eius. qđ est ppositū quo ad hoc. Sit scđo b numerus impar aliquoz imparium
+fm quem cōstituēdus est cubus: cuius quadratus sit f. quia enī b est impar: igitur per vndecimam huius
+q f est impar. diuido enī f in duas portiones inequales 7 vnitate distātes p decimānonā huius quaz
+maioz sit p / et minoz q. quia enī f numerus impar supfluit fm numerozum seriem absqz pari hinc fiet
+vt quoties vnitas in p totus imparium sit f ab vnitate: et quoties vnitas in q tot sint pares sub ipso.
+cōstituo itaqz duos ordines: primum ab vnitate vsqz b / et scđm ab vnitate vsqz a. sitqz b maioz vnitate a.
+et intelligo b diuisum in duas partes vnitate distātes: qz est impar. quaz maioz sit r / et minoz sit s. per
+tricesimātertiam terti: illi aggregati cōstituūt quadratū: cuius latus est b. ille aut quadratus positus
+est f. quare adiuuāte eadem a cū suis inferiozibus 7 r maioze portione b: tot cōtinent vnitates: quot r
+cōtinetur in p. sunt igitur tot impares supra f: quot vnitates in s. sit ergo vltimus t. quia enī f totus
+erat imparium ab vnitate quot sunt vnitates in a in inferiozibus 7 in r. ergo t totus est imparium ab
+vnitate: quot sunt vnitates in b 7 in oibus suis inferiozibus. sed 7 sumptoz imparium vltimus totus
+erat ab vnitate. q̄re t est illoz vltimus. numeri igit b: assignatoȝ imparium tot sunt supra f quot infra
+erit q f illoz medius. oēs igitur per idem qđ prius cū p numerati: erunt tm pductum ipe per numerum
+oīm: id est b multiplicatus. et qm b in se pducit f: iem f / manifestum est b in ipm pducere cubum: cuius
+latus est ipse b numerus assignatoȝ imparium. sicqz totum constat propositum.
+
+<image-desc>A small analytical grid of five columns. Rows include: 'h 19 p 5 q 4', 'l 17 r 2 s 1', 'g 16 b 3', 'm 15 a 2 a 2', 'n 13 i 1', and 't 11'.</image-desc>
+
+## ¶ Numeri ab vnitate dupli: sunt pariter pares tantum. 29
+
+¶ Cōtinētur ab vnitate oēs sēquēter dupli: dico eos oēs esse pariter pares. et nullos pzeter eos esse
+pariter pares. cum enī duplus vnitate sit binarius qui est par / 7 secūdus illoz numerozum ab vnitate
+
+<vocab>quadratum, cubus, gnomonas, altera parte longiorem, impares, pariter pares, tricesimātertiam, ternarius, binarius, arithmetica</vocab>

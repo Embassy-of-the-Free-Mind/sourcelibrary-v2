@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>465</page-num>
+<header>Vom Zahl-Kampf.</header>
+<meta>catchword: Das</meta>
+
+Weißen hauffen / vier und sechszig leere felder: (in so viele / auch die Schach-Tabel / abgetheilet wird) und hat dieser unbesetzete / viereckete platz / nach der rechten hand / unten an der ecke / ein weisses feld.
+
+(Buxer: fol: 24. a.
+> Hæc Ludi dispositio, Agminis instar est. Neq; ab hoc, ab- cc
+> horrere videtur id, quod Polybius scriptum reliquit: Extre- cc
+> mam Agminis partem, laxiorem esse debere: ita ut pauciores cc
+> Milites, à Tergo, quam à Fronte stent: æquum tamen & par cc
+> utrisq; sit spacium. Nam si priores Milites, imbecillitate la- cc
+> borent, debilesq; sint, possint ad posteriorem Agminis partem se cc
+> recipere: unde & facultas iterum pugnandi conceditur. Item cc
+> Equites levis armaturæ, similitudinem Alarum, in Agmi- cc
+> ne imitantur, quod nonnihil, cum hujus Ludi dis- cc
+> positione, consentit & consonat.) cc
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mask or face with a leafy beard, framed by symmetrical, intricate scrolling acanthus leaves and floral ornaments.</image-desc>
+
+<vocab>Zahl-Kampf, Schach-Tabel, Polybius, Agminis, Equites levis armaturæ, Buxer, Rythmomachia</vocab>

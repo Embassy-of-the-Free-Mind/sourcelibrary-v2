@@ -1,0 +1,15 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE; IEV</header>
+<warning>Dark image with significant foxing and ink staining throughout.</warning>
+<meta>catchword: rent</meta>
+
+## Prinſe par obfidion ou emprifonnemẽt
+
+Si quatre tables font diſpoſées au tour de quelqu'autre de l'aduerfaire par mouuement regulier ou irregulier, tellement que la deſmarche reguliere de celle de l'aduerfaire ſoit empeſchée, elle ſera prinſe des lors que tu ioueras la derniere des quatres emprifonnãtes. Par exẽple ſoit quelque table ronde de l'aduerfaire en A, icelle ſera prinſe ſi le tiens 4 ſont en B. C. D. E. & ſi la table de l'aduerfaire eſt triangulaire ſera prinſe les tiens 4 ſont en V. Y. T. S.
+
+## Prinſe des Pyramides
+
+Tout nombre quarré ou lateral de la pyramide peut prendre ou eſtre prins comme les tables, & qui plus eſt qui aura gaigné vn degré de la pyramide la degradera, & priuera tout en vn coup de deux nombres comprins en icelle ſoubs meſme forme & figure cõme ſi le nombre quarré 36. de la pyramide parfeicte eſtoit prins enſemble ſeroit icelle degradée & priuée de l'autre nombre 25. qui eſt en meſme figure quarrée que 36. tellement que de toute la pyramide qui contiẽt 91. ne reſtera plus que 30. & plus ne luy ſeruirent
+
+<vocab>Rythmomachie, obfidion, emprifonnemẽt, pyramide, quarré, lateral, degré, parfeicte, degradée</vocab>

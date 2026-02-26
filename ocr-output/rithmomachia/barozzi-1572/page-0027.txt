@@ -1,0 +1,10 @@
+<language>Italian</language>
+<page-type>text</page-type>
+
+Fatta adunque <gloss>a</gloss> queſto modo la prima, & finta diſpoſitione faciaſi la ſeconda, & perfetta à queſto modo. Primamente ſepararai li 8 quadrati bianchi in due parte tirandoli li 4 coſi come ſi trouano nell’uno cantone del tauoliero, & li altri 4 nell’altro di modo che reſtino li loro luoghi, che prima occupauano uacui. Fatto queſto tiriſi il triangolo 9 ſopra il quadrato 15, & il triangolo 6 faciaſi deſcender ſopra il quadrato 45, & ſimilmente il triangolo 81 tiriſi ſopra il quadrato 153, & il triangolo 72 faciaſi deſcender ſopra il quadrato 91, cioè ſopra la pyramide. Dipoi faciaſi deſcender il triangolo 25 appreſſo al quadrato 45, & il triangolo 49 appreſſo la pyramide. Poi uenghino giù deſcēdēdo li dui rimanenti triangoli coſi come ſtanno fino che ſi acconzino in una medeſima ſchiera trà li dui triangoli 25, & 49. Parimente uengano giu deſcendendo li 8 tondi come ſi ritrouano fino che caſchino ſopra li quatro triangoli 25, 20, 42, & 49. Il medeſimo ordine ſi tenirà nelli pezzi neri. che coſi ſi hauerà fatto la ſeconda, & perfetta diſpoſitione delle due ſchiere, cioè della biancha, & della nera. come eſquiſitamente ſi uede nella ſeguente figura.
+
+<image-desc>
+The diagram at the bottom of the page, referred to in the text as the "seguente figura," illustrates the arrangement of pieces for a game, likely Rithmomachia. Though partially obscured by ink bleed-through from the reverse side, it shows two rows of circular pieces (tondi) and a bottom row of triangular pieces (triangoli). The top row of circles contains numerical values such as 8, 3, 4, and 15. The second row of circles shows numbers like 38, 16, and 4. The bottom row consists of several triangles pointing upwards, each containing a number (e.g., 20, 25, 18).
+</image-desc>
+
+<vocab>diſpoſitione, quadrati bianchi, tauoliero, triangolo, quadrato, pyramide, tondi, pezzi neri, Rithmomachia</vocab>

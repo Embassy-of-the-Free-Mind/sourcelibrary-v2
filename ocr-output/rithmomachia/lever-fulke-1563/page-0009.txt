@@ -1,0 +1,32 @@
+<language>English</language>
+<page-type>dedication</page-type>
+<header>DEDICATORY.</header>
+
+VVhat game therfore lyke vnto this,
+may gotten be or had?
+There is not one that I do knovv,
+the rest are all to bad.
+
+It causeth no contention this,
+nor no debate at all,
+By this no hatred vvrath nor guyle,
+in any vvyse doth fall.
+
+It stirreth not such troubles that,
+our frend becomes our foe:
+It moueth not to mischiefe this,
+as many others do.
+
+Let vs auoyde the vvorst therfore,
+and cleue vve to the best.
+So shall vve shunne all vvickednes,
+and purchase quiet rest.
+
+So shall vve serue the liuing Lorde,
+and vvalke after his vvill:
+So shall vve do the thing is good,
+and flye that vvhich is yll.
+
+<sig>a.v.</sig>
+<meta>catchword: So</meta>
+<vocab>Dedicatory, game, contention, debate, hatred, vvrath, guyle, mischiefe, vvickednes, quiet rest, liuing Lorde</vocab>

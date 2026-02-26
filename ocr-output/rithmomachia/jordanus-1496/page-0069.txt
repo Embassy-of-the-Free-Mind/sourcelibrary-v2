@@ -1,0 +1,35 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIIII</page-num>
+
+numeratas. nā b addit super a binariu: ergo c bis continet a illū superaddēs binariū. sed binarius est vno minor a: ergo est eius totidē partes. est igitur c ad a prima multiplex superpartiēs: quare 7 ad I. q: a et l sunt idem numerus. Item q: vtiuisum est c addit binariū super eo qd fit ex binario in a. et binarius in m per nonā primi facit c: ergo c bis cōtinet m. sed et per decimānonam septimi d cōstat ex l et m: 7 g cōstat ex c et d. ergo g cōtinet ter m. 7 insuper l tres scz eius partes. eritq; g ad m secūda multiplex superpartiens. et hunc in modū probabis l in n cōstituere g. 7 per decimānonā septimi m n constituere e. 7 h cōtinere n secundū m. et insup m quattuor scz partes n. et ita cōsequenter inuenies multiplicium denoiationes et ab eodē numero superpartiēti partes numeratas: qd est propositū.
+
+<image-desc>A vertical column of superparticular ratios: 8/7, 7/6, 6/5, 5/4, 4/3, 3/2, 2/1.</image-desc>
+
+### 45 ¶ Si due diuerse superparticulares coniūgantur composita aut erit dupla aut superparticularis aut superpartiens.
+Sint a b c d e f quotlibet per ordinē superparticulares: dico q: si due quelibet simul iungant compositam esse aut duplā aut superparticularē aut superpartiētem. nam si a et b sesqualtera et sesquitertia cōiungis cōposita erit dupla. nā constituta dupla: inuenis per primā quinti sesquitertiā pportionem qua abundat dupla super sesqualterā. constituit igitur due prime duplā. sed si cum a aut c aut d aut e aut f cōiunxeris: q: per tricesimāseptimā huius quelibet est minor b cōposita pportio erit illa dupla minor et ideo nō multiplex. est em dupla per eandē tricesimāseptimā huius multiplicitū minima: igit cōposita pportio aut erit superparticularis aut superpartiēs: quod est propositū.
+
+<image-desc>A complex diagram of line segments. A long bar 'm' is at the top. Below it is bar 'k' with the number 1155. Several smaller bars 'p', 'n', 'q' are shown. To the right are small segments labeled with numbers (8, 4, 2, 1) and letters (b, c, a, l, etc.).</image-desc>
+
+### 46 ¶ Superparticularem inuenire: cum qua quotlibet superparticularium quelibet: superparticularem componant.
+Sint a b c quotlibet numeri ab vnitate pportionales: et sit d primus ad a qui idē etiā per vicesimāseptimā quarti erit primus ad b et c 7 cōiungatur d cuilibet eorum et proueniāt compositi e f g. eritq: per nonā tertij quilibet eozū ad quēlibet eozū et quotlibet alios illius ordinis pportionaliū primus. sumo iterū cōtinue pportionaliē post primos qui sit h et per vicesimāquintā tertij minimū quē numerant d e f g qui sit k: qui pervicesimāseptimā tertij erit primus ad h. sit itē pervltimā tertij l multiplex h 7 m multiplex k: addatq; l super m q̄tum est d. deinde addo sigillatim ad l numeros a b c et proueniāt cōpositi n p q: manifestū est l esse superparticulare ad m. nā ei superaddit suā partem scz d: sed et n ei superaddit d 7 a quod est e. et p ei superaddit d et b quod est f. 7 q ei superaddit d et c quod est g. 7 per vicesimātertiam primi e f g quilibet est pars m: q: est pars k. igitur n p q pariter et l sunt superparticulares ad m. constare ergo potest propositum.
+
+<image-desc>A numerical diagram showing ratios 27/16 and 15/8. Below them, the word "Composite". Further down is a diagram with vertical lines a, b, c associated with values 8, 4, 2 and horizontal segments labeled 3, 4, 5.</image-desc>
+
+### 47 ¶ Data superparticulari: quotlibet alias inquirere quarum quelibet cum eadem: superpartientem efficiat.
+Sit a denoiatās partem date superparticcularis. sumo ab vnitate cōtinue pportionales quozū ipse sit vnus qui sint a b c. dico pportione superparticulare dictā ab a cum superparticulari cuius pars denoiata ab b vel ab c constituere superpartientē: qualē presens proponit inuentionē. nam cōposita ex pportione superparticulari denoiata ab a et denoiata ab b habet in denoiatione suiu nū et partes q̄ dicitur ab a 7 ab b per octauā huius. q̄quidē partes per quartā huius denoiinātur ab eo qd fit ex a in b qui sit d sed ille per decimātertia huius nō constituunt partē: ergo cũ proportio cōposita ex demōstratione penultime nō sit multiplex neq; superparticularis: q: partes composite non cōstituunt partē vnā. relinquit ergo cōpositā esse superpartientē: 7 ita de qualibet alia.
+
+<image-desc>A geometric diagram with lines labeled e, d, c, b and characters g, h, f with values 8, 7, 5, 4, 3 and 1, 6, 4.</image-desc>
+
+### 48 ¶ Omnis superparticularis cū qualibet suppartiēte: constituit pportionē tripla minorē
+Nam dupla cũ sesqualtera que per tricesimāseptimā huius est maxima superparticulariū pponunt per correlariū vicesimetertie huius triplā: sed oīs proportio suppartiens est minor pportione dupla igitur quecūq; pportio superpartiēs cũ maxima superparticulari aut minori superparticulari p quintā quinti cōstituet proportionē tripla minorē: quod est propositū.
+
+<image-desc>Upper diagram with numbers 15, 18, 25 and lines a, b with values 3 and 6. Lower diagram contains lines e, d, c on the left and f, b, d on the right with numbers 8, 7, 5, 2, 4 and 1.</image-desc>
+
+### 49 ¶ Data pportionē que tripla minor sit: in superparticulare 7 suppartientē partiri.
+Sit primo superparticularis quecunq; data que hoc modo diuidi petatur. capio a 7 b mimos terīos a quidē minorē 7 b maiorē inter quos cōsistat. qui per tricesimāseptimā huius erunt numeri in continua serie numeroz sumpti: solaq; vnitate distātes. sitq; c cōpositus ex eis cui addatur a et pueniat d: quoquidē maior vnitate sit e 7 ducātur a et b in d et proueniāt f et g. eritq; per octauā secūdi pportio g ad f ea que b ad a. Itē duco a in e 7 pueniat h: addetq; h super f per nonā primi q̄tum ē a: et a est ps f. nā a positus est numerare f secundū d: igitur h ad f est pportio supparticularis. Item q: b est maior a vnitate per decimā primi g addit super f q̄tum est d. ergo g addit super h minus d quantū est a: sed substracto a ab d manet c. igitur g addit super h quantū est c 7 per nonam 7 decimā tertij c est primus ad g. erit itaq; g ad h pportio superpartiēs: quare proportio supparticularis assignata que est g ad f in duas diuisa est: scz h ad f supparticulare et g ad h superpartientē: quod est propositū quo ad hoc.
+Secundo sit superpartiēs inter a et b minimos terminos: sitq; b maior terminus et ducatur b in se et in a et prouentāt c 7 d. eritq; per septimā secundi pportio c ad d ea suppartiēs que b ad a. Item addo a ad d et proueniat e. per decimā primi a numerabit e secundū numerū vno maiorē b. quare e ad d est superparticularis. et quia per decimam tertij e est primus ad b: ergo pervndecimā eiusdem est etiam primus ad c. et cum differentia c ad e non sit vnitas sed vnitate maior: ergo non erit superparticularis. Relinquitur igitur c ad e proportione esse superpartiētem: quare suppartiēs assignata c ad d diuisa est in duas: scz e ad d superparticularē 7 c ad e superpartitētem quēadmodū erat propositū. Tertio sit
+
+<sig>e . i</sig>
+
+<vocab>superparticularis, superpartiens, proportio, dupla, sesqualtera, sesquitertia, multiplex, numerus, terminus, vnitas</vocab>

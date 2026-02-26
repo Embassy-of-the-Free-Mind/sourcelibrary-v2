@@ -1,0 +1,32 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>123</page-num>
+<header>1.cap: Vom Schach-Spiel.</header>
+
+daß die Schach-Männlein / einander den Kopf bieten / und umb ihren König / mit klug und vorsichtigkeit / streiten und kempfen solten : Aber dem Könige / haben Sie diese aigenschafft zugeschrieben : daß Er / wan Er angefallen würde / immer weichen / und sich / mit seinem Feinde / (es wehre dan / daß ihn derselbe / im nächsten felde / unvorsichtig anfiehle : oder Er / so fern es die noth erheischete / zu dessen Steinen / im nächsten felde / auf den seiten und ecken / das hin dieselben / nicht treffen könten / sich nahete : alß / wan Er etwa einem Rochen / auf eines Schützen linie : oder einem Schützen / in einem felde / welches einer andern farbe / alß das / da derselbe auf stünde / wehre / beykäme) in kein treffen einlassen solte. Auß diesem nuhn / daß der König / immer weichen muß / ist die Regul / welche alhie / alß ein principium zu setzen / geflossen : daß der König / nicht wie andere Steine geraubet / besondern nuhr gejaget / oder / wie man / der Kunst nach / redet / geschachet / und geschach-Mattet / werden könne.
+
+Es wird ferner / der Schach-Mat / und hierauß entstehender Sieg / folgender gestalt / so wol auf seiten des überwinders / alß überwundenen / respectivè, entweder gelobet oder getadelt.
+
+<image-desc>A complex logical diagram using braces to classify variations of checkmate (Schach-Mat). The text "Der Schach-Mat" on the left branches into three categories: by which piece (durch), in which position (in der), and under what condition (welcher). These lead through the word "wird" (becomes) to a right-hand set of braces categorizing the mate as either a series of honorable titles (Löblicher, Adelicher, etc.) or as "Alexander's" unfavorable types (Unglücklicher, Märrischer, etc.), concluding with "Mat genennet."</image-desc>
+
+->Der Schach-Mat<-
+
+| | | |
+|---|---|---|
+| durch | die Königin / einen { Schützen/ Reuter/ Rochen/ Soldaten } Entdeckung | |
+| in der | { Höhe / Mitte / an der Seite } des platzes / | wird |
+| welcher | { den König / ohne Schach-bieten / einspert / Blind ist / } | |
+
+| | |
+|---|---|
+| ein | { Löblicher / Adelicher / ein Ehrlicher / Anmuhtiger / Schimpflicher / der Allerwürdigste / } Mat genennet. |
+| des Alexanders / | { Unglücklicher / Märrischer / ein Stal- und unehrlicher / Schandlicher / } Mat genennet. |
+
+---
+
+Weyl nuhn diese Nahmen / und manieren zu reden / (Schachen / Matten / es gilt nicht / in den Schach ziehen / etc :) von dem gebrauch / der wörter Schach / und Mat / so in diesem Spiele / außgesprochen werden müssen / nohtwendig herrühren : alß wird derowegen vonnöten seyn / daß wir (1.) diese wörtlein / Schach und Mat / (2.) worzu /
+
+<sig>Q iij</sig>
+<meta>catchword: und</meta>
+
+<vocab>Schach-Spiel, König, Schach-Männlein, Rochen, Schützen, Schach-Mat, Reuter, Soldaten, Entdeckung, Alexander, genennet</vocab>

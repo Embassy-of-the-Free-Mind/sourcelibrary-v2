@@ -1,0 +1,36 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<meta>image quality: good; catchword: necesse</meta>
+
+qđ fit ex illa unitate in se est quadratū z <unclear>r</unclear> unitas. et qđ fit ex illa in alterā itidē est unitas et equale vnitati. constat ergo dīam l z ad e esse vnitatē. Similiter diuido c in duas partes scz unitatē z b: et qz per eandē decimāquartam primi quod fit ex c in b scz l: equū est ei quod fit ex b in se qđ est quadratus f: r ex b in vnitatem qui est latus b. constat ergo differentia l ad f esse b: et ita per decimāquartam primi de singulis ostende. constat ergo totum propositum.
+
+---
+
+<margin>25</margin>
+### ¶ Si sumantur ab unitate numeri altera parte longiores proximis quibusqz coniunctis: dimidius coniunctorum sumptis proueniunt omnes quadrati
+
+Ut parte altera lōgioribus figuratis quēadmodū in supiori factū est: dico l z et l altera lōgtiorū sumptoruz medietatē esse quadratū. Similit l et m simul sumptorz medietatē esse quadratū z ita binoz et binozū ɔtinue sumptoz quotquot essent: medietatē esse tetragonicā. Nam qa per secundā partem pcedentiis monstratū est dīam l z minoris ad f esse b: et l maioris ad f et iā esse b: l z et l sunt circūpositi atqz equidistātes f. ergo p secūda primi f est numeroz l z et l simul sūptozū medietas. at f cognoscitū eẽ quadratū: ergo de l z et l constat ppositum esse verū. et cōsimiliter de l z m cōstabit: qz eoz differentia ad g per pcedente est c latus g: quare per secundā primi concluditur quadratus g esse numeroz l et m simul iunctozum medietatem.
+
+---
+
+<margin>26</margin>
+<image-desc>Diagram with five horizontal lines of different lengths labeled a, b, c, d, and e.</image-desc>
+<image-desc>A numerical diagram showing ratios: 110 at the top, with 121 and 100 below it. Labels include g, h, k, l, b, f and numbers 11 and 10.</image-desc>
+### ¶ Nullus altera parte longior est quadratus vel cubus.
+
+¶ Nā si aliqs altera pte longioz vt a esset quadrat⁹: per diffinitionē eius latera essent equālia. et qa esset altera pte longioz eius latera sola vnitater distarēt. si ergo illa dētur et sint b maior z c minoz: qa etiā a esset quadrat⁹ sit eius tetragonicū latus d. et qz qđ fit ex b in c est equale ei qđ fit ex d in se: ergo p vicesimāsextā secundā b d c sunt cōtinue ppoztiōales qđ est īpossibile. Nam cum b et c sola vnitater distēt inter b z c nullus cadit nūerus medi⁹. sed si dicat aduersari⁹ d eẽ equale b aut c. cū ergo b c d cōtinue ppoztiōē oportet b et c esse equalia qđ est cōtra hypothesim. At dicat d esse maiorē b z c. tūc ergo b ad d est pportio minus nūeri ad maiorē: r d ad c pportio maioris ad minozē. et ille ponūtur eedē hoc autē īpossibile. at dicatvltiō d vtroqz et b r c esse minozē: tūc pportio b ad d ē maiori ad minozē et d ad c miōris ad maiorē: r ponunť eedē hoc itez īpossibile nō est igiť a altera pte lōgioz: quadratus qđ est primū. ostēdo deinde a altera pte longiozē nō esse cubū. nā si iō possibile ē sit a altera pte lōgioz cubus z eius latera sint: maius quidē b et minus c et quadratū b sit d r quadratū c sit e: sitqz f latus a in eo qz cubus: cui⁹ quadratū sit l z. erit enī p correlariū quarte hui⁹ vnus medius pportiōalis inť d et l z qđ sit g. et p idē vnus inť e r l z qđ sit h: r p septimā secundā q pportio b ad f ea est d ad g: et g ad l z. et silť q pportio c ad f ea erit e ad h r h ad l z. et qz e r l z in f sit a r idē fit b p hypothesim ex b in c: ergo p scđaz partē vicesimequarte secūdi erit l z ad b sicut c ad f. r etiā pmutati l z ad c sicut b ad f. erit igit inter d z c cōtinue pportionales g et l z r sit inter e r b. itidem duo h et l z. et qz b r e vel erunt ɔmēsurabiles vel cōtra se pmt. si ɔmēsurabiles cū b numeret d eius quadratū: ergo p vicesimātertiam primi ācunqz numerus nūerabit b etiā numerabit d. quare d r e erunt cōmensurabiles. at tñ qz b r c sunt cōtra se pmt d et e esse cōmensurabiles p duodecimā tertij est īpossibile. si autē b r e sint incōmensurabiles p scđam hui⁹ b et e sunt cubi. Silť si c et d essent cōmensurabiles p idē qđ prius d et e essent ɔmensurabiles qđ p duodecimā tertij est īpossibile. si aut c r d sint incōmēsurabiles ergo p scđam hui⁹ vterqz ē cub⁹ quare inť b et c erūt duo media ɔtinue pportiōalia p correlariū quarte hui⁹ at nō mō duo vez etvnū quidē incidere mediū vt in pma parte mōstratū est: est īpossibile. cōstat igitur verū esse ppositum.
+
+---
+
+<margin>27</margin>
+<image-desc>A complex branching tree diagram showing numerical relationships. At the top is the number 12 (labeled o). Below it are pairs of numbers: 72 (l) and 16 (k); 16 (m) and 12 (h); 9 (n) and 8 (g); 2 (a) and 9 (f); and a base row of 2 (b), 1 (c), 4 (d), 2 (e). Below this are labels l, m, n, a on the left and letters r, q, p associated with numbers 36, 6, and 1 respectively.</image-desc>
+### ¶ Dato altera parte longiore: alium ab eo altera parte longiozem inuenire cuius ad illum sit pproportio que quadrati ad quadratum.
+
+¶ Sit a datus nūerus altera pte longior et eius maius latus sit b: min⁹ vero sit c: sitqz d duplus ad b z e duplus ad c: r quadrat⁹ d sit f: et primus sub eo quadrat⁹ sit g quo nūerus vnitater minoz sit h r pte altera lōgioz inter f et g sit l z. qz enī per secundā partē vicesimequarte huius dīa f et l z est d: et dīa l z ad g est nūerus eo minoz vnitater. ideo dīa l z ad h ē equalis d. et cū dīa d et e sit binarius: qm̄ duplū dīe b ad c. nā per correlariū septime scđi duplatop: duple sunt dīe. r cū ex d in se fiat f et ex d in binarīū qui est dīa eius ad e fiat dīa f ad h: qz sit dīa f ad l z et l z ad h qđ est dupla ad d: vt postcōsum est. erit igiť h reliquus nūerus qđ fit ex d in e. duco igiť g in h qđ numeri sola vnitater distare sunt positi: fiatqz l altera pte longioz quē dico esse: quē querim⁹. ducať enī b in h et fiat m: r c in g r fiat n. eritqz p octauā secūdi ea pportio l ad m qđ g ad b. et per eandē etiā ea pportio n ad a que g ad b. quare ea est pportio l ad m que n ad a. et qa ex b in h fit m: et ex c in g sit n: ideo p nonā quinti erit ppoztiō m ad n ɔposita ex pportiōnibus b ad c et h ad g. r qa d in se facit f: et d in e facit h erit pportio f ad h qđ d ad e. quare r q̄ erit vnus similis ppoztiōalif medius inter m et n qđ sit o. cũ sit ergo o ad n sicut m ad o et n ad a sicut l ad m. ergo per equā ppoztiōalitatē indirectā erit l ad o sicut o ad a. capio ergo in pportione l ad o tres numeros in cōtinua ppoztiōalitate primos q sint r q p: manifestū est r et p esse quadratos: tunc sic q̄ pportio r ad q ea ē l ad o: et q̄ q ad p ea est o ad a: ergo p equā pportiōalitatē que pportio r ad p quadrati ad quadratū ea est l ad a altera parte longiozē ad altera parte longiozē: qđ est ppositū.
+
+---
+
+<margin>28</margin>
+### ¶ Si numeri ab unitate ppoztiōales disponātur tertium ab unitate quadratū: atqz vno intermisso tertium semper esse quadratū quartū vero ab unitate cubum z duob⁹ intermissis quartū semper esse cubum: septimū autem quadratū cubicum atqz quinqz intermissis septimū semper esse quadratum cubicum est necesse
+
+<vocab>quadratus, cubus, altera parte longior, proportio, tetragonica, commensurabiles, medietas, differentia, unitas, incommensurabiles</vocab>

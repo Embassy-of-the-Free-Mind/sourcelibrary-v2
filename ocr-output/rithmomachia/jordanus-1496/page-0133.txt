@@ -1,0 +1,53 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>f i</sig>
+
+Numer⁹ multiplex superparticularis est quotics maior numerus ad minorē pparatus habet eum plusq semel et eius partem aliquā.
+
+Et si bis continet 7 eius medietatē vocatur duplus sesquialter.
+
+Et si bis et tertiam duplus sesquitertius.
+
+Et si ter et medietatē triplus sesquialter 7 ita deinceps : ex vtriusq denominatione multiplicis et superparticularis prout cōparatio attulerit noia colligendo.
+
+Numerus multiplex superpartiens est quotics maior numerus minori cōparatus minorem plusq semel continet 7 insuper eius aliquot partes. 7 noia sumit pposita ex vtraq cōparationis denoiatione. vt hec: duplus superbipartiens / duplus supertripartiens / triplus / quadruplus / quincuplus superbipartiens et similia. Et quo pacto quinq sumunf species cōparando maiorē numerum ad minorē eo pacto sumūtur quinq correlatiue cōparato minore ad maiorē: quorum et suorū specialiū modorū specierūq nomina: sola sub ppositione addita effingimus: que sunt. submultiplex subsuperparticularis / subsuperpartiens / submultiplex subsuperparticularis / submultiplex subsuperpartiens. et species submultiplicis sunt subduplus / subtriplus / subquadruplus / subquincuplus. et hoc pacto deinceps.
+
+Species subsuperparticularis: subsesquialter / subsesquiterti⁹ / subsesquiquartus / subsesquiquintus. et hoc pacto deinceps.
+
+Species subsuperpartientis sunt subsuperbipartiens / subsupertripartiens / subsuperquadripartiens. et hunc in modum consequenter.
+
+Species submultiplicis subsuperparticularis subduplus subsesquialter / subtriplus subsesquialter et similes.
+
+Species submultiplicis subsuperpartiētis sunt subduplus subsupbipartiēs subduplus subsupertripartiens atq cetere similes secundum rationis / cōparationisq naturā. sed hec statim nota sunt.
+
+Numerus linearis est qui per plures in vnam / eandēq partem adiectas : describitur vnitates.
+
+Numerus planus est qui per suas vnitates descriptus: in longū atq latum porrigit.
+
+Numerus autē solidus est qui per suas vnitates descriptus longitudini et latitudini crassitiem superaddit / trinoq distenditur interuallo.
+
+Trigonus est numerus planus : qui suis vnitatibus explicatus tria latera possidet equalia.
+
+Tetragonus: quattuor equalibus angulis perficitur.
+
+Pentagonus : quinq.
+
+Hexagonus sex.
+
+Heptagonus septem.
+
+Octogonus octo.
+
+Ennagonus nouem.
+
+Decagonus decem.
+
+Endecagonus vndecim et hunc in modū deinceps: quos appellatione latina nuncupare possumus triāgulos / quadrāgulos / quinquāgulos / sexangulos / septangulos octangulos / nonāgulos / decāgulos / vndecāgulos et hoc pacto cōsequenter.
+
+Numerus altera parte longior est numerus planus qui per vnitates descriptus : longitudini latitudinē habet vnitate discrepātem. 7 idem longilaterus appellat.
+
+Numerus vero antelongior : est qui per vnitates descriptus latera sua habet plusq vnitate disiuncta. hoc est longitudinē latitudini plusq vnitate dissentientē.
+
+Pyramis est numerus solidus cuius singula latera sunt ab vno planorū ad vnum cacuminis verticē eleuata. Et planus nūcrus a quo latera erigunt: pyramidis basis nuncupat. Punctus autem / vnitasq in quā conueniunt pyramidis conus / mucro / vertexq dicitur. que si ex base triangula nascitur: pyramis triangula nominatur. Si ex base quadrangula: pyramis tetragona. et hoc pacto deinceps.
+
+<vocab>arithmetica, numerus multiplex, superparticularis, sesquialter, planus, solidus, trigonus, tetragonus, pentagonus, pyramis</vocab>

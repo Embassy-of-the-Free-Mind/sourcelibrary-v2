@@ -1,0 +1,17 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>494</page-num>
+<header>Das Sechste Capittel/</header>
+<meta>catchword: nem es-</meta>
+
+Hiebey zu mercken : daß diese Sieben letzte überwinnungen/ auß den Dreyen Haupt-Victorien, dieses Spieles/ genommen seynd: dan gleich wie in der Grossen / drey Einfache / alß der Zahl = der Meß = und der Singe = Kunst / seynd : auß welchen / drey andere/ welche in der Grössern / zu finden / nemlich / der Zahl = und Meß = Kunst: Der Zahl = und Singe = Kunst: Der Meß = und Singe = Kunst/ herfür kommen : Von welchen endlich / die Grösseste überwinnung / welche alle drey / nemlich die Zahl = Meß = und Singe = Kunst/ begreiffet/ zusamen gesetzt wird : Also seynd/ in diesen Sieben überwinnungen / drey Einfache: Alß der Steine: der Zah-le: und der Zifren: Von welchen/ drey zusamen gesetzete/ alß der Steine/ und der Zahle: Der Steine/ und der Zifren der Zah-le: Der Zahle/ und derselben Zifren / herkommen / und entspringen: welche endlich die Siebende und letzte/ so von den Steinen/ Zahlen und Zifren/ zusamen gesetzt wird/ zu wege bringen.
+
+Mit den Steinen dieses Spieles/ kan man ferner/ das Schach-Spiel / auf folgende weyse / ziehen:
+
+Wan man nemlich / den halben theil / dieser Tabel nimt / und die Türne an stat der Könige: drey Viereckete / über ein ander gesetzet / für die Königin: einen Vierecketen / für einen Rochen: einen Dreyecketen / auf einen Vierecketen geleget / für einen Reuter: zween Dreyeckete / übereinander gestellet / für einen Schätzen / oder Narren / ( wie Sie Buxer : fol : 24. b. und 40. a, nennet ) und dan acht Runde Steine / für die acht Soldaten / gebrauchet / und dieselben semptlich / auf art und weyse / wie im Schach- Spiel gebreuchlich / ziehet und spielet. Sonsten mag man noch weiter/ alles dasjenige/ was einem jedern/ nach seinem guterachten / von diesem Spiele / umb dasselbe zu erweitern / gefallen wird / hinzuthun / in ansehung / die unterschiedene Zahlen/ welche auf die Steine verzeichnet / auch nebest den Steinen/ unter einander kempfen können. So ist auch das Schach = Spiel / wie ich warhaftig glaube / auß diesem / unserm itztbeschriebenen Spiele/ genommen: in erwegung jehnes viel newer ist/ dan dieses.
+
+( Buxer : fol : 42. a.
+
+> Thomas Topcliphus Anglus, copiam mihi fecit, cujusdam libelli, qui, (ut ille retulit) decerptus est, ex quodam Veteri libro Chaldaico, ac Anglico sermone donato, & quandam ludendæ Rythmomachiæ rationem continet : quam in hoc meo libello, prætermittere nolui : præsertim, cùm in hac sim opinione, hanc Progref-fionis Formam, (qua Scachicæ respondet) nostri Ludi, perfectio-
+
+<vocab>Rythmomachia, Schach-Spiel, Thomas Topcliffe, Buxer, Haupt-Victorien, Arithmetica, Geometria, Musica</vocab>

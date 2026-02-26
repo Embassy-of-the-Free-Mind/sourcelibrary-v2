@@ -1,0 +1,77 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>VII</header>
+
+plus p̄stituere q̃ duplū g r̃ minus duplo h. et similiť c d e g r̃ l z plus p̄stituere duplo h et minus duplo
+lz sicq; deinceps. quare c / d e g h k l l simul p vicesimānonam huius non p̄stituēt pariter parem. ergo p
+quinquagesimam huius c d e g h k l l simul p̄stitūt impariter parem. quod est propositum.
+
+## 53 ¶ Omnis numerus primus: est diminutus.
+¶ Nam ois numerus solam partem habet vnitatem: que vt certum est minus eo p̄stituit. est igiť ois
+talis per diffinitionem diminutus. quod est propositum.
+
+## 54 ¶ Quilibet pariter par: diminutus esse pbatur.
+¶ Nam per vicesimanonam huius ois talis est de duplis ab vnitate sumptis: que p vicesimasextam
+quarti nullus nūerabit nisi aliqs in illo ordine sumptus. at p tricesimasecdam huius ōes in illo ordine
+lit̃ aggregati p̄cedētes minꝰ illo p̄stitūt. constat igit̃ p diffinitionem illū esse diminutum. qd̃ est ppositū.
+
+## 55 ¶ Ois quem numerat numerus aut abundans aut perfectus: vt abundet necesse est.
+<image-desc>A mathematical diagram consisting of horizontal lines of varying lengths. On the left, a set of lines labeled with letters and numbers: a=6, e=12; b=1, h=2; c=2, g=4; d=3, f=6. To the right, a vertical alignment of labels a, e, h, g, f, and I.</image-desc>
+¶ Sit a nūerus pfectus aut abūdans: habēs tres ptes b c d easdēq; scdam/tertiā/et sextam: ducatq;
+a in quēcunq; numerum vt in e vt pueniat e. erūt p̃siles tres ptes q̄ sint f g h. eedēq; scda tertia sexta.
+quia q̃ pportio b ad a ea est f ad e: ergo pmutatim b ad f vt a ad e. Itē c ad a vt g ad e: ergo pmutatim
+c ad g vt a ad e. Itē d ad a vt h ad e: ergo r̃ pmutatim d ad h vt a ad e. erunt ergo tres numeri b c d ad
+totidem f g h in eadē pportiōe vt que est a ad e. ergo p vicesimam secūdi b c d simul ad f g h simul sūt
+in eadem pportiōe q̄ a ad e. tunc sic. b c d simul ad f g h simul vt a ad e: ergo pmutatim b c d simul ad a
+vt f g h simul ad e. ergo si b c d simul abūdat sup a: et f g h siť abūdabit sup e. et si b c d p̄ficte p̄ficiunt
+a: itidem f g h p̃fictē p̄ficiūt e. at si f g h p̄ficte p̄ficiūt e: cum e p̄ceptiōem habeat aliam partem ab
+ipso deuoiatam que est vnitas: ea si fcōē p̄dictis adiuncta facit totum abūdare sup e. erit igit̃ quicūq;
+talis quem numerat aut abundans aut pfectus: abundans. quod est propositum.
+
+## 56 ¶ Quicunq; perfectum numerat: est diminutus.
+¶ Nam si is qui numerat pfectū diminutus non sit: a diuisione erit aut pfectus aut abūdans: qui si
+est pfectus aut abūdans p p̄cedentem ille quicūq; nūerat est abūdans at ponitur pfectus. non est
+igitur perfectus aut abūdans. relinquit̃ igit̃ quēadmodum pponitur eē diminutus. qd̃ est ppositū.
+
+## 57 ¶ Numerum imparem abundantem inuenire: cuius sumptay partiū maxima: a posito impare denominetur.
+<image-desc>A mathematical calculation diagram. A column of horizontal lines labeled f, e, b, c, a. To the right, a vertical list of odd numbers: 5, 7, 9, 11, 13. Above the total result is the text "Surgit ex multiplicatione." and the number "45045".</image-desc>
+¶ Hec videtur supponere aliquem imparem eē abūdātem: qd̃ r̃ verum est. Sit ergo a impar positꝰ
+qui maximā partium sumptar̃ imparis abūdātis dēnoiāre debet et b quicūq; imparium abūdans
+qui si sit minor a: duco ip̄m in aliquē imparem donec eueniat impar maior a qui p quinquagesimam
+quintam huiꝰ erit abūdās. si aūt sit maior a: non quero aliū. et ita sit in pposito. deinde sumo impares
+denoiantes quotquot volo supra a: ita vt a sit denoiatiuū mimus. alioquin x̃itatem ppositio h̄e nō
+posset: sint q; c d e et duco a in c vt pueniet impar p vndecimam huius r̃ d in pductum: r̃ e in vltimum
+pductum: et ille vltimus pductus p vicesimātertiam primi h̄ebit ptes denoiatas ab a c d e r̃ b.
+in ip̄m totum: b. pductus f qui p vndecimam huius erit impar: sed et p quinquagesimāquintam
+huius erit abūdans. qa b est abundans r̃ habet ptes denoiatas p̄cisē: m̄ertiam p̄mi ab a c d e r̃ b.
+et qa p̄tiū assumptar̃ ps denoiata ab a habet minorem denoiationem: qz positus est a oim denoians
+minimus per p̄ceptiōem ps denoiata ab a est oim sumptar̃ scz scd̄m a c d e r̃ b maximā. qd̃ est ppositū.
+
+## 58 ¶ Si aliqs in nūerū primum ductus pfectū numerum pducit idem in eo minorem et se non numerantem ductus: pducet numerum abundantem.
+<image-desc>A complex proportional line diagram with letters and numbers.
+Left side: c=28, a=4, f=2, g=1.
+Middle: b=7, h=14, k=28.
+Right side: e=24, d=6, p=12, m=24, n=6.
+The lines connect various magnitudes illustrating arithmetic proportions.</image-desc>
+¶ Sit b numerus p̄mus: r̃ a ductus in b pducat c qd̃ sit nūerus pfectus: sitq; d minor b nec numeret a
+et ducatur itez a in d r̃ pueniat e. dico e esse numerum abūdātem. nullus eni in alium ductus nūera
+bit c: quoꝝ alter non numeret a. vt si f in g pducat c: intelligo f primum/ a scd̄m/ b tertium/ r̃ g quartū
+per vicesimāquintam secūdi f ad a vt b ad g. sed r̃ per quartā tertij b numerat alter. at cum b maior sit
+a/ et g maior f vt supponit̃: b nūerabit g. q̃re r̃ f nūerabit a. ōstat g̃ ꝙ nullus in aliū ductus nūerabit c
+quoꝝ alter non numeret a. et ideo si a eēt primus non haberet c nisi a r̃ b r̃ vnitatem ptes suas: et a r̃
+b vnitate distarent. at nulli sunt primi vnitate distātes nisi binarius r̃ tnarius: cū oporteat alterū eoꝝ
+esse parem/ r̃ alterū imparem: et ois alius par a binario/ sit compositus. quicūq; igiť sumeretur sub b
+aut eēt a aut ip̄m nūeraret. alioquin dicātur non distare vnitate sola vt f et p: qui in se faciant pfectū.
+non habebit ptes g̃ nisi e f r̃ vnitatem. at pductus ex illis totles habet in se maiorē e quoties vnitas
+est in f. at vnitas r̃ f simul minus faciūt q̃ e aliqtics sumptus: ergo f r̃ r̃ vnitas non p̄stituūt pfectū.
+erit ergo a op̄ositus. sint ergo eius partes f r̃ g: que p vicesimātertiam primi numerabunt c. numeret̃
+ergo ip̄m scd̄m h r̃ k. et eedem partes p idem etiā numerabunt e: sitq; scd̄m l r̃ m. eritq; per septimam
+secundi ter repetitam c ad b h k: sicut a ad l m. cum ergo c super b r̃ h in numeris a f g: supabit etiā e
+numeros d l: sitq; id in numero n. quē dico eē minus q̃ a f g. qd̃ sic ostenditur. qz c ad b h: sicut e ad d l.
+ergo vt c ad e totum: vt b h ad d l detractus ad detractum. ergo residuus a f g: ad n residuum
+vt c totus ad e totum. at c maior est e: igitur a f g maioꝝ n. igitur a f g partes itidem e addite ad d l:
+plus faciunt q̃ e. est igitur e numerus abundans. quod erat demōstrandū.
+
+## 59 ¶ Si numerus in alium ductus perfectum vel abundantem pduxerit: in quolibet ab eo numeratum ductus abundantem producet.
+
+<vocab>numerus primus, diminutus, abundans, perfectus, pariter par, multiplicatio, pportio, denoiatio</vocab>

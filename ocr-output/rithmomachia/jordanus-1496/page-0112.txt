@@ -1,0 +1,30 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>35</page-num>
+
+| Consonãtie i Arithmetica medietate | A prima unitate | A scđa unitate | A tertia unitate |
+| :--- | :--- | :--- | :--- |
+| 1 \| 3 \| 1 \| 6 \| 1 \| 9 \| 1 \| 12 | 1 \| 1 \| 2 \| 3 \| 4 | 1 \| 10 \| 20 \| 30 \| 40 | 100 \| 200 \| 300 \| 400 |
+| Duplus diapason \| ſesquitertiº diateſ. | Duplari \| epitritº | diapaf. diates. | diapason diatessa. |
+| \| ſesqualtẽ diapēte \| | \| hemiol. \| | \| diapē. \| | \| diapente \| |
+| Triplus. diapason diapē. \| | Triplaris \| | diapā. diap \| | diapa. diapēte \| |
+| \| Quadruplus. bis diapason | Quadruplaris \| | Bis diapason \| | Bis diapason |
+
+---
+
+¶ Intelligit ternaria pgreſſioẽ ad ſe addi numerus qñ additur pmo ad ſe ſemel/ deinde bis/ deinde ter. dico ergo quēcunqз numerũ ad ſe hoc pacto additum: oẽm cõſtituere conſonãtiã muſicam. Nam ſemel ſibi adiectus: duplex ad ſe efficit/ ⁊ diapason conſonãtiam. et bis ſibi additus: ad primã additio- nem ſesqualter cõſtituit ⁊ diapente: et ad ſe triplũ atqз diapason ac diapente. nam in pma additiõe bis: ⁊ in ſecũda ter cõtinetur. Tertio ſibi additus ad ſcđaz additiõem facit ſesquitertiũ ⁊ diateſſaron: nam primus nũerus hic quater/ illic <gloss>vero</gloss> ter cõtinetur. et ad ſe quadruplũ facit et bis diapason. in hac igitur pgreſſione ois cõtinetur cõſonãtia muſica. et q2 cõtinue numerorũ ex eius additiõe ſurgentĩũ ipſe numerus additus eſt differẽtia: ergo reperte conſonãtie in Arithmetica medietate continetur. et ex hac cognoſcitur cur in oim unitatum quaternaria pgreſſione que vbiqз denarũ Pythagoricũ ple- nitudinem implet: oẽs conſonãtie muſice et in Arithmetica quidem medietate reperiãtur.
+
+¶ Tonum et oẽm conſonantiam ſimplicem: in duo equa partiri/ verasqз medietatum puncta in chorda: geometrice monſtrare.
+
+¶ Precedẽtes ſeptima ſcđi/ ⁊ viceſimatertia tertij prētēdũt tonũ/ diateſſaron/ diapẽte ac diapason: in duo equa diuidi non poſſe. hec <gloss>vero</gloss> mõſtrat quo pacto ea omnia poſſint in duo equa partiri. nec hoc quidẽ repugnat. Mã precedẽtes contẽdunt id effici non poſſe Arithmetice certo/ cõſtitutoqз numero/ atqз ratiõali habitudine: hec <gloss>vero</gloss> id effici poſſe geometrice ſine numeri certa/ cõſtantiqз ratione.
+
+-> g h i k <-
+-> A c d e f b <-
+
+<image-desc>
+A complex geometrical diagram used to demonstrate the harmonic and arithmetic division of musical intervals. A horizontal base line contains several points: 'A' at the far left, 'b' in the center, and 'f', 'e', 'd', 'c' clustered toward the right. Above this baseline, four nested semicircles are drawn, each having point 'A' as its left diameter endpoint and one of the points 'c', 'd', 'e', or 'f' as its right diameter endpoint. A perpendicular line rises from point 'b' and intersects the arcs of these four semicircles at points 'k', 'i', 'h', and 'g' respectively (moving from bottom to top). Oblique straight lines connect point 'A' to each of these intersection points (Ag, Ah, Ai, Ak) and connect each intersection point to its corresponding diameter endpoint on the right (cg, dh, ei, fk).
+</image-desc>
+
+¶ Sit ergo data chorda a b ſuperior in qua iubeamur integrum ſemitonium/ et psonãtiarũ diateſſa- ron/ diapente/ ac diapason vera media reperire. facio a b ⁊ c b tonum. a b et d b diateſſaron. a b ⁊ e b diapente. a b et f b diapason eo qui in præcedẽtibus mõſtratus eſt modo. deinde in inferiori linea a c indefinite quãtitatis capio a b equalẽ linee ſuperiori a b et b c õtinue equalem linee b c ſuperiori. et a puncto b verſus c: capie lineam b d equalem chordæ b d et b e equalẽ chordæ b e et b f chordæ b f. et in- telligo q̄ttuor dimidios circulos a c/ a d/ a e/ a f. et a puncto b educo perpendicularẽ linee a c ad circũ- ferẽtias ſemicirculorũ a c/ a d/ a e/ a f. et pũcta vbi eos cõtingit linea ſint g/ h/ i/ k: ad que pũcta educo a g/ c g/ a h/ d h/ a i/ e i/ a k/ f k. at per nonã ſexti geometrie a b ad b g vt b g ad b c. facio igit̃ in chordæ superiore a b lineam b g equalẽ inferiori linee b g et cũ pportio a b ad b g vt b g ad c b vt præoſtẽſum eſt: ſectur tonum a b ⁊ c b eſſe in duo equa diuiſum: ⁊ pũctũ g eſſe medium veri ſemitonij ſignũ. et per eadem que pportio a b ad b h ea ſit b h ad b d. eſto igitur h b in chorda a b equalis linee b h per idem vt prius: ea erit pportio a b ad b h que b h ad b d. quare a b et d b diateſſaron in duo equa partita eſt. et eodem pacto facta chorda i b ſuperiori equali linee b i. et chorda k b equali linee b k: mõſtrabis cõ-
+
+<vocab>Arithmetica medietate, diapason, diatessaron, diapente, Pythagoricum, semitonium, chorda, geometrice, proportio</vocab>

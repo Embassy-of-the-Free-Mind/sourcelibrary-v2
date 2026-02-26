@@ -1,0 +1,25 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>23</page-num>
+<sig>G</sig>
+<meta>catchword: alla</meta>
+
+La settima, & ultima regola è, che quando si vuol far l'ultima uittoria, auanti che la si proclami, bisogna aggregar molti pezzi intorno à quelli, che sono già situati nel campo del nemico per far la uittoria, accioche il nemico, come farà auisato della uittoria che tu uoi fare, nō ti possa à modo alcuno ritardar, & disturbar essa uittoria.
+
+Dopò queste sette regole generali non farà fuor di proposito auuertire come se fossero de quelli che non si curassero di peruenir à questa ultima uittoria, ma che uolesseno giuocar piu rozamente questo giuoco, potriano usar altre sorte di uittorie, lequali sono sette.
+
+La prima è attēder à spogliarsi di pezzi, & chi spogliarà piu tosto il compagno, colui habbia uinto.
+
+La seconda è attender à spogliar l'auuersario del ualor delli numeri, & chi prima arriuarà alla tal summa, non hauendo consideratione delli pezzi, colui habbia uinto.
+
+La terza è attender à spogliarsi de charatteri, cioè de cifre delli numeri, & chi arriuarà più tosto alle tante cifre, non hauendo consideratione di pezzi, ne del ualor delli loro numeri, colui habbia uinto.
+
+La quarta è attender à spogliar l'auuersario insieme insieme de pezzi, & del ualor delli loro numeri: & chi primo arriuarà alli tanti pezzi, & alla tal summa in essi contenuta, quello habbia uinto il giuoco; non hauendo alcuna consideratione alle cifre di essi numeri.
+
+La quinta è attender à spogliarsi di pezzi, e di cifre insieme: & chi primo arriuarà alli tanti pezzi, & cifre in essi contenute; colui habbia uinto il giuoco senza hauer consideratione alcuna del ualor di numeri.
+
+La sesta è attender à spogliarsi di cifre, & insieme del ualor di esse: & chi primò arriuarà, alle tante cifre, & alla tal summa in esse contenuta; colui sia uincitore, non hauendo consideratione alcuna delli pezzi.
+
+La settima, & ultima è attender à spogliarsi delli pezzi e del ualor delli numeri di essi, & della quantità di cifre, & chi prima arriuarà insieme a tāti pezzi, & a tante cifre, &
+
+<vocab>uittoria, pezzi, nemico, giuoco, numeri, cifre, charatteri, summa</vocab>

@@ -1,0 +1,13 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+<meta>Engraving by Jacob van der Heyden</meta>
+
+<margin>
+<unclear>Stamp or inscription in top left corner</unclear>
+</margin>
+
+<image-desc>A detailed copperplate engraving depicting two men in late 16th or early 17th-century aristocratic dress playing a game of chess. The man on the left, shown in profile, sits in a high-backed chair with curved legs, his right hand extended toward the chessboard as if mid-move. He wears a ruff collar and a decorated doublet. The chessboard is positioned on a table covered with a heavy, fringed cloth. On the right side of the table, another man is partially visible, holding a drinking glass. The background shows a simple interior with a draped bed or alcove visible through a doorway. The engraving is finely detailed, showing individual chess pieces and textures of the fabric and wood.</image-desc>
+
+I. ab heyden sculpsit.
+
+<vocab>chess, sculpsit, Jacob van der Heyden, engraving, seventeenth century</vocab>

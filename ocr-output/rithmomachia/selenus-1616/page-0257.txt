@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>223</page-num>
+<header>13. cap: Vom Schach-Spiel.</header>
+<sig>Ef</sig>
+<meta>catchword: tzen/auf</meta>
+
+gibt/ mit der Königin/ auß dreyffig/ Schach-Mat) der Schwarze/
+gibt/ mit des K. Schützen / auß acht und dreyffig / Schach : Der
+Weisse / muß den König / mit der K. Soldaten / auf neun und
+zwanzig/ bedecken : Der Schwarze/ nimt ihn/ mit des K. Schü-
+tzen/ und beut abermal Schach : Der Weisse/ bedecket den König/
+mit der K. Schützen/ auf zwanzig : Der Schwarze/ nimt ihn /
+mit des K. Schützen / und gibt Schach : Der Weisse/ rucket den
+König/ auf viere : (dan/ wan Er ihn/ auf zwölfe/ und/ nach dem Ab-
+Schache/ von der S. Königin/ durch des S. K. Schützen / auf vier
+und dreyffig: auf ein und zwantzig/ ziehet/ derselbe/ dergestalt/ wie
+in der vorigen parenthesi erwehnet / erlegt wird : Ziehet Er ihn
+aber/ nicht auf 21, besondern auf eylfe : so gibt/ der Schwarze/ mit
+dem gedachten Schützen/ auß funf und zwanzig/ Schach: Er/ muß
+den König/ auf zwey/ rucken : Der Schwarze/ gibt/ mit der Köni-
+gin/ auß achtzehen / Schach-Mat) der Schwarze/ gibt/ mit der
+Königin/ auß achtzehen / Schach : Der Weisse/ muß den König/
+auf zwölfe/ rucken : Der Schwarze/ gibt/ mit der Königin/ auß
+eylfe / Schach : Der Weisse/ muß / mit dem Könige / auf ein und
+zwanzig/ weichen : Der Schwarze/ gibt/ mit der K. Schützen/
+auß funf und dreyffig/ Schach: Der Weisse/ muß den König / auf
+zwey und zwantzig / rucken : Der Schwarze/ gibt/ mit des K.
+Schützen/ auß neun und zwantzig / Schach : Der Weisse/ darf ihn/
+mit der Königin/ nicht nehmen/ (dan sonsten/ der Schwarze/ seines
+K. Schützen nehmen/ Schach-bieten / und dessen Rochen / erlangen
+würde) besondern/ rucket/ den König/ auf drey und zwanzig : Der
+Schwarze/ nimt/ mit der K. Schützen/ der W. K. Schützens- Sol-
+daten/ und gibt Schach : Der Weisse/ (wan Er den König/ auf vier
+und zwanzig/ nicht rucken wil : auf welchen fahl/ Der Schwarze/
+mit der K. Schützen/ die W. Königin/ wegnimt : Er/ damit sein
+König/ auß funfzehen / nicht gleich Schach-Mat werde : rucket der
+K. Reuter / auf dreyzehen : Der Schwarze/ nimt / mit der K.
+Schützen/ des W. K. Schützen/ ziehet/ auf dessen Rochen/ und kan
+Ihn / in wenig Zügen / matten : Rucket Er aber / den König / nicht
+auf 24, besondern / auf ein und dreyffig : so nimt / Der Schwarze/
+ebenmessig / die W. Königin / mit der K. Schützen : Der Weisse /
+denselben / mit des K. Schützen : Der Schwarze / mit der Köni-
+gin / der W. K. Reuters- Soldaten / beut Schach / und ziehet sie / auf
+dero Rochen : Der Weisse / bedecket / den König / mit seinem Schü-
+
+<vocab>Schach-Spiel, Schach-Mat, König, Königin, Schützen, Soldaten, Rochen, Reuter</vocab>

@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>103</page-num>
+<header>10.cap: Vom Schach-Spiel.</header>
+
+auch durch die ſtet eylen / und nit viel umb lügen / und ſollen ſich "
+hüten / vor trunckenheit in frembden landen. "
+Der fußgang der gemeinen leut / das iſt / der Wenden / "
+der iſt aller gleych : wan ir neglicher mag gan von ſtat / auf das "
+drit veld : wan ein yeder gemeiner Man / ſol zu dem mynniſten "
+ſicher ſein / in ſeinem lande : Sy geenth auch nur für ſich / und "
+nit wider hinderſich : Nurr ſie verdienen es dan / das ſie kom- "
+ment an die Spang / irer wiederewecken : ſo gewinnent Sie / die "
+wirde / das Sie Künigin werdent / und gewinnent den gang der "
+Künigin / und all ir macht ze nehmen / und ze vahen / uber eck / wer "
+in ſo nahe kumt / und ir recht iſt / wan ſy fur ſich gent : welcher "
+edel in man widerwert / von ihren widerwecken / den mügen ſie "
+gefahen oder geſchlachen aus dem winckel / do ſie ſtent / wan die "
+ſelben leut geent oder farent / und man ſye beſeiß an reytet und "
+anlaufet / das iſt / ein zeichen / daß man ſie berauben wil : und wan "
+aller leute recht iſt / ſich an den nöten ze wern und ze ſchirmen / "
+von edeln und von unedeln : davon iſt in das recht gegeben / wer "
+ſye alſo anreyt / das ſye irs leibes / und irs gutes fürchten müſ- "
+ſen / ſo mögent ſye ſich wol geweren. Es ſoll auch ſölich gemein "
+leut / nyemand verſmächen / wan man liſt / das ſy dick habent "
+aufgenommen / das ſy zu Käyſer warden ſint / und zu pabſten / "
+und das iſt darmit bezeichnet / das ſye der Künigin gewalt ge- "
+ſvynnent an dem Spiel / ob ſy mit gewalt oder mit liſten / der "
+Veind ſchar / durchdringent / und koment an die Spangen : nie- "
+mand ſol ſich übernehmen ſeines gewalts und ſtercke / noch ſeiner "
+edele / noch ſeins Reichthumbs. zc. "
+Darnach ſagen wir / warumb man die unedeln / daß ſeint "
+die Wenden / ſetze für die Edeln / auf dem Schachzabel ? und "
+geſchicht zu dem erſten mal darumb / wan die gemein / ſeint alß "
+ein Kron der Edlen : Was vermöcht das Roch zu der rechten "
+hand / do bey vißtumb und verweſer bezeichnet ſeint : hette Er "
+deß bawmans nit / der im arbeit / weß er bedorft ? eß wer ein "
+Edelman / alß entwicht in nöten / were er ze fuſſen und on wa- "
+pen : waß wer der Edlen zartheit / hetten ſie nit kauſleuthe / die "
+in es brechten : und werckleuthe / die in es machten ? Auch weh- "
+ren die Fürſten und Fürſtinne / dick kranck / hülffe man ihnen nit / "
+mit Ertzeney : alſo bedürfen ſie / der gemeinen leut aller / in allen "
+
+->D<- <meta>catchword: dingen/</meta>
+<sig>D</sig>
+
+<vocab>Schach-Spiel, Wenden, Künigin, Spangen, Schachzabel, Roch, Ertzeney, gemeinen leut</vocab>

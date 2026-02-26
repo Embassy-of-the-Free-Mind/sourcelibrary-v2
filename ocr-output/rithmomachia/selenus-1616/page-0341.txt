@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>307</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Qq iij</sig>
+<meta>catchword: Rochen/</meta>
+
+<margin>5.cap:</margin> denselben/mit der K. Soldaten: Der Schwarze/denselben/ mit des K. Rochen/beut Schach/und ziehet ihn/auf der W.K. Schützens=Soldaten:
+<margin>38.</margin> \* **Der Weisse**/den König/ auf des S.K. Rochen/ und Reuter/ auf neunzehen: **Der Schwarze**/beut/ mit demselben Rochen/ auß zwantzig/Schach: **Der Weisse**/nimt/ des S.K. Reuter/mit dem Könige: oder ziehet ihn/auf sieben und zwantzig: **Der Schwarze**/gibt/ mit der K. Rochen/ auß neun und zwantzig/ Schach-Mat.
+<margin>39.</margin> Wan aber **der Weisse**/ den König/nicht auf 19. (n.38.) besondern/auf drey setzet: so ziehet/ **der Schwarze**/der K. Rochen/ auf
+<margin>40.</margin> fünfe: \* **Der Weisse**/des K. Rochens-Soldaten/auf des S.K. Reuter/ auf siebenzehen: **Der Schwarze**/ nimt/ mit des K. oder der K. Rochen/ des W.K. Reuter/ und beut Schach-Mat.
+<margin>41.</margin> Rucket aber **der Weisse**/ nicht des K. Rochens / auf 17. (n.40.) besondern dessen Reuters-Soldaten / auf achtzehen : so nimt **der Schwarze** / mit des K. Rochen/ gleichwol/ des W.K. Reuter / und beut Schach : **Der Weisse** / rucket den König / auf zehen : **Der Schwarze**/ nimt/ des W.K. Rochen/ mit seines K. Rochen: **Der Weisse** / ziehet/ den König/ auf des S.K. Reuter/ auf siebenzehen/ und nicht auf neunzehen: (Dan sonsten/der Schwarze/mit dem selben/ seines K. Rochens-Soldaten / nehmen/ und Schach-bieten würde) **Der Schwarze**/denselben/ auf der S.K. Schützens-Soldaten/ auf zwantzig : **Der Weisse**/der K. Rochens-Soldaten/ auf zwey und dreyssig : **Der Schwarze**/ des K. Rochen/(ob Er gleich/ der W.K. Reuter / mit der K. Rochen / erlangen könte) auf drey : **Der Weisse**/der K. Rochen / auf des S.K. Reuter / auf vier und zwantzig: **Der Schwarze** / (umb / denselben zu entsetzen) der K. Rochen/ auf viere: **Der Weisse**/der K. Reuter / auf zwey und zwantzig: **Der Schwarze**/ des K. Rochen / (umb / mit demselben / auß drey und dreyssig/ Schach-Mat / zu geben) auf fünf und dreyssig: **Der Weisse**/ muβ / auf denselben/ des K. Reuters-Soldaten/ auf sechs und zwantzig/ ziehen: **Der Schwarze**/ nimt ihn/
+<margin>42.</margin> mit des K. Reuter: \* **Der Weisse**/denselben/ mit dem Könige: **Der Schwarze**/ beut/ mit der K. Rochen / auß zwey/ Schach : **Der Weisse**/ ziehet den König / auf fünf und zwantzig / oder siebenzehen: **Der Schwarze**/ gibt/ mit des K. Rochen/ auß drey und dreyssig/ Schach-Mat.
+<margin>43.</margin> Wan aber **der Weisse**/ mit dem Könige/ den S. Reuter nicht nimt/ (n.42.) besondern/ denselben/ auf fünf und zwantzig/ ziehet: so rucket **der Schwarze**/ (zur beschützung des K. Reuters) der K. Rochen/
+
+<vocab>Schach-Spiel, König, Rochen, Reuter, Schützen, Soldaten, Schach-Mat, Weisse, Schwarze</vocab>

@@ -1,0 +1,106 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>R</sig>
+
+<image-desc>
+To the left of the main text block, there is a woodcut diagram showing various three-dimensional cubes and rectangular blocks in isometric perspective. Some are shown individually, while others are stacked into larger configurations. Many of the visible square faces are labeled with numerals (including 2, 4, 8, 9, 16, 27, 48, 64, 81, 100, 125, 144), likely representing values used in the mathematical board game Rithmimachia.
+</image-desc>
+
+tur? et vitam sine crimine transigunt innocuam / labeqꝫ carentem. hoc illis studium / hoc solamen / hee
+vigilantissima cura:
+
+> Ut sese totos rimentur ad unguem
+> Ne quid hiet / ne quis perturbet se angulus / equis
+> Partibus ut coeat / nil ut declinet amussis.
+> Nec prius in dulcem declinant lumina somnum:
+> Omnia q̄ longi reputarint acta diei.
+> Quo pretergressi / quid gestum in tempore / quid non.
+> Offensi pravis: dant palmam et premia rectis.
+
+¶ Tales candidi discipulos decet esse Pythagore. Ergo meum consilium est o Bathille ⁊ Brontine
+generosi adolescentes: vt tantisper ludo indulgeatis dum tenerior etas vos ad altiora conscēdere non
+sinit / dum tardat aditum. mox aut̄ plusculo robustiores animo facti: nostrum silētium querite / et vos
+nostro cetui comites asciscite: vitam semper que frugi sit querentes innocuam. ⁊ me potius magistro
+(aut si mauultis vobiscū condiscēte) doctrinam / moresqꝫ ⁊ iocos discite. vos aut̄ dū etas teneriuscula
+patitur: a iunioribus que petiti ludi supsunt vel q̄ facillime discetis / nūcaꝫ ambo recte valete. Bat.
+Nos q̄ valemus / q̄s possumus o Alcmeon ego ⁊ Brōtinus: bonas p̄ tue humanitatis officio habe-
+mus nunc / habebimusqꝫ semp gratias. ⁊ cognoscimus te preter dignitatem hec minutula percōtatos
+esse. qdꝫ vero superest nobis facile vēdicabimus. atqꝫ tu interim dū te ad seria magis erga nos vtemur
+preceptoris opera: nostri semper memor felicissimus valeto.
+
+---
+
+## Rithmimachie Finis.
+
+---
+
+¶ Has duas Quadriuij partes et artium liberalium precipuas atqꝫ duces cum quibusdam āminicularijs adiectis: curarunt vna formulis emendatissime mandari ad studiosum vtilitatem Joannes Hygmanus / et Volgangus Hopilius suis grauissimis laboribus ⁊ impensis Parisiij Anno salutis domini: qui oīa in numero atqꝫ harmonia formauit 1496 absolutūqꝫ reddiderunt eodem anno: die vicesima secunda Julij suos labores vbicunqꝫ valebunt semper studiosis deuouentes. Et idem quoqꝫ facit Dauid Lauxius Brytannus Edinburgensis: vbiqꝫ ex archetypo diligens operis recognitor.
+
+### Registrum presentis operis.
+
+->**a b c d e f g h i**<-
+->Omnes quaterni.<-
+
+<columns>2</columns>
+
+**a**
+Primum: In hoc opere.
+Secundum: Jordani Nemorarij.
+Tertium: ¶ Sint a b c d e f.
+Quartum: cum se.
+
+**b**
+Primum: ¶ Si duo numeri.
+Secundum: limā quintam.
+Tertium: nūerans qui et idem.
+Quartum: ¶ Numerorum cōtinue.
+
+**c**
+Primum: ¶ Nam si.
+Secundum: ¶ Quadratus cubicus.
+Tertium: ¶ Si fuerint duo numeri.
+Quartum: ¶ Si quotlibet.
+
+**d**
+Primum: q̄ precedens.
+Secundum: ¶ Si sumātur.
+Tertium: parte longior.
+Quartum: sequens tetragonum.
+
+<column-break/>
+
+**e**
+Primum: numeratas.
+Secundum: ¶ Datam proportionem.
+Tertium: ¶ Multiplicem.
+Quartum: cunt ex trina.
+
+**f**
+Primum. ¶ Jacobi.
+Secundum: ¶ Jacobi.
+Tertium: ¶ Si terminox.
+Quartum: ¶ supparti.
+
+**g**
+Primum: interuallo e d
+Secundum: pportiones esse.
+Tertium: ¶ Itidem ditonus.
+Quartum: ¶ Differentia.
+
+**h**
+Primum: f ad g.
+Secundum: ad q fiat p.
+Tertium: ¶ Sint p reliquis.
+Quartum: ¶ Sint numeri.
+
+**i**
+Primum: Numerus multiplex.
+Secundum: Numeri paris.
+Tertium: Suppartietis.
+Quartum: Altera parte.
+
+<insert>
+Myn This book Edward pistoris
+</insert>
+
+<vocab>Rithmimachia, Jordanus de Nemore, arithmetic, geometry, quadrivium, Jean Higman, Wolfgang Hopyl, David Lauxius, Paris, 1496, colophon, register, Pythagorean verses</vocab>

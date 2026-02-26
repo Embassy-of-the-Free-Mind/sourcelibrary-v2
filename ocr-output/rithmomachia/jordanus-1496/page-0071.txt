@@ -1,0 +1,62 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIII</page-num>
+<header>VIII</header>
+<meta>Top right: 20 15 10</meta>
+
+<margin>54</margin>
+# ¶ Data proportione quę quadrupla minor sit in duas superpartientes diuidere.
+
+¶ Sint datæ proportionis minimi termini a et b:qui coniuncti faciant d:sitq; e maior d vno qui coniuncti faciant f:cui addatur equale d.sitq; totus f g:ducaturq; a in f g et pueniat h:r ex a b in eūdem fiat h l z l.patet igitur q̄ ex b in f g sit l z: et ex b in g sit l z. quare ex b in f sit l. sit item c triplus ad a et ex c in g fiat m n:sitq; n equalis l z. per octauam secundi erit proportio h l l z ad h tanq̄ a b ad a. r quia a b per hypothesim est minus q̄ quadruplū a:est ergo b minus q̄ triplum a.quare minus q̄ c.r quia g est equale d et n equalis g:constat m; esse equalem vel multiplicem ad d per duodecimā primi. Item qz d et e sunt contra se primi:ergo per nonam tertij f erit ad vtrunq̄ primus. et per eandē f et g simul ad d primus.et qz a est minor d r ad ipsum primus per eandē nonam: quod fit ex a in f g scz h non numerabitur per decimā eiusdem ab d.et qz d numerat l z r d nō numerat h:ergo l z per vicesimātertiam primi nō numerabit h.et quia f g maius est q̄ triplum d:ergo maius erit h q̄ n:maius ergo q̄ l z.erit ergo l z partes h.et eadem ratione qz a b est minor r primus ad f nō numerabit f quod fit ex a b in f g: scz h l z l.et qz f numerat l: ergo l nō numerabit h l z l: quare neq; h l z. r qz per nonā primi l est quātum l z bis et b.r n est equalis l z et m equalis vel maior d r maior b et h maior m n:erit h l z maior l.erit igr l partes eius.constat itaq; h l z ad h esse superpartientē th l z ad h l z etiam esse superpartientē:in quas diuisa est proportio quę est inter a et b:factumq; esse ppositū.
+
+<margin>
+<image-desc>A complex geometrical and numerical diagram illustrating Proposition 54. At the top, a broad arc connects 20 and 10 with 15 marked in the center. Below this are two nested smaller arcs: one connecting 20 and 7, another connecting 7 and 3. Below the arcs are horizontal segments labeled with letters and numbers: h (10, 7, 3), i (12), i (9, 6, 3), lz (4, 3), c (3), and b (8, 1) with intermediate segments labeled 1, 2, and 4.</image-desc>
+</margin>
+
+---
+
+<margin>55</margin>
+# ¶ Omnis multiplex superparticularis addit super similez multiplicē:superparticularem̄ a numero qui fit ex ductu numeri multiplicis in numerū partis denominatā.
+
+¶ Sit b ad a proportio multiplex superparticularis: sitq; c ad a similis multiplex. dico proportionē b ad a addere super proportionem c ad a superparticularem denominatam a numero qui fit ex ductu numeri multiplicis in numerū denominantē partis superparticularis. Sit enī d quo abundat b sup c et denominans multiplicis sit e r denominans superparticularis sit f:manifestū est ergo q̄ a erit in c secundū e: r d in a secundum f. fiat ergo g ex e in f: eritq; per vicesimātertiam primi d in c secundū g. quare b continebit c et partem denominatā ab g. continet igitur proportio b ad a proportionē superparticularem denominatā ab g numero qui fit ex ductu e denominātis multiplicis in f numerū denominantem partis superparticularis: quod est propositum.
+
+<margin>
+<image-desc>Diagram for Proposition 55 consisting of horizontal line segments. Line g is marked with 4; lines e and f are marked with 2; line c is marked with 4; line b is marked with 5; and line a is marked with 2.</image-desc>
+</margin>
+
+---
+
+<margin>56</margin>
+# ¶ Omnis multiplex superpartiēs cuius multiplicis numerus partes numerat:addit super eandem multiplicē : superparticularem̄ ab vna partium denominatā.
+
+¶ Sit pportio b ad a pportio multiplex superpartiens: sitq; d numerus denominās multiplicē scōm quē sit sumptus numerus partiū b ad a. dico pportionē b ad a addere super similē multiplicē: superparticularē denominatā ab vna illarum partiū. Sumo eni c ad a similē multiplicē. r qz b maior est c: sit f quo abundat b super c. qz eni f est partes a sumpte scōm d et denominate ab a: r a est pars c denonimata ab d.et cū ex d in a fiat c ex f in a fiet c. est ergo f pars c denominata ab a. continet igitur b ad a pproportionem superparticularem super pportione c ad a denominatā ab vna partium superpartiētis: quod erat demonstrandum.
+
+<margin>
+<image-desc>Diagram for Proposition 56 showing segments: f (2), b (8), c (6), and a (2).</image-desc>
+</margin>
+
+---
+
+<margin>57</margin>
+# ¶ Multiplicē superpartientē inuenire:que super totā multiplicē addat superparticularem:cū sint numerus partiū z numerus denonans multiplicē dati cōmensurabiles.
+
+¶ Proponit hec: q̄ si dati numeri quorū vnus denoiat multiplicē et alter est numerus partiū simul multiplicis superpartiētis: sint adinuicē cōmensurabiles inuenire multiplicē superpartiētem quę super similem multiplicē addat superparticularē. Sint pmo a numerus denominās multiplicē r b numerus partiū dati cōmensurabiles. sitq; b numerus sumptus scōm a et per p̄cedentē factum erit ppostum. Sint scdo a r b cōmensurabiles:sed b sit pars a et adiuuate p̄cedente pvicesimātertiam primi cōcludes ppositū. Sit tertio a pars b dicta ab c:sumo quēlibet numerū maiorē a: quē tamen nō numeret qui sit d:et duco c in d et pueniat e. r qz c in a facit b: erit e maior b. et qz p septimā secūdi b ad a sicut a ad d et a nō numerat d. igitur neq; b numerabit e. duco a in e r pueniat f:cui adiuncto b fiat g. dico ergo g ad e esse superpartientē que queriť. nam g cōtinet e secundū a et insup b partes e. r qz b est pars f q e multiplex sit ad c:r a in c faciat b. addet igitur g sup f multiplicē ad e denominatū ab a:numerū b eius partē:quod est ppositum. Quarto sint a r b cōmensurabiles:sed neuter alterū numerer. r sit c maximus eos numerās:numeretq; c numerū b scōm d. capio e quēcunq; numerū maiorē c: quē tamē c nō numeret:quē duco in d et pueniat f qui erit maior b:neq; ab eo numerabitur. dico ergo vt in precedenti parte imediate mōstratū est: pportionem superpartientē denominatā ab a r a partibus dictis ab f sumptis secundū numerum b:addere super multiplicem dictam ab a:superparticularē.hoc vt in precedenti parte monstratur:sicq; totum construitur propositum.
+
+<margin>
+<image-desc>Diagram for Proposition 57 with labeled segments: a (2), b (4), f (12), e (6), g (16). Below, another set: a (2), b (2), c (3), f (6), e (3), g (8) with b=4, g=40, f=36, e=6, f=6, b=4.</image-desc>
+</margin>
+
+---
+
+<margin>58</margin>
+# ¶ Multiplicē superpartientē cuius multiplicis numerus et numer⁹ partes numerās fuerint adinuicē primi: super similē multiplicē:superpartientē addere necesse est.
+
+¶ Sit a numer⁹ multiplicis et b numerus partiū superpartiētis:sintq; a r b numeri adinuicē primi dico multiplicē superpartientē denominatā ab a et partiū b: super similē multiplicē addere pproportione superpartientē.sit eni c denominās partes b manifestū est c esse maiorē b:neq; b ipm numerare duco ergo a in c r fiat d per vicesimāprimam tertij b nō numerabit d. addo igitur b super d r fiat e:qz eni e continet secundū a. et insuper partes c sumptas secundū b est pproportio e ad c multiplex superpartiens denoiata ab a et partium b. sed r pproportio d ad c est multiplex dicta ab a: et addit super d
+
+<margin>
+<image-desc>Diagram for Proposition 58 showing segments: e (11), d (8), c (4), and a, b. Ratio e to c is indicated as 2 3/4, and d to c as 2.</image-desc>
+</margin>
+
+<sig>e2</sig>
+
+<vocab>proportio, multiplex, superparticularis, superpartiens, commensurabiles, denominans, numerus partium</vocab>

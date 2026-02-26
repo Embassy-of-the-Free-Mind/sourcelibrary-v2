@@ -1,0 +1,52 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>iiii</page-num>
+
+f ad g tonus. nam utrūq; ex sesquioctaua pportiōe nascitur. ergo p sextam tertij e ad f erit semitoniū minus. est itaq; e|f|g|h tetrachordū meson per semitoniū minus τ duos tonos pcedens in genere diatonico diuisum. et q: a e proslambanomenos τ hypate meson in precedēti mōstrata sunt cōsonare diapente: et in pñti e h hypate meson τ mese diatessaron. ergo per vicesimā tertiā: proslābanomenos ad mesen cōsonat diapason. cōtinet igitur octochordū a|b|c|d|e|f|g|h consonātiam diapason. quod est totum propositum.
+
+<margin>5</margin>
+
+## ¶ Præposito octochordo: in eodem genere tetrachordum disiunctarum submittcre. et dodecachordum diapason ac diapente continere.
+
+| | | | |
+|:---|:---:|:---:|:---:|
+| Proslambanomenos | a | | a |
+| Hypate hypaton | b | | b |
+| Parhypate hypaton | c | | c |
+| Lichanos hypaton | d | | d |
+| Hypate meson | e | | e |
+| Parhypate meson | f | | f |
+| Lichanos meson | g | | g |
+| Mese | h | | h |
+| Paramese diezeugmenon | k | Trite coniunctarum | k |
+| Trite diezeugmenon | l | Paranete cōiunctarū | l |
+| Paranete diezeugmenon | m | Nete coniunctarum | m |
+| Nete diezeugmenon | n | | n |
+
+¶ Sit k l m n tetrachordū diezeugmenon quot et disiunctu dicitur. facio h ad k mesē ad paramesen diiunctarū sesquioctauā. et ad m paraneten diiunctu sesquitertiā. ad n vero neten diiunctu sesqualterā. deinde l ad m triten ad paranetē facio sesquioctauā: sic ergo mese ad paranetē diiunctarum cōcinit diatessaron et ad neten diapente. est ergo per decimātertiā tertij m ad n paranetes ad neten tonū interuallū. et l ad m trites diezeugmenō ad paranetē similiť tonus est. sed τ cū mese ad paranetē cōsonet diatessaron et l ad m sit tonus τ similiť h ad k tonus ergo per sextā tertij k ad l erit semitoniū minus. erit itaq; paramese ad triten diezeugmenō semitoniū minus: trite ad paraneten tonus: et paranete ad neten diezeugmenon psimiliter tonus. quare tetrachordū disiunctarū superiori octochordo in diatonico genere subiunctū est. Et cum precedens mōstrauerit a h esse diapason et præsens h n esse diapētē: igiť a n proslābanomenos τ nete diezeugmenō in dodecachordo a b c n cōtinent diapason ac diapente. Quod si in moliori canēdi modo: tetrachordū a chorda mese coniūctū partiri/ cōstituereq; volemus: sit id tetrachordū h k l m: que sunt mese trite synezeugmenō paranete synezeugmenō nete synezeugmenō: facioq; mesen ad neten synezeugmenon sesquitertiā. quare τ cōcinentē diatessaron et l ad m paranetē synezeugmenō ad neten tono distātem pariter et k ad l tono. erit ergo per sextā tertij h ad k meses ad triten synezeugmenon semitoniū minoris interuallū et k l τ l m duo toni τ tetrachordun synezeugmenon hoc est disiunctarū in genere diatonico diuisum.
+
+<margin>7</margin>
+
+## ¶ Tetrachordum hyperbolæon in eodem diatonico genere prædictis copulare: et in pentadecachordo: bis diapason consonātiam compleri
+
+| | | | | | |
+|:---|:---|:---:|:---:|:---|:---:|
+| A re | Proslambanomenos | a | | | a |
+| b mi | Hypate hypaton | b | | | b |
+| c faut | Parhypate hypaton | c | | | c |
+| d solre | Lichanos hypaton | d | | | d |
+| e lami | Hypate meson | e | | | e |
+| f faut | Parhypate meson | f | | | f |
+| g solreut | Lichanos meson | g | | | g |
+| a lamire | Mese | h | | | h |
+| b mi | Paramese diezeugmenō | k | b fa | Trite syn. | k |
+| c solfaut | Trite diezeugmenon | l | c solfaut | Paranete syn. | l |
+| d lafolre | Paranete diezeugmenon | m | d lafolre | Nete syn. | m |
+| e lami | Nete | n | | | n |
+| f faut | Trite hyperbolæon | o | | | o |
+| g solreut | Paranete hyperbolæon | p | | | p |
+| a lamire | Nete hyperbolæon | q | | | q |
+
+<sig>h i</sig>
+
+<vocab>tetrachordum, diapason, diapente, diatessaron, Proslambanomenos, Hypate hypaton, Hypate meson, Mese, Paramese diezeugmenon, Trite diezeugmenon, Paranete diezeugmenon, Nete diezeugmenon, Synezeugmenon, Hyperbolæon, sesquioctava, tonus, semitonium</vocab>

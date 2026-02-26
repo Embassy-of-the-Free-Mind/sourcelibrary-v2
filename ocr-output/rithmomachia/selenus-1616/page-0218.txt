@@ -1,0 +1,40 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>188</page-num>
+<header>Das Ander Buch / 9. cap:</header>
+
+auß sieben und zwantzig/ abermahl Schach : Er/ (damit Er nicht das
+Spiel verscherze) darf den König/ ins raume feld/ nicht herauß brin=
+gen/ sondern muß ihn/ in seinem Quartier verbleiben lassen/ und
+auff ein und sechßig/ wider rucken : Der Weisse/ nimt/ mit der
+Königin/ seines K. Schätzens= Soldaten/ beschützet damit/ der K.
+Rochens= Soldaten/ und ziehet Sie/ auf dessen Rochen/ welcher
+<margin>13.</margin> Ihm/ nicht kan entstehen : Dan * wan Er/ denselben auf sechß=
+zig rucket : ihn der Weisse/ mit der Königin nimt/ und Schach
+beut : Er/ nimt dieselbe/ mit dem Könige : Der Weisse/ rucket
+seines K. Soldaten / auf acht und funffzig/ machet denselben zur
+Königin / und beut Schach : Er / rucket den König/ auf zwey
+und funffzig: Der Weisse/ beut/ mit des K. Rochen/ auß zwan=
+<margin>14.</margin> zig/ Schach: * Er/ rucket den König/ auf fünf und vierzig: Der
+Weisse/ beut/ mit der newen Königin/ auß achtzehen/ abermal
+Schach : Er/ rucket den König/ auf sieben und dreyßig: Der
+Weisse/ mit der Königin/ auß sechs und dreyßig/ Schach=Mat.
+<margin>15.</margin> Rucket aber der Schwarze/ den König/ nicht auf 45.
+(n. 14.) sondern auf drey und vierzig: so beut der Weisse/ mit
+der newen Königin/ auß neun und funffzig/ Schach: Der Schwar=
+ze/ rucket den König/ auf zwey und vierzig: Der Weisse/ des k.
+Rochen/ auf achtzehen/ und beut Schach : Der Schwarze/ se=
+tzet den König/ auf neun und vierzig: Der Weisse/ beut/ mit
+der Königin/ oder des K. Rochen/ auf funffzig: oder mit des K.
+Schützen/ auß ein und zwantzig/ Schach=Mat. Ist also/ durch
+das/ (n. 12. erwehnte) wegnehmen/ des W. Rochens / die S. Kö=
+nigin/ ihrem hauffen/ (Ja wan Sie gleich / an stat des zu=
+ges/ mit dem Rochen / auf 60. n. 13. der W. K.
+-> Soldaten/ weggenommen) wenig <-
+-> nütze gewesen. &c. <-
+
+<image-desc>A decorative woodcut tailpiece featuring a central stylized mask or face flanked by symmetrical, ornate scrollwork, foliage, and floral patterns.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach, König, Königin, Rochen, Soldaten, Schach-Mat, Weisse, Schwarze, Schützen</vocab>

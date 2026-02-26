@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>256</page-num>
+<header>Das Dritte Buch / 1. cap:</header>
+
+und / an denen orten / da es nötig seyn wird / daß man ihn / auf rech-
+te bahn / in etwas hinwider bringe / fleiß anwenden wollen.
+
+Auf daß wir aber / auch / in dieser abhandelung / nicht ohne Ord-
+nung / verfahren: so haben wir dieselbe / bey dem / wan sich der
+Schwarze / gegen des Weissen Reuters anfall / auf 19. zur ge-
+genwehr stellen sol / inacht genommen / und aufgesetzet.
+
+Thut demnach der Schwartze / (nach des Damiani meynung)
+im andern zuge / entweder einen gegen-Anfall / auf des W. K.
+Soldaten / mit seines K. Reuter / auf drey und vierzig: davon
+dan dieses Capittel handlet: oder aber / beschützet seines an-
+gefallenen Soldaten: davon die folgende Capittel / biß zum en-
+de / dieses Buches / bericht geben.
+
+Die Erste Art / wird nuhn folgender gestalt / verrichtet:
+
+<margin>1. ,,</margin> Nachdem der Weisse / und der Schwartze / ihrer Königes
+Soldaten / in dero vierte felder / gesetzet: der Weisse / auf
+des S. K. Soldaten / des K. Reuter / auf neunzehen gezo-
+gen: so stellet der Schwartze / auf des W. K. Soldaten / sei-
+nes K. Reuter / auf drey und vierzig: der Weisse / nimt / des
+<margin>2. ,,</margin> S. K. Soldaten / mit seines K. Reuter: * der Schwartze /
+des W. K. Soldaten / mit des K. Reuter: der Weisse / ziehet /
+<margin>3. ,,</margin> auf denselben / die Königin / auf zwelfe: * der Schwartze /
+(auf daß Er ihn / nicht verliere) denselben / auf drey und
+vierzig: der Weisse / beut / mit des K. Reuter / von der Kö-
+nigin / Ab-Schach / setzet ihn / auf die S. Königin / auf
+sechs und vierzig und bringet dieselbe / (Sie verbleibe / in
+ihrem felde / oder stelle sich / für den König) dergestalt in
+seine gewalt.
+
+<margin>4. ,,</margin> Wan aber der Schwartze / nicht den Reuter / auf 43.
+(n. 3.) besondern die Königin / (umb sie nicht zu verlieren) auf
+des W. K. Reuter / auf zwey und funfzig / ziehet: so nimt / der
+Weisse / (umb denselben zu beschützen) mit der Königin / des S.
+K. Reuter: der Schwartze / ziehet nochmaln auf denselben / der
+K. Soldaten / auf fünf und vierzig: der Weisse / darf ihn / we-
+gen seiner Königin / nicht weg rücken / besondern ziehet / dero
+Soldaten / auf neun und zwanzig: der Schwartze / des K.
+Schützens / Soldaten / auf des W. K. Reuter / auf drey und
+vierzig: der Weisse / seines K. Schützens / Soldaten / auf sie-
+ben und zwanzig: der Schwartze / nimt des W. K. Reuter / mit
+der K. Soldaten: der Weisse / denselben / mit seiner K. Solda-
+
+<meta>catchword: ten: * der</meta>
+
+<vocab>Damiani, Reuter, Königin, Ab-Schach, Soldaten, Schachspiel, Schachnotation</vocab>

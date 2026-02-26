@@ -1,0 +1,38 @@
+<language>German</language>
+<page-type>preface</page-type>
+<meta>catchword: gerucket</meta>
+
+<image-desc>A decorative rectangular woodcut headpiece featuring elaborate scrolling foliage and two birds (possibly peacocks or pheasants) facing a central ornamental element.</image-desc>
+
+# Dem Leser.
+
+Es hat der *Author*, dieses folgen-
+den Werckes/ wan Er sich/ von wich-
+tigern Händeln/ entlediget befunden/
+zun zeiten / umb den müssiggang zu
+verhüten/ etliche Reguln/ Exempel/
+und was sonsten/ zum Schach-Spie-
+le/ (dahin Er sich / in etwas *inclinie-*
+*ret* befunden) dienlich / jedoch ohne
+jehnige ordnung/ nuhr zu seiner erinnerung / für die-
+sem/ zu papier gebracht/ und aufgezeichnet.
+Ob Er nuhn wol/ nicht vorhabens gewesen/ diese
+seine Gedancken / zu einigem *Tractat*, weniger in offe-
+nen Truck/ kommen zu lassen / besondern / des *Senecæ*
+wort/ (wie dieselben / vom *Phil: Camerario*, in *præf:*
+2. *Cent: Hor: subcil: auch angezogen*) *Quoties aliquid* «
+*scripturus es, scito, te, morum tuorum & ingenij, homini-* «
+*bus, chirographum dare:* Ihm wol darunter zu ge- «
+mühte geführet/ und bey sich reiflich erwogen: So hat
+Er doch dieselbe/ auf begehren/ etlicher seiner Verwan-
+ten/ und sonsten verständiger Personen/ denen sie/ in et-
+was gefallen/ allgemach/ in eine ordnung bringen/ und
+nach verfliessung etlicher zeit/ endlich / (auf daß Ihm
+nicht/ ein übermässiger fleiß/ welchen man / *morosam*
+*diligentiam* nennet : ebener massen/ von irgendes ei-
+nem/ wie dem *Protogeni*, vom *Apelle:* oder dem *P. Æ-*
+*milio Veronensi*, und *Th. Linacro Anglo*, vom *D. Eras:*
+*Roterod: lib: 6. Apopht: 35.* widerfahren : möchte auf-
+<sig>):(</sig> gerucket
+
+<vocab>Schach-Spiel, Seneca, Phil: Camerario, morosam diligentiam, Protogeni, Apelle, Erasmus Roterodamus</vocab>

@@ -1,0 +1,19 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, IEV</header>
+
+### Exemple.
+
+Certains ioueurs ont determiné que quiconques auroit plustost 100. auroit gaigné le ieu. si donc l’vn peut auoir les deux tables 64, & 36, lesquelles vallent 100, ou bien la mesme table de 100, sans auoir respect aux nombre des tables pourueu que la valeur y soit, iceluy aura victoire de biens.
+
+## victoire des proces.
+
+Tout ainsi que les proces d’eux mesmes ne sont que des papiers & paintures contenãs les biens : semblablement les caracteres des tables ne representent qu’escripture contenans les nombres. Qui plustost aura la valeur prefixe en certaine quantité desdicts caracteres au plaisir des ioueurs, sans auoir esgard aux quantitez des tables : il aura la victoire.
+
+### Exemple.
+
+Les ioueurs ont preordonné que qui aura plustost 100, ou autre telle valeur, en huict caracteres aura gagné le ieu. quiconques donc aura premier ses 6 tables 2, 4, 6, 8, 20, 64, ausquelles 6 tables sont contenus 100 en huict caracteres, ou autres telles tables contenans ladite somme 100 en huict marques sans auoir respect à la
+
+<meta>catchword: quan-</meta>
+
+<vocab>Rithmomachie, victoire de biens, victoire des proces, caracteres, tables, ioueurs, gaigné, huict</vocab>

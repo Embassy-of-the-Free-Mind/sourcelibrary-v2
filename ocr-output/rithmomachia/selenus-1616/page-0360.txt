@@ -1,0 +1,31 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>326</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+
+gesetzet worden / so kan Er / gegen dem Weissen / für dießmahl / doch nichts erhalten.
+
+<margin>114.</margin> Wan aber der Weisse / den König / nicht auf 2. (n. 66.) be-
+sondern auf vierzehen / versetzet: und der Schwartze / mit des K.
+Reuter / gleichwol des W. K. Soldaten / nimt / und denselben /
+auf des W. K. Schützens-Soldaten / ziehet: so rucket der Wei-
+sse / (auf daß Er / denselben / nicht verliere) der K. Soldaten /
+auf des G. K. Schützen / und Soldaten / auf neun und zwans-
+zig: Der Schwartze / nimt ihn / mit diesem Soldaten: Der
+Weisse / rucket / des K. Rochen / (umb des G. K. Reuter / gefan-
+gen zu halten ) auf viere / und ordnet dergestalt / sein Spiel /
+nicht übel.
+
+Haben also zur genüge / den Schach-Ziehern / welcher Zug /
+dieses ortes / für gut oder böse / zu achten / entdecket / und zuver-
+stehen geben: Es wird auch der Schwartze / wegen dieser an-
+gedeuteten sehr schädlichen Züge / des K. Schützen / (ehe Er /
+des W. K. Soldaten / mit seines K. Reuter /
+nimt) mit mehrem nutzen / auf 47.
+(n. 64. 65.) rucken.
+
+<image-desc>An ornamental woodcut tailpiece featuring a symmetrical design with a central grotesque mask or head, surrounded by elaborate scrolling foliage, floral motifs, and bunches of fruit suspended from the sides.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach, Weisse, Schwartze, König, Reuter, Soldaten, Schützen, Rochen</vocab>

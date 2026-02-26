@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>389</page-num>
+<header>3.cap:      Vom Schach-Spiel.</header>
+
+tzen: Der Weisse/ ziehet/ der K. Rochen / auß der gefahr : Der Schwartze / nimt / mit der Königin / des W. K. Soldaten / und gibt Schach: Der Weisse / rucket / den König / auf drey: Der Schwartze / nimt / mit des K. Reuter / der W. K. Soldaten / rucket denselben / auf des W. K. Schützen / und kan den Weissen / in wenig Zügen / mit gewalt erlegen.
+
+<margin>19.</margin>
+Wan aber der Weisse / an stat des Rochens / auf 7. (n. 12.) der K. Reuter / (auß der gefahr) auf vierzehen / rucket : so setzet / der Schwartze / die Königin / auf der W. K. Schützen-Soldaten /
+
+<margin>20.</margin>
+auf viertzig / und verthetiget / das ein und dreyfstigste feld : * Der Weisse / (umb / auf vier und funfzig / mit der Königin / außzureissen) dero Reuters-Soldaten / auf sieben und viertzig : Der Schwartze / (des Weissen vorhaben / zu verhindern) des K. Reuter / auf fünf und dreyffig : Der Weisse / die Königin / auf vier und funfzig : Der Schwartze / auf dieselbe / des K. Schützen / auf funf und viertzig : Der Weisse / muß sie / hin wider / auf fünf und funfzig / rücken : Der Schwartze / auf dieselbe / der K. Schützen / auf sechs und viertzig / und erlanget sie mit gewalt.
+
+<margin>21.</margin>
+Wan aber der Weisse / nicht den Soldaten / auf 47. (n. 20.) besondern den Rochen / auf sieben / rucket : so setzet / der Schwartze / der K. Schützen / auf zwey und sechsszig / und erlanget die S. Königin / mit gewalt.
+
+<margin>22.</margin>
+Wan aber der Schwartze / an stat des Schützens / auf 53. (n. 11.) mit der K. Rochen / der W. K. Reuter / nimt : so rucket / der Weisse / der K. Reuters-Soldaten / auf sieben und viertzig : Der Schwartze / der K. Schützen / auf drey und funfzig : Der Weisse / die Königin / auf vier und funfzig / und gibt ursache / zur verwechslung der Königinne : (dieweyl Er / sie sonsten etwa / nuhr umb einen andern Stein / verlieren müste) der Schwartze / (welcher einen Schützen / dem Weissen / abgenommen) wird sein Spiel / zum Siege / ferner einzurichten haben.
+
+<margin>23.</margin>
+Nimt aber der Weisse / nicht den S. Soldaten / mit der Königin / (n. 10.) besondern ziehet dieselbe / auf acht und dreyffig : so spielet / der Schwartze / (auf daß der Weisse / die Königin / auf ein und dreyffig / nicht errette / besondern des K. Schätze / auf sie zielen könne) dessen Reuter / auf des W. K. Soldaten / auf funf und dreyffig : Der Weisse / nimt / mit derselben / diesen S. Schützen / und deut Schach : Der Schwartze / nimt
+
+<meta>catchword: nimt</meta>
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Reuter, Schützen, Soldaten, Schach, verwechslung, Siege</vocab>

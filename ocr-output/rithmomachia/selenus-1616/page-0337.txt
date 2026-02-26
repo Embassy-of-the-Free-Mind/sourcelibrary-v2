@@ -1,0 +1,55 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>303</page-num>
+<header>5. cap: Vom Schach-Spiel.</header>
+
+besondern/ der K. Reuter/ auf zwey und zwanzig/ ziehet : so nimt
+der Schwartze / mit des K. Schützen/ des W. K. Schützens= Sol=
+daten : Der Weisse/ denselben/ mit dem Könige : Der Schwar=
+tze/ des W. K. Reuter/ mit der K. Schützen / und hat einen Solda=
+ten zum Vortheil.
+
+<margin>25.</margin> Wan aber der Weisse/ nicht der Königin/ auf 22. (n. 24.)
+besondern des K. Reuter / (umb den Paß/ der K. Schützen/
+folgendes zu eröffnen) auf viere/ ziehet: so rucket/ der Schwartze/
+des K. Reuter / auf drey und vierzig : Der Weisse/ der K. Sol=
+daten / auf ein und zwanzig : Der Schwartze/ springet mit dem
+Könige/ über seines Schützens = Soldaten / auf zwey und vierzig :
+Der Weisse/ rucket/ auf des S. K. Schützen/ der K. Schützen/
+(welches dan/ ein guter Zug/ umb/ die Schützen zu verwechseln/ oder
+nach etlichen Zügen/ alß/ mit der K. Soldaten / auf neun und zwan=
+zig: und mit dero Reuter = Soldaten/ auf ein und dreyßig: den S.
+Schützen/ dofern er etwa/ nicht bey zeiten/ weggerucket wird / zu er=
+haschen / scheinet) auf zwanzig : Der Schwartze/ (auf daß der=
+
+<margin>26.</margin> selbe/ sich nicht bewegen könne) des K. Rochen/ auf sechzig : * Der
+Weisse / (ihn zu entfreyen) den König / auf dreyzehen : Der
+Schwartze/ nimt / gedachten W. Schützen/ mit seines K. Schü=
+tzen/ und beut Schach : Der Weisse/ nimt/ denselben/ mit des K.
+Schützens = Soldaten: Der Schwartze/ (umb das Spiel zu er=
+
+<margin>27.</margin> halten) ziehet/ der K. Rochen/ auf ein und sechßzig : * Der Weisse/
+der K. Reuter / auf zwey und zwanzig : Der Schwartze/ des K.
+Reuter/ auf des W. K. Schützens = Soldaten/ auf sechs und zwan=
+zig : Der Weisse/ (ihn zu beschützen) der K. Reuter/ auf fünfe :
+Der Schwartze/ des K. Reuter / auf der W. K. Soldaten / auf
+sechs und dreyßig : Der Weisse/ denselben/ auf ihn/ auf neun und
+zwanzig : Der Schwartze/ nimt/ mit demselben/ der W. K.
+Schützens = Soldaten/ und beut Schach : Der Weisse/ rucket/ auf
+ihn/ den König/ auf zwey und zwanzig : Der Schwartze/ nimt/
+
+<margin>28.</margin> mit demselben/ des W. K. Schützens = Soldaten: * Der Weisse/
+denselben/ mit der K. Reuter : Der Schwartze/ denselben/ mit des
+
+<margin>29.</margin> K. Rochen / und beut Schach : * Der Weisse/ setzet den König/
+(umb/ der K. Soldaten/ zu beschützen) auf dreyßig : Der Schwar=
+tze/ beut/ mit der K. Schützen/ auf vier und vierzig/ Schach : Der
+Weisse/ ziehet den König/ auf acht und dreyßig : Der Schwartze/
+
+<margin>30.</margin> gibt/ mit der K. Rochen/ auß sieben und dreyßig/ Schach : * Der
+
+<sig>O q</sig>
+
+<meta>catchword: (Weisse/</meta>
+
+<vocab>Schach, Reuter, Schützen, Rochen, Soldat, Schach-Spiel, beut Schach, König</vocab>

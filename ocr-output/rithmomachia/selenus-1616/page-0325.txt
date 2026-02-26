@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>291</page-num>
+<header>4. cap: Vom Schach-Spiel. 291</header>
+
+37.. Wan aber der **Schwarze**/ den **W. Soldaten**/(n. 28.) nicht nimt/ sondern/ den **König**/ auf funfzig ziehet: so sol der **Weisse**/ mit des **K. Rochens-Soldaten**/ auß ein und vierzig/ ferner **Schach-bieten**:
+
+38. \* Der **Schwarze**/ ziehet den **König** / auf zwey und vierzig : Der **Weisse**/ nimt/ des **S. K. Schützen**/ mit des **K. Schützens-Soldaten**: Der **Schwarze**/ denselben/ mit der **Königin**: Der **Weisse**/ gibt/ mit seiner **Königin** / auß drey und dreyssig: oder / (so fern der **Schwarze**/ itztgedachten **W. Soldaten**/ mit des **K. Reuter** / genommen: oder/ der **K. Schützen**/ auf sechs und zwanzig/ gezogen) auß vier und dreyssig/ **Schach-Mat**.
+
+39. Wan aber der **Schwarze**/ den **König**/ nicht auf 42. (n. 38.) sondern/ auf neun und funfzig/ rucket: so nimt/ der **Weisse**/ des **S. K. Schützen**/ mit seines **K. Schützens-Soldaten**: Der **Schwarze**/ denselben/ mit des **K. Reuter**/ und nicht mit der **Königin**: (dan dieselbe sonsten / durch den folgenden Zug/ in haft gerichte) der **Weisse** / ziehet des **K. Rochen**/ auf drey/ und helt/ den gedachten **S. Reuter** / gefangen: Der **Schwarze**/ rucket der **K. Reuter** / (umb seinen gesellen / zu entsetzen / und der **W. Königin**/ nachzutrachten) auf drey und funfzig: Der **Weisse**/ die **Königin**/ (umb/ mit derselben/ dem **S. Könige**/ auß funfzig/ **Schach-** und auß ein und funfzig/ oder vier und vierzig: oder mit des **K. Soldaten** / oder mit der **K. Schützen** / wan Er auß sieben und zwanzig / **Schach-geboten**: auß sechs und dreyssig / **Schach-Mat** zu geben)
+
+40. auf vier und dreyssig: \* Der **Schwarze** / (dem fürzukommen) seine **Königin** / auf zwey und funfzig: Der **Weisse** / des **K. Soldaten**/ auf des **S. K. Reuter**/ auf sechs und dreyssig: Der **Schwarze** / (umb denselben zu entfreyen) den **König** / auf sechssig: Der **Weisse** / die **Königin**/ auf funfzig: Der **Schwarze** / nimt sie/ mit der **Königin**: (dan Er sonsten/ des **K. Rochen**/ gleich verlöre) Der **Weisse**/ dieselbe/ mit des **K. Rochens-Soldaten** / und ziehet ihn/ auf des **S. K. Rochen**: Der **Schwarze**/ denselben/ auf ihn / (damit er nicht zur **Königin** werde) auf acht und funf-
+
+41. zig : \* Der **Weisse** / nimt ihn / mit des **K. Schützen**: Der **Schwarze** / denselben / mit des **K. Reuter**: Der **Weisse** / rucket/ des **K. Soldaten** / auf der **S. K. Reuter** / auf vier und vierzig: Der **Schwarze**/ denselben/ (umb der **K. Schützen**/ gegen den gedachten **W. Soldaten** / zu entblössen) auf sieben und vierzig: Der **Weisse**/ beut/ mit des **K. Rochen**/ auß neun und funfzig/ **Schach**/ und ziehet ihn/ auf des **S. K. Reuter**: Der **Schwarze**/ den **König**/
+
+<sig>Go iij</sig>
+<meta>catchword: auf zwey</meta>
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Schützen, Reuter, Soldaten, Schach-Mat, Weisse, Schwarze</vocab>

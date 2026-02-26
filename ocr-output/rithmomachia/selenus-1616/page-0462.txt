@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>428</page-num>
+<header>Das Vierte Buch / 9. cap:</header>
+
+Die Currierer / (welche die besten Steine seynd / und von denen / dieses Spiel / den nahmen / erlanget) ziehen Sie / wie die Schützen / oder Alten / nach den ecken / auf einerley farbe / so weit / oder nahe / sie / unverhindert kommen können / eins / zwey / drey / oder mehr felder: Sie springen aber nicht / über andere Steine / besondern / werden / gleich den Schätzen / (davon droben / im 8. Cap: des Ersten Buches / meldung geschehen) biß an die leisten / der Tabel / gerucket.
+
+<image-desc>A framed woodcut illustration of a chess piece known as "The Man" (Der Man). The piece is depicted as a bust of a bearded man wearing a round, turban-like hat and a high-collared garment. The bust rests upon a decorative, turned pedestal base similar to a chalice stem. Below the figure, within the frame, is the German caption "Der Man."</image-desc>
+
+Die Gehähme Rähte / (welche die zu Ströpeke / die Männer / nennen) werden von ihnen / wie die Alten / und Rochen / schlims / und überzwerch / für= oder hintersich / und auf die seiten / doch / zu einem Zuge / nuhr auf ein feld / gezogen. Können also / wan Sie / auff ihrem felde / und zwerch=linie / gerucket seynd / acht felder / zugleich beschützen.
+
+Einen ebenmessigen gang / mit diesen / haben die Könige: (anzudeutend / daß die Herren / den guten Rähten / in billichen sachen / folgen / und nach dero getrewen bedencken / ihr Regiement / anstellen sollen) dan sie nicht springen / besondern ins nechste feld / nuhr gezogen werden.
+
+Die Königinne / springen / zum ersten Zuge / für sich / in ihr drittes feld: nach diesem vollbrachten Zuge / oder Sprunge / (welchen Sie / den Freuden=Sprung / nennen) haben Sie folgendes der Currierer gang: und werden zur zeit / nuhr ein feld / für=oder hintersich / gerucket: Verbleibet also die Weisse / stäts auf den Weissen= und die Schwartze / auf den Schwartzen / feldern.
+
+<meta>Catchword: Die</meta>
+
+<vocab>Currierer, Schützen, Alten, Schätzen, Tabel, Der Man, Gehähme Rähte, Ströpeke, Männer, Rochen, Könige, Königinne, Freuden-Sprung, Courier Chess</vocab>

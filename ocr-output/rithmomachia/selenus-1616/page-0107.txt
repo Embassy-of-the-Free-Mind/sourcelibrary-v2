@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>77</page-num>
+<header>2. cap: Vom Schach-Spiel.</header>
+<meta>catchword: Das</meta>
+
+angreiffen noch thun: es sey dan der Richter ratt dabey / cc
+und dovon / so ist es notürftig / das sye vollkomend seyen / cc
+in der Kunst / und in den sitten: und daß erzeiget der gang cc
+und die bewegung die sy haben / so sy von den Rittern / cc
+auf das dritte Veld gand: wan in sechsen / das erst fol= cc
+kummen zahl ist / volbringen sy den gangk und die be= cc
+->wegung folkommen: ist darumb / daß<- cc
+->sich das ende gefugt an dem<- cc
+->anfang. &c.<- cc
+
+---
+
+<image-desc>A decorative woodcut tailpiece ornament featuring a central human mask or face surrounded by symmetrical, elaborate scrollwork, stylized foliage, and hanging ribbons.</image-desc>
+
+<vocab>Schach-Spiel, Richter, Rittern, Veld, folkommen</vocab>

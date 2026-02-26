@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>459</page-num>
+<header>Vom Zahl-Kampf</header>
+<meta>catchword: Partes</meta>
+
+<image-desc>The page features two sets of geometrical diagrams. The top set consists of three rows: the first two rows each contain four triangles with numbers inside (Row 1: 12, 30, 56, 90; Row 2: 16, 36, 64, 100). The third row contains four squares with numbers (28, 66, 120, 190) that are the sums of the triangles directly above them. The second diagram set consists of four squares with numbers (49, 121, 225, 361) with smaller numbers (7, 11, 15, 19) printed above each square.</image-desc>
+
+Die Zahle/ der vier ersten schwartzen/ vierecketen Steinen/ findet man / auß den Summen/ der zusamen gerechneten Zahlen/ welche/ auf die acht schwartze / dreyeckete Steine / gezeichnet sind: Dan 12 und 16, machen 28: 30 und 36, 66: 56 und 64, 120: 90 und 100, 190.
+
+---
+
+Der übrigen vier schwartzen vierecketen Steinen Zahle / suchet man ebenmessig / gleich wie der letzten vier weissen vierecke= ten Steinen / nuhr daß man nicht von der 5, sondern von 7, (dahero / die in der verzeichnuß / der gedachten vier letzten weissen / vierecketen Steinen / außgelassene Zahle / anhero ge= zeichnet seynd) anhebet / folgender gestalt: 7. 11. 15. 19. und wer= den / 9. 13. 17. ( welche zu den gedachten dreyen letzten Weissen vierecketen Steinen / gebrauchet worden ) außgelassen : Diese Zahle nuhn / in sich selber vermehret/ geben die gesuchte Zahle/ als: nemlich / 49. 121. 225. 361.
+(Buxer: fol: 14. a.)
+
+<sig>MMm</sig>
+
+<vocab>Zahl-Kampf, schwartze viereckete Steine, dreyeckete Steine, Summen, Buxer, vermehret</vocab>

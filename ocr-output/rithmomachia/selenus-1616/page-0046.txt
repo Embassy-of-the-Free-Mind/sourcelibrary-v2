@@ -1,0 +1,47 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<header>Das Erste Buch / 1. cap:</header>
+
+,, Et dopo questo, entrati in molti & in diversi ragionamen-
+,, ti, à Filocopo, andò l' occhio ad un canto del luogo, dove dimora-
+,, vano, dove egli vide appicciato uno <term>scacchiero</term>, nobilissimo &
+,, ricco, il quale veduto, disse. Sire, dilettatevi, di giuocare à
+,, <term>scacchi</term>, ch' io vi veggio si bello <term>scacchiero</term>? Rispose Sadoc, si
+,, molto, & tu sai giuocare? A cui Filocopo rispose, alquanto
+,, ne fo: disse al hora Sadoc: Hor, giuochiamo insieme, infino
+,, à tanto, che questo caldo passi, & che tu possa, alla città tor-
+,, nare. Ciò mi piace molto, signor mio, rispose Filocopo. Fe-
+,, ce adunque Sadoc, in una fresca loggia, distendere Tappe-
+,, ti, & venir lo <term>Scacchiero</term>, & l' uno dall' una parte, & l' al-
+,, tro dall' altra, s' assettarono. Ordinaronsi da costoro gli <term>scac-</term>
+,, <term>chi</term>, & cominciossi il <term>giuoco</term>, il quale, accioche puerile non pares-
+,, se, da ciascuna parte, gran quantità di bisanti, si posero, pre-
+,, sti per merito del vincitore. A giuocare adunque costoro, l' u-
+,, no, per guadagnare i posti bisanti, si pose l' altro, per perder
+,, quelli, & per acquistare amista. Filocopo giuocando, conob-
+,, be, se più saper del <term>giuoco</term>, ch' il Castellano: Ristrinse adunque
+,, Filocopo il <term>Re</term>, del Castellano, nella sua sedia, con l' uno de suoi <term>Roc-</term>
+,, <term>chi</term>, & col <term>Cavaliero</term>, havendo il <term>Re</term>, alla sinistra sua, l' uno de
+,, gli <term>Alfieri</term>: Il Castellano assediò quello, di Filocopo, con molti
+,, <term>scacchi</term>, & solamente un punto, per sua salute, gli rimase, nel
+,, salto del suo <term>Rocco</term>. Mà Filocopo, à cui giuocar conveni-
+,, va, dove mover deveva il <term>Cavaliero</term> suo secondo, per dare
+,, <term>scacco matto</term> al <term>Re</term>, & conoscendo bene, mosse il suo <term>Roc-</term>
+,, <term>co</term>, & nel punto, rimaso per salute, al suo <term>Re</term>, lo pose. Il Ca-
+,, stellano, lieto, cominciò à ridere, veggiendo, che <term>matto</term> era Fi-
+,, locopo, dove Filocopo haria lui potuto <term>mattare</term>, & dando-
+,, gli con una <term>pedona</term>, pingente <term>scacco</term>, quivi il <term>mattò</term>, à se ti-
+,, rando poi li bisanti, & ridendo disse: Giovane, tu non sai del
+,, <term>giuoco</term>, avenga che ben si fosse aveduto di ciò, che Filocopo ha-
+,, veva fatto, ma per cupidigia de bisanti, l' haveva soffer-
+,, to, infingendosi di non avedersene. A cui Filocopo rispose;
+,, Signor mio, cosi apparono i folli. Acconciossi il secondo <term>giuo-</term>
+,, <term>co</term>, & la quantità dè bisanti, si raddoppiò, da ciascuna parte.
+,, Il Castellano, giuocò sagacemente, & Filocopo, non meno. Il
+,, Castellano niun buon colpo moveva, che non dicesse: Giovane,
+,, meglio ti era, il tuo Falcon, lasciare andare, che quà seguirlo.
+
+<meta>catchword: Filoco-</meta>
+
+<vocab>Filocopo, Sadoc, scacchiero, scacchi, bisanti, Re, Rocchi, Cavaliero, Alfieri, pedona, scacco matto, Falcon</vocab>

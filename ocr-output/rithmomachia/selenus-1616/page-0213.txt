@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>183</page-num>
+<header>Vom Schach-Spiel.</header>
+<margin>9.cap:</margin>
+
+<image-desc>A rectangular decorative woodcut headpiece consisting of elaborate scrollwork and foliage, featuring several stylized human masks or faces: one in the center and others at the corners.</image-desc>
+
+## Das Neunte Capittel.
+
+### Von der Andern / und dritten Art / wie ein Spiel / weyter darauf zu volführen.
+
+<image-desc>A large decorative drop-cap letter 'D' embellished with intricate floral patterns and scrollwork.</image-desc>
+
+Die Andere Art ist: wan der Schwartze / nach voriger anordnung / die im Achten Capittel / geschehen / seine Züge / im dritten Zuge / verendert / und an stat der Königin auf 45. dero Schützens-Soldaten / auf sechs und vierzig / rucket: Ziehet nuhn hierauf der Weisse / im vierten Zuge / seiner K. Schützens-Soldaten / auf zwey und zwanzig: so thut / der Schwartze / mit der K. Soldaten / auß sieben und dreyssig / einen einfall: Diesem nuhn vorzubauen / sol der Weisse / so fern Er / sein Spiel / im anfang / in etwas in acht nehmen wil / nicht der K. Schützens-besondern des K. Schützens-Soldaten / auf sieben und zwantzig / rucken / und des Schwartzen / quartier anfallen: Hierauß entstehet die Dritte Art / das Spiel / weyter außzuführen / und zwar / wie folget:
+
+<margin>1.</margin> Nachdem der Weisse / des K. Soldaten / auf 28: Der Schwartze / des K. Soldaten / auf 36: Der Weisse / des K. Schützen / auf 30: Der Schwartze / des K. Schützen / auf 38: Der Weisse / die Königin / auf 12: Der Schwartze / nicht der K. Soldaten / auf 45. (wie im dritten Zuge / des 8. Cap: gesetzet) besondern dero Schützens-Soldaten / auf sechs und vierzig: Der Weisse / auch nicht / der K. Schützens-Soldaten / auf 22. (wie bey der Andern Art / zum anfange / dieses Capittels / erwehnet) gezogen: besondern / mit des K. Schützens-Soldaten / auß sieben und zwantzig / den anfahl gethan:
+
+<margin>2. *</margin> alßdan nimt / der Schwartze / denselben / mit seines K. Soldaten: Der Weisse / ziehet / des K. Reuter / (umb / das funf und zwantzigste feld / in acht zu nehmen) auf neunzehen: Der Schwartze / des K. Schützen / (auf eine vorsorge) auf sieben und vierzig: Der Weisse / der K. Soldaten / (auf daß / ihr Schütze / des S. K. Soldaten / folgendes wegnehme) auf neun und zwantzig: Der Schwartze / (ihn zu berthetigen) des K. Reuters-Soldaten / auf vier und dreyssig: Der Weisse / (des gegentheiles anschläge zu verstören) des K. Rochens-Soldaten
+
+<sig>A a</sig>
+<meta>catchword: Solda-</meta>
+
+<vocab>Schach, Capittel, Weisse, Schwartze, Königin, Schützens-Soldaten, Reuter, Rochens-Soldaten, Zug, Feld</vocab>

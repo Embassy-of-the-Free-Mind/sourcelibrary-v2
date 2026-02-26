@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>33</page-num>
+<header>DES PHILOSOPHES.</header>
+<warning>Page has heavy foxing and speckling, with some bleed-through from the verso side.</warning>
+
+| | |
+|:---|:---|
+| Les sept | 1218. |
+| Les huict | 1349 |
+| Les neuf enseignes valent | 1566. |
+| Les dix font | 1740. hommes. |
+
+---
+
+| | |
+|:---|:---|
+| Mais si l'Empereur des Chrestiens pert deux de ses enseignes, Il perdra | 260 Chrestiens. |
+| Si trois enseignes | 390 |
+| Si quatre | 520 |
+| Si cinq | 650 |
+| Si six enseignes, perte de | 780 hommes. |
+| Si sept, de | 910 |
+| Si huict, de | 1040 |
+| Si neuf, de | 1170 |
+
+Si dix enseignes, Il perdra toute son armée qui monte à 1300 combat-tans sans les deux capitaines & 10 port'ensei-gnes.
+
+->Fin de la derniere des simples victoires.<-
+
+## Des victoires propres.
+
+*Victoire propre est l'ordonnance & disposition de divers nombres au camp de l'adversaire, constituant en soy certaine proportion: & est dicte à bon droict propre victoire, car tout*
+
+<sig>B</sig>
+
+<vocab>enseignes, Chrestiens, Victoire propre, ordonnance, proportion, combatans</vocab>

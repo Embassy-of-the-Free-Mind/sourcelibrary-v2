@@ -1,0 +1,30 @@
+<warning>The image is heavily stained and appears to be a mirrored capture or bleed-through from the reverse side of the page. The transcription below reflects the text in its intended readable orientation.</warning>
+
+<language>English</language>
+<page-type>preface</page-type>
+<meta>mirrored text; possible bleed-through from verso</meta>
+
+# The bookes ver-
+# dict.
+
+VVanting I have bene long truly,
+In English tongue many a day,
+I do confesse it very truly,
+Yet though I came late on way,
+And playd my part in Latine verse,
+Making men mery with my rehearse,
+I care not now I do professe,
+Unto the world in many a guyse,
+I shew my selfe in English dresse,
+VVho list my name to advertise,
+And I am sure it is no sinne,
+To speake in English to my kinne.
+
+---
+
+->CATO<-
+
+> Interpone tuis interdum gaudia curis,
+> Ut possis animo quemvis sufferre laborem.
+
+<vocab>The bookes verdict, English tongue, Latine verse, Cato, Disticha Catonis, translation</vocab>

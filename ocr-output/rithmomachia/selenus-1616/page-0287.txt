@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>title-page</page-type>
+<page-num>7</page-num>
+<image-desc>An ornate architectural woodcut border. At the top, two putti flank a square chessboard. On the left side of the frame, a standing figure of an elderly bearded man in long robes holds a book, positioned on a pedestal labeled "Xerxes Philomater." On the right side, a figure in royal oriental-style attire and a turban stands on a pedestal labeled "Amilinus Evilmerodach." At the bottom, a decorative cartouche contains the Latin publication details.</image-desc>
+
+### Das
+# Dritte Buch
+## der Beschreibung / des Schach-Spieles.
+
+->Xerxes Philomater.<-
+->Amilinus Evilmerodach.<-
+
+->Lipsiæ apud Henningum<-
+->Grosium Juniorem.<-
+
+<vocab>Schach-Spiel, Chess, Xerxes Philomater, Amilinus Evilmerodach, Lipsiæ, Henningum Grosium Juniorem</vocab>

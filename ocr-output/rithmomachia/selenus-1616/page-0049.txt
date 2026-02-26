@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>19</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap:</margin>
+ten stehen. Der Wacht-Meister / belagerte hingegen / des cc
+Philocopi Spiel-König / mit vielen Schach-Steinen / und hat- cc
+te demselben / nuhr ein einziges Feld / (wan Er nemlich / nach cc
+seinem Rochen wertz / hinspringen würde) sich zu erretten / cc
+noch übrig gelassen. Aber Philocopus, an welchem der Zug war / cc
+setzete / an stat des andern Reuters / damit Er hette Schach- cc
+Mat geben können / unangesechen Ers wol sahe / seinen Ro- cc
+chen / auf dasselbe feld / welches seinem Könige / zu dessen ent- cc
+setzung / noch übrig / und ledig war. Der Wacht-Meister / cc
+hub für freuden an / zu lachen / wegen Er sahe / daß der Philoco- cc
+pus, welcher ihn / hette matten können / Schach-Mat war : rü- cc
+ckete einen Soldaten oder Bawren für sich : gab ihm Schach- cc
+Mat / mit demselben / und zog das geld / fein sauberlich nach cc
+sich / mit lachendem munde / sagend : Jüngling / du verstehest cc
+das Spiel nicht : unangesehen / daß Er ganz wol wahrgenom- cc
+men / wie der Philocopus seine züge / angestellet hatte / aber we- cc
+gen grosser begierd / nach dem aufgesetzten gelde / könte Er cc
+sich nicht / so bald besinnen / sich endlich stellend / alß wan Ers cc
+nicht innen worde : Deme Philocopus, nuhn antwortete : Mein cc
+Herr / also müssen die Narren / in die Schule geführet werden / cc
+und das lern-geld geben. Nuhn das Ander Spiel / ward hin- cc
+wider eingerichtet / und der vorige aufsatz / auf beeden seiten / cc
+gedoppelt : der Wacht-Meister / spielete sehr fürsichtig und cc
+scharf : der Philocopus, nicht geringer : Es that auch der Wacht- cc
+Meister / keinen Zug / der gut wahr / daß Er nicht zugleich cc
+sagete : Guter Gesel / es wehre dir besser gewesen / dei- cc
+nen Falcken nuhr wegflichen zu lassen / dan ihn / biß hieher cc
+zu verfolgen. Philocopus schwieg stille / stellete sich an / cc
+als wan ihm / an dem verlust des geldes / sehr wehe gesche- cc
+he / und könte dem Wacht-Meister / nachdem Er das Spiel / cc
+bey nahe zum ende gebracht / gar leichtlich Schach-Mat ge- cc
+ben : alleine / ob Ers zwar / mit einem hand-gebärde / daß Ers cc
+wol gesehen hette / welcher gestalt Er / den Schach-Mat / leicht- cc
+lich hette ins werck richten können / zu verstehen gab / machete cc
+Ers doch / mit dem außgange des Spieles / dergestalt / daß keiner cc
+gewan / besondern / die Schach-Steine / zugleich aufgehobe wür- cc
+den. Es merckete / der Wacht-Meister / sehr wol / die Höflichkeit cc
+
+<sig>C iij</sig>
+<meta>catchword: des Phi-</meta>
+
+<vocab>Schach-Spiel, Philocopus, Wacht-Meister, Schach-Mat, Rochen, Reuter, Bawre, Falcke, Schach-Steine, lern-geld</vocab>

@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>293</page-num>
+<header>4.cap: Vom Schach-Spiel.</header>
+
+Rochen/ des S. K. Reuter: **Der Schwartze/** Ziehet/ auf densel-
+ben / und seinen Soldaten/ den König/ auf ein und funffzig: **Der**
+**Weisse/** des K. Rochen/ auf ein und sechszig: **Der Schwartze/**
+nimt/ dessen Soldaten/ mit dem Könige: **Der Weisse/** rucket/ der
+K. Schützen/ auf sieben und zwantzig: dero Reuter/ auf zwey und
+zwantzig: und folgendes dero Rochen/ auch ins raume feld: wodurch
+Er/ **des Schwartzen König/** (weyl Er demselben/ mit einem Ro-
+chen/ Reuter und Soldaten/ überlegen: dessen Königin-Schützen/
+mit seines K. Rochen/ gefangen helt: und sein Schütze/ von dessen
+Schützen/ nicht kan angefochten werden ) leichtlich erleget.
+
+<margin>45.</margin> Wan aber/ **der Schwartze/** nicht die Königin/ auf 52. (n. 40.)
+besondern den König/ auf sechszig/ rucket: so ziehet/ **der Weiss-**
+**se/** des K. Soldaten/ auf des S. K. Reuter/ auf sechs und
+dreyssig: **Der Schwartze/** (so fern Er/ die Königin/ umb des
+W. K. Soldaten/ gefangen zu halten/ nicht wil/ auf 52. rucken:
+auf welchen fahl/ die Züge/ wie d. n. 40. weiter angeordnet wer-
+den) nimt/ mit demselben/ des W. K. Schützen: **Der Weisse/**
+beut/ mit der Königin/ auß drey und dreyssig/ **Schach:** **Der**
+**Schwartze/** spielet den König/ auf zwey und funffzig: **Der Weiss-**
+**se/** gibt/ mit der Königin/ (weyl ihres K. Roche/ sie auß drey/ ver-
+hütet) auß ein und funffzig/ **Schach-Mat.**
+
+<margin>46.</margin> Wan aber **der Schwartze/** den Soldaten/ nicht auf 37.
+(n. 25.) besondern/ auf die W. Königin/ auf fünf und viertzig/
+ziehet: so gibt/ **der Weisse/** mit des K. Rochens-Soldaten/
+auß drey und dreyssig/ **Schach:** **Der Schwartze/** muß den König/
+auf ein und viertzig/ rucken: **Der Weisse/** setzet/ der K. Soldaten/
+auf neun und zwantzig/ und gibt/ von dero Schützen/ **Ab-Schach:**
+**Der Schwartze/** muß/ den König/ mit seines Reuters-Soldaten/
+auf vier und dreyssig/ bedecken: **der Weisse/** nimt/ mit der Köni-
+gin/ des S. K. Rochen: **Der Schwartze/** rucket/ des K. Reuter/
+(umb denselben zuerretten/ und die W. Königin/ einzusperren) auf
+drey und viertzig: **Der Weisse/** auf denselben / des K. Sol-
+<margin>47.</margin> daten/ auf sechs und dreyssig: * **Der Schwartze/** nimt/ mit
+demselben/ des W. K. Rochens-Soldaten: **Der Weisse/** den-
+selben / mit des K. Rochen / und beut **Schach:** **Der Schwartze/**
+nimt denselben / mit dem Könige: **Der Weisse/** des S. K. Rochens-
+Soldaten / mit der Königin / und beut **Schach:** **Der Schwartze/**
+<margin>48.</margin> bedecket/ den König / mit seine Schützen / auf ein und viertzig: * **Der**
+**Weisse/** rucket die Königin / auf ein und funffzig / und gibt **Schach:**
+
+<meta>catchword: * Der</meta>
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Soldaten, Schützen, Schach-Mat, Ab-Schach</vocab>

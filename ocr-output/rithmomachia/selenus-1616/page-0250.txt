@@ -1,0 +1,9 @@
+<language>None</language>
+<page-type>illustration</page-type>
+<warning>The page contains no legible text. The visible image is a faint offset or bleed-through from a facing page, appearing as a mirror image.</warning>
+
+<image-desc>
+A faint, monochromatic ghost image (likely an offset from a facing page or bleed-through) depicting a scene in an interior. A man is seated in a high-backed armchair with turned legs on the left side of the frame, facing toward the right. He is positioned at a table upon which a chessboard is visible. In the background, another figure stands behind the table, appearing to observe the game. The style is characteristic of 17th-century European engravings.
+</image-desc>
+
+<vocab>chess, game, armchair, interior scene, engraving, offset</vocab>

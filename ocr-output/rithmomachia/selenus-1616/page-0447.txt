@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>413</page-num>
+<header>6. cap: Vom Schach-Spiel.</header>
+<meta>catchword: Das</meta>
+
+den angrif thun muß) der W. K. Soldaten / nicht ehe und zuvor /
+dan Ers ihm erlaubet / darf wegnehmen.
+
+Hiemit seynd nuhn / die eilf Exempel / des Schach=Spieles /
+welche / der Damianus, in die Acht Capittel / seines Büchleins /
+eingetheilet / zum ende gebracht. Es ist aber / wegen des gerin=
+gen Vortheiles / welchen man / auß denselben / schepfen kan / viel
+besser / dieselben nuhr gantz zu unterlassen / alß mit denselben / die
+zeit / ohne nutzen / zu verderben.
+
+->n. 1. 2. 5. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n. 6. 7.<-
+
+<image-desc>Two side-by-side square grids representing chess boards with piece positions. The board on the left is labeled "n. 1. 2. 5." and the board on the right is labeled "n. 6. 7.". The squares contain abbreviations for chess pieces: SR (Schwarzer Roch/Rook), SS (Schwarzer Soldat/Pawn), SK (Schwarzer König/King), WR (Weißer Roch/Rook), WS (Weißer Soldat/Pawn), and WK (Weißer König/King). The left diagram also includes a square marked with the number "37".</image-desc>
+
+<vocab>Schach, Damianus, Exempel, Capittel, Vortheil, Soldaten, König</vocab>

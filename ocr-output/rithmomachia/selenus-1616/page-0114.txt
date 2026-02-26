@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>84</page-num>
+<header>Das erste Buch / 9 cap:</header>
+<meta>catchword: Das</meta>
+
+>> alß der zu der gelincken hand / und der ander für den König /
+>> alß der zu der gerechten hand / recht alß sie / den König / und die
+>> Künigin / umbgeben / alß ein Kron / so sy begend zu den striten /
+>> und das feld suchen / und an ein andren begegnend / so offenbart
+>> sich in ihn volkummenlich / die Ritterliche kraft: Wan der Rit-
+>> ter / mag nicht erkent werden / wie er fecht / eß sey dan / das Er
+>> mit fechten / sein kraft erzeig. Die starcken unerfarn Ritter /
+>> haben deß gewont: Zu dem Ersten / so sie das Harnasch ent-
+>> pfangen / das sie erliden und blaich werden / und das in das
+>> blut zu der nasen / außgant: das Zeichen / wirt mer zugesaget
+>> der frumkait / dan dem laster: Wan es ist geleublich / daß der /
+>> der zu dem ersten geschlagen wird mit forcht / so kompt zu dem
+>> strit / daß Er Retterlichen stritt / noch das Er den ruck kere /
+>> so Er dar zu kompt / da die forcht des Todes / die von natur vor
+>> geschehen ist / nicht wird gesehen gegenwirtecklich anligen / sun-
+>> der daß er stercklichen mit stritten / wider schlecht / das die na-
+>> tur zu dem ersten Hant der Zornecklichen kraft / gehandtrei-
+>> chet: Wan der ist eines grossen herzen und gemühtes / so der
+>> gedinckt einer grosen verdamnus / daß der nit wichet / sunder
+>> daß er sich dar iber erzeiget / und der gibt festencklichen zu fech-
+>> ten / mit den fynden: und das erzeigen die Ritter / so sy zu
+>> dem ersten nicht mügen gan / nur auf drey Feld / und by den
+>> enden des rychs : aber sy / des rychs end und gegend auß-
+>> gand / mit geheißner und empfangener kraft / so springent sy /
+>> biß zu acht feldern / und schlachen nieder / die synd die sie fin-
+>> den: Also ist von einem yetlichen menschen / der von im die-
+>> mütiger ding empfindet / so der außgeleyt wird / mit den
+-> Tugenden / so er klerlicher erschinet: wan wer <-
+-> sich diemütiget / der wird erhöhet. <term>2c.</term> <-
+
+<image-desc>A decorative woodcut ornament or fleur-de-lis style vignette featuring symmetrical scrollwork, foliage, and a central ornamental mask or grotesque face.</image-desc>
+
+<vocab>König, Künigin, Ritterliche kraft, Harnasch, frumkait, forcht des Todes, verdamnus, diemütiger, Tugenden</vocab>

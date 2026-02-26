@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>196</page-num>
+<header>Das Ander Buch / 19. cap:</header>
+<meta>catchword: und zwans; signature: iii d k</meta>
+
+zu verlieren) auf drey: **Der Schwarze** / der K. Reuter / (zu be-
+ſchuͤtzen des K. Soldaten) auf ſechs und viertzig: **Der Weiſſe** / des
+K. Rochens = Soldaten / auf des S. K. Reuter / auf ſiebenzehen:
+**Der Schwarze** / denſelben / auf drey und viertzig: **Der Weiſſe** /
+der K. Reuter / auf zwey und zwantzig: **Der Schwarze** / der
+K. Soldaten / auf des W. K. Schuͤtzen und Soldaten / auf ſieben und
+dreyſſig: **Der Weiſſe** / den Schuͤtzen / (umb / der S. K. Reuter /
+gefangen zu halten) auf neun und dreyſſig: **Der Schwarze** /
+(denſelben zu entſetzen) der K. Schuͤtzen / auf drey und funffzig :
+**Der Weiſſe** / nimt obgedachten / der S. K. Reuter / mit ſeines
+K. Schuͤtzen: **Der Schwarze** / denſelben / mit der K. Reuters =
+Soldaten: **Der Weiſſe** : des S. K. Soldaten / mit des K. Reu-
+ter : (welcher / auf der S. K. Schuͤtzen / zugleich ziehet) **Der
+Schwarze** / des W. K. Soldaten / mit der K. Soldaten: **Der Weiſ-
+ſe** / (auf daß / dieſer S. Soldaten / nicht koͤnne frey geſpielet werden)
+ſetzet des K. Reuter / auf des S. K. Reuter / auf ſechs und zwantzig /
+und gewinnet alſo denſelben Soldaten / und das ganze Spiel: Ver-
+richtet aber / der **Schwarze** / andere zuͤge / ſo muß Er / ob gleich
+ſein Spiel / mit einem ziemlichen Vortheil / verſehen / ſich nichts
+deſto minder / wol inacht haben.
+
+<margin>3.</margin> Wan aber der **Weiſſe** / nicht des K. Schuͤtzen / auf 30. (n. 2.) <margin>.r.</margin>
+beſondern / der K. Schuͤtzens = Soldaten / auf zwey und zwanzig /
+ziehet : ſo ruͤcket der **Schwarze** / ebenmeſſig / auf des W. K. <margin>.s.</margin>
+Soldaten / ſeines K. Reuter / auf drey und viertzig: **Der Weiſſe** /
+(umb denſelben zu beſchuͤtzen) die Koͤnigin / auf vierzehen: <margin>4.</margin> **Der
+Schwarze** / ſeines K. Schuͤtzen / auf acht und dreyſſig: * **Der
+Weiſſe** / ſeines K. Reuter / auf des S. K. Soldaten / auf neun-
+<margin>5.</margin> zehen: * **Der Schwarze** / (ihn zu verthetigen) der K. Reuter /
+auf ſechs und viertzig: **Der Weiſſe** / auf denſelben / ſeines K. Schuͤ-
+tzen / auf neun und dreyſſig.
+
+<margin>6.</margin> Wan aber der **Schwarze** / nicht den Reuter / auf 46. (n. 5.)
+beſondern der K. Soldaten / auf funf und viertzig / ziehet: ſo ſpie-
+let der **Weiſſe** / auf des S. K. Schuͤtzen / ſeiner K. Soldaten / auf
+neun und zwanzig : **der Schwarze** / nimt ihn / welches dan ſein
+beſtes fuͤrnehmen iſt / ſo Er thun kan) mit ſeines K. Soldaten :
+**Der Weiſſe** / denſelben / mit der K. Schuͤtzens = Soldaten / wel-
+chen Er / hiedurch / anderweit / auf des S. K. Schuͤtzen / ziehet :
+**der Schwarze** / denſelben / auf ein und dreyſſig / und beut **Schach** :
+**Der Weiſſe** / bedecket den Koͤnig / mit der K. Reuter / auf zwey
+
+<vocab>Schach, Schachspiel, Reuter, Soldaten, Schützen, Rochen, König, Königin, Weiſſe, Schwarze</vocab>

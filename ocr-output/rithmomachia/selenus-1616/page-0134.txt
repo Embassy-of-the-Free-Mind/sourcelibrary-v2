@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>104</page-num>
+<header>Das Erste Buch/ 10.cap:</header>
+
+> » dingen/der in not ist/zu ihrem tun und leben / und zu irer aller
+> » parat und stampony. Und darumb hat der Meister / der diß
+> » Spiel funden hat/die gemeinen leuthe/gesetzt/für die Edlen/
+> » das Sie sie nit verschmechten oder verdrückten. Zu dem andern
+> » mahl/setzet man die gemein/für die edelln darumb/daß sie leere
+> » felder/für in haben/das bedeutet/das sie ihren Handwercken/
+> » ob sollent lieggen/und arbeiten/und den edelln solten sie lassen/
+> » den Rat: wan Sye wissent/waß der land recht sint/domit sich
+> » der gemein Man/nicht mag beschirmen/oder bekümmern/und
+> » kan sein nicht/und davon sollent sie/die hohe Rähte/empfelen
+> » den Edelln/und sollent nit sein vorsprechen/nuhr was einem je-
+> » den/zu seiner Arbeit und Handwerck gehöret : und zwingen nicht
+> » freffelich/davon werdent dick verdruckt und verderbet/die weiß-
+> » heit/und geschicht / daß Burgen / Stätte und Land / verloren
+> » werden. Zu dem dritten mahl/wan das gestein gesetzet wirt/
+> » auf das prett/so findet man dannoch/alß viel leerer Veld/alß
+> » voller und besetzter : das beteut/das ein Herr/der ein land hat/
+> » der sol betrachten/alß viel er leuthe hat/daß er alß viel stäte ha-
+> » be/und bürge/darein sie sich enthalten mögent / auch für den-
+> » selben steten/bürgen und dörfern/so viel feldes lasse / das man
+> » im baue müge haben/domit sich mügen die began/welche da-
+> » rin seyn : und das er sy beschirmen möge. Dan wer Herren
+> » nahmen hat/on herschaft/das ist ein Adel on nutz : auch ist Ar-
+> » muth den leuthe viel verworfner/und herter ze tragen : wan
+> » einem gemeinen Armen/schiltet/niemand/aber einen
+> » Edeln Armen schiltet man : eß sey dan/daß
+> » sein Armut / Zucht und Tu-
+> » gend decke. etc.
+
+<image-desc>A decorative woodcut tailpiece ornament featuring a central grotesque mask or face surrounded by elaborate scrolling acanthus leaves, cornucopias, and stylized architectural flourishes.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Meister, Spiel, gemeinen leuthe, Edlen, Handwercken, Rähte, Burgen, Stätte, gestein, prett, Armuth</vocab>

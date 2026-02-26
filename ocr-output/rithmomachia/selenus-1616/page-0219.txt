@@ -1,0 +1,132 @@
+<language>German</language>
+<page-type>diagram</page-type>
+<columns>2</columns>
+<page-num>189</page-num>
+
+<margin>
+9. cap:
+Vom Schach-Spiel.
+</margin>
+
+### n. 2. 3.
+
+<image-desc>
+An 8 by 8 grid diagram representing a chess-like board with the following pieces and positions:
+- Row 1: SR, SR, SS, S&, SK, [blank], SR, SR
+- Row 2: SS, SS, [blank], SS, [blank], SS, SS, SS
+- Row 3: [blank], [blank], SS, [blank], [blank], [blank], [blank], [blank]
+- Row 4: [blank], [blank], SS, [blank], SS, [blank], [blank], [blank]
+- Row 5: [blank], [blank], WS, [blank], WS, WS, [blank], [blank]
+- Row 7: WS, WS, WS, WS, W&, [blank], WS, WS
+- Row 8: WR, WR, WS, [blank], WK, [blank], WR, WR
+</image-desc>
+
+---
+
+### n. 6.
+
+<image-desc>
+An 8 by 8 grid diagram with pieces and numerical annotations:
+- Row 1: SR, SR, SS, [blank], SK, [blank], [blank], SR
+- Row 2: SS, SS, [blank], SS, [blank], SS, SS, SS
+- Row 3: [blank], [blank], SS, [blank], SR, [blank], [blank], [blank]
+- Row 4: [blank], [blank], [blank], [blank], [blank], [blank], 33, [blank]
+- Row 5: [blank], [blank], WS, WS, WS, [blank], [blank], S&
+- Row 6: [blank], [blank], WR, [blank], [blank], [blank], WR, [blank]
+- Row 7: WS, WS, WS, [blank], W&, [blank], [blank], WS
+- Row 8: WR, [blank], [blank], WS, WK, [blank], [blank], [blank]
+</image-desc>
+
+---
+
+### n. 9. 10.
+
+<image-desc>
+An 8 by 8 grid diagram:
+- Row 1: SR, SR, [blank], [blank], [blank], [blank], [blank], SR
+- Row 2: SS, SS, WR, [blank], [blank], SK, SS, SS
+- Row 3: [blank], [blank], SS, [blank], SS, [blank], [blank], [blank]
+- Row 5: [blank], [blank], W&, WS, WS, WS, [blank], [blank]
+- Row 6: [blank], [blank], [blank], [blank], [blank], WR, [blank], [blank]
+- Row 7: WS, WS, WS, [blank], [blank], [blank], [blank], S&
+- Row 8: WR, [blank], [blank], [blank], WK, [blank], [blank], j
+</image-desc>
+
+---
+
+### n. 13.
+
+<image-desc>
+An 8 by 8 grid diagram:
+- Row 1: SR, SR, SS, SK, 60, [blank], SR, [blank]
+- Row 2: SS, SS, [blank], SS, [blank], W&, WS, [blank]
+- Row 3: [blank], [blank], SS, [blank], [blank], [blank], [blank], SS
+- Row 5: [blank], [blank], [blank], WS, [blank], [blank], [blank], [blank]
+- Row 6: [blank], [blank], [blank], [blank], [blank], WR, [blank], [blank]
+- Row 7: WS, [blank], [blank], [blank], WS, [blank], [blank], WS
+- Row 8: S&, [blank], [blank], WR, WK, [blank], [blank], [blank]
+</image-desc>
+
+<column-break/>
+
+### n. 5. 11.
+
+<image-desc>
+An 8 by 8 grid diagram:
+- Row 1: SR, SR, SS, [blank], SK, [blank], [blank], SR
+- Row 2: SS, SS, [blank], SS, [blank], SS, SS, SS
+- Row 3: [blank], [blank], SS, [blank], [blank], SR, [blank], [blank]
+- Row 4: [blank], [blank], [blank], [blank], [blank], [blank], 34, [blank]
+- Row 5: [blank], [blank], WS, WS, WS, [blank], [blank], S&
+- Row 6: [blank], [blank], [blank], 22, [blank], [blank], WR, [blank]
+- Row 7: WS, WS, WS, [blank], W&, [blank], [blank], WS
+- Row 8: WR, WR, WS, [blank], WK, [blank], [blank], [blank]
+</image-desc>
+
+---
+
+### n. 7. 8.
+
+<image-desc>
+An 8 by 8 grid diagram:
+- Row 1: SR, SR, SS, [blank], [blank], [blank], [blank], SR
+- Row 2: SS, SS, [blank], SS, [blank], SK, SS, SS
+- Row 3: [blank], [blank], SS, [blank], [blank], [blank], [blank], [blank]
+- Row 4: [blank], [blank], [blank], [blank], [blank], [blank], WS, SR
+- Row 5: [blank], [blank], [blank], WS, WS, 27, [blank], S&
+- Row 6: [blank], [blank], [blank], WR, [blank], [blank], WR, [blank]
+- Row 7: WS, WS, WS, [blank], W&, [blank], [blank], WS
+- Row 8: WR, [blank], [blank], [blank], WK, [blank], [blank], [blank]
+</image-desc>
+
+---
+
+### n. 12.
+
+<image-desc>
+An 8 by 8 grid diagram:
+- Row 1: SR, SR, SS, SK, [blank], [blank], SR, [blank]
+- Row 2: SS, SS, [blank], SS, [blank], SS, WS, [blank]
+- Row 3: [blank], [blank], [blank], SS, [blank], [blank], [blank], SS
+- Row 5: [blank], [blank], [blank], [blank], WS, W&, [blank], [blank]
+- Row 6: [blank], [blank], [blank], 22, [blank], [blank], WR, [blank]
+- Row 7: WS, S&, [blank], WS, WS, [blank], [blank], WS
+- Row 8: WR, WR, [blank], [blank], WK, [blank], [blank], [blank]
+</image-desc>
+
+---
+
+### n. 14. 15.
+
+<image-desc>
+An 8 by 8 grid diagram:
+- Row 1: SR, SR, SS, [blank], [blank], [blank], W&, [blank]
+- Row 2: SS, SS, [blank], SS, SK, [blank], [blank], [blank]
+- Row 3: [blank], [blank], [blank], SS, 45, [blank], 43, SS
+- Row 5: [blank], [blank], [blank], [blank], WS, [blank], [blank], [blank]
+- Row 6: [blank], [blank], [blank], [blank], [blank], WR, [blank], [blank]
+- Row 7: WS, [blank], [blank], [blank], [blank], WS, [blank], WS
+- Row 8: S&, [blank], [blank], WR, WK, [blank], [blank], [blank]
+</image-desc>
+
+<vocab>Vom Schach-Spiel, chess, game diagrams, notation, SR, SS, SK, S&, WS, WR, WK, W&</vocab>

@@ -1,0 +1,57 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>284</page-num>
+<header>Das Dritte Buch / 4. cap:</header>
+
+<margin>3. ,,</margin> Schützen:* Wan dan der Schwartze/ sich übereylet/ und den possen/
+<margin>,,</margin> nicht mercket/ besondern den W. Schützen/ mit seiner K. Schützen/
+<margin>,,</margin> nimt: so gibt/ der Weisse/ auß 35. mit der Königin/ Schach-Mat.
+<margin>4. ,,</margin> Nimt aber der Schwartze/ nicht den W. Schützen/(n. 3.) besondern zie=
+<margin>,,</margin> het/ des K. Schützen/ auf die W. Königin/ auf 45: (n. 27. d. c. 3.) so rucket sie der
+<margin>5. ,,</margin> Weiße/ auf 40: * Der Schwartze/ auf dieselbe/ der K. Reuter/ (auf daß
+<margin>,,</margin> Er/ dero Rochen/ nicht verlihre) auf sechs und vierzig: Der Weisse/ nimt
+denselben/ mit des K. Schützen: Der Schwartze/ ziehet/ der K. Rochen/ auf
+drey und sechszig: Der Weisse/ nimt dessen Soldaten/ mit der Königin/ und
+hat also fünf Soldaten/ zum Vortheil.
+
+<margin>6.</margin> Nimt aber der Weisse/ (wan etwa der Schwartze/ der K. Reuter/ auf
+46, n. 5. nicht ziehet) mit des K. Schütze/ der S. K. Roche: so hat Er vier Solda=
+ten/ und einen Rochen/ für einen Reuter/ gewonne: behelt auch seine Soldaten/
+noch bey einander: dem Schwartzen aber/ verbleiben nuhr drey oder viere/
+noch übrig: Wiewol/ nach des *Damiani* Art/ der Weisse/ (wie kurtz für dem
+25. n. des 3. Cap: zu ersehen) nuhr drey/ und nicht mehr/ Soldaten/ gewinnet. Es
+wolle aber/ ein jeder urtheilen/ was besser sey/ entweder vier/ oder fünf Soldaten/
+nebest einem Rochen/ für einen Reuter: oder nuhr drey Soldaten/ ohn ein anders
+Vortheil/ gewinnen. Und über das/ wan gleich der Schwartze/ der K. Sol=
+daten/ (n. 25. d. c. 3.) nicht fürziehet: erlanget der Weisse/ doch/ das ganze
+Spiel/ mit gewalt/ und nicht allein drey Soldaten/ wie *Damianus*, ohn weytes
+nachdencken/ vermeinet/ und zwar folgender gestalt.
+
+<margin>7. ,,</margin> Dan/ wan der Schwartze/ den König/ mit dem Soldaten/ auf
+<margin>,,</margin> 37, nicht bedecket/ (n. 2.) besondern/ denselben/ auf zwey und vierzig
+<margin>,,</margin> ziehet: Der Weisse/ alsdan/ mit der Königin/ auß fünf und dreyssig/
+<margin>,,</margin> (unangesehen es *Damianus*, n. 19. 3. cap: vermeynet) nicht sol Schach=
+geben/ (in erwegung Er/ ohne das/ sein Spiel/ so weit geordnet/ daß es doch
+wol/ sein verbleibe wird) besondern/ ehe Er denselben gibt/ des K. Rochens= Sol=
+<margin>8.</margin> daten/ auf fünf und zwanzig/ ziehen: * Spielet nuhn der Schwartze/ seines
+K. Rochens= Soldaten auf ein und vierzig: so nimt Er/ mit demselben/ den platz
+ein/ dahin sein König/ für dißmahl/ wegen des Schaches/ von der W. Königin/
+noch fliehen könte: Rucket Er ihn aber/ auf drey und dreyssig: und/ den König/
+(wan der Weisse/ mit der Königin/ auß fünf und dreyssig/ Schach geboten)
+auf ein und vierzig: so beut/ der Weisse/ (wan Er/ der K. Soldaten/ auf
+neun und zwanzig/ rucket) von dero Schützen/ Ab= Schach: der Schwar=
+tze/ (dieweyl sonsten keine hülfe verhanden) bedecket den König/ mit seines
+Reuters= Soldaten/ auf vier und dreyssig: Der Weisse/ nimt ihn mit des
+<margin>9.</margin> K. Rochens= Soldaten/ und beut abermahl Schach: * Der Schwartze/
+ziehet/ den König/ auf funfzig: Der Weisse/ gibt/ mit seiner Königin/ auß
+ein und funfzig/ Schach= Mat.
+
+<margin>10.</margin> Nimt aber der Schwartze/ (so fern Er/ den König/ auß dem
+Schache/ n. 9. nicht rücken wil) mit der Königin/ des W. K. Ro=
+chens= Soldaten: so nimt sie/ der Weisse/ mit seiner K. Schü=
+tzen/ gibt Schach: und folgendes/ mit der Königin/ (weyl der S.
+König/
+
+<meta>catchword: König/</meta>
+
+<vocab>Schach, Königin, Schütze, Reuter, Rochen, Soldat, Damianus, Schach-Mat, Vortheil</vocab>

@@ -1,0 +1,38 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>15</page-num>
+<sig>E</sig>
+<meta>catchword: toccando</meta>
+
+talmente circōdato da altri pezzi ſuoi auuerſarij, che non
+fi poſſa mouer ſecondo il ſuo proprio camino, ne manco
+poſſi eſſer agiutato da gli altri pezzi ſuoi compagni con far
+prigione qualche pezzo di quelli che lo aſſediano: allhora
+s'intende aſſediato detto pezzo, & fi leua dal giuoco, come
+nel ſeguente eſſempio, ſe fi trouerà vno triangolo bianco
+
+<image-desc>A rectangular diagram divided into four quadrants by a central horizontal line and a central vertical line. The letter "A" is positioned at the central intersection. The top-left quadrant is labeled "B", the top-right "C", the bottom-left "E", and the bottom-right "D".</image-desc>
+
+nell'A, & che fi trouino 4 pezzi neri nelle B, C, D, E, ca-
+felle, non è dubio che il detto triangolo è aſſediato, non po
+tendo qualche altro pezzo bianco agiutarlo col prender
+qualch'uno delli detti 4 pezzi neri, che lo aſſediano. Et no
+ta che non è alcun pezzo in queſto giuoco, il qual non pof-
+ſa aſſediare, & eſſer aſſediato. ma dui pezzi ſono che nō fi
+poſſono pigliare ſe non con l'aſſedio ſolo, cioè il 190 della
+pyramide nera, & il 153 quadrato bianco.
+
+Hauendo già eſplicato tutti li 7 modi di combattere,
+inanti che venghiamo alle vittorie, notaremo alcune re-
+gole generali, lequali ſeruono al combattere, dellequali la
+prima è. Che non ſi può far preda alcuna, ſe non ſi giuo-
+ca il ſuo pezzo ſecōdo il proprio camino di eſſo, eccetto in
+quattro caſi. Il primo è quando foſſe qualche pezzo in co-
+uerta tra li dui pezzi che ſi poſſono depredare, ilqual pez-
+zo ſubito che fuſſe leuato ò dall'vno, ò dall'altro giuocato-
+re: ſenza giuocar altro pezzo, ſi depreda quello delli det-
+ti dui pezzi diſcoperti, che può eſſer depredato. Et ſe co-
+lui che ha leuato la coperta, è il vincitore, gli ſerue l'ha-
+uer leuato la coperta per vno colpo: Ma ſe lui è il vinto,
+
+<vocab>affediato, giuoco, triangolo, pyramide, quadrato, combattere, preda, caselle, Rithmomachia</vocab>

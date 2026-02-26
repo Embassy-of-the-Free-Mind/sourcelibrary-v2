@@ -1,0 +1,37 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+(except the lowest and greatest) be taken
+the king may redeme hym, by any man
+of his that is of the same number . If he
+haue none of the same number, he maye
+redeme him by any of his men that hys
+aduersary wyll chuse. But if his lowest
+square be taken, no ransom wyll delyuer
+him. Also if the whole kyng at onis that
+is the whole number of Pyramis be ta-
+ken, he can not be redeemed.
+
+### ¶ Of the triumphe.
+
+To take alwaye the tediousnes of
+long play from them that be yonge
+beginners , wryters of this game
+haue inuented diuers kyndes of shorte
+victories, wherefore they deuise victory
+into proper and common. Of the proper
+victorie need nothing here be spoken, for
+all things thereto belonging are suffici-
+ently set forth in ye first kynd of playing.
+
+### ¶ Of the common victory.
+
+The common victorie (they say) is af-
+ter fyue maners, for men contende
+either for bodies, goods, quarelles,
+honour, or els for both quarels & honor.
+
+<meta>catchword: Victo</meta>
+
+<vocab>Philosophers game, Rythmomachia, Pyramis, triumphe, victorie, redeme, quarels</vocab>

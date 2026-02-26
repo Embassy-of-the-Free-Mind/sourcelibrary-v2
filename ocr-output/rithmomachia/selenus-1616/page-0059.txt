@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>29</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>2.cap:</margin>
+werffen solte / der zielete nach demselben / ob er ihn treffen kön- „
+te. Traf oder rürete er nuhn / diese *Penelopen*, und trieb sie / „
+von ihrer stelle / für sich / so ward sein Stein / auf des ausge- „
+stossenen feld / hinwider gesetzet. Wan er nuhn die *Penelopen*, auf „
+die Stelle da sie vorhin stund / wider gesetzet / so warf er / seinen „
+Stein / zum andern mahl : und wan er sie / abermahl traf / und „
+keinen / von seiner gesellen oder gegenern Steinen / (welche umb „
+dieselben her stunden) anrürete / so gewan er / und machte Ihm „
+deßwegen gute hofnung / zu der Heurath / mit der *Penelope*. „
+Dieses widerfuhr nuhn / dem *Eurimacho*, zum öftern : dahero „
+Er ihm / die gedancken schepfete / Er würde dermaln einst / mit „
+der *Penelope*, sich verheuraten. „
+
+Hieher gehöret auch das Spiel / so man *πόλεις* genennet : das
+von *Cratin* : in *fugit* : und *Plato lib : 4. de Rep:* gedencket : Wie
+auch droben / im ersten Cap: auß dem *Erasm : Roterod :* albereit er-
+wehnet : und *Julius Pollux, d. c. 7. Ludum Latrunculorum* nennet :
+und eben das Spiel ist / welches mit unserm Schach- oder vielmehr
+Streit-Spiele / übereinstimmet.
+
+Ferner ist ein Spiel gewesen / welches man *Ludum quinque
+Linearum*, oder eigentlich *πεττείαν*, quasi *πεντείαν*. (wiewol dieses
+wörtlein / auf alle andere / dieser Art Spiele / vom *Hesychio*, und
+Andern / die vorige *allusion* hindangesetzet / nicht unbillig / gezo-
+gen wird) genennet : davon man / beym *Polluce, d. lib :* und *Simone
+Majolo, Episc: Vulturariense*, in seinen *Diebus Canicularibus, pag:*
+576. S. *πεσσοί*. lesen mag.
+
+Es gedencket / noch eines andern Spieles / (zu welchem sechs-
+zig Steine / nemlich / dreyßig weisse / und so viel schwartze / gebrau-
+chet worden) der *Eustathius, Iliad : fol : 490* : so wol auch *Cœl : Rhod:*
+*lib : 20. c. 27.* und wird dasselbe / unserm Schach-Spiele / (wie *Jul:
+Pollux, in d. c. 7. pag : 440. lin : 25.* bezeuget) viel näher kommen :
+unangesehen gedachter Bischof *Majolus, pag : 576.* dasselbe / auf ein
+ander Spiel / wie folget / ziehen wil :
+
+> *Sed & Διαγραμμισμός, Lusus Linearum, sive 60. Cal-* „
+*culorum, in Schemate, lineis rectis descripto, exercebatur sexa-* „
+*ginta calculorum, quorum triginta, nigri erant, reliqui candidi,* „
+*positu ductuq̅. Huic similis esse videtur, is Ludus, qui octodecim* „
+*Calculis, binis coloribus, in duos Ordines distinctis, apud nos exer-* „
+*ceatur : his arte dispositis, in cardines & mutuas intersectiones li-* „
+*nearum rectarum quadrati diagrammatis, quod trium magnitu-* „
+*dine differentium, quadratorum tripartitâ descriptione, & trans-* „
+*versa-*
+
+<vocab>Schach-Spiel, Penelope, Eurimacho, πόλεις, Ludum Latrunculorum, Ludum quinque Linearum, πεττείαν, Eustathius, Διαγραμμισμός, Lusus Linearum</vocab>

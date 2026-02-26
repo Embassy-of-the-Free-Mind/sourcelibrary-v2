@@ -1,0 +1,113 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>420</page-num>
+<header>Das Vierte Buch/ 7.cap:</header>
+
+->n. 3. jz.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | S& | SK | SS | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | | | | | | |
+| | | | SS | SS | | | |
+| | | | WS | 28 | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | WR | WS | WR | WK | WS | WR | WR |
+
+->n. 5. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SK | | | SR | |
+| SS | SS | | SR | SS | SS | SS | |
+| | | | | SS<gloss>c</gloss> | | | |
+| S& | SS | WS | | | | | |
+| | | | WR | | | | |
+| | | WR | | | | | |
+| WS | WS | WS | 13 | | WS | WS | WS |
+| WR | | WS | | WK | | WR | WR |
+
+->n. jo. jj.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | | SR | SR | |
+| SS | SS | | SK | | SS | SS | SS |
+| | | | | | | | |
+| | WR | SS<gloss>c</gloss> | | | | | |
+| | | | SS | | | | |
+| | | | zj | | 19 | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | | WS | | WK | | WR | WR |
+
+->n. j7. j8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | S& | SK | SS | SR | SR |
+| SS | SS | | SS | 5z | SS | SS | SS |
+| | | | | | | | |
+| | | SS | | WR | | | |
+| | | | | | | | |
+| | | | | | | | |
+| WS | WS | WS | | WS | WS | WS | WS |
+| WR | WR | WS | | WK | WS | WR | WR |
+
+<column-break/>
+
+->n. 4. 9.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SK | | SR | SR | |
+| SS | SS | | SS | SS<gloss>c</gloss> | SS | SS | SS |
+| | | | | | | | |
+| S& | WS | WS | | | | | |
+| | | | | SS | | | 26 |
+| | | | WR | | | | |
+| WS | WS | WS | | WR | WS | WS | WS |
+| WR | | WS | | WK | | WR | WR |
+
+->n. 6. 7.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SK | | SR | | |
+| SS | WR | | SR | SS | SS | SS | |
+| | | | | | | | |
+| | SS<gloss>c</gloss> | WS | | | | | |
+| | | | | | | | |
+| | | SR | | | | | |
+| WS | | WS | 13 | | WS | WS | WS |
+| WR | | WS | 5 | WK | | WR | WR |
+
+->n. j4. j5.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | S& | SK | SS | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | | | | | | |
+| | | | | SS | | | |
+| | | | | WS | 28 | | |
+| | | | | | | | |
+| WS | WS | WS | | WS | WS | WS | WS |
+| WR | WR | WS | WR | WK | WS | WR | WR |
+
+->n. zo. zj.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | S& | SK | SS | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | | | | | | |
+| | | | | SS | | | |
+| | | | 30 | WR | 28 | | |
+| | | | | | | | |
+| WS | WS | WS | | WS | WS | WS | WS |
+| WR | WR | WS | | WK | WS | WR | WR |
+
+<vocab>Das Vierte Buch, SR, SS, WS, WR, WK, SK, S&, jz, jo, jj, zo, zj</vocab>

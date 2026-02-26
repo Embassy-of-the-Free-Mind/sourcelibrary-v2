@@ -1,0 +1,43 @@
+<language>German</language>
+<page-type>preface</page-type>
+<sig>):( ij</sig>
+<meta>catchword: Daß</meta>
+<warning>water staining on the left edge affecting readability slightly</warning>
+
+und Frembden / eigene wort / wa es vonnöten / und
+sich geschicket / als seine / doch nicht ohne ursachen / in
+diesen Tractat, setzen wollen.
+
+Der Alten Teutschen worte / hat Er sonderlich /
+dem Leser / zum wolgefallen / (ob irgend derselbe / an
+solcher Sprache / sich erlustigen wolte) anziehen / und
+danebest / den embsigen fleiß derselben / wie höchlich sie
+sich / dieses Spiel / auf ernste Sachen / und zum gemei-
+nen Bürgerlichen und Hof-leben / zu ziehen / bemühet /
+zu verstehen geben / auch zugleich hiemit / beyläuffig / er-
+innern wollen: daß / do etwa subtilen ohren / dieselben
+wörter / zu hart klingen möchten / oder sonsten einer /
+auf das Haupt-werck / ohne verlierung der zeit / sich
+nuhr legen wolte: derselbe / was mit diesem Zeichen
+( » ) vom 6. Cap: biß zum 11. des Ersten Buches / die-
+ses Tractats / nach dem Beschluß eines jeglichen Ca-
+pittels / gezeichnet / wol außlassen / und desto geschwin-
+der fortfahren möge.
+
+Der Außländischen Authoren, eigene wort / hat
+Er sich / in den zweyen Ersten Capitteln / des 1. Buches /
+fürnehmlich gebrauchen müssen: damit (1) keiner / an
+denselben / zu zweyflen hette: und (2) im nachschlagen
+der Authoren, so fern deren worte / nicht anhero gesetzt
+worden / von dieser kurtzweyligen Kunst / zu ernstem
+studieren / zu zeitig / gleichsam wider seine meynung / ge-
+bracht würde: Endlich / (3) umb auch denen / welche /
+die angezogene Authoren, in der frembde / oder sonsten /
+wegen obliegender geschäfte / oder daß sie dieselben nicht
+hetten / oder in ihrer Sprache / nicht verstünden / (deß-
+wegen dan / die meisten angezogene Texte / ins Teut-
+sche / übersetzet worden) und gleichwol / auß der rechten
+Brun-quelle / wasser schöpfen wolten / nicht nachschla-
+gen könten : zu wilfahren.
+
+<vocab>Alten Teutschen, Tractat, Außländischen Authoren, Capittel, Brun-quelle</vocab>

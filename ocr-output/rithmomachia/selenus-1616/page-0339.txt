@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>305</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin>
+denselben / durch der K. Rochen / zu beschützen ) der K. Reuters-Sol-
+daten / auf sieben und vierzig : Der Weisse / des K. Rochen / auf
+des S. K. Rochen / auf viere : Der Schwarze / muß ihn / mit
+demselben / wegnehmen : ( Dan sonsten der Weisse / mit der K.
+Reuter / auf sechs und dreyßig / Schach-bieten / und denselben / auf
+der K. Rochen / ziehen würde : Nehme Er dan / der W. K. Reu-
+ter / mit des K. Rochen / so wehre dieser / umb zehnen verwechselt )
+Der Weisse / denselben / mit dem Könige : Der Schwarze / ru-
+cket / der K. Rochen / damit Er denselben / im Schache / von des
+W. K. Reuter / auf sechsz und dreyßig / nicht verliere ) auf zwey und
+fünfzig : Der Weisse / nimt / der S. K. Soldaten / nicht mit des
+K. Reuter / ( Dan sonsten / der Schwarze / der K. Schützen / auf
+der W. K. Rochen / auf drey und zwanzig / ziehen / von seiner K.
+Rochen / Ab-Schach-bieten / und denselben / also erlangen wär-
+de ) besondern mit der K. Rochen : Der Schwarze / der W. K.
+Rochens-Soldaten / mit der K. Schützen / und beut / von der K.
+Rochen / Ab-Schach : Der Weisse / rucket / den König / auf eylfe :
+Der Schwarze / des K. Rochens-Soldaten / ( umb den König /
+da es von nöten / auf neun und vierzig / zu rücken / und denselben zu
+verschantzen ) auf ein und vierzig : Ist also sein Spiel besser / dan
+des Weissen / geordnet / und wird Er demselben / dofern Er sich
+inacht hat / wol abgewinnen.
+
+<margin>33.</margin>
+Wan aber der Weisse / den S. Reuter / nicht nimt / (n. 28.)
+besondern des K. Reuter / ( zur beschützung / der K. Soldaten ) auf
+neunzehen / ziehet : so nimt der Schwarze / mit des K. Reuter /
+der W. K. Reuter / und beut Schach : Der Weisse / nimt / densel-
+ben / mit der K. Rochen : Der Schwarze / ziehet / der K. Solda-
+ten / auf der W. K. Soldaten / auf acht und dreyßig : Der Weisse /
+nimt ihn / mit demselben : Der Schwarze / beut / mit des K.
+Rochen / auf zwanzig / Schach : Der Weisse / ziehet / den Kö-
+nig / auf ein und dreyßig : Der Schwarze / der K. Rochen / ( auß
+der gefahr ) auf sechsszig : Der Weisse / beut / mit des K. Reuter /
+auß fünf und zwanzig / Schach : Der Schwarze / rucket auf
+ihn / den König / auf vier und dreyßig : Der Weisse / ( ihn zu be-
+schützen ) seinen Soldaten / auf achtzehen : Der Schwarze / der
+K. Rochen / auf acht und zwanzig / und beut Schach : Der Weisse /
+rücket / den König / auf vierzig : Der Schwarze / der K. Schüt-
+zen / auf der W. K. Rochens-Soldaten / auf vier und vierzig :
+Der Weisse / des K. Reuter / auf des S. K. Rochen / auf zehen :
+
+<sig>Qq ij</sig>
+<meta>catchword: Der</meta>
+
+<vocab>Schach-Spiel, Rochen, Reuter, Schütze, Soldaten, Schach-bieten, Ab-Schach, König</vocab>

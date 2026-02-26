@@ -1,0 +1,49 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III</page-num>
+
+<margin>2</margin>
+# ¶ Itidem ditonus inter ſeſquitertiā atq; ſeſquiquartam medius: minime muſicam complet atq; perficit harmoniam.
+
+| 85 1/3 | 81 | 80 | 72 | 64 | 21 1/3 | 16 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| D | A | E | B | C | F | G |
+
+¶ Harmoniam et conſonantiam idem dicimus et huius ut precedētis procedit demonſtratio. Sint ergo a b c duo toni in minimis conſtituti. ut 81| 72 | 64. dico ditonum a ad c conſiſtere in proportione minore ſeſquitertia: et maiore ſeſquiquarta: muſicam conſonantiam haud quaq; perficere. Capio enī tertiam partem c per decimā ſecundi huius ut ſepe factum eſt. et venit unum & viginti cum triente unius: qui numerus ſit f. addo itaq; f 21 et trientē ad numerũ c 64. et aggregatus eſt 85 cum tertia parte unius: qui idem ſit d. manifeſtũ eſt d ad c eſſe ſeſquitertiũ. at d maior eſt a: continet enī a dumtaxat unum et octuaginta: d vero octuaginta quinq; & amplius. eſt ergo ſeſquitertia proportio ditono maior. Et rurſum capio quartam partem c quae ſit g: quam addo ad c et ſurgat e: qui erit ad c ſeſquiquartus. at a maior eſt e. igitur per undecimam ſecundi huius: ditonus ſeſquiquartū tranſcendit. et cum inter ſeſquitertium & ſeſquiquartū nullus cadat ſuperparticularis medius nec multiplex: erit ergo ditonus in proportione ſuperpartiēti collocatus. quare muſicam conſonantiam (etſi in muſicis modulationibus ſit euphonus ſuauiterq; auditum feriens) nōdum tamen perficit.
+
+---
+
+<margin>3</margin>
+# ¶ Ditoni interuallum: ſola ſeſquitonum ſuperat apotome.
+
+¶ Nam ſeſquitonus unum tonum cōtinet integrum et ſecundi toni cōtinet ſemitoniū minus. ſed cū tonus ex ſemitonio minore & apotome conſtet euadatq; coalitus. ergo ſeſquitono ad ſecūdi toni complationē ſola deeſt apotome. at ditonus ſolos duos incolumes integroſq; poſſidet tonos. ergo ditoni interuallum ſola apotome/ ſoloq; ſemitonio maiore: ſeſquitonū ſuperat interuallũ. qd eſt propoſitū.
+
+---
+
+<margin>4</margin>
+# ¶ Diateſſaron conſonantiam in data chorda collocare.
+
+<image-desc>A horizontal line representing a string or musical monochord, marked at specific points to illustrate mathematical divisions. Above the line are the numerals 4, 3, 1, and 1/3. Below the line, corresponding points are labeled with the letters a, c, d, e, and b. This diagram demonstrates the placement of the diatessaron interval within a given string length.</image-desc>
+
+¶ Cum enim epitrita/ ſeſquitertiaq; proportio: conſonantiam diateſſaron creet: iccirco data quacūq; chorda ut a b eam in quattuor equas portiones diuido. ut a c: c d: d e: & e b. et dico a b ad c b conſonare diateſſaron. Nam a b continet c b et inſuper a c quae tertie parti c b equatur. eſt ergo interuallum a b ſeſquitertiū ad c b. ergo a b ad c b per diffinitionē conſonat diateſſaron: et conſonantia diateſſaron in chorda a b data: collocata. quod eſt propoſitum.
+
+---
+
+<margin>5</margin>
+# ¶ Tritonus: conſonantiam diateſſaron tranſcendit.
+
+¶ Nam per decimaoctauam primi tres ſeſquioctaue proportiones ampliūs ſunt ſeſquitertio interuallo. atqui in tribus ſeſquioctauis: per diffinitionē tres conſiſtunt toni. igitur in tribus ſeſquioctauis conſiſtit tritonus. & in epitrito/ ſeſquitertioq; interuallo conſiſtit conſonantia diateſſaron. Igitur conſonantiam diateſſaron tranſcendit ut proponebatur: tritonus.
+
+---
+
+<margin>6</margin>
+# ¶ Conſonantia diateſſaron: duobus tonis atq; ſemitonio minore conſtare neceſſe eſt Unde facile comparatum eſt ſeſquitonum tono/ et ditonum ſemitonio minore citra diateſſaron concētum deficere. Compertum item eſt conſonantiam diateſſaron quinq; dieſes et duo commata continere.
+
+-> Diateſſarum conſonantia <-
+<image-desc>A horizontal diagram representing the Diatessaron interval. The main line is labeled "Diatessarum consonantia" above. Below the line, the letters a, c, and b mark primary points. Vertical strokes divide the line into segments representing musical steps, with additional markings below identifying specific proportional divisions.</image-desc>
+
+¶ Sit a b et c b conſonantia diateſſaron. dico eam duobus tonis & ſemitonio minore conſtare. Nam cum a b & c b ſit diateſſaron: erit a b et c b per cōuerſionem diffinitionis ſeſquitertius. at cum ſemitonium minus per diffinitionē ſit id quo ſeſquitertia duobus tonis maior eſt. continet ergo a b & c b ſemitonium minus et duos tonos. igitur conſonantia diateſſaron duobus tonis/ ſemitonioq; minore conſtat. Et primū correlariū hinc facile cognoſcitur. Cum enim ſeſquitonus ſolū tonum & ſemitoniū minus contineat: deeſt igitur ipſi ad conſonantiam diateſſaron complēdam per preſentē unus tonus. et cum ditonus ſolum duos cōplectatur tonos: deerit ipſi ad eandem complēdam ſemitoniū minus. Secūdum vero hinc haud difficile perſpicitur cognitū. Nam cum tonus per triceſimātertiam ſecūdi duas dieſes & unum comma cōtineat: duo toni quattuor dieſes & duo cōtinebunt cōmata. at per preſentem diateſſaron conſonantia duobus tonis vnam dieſim ſuperaddit. continet igitur conſonantia diateſſaron quinq; dieſes atq; duo commata. quod eſt totum propoſitum.
+
+<meta>catchword: ss</meta>
+
+<vocab>ditonus, ſeſquitertia, ſeſquiquarta, harmonia, conſonantia, ſeſquitonus, apotome, diateſſaron, tritonus, ſemitonium, dieſis, comma</vocab>

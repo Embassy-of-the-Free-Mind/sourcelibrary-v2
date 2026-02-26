@@ -1,0 +1,38 @@
+<language>Italian</language>
+<page-type>errata</page-type>
+<warning>Significant ink bleed-through from the reverse side of the page makes some areas difficult to read.</warning>
+
+<image-desc>A simple rectangular diagram divided into sections. The top half is divided into two sections labeled A and C. Below section C is a third section labeled B.</image-desc>
+
+à car. 13.a. nella quinta riga, doue si legge il menar, legasi il minor. à car. 14. b. nella prima & nel
+la terza riga, doue si legge set, legasi cinq;. & nella sesta riga doue si legge settimo, legasi sesto.
+à car. 15. a nella quinta decima riga, doue si legge li 7, legasi li 6. à car. 15.b. nella riga 32, doue si
+legge depredato, legasi depredata. à car. 16, a. nella nona riga, doue si legge anchor altri, legasi
+anchor li altri. à car. 16.b. nella penultima riga, doue si legge gran, legasi grande. à car. 18. a.
+la figura die star à questo modo.
+
+| 2 | 3 | 6 |
+|---|---|---|
+| 3 | 4 | 6 |
+| 3 | 5 | 15 |
+| 4 | 6 | 12 |
+| 4 | 7 | 28 |
+| 5 | 8 | 20 |
+| 5 | 9 | 45 |
+| 9 | 8 | 12 |
+| 7 | 12 | 42 |
+| 8 | 15 | 120 |
+| 9 | 15 | 45 |
+| 9 | 16 | 72 |
+| 12 | 15 | 20 |
+| 15 | 20 | 30 |
+| 25 | 45 | 225 |
+| 30 | 36 | 45 |
+| 72 | 90 | 120 |
+
+à car. 18.b. nella colonna di mezo della figura, doue è scritte 9 8 153 scriuasi
+9 81 153
+
+<image-desc>A diagram consisting of three interlocking diamond shapes oriented horizontally. The diamonds contain letters and numbers, though they are obscured by heavy bleed-through from the other side of the leaf.</image-desc>
+
+<vocab>errata, correzioni, matematica, figura, riga, colonna</vocab>

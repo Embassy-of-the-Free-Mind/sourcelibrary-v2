@@ -1,0 +1,25 @@
+<language>English</language>
+<page-type>preface</page-type>
+<header>To the Reader.</header>
+
+that I thought these to them
+whom I haue written to be suf-
+ficient. yet for that I woulde be
+lothe, frõ playe & game, to fall to
+earnest contention, if any man
+in this doing or any part thereof
+shall think I haue done amisse,
+and will do better himself, so
+far am I from enuying his
+good proceding, that I
+->wil be right glad, and<-
+->geue him heartye<-
+->thankes there-<-
+->fore.<-
+
+All things belonging to this game
+for reason you may bye:
+At the booke shop vnder Bochurch,
+in Chepesyde redilye.
+
+<vocab>Chepesyde, Bochurch, booke shop, playe, game</vocab>

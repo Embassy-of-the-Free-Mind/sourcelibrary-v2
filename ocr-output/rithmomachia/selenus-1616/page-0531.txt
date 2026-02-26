@@ -1,0 +1,59 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>489</page-num>
+<header>Vom Zahl-Kampf.</header>
+<meta>catchword: molestiam,</meta>
+
+durch sie / die überwinnungen / entweder alleine / oder nebest denen /
+auß dem andern Hauffen verrichten müssen. So ferne auch beeder
+Hauffen Steine / welche aufs letzte / auf der Spiel-Tafel noch ver-
+handen / die überwinnungen zum ende zu bringen / nicht vermögen /
+alsz mag man / die vom Gegentheil / geraubte Steine / ebenmessig
+gebrauchen / und zu hülffe nehmen.
+
+4.) Die überwinnungen / werden in solchen feldern / welche
+der farbe seynd / deren / das Widertheil sich gebrauchet / es geschehe
+nuhn / auf was Art / es dem Spieler gefellig / verrichtet und zu we-
+ge gebracht. Die Steine / aber / welche man / zu der erlangung
+des Sieges / gebrauchet / müssen / in solche felder gestellet werden /
+die ein ander gleich folgen / und nahe bey einander seynd: alsz ABCD.
+AEFG. AHEI. BIEK. IHKL. und werden diese Buchstaben /
+auf der rechten seiten / der Tafel / des vorigen fünften Capi-
+tels / gefunden.
+
+5.) Wan ein Stein / auf welchen / der letzte Zug / welcher dem
+Spiele / den endlichen ausschlag / geben kan / erfolgen sol / gerucket
+wird: so muß man / denselben zug / (auf daß der Gegener / so fern
+Er kan / sich fürsehen / und seiner schantzen hüten möge: man auch /
+wan derselbe / nicht zu verhindern ist / mit sonderbahrem ruhm / den
+letzten Stein / welcher die höchste überwinnung / erhalten sol / ru-
+cke) anmelden / und dem andern zu verstehen geben.
+
+6.) Wan die letzte überwinnung angezeiget / so können her-
+nacher keine Steine / von denselben / welche dieselbe zu wege zu rich-
+ten / albereit geordnet seynd / genommen werden.
+
+7.) Wan auch die Letzte / und Grösseste überwinnung / ins
+werck sol gerichtet werden / so muß man / ehe dieselbe / ange-
+meldet wird / (auf daß der gegener / wan ihm / diese endliche
+überwinnung / welche man zu verrichten gewillet / angekün-
+diget ist / einen nicht aufhalte / noch dieselbe verhindere und ver-
+störe) denselben Steinen / welche in des Feindes feld / den end-
+lichen Sieg / dadurch zu erhalten / albereit gestellet seynd / noch
+viele andere zu hülffe ordnen / und mit diesen / jehne / gleichsam
+umbgeben.
+
+(Buxer : fol: 40. a. b.
+
+<margin>cc</margin>
+*At obÿciet fortasse aliquis : Quanam te causa movit , ne de*
+<margin>cc</margin>
+*Victorÿs Numerorum Parium & Imparium, in morem Fabri*
+<margin>cc</margin>
+*Stapulenfis, separatim, seorsimq́; disputes?*
+<margin>cc</margin>
+*Huic ego homini sic respondeo : Primum, cum Ludus im-*
+<margin>cc</margin>
+*mensitate, infinitoneq́; suâ, infinito esset infinitior, in Ludentibus,*
+
+<vocab>Zahl-Kampf, Rithmomachia, überwinnung, Spiel-Tafel, Jacobus Faber Stapulensis, Buxer</vocab>

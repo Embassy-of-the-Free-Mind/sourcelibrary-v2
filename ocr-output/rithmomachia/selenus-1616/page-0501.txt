@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>463</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+<image-desc>A decorative rectangular woodcut headpiece featuring elaborate scrolling acanthus leaves and floral patterns, with small figures or cherubs integrated into the foliage on either side of a central floral motif.</image-desc>
+
+# Das Dritte Capittel.
+
+## In welche felder dieser geschackten Tabel / die / vier und zwanzig / schwartze: und vier und zwan- / tzig / weisse Steine / sollen gestellet werden.
+
+Die Tabel dieses Spieles / sol man der- / gestalt für sich legen / daß die lenge derselben / von / des Spielers lincken = nach seiner rechten seiten / / reiche / und dero breite / übersich stehe. Dan Ei- / ner / wan Er / an der mitte dieser Tabel sitzet / auf / alle felder / (dieweyl dieselben / dem gesichte / auf / die weyse / in etwas näher seynd) füglicher acht haben / und die / Steine / mit der rechten hand / nach der lincken seiten / bequämer / ziehen kan.
+
+<margin>(Buxer: fol: 17. a.)</margin>
+<margin>(a. 16.)</margin>
+> Cum Abaci tui Longitudo, oculos tuos impedire possit, ne se / acutiùs cernant, aut ne, variâ Numerorum representatione / deludaris; enitere, ut Abaci Longitudo, versus dextram & si- / nistram, tendat: quò faciliùs & de Hostium acie, judices, & / ad Dextram ludas; quandoquidem sedens in Medio loco, ambas / acies, propiores habet.
+
+<margin>(n. 15.)</margin>
+Wan man nuhn / oberwehnter massen / die Tafel für sich ge- / nommen : so sol man erstlich / eine absonderliche Ordnung / auß / welcher folgendes / die rechte stellung / dieser Steine / (zu welcher / man sonsten / ohne dieses mittel / mit mühe / und gantz beschwerlich / wan die Steine / untereinander vermenget wehren / kommen könte) / erfolgen möge : erdencken und anstellen : den Anfang von den Weis- / sen Runden Steinen / machen : die felder / von der ecke des Bretes / welche der rechten hand zum nechsten / von unten auf / nach der breite / und höhe / biß ins dritte = folgendes nach der lenge / und der lincken / hand / biß ins sechste feld / zehlen : und in dasselbe / den ersten weissen / Runden Stein / mit 2. verzeichnet / setzen : folgendes ins nechste / feld / (nach der höhe oder aufwertz) den mit 4 : auf diesen / den mit 6 : / und endlich / ins dritte feld / (von oben herab gerechnet) den mit 8 : bey / diese vier erste weisse Runde Steine / (nach der rechten hand) die übrige
+
+<sig>Mm m iij</sig>
+<meta>catchword: vier</meta>
+
+<vocab>Zahl-Kampf, Abacus, Steine, Ordnung, Abaci Longitudo, geschackte Tabel</vocab>

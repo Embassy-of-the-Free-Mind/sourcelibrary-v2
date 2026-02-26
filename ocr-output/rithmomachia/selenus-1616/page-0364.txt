@@ -1,0 +1,45 @@
+<language>German</language>
+<page-type>diagram</page-type>
+<columns>2</columns>
+<page-num>330</page-num>
+
+<margin>5. cap:</margin>
+<margin>Das dritte Buch /</margin>
+
+### n. 88. 89.
+
+<image-desc>A rectangular grid diagram containing alphanumeric notation. Key elements include the abbreviations SK, SR, SS, WR, WS, and WK, along with the number 51. The notations are placed within specific cells of the 10x7 grid to indicate movement or positioning.</image-desc>
+
+### n. 93. 94.
+
+<image-desc>A rectangular grid diagram containing notations: WR, SR, SS, SK, WS, and WK. It includes the numbers 35 and 33. The layout follows a specific sequence within the grid cells.</image-desc>
+
+<margin>40</margin>
+
+### n. 99. jjj.
+
+<image-desc>A rectangular grid diagram containing notations: SK, SR, SS, WR, WS, and WK. The number 40 is noted in the margin adjacent to the fourth row of the grid.</image-desc>
+
+### n. jo7. jjo.
+
+<image-desc>A rectangular grid diagram featuring the numbers 63 and 61 at the top. The grid contains notations SK, SR, SS, WR, WS, and WK arranged throughout the cells.</image-desc>
+
+<column-break/>
+
+### n. 91. 92.
+
+<image-desc>A rectangular grid diagram containing notations: WR, SK, SR, SS, WS, and WK, along with the number 51.</image-desc>
+
+### n. 95. 96.
+
+<image-desc>A rectangular grid diagram containing notations: WR, SR, SS, SK, WS, and WK, along with the number 17 in the lower right section.</image-desc>
+
+### n. joj. jo5.
+
+<image-desc>A rectangular grid diagram containing notations: SR, SS, SK, WR, WS, and WK. It includes the numbers 52 and 21 within the central cells.</image-desc>
+
+### n. jj2. jj3.
+
+<image-desc>A rectangular grid diagram containing notations: SK, SR, SS, WR, WS, and WK. The number 46 appears in the middle section of the grid.</image-desc>
+
+<vocab>SK, SR, SS, WS, WR, WK, cap, Buch, n., Nummer</vocab>

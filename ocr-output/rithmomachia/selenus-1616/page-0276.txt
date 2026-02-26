@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>242</page-num>
+<header>Das Ander Buch/ 14. cap:</header>
+
+fünf und vierzig/ und eröffnet/ seiner K. Schützen/ den weg/ auf des
+W. K. Rochen: Der Weisse/ ziehet/ denselben/ auf drey und sech-
+zig: Der Schwarze/ den König/ auf drey und vierzig: Der
+Weiße/ nimt/ des S. K. Reuters Soldaten/ mit seiner K. Reuter:
+Der Schwarze/ beut/ mit der K. Rochen/ auß vier und vierzig/
+Schach: Der Weisse/ rucket/ den König/ auf ein und zwantzig:
+Der Schwarze/ beut/ mit der K. Schützen/ auß acht und zwan-
+tzig/ Schach: Der Weisse/ rucket/ den König/ auf zwey und zwan-
+tzig: und verschaffet ihm/ auf fünfzehen/ eine gute Festung: Kan
+auch dem Schwarzen/ wan Er etwa/ einen seiner Soldaten/ noch
+zur Königin machet/ umb so viel leichter/ abgewinnen.
+
+Hiebey zu mercken/ daß man diese Züge/ (von n. 6. biß hie-
+her) ob sie schon/ mannichfaltig können verendert werden/ darumb/
+von Zügen zu Zügen/ den mehrer theil/ vortgespielet habe: weil al-
+lerhand fälle/ welche einem Spieler/ ein gutes nachsinnen/ erwecken/
+und in andern Spielen/ nicht undienlich können gebrauchet/ oder
+außgelassen werden/ unter denselben/ sich zutragen und begeben.
+
+<margin>32.</margin>
+Wan aber der Weisse/ den Soldaten/ mit dem Reuter/ auf
+19. (n. 4.) nicht beschützet/ besondern des K. Soldaten/ auf des S. K.
+<margin>33.</margin>
+Reuter/ auf sechs und dreyssig/ ziehet: * so nimt/ der Schwarze/
+mit seiner K. Reuter/ der W. K. Soldaten/ und ziehet ihn/ auf die-
+selbe: Der Weisse/ nimt des S. K. Reuter/ mit seines K. Solda-
+ten/ und ziehet ihn/ auf die S. Königin: Der Schwarze/ nimt die
+W. Königin/ mit der K. Reuter: Der Weisse/ die S. Königin/ mit
+des K. Soldaten: Der Schwarze/ der W. K. Reuter/ mit seiner
+K. Reuter: Der Weisse/ (auf daß Er/ seiner K. Rochen/ wan Er/
+mit dero Reuters Soldaten/ diesen S. Reuter nehme/ durch des
+S. K. Schützen/ im Schach-bieten/ nicht verliere) ziehet/ der K.
+Rochens Soldaten/ auf des S. K. Schützen/ auf vier und zwantzig:
+Der Schwarze/ denselben/ auf viertzig: Der Weisse/ der K.
+Schützen/ auf dreyzehen/ und erlanget dadurch/ des S. K. Reuter/
+oder Schützen.
+
+<margin>34.</margin>
+Wan aber der Schwarze/ den W. Soldaten/ mit seinem
+Reuter (n. 33.) nicht wegnimt/ besondern/ des K. Reuter/ (umb/ des
+W. K. Soldaten/ zu weichen) auf der W. K. Reuter/ (welcher/ von
+seines K. Schützen/ albereit gefangen gehalten wird) auf sieben und
+dreyssig/ zufoderst ziehet: so spielet/ der Weisse/ (denselben ferner
+zu beschützen) der K. Schützen/ auf dreyzehen: Der Schwarze/
+nimt/ mit der K. Reuter/ der W. K. Soldaten/ und ziehet/ auf
+<meta>catchword: die W.</meta>
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Schützen, Soldat, Festung, Züge, Weisse, Schwarze</vocab>

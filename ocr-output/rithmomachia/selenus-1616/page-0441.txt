@@ -1,0 +1,33 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>407</page-num>
+<header>5. cap: Vom Schach-Spiel.</header>
+
+nigin : Der Weiſſe / des S. K. Reuter / mit ſeiner Königin :
+<margin>16.</margin> * Der Schwartze / des W. K. Rochens-Soldaten / (umb ſeines K. Rochens-Soldaten / zu entſetzen : und / daß der Weiſſe / der K. Schützen / auf ſeines K. Schützen / auf ein und viertzig / nicht ziehe / zu verhindern) mit ſeiner Königin : Der Weiſſe / des S. K. Reuters-Soldaten / mit des K. Schützen / und beut Schach : Der Schwartze / nimt ihn / mit des K. Rochens-Soldaten : Der Weiſſe / denſelben / mit der Königin / und beut abermaln Schach : Der Schwartze / ziehet / den König / auf ein und ſechtzzig : (dan auf zwey und funftzig / der W. K. Schütze / denſelben / auß vier und dreyſſig / gleich erlegete) der Weiſſe / beut ihm / mit der K. Schützen / auß vier und dreyſſig / Schach : Der Schwartze / bedecket ihn / mit des K. Schützen / auf zwey und funfzig : Der Weiſſe / gibt / mit der Königin / auß acht und funfzig / Schach-Mat.
+
+<margin>17.</margin> Nimt aber der Schwartze / nicht den W. Soldaten / mit der Königin / (n. 16.) beſondern / rucket dieſelbe / auf andere felder : ſo kan der Weiſſe / wan Er ſich nuhr / in etwas vorſiehet / das Spiel / gleichwol erhalten : und wird dem Damiano, die ſorge und furcht / wegen des Weiſſen / daß Er / das Spiel / oder die Königin verſchertzen möchte / gentzlich benommen.
+
+Die dritte Art / dieſes Spiel zu ziehen / (wie ſie / vom Damiano,
+<margin>18.</margin> <margin>cc</margin> aufgezeichnet worden) iſt ferner dieſe : * Wan der Schwartze / nicht
+<margin>cc</margin> des Schützens / auf 35. (n. 10.) beſondern der K. Soldaten / auf
+<margin>cc</margin> ſieben und dreyſſig / rucket : ſo ziehet / der Weiſſe / des K. Reuter /
+<margin>19.</margin> <margin>cc</margin> auf des S. K. Soldaten / auf neunzehen : * Der Schwartze /
+<margin>cc</margin> denſelben / auf ihn / auf acht und zwantzig : (welches aber kein
+<margin>cc</margin> guter Zug iſt) der Weiſſe / nimt ihn / mit der K. Soldaten : Der
+<margin>cc</margin> Schwartze / denſelben / mit ſeiner K. Soldaten : Der Weiſſe / die
+<margin>cc</margin> S. Königin / mit ſeiner Königin / und beut Schach : Der Schwar-
+<margin>cc</margin> tze / nimt dieſelbe / mit dem Könige : Der Weiſſe / ziehet / des K.
+<margin>cc</margin> Reuter / (auß der gefahr) auf der S. Königin / und des S. K.
+<margin>cc</margin> Schützens-Soldaten / (umb einen von denſelben / oder des S.
+<margin>cc</margin> K. Rochen / ſo fern deſſen Schützens-Soldat / nicht wird inacht
+<margin>cc</margin> genommen / zu erhaſchen) auf vier und dreyſſig.
+<margin>20.</margin> <margin>cc</margin> Spielet aber der Schwartze / (umb die Königin zu erhalten)
+<margin>cc</margin> nicht den Soldaten / auf 28. (n. 19.) beſondern / (umb denſelben
+<margin>cc</margin> zu entſetzen) des K. Schützen / auf funf und vierzig : ſo ziehet /
+<margin>cc</margin> der Weiſſe / (auf daß / des S. K. Soldat / auf ſeinen Reuter /
+
+<sig>Fff</sig>
+<meta>catchword: nicht</meta>
+
+<vocab>Schach, Damiano, Königin, Reuter, Schach-Mat, Schützen, Soldat, Rochens-Soldat, Weiſſe, Schwartze</vocab>

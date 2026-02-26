@@ -1,0 +1,41 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>VIII.</header>
+
+parte lōgioz b diuidit in duos triāgulares quoz vterqꝫ totus est ab vnitate quotus pte altera lōgioz post vnitatē: qꝫ latus illozū triāgulozum equale sit minori lateri altera parte lōgiozis. quare z vterqꝫ totus est ab vnitate quotus tetragonus a post vnitatē. vnus ergo illozū trigonozū per duodecimā huiꝰ cū tetragono a cōstituit pentagonū post vnitatē totū: sed et per precedentē idē pentagonus cū altero triāgulari qui est totus ab vnitate cōstituit hexagonū tetragonicū. a igitur cum b altera parte lōgioze precedēte cōstituit hexagonū tetragonicū: quod erat demōstrandum z ppositum.
+
+<image-desc>A series of geometric diagrams on the right margin illustrating hexagonal and triangular numbers:
+1. A small hexagonal arrangement of 7 dots (1 center, 6 surrounding).
+2. A triangular arrangement of dots with 6 rows. The 5th row is labeled 'b' and the 6th row 'c' at the left margin.
+3. A hexagonal arrangement of 19 dots.
+4. A large hexagonal arrangement with labeled vertices 'a', 'b', 'c', 'd', 'e', 'f' and a central point 'g'.
+5. A large, complex hexagonal arrangement consisting of concentric rings of dots.
+</image-desc>
+
+<margin>16</margin> ¶ SI disponantur triangulares ab vnitate: tertius atqꝫ vno intermisso a prius sumpto tertius: erit hexagonus.
+¶ Nā per vndecimā huius dispositis ab vnitate pte altera lōgiozibus et quadratis si duo z duo oiun gātur fient oēs triāgulares. at cū primus triāgularis post vnitatē fiat ex vnitate z p̄mo altera pte lon gioze: scd̄us triāgularis post vnitatē q̄ est tertius ab vnitate fiet ex p̄mo tetragono post vnitate z p̄mo post vnitatē altera pte lōgioze per eandē vndecimā qui est tetragonū precedēs. ergo ꝑ precedentē ter tius triāgularis ab vnitate ē hexagonꝰ. sed z eadē rōne qꝫ vno intermisso tertius semp a q̄drato et p̄ce dente altera pte lōgioze ꝑ vndecimā huius nascitur: ergo per p̄cedentē tertius semper erit hexagonus quod est propositum.
+
+<margin>17</margin> ¶ SI sex vnitates vni circūponantur: ita vt illarū adinuicē z ad illam eadē sit distātia hexagonum equiangulū constituent.
+¶ Nā quelibet due illazū vnitati cum media vnitate triāgulum equilaterū constituunt. fient ergo sex triāguli equilateri quos dico ettā esse adinuicē equiāgulos. nā cum illozū vnitates adinuicē z a media distēt vnitate: si vnitates vnius vnitatibꝰ cuiuslibet alterius applicentē erunt supra se inuicē apposite et āguli vnius āgulos alterius nō excedētes: quare sex āguli herāguli erunt equales. erit igitur talis hexagonus equiāgulus q̄d intēditur. et ita de tetragono equiāgulo z pētaogono si placeret ostēderet.
+
+<margin>18</margin> ¶ LATERE proposito hexagonum equiangulū constituere.
+¶ Sit a vnitates dati lateris q̄bus vna plures applico: ita semp augēdo donec tot sint ordines quot vnitates sunt in latere. fiat qꝫ hoc mō descēdendo donec tot cōpleant ordines quor vnitates sunt in eo dem latere. z qꝫ fiunt tria latera equalia ascēdēdo et tria similia descēdendo pꝫ creatū esse herāgonū quē dico equiāgulum. nā medius ordinū semp per vicesimātertiā septimi ē impar qꝫ totus sit a nuero lateris quotus nūerus lateris ab vnitate. habet igit̄ ille maximus numerus vnum mediū. z si fignas extremitates sex laterum per b c d e f g erit illa mediā vnitas media ordinis f c: et b: et ordinis d g. qꝫ equales sunt et ea cōtcānt. distat ergo equalit̄ ab f z c et ab e t b et ab d r g. quare sex triāguli: scz̄ me dia vnitas f c: e media vnitas e b: d: media vnitas d c: media vnitas c b: et media vnitas b g: z media vnitas g f: adinuicē eqlateri sunt et vt in p̄cedēti equiāguli. ē igit̄ hexagonꝰ b c d e f g equiāgulꝰ: q̄d ē ꝑpositū
+
+<margin>19</margin> ¶ SI cuilibet hexagono equiangulo totus senarij multiplex addatur quotus ipse est ab vnitate: similem hexagonū prouenire necesse est.
+¶ SI p̄mo hexagono q̄ est vnitas senarius circūponat per penultimā fiet sequēs hexagonus equiān gulus. nā habēs duo in latere qꝫ si eozū interuallis que etiā sunt sex: sex aptētur vnitates in eadē distan tia: atqꝫ ipsis sex vnitatibꝰ alie sex angularit̄: fiet sequēs hexagonus equiāgulus habens ternariū in latere. z vt precedēs hexagonus secūdus erat ab vnitate ita acceptus est totus senari multiplex: scilz̄ duplus ad senariū qui est duodenarius: cui si rurfum circūponas triplū senarij: scz̄ duodeci vnitate in duodeci interuallis et sex ad sex āgulares vnitates efficis sequētem hexagonū equiāgulum qui vt in precedēte probaret habet quaternariū suū latus. et qꝫ semp iterualla crescūt in senario tot āgulis semp manētibus apposito sequēti senarij mltiplici semp efficies hexagonulū equiāgulū z eadem rōne sequētem: quod intendit propositio.
+
+<margin>20</margin> ¶ SI ordinentur ab vnitate triangulares et singuli secundū senarium multiplicētur: producti addita vnitate erunt hexagoni equianguli.
+¶ SI enim vnitatē que primus triāgularis est senario multiplices: secūdus hexagonus nāscitur: qui addita vnitate circūclusa cognoscit̄ z equiāgulus. et qꝫ per p̄ccedētem quilibet hexagonus tot addit senarios super p̄cedētem quotus ipse p̄cedēs fuerit ab vnitate. z qꝫ libet triāgularis ꝑ correlariū p̄me tot hꝪ vnitates supra p̄cedētem quotus ipse fuerit ab vnitate. ergo si scd̄s triāgularis q̄ ideo hꝪ duas vnitates supra primū multiplicet̄ ꝑ sex addet tot senarios supra p̄cedētem hexagonū qui fuit scd̄us: quotus ipse scd̄us hexagonꝰ fuit ab vnitate. ergo ꝑ p̄cedētem erit sequēs hexagon⁹. z ita quoqꝫ ttio triāgulari q̄ addit tres vnitates supra scd̄z ꝑ sex mltiplicato: z quolibet alio: addes ex multiplicatiōe tot senarios quotus z triāgularis z precedēs hexagonus fuerit ab vnitate: sicqꝫ ꝑ precedētem semp concludes propositum.
+
+<margin>21</margin> ¶ Omnis hexagonus equiangulus tanto abundat super hexagonum tetragonicum simili post vnitatē loco sumptū: q̄stus est tetragonus ab vnitate similiter dictus
+¶ Sit exēpli cā a quartus ab vnitate hexagonꝰ tetragonicꝰ q̄ z tertius ē post vnitatē: sitqꝫ b totus ab vnitate tetragonus id est tertius: z quartus tetragonus c r medius altera parte lōgioz d. dico tertiū hexagonū equiangulū post vnitatē tantū distare ab a q̄tus est b tertius ab vnitate tetragonus. nam per decimāquintā huius c et d cōponunt a: sed z qꝫ differētia b ad d per vicesimāquartam sexti est ter narius latus b: z differētia c ad est quaternari⁹ latus c. erūt ergo ꝑ secundā primi b z c simul maius b vno qꝫ duplum d. capto et totum ab vnitate triangularem quotus est b tetragonoz: quia minus latus
+
+| | | |
+|---|---|---|
+| a | 28 | 37 |
+| c | 16 | 12 |
+| b | 9 | 6 |
+
+<sig>d 3</sig>
+
+<vocab>hexagonus, equiangulus, tetragonicus, triangulares, senarius, vnitas, pentagonus</vocab>

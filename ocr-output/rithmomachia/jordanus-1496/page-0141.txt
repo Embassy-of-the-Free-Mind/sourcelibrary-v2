@@ -1,0 +1,54 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+# Formula proprietatũ ex Boetio reperiendarũ atqz ex Jordano demonstrandarum.
+
+->Diuus Se ue ri nus Bo e ti us <- ->Jor da nus.<-
+| Numerorum proprietates. | Caput. | Liber. | Propositio. | Liber. |
+|-------------------------|:------:|:------:|:-----------:|:------:|
+| **Numerus.** | | | | |
+| 1 | 7 | I | 2 | I |
+| 2 | 7 | I | 2 | I |
+| **Numerus par.** | | | | |
+| 1 | 5 | I | 2 | 7 |
+| 2 | 5 | I | 2 | 7 |
+| 3 | 46 | 2 | 10 | 7 |
+| 4 | 46 | 2 | 12 | 7 |
+| **Numerus impar.** | | | | |
+| 1 | 5 | I | 3 | 7 |
+| 2 | 46 | 2 | 11 | 7 |
+| 3 | | | 10 | 7 |
+| **Numerus pariter par.** | | | | |
+| 1 | 9 | I | 31 | 7 |
+| 2 | 9 | I | 29 | 7 |
+| 3 | 9 | I | 32 | 7 |
+| 4 | 9 | I | 54 | 7 |
+| 5 | 9 | I | 25 | 4 |
+| 6 | 9 | I | 26.40 | 2.7 |
+| **Numerus pariter impar.** | | | | |
+| 1 | 10 | I | 33 | 7 |
+| 2 | 10 | I | 34 | 7 |
+| 3 | 10 | I | 35 | 7 |
+| 4 | 10 | I | 35 | 7 |
+| 5 | 10 | I | 2 | I |
+| 6 | 10 | I | 3 | I |
+| **Numerus impariter par.** | | | | |
+| 1 | 11 | I | 37 | 7 |
+| 2 | 11 | I | 38 | 7 |
+| 3 | 11 | I | 40 | 7 |
+| **Numerus perfectus** | | | | |
+| 1 | 20 | I | 0 | 0 |
+| 2 | 20 | I | 60 | 7 |
+| **Numerus diminutus et abundãs** | | | | |
+| 1 | 0 | 0 | 55 | 7 |
+| 2 | 0 | 0 | 55 | 7 |
+| **Numerus primus et compositus** | | | | |
+| 1 | 0 | 0 | 1 | 3 |
+| 2 | 0 | 0 | 2 | 3 |
+| 3 | 17 | I | 25 | 7 |
+| 4 | 17 | I | 25 | 7 |
+| **Numerus ad alterum primus.** | | | | |
+| 1 | 17 | I | 12 | 3 |
+| 2 | 18 | I | 15 | 3 |
+
+<vocab>Boetius, Jordanus, Numerus par, Numerus impar, Numerus perfectus, Numerus primus, Arithmetica</vocab>

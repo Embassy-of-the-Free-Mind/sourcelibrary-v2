@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>197</page-num>
+<header>11. cap: Vom Schach-Spiel.</header>
+<meta>catchword: so nimt</meta>
+
+und zwantzig: Der Schwartze / ſetzet / der K. Reuter / auf ſechs
+und vierzig: Der Weiſſe / (denſelben gefangen zu halten) des K.
+Schützen / auf neun und dreyſſig: Der Schwartze / (denſelben / das
+mit er / ſeinen König / nicht mehr bedecken dörffe / wider frey zu ma-
+chen) der K. Schützen / auf drey und funffzig: Der Weiſſe / (umb
+dem feinde / ſich zu widerſetzen / oder mit dem Könige / zum folgen-
+den Zuge / auf zwey / zu ſpringen) deſſen Rochen / auf drey: Dahero
+derſelbe / dofern Er / das Spiel verſtehet / daſſelbe wol anzuordnen
+vermögen / und nicht allein / den feind beſchädigen / ſondern auch / ſei-
+ne Züge / umb ſo viel mehr / verſichern wird.
+
+<margin>7.</margin> Wan aber der Schwartze / ſeines K. Soldaten / weder mit
+dem Reuter / (n. 5.) noch mit der K. Soldaten / (n. 6.) verhütet / be-
+ſondern / die Königin / auf zwey und funffzig / rucket: ſo iſt derſelbe
+Zug / dem Spiele / viel dienlicher: dan der Weiſſe / (auf daß Er /
+des K. Soldaten / nicht verliere) ſeiner K. Soldaten / alß dan / auf
+neun und zwantzig / nicht ziehen kan: In erwegung / da es geſchicht /
+der Schwartze / denſelben / mit ſeines K. Soldaten / und folgendes /
+(wan der Weiſſe / den König / des Schaches / von ſeines K. Schützen /
+auß ein und dreyſſig / entfreyet) des W. K. Soldaten / mit ſeines K.
+Reuter / hinweg nimt / und durch denſelben / (ſo fern des K. Schütze /
+auf zwölfe / nicht fürgezogen) von der Königin / Ab-Schach gibt. Thut
+dan der Weiſſe / ſchon andere Züge / ſo wird Er gleichwol / nicht viel
+erhalten. Doch ſol man dieſes / ſo weit verſtehen / wan der Schwar-
+tze / das Spiel zu führen weiß: Dan Er ſonſten / ob ſchon der Weiße
+/ der K. Soldaten / auf 29. (n. 6.) ziehet / gleichwol nicht eben ge-
+winnen wird.
+
+<margin>8.</margin> Wan aber der Weiſſe / nicht den Reuter / auf 19. (n. 4.) beſon-
+dern / des K. Schützens-Soldaten / auf ſieben und zwantzig / ziehet /
+und auf die weyſe / des Schwartzen Spiel / bricht und zerſtöret:
+<margin>9. *</margin> ſo spielet derſelbe / (umb ſeines K. Soldaten zu beſchützen) ſeinen
+lincken Reuter / auf ſechs und zwantzig: Der Weiſſe / auf des S.
+K. Soldaten / ferner ſeines K. Reuter / auf neunzehen / und beſchützet
+<margin>10.</margin> mit demſelben / deſſen Rochens-Soldaten: * Der Schwartze /
+ziehet des K. Reuter / auf des W. K. Rochen / auf eylfe: Der Weiſſe /
+der K. Soldaten / auf des S. K. Schützen / auf neun und zwantzig:
+<margin>11. *</margin> Der Schwartze / nimt ihn / mit des K. Soldaten: Der Weiſſe /
+des S. K. Reuter / mit ſeiner Königin.
+<margin>12.</margin> Wan aber der Schwartze / nicht den W. Soldaten / (n. 11.)
+beſondern des W. K. Rochen / mit ſeines K. Reuter / hinwegraumet:
+
+<vocab>Schach-Spiel, Schwartze, Weisse, König, Reuter, Schützen, Soldaten, Königin, Rochen, Ab-Schach</vocab>

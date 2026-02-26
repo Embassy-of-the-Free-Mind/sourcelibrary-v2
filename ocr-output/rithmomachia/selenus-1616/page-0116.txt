@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>86</page-num>
+<header>Das erste Buch. 10. cap:</header>
+
+meldung thut/ wenig geachtet hat) von denen aber/ so auf die Krieges-kunst/ ein auge gehabt/ gemeine Soldaten/ genennet werden. Diesen letzten Nahmen/ wollen wir ihnen/ in diesem unserm Tractat/ auch nicht unbillig gönnen.
+
+Es bekommen aber diese Acht Soldaten/ beyde/ von der seite des Königes/ und dan der Königin/ daselbsten Sie stehen/ und dan vom jeglichem Haupt-Steine/ für welchem sie gestellet/ folgender gestalt/ ihre Zu-Nahmen:
+
+<image-desc>A text-based diagram illustrating the classification of the eight pawns (Soldaten). A bracket shows that they are named as either "der Könige" (the King's) or "der Königinne" (the Queen's). For each side, four types of pawns are listed behind a second set of brackets: "Eigne" (Own), "Schützen" (Archers/Bishops), "Reuter" (Riders/Knights), and "Rochen" (Rooks). All eight are grouped by a large closing bracket on the right under the collective term "Soldaten".</image-desc>
+
+Ihre Losierungen belangend: stellet man Sie / in die Nächste Zwerch-linie / für die Haupt-Steine / von der einen seite / des platzes/ biß zu der andern / und müssen denselben/ (ausgenommen den Reutern/ welche selber wol wege finden/ und durchbrechen können) wan Sie auß dem Feld-Lager/ oder der Schlacht-Ordnung/ umb dem Feinde/ den kopf zu bieten/ sollen geführet werden/ platz geben/ und den weg eröfnen.
+
+Hiemit nuhn/ hat der Erfinder dieses Kunstreichen Spieles/ etwa andeuten wollen: daß (1.) die fürnemsten / mit den geringsten Soldaten / nicht sollen gleiche losierungen haben: und (2.) die gemeine Soldaten / zu dem grossen und geheimten Kriegs-Rath/ gleich den Befehligs-Habern/ nicht gezogen werden: Sie auch/ (3.) gleichsam ein wall / und brust-wehr/ für den König/ und den Andern Haupt-Steinen sind: und wan Sie (4.) einen irtumb und fähler begehen/ es nicht so gefähr- und schädlich ist/ alß wan einer/ auß den Hauptleuten / (dadurch etwa der Sieg / ungewiß gemachet werden möchte) sich in etwas verstiesse/ oder gefangen würde: Sie auch (5.) zur erhaltung/ des gantzen wesens/ weyl das gemeine Volck/ die arbeit auszustehen vermügsamer ist/ billig / umb die ersten Streiche aufzufangen/ vorn an die Spitze/ gestellet werden: Daß auch (6.) eine grössere anzahl des Fuß-Volckes/ mit wenigerm unkosten/ dan die Reuterey gehalten wird: und man endlich (7.) den Feind/ mit dem Fuß-Volck/ die Reuterey so bald gewahr zu werden / hindert und blendet.
+
+<meta>catchword: Ihren</meta>
+
+<vocab>Soldaten, König, Königin, Haupt-Steine, Rochen, Reuter, Schützen, Fuß-Volck, Reuterey, Kriegs-Rath, Schachspiel</vocab>

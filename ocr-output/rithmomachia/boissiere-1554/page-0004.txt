@@ -1,0 +1,29 @@
+<language>French</language>
+<page-type>title-page</page-type>
+<meta>Handwritten shelfmark "V 8143" and printed number "2" at the bottom center. Circular library stamp "BIBLIOTHECA REGIA" with the French royal coat of arms (three fleurs-de-lis under a crown). Another dark circular stamp on the left.</meta>
+
+# LE
+# TRESEXCEL-
+## LENT ET ANCIEN
+*ieu Pythagorique, dict Rythmomachie, fort*
+*propre & tres vtil à la recreation des esprits*
+*vertueux, pour obtenir vraye & prompte*
+*habitude en tout nombre & proportion: il-*
+*lustré par maistre Claude de Boissiere Daul-*
+*phinois, & nouuellement amplifié par le*
+*mesme autheur.*
+
+<image-desc>The center of the page features the printer's mark of Guillaume Cavellat: a circular woodcut depicting a hen (poule grasse) with a Latin inscription in the border. To the right is a library stamp from the "BIBLIOTHECA REGIA" showing three fleurs-de-lis under a crown. On the left is a dark, partially illegible circular stamp.</image-desc>
+
+->A PARIS,<-
+->*Chez Guillaume Cauellat à l'enseigne de la poul*<-
+->*le grasse, deuant le College de Cambray. 1556*<-
+
+---
+
+->*Les ieux se vendent chez Iean Gentil*<-
+->*à la grand court du palais.*<-
+
+## AVEC PRIVILEGE DU ROY
+
+<vocab>Rythmomachie, Claude de Boissiere, Guillaume Cavellat, Jean Gentil, Pythagorique, 1556, arithmetic, game</vocab>

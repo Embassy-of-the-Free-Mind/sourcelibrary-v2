@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>10</page-num>
+<header>10 Das erste Buch. 1. cap.</header>
+
+,, ten werden. So viel es nuhn/ dem Spiele/ ersprießlich ist/ hal-
+,, ten die Steine/ welche/ mit einander verbunden sind/ unter sich
+,, gute Freundschaft. Wan wir demnach nuhr/ nach dem/ was
+,, Vortheil bringet/ die Freundschaft ansehen wolle/ so halten wirs
+,, dafür/ daß auch die Schach-Steine/ auf der Schach-Tafel/ die
+,, Freundschaft / (welche sonsten in sehr hohen ehren vnd würden
+,, ist) üben/ und das fürtrefliche werck/ der erhaltung der freund-
+,, schaft/ führen können.
+
+Wolte man nuhn/ auf das studieren/ sitten/ laster und tugen-
+de/ so in demselben üblich seynd/ und fürgehen/ sehen / so wird mans
+alhier/ auch artig/ abgemahlet befinden: Dan / wie ein Schach-Zie-
+her/ nuhr darauff siehet/ daß Er/ seinen nutzen/ auf alle wege/ schaffe/
+und dem Mit-Spieler/ mit allerhand vortheil/ und geschwindigkei-
+ten/ beykommen möge/ also bemühet sich ein Jeglicher / nuhr zu sei-
+nem vortheil/ auch mit des Nechsten schaden. Dahero die Griechen
+und Lateiner/ das Sprichwort genommen / *Ludimus Civitates*, das
+ist: Wir Spielen das Schach-Spiel: welches Des: Erasm: Roterod:
+in Adagijs, 3228. Adagio, also außleget:
+
+> ,, *Lusus genus quoddam est, in quo Calculis, ludebatur olim,*
+> ,, *quos Antiquitas πόλεις, i. e. urbes, vocabat. Neoterici χώρας,*
+> ,, *i. e. Regiones, appellare cœperunt. Usurpavit Adagium Cratinus,*
+> ,, *in Fugitivis, & allusit ad hoc Proverbium Plato, lib: de Rep: 4.*
+> ,, *Nam illarum unaquæq; plurimæ sunt civitates, non civitas,*
+> ,, *quemadmodum dicere solent, Ludentes. Refert Zenodotus, quan-*
+> ,, *quam Idem Adagij sensum, non indicat. Quare cuiq;, quod vero*
+> ,, *proximum videatur, conjectandum relinquo. Mihi quadraturum*
+> ,, *videtur, quotiès suum quisq; commodum, quacunq; sectatur viâ, &*
+> ,, *æmulo, competitoriq;, modis omnibus, tendit insidias: qui Lusus,*
+> ,, *frequens est, in Aulis Principum, & in Magistratibus publicis.*
+> ,, *Ab hoc Lusu, manasse videtur, qui nunc vulgo Scacarius dicitur:*
+
+->Das ist:<-
+
+,, Das Sprichwort lautet also: Wir Spielen Stäte: dan
+,, es ist/ eine Art/ eines Spieles / welches man/ mit Steinen/
+,, vorzeiten spielete/ und würden dieselbe/ von den Alten/ Stäte/
+,, von den nachkommenden aber/ Landschaften/ genennet. Die-
+,, ses Sprichwort/ ist zu gebrauchen/ wan man/ von einem/ der
+,, sein eigen vortheil und nutzen / auf allerhand Art/ wie Er kan
+,, und vermag/ suchet/ und seinem gesellen/ der etwa auch/ weiter
+für sich
+
+<vocab>Schach-Spiel, Schach-Steine, Erasmus Roterodamus, Ludimus Civitates, Scacarius, Plato, Adagia</vocab>

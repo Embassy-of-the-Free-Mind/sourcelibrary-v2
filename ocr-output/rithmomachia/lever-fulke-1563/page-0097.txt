@@ -1,0 +1,4 @@
+<language>None</language>
+<page-type>blank</page-type>
+<warning>The page is blank and exhibits significant foxing, staining, and a dark shadow in the bottom right corner, likely from the digitization process.</warning>
+<meta>A circular mark, possibly a watermark or bleed-through, is visible in the upper center of the page.</meta>

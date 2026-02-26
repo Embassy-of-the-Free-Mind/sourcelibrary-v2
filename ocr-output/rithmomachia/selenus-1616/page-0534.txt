@@ -1,0 +1,53 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>492</page-num>
+<header>Das Sechste Capittel.</header>
+
+der Zahle / (ungeachtet was die Zahle / gelten möchten) überle-
+gen wehren.
+
+6) Wan Sie Gegnern / mit den Zifren der Zahlen / und
+auch / mit derselben Weerthe / (unangesehen / daß schon derselbe /
+mehr Steine / hette) überträfen.
+
+7) Wan Sie / ihrem Gegentheile / nicht alleine / mit den
+Steinen / besondern auch mit dem Weerthe / und den Zifren der
+Zahle / überlegen wehren.
+
+(Buxer: fol: 31. b.)
+
+> Cùm, Colludentium pace, factum est, ut quisquis certam
+> vim Numerorum & valorem, certam item quantitatem Calculo-
+> rum & Notarum, (in quibus Valorem, comprahendi volunt) ità,
+> ut qui perfectum fixumque valorem & quantitatem teneat, necesse
+> erit, ut victoriâ potiatur: is hac Calculorum quantitate, Nota-
+> rumque valore exornatus, Ludi Dominium acquiret, etiamsi plu-
+> res Calculi, aut valor, quàm sint constituti, eidem contingunt.
+
+(Idem, fol: 32. a.)
+
+> Hac ultima species, Simplicium Victoriarum, satis felici-
+> ter excogitata est, à Johanne Petro Mesmio Marsano, Mathe-
+> mata Lutetia profitente, hoc pacto:
+> Unus Ludentium finget, se esse Carolum Cæsarem, Christia-
+> norum Imperatorem, Is præsertim, qui Alborum Calculorum,
+> partes tuebitur. Albus enim color, decet Christianos; Alter ve-
+> rò dicet, se esse Solymannum Turcarum Dominum, turbam Ru-
+> brorum Calculorum, regentem. Nam Rubro colore, maxi-
+> mè gaudent Turcæ.
+> Albi Calculi, cum Pyramide, continent 1312, puncta,
+> (demptis Numerorum Radicibus Quadratorum, in Pyramide ex-
+> pressorum) totidem sibi, fictus Noster Imperator, finget Pedites.
+> Duo ultimi, hujusce Exercitus, fient Duces. Hi Duces crea-
+> bunt sibi, 10 Antesignanos. Restant igitur 1300 Pedites, qui
+> divisi in 10, dabuntur cuilibet Antesignano, 130 Bellatores.
+> Rubri Calculi, cum Pyramide, 1752 puncta complectun-
+> tur, ablatis Radicibus, in Pyramide expressis. Turcarum Im-
+> perator, tot sibi dabit Bellatores. Duo ultimi Duces totius Ex-
+> ercitus, & 10 Antesignani creabuntur: supersunt Pedites, 1740,
+> qui in 10 distributi, quilibet Antesignanorum, habebit 174 Pe-
+> dites. Veluti ipsi Turcarum Duces, vincunt Christianos, nu-
+
+<meta>catchword: mero</meta>
+
+<vocab>Carolum Caesarem, Solymannum Turcarum Dominum, Pyramide, Calculi, Mathematics, Johanne Petro Mesmio Marsano, Jean Pierre de Mesmes, Rithmomachia, Antesignanos</vocab>

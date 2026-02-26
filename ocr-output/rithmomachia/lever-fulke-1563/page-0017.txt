@@ -1,0 +1,16 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The philoſophers game.</header>
+<sig>A.j.</sig>
+<meta>catchword: gyue</meta>
+<warning>Heavy bleed-through from the reverse side and fading at the top edge.</warning>
+
+# The diffinition
+
+<image-desc>Decorative drop cap 'T' with floral and foliate ornamentation.</image-desc>That moſte auncient and learned playe, called the Philoſophers game, beinge in Greeke termed <term>ρυθμομαχια</term> ,is as much to ſaye in Engliſhe, as the battell of numbers . Numbers be either euē or odde, wherfore the euen parte is againſt the odde, either parte hauinge a kyng, whych being taken of the aduerſaryes part, and a triumphe celebrated within his campe, the game is ended.
+
+## ¶ Of diuerſe kyndes of playinge.
+
+Amonge the dyuerſe kyndes of playinge thys game, we ſhall ſette forth three ſortes, of whiche the reader maye choſe whether of them he lyketh beſt . And of all thoſe three, we ſhall
+
+<vocab>Philoſophers game, ρυθμομαχια, Rythmomachia, numbers, euen, odde, kyng, triumphe</vocab>

@@ -1,0 +1,93 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<columns>3</columns>
+<page-num>18</page-num>
+
+Bront. quid est Alcmeon q̃ calculos in officinis extornātium multicolores sepenũero egoipse aspe=
+xerim. Alc. neqȝ abfurde queris Brontine. hoc ad acierũ discrimen existimāt: sed duo colores michi
+fatis esse videntur vt acies pariũ sit nigricans q̃ pares ad mundũ pertineant sensibilē. acies autem
+impariũ niuea sit et candicās: q̃ impares masculi fint et indiuidue semperqȝ eiusdē substātie expris
+mant similitudinẽ. Pyramides tamē ob excellentiā cum sue nature tum diuinitatis quadratorū sub
+stantie ex quorũ coaceruatione furgunt coalescuntqȝ nobili quodã par est insignire colore. vt perfectā
+pyramida rubro et tricurtã ceruleo. Bat. Perfectionē colorem pyramidi parium tribuis q̃ ei que
+presidet aciei impariū. Alc. Nec iniuria o Bathille nam et eadẽ impar est et in eius mucrone ac ver
+tice summo residet diuinitas. et latus sue basis infime: primus est a monade perfectus numerus/ et
+suarũ basium numerus eiusdẽ sue basis latus est/ numeri uicqȝ perfectus. et illa eadẽ sua basis primus
+est sensibilis rerūqȝ mobiliũ circulus: verũtamē in ordine circulorū tertius. primus eni simplicissim⁹
+est atqȝ plenissimius cuius centrum vbiqȝ est et circunferentia nusq̃. secundus est eternitatis horizon
+atqȝ supra tempus. tertius est horizon cui at cũ tempore indetessa xtrigine reuolutus. primus est nre
+pyramidis sũmus mucro/ simulqȝ vertex. secundus secūda basis. tertius prima/ infimaqȝ basis. Bat.
+Paradigmata fingis Alcmeon: ludum querimus non symbola. Alc. Recte amones Bathille. vix
+ego memetipsm negligebā: et a suscepto officio aberrabam longius. colores cognofiri arbitrū sunto.
+nam cũ et alijs vsi fueritis nihil refert. verũ quod superest his paucis deprēhedet̃ regulis: et quo in
+re parua modicus vobis satis sit sermo regularum Prima sit hec.
+¶ **Prima.** Calculi vndecūqȝ in vacuos dimoueatur campes: rotondi in scdm. trigoni in tertium. tetragoni cū  1
+sua pyramide in quartum. Bat. Aimoueri in scdm intelligis forte in primū campum. Alc. Ita
+volunt. est enim secundus a se sed post se primus.
+¶ **Scda.** Calculus ois quocūqȝ recto incessu calculum tollere potest: sz angulari atqȝ obliquo nunq̃. 2
+¶ **Tertia.** Numerus numerum partis aduerse et quātitatat eiusdẽ suo recto cursu offendēs: eundem  3
+tollit.
+¶ **Quarta.** Si duo numeri eiusdē partis: numero partis aduerse que iuncti cōstituūt: circūponāt̃: 4
+clausum auferūt. hinc fit vt ternarius 7 quinarius clausum octonariū partis aduerse tollant: et qua=
+ternarius 7 octonarius duodenarium. et h; oc pacto de similibus.
+¶ **Quinta.** Si inter duos aduerse partis numeros vacui interiacētes campi per minorem numerum 5
+multiplicati maiorem efficiant: numerus tollit̃ maior. hinc euenit vt binarius duodenariū sex inter=
+iacentibus campis auferat/ et septenarium octo. et ternarius senariū interiacētibus duobus/
+et nouenarium tribus: et quintuodenarium quinqȝ.
+¶ **Sexta.** Quicūqȝ numerus: cui vt recto calle dimoueatur ois adempta est potestas: tollitur. 6
+¶ **Septima.** Si maxima pyramidis basis offendit pyramidem: eam tollit. si offenditur: tollitur. 7
+¶ **Octaua.** Si numerus per interceptos cāpos multiplicatus basim pyramidis maximam restituat 8
+eandem tollit.
+¶ **Nona.** Si alie bases pyramidẽ offendant cōsimilis in campis (si adest) auferat: et idem euentat 9
+si numerus per interualla multiplicatus aliquam illarũ basium efficiat. si offendātur: eedem tollātur.
+¶ **Decima.** Victoria parta est si in aduersis castris maxima constituit harmonia. itidem seu inferior 10
+ignobiliorqȝ: si constituitur harmonia minor.
+¶ **Undecima.** Calculi acquisiti ad complendam harmoniam aduerse parti auxiliares accipiūtur. 11
+¶ **Duodecima.** Cū maxima harmonia parat calculus ad complendam harmoniam acquifitus a suo 12
+loco non dimouetur.
+
+| Maxime | d | c | b | A | | | | |
+|:---|:---:|:---:|:---:|:---:|:---|:---|:---|:---:|
+| Victorie | 2 | 3 | 4 | 6 | 2.4.6 Medietas arith. | 2.3.4.6 Geo. | 2.3.6 har. | 1 |
+| Pro acie | 4 | 6 | 8 | 12 | 4.8.12 Medietas arith. | 4.6.8.12 Geo. | 4.6.12 har. | 2 |
+| Parium | 6 | 8 | 9 | 12 | 6.9.12 Medietas arith. | 6.8.9.12 Geo. | 6.8.12 har. | 3 |
+| | 4 | 6 | 9 | 12 | 6.9.12 Medietas arith. | 4.6.9 Geo. | 4.6.12 har. | 4 |
+| | 2 | 9 | 16 | 72 | 2.9.16 Medietas arith. | 2.9.16.72 Geo. | 9.16.72 har. | 5 |
+| Maxime | 3 | 5 | 15 | 25 | 5.15.25 Medietas arith. | 3.5.15.25 Geo. | 3.5.15 har. | 1 |
+| Pro acie | 5 | 9 | 45 | 81 | 9.45.81 Medietas arith. | 5.9.45.81 Geo. | 5.9.45. har. | 2 |
+| Impariū | 5 | 25 | 45 | 225 | 5.25.45. Medietas arith. | 5.25.45.225. Geo. | 25.45.225. har. | 3 |
+| Minores | 5 | 15 | 25 | 45 | 5.25.45 Medietas arith. | 5.15.45 Geometrica. | | 1 |
+| Victorie | 12 | 15 | 16 | 20 | 12.16.20 Medietas arith. | 12.15.16.20 Geometrica. | | 2 |
+
+---
+
+**Prime maxime victorie**
+**consonantie musice**
+A b diapente
+B c diatessaron
+A c diapason
+A d diapason ac diapente
+B ad vziam c d bis diapason
+
+<column-break/>
+
+**Secunde maxime victorie**
+**consonantie musice**
+A b diapente
+B c diatessaron
+A c diapason
+A d diapason ac diapente
+B ad vziam c d bis diapason
+
+<column-break/>
+
+**Tertie maxime victorie**
+**consonantie musice**
+A b diatessaron
+B c tonus. consonantiaȝ principiū.
+A c diapente
+A d diapason
+A ad vziaz a c diapafō ac diapēte
+C ad vziam c d bis diapason
+
+<vocab>Alcmeon, Bathillus, Brontinus, Pyramides, Calculus, Harmonia, Diapente, Diatessaron, Diapason, Medietas arithmetica, Geometrica</vocab>

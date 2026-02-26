@@ -1,0 +1,15 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+
+<image-desc>
+A faint engraving or offset print depicting a checkered game board, specifically for the medieval and Renaissance mathematical game known as Rythmomachia (The Philosophers' Game). The board is an 8x8 grid. One side's pieces are arranged in the four central rows on the left side of the board.
+
+The pieces are categorized by their geometric shapes, each containing a number:
+- **Squares**: Positioned in the first two columns of the central rows. Numbers include 81, 121, 49, 45, 25, 20, 9, and 12.
+- **Triangles**: Positioned in the third and fourth columns. Visible numbers include 81, 25, 12, and 6.
+- **Circles**: Positioned in the fifth and sixth columns, featuring smaller and much fainter numbers.
+
+The illustration has a grainy, faded quality, characteristic of a ghost image transferred from a facing page or a worn printing surface.
+</image-desc>
+
+<vocab>Rythmomachia, Philosophers' Game, board game, arithmetic, geometry, squares, triangles, circles</vocab>

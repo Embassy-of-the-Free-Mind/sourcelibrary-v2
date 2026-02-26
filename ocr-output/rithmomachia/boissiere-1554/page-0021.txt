@@ -1,0 +1,13 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, IEV</header>
+
+### Exemple.
+
+Ie veux trouuer les huict nõbres appartenans aux huict premieres tables triangulaires du nõbre requerant: ie prẽs les deux tables de la premiere espece multiplice au rang des pairs, qui est 2. & 4. prouient 6. qui sera mon premier nõbre pretendant en proportion particuliere. Apres ie viens à la seconde proportion multiplice 3 & 9, qui est au nõbre nõpair, puis adioustant 3 & 9. prouiẽt 12: qui sera mon second nõbre pretendãt: & ainsi des autres faisans, auray mes huict premieres tables pretendues ou requises.
+
+Ayant donc ainsi marqué par ceste addition huict tables triãgulaires, cõtenãt le premier nõbre de la proportiõ particuliere appelle requerant, pour trouuer quel nombre conuiẽt avec vn chacun d'iceux requerans en proportion particuliere: faudra que consideres le nõ d'vne chacune espece particuliere cy apres, & selon l'ethimologie & signification du nõ leur acquerras vn nõbre requis proportional, & pour l'exẽple, prenõs le premier nõbre requerãt au ran des pairs, qui est repeté en la suyvãte figure, à sçauoir, 6, & le premier nom de la proportiõ particuliere, qui est sexquialtre, quand tu dis, altre, cest autant cõme autre, & par ainsi trouue vn nõbre qui contiẽt 6,
+
+<meta>catchword: & son</meta>
+
+<vocab>Rithmomachie, tables triangulaires, proportion particuliere, multiplice, pair, nonpair, sesquialtre, nombre requerant</vocab>

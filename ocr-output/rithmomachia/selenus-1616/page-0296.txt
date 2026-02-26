@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>262</page-num>
+<header>Das Dritte Buch | 1. cap:</header>
+<meta>catchword: zehen:</meta>
+
+der Weisse/ gebe/ mit der Königin/ auß funffzig/ Schach-Mat) be-
+sondern/ auf acht und funffzig: der Weisse/ der K. Schützen/ auf
+die S. Königin/ und dero Rochen/ auf vier und dreyßig/ und ent-
+blößet gegen derselben/ des K. Rochen: der Schwartze/ beut/ mit
+derselben/ auß neun und zwantzig/ Schach: der Weisse/ rucket/
+den König/ auf neune: der Schwartze/ (auf daß Er nicht/ durch
+die W. Königin/ auß ein und funffzig/ gleich gemattet werde: auch/
+umb zu versuchen/ ob Er/ dem W. Könige/ auß zehen/ einen
+Schach = Mat/ möchte zufügen) seine Königin/ auf sieben und
+dreyßig: der Weisse/ (umb/ denselben zu verhindern) des K. Schü-
+tzen/ auf die S. Königin/ auf neunzehen: der Schwartze/ nimt/
+mit des K. Schützen/ des W. K. Reuters = Soldaten/ und beut
+Schach: der Weisse/ nimt ihn/ mit dem Könige: der Schwart-
+ze/ beut/ mit der Königin/ auß sechs und dreyßig/ Schach: der
+Weisse/ (umb/ zur verwechslung der Königinne/ wan Er den
+König/ mit der K. Schützen/ auf sieben und zwantzig/ bedeckete:
+keine ursach zu geben) ziehet den König/ auf zehen: der Schwartze/
+seinen bestricketen Rochen/ (umb der K. Schützen/ zu vertheti=
+gen) auf zwey und sechßig: der Weisse/ auf ihn/ die Königin/
+auf sechs und zwantzig: der Schwartze/ (weil sein König/ er blei-
+be stehen/ oder werde vortgerucket/ von der W. Königin/ oder des
+W. K. Rochen/ eines Ab = Schaches/ so fern Er/ seiner K. Ro-
+chen/ nicht wil in die Schantze schlagen: sich unaußbleiblich zu ver-
+muhten) hat sich/ für dem Weissen/ wol zu hüten. Nimt Er
+nuhn/ mit seiner K. Schützen/ des W. K. Schützen/ und beut
+Schach: so nimt ihn der Weisse/ mit des K. Rochen: Er beut/
+mit der Königin/ auß zwelfe/ Schach: (welches dan besser ist/ alß
+mit der K. Rochen/ wan Er/ mit demselben/ der W. K. Schü-
+tens = Soldaten/ nehme/ auf vierzehen: Dan der Weisse/ auf
+den fahl/ mit der K. Schützen/ auf dreyzehen/ den König/ bede-
+cken/ Ab = Schach/ von der Königin/ bieten/ und also/ zur unumb-
+genglichen verwechslung der Königinne/ ursache geben würde: Rü-
+ckete dan/ nach dieser verwechslung/ der Weisse/ zur beschützung/
+seiner K. Schützen/ des K. Rochen/ auf eylfe: so zöge Er/ des K.
+Rochen/ damit Er/ der K. Rochen/ wan der Weisse/ mit der K.
+Schützen/ auß ein und viertzig/ Schach gebe/ nicht verlöre: auf
+zwey und sechßig: der Weisse/ der K. Reuters - Soldaten/ auf
+drey und zwantzig/ und würde/ Ihm/ mit einem Schützen/ über-
+legen seyn) der Weisse/ rucket den König/ mit nutzen/ auf acht-
+
+<vocab>Schach, Schach-Mat, Königin, Rochen, Schützen, Reuters-Soldaten, Ab-Schach</vocab>

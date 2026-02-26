@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<header>Das erste Buch/ 1. Cap:</header>
+
+> » Nachdem nuhn Sadoc / ein Araber/ (der oberste Wacht=
+> » Meister / des Turnes / in welchem die schöne Bianco-fiore, ge=
+> » fänglich gehalten ward) mit dem Florio, (welcher des Königes
+> » Filicis in Hispanien Sohn / und des gefangenen Jungfrewleins
+> » Liebhaber war) oder Philocopo, (wie Er sich dohmaln nennete)
+> » unter das gewelbe des Turnes / sich verfüget hatte / auch vie=
+> » le und mannicherley gespräche / mit einander hielten / sagete
+> » Philocopus, als Er / in einer ecke / an der wand / ein köstliches
+> » Schach-Bret / hangen sahe / zu dem Wacht-Meister: ob Er
+> » gerne den Schach zöge / sinthemahl Er / so ein schönes Bret /
+> » dorthin hängen sehe? Der Sadoc antwortete / daß es nicht
+> » ohn wehre: Dan Er sich wol darmit zuzeiten belüstigete / und
+> » begerte von ihm zu wissen/ ob Ers auch zu ziehen verstünde? da=
+> » rauf ihm der Philocopus, zur antwort gab: Er wüste wol ein we=
+> » nig / von demselben. Wolan / sagte Sadoc / so wollen wir mit=
+> » einander / so lange spielen / biß die hitze / in etwas für über schlei=
+> » che / und du / hinwider zu rücke / in die Stat / reiten könnest: Sol=
+> » ches gefellet mir gantz wol / antwortete Philocopus. Hierauf/
+> » wie der Sadoc / etliche Tappezereien / in einem külen frischen
+> » gewelbe / von einander spreiten / und das Schach-bret / bringen
+> » lassen / der Eine auf dieser / der Ander auf jener seiten / sich ge=
+> » gen einander über / setzeten: Die Schach-Steine / wurden / auf
+> » beede seiten / geordnet: Das Spiel angefangen / und von bee=
+> » den Theilen / damit es nicht gar zu kindisch liesse / eine ziemliche
+> » anzahl / etlicher guldener Pfenninge / welche dem überwinder /
+> » zum besten und zu theile kommen solten / hingeleyet. Setzeten
+> » sich demnach / diese beede Spieler / wie erwehnet / mit unterschie=
+> » denen gedancken / nieder: dan der Eine / wolte gerne / das auf=
+> » gesetzete geld / gewinnen / der Ander aber / zu erlangen die freund=
+> » schaft und vertraulicheit / des Wacht-Meisters / (umb seinem
+> » anschlage / auf den Turn zu kommen / einen bessern vortgang zu
+> » verschaffen) gutwillig verlieren. Der Philocopus, vermercke
+> » bald / in den ersten Zügen / daß Er das Spiel baß verstünde /
+> » als sein Gegener der Wacht-Meister. Setzete demnach / des
+> » Wacht-Meisters Schach-Könige / mit einem seiner Rochen /
+> » und Reuter / scharf zu / denselben / gleichsamb einschliessend / und
+> » hatte der König / auf der lincken seiten / einen Schützen oder Al=
+
+<meta>catchword: ten sie</meta>
+
+<vocab>Sadoc, Araber, Wachtmeister, Bianco-fiore, Florio, Filicis, Hispanien, Philocopo, Philocopus, Schach, Schach-Bret, Tappezereien, Pfenninge, Rochen, Reuter, Schützen</vocab>

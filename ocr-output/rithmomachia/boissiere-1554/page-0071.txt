@@ -1,0 +1,23 @@
+<language>French</language>
+<page-type>text</page-type>
+<meta>catchword: De</meta>
+
+# RYTHMOMACHIE, IEV
+## De la proportion de Geometrie.
+
+Proportion de Geometrie eſt, quand les differences que les deux nombres extremes ont au nombre moyen, ſont de meſme proportion que l'vn des deux extremes au moyen. comme 2, 4, 8. icy vois-tu la difference que le premier 2 a au moyen 4, eſtre 2: ſemblablement la difference que le dernier 8, a au moyen 4, eſtre 4. Parquoy appert les deux differences 2, & 4, eſtre en proportiō double, tout ainſi que le moyen 4 auec le quel que tu vouldras des deux extremes 2, & 8, car 2, & 4, eſt proportion duple: & 4, & 8, par le ſemblable.
+
+<insert>
+->Proportions de Geometrie contenuues au ieu.<-
+
+| | | |
+| :--- | :--- | :--- |
+| 2 4 8 | 5 25 125 | 25 30 36 |
+| 3 6 12 | 9 12 16 | 25 45 81 |
+| 4 6 9 | 9 15 25 | 36 42 49 |
+| 4 8 16 | 9 45 225 | 36 90 225 |
+| 4 12 36 | 16 20 25 | 49 56 64 |
+| 4 16 64 | 20 30 45 | 81 90 100 |
+</insert>
+
+<vocab>Rythmomachie, proportion de Geometrie, nombres extremes, nombre moyen, proportion double, proportion duple</vocab>

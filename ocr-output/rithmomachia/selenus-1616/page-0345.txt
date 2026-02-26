@@ -1,0 +1,56 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>311</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>s. cap:</margin>
+sondern der K. Soldaten / auf des S. K. Reuter / auf fünf und
+viertzig / so nimt der Schwartze / gleichwol / des W. K. Schüt=
+zen / mit der K. Schützens-Soldaten: Der Weisse / des S. K.
+Reuter / mit seiner K. Schützens-Soldaten: Der Schwartze /
+denselben / mit der Königin: ziehet folgendes / des K. Schützen /
+auf der W. K. Reuter / auf viertzig / und ordnet sein Spiel / sehr
+wol: Der Weisse aber / hette für dießmahl besser gethan / daß Er /
+mit seinem Schützen / zu rücke gewichen wehre / alß seinen Feind /
+ferner verfolget hette.
+
+<margin>60.</margin>
+Wan aber der Weisse / nicht den Reuter auf 22. (n. 57.) be=
+sondern / der K. Schützens-Soldaten / auf des S. K. Reuter / und
+der S. K. Schützens-Soldaten / auf fünf und viertzig / ziehet:
+so nimt ihn / der Schwartze / mit diesem Soldaten: der Weiß=
+se / denselben / mit seiner Königin: Der Schwartze / ziehet seine
+Königin / (umb / dieselbe / mit der S. Königin / dieweyl Er /
+wan die beede / von der Tafel / abgeschaffet seynd / das Spiel füg=
+licher ordnen / und sicherer damit verfahren kan: zu vertauschen)
+auf vier und funfzig: Der Weisse / die Königin / (weyl Er sie
+noch behalten wil / auch umb / ihren Schützen / ob sie schon demsel=
+ben / den gang sperret / zu verthetigen) auf dreyzehen / und nicht auf
+fünfe: Dan Er sonsten / das Spiel / verschertzete: Weyl der
+Schwartze / auf diesen zug / die Königin / auf seines K. Schützen /
+(welcher ohne wacht ist) und auf dessen Soldaten / (umb / seinem
+Könige / auß dieses felde / Schach-Matt zu geben) auf acht und dreyß=
+ig / ziehen würde: Entwiche Er nuhn dem Schach-Matte / oder
+zöge die Königin / auf zwelfe: so verlöre Er gleichwol / einen sei=
+ner Schützen / oder des K. Reuter / so ferne derselbe / auf neun und
+zwanzig gezogen worden.
+
+<margin>
+61.
+62.
+</margin>
+Wan aber der Schwartze / seine züge / wie (n. 49. 52.) geset=
+tzet / nicht ansteltet / besondern die Königin / auf zwey und funfzig /
+ziehet: * so nimt der Weisse / der S. K. Reuter / mit des K. Schü=
+tzen: Der Schwartze / denselben / (auf daß Er sein Spiel / nicht
+verderbe / und der K. Schützen / den weg eröffne) mit der K. Sol=
+daten: Dieses nuhn lauffet demselben / welches im 4. Cap: des 2.
+Buches / von den Soldaten / daß man dieselben / nicht für einander
+ziehen / und ihre gänge dergestalt hemmen sol / gesetzet worden /
+nicht zu wiedern: Dan es dem Schwartzen / für dießmahl bon=
+nöten thut / sein Spiel / dergestalt anzuordnen / und / von den ein=
+
+<sig>Rr</sig>
+<meta>catchword: fällen</meta>
+
+<vocab>Schach-Spiel, Reuter, Schützen, Soldaten, Königin, Schach-Matt, Weisse, Schwartze</vocab>

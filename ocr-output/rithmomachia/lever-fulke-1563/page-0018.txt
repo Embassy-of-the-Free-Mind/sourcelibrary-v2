@@ -1,0 +1,30 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>. i . ii</sig>
+<meta>catchword: ¶ The</meta>
+<warning>Ink bleed-through from the reverse page is visible throughout, though the primary text remains legible.</warning>
+
+gyue suche shorte and easye rules, that 
+no man (althoughe he were altogether 
+ignoraunt in Arithmetike) shall fynde 
+the game so hard, but that he may learne 
+to playe it.
+
+## ¶ Of the partes of thys Game.
+
+He that wyll learne thys game, any 
+of the three waies, muste firste be 
+enstructed of these sixe partes. The 
+table as the fielde. 2. the menne and the 
+numbers of them as the hoste. 3. the 
+placynge of them, as the encampinge. 4. 
+the order of playe and remouynge the 
+men, as the marchynge and fyghtynge 
+5. the manner and lawes of conqueryng 
+and taking. 6. and last of al the triumphe 
+after the victorie,
+
+## ¶ Of these partes in the fyrst kynd of playing.
+
+<vocab>Philosophers game, Arithmetike, hoste, encampinge, victorie, Rithmomachia</vocab>

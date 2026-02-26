@@ -1,0 +1,15 @@
+<language>German</language>
+<page-num>180</page-num>
+<header>Das Ander Buch / 8. cap</header>
+<page-type>text</page-type>
+<meta>Catchword: Die an-</meta>
+
+# An den Leser.
+
+<image-desc>An ornamental woodcut drop cap 'O' containing a diagram of three overlapping circles or spheres within a decorated frame.</image-desc>OB wol droben / im 6. Cap: dieses Buches / welcher gestalt man / die verenderungen der Züge / in den Exempeln / auf eine besondere Art / leichtlich behalten / und wan es einem geliebe / zu jederzeit / alsbald ihm selber / für Augen stellen könne / anleytung gegeben worden: so hat doch / der Author, (weil es etwa / dergleichen züge selber aufzuzeichnen / den angehenden / und noch ungeübeten Schach-Ziehern / in etwas schwer- oder vielen / die mit höhern gescheften beladen / auß mangel der übrigen zeit / ungelegen fallen möchte: auf daß auch bey diesem Punct / dem Läser gedienet / und alles / umb so viel leichter / gemachet würde) diesem / und den folgenden Capitteln / in welchen / die Exempel außführlich beschrieben worden / so viel Schemata, alß nötig seyn möchten / hinzu ordnen / und noch mittheilen wollen.
+
+Wan aber zu zeiten / ein Schema eines angezogenen Numeri, außgelassen worden / so kan man / dasselbe Schema / welches auf den nächsten Numerum / der für demselben gefunden wird / gerichtet ist / gebrauchen: Die züge / biß an den ersten zug / des angehenden Numeri, ziehen: und ihm selber / dergestalt / das außgelassene diagramma, verfertigen.
+
+Die Buchstaben / dieser quadraten, belangend: so zeigen Sie / die Schach-Steine / folgender massen an: (K) König: (K) Königin: (Ro) Roche: (Sc) Schütze: (R) Reuter: (S) Soldat. Das w und S aber / (so für die obgedachte buchstaben gesetzet) deuten an / die Weisse / und Schwartze farbe / der Schach-Steine.
+
+<vocab>Schach, Züge, Schemata, König, Königin, Roche, Schütze, Reuter, Soldat, diagramma, Schach-Steine, Gustavus Selenus</vocab>

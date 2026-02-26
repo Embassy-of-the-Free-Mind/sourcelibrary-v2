@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>355</page-num>
+<header>9. cap: Vom Schach-Spiel.</header>
+
+Züge / zur Lust / selber nach zusuchen / heimbstellet ) auf vielers
+ley Art / zu verendern seynd / also sollen dieselben / weiter nicht ver=
+folget werden.
+
+<margin>46.</margin> Nimt aber der Schwarze / nicht den W. Reuter / (n. 5.) be=
+sondern des W. K. Schützens-Soldaten / mit seines K. Schü=
+zens-Soldaten : so ziehet / der Weisse / des K. Rochen / auf drey :
+Der Schwarze / auf denselben / seines K. Rochen / auf neun
+und funfzig : Der Weisse / nimt ihn / mit seines K. Rochen /
+und beut Schach : Der Schwarze / nimt denselben / mit dem
+Könige : Der Weisse / mit seines K. Reuter / des S. K. Ro=
+chens-Soldaten / und beut Schach : Der Schwarze / muß
+den König / auf sechßig / rucken : Der Weisse / ( umb / seine
+Königin zu beschützen ) setzet / dero Schützen / auf die S. Königin /
+auf vier und dreyßig : Der Schwarze / muß sie / auf drey und
+funfzig / stellen : Der Weisse / nimt / mit der K. Schützen / des
+S. K. Reuter : Der Schwarze / darf ihn / mit des K. Reu=
+ters-Soldaten / nicht nehmen / besondern / rucket die Königin /
+( welche Er sonsten / auf den erzehleten fall / durch des W. K.
+Reuter / auf drey und viertzig / im Schach geben / verlieren müste /
+auch / umb ihren Schützen / ferner zu entsetzen ) auf zwey und
+sechßig : Der Weisse / nimt / mit der K. Schützen / des S. K.
+Reuters-Soldaten : Der Schwarze / rucket / der K. Schü=
+tzen / auf vier und viertzig : Der Weisse / auf denselben / des
+K. Reuter / auf neun und funfzig : <margin>47.</margin> * Der Schwarze / densel=
+ben / auf drey und funfzig : Der Weisse / gibt / mit der Königin /
+auß drey und dreyßig / Schach : Der Schwarze / rucket den
+König / auf ein und sechßig / oder zwey und funfzig : Ziehet Er
+ihn / in jenes feld : so gibt / der Weisse / mit / der K. Schützen /
+auß drey und viertzig / Schach-Mat : Setzet Er ihn aber / auf
+dieses plätzlein : so gibt / der Weisse / mit der Königin / auß ein
+und funfzig / Schach : Der Schwarze / rucket / den König / auf
+ein und sechßig : Der Weisse / gibt / mit der K. Schützen / auß
+drey und viertzig / Schach-Mat.
+
+<margin>48.</margin> Wan aber der Schwarze / den Schützen / nicht auf 53. (n. 47.)
+besondern / auf ein und funfzig / rucket : so setzet / der Weisse / auf
+ihn / die Königin / auf drey und viertzig : Der Schwarze / densel=
+ben / auf drey und dreyßig : Der Weisse / des K. Reuter / auf
+<margin>49.</margin> neun und vierzig : * Der Schwarze / die Königin / ( in wil=
+lens / auß zwelfe / Schach-Mat zu geben ) auf des W. K. Reu=
+
+<sig>Yy iij</sig>
+<meta>catchword: teres</meta>
+
+<vocab>Schachspiel, Schach-Mat, Rochen, Reuter, Schützen, Soldaten, Königin, König, Weiß, Schwarz</vocab>

@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>152</page-num>
+<header>Das Ander Buch / 4. cap:</header>
+<meta>catchword: Das</meta>
+
+1.) Wan einer nicht lust hat / seinen feind / mit den ersten zügen / anzugreiffen / besondern sich nuhr beschützen wil / so sol Er den andern / umb seine Steine anzugreiffen / nuhr wol herbey kommen lassen / doch dem ersten ansprengen des Feindes / gnugsamen widerstand thun / und alle mittel / umb dem Andern / das zuruckeweichen / zu verhindern / erdencken und erfinden.
+
+Es sol (2.) ein Spieler / einen Soldaten / ohne besatzung / nicht stehen lassen / besondern dieselben semptlich / auf daß der hinterste / den fordersten / zu jederzeit / so viel möglich / beschützen möge / nahe bey ein ander / behalten. Dan die Soldaten / welche bloß stehen / schwerlich schutz haben / es wehre dan / daß man Sie / umb etwas sonderliches zu gewinnen / oder das Spiel dadurch / in einen bessern stand zu bringen / oder aber wegen einer andern erheblichen ursache / die im Spiele fürfallen möchte / also ziehen müste. So fern es demnach / die höchste noth / nicht anderst erfodert / so ists allezeit besser / daß Sie immer wol entsetzet / und nicht weit / von einander gestellet werden. In erwiegung / die andere Haupt-Steine / weil Sie / mit ihrer eigenen beschützung / gnugsam zu schaffen / ihnen in der noth / die hülfliche hand / der notturft nach / nicht allezeit bieten können. So erlanget auch der feind / so bald die ordnung geöffnet / und die Steine / hin und wider / unordentlich gesetzet sind / viele bessere gelegenheit / sie anzugreiffen / alß wan sie / in einer guten ordnung / bey ein ander stehen / und stand halten.
+
+Es sol (3.) ein Spieler / welcher sich beschützen wil / fleissig dahin trachten / daß Er nuhr mit wenigen / vielen hereintringens den Feinden / begegnen / und ihr ansprengen / zu rücke treiben dörfe : davon dan in den folgenden Exempeln / weitere nachrichtungen / sich werden erzeigen / und angeben.
+
+<image-desc>A large decorative woodcut ornament acting as a tailpiece. It features a central human-like mask or grotesque face surrounded by symmetrical, elaborate scrollwork, stylized foliage, and ribbon-like shapes.</image-desc>
+
+---
+
+<vocab>Soldaten, Steine, Spieler, Feind, ansprengen, widerstand, besatzung, entsetzet, Haupt-Steine, ordnung</vocab>

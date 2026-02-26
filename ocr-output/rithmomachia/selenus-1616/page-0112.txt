@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>82</page-num>
+<header>Das erste Buch / 9. cap:</header>
+
+» entpfach / und das Er habe von ihm hilf / wan Er sol / sein Hů-
+» ter seyn / und davon Er sein bedarf: Wer Ritter seyn wil /
+» der muß viel sach / an ihm haben / von not. Erstlich sol Er
+» weißheit haben: wan / ehe der Ritter / die Ritters gůrtel /
+» umb sich gůrt / so sol Er gewesen sein / ein Knap von wa-
+» pen / das Er in wapen sich geůbet und gearbeitet hab: wan
+» in streit frumpt mehr / erfarn weißheit und kunst / dan
+» sterck / und unweiser Man Kůnheit: wan es geschicht dick / das
+» man streites unterleit / wan man unwyslichen / von tőreter
+» Kůnheit / angreiffet. Und davon sol ein fůrst nit haben /
+» ein Ritter Meister / der Jung sey / und unerfahren. Es sol
+» auch der Ritter stet sein und getrew: wan stetigkeit durch-
+» leuchtet ritterliche sitten / alß ein durchsichtiger margarit /
+» under edelm gestein. Und davon / ein Ritter / der seinem
+» Herren / ungetrew ist / der verleust / von recht / Ritters Nah-
+» men. Es sol auch der Ritter / nicht allein seim Herren ge-
+» trew sein / er sol auch getrew sein / seinen Ritters-gesellen:
+» Wan Veinde erschrecket nichts so harte / alß eynmůhtig-
+» keit / oder aynung / unter gesellschaft / und das under ihn
+» ungebrochen beleib / und stått sey: das macht sieg / und rit-
+» terlichen preyß. Wo aber gesellen muht sich theilet / die
+» werden syglos / und lygen under / bey allen guten Sachen.
+» Es sol ein jeder / seinen gesellen / alß lieb haben / daß ihm
+» důnck / was ihm ern widerfare / das sey sein ere auch / und
+» das er all freyß / gern mit ihm leid. Darnach sol der Rit-
+» ter mild sein / also das Er vor seinen Ritters gesellen / oder
+» mitgenossen / nichts spar an keinem wapen: also was er ge-
+» win / daß das gemein sey. Wan es geschicht oft und dick /
+» wen ein Ritter sein gewinn / geitiglich behaltet / und sicht
+» sein gesellen in nőten / er keret im den ruck / und lest ihn schla-
+» hen / also schlecht in sein geitigkeit. Es geschicht dick / was
+» die natur verzeicht / daß gibt gut: Und darumb sol sich ein
+» Herr hůten / wen er kriegen wolle / das er den seinen / zu
+» derselben Zeit / nit abprech / noch abnehme ihr haab und
+» gut: wan der theil / des raubes sol gemein sein / alß der Sieg
+» sein ist: ( besihe 1. Sam: 30. v. 21. ad f. Josuæ, 22. v. 8.) Es sol
+» auch ein Ritter starck sein / nicht allein an dem leibe / beson-
+
+<meta>catchword: dern</meta>
+
+<vocab>Ritter, weißheit, Kůnheit, Ritters-gesellen, eynmůhtigkeit, geitigkeit, Sieg, 1. Samuel 30, Josuæ 22</vocab>

@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>75</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>K iij</sig>
+<meta>catchword: der gant</meta>
+
+<margin>8. cap:</margin>
+bot vinden und setzen/und das sie den/ die in dem Reich seint/ <margin>cc</margin>
+recht und redlich/zu rechter sach helffen/und das sie die urtheil <margin>cc</margin>
+geben/als sie gehören/von dem vorsprechen/und rechten rat ge- <margin>cc</margin>
+ben/und gemein leut seynt/ also das sie weder durch lieb noch <margin>cc</margin>
+leyd/dem rechten abgesten/und sollen auch stets beschawen/waß <margin>cc</margin>
+land und leuten gut sey. Es ist ze mercken/daß die Richter viel <margin>cc</margin>
+sache an ihn haben sollent/ die in not seind/ ob sie recht richten <margin>cc</margin>
+wollent. **Deß Ersten**/sol sein/ein yeglicher Richter standthaf- <margin>cc</margin>
+tig/also/daß er weder durch gut/noch lieb/noch durch veint- <margin>cc</margin>
+schaft/noch durch Zorn/dem rechten/nicht abstee: Es sol auch <margin>cc</margin>
+der Richter/nach hab oder gut/nicht geitig sein: 2. sol der Rich- <margin>cc</margin>
+ter unrecht hassen/besunder freundschaft/und veindschaft/Also <margin>cc</margin>
+daß Er durch lieb/noch durch leid/nicht thu/nur das recht sey: <margin>cc</margin>
+3. Sol Er richten ohne Zorn: 4. Sol Er nicht/wider gerechtig- <margin>cc</margin>
+keit / geboren freuntschaft achten: Er sol gleich büßen / den <margin>cc</margin>
+freundt alß den veint/wan er tut wider das recht: und was er <margin>cc</margin>
+gebeut andern leuthen/das sol er selber tun: Deß tunt aber die <margin>cc</margin>
+Richter nun nit/wan ihr gebot seynd/nuhr als die Spinnen <margin>cc</margin>
+wep/die begehren nur mucken/und kleine ding: Also vahend <margin>cc</margin>
+sie/nur arm leut/mit ihren geboten: und dovon geschicht/wan <margin>cc</margin>
+die edelln leut/die nit lieb habent das recht/noch der fürsten ge- <margin>cc</margin>
+richt furchtent/das dieselben/werdent rauber/prenner/mor- <margin>cc</margin>
+der/und der armen leut echter/und ze jungst ierer Herren ver- <margin>cc</margin>
+drucker und verreter. 5. Sollent die Richter/die der Bücher <margin>cc</margin>
+nit künnen/dick hören/dy der bücher gelert seind/und das be- <margin>cc</margin>
+trachten/was sie hören/das recht ist/das sie das volfüren/und <margin>cc</margin>
+darumb sollent sie/nit gemeine arbeit haben zeschaffen: Sie sol- <margin>cc</margin>
+lent aber/alle Arbeiter beschirmen/auch betrachten/das wir <margin>cc</margin>
+hie/nit yemer leben. <margin>cc</margin>
+
+Der Alten gang/von stat ist/wan der schwarz/wirt <margin>cc</margin>
+gesetzet/zu der rechten hand deß Küniges/ in sinen aigen stuel/ <margin>cc</margin>
+aber der weiß/wirt gesetzet/zu der gelincken hand/der Küni- <margin>cc</margin>
+gin/und heisend weiß und schwarz/nit von farb/wegen ir <margin>cc</margin>
+selbs wesen/sonder von der stat wegen/ er sey weiß/oder <margin>cc</margin>
+schwarz: So sy in ihren aigen steten stand/so mügen sy/auf <margin>cc</margin>
+zwo stet gan: wen der zu der rechten hand/der Schwarz ist/so <margin>cc</margin>
+
+<vocab>Richter, Schach-Spiel, Künig, Künigin, schwarz, weiß, Spinnen wep, gerechtigkeit, rauber, prenner, morder</vocab>

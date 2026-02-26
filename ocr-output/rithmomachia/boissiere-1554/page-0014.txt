@@ -1,0 +1,17 @@
+<language>Latin</language>
+<page-type>diagram</page-type>
+<page-num>9</page-num>
+
+<image-desc>
+A rectangular diagram featuring a 12-column by 7-row checkerboard grid of alternating white and black squares, beginning with a white square in the top-left corner. Various characters of the Latin alphabet and an ampersand are distributed within the central squares of the grid. Letters placed on white squares are printed in black ink, while letters on black squares are printed in a light or white ink.
+- Row 1: "Q" in the 3rd column (white), "R" in the 5th column (white), and "K" in the 7th column (white).
+- Row 2: "H" in the 5th column (black).
+- Row 3: "E" in the 4th column (black), lowercase "y" in the 5th column (white), "B" in the 6th column (black), and "X" in the 7th column (white).
+- Row 4: "P" in the 3rd column (black), "G" in the 4th column (white), "V" in the 5th column (black), "A" in the 6th column (white), "S" in the 7th column (black), "F" in the 8th column (white), and "L" in the 9th column (black).
+- Row 5: "D" in the 4th column (black), "T" in the 5th column (white), and "C" in the 6th column (black).
+- Row 6: an ampersand "&" in the 4th column (white) and "I" in the 5th column (black).
+- Row 7: "O" in the 3rd column (white), "N" in the 5th column (white), "Z" in the 7th column (white), and "M" in the 8th column (black).
+The number 9 is printed at the bottom right corner of the page.
+</image-desc>
+
+<vocab>checkerboard, grid, cipher, mnemonics, Latin alphabet, ampersand</vocab>

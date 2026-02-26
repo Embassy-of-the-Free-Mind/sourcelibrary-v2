@@ -1,0 +1,39 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>28</page-num>
+<header>DES PHILOSOPHES.</header>
+
+## De l'emprisonnement.
+
+**S**I quelques nombres tellement peuuent assie-
+ger vn autre, qu'il ne puisse sortir droictemẽt
+sans aller par les coings cõme les fols des eschets,
+n'auoir secours d'aucun autre de sa liurée: iceluy
+sera prins par emprisonnement lors qu'on iouera
+la derniere table des emprisonnẽtes, sans porter
+vn autre en son lieu.
+
+->Exemple.<-
+
+La table quarrée de 15 enuironnée & assiegée
+des nõbres aduersaires ne peut sortir en sorte quel
+cõque: parquoy à bõ droit doit estre prinse: et tous
+nombres peuuent estre par ce moyen emprison-
+nez, & peuuent emprisonner les autres par au-
+tant que nous auons dit en la prinse d'assault que
+si on peut transporter sa table, en quelque lieu, ou
+la descouurir tellement qu'il se trouuast d'espaces
+vuides entre icelle table et quelqu'autre de l'ad-
+uersaire par lesquelles ta table multipliée fust ega
+le à la table de l'aduersaire la pourroit prendre,
+sans se transporter en la place d'icelle. En quel-
+conque prinse que ce soit, si tu as oublié negligem
+ment de prendre quelque table & à l'autre coup
+que viendras à iouer tu trouues encores les tables
+ainsi disposées tu pourras prendre la table de ton
+aduersaire, & pource que nulle prinse ne se faict
+sans iouer ioueras la table victorieuse au lieu de
+
+<sig>D iij</sig>
+
+<vocab>emprisonnement, fols des eschets, table quarrée, prinse d'assault, aduersaire</vocab>

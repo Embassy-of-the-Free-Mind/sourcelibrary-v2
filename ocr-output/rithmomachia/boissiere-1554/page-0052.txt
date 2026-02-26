@@ -1,0 +1,29 @@
+<language>Latin</language>
+<page-type>diagram</page-type>
+<page-num>25</page-num>
+
+<image-desc>
+A hand-drawn or printed diagram of a numerical grid, likely representing a game board (such as for Rythmomachia). The grid consists of 9 rows and 14 columns, bisected by a thick vertical line between the 7th and 8th columns. 
+
+On the left side of the divider, the grid contains several white (unfilled) geometric shapes, most of which have a dot positioned below the numeral inside:
+- Row 1, Column 7: A triangle containing the number 25.
+- Row 2, Column 1: A square containing the number 45.
+- Row 4, Column 6: A circle containing the number 8.
+- Row 5, Column 2: A circle containing the number 3.
+- Row 5, Column 4: A circle containing the number 36.
+- Row 5, Column 7: The letter "B".
+- Row 6, Column 6: A circle containing the number 4.
+- Row 6, Column 7: The letter "C".
+
+On the right side of the divider, the grid contains several black (filled) geometric shapes and one white square:
+- Row 1, Column 9: A black circle containing the number 25.
+- Row 2, Column 10: A black circle containing the number 5.
+- Row 5, Column 9: A black triangle containing the number 12.
+- Row 7, Column 11: A black circle containing the number 3.
+- Row 8, Column 10: A black circle containing the number 6.
+- Row 8, Column 11: A white square containing the number 15.
+- Row 8, Column 12: A black square containing the number 28.
+- Row 9, Column 11: A black triangle containing the number 20.
+</image-desc>
+
+<vocab>Rythmomachia, game board, numerical grid, geometric pieces, mathematical diagram</vocab>

@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>26</page-num>
+<header>Das Erste Buch / 2.cap:</header>
+
+nebest ihren beeden vorgängern/ geschrieben: Also/ daß/ der Xerxes, (alij Xerxes,) umb das 3635 Jahre / nach erschaffung der Welt / solte gelebet / und den König Ewilmerodoch / einen scheußlichen Tyrannen / mit diesem Spiele / zur güte/ beweget haben / und was der umbstände / mehr seynd. Es bekreftiget dieses / noch ferner / *Lucas VVielius, in Tract: de Ludo Scacch: cap: 2.* mit dem worte *Schach* / so *Chaldaisch* seyn sol. Imgleichen/ daß die Schach-Tabel / nach der Stad Babylon / vierecket / gemachet sey. Aber / man möchte sich / gerne berichten lassen / wer doch diesen *Xerxem Philomatorem*, auß der ganzen *Antiquitet*, gekant / daß man ihn / nach verfliessung tausent und mehr Jahren / wider herfür gesuchet? Man wolte auch / noch zweiflen / ob Ewilmerodoch / ein so arger Tyran gewesen / wie Ihm die Juden andichten? Der *H. Hieronymus*, helts im 4. Cap: des 14. Buches / über den Propheten *Esaiam*, für eine Fabel / und Thalmudisch Mährlein: So erkennet Ihn / auch *Phil: Melanchton, lib: 1. Chronic:* für einen Gottsfürchtigen / und frommen Regenten / und beweiset solches / auß dem letzten Capitt: des 2. Buches der Könige. So ferne nuhn / das wort *Schach* / *Chaldaisch* / fragt man / wie es doch kommen / weil sie ja selbsten / daß dieses Spiel / von den *Chaldeern* / auf die Griechen / von diesen / auf die Römer / und also fort / auf uns gebracht worden / bekennen: Daß / das wörtlein *Schach* / bey itztgeregten Völckern / so eine geraume Zeit / verschwiegen und hinterhalten worden? Das letzte / wil sich / zu unserm Spiele / nicht wol reymen / daß man in Stäten / öffentliche Feld-Schlachten / anstellen wolte. Es mag derwegen / ein Jeglicher / hievon halten / was Er wil.
+
+Viel weniger aber / ist dem *Vidæ* zu glauben / daß ein welsches Weiblein / *Scacheides*, dasselbe solte erfunden haben: Wie Er mit folgenden Verschen / vielleicht auß zuneigung gegen seinem Vaterlande / oder doch Poetischer freyheit / in seiner *Scacchiâ*, vermeinet:
+
+> » *Vos primæ studia hæc, Italis monstrastis in oris*
+> » *Scacchides egregiæ, monimentum insigne sororis.*
+> » ->Das ist:<-
+> » Ihr (Götter) habt jah erstlich / in Welschland
+> » Diese kurzweil / gemacht bekand /
+> » Welche bekam / den Nahmen sein
+> » Von Schachide / ewr Schwester rein.
+
+Schließlich / helts *Vincent: Castell: in lib: de reb: à Palam: invent:* und *Th: Act: circ: f. tractat: de Lud: Scach:* so wol auch *Jac: Mycil:*
+
+<meta>Catchword: Mycil:</meta>
+
+<vocab>Xerxes, Ewilmerodoch, Babylon, Lucas Wielius, Schach, Chaldaisch, Hieronymus, Melanchton, Vida, Scacheides, Scacchia, Vincentius Castellanus</vocab>

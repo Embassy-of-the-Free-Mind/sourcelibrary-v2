@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>321</page-num>
+<header>I. cap: Vom Schach-Spiel.</header>
+
+<margin>94.</margin>Wan aber der Schwartze/ den W. Reuter / nicht nimt /
+(n. 93.) besondern den König/ auf funf und dreyffig / ziehet: so gibt /
+der Weisse / mit des K. Reuters = Soldaten / auß sechs und zwan=
+zig/ Schach=Mat: Ziehet ihn aber/ der Schwartze/ nicht auf funf=
+besondern/ auf drey und dreyffig: so rucket der Weisse/ die Königin /
+auf ein und funfzig/ und beut Schach : Der Schwartze/ bedecket /
+den König/ mit des K. Reuters = Soldaten / auf zwey und viertzig :
+Der Weisse / beut / mit seines K. Reuters = Soldaten / auß sechs
+und zwantzig/ Schach : Der Schwartze/ muß / mit dem Könige/
+auf funf und zwantzig/ weichen : Der Weisse/ nimt/ die S. Köni=
+gin/ mit des K. Reuter : Der Schwartze / denselben/ mit der K.
+Reuters = Soldaten : Der Weisse/ des S. K. Schützens = Solda=
+ten/ mit der Königin/ ziehet dieselbe / auf des S. K. Rochen / und
+
+<margin>95.</margin>beut Schach : * Der Schwartze / nimt/ des W. K. Reuters =
+Soldaten/ mit dem Könige : Der Weisse/ gibt/ mit der Königin /
+auß sieben und zwantzig/ Schach / und folgendes / (wan der S. Kö=
+nig/ auf drey und dreyffig / oder siebenzehen / gerucket) auß vier und
+dreyffig/ oder achtzehen / Schach = Mat.
+
+<margin>96.</margin>Nimt aber der Schwartze/ den W. Soldaten/ nicht/(n. 95.)
+besondern/ rucket den König/ auf siebenzehen : so beut/ der Weisse/
+mit der Königin/ auß neunzehen / Schach : Der Schwartze/ zie=
+het den König/ auf funf und zwantzig: Der Weisse/ beut / mit der
+Königin/ auß achtzehen/ Schach = Mat.
+
+<margin>97.</margin>Wan aber der Schwartze/ den König/ mit dem Reuter /
+auf 32. (n. 68.) nicht bedecket / besondern denselben / auf neun und
+funfzig/ ziehet: so rucket / der Weisse / der K. Schützen / (auß der
+gefahr) auf zwantzig/ und kan sein Spiel/ (dieweyl Er / einen Schü=
+tzen / zum Vortheil erlanget) gegen dem Schwartzen/ ferner wol
+erhalten.
+
+<margin>98.</margin>Wan aber der Weisse / nicht den Schützen / auf 30. (n. 67.)
+besondern die Königin/ auf zwölfe / ziehet : so rucket / der Schwar=
+tze / (umb/ der K. Schützen / zu entsetzen/ und die gefahr / von seiner
+Königin / abzuwenden) dero Rochen / auf funf und vierzig : Der
+Weisse / seiner K. Rochen / auf viere : Der Schwartze / die Köni=
+gin / auf drey und funfzig : Der Weisse / nimt / der S. K. Schützen /
+mit des K. Rochen / und beut Schach : Der Schwartze / rucket
+den König / auf ein und sechßig : Der Weisse / der K. Schützen /
+auf der S. K. Rochen / auf sieben und zwantzig : Der Schwartze /
+
+<sig>Ss ij</sig>
+<meta>catchword: densel-</meta>
+
+<vocab>Schach, König, Reuter, Soldaten, Königin, Rochen, Schütze, Schach-Mat</vocab>

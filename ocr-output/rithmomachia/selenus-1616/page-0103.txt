@@ -1,0 +1,55 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>73</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>
+8. cap:
+</margin>
+
+ches/ n. 21. in f. zu finden : da / des Schwartzen Königs-Schützens 
+Soldat / in des Weissen Königs-Schützens / drittem felde / von der 
+Schwartzen Königin-Schützen / in des Weissen Königs / anderm 
+felde / beschützet wird.
+
+Er hilft / (7.) besser / alsz der Reuter / seinem Soldaten / für sich / 
+umb den feind zu verletzen / oder ihn / zur Königin / zu machen.
+
+Er vermag / (8.) mit einem Rochen / das Spiel / gegen des feins 
+des eintzigen Rochen / welcher / bey dessen Könige / allein noch übrig / 
+(wie ausz dem Abriß zu ersehen) zu gewinnen / welches dem Reuter 
+wol fehlet.
+
+<image-desc>
+A diagram of a 3x3 chess board segment with pieces marked with abbreviations. 
+Top row: empty, SR (Schwarzer Roche), empty. 
+Middle row: WK (Weisser König), empty, SK (Schwarzer König). 
+Bottom row: WSc (Weisser Schütze), empty, WR (Weisser Roche). 
+The squares alternate between white and black (shaded).
+</image-desc>
+
+Es kan / (9.) des Feindes König / Ihn nicht alleine / wie den / 
+Reuter / gefangen nehmen : Alsz / wan der Schwartze König / den 
+Weissen Reuter / in seines Rochens felde / antrift / und derselbe Kö-
+nig / in seines Schützens / dritte feld / gezogen wird / so ists dem Reu-
+ter / unmöglich / (wie der Abriß zeiget) zu entrinnen. Dan wan der 
+König / in seines Reuters / andere feld gezogen wird / erleget Er ihn / 
+oder in des Rochens / (so fern Er nicht darauß gezogen) oder in des 
+Schützens / anderem / oder des Reuters / drittem felde.
+
+<image-desc>
+A second diagram of a 3x3 chess board segment. 
+Top row: empty, empty, WSp (Weisser Springer/Reuter). 
+Middle row: empty, SK (Schwarzer König), empty. 
+Bottom row: SK (Schwarzer König), empty, empty. 
+The squares alternate between white and black (shaded).
+</image-desc>
+
+Er kan / (10.) einen Soldaten / auf der Rochen Linie / verhin-
+dern / dasz derselbe / zu einer Königin / nicht gemachet werde ; welches 
+aber der Reuter / nicht vermag zu thun.
+
+<sig>K ij</sig>
+<meta>catchword: Er</meta>
+
+<vocab>Schach-Spiel, Reuter, Rochen, Schütze, Königin, Soldat, König, Abriß</vocab>

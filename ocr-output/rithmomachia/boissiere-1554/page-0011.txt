@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>II</page-num>
+<header>RYTHMOMACHIE, IEV</header>
+<meta>catchword: embu-</meta>
+
+*peust estre recreation aux fascheries, sans toutes*
+*foys preiudicier aux temps, ou se fouruoyer des*
+*limites de vertu. Lequel ieu iaçoit qu’entre les*
+*anciens ait esté en grand estime, & extraict des*
+*harmonies & proportions du subtil & inge-*
+*nieux Pythagoras : Au iourd’huy toutes foys*
+*n’est en vsaige à cause des enigmatiques inter-*
+*pretations ou iusques à present il a esté caché &*
+*obscurcy. Mais voyant l’vtilité & profit proue-*
+*nant d’iceluy, me suys mis en deuoir de tellement*
+*le descripre & desployer, que non seulement les*
+*tristes en pourront auoir recreation, mais aussi*
+*toutes gens de vertu en iceluy se recreants, pour-*
+*ront acquerir habituation pour promptemẽt pou-*
+*uoir discerner de toute proportion & harmonie,*
+*desquelles choses rien plus propre ou subtil n’à*
+*en ce monde dont mieux puissions contempler*
+*les quãtitez & choses admirables en toute sor-*
+*te de creature. Or donc procederons à iceluy de-*
+*clarer selon son ordre & teneur.*
+
+### Diffinition du ieu.
+
+*Rythmomachie est autant à dire que bataille*
+*de nombres accordants, ou bataille d’ac-*
+*cords, par autant que par accord merueilleux est*
+*dressé ce ieu, & apres par rencontres, prinses,*
+
+<meta>catchword: embu-</meta>
+
+<vocab>Rythmomachie, Pythagoras, recreation, proportion, harmonie</vocab>

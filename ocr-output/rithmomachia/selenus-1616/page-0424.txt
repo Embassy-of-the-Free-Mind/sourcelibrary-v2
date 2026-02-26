@@ -1,0 +1,37 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>390</page-num>
+<header>Das Vierte Buch/ 3. cap:</header>
+
+nimt dieselbe / mit dem Könige / oder mit dessen Rochen: Der
+Weisse / ziehet / der K. Reuter / (auß der gefahr) auf vierzehen.
+
+<margin>24.</margin>
+Stellet aber der Weisse / die Königin / (nachdem der Schwar-
+tze / des K. Reuter / auf 52. gezogen) auf 24: (n. 9.) so ziehet / der
+Schwartze / des K. Reuter / auf des W. K. Soldaten / auf fünf
+und dreyssig: Der Weisse / (ihn zu beschützen) die Königin auf
+sechse: Der Schwartze / beut / mit der Königin / auß fünf und
+zwantzig / Schach: und verursachet dem Weissen / damit ein bö-
+ses Spiel / welches Er / so fern Er sich / nicht gnugsam / fürzuse-
+hen weiß / leichtlich verlieren kan.
+
+Ist demnach / dem Weissen / nicht nützlich / ob es wol einen
+schein / eines guten Spieles haben mag / dergestalt zu spielen / be-
+<margin>25.</margin>
+sondern / * Er sol / der S. K. Reuter / auf seinem felde / (n. 5.)
+verbleiben lassen / und (umb seine Steine / ins feld zu bringen) mit
+des K. Schützen / auß neun und dreyffig / Schach-bieten: Bedecket
+dan der Schwartze / den König / mit (obgedachtem) der K. Reu-
+ter / auf drey und funfzig / oder sechs und viertzig: so ziehet / der
+Weisse / (umb der K. Soldaten / zu beschützen) des K. Reuter /
+auf zwölfe: und wird also keine ursache / zur verwechselung /
+beederseits Königinne / (wie n. 2. geschehen) geben /
+besondern dieselbe / durch andere / dienliche
+Züge / vielmehr verhindern.
+
+<image-desc>A decorative woodcut tailpiece featuring a central stylized mask or grotesque head surrounded by symmetrical scrolling acanthus leaves and floral flourishes.</image-desc>
+
+<meta>Catchword: Das</meta>
+
+<vocab>Schach, Weisse, Schwartze, König, Königin, Rochen, Reuter, Soldaten, Schützen, Schach-bieten, Züge</vocab>

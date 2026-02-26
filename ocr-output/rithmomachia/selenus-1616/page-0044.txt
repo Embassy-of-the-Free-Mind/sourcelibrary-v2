@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>14</page-num>
+<header>Das erste Buch / 1. cap.</header>
+
+> » lust / fürsichtig zu leiden / oder sitsam und höflich / zu ver=
+> » schmerzen wisse / etc: Wegen dieser verwarnung / könten sich
+> » nuhn / die sorgfeltige bedachtsame Eltern / ganz wol inacht
+> » haben / wie weit Sie / wegen ihrer Töchter verheuratungen /
+> » gehen / ob Sie dieselben / annehmen / oder ausschlagen solten.
+
+Dessen haben wir / ein Exempel / an des Königs in Franck=
+reich / mit nahmen Pipini, Sohn / welcher / dieweil Er / nicht gewin=
+nen könte / gegen seinem Mit-Spieler / dermassen erbitterte / daß Er
+ihn / mit dem <term>Schach-Breete</term> / erschlug. Wir wollen alhie / die gans
+ze geschicht / wie sie / auß einer geschriebenen Bayerischen Chronic /
+(welche / in des Marci VVelsers, Bibliothec, vorhanden) außgezeich=
+net / den Liebhabern / Teutscher Antiquiteten, anhero setzen.
+
+> » *Okarius Filium habuit, in curiâ Pipini, bonis moribus, plus*
+> » *quàm Filius Pipini, adornatum: quòd Invidia fomitem admini=*
+> » *strabat; quoniam ex Fortunâ, sapè crescit Invidia. Et dùm Filij,*
+> » *dictorum Principum, in Scaco luderent, Filius Okarij, semper Pi=*
+> » *pini Filium vicit. Pipini tamen Filius, de potentiâ Patris præsu-*
+> » *mens, Filium Ducis per tempora percutiens, interfecit.* Das ist:
+> » Herzog Okar in Bayern / hatte / an des Königes Pi=
+> » pini Hofe / einen Sohn / welcher / mit guten sitten / und höf=
+> » lichkeit / des Pipini Sohn / weit übertraf: dahero dan die Miß=
+> » gunst / welche / wegen des wol ergehens / und Tugenden eines
+> » andern / gemeinlich entspringet / sich / nicht wenig enzündete. So
+> » oft auch / dieser beeder Fürsten Söhne / im Schache / sich übe=
+> » ten / gewan allezeit des Herzogen Sohn / und des Königes
+> » Sohn / verspielete. Endlich / entleibete des Pipini Sohn /
+> » (auf seines Herren Vaters / macht und gewalt / trotzend) des
+> » Herzogen Sohn: Dan Er denselben / am Kopfe / in dem
+> » Schlafe / verletzte.
+
+Von dieser Historie / hat Metellus Tegerseensis, (welcher
+umb das 1060 Jahr / gelebet) in seinen Quirinalibus, folgende
+merckliche versche / aufgezeichnet:
+
+> » *Divâ progenie par, geminum prodierat decus*
+> » *Fratrum, bellipotens ac locuples divitijs honos,*
+> » *Pipinum quibus & fama refert stemmate proximum,*
+> » *Insignis Caroli, qui Validus regna tulit, Patrem.*
+> » *Alter Bajarici jure Comes præcipuus soli,*
+> » *Burgundis alius belligero robore Dux probus,*
+
+<meta>catchword: Quem</meta>
+
+<vocab>Pipino, Okarius, Metellus Tegerseensis, Schach-Breete, Scaco, Quirinalibus, Bayerische Chronic, Marci VVelsers</vocab>

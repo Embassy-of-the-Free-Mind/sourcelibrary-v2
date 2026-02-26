@@ -1,0 +1,33 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>C.ij.</sig>
+<meta>catchword: The</meta>
+
+angle.12.by addition. Also.120.the square
+standing in.D.and.49.the rounde stan-
+ding in.B.or elles.49.the square stan-
+ding in.L.which being added together
+make.169.which standeth in.A.shal take
+the sayde square.169.by Addition.
+
+---
+
+### ¶ Of taking by Sub-
+### traction.
+
+When two men do so stande, that
+the lesser beyng subtracted out of
+the greater, the number remain-
+ing,is all one with the aduersaries man
+that standeth in bothe their draughtes,
+so soone as the latter is set in his place,
+he may take awaye the aduersarie, not
+remouing into his place,unlesse he finde
+him so before he remoue: as for as exam-
+ple,2.the rounde standing in.B.& 9.the
+triangle standing in.6.shall take theyr
+aduersarie,7.standynge in.A.for,2.out
+of,9.remayneth,7. Another example.
+
+<vocab>Philosophers game, addition, subtraction, square, rounde, triangle, draughtes</vocab>

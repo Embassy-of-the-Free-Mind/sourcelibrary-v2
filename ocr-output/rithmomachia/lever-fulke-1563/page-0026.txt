@@ -1,0 +1,12 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Heavy ghosting/bleed-through from the reverse side of the leaf creates dark textured patterns throughout the background.</warning>
+
+# ¶ Of multiplex.
+
+MULTIPLE proportion, is when a great number conteyneth a lesse number manye tymes, and leaueth nothinge, as . 8. conteyneth . 2 fower tymes and nothing remaineth. 16. conteineth. 4. &c, this proportiō semeth best to agree with roundes because the one number conteyneth the other and nothinge remaineeth as the fyrste order of roundes be.
+
+<image-desc>A rectangular diagram containing two rows of circular game pieces, referred to in the text as "roundes." The top row features four light-colored circles containing the even numbers 2, 4, 6, and 8. The bottom row features four dark-shaded circles containing the odd numbers 3, 5, 7, and 9.</image-desc>
+
+<vocab>Philosophers game, Rythmomachia, multiplex, proportion, roundes, arithmetic</vocab>

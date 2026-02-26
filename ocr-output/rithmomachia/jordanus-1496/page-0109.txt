@@ -1,0 +1,33 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III</page-num>
+
+sed e octonarius non est multiplex ad ternarium/ neq; supparticularis q᷑ etsi bis cōtineat et insuper binariū qui ternarij nō pars vlls est sed partes. est eni octonarius ad ternariū duplex subbiparties. Non est igitur diapason ac diatessaron psonātia. oīs enī consonantia aut in supparticulari/ aut in multiplici genere ex diffinitione cōsistit. Et in hoc facile cognosci potest: ex nouo pblematū libro q᷑ Pÿ=thagoricis cōsensit Aristoteles: cū inquit: cur non bis diapente/ aut bis diatessaron reddi psonātia potest: vt bis diapason coaptari solet. Hoc inquit ideo est q᷑ diapēte consonantia posita in proportione sesqualtera est diatessaron xº in sesquiteria. q᷑ si duo sesqualteri aut sesquiterij numeri ordine dispo nūtur: extremi nullam inuicem proportiōem habebūt. neq; eni supparticulares neq; multiplices esse poterūt. at diapason pcinētia qm in duplari proportione cōsistit: hac gemiata: quadruplam inuicem extremi tenebūt/ habebūtq; pportiōem. Aides ergo quo pacto Aristoteles consonātiarū pportiones solas supparticulares aut multiplices efficit: suppartietes q᷑ prorsus nulle sint repudians. Et re xª Ptholomei cū Pythagoricis magis in noie q᷑ in reipsa dissentio putanda est. sed de his hactenus.
+
+<margin>25</margin> **¶ Diapason ac diapente: in triplici consistit ratione. estq; diapason ac diapente con=sonantia vna.**
+
+¶ Cū enim diapason ac diapente in tripla rōne cōsistat: hoc ideo est q᷑ ex duodecima primi ex duplici atq; sesqualtero interuallo triplex nascit interuallū. duplex autē ꝛ sesqualter sunt psonātiae diapason et diapente inualla. igitur iuncte psonātion ac diapente in tripla rōne cōsistunt. sed cū sensu iam satis sit exploratū hūc cōcentū modulate/ suauiterq; ad auditū puenire: ergo per diffinitiōem is concētus consonantia est. quod est totum propositum.
+
+<margin>26</margin> **¶ Diapason diapente ac tonus: melos citra consonantiam eliciunt.**
+
+| 27 | | | 8 |
+|:---:|:---:|:---:|:---:|
+| e | | | f |
+| 3 | | 9 | 8 |
+| a | b | c | d |
+
+¶ Melos hic vocamus suauem auribus acceptam voculationem/ amentiq; pluriū vocum cōgressum. sed q᷑ diapason diapente ꝛ tonus simul iuncta melos constituūt: statim notum est. Nam hec sonorum voculatio suauiter vt experientia dicitur auribus accidit. sed q᷑ consonantiam nullā parēt: ostēdit. qm enī per precedētē diapason ac diapente in tripla proportiōe consistit. sint ergo a b tria rōnū minimi consonātie diapason ac diapente numeri/ et c d nouem ꝛ octo minimi numeri toni. duco c in a ꝛ d in b eueniat e f/ ſcz 27 et 8 inter que est diapason diapente atq; tonus. sed e ad f neq; supparticularis neq; multiplex: quinimo et cōtinet f ter et tres eius octauas: estq; e ad f triplus suptripartiēs octauas. non cōcinit igitur e f aliqua consonātia. quod totum est propositum.
+
+<margin>27</margin> **¶ Bis diapason consonantia: in quadruplari constituta reperitur habitudine.**
+
+¶ Cū enī bis diapason in quadruplari cōsistat: statim est manifestum. Nā per decimātertiā ꝑmī duo duplicia interualla quadruplex iungunt inuallū. diapason autē in duplari cōsistit. igit bis diapason quadruplarem iungit habitudinem: que est multiplex. et cū bis diapason ad auditū suauis/ emodula taq; pueniat vt vt quoq; sensu perceptum est. ꝑ diffinitiōem erit psonātia. qđ erat mōstrandū.
+¶ Pythagorici ꝛ priores musici oēs: pcentuū modū in terminis quadrupla arq; in finibus psonātie bis diapason perstrinxerūt: non temere lōgius progreſſi aut q᷑ inter illos terminos vnicuū factus a natura reperitur ſue vocis modus/ aut q᷑ ſtridulꝰ ille canor illis vt iam quoq; dictū est visus est q᷑ ve feriam iam relinquūt mediocritatem/ aut q᷑ hactenus cōtēplatio satis īpis esse visa est ad musicam institutiōem. posteritas autē ad ter diapason vel ꝛ amplius adauxit ad terios vſq; octuple lōgius euagata: de quibus necessaria speculatio non incūbere videtur: sed pauca paucis strinxisse satis erit. Nā qui moduliatiōem supra bis diapason cognoscere desiderabūt: facili demōstratiōe vt precedētia pcipient. bis enī diapason ac diatessaron in pportiōe quadrupla sesquiteria cōsistit. et proinde plane cōsonātia putāda nō est. bis diapason ac diapente in pportiōe sescupla et ideo consonātijs ānumerata. ter vero diapason in proportione octupla.
+
+<margin>28</margin> **¶ Omnes consonantias: in data chorda suo ordine subiūgere: et eas sensu percepti=biliter experiri.**
+
+| A | c | d | e | f | g | b |
+|---|---|---|---|---|---|---|
+
+¶ Sit a b data chorda in qua ppositiū sit psonātias diateſſaron/ diapēte/ diapason/ diapason ac dia:pente/ et bis diapason. colloco in signo a bzachiū circini īmobile et ad totius chordæ quartam partem extendo circini bzachiū mobile: et in termio eius pono notam c. deinde extendo idem bzachiū ad eiusdem chordæ partem tertiā: et in terio pono d. mox ad totius chordæ partē mediā quā deſigno nota e. deinde bzachio capio totius chordæ biſſen: hoc est duas tertias: et in terio biſſes pono f. mox extēdo circinū ad chordæ dodrātem: hoc est ad tres eius completas quartas: in cuius fine affigo notam g. tunc sic a b ꝛ c b per quartā huius psonat diatessaron. a b ꝛ d b per octauā diapente a b ꝛ e b per decimāoctauam diapason a b ꝛ f b per viceſimāquintam diapason ac diapente. postremo xº a b ꝛ g b per precedētem bis diapason. Suppone igit musicale hemispherīū sensim singulis chordæ notis et sonos ad totius chordæ sonum diligēter attēde. et suo ordine ppositas pcinētias annotabis. quod prōptius experiri valebis: si chordæ a b chordam equisonam/ vnisonāq; etiā collocaueris: cuius sonū cum singulis sectionum a b pcussionibus non segniter attenderis.
+
+<vocab>diapason, diapente, diatessaron, tonus, consonantia, proportio, chorda, Aristoteles, Ptholomeus, Pythagoras</vocab>

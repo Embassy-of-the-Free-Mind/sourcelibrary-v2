@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>142</page-num>
+<header>Das Ander Buch / 4. cap:</header>
+
+<image-desc>A rectangular decorative woodcut ornament featuring symmetrical floral and leafy scrollwork with a central face or mask-like figure.</image-desc>
+
+### Das Vierte Capittel.
+# Wie ein Spieler / seine Steine / artig und fürsichtig ziehen / dieselbe ins feld / und auf den feind führen / dessen Steine rauben / mit demselben verwechslung halten / und im gegentheil / sich beschützen solle.
+
+Folgen nuhn die Satzungen / nach welchen die Mittele / (davon im ersten Cap: dieses Buches / bericht geschehen) zu wercke gerichtet werden müssen: Es sollen aber dieselben / in diesem Capittel / auf die jennige Mittel / so mit den dreyssig Kriegenden Steinen / fürzunehmen / gerichtet / und darauf / (im folgenden funften Cap:) die übrigen Ordnungen / die beeden Könige / betreffende / eingeführet werden.
+
+Was nuhn / erstlich / das Ziehen / anlanget: so wird / von einem Schach=Zieher / auf daß das Spiel / aufs artigste und zierlichste / wie immer müglich / geführet werde / erfodert: daß Er nicht allein / denselben Stein / welchen Er angerühret / (Es geschehe dan etwa solches angreiffen / nuhr darumb / daß Er ihn etwa / gleicher / in seinem felde / setzen wollen: auf welchen fahl / Er solches / mit worten / nicht allein zu verstehen geben / sondern auch / die hand / bald wider abziehen muß: Dan wan Er sich / in etwas verweglet / und dieses ordnen / nicht bald zu wercke richtet / so hat man darauß / daß Er den Stein / zwar habe ziehen wollen: Alleine / weyl Er versmercket / daß es seinem Spiele / schaden bringen möchte / es ihm gerewe / leichtelich abzunehmen: Wan Er aber / den angerürten Stein / wegen dessen / daß die Felder / dahin derselbe / kan gezogen werden / von seinen andern Steinen / albereit eingenommen seynd / nicht rucken kan / so muß Er / einen andern Stein ziehen / und hat den Zug / deßwegen nicht verscherzzet) sondern auch / einen aufgehobenen Stein / in das feld / welches Er mit demselben berühret / setze. Welches dan / ein guter Spieler / zu thun sich nicht wegert / noch damit / daß Er den Stein noch nicht auß der hand gesetzet / zu entschüldigen begehret: In ansehung / solches ein unhöfliches einwenden seyn würde / hette auch / weyl es der vernunft zu widern stösset / beym
+
+<meta>catchword: gegens</meta>
+
+<vocab>Schach, Spieler, Steine, Satzungen, Ziehen, verwechslung, Kriegende Steine, Könige, Schach=Zieher, verweglet</vocab>

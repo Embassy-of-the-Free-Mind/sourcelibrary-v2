@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>476</page-num>
+<header>Das Fünffte Capittel/</header>
+
+nen / kan genommen werden / gezogen : so nimt Segener denselben /
+und rucket gleichwol / einen seiner Steine.
+
+4.) Der Dritte ist also beschaffen: Wan einer unter den Spie-
+lern nicht gewahr wird / daß Er / des Andern Stein / nehmen kön-
+ne / besondern denselben stehen lasset / folgendes aber / wan der Zug /
+abermahl / an ihn komt / Daß derselbe / auß der Gefahr nicht ge-
+zogen / besondern / von ihm / nochmahl könne genommen werden /
+vermercket : so darf Er denselben wol nehmen / und einen seiner
+Steine / zugleich rucken.
+
+5.) Der Vierte und letzte / geschicht also : Wan zween Stei-
+ne / dergestalt gegen einander gezogen seynd / daß der eine / den an-
+der / mit dem Vermehren und Theilen / kan überwinnen / und der
+eine Spieler / des Andern Stein / durchs Vermehren oder Theilen /
+nicht nimt / besondern einen andern / seiner Steine ziehet : So kan der
+ander / weyl diese beede Steine / im vorigen stande / noch vorhanden /
+den einen von demselben / mit dem theilen oder vermehren / hinwegs
+nehmen / und einen seiner Steine / seines gefallens zugleich rucken.
+
+->(Buxer : fol : 28. a. b. 47. a.)<-
+
+> *>> Quoniam in adjuncto ingressu, qui per Multiplicationem*
+> *>> & Divisionem, reciprocatur, si Hostis, tuum coopertum Cal-*
+> *>> culum, intercipere, per Multiplicationem, est oblitus: tu postea,*
+> *>> illius Calculum, per Divisionem accipies, aut contrà, & trans-*
+> *>> feres tuum Calculum, in locum capti. Porrò nullum est genus*
+> *>> pradae, aut pugnae, in quo cogamur Calculum Victorem, in lo-*
+> *>> cum Victi, transferre, nisi in praecedenti Exemplo, aut si fortè*
+> *>> fortunâ, nostrâ incuriâ, aliquis Calculus, ex praecedenti ictu,*
+> *>> devictus, adhuc in suo loco, relinquatur, & lusuri, eum pradae*
+> *>> expositum, cernamus & inveniemus. Nam tunc, eum Calcu-*
+> *>> lum, primò capere possumus : & quoniam nulla prada fit, nisi*
+> *>> ludatur, simulatq; eum ceperimus victum, ludentes, Victorem,*
+> *>> in locum Victi transferemus, & si Pyramis sese redimat, in lo-*
+> *>> cum redimentis, substituetur. Deniq;, quod de Calculis, pau-*
+> *>> lò ante diximus, idem intelligas de Pyramide, quando nihil in*
+> *>> eâ relinquitur: sed si post praesentem pradam, aliquae Bases ad-*
+> *>> huc in eâ Pyramide reliquae fuerint, & si eam pradatus fue-*
+> *>> ris, aliquâ aliâ Base, tamen, quia non omninò destituitur viri-*
+> *>> bus, eam sic imminutam, in suâ sede relinques: ludes tamen*
+> *>> Victorem Calculum, pro arbitrio, secundum leges praescriptas.)*
+
+<meta>catchword: 6.) Wan</meta>
+
+<vocab>Segener, Buxer, Multiplication, Division, Calculus, Pyramis, Rhythmomachia</vocab>

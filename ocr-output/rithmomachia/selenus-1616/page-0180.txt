@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>150</page-num>
+<header>Das Ander Buch / 4. cap:</header>
+
+dem Andern / (umb sich füglich zu beschützen / und dem feine- 
+de / desto besser abbruch zu thun) an seinem gange / schädlich 
+sey. Ob nuhn gleich / diese beede Soldaten / welche in einer li- 
+nie / nach des feindes hauffen stehen / demselben bißweilen / gleich- 
+sam wie zween Steine / zusetzen können / dannoch thun sie ihm / ge- 
+meiniglich / nicht mehr schaden / dan nuhr ein einziger / verhindern 
+vielmaln / ihre eigene gesellen / und können / in dieser unordnung / 
+dem gegener / einen solchen abbruch / (es geschehe dan etwa ohn ge- 
+fahr / und auß dessen nachlässigkeit) alsz wan sie / in ihrer ordnung / 
+und rechtem orte / sich finden liessen / nicht zufügen / besondern wer- 
+den nicht anderst / alsz wan sie / von ihrer stelle / und der Schach-Ta- 
+bel / hinweggenommen / und die Schlacht-Ordnung / verendert und 
+gebrochen wehre / geachtet und gehalten.
+
+Es können ferner / die Haupt-Steine / welche im spielen / frey 
+gegeben worden / und sicher geleyde haben / dasz man Sie / ohne 
+schew / hin und wider / wie es den Spielern nützlich / ziehen / und 
+sich / dasz sie verhindert oder geraubet werden / nicht befahren darf / 
+auf keinerley weyse / von dem gegener / genommen werden. Mit 
+den Soldaten aber / welche sicher geleyde bekommen / und nicht 
+können genommen werden / hat es eine andere gelegenheit / alsz 
+mit den Haupt-Steinen. Dan wan diese Soldaten / zur Königin / 
+gemachet sind / so können Sie / (es währe dan / insonderheit ausz- 
+genommen und auszsgedinget) gantz wol genommen werden. In 
+betrachtung / dieselben / so bald sie / zur Königin werden / keine Sol- 
+daten mehr seynd / man auch nicht sagen kan / dasz ein Soldat / beson- 
+dern eine Königin / weggenommen sey. Muß man sich demnach / in 
+diesem fahl / auch recht erklären / auf dasz keiner übervortheilet werde.
+
+Schließzlich / pflegen sich die Spieler bißweilen zu verglei- 
+chen / dasz keiner unter ihnen / über drey Steine / von den Sechszze- 
+hen / durchs gantze Spiel / nehmen solle. Auf welchen fal / einer 
+im rauben und verwechslen / sich nicht übereylen / besondern / wol 
+acht haben muß / an stat der dreyen Steine / die jenigen / welche 
+ihm / zum schädlichsten seyn möchten / hinweg zu nehmen / und 
+seine Steine / weyl ihm / die meysten / müssen gelassen werden / in 
+solche felder / auß welchen ihm / der feind / wan derselbe sie innen 
+hette / grossen schaden könte zufügen / zu setzen.
+
+Wie man sich nuhn / in anre- und raubung des Feindes / fürs- 
+zusehen hat / alsz muß vielmehr / bey Verwechslung der Steine / 
+eine gute fürsichtigkeit / gebrauchet werden. Dan / wan man ver- 
+geblich wechszlet / und nuhr Steine umb Steine gibt / so ist das 
+Spiel / darauf leichtlich verloren / und wird zun zeiten / wol von
+
+<meta>catchword: keinem</meta>
+
+<vocab>Schach-Tabel, Soldaten, Königin, Haupt-Steine, Schlacht-Ordnung, geleyde, Sechszzehen</vocab>

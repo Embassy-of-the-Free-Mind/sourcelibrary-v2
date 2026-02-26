@@ -1,0 +1,58 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+b: quota pars vel partes c ad d. Si aut sit a ad b tota pars quota c ad d: vt in prima figuratiõe mōstratur: erit d eque multiplex ad c vt b ad a. quare que pportio b multiplicis ad a: eadem erit d eque multiplici ad c. at si a tote partes sit b quote c est d: per vicesimā igitur primā b toties cōtinebit ipsū a et totā eius partē vel partes: quoties d ōtinet c et quotā eius partem vel partes. q̃re similis erit denoiatio b ad a que d ad c: et que pportio b ad a eadem et d ad c. q̃ si a numerus est maior b: simili argumēto pateat propositum ponēdo b primum numerum a scđm / d tertium / c quartum.
+
+<image-desc>Diagram in the left margin showing horizontal lines with numbers and labels. Top: lines labeled 'b' with number 2 and 'a' with number 6, next to lines with numbers 3 and 9. Bottom: lines labeled 'b' with number 6 and 'c' with number 2, next to lines with numbers 9 and 3.</image-desc>
+
+<margin>2</margin>
+# **Si fuerit primus ad scđm sicut tertius ad quartum: fueritq; primus maior secūdo erit tertius maior quarto.**
+
+¶ Sine vt prius quattuoꝛ numeri: a primus / b secundus / c tertius / d quartus: sitq; a maior b. dico etiā c esse maiorem d. Nam per precedentem qz que pportio a ad b ea est c ad d: ideo 7 ꝓtra que pportio b ad a eadem erit d ad c. at b ponit minoꝛ a: igitꝛ erit per primam primi b pars aut partes a. quare et d tota ps vel ptes c. atq; d mioꝛ c qđ intēdit. Potes 7 directe pbare qz a ē maioꝛ b aliq̃ties ōtinet b vel aliquotiies et ptē aut partes. et cū eandem pportione hēat ad d: ergo toties c ōtinebit d aut toties et partem aut partes. q̃re c maioꝛ est d. qđ est propositum. Et cōsīlr pbare possis q̃ facillime si p̃mus minoꝛ scđo fuerit: tertiū quarto eē minorem. Nā si p̃mus sit mioꝛ scđo per primam primi erit pars vel partes scđi. et cū tertius ad quartum eādem habeat propoꝛtionem: tota ps aut partes erit tertius quarti: quare minoꝛ quarto. et si primus eēt equalis scđo p̃silr pbabis tertium esse equalem quarto.
+
+| a 2 | b 6 | c 3 | d 9 |
+|---|---|---|---|
+| a 3 | b 8 | c 6 | d 16 |
+| a 6 | b 2 | c 9 | d 3 |
+
+<margin>3</margin>
+# **Si fuerit primus ad scđm sicut tertius ad quartum: erit pmutatim sicut primus ad tertium: ita secundus ad quartum.**
+
+¶ Hec demonstrat pmutatam propoꝛtiōalitatem: que est quoties cōcludimus vt añs ad añs: ita pñs ad pñs: qv vt antecedens ad pñs: ita añs ad pñs sese habuerant. Sint ergo quattuoꝛ numeri: a primus / b secundus / c tertius / d quartus: sitq; similis pportio a ad b et c ad d. dico silē esse propoꝛtionem a ad c et b ad d. Nam primo si a sit minoꝛ c tunc per b: qđ similis est propoꝛtio a ad b et c ad d: hinc euenit vt q̃ta pars a sit b tota pars c sit d. ergo per vicesimāseptimā primi: quota pars vel partes b est ad v: tota ps vel partes erit a ad c. erit itaq; eadem pportio a primi ad c tertium: et b secundi ad d quartum. Scđo si a sit ptes b vt in scđa figuratiõe: idem 7 similiter argumētabere per vicesimāoctuauā primi. Tertio si a sit maioꝛ b: facto b primo / a secūdo / d tertio / c quarto: auxilio prime huius idē efficies q̃ facillime.
+
+<margin>4</margin>
+# **Si fuerit primus ad scđm sicut tertius ad quartum fueritq; primus maior tertio: erit quoq; secundus maior quarto.**
+
+¶ Sit a primus numerus: b secundus c tertius d quartus: 7 similis propoꝛtio a ad b et c ad d: sitq; a maioꝛ c. dico b eē maiorem d. Nam qz vt a ad b: ita c ad d. pmutatim igitur per precedentem vt a ad c: ita b ad d. sed a maioꝛ est c: ergo et b maioꝛ d per secundam. quod est propositum.
+
+| a 3 | b 9 | c 2 | d 6 |
+|---|---|---|---|
+
+<margin>5</margin>
+# **Si sicut totus ad totum fuerit detractus ad detractum: erit residuus ad residuum sicut totus ad totum.**
+
+<image-desc>Two arch-shaped diagrams labeled with numbers and letters. The first arch has 8 at the top, with 6 and 2 at the base, labeled a, b, c. The second arch has 16 at the top, with 12 and 4 at the base.</image-desc>
+
+¶ Sit a b totus numerus: a detractus: et b residuus: et c d alter totus c ab eo detractus 7 d residuus sitq; similis propoꝛtio a b ad c d: et a ad c: dico b ad d propoꝛtionem esse que est a b ad c d. Nam si a b fuerit minoꝛ c d: erit per vicesimāprimā / primam 7 vicesimāsecūdam primi sub distictione q̃ta pars aut partes fuerit a b ad c d: vt tota pars vel partes sit b ad d residui ad residuum. quare q̃ pportio totius ad totum: ea erit 7 residui ad residuum. at si a b sit maioꝛ c d: ecōuerso quota pars vel partes c d ad a b: tota pars vel partes erit d ad b. quare iteꝛ per primam huius cōcluditur propositum.
+
+<margin>6</margin>
+# **Si fuerit primus ad scđm sicut tertius ad quartū: erit primus 7 secundus ad scđm sicut tertius et quartus ad quartum.**
+
+¶ In hac demōstratur coniūcta ppoꝛtionalitas: que est quoties cōcludimus cōiūctum antecedētis et psequentis ad psequēs vt cōiūctum añtis 7 pñtis ad psequens: qz añcedens ad cōsequens se habeat vt antecedēs ad consequens. Sit vt a primus numerus se habet ad b secundum: ita c tertius se hēat ad d quartum. dico ergo vt a b ad b: ita et c d ad d. Nā quia est similis ppoꝛtio a ad b et c ad d: si a ergo sit minoꝛ b: erit vt quota pars vel partes a est b: tota pars vel partes c sit d. ergo semel b est in a: et semel d in c d. et in a b superat a tota pars vel partes b: quota pars vel partes c est ipsius d exuperans in c d. quare que propoꝛtio b ad a b: eadem erit d ad c d. per primā ergo huius que propoꝛtio a b ad b: eadem erit c d ad d. qđ est propositum quo ad hoc. At si si a ponatur maioꝛ b vt in secūda figuratiōe per primam quota pars vel partes b erit ad a: tota pars vt partes d est ad c. ergo b semel se supaddēs in a b: tota pars vel partes erit a b: quota pars vel partes d erit c d se itidem semel supaddens in c d. quare eadem propoꝛtio b ad a b et d ad c d. per primam ergo huius que ppoꝛtio a b ad b: eadem erit c d ad d. quod iteꝛ est propositum.
+
+| a 2 | b 6 | c 3 | d 9 |
+|---|---|---|---|
+| a 4 | b 3 | c 8 | d 6 |
+
+<margin>7</margin>
+# **Si vnus numerus duos multiplicet: erit pductor 7 multiplicatoꝛ eadē pportio. vnde manifestū est multipliciū oīas submultipliciū differentiis eē eque multiplices.**
+
+¶ Multiplicet a numerum b 7 proueniat d: et idem a multiplicet c 7 prouentat e. dico que propoꝛtio b ad c / multiplicati scz ad multiplicatum eadem esse d ad e / pducti scz ad pductum. Nam cū b sit in d fm a: et c in e etiam fm a: quoties b est in d toties c est in e. ergo q̃ propoꝛtio b ad d ea erit c ad e. pmutatim igitur per tertiam q̃ propoꝛtio b ad c ea erit d ad e. qđ est propositum quo ad hoc: 7 coꝛrelariū
+
+| b 5 | c 4 | d 10 | e 8 |
+|---|---|---|---|
+| a 2 | f 1 | g 2 | |
+
+---
+
+<vocab>proportio, arithmetica, multiplex, antecedens, consequens, pmutatim, coniuncta, residuum, detractus</vocab>

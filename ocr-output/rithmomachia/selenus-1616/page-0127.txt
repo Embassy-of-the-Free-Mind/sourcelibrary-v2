@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>97</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>N ij</sig>
+<meta>catchword: man</meta>
+
+<margin>10. cap:</margin>
+was man dan thut / das nuget man / in freundlicher ståttikeit : «
+was man aber in glücke thut / das mag man schmeichlicher «
+gleichssenheit eygenen. Die ander freundschaft / ist auf ein guet / «
+das Erbar ist / und die freundschaft gehöret an einen freund / der «
+tugenthaft ist : Das Ander das die Werckleut haben sollen / daß «
+ist keußcheit / also das ehemen / die zu jhn arbeiten / icht von jhn «
+angemüetn noch begehren / das wider ihr Ehr sey : das keine «
+fraw / die zu jm wandert / icht von jm angemüetet werde / noch be- «
+gere / das wider ir ere ist : Das dritte ist / das sie warhaft sein / «
+also das ihr herz und fürsatz / nachfolge den worten / und den «
+wercken : wan warheit / ist ein tugend / wer die hat / der mag «
+gereden / ohne forcht / und an aller stat / mit freyem mut. «
+
+Der vierte Wend / auf dem SchachZabel sol sien vor «
+dem Kunig / der sol sein also gestalt : Er sol haben / in der rechten «
+hand ein wåg / und ein gewicht : do bey seint bezeichnet wechßler «
+und leiher / und in der lincken / ein elen / do by seint bezeichnet / «
+gewandsneider / oder Tuchmacher / und solch Volck : und an «
+der gürtel / ein grossen seckel / oder ein Taschen / mit golde / do bei «
+seind bezeichnet Herren Pfenig einnehmer / und eingeber / dy al «
+follent fliehen geitigkeit : die geitikeit ist ein unmeßlich liebe / zu ha- «
+ben / oder zu nehmen / oder zu behalten / gut / über die noturft. «
+Die untugent / ist allen leuthen schad / und allermeinst denen / die «
+vor sollent sein der gemeine : Alß Herren / und ihren Amptleu- «
+ten / und reichsenet oder herschend allermeist an allen leuten / daß «
+doch törlich ist / das ein mensch / den kurtzen weg / alß vil Zerung / «
+mit im nimt / der doch kurtz leben muß / und alß viel nach gut «
+trachten und sezen. Ein geitig man / ist jm selber böß / aber der «
+Arm / ist aller bößest / wan er hat alzeit etlich ursach / zu versagen : «
+Geitigkeit ist dick / ein ursach / fallens in sünd : Geitigkeit zerstö- «
+ret auch trew / und frumkeit / und andere tugenden : Zu dem an- «
+dern mahl / sollent sich dieselben hütten / von viel schulden : Ar- «
+mut ist nicht ein laster oder eine boßheit : aber sollen gelten / und «
+nicht gebend / ist schand : Bistu arm oder rich / so bit nit umb lie- «
+hen / wan bistu rich / so bedarfst du sy nit : bistu arm / so gedinck / «
+daß du kum magst vergelten. Ein jeder Mensch / der gern gab «
+nimpt / der sol auch gern gab geben / das sy auch ibertreffen / die «
+da jhm geben / mit güt und mit tugenden : seid nuhn das ist / daß «
+
+<vocab>Schach-Spiel, SchachZabel, Wend, wechßler, leiher, Gewandsneider, Tuchmacher, geitigkeit, keußcheit</vocab>

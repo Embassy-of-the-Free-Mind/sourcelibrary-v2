@@ -1,0 +1,87 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>336</page-num>
+<header>Das Dritte Buch / 6. cap:</header>
+
+->n. 1. 2. 9. 10.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | SS | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | 46 | SS | 44 | | | | |
+| | | | SS | 35 | | | |
+| | | WS | | WS | | | |
+| | | | | WR | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | | | WR |
+
+->n. 5. 6.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SS | SR | SR |
+| SS | SS | | S& | | SS | SS | SS |
+| | | | | | | | |
+| | WR | | SS | SS | | | |
+| | | | | | | | |
+| | | WS | | | WR | | |
+| WS | WS | | WS | 12 | WS | WS | WS |
+| WR | WR | WS | | WK | | | WR |
+
+->n. jj. j4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | SS | WS | SR |
+| SS | SS | SS | | | | SS | SS |
+| | | | SS | | | | |
+| | | | | SS | SS | | |
+| | | | | WS | | | |
+| | | | | | WR | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | | | WR |
+
+<column-break/>
+
+->n. 3. 4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | S& | SK | SS | SR | SR |
+| SS | SS | | SS | | SS | SS | SS |
+| | | | | | | | |
+| | | WS | | SS | SS | | |
+| | | | | | | | |
+| | 23 | WS | | | WR | | |
+| WS | WS | | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | | | WR |
+
+->n. 7. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SS | SR | SR |
+| SS | SS | 54 | S& | | SS | SS | SS |
+| | | | | | | SS | WR |
+| | | | | 32 | | | SS |
+| | | | WS | | | | |
+| | | | | | | | |
+| WS | WS | | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | | | WR |
+
+->n. jz. j3.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | 6z | S& | SK | SS | SR | |
+| SS | SS | SS | | | 5z | SS | SS |
+| | | | SS | | | | |
+| | | | | SS | SS | | |
+| | | | | | | | |
+| | | | WS | | | WR | |
+| WS | WS | | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | | | WR |
+
+<vocab>Schach, Endspiel, Diagramm, König, Roch, Springer, Soldat, Dame, Selenus</vocab>

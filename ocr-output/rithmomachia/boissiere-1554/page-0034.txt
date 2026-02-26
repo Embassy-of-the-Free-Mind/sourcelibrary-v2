@@ -1,0 +1,30 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<header>DES PHILOSOPHES.</header>
+
+des nõbres ne te trouble, fais que la longueur du
+tablier soit à dextre & senestre, & plus facille-
+mẽt estãt situé au meillieu de ton tablier, iugeras
+du cãp de tõ aduersaire, et si te sera plus aise à iou
+er à dextre. S'il y a dõc de lõgueur 16. quarreaux
+en ton tablier, cõmẽce à ordõner les tables au six
+iesme carreau et loge d'icelle longueur. S'il n'ẽy
+a que dix, cõmence au cinquiesme, suyuant l'ordre
+naturel des pairs: posãt le moindre nõbre des ron
+des tables qui est 2. au troisiesme quarreau à la
+dextre, & aux suyuans, trois quarreaux, les au-
+tres trois nõbres pair, qui sont 4. 6. 8. Et pource q̃
+lesdictes tables 2. 4. 6. 8. sõt de la proportiõ mul
+tiplice, multiplie vne chascune en soy, & le pro
+uenu te mõstrera la table qui doit estre mise derri
+ere elle, disãt 2. fois 2. sõt 4. pose dõc 4. derriere 2.
+Aprez dictz 4. fois 4. font 16. pose 16. au der-
+riere de 4. Dictz de rechef 6. fois 6. font 36, &
+pose 36 au derriere de 6. Consequemmẽt 8. fois 8
+sõt 64. pose 64. au derriere de 8. Ce qu'aiãt faict
+auras aussi paracheué la proportion multiplice
+des nombres pair, à l'imitation desquels tu pour-
+ras aisement disposer les multiplices des impairs.
+
+<vocab>tablier, dextre, senestre, quarreaux, proportion multiplice, nombres pair, impairs, Rithmomachia</vocab>

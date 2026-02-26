@@ -1,0 +1,11 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+## ¶ Of superparticulier proportion.
+
+Super particuler proportion is when a greater number contayneth a lesser with one part of it, which may measure the whole, as .12. contayneth .9. and 3. whiche is a thyrde parte of nine .6. contayneth .4. and .2. that is one halfe to 4. Thys proportion beynge the cheife, next vnto multipler, is beste figured by a trianguler forme, whyche hathe fewest lynes and angles next vnto a circle. For the manner of thys proportion consider thys figure.
+
+<image-desc>A rectangular diagram containing eight circular game pieces or counters arranged in two rows of four. Each circle contains a numeral in blackletter script. The top row contains the numbers 9, 6, 4, and 2. The bottom row contains the numbers 12, 8, 6, and 3. These pairs illustrate superparticular ratios: 12:9 and 8:6 are both 4:3 (sesquitertia); 6:4 and 3:2 are both 3:2 (sesquialtera).</image-desc>
+
+<vocab>superparticulier, proportion, multipler, trianguler forme, Philosophers game, Rythmomachia</vocab>

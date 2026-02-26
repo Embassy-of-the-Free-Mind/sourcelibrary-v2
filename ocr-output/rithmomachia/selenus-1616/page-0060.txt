@@ -1,0 +1,56 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>30</page-num>
+<header>Das Erste Buch / 2. cap:</header>
+
+,, *versarum rectarum linearum, latera quadratorum, æquabiliter*
+,, *dissecantium, ductu, describitur:* **Das ist:**
+,, **Das Linien-Spiel / welches mit geraden linien / gleich /**
+,, **wie eine Geometrische Figur / abgebildet ward / spielete man /**
+,, **mit sechszig Steinen / darunter dreyssig / schwartz / und die**
+,, **übrigen weis waren. Diesem scheinet / das Spiel / gleich zu**
+,, **seyn / welches mit achtzehen Steinen / so von zwoerley farben /**
+,, **und in zween hauffen / unterschieden / bey uns heutiges Tages /**
+,, **gespielet wird. Diese Steine / werden nach einer gewissen art**
+,, **und weyse / auf die winckel oder ecken / und mittelpuncten / das**
+,, **selbsten / die geraden linien / der vierecketen figur / mit den durch=**
+,, **gezogenen Zwerch-linien / sich rühren / gestellet und geleget. Es**
+,, **wird aber / dieselbe figur / von dreyen vierecken / welche / wegen**
+,, **daß die eine grösser / alß die andere / unterschieden / und ihre sei=**
+,, **ten / mit geraden Zwerch-linien / in der mitte / durchschnitten**
+,, **werden / gemachet und gezogen. Durch dieses letzte Spiel / wird**
+**ohne zweyfel / das Müllen-Spiel / von dem Majolo, verstanden.**
+
+->**Bey den Römern / wie das Stein-Spiel gespielet / wird auß**<-
+->**folgendem abzunehmen seyn.**<-
+
+**Ovidius, gedencket dieses Spieles / in seinen Schrifften / für=**
+**nehmlich / an dreyen Orten; Alß erstlich / lib: 2. de arte Amandi,**
+**pag: 409.**
+
+> ,, *Sivè Latrocinij sub imagine, Calculus ibit,*
+> ,, *Fac pereat vitreo, Miles ab Hoste tuus.*
+
+->**Das ist:**<-
+
+,, **Wan du mit deiner Buhlschafft / mit gläsern Steinen /**
+,, **auf einer Schach-Tabel / spielest / und dieselbe / auf deine Stei=**
+,, **ne / einen heimlichen anschlag machet / so laß dir nuhr / (weil du**
+,, **ihr / in allem zu willen zu seyn / dich befleissen solst) deinen Stein /**
+,, **mit ihrem Steine / ungehindert wegnehmen / und stelle dich an /**
+,, **alß wan du es / nicht gesehen / noch gemercket.**
+
+**Zum Andern / lib: 3. de Arte Amandi, pag: 440.**
+
+> ,, *Cautag, non stultè, Latronum prælia ludat,*
+> ,, *Unus cum gemino Calculus, Hoste perit.*
+> ,, *Bellatorg, suo, prensus sine compare bellet :*
+> ,, *Æmulus incœptum sæpè recurrat opus.*
+
+->**Das ist:**<-
+
+,, **Sie / (nemlich / das Jungfräulein / welches zum ehren /**
+,, **begehret wird) sol fürsichtig / und klüglich / das Schach- oder**
+**Stein-**
+
+<vocab>Linien-Spiel, Müllen-Spiel, Majolo, Ovidius, de arte Amandi, Schach-Tabel, Latrocinium, Calculus, Buhlschafft</vocab>

@@ -1,0 +1,32 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>462</page-num>
+<header>Das Ander Capittel/</header>
+
+2.) Daß Sie/ aussen/ an den rand der Türne/ umb die-
+selbe/ desto besser/ im gesichte zu haben/ verzeichnet werden.
+3.) Daß unter Sie/ ein weisser oder schwartzer punct oder
+düpflin/ (umb die unterste seite/ der Zahle/ von der obersten zu
+unterscheiden) gemachet werde:
+
+<image-desc>Six geometric shapes arranged in two rows. Each shape contains a number with a small dot positioned directly below it to indicate the correct orientation. 
+First row: 
+- An unshaded circle containing the number 6.
+- A shaded circle containing the number 9.
+- An unshaded triangle containing the number 81.
+Second row:
+- A shaded triangle containing the number 16.
+- An unshaded square containing the number 15.
+- A shaded square containing the number 66.</image-desc>
+
+Dan in verbleibung dessen/ (dieweyl die Steine/ unterm
+spielen/ oftmaln umbgestossen/ oder verrucket werden) man/
+wie der Abriß andeutet/ die 6 von der 9: 16 von 91: 18 von 81:
+15 von 51: 66 von 99, 2c. schwerlich unterscheiden/
+besondern sich selber nuhr aufhalten und
+verwirren würde.
+
+<image-desc>An ornate woodcut tailpiece featuring a central mask with a stylized headdress, surrounded by symmetrical scrollwork and floral motifs. Two lion heads are visible at the top corners, and beaded ornaments hang from the sides.</image-desc>
+
+<meta>catchword: Das</meta>
+<vocab>Türne, punct, düpflin, Steine, Abriß</vocab>

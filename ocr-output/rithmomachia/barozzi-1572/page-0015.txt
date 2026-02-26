@@ -1,0 +1,35 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>4</page-num>
+<sig>B 2</sig>
+<meta>catchword: dietro</meta>
+
+i bianchi bisogna scriuer con color nero, & sopra li neri con
+biancho. Volendo adunque ritrouar li numeri, che van-
+no scritti sopra li 8 tondi bianchi, pigliaremo primamen-
+te li quatro primi numeri pari, vn dietro l'altro, comin-
+ciando dal 2. liquali saranno 2, 4, 6, 8. & li scriueremo
+sopra li 4 tondi bianchi, cioè vn per pezzo. Poi met-
+tendoli in schiera vn doppò l'altro, come seguitano, met-
+teremo sotto à quelli li altri quatro tondi bianchi, sopra li
+quali segnaremo quelli numeri che ne verranno dalla mol-
+tiplicatione delli primi in se stessi. cioè in quello che sta
+sotto al 2 scriueremo il 4. per ilche il 2 moltiplicato in se
+stesso produce il 4. similmente in quello, che è posto sotto
+al 4 segnaremo il 16. percioche dal 4 moltiplicato in se
+stesso nasce il 16. Parimente in quello, che giace sotto al 6
+notaremo il 36. imperoche moltiplicando il 6 in se mede-
+simo, ne prouienne il 36. finalmente in quel tondo che è
+situato sotto al 8 dipingeremo il 64. perche dalla molti-
+tiplicatione del 8 in se stesso ne vien il 64. & cosi hauere-
+mo descritti li numeri sopra li 8 tondi bianchi, come nella
+seguente figura si uede.
+
+<image-desc>A diagram consisting of eight circles arranged in two rows of four. The top row contains the numbers 2, 4, 6, and 8 from left to right. The bottom row contains their squares: 4, 16, 36, and 64 respectively.</image-desc>
+
+Similmente uolendo dipinger li numeri sopra li 8 ton-
+di neri, pigliaremo li 4 primi numeri impari un dopò l'al-
+tro, cominciando dal 3, liquali faranno 3, 5, 7, 9. & li segna-
+remo sopra li 4 tondi neri: Poi mettendoli in schiera un
+
+<vocab>numeri pari, numeri impari, tondi bianchi, tondi neri, moltiplicatione, schiera</vocab>

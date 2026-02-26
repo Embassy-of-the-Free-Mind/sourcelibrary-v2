@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>215</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>13. cap:</margin>
+
+gin/nimt: **Der Schwartze** / (ſeinem Könige / auf alle fälle / lufe
+zu machen) ziehet / der K. Soldaten / auf funf und vierzig: **Der
+Weiſſe** / nimt / mit der Königin / des S. K. Schützen-Soldaten:
+**Der Schwartze** / dieſelbe / mit ſeiner Königin: **Der Weiſſe** / die-
+ſelbe / mit des K. Soldaten: **Der Schwartze** / beut / mit des K.
+Rochen / auß ſechzig / Schach: **Der Weiſſe** / ſetzet den König / auf
+elfe: **Der Schwartze** / nimt des W. K. Rochens-Soldaten / mit
+des K. Reuters-Soldaten / und ziehet ihn / auf des W. K. Rochen:
+**Der Weiſſe** / denſelben / auf funfzig: **Der Schwartze** / der K.
+Schützen / auf vier und vierzig: **Der Weiſſe** / ſeiner K. Schützen /
+auf des S. K. Reuters-Soldaten / (umb Ab-Schach von ihm / durch
+des K. Soldaten / zu geben) auf vier und dreyſſig: **der Schwartze** /
+des K. Rochen / (auf daß Er denſelben / im Ab-Schach / nicht verlie-
+re) auf neun und funfzig: **Der Weiſſe** / (damit Er / der K. Ro-
+chen / zu ſeiner notturft / auch gebrauchen möge) dero Reuter / auf
+dreyzehen: **Der Schwartze** / ſeiner K. Reuter / auf des W. K. Sol-
+daten / auf drey und funfzig: **Der Weiſſe** / der K. Rochen / auf der
+S. K. Schützen / auf viere: **Der Schwartze** / denſelben / (auf daß
+Er ihn / nicht verliere / noch gleich Schach-Mat werde) auf ein und
+funfzig: **Der Weiſſe** / der K. Rochen / auf zwey und funfzig: **Der
+Schwartze** / ſeiner K. Schützen / auf ſechzig: **Der Weiſſe** / auf
+denſelben / der K. Soldaten / auf ein und funfzig: **Dahero der
+Schwartze** / ohn jenniges mittel / muß verlieren: Dan / wan Er /
+nicht des W. K. Soldaten / mit der K. Schützen / wegnimt / (auf
+welchen fahl / der Weiſſe / mit ſeines K. Rochen / denſelben nimt /
+und Jhn bald abfertigen kan) beſondern / der K. Reuter / auf ſieben
+und vierzig / ziehet: **Der Weiſſe** / der S. K. Schützen / mit des K.
+Soldaten / hinwegnimt / und / (weil derſelbe / nach etlicher örter ge-
+brauch / zur Königin worden) Schach beut: **Der Schwartze** / muß
+ihn / (dan ſonſten / ſein König / gleich Schach-Mat wehre) mit des K.
+Rochen / hinwegnehmen: **Der Weiſſe** / ziehet / der K. Rochen / auf
+vier und vierzig / und beut / von ſeiner K. Schützen / Ab-Schach:
+**Der Schwartze** / ziehet / den König / (weil ihn deſſen Roche / auf
+zwey und funfzig / ohne nutzen bedecket / und das Spiel / umb einen
+Zug / nuhr lenger aufhelt) auf zwey und ſechſſig: **der Weiſſe** /
+nimt / mit der K. Rochen / des S. K. Rochen / und gibt ihm / Schach-
+Mat. Hievon thut beygefügter Kupfer-Stich / (in welchem die ſtel-
+lung der Steine / auf der Schach-Tabel / und die ordnung / der wegges
+
+<sig>E e</sig> <meta>catchword: nommee</meta>
+
+<vocab>Schach-Spiel, Schwartze, Weiſſe, Königin, Rochen, Reuter, Soldaten, Schützen, Schach-Mat, Ab-Schach, Kupfer-Stich, Schach-Tabel</vocab>

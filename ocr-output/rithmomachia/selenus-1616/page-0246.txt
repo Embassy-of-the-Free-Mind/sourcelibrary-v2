@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>216</page-num>
+<header>Das Ander Buch / 13. Cap.</header>
+
+nommenen Steine / nachdem Schach = Mat / gegeben worden / fleis-
+sig abgebildet / zu befinden) augenscheinlichen bericht. <image-desc>manicule pointing right</image-desc>
+
+8. &emsp;&emsp; Wan aber der **Schwartze** / nach der Andern Art / nicht den
+Reuter / auf 43. (n. 1.) besondern / die Königin / auf fünf und zwanzig /
+ziehet / und Schach = beut: so setzet / der **Weisse** / den König / auf drey:
+9. * **Der Schwartze** / der K. Soldaten / auf funf und viertzig: **Der**
+**Weisse** / des K. Reuter / auf die S. Königin / auf neunzehen: **Der**
+**Schwartze** / dieselbe / auf sechs und zwanzig: **Der Weisse** / (auf
+daß / in allen fällen / die Königin / von des K. Rochen / schutz habe: Er
+auch sich dessen gebrauchen könne) den König / auf eylfe: **Der**
+**Schwartze** / des K. Reuter / auf des W. K. Soldaten / auf drey und
+viertzig: **Der Weisse** / (umb denselben zu beschützen) des K. Rochen /
+auf viere / und hat sein Spiel / dergestalt wol angeordnet: Ob auch
+schon / der **Schwartze** / einen Soldaten / zum Vortheil hat / so ist doch
+sein Spiel / durch dessen eroberung in eine grosse unordnung kommen.
+
+10. &emsp;&emsp; Wan aber der **Schwartze** / nicht den Soldaten / auf 45. (n. 9.)
+besondern / des K. Schützen / auf acht und dreyßig / ziehet: so setzet /
+der **Weisse** / auf denselben / (umb den Schach-Mat / auf eylfe / zu ver-
+hüten) der K. Soldaten / auf neun und zwanzig: **Der Schwartze** /
+denselben / auf sieben und viertzig: **Der Weisse** / des K. Reuter / auf
+11. die S. Königin / auf neunzehen: * **Der Schwartze** / dieselbe / auf
+sechs und zwanzig: **Der Weisse** / nimt / mit des K. Schützen / des
+S. K. Schützens-Soldaten / und beut Schach: **Der Schwartze** /
+nimt / denselben / mit dem Könige: **Der Weisse** / beut / mit des K.
+Reuter / auf sechs und dreyßig / Schach / und kan ihm / die S. Köni-
+gin / nicht entstehen.
+
+12. &emsp;&emsp; Wan aber dieser ursachen halber / der **Schwartze** / die Köni-
+gin / nicht auf 26. (n. 11.) besondern / auf drey und viertzig / ziehet: so
+rucket / der **Weisse** / auf dieselbe / des K. Soldaten / auf sechs und dreyf-
+13. sig: * **Der Schwartze** / dieselbe / auf des W. K. Schützen / auf
+sechs und viertzig: **Der Weisse** / (ihn zu bewahren) die Königin / auf
+zwölfe: und kan also / mit der K. Schützen / des S. K. Soldaten er-
+langen / und ein gutes Spiel haben.
+
+14. &emsp;&emsp; Wan aber der **Schwartze** / die Königin / nicht auf 46. (n. 13.)
+besondern / (umb des K. Soldaten / zu vertheitigen) auf fünf und
+dreyßig / ziehet: so rucket / der **Weisse** / auf dieselbe / des K. Schützen /
+auf ein und zwanzig: **Der Schwartze** / dieselbe / (umb sie / und des
+K. Soldaten / ferner zu vertheitigen) auf sechs und zwanzig: **Der**
+**Weisse** / auf Sie / des K. Rochens = Soldaten / auf siebenzehen:
+
+<meta>catchword: der</meta>
+
+<vocab>Schach, Schach-Mat, König, Königin, Reuter, Rochen, Soldaten, Schützen, Spiel, Schwartze, Weisse</vocab>

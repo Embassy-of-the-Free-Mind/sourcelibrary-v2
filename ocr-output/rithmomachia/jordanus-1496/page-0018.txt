@@ -1,0 +1,41 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<columns>2</columns>
+
+<image-desc>
+The left margin contains numerical examples and diagrams illustrating the mathematical propositions:
+1. A configuration of line segments and numbers. Top row: 54, 108, 162. Below these are letters k, h, g. To the left, a set of points c (2), b (4), a (6) connected by lines. In the center, f (6), e (9), d (18) connected by lines.
+2. Two sets of semicircular arcs. The left one spans points a to e, divided at b, c, d into sections labeled 3 and 2, with 5 below. The right one spans from a point to another, divided into 6 and 4, with 10 below.
+3. Two similar semicircular diagrams. The left one is labeled 4 and 4 with 8 below. The right one is 3 and 3 with 6 below. Points are labeled a, b and e, f.
+4. Vertical stack of labeled horizontal lines: f (24), g (32), e (24), d (8), c (6), b (4), a (8).
+5. Two identical column diagrams labeled c (4), b (6), a (9).
+</image-desc>
+
+<column-break/>
+
+modo sequẽs ponet ppositiõ. Sint ergo a b c quotlibet numeri in cõtinua pportiõalitate & directe se hñtes ad totidẽ d e f. ut sicut se hẽat a ad b: ita d ad e. et sicut b ad c: ita e ad f: dico eãdẽ eẽ pportiõem a ad c & d ad f. nã qz q̃ pportio a ad b: ea est d ad e. p mutatim p tertiã huius q̃ proportio a ad d ea est b ad e. et qz q̃ proportio b ad c ea est e ad f: igit' p eãdez tertiã pmutatim q̃ pportio b ad e: ea est c ad f. quare et que a ad d. cum itaqz que proportio a ad d ea sit c ad f: ergo pmutatim per tertiam que proportio a ad c: eadem est d ad f: quod est propositum.
+
+<margin>22</margin>
+¶ Si quotlibet numeri totidem alijs indirecte pportiõales fuerint: extremi quoqz in eadem proportione proportionales erunt.
+¶ Sit a ad b ut e ad f: et b ad c ut d ad e & inuerso ordine proportionales: dico a ad c ut d ad f. Duco enĩ d in e & in f: et pueniãt g h: et e in f. et pueniat k. per septimã hui' q̃ proportio d ad e: ea est g ad h quare d ad b ad b: eadem est g ad h. et qz d et e multiplicãt f: p octauã q̃ proportio d ad e: ea est g ad k q̃re d ad b ad c. et qz g fit ex d in e: et k ex e in f: et iõe k p octauã primi alternatim fit ex f in e: ergo per octauã huius q̃ proportio d ad f: ea est g ad k. At p precedẽtem qvãt a ad b: ita g ad h. et ut b ad c: ita h ad k. ergo ut a ad c: ita g ad k. et cũ proportio g ad k monstrata sit eadez proportioni d ad f: erit igitur ut a ad c: proportio d ad f. quod erat demonstrandum.
+
+<margin>23</margin>
+¶ Si fuerit primus ad secundũ: sicut tertius ad quartũ. Itẽqz primus ad quintum sicut tertius ad sextum: erit sicut primus ad scõm & quintũ: ita tertius ad quartum et sextum.
+¶ Sit pmus nũerus a: scõs b: tertius c: quartus d: quintus e: sextus f. sitqz a ad b: sicut c ad d. et a itẽqz ad e sicut c ad f: dico ut a ad totũ b e: ita c ad totũ d f. quia enĩ a ad b sicut c ad d erit per primã hui' ut b ad a: ita d ad c. erũt igit' 2tinve proportiõales ut b ad a: ita d ad c. vt a ad e: ita c ad f. q̃re p vicesimã primam vt b ad e: ita d ad f. ergo p sextam huius erunt 2iunctim vt b et e ad e: ita d et f ad f: per primã igitur hui' vt e ad b e: ita f ad d f. qz ergo vt a ad e: ita c ad f. et vt e ad b e: ita f ad d f. ergo p vicesimã primam vt a ad b e: ita c ad d f quod est propositum.
+
+<margin>24</margin>
+¶ Si fuerit primus ad secundum sicut tertius ad quartũ fueritqz primus maximus: numerus compositus ex primo & quarto maior erit numero cõposito ex scõdo & tertio
+¶ Sit a b primus numerus: c secũd': d e tertius: f quartus. sitqz vt a b ad c: ita d e ad f. et sit a b illoz e quattuor numerǫ maximus. dico compositum ex a b et f: maiorem esse composito ex c et d e. cũ enĩ a b sit maximus est maior c secũdo: quare per scõam huius d e maior f quarto. et cũ vt a b ad c: ita d e ad f. ergo pmutatim per tertiam huius vt a b ad d e: ita c ad f. sed cũ a b sit maximo per hypothesim est maior d e. ergo per secũdam huius et c maior f. est itaqz f illǫ minimus. esto ergo b differentia a b ad c et e differentia: d e ad f. qz sicut a b ad c: pbatum est c ad f. r a adequatur c. r b equatur f. ergo q̃ proportio a b ad d e ea est a ad d detracti scz ad detractum. ergo per quintaz huius vt a b ad d e: ita b ad e residuus ad residuũ. q̃re p scõam huius cũ a b sit maior d e: etiã b est maior e. sunt itaqz b et f maius d e. quare itez a b et f maius c et d e. at a et b simul per cõem cõceptum equãtur toti a b. est itaqz cõ= positus ex a b et f primo et quarto maior composito ex c et d e secũdo r tertio. qđ est propositum.
+
+<margin>25</margin>
+¶ Si fuerint quattuor numeri pportiõales: quod sub extremis continetur equale est ei quod producitur ex medijs. quod si producta fuerint equalia: erunt et numeri proporzionales.
+¶ Is sub extremis contineri dicitur qđ ex extremo in extremum producitur. Sint a b c d quattuor numeri proportiõales: itavt q̃ proportio a ad b: ea sit c ad d. dico primo qđ fit ex a in d sit equale eẽ ei quod fit ex b in c quod fit f. Secundo si quod fit ex a in d: equale sit ei qđ fit ex b in c numeros illos esse proportionales. Primum patet: r vt dictum est ex ductu a in d fiat e: et ex ductu b in c fiat f: quos dico esse equales. Duco enim itez a in b r proueniat g. erit per septimam huius g ad e vt b ad d. sed et quia ex a in b prouenit g alternatim ex b in a prouenit g. et etiam ex b in c prouenit f. ergo itez per septimam g ad f vt a ad c. et quia vt a b ita c ad d: ergo permutatum per tertiam vt a ad c: ita b ad d. quare g ad f vt b ad d. et probatus est etiam g ad e vt b ad d quare e et f quoz ad eũdẽ numerum est proportio una: adinvicem sunt equales. quod est primum. Preterea dico si e et f adinvicem sunt equales: a b c d esse proportionales. nam cũ e r f sint equales: ipsius g ad eos est pportio vna. et quia vt dictum est g ad f vt a ad c: et g ad e vt b ad d: erit a ad c vt b ad d. ergo pmutatim per tertiam a ad b vt c ad d qđ est numeros a b c d: esse adinuicem proporzionales: et secundum.
+
+<margin>25</margin>
+¶ Tribus numeris pportiõalibus qđ sub extremis continetur: quiqz ex medio in se pducit sunt eq̃les. qđ si illi eq̃les fuerint: tres qqz numeri erunt 2tinue pportiõales.
+¶ Sint a b c tres numeri cõtinue proportiõales: dico pmo qđ fit ex a in c: equale esse ei qđ fit ex b in se. Scđo si qđ fit ex b in se: equale sit ei qđ fit ex a in c: tres numeros a b c eẽ cõtinue proportiõales. Primam partem probas per primam partem precedentis posito b bis aut quẽcunqz numerum vt d equalem b. Et scđam partem per pcedentes secũdam partem: nec vt demõstretur est difficultas.
+
+<margin>27</margin>
+¶ Si fuerit proportio primi ad secundum maior q̃ tertii ad quartum: qui ex primo in quartum pducit: maior est producto ex secundo in tertium. qđ si pductus ex pmo in quartum sit maior: et proportio primi ad secundum maior erit.
+
+<vocab>proportio, numeri, extrema, media, productum, continue proportionales, maximus, compositus, differentia</vocab>

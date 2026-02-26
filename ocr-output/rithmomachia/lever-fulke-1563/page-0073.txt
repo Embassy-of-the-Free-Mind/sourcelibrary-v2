@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>diagram</page-type>
+<warning>Significant bleed-through from the reverse side of the leaf obscures the page; the background text is mirrored and illegible. The primary content of the page is a mathematical diagram.</warning>
+
+<image-desc>
+A detailed woodcut or engraved diagram of a Rithmomachia (The Philosophers' Game) board, an early modern mathematical board game. The board is an 8x16 rectangular grid containing various geometric pieces (circles, triangles, squares, and pyramids) labeled with Arabic numerals. The pieces are arranged in two opposing camps.
+
+The upper camp (oriented upside down relative to the viewer) contains:
+- A row of four squares containing the numbers 361, 225, 121, and 49.
+- A row containing a stepped pyramid piece and three squares with the numbers 120, 66, and 28.
+- Two rows of four triangles each, containing numbers including 91, 72, 64, 56, 30, 30, 16, and 12.
+- Two rows of four circles each, containing the numbers 81, 49, 25, 9 and 9, 7, 5, 3.
+
+The lower camp (oriented upright) contains:
+- Two rows of four circles each, containing the numbers 2, 4, 6, 8 and 4, 16, 36, 64.
+- Two rows of four triangles each, containing the numbers 6, 20, 42, 72 and 9, 25, 49, 81.
+- A row containing two squares (15, 45), a stepped pyramid piece, and a square (153).
+- A bottom row of four squares containing the numbers 25, 81, 169, and 289.
+</image-desc>
+
+Vnd
+
+<meta>The word 'Vnd' appears at the bottom left as a catchword, though it is partially obscured by the bleed-through of the same word from the verso.</meta>
+
+<vocab>Rithmomachia, Arithmetica, geometry, pyramid, squares, triangles, circles, board game</vocab>

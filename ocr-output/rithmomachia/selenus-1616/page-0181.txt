@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>153</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>4. cap:</margin> Keinem gewonnen / beſondern / dergeſtalt vergeblich geſpielet / und der rechte zweck und nutz dieſes Spieles / welcher zur luſt / und übung der gedächtnus und des verſtandes / angeſehen / nicht erlanget. Sollen derowegen / von einem <term>Schach-Zieher</term> / nachfolgende Regeln / wol inacht genommen werden.
+
+1. Wan Er ſiehet / daß das gegentheil / alle ſeine Steine / ihm / gar wol zu nütze machen / und deren mit vortheil / gebrauchen kan / ſo muß Er / zur verwechſlung der Steine / nicht urſach geben / es wehre dan / daß Er ohne dieſelbe / einen guten anſchlag / auf den feind / nicht könte / ins werck richten.
+
+Befindet Er nuhn / (2.) daß der <term>Gegener</term> / beſſer / mit der <term>Königin</term> / dan mit den anderen Steinen / ſpielet / und Er auch ſein Spiel / füglicher anordnen / und gewiſſer damit verfahren kan / ſo ſol Er / mit demſelben / die Königin / fur ſeine Königin / verwechſlen. Dan es ſeynd ihrer viele / welche / nachdem Sie / ihre Königin verloren haben / und ihnen der rechte gebrauch / der andern Steine / unbekand / wie ſie weiter / ihr Spiel zum ende führen ſollen / nicht wiſſen. Imgleichen / weyl man etliche / welche beſſer mit den <term>Reutern</term> / oder <term>Schützen</term> / oder <term>Rochen</term> / ſpielen / findet und antrift / alß ſol Er / auf den fahl / dieſelben / (weyl ein groſſes vortheil / dadurch erhalten wird) auch verwechſlen / und ſie deren berauben.
+
+Er ſol / (3.) ſo viel müglich / ſich hüten / daß Er des Königess Schützen / weder mit einem andern Schützen / noch mit des Königess Reuter / verwechſle: dan Er den Feind / mit demſelben / immerdar kan ängſtigen. Wil Ers aber ietzo thun / ſo ſol es zu gelegener zeit / oder / wan ihn die noth darzu treibet / von ihm geſchehen. Dan Er alſzdan mehr / den gegenwertigen ſchaden / alß zukünftigen nutzen / inſonderheit / wan jener erheblich und hochtringend / dieſer aber nicht ſehr ſicher / noch gewiß iſt / zu betrachten hat.
+
+Er ſol / (4.) keinen <term>Haupt-Stein</term> / für zween / jah auch nicht für drey <term>Soldaten</term> / ob ſichs ſchon anſehen lieſſe / daß es wol gethan wehre / geben oder verwechſlen: Es zwänge dan einen / die Noth darzu / oder es könte / dem feinde / dadurch der garauß / gemachet werden. Dan auf dieſen fahl / Er / nicht allein / für zween / beſondern auch wol / für einen Soldaten / dienlich verwechſlet wird.
+
+Obgeſetzter maſſen / muß nuhn ein Spieler / welcher ſeine Steine / auf den feind ziehen / denſelben anrennen / und deſſen Steine / rauben oder verwechſlen wil / ſich verhalten: Wan ihm aber / nicht weniger obliegen wil / daß Er auch ſeinen hauffen / zu Beſchützen wiſſe / alß dienen ihm darzu / folgende Regeln:
+
+<sig>B</sig>
+<meta>catchword: 1.) Wan</meta>
+
+<vocab>Schach-Spiel, Schach-Zieher, Gegener, Königin, Reutern, Schützen, Rochen, Soldaten, Haupt-Stein</vocab>

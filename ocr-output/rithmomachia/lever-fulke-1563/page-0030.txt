@@ -1,0 +1,17 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+# ¶ Superpartiens proportion.
+
+<image-desc>In the left margin, a square geometric diagram with internal diagonal lines and horizontal/vertical bisectors, illustrating the "corners and sides" mentioned in the text.</image-desc>
+
+The superpartiens proportion is when the greater number conteyneth the lesser and mo partes of it then one as .15. conteyneth .9. and .6. whiche is two thirdes of .9. lyke wyse .28. coteyneth .16. and .12. that is 3/4 of .16. This proportiō conteineth diuers parts beside the whole number therfore is wel figured in the square, which also conteyneth more corners and sides. For the maner of their proportion consyder thys table.
+
+<margin>10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</margin>
+<image-desc>A rectangular grid containing two rows and four columns. Each of the eight cells features a dark triangle pointing upwards with a white number printed inside.
+Top row triangles: 25, 49, 81, 121.
+Bottom row triangles: 15, 28, 45, 66.
+These represent ratios of 5:3, 7:4, 9:5, and 11:6 respectively.</image-desc>
+
+<vocab>Superpartiens, proportion, Rithmomachia, Philosophers game, square, triangle</vocab>

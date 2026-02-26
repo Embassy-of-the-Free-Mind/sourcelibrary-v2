@@ -1,0 +1,45 @@
+<language>German</language>
+<page-num>446</page-num>
+<header>Vorrede.</header>
+<page-type>text</page-type>
+
+Nachdem es auch voller Künste / und geschwin-
+digkeiten / stecket / und die verstendigen / gleichsam mit
+Spielen / und schertzen / zu der Zahl- und Singe-Kunst /
+(als zwo edlen / und nutzbaren Künsten) anführet / und
+in denselben / erfahren machet / als nutzet es / dero ge-
+mühte / und verstande / nicht wenig.
+
+Es hat dieses Spiel / wie ein gespräche / Iacobus
+Frater Stapulensis, in Lateinischer Sprache / jedoch sehr
+kurtz / beschrieben.
+
+Claudius Buxerius, aber / auß dem Delphinat, bür-
+tig / hat es / im 1556 Jahre / in etwas weitleuffiger / erklä-
+ret und erleutert.
+
+<margin>” ” ”</margin> Sonsten / gedencket auch dessen / mit wenig
+worten / Thomas Morus, im funften Capittel /
+seiner Utopiæ.
+
+Das rechte Exemplar aber / wie es der gedachte
+Pythagoras, in Griechischer Sprache / entworffen hat /
+ist / meines wissens / noch / biß auf diese stunde / niergen-
+des aufgefunden.
+
+Dieweyl Ich dan / dieses Spiel / in meine Mutter-
+Sprache / zu übersetzen / vorhabens bin / als habe Ich /
+der obgedachten beeden Authorn / arbeit und gedan-
+cken / darzu gebrauchen wollen: nicht zwar zu dem en-
+de / daß Ichs von worten zu worten / wie sie es beschrie-
+ben / ins Welsche brächte / sondern / nuhr / eine kurtze
+erklärung / (umb / gelegenheit zu haben / etliche sachen /
+die etwa / gar zu kurtz / von ihnen gesetzet / mit mehren
+umbstenden / anzudeuten: etliche aber / die gar zu weit-
+leuffig / von ihnen beschrieben / kürtzer zu begreiffen:
+und endlich / das jehnige / welches Sie / in etwas dun-
+ckel / und unverstendlich an den tag gegeben / deutlicher
+fürzubringen) darüber verfertigete.
+<meta>catchword: Das</meta>
+
+<vocab>Zahl- und Singe-Kunst, Iacobus Frater Stapulensis, Claudius Buxerius, Thomas Morus, Utopiæ, Pythagoras, Mutter-Sprache, Welsche</vocab>

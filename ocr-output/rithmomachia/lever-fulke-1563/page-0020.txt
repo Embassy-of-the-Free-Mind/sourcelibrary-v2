@@ -1,0 +1,31 @@
+<warning>The image is a high-contrast black and white reproduction. There is significant show-through (bleed-through) from the reverse side of the page, particularly visible in the upper half of the grid where faint text and numbers appear reversed.</warning>
+
+<language>English</language>
+<page-type>diagram</page-type>
+<page-num>19</page-num>
+<header>The Philosophers game.</header>
+
+<image-desc>
+A detailed diagram of a game board for "The Philosophers game" (also known as Rhythmomachia). The board consists of a vertical rectangular grid of 8 columns by 16 rows with alternating black and white squares. 
+
+The top portion of the grid contains faint, reversed markings from the verso, though a circle containing the number 6 is visible in the sixth row.
+
+The middle and lower sections of the board feature letters and geometric shapes arranged in a specific configuration:
+- Letters:
+    - Row 7: K (column 1), L (column 5), M (column 8).
+    - Row 8: X (column 4), E (column 5), Z (column 8).
+    - Row 9: B (column 4), S (column 5), C (column 6).
+    - Row 10: R (column 1), H (column 2), Y (column 3), A (column 4), T (column 5), I (column 6), N (column 8).
+    - Row 11: E (column 4), V (column 5), D (column 6), W (column 7).
+    - Row 12: G (column 5).
+    - Row 13: Q (column 1), P (column 5), O (column 8).
+
+- Geometric Symbols at the bottom:
+    - Row 14: A circle with a horizontal bisecting line (col 1), a square containing the number 12 (col 4), and a triangle with a central dot (col 7).
+    - Row 15: A circle with the number 9 (col 3), a circle containing a triangle (col 6), a triangle containing a square (col 7), and a circle with the number 6 (col 8).
+    - Row 16: A triangle containing the number 4 (col 1), a circle with the number 3 (col 4), and a square containing a smaller square or circle (col 7).
+
+The entire grid is framed by a thick black border.
+</image-desc>
+
+<vocab>The Philosophers game, Rhythmomachia, board game, arithmetic, geometry, squares, triangles, circles</vocab>

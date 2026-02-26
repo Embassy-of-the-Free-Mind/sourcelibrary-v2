@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>317</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin> nehme : oder des K. Rochen / auf vier und funfzig / zöge / und gleich
+Schach-Mat gebe) besondern / rucket / des K. Rochen / auf zwey und
+sechzig : Der Weiße / gibt / mit der K. Rochen / auß fünfe / Schach :
+Der Schwarze / nimt / mit dem Könige / des W. K. Rochen :
+Der Weiße / mit der Königin / des S. K. Rochen / und gibt Schach :
+Der Schwarze / muß den König / nicht auf zwey und funfzig /
+(dan der Weiße / mit der K. Schützen / auß funf und vierzig / Schach
+bieten / und seine Königin / ertappen würde) besondern / auf ein und
+funfzig / rücken : Der Weiße / gibt / mit der K. Rochen / auß drey
+<margin>80.</margin> und funfzig / Schach : * Der Schwarze / rucket / den König / auf
+vier und vierzig : Der Weiße / nimt / der S. K. Reuter / mit der
+K. Rochen / und gibt / von der Königin / Ab-Schach : Der Schwar-
+ze / muß den König / auf sieben und dreyßig / rücken : Der Weiße /
+nimt / mit der K. Rochen / die S. Königin / und gibt Schach : Der
+Schwarze / muß den König / auf acht und zwanzig / auf der W.
+K. Schützen / ziehen : Der Weiße / verthetiget ihn / mit des K.
+Rochen / auß dreyßig / und gibt Schach : Der Schwarze / setzet /
+den König / auf sieben und dreyßig : Der Weiße / gibt mit der K.
+Rochen / auß neun und zwanzig / Schach-Mat : welcher / droben /
+im 1. Cap : des 2. Buches / (dieweyl der König / in der mitte der
+Tafel erleget wird) ein unglücklicher Schach-Mat genennet wird :
+Rucket aber / der Schwarze / den König / nicht auf 37, besondern /
+auf ein und zwanzig : so gibt der Weiße / (nachdem Er / mit dem
+gedachten Rochen auß 29. Schach geboten : und der Schwarze / den
+König / auf zwelfe / ziehen müssen) mit der Königin / auß vier und
+viertzig / Schach-Mat.
+<margin>81.</margin> Rucket aber der Schwarze / den König / nicht auf 44.
+(n. 80.) besondern bedecket ihn / mit der Königin / auf zwey und funf-
+zig : so gibt / der Weiße / mit des K. Reuter / auß funf und vier-
+zig / Schach : Der Schwarze / muß den König / auf vier und
+viertzig / rücken : (dan / wan Er ihn / auf funfzig / setzete : Der
+Weiße / mit der K. Rochen / seine Königin nehme / und Schach-
+Mat / gebe) der Weiße / nimt / mit der K. Rochen / der S. K. Reu-
+ter / und beut / von der Königin / Ab-Schach : Der Schwarze /
+muß den König / auf sieben und dreyßig / (so ferne Er / die Köni-
+gin / wiewol vergeblich / auf drey und funfzig / nicht fürziehen wil)
+rücken : Der Weiße / nimt / mit der K. Rochen / die S. Königin :
+und gibt / folgendes / mit seiner Königin / auß dreyßig / Schach-
+Mat.
+
+<meta>catchword: Wan</meta>
+
+<vocab>Schach-Spiel, Schach-Mat, König, Rochen, Reuter, Königin, Schützen, Ab-Schach, Weisse, Schwarze</vocab>

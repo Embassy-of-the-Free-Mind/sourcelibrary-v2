@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>195</page-num>
+<header>11. cap: Vom Schach-Spiel.</header>
+
+<image-desc>An ornamental woodcut headpiece with symmetrical floral and foliage scrollwork.</image-desc>
+
+### Das Eylfte Capittel.
+
+## Wie man auf die fünfte / ſonderlich aber / auf die ſechſte Art / ſpielen müſſe.
+
+Die fünfte Art iſt: wan der Schwarze / den andern zug / in dem aufgezeichneten Exempel / des Achten Capittels / verendert / und an ſtat des K. Schützens / der K. Schützens-Soldaten / auf ſechs und vierzig: Der Weiße / aber zur hintertreibung / des Gegeners Anſchlägen / des K. Reuter / auf neunzehen: oder deſſen Schützens-Soldaten / auf ſieben und zwantzig / rucket.
+
+Die ſechſte Art iſt: Wan der Schwarze / im andern zuge / nicht den Schützen / auf 38: (wie in den dreyen vorigen Capitteln erwehnet) noch des Schützens-Soldaten / auf 46: (wie kurtz droben im anfange dieſes Capittels / geſetzet) beſondern / mit des K. Reuter / des W. K. Soldaten / auß drey und viertzig / folgender geſtalt / anfält:
+
+<margin>1.</margin> Der Weiße / ziehet des K. Soldaten / auf 28: Der Schwarze /
+<margin>2.</margin> ſeines K. Soldaten / auf 36. * Der Weiße / des K. Schützen / auf 30: Der Schwarze / thut / wie geſetzet / mit dem Reuter / auf des W. K. Soldaten / auß drey und viertzig / den angrif: Der Weiße / (den Soldaten zu vertheitigen) rucket / der K. Soldaten / auf ein und zwanzig: Der Schwarze / des K. Schützen / auf acht und dreyſſig: Der Weiße / des K. Reuter / auf des S. K. Soldaten / auf neunzehen: der Schwarze / denſelben zu beſchützen / und auf des W. K. Schützens-Soldaten / ſeines K. Reuter / auf ſechs und zwantzig. Der Weiße / die Königin / (auf daß dieſer S. Reuter / dieſelbe / oder des K. Rochen / nicht ertappe) auf zwelfe: der Schwarze / nimt / mit des K. Schützen / des W. K. Schützens-Soldaten / und beut Schach: Der Weiße / rucket ſeinen König / auf fünfe. Der Schwarze / des K. Schützen / (auf daß Er denſelben / oder den Reuter / wan etwa der Weiße / auf dieſen / ſeines K. Rochens-Soldaten / auf ſiebenzehen ziehet / nicht verliere) auf ſieben und viertzig: der Weiße / ſeines K. Rochen / (umb denſelben / im Schache / von des S. K. Reuter / auß elfe / nicht
+
+<sig>Bb iij</sig>
+<meta>catchword: zu verlies</meta>
+<vocab>Schach-Spiel, Schwarze, Weiße, Reuter, Soldaten, Schütze, Königin, Rochen, Schach</vocab>

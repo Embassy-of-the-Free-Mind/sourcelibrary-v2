@@ -1,0 +1,11 @@
+<warning>The image is extremely blurry and out of focus, rendering the text illegible. The overall quality is insufficient for a reliable transcription of the content. The following metadata is based on the visible layout and page structure.</warning>
+
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>8</page-num>
+
+<unclear>
+[The entire page consists of approximately 30 lines of printed text that are completely illegible due to severe blurring and low contrast. The text appears to be a single block of prose.]
+</unclear>
+
+<vocab>Latin</vocab>

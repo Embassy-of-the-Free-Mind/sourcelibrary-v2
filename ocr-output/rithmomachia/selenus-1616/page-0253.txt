@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>219</page-num>
+<header>Vom Schach=Spiel.</header>
+<sig>Ee iij</sig>
+<meta>catchword: gegen</meta>
+
+<margin>18. cap:</margin>
+auf des W. K. Schützen: der Weisse/ beut/ mit demselben/ auß neun und dreyssig/ Schach: der Schwartze/ bedecket den König/ mit der K. Reuter/ auf sechs und vierzig: der Weisse/ nimt des S. K. Soldaten/ mit der K. Schützen: der Schwartze/ gibt/ mit der Königin/ auß viertzig/ Schach/ und ziehet dieselbe/ auf des W. K. Schützen: der Weisse/ verthetiget ihn/ und bedecket den König/ mit der K. Reuter/ auf zwey und zwantzig: der Schwartze/ ziehet des K. Schützen/ auf des W. K. Reuter/ (welcher/ von seiner Königin/ albereit gefangen gehalten wird) auf ein und dreyssig: der Weisse/ nimt der S. K. Reuter/ mit seines K. Schützen/ und beut Schach: der Schwartze/ nimt denselbē/ mit der K. Reuters=Soldaten: wird also die Soldaten/ wol bey ein ander behalten/ und sein Spiel/ nach dem ihm der Weisse/ ursach und anlaß darzu gibt/ anordnen/ und führen.
+
+<margin>20.</margin>
+Wan aber der Schwartze/ nicht der Königin= auf 46, (n. 19.) besondern des K. Schützens-Soldaten/ auf des W. K. Soldaten/ auf fünf und dreyssig/ ziehet: so nimt ihn/ der Weisse/ mit demselben: der Schwartze/ beut / mit der Königin / auß fünf und zwanzig / Schach: der Weisse/ ziehet den König / (welches dan/ in diesem fall/ der beste zug ist/ welchen Er thun kan) auf drey: der Schwartze/ (auf daß die Königin/ des W. K. Schützen/ wegnehmen könne) des K. Soldaten/ auf des W. K. Reuters=Soldaten/ auf neunzehen :
+
+<margin>21. *</margin>
+der Weisse/ nimt/ mit des K. Schützen/ des S. K. Reuter: der Schwartze/ mit des k. Soldaten/ des W. K. Reuters=Soldaten/ und beut Schach: der Weisse/ nimt denselben/ mit dem Könige: der Schwartze/ des W. K. Schützen/ mit seines K. Rochen: Wird also der Weisse/ in einer bösen ordnung sich befinden/ und vom Schwartzen/ leichtlich überwunden werden.
+
+<margin>22.</margin>
+Nimt aber der Weisse/ nicht den S. Reuter/ (n. 21.) besondern ziehet des K. Schützen/ auf des S. K. Soldaten/ (umb auch/ seines K. Reuters=Soldaten/ zu beschützen) auf sieben und dreyssig: so raubet der Schwartze/ des W. K. Reuters=Soldaten/ mit des K. Soldaten / und beut Schach: der Weisse/ nimt ihn/ mit diesem Schützen/ und errettet denselben/ ohne verlust/ seiner Steine: der Schwartze/ beut/ mit der Königin / auß sieben und zwantzig/ Schach: der Weisse/ bedecket/ den König / mit der Königin/ auf neunzehen / und beschützet zugleich / dessen Soldaten: der Schwartze/ nimt dieselbe / mit seiner Königin: der Weisse/ dieselbe/ mit des K. Schützen: der Schwartze / ziehet / der K. Soldaten / auf fünf und vierzig / und decket dero Schützen /
+
+<vocab>Schach, König, Königin, Schütze, Reuter, Soldat, Rochen, Weisse, Schwartze, Weisser König, Schwartzer König</vocab>

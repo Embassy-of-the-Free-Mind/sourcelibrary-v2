@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>161</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin>
+und durch sein <term>Schach-Mat</term> geben / dergestalt / nichts erhalten / noch gewonen. Diese unterschiedene meynungen / welche / wegen dieser frage / haben aufgesuchet / und zu händen / gebracht werden können / haben wir nuhn darumb / auf daß die Spieler / umb unnötiges gezäncke zu verhüten / zum anfange des Spieles / wegen dieses streitigen falles / einer gewissen meynung / sich leichtlich / zu vergleichen hetten / alhie kürtzlich verzeichnen wollen.
+
+Ferner muß ein <term>Schach-Zieher</term> / sich nicht alleine / des Schachens und Mattens / besondern auch / seines Königes / zu gelegener zeit / und wan es die noth erfodert / zu gebrauchen / und / ehe Er / mit dem Könige / einen Stein / es sey gleich ein Haupt- oder anderer Stein / sonderlich / wan ihm derselbe Schach geboten / wegraume / sich wol zu bedencken wissen. Dan der Gegner oftmaln hiedurch gelegenheit suchet / und auch erlanget / ihm den garausz zu machen. Aber noch vielmehr / muß Er / welcher gestalt Er / den König beschützen / und in sicherheit setzen möge : daranne dan / (vermöge des 1. Capitt: dieses Buches) mercklich viele gelegen / acht haben / auch zu dessen behuf / noch folgende Regeln / wol anmercken.
+
+Daß Er (1.) den König / aufs forderlichste / und insonderheit / wan dessen <term>Soldat</term> / verloren / und er entblöset ist / an einen sichern Ort / er springe nuhn / in ein drittes- oder werde / aufs nächste feld / gezogen / bringe und setze.
+
+Daß Er (2.) die <term>Soldaten</term> / hinter welche sich / der König / begeben / auß ihren eigenen feldern / nicht rücke / noch in andere plätze stelle : Es muste dan nohtwegen / (dem Könige etwa / einen freyen außgang zu geben : oder ihm / daß er / in ihre felder / da es vonnöten / und er etwa bloß stünde / weichen könte / platz zu machen : oder aber / einem Steine des feindes / welcher gefähr- oder verhinderlich seyn möchte / abzuwehren / und von sich zu treiben : oder aber / etwas sonders und nützliches / dadurch zu erlangen) von ihm geschehen : Auf welchen fahl Er / wol acht haben muß / daß sein Spiel / in einem solchen stande sey / damit Er / mit seinen Haupt-Steinen / an dem Orte / da es / durch diesen Zug / zerrissen / und in eine unordnung / gebracht worden / füglich hinwider befestigen / und verschantzen möge. Wie aber diese Steine / auf dergleichen nothfahl / zu ziehen seyn möchten / davon kan man / keine gewisse maß oder Regel / deren man nohtwendig folgen müste / geben / besondern / man hat / nachdem es des Spieles zustand / und anordnung / (welches man / des <term>Schach-Ziehers</term> nachdencken und gefallen / anheim stellet) erfodert / damit zu thun / und zu lassen. Do fern aber / keine sonderliche / hohe und erhebliche
+
+<sig>X ii</sig>
+<meta>catchword: ehehafs</meta>
+
+<vocab>Schach-Spiel, Schach-Zieher, Schach-Mat, Soldat, Haupt-Steinen, König, Gegner</vocab>

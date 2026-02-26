@@ -1,0 +1,26 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+*Ayant ainsi preparé en huict tables ce pre-*
+*mier ordre de tels nombres requerans, pour*
+*trouuer ceux qui conuiennent & font requis*
+*pour faire proportion multiplice avec vn cha-*
+*cun d'iceux : reprens & multiplie vn chacun*
+*d'iceux requerans à part par soy, & il te produi-*
+*ra son nombre requis, qui conuiendra avec luy*
+*en proportion multiplice. Prenons pour exemple*
+*le premier requerant des pairs, qui est 2, & le*
+*multipliant par soy prouiendra 4, le vray nom-*
+*bre requis de 2, conuenant avec luy en propor-*
+*tion multiplice, A sçauoir duple. Le semblable*
+*feras du premier requerant des impairs qui est*
+*3 : disant 3 fois 3, font 9. diras donc . 9 . estre le*
+*nombre requis pour faire proportion multiplice,*
+*asçauoir triple avec 3. le premier requerant des*
+*impairs & ainsi multipliant vn chacun des*
+*nombres requerans, auras les nombres requis*
+*pour parfaire la proportion multiplice comme*
+*tu voys icy depaincte avec ses noms & especes.*
+
+<vocab>Rythmomachie, proportion multiplice, pairs, impairs, duple, triple, nombres requerans</vocab>

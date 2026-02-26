@@ -1,0 +1,47 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>VI</header>
+<sig>c 3</sig>
+
+41 ¶ **Si fuerit duo nũeri superficiales sĩles: erit pporzio vni⁹ ad alteꝝ tãq̃ q̃drati ad q̃dratũ.**
+<image-desc>A diagram showing two sets of three lines with associated numbers. Top set: a (24), b (36), c (54). Bottom set: d (4), e (6), f (9). Lines connect corresponding terms across the sets.</image-desc>
+¶ Sint a et b duo superficiales similes: dico pportionẽ a ad b esse q̃ quadrati ad quadratũ. nam p ante missam erit inter eos vnus medius pporzionalis q̃ sit c. Sumo ergo tres minimos in eoꝝ pportiõe q̃ sint d e f p primã huius d r s ũt quadrati. et cum q̃ pportio d ad e ea sit a ad c. r q̃ e ad f ea sit c ad b ergo p equã pporzionalitatẽ q̃ pportio d ad f quadrati ad quadratũ ea est a ad b: qd̃ est propositũ.
+
+42 ¶ **Si duorum numerorum proportio fuerit que quadrati ad quadratum illos superficiales similes esse necesse est.**
+<image-desc>A diagram with four lines: a, b, c, d. Lines a and b are grouped, as are c and d.</image-desc>
+¶ Hec est cõuersa precedẽtis. Sint a et b quadrati r sit pportio c ad d q̃ a ad b: dico c d numeros esse superficiales sĩles. Nam p correlariũ quarte hui⁹ est vnus medi⁹ pporzionalis int̃ a r b. q̃re r p duodecĩã quarti vn⁹ erit medi⁹ pportiõalis int̃ c et d. q̃re p 40 hui⁹ c r d sunt supficiales sĩles: qd̃ ẽ ppositũ.
+
+43 ¶ **Si duorꝝ superficialiũ similiũ alter in alterũ ducat̃: quadratus numerus producet̃.**
+<image-desc>A diagram with three lines a (24), b (36), c (54), and a fourth longer line below them labeled d with the number 1296.</image-desc>
+¶ Sint a et b superficiales similes: ducaturqꝫ a in b r pueniat c: dico c esse quadratũ. Nam p tricesimã nonã huius inter a r b est vnus medius pporzionalis q̃ sit d. qa ergo a d b sunt cõtinue pporzionales per vicesimãsextam secundi idem est qui fit ex a in b r ex d in se. at qd̃ ex d in se fit est quadratũ: igitur et c quod fit ex a in b: quod est propositum.
+
+44 ¶ **Si ex ductu duorum numerorum vnius in alterum producatur quadratus: illos duos superficiales similes esse conueniet.**
+<image-desc>A diagram with lines a, b, c, d, e. a, b, c are horizontal; d and e are shorter lines below.</image-desc>
+¶ Hec conuertit precedẽtẽ. vt si ex a in b producatur c quadratus: dico a et b esse supficiales similes Nam per vicesimãsextam secundi latus tetragonicum c erit medius pporzionalis inter a et b. ergo per quadragesimã huius a et b sunt superficiales similes: quod intenditur.
+
+45 ¶ **Si duo numeri superficiales vni fuerint similes: erunt et inter se similes.**
+¶ Sint a b duo numeri superficiales similes c: dico a et b esse inter se similes. Nam qa a ẽ similis c int̃ a et c est vnus medius pporziõalis qui sit d. et qa b etiam similis c inter b r c similiter vnus medius pporzionalis qui sit e. igitur per decimãsextam quarti et inter a r b erit vnus medius pporzionalis quare per quadragesimã huius a et b erunt superficiales similes: et propositum.
+
+46 ¶ **Si aliquis numerus in superficialem ducatur: proueniens erit solidus.**
+¶ Nam superficialis fit ex ductu numeri in numerũ facta multiplicatione. qui igitur ex ductu alicuius in ipsum produccetur tribus lateribus cõtinebatur cõtinua facta multiplicatione. quare per diffinitionẽ erit solidus: quod intendebatur.
+
+47 ¶ **Omnis solidus ab aliquo superficiali numeratur.**
+¶ Nam ois solidus per diffinitionẽ habet tria latera quoy tertium ducit̃ in productũ ex reliquis. at talis pductus est superficialis. numerat̃ igitur ois solidus ab aliquo supficiali vt proponebat̃.
+
+48 ¶ **Datis trib⁹ nũeris cũ triplici mõ solidõ pcreet̃: vnus tñ idẽqꝫ erit q̃ ex oib⁹ pducet̃.**
+<image-desc>A numerical diagram showing: Top row 24; Second row 12 and 8 pointing to 24; Third row 6, 12, 8; Bottom row 2, 3, 4 with labels a, b, c. Lines connect the values showing multiplication steps.</image-desc>
+¶ Sint tria latera a b c: et primo ex a in b fiat d: r ex c in d fiat solidus e. scdo ex b in c fiat f et ex a in f fiat solidus g. tertio ex a in c fiat h et ex b in h fiat solidus k. dico tres solidos e g k ex tribus lateribus triplici mõ creatos eosdẽ esse atqꝫ equales. Nã q̃z altr̃ b facit d: et c in b facit f. ergo p octauã secundi d ad f vt a ad c. ergo p vicesimãquintã secundi idẽ est fit ex a in f et c in d: sed a in f facit g r c in d facit e sunt igit̃ e g solidi equales. It̃ qẽ ex b in c fit f et ex a in c fit h: ergo p eandẽ octauã que pportio b ad a ea est f ad h. ergo p vicesimãquintã secundi itẽ idẽ est fit ex a in f et b in h. sed ex a in f fit solidus g: ex ex b in h fit solidus k. sunt igit̃ g k adiuicẽ equales: sed et solidi e g positi est equalis solido g r p cõem scĩam k et e sunt solidi eq̃les. sunt igit̃ vt proponebat̃ tres solidi e g k adiuicẽ eq̃les: r ppositũ
+
+49 ¶ **Omnis numerus a tribus numeris numeratus solidus esse probatur.**
+<image-desc>A simple diagram with three horizontal lines labeled a, b, c.</image-desc>
+¶ Sint a b c tres nũeri numerates d: dico d esse numerũ solidũ. nã vel a est primus vel pposit⁹. si pposit⁹ ergo p quadragesimãsextã huius q̃cunqꝫ nũerus in ip̃m ducat̃ pducet solidũ: sicqꝫ cõstabit propositũ. Si aut̃ sit prim⁹ qꝛ b nũerat d fm aliquẽ numerũ: ergo p quartã tertij a numerat b: vel alterũ fm quẽ nũerat. quare b aut is fm quẽ nũerat est supficialis. erit itaqꝫ p quadragesimãsextã: vt prius d solid⁹.
+
+50 ¶ **Omniũ duorũ solidorũ proportio: ẽ ex laterũ vni⁹ ad latera alteri⁹ pducta proportiõib⁹.**
+<image-desc>A tabular diagram with two columns of values and labels. Left: a-24, k-12, c-4, d-3, e-2. Right: b-8, l-8, f-4, g-2, h-1.</image-desc>
+¶ Sint a et b duo solidi: sintqꝫ c d e latera a: et f g h latera b. dico proportionẽ a ad b esse cõpositã ex pportionibus c ad f: d ad g: r e ad h. duco enĩ c in d et pueniat k r f in g et proueniat l. p nõnã igitur quinti pportio k ad l cõposita est ex proportionibus c ad f r d ad g. et qꝛ per quadragesimãoctauã huius si educatur in k et h in l proueniet a r b. ergo per nõnã quinti pportio a ad b vt k ad l et e ad h: sed pportio k ad l monstrata est cõposita ex c ad f et d ad g. ergo proportio a ad b composita est ex proportionibus c ad f: d ad g: et e ad h: quod est propositum.
+
+51 ¶ **Si duo solidi sĩles alios duos equaliṫ nũmerẽt: illos quoqꝫ solidos sĩles eẽ nc̃ce ẽ.**
+<image-desc>A list-like diagram with alphabetical labels and numbers: d-16, e-128, c-8, b-64, p-2, q-4, n-8, o-32, f-4, k-8, g-2, l-4, h-1, m-2.</image-desc>
+¶ Sint a b duo solidi similes: numeretqꝫ d e equalitervt secundũ c. dico d e pariter eẽ solidos similes assigno enim f g h latera a: et k l m latera b. ducoqꝫ f in g r pueniat n et k in l r pueniat o. et qꝛ h in n p quadragesimãoctauã huius facit a: et m in o facit b. est itaqꝫ n in a fm h: et a in d fm c. ergo p vicesimãtertiã primi n in d secundũ pductũ ex c in h q̃ sit p. et similiter qꝛ o est in b fm m et b in e fm c: per eandẽ vicesimãtertiã o est in e fm pductũ ex c in m q̃ sit q. ꝛ qꝛ in h facit p et c in m facit q. ergo que pportio h ad m p septimã secundi ea est p ad q: quare r q̃ f ad k et g ad l. sed p in n facit d r q in o facit e vt monstratũ est. sed tm est f in g q̃tum n: et k in l q̃tum o. ergo p f g in se faciet d: et q k l in se h.
+
+<vocab>superficiales similes, quadratus, solidus, proportio, latus, medius pporzionalis</vocab>

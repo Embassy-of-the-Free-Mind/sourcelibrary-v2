@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>74</page-num>
+<header>Das Erste Buch / 8. cap:</header>
+<meta>image quality: clear; some bleed-through from reverse page visible in the center</meta>
+
+Er kan (11) nebest einem Soldaten/einem Rochen / den weg
+und gang wol verschliessen : dan/wan der Weissen Königin-Schütz/
+in des Schwartzen Königes-Reuters/anderem felde/stehet/und des
+Weissen Königes-Rochens-Soldat / in des Schwartzen Königes-
+Rochens/dritte feld/umb den gedachten Schützen zu vertheidigen /
+gezogen wird/und des Schwartzen Königes-Roche / in seinem an-
+dern felde/sich befindet: demselben/der Paß / (wie auß dem Abriß
+zu sehen) daß Er/ohne verlust/nicht kan gezogen werden/geschlossen
+ist : Welches aber der Reuter/nicht vermag/ins werck zu richten.
+
+<image-desc>A 2x2 grid representing a portion of a chessboard. The top-left square is white and contains the text "W. Sc.". The top-right square is shaded gray/black and contains the text "S. R.". The bottom-left square is solid black. The bottom-right square is white and contains the text "W. B.".</image-desc>
+
+Er kan (12.) mit hülffe eines Soldaten/so wol der Königin/als
+einem Rochen/den Paß/daß Sie nicht / an seinen König / geraten
+können/Versperren.
+
+Ob nuhn wol die Schützen/ausser diesen oberwehnten zwelf
+nutzbarkeiten/noch viele andere/welche den erfahrenen Spielern/wol
+bekand sind/und in den folgenden Exempeln/sich erzeigen werden /
+haben : So ist es doch nicht ohn / daß die Reuter / auch mit etli-
+chen vortheilen / welche/bey den Schützen/nicht zu finden/versehen
+seynd.
+
+Was man endlich von diesen Haupt-Steinen/in den erweh-
+ten Mss : oder verdolmetschungen/gefunden/hat man angefangener
+massen/auch anhero setzen wöllen :
+
+> » Die Alten/auf dem SchachZabel/sollen sein/also ge-
+> » stalt : das zween sitzen/auf zweyen stühlen/und haben ein Buch/
+> » auf der schoß : und die bedeuten Richter und anweiser : Vnd
+> » wan zwo sach seind/darumb man richt/umb unzucht / und umb
+> » hab/dan umb schuld : Darumb sollent der Alten zween sein /
+> » einer auf dem schwartzen Feld / und einer auf dem weissen
+> » Feld : Der auf dem schwartzen Feld / sol richten umb unzucht :
+> » Der auf dem weissen Feld/sol richten/umb habe : Der Alten
+> » Amt ist/das sie dem König bey seynd/und daß sie deß Künigs
+
+<meta>catchword: bot uns</meta>
+
+<vocab>Soldaten, Rochen, Königin-Schütz, Reuters, Schützen, SchachZabel, Richter, unzucht, habe</vocab>

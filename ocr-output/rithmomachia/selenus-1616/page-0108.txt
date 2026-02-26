@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>78</page-num>
+<header>Das Erste Buch / 9. cap:</header>
+
+<image-desc>An ornamental woodcut headpiece consisting of elaborate floral and foliate scrolls.</image-desc>
+
+## Das Neunte Capittel.
+
+### Von der Könige- und Königinne-Reuter:
+->welche Felder Sie/ zum anfange des Spieles<-
+->einnehmen und besitzen/ und wie sie gehen.<-
+
+<image-desc>A framed woodcut illustration of a chess piece. It depicts a knight in full suit of armor, holding a lance, mounted on a horse. The horse stands upon a decorative turned pedestal. At the bottom of the illustration, within the border, is the caption "Ein Reutter."</image-desc>
+
+Den Schützen / werden zu nechst / und gleich / oder in etlichen fällen / höher alß dieselben / geachtet / die Steine / welche man **Equites Auratos**, Reuter / Ritter / oder Sprenger nennet: durch welche / ohn zweyfel / die Reuterey wird angedeutet.
+
+Dieser sind / im gleichen falle / bey jeglichem hauffen / zweene: haben ihre stellen / an beeden flügeln / zwischen den Elephanten und Schützen: und stehet / des Weissen Königs-Reuter / im Schwartzen = des Schwartzen / im Weissen = der Weissen Königin / im Weissen = und der Schwartzen / im Schwartzen Felde.
+
+Ihr gang ist auß ihrem felde / in ein drittes / weder gerade / noch nach den ecken / sondern / auß einem Weissen / in ein Schwartzes = und auß diesem wider in ein Weisses feld / doch alzeit / in die andere oder dritte / hinterste oder vorderste Zwerch-linie / oder welche an den seiten / sind. Dan Sie / auf ihrer linie / nicht nach den seiten / noch für = oder hintersich / minder auß ihrem felde / nach den ecken / in eine dritte linie / gleich dem Könige / springen können / sondern haben gleichsam einen doppelten gang / Zu einer Zeit / dies-
+
+<meta>catchword: weil</meta>
+
+<vocab>Schachspiel, Reuter, Ritter, Sprenger, Equites Auratos, Elephanten, Schützen, Zwerch-linie</vocab>

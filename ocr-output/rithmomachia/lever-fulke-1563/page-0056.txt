@@ -1,0 +1,12 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>B. vii.</sig>
+<warning>Heavy show-through/bleed-through from the reverse side of the leaf makes the page appear cluttered with reversed text; ignore these faint, mirrored characters.</warning>
+
+As .20. multiplied by .45. is .900. the roote is .30. square, whych multiplyed in it selfe is .900. But yf you lyste not to take suche paynes, here is a Table that maye serue your tourne for Geome-tricall proportion to be vſed
+->in this game.<-
+
+->A table<-
+
+<vocab>Philosophers game, Rithmomachia, multiplication, square root, Geometrical proportion</vocab>

@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>153</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5.cap:</margin>
+
+<image-desc>A decorative woodcut headpiece featuring symmetrical scrollwork and floral designs flanking a central circular medallion containing a cross.</image-desc>
+
+### Das Fünfte Capittel.
+
+#### Wie man den König / Schachen / Schach-Mat- / ten / und hingegen gebrauchen und verthetigen müsse: / auch / wie sich die Spieler / wan ihr Spiel / aufs letzte / mit wenigen Steinen / beederseits gleich wird / verhalten sollen.
+
+Es muß ferner / (der im anfange des vori- / gen vierten Capitt: angedeuteten Ordnung nach) / der jenige / welcher unter den Spielern Schach / / saget / denselben Schach / durch welchen Stein / er / geschehe / weysen und anzeigen: in ansehung / wan / Ers nicht zeiget / sondern / einen andern Zug / dazwischen thut: / Er den Andern / daß Er / auß dem Schache ziehe / nicht nötigen kan. / Er ruckete dan / mit demselben Steine / mit welchem Er vorhin / Schach gegeben / fur - oder hinter sich / in ein ander feld / böte also / / zum andern mahl Schach / zeigete denselben an / und des Andern Kö- / nig / stünde noch / in einem solchen felde / darauf / dieser Stein / dem- / selben / dem Spiele gemäß / Schach geben könte. Dan / auf den fahl / / der Ander mit dem Könige / auß dem Schache / do fern Er densel- / ben nicht kan bedecken / noch den Stein / der ihm Schach=beut hin- / wegzunehmen / zu weichen / schuldig ist. Hiebey ist zu mercken / daß / der König / so lang der Ander / nicht noch einmahl / wider Schach / gibt / und andeutet / auf derselben linie / ungeachtet des Andern Stei- / nes / nicht anders / alß wan ihn keiner verhinderte / kan gezogen / werden.
+Ferner / wan einer / einen Stein / welcher / des Andern Köni- / ge / einen Schach anbeut / gezogen / und dasselbe / nicht alßbald / be- / sondern / nach etlichen Zügen / gewahr wird: so sollen die geschehene / züge / nicht wider zu rücke gezogen / und alles / in den vorigen stand / gebracht werden / sondern der jenige / welcher es versehen / mags / ihm selber / daß Er / die gute gelegenheit / verabsaumet / zuschrei- / ben. Dan wegen eines nachlässigkeit / der gantze hauffe / nicht sol / in eine unordnung gebracht werden: So würde auch dahero / einer / auf einmahl / zween Steine / (in dem Er / mit dem einen / dem / Könige / Schach gebe / mit dem andern aber / sonsten auf einen gu- / ten Stein / umb denselben zu erhaschen / laurete) welches aber /
+
+<sig>V ij</sig>
+<meta>catchword: (wie</meta>
+
+<vocab>Schach, Schach-Matten, König, Stein, Zug, Capittel, Ordnung, Feld</vocab>

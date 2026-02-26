@@ -1,0 +1,5 @@
+<language>None</language>
+<page-type>blank</page-type>
+<meta>Blank page; yellowed and foxed paper; torn bottom-left corner; faint institutional stamp ghosting in the center; Digitized by Google watermark in bottom-right corner.</meta>
+<warning>This page contains no legible text or manuscript content.</warning>
+<vocab></vocab>

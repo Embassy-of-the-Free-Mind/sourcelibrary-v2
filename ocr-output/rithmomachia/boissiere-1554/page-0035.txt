@@ -1,0 +1,35 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>18V</page-num>
+<header>RYTHMOMACHIE, IEV</header>
+<meta>catchword: perpa-</meta>
+
+Ayant ainsi situé les tables *multiplices*, facil-
+lement par addition d'elles trouueras la dis-
+position des particulieres triangulaires. Premie-
+rement adiouste la premiere & moindre propor-
+tion desdictes multiplices disant 2. & 4. font 6.
+Qui est le premier triangle superparticulier qui
+doit estre mis au derriere de 4, & ainsi des autres
+3. Auoir posé les premieres 4. triangulaires, pose
+au derriere d'elle les autres 4. selõ l'ordre naturel
+des particuliers en nõbre pair: qui sōt *sesquialtre*
+*sesquiquarte*, *sesquisexte*, *sesquioctave*. et pour
+ce q̃ la premiere qui est 6, requiert vn autre qui a
+icelle face proportiõ *sexquialtre*: sçauoir est qui
+la cõtienne et en oultre sa moytié qui est 3, la re-
+quise sera le nombre 9, qui cõtient ledit 6. & en
+oultre sa moytié 3. & ainsi des autres 3. comme
+auons monstré à l'inscription des characteres. A-
+uoir donc situé ceste proportion particuliere fault
+que de rechef par l'addition des 2. nombres pro-
+portionaux aux tables triangulaires, trouuez la
+première quarrée superpartiente qui doit estre mi-
+se au derriere desdictes deux triāgulaires: disant
+9. & 6. font 15. & ainsi consequemment des au-
+tres trois. Apres voyant que ces quatres premie-
+res quarrées en requierent autres 4. pour parfai-
+re leur proportiõ superpartiente, situez au derrie-
+re d'elles les autres 4. selon l'ordre naturel des su-
+
+<vocab>Rythmomachie, multiplices, triangulaires, superparticulier, sesquialtre, sesquiquarte, sesquisexte, sesquioctave, superpartiente, quarrée</vocab>

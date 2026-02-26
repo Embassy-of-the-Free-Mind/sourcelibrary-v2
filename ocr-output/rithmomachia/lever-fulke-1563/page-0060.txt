@@ -1,0 +1,34 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>Significant bleed-through from the verso page. The text is printed in a blackletter (Gothic) typeface.</meta>
+<warning>Image quality is dark with heavy ink show-through from the reverse side, making some numbers near the bottom of the table difficult to read clearly.</warning>
+
+## ¶ A table of Musicall proportion.
+
+| | | |
+|---|---|---|
+| 2 | 3 | 6 |
+| 3 | 4 | 6 |
+| 3 | 5 | 15 |
+| 4 | 6 | 12 |
+| 4 | 7 | 28 |
+| 5 | 8 | 20 |
+| 5 | 9 | 45 |
+| 6 | 8 | 12 |
+| 7 | 12 | 42 |
+| 8 | 15 | 120 |
+| 9 | 15 | 45 |
+| 9 | 16 | 72 |
+| 12 | 15 | 20 |
+| 15 | 20 | 30 |
+| 5 | 45 | 225 |
+| 30 | 36 | 45 |
+| 30 | 45 | <unclear>49</unclear> |
+| 72 | 90 | 120 |
+
+->17.<-
+
+<sig>C.i.</sig>
+
+<vocab>Philosophers game, Rythmomachia, Musicall proportion, arithmetic, table</vocab>

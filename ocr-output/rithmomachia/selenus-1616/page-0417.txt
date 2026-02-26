@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>389</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>2. cap:</margin>
+viertzig : **Der Weisse** / der K. Soldaten / auf des G. K. Schü-
+tzen und Soldaten / auf neun und zwantzig : **Der Schwartze** / nimt
+ihn / mit gedachtem Soldaten : **Der Weisse** / denselben / mit der K.
+Schützens-Soldaten / und ziehet nochmaln / auf des G. K. Schützen :
+**Der Schwartze** / beut / mit demselben / (so fern Er / den gedachten
+**W.** Soldaten / mit der K. Reuter / nicht nehmen wil) auß ein und
+dreyffig / **Schach** : **Der Weisse** / bedecket den König / mit der K.
+Reuter / auf zwey und zwantzig : **Der Schwartze** / spielet / des
+K. Reuter / auf des **W.** K. Soldaten / auf drey und viertzig : **Der
+Weisse** / denselben / auf ihn / auf sechs und dreyffig : **Der Schwar-
+tze** / denselben / auf acht und zwantzig : **Der Weisse** / die Königin /
+(umb / des G. K. Schützens-Soldaten / zu erlangen / und ihrem
+Reuter / zu helfen) auf drey und zwantzig : oder aber / auf des G.
+K. Reuter / auf ein und zwantzig : Verstehet Er nun das Spiel /
+so hat Er / gute gelegenheit / es ferner / wol anzuordnen / und sol ihm
+diese Züge / umb dieselben / nachdem es die notturft erfodert / zu ge-
+brauchen / wol gemein machen.
+
+<margin>5.</margin> Es spielet aber der **Weisse** / noch besser / und sicherer / an stat
+des K. Soldatens / und Reuters / (n. 4.) der K. Soldaten / auf neun
+und zwantzig / und dero Schützen / auf sieben und zwantzig : **Der
+Schwartze** / der K. Soldaten / auf sieben und dreyffig : **Der Weisse** /
+auf denselben / der K. Schützens-Soldaten / auf dreyffig : **Der
+Schwartze** / nimt ihn / mit demselben : **Der Weisse** / (umb / den
+Paß / von des K. Schützen / auf diesen / zu eröffnen) ziehet / des K. Sol-
+daten / auf zwantzig : **Der Schwartze** / (umb / ihn zu beschützen) der
+K. Reuters-Soldaten / auf neun und dreyffig : **Der Weisse** / auf den-
+<margin>6.</margin> selben / der K. Rochens-Soldaten / auf zwey und dreyffig : * **Der
+Schwartze** / nimt ihn / mit demselben : **Der Weisse** / der G. K.
+Soldaten / mit des K. Schützen : oder aber / der G. K. Reuters-
+Soldaten / mit seiner Königin / beut **Schach** / und nimt folgendes / un-
+gehindert / der G. K. Soldaten.
+
+<margin>7.</margin> Nimt aber der **Schwartze** / den **W.** Soldaten / nicht / (n. 6.)
+besondern ziehet / der K. Schützens-Soldaten / (umb / dero Reuters-
+Soldaten / zu entsetzen) auf sechs und viertzig : so nimt ihn / der
+**Weisse** / gleichwol / mit der K. Rochens-Soldaten : **Der Schwar-
+tze** / denselben / (umb / der K. Soldaten / zu entsetzen) mit dero Schü-
+tzens-Soldaten : **Der Weisse** / ziehet / der K. Reuters-Soldaten /
+auf der G. K. Soldaten / auf drey und zwantzig : **Der Schwartze** /
+nimt ihn / mit demselben : **Der Weisse** / der G. K. Schützens-
+
+<sig>Ccc</sig>
+<meta>catchword: Sols</meta>
+
+<vocab>Schach-Spiel, Weisse, Schwartze, König, Reuter, Schützen, Rochens-Soldaten, Soldaten, Schach</vocab>

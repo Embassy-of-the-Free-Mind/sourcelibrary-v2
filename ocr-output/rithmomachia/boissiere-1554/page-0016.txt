@@ -1,0 +1,25 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>7</page-num>
+<header>DES PHILOSOPHES.</header>
+
+tenuz entre 1, & 10, & feront tels nombres
+particulieremēt prins, la source & origine de tou
+tes proportions: obseruāt toutesfois que les nom-
+bres pairs soient en vne couleur, & les impairs
+en vne autre, d'autant que les tables du nombre
+pair ne doiuent estre meslées auecques celles du
+nombre impair, toutesfois parce qu'vn nombre
+particulierement prins, ne peust par soy faire au-
+cune proportion: te fault presupposer qu'vn cha-
+cun des quatre nombres pair, en requiert vn au-
+tre de sa couleur, pour faire proportion selon soy.
+Ce q̃ semblablēmet faict vn chacū des impairs.
+Parquoy serōt dits & appellez lesdicts 4. pairs
+et 4. impairs, nombres requerans ou pretendans.
+
+## Les premieres tables propres à la premiere partie des proportions multiplices.
+
+<image-desc>A rectangular frame contains two rows of four circles each. The top row consists of four white circles containing the even numbers 2, 4, 6, and 8, each with a small dot centered beneath the numeral. To the left of this row is the label "Pair.". The bottom row consists of four solid black circles containing the odd numbers 3, 5, 7, and 9 in white. To the left of this row is the label "Impair.". A large curly brace to the left of these labels groups both rows together under the vertically oriented text "Nombres req̃ rās." (Nombres requerans).</image-desc>
+
+<vocab>proportions multiplices, nombres pairs, nombres impairs, nombres requerans, nombres pretendans</vocab>

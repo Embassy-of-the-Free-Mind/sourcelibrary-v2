@@ -1,0 +1,17 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>27</page-num>
+<header>DES PHILOSOPHES.</header>
+
+### Embuſche.
+
+SI deux moindres nombres ſe peuuẽt iecter au tour d'vn autre plus grand, & que la puiſſan- ce & quantité des deux puiſſe eſtre égale à cel- le dudict plus grand: il l'emporteront : des lors que la ſeconde table ſera ſituée ſans tranſporter la victorieuſe au lieu de la prinſe
+
+#### Exemple.
+
+*Pour bien entendre ceſt exemple; regarde en la tierce, quatrieſme, & cinquieſme colomnes en largeur depuis la lettre B, iuſques à la table des pairs 36, eſtre contenus trois eſpaces. Surquoy tu viens à colliger que ſi la table des impairs, qui eſt 12, eſtoit à ladite loge de B, facilement empor- teroit, par les precedentes reigles le 36 qui eſt du nombre pair, & ce par aſſault : à ſes fins tu tranſporteras icelluy 12. en la loge de B: Mais d'autant que ton aduerſaire ayant le nõbre pair auoit preparé en la tierce colomne tout aupres de la loge B. vn 8 en embuſche, ſi tu aduances tō 12. à ladite loge B. aupres de ſon 8, icelluy aduer- ſaire tranſportera ſon 4, qui eſt en la cinquieſme colomne, en l'autre loge de C. tout aupres de ton 12. Et parce que ſon 8. qui eſtoit en embuſche, & ſon 4. (qui ſont par addition egaux de force & Valeur auec 12) ſont deux; emporteront icel- luy 12. Et ainſi des autres. Et peux voir icy les*
+
+<sig>D iij</sig>
+<meta>catchword: les</meta>
+
+<vocab>Rythmomachie, nombres pairs, impairs, embuſche, loge, colomnes, addition, valeur</vocab>

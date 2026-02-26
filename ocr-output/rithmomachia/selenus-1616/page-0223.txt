@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>193</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Bb ij</sig>
+<meta>catchword: Das; chapter: 10.cap: in margin; paper transparency shows grids from facing page</meta>
+<warning>There is significant bleed-through from the reverse side of the page, showing grid patterns and some text in the margins.</warning>
+
+<margin>10.cap:</margin>
+
+15. * Der Schwarze / nimt / des W. K. Reuter / mit des K. Schützen : Der Weiſſe / denſelben / mit des K. Rochen : Der Schwarze / ziehet / ſeines K. Rochen / oder die Königin / auf des W. K. Schützen / auf neun und funfzig : Der Weiſſe / des K. Rochen / auf drey / und wird alſo / ſofern Er / zu ſpielen weiſſ / das Spiel / wol gewinnen.
+
+16. Wan aber der Schwarze / den W. Reuter / (n. 15.) mit dem Schützen / nicht wegnimt / beſondern / die Königin / auf des W. K. Schützen / auf neun und funfzig / ziehet : ſo ſpielet der Weiſſe / denſelben / auf drey und dreyſſig : Der Schwarze / nimt des W. K. Reuter / mit ſeines K. Schützen : Der Weiſſe / des S. K. Reuter / mit der Königin : Der Schwarze / gibt / mit der Königin / auſſz eylfe / Schach / und verthetiget zu gleich / ihres K. Schützen : Der Weiſſe / ziehet den König / auf fünfe : Der Schwarze / (umb / den Schach / von der W. K. Schützen / auſſz vier und dreyſſig / zu verhüten) des K. Rochens = Soldaten / auf ein und vierzig : Der Weiſſe / der K. Reuter / (umb / auf das dritte feld / acht zu haben) auf dreyzehen : der Schwarze / des K. Rochen / auf neun und funfzig : der Weiſſe / die Königin / (auf daſſz ihr / des S. K. Roche / auſſz ſieben und zwantzig / nicht zuſetze) auf ein und zwantzig : Der Schwarze / der K. Reuter / auf der W. K. Soldaten / auf ſechs und vierzig : Der Weiſſe / der K. Reuter / auf die S. Königin / auf acht und zwantzig : Der Schwarze / nimt / mit dero Reuter / der W. K. Soldaten / und zielet ebenmeſſig / auf die W. Königin : Der Weiſſe / wan Er die S. Königin wegnimt / gewinnet folgendes / (es ziehe der Schwarze / wie Er wolle) deſſen K. Schützen / oder ſeiner K. Reuter / jah auch das gantze Spiel.
+
+17. Wan aber der Schwarze / nicht ſeinen Reuter / auf 43. (n. 2.) beſondern ſeine Königin / auf zwey und funfzig / ziehet : ſo wird Er ſein Spiel / beſſer anzuordnen vermögen : und darf der Weiſſe / der K. Soldaten / (weyl Jhm ſonſten / ſeines K. Soldat / durch die S. Königin / genommen würde)
+->auf neun und zwantzig / nicht<-
+->rucken. ic.<-
+
+---
+
+<image-desc>A decorative horizontal fleuron consisting of symmetrical floral and leaf patterns.</image-desc>
+
+Das
+
+<vocab>Schach-Spiel, Schwarze, Weiſſe, Reuter, Schützen, Rochen, Königin, König, Soldaten, Schach, gewinnen, eylfe, dreyzehen, zwantzig</vocab>

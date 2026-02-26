@@ -1,0 +1,45 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>487</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+Die Duodecime, A, D, Item / das C, oder der unterscheid / A, C, (6) gegen den unterscheid / C, D, (2) Item das B, gegen die unterscheide / A, B, und B, C, (3) verglichen.
+
+Die Quintadecime, der unterscheid A, D, (8) gegen den unterscheid C, D, (2) Item das A, gegen die unterscheide A, B, und B, C, (3) gehalten.
+
+Der Ton / das B, mit dem unterscheide A, D, (8) verglichen.
+
+->Das Achte.<-
+
+| D. | C. | B. | A. |
+|----|----|----|----|
+| 6. | 8. | 9. | 12. |
+
+Die Quinte, A, C, Item B, oder der unterscheid A, C, (4) gegen D, oder gegen den unterscheid / A, D, (6) Item die unterscheide / B, D, und A, B, (3) gegen den unterscheid / C, D, (2) verglichen.
+
+Die Quarte, A, B, Item / C, gegen D, oder gegen den unterscheid A, D, (6) Item der unterscheid / A, C, (4) gegen die unterscheide / A, B, und B, D, (3) verglichen.
+
+Die Octave, das A, gegen D, oder gegen den unterscheid / A, D, (6) Item / das C, gegen den unterscheid / A, C, (4) Item / das D, oder der unterscheid A, D, (6) gegen die unterscheide / A, B, und B, D, (3) Item der unterscheid / A, C, (4) oder der unterscheid B, C, (1) mit dem unterscheide C, D, (2) verglichen.
+
+Die Duodecime, das A, gegen den unterscheid / A, C, (4) Item / das B, oder der unterscheid / B, C, (1) gegen die unterscheide / A, B, und B, D, (3) Item das D, und der unterscheid / A, D, (6) gegen den unterscheid / D, C, (2) verglichen.
+
+Die Quintadecime, das A, gegen die unterscheide / A, B, und B, D, (3) Item das C, gegen den unterscheid C, D, (2) Item / der unterscheid A, C, gegen den unterscheid / B, C, (1) verglichen.
+
+->Das neunte / und letzte.<-
+
+| D. | C. | B. | A. |
+|-----|-----|-----|-----|
+| 12. | 15. | 16. | 20. |
+
+Die Quinte, das D, gegen den unterscheid / A, D, (8) verglichen.
+
+Die Quarte, A, C, und B, D, Item / die unterscheide A, B, und B, D, (4) gegen den unterscheid / C, D, (3) verglichen.
+
+Die Octave, das B, oder die unterscheide / A, B, und B, D, (4) gegen den unterscheid / A, D, (8) verglichen.
+
+Die Duodecime, das D, gegen die unterscheide / B, D, und B, A, (4) Item / das C, gegen den unterscheid / A, C, (5) verglichen.
+
+<sig>Ppp iij</sig>
+<meta>catchword: Die</meta>
+
+<vocab>Zahl-Kampf, Duodecime, Quintadecime, Ton, unterscheid, Quinte, Quarte, Octave, verglichen</vocab>

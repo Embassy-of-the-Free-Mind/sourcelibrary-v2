@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>93</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>10. cap:</margin>
+BawMan / von ersten / Got erkennen / daß Er dem dien / der cc
+ihm und unß gibt zitlich ding / alß das unserm leben / ein noturft cc
+ist / und im dancken seiner genaden / mit dem zehend / welches dan cc
+billig : Darumb daß Er uns behüt / die neun theil / für unge- cc
+witter / und für feinden : 2. Sol der Bawman / gehorsam sein / cc
+daß Er seines Herren hab / fleissiglich / und auch eigentlich hütt / cc
+und der schön und wol pfleg ; Ir ist leider viel / dye versehen cc
+knechts nahmen / und knechts gewand / und speiß habent / aber cc
+sie habent knechtes sitten nit / sie fleihent auch nit knechts sitten / cc
+wan sie setzent sich nit / nach weißheit. 3. Soll Er das leben lieb cc
+haben / und doch den todt nicht fürchten : Wan es ist ein gespöt / cc
+dem des lebens / also verdreußt / das Er zu dem tod / gauchet : cc
+Ein weiser Man / sol nicht / zu dem tod gauchen / sünder nuhr cc
+senft gehen : 4. Sol Er sich arbeit fleissen / und doch / das Er cc
+fyer / die fiertag / die die Christenheit gesetzt hat / on eehaft not / cc
+mit nichten überfahren sol : Dem Bawman gehörent mit recht cc
+zu drey Sach und ding : Des Ersten / daß Er das Erdrych ü- cc
+ben und umbkeren sol / und darumb solle Er haben / in seiner rech- cc
+ten Hand / eine wagen fuen oder hawe / domit Er / das Erd- cc
+reich spalte : Er sol auch Viech ziehen / und davon sol Er in der cc
+lincken haben / ein gerten oder rut / domit man / das Viech auß- cc
+trieb ze veld : Er sol auch sein ein Hüter / nit alleine / daß Er das cc
+Viech für / und außtreib / sunder das Er tugend und treiwen dar- cc
+zu pfleg / und Gott das beste geb : Er sol auch baum furben / und cc
+seubern / von übrigen und unberhaften schüßlingen / und Wein- cc
+garten züglen : Darum hat Er / under der gürtel / ein besneid- cc
+Messer.
+
+Der Ander Wend / auf dem Schach-Zabel / beteut / was cc
+man mit hemern schmiedet / mit axsten / und mit Zimer parten : cc
+und den setzet man für den Ritter / zu der rechten Hand / des Kü- cc
+niges : Wan der bedarf des schmiedts zu Messern / und zu cc
+schwertern / zu sporen / zu setteln / und auch allen andren dingen. cc
+Sein gestalt sol seyn / alß ein schmit / der hab in der rechten Hant / cc
+ein hammer / und in der lincken Handt ein parten / und under der cc
+gürtel ein fell. Die Werckleute / die do bedeuten seint / die sollent cc
+haben warheit und trew / wan man in entpfile grosse Sach / cc
+Golt / Silber / und edelgestein / (alß den goldschmieden / mu cc
+
+<meta>catchword: fietern</meta>
+
+<vocab>Schach-Spiel, BawMan, Erdrych, Wend, Werckleute, besneid-Messer, Zimer parten, setteln</vocab>

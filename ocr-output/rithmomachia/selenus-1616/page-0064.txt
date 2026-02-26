@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>34</page-num>
+<header>Das erste Buch / 2. cap:</header>
+
+>> schieden. Die Art des Spielens / belangend / begegneten Sie
+>> ein ander / in gemachter Schlacht-Ordnung / gleich denen / so ei-
+>> ne Schlacht / im offenen felde / lieffern und halten wöllen. Hat-
+>> ten auch ihr mahl und gräntze / wie weit sie gehen dörfften.
+>> So muste man sich auch / dergestalt hüten / und vorsehen / daß
+>> man / wan der feind solte angegriffen werden / nicht zu sehr / auf
+>> ihn zueylete / sich dahero entblößete / und unfürsichtig / selber in
+>> gefahr setzete. Es würden auch diese Steine / auß köstlichen E-
+>> delgesteinen gemachet / und spieleten mit demselben / so wol Wei-
+>> bes- alß Mannes-Personen.
+
+Auß diesem ist nuhn zu ersehen / daß das Spiel / welches die Lateiner / <term>Ludum Latronum</term> nennen / eben eins / mit unserm <term>Schach-Spiele</term> sey. Dan dasselbe / gleich so wol / auf die ergetzung und übung des gemühtes / und auf die Krieges-Kunst / alß unsers / gerichtet ist: wie dan solches / auß des <term>Ovidij</term> und <term>Martialis</term> phrasibus: <term>sub imagine Latrocinij</term>: <term>prælia Latronum ludere</term>: <term>ludere bella Latronum</term> &c. abzunehmen.
+
+Ob nuhn zwar Barth: Merula, in Comment: ad lib: 2. & 3. <term>Ovidij</term>, <term>de Arte Amandi</term>, nicht eben / mag getroffen haben: So hat doch gleichwol / Jacob: Micyllus, in Expl: <term>Ovidij</term>, des rechten weges / in dehm / auch verfehlet: daß Er / dieses unser Spiel / gantz und gar / ein anders / von dem <term>Ludo Latrunculorum</term> zu seyn / vermeynet. Dan gleich gesetzet / daß etwa / bey den Alten / die Steine / auf eine andere Art / (wie auß dem <term>Ovidio</term> und <term>Polluce</term>, zu ersehen) alß zu unsern Zeiten / gebräuchlich seyn mag / geraubet worden: so erfolgt doch hieauß / nicht alsbald / daß es gar ein ander Spiel / seyn müsse: gestalt auch heutiges Tages / dieses Spiel / nicht auf einerley Art / gezogen wird. Dan ob schon / die Chineser, Persen, und Mauritanen / den Schach ziehen / so geschicht es gleichwol / auf eine andere art / (wie solches / auß dem / was wir bald / auß dem <term>Garciâ ab Ortâ</term>, lib: 2. c. 28. und <term>Trigautio</term>, S. J. P. anziehen wöllen / zu ersehen) alß wir ihn ziehen. Ist nicht ein unterscheid / zwischen dem <term>Currier-Spiel</term> / oder / wie es die Einwohner zu <term>Stropeke</term> / des Ortes spielen / und dem / welches sonsten gebreuchlich ist / zu erspüren? Wer wolte aber sagen / daß die zu <term>Stropeke</term> / nicht so wol den Schach / alß andere / auf die gemeine Art / ziehen?
+
+Innerhalb vier- oder dreyhundert Jahren / haben etliche / vom Schach-Spiel / unterschiedliche Tractätlein / außgehen lassen: unter welchen wol der Eltest seyn wird / <term>Fr. Jacobus de Casallis</term>, welchen wir droben albereit angezogen / und der / umb das 1200. Jahr / nach Christi
+
+<vocab>Schach, Ludum Latronum, Ludus Latrunculorum, Ovidius, Martialis, Currier-Spiel, Stropeke, Jacobus de Casallis, Bartholomaeus Merula, Jacobus Micyllus, Garcia de Orta, Nicolas Trigault</vocab>

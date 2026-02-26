@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>209</page-num>
+<header>12.cap: Vom Schach-Spiel.</header>
+<sig>Dd ij</sig>
+<meta>catchword: Rochenes</meta>
+
+setzet den Reuter / auf funf und zwanzig: so ziehet der Weisse /
+seines K. Reuter / auf des S. K. Schützens-Soldaten / und der S.
+K. Schützen / (weyl er / von seines K. Rochen / beschützet wird) auf
+vier und dreyssig / und kan also / dofern Er / das Spiel verstehet /
+gantz wol gewinnen.
+
+<margin>19.</margin> Wan aber der Schwartze / den Schützen / auf 17. (n. 16.) nicht
+ziehet / sondern des W. K. Reuter / mit demselben wegraumet /
+und ihn / auf die W. Königin / ziehet: so nimt ihn der Weisse / mit
+derselben: der Schwartze / ziehet / auf dieselbe / des K. Reuter /
+auf funf und zwanzig: der Weisse / nimt mit ihr / des S. K. Sol-
+daten / und ziehet sie / auf dessen Schützens-Soldaten: der Schwar-
+ze / (ihn zu beschützen) die Königin / auf zwey und funfzig: der
+Weisse / des K. Rochen / (umb des S. K. Schützens-Soldaten /
+mit gewalt zu erlangen) auf drey: dan / wan der Schwartze / des
+K. Reuter / auf die W. Königin / auf zwey und vierzig / ziehet: Der
+Weisse / als dan / des S. K. Schützens-Soldaten / mit des K. Schü-
+tzen / wegnimt / und Schach-beut: der Schwartze / setzet den Kö-
+nig / auf ein und sechssig: der Weisse / dofern Er / zur verwechss-
+lung der Königinne / nicht wil ursache geben) die Königin / nicht auf
+vier - sondern auf dreyßig: der Schwartze / der K. Reuter /
+(umb sich dessen folgendes zu gebrauchen) auf drey und funfzig: der
+Weisse / der K. Schützen / auf die S. Königin / auf vier und dreys-
+sig: der Schwartze / bedecket sie / mit ihrem Reuter / auf drey
+und vierzig: der Weisse / rucket / auf denselben / des K. Soldaten /
+
+<margin>20.</margin> auf sechs und dreyssig: * der Schwartze / nimt / mit der Köni-
+gin / des W. K. Schützen: der Weisse / der S. K. Reuter / mit des
+K. Soldaten: Der Schwartze / ziehet / den König / (auß der ge-
+fahr / des Ab-Schaches / von der W. K. Schützen) auf sechßzig:
+der Weisse / gibt mit des K. Rochen / auß viere / Schach: der
+Schwartze / bedecket den König / mit seinem Schützen oder Reu-
+ter / auf zwey und funfzig: der Weisse / gibt / mit der Königin / auf
+neun und dreyßig / Schach / ziehet dieselbe auf der S. K. Reuters-
+Soldaten / und wird sein Spiel / zum Siege / ferner wol einzu-
+richten haben.
+
+<margin>21.</margin> Nimt aber der Schwartze / nicht den W. Schützen / (n. 20.)
+besondern des W. K. Soldaten / mit der K. Soldaten: so raubet ihn /
+der Weisse / mit seiner K. Soldaten / und ziehet denselben / noch -
+
+<margin>22.</margin> maln / auf der S. K. Reuter: * der Schwartze / nimt obgedach-
+ten W. Soldaten / mit der Königin / und rucket sie / auf des W. K.
+
+<vocab>Schach-Spiel, Reuter, Rochen, Königin, König, Schütze, Soldat, Schach-beut, Ab-Schach</vocab>

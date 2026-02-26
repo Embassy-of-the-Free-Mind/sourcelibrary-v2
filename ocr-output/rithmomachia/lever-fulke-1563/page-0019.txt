@@ -1,0 +1,11 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>A.ij.</sig>
+<vocab>Philosophers game, squares, chessboard, breadth, length</vocab>
+
+# The Philoſophers game.
+
+The table muſte be a playne borde conteyninge . 128 . ſquares that is . 8 . in breadth and . 16 . in length ſette forthe in two dyuerſe collours . Or for a play-ner underſtandynge, the table is a doble cheſse bord, as it were two cheſſebordes ioyned together, the length of twoo , the breadth of one, where of thys is an ex-
+->ample.<-
+
+<image-desc>A diagram of an 8 by 16 checkered board, representing a double chessboard used for the "Philosophers Game" (Rythmomachia). The board is populated with various symbols including letters (Z, X, N, T, A, Y, R, W, U, V), numbers (1, 2, 4, 9), and geometric shapes (circles, triangles, squares) containing values. The printer's signature "A.ij." is printed on a light square on the right side of the board's middle section.</image-desc>

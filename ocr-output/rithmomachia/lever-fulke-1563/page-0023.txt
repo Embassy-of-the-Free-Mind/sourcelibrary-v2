@@ -1,0 +1,36 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+one of the fyrste order and another of the
+seconde order, as .2. and .4. make first
+3. and .9. make twelue, on the euen syde
+they are these. 6. 20. 42. 72. on the odde
+syde. 12. 30. 56. 90.
+
+The second order of triangles be made
+by addynge one to euery one of the first
+order of roundes, and then multiplying
+that number in hym selfe: as, 2. is one of
+the firste order of roundes, thereto adde
+one, yᵉ is .3. then .3. tymes .3. is .9. a triangle
+of the seconde order, on the euen syde.
+Likewise to thre a round on the odde side,
+adde .1. so is it .4. then .4. tymes .4. is .16.
+On the euen parte, they be. 9. 25. 49. 81.
+on the odde parte. 16. 36. 64. 100.
+
+The first order of squares (in whiche
+are contayned the kynges) be made by
+addynge two triangles together, one of
+the fyrste order, and another of the se-
+conde, as .6. and .9. make .15. lykewyse
+12. and .16. make .28. Amonge the euen
+they be . 15 . 45 . and . 91 . the Kynge .
+153 . amonge the odde they be . 28 . 66 .
+120 . and . 190 . the Kynge.
+
+<sig>A.iiij.</sig>
+<meta>catchword: The</meta>
+
+<vocab>Philosophers game, Rithmomachia, triangles, squares, kynges, roundes, arithmetic, proportions, numbers, sequence</vocab>

@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>36</page-num>
+<header>Exemple.</header>
+
+<image-desc>A historical printed table of numerical sequences, organized into three main sections separated by double vertical lines. The entire table is enclosed in a hand-drawn decorative frame with a bracket-shaped top edge. The headings for the three sections are "Arithmeticque & Geometrie ensemble.", "Arithmeticque seule.", and "Geometrie seule."</image-desc>
+
+| Arithmeticque & Geometrie ensemble. | Arithmeticque seule. | Geometrie seule. |
+|:---|:---|:---|
+| 2 3 4 8 | 2 3 4 | 2 4 8 |
+| 2 4 6 8 | 2 4 6 | 4 6 8 |
+| 2 4 6 9 | 2 4 6 | 4 6 9 |
+| 2 4 5 8 | 2 5 8 | 2 4 8 |
+| 2 9 12 16 | 2 9 16 | 9 12 16 |
+| 3 6 9 12 | 3 6 9 | 6 9 12 |
+| 3 4 6 9 | 3 6 9 | 4 6 9 |
+| 3 9 15 25 | 3 9 15 | 9 15 25 |
+| 4 5 6 9 | 4 5 6 | 4 6 9 |
+| 4 6 8 9 | 4 6 8 | 4 6 9 |
+| 4 6 8 16 | 4 6 8 | 4 8 16 |
+| 4 12 20 36 | 4 12 20 | 4 12 36 |
+| 5 9 15 25 | 5 15 25 | 9 15 25 |
+| 5 25 45 81 | 5 25 45 | 25 45 81 |
+| 6 9 12 16 | 6 9 12 | 9 12 16 |
+| 7 16 20 25 | 7 19 25 | 16 20 25 |
+| 9 12 15 16 | 9 12 15 | 9 12 16 |
+| 9 12 15 25 | 9 12 15 | 9 15 25 |
+| 9 45 81 225 | 9 45 81 | 9 45 225 |
+| 9 25 45 81 | 9 25 45 | 25 45 81 |
+| 9 12 16 20 | 12 16 20 | 9 12 16 |
+| 9 15 20 25 | 15 20 25 | 9 15 25 |
+| 9 81 153 289 | 9 81 153 | 81 153 289 |
+| 12 16 20 25 | 12 16 20 | 16 20 25 |
+| 15 16 20 25 | 15 20 25 | 16 20 25 |
+| 15 20 30 45 | 15 30 45 | 20 30 45 |
+
+<vocab>Arithmeticque, Geometrie, ensemble, seule, progression</vocab>

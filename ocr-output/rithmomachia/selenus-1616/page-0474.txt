@@ -1,0 +1,56 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>440</page-num>
+<header>Das Vierte Buch/ 10. cap:</header>
+
+Der Schwartze/ rucket/ den König/ (umb seinem Soldaten/
+einen freyen Paß / ferner zu verschaffen) auf siebenzehen: Der
+Weiße/ den Soldaten/ auf drey und viertzig:
+
+Der Schwartze/ seinen Soldaten/ auf sechs und zwantzig:
+Der Weiße/ den Soldaten/ auf ein und funffzig:
+
+Der Schwartze/ seinen Soldaten/ auf achtzehen: Der
+Weiße/ den Soldaten/ auf neun und funffzig: daselbsten er / (wie-
+wol ohne nutzen) zur Königin/ gemachet wird.
+
+Der Schwartze/ gibt / mit dem Soldaten / auß zehen/
+Schach-Mat/ und thut dergestalt seine Zusage halten.
+
+,, 6. Der Weiße/ stellet/ den König/ auf fünfe: einen Sol-
+,, daten/ auf zwey und dreyßig: Der Schwartze/ seinen König/
+,, auf dreyßig: einen Rochen / auf zwey und zwantzig: einen
+,, Reuter/ auf fünf und zwantzig: vier Frawen / oder Königin-
+,, ne/ auf neunzehen: zwantzig: sieben und acht und zwantzig: ei-
+,, nen Fenden oder Soldaten/ (umb den W. Soldaten / aufzuhal-
+,, ten) auf viertzig. Wan nuhn der Schwartze/ dem Weißen/ mit
+,, dem Rochen/ wil Schach-Mat geben/ im fünften Zuge.
+
+So muß Er/ eine Fraw oder Königin (von 27.) auf sechs und
+dreyßig/ ziehen: Der Weiße/ rucket/ den König/ auf viere:
+
+Der Schwartze/ eine Frawe / (von 19.) auf zwelfe: Der
+Weiße/ nimt sie/ mit dem Könige:
+
+Der Schwartze/ ziehet/ den Rochen/ auf sechs: Der Wei-
+ße/ nimt / mit dem Könige / eine S. Frawe/ auß zwanzig:
+
+Der Schwartze/ rucket/ den Rochen/ auf vierzehen: Der
+Weiße/ nimt / mit dem Könige / eine S. Frawe/ auß acht und
+zwanzig:
+
+Der Schwartze / beut / mit dem Rochen / auß zwelfe /
+Schach-Mat.
+
+,, 7. Der Schwartze/ setzet/ den König/ auf vier und sechß-
+,, zig: einen Soldaten / auf drey und dreyßig: Der Weiße/ sei-
+,, nen König/ auf zwey und sechßzig: die Königin/ auf acht und
+,, funfzig: einen Rochen / auf eins : einen Reuter / auf neun
+,, und dreyßig: drey Soldaten / auf ein und funfzig: zwey und
+,, fünf und zwanzig: Wan nuhn der Weiße/ dem Schwartzen/
+,, mit der Königin/ im achten Zuge/ wil abhelfen:
+
+So Ziehet Er/ den Reuter/ (umb dem S. Könige/ luft zu
+machen)
+
+<vocab>Schach, König, Soldat, Königin, Fraw, Rochen, Reuter, Fenden, Schach-Mat, Zug</vocab>

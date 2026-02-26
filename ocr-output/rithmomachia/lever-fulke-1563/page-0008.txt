@@ -1,0 +1,33 @@
+<language>English</language>
+<page-type>preface</page-type>
+<warning>Page suffers from heavy staining in the center-right and significant ink bleed-through (ghosting) from the reverse side.</warning>
+<meta>catchword: VVhat</meta>
+
+# THE EPISTLE
+
+The mynde it maketh circumſpect,
+and heedfull for to bee:
+The tyme that theron is beſtovvd,
+is not in vaine trulye.
+
+The body it doth ſtyrre and moue,
+to lightſomnes and ioye:
+The ſences and the povvers all,
+it no vvyſe doth annoye.
+
+It practiſeth Arithmeticke,
+and vſe of number ſhovvth:
+As he that is conning therein,
+aſſuredly vvell knovvth.
+
+In Geometrie it truly vvades,
+and therein hath to do:
+A learned play it is doutleſſe,
+none can ſay nay thereto.
+
+Proportion alſo muſicall,
+it ioynes vvith thother tvvayne:
+So that therin three noble artes,
+are exerciſde certayne.
+
+<vocab>Arithmeticke, Geometrie, Proportion musicall, artes</vocab>

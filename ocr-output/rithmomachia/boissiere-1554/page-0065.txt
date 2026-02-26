@@ -1,0 +1,12 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, IEV</header>
+
+huict tables excede la Valeur determinée, le ſurplus n'empeſchera: car pour cela ny ſeront moins les prefixes tables & la Valeur determinée.
+
+### Victoire d'honneur & proces.
+
+Soit determinée au plaiſir des ioueurs la valeur des nombres, ſemblablement la quantité des caracteres auſquels ils veullēt ladicte valeur eſtre cōtenue, & conſequēment la quantité des tables auſquelles tu veux la valeur & caracteres determinez eſtre contenus. Et qui premier aura la preordonnée quātité des tables caracteres & valeurs: aura Victoire d'honneur & proces. Et s'il y a plus de tables ou caracteres, ou de valeur qu'il n'a eſté conſtitué, n'empeſchera comme auons dict cy deſſus. Et pour decorer la practique du ieu, ſi on determine 10 eſcuz pour vne chacune vnité des nombres, la Victoire en ſera plus plaiſante au victorieux, & luy ſera choſe ioyeuſe de nombrer: & ſi ſera le vaincu beaucoup plus allegé exercité & plus caut à ſubtillement conter.
+
+<meta>catchword: Ceſte</meta>
+<vocab>Rithmomachie, Victoire d'honneur & proces, ioueurs, nombres, caracteres, eſcuz</vocab>

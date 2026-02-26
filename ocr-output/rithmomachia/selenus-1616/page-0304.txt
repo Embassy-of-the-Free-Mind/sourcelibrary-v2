@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>270</page-num>
+<header>Das Dritte Buch / 2. cap:</header>
+
+,, K. Reuter / auf 46: Der Weisse / des K. Schützen / auf dreys-
+,, sig: Der Schwartze / seines K. Schützen / auf acht und dreys-
+,, sig: Der Weisse / der K. Soldaten / auf ein und zwanzig / oder
+,, aber / (auf daß / des Damiani Art / ungeendert verbleibe) dero
+,, Schützens-Soldaten / auf zwey und zwanzig: Der Schwar-
+,, tze / des K. Reuter / auf des W. K. Soldaten / auf drey und
+,, vierzig: Der Weisse / (ihn zu bewahren) der K. Soldaten / auf
+,, ein und zwanzig: Der Schwartze / seiner K. Soldaten / (umb
+,, dero Schützen / luft zu machen) auf funf und vierzig: Der
+,, Weisse / des K. Rochen / auf drey: Der Schwartze / der K.
+,, Schützen / auf des W. K. Reuter / auf sechs und zwanzig:
+,, Der Weisse / die Königin / (umb des S. K. Schützens / oder der
+,, S. K. Reuters / Soldaten / zu erlangen) auf drey und zwan-
+,, ßig: Der Schwartze / (diesem vorzukommen / und der K. Reu-
+,, ters / Soldaten / zu beschützen) der K. Reuter / auf die W. Köni-
+,, gin / und des W. K. Schützen / auf vierzig: Der Weisse / nimt /
+,, des S. K. Schützens / Soldaten / mit seines K. Schützen /
+,, und beut Schach: Der Schwartze / ziehet / den König / auf
+,, neun / oder zwey und funfzig: Der Weisse / die Königin / auf
+<margin>2.</margin> ,, des S. K. Reuter / auf zwey und dreyßig: * Der Schwartze /
+,, nimt / mit dem Könige / des W. K. Schützen: Der Weisse / mit
+,, der Königin / der S. K. Reuter.
+
+<margin>3.</margin> ,, Wan aber der Schwartze / den W. Schützen / (n. 2.) nicht
+,, nimt / sondern / (auf daß seine Königin / ihren Reuter / beschü-
+,, tzen könne) dero Schützens-Soldaten / auf sechs und vierzig /
+,, ziehet: so spielet der Weisse / auf der S. K. Reuter / und des S.
+,, K. Schützen / der K. Reuters-Soldaten / auf ein und dreyßig:
+,, Der Schwartze / nimt / des W. K. Schützen / mit seinem Köni-
+<margin>4.</margin> ,, ge: Der Weisse / der S. K. Reuter / mit seiner Königin: * Der
+,, Schwartze / dieselbe / mit der Königin: Der Weisse / dieselbe / mit
+,, der K. Reuters-Soldaten: und thut also / nicht übel / dieweyl
+,, ein Soldat / zum Vortheil vorhanden / daß Er / die Soldaten /
+,, für ein ander setzet.
+
+->Dieses obgemeldte nuhn / ist des Damiani meynung / wiewol<-
+->sie / mit deutlichern worten / anhero gesetzet worden. Man kan aber /<-
+->hierauß nicht vermercken / wie oft der Sieg / auf seiten des Weissen /<-
+->wan Er nach dieser art gespielet / erhalten sey: In betrachtung Er /<-
+->auf zwo linien / seine Soldaten / den obgedachten / des S. K. Schüt-<-
+
+<meta>catchword: zens= Sol-</meta>
+
+<vocab>Damiani, Reuter, Rochen, Schützen, Soldaten, Königin, Schach, W. K., S. K.</vocab>

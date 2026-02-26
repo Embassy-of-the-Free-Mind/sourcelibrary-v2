@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>203</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>12.cap:</margin>
+
+<image-desc>A horizontal woodcut headpiece featuring symmetrical floral scrollwork, leaves, and a central decorative element.</image-desc>
+
+## Das Zwölfte Capittel.
+
+### Von der Siebenden Art/ wie dieselbe/ hinwider auff fünfferley weyse/ könne gespielet werden: und dan wie die Erste derselben/ anzustellen sey.
+
+Die siebende Art/ ist: **Wan der Weisse/** nachdem die Soldaten/ der beeden Könige/ in den ersten zügen/ zu felde geführet/ mit des K. Schützens-Soldaten/ auff sieben und zwanzig/ alsbald an des **Schwarzen** gräntze/ rucket/ und dessen hauffen/ den Kopf beut.
+
+Diese Art ist fürnehmlich/ zur zerstörung/ der Ordnung des Gegeners/ gerichtet: und wird/ wegen des **Schwarzen/** gegenswehr/ im andern zuge/ wiederumb in zwo unterschiedliche weysen/ zu spielen/ abgetheilet: Dan es nimt entweder derselbe/ obgedachten **W.** Soldaten/ oder ziehet einen Andern Stein: Von jehner Art/ wird in diesem und folgenden dreyzehenden/ Von dieser/ im Vierzehenden/ und funfzehenden Capittel/ gehandlet. Bey der Ersten Art/ wan man/ auf des **Weissen** fürnehmen/ im dritten zuge/ siehet/ entspringen noch dreyerley weysen: Dan es ziehet derselbe/ (1.) entweder des K. Reuter/ auf neunzehen: oder (2.) der K. Soldaten/ auf neun und zwanzig: (davon in diesem Capittel/) oder (3.) des K. Schützen/ (davon im folgenden Capittel/) auf dreyßig.
+
+<margin>1.</margin> **Wan nuhn/** nach beeder Könige-Soldaten/ ausführung: **Der Weisse/** den anfahl mit des K. Schützens-Soldaten/ auß sieben und zwanzig/ gethan: und der **Schwarze/** denselben/ mit des <margin>2.</margin> **K. Soldaten/** weggeraumet: * so spielet der **Weisse/** des K. Reuter/ auf neunzehen: der **Schwarze/** seines K. Reuter/ auf des **W.** K. Soldaten/ auf drey und viertzig: der **Weisse/** denselben/ auf ihn/ <margin>3.</margin> auf sechs und dreyßig: * **Der Schwarze/** (seines Gegeners vorhaben/ zu verhindern) die Königin / auf zwey und funfzig: **Der Weisse/** (zur vortsetzung seines anschlages) seine Königin / auf zwölfe: **Der Schwarze/** des K. Reuter/ (auß der gefahr) auf drey und dreyßig: der **Weisse/** der K. Reuter/ auf zwey und zwanzig: der **Schwarze/** (auf daß derselbe/ auf seine Königin/
+
+<sig>Cc iij</sig>
+<meta>catchword: auf sie-</meta>
+
+<vocab>Schach-Spiel, Capittel, Siebende Art, Weisse, Schwarze, Soldaten, Reuter, Königin, Schützen, gräntze, gegenswehr</vocab>

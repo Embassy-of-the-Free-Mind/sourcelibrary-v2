@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>146</page-num>
+<header>Das Ander Buch/ 4. cap:</header>
+<meta>catchword: viele</meta>
+
+wendet/ oder einen schlechten Stein/ ins feld rucket/ denselben in
+die ſchantze ſchläget/ und alſo dem Andern/ (umb/ wan der eylens
+des/ ohn weyter nachſinnen/ weggenommen würde/ mit dem folgen
+den Zuge/ einen beſſern Stein/ und vortheil/ zu erlangen) die augen
+verblendet.
+
+Endlich ſol ein Schach-Zieher/ ſeine Steine/ alſo ziehen/ daß
+ſie nicht weit von einander/ in guter ordnung ſtehen/ damit nicht/
+wan dieſelbe geöffnet und gebrochen/ der Gegener gelegenheit erlan
+ge/ ſeine Steine allenthalben anzugreiffen. Vnd ob ſchon/ das Spiel/
+zum meiſten theil erobert/ ſo ſol Er doch deßwegen / alß wan ihm /
+nicht könte abgewonnen werden / ferner nicht unbedachtſam Spie
+len/ beſondern/ ſeine Soldaten / und andere Haupt-Steine/ ſo ferne
+Er gewinnen wil/ nichtes deſto weniger/ ſo viel möglich/ bey ein an
+der behalten. Dan/ wan Er ſie zu weit/ (alſo/ daß keiner den an
+dern/ leichtlich verthetigen/ noch entſetzen kan) von einander ſetzet/
+und zerſtrewet/ der feind ihm alſzdan/ mit geringer mühe/ noch etwa
+abgewinnen möchte.
+
+So viel von den Zügen/ in gemein. Was nuhn inſonderheit/
+die Ausführung der Steine / ins feld / belangen thut: ſo ſol ein
+Schach-Zieher (1.) des Königes/ der Königin/ und der beeden Schü
+tzen/ Soldaten/ ins feld/ vorn an die Spitze/ ſo weit es möglich/ und
+nütze ſeyn wird/ außziehen: doch/ daß Er dieſelbe/ damit ſie nicht ir
+gend vergeblich verloren werden/ in fleiſſige obacht nehme. Worzu
+dan/ ſonderbahre fürſichtigkeit/ nötig ſeyn wird / und wil das gantze
+werck/ mit hohem aufmercken/ in acht zu haben ſeyn / und zwar der
+geſtalt/ wie folgendes/ (wan man/ von der art und weiſe / wie das
+Spiel anzuordnen/ und wan es/ dieſen oder jenen haupt- oder ſchlech
+ten Stein zu ziehen/ oder ſtehen zu laſſen/ nütze ſey/ handlen wird)
+berichtet und erinnert werden ſol. In betrachtung / ſo fern nicht /
+mit ſonderm fleiß/ dieſe Züge geſchehen/ es ſich oftmals begibt / daß
+man/ ſo nütz es ſonſten iſt/ die Soldaten/ zu rechter zeit zu ſpielen/
+mit groſſem ſchaden/ dieſelben zu unzeiten/ fortſetzet. Dan der Kö
+nig/ alß der fürnehmſte/ dadurch nicht alleine/ in gefahr komt/ beſon
+dern auch/ die andere Haupt-Steine/ dieſer verurſachten unordnung
+wegen/ liederlich verloren werden.
+
+Darneben/ ſol (2.) ein Spieler/ ſich bemühen/ daß Er auch die
+ſechs Haupt-Steine/ nemlich die beede Reuter/ Schützen/ und Ro
+chen/ in allen Spielen/ auf daß man ſich ihrer / auf alle fälle zu ge
+brauchen habe/ ſo bald müglich/ ins feld bringe. Dan in verbleibung
+deſſen/ ein einiger Stein/ wan derſelbe/ nuhr allein gezogen wird/
+viele
+
+<vocab>Schach-Zieher, Steine, Soldaten, Haupt-Steine, Königes, Königin, Reuter, Schützen, Rochen</vocab>

@@ -1,0 +1,104 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIII</page-num>
+
+cuntur ex trina equalitate terminorũ sumptorum secundũ numerũ tertiũ cuiusq; extremi triplorum.
+7 quadrupli cõsimiliter a triplis acceptis cõtinue tribus triplis secundũ exigentia[m] equalitatis tertiũ
+extremi triplorũ et hac analogia in cõsequẽtibus multiplicibus. Et sesqualteri sesquiterti[i] sesqui-
+quarti et cõsequẽtes nascentur cõuersis duplis triplis quadruplis et cõsequẽtibus sumptis simili
+obseruantia duplis conuersis triplis quadruplis et reliquis quoties oportet a trina equalitate: sed
+quorũ multiplicũ conuersorũ primum atq; maximũ extremorũ equetur singulo quoq; tertio supparti
+culari uti ubiq; vt in precedentibus est idem demonstrandi modus.
+
+<margin>
+| d | e | f | |
+|---|---|---|---|
+| 4 | 6 | 9 | Supparticulares |
+| 4 | 10 | 25 | Multiplices sup |
+| a | b | c | particulares |
+</margin>
+
+71 ¶ Datis superparticularibus vel multiplicibus superparticularibus multiplices super
+particulares et superpartientes: datis vero superpartientibus aut multiplicibus sup-
+partientibus superpartientes et multiplices superpartientes procreare.
+¶ Sint a b c superparticulares termini et sumatur a semel 7 sit e primus numerus et a semel 7 b semel
+et sit f secundus numerus 7 ita secundũ trine p[er]fectionis p[re]cepta vt in p[re]cedẽti factũ est et pueniãt
+d e f qui vt in p[re]cedẽti erunt cõtinue p[ro]pportionales. at per decimãoctauam huius proportio e ad d
+est multiplex superparticularis: igit[ur] e f ad e. erunt igitur cõtinue d e f multiplices superparticulares. et
+eodẽ modo ex multiplicib[us] superparticularib[us] nascetur multiplices superparticulares. Si vero cõuersis
+terminis a b c incipias per eandẽ decimãoctauã huius prouentẽt cõtinue superpartiẽtes: sicq[ue] constat
+primũ. Secũdum vero eodẽ modo patebit per decimãnonam huius dato ordine superpartientiũ aut
+multipliciũ superpartientiũ. nam si aggregatio a minori incepta fuerit per dictã decimãnonam proue-
+nient multiplices superpartientes. si a maiori termino: proueniẽt superpartiẽtes: sicq[ue] constat p[pro]positum.
+¶ Ex duab[us] ultimis cõclunioib[us] colligẽ[re] potes. Ex eqlitate prime nasci duplos. Ex duplis triplos. Ex
+triplis q[ua]druplos: et hoc pacto de reliq[ui]s multiplicib[us] sequẽtur. Et ex multiplicib[us] cõuersis nasci sup
+particulares: vt ex duplis sesqualteros. Ex triplis sesquitertios: et ita de cõsequẽtibus supparticula
+ribus ex sequẽtibus multiplicib[us]. Et ex supparticularib[us] multiplices superparticulares: vt ex sesqual
+teris duplos sesqualteros. Ex sesq[ui]tertiis duplos sesq[ui]tertios: et hũc in modũ de reliquis. Ex multipli
+cibus supparticularib[us] itidẽ multiplices superparticulares: sed ex duplis supparticularibus tripli sup
+particulares. Et ex triplis supparticularib[us] quadrupli superparticulares. Et ex multiplicib[us] cõuersis nasci
+supparticularib[us] cõuersis suppartiẽtes: vt ex sesqualteris supbipartientes. Ex sesq[ui]tertiis
+suptripartiẽtes. Ex duplis sesqualteris 7 ex duplis sesq[ui]tertiis cõstit[ur] supbipartietes et suptripartiẽtes
+Ex suppartiẽtibus multiplices suppartiẽtes: vt ex supbipartiẽtibus duplas supbipartiẽtes. Ex sup-
+tripartiẽtibus duplas suptripartiẽtes. Ex multiplicib[us] suppartiẽtibus: itidẽ multiplices suppartiẽ-
+tes: sed ex duplis triplis aut quadruplis suppartiẽtibus: tripli quadrupli aut quicupli suppartiẽtes.
+Ex cõuersis suppartietibus aut multiplicib[us] suppartiẽtibus: nascũtur superpartiẽtes. Et ex tribus p[re]
+ceptis hec vbiq[ue] latissimẽ patẽt. 7 expressa quũcunq[ue] voles longa serie: supparticulariũ cõtinue p[ro]por
+tionaliũ si cõtinue tria p[re]cepta tribus 7 tribus terminis sertet aptãdo p[ce]cedis: nascẽtur multiplices sup-
+particulares sed solũ per tres et p tres cõtinue p[ro]pportionales. et eodẽ pacto cõuerso ordine nascẽtur
+suppartiẽtes sed solũ in tribus 7 tribus terminis cõtinue p[ro]pportionales. at de his hactenus.
+
+<margin>
+<image-desc>A decorative shield-shaped frame containing letters and numbers organized in rows.</image-desc>
+| l | m | n |
+|---|---|---|
+| 8 | 12 | 18 |
+| g | h | k |
+| 9 | 12 | 16 |
+| a | b | c |
+| 9 | 3 | 1 |
+| d | e | f |
+</margin>
+
+72 ¶ Datas superparticulares in multiplices atq; easdem in miõres multiplices donec
+ad equalitatem perueniant: reducere.
+¶ Id aduerrtere licet p[ro]pportiones in illas t[antu]m resolui ex q[u]ibus procreaf. Quo sit vt in oibus iste resol
+uendi modus appareat: in qubus idẽ erat modus pcreãdi. Sint a b c dati termini cõtinue supparticulares
+et sit d equalis a: et p[ri]mũs nũerus: et ab b tollat d 7 remaneat e: et de c tollatur d et de bis e remaneat f.
+dico d e f esse cõtinue p[ro]pportionales et multiplices. q[uo]d sint cõtinue p[ro]pportionales declarat. capto eni g
+h k tres terminos in cõtinua p[ro]pportione a d b: q ex illis superiori aggregãdi modo pueniẽt erunt ex
+p[re]cedẽtibus cõtinue p[ro]pportionales et sint l m n. et q[ui]a l a d g sicut a ad d 7 m ad h sicut b ad e. 7 ita pinter
+igitur d e f sunt cõtinue p[ro]pportionales. et q[ui]a b ad a p hypothesim est supparticularis p decimãsextam
+huius erit e ad d similis denotationis multiplex. quare supparticulares date: sunt in suas multiplices
+reducte. si itaq[ue] superparticulares date erant sesquiterte resolute sunt in triplas si sesqualtere in du-
+plas q[uo]d si reducte sint in triplas eodẽ modo quo prius adiuuante septuagesima huius probabis illas
+multiplices reduci in duplas et duplas in iqualitatẽ: quod est p[ro]positum.
+
+73 ¶ Multiplices superparticulares in superparticulares: et multiplices superpartiẽtes
+in superpartientes resoluere.
+¶ Sint a b c tres t[er]mini multiplices supparticulares. et d equalis a q[uod] substrat[ur] ab b 7 relinquatur
+e 7 eo mõ quo in p[re]cedẽti substrahatur. si b ad a erit multiplex supparticularis vtriq[ue] ab eodẽ nũero
+denoiatus p quadragesimãprimã huius factũ erit p[ro]positũ. et ita de suppartiẽtibus. At si multiplex
+sit maioris denoiationis nõ fiet hoc p[ri]ma resolutione: sed resoluem[us] p[ri]mo in multiplices vno minorẽ
+denoiationis denoiatione partis semper eadẽ manente: donec ad hoc veniamus vt eadẽ sit denoiatio
+multiplicis et partis sicq[ue] quod p[pro]ponitur facile apparebit.
+
+¶ Quaslibet superpartientes in superparticulares reduci est possibile.
+74 ¶ Nam q[ue] p[er] septuagesimãseptimam huius suppartientes ex supparticularibus nascũtur. ideo sint
+a b c huiusmodi superpartiẽtes d equetur a: substrahatur q[ue] d ab b et relinquatur e 7 de e bis ab c: et
+relinquatur f 7 venient p[er] illam septuagesimãseptimam superparticulares a quibus nascebantur.
+at non oportet te semper in prima reductione contingere quod tamen nunc cõtingebat. sed aliquãdo
+resoluẽtur p[ri]ma resolutione in multiplices superparticulares que p[er] p[re]cedentẽ in supparticulares
+tandẽ reducent[ur]: quo facto factũ erit p[ro]positum. Aliquã in suppartiẽtes aut multiplices supparttentes
+
+<margin>
+| 9 | 15 | 25 |
+|---|----|----|
+| a | b | c |
+| 9 | 6 | 4 |
+| d | e | f |
+</margin>
+
+<sig>e 4</sig>
+
+<vocab>superparticularis, multiplex, superpartiens, proportio, resolutio, reductio, sesquialtera, sesquitertia, continuus, terminus</vocab>

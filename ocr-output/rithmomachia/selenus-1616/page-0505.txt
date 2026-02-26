@@ -1,0 +1,22 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+
+<image-desc>
+An engraved illustration showing a Rithmomachia board (The Philosophers' Game), a medieval and Renaissance mathematical board game. The board is depicted as a large grid of alternating black and white checkered squares. While a full Rithmomachia board is typically 8x16 squares, this illustration shows approximately 8 rows and 13 columns.
+
+The game pieces for one side (likely the "Odd" side) are arranged in a specific starting formation on the right half of the board. The pieces are drawn with three-dimensional perspective and are inscribed with Arabic numerals. The pieces include circles (rounds), triangles, squares, and one complex pyramid. 
+
+The arrangement of pieces from top to bottom is as follows:
+- **Topmost Row:** A triangle with the number **100**, a complex tiered square pyramid piece (labeled with **91** and **190**), and a square with **361**.
+- **Second Row:** A triangle with **90**, a square with **120**, and a square with **225**.
+- **Third Row:** Two circles with **9** and **81**, and a triangle with **64**.
+- **Fourth Row:** Two circles with **7** and **49**, and a triangle with **56**.
+- **Fifth Row:** Two circles with **5** and **25**, and a triangle with **30**.
+- **Sixth Row:** Two circles with **3** and **9**, and a triangle with **36**.
+- **Seventh Row:** A triangle with **12**, a square with **66**, and a square with **121**.
+- **Bottommost Row:** A triangle with **16**, a square with **28**, and a square with **49**.
+
+The left side of the board is empty, awaiting the opposing side's pieces.
+</image-desc>
+
+<vocab>Rithmomachia, board game, arithmetic, game pieces, pyramid, squares, triangles, circles, numerals, mathematical game</vocab>

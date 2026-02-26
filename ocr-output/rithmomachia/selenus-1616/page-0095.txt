@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>65</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>I ij</sig>
+<meta>catchword: der Weiss</meta>
+<vocab>Schach-Spiel, Roche, Elephant, Interreges, Königin, König, Schlacht-Ordnung, Maccabäer</vocab>
+
+---
+
+### Das Siebende Capittel.
+## Von den Rochen/ ihrer Stellung/ und gängen.
+
+<image-desc>An ornamental woodcut header featuring scrolling acanthus leaves. Below it, an illustration of a chess Rook, depicted as an elephant standing on a decorative pedestal with a fortified stone tower on its back. The illustration is captioned "Ein Roche." below the image.</image-desc>
+
+->Ein Roche.<-
+
+<margin>7. cap:</margin>
+Nachdem wir der Königinnen/ (alß Feld-Marschallen / des gantzen Heeres ) amt/krafft und vermögen/ im vorigen Capittel / erzehlet: so wollen wir nunmehro / auch die Obersten / Capiteine und Befehligs-Habere/ für uns nehmen. Es seynd aber derselben/ bey jeglichem Hauffen / zween: und werden von den Alten Interreges, das ist Stadt-Halter / der weit abgelegenen Landen / (weil Sie / auf den gräntzen / ihre Stelle haben/ oder vielmehr/ daß Sie des Königes / und der Königin / welche mitten im Hauffen sich aufhalten: Stelle / an den ecken der Schlacht-Ordnung/ verwalten) sonsten Elephanten / Thürne oder Rochen / (wegen des Alten gebrauches / der Außländischen Völcker / welche mit Elephanten / und darauf gebawten Thürnen / alß Rocken / wie die Welschen/ eine Festung nennen / ihre Schlachtungen / und Kriege verrichteten: davon dan / im Ersten Buche der Maccab: im 6. Cap: v. 30. 34. ad 38. ein Exempel zu lesen) genennet.
+
+Ihre Stellung/ist an den ecken der Linien / darauf die Könige / und die Königinnen gesetzt: und stehet / der auf des Weissen Königes seite / im Weissen: der auf des Schwartzen/ im Schwartzen

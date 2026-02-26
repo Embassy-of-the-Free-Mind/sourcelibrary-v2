@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>354</page-num>
+<header>Das Dritte Buch / 9. cap:</header>
+
+dem Reuter/ auß drey und viertzig/ Schach/ und verfolget die Züge/ wie kurtz erwehnet.
+
+<margin>42.</margin> Wan aber der **Schwarze**/ den König/ nicht auf 60. (n. 38.) besondern/ auf neun und funfzig/ rucket: so gibt/ der **Weiße**/ mit
+<margin>43.</margin> des **K. Rochen**/ auß drey/ Schach: * Der **Schwarze**/ rucket den König/ auf sechszig: der **Weiße**/ gibt/ mit der Königin/ auß zwey und sechszig/ Schach: Der **Schwarze**/ muß/ den König/ auf zwey und funfzig/ rucken: Der **Weiße**/ gibt/ mit der **K. Reuter**/ auß sieben und dreyffig/ Schach: Der **Schwarze**/ muß ihn/ mit der Königin/ nehmen: Der **Weiße**/ rucket/ die Königin/ (auß der gefahr/ von des **S. K. Rochen**) auf vier und funfzig/ und gibt Schach: Der **Schwarze**/ ziehet/ den König/ auß demselben: Der **Weiße**/ nimt/ die **S. Königin**/ mit des **K. Soldaten**/ und kan ihm/ des **S. K. Reuter**/ zusamm dem Spiele/ nicht enststehen.
+
+<margin>44.</margin> Rucket aber der **Schwarze**/ den König/ nicht auf 60. (n. 43.) besondern auf acht und funfzig: so nimt/ der **Weiße**/ mit des **K. Rochens-Soldaten**/ des **S. K. Reuter**: Der **Schwarze**/ (umb das ein und funfzigste feld/ zu beschützen) muß die Königin/ auf vier und vierzig/ rucken: Der **Weiße**/ der **K. Reuter**/ auf sieben und dreyffig: Der **Schwarze**/ seiner **K. Reuter**/ auf drey und funfzig: Der **Weiße**/ nimt/ mit der Königin/ der **S. K. Reuters-Soldaten**/ und rucket sie/ auf dero Rochen: Der **Schwarße**/ denselben/ auf sie/ auf drey und sechszig: Der **Weiße**/ stellet sie/ auf vier und funfzig/ und wird sein Spiel/ wan Er/ die beede Rochen/ hintereinander stellet: ferner wol anzuordnen vermögen.
+
+<margin>45.</margin> Rucket aber der **Schwarze**/ den König/ weder auf 60, noch auf 59, (n. 38. 42.) besondern/ auf drey und viertzig: so gibt/ der **Weiße**/ mit des **K. Rochen**/ auß drey/ Schach: Der **Schwarze**/ muß den König/ auf vier und viertzig/ rucken: Der **Weiße**/ nimt/ mit des **K. Rochens-Soldaten**/ des **S. K. Reuter**: Der **Schwarße**/ (auf daß der **Weiße**/ mit der Königin/ auß ein und funfzig/ nicht Schach = Mat gebe/ besondern/ sein König/ demselben/ entweichen könne) den gedachten **W. Soldaten**/ mit der Königin: oder rucket dero Soldaten/ auf sieben und dreyffig: oder dero Reuter/ (umb der **W. Königin**/ den paß zu verlegen) auf drey und funfzig: Weyl aber hiedurch die Züge/ (welche man den Schach-Ziehern/ nach anleitung der vorigen und folgenden Züge/
+
+<meta>catchword: Züge/</meta>
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Soldaten, Schach-Mat, sechszig, dreyffig, Gustavus Selenus</vocab>

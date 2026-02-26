@@ -1,0 +1,48 @@
+<language>French</language>
+<page-type>diagram</page-type>
+<sig>B</sig>
+
+<image-desc>
+A mathematical diagram framed in a large rectangle, divided into two main horizontal sections categorized as even numbers ("pair") and odd numbers ("Nõpair").
+
+The top section for even numbers consists of:
+- A first row of four white circles containing the numbers 2, 4, 6, and 8, each with a small dot centered below the digit.
+- A second row of four white circles containing their squares: 4, 16, 36, and 64, each with a small dot centered below.
+- A row of four white triangles containing the sum of the two circles above them (representing pronic numbers): 6, 20, 42, and 72, each with a small dot centered below.
+
+The bottom section for odd numbers mirrors this layout with solid black shapes and white text:
+- A first row of four black circles containing the numbers 3, 5, 7, and 9.
+- A second row of four black circles containing their squares: 9, 25, 49, and 81.
+- A row of four black triangles containing the sums: 12, 30, 56, and 90.
+
+A set of nested brackets in the left margin labels the rows and sections.
+</image-desc>
+
+<margin>
+Nombre
+pair
+Addition des multipli.
+Pro- uenu regūrant des p- ticu.
+</margin>
+
+2 . 4 . 6 . 8 .
+
+4 . 16 . 36 . 64 .
+
+6 . 20 . 42 . 72 .
+
+---
+
+<margin>
+Nõpair
+Ad- ditiõ des mul- tipli.
+Pro- uenu regu- rant des parti cul.
+</margin>
+
+3 . 5 . 7 . 9 .
+
+9 . 25 . 49 . 81 .
+
+12 . 30 . 56 . 90 .
+
+<vocab>Nombre pair, Nombre Nõpair, Addition des multipli., Prouenu regūrant, pronic numbers, heteromecic numbers</vocab>

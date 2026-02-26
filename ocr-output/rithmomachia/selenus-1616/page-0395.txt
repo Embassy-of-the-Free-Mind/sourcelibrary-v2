@@ -1,0 +1,38 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>361</page-num>
+<header>11.cap: Vom Schach-Spiel. 361</header>
+
+<image-desc>A decorative woodcut headpiece featuring symmetrical scrolling acanthus leaves, floral motifs, and a central stylized face or mask.</image-desc>
+
+## Das Eylfte Capittel.
+
+### Was massen/ nach des Damiani meynung/ der ienige/ welcher den Weissen Hauffen führet/ sein Spiel/ wan Ers/ mit der Königin-Soldaten/ anfähet/ verfolgen könne/ und wie es zu verbessern sey.
+
+Es ist auß dem/ was vom Achten Capitel/ des Andern Buches/ bißhero/ weitleuffig gehandlet worden/ gnugsam verhoffentlich/ zu vernehmen gewesen/ wie man/ mit des K. Soldaten/ den Anfang des Spieles machen/ und dasselbe ferner auszuführen möge: Nuhn folget/ der Ander Hauffe/ derer Spiele/ welche/ mit der K. Soldaten/ angefangen werden. Vnd ist hierbey/ zum anfange zu erinnern/ daß/ der besten Schach-Zieher meynung nach: Die Erste Art/ welche durch des K. Soldaten/ angefangen wird/ in viele wege besser/ dan diese Andere/ so durch der K. Soldaten/ den Anfang machet/ (ob schon D. Mennel, und Andere/ in ihren Büchern von diesem Spiele/ den anfahenden/ ein anders/ wan sie sagen:
+> Antè Reginam, Debes producere primam: Den Fenden cc
+> vor der Frawen Klug / Soltu außziehn / im ersten Zug: be- cc
+richten wollen / und / so ferne man / die Schach-Züge / nach der Al- cc
+ten langsamen Art / davon drunten / im letzten Buche / eine beschrei- cc
+bung folget: anstellete / so weit / nicht unrecht habe möchte) zu halten. cc
+
+Nachdem nuhn der Damianus, die Erste Art abgehandlet / alß cc
+hat Er / diese Letzte / ebener massen / für sich genommen / welche cc
+wir dan/ seiner anweisung nach/ in diesem Capittel / vernehmen: im cc
+folgenden Exempel aber / auch unsere meynung / deßwegen / ausse- cc
+tzen wollen. cc
+
+<margin>1.</margin> Ziehet nuhn der Weisse / der K. Soldaten / auf neun und cc
+zwanzig: so rucket / der Schwartze/ seiner K. Soldaten / auf cc
+sieben und dreyßig: Der Weisse / auf denselben / der K. Schü- cc
+tzens-Soldaten / auf dreyßig: Der Schwartze / nimmt ihn / mit cc
+der K. Soldaten: Der Weisse / ziehet / des K. Soldaten / cc
+(auf daß / dessen Schütze / auf der S. K. Soldaten / lauren kan) cc
+auf acht und zwanzig: Der Schwartze / (umb denselben zu be- cc
+schützen) der K. Reuters-Soldaten / auf neun und dreyßig: Der cc
+Weisse / (umb des Schwartzen Soldaten / in eine unordnung zu cc
+bringen)
+
+<sig>Z z ii</sig>
+
+<vocab>Schach-Spiel, Damianus, D. Mennel, Königin-Soldaten, Fenden, Schützens-Soldaten, Reuters-Soldaten, Schach-Zieher</vocab>

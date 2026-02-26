@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>369</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>12. cap:</margin>
+<margin>15.*</margin>
+Der Schwarze / muß / den König / mit der Königin / auf drey und funfzig / bedecken: Der Weiſſe / beut / mit der K. Reuter / auß vier und funfzig / Schach / und ziehet ihn / auf der S. K. Rochen: Der Schwarze / den König / auf zwey und funfzig: Der Weiſſe / gibt / mit der Königin / auß ſechs und dreyßig / Schach: Der Schwarze / rucket den König / (ſo fern Er / die Königin / auß vier und vierzig / von der W. K. Reuter / nicht wil nehmen laſſen) auf ein und ſechßzig: Der Weiſſe / der K. Rochen / auf die S. Königin / auf fünfe: Der Schwarze / nimt ihn / mit derſelben / und beut Schach: Der Weiſſe / nimt dieſelbe / mit dem Könige: Der Schwarze / (auf daß Er / von der W. Königin / auß ſechßzig / nicht gleich Schach-Mat werde) rucket / des K. Reuter / auf drey und viertzig: Der Weiſſe / nimt / der S. K. Rochen / mit der K. Reuter: Der Schwarze / (dieweyl Er / ohne die Königin ſpielet) wird ſich / dem Weiſſen / bald ergeben müſſen.
+
+<margin>16.</margin>
+Wan aber der Schwarze / den König / nicht auf 52. (n. 15.) ſondern / auf ein und ſechßzig / rucket: ſo ſtellet / der Weiſſe / der K. Rochen / auf die S. Königin / (umb / dieſelbe gefangen zu halten) auf fünfe: Der Schwarze / muß / entweder / den W. Rochen / mit derſelben nehmen: oder des K. Reuter / auf drey und viertzig / ziehen: (dan ſonſten der Weiſſe / die Königinne verwechſlen / und Schach-Mat / geben würde) hat Er nuhn / des K. Reuter / gezogen: ſo nimt / der Weiſſe / die S. Königin / mit ſeiner K. Rochen / und gibt Schach: Der Schwarze / nimt ihn / mit des K. Reuter: Der Weiſſe / der S. K. Rochen / mit der K. Reuter: Der Schwarze / ziehet / der K. Reuter / (auß der gefahr) auf drey und zwanzig: Der Weiſſe / gibt / mit der K. Schützen / auß vier und funfzig / Schach: Der Schwarze / rucket / den König / nicht auf zwey und ſechßzig / (dan der Weiſſe / mit der Königin / auß acht und viertzig / gleich Schach-Mat gebe) ſondern / auf ſechßzig: Der Weiſſe / die Königin / (umb / des K. und ihres Rochens-Soldaten / zu beſchützen) auf der S. K. Rochens-Soldaten / auf funf und funfzig: und wird dem Schwarzen / (dieweyl derſelbe / ſeinen beſten Stein / verlohren) ferner wol abbruch / zufügen können.
+
+<margin>17.*</margin>
+Thut aber der Schwarze / andere Züge / (auſſer denen / welche / von n. 12. biß hero beſchrieben) ſo kan der Weiſſe / wan Er nuhn in etwas ſich in acht hat / gleichwol gewinnen / und die oberhand behalten: In betrachtung / ſo ferne Er nicht des Rochens-auf 31. (n. 14.) ſondern der K. Soldaten / auf funf und vierzig / ziehet: Er nicht
+
+<sig>Aaa ij</sig>
+<meta>catchword: allein/</meta>
+
+<vocab>Schach-Spiel, König, Königin, Reuter, Rochen, Schach-Mat, Soldaten, Stein, Züge</vocab>

@@ -1,0 +1,25 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV.</header>
+<meta>catchword: Prin-</meta>
+
+## Reigle vniuerselle.
+
+Avcune table ne peut marcher qu'en son lieu determiné, tellement que les quarres ne s'arresteront point en la prochaine loge n'en la tierce ains en la quatriesme, les triangles ne s'arresteront en la suivante, ains en la tierce.
+
+## Desmarche irreguliere.
+
+Toute table, sauf les Roys ou Pyramides, peut eschaper ou se transporter là ou bon leur semblera en la forme des cheualiers des eschets, comme des le lieu B. en T. L. V. pourueu qu'elles ne soient en obsidion ou emprisonnement: car lors des que la derniere table emprisonnãte est posée, ne peuuent sortir les emprisonnées: car leur vertu est perdue.
+
+## Des Bastieres.
+
+<image-desc>A diagram illustrating the game mechanics of Rythmomachy, specifically different types of captures or encounters related to mathematical operations, using braces and connecting lines.</image-desc>
+
+->AEqualité ————— Rencontre<-
+->Addition } ————— Embusche<-
+->Subtraction }<-
+->Multiplicatioñ } ————— Assaut<-
+->Diuision }<-
+->Obsidion ————— Emprisonnement<-
+
+<vocab>Rythmomachie, Reigle vniuerselle, quarres, triangles, Roys, Pyramides, cheualiers des eschets, obsidion, emprisonnement, Bastieres, AEqualité, Addition, Subtraction, Multiplicatioñ, Diuision, Rencontre, Embusche, Assaut</vocab>

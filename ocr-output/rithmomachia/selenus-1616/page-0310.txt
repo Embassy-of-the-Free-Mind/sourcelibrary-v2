@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>276</page-num>
+<header>Das Dritte Buch/ 3.cap:</header>
+
+auf 45; (n. 11.) ſetzet: ſo rucket der Weiſſe/ auf dieſelbe/ der K. Sol-
+daten/ auf ſieben und dreyſſig: Der Schwartze/ (umb die W. Köni-
+gin/ auß der behaltnuß noch nicht zu erlaſſen) dieſelbe / auf ſechs und
+dreyſſig: Der Weiſſe/ den König/ auf zwelfe/ nicht aber/ auf drey-
+zehen: (dan ſonſten Der Schwartze/ mit des K. Reuter/ auß acht
+und zwantzig/ Schach=bieten: und die W. Königin/ mit ſeiner Köni-
+gin/ erlangen würde) der Schwartze/ der K. Soldaten / (umb
+ihren Schützen/ auch zu gebrauchen) auf fünf und vierzig: Der
+Weiſſe/ des K. Schützens-Soldaten/ auf die S. Königin/ auf ſieben
+
+<margin>13.</margin> und zwantzig: * Der Schwartze/ beut/ mit derſelben/ auß drey
+und dreyſſig/ Schach: Der Weiſſe/ rucket/ den König/ auf eylfe:
+Der Schwartze/ die Königin/ auf der W. K. Schützens-Solda-
+ten/ (umb/ auß vierzehen/ Schach zu bieten) auf fünf und dreyſſig:
+Der Weiſſe/ (denſelben zu verhüten) auf dieſelbe/ des K. Schü-
+tzen/ auf ein und zwantzig: Der Schwartze/ (vermeunend/ wan
+Er des K. Schützen/ auf funfzig/ zöge/ die W. Königin/ nuhrmehr
+zu ertappen) die Königin/ auf drey und funfzig: Der Weiſſe/ (die-
+ſer euſſerſten gefahr/ derſelben fürzubawen) derſelben Reuter/ auf
+acht und zwantzig: Der Schwartze/ darf des K. Schützen/ auf
+funfzig/ nicht ziehen: (dan derſelbe/ ſo wol auch ſein Reuter/ wan
+der Weiſſe/ mit der K. Reuter/ auß vier und dreyſſig/ Schach=gebe:
+und ſein König/ deßwege/ auf zwey und funfzig/ weichen müſte: durch
+die W. Königin/ genomen würde) Nimt Er aber/ der W. K. Reuter/
+mit ſeines K. Reuter/ und beut Schach: ſo nimt/ ihn der Weiſſe/
+mit des K. Schütze/ und errettet ſeine Königin/ nichtesdeſto minder.
+
+<margin>14.</margin> Wan aber der Schwartze/ nicht/ mit der Königin/ (n. 13.) auß
+33. beſondern/ mit dero Schützen/ auß ſechs und zwantzig/ Schach=
+gibt: ſo rucket der Weiſſe/ den König/ (umb/ der K. Schützen/ nicht
+zu verlieren) auf ein und zwantzig: Der Schwartze/ gibt/ mit der
+Königin/ auß fünf und dreyſſig/ Schach: Der Weiſſe/ rucket den
+König/ auf dreyzehen: auch endlich/ der K. Schützen/ auf des S. K.
+Reuter/ auf neun und zwantzig/ und bringet ſeine Königin/ derge-
+ſtalt gleichwol davon.
+
+<margin>15.</margin> Wan aber der Schwartze/ den König/ auf 51, (n. 7.) nicht
+ziehet/ beſondern/ mit der Königin/ der W. K. Schützens-Solda-
+ten/ nimt/ und auf dero Reuters-Soldaten/ ziehet: ſo rucket
+der Weiſſe/ (umb der K. Rochen/ nicht zu verlieren) dero Reuter/
+auf dreyzehen: Der Schwartze/ nimt/ mit der Königin/ der W. K.
+Reuters-Soldaten/ und rucket ſie/ auf dero Rochen: Der Weiſſe/
+
+<meta>catchword: (denſel-</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schützen, Soldaten, Rochen, Weiſſe, Schwartze</vocab>

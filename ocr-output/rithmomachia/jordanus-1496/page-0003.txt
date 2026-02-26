@@ -1,0 +1,18 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>275</page-num>
+<meta>Preliminary leaf containing handwritten bibliographic notes and shelf marks. "Hain 9436" refers to Ludwig Hain’s Repertorium bibliographicum, specifically the entry for Jordanus de Quedlinburg's Sermones de tempore.</meta>
+
+->thru<-
+->450-<-
+
+2
+
+Hain 9436
+
+1/2 M
+
+Incunabula
+Jordanis
+
+<vocab>Incunabula, Jordanis, Hain 9436</vocab>

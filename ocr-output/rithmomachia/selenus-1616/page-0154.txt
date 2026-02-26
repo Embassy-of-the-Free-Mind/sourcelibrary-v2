@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>124</page-num>
+<header>Das Ander Buch / 1. cap:</header>
+
+und (3.) warumb ſie gebrauchet werden/und aufkommen ſeyn / erkennen lernen.
+
+Das wörtlein Schach und Mat / geben etliche für Hebräiſch auß. Es heiſſet aber Scacha, (wie Matth : Flacius Illyr: in Clav : Script : verb : Adorare, wil) auf hebräiſch/ſo viel / alß adorare, einen anbeten/und ihm mit gebogenem oder gekrümmeten leibe/ehre beweiſen ; oder/(wie Andere wollen) mit einem walle umbgeben/oder umbzäunet ſeyn : Mat oder Mot aber/ſol bey ihnen/ſo viel / alß geſtorben ſeyn/heiſſen.
+
+In Chaldeiſcher Sprache/ſol Schach/ſo viel / alß eine verwarnung gelten/umb ſeine Sachen/in gute aufacht/zu haben : Dahero/die Orientaliſche Völcker / (wie beym Joſeph. Scaligero, lib : de Emendat : Temporum, pag : 78. zu finden) die Zeit der Zwölf verwarnungs-Jahren/Schaichun, vielleicht genennet.
+
+Etliche wollen/daß dieſes wörtlein Schach/ob es wol in etwas verendert/ſeinen urſprung/von den Arabern/nehme/und in ihrer Sprache/ſo viel/alß eine außtreibung / eine verjagung bedeute : wie dan/durch Mat/eine ſolche ſache/verſtanden wird/die zum tode/gehörig iſt. Dahero die Araber/den Ort des andern lebens / nach dieſem Tode / Mahad nennen.
+
+Andere ſuchen/dieſes wörtleins urſprung / von den heutigen Perſen : (derer Sprache/in gantz Orient/wie bey uns/in Occident, die Lateiniſche/im gebrauch iſt : Joſeph : Scalig : d. lib : de Emend : Temp : pag : 338.) weyl nemlich dieſe/und mit ihnen die Mauritaner und andere / ihre Könige / (wie wir/auß dem Garc: ab Ortâ, Bizaro und Minadoo, hiebevor erzehlet) Xa, Sah, Schah, oder Schach, nennen.
+
+Wir haben ſonſten/ im 2. Cap: des 1. Buches/droben / mit Vito Amerbachio, albereit gemuthmaſſet/daß dieſe/gute Teutſche wörter wehren / und daß Schachen / ſo viel bedeute / alß gejaget werden / oder fliehen. Was Mat ſey / iſt gar bekant / heiſſet ſo viele/alß von kreften kommen / ermatten / ermüden / keinen fuß von der Stelle rucken / noch fortgehen können / beſondern / ſtille ſtehen müſſen. Auß dieſem Deutſchen matten / ermatten / Schach-Mat geben/haben die Welſchen/ihr Mattare, und Scacco matto dare, gemachet und genommen.
+
+Worzu nuhn/dieſe wort gebrauchet werden / iſt auß der beſchreibung des Schachens und Mattens / auß dem vorigen / anhero zu widerholen : daß man nemlich / mit dieſen worten / dem gegner anzeiget / daß deſſen König / angeſprenget ſey / und Er weichen ſolle/
+
+<vocab>Schach, Mat, Hebräiſch, Chaldeiſcher, Araber, Perſen, Mauritaner, Schach-Mat, König, Vito Amerbachio, Joſeph Scaliger, Matthaeus Flacius Illyricus</vocab>

@@ -1,0 +1,39 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>i 3</sig>
+
+## Su per par ti en tis pro pri e ta tes.
+
+1 Omnis ſuperpartiens maiorē ſupra ſe ſuperpartientē relinquit. Maior ea eſt:que a maiore numero ſuam denominationē ſumit.
+2 Omnes ſuperpartiētes ex continue a quinario imparibus ad numeros cōtinua ſerie ternario ſuccedentes comparatis ſurgunt.
+
+## Spe ci e rum ſu per par ti en tis pro pri e ta tes
+
+1 Continue ſuperbipartientes naſcentur ſi in vtrunqʒ terminū primi ſuperbipartientis binarius ducitur et rurſus in terminos producte ſuperbipartientis et ita quoties in productos terminos ducetur binarius.
+2 Continue ſuptripartientes ſimili creatione ſurgent ſi in terminos primæ ſupertripartientis ternarius ducitur et in productos termios. & ita deinceps. Et ſuperquadripartientes ſi in primos eiuſdem inequalitatis terminos duxeris quaternariū. Et idem quoqʒ valuerit ſi aliū quēcunqʒ duxeris numerū. et ſimili creatione reliquas ſuperpartiētis ſpecierum formationes elicias.
+
+## Mul ti pli ciū ſu per par ti cu la riū pro prie ta tes
+
+1 Multiplices ſuperparticulares continue naſcūtur ex imparibus ſuo ordine a quinario collectis continue numeris a binario ſuccedentibus cōparatis.
+2 Dupli ſeſqualteri continue creantur: ſi continuis a binario paribus: numeri a quinario ſeſe continue quinario tranſſilientes cōparabuntur.
+3 Dupli ſeſquitertij itidem orientur: ſi perpetua ſerie a ternario ſurgentibus triplis: numeri a ſeptenario ſeſe continuo ſeptenario excedentes cōparabuntur.
+4 Dupli ſeſquiquarti naſcentur: ſi a quaternario continue quadruplis: numeri a nouenario ſeſe continue nouenario trāſſilientes coaptabuntur/ cōparabunturqʒ. & hoc pacto ſeſquiquiti ex quicuplis et vndenariis & eque in reliquis pfacilis eſt inuētio.
+
+## Mul ti pli ciū ſu per par tien tiū pro pri e ta tes
+
+1 Dupli ſuperbipartientes naſcentur: ſi octonarius ternario/ et continue ſe octonario tranſgredientes continue ſe ternario excedētibus cōparabuntur.
+2 Dupli ſupertripartientes certa lege naſcentur: ſi ab vndenario et ſe continue eodem numero excedētes quaternario et ſe quoqʒ indiſcōtinuata ſerie iugiter quaternarij ſumma tranſſilientibus: continue cōparabuntur.
+3 Et dupli ſuperquadripartiētes a decimoquarto et ſe eodem tranſgrediētibus et quinario eodēqʒ ſe excedētibus reperiūtur. Et ita omniū hac induſtria facillima eſt inuentio. Et de triplis ſuperbipartientibus/ ſupertripartientibus et quibuſlibet aliis hac arte facile ſeries colligitur.
+
+## Nu me ri pla ni et ſo li di pro pri e ta tes.
+
+1 Omnis numerus planus in triangulos eſt reſolubilis.
+2 Omnes figuræ planæ ſibi proxime adinuicē comparate vt tetragonus trigono et penthagonus tetragono & hoc pacto conſequētes ſeſe triangulo ſuperant.
+3 Omnis numerus ſolidus primordiū ſui tenet pyramidem.
+
+## Spe ci e rum nu me ri pla ni pro pri e ta tes.
+
+1 Omnes trigoni ſurgunt ſi diſpoſita naturali numerorum quātitate: prioribus ſemper proxime ſequens adiciatur.
+2 Tetragoni ſunt omnes qui numeris naturaliter et in longum & in latum duplici ſerie diſpoſitis et in ſeinuicē quolibet in quēlibet ductis: angulares reperiunt. Angulares dicuntur qui ſurſum a monade diametralē ſeriem ad angulum e regione oppoſitum complent.
+
+<vocab>arithmetica, superpartiens, multiplices superparticulares, numeri plani, numeri solidi, tetragonus, pyramis, trigonus</vocab>

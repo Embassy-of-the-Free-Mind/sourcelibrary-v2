@@ -1,0 +1,15 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Slight bleed-through of text and numbers from the reverse page.</warning>
+<meta>catchword: ¶ To</meta>
+
+# ¶ Of Musicall proportion.
+
+Musicall proportion is when the differences of the first and last frõ the middes, are the same, that is betwene the first and the last, as 3. 4. 6. betwene .3. and .4. is .1. betwene .4. and 6. is .2. the whole difference is .3. which is the difference betwene .6. and .3. the first and the last.
+
+## ¶ A rule to fynde the first, when you haue the two last.
+
+Multiplie the seconde by the thyrde, deuide the producte by the distans and the thyrde number, and the quotient is the first, as hauinge .6. and 12. I would fynde the first, 6. tymes .12. is 72, the difference betwene .6. and .12. is 6, whiche added to .12. is .18, deuide .72. by 18. the quotient is .4. so haue you .4. 6. 12. in Musicall proportion.
+
+<vocab>Musicall proportion, Rythmomachy, arithmetic, harmonic mean</vocab>

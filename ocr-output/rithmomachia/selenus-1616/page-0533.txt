@@ -1,0 +1,53 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>491</page-num>
+<header>Vom Zahl-Kampf</header>
+
+*64 & 36, continentes 100: aut Calculum 100, ornatum, non ani- cc*
+*madverso Calculorum numero, multitudineq;, dummodò Calculi, cc*
+*100 valeant, acquisiverit, is Victor evadit.) cc*
+
+3) Wan Sie / dem Feinde / mit den Zifren der eroberten
+Zahlen / (unangesehen / daß derselbe / noch mehr Steine hette /
+oder auch der weerth seiner Zahle / höher reichete) obsiegeten.
+
+>(Buxer: fol: 30. b.
+*Ut; Lata est Lex, à certantibus, ut qui 100, aut quemvis cc*
+*Numerum, octo in characteribus, primus perfecerit, Ludo po- cc*
+*tiatur: Itaq; qui priores sex Calculos, complectentes, 2. 4. 6. 8. cc*
+*20. 64. in quibus 100, ingrediuntur, octo tantum Characterum cc*
+*Numero, aut alios Calculos, eandem Summam facientes, toti- cc*
+*dem octo notis, nihil sollicitus, de Calculorum numero, ceperit, cc*
+*penès eum Victoria fit, necesse est. Neq; angare, si in prædictis, cc*
+*octo characteribus, 100 plus contineatur, quatuorq; superant: cc*
+*Nam si Numerus octo Characterum, Centenarium Numerum cc*
+*excedit in quatuor, multò magis, quàm 100, valuerit, & super- cc*
+*abundantia quaternaria, non impediverit, quin Numerus si- cc*
+*gnorum, eorumq; vis, ad finem & pactum, perductus esse vi- cc*
+*deatur.*) cc
+
+4) Wan Sie den feind / nicht alleine der Steine / berau-
+beten / besondern ihn auch zugleich / mit den Zahlen / (ungeach-
+tet / ob schon derselbe mehr Zifren der Zahle / auf seinen Steinen
+hette) überträfen.
+
+>(Buxer: fol: 31. a.
+*Ut; Latum est Ludiscitum, à decertantibus, ut qui celeriùs cc*
+*ad 100, in octo calculis scripta, depictaq; pervenerit, penes eum, cc*
+*fit vis & victoria Ludi. Quare, cui hi Calculi, 2. 4. 6. 8. 4. cc*
+*16. 45. 15. aut 3. 5. 7. 9. 25. 9. 12. 30. qui unum idemq; valent, cc*
+*cum 100 obtinuerint, Victoriam assequutus est. Notabis tamen, cc*
+*quod quamvis ipso in limine Certaminis, unum aut alterum Cal- cc*
+*culum, 100 continentem, fueris lucratus: non ideò tamen Victor cc*
+*regnabis, quoad is valor visq;, octo Calculis sit sociatus: quòd cc*
+*si valor virtusq; superiorum octo Calculorum, centenarium Nu- cc*
+*merum excedat, non erit obstaculo, supervacaneum id, quin cc*
+*Coronâ denêre: fiquidem & valorem Numeri, in Calculis octo cc*
+*præfixum, tibi comparâsti.*) cc
+
+5) Wan Sie / dem Feinde / mit den Steinen / und Zifren
+
+<sig>Qqq</sig>
+<meta>catchword: der Zah-</meta>
+
+<vocab>Zahl-Kampf, Zifren, Calculi, Victoria, Centenarium, Ludiscitum, Buxer</vocab>

@@ -1,0 +1,87 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>252</page-num>
+<header>Das Ander Buch / 15. cap</header>
+
+->n. j. j5.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SR | SK | SS | SR | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | 45 | | | | |
+| | | 38 | | SS | | | |
+| | | | | WS | WS | | |
+| | | | | | | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WR | WR | WSc | WR | WK | WSc | WR | WR |
+
+->n. 4. 7.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SK | | | | | SR |
+| SS | SS | SS | | | WSc | | SS |
+| | | | | 44 | SR | | |
+| | | | SSc | | WS | | |
+| | | | | | SS | SS | SR |
+| | WR | | | | | | |
+| WS | WS | WS | WR | jz | | WS | WS |
+| WR | | WSc | | WK | | WR | WR |
+
+->n. 8. jj. j4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SK | 6; | | | | SR |
+| SS | SS | SS | | | WSc | | SS |
+| | | | | | SR | | |
+| | | | SSc | | WS | | |
+| | | | | 28 | SS | SS | |
+| | WR | | | 20 | | | |
+| WS | WS | WS | WR | | | SR | WS |
+| WR | | WSc | WK | | WR | | |
+
+<column-break/>
+
+->n. 2. 3.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SK | | | SSc | | SR |
+| SS | SS | SS | | | WSc | | SS |
+| | | | | | SS | 44 | SR | |
+| | | | | | | | SS | |
+| | | | | | WS | WS | SS | SR |
+| | | | WR | | | | |
+| WS | WS | WS | j3 | | | WS | WS |
+| WR | WR | WSc | | | WK | | WR |
+
+->n. 5. 6.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SK | | | | | SR |
+| SS | SS | SS | WSc | | | | SS |
+| | | | | | | SR | |
+| | | | SSc | | WS | | |
+| | | | | | | SS | SS | SR |
+| | WR | | | | | | |
+| WS | WS | WS | WR | | | WS | WS |
+| WR | | WSc | | WK | | WR | WR |
+
+->n. j2. j3.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SK | SR | | | | |
+| SS | SS | SS | 53 | | | | SS |
+| | | | | | WSc | SR | |
+| | | | SSc | | WS | | |
+| | | | | | | SS | SS | |
+| | WR | | | | | | |
+| WS | WS | WS | WR | | | SR | WS |
+| WR | | WSc | WK | | WR | | |
+
+<vocab>Das Ander Buch, Webebriefe, SR, SS, SK, WS, WR, WK, WSc, SSc</vocab>

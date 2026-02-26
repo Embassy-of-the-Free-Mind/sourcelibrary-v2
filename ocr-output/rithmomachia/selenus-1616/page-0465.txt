@@ -1,0 +1,40 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>431</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>9. cap:</margin> Es wird schliesslich / das biß dahero / in diesen vier Büchern / abgehandelte Spiel / von diesen / der Welsche-Schach / genant / und mit gleichen Zügen / ( wie / in denselben / erwehnet ) gespielet : nuhr alleine / daß Sie / mit der Königinne- und Rochen- Solda- ten / ( wie / in der beschreibung des Currier- Spieles / kurtz zuvor / in diesem Capittel / gedacht worde ) den anfang machen / auch die übri- ge Soldaten / nuhr ein feld / für sich rucken / und die Königin / nicht ehe / biß daß Sie / den erwehnten Freuden- Sprung / für sich / in ihr drittes feld / gethan / allenthalben ziehen können : So lassen Sie auch / den König / nicht springen / noch seine stelle / mit einem Andern Steine / verwechseln.
+
+Von diesen beeden Spielen / insonderheit aber / von dem Gros- sen / setzet / Cunrat von Ammenhusen / der Stat zum Stein / Münch / und Lut- Priester / in seinem Mscripto, ( welches / in dem Jahre / alß man / von Gottes geburt / 1337. geschrieben / gemachet : und dem Authori, auß der Rappolsteinischen Bibliothec, communicieret worden ) nachfolgende teutsche Versche :
+
+<margin>cc</margin> Eines ich doch sagen wil /
+<margin>cc</margin> Ich hab wol etlich Spiel gesehen
+<margin>cc</margin> Daruf man sach / wer wolte spehen
+<margin>cc</margin> Wol sechzehen Steinen mere
+<margin>cc</margin> Aber nach dieser lere
+<margin>cc</margin> So an diesem Buche stat
+<margin>cc</margin> Daß SchachZabel nit mere hat
+<margin>cc</margin> Denne zwen und dreissig Steine
+<margin>cc</margin> Ze beiden ich meine /
+<margin>cc</margin> Einen Kung / und ein Küngin /
+<margin>cc</margin> Zwen Alten / zwen Ritter / da bi sol sin
+<margin>cc</margin> Ein Roch an ietwederm ende /
+<margin>cc</margin> Und vor ietlichen ein Vende
+<margin>cc</margin> Diß sol wesen / zu einer sit
+<margin>cc</margin> Recht alß ob sie ein strit
+<margin>cc</margin> Und andert halben alß vil
+<margin>cc</margin> Daß ist / das recht SchachZabel Spil.
+<margin>cc</margin> Och wil ich zellen / die ich sach me
+<margin>cc</margin> Alß ich hab gesprochen e
+<margin>cc</margin> Zu ietweder siten acht Stein
+<margin>cc</margin> Vier groß und vier klein.
+<margin>cc</margin> Die grossen wil ich nennen.
+<margin>cc</margin> So mugent ir si erkennen
+<margin>cc</margin> Es ist ein trulle und zwen Kurrier
+<margin>cc</margin> Und ein ratgeb. Das werdent vier
+<margin>cc</margin> Die sont ze ietweder siten stan
+
+<sig>Jii</sig>
+<meta>catchword: Der</meta>
+
+<vocab>Welsche-Schach, Currier-Spiel, Cunrat von Ammenhusen, SchachZabel, Kung, Küngin, Alten, Ritter, Roch, Vende, trulle, ratgeb</vocab>

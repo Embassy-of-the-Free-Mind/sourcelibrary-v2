@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>preface</page-type>
+<page-num>447</page-num>
+<header>Vorrede.</header>
+
+Damit Ich aber / mit diesem wercke / ordentlich verfahre / alß wil Ichs / in Sechs Capittell / abtheilen / und in denselben / nachfolgendes / abhandlen und beschreiben:
+
+Im Ersten / die form des Bretes / oder der Tafel: und dan der Steine / oder stücken / welche man / auf derselben / zu diesem Spiele / gebrauchet.
+
+Im Andern / die Zahle / welche man auf die Steine / verzeichnet.
+
+Im Dritten / die Felder / auf welche man / die Steine / setzet.
+
+Im Vierten / den Gang der Steine / wie man dieselben / ziehen sol.
+
+Im Fünften / die Art und weyse / des Kempfens / wie man nemlich / diese Steine / an ein ander / führen sol.
+
+Im Sechsten und Letzten / die unterschiedene überwindungen / durch welche / der Sieg erhalten / und das Spiel / zum ende / gebracht wird.
+
+<image-desc>A decorative woodcut tailpiece featuring a central human mask (mascaron) with a stylized headband, surrounded by ornate, symmetrical scrollwork and foliage. At the top corners are the heads of lions or similar heraldic creatures facing outwards.</image-desc>
+
+<sig>Kkk iij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Vorrede, Capittell, Bret, Tafel, Steine, Spiele, Zahle, Felder, Kempfens, Sieg</vocab>

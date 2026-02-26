@@ -1,0 +1,14 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>218</page-num>
+<header>Das Ander Buch / 13. cap:</header>
+
+<margin>16.</margin> Wan aber der Schwarße / nicht den Soldaten / auf 34. (n. 15.) besondern / des K. Reuter / auf des W. K. Soldaten / auf drey und vierzig ziehet : so spielet der Weiße / des K. Reuter / auf die S. Kö- nigin / auf neunzehen : der Schwarße / dieselbe / auf drey und dreyß- sig : der Weiße / die Königin / (umb ihres K. Soldaten / zu beschü- tzen) auf zwölfe : der Schwarße / des K. Reuters = Soldaten / auf vier und dreyßig : <margin>17.</margin> * der Weiße / muß des K. Reuter / (ob es schon ein guter zug scheinet) auf sechs und dreyßig / nicht ziehen : Dan da es geschicht / durch anlaß des Schwarzen / die Königinne / ver- tauschet werden. Wan nuhn der Weiße / die S. Königin / mit sei- nem Könige nimt : so spielet der Schwarße / der K. Soldaten / auf des W. K. Reuter / auf fünf und vierzig : der Weiße / raubet mit demselben / des S. K. Schützens = Soldaten : der Schwarße / zie- het obgedachten / der K. Soldaten / auf des W. K. Schützen / auf sieben und dreyßig / und gewinnet einen Stein / zum Vortheil : Dan / wan der Weiße / des S. K. Rochen / mit seines K. Reuter / erleget : Er / den gedachten W. Schützen / mit der K. Soldaten / wegnimt / und den W. Reuter / auch ohne verhinderung / erlanget.
+
+<margin>18.</margin> Ist derowegen besser / daß der Weiße / nicht seinen Reuter / (obgesetzter massen / n. 17.) auf 36. besondern an dessen stat / der K. Soldaten / auf neun und zwantzig / ziehe : der Schwarße / rucket / der K. Soldaten / auf fünf und vierzig : der Weiße / des K. Sol- daten / auf des S. K. Reuter / auf sechs und dreyßig : der Schwar- ße / nimt denselben / mit seiner K. Soldaten : der Weiße / densel- ben / mit seiner Königin / und beut Schach : der Schwarße / (umb / des K. Reuter / nicht zu verlieren ) bedecket den König / mit seinem Schützen / auf zwey und funfzig : der Weiße / nimt / der S. K. Schützens = Soldaten / mit seiner Königin / ziehet dieselbe / auf dero Schützen / und Reuters = Soldaten / hat auch sein Spiel / derge- stalt eingerichtet / daß Er mit demselben / den Sieg / endlich wol erhalten / und davon bringen wird.
+
+<margin>19.</margin> Ziehet aber der Schwarße / nach der dritten Art / nicht den Reuter / auf 43. (n. 1.) noch die Königin / auf 25, (n. 8.) besondern der K. Schützens = Soldaten / auf sechs und viertzig : so rucket der Weiße / (auf daß / der K. Schütze / des S. K. Soldaten / nehmen könne) der K. Soldaten / auf neun und zwantzig : der Schwarße / seiner K. Soldaten / auf des W. K. Schützen / auf sieben und dreyß- sig : der Weiße / nimt ihn / mit des K. Soldaten : der Schwarße / denselben / mit der K. Schützens = Soldaten / und zielet nochmaln /
+
+<meta>catchword: auf des</meta>
+
+<vocab>Schachspiel, Schwarße, Weiße, Reuter, Königin, Soldat, Schütze, Rochen, Vortheil, Schach</vocab>

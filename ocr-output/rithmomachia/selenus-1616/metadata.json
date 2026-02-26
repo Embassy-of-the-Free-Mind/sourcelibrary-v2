@@ -1,0 +1,10 @@
+{
+  "title": "Das Schach- oder König-Spiel",
+  "author": "Gustavus Selenus (August, Duke of Brunswick-Lüneburg)",
+  "year": 1616,
+  "language": "German",
+  "pages_total": 540,
+  "ocr_model": "gemini-3-flash-preview",
+  "ocr_prompt": "Standard OCR v6",
+  "exported_at": "2026-02-26T22:50:22.857Z"
+}

@@ -1,0 +1,59 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>439</page-num>
+<header>10.cap: Vom Schach-Spiel.</header>
+<meta>catchword: Der</meta>
+
+daten / auf sechs und zwanzig: Der Schwartze / seinen König / „
+auf drey und zwanzig: einen Rochen / auf sechzehen / einen „
+Schützen / auf vier und zwanzig: einen Soldaten / (umb den „
+W. Soldaten / aufzuhalten) auf vier und dreyssig: Wan „
+nuhn der Schwartze / mit dem Soldaten / dem Weissen / im sie- „
+benzehenden Zuge / Schach-Mat zu geben / verheissen hat: „
+
+So springet / sein Schütze / (umb dem W. Könige / luft zu
+machen) auf acht und dreyssig: Der Weisse / ziehet / den König /
+auf sechse:
+
+Der Schwartze / den Rochen / auf funfzehen: Der Weisse /
+den König / auf fünfe:
+
+Der Schwartze / den Rochen / auf vierzehen: Der Weisse /
+den König / auf viere:
+
+Der Schwartze / den König / auf zwey und zwantzig: Der
+Weisse / den König / auf fünfe:
+
+Der Schwartze / seinen König / auf ein und zwanzig: Der
+Weisse / den König / auf viere:
+
+Der Schwartze / den Rochen / auf dreyzehen: Der Weisse /
+den König / auf drey:
+
+Der Schwartze / den Rochen / auf zwelfe: Der Weisse /
+den König / auf zwey:
+
+Der Schwartze / den König / auf zwanzig: Der Weisse /
+den König / auf drey:
+
+Der Schwartze / den König / auf neunzehen: Der Weisse /
+seinen König / auf zwey:
+
+Der Schwartze / seinen Rochen / auf eylfe: Der Weisse /
+den König / auf eins:
+
+Der Schwartze / den König / auf achtzehen: Der Weisse /
+seinen König / auf zwey:
+
+Der Schwartze / springet / mit dem Schützen / auf zwan-
+zig / und beut Schach: Der Weisse / rucket / den König /
+auf eins:
+
+Der Schwartze / den Rochen / (seiner zusage sich erinnernd:
+dan Er sonsten / mit demselben / auß drey / oder neune / Schach-
+Mat geben könte: und auf daß Er seinen Soldaten / für sich ruc-
+cken / und der Weisse / dieweyl sein König / gefangen / einen Zug /
+haben könne) auf funf und dreyssig: Der Weisse / muß ihn / mit
+seinem Soldaten / nehmen:
+
+<vocab>Schach-Spiel, König, Rochen, Schütze, Soldat, Schach-Mat, Schach, beut</vocab>

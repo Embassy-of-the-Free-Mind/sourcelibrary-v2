@@ -1,0 +1,30 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>127</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1.cap:</margin>den: weyl / (2.) dieses auch ein Spiel ist / darinnen der König / bey vollem Heere / und ohne abbruch seiner meisten Soldaten / oftmaln getroffen / und Schach-Mat wird / solches aber / auß einiger flucht oder warzeichen / nicht abzunehmen / so muß mans / zu einer loose / und ungezweifleter anzeige / gleichsam gebrauchen / daß nemlich / die Schlacht nunmehr verloren / das Haupt gefangen / und also auf einer seiten / das feld erhalten sey.
+
+Es träget sich aber / oftermaln zu / daß der Schach-Mat / entweder / wan Er gleich gegeben / nichtes gilt: oder verhindert wird: oder wegen unvermügenheit / und daß die Steine / beederseits gleich seynd / nicht kan / ins werck gerichtet werden.
+
+Der Schach-Mat / gilt alszdan nichtes: wan der König / keinen einzigen Stein / mehr bey sich hat: Dan dieses Spiel so geordnet / daß man aufs wenigste / einen Stein / von seinem Hauffen / bey ihm lassen müsse.
+
+Der Schach-Mat / wird verhindert / durch die einsperrung und einschliessung des Königes: und geschicht dieselbe / wan ein König / ohne Schach-bieten / dergestalt eingeschlossen und eingeschrencket wird / daß Er sich / auß seinem Orte / nicht kan begeben / noch hülffe und errettung / von seinen Soldaten erwarten / noch deren einen ziehen / sondern / wan Er auß seinem felde / gehen wolte / in den Schach / und gefahr / (welches doch / wider dieses Spieles eigenschaft) selber treten müste: Zum Exempel: Wan ein Weisser Roche / auf der Schwartzen Soldaten Linie / stünde: und der Schwartze König / in seines Schützens- ein Weisser Reuter aber / ins dritte feld / desselben Schwartzen Schützens / gezogen wehre: so würde zwar / der König / eingesperret: man gebe ihm aber / weder Schach / noch Ab-Schach: Ein ebenmessiges / widerfähre / dem Weissen Könige / wan derselbe / in seines Rochens feld / gezogen wehre: und der Schwartze König / im dritten felde / des itzt gedachten weissen Rochens: ein schwartzer Roche aber / im andern felde / des Weissen Königes-Reuters / stünde: Imgleichen / wan der Schwartze König / in seines Schut-
+
+<image-desc>
+Two square diagrams of partial chess boards illustrating stalemate (Patt) positions.
+The left diagram depicts a 3x3 section of a board:
+- Top row: A dark square, a light square with the initials "S.K." (Schwartzer König), and a dark square.
+- Middle row: A light square, a dark square, and a light square with "W.R." (Weisser Roche).
+- Bottom row: A dark square with "W.S." (Weisser Springer), a light square, and a dark square.
+
+The right diagram depicts a 3x3 section of a board:
+- Top row: A dark square, a light square with the initials "S.K." (Schwartzer König), and a dark square.
+- Middle row: A light square with "S.R." (Schwartzer Roche), a dark square, and a light square.
+- Bottom row: A dark square, a light square with "W.K." (Weisser König), and a dark square.
+</image-desc>
+
+<sig>R</sig>
+<meta>catchword: gensz</meta>
+
+<vocab>Schach-Mat, König, Soldaten, Roche, Reuter, Springer, Schützens, einsperrung</vocab>

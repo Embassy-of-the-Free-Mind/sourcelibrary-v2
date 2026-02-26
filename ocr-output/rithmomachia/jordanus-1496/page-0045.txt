@@ -1,0 +1,80 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VII</page-num>
+
+f medius inter a ⁊ b. et cũ a addat vnitatē super c differentiā eius ab vnitate b : ⁊ f similiter vnitatē
+super c : erit a constitutus ex portionibus e. ⁊ f qui est medius numerus maior est portio ⁊ e minor.
+cōstat itaqȝ inter imparē ⁊ vnitatē esse vnū mediū: eundēqȝ esse iparis maiorē portionē qđ est primū.
+Scđm siliter. nã si inter a ⁊ vnitatem b sit f medius: per diffinitionem a ad f et b ad f equales sunt dñie
+sed cũ per pceptōem differētia a ad b pposita sit ex differētijs a ad f et b ad f. illa cũ in duo equa diui
+di possit: erit par. at illam numerus a vnitate supat. a igitur per diffinitionem est impar. qđ est scđm
+et totum propositum.
+
+<margin>24</margin> ¶ Inter parem ⁊ vnitatem vel nullus erit medius: vel duo minores paris dimidium.
+qđ si inter ip̄m ⁊ vnitatem duo fuerint medij: eum esse parem necesse est.
+¶ Sit a quilibet par / ⁊ b vnitas: si a sit par prime sequēs vnitatem cū sola vnitate distent: inter a et
+vnitatem nullus erit medius. qđ si āplius vnitate distent: dico p̄mo inť a ⁊ b duos eē medios / minoresqȝ
+esse paris dimidiū. Scđo qđ si iter a quēcunqȝ nūerum ⁊ b vnitatem duo medij p̄stiterint: a eē parem.
+Primum ostēditur. nam a paris: ab vnitate b differētia est impar. qđ ideo p̄ parem ⁊ imparem vnitate
+distātes per nonam huius portiri potest. partiatur itaqȝ illa dñia in duas tales portiones. tūc capio c
+numerum: cuius quidē minor portio sit differētia ad b. per pceptiōem maior portio erit differētia a
+ad c. at maior portio minore vnitate supat. capio ergo numerum p̄tinue sequentem c qđ sit d. differētia
+eni a ad d: minor erit vnitate differētia a ad c. quare differētia a ad d et c ad b sūt equales. sunt igitur
+c ⁊ d medij inter a et b. et quia per scđam primi c est medietas d ⁊ dñie c ad b simul iūctoꝝ: et d ⁊ dñia
+c ad b equātur a: cū d ⁊ dñia c ad b addant vnitatem a ad c et c ad b. est igitur c: minor medioꝝ medietas
+paris a. et hoc est primum. Scđm declaratur. nam si inter a ⁊ vnitatem b: sint duo medij vt c ⁊ d: quoꝝ c
+sit minor/ et d maior: dñia c ad b minor est vnitate dñia ip̄ius c ad a. eaꝝ igiť vna est par / et altera impar.
+addite igitur simul per scđam huius p̄stituūt numerum imparem: qui per pceptionem est differentia
+a ad b: cui siquē addideris vnitatem: p̄stitues a. est igitur a par. quod est scđm.
+
+<image-desc>Geometric diagram in the right margin showing labeled line segments. At the top, three lines are labeled 'a' (with number 6), 'b' (with 4), and 'c' (with 3). To the right, shorter segments labeled 'a' (2), '1', and 'b' (1). Below these, a segment 'b' and a mark 'I'.</image-desc>
+
+<margin>25</margin> ¶ Si impares oēs ab vnitate disponantur ⁊ totidem post quēlibet sumātur : quotus
+ipse ab vnitate fuerit: extremū ab illo numerari p̄ueniet. et item totus ab illo quotus
+ipse a primo idē a p̄mo nūerabitur: sicqȝ deinceps. oēsqȝ in medio relicti erunt primi.
+¶ Sint a / b / c / d / e / f / g / h / k / l / m / n / o / p / q / r / s impares ab vnitate p̄sequēter dispositi: et quotquot vl
+terius voles. dico p̄mo qđ si accepto a qđ ternari⁹ est primo ab vnitate impare: quotus ip̄e e ab vnitate
+totum imparem post ip̄m accipias vt d: is est tertium: a ip̄m numerare. et si totum iteꝝ post d accipias
+vt g: iteꝝ a ip̄m numerare. et si totum post g vt l: iteꝝ a ip̄m numerare. ⁊ ita p̄sequenter. Scđo: medios
+oēs vt b c / e f / h k: et ita cōsequēter ad a esse primos. Primum p̄z. nam q̄a ternarius a eius est ab vni
+tate: tres post accepti impares et ipse : sunt quatuoꝝ. quare inter a ternarium ⁊ d tertium post ipsum
+sunt b et c duo impares medij: et tres differētie equales. imparium eni p̄tinue ordinatoꝝ ad impares:
+differētia est binarius: dñie scz totidem quot sunt vnitates in illo. sed tota dñia d ad a per pceptiōem
+bis repetitam: p̄poniť ex illis tribus differētijs. igitur a in vnam illaꝝ ductus: p̄ducit rotam. at ipse
+toti differētie additus: p̄stituit d. igitur a numerat d. et siliter ostēdiť a numerare g. sunt enim quinqȝ
+inťmedij impares ⁊ sex binarij dñie equales: duple qđē tribus primis. et dñia g ad a p̄posita ex illis
+sex. ergo a per vicesimam tertiam primi idē a numerabit. at a toti dñie g ad a additus p̄stituit g: a igiť
+numerat g. et siliter nūerabit l. q̄a dñia l ad a erit tripla dñie d ad a. ⁊ siliter qđ nūerabit o. q̄a differētia
+quadrupla. et hūc in modum p̄sequēter. Scđm p̄z. nam p̄mo a non nūerabit b: q̄ siquidē detracto a de
+b. per duodecimam primi a nūeraret binarium differētiam residuā m̃oz scz minorem. qđ est impos
+sibile. neqȝ p̄ idem nūerabit c. nam ip̄o subtracto d c nūeraret differentiam c ad a. quæ cũ sit binarius
+bis sumptus: si substrahatur ab illa dñia numerabit residuū dñiam scilicet dñie q̄ erit vnitas: maioꝝ scz
+minorem: et numerus vnitatem. qđ est impossibile. Ita quoqȝ p̄babis e ⁊ f ⁊ reliquos intermedios eē
+primos ad a. nam si a nūeraret e: substraho e ab g. et q̄ a numerat g vt ostēsum ē / ⁊ e per hypothesim
+numerum subtractum: ergo per duodecimam primi numerat dñiam e ad g: quæ ē p̄stituta ex duobus
+binarijs. qđ nuper mōstratum est impossibile. Siliter si numeraret f substraho f ab numero g: et resi
+duus erit binarius vt notum est: ⁊ a numerat g ⁊ detractum f: ergo nūerat residuum qui est binarius
+maioꝝ minorem. qđ est impossibile. Et ita p̄ba b nūerare g / n / s: sed intermedios oēs esse ad b p̄mos.
+et c nūerare l et s ⁊ inťmedios ad ip̄m esse primos. habebisqȝ p̄simili vbiqȝ argumentatiōe p̄positum.
+atqȝ ita habeť impares relictos qđ post aliquē totoꝝ toti nonveniunt: oēs p̄ tridecimā hui⁹ esse p̄mos.
+
+<image-desc>A vertical diagram in the margin listing letters and odd numbers. From top to bottom: s-35, r-33, q-31, p-29, o-27, n-25, m-23, l-21, k-19, h-17, g-15, f-13, e-11, d-9, c-7, b-5, a-3.</image-desc>
+
+<margin>26</margin> ¶ Si ab vnitate impares coaceruētur: qui p̄ueniet erit quadratus.
+¶ Sit vnitas: ⁊ suo ordine p̄sequētes impares a / b / c / d / e / f. dico vnitatem ⁊ a p̄stituere quadratum.
+Item vnitatem a ⁊ b p̄stituere quadratum: et vnitatem a b et c. et ita p̄sequēter quotquot sil aggrega
+ueris. diuiso eni a primum imparem in duas portiones vnitate distātes: et certū est nūeroꝝ distāre
+vnitate ab vnitate ⁊ minorem vnitate eē equalem: quas vno ordine situo iuxta primam vnitatem certū
+est duos esse ordines ab vnitate sumptos vsqȝ ad duos vnitate distātes (vnitatem eni hic nomine nūeri
+censemus) ergo per tricesimāmertiam sexti vnitas ⁊ due ille portiōes aggregate p̄stituūt quadratū.
+at due ille portiones equātur impari vnitate sequēti. vnitas igitur ⁊ a impar sequens simul iuncta:
+p̄stituūt quadratum. Item resoluto a in vnitatem ⁊ binarium: cum binarius sit dñia b ad a: b resolueť
+per nonam huius in duas portiones: quaꝝ vna erit binarius / ⁊ altera binariovnitate maior: id est equa
+a. qđ cū prima vnitate statuat̄r vno ordine iuxta portiōes a. tūc erūt duo ordines ab vnitate ad nūeros
+vsqȝ vnitate distātes dispositi: ergo per eādem tertiam ⁊ tricesimam sexti illi simul aggregati p̄stituūt
+
+<image-desc>Diagram at the bottom right showing the generation of square numbers by adding successive odd numbers. From top to bottom: 13 | 49 | f; 11 | 36 | e; 9 | 25 | d; 7 | 16 | b; 5 | 9 | c; 3 | 4 | b; 1 | a.</image-desc>
+
+<meta>Catchword: I</meta>
+
+<vocab>impares, quadratus, medius, differentia, vnitas, numerus, binarius</vocab>

@@ -1,0 +1,44 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>67</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>I iij</sig>
+<meta>catchword: follent</meta>
+
+<margin>7. cap:</margin>
+
+<image-desc>A woodcut diagram of a 3x3 section of a chessboard. The grid contains alternating light and dark squares. In the top row, the left-most light square contains the letters "W.R." and the right-most light square contains "S.K.". In the bottom row, the middle dark square contains the letters "W.K.".</image-desc>
+
+stehet/ treffen/ und dem Könige/ zu hülfe kommen können: alsß
+hat man sich derselben / zum meisten / auf die letzte zu gebrauchen.
+Von diesen Steinen / findet man / in den gedachten Alten
+Mls: folgenden Bericht:
+
+> Daß Roch / auf dem SchachZabel / sol seyn / ein Rit- <gloss>cc</gloss>
+> ter / sitzend auf eim Roß mit einer Bele / und sol auf haben gu- <gloss>cc</gloss>
+> gel/ mit vehem underzogen / und sol ein reysß / oder steblen ha- <gloss>cc</gloss>
+> ben/ in seiner rechten Hand: das beteut vistumb / und lega- <gloss>cc</gloss>
+> ten der fürsten: Wan ein Künig nit allenthalben / in seinem <gloss>cc</gloss>
+> Rych gesein mag / dovon ist im not / daß Er hab verweser/ <gloss>cc</gloss>
+> die seinen gewalt habent / die do thun von seinem gewalt / <gloss>cc</gloss>
+> das Er do selbs thun solt/ und wan die Reich ze weit seint / so <gloss>cc</gloss>
+> ist not / daß ir zween seint / einer zu der rechten hand / und ei- <gloss>cc</gloss>
+> ner zu der lincken hand/ und seiten: darumb daß an der gemer- <gloss>cc</gloss>
+> cke und winckeln/ icht auferstee/ wider des Reichs gesetz/ und <gloss>cc</gloss>
+> das dem Reich / icht übel anstee/ und der gemein schedlich sey/ <gloss>cc</gloss>
+> und darumb / daß sie an den gemercken understen / ob sich icht <gloss>cc</gloss>
+> herumb fugt oder mecht/ dovon schaden komen möchte. Diesel- <gloss>cc</gloss>
+> ben verweser / sollen 1. haben gerechtigkeit / die vor allen andern <gloss>cc</gloss>
+> tugenden leuchtent : wan es geschicht etwan/ das die Reich ver- <gloss>cc</gloss>
+> loren werdent/ ob die underton gerecht seint / und amptleut <gloss>cc</gloss>
+> ungerecht sint/ so went man/ der Fürst sey auch ungerecht. Do- <gloss>cc</gloss>
+> von sollen deß Küniges verweser / alsß gerecht seyn / das sie <gloss>cc</gloss>
+> durch gerechtigkeit stet und bereit sein / ze sterben / und was <gloss>cc</gloss>
+> der gemeyn gut / und nuß sey / in dem Reich / daß Er daß baß <gloss>cc</gloss>
+> mein/ dan sein selbs leben: 2. sollent die verweser/ güte haben/ <gloss>cc</gloss>
+> das sie mit der gemein/ was der wirt/ oder widerfert ein mitlei- <gloss>cc</gloss>
+> den habē/ an dem Herzen/ und auch mit den wercken/ einem sol- <gloss>cc</gloss>
+> lent sie lassen/ dem Andern gebē/ wan gutt/ ist eine gemeine hilf- <gloss>cc</gloss>
+> fe/ die get aus eines senften herze gütigkeit und süssigkeit: 3. Sie <gloss>cc</gloss>
+
+<vocab>Roch, SchachZabel, Bele, vehem, vistumb, legaten, Künig, verweser, gemercke, amptleut</vocab>

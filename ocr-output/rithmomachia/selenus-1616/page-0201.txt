@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>171</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>6.cap:</margin>
+gehenden §, oder * stehet / kommen / biß dahin / da man abermaln / zu rücke gewiesen wird / vortziehe. Ist dan die Verenderung der Züge / nicht weit zu suchen / so kan man zu zeiten / zu rücke hinauf spielen / und die Steine / in die angedeutete felder / ebenmessig stellen : doch gehöret hiezu / in etwas / eine übung und gedächtnus. Wan aber einer / die Züge / vom anfange des Capittels zu widerholen / und alle Steine / anderweit / nach der ersten ordnung / aufs bret zu setzen / nicht lust hast : (wiewol es / auf daß Er / dieses kunstreiche Spiel / auß dem grunde / und durch übung / welche endlich Meisters machet : desto baß erlernen möchte / nicht undienlich wehre) so kan derselbe / so viele viereckete figuren / als zu einem Exempel / nötig / in vier und sechszig leere felder / abgetheilet / auf ein papier abreißen : Die stellung der Steine / wie sie / für einem angehenden § oder * / sich gefunden / darein verzeichnen : und die Zahlen / welche aufm rande stehen / zur nachrichtung / darüber schreiben : folgendes vorspielen : und wan Er abermahl / zu rücke gewiesen wird / nach demselben Abriß / oder verzeichnis / mit welcher / die eingeschlossene Zahle / im Texte / übereinstimmen / die Schach-Steine / auf die Schach-Tabel hinwider ordnen.
+
+Wan / (9.) ihrer zween / diese Exempel versuchen / und nachsehen wolten / daß dieselben / (umb die augen / und gedancken / nuhr auf die Schach-Steine / zu haben) eine dritte Person / den Zügen nach / ihnen / fein deutlich / und langsam / nicht undienlich / fürlesen konte. Doch stehet solches / 
+->eines jedern gutachten / und gelegens-<-
+->heit / frey und anheimb.<-
+
+<image-desc>A decorative woodcut tailpiece featuring a central lion-like mask or grotesque face surrounded by ornate scrollwork, stylized foliage, and acanthus leaf patterns.</image-desc>
+
+<sig>Q iij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Schach-Steine, Schach-Tabel, Meisters, Abriß, Exempel</vocab>

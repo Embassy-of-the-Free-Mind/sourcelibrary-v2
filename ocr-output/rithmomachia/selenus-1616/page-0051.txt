@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>21</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Maho-</meta>
+
+ist alles ewer : und / in dehme Er sich anstellete / alß wan Er sein «
+aufgesetzetes geld / zu des Wacht-Meisters auffatze / schieben / «
+und mit demselben vermischen wolte / legete Er / noch wol drey «
+mahl so viel / von seinem anderen gelde / darzu : welches der «
+Wacht-Meister / sich anstellend / alß wan Er / auf andere wort «
+und sachen / achtung gebe / fein zu sich ruckete / sagend : Junger «
+Gesel / Ich schwere dir / bey der Seelen / meines Vatern / daß «
+ich alle meine lebetage / mit vielen gespielet / aber nie einen ge- «
+funden / welcher mir auf diesem Spiele / Schachmat gegeben «
+hette / ausser dir : So habe ich auch / noch nie / einen höflichern «
+Jüngling gesehen.
+
+<margin>1. cap:</margin>
+Auß diesem allen / ist nuhn zu ersehen / wie weit dieses Spiel /
+von allen andern / welche entweder dem Glücke / gantz / oder zum
+theil / unterworffen / und dessen Zweck und nutzen / bey weitem / nicht
+erreichen mögen / zu unterscheiden sey. Welchen unterscheid / der
+Steph: Costa, in d. Tract: de Ludo : Lamb: Danæus, in seinem Tract:
+de Ludo Aleæ : und D. Henricus Knaustinus, in seiner repetit: de Lu-
+do, wol in acht gehabt und aufgemercket. Hiebey gleichwol zu erin-
+nern / daß das Zahl-Spiel / (davon / zu ende / dieser Beschreibung / ein
+absonders Tractätlein / angehangen worden) mit diesem unserm
+Spiele / wan es nuhr eben so gebreuchlich wehre / gleiches schlages /
+seyn wurde.
+
+Demselben nuhn / welches seithero / mit sat- und gnugsamen
+gründen / von der Natur / und den Eigenschaften dieser Kunst / außge-
+geführet : thun sich Etliche / unter welchen / nicht geringes Standes
+und ansehens Personen / (Alß : nach dem Platone, in lib: 2. de Re-
+publ: der König / in Gros Britannien, Jacobus, des Nahmens der Er-
+ste / in demselben Büchlein / welches seine H§. an dero Sohn / Henri-
+cum, Christmilden / hochlöblichen angedenckens / geschrieben / und ein
+Königlich Geschenck / intituliren : Imgleichen / Paris de Puteo, in
+tractat: de Ludo, n. 11. Navarrus, in Enchir: confess : c. 16. n. 3. und
+Olaus Magnus, der Ertz Bischof / zu Upsal / im 13. Cap: des 15. Buch-
+es : Dan auch / zum theile / Graf Balchasar von Castilien / im 2.
+Buche / seines vollenkommenen Hof-Mannes : Ferner Petrus Hei-
+gius, in seinen letzten quæst: quæst: 10, n. 51 : und dan Emanuel Soa-
+rez, de verbo Lydus, n. 197.) verhanden / nicht wenig widersetzen : des-
+nen wir gleichwol / ehe wir weiter schreiten / der sachen nohturft nach /
+begegnen müssen.
+
+Vnd gehet uns zwar / zufoderst wenig an / daß / der verfluchte
+
+<vocab>Schach-Spiel, Schachmat, Zahl-Spiel, Steph: Costa, Lamb: Danæus, Henricus Knaustinus, Platone, Jacobus I of England, Basilikon Doron, Paris de Puteo, Navarrus, Olaus Magnus, Balchasar von Castilien, Petrus Heigius, Emanuel Soarez</vocab>

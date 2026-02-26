@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>169</page-num>
+<header>6. cap: Vom Schach-Spiel. 169</header>
+
+Dan man / bald mit diesem / bald mit einem andern Steine / den Anfang machet: Imgleichen / bald darauf diesen / bald einen Andern / so wol in jehnes / alsz dieses feld / und also fürter / zu guter anfüh-rung / zum anschlage / zum anlauffen / und was dergleichen mehr / rucket. Man kan auch den König / in alle felder der Schach-Tabel / ehe er zu matten ist / ziehen / Ihm auch / auß einem jedern derselben / den Schach / und Schach-Mat / anmuhten. Dahero dan / so mannichfaltige unterschiedliche Arten und weysen / derer sich ein Spieler / nach des Andern fürnehmen / mit sonderbahrer discretion und nachdencken / (umb obgedachte Mittel und Satzungen / zu rechter zeit / ins werck zu richten) zu gebrauchen wissen muß: zu spielen erfolgen. Im wiedrigen fahl / wan einer nuhr / mit gewissen zügen / und auf einerley Art / alle seine Spiele verrichten / und / welcher gestalt / sein gegener / auf ihn zuruckete / nicht acht haben wolte: so würde derselbe / gar leichlich / den kürtzern ziehen / und den Schach-Mat / in kurtzer frist / davon tragen müssen.
+
+Ehe wir nuhn insonderheit zu den Exempeln / durch welche / wie das Spiel / außzuführen sey / auf vielerley Art / abgebildet wird / schreiten: so hat man / zu guter nachrichtung / von denselben / nachfolgenden Bericht / so wol wegen beschreibung derselben / alsz wie man sich / in dieselbe / zu richten und zu schicken / ins gemein hiemit einzunehmen.
+
+Dasz man erstlich / nicht alle weysen / welche etwa / in diesem Spiele gebrauchet worden / oder an itzo noch gebreuchlich sind / besondern / nuhr die fürnemsten / besten und nötigsten / welche die jehnigen / so für die besten Spieler / gehalten werden / gemeinlich ins acht haben / setzen und beschreiben wolle. Derowegen viele / welche fürlängst abgangen / und unterlassen seynd / auch nuhr hader und zanck anrichten / mit stilleschweigen / überschritten worden.
+
+Dasz man (2.) die Exempel der Spiele / vom ersten / biß zum letzten zuge / nicht allezeit hinauß führen / (dan solches / ob es schon müglich / dannoch / bey diesem Tractat, viel zu lange wehren / und eine weitleufficheit gebären würde: Könten auch / deßwegen / nicht so leichtlich / gefasset und erlernet werden) besondern mit fleiß / und in dienlicher kürtze / alsz müglich / abhandlen / auch nuhr dieselbe Spiele / welche / unter den fürnehmen Spielern / zum meisten / üb- und gebräuchlich sind / durchlauffen / und daselbsten / da etwa ein Wortheil / wegen eines Haupt- oder gemeinen Steines / zu erhaschen / oder da die Steine / semtlich / wol und besser / geordnet seyn möchten / abbrechen und enden wollen. Dan / wan das Spiel wolgeordnet ist / so gehet es besser vort / und entspringen / auß einer guten
+
+<sig>Q ij</sig>
+<meta>catchword: anstels</meta>
+
+<vocab>Schach-Spiel, Steine, Schach-Mat, Spieler, Exempel, Tractat, Wortheil</vocab>

@@ -1,0 +1,12 @@
+<language>None</language>
+<page-type>blank</page-type>
+
+<image-desc>
+This image shows the exterior cover of a historical manuscript or printed book. The binding is made of aged leather or vellum, showing significant wear, dark staining, and several small wormholes. 
+
+The cover is decorated with elaborate blind-tooled (embossed without gold) patterns. The design consists of several concentric rectangular borders. The wider frames are filled with intricate, repeating scrolling vine and floral motifs. In the center of the page is a large, vertically-oriented lozenge-shaped (diamond-like) medallion featuring dense arabesque or foliate ornamentation. 
+
+On the right-hand edge, there are two small metal plates with visible pins or rivets, which are the remnants of original metal clasps used to keep the book closed.
+</image-desc>
+
+<vocab>binding, blind-tooling, leather, lozenge, foliate patterns, clasps, scrollwork</vocab>

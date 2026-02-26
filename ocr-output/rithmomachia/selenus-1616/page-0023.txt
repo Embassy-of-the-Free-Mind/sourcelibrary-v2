@@ -1,0 +1,39 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<meta>image has minor staining and foxing on the left edge; catchword: Aut</meta>
+
+Qui virtute velint, vitam tràducere pauci:
+Malunt delicijs, vetitisq; vacare; juventus
+Imprimis nescit, quâ fit ratione regenda.
+Luxus, Vina, Venus latè dominantur ubiq; :
+Et Genium pauci fraudant, sic Alea multos
+Nudat, sunt vicijs jampridem dedita castra.
+Ludimus in factis, verbisq; jocamur ineptis.
+Hæc alios inter, Palamedis cura sagacis,
+Vidit, & obstupuit, dum Troica castra secutus,
+Militis effreni motus frenare laborat,
+Inventis varijs secretis obvia nullis.
+Hæc illos docuit, possent ut fallere tempus,
+Martis in Emporio, Martis simulachra colentes.
+Scacchidis argutæ ostendens monumenta, ciere
+Quêis belli effigiem possent, ut seria ludo
+Miscerent, acie fictâ in bicolore phalange,
+Seu pedibus, vel equis, tentent certamina inire.
+Nec potuit meliùs litem finire jocosam:
+Prima **PALAMEDI**, promenti Scacchida doctam,
+Gloria debetur, **SELENO** proxima, acutè
+Dùm primus Patriæ, Praxin Certaminis hujus
+Eruit, & varijs Exemplis omnia donat.
+Erige, si valeas, non præceptore **COLONO**,
+Ovum hoc; si nequeas, sine, nugacissime Livor.
+
+<image-desc>A rectangular decorative woodcut headpiece or divider featuring ornate scrolling acanthus leaves and floral motifs.</image-desc>
+
+## AD AUTHOREM,
+### D. S. C.
+
+Jucundissime Thuitonis Nepotum,
+Manno juncte vetustiore stirpe;
+Seu pugnæ simulacra, nùnc, sub armis,
+
+<vocab>Palamedes, Selenus, Scacchis, chess history, Thuiton, Manno, Colonus</vocab>

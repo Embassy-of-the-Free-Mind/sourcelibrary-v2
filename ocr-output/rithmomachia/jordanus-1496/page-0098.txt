@@ -1,0 +1,45 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>4b</page-num>
+
+7 septem et pductum diuiso per 17 et veniẽt 18 septimedecime: que vnum cõplent integrum/ vnam septimãdecimam. Est ergo vnitas 7 vna vnitatis septimadecima date summe decem 7 octo/ p re vna septimadecima. Si Xo summe decem 7 septem volo partem octauã repire: duco 17 in octo 7 qđ pductum fuerit diuido per octo 7 pueniẽt 17 octaue q duas vnitates 7 vnam octauam efficiũt. erũt g̃ duo 7 octaua vnius totius sũme decem 7 septem pars octaua. qđ querebat̃. Et ita in quibuslibet se quiuis valeat exercitare: habent tñ q̃ particulari/ exemplariq̃ demõstratiõe sunt ostensa: ad sequentia põdus ac momentum.
+
+<margin>11</margin>
+### Si duo inequales numeri ad eundem minorem comparentur: maioris ad ipsum maior est proportio/ et minoris minor.
+
+| 9 | 8 | 7 |
+|---|---|---|
+| a | b | c |
+
+Sint a & b duo inequales nũeri quoz a sit maior/ et b minor: qui comparẽtur ad eundem minorem c. dico a ad c maiorem eẽ pportiõem q̃ b ad c. Nam cũ per octauam petitiõem extremorum a ad c pportio pposita sit ex pportiõibus a ad b 7 b ad c vt suis partibus: ergo pportio b ad c pars est pportiõis a ad c et pportio a ad c totũ. et cũ per vltimũ cõmune ploquiium Ome totũ maius sit sua parte: igitur pportio a ad c maior est pportione b ad c. et ita de quibuslibet alijs simili argumẽto est agendum.
+
+<margin>12</margin>
+### Sesquisextadecima proportio: integrum toni dimidium superat.
+
+<image-desc>A horizontal diagram representing the division of a musical interval into segments, with letters a, c, d, e, f, g, h, i, k, b in boxes in the top row, and l, m, n, o, p, q, r, s, t in the bottom row.</image-desc>
+
+| a | c | d | e | f | g | h | i | k | b |
+|---|---|---|---|---|---|---|---|---|---|
+| l | m | n | o | p | q | r | s | t | |
+
+Quia huius monstrauit medio extremorum toni spacio in duo equa diuiso: tonũ mime in duo equa geometrice partiri: et sectionem hinc 7 inde altrinsecus sesquiseptimãdecimã/ et sesquisextãdecimã retinere pportiõem. hec Xo ostẽdit sesquisertãdecimã pportiõem que illic ex parte intensiõis acuminisq̃ relinquit̃: hemitonio/ integroq̃ toni dimidio esse maiorem. et sequẽs mõstrabit sesquiseptimãdecimam ex grauiori parte sumptam: eodẽ toni dimidio esse minorem. Sit ergo vt in quita huius spacium a b in decem 7 octo equas partes per a c d e f 7 reliquas notas diuisum. ita vt a b earz partiũ ɔtineat decem 7 octo/ 7 c b sedecim/ 7 l b decem 7 septem. manifestũ est a b 7 c b vt prius visum est esse tonum: et l b 17 ad c b 16 eẽ sesquisextãdecimã quã habitudinem dico esse integro semitonio maiorẽ. qm̃ enĩ per decimam huius vnitas 7 sextadecima vni⁹: est summe decem 7 septem pars sextadecima. q̃ si eidẽ sũme adiũciaf fient decẽ 7 octo/ et sextadecimavnius. at octodecim 7 sextadecimavni⁹ ad decẽ 7 septem p diffinitiõẽ est sesquisertadecima. Sunt g̃ decẽ 7 octo 7 sextadecimavnius ad decẽ 7 septem et decem 7 septem ad sedecim due ɔiũcte sesquisertedecime. sed decem 7 octo 7 sextadecimavnius: p precederitem maior est sesquioctaua ad sedecim. Nam decem 7 octo ad sedecim vt prius visum est: sesquioctaua est. igit̃ sesquisertadecima bis aucta tonum/ toni q̃ interuallum trãscẽdit. quare p nonum ploquiũ sesquisertadecima pportio integrũ toni dimidium superat. quicũq̃ enĩ bis auctũ trãscẽdit aliquo: id vltra eius dimidiũ eẽ necesse est. Ex quo valẽtiori iure cognoscit̃ sesquiquintadecimam 7 oẽm pportiõem sesquisertadecima maiorem: integrum toni dimidium superare.
+
+<margin>13</margin>
+### Sesquiseptimadecima: minor est integro toni dimidio.
+
+| 19 | I | 19 | I | 18 | I | 17 | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| d | 8 | c | 17 | 8 | b | | A ad b sesquidecimaseptimam pportiõem |
+| | | | | | | | ɔtinet: q̃ integro toni dimidio õtractior est. |
+
+Sint a decem 7 octo interualli partes 7 b decem 7 septem/ c decem 7 nouem 7 vna septimadecima/ d Xo decem 7 nouem 7 vna octaua. per decimã huius a ad b est sesquiseptimadecima. et c ad a similiter sesquiseptimadecima. sunt ergo c ad b due sesquiseptimadecime adinuicem coniũcte. sed et p eandem d ad b sesquioctaua est atq̃ tonus. d enĩ cõtinet b 7 eius partem octauam. at d ad b pportio maior est pportiõe c ad b. nam vnius ps octaua maior est vna septimadecima. ergo sesquiseptimadecima pportio per decimum ploquiũ minor est integro semitonio. qđ eniz duplatũ non implet integrum: neq̃ id quoq̃ continet dimidiũ. Est ergo notum sesquiseptimãdecimam pportiõem integro toni dimidio esse minorem.
+
+<margin>14</margin>
+### Integram toni medietatem: inter sesquisertamdecimam 7 sesquiseptimadecimam proportionem cadere necesse est.
+
+Nam per duodecimam sesquisextadecima maior est toni dimidio: 7 p decimãtertiã minor est eodẽ toni dimidio. at per cõem sciẽtiam inter maius atq̃ minus dimidio: ipm̃ dimidiũ cõsistere necesse est. ergo integrum toni dimidium inter sesquisertãdecimam et sesquiseptimãdecimam cadere necesse est. Sed id in noto/ integroq̃ numero nullo pacto vt septima huius mõstrauit fieri cõtinget: vt neq̃ in geometricis diameter quadrati: eius coste certo/ ɔstitutoq̃ numero cõmensurari potest. Sed hoc vltim ex altero loco requirendum est.
+
+<margin>15</margin>
+### Semitonium minus: duobus tonis in chorda subiũgere.
+
+<vocab>tonus, semitonium, sesquisextadecima, sesquiseptimadecima, proportio, intervallum, medietas, numerus, chordae divisiones</vocab>

@@ -1,0 +1,38 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>I</page-num>
+<sig>f 3</sig>
+
+<margin>
+4
+</margin>
+
+### ¶ Si terminozū interualli primus ad secundū comparatus sese vt tertius ad quartū habuerit: quot ppoztionaliter medij primo et secundo: totidem tertio z quarto interuenire necesse est.
+
+->E medium propoztionale inter d et f tertium z quartum vt b inter primū et secundum.<-
+
+| 27 | 18 | 12 | | | 18 | 12 | 8 | | | 9 | 6 | 4 | | | | | 2 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **a** | **b** | **c** | | | **d** | **e** | **f** | | | **g** | **h** | **k** | | | | | **l** |
+
+¶ Hanc duodecima quarti monstrat cuius adhuc hic vt ad sequentia momentum habens: cognitio promptioz habeatur: repetitur demonstratio.
+¶ Sit a cuiuscunq; interualli primus terminus ad c secundū vt d tertius ad f quartū: et sit b medius propoztionaliter constitut⁹ inter a z c. dico etiam inter d et f interuenire vnum ppoztionalit⁹ mediū. Capio eni per sextam quarti g h k tres minimos secundū ppoztionē a ad b: et argumentoꝛ ex vicesimaprima secundi per equam ppoztionalitatē g ad h vt a ad b et h ad k vt b ad c. igitur g ad k vt a ad c. quare r vt d ad f. at si d et f sunt iidem termini cū g k manifestum iam est inter d et f interuenire vnū ppoztionaliter mediū. Sin minus: ergo per vicesimā tertiā Arithmetices g et k metiētur d et f equaliter: sitq; id secundū l. duco ergo l in g h et k: z proueniant d e f per septimam secundi d ad e vt g ad h et e ad f vt h ad k. quare e interuenit ppoztionaliter medius terminis d z f: qđ erat mōstrandū.
+
+<margin>
+5
+</margin>
+
+### ¶ Superparticularis interualli medius numerus: neq; vnus neq; plures ppoztionaliter interuenient.
+
+<margin>
+a] propoztio superparticularis: in duo equa diuidi non possit.
+</margin>
+
+| 27 | | 18 | | | | | **A c spacium superparticulare.** |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **a** | **b** | **c** | | **d** | **e** | **g** | **f** | **De f tres minimi propoztionis a ad b.** |
+
+¶ Hanc intelligimus: nullum superparticulare interuallum in duas aut plures interualloꝛ habitudines propoztionesq; secabile esse. quod demonstrazione proxime subiuncta perq̄ facile liquebit.
+¶ Sit a c superparticulare quod diuidatur in duo equaliū habitudinū spacia a b z b c certis cōstitutisq; numeris si possibile est. sitq; iccirco vt a ad b ita b ad c. capio per sextā quarti arithmetices d e f tres minimos continue ppoztionales in propoztione a ad b. et qꝛ d ad e vt a ad b et e ad f vt b ad c: ergo per equā ppoztionalitatē d ad f vt a ad c. atqui a ad c positū est superparticulare interuallū: igitur r d ad f est superparticulare. At vero quoniam d e f sunt tres illius habitudinis minimi termini: igitur d et f primus z vltimus per primā quarti sunt adinuicē primi. At cū ō mōstratus sit superparticularis ad f: per diffinitionē d continet f et eius partem que ideo per diffinitionē metitur f. Et si ea pars sit numerus cum ea etiam per cōmunem conceptū metiatur d: metietur enim se partem detractam z residuū quod equū est f. non erūt ergo d et f adinuicē primi cuius oppositū iam monstratum est z impossibile. erit ergo ea pars vnitas. Tunc addo vnitatem ipsi f z fiat g: vt g et f solius vnitatis discrimine distent mox argumentoꝛ d ad f vt g ad f. sed inter d et f positus est vnus interuenire medius igitur per precedentē r inter g et f numeros sola vnitate distantes interuenit intercipituꝛq; aliquis numerus medius quod per secundā petitionem est impossibile. non igitur superparticularis interualli vnus medius interuenit numerus. neq; quoq; eodem argumēto interueniēt plures. Et hāc etiam demōstrat sexagesimaprima noni. Et ex hac quoq; cognoscitur reprehēsionem demōstrationis Archite: q̄ nulla superparticularis in duo equa diuidi possit quam tertio institutionis musice capite vndecimo videtur diuus Seuerinus adducere nō tam esse diui Seuerini q̄ Michomachi aut alioꝛū quos interpretatur elegantissime qui z simile in plerisq; tum Arithmetice tum Musice institutionis locis fecisse comperitur. Et non verentur quidā (pace omniū dixerim) eius libros perlustrare non vt sciant sed vt ersurculent et canino more si quio hians subfultansq; appareat: altius dentem infigant/ moueant z reprehendant et sanctū z venerabile Philosophie nomen et suoꝛū conuiciis lacerent: et quod alioꝛū vicium est id quod est: diui Seuerini exclament erroꝛem faciantq; aliozū crimine reum. et cum nichil nozint volunt litterarios duces insectado carpendo laniado omnia scire videri: atq; suprā Philosophicos vertices sese gloriabundos extollere faciūtq; quod est apud Comicū ne intelligēdo vt nihil intelligant quos idem statimvt maledicere desināt ammonere malefacta ne cognoscant sua. Sed hec preter presentis negociū officium. de Philosophis eni qui recte fuerint natura instituti vel absq; monitione semper recte cogitabunt qui eni secus faciunt ab eorum se segregant consorcio et vt Philosophi quales se videri volunt non amplius esse cognoscantur necesse est.
+
+<vocab>superparticularis, ppoztionaliter, Archite:q̄, Seuerinus, Michomachi, Arithmetice, Musice, interualli, medius numerus</vocab>

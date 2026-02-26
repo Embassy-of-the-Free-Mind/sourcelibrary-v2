@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>catchword: spaces</meta>
+
+For men that may be taken by eruption
+looke in the table of takyng by multi
+plication in the second kynd of playing.
+
+### ¶ Of takyng by deceypt or
+### lying weyght.
+
+To take by deceypt or lying weight,
+is to take by addition, not as before
+when the aduersary standeth with
+in the draught of two men which being
+added make the iuste number of the ad
+uersary, but when the .2. numbers that
+are to be added, stande in the next spaces
+to the aduersarie. For to take by deceipt,
+looke in the table that was set forth for
+takyng by addition in the first kynde of
+playinge.
+
+### ¶ Of taking by Obsidion.
+
+By Obsidion all men may be taken,
+when foure men besiege the aduer
+sarye, standynge in the foure nexte
+
+<vocab>Philosophers game, eruption, multiplication, deceypt, lying weight, addition, Obsidion, besiege</vocab>

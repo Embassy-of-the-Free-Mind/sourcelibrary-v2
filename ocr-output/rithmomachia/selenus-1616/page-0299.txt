@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>265</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1.cap:</margin> (wan Er der K. Rochen/ auf funfzig : und endlich des K. Rochens-
+Soldaten / auf ein und viertzig / gebracht) auß sieben und funfzig/
+Schach = Mat.
+
+<margin>23.</margin> Wan aber der Schwarze/ nicht der Königin = auf 46. (n.19.)
+besondern des K. Schützens = Soldaten/ (so fern Er nicht / der K.
+Rochen / auf die W. Königin / auf neun und zwantzig / rucken wil :
+Auf welchen fahl der Weisse / dieselbe / gegen ihm verlieret : Dan
+wan derselbe / den König / auf drey ruckket/ Er/ die Königin mit
+dem Rochen/ wegnimt : der Weisse / denselben / mit des K. Schü-
+tzen : Ist demnach dem Weissen besser / an stat der Züge / mit der
+Königin / auf 32. oder 30. n. 15. 16. mit der K. Reuter / der S. K.
+Reuter / weg zu nehmen / und des K. Schützens = Soldaten / auf
+fünf und dreyßig zu rucken / &c.) auf des W. K. Schützen / auf neun-
+zehen / ziehet : so muß der Weisse / mit der Königin / nicht den ent-
+blößeten/ der S. K. Schützen / (dan Er sonsten / durch die Königin /
+auß zwelfe / gleich Schach = Mat wehre) besondern / mit des K. Reu-
+ters = Soldaten / des S. K. Schützens Soldaten / nehmen / und ihn
+auf den gedachten S. Schützen / Ziehen : der Schwarze / nime
+ihn / mit demselben / und ziehet / auf des W. K. Rochen : Der Weiß-
+se / denselben / auf ihn / auf drey : der Schwarze / denselben / auf
+drey und dreyßig : Der Weisse / der K. Schützen / (umb zu ver-
+hindern / daß der S. K. Roche / nicht auf fünf und folgendes / auf
+vier und viertzig / gerucket werde) auf sieben und zwantzig : Der
+Schwarze / (weil Er / der K. Schützens = Soldaten / vermei-
+nend / der W. K. Schützen / folgendes zu ertappen / mit dero Ro-
+chen / auf zwey und sechßzig / nicht vertheidigen wil) auf denselben /
+des K. Reuters = Soldaten / auf vier und dreyßig : Der Weisse /
+nimt / mit demselben / der S. K. Schützens : Soldaten / und ziehet
+ihn / auf dero Rochen : Der Schwarze / denselben / auf ihn / auf
+zwey und sechßzig ; der Weisse / beut / mit der Königin / (weil
+Er / ihren Schützen / sonsten verlöhre ) auß neun und dreyßig /
+Schach : Der Schwarze / muß den König / mit der Königin /
+auf drey und funfzig / bedecken : der Weisse / nimt / mit des K.
+Schützen / der S. K. Schützen / und beut Schach : Der Schwar-
+ze / muß den König / auf zwey und funfzig / rucken : Der Weisse/
+beut / mit des K. Rochen / auß ein und funfzig / Schach : Der
+Schwarze / rucket den König / auf sechßzig / oder vier und viertzig :
+der Weisse / beut / durch die Königin/ entweder auß drey und funf-
+zig / oder sechs und dreyßig / Schach = mat : oder nimt die S. Kö-
+
+<sig>Ll ij</sig>
+<meta>catchword: nigin/</meta>
+
+<vocab>Schach-Spiel, Schach-Mat, König, Königin, Rochen, Reuter, Schützen, Soldaten, Weisse, Schwarze</vocab>

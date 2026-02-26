@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>107</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>G iij</sig>
+<meta>catchword: men:</meta>
+
+<margin>II. cap:</margin>
+der Schützen- und Reuter- Soldaten: der Rochen- Soldaten aber /
+beschützen nuhr ein feld / nemlich das dritte / der Reuter.
+Wegen dieser der Schach-Steine / einlosierung / wird erstlich /
+die Schach-Tabel / in zwey Heupt-quartier / getheilet: und das eine /
+des Weissen: das ander des Schwartzen Königes / quartier / genennet.
+Es begreiffet aber / (nach folgendem Abriss) ein jegliches quartier /
+vier zwerch-linien / in sich: die eusserste / und erste / wird genandt / die
+Haupt: die andere / der Soldaten: die dritte / des Weissen / oder
+Schwartzen Königes / dritte: die vierte / derselben vierte linie: mit
+welcher sich dan / eines iedern Königes gräntze / endet.
+
+<image-desc>
+A diagram of a chessboard divided into two halves to illustrate territorial "quarters." 
+
+Above the top half of the board is a handwritten caption: "Des Schwartzen Königes quartier ingemein." Below the bottom half is another: "Des Weissen Königes quartier ingemein." 
+
+The board is an 8x8 grid of alternating dark and light squares. The rows are labeled to indicate the position and ranks of the pieces:
+1. Top row (Black's base): Labeled left to right: R. (Roch/Rook), Sp. (Springer/Knight), Sc. (Schütze/Bishop), [stylized bust symbol for the Queen], K. (König/King), Sc., Sp., R.
+2. Second row from top: Each square contains the number "2." (representing the pawn/Soldaten line).
+3. Third row from top: Each square contains the number "3."
+4. Fourth row from top: Each square contains the number "4."
+
+The bottom half (White's territory) mirrors this structure starting from the bottom up:
+1. Bottom row (White's base): Labeled R. Sp. Sc. [Queen symbol] K. Sc. Sp. R.
+2. Second row from bottom: Each square contains the number "2."
+3. Third row from bottom: Each square contains the number "3."
+4. Fourth row from bottom: Each square contains the number "4." (meeting Black's fourth row at the center divide).
+</image-desc>
+
+Zum andern / kan man die Schach-Tabel / in vier absondere-
+liche Quartiere: Als / nemlich / (1.) in des Weissen Königes- und
+(2.) der Weissen Königin: (3.) in des Schwartzen Königes- und
+(4.) der Schwartzen / Königin / quartier / (davon dan folgende fi-
+gur / augenscheinlichen bericht thut) abtheilen. Es hat aber ein
+jegliches quartier / sechszehen felder: ied für jeglichem Haupt-
+Steine viere / hinaufwertz: dahero sie auch / ihren nahmen bekoms-
+
+<vocab>Schach-Spiel, Schach-Tabel, Heupt-quartier, zwerch-linien, Schützen-Soldaten, Reuter-Soldaten, Rochen-Soldaten, Schach-Steine, König, Königin, Quartiere</vocab>

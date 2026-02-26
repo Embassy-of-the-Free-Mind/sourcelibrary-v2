@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>79</page-num>
+<header>9.cap: Vom Schach-Spiel.</header>
+
+weil sie/durch das erste feld gerade/und in das ander/über-eck: oder
+in das erste/über-eck/und in das letzte/gerade/gezogen werden : Auf
+jehne art/seynd die felder von farben gleich/auf diese Art aber zu ver-
+stehen/von farben ungleich. Auß diesem folget/daß sie zweenerley
+Sprünge haben/einen nahen/und einen fernen oder weiten: Zum
+Exempel: des Weissen Königes-Reuters/nächster Sprung/ist ins
+andere feld desselben K: der weiteste aber/ins dritte feld/dessen
+Schützens oder Rochens.
+
+Kan demnach/des Weissen Königes-Reuter/auß seinem fel-
+de/in die itzgedachte drey felder: der Weissen Königin-Reuter/in
+dero andere:dero Schützens:und dero Rochens/dritte feld/springen.
+Ebenmessig/seynd die Sprünge/der beeden Schwartzen Reuter/
+auch zu verstehen.
+
+Ferner können diese Sprünge / wan die felder / darein diese
+Reuter springen sollen/von den ihrigen eingenommen/und besetzet
+sind/nicht geschehen: hält sich aber einer/von ihren feinden/darinnen
+auf/so haben Sie macht/zu demselben/hinein zu wischen/und ihn/
+von der Schach-Tafel/(dofern es/zu ihrem vortheil/oder zu verhü-
+tung eines vorstehenden unglückes/gereichet) auß denselben/weg zu
+rauben/auch sonsten/auf dem gantzen Schach-brete / umb den ihri-
+gen zu hülfe zu kommen / und den feind zu beschedigen: ihren weg
+herumb zu nehmen.
+
+Stehen Sie/in eines Rochens felde/(daselbsten Sie/die we-
+nigste Sprünge haben) so können Sie nuhr / auf zwo linien / und in
+zwey felder/(alsz/in ihrer linien dritte:und in der Schützen andere
+feld) treffen. In andern feldern/können Sie in vier:in sechs:ja wol
+in acht felder/und vier linien/springen. Diese letzte Sprünge/ver-
+richten Sie/alszdan/wan Sie für-sich/auf jeglicher seite/und hinter-
+sich/zwey felder haben/gleichsam radoppieren, und mit den hinter-
+sten Schenckeln des Rosses/immer im mittel des Kreisses/verblei-
+ben: Sie müssen aber alszdan/in einem vierten oder dritten felde/
+eines Königes/einer Königin/oder eines Schützens/stehen.
+
+Wan man Sie/nach den ecken hinauf ziehen wolte / so könte
+man dadurch/die manier oder Schule / wie man ein Roß / Schlan-
+gen-weiß / (auf daß man/von den Schützen / so leichtlich nicht ge-
+troffen werde) und zum Schwert / zu tumlen pfleget / gleichsam an-
+deuten : Zum Exempel : der Weissen Königin-Reuter / rennet auf
+die rechte hand/für-sich/auß sieben/auf zwey und zwanzig: (NB. den
+verstand dieser und der folgenden Zahle/suche drunten / am ende des
+11. Capittels/dieses Ersten Buches) auß dem/wendet Er / auf die
+
+<sig>L</sig>
+<meta>catchword: lincke</meta>
+<vocab>Schach-Spiel, Reuter, König, Königin, Schützen, Rochen, Schach-Tafel, Schach-brete, radoppieren</vocab>

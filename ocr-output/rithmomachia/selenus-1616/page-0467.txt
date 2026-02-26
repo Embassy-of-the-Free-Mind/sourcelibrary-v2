@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>433</page-num>
+<header>10.cap: Vom Schach-Spiel.</header>
+
+<image-desc>An ornamental woodcut divider featuring three grotesque masks or human faces intertwined with ornate leafy scrolls and vine-like patterns.</image-desc>
+
+### Das Zehend und letzte Capittel.
+
+## Etliche Exempel / des Alten Schaches / dessen im vorigen Capittel / gedacht worden.
+
+ES seynd / des D. Jacobi Mennels Büchlein / (welches Er / in teutschen Reymen / auf dem Reichß Tage zu Costentz / Anno 1507. vom Schach-Zabel / außgehen lassen) dreyerley Arten / von Hütten : und sieben Exempel / des Alten Spieles / (davon im vorhergehenden Capittel / erwehnung geschehen) von etlichen hinzugesetzet worden.
+
+<margin>cc</margin>Ob nuhn wol dieselben / der newen ungewöhnlichen Art / damit sie beschrieben / so wol auch / der außgelassenen Züge halber / welche der jenige / so sich beschützen muß / in den Exempeln verrichten sol / nicht wenig / tunckel und unvernehmlich / seynd : so hat sie gleichwol der Author, (dieweyl sie / zu weiterer erklärung / des vorigen Capittels nützen möchten) auf seine Art verendert / und mit den außgelassenen Zügen / zu mehrer / und deutlicher nachrichtung / verbessert / dem vorigen / noch anfügen wollen.
+
+<margin>cc</margin>Folgen demnach zufoderst / die drey Hütten / wie sie nach Art des Alten Spieles / zu machen seynd.
+
+<margin>cc</margin>Es ist aber eine Hütte / (beyleuffig deren alhie / wie auch droben / im ersten Cap: des Andern Buches / geschehen / zu gedencken) nichts anders : dan daß der König / mit etlichen gebräuchlichen Steinen / also versehen / und versichert wird / daß er ruhig stehen / und wegen des Schach-bietens / durch solchen schirm / seiner Steine / sicher seyn möge. Die beste Hütte / ist die : wan sich alle Steine / wol zusamen schliessen / und je einer den andern / doppelt verwahret : Auch ist die hütte / besser und bestendiger / an den ecken / dan mitten im felde / und nützer / von wenigen / dan von vielen Steinen.
+
+<margin>cc</margin>Die Erste ist diese : Wan einer / mit den Weissen Steinen / spielet : so sol Er / des K. Schützens-Soldaten ziehen / auf sieben und zwanzig : auf funf und dreyssig : des K. Soldaten / (demselben zu hülffe) auf acht und zwanzig : der K. Soldaten / auf ein und zwanzig : des K. Schützen / über dessen Reuters-
+
+<sig>Iii ij</sig>
+<meta>catchword: Solda-</meta>
+
+<vocab>Jacobi Mennels, Schach-Zabel, Hütten, Exempel, Altes Spiel, Weisse Steine, König, Schützen-Soldaten</vocab>

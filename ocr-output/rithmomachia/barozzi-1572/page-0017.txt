@@ -1,0 +1,30 @@
+<language>Italian</language>
+<page-num>5</page-num>
+<page-type>text</page-type>
+<meta>catchword: Pari-</meta>
+<sig>18</sig>
+
+sopra li quatro primi bianchi triangoli, come si vede nella
+seguente figura :
+
+<image-desc>A mathematical diagram consisting of four columns. Each column contains two circles vertically stacked above a triangle. Every shape contains a number and a small central dot.
+Column 1: Circle (2), Circle (4), Triangle (6).
+Column 2: Circle (4), Circle (16), Triangle (20).
+Column 3: Circle (6), Circle (36), Triangle (42).
+Column 4: Circle (8), Circle (64), Triangle (72).</image-desc>
+
+Ritrouati adunque li quatro numeri delli primi quatro
+triangoli bianchi, ritrouaremo anchor quelli, che dieno
+scriuersi sopra li quatro altri, se congiungeremo li 4 già ri-
+trouati triangoli bianchi con li 4 primi tondi neri ordina-
+tamente il primo triangolo bianco col primo tondo ne-
+ro, & il secondo col secondo, & il terzo col terzo, & il quar-
+to col quarto, cioè il 6 col 3, il 20 col 5, il 42 col 7, il 72,
+col. 9. perche à questo modo produremo li quatro nume-
+ri, che si dieno scriuer sopra li altri quatro triangoli bian-
+chi, liquali faranno questi 9, 25, 49, 81, come la seguente fi-
+gura ci mostra.
+
+<image-desc>A row of four triangles, each topped with a circle. The contents are very faint due to age or bleed-through, but they represent the mathematical progression and values (9, 25, 49, 81) described in the preceding text.</image-desc>
+
+<vocab>triangoli bianchi, tondi neri, aritmetica, progressione, numeri quadrati</vocab>

@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III</page-num>
+
+¶ Differẽtia hic vocat̃ ea pportio quã maioꝛ superat minoꝛẽ. Nam ꝑ coꝛrelariũ decime huius sub ducto tono a cõsonantia diapente relinquĩt̃ consonantia diatessaron. solo igit̃ tono consonantia diapente cõsonantia diatessaron est maioꝛ. est igit̃ per diffinitionẽ: harũ cõsonantiarũ tonus dĩa. ⁊ coꝛrelariũ statim ex propositione notum est.
+
+<margin>14</margin>
+¶ **Bis diatessaron: sesquitono consonantiam diapente transcendit.**
+¶ Diatessaron enĩ ꝑ sextã huius duos tonos atqʒ semitoniũ minus cõtinet. ergo bis diatessaron quatuor tonos et duo semitonia minora ꝑtinebit. atqui a quatuor tonis ⁊ duobus semitoniis minoribꝰ dempto sesquitono: relinquũtur tres toni et semitoniũ minus. At uero ꝑ decimã huius cõsonantia diapente totidẽ tonos cũ semitonio minore cõplectitur. ergo bis diatessaron: sesquitono consonantiã diapente transgreditur transcenditqʒ quẽadmodum proponitur.
+
+<margin>15</margin>
+¶ **Cõsonantie diatessaron / ac diapente: in maximis superparticularibus sunt collocate**
+¶ Nam ex diffinitione cõsonantia diatessaron in epitrita sesquitertia pportione collocatur. et diapente in hemiolia atqʒ sesquialtera. at nulle superparticulares sesquialtera ⁊ sesquitertia sunt maiores nam a secũdã tertia parte q̃ maxime sunt sese cõsequẽtes partes: denominãtur. igitur he cõsonantie ex maximarum superparticulariũ originibus ducte: in maximis superparticularibus sunt collocat quod est propositum.
+
+<margin>16</margin>
+¶ **Bis diatessaron / aut bis diapente: nullam consonantiam cõponere potest.**
+¶ Hec proponit duas diatessaron cõsonantias aut duas diapente cõsonantias: nullã conflare posse cõsonantiã. Nam et diatessaron ⁊ diapẽte nõ in multiplicibus sed superparticularibus sunt constitute et ꝑ primã petitionẽ que itervallũ ad intervallũ pportio est: ea quoqʒ est et soni ad sonũ. at ꝑ sextã primi duo s̃milia intervalla nõ multiplicia: neqʒ multiplex neqʒ superparticulare creant intervallum. quare neqʒ illorũ soni in multiplici: neqʒ in superparticulari gñe existunt. omnis aut̃ cõsonãtia aut in superparticulari aut in multiplici rõne collocãda est. sic eni cõsonantie noie hoc in loco Pythagoricã sequẽtes autozitatẽ: suscepimus utẽdum. ergo due cõsonantie diatessaron aut due diapente: nullam efficiẽt cõsonantiã. et nõ modo idverũ sit: sed ⁊ quotquot cõsonantie diatessarõ in imensum copulẽtur et quotquot diapẽte: nullã vnq̃ cõsonãtiam ex quinta primi huius efficere valebũt.
+
+<margin>17</margin>
+¶ **Adiuncto ad consonantiam diapente tono: nulla parabitur consonantia. item neqʒ ad diatessaron trisemitonio.**
+
+| | | | | Numeroꝝ dĩa | | T | 3384 | | Numeroꝝ ⁊ dĩa |
+|---|---|---|---|---|---|---|---|---|---|
+| E | 27 | F | 16 | Sexta maior | R | 9216 | S | 5832 | Sexta minor |
+| L | 9 | D | 8 | Tonus | N | 2304 | M | 1944 | Sesquitonus |
+| A | 3 | B | 2 | Diapente | K | 4 | I | 3 | Diatessaron |
+| | | | | | I | 256 | M | 243 | Semitoniũ minus |
+| | | | | | D | 9 | K | 8 | Tonus |
+
+¶ Et si hic sonorũ congressus nõdum consonantia sit: euphonũ tamen musici reputant melomodulaminibusqʒ aptum: sextãqʒ ꝑ se impleatur vocibꝰ nostri nunc nũcupant. et quattuor tonis atqʒ vnã diesi hoc est semitonio minore constat. qui ꝑ nõdum cõsonãtia sit patet. Accipio eni a ⁊ b ternariũ et binarium: minimos scʒ numeros cõsonantie diapente. ⁊ c ⁊ d nouenariũ atqʒ octonariũ minimos numeros toni. et duco c in a ⁊ veniat d septem supra viginti. et d in b ⁊ veniat e decem et sex. ꝑ tertiam quinti Arithmetices d ad e cõtinet sesquialterũ ⁊ sesquioctauũ: quare d ad e cõtinet diapente atqʒ adiunctũ tonum. at manifestũ est d ad e 27 scilicet ad 16 nõ esse multiplex. nam septem ⁊ viginti nõ continẽt bis aut tertio aut deiceps sexdecim. neqʒ d superparticularis est ad e. nam dĩa numeri d ad e est undecim qui numerus summe 16 pars nulla est. transcẽdit eni vndenarius sedenarij dimidiũ. Igitur adiũctus ad consonantiam diapente tonus: nullam parit cõsonantiã. et simili argumento adiecto ad cõsonantiã diatessaron sesquitono: nulla fit cõsonantia vt ex secũda figuratione perfacile patere potest. fit tamẽ euphona vocum congressio: quã item sextam nũcupant: sed que a prima contractioꝛ tota distet apotome. est ergo hec minoꝛ illa vero maioꝛ. constat enim prima vt dictum tam est: quattuor tonis et vna diesi: secunda vero tribus tonis ⁊ duabus diefibus. Primã sonat parhypate hypaton ad mesen: secũdam vero que contractioꝛ est: sonat hypate hypaton ad Lichanon meson. que autem hypate/ que parhypate: qui lichanꝰ et que mese dicãtur: sequẽs liber declarabit.
+
+<margin>18</margin>
+¶ **Quo pacto diapason consonantia: in chorda sit adiungenda.**
+
+<image-desc>A diagram showing a line segment with points marked A (at the left), C (in the center), and B (at the right). A label below the diagram identifies this as the proportion for the diapason consonant.</image-desc>
+
+->Consonantia diapason<-
+
+¶ Hec cõsonantiarũ ut in libro problematũ testatus est Aristoteles: elegãtissima/ pulcherrimaqʒ est Chordam ergo a b seco ꝑ medium ꝑ notã c. et quia a b ad c b est dupla intervalli habitudo. ergo ꝑ diffinitionem a b ad c b consonat diapason.
+
+<sig>g 4</sig>
+
+<vocab>consonantia, diapason, diapente, diatessaron, tonus, semitonium, sexta maior, sexta minor, sesquitonus, superparticularis, proportio, Pythagoras, Aristoteles, differentia, epitrita, hemiolia, apotome</vocab>

@@ -1,0 +1,120 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>X</page-num>
+
+<margin>6</margin>
+¶ Si fm pportiõem medii datozū numeroꝝ ad dñiam: sumãtur tres nūcri in eadem
+medietate:erit medii illoꝝ ad differentiã:que inter extremos passignatoꝝ pportio.
+
+<margin>
+m ————— 12
+f — 8 g — 6 h — 4
+k — 4
+l — 2
+a — 6 b — 4 c — 2
+d — 4
+e — 2
+</margin>
+<image-desc>A line diagram illustrating arithmetic proportions with labeled line segments and numerical values.</image-desc>
+¶ Sint a b c tres numeri in Arithmetica medietate quoꝝ maximus sit a.et sit v differẽtia a ad c:et e
+medietas que est differentia a ad b ꝛ differentia b ad c.sumo item in eadem medietate numeros f g h
+quoꝝ extremoꝝ sit pportio tanq̃ b ad e:sitq̃ f maximus.dico g ad differentiam f ad g q̃ sit l eam ppoz
+tionem esse que a ad c.capio enī differẽtiam f ad h q̃ sit k:cuius medietas sit l.et cõpositus ex f et h sit
+m.qꝛ enī per hypothesim b ad e tanq̃ f ad h:et b ꝛ h sunt a.igitur per sextam secundi a ad e sicut m ad h.
+et quia vt dictũ est b ad e vt f ad h:ergo pmutatī b ad f totus ad totū:sicut e ad h detractus ad detra
+ctum.igitur per quintam secundi c ad k residuus ad residuum sicut totus ad totū.quare ḡ vt e ad h:
+ita c ad k.permutatī ergo e ad c vt h ad k.ergo p vicelimãprimam secūdi ꝛ equã ppoꝛtiõalitatem m
+ad k sicut a ad c.ergo q per scd̃am huius g sit dimidium m:erit a ad c sicut g ad l: dimidium scilꝫ gõ
+dimidiã differentiam sicut totum m ad k totam differentiam.quod est propositum.
+
+<margin>7</margin>
+¶ Si fuerint tres nūcri in hac medietate dispositi: extremoꝝ / ꝛ medij ad differentiã
+candem esse proportionem impossibile est:maiorem vo siue minorem:possibile.
+
+<margin>
+f — 5 h — 4
+e — 1 g — 2
+a — 4 b — 3 c — 2
+</margin>
+<image-desc>A line diagram with segments labeled with letters and corresponding numbers: f(5), h(4), e(1), g(2), a(4), b(3), c(2).</image-desc>
+¶ Sint tres numeri a b c in hae medietate cõstituti:et a maximus:et differentia a ad b / et b ad c sit d.
+dico impossibile esse eadem ppoꝛtiõem a ad c ꝛ b ad d.nam si it possibie foꝛet:ponatꝛ ergo vt sit a ad
+c tanq̃ b ad d.ergo p viceſimãquintam ſecūdi qđ fit ex a in d:equũ eſt ei qui fit ex b in c.at p decimam
+quartam primi qđ fit ex a in d m̃ eſt q̃tum qđ fit ex d in ſe et d in b qui ſint e ꝛ f.ſed per eandem b in c
+tñ eſt q̃tum qđ fit ex c in ſe qui ſint g ꝛ h.equabūtur ergo adinuicem e f.simul et g h ſimul.qđ
+eſt impoſſibile.qđ ſic oſtēdo.nam p ſeptimam ſecūdi f ad e ſicut b ad d.et per eandem h ad g ſicut c ad
+d.ſed p nonam ſecūdi ppoꝛtio b ad d maioꝛ eſt q̃ ppoꝛtio c ad d.igitꝛ ꝛ ppoꝛtio f ad e maioꝛ erit ppoꝛ
+tione h ad g.quare ſi f eſquet h ꝛ e erit minoꝛ g.quare e ꝛ f non equabūtur g ꝛ h.et ſi f ſit minoꝛ
+h ergo p decimãſeptimãſecūdi e etiã erit minoꝛ g.quare cõpoſitus ex e ꝛ f duobus minoꝛibus non
+equabitur cõpoſito ex g ꝛ h.at ſi f ponitꝛ maioꝛ h / et cõpoſitus e ꝛ f equetur cõpoſito g ꝛ h:ergo per
+decimãnonam ſcđ̃i ppoꝛtio f ad e minoꝛ erit q̃ ppoꝛtio h ad g: cui⁹ oppoſitum mõſtratum eſt. cõſtat
+ergo qđ dictũ eſt. ¶ Sed extremi ad extremum ppoꝛtio maioꝛ poſſibilis eſt q̃ medij ad differentiam
+ſi abvnitate tres ɔtinue ponantꝛ termini qui erūt in hac medietate.et qđ extremi ſcz ternarij ad vnita
+tem eſt ppoꝛtio tripla:ſed medij binarij ad vnitatem (que differẽtia eſt) ppoꝛtio dupla:ɔſtat extremi
+ad extremum maioꝛem eſſe ppoꝛtiõem q̃ medij ad differẽtiam.et ita ſi poſt vnitatem in hac medie
+tate numeri apte diſcõtinue ſumãtur. Poſſibilis eſt etiã extremi ad extremum ppoꝛtio mioꝛ q̃ medij
+ad differẽtiam.nam acceptis quibuſcūq̃ tribus terminis continue poſt vnitatem:maioꝛ erit ppoꝛtio
+medij ad vnitatem que erit differentia q̃ extremi ad extremum quoꝝ differentia ſemp eſt binarius.
+
+<margin>8</margin>
+¶ Tres numeros in hac medietate inuenire quoꝝ pportiõis medij ad differẽtiam:
+ad proportionem extremoꝝ differentiã sit qualibet data proportione maioꝛ.
+
+<margin>
+b ————— 3
+c ——— 2
+b ——— 2
+a — 1
+</margin>
+<image-desc>Diagram with lines representing proportions: b(3), c(2), b(2), a(1).</image-desc>
+¶ Sint a ꝛ b nūeri date ppoꝛtiõis ꝛ b maioꝛ:addo b ad a ꝛ fiat c cui etiã addo b et fiat d.manifeſtum
+eſt d c a eſſe tres numeros in hac medietate cõſtitutos cũ b ſit cõiſ differẽtia d ad c ꝛ c ad a:quoꝝ dico
+differẽtiam ppoꝛtiõis c ad b medij ad differẽtiam:ad ppoꝛtionem d ad a eſſe data ppoꝛtione b ad a
+maioꝛem.nam ppoꝛtio c ad a addit ſup ppoꝛtionem c ad b ppoꝛtionem b ad a.et ppoꝛtio d ad a
+eſt maioꝛ ppoꝛtione c ad a.addet igiꝛ ppoꝛtio d ad a ſup ppoꝛtiõem c ad b maius ppoꝛtiõe data
+b ad a.eſt itaq̃ differẽtia ppoꝛtiõis c ad b ad ppoꝛtiõem d ad a data ppoꝛtione maioꝛ.
+
+<margin>9</margin>
+¶ Si extremꝝ extremi duplus: erit medius differentie triplus: et cõuertitur. ꝙ si alter
+alterius maius duplo fuerit: erit medius minus triplo differentie: et ecõuerfo.
+
+<margin>
+a — 4c — 3b — 1
+a — 9c — 6b — 3
+8 — 5 — 2 / 3
+</margin>
+<image-desc>Proportional line diagram with letter-number combinations: 4c-3b-1, 9c-6b-3, and a fractional relationship 2 over 3.</image-desc>
+¶ Nam ſi a maximus ſit duplus b mĩmi:erit b duplus differentiã.quare c ex b ꝛ differẽtia illa cõſti
+tutus eidem differẽtie erit triplus.et ſi c eſt triplus ad differẽtiam cũ ɔſtituaꝛ ex illa differẽtia et b:
+ergo b erit duplus ad differẽtiam.quare a ɔſtitutus ex b ꝛ dupla differẽtia que equatur b iteꝛ inueni
+etur duplus ad b.quod eſt primum.et ſi a eſt triplus ad b:idem b equabiꝛ vni differentiaz.at b ꝛ vna
+equaliũ differẽtiãꝛ ɔſtitutū c.igitur c duplus eſt ad differẽtiam.et ſi c duplus eſt ad differẽtiam
+erit rurſus a triplus ad b.nam ſi c ſit duplus ad differẽtiã cũ ſit ɔſtitut⁹ ex differẽtia ꝛ b:differẽtia
+illa equabitur b.ſed b cum equali differẽtia bis ſumpta ɔſtituit a.igitur a triplus eſt ad b. et vniuer
+ſaliter ſi maximi ad mimum ppoꝛtio maioꝛ q̃ dupla inueniatur: erit ſemp minus ad differẽtiam
+mĩnoꝛ q̃ duplus.igiꝛ ꝛ medius ex mimo ꝛ differentia cõſtitutus ad differẽtiam minoꝛ erit q̃ triplus
+Et cõuertitur vt in alijs quoq̃ monſtratum eſt.
+
+<margin>10</margin>
+¶ Datis quibuslibet duabus pportiõibus: fm vtrãꝙ in Arithmetica medietate tres
+terminos oꝛdinare: quoꝝ adinuicem differẽtie sint equales.
+
+<margin>
+l ————— 8 n ————— 6
+g ————— 6 i ———— 4
+m ————— 40
+2 / 1 ——— a ——— b c ——— 3 / 1
+e ——— f
+g ————— 4
+h ————— 4 k
+</margin>
+<image-desc>Complex proportional diagram with letters l, n, g, i, m, a, b, c, e, f, h, k and numbers 8, 6, 40, 4. Fractions 2/1 and 3/1 are also present.</image-desc>
+¶ Sint minĩmi termini duarū datarū ppoꝛtionum a b ꝛ c d.et differẽtie illoꝝ ſint e ꝛ f.ſumo iteꝛ m
+nūerū aliquem quem cõiter numerent differentie e ꝛ f.et ſint numeri ſm quos iꝝm numerãt h et k.
+deinde multiplico a ꝛ b per h:ꝛ pueniãt l ꝛ m.et multiplico c et d per k et pueniãt n et o. p ſeptimam
+ſecūdi l ad m vt a ad b.et n ad o vt c ad d.et differẽtia l ad m eſt g.ꝛ ſiliter differẽtia n ad o eſt g.ſi igiꝛ
+g eſt par:ſumo medium inter l et m qui cõſtabit ex m et dimidio g.et mediũ inter n et o qui cõſtabit ex
+o et dimidio g.et erūt tres termini l ꝛ m cũ ſuo medio ſm ppoꝛtiõem a ad b:et tres alij n et o cõſuera
+to eoꝝ medio ſm ppoꝛtiõem c ad d in arithmetica medietate quoꝝ adinuicem differẽtie ſunt equales
+
+<vocab>proportio, Arithmetica medietate, medius, extremus, differentia, numerus, secundum, triplus, duplus, propositum</vocab>

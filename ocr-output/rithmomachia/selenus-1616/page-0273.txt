@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>239</page-num>
+<header>14. cap: Vom Schach-Spiel. 239</header>
+
+Setzet Er aber / den Rochen / nicht auß der gefahr / sondern ziehet / den Schützen / auf den W. Rochen / auf zwölfe : so nimt der Weisse / den gedachten S. Rochen / mit dem Reuter / und gibt Schach : Er / rucket den König / auf ihn / auf zwey und funfzig : der Weisse / den Rochen / auf zwey / und machet / des K. Rochens = Soldaten / in wenig zügen / zur Königin.
+
+<margin>22.</margin> Wan aber der Weisse / den König / nicht auf 19. (n. 21.) ziehet / sondern / mit des K. Rochen / auf acht und funfzig / Schach beut /
+<margin>23.</margin> und zugleich / des K. Reuters = Soldaten / beschützet : * so rucket / der Schwarze / den König / auf ein und vierzig : der Weisse / des K. Reuter / auf drey und vierzig / und gibt folgendes / mit des K. Reuters = Soldaten / auß vier und dreyssig / Schach-Mat.
+
+<margin>24.</margin> Wan aber der Schwarze / den König / nicht auf 41. (n. 23.) sondern / auf fünf und zwantzig / ziehet : so rucket der Weisse / der K. Reuter / auf sieben und zwantzig / und versperret / mit demselben / den
+<margin>25.</margin> S. König : * der Schwarze / rucket des K. Rochens = Soldaten / auf des W. K. Reuters = Soldaten / auf drey und dreyssig : der Weisse / nimt ihn / mit seiner K. Reuter : der Schwarze / rucket / der K. Schützens = Soldaten / auf acht und dreyssig : der Weisse / der K. Reuter / auf sieben und zwantzig : der Schwarze / der K. Schützen / auf fünf und funfzig / und beschützet mit demselben / dero Rothen : der Weisse / ziehet / des K. Rochen / auf funfzig : der Schwarze / der K. Rochen / (nachdem Er / mit demselben / auß sechszig / Schach geboten : und der Weisse / den König / auf eylfe / gerucket) auf der W. K. Reuter / auf acht und zwantzig : der Weisse / denselben / auf zehen / und beut Schach : der Schwarze / ziehet / den König / auf des W. K. Rochens = Soldaten / auf siebenzehen : der
+<margin>26.</margin> Weisse / der K. Reuter / auf zwantzig : * der Schwarze / nimt / mit dem Könige / des W. K. Rochens = Soldaten : der Weisse / gibt / mit des K. Rochen / auß neun und vierzig / Schach-Mat.
+
+<margin>27.</margin> Nimt aber der Schwarze / nicht des W. K. Rochens (n. 26.) besondern Reuters = Soldaten / mit seiner K. Rochen : so nimt / der Weisse / denselben / mit des K. Rochen : der Schwarze / ziehe nuhn / welchen Stein Er wil : so kan ihm der Weisse / (wan Er des K. Rochen / auf sieben und zwantzig : der K. Reuter / auf fünf und dreyßig : und endlich / des K. Rochen / auf fünf und zwantzig / setzet) mit gewalt / Schach-Mat geben.
+
+<margin>28.</margin> Rucket aber der Schwarze / den König / (weil Er / mit demselben / die W. Soldaten / n. 26. 27. nicht nehmen wil) auf fünf und
+
+<sig>Hh</sig>
+<meta>catchword: zwantzig:</meta>
+
+<vocab>Schach-Spiel, Rochen, Schützen, Reuter, Soldaten, König, Königin, Schach-Mat, Weisse, Schwarze</vocab>

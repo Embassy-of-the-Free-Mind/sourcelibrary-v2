@@ -1,0 +1,53 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VI</page-num>
+
+<margin>6</margin>
+### Si cubi fuerint pꝓortiōales: erunt ⁊ latera pꝓortiōalia. qꝛ si latera pꝓortiōalia fuerint: cubi quoqꝫ pꝓortionales erunt.
+
+Sit hypothesis ea q̄ prius: sed g/h/k sint cubi numeroꝛ a/b/c. Scđ̇a pars hui⁹ patet ducendo a b cōtinue pꝓortiōales in d e f suos quadratos qui p̄ pꝛimam pꝛem p̄cedentis sunt cōtinue pꝓortiōales et ꝓueniēt g h k qui p̄ decimam quinti sunt cōtinue pꝓortiōales. qđ est scđ̇m. Et p̄ma pars declarat̄ Nam per nonam quinti pꝓortio g ad h ꝓposita est ex pꝓortiōibus a ad b ⁊ a ad b. et a ad b. pꝓortio h ad k cōposita ex pꝓortiōibus b ad c ⁊ b ad c. et b ad c. si a b c nō sunt pꝓortiōalia: neqꝫ d e f. si ergo a ad b maior sit pꝓortio q̄ b ad c: ergo per quintam quinti maior erit d ad e q̄ e ad f. ergo per eandem quintam g ad h ꝓstituta ex d ad e et a ad b maioribus pꝓortiōibus erit maior q̄ h ad k. nō sunt igit̄ g h k pꝓortionales. quod est cōtra hypothesim ⁊ totum pꝓositum.
+
+<margin>7</margin>
+### Quo abūdāt quadratū super quadratū est nūerus ex lateribus ipsoꝛ coaceruatus et fm laterum differentiam multiplicatus.
+
+<image-desc>A geometric diagram to the right of Proposition 7 showing a large semicircle labeled with numbers 16 and 9 at the top corners, a smaller inner semicircle labeled 7, and two rectangular segments at the bottom labeled 4 and 3.</image-desc>
+
+Sint a ⁊ b duo quadrati: a maior: et b minor. sitqꝫ c latus a: d latus b. dico numerum quo a superat b: esse numerum qui pꝓcreat̄ ex c̄uctu differentiē c ad d in coaceruatum c ⁊ d. Intelligo enī coaceruatum c d esse diuisum in c maiorem numerum: ⁊ d minorem. et quia p̄ decimaoctauam p̄mi quod fit ex d in se: cũ eo quod fit ex differentiā c ad d in coaceruatum c d: equū est ei quod fit ex c in se. sed qđ fit ex c in se est quadratū maius a: ⁊ qđ fit ex d in se est b quadratū minus: g b quadratū minus superat̄ ab a q̄drato maiore in eo nūero q̄ fit ex dīa c ad d in coaceruatū c d. abūdāt ḡ a sup b in eodē nūero. qđ ē ꝓpositū.
+
+<margin>8</margin>
+### Si quadratus quadratum numeret: et latus suū latus alterius nūerabit. qꝛ si latus a latere numerabitur: et quadratus a quadrato numerabitur.
+
+<image-desc>A line diagram to the right of Proposition 8 showing points a, b, c, d, e, f on horizontal segments. Numbers 9, 18, 36 are above the segments, and 3, 6 are below.</image-desc>
+
+Sint a b duo quadrati: et a numeret b: sitqꝫ c latus a ⁊ d lat⁹ b. dico c nūerare d. dico itē si c nūerat d: etiā a numerare b. sit enī ꝓ coꝛrelariū quarte huius e medium pꝓortiōale inter a ⁊ b: erūt enim a ad e et e ad b in cōtinua pꝓoꝛtiōe vt c ad d. sed a primus numerus ꝓ hypothesim numerat b vltimū: ergo per decimatērtiā quarti: a p̄mus nūerat e scđm. quare c numerabit d. qđ est p̄mū. Scđm pꝓ: nā si c nūerat d: ḡ ⁊ a nūerat e ⁊ e nūerat b. ḡ ꝓ vicesimatērtiā p̄mi a nūerabit b. qđ ē scđm ⁊ totū ꝓpositū
+
+<margin>9</margin>
+### Si cubus cubum nūeret: ⁊ latus ipsius latus alterius numerabit. qꝛ si latus nūerat latus: et cubus cubum numerabit.
+
+<image-desc>A line diagram to the right of Proposition 9 showing points a-b, c-d, e-f with corresponding numbers 64, 32, 16, 8, 4, 2.</image-desc>
+
+Quod de quadratis modo ostensum est: hic de cubis demōstrandum ꝓponitur. Et p̄ma ps positis mediis pꝓoꝛtiōalibus inē cubos ꝓ coꝛrelariū quarte huius vt p̄ma p̄cedētis cognoscit̄: ⁊ scđavt scđa.
+
+<margin>10</margin>
+### Trium numerorum cōtinue pꝓortionalium: si primus fuerit quadratus: tertium quoqꝫ quadratum esse necesse est.
+
+<image-desc>A complex geometric diagram to the right of Proposition 10 showing multiple horizontal line segments representing numerical ratios. Points labeled a-l and numbers 100, 50, 25, 50, 25, 10, 5, 2, 1.</image-desc>
+
+Sint a b c tres numeri cōtinue pꝓortionales: et sit a quadratus: dico c eē quadratum. sint enī d e mīmi in pꝓoꝛtiōe a ad b. per decimānōnam tertij d numerabit a. sitqꝫ id scđm f. ⁊ etiā per eādem numerabit c. cū per hypothesim eadē sit pꝓortio a ad b ⁊ b ad c: sit ergo f scđm g. et quia a ponitur quadratus: sit ergo eius latus h. q̄a enī h in se fīm est a: tūm d in f: ergo ꝓ scđaz ptem vicesimesexte scđ̇i d/h/f sunt cōtinue pꝓoꝛtiōales. et ꝓ nonam quinti pꝓortio a ad f cōposita ex pꝓortiōibus d ad h ⁊ d ad h. ergo qꝛ a ad b vt d ad e: erit b ad c vt f ad g. est ergo d ad e vt f ad g. ergo p̄mutatim d ad f sicut e ad g. ergo per duodecimam quarti inter e et g tot media pꝓoꝛtiōalia cadūt: quot inter d ⁊ f. at inē d et f cadit h vnū medium pꝓoꝛtiōale: igit̄ ⁊ inter e et g cadet vnū qđ sit k. et qꝛ e ⁊ g in pꝓositū est fieri et ergo ꝓ vicesimasextam secundi ex l in se fiet idem c. est igit̄ c quadratus. quod erat demonstrandum.
+
+<margin>11</margin>
+### Si q̄ttuor numeroꝛ pꝓortiōaliū p̄mus fuerit cubus: quartū q̄qꝫ cubū eē ꝓueniet.
+
+<image-desc>A complex diagram to the right of Proposition 11 with points a-p and several horizontal lines. Numbers include 1000, 500, 250, 125, 200, 25, 40, 5, 8, 4, 2, 1.</image-desc>
+
+Sint a/b/c/d q̄ttuor nūeri cōtinue pꝓoꝛtiōales: quoꝛ a p̄mus sit cubus. dico d quartū eē cubū. sicut enī e/f/g/h quattuor in eadem pꝓoꝛtiōe mīmi: erūt qꝛ per scđam hui⁹ e ⁊ h cubi. et qꝛ e ⁊ a sunt cubi: erūt pꝓ coꝛrelariū quarte huius duo pꝓoꝛtiōales medij inter e et a qui sint k l. et quia p equam pꝓortiōalitatem que pꝓortio e ad h ea est a ad d: ergo p̄mutatim q̄ pꝓortio e ad a: ea est h ad d. sed inter e et a pbati sunt eē duo pꝓoꝛtiōales medij. ergo ꝓ duodecimam quarti ⁊ inē h ⁊ d duo silr̄ erūt pꝓortiōales medij qui sint m ⁊ n. et qꝛ per decimānōnam tertij h nūerat d: ergo per scđam ptem decime tertie quarti h numerabit m. Sit igit̄ o latus cubi h: sitqꝫ quoties h in m toties o in p. qꝛ igit̄ pꝓoꝛtio h ad m tanq̄m m ad n triplicata: erit eadē pꝓoꝛtio d ad h tanq̄m pꝓortio p ad o triplicata. et qꝛ p quartā huius eadem est pꝓortio inē cubum p et cubū h. erit igit̄ d cubus: ⁊ eius latus erit p. qđ est pꝓositū.
+
+<margin>12</margin>
+### Quadratos tres inuestigare: quoꝛ cōtinue sumptoꝛ differentie sint equales.
+
+<image-desc>Diagrams to the right of Proposition 12. Top part: horizontal segments with points a-k and numbers 7, 4, 3, 4, 10, 28, 12, 70, 30. Bottom part: A semicircle labeled with points l, m, g and containing numbers 70, 40, 28, 12, 30.</image-desc>
+
+Sit c duplum cuiuslibet numeri. addat̄qꝫ cuilibet nūero vt b. sitqꝫ a ꝓpositus ex b ⁊ c. et ex a ⁊ b fiat d. et ex c in a ⁊ in b fiāt h ⁊ k. et ex a ⁊ b in d fiant e et f. et ponatur numerus l/m/g equalis numero e: ita vt g sit equalis f. quia enī e/l/m/g equat̄ur: et ex a in d fit e: etiā ex a in d fit l/m/g. sed qꝫ equatur f qui fit ex b in d: ergo residuū l et m per decimam primi equū est ei qđ fit ex c in d. quare p nonā eiusdez l et m sunt tanq̄m h et k. Sit ergo l equalis h: et m equalis k. dico ergo l g posse diuidi in duo equalia. Nam cũ b in d fiat g: et d sit tanq̄m b bis ⁊ c: iteꝛ b in se bis. hoc est in suū duplum. et in c facit g. ⁊ a in c facit l. erūt ergo l g tanq̄m qđ fit ex b in se bis. et a (quod est d) in c: cui⁹ dimidiū est quod fit ex b in se semel: et ex d in dimidium c. est ergo numerus l g in duo media eidez dimidia oīia diuisibile. diuido
+
+---
+<vocab>proportionales, cubus, quadratus, numerus, latus, hypothesis, differentia, coaceruatus</vocab>

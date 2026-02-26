@@ -1,0 +1,44 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>64</page-num>
+<header>Das Erste Buch / 6.cap:</header>
+<meta>catchword: Das</meta>
+
+,, und an sitten / sol die Königin ire Döchter an keusche / und rei-
+,, nigkeit ziehen.
+,,         Der Kunigin gang / auf dem <term>Schach-Zabel</term> / von stat
+,, ist / wan sie dem König / geselt ist / so hat sie zweier Stein Natur /
+,, des Alten und des Rochs / des Alten vart ist also / ist sy schwarz /
+,, so get sy auf das schwarz veld / zu der rechten hand / ob es ler ist /
+,, für den lotter oder schreiber: zu der gelincken seiten / auf das
+,, schwarz lere veld / vur der stett hieter: Aber der Roch gang /
+,, hant sie / an zweien wegen / der erst / zu der rechten hand / auf das
+,, schwarz veld / <unclear>von der Alt auff si</unclear> / ob es ler ist / deß andern mals
+,, zu der gelincken hand / auf das veld / do der Riter / auf gestan-
+,, den ist / des drittenmals für sich / auf das schwarze veld / für den
+,, <term>Arzet</term>: und das ist darumb / daß dye Kunigin / von des Küni-
+,, ges genade ze thun hat / und nicht von gewalt. Der Ritter
+,, gang / hat die Königin darumb nicht / daß sie fechter und urleu-
+,, ger seiend / und daß frawen nit zestreiten gehörent / wan sie blö-
+,, der natur seind / wan sie aber von stat get / so sol sie darnach / nur
+,, auf das nechst veld gen / über eck für sich oder hinter sich / zu raub /
+,, oder zu flucht. Es ist ein frag / seit das Schach-Zabel / ein <term>urleug</term>
+,, spiel ist / warumb die Königin / under urleuger gesetzet sey / zu
+,, streit / und doch die frawen / zu solchen sachen / nicht gehören /
+,, noch nütz seynd? Das ist geschehen darumb / daß sich vorzeiten
+,, frawen / mit den Mannen / ze velde / geleget haben. Es ist auch
+,, geschehen dem König / zu einer kurtzweile / und zu freuden / und
+,, daß sye auch / domit erzeug die lieb / dye sie zu dem Künig hat / und
+,, daß das Reich / bleib / bey den Erben und daß sie sollen besor-
+,, gen / des Reiches Herren / und sein Bürger: Wie auch / dem
+,, veld sey / do die Königin auf stet / bey dem Künig / es sey weiß oder
+,, schwarz / daß sol sie nit wandeln / sondern darauf bleiben: das
+,, beteut / das sie schemig und keusch sey / und nicht bald frevel:
+,, und dovon ist ir gang / auf das nechst veld: wan doheim / mag sie /
+,, mit den jeren frölig schimpf treiben und kurtzweil: wan sye un-
+-> der den Feinden / nicht alß sicher ist / eren und leumuts / <-
+-> alß bey den jeren: und sol sich eine fraw selten <-
+-> in baldigkeit lassen sehen / wan es <-
+-> macht sie unwert. <-
+
+<vocab>Schach-Zabel, Kunigin, Roch, Alte, urleug, Arzet, leumuts, keusch</vocab>

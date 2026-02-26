@@ -1,0 +1,119 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>201</page-num>
+
+<margin>
+11. cap:
+Das Ander Buch!
+</margin>
+
+### n. 4. 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | SR | | | |
+| | | SSc | | SS | | | |
+| | | | | WS | 27 | | |
+| | | | WS | | 19 | | |
+| WS | WS | WR | WS | | WS | WS | WS |
+| WR | WR | WSc | | WK | WS | WR | WR |
+
+### n. 11. 12.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | | | | |
+| | | SSc | | SS | | | |
+| | | | WS | WS | WS | | |
+| | | | WS | | WR | | |
+| WS | WS | WR | | SR | WS | WS | WS |
+| WR | WR | WSc | | WK | WSc | | WR |
+
+### n. 18. 27.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | 50 | SS |
+| | | | | 43 | | | |
+| | | | | | | SS | SR |
+| | | | | WS | SS | | |
+| | | WS | WS | | | | |
+| WS | WS | | | WSc | WR | WS | WS |
+| WR | WR | WSc | | WK | | WR | |
+
+### n. 23. 26.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | SR | |
+| SS | SS | SS | SS | | SS | | |
+| | | | | SR | | | SS |
+| | | | | | WS | | |
+| | | | WS | | | | |
+| | | WS | WS | | | | |
+| WS | WS | | | WS | | | WR |
+| WR | WR | WSc | | WK | | WR | |
+
+<column-break/>
+
+### n. 9. 14. 15.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | SR | | | |
+| | | SSc | | SS | | | |
+| | | | | WS | WS | 26 | |
+| | | | WS | | | | |
+| WS | WS | WR | WS | | | WS | WS |
+| WR | WR | WSc | | WK | WSc | WR | WR |
+
+### n. 16. 17.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | 43 | | | |
+| | | | | | | 34 | SR |
+| | | | | | WS | SS | |
+| | | | WS | WS | | | |
+| WS | WS | | | | | WR | WS | WS |
+| WR | WR | WSc | | WK | WSc | WR | WR |
+
+### n. 19. 22.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SR | |
+| | | | | 44 | 43 | | SS |
+| | | | | | | SS | |
+| | | | | WS | | | WS |
+| | | | WS | WS | | WR | |
+| WS | WS | | | WS | | | |
+| WR | WR | WSc | | WK | | WR | |
+
+### n. 28. 29.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRc | SR | SSc | SK | SK | | 5 8 | SRc |
+| SS | SS | SS | SS | | SS | | SS |
+| | | | | | SR | | 4 1 |
+| | | | | | | SS | |
+| | | | | WS | | | |
+| | | | WS | WS | | | WS |
+| WS | WS | | | | WS | WR | |
+| WR | WR | WSc | | WK | | WR | |
+
+<vocab>
+SR, SS, SSc, SK, WS, WSc, WR, WK, Buch, capitel
+</vocab>

@@ -1,0 +1,15 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>High contrast microfilm scan; text on the right margin is partially obscured by binding shadows.</warning>
+<meta>catchword: at</meta>
+
+## ¶ Of Arithmeticall proportion.
+
+Arithmeticall proportion, is when the mydle number differeth as muche from the first, as from the thyrde, that is to saye, when the thyrde hath so many more, from the seconde, as the seconde hath from the firste, as .2.4.6. Here, two, is the distans, for .4. exceedeth .2. by two, & .6. is more then foure by .2.
+
+### ¶ A rule to fynde out Arith-meticall proportion betwene the firste and the laste.
+
+When you haue the first and the la<unclear>st</unclear> if you woulde finde out the midle in proportion. Adde the first & the last together, and deuide the whole into .2. for the halfe is the midle in proportion.
+
+<vocab>Arithmeticall proportion, mydle number, distans, deuide, Philosophers game</vocab>

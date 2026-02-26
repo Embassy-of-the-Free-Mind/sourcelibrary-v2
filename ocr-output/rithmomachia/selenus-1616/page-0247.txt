@@ -1,0 +1,11 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+<page-num>216</page-num>
+<header>ad pag. 216.</header>
+<warning>The illustration is extremely faint, possibly due to fading, poor inking, or being a ghost image from a facing page.</warning>
+
+<image-desc>
+A faint engraving depicting a person seated in a high-backed armchair. The figure is positioned in profile, facing left toward a table or desk. The scene appears to be an interior, likely a study or library, typical of 17th or 18th-century scholarly portraits or frontispieces. The legs of the chair and the corner of the table are just visible in the lower-left quadrant of the frame.
+</image-desc>
+
+<vocab>ad paginam, engraving, scholar</vocab>

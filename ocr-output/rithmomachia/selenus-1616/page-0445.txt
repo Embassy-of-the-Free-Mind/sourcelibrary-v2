@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>411</page-num>
+<header>6. cap: Vom Schach-Spiel. 411</header>
+
+<image-desc>A decorative woodcut header banner featuring symmetrical floral scrollwork and acanthus leaves, with a small central cartouche.</image-desc>
+
+## Das Sechste Capittel.
+
+### Wie sich der Schwartze / wan Er den Vorzug hat / und mit dem Weissen / ohne seiner Königin Reuter / spielet / verhalten / und der Weisse / auch fürsehen sol.
+
+**S**o fern der Weisse / den S. Reuter / zum Vortheil / nimt / und nicht des Schätzens Soldaten / mit dem Vorzuge / (wie im vorigen 5. Cap: beschrieben) besondern nuhr den blossen Vorzug / dem Schwartzen / überlässet: so entstehet hierauß die fünfte Art / welche Damianus, im 8. und letzten Capit: seines viel-gedachten Büchleins / aufgezeichnet / und wir auß ihm / in diesem / und folgenden 7. Cap: gründlich verbessert / erzehlen wollen.
+
+<margin>1.</margin> Ziehet demnach erstlich / (nach des Damiani, andeuten) cc
+der Schwartze / seines K. Soldaten / auf sechs und dreyssig: Der cc
+Weisse / seines K. Soldaten / auf acht und zwanzig : Der cc
+Schwartze / auf denselben / des K. Reuter / auf drey und vierzig: cc
+Der Weisse / (umb ihn zu vertheitigen) der K. Reuter / auf zwey cc
+und zwanzig: Der Schwartze / des K. Schützen / auf acht und cc
+dreyssig: Der Weisse / seines K. Schützen / auf dreyssig: Der cc
+Schwartze / der K. Schützens-Soldaten / auf sechs und vierzig: cc
+<margin>2.</margin> Der Weisse / des K. Schützen / auf drey und zwanzig: * Der cc
+Schwartze / (umb / dem Weissen / das Spiel / zu brechen) der K. cc
+Soldaten / auf des W. K. Soldaten / auf sieben und dreyssig: cc
+Der Weisse / (ihn ferner zu beschützen) der K. Soldaten / auf ein cc
+<margin>3.</margin> und zwanzig: * Der Schwartze / nimt des W. K. Soldaten / mit cc
+der K. Soldaten: Der Weisse / denselbẽ / mit seiner K. Soldaten. cc
+<margin>4.</margin> Nimt aber der Schwartze / nicht / den W. Soldaten / (n. 3.) cc
+besondern ziehet / des K. Rochens-Soldaten / (auf daß / der cc
+Weisse / seines K. Reuter / mit der K. Schützen / auß vier und cc
+dreyssig / nicht könne gefangen nehmen) auf ein und vierzig: cc
+so rucket / der Weisse / des K. Reuter / auf des S. K. Soldaten / cc
+auf neunzehen: Der Schwartze / der K. Schützen / (umb den cc
+selben gefangen zu nehmen / und seinen Soldaten / dergestalt / für cc
+
+<sig>Fff iij</sig>
+<meta>catchword: ihm / zu</meta>
+
+<vocab>Schach-Spiel, Reuter, Schützen, Soldaten, Rochens-Soldaten, Damianus, Vorzug, König, Schwartz, Weiss</vocab>

@@ -1,0 +1,32 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>A</sig>
+<meta>catchword: Aut</meta>
+<warning>Water staining at top and right margins; heavy show-through from reverse page.</warning>
+
+Aut cursus celerum, cies, equorum;
+Aut frenas, facili gyrasvè habenâ:
+Seu quondam jaculis & ense, & hastâ
+Concertas; modò de coronâ adeptâ
+Pendentis geris annuli triumphum:
+Seu curâ vacuus, jocosiorum
+Ludis prælia nùnc Latrunculorum;
+Seu ipse hæc lepido, novo, libello,
+Aridâ modò pumice expolito,
+Tentes, clariùs explicare N O B I S,
+V I T A hac, quâ frueris Q U I E T I O R I.
+Hinc sat, T E M P O R E  D U R I O R E (.pugnâ
+Si fortè patrias, Erynnis, oras
+Infestet, D E A Sæva, feriori.)
+Ostendis, tibi præparata quàm sit,
+Et quàm Martia mens, & acre pectus,
+O fortissime Thuitonis Nepotum
+Manno juncte vetustiore stirpe.
+
+->*Matthias Börtius, J. U. L.*<-
+
+---
+
+<image-desc>An ornate woodcut tailpiece featuring a central human mask or face set within elaborate, symmetrical scrollwork and foliate designs. The top of the ornament is flanked by two outward-facing zoomorphic heads (possibly griffins or dragons). Beaded chains or tassels hang from the scrolling elements on either side.</image-desc>
+
+<vocab>Latrunculorum, Thuitonis, Manno, Matthias Börtius, Erynnis</vocab>

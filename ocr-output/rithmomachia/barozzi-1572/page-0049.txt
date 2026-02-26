@@ -1,0 +1,55 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>21</page-num>
+<warning>Ghost text from the reverse side of the page is visible throughout but does not significantly obstruct the primary text.</warning>
+
+di questo giuoco: come anchor per eccitar la méte di quel-
+li, che non hanno cognitione di tali scienze di cercar d’in-
+tender la origine delle consonantie Musicali da quelli che
+la fanno.
+
+## TAVOLA DE LE CONSONANTIE
+
+->Primo Essempio.<-
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 4. | 6. | 8. | 12. |
+
+La Diapente consonanza ci mostrano li numeri AB, o-
+uero il numero A comparato alla differenza delli numeri
+A D. similmente li numeri CD. ouero il numero C compara-
+to alla differenza BD. & la differenza A C alla differenza BD,
+ò pure al numero D.
+
+La Diatessaron, li numeri B C, & la differenza A dalla dif-
+ferenza A C, ouero al C, & il B alla differenza AC.
+
+La Diapasson, li AC, & li BD, ò uero il B à ciascuna delle
+differenze BD, & AD: & la differenza AD alla D, ouero alle
+differenze AB & BD: & l’A alla differenza AC.
+
+La Diapasson, con la Diapente insieme li AD, & l’A alle
+differenze BA & BD, & il C alle differenze CB & CD, & la diffe
+renza AC alle differenze CB & CD.
+
+La Disdiapasson, alle differēze BC & CD, & la differēza AD
+alle dette differenze BC & CD.
+
+->Secondo Essempio.<-
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 3. | 5. | 15. | 25. |
+
+La Diapente, il B alle differenze BA & BC, & il D alla dif-
+ferenza DC.
+La Diatessaron, la differenza CA al numero B.
+La Diapasson, la differenza AC alle differenze AB & BC.
+La Diapasson con la Diapente insieme, il B al C.
+La Disdiapasson, la differenza BD al D.
+
+<sig>C I — I</sig>
+<meta>catchword: Ter-</meta>
+
+<vocab>consonantie, Musicali, Diapente, Diatessaron, Diapasson, Disdiapasson, differenza</vocab>

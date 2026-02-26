@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>136</page-num>
+<header>Das Ander Buch/ 3. cap:</header>
+
+Daß (4.) die Steine/wan sie/von beeden theilen / erwehlet/ fein ordentlich/und dem Spiele gemäß / auf die Tabel / in ihre gebürende Felder/gesetzt und geordnet werden sollen.
+
+Ehe aber das Spiel/weiter angefangen wird / so pfleget man oftmaln/einen vortheil/entweder im voraus-ziehen/oder daß man etliche Schach-Steine/ von den Andern absonderet / oder auch sonsten: zu geben/und zu nehmen: darbey nuhn / nachfolgende Regeln/ inacht zu nehmen seynd.
+
+Es sol / (1.) keiner dem Andern / weyl man bald irren und fehlen kan / auch zum Spielen / nicht allezeit / gleiche lustig ist / besondern viel mahlen/sich gar untauglich/darzu befindet / einigen vortheil / (welcher dan zum nutzen dessen nehmers / und schaden dessen gebers / gemeynlich gereichet) leichtlich geben / und überlassen.
+
+Wölle dan einer / (2.) dem Feinde / ieh einen vortheil geben / so sol Er / auf daß derselbe / den grief/wie Er sich füglich beschützen / und verthetigen möge / nicht endlich / dadurch erlerne / nimmer auf einerley Art / demselben überlassen : besondern in allen Spielen / entweder verringern oder verbessern. Wolte man aber / dem gegener / eben denselben / wider gönnen / so sol man wol acht haben / und aufmercken / ob und wie derselbe / (auf daß man ihm / auf eine andere / newe und unvermuhtsame weyse / immer zusetzen möge) sich / an dem Orte / da Er ist angegriffen worden / verthetige und entsetze.
+
+Es sol / (3.) keiner / den vor- und außzug / leichtlich zum vortheil geben / nicht alleine / wegen dessen / daß derselbe / (weyl es eine anzeig ist / eines hohen geistes / und unverzagten Gemühtes / der Schlacht / fürnemlich / in einer rechtmessigen Sache / einen anfang machen : in betrachtung dieselben / welche die außforderung erwarten / dem Feinde gleichsam weichen : da sie doch demselben / mit mehrem nutzen / weit entgegen ziehen / dan seiner daheim erwarten solten) hoch zu halten / besondern auch / des Schadens und frommens halber / welcher hierauß erfolgen kan. Dan ob gleich / zwischen denen Spielern / welche / diese Schach-Züge / nicht recht verstehen / noch dahero / wer unter ihnen / einen vortheil habe / unterscheidē / noch mit dem Vorzuge / ihrem Spiele / einigen nutzen schaffen können : gantz kein unterscheid zu befindē / besondern es gleich gilt / wer den ersten Stein rucket : so sol doch insonderheit der ienige / welcher nicht so erfahren auf diesem Spiele / wie sein Gegener / ist / den vor- oder ersten Anzug / nicht geringe achten / noch in den wind schlage / vermeynend / das Spiel / ohne denselben / doch zu gewiñen / und daß / an den zahlen der Züge / wenig gelegen : dan Er auf die weyse / sich überwunden / befinden wird.
+
+<meta>catchword: Verste-</meta>
+
+<vocab>Schach, Steine, vortheil, vorzug, außzug, Anzug, Regeln, Feinde, Spiel</vocab>

@@ -1,0 +1,79 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<margin>
+<image-desc>A geometric diagram consisting of a larger semicircle containing two smaller tangent semicircles. The large arc is labeled 28. The left interior semicircle is labeled 24, and the right interior semicircle is labeled 4. Below them are the letters g, h, s, and s.</image-desc>
+<image-desc>A second geometric diagram below the first, showing two tangent semicircles under a larger arc labeled 27. The left semicircle contains 9 and 8, the right contains 4 and 1. Letters a, c, and b are marked along the baseline.</image-desc>
+f ——— 676
+g ——— 672
+e ——— 169
+d ——— 168
+
+c ——— 4
+b ——— 13
+a ——— 8
+
+t ——— 676
+s ——— 672
+13 5
+a ——— 8 3
+b ——— 5 2
+e ——— 5 2
+f ——— 2
+——— 1
+
+r ——— 169
+q ——— 168
+——— 65
+p ——— 65
+n ——— 64
+9 15
+m ——— 12
+l ——— 8
+25
+10 15
+h ——— 12
+s ——— 5
+</margin>
+
+a partiale eundẽ scz aut multiplicẽ ad b in b d et pueniat l: quẽ manifestũ est ꝑ 13 primi eẽ multiplicẽ ad b ꝑtiale. Deinde duco c vnitatẽ in b d et veniat l: g ꝗđ ꝗz vnitas in quẽcunqʒ numerũ ducat illũ ꝑducit est eq̃lis b d: sed b d suꝑat b sola vnitate. ergo l g superat b sola vnitate. hanc igit demo q̃ sit h g tũc aggregatũ f h est mltiꝑlex ad b: sed aggregatũ f h superat totũ f g sola vnitate h g. sed cũ f g fiat ex ductu a partialis ⁊ c in b d equat e ꝗ̃ fit ex ductu a totalis in b d ꝑ decimã primi. at dictũ est e eẽ multiꝑlicez ad a ⁊ f h multiplicẽ ad b. igit e multiplex ad a equalis quidẽ f g suꝑat f h multiplicẽ ad b sola vnitate qđ erat demõstrandũ et propositũ quo ad vnã partẽ. Sed rursum demõstrandũ est dabilẽ esse multiplicẽ ad b qđ solã hʒ vnitatẽ super multiplicẽ ad a: aufero vnitatẽ ab b totali q̃ sit d et duco b ꝑtiale in totalẽ a et ꝑueniat e manifestũ est e eẽ multiplicẽ ad a. et duco iterũ b ꝑtialẽ in a ꝑtiali equali aut multiplicẽ totius b et ꝑueniat f g manifestũ est f g esse multiplicẽ ad totũ b. deinde duco b d in c vnitatẽ ⁊ fiat g h qui ꝗʒ quicũqʒ numerus in vnitatẽ ducat seiꝑsũ ꝑducit g h est equalis toti b quare totus f h est mltiꝑlex ad b. Sed cũ ꝑ nonã primi qđ fit ex b ꝑtiali in a eequet ei qđ fit ex eodẽ b ꝑtiali in a et in c: ⁊ illẽ qđ fit ex b ꝑtiali in a: et b totali in c solã vnitatẽ suꝑaddat illi qđ fit ex b ꝑtiali in a et in c. sequitur ergo qđ multiplex ad b scz f h qđ fit ex b ꝑtiali in a et b ꝑtiali in c: solã addet vnitatẽ suꝑ e multiplicẽ ad a qui fit ex b ꝑtiali in a: quod est secundũ et totum propositũ.
+
+<margin>31</margin>
+### ¶ Propositis duobus numeris cõtra se primis: multiplicẽ cuiuslibet eoꝝ inuestigare cuius ad multiplicẽ alterius differentiã sit dato numero equalis.
+
+¶ Sint a b duo nũeri contra se ꝑmi quoꝝ cuiuslibet iubemur assignare multiplicẽ cuius dĩa ad multiplicẽ alteri⁹ sit dato nũero qđ sit c equalis. capio fm exigentiã ꝑcedẽtis multiplicẽ a qđ sit d et multiꝑlice b qđ sit e addẽs suꝑ multiplicẽ a solã vnitatẽ ⁊ multiplico d ꝑ c numerũ datũ et ꝑueniat f ⁊ e ꝑ eundẽ c et ꝑueniat g. ⁊ qz tũ f est c in d et g tũ c in e ⁊ vt d vnitatẽ ꝑ nonã primi ⁊ ois nũerus in vnitatẽ seiꝑsũ ꝑducit. ergo dĩa g ad f est nũerus datus c. et cũ a sit ꝑs d et d ꝑs f: ⁊ b ꝑs e et e ꝑs g ergo ꝑ vicesimãtertiã primi a est ꝑs f et b ꝑs g. quare f et g multiplices sunt ad a b int quos nũerus assignat⁹ est dĩa. et posses silr ꝑ ꝑcedente caꝑe multiplicẽ a qđ suꝑadderet vnitatẽ mltiꝑlici iꝑius b. deinde ꝑcedere vt dictũ est. Ceterũ si minor quoties ꝑōt de maiore detract⁹ nõ solũ relinquat vnitatẽ sed vlterior fiat substractio quo min⁹ ꝑ ꝑcedente oꝑari posses hoc mõ poteris oꝑari. Datis eni a b nũeris contra se ꝑmis et c numero cui sit caꝑiẽda dĩa multiplicũ equalis et detracto b ab a quoties ꝑōt remaneat d et d detracto ab b quoties ꝑōt reliquũ qđ sit e: ⁊ e detracto ab d quoties ꝑōt maneat f et qz tandẽ ꝑ decimãquintã huius relinquetur vnitas sit fit ergo vt detracto f ab e quoties ꝑoterit relinquat vnitas. si ergo multiplex a debet addere supra multiplicẽ b sumo alterũ extremox qui est in situ iꝑart ab a vt f et sumať h multiplex eius qđ addat vnũ suꝑ multiplicẽ e ⁊ r quo sit f r f m g quacqz g in d et fiat h l: qđ addet suꝑ multiplicẽ e vnitatẽ: qm g in d tũ m in e faciat r: qui silr addit suꝑ multiplicẽ b qui fit q vnitatẽ. multiplico igit r et q ꝑ c numerũ datũ et ꝑducatnr s ⁊ t qđ erunt multiplices b ⁊ a in r se dĩa f m c numeꝝ assignatũ seruãtes.
+
+->Tertiũ elemẽtoꝝ arithmetices Iordani finis.<-
+
+<margin>
+<image-desc>A diagram showing three horizontal line segments representing numbers in geometric progression. 
+The first line starts at 'a' and has markings for 1, 2, 4, 8.
+The second line starts at 'a' and has markings for 8, 12, 18, 27.
+The third line starts at 'a' and has markings for 16, 24, 36, 54. 
+Below are various letter labels (e, f, g, h, l, m, n, p, q, r) associated with these numerical values.</image-desc>
+16 24 36 54
+a ——— b ——— c ——— d
+8 12 18
+——— f ——— g
++ ——— 6
+——— m ———
+2 3
+h ——— l ———
+n ———
+4 9
+——— p ———
+8 27
+q ——— r
+</margin>
+
+<margin>1</margin>
+### ¶ Si fuerint quotlibet numeri continue proportionales : duo et duo proximi erunt commensurabiles.
+
+¶ Sint a b c d quotlibet nũeri continue ꝑꝑortionales: dico a b esse cõmensurabiles. itẽ ⁊ b c et c d. Si eni a nũeret b manifestũ est a et b esse cõmensurabiles. et qz q̃ ꝑꝑortio a ad b ea est b ad c ⁊ c ad d ideo b nũerabit c et c nũerabit d. quare cõstabit ꝑꝑositũ: a b: b c: c d: esse cõmensurabiles. at si a non nũerat b: qz iꝑossibile est tũc a et b eẽ in sua ꝑꝑortione mimos. nã si a et b essent in sua ꝑꝑortione minimi essent ꝑ decimãoctauã tertij adinuicẽ ꝑimi: et ꝑ decimãnonã numerarẽt quoslibet in sua ꝑꝑortione: ⁊ qz q̃ ꝑꝑortio a ad b: ea est b ad c: a ergo nũeraret b ꝑmus cõtra se ꝑimũ qđ est iꝑossibile et etiã oppositũ ꝑositi. nõ erunt ergo a et b in sua ꝑꝑortione mimi. caꝑta ergo ꝑ vicesimãtertiã tertij ef mimos in illa ꝑꝑortione qđ ꝑ decimãnonã eiusdẽ numerabit a b fm eundẽ nũerũ equalẽ vt fm g: et consistit b c et c d. sunt igit a b: b c: ⁊ c d adinuicẽ cõmensurabiles: quod est ꝑꝑositũ.
+
+<margin>2</margin>
+### ¶ Si numerorum continue proportionaliũ duo extremi fuerint cõicantes erit numerus cõiter oẽs numerãs maximusque qui oẽs numerabit erit maximus extremos numerãs. Ex hoc cõstat qđ si aliquot ꝑꝑortionales inť duos cõicantes ceciderint: totidẽ inter vtrũqʒ eoꝝ et maximũ numerũ cos cõiter numerantẽ cadere necesse est. Palãqz sit etiã maximos qui binos ⁊ binos numeroꝝ proportionaliũ cõiter numerãt esse cõtinue ꝑꝑortiõales.
+
+¶ Sint ab c d nũeri continue ꝑꝑortiõales quoꝝ a d extremi sint cõicãtes: dico ꝑmo aliquẽ esse numerũ eos oẽs cõiter nũerantẽ. scđo maximũ nũeꝝ oẽs numerãtẽ esse maximũ numerantẽ extremos. cũ eni ꝑ ꝑcedente a b cõicent ⁊ sit b c et c d: caꝑio ꝑ 16 tertij maximũ nũeꝝ numerãtẽ a b qđ sit e: ⁊ maximũ nũerantẽ b c qđ sit f. et maximũ nũerãtẽ c d qđ sit g. ꝑonoqz h l mimos in ꝑꝑortiõe a ad b et ꝑ 23 tertij et 19 eiusdẽ e f g numerabũt a b c fm h: et g nũerabit d fm l. sumo itẽ maximũ numerantẽ e f qđ sit r maximũ numerantẽ f g qđ sit m: ꝑ vicesimãtertiã tertij l nũerabit e ⁊ m f m h. et iterũ l nũerabit f fm k ⁊ m numerũ g scõm k. ꝑ 19 tertij et l ⁊ m sunt diuersi nũeri ab h k. nã si iidẽ essent h n se ꝑduceret e ⁊ l in se ꝑuinceret g ⁊ h in e ꝑducit a et l in g ꝑducit d ⁊ h l ꝑ 18. tertij sunt contra se ꝑimi. erit ergo a d ꝑ duodecimã tertiũ cõtra se ꝑimi qđ est contra hypothesim. sunt ergo l ⁊ m aliẽ ab h l. quare ergo h l numerãt l et m equalit: numerẽt ergo iꝑsos scđm n qđ ꝑ 23 tertii est maximus eos
+
+<vocab>Jordanus de Nemore, arithmetica, numeri, proportionales, commensurabiles, differentia, multiplex, contra se primi</vocab>

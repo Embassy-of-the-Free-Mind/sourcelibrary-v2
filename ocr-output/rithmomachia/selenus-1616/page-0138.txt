@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>108</page-num>
+<header>Das erste Buch / 11. cap:</header>
+
+men : dan dasselbe viereckete plätzlein / in des Weissen Königes quartier / darauf desselben Roche stehet / ist des Weissen Königes = Rochens feld: hingegen in derselben linien / hinaufwertz in des Schwartzen Königes quartier / das feld / darauf dessen Roche geordnet / ist des Schwartzen Königes = Rochens feld: wiederumb das plätzlein oder feld / in der Weissen Königin quartier / darauf derselben Roche / gestellet / ist der Weissen Königin = Rochens feld: Also ists auch / mit der Schwartzen Königin quartier beschaffen. Ferners
+
+<image-desc>
+A large square diagram of a chessboard divided into four equal quadrants by a thick cross. Each quadrant consists of a 4x4 grid of alternating black and white squares.
+
+The top-left quadrant is labeled "Der Schwartzen königin quartier". The top row contains letters "R. Sp. Sc. K." and the second row contains "B. B. B. B."
+The top-right quadrant is labeled "Des Schwartzen königes quartier insonderheit." The top row contains "K. Sc. Sp. R." and the second row contains "B. B. B. B."
+The bottom-left quadrant is labeled "Der weissen Königin quartier." The bottom row contains "R. Sp. Sc. K." and the row above it contains "B. B. B. B."
+The bottom-right quadrant is labeled "Des Weissen königes quartier insonderheit." The bottom row contains "K. Sc. Sp. R." and the row above it contains "B. B. B. B."
+
+Legend for pieces: R (Roch/Rook), Sp (Springer/Knight), Sc (Schütze/Bishop), K (König/King or Königin/Queen), B (Bauer/Pawn).
+</image-desc>
+
+auf der Rochen linie / hinaufwertz / das jenige feld / welches eines Rochens felde / am nächsten ist / (so ferne ein Soldat / noch darinnen stehet) wird des Königes = oder der Königin = Rochens = Soldatens feld: oder aber / (wan er auß demselben / in ein ander feld gezogen worden) das ander feld / desselben Rochens: weiter dieselben beede felder / welche diesem itztgedachten / auf seiner linie folgen / das dritte und vierte feld / des Rochens / genennet. Ein ebenmessiges / sol man / von den
+->übrigen<-
+
+<vocab>Schach, Weisser König, Schwartzer König, Königin, Roche, Soldat, Quartier, Springer, Schütze, Bauer, Feld</vocab>

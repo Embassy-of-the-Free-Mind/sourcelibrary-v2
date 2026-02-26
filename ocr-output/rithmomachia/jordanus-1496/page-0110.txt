@@ -1,0 +1,44 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>ad</header>
+
+<page-num>29</page-num>
+## ¶ Consonantiarũ hoc pacto digestarum: finis consonantie diatessaron: ad finem diapente sonat tonum/ad finem diapason: consonat diapente. ad finem diapason ac diapente: incõsonus. ad finem vero bis diapason: consonat diapente ac diapason.
+
+<image-desc>A horizontal line representing a monochord division with vertical strokes marking points. Above the line are the letters: a, c, d, e, f, g, b. The spacing reflects musical intervals.</image-desc>
+
+-> | a | | c | d | | e | | f | g | | b | <-
+
+¶ Sint a/c/d/e/f/g/b modo qui dictus est vigeste consonãtie: dico c b finem ꝓsonãtie diatessaron ab d b sonare tonum/ad e b esse diapente/ad f b incõsonũ esse/ad g b ⁊ b o cõsonare diapente ac diapason. Nam per precedentem a b ⁊ c b est diatessarõ et a b et d b diapente. depta ergo a b ⁊ c b diatessaron cõsonãtia ab c b ⁊ d b diapente: per correlariũ decime huius relinquiť tonus. qđ aut relinquiť est c b ⁊ d b: igitur c b ad d b sonat tonum. et qñ per precedentẽ a b ⁊ e b ꝓcinit/modulaturqʒ diapason substracta: igit a b et c b diatessaron ab a b et e b ꝓvicessimãscđam huius qđ relinquiť est diapente. atqui quod relinquiť est c b et e b: igitur c b ad e b ꝓsonat diapente. et ꝑ precedetẽ a b ⁊ f b consonat diapason ac diapete: subducta igitur a b ⁊ e b ꝓsonãtia diapason: qđ relinquiť est diapente. quod aut relinquiť est e b ⁊ f b. igitur e b ⁊ f b consonantia est diapete. sed ꝑ modo monstratũ c b ⁊ e b etiã diapente est: igitur c b ⁊ f b est bis diapente. at ꝑ decimãquartã huius bis diapente ꝓsonãtia componi nõ potest: igit c b ad f b incõsonus est. postremo qñ vt ex ꝓcedẽti notũ est a b ⁊ g b ꝓsonat bis diapason. dẽpta igiť a b ⁊ e b diapason ꝓsonãtia relinqtuꝛ e b et g b eẽ diapason. atqui c b ⁊ e b per scđam ptem huius mõstrata est esse diapente. igitur adiũcta c b et e b consonãtia diapente ad e b ⁊ g b cõstituitur diapente ac diapason. cõsonat ergo c b ⁊ g b diapente ac diapason. quod est totum propositum.
+
+<page-num>30</page-num>
+## ¶ Sic positis consonãtijs: finis diapente ad finem diapason modulatur diatessaron/et ad finem diapason ac diapente: modulatur diapason. ad finem vero bis diapason euphonus est: sed qui nondum consonantia est.
+
+<image-desc>A line diagram identical in structure to the previous one, showing divisions labeled a, c, d, e, f, g, b.</image-desc>
+
+-> | a | | c | d | | e | | f | g | | b | <-
+
+¶ Esto precedẽtiũ hypothesis: dico d b finem diapente ad e b consonare diatessaron. ad f b diapason. et ad g b sonare diatessaron ac diapason. Nam per penultimã a b et e b cõsonãtia est diapason. et a b et d b diapente. substracta igitur a b ⁊ d b diapente: ab a b ⁊ e b ꝓsonãtia diapason: per vicessimãscđam huius relinqtuꝛ diatessaron. qđ aut relinqtuꝛ est d b et e b: igiť d b ad e b ꝓsonat diatessaron. et qz in ꝓcedẽti mõstratũ est e b ⁊ f b eẽ diapente: et nũc d b et e b esse diatessaron: ergo per vicessimã huius d b et f b ex illis duabus cõflata/coalitaqʒ cõsonãtia modulabiť diapason. Rursum cũ e b ⁊ g b in ꝓcedenti mõstrata sit diapason: et e b et f b diapẽte: ergo per vicessimãscđam huius f b ⁊ g b est diatessaron. et d b et f b nunc mõstrata est diapason. igitur d b ⁊ g b est diapason ac diatessaron: que cũ modulatio sit euphona ⁊ eã monstrauerit vicessimaquarta huius non esse ꝓsonãtiã totũ liquet mõstratũ ꝓpositũ. et ex hac quoqʒ pariter cognitũ est finem diapason: ad finem diapason ac diapente modulari diapẽte vt e b ad f b et ad finem bis diapason cõsonare diapason.
+
+<page-num>31</page-num>
+## ¶ Consonãtiaꝝ sic collocataꝝ: totius chorde atqʒ cuiusqʒ sectiõis nũeros designare.
+
+| 24 | | 18 | | 16 | | 12 | | 8 | | 6 | |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **a** | | **c** | | **d** | | **e** | | **f** | | **g** | | **b** |
+
+¶ Duco duo/tria/et quattuoꝛ in seinuicem: et numerũ indesurgentem atqʒ ꝓductũ qui hẽbit scđam tertiam ⁊ quartã: pono totius linee numerum quem iccirco voco numerum a b ab quo demo quartam partem et reliquus fit c b: et erit ꝓmus numerus ad iꝓm sesquitertius. quare diatessaron. et ab eodez numero demo partem tertiam ⁊ residuus sit d b: eritqʒ a b ad d b sesquialter: quare cõsonãtia diapẽte. et iteꝛ ab a b diduco ptem mediã et residuus site b: eritqʒ a b ad e b duplus. qđ circa diapason ꝓsonãtia inter eos exurget. et nũeri a b sumo solã tertiam q̃ sit f b: erit ergo a b ad f b hitudo tripla. cõtinebũt igit a b et f b diapason ac diapẽte. Rursum numeri a b sola quarta sit g b: erit a b ad g b quadruplus. quare a b et g b sunt numeri bis diapason. sunt itaqʒ totius choꝛde ab ⁊ cuiusqʒ sectionis eius fm assignatas consonãtias designati numeri. quod erat demonstrandum.
+
+<page-num>32</page-num>
+## ¶ Quotcunqʒ harmonicas medietates assignare: inter quay terminos eoꝝqʒ differentias omnes musice reperiantur consonantie.
+
+| Harmonice | | 12 | | 8 | | 6 | | | Epitritus | b c | Diatessaron |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
+| Medietates | | 6 | | 4 | | 3 | | | Hemiolus | a b | Diapente |
+| | | **a** | | **b** | | **c** | | | Duplaris | a c | Diapason |
+| Differentie | | | | 2 | | 1 | | | Triplaris | c e | Diapason diapente |
+| | | | | **d** | | **e** | | | Quadruplaris | b e | Bis diapason |
+
+¶ Harmonica medietas in Arithmeticis diffinita est qñ trium terminoꝝ maximus ad minũ: ita dĩa maioꝛũ ad dĩam minoꝝ. Sit ergo c quicũqʒ nũerus partem tertiam habens que sit e: duplo c. sitqʒ duplatus a. manifestũ est a ad c esse duplum. et qz c ꝓtinet tria e: iꝓm a ꝓtinet sex e. adde e ad c ⁊ fiat b
+
+<vocab>consonantia, diatessaron, diapente, diapason, tonus, bis diapason, sesquitertius, sesquialter, duplus, tripla, quadruplus, medietas harmonica, epitritus, hemiolus, duplaris, triplaris, quadruplaris</vocab>

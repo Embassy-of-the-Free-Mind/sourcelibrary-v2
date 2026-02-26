@@ -1,0 +1,41 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>m iij</sig>
+<warning>Dark left margin and ghosting/bleed-through from the reverse page are present, but text remains legible.</warning>
+
+# The Philosophers game.
+
+## ¶Of the greatest tri-
+## umphe.
+
+The greatest triumph is of Arithme-
+ticall, Geometricall, and Musicall
+proportions all ioyned together.
+
+->Arithmetical, Geometrical, and Musical
+proportions, all together.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2 | 3 | 4 | 6 | 6 | 8 | 12 | 16 |
+| 2 | 3 | 6 | 9 | 6 | 12 | 15 | 20 |
+| 2 | 4 | 6 | 12 | 7 | 12 | 42 | 72 |
+| 2 | 5 | 8 | 20 | 8 | 15 | 64 | 120 |
+| 2 | 7 | 12 | 42 | 8 | 15 | 120 | 225 |
+| 2 | 9 | 16 | 72 | 12 | 15 | 16 | 20 |
+| 3 | 4 | 6 | 8 | 12 | 15 | 20 | 25 |
+| 4 | 4 | 6 | 9 | 15 | 20 | 36 | 45 |
+| 3 | 5 | 9 | 15 | 15 | 30 | 45 | 90 |
+| 3 | 5 | 15 | 25 | | 30 | | |
+| 3 | 9 | 15 | 45 | | | | |
+| 4 | 6 | 8 | 12 | | | | |
+| 4 | 6 | 9 | 12 | | | | |
+| 4 | 7 | 16 | 28 | | | | |
+| 4 | 7 | 28 | 49 | | | | |
+| 5 | 6 | 25 | 45 | | | | |
+| 5 | 9 | 45 | 81 | | | | |
+| 5 | 25 | 45 | 225 | | | | |
+| 5 | 15 | 25 | 45 | | | | |
+| 6 | 8 | 9 | 12 | | | | |
+
+<vocab>Philosophers game, Rythmomachia, Arithmeticall proportion, Geometricall proportion, Musicall proportion, triumph, table of proportions</vocab>

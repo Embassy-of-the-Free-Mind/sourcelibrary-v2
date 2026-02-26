@@ -1,0 +1,88 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>75</page-num>
+
+et multiplex suppartientes per p̄cedetē reducūtur in suppartientē que teꝛ reducetur in supparticularē
+vt si detracto d de b remaneat e quē contineat d et eius partes: vel in supparticularē si eo detracto re
+maneat e quē contineat d et eius partē. at si remaneat e quē contineat d et partes. qꝛ illa detractio in
+infinitū fieri non pōt vt semp in suppartiētes resoluatur aliqn occurret supparticularis. factūqꝫ appa
+rebit propositū. Occurret dico tandē superparticularis et nō multiplex: qꝛ ex multiplicibus non īme
+diate suppartientes sed superparticulares per septuagesimā huius gignūtur.
+
+### ¶ Datas proportiones quascunq[ue] ad equalitatem reducere.
+
+¶ Nam per septuagesimātertiam huius multiplices suppartientes reducūtur in superpartiētes et
+multiplices supparticulares in superparticulares ꝛ per p̄cedentē suppartiētes in supparticulares.
+et per septuagesimāsecundam huius supparticulares reducūtur in multiplices et mltiplices in alias
+multiplices donec in equalitatē restitute sint. omnes igitur in equalitatē reducūtur.
+
+->Noni elemētoꝝ Arithmetices Jordani finis.<-
+
+Edicta est connectio extremoꝝ: habitudine vtriusqꝫ ad mediū. Medie=
+tatum quedam sunt principales: et quedam principalibus collaterales.
+Principales sunt tres. Prima est quādo maioris/medij/ac minoris equa=
+les sunt differētie. et hec dicitur Arithmetica medietas. Secūda est quādo
+maximi ad mediū eadē est pꝝportio: q̄ medij ad minimū. et hec geometrica vocatur
+Tertia est qñ maximi ad minimū eadē est pꝝportio: que dꝛie maximi ad mediū ad dif
+ferentiā medij ad minimū. et hec musica nūcupatur. Collaterales sunt octo. Prima
+est qñ maximus ad mediū sicut dꝛia minoꝝ ad differentiā maioꝝ. Scōa est qñ me
+dius ad minimū: sicut dꝛia minoꝝ ad differentiā maioꝝ. Tertia est qñ maximus ad
+mediū sicut dꝛia extremoꝝ ad differentiā maioꝝ. Quarta est qñ medius ad minimū
+sicut dꝛia extremoꝝ ad differentiā maioꝝ. Quinta est qñ medius ad minimū: sicut
+differētia extremoꝝ ad differentiā minoꝝ. Sexta est qñ maximus ad minimū: sicut
+differētia minoꝝ ad dꝛiam maioꝝ. Septima est qñ maximus ad minimū: sicut dꝛia
+extremoꝝ ad differentiā maioꝝ. Octaua est quando maximus ad minimū: sicut
+differentia extremoꝝ ad differentiā minoꝝ.
+
+<margin>1</margin>
+<image-desc>A mathematical diagram featuring three connected semi-circles with numbers 8, 6, and 4. The differences between the numbers are noted as '2' within the segments. Labels include '8b' and '6c'.</image-desc>
+
+### ¶ Si fuerint tres numeri in arithmetica medietate dispositi: erit maioris ad medium minor proportio q̄ medii ad minimum.
+
+¶ Sint a b c tres numeri in arithmetica medietate dispositi quoꝝ maximus sit a: dico a ad b minoꝛē
+esse pꝝportionē q̄ b ad c. nā per diffinitionē a ad b et b ad c equales sunt dꝛie: qꝛ igitur a ꝛ b sunt cō=
+positi ex b et c ipsis additis numeris equalibus scz differentiis eoꝝ. ergo per decimāsextam secundi
+pꝝportio a ad b minoꝛ erit proportione b ad c: quod est propositum.
+
+<margin>2</margin>
+<image-desc>A diagram showing two parallel horizontal lines labeled with the numbers 10 and 5.</image-desc>
+
+### ¶ In eadē medietate duo extremi cōiuncti ttm reddunt: q̄tum medius duplicatus.
+
+¶ Nam p diffinitionē primi ad mediū et medij ad extremū equales sunt dꝛie: igitur p secundā primi
+medius est extremoꝝ cōiunctoꝝ medietas. duplicat⁹ igitur equatꝛ extremis iūctis: qđ est pꝝpositū.
+
+<margin>3</margin>
+<image-desc>A diagram with three horizontal line segments labeled '4b', '5', and 'c' with a numerical '2' placed nearby.</image-desc>
+
+### ¶ In eadē medietate quod sub extremis continetur cum quadrato differētie equale est quadrato medii.
+
+¶ Nam per premissam duo extremi simul sunt tanq̄ duplus medij. Ponatꝛ ergo duplus medij qđ sit
+d diuisus p duo equalia quoꝝ medius est vnꝰ: ꝛ per duo inequalia q̄ sint a e extremi: et p decimānonā
+primi erit quadratum b vnius equalium q̄tum quod fit ex a in c cum eo quod fit ex differētia a ad b in
+differentiā b ad c. at qꝛ differentie ille sunt equales: tantum ergo erit quadratū medij b q̄tum quod
+cōtinetur sub extremis a ꝛ c cum quadrato dꝛie medij ad extremū: quod est propositū.
+
+<margin>4</margin>
+<image-desc>A tabular diagram with columns of numbers: 20, 18, 16 in the top row; 4, 3, 2 in the middle; and labels 'a', 'b', 'c' at the bottom.</image-desc>
+
+### ¶ In eadem quoqꝫ medietate quadrata extremoꝝ: duplum sunt quadrato medii et quadrato differentie.
+
+¶ Sint a b c numeri in hac medietate dispositi: sitqꝫ d quadrata a et c. dico d duplū esse quadrato me
+dij ꝛ quadrato dꝛie simul. Sit eni f qđ fit ex a in c bis ꝛ quadrata b medij bis sint e: qꝛ eni per secundā
+huius a et c cōiuncti tantū sunt q̄tum duplus b. et per decimāquintā primi d ꝛ f simul em sunt q̄tum
+quadratū totius a c: sed ꝛ per eandē decimāquintā e erit medietas d ꝛ f simul. igitur per secundā partē
+secūde primi e ad d ꝛ ad f equales sunt dꝛie. igitur per diffinitionē e hac medietate medius est inter d
+et f. ꝛ qꝛ per p̄cedentē qđ fit ex a in c semel cū quadrato dꝛie tantū est q̄tum b in se. igit e addit super f
+duplū quadrati dꝛie: quare ꝛ d tantum addet sup e. quare ꝛ d duplū quadrati differētie b ad a equatꝛ d.
+igitur quadratus b qđ est medietas e cū quadrato differētie b ad a est medietas d: qđ est propositū.
+
+<margin>5</margin>
+<image-desc>A diagram showing three points or segments on a line labeled '7', 'b', and 'c'.</image-desc>
+
+### ¶ Trium numeroꝝ in hac medietate dispositoꝝ duobꝰ extremis datis: mediū repire.
+
+¶ Sint a b duo extremi in hac pꝝportione: illos simul adde atqꝫ aggregati sumo medietatē que per
+secundam huius erit medius petitus: factumqꝫ erit propositū.
+
+<vocab>Jordanus de Nemore, Arithmetica, medietas, arithmetica medietas, geometrica medietas, musica medietas, proportio, differentia, quadratum</vocab>

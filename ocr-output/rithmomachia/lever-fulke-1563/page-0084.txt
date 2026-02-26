@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>text</page-type>
+<warning>Significant ink bleed-through and ghosting from the reverse side of the page makes some characters difficult to read.</warning>
+<meta>catchword: The</meta>
+
+# The Philosophers game.
+
+There must also in this thyrd kynde
+be considered the table, the men,
+their marking, the order of theyr
+battell, the motions, their taking, and
+last of all theyr triumphing.
+The table is the same that hath bene
+twyse already discribed. Yet some wyll
+not haue it so longe, but at the lest it
+must conteyne .10. squares in length and
+alwayes .8. in breadeth. The longest
+is best.
+
+## ¶ Of the men.
+
+The men be .48. as it hath bene told
+of two contrary collor, the head and
+bottom all of one collor, because
+men ons taken be no more occupyed in
+thys kynde of playing.
+
+## ¶ The inscription and
+## fashion.
+
+<vocab>The Philosophers game, Rythmomachia, board game, game pieces, table, squares, inscription</vocab>

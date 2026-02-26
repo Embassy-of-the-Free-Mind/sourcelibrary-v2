@@ -1,0 +1,38 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>8.</page-num>
+
+<image-desc>A structural diagram of the Greek musical system (the Greater Perfect System) showing the arrangement of tetrachords. The diagram consists of four main rows. 
+The top row contains two boxed labels: "Tetrachordū hypaton" (spanning notes a to d) and "Tetrachordū diezeug." (spanning notes k to n). 
+The second row lists intervals between the notes: "To." (Tonus), "Semi." (Semitonium), "To.", "To.", "Semi.", "To.", "To.", "To.", "Semi.", "To.", "To.", "To.", "Semi.", "To.", "To.". 
+The third row contains the letter designations for the fifteen notes: a, b, c, d, e, f, g, h, k, l, m, n, o, p, q. 
+The bottom row contains two boxed labels: "Tetrachordū melon" (spanning notes e to h) and "Tetrachordū hyperboleō" (spanning notes o to q).</image-desc>
+
+¶ Sit n o p q tetrachordū hyperboleon facio vt in prioribus n neten diezeugmenon ad q netē hyperboleon sesquiteritiā: et iccirco ad eam cōcinentem diatessaron. et p ad q facio toni intervallū. t o ad p itidem toni intervallū. per sextam tertij n ad o erit semitoniū minus. est ergo tetrachordū hyperboleon n o p q ex semitonio minore duobus subiunctis tonis in genere diatonico dimēsū. sed et per precedētē h mese ad n neten diezeugmenon cōsonat diapente: ergo h ad q mese ad neten hyperboleon ex cōsonantia diapente et diatessaron constans: cōsonat diapason. ergo a ad q proslambanomenos ad netē hyperboleon cōsonabit bis diapason. et cum totum polychordum a q omnino quindecim perficiatur chordis: in pētadecachordo et in genere diatonico cōstitutum est bis diapason. quđ est totū propositū.
+
+# ¶ Pentadecachordū in diatonica melodia constitutu: numeros reperire.
+
+| | | | | | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---|
+| Proslambanomenos | a | 9 | 2 1 6 | 1 7 2 8 | 1 3 8 2 4 | |
+| Hypate hypaton | b | 8 | 1 9 2 | 1 5 3 6 | 1 2 2 8 8 | Tonus |
+| Parhypate hypaton | c | | | | 1 4 5 8 | 1 1 6 6 4 | Semi. minus |
+| Lichanos hypaton | d | | | 1 6 2 | 1 2 9 6 | 1 0 3 6 8 | Tonus |
+| Hypate meson | e | | | 1 4 4 | 1 1 5 2 | 9 2 1 6 | Tonus |
+| Parhypate meson | f | | | | | 8 7 4 8 | Semi. minus |
+| Lichanos meson | g | | | | 9 7 2 | 7 7 7 6 | Tonus |
+| Mese | h | | | 1 0 8 | 8 6 4 | 6 9 1 2 | Tonus |
+| Paramese diezeugmenō | k | | | | 7 6 8 | 6 1 4 4 | Tonus |
+| Trite diezeugmenon | l | | | | 7 2 9 | 5 8 3 2 | Semi. minus |
+| Paranete diezeugmenō | m | | | 8 1 | 6 4 8 | 5 1 8 4 | Tonus |
+| Nete diezeugmenon | n | | | 7 2 | 5 7 6 | 4 6 0 8 | Tonus |
+| Trite hyperboleon | o | | | | | 4 3 7 4 | Semi. minus |
+| Paranete hyperboleon | p | | | | 4 8 6 | 3 8 8 8 | Tonus |
+| Mete hyperboleon | q | | | 5 4 | 4 3 2 | 3 4 5 6 | Tonus |
+| | | pmꝰ | scđus | tertius | q̄rtus locꝰ | |
+
+---
+
+¶ Numeri qui in musica disciplina precipue desiderantur: sunt duplares / triplares / quadruplares / hemioli / epitriti epogdoi: hoc est dupli / tripli / quadrupli / sesqualteri / sesquitertij / et sesquioctaui. quo circa si desideras cognoscere ad quem numerū numerus maior est duplus: ipsum partire per duo. Ad quem triplus partire per tria. Ad quem quadruplus partire per quattuor. Ad quem sesqualter partire per tria et tertia auge per duo. Ad quem sesquitertius partire per quattuor et quartā auge per tria. Ad quem sesquioctauus partire per nouem et nonam auge per octo. Et numeri: per octauā secundi Arithmetices vbiqƺ surgens peritit: si maior duplus / triplus / quadruplus / sesqualter / sesquitertius / aut sesquioctauꝰ est. ¶ Et si rursum cognoscere desideras quē numerus minor duplū habet: ipsum auge per duo. Quem triplum: auge per tria. Quem quadruplū: auge per quattuor. Quem sesqualterū: partire per duo et illi medietatē adde. Quem sesquitertīū: partire per tria / et tertiam adde. Quem sesquioctauū: partire per octo / et octauam adde. Et statim per eandē octauā et diffinitiones cognosces petitū. ¶ Sed nunc ad monstrandū propositum nos cōuertamus. Sit pentadecachordū in diatonico genere modo repertum: cuius numeri quērūtur: a b c d e f g h i k l m n o p q. duco in seinvicem duo / tria / quattuor / et minimos toni: hoc est vigintiquattuor: in 9 et 8 minimos terminos toni et veniant in secundo loco a b que per septimā secundi arithmetices sunt in pportione sesquioctaua / et continentia tonum. capio sesquitertiū numeri a: sit quod d / et sesqualterū qui sit e / subduplū qui sit h Rursum sumo sesquitertium numeri b qui sit m et sesqualterum qui sit n et eius subduplum qui sit q. quia a ad d est diatessaron et a ad e diapēte: quod per decimātertiu tertij d ad e tonus est et eadē quoqƺ ratione m ad n tonus. Et si d octauā partem haberet ea eidē adiecta facerē c sesquioctauū ad d: et c d cōtinentia tonū. modo autē quđ d cōperitur octaua parte carere: augeo a b d e m n q octo: surgētqƺ tertio loco a b d e m n q: qui numeri per eandē septimā adinvicē eandē seruabūt pportione: quā i numeri scđo loco positi. quia quod d tertio loco positus habet octauā: ea igitur adiecta ad d fiat c: eritque c ad d sesquioctauꝰ atque cū eo tonū pertinēs. itidē adiecta octaua parte h ad h fiat g. et octaua parte m ad m fiat l. et octaua q.
+
+<vocab>tetrachordum, hyperboleon, diezeugmenon, diatessaron, semitonium, diapente, diapason, proslambanomenos, pentadecachordum, diatonica, hemioli, epitriti, epogdoi, sesquioctavus, arithmetices</vocab>

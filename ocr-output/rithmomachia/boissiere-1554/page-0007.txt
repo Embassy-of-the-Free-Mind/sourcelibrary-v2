@@ -1,0 +1,17 @@
+<language>Middle French</language>
+<page-type>text</page-type>
+<page-num>1</page-num>
+<meta>catchword: mis &</meta>
+
+casse des harmonies de musique. Et brief
+auec Aristote ie concluds, que toute chose
+sans raison de quantité est nulle. Sur quoy
+s'ensuit l'authorité du diuin Plato, lequel dict:
+> Ceux lá qui de nature sont Arithmeticiens,
+> estre idoines & aptes à toute noble discipli-
+> ne & bon sçauoir. 
+Parquoy à bon droict voulut estre escript à la porte de son Academie cest epigramme: 
+> Aucun ignorant de Geometrie n'entre icy. 
+sous lequel nom de Geometrie est comprise l'Arithmetique. Et de ceste authorité meu, apres auoir par plusieurs iours affectueusemẽt trauaillé ausdits nõbres, est tombée entre mes mains vne compositió & disposition des nombres fort excellente, tirée des proportions & harmonies de Pythagoras: laquelle par maniere de ieu & recreatiõ estoit introduicte entre les anciens Philosophes, pour adoulcir leurs fascheries, & recréer en vertu leurs esprits inquietez par lõgue estude. Au nombre desquels Philosophes, si Lucain & autres historiés ont voulu mettre Iules Cæsar, disant qu'iceluy entre les troubles des guerres ciuiles, iamais ne delaissa le tant noble estude des sciences celestes: à plus forte raison audict nõbre des Philosophes doit estre
+
+<vocab>Aristote, Plato, Arithmeticiens, Geometrie, Pythagoras, Lucain, Iules Cæsar, musique, nombres, sciences celestes</vocab>

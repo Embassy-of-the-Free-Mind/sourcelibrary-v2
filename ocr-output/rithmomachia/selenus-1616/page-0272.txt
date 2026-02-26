@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>238</page-num>
+<header>Das Ander Buch / 14. cap:</header>
+
+der Weiße / (ihn zu vertheidigen /) des K. Rochen / auf vier
+und dreyßig : (dan / wan ihn / der Schwarze / mit der K. Rochen /
+wegnehme : der Weiße / mit der K. Reuter / auß zwey und
+vierzig / Schach-bieten / und diesen S. Rochen / folgendes / weg-
+nehmen würde) der Schwarze / (des K. Schützens-Soldaten /
+zu vertheidigen) der K. Schützen / auf vierzehen : der Weiße /
+des K. Rochens-Soldaten / auf drey und dreyßig : der Schwarze /
+der K. Rochen / auf ein und funfzig : der Weiße / beut / mit der K.
+Reuter / auß zwey und vierzig / Schach : der Schwarze / setzet
+den König auf sechßig : der Weiße / der K. Reuter / auf des S. K.
+Schützens-Soldaten / auf zwey und funfzig : der Schwarze / den-
+selben / (auf daß Er ihn / auß der gefahr errette / und zur Königin
+mache / auch keine ursache / zur verwechslung der Steine / gebe) auf
+sieben und zwanzig : der Weiße / des K. Rochen / auf der S. K.
+Schützen / auf zehen : der Schwarze / denselben / auf ein und
+zwanzig : der Weiße / auf denselben / des K. Rochen / auf drey-
+zehen : der Schwarze / denselben / auf dreyßig : der Weiße / der
+K. Reuter / auf fünf und dreyßig : der Schwarze / des K. Schü-
+tzens-Soldaten / auf neunzehen : der Weiße / (demselben / den
+Paß zu verlegen) des K. Rochen / auf eylfe : der Schwarze / (ihn
+zu vertheidigen) der K. Schützen / auf zwelfe : der Weiße / auf den-
+selben / der K. Reuter / auf achtzehen : der Schwarze / denselben /
+auf fünfe : der Weiße / den König auf acht und zwanzig : der
+Schwarze / der K. Rochen / auf des W. K. Soldaten / auf drey
+und vierzig : der Weiße / seines K. Rochen / auf der S. K. Schü-
+tzen / auf drey : der Schwarze / beut / mit der K. Rochen / auß
+vier und vierzig / Schach : der Weiße / rucket den König / auf sie-
+ben und zwanzig : der Schwarze / der K. Rochen / auf drey und
+vierzig / und beut Schach : der Weiße / ziehet / den König / auf
+zwanzig : der Schwarze / nimt / des W. K. Soldaten / mit der
+K. Rochen / und vertheidiget dero Schätzen : Der Weiße / ziehet /
+der K. Reuter / auf der S. K. Rochen / auf acht und zwanzig :
+der Schwarze / muß ihn nicht / auf sieben und dreyßig : dan ihn
+sonsten / der W. K. Reuter / wan derselbe / seinem Könige / auß
+drey und vierzig / Schach gebe : erhaschen würde) besondern an-
+derswo hinziehen : und wird / der K. Schützen / zusamt dem gan-
+zen Spiele / dofern der Weiße / dessen kündig / verloren haben :
+
+<meta>catchword: Setzet</meta>
+
+<vocab>Schach, König, Rochen, Reuter, Soldaten, Schützen, Schach-bieten, Weiße, Schwarze, Königin, Spiel</vocab>

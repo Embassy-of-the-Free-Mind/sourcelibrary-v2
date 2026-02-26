@@ -1,0 +1,84 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>ii</page-num>
+<warning>Faint annotations and numbers at the bottom left. The text uses early modern typographical abbreviations common in 16th-century printing.</warning>
+
+et proueniat e. et a in se et proueniat f. et in d et proueniat g. et in c et pueniat h. per septimam huius
+que proportio a ad b: ea est f ad e. et que c ad d: ea h ad g. dein duco b in c et pueniat k: eritq; p octauā
+huius h ad k sicut f ad e. at proportio f ad e q; equatur pportioni a ad b: est maior proportione c ad d.
+ergo et proportio h ad k eadem proportioni f ad e: maior est pportione h ad g. cũ h ad g equetur c ad d.
+ergo per decimam k minor est g. et q; f ad e vt h ad k: p tertiam vt f ad h: ita e ad k. et q; g pbatus
+est minor k: ergo per scdam partem none minor erit proportio e ad g q; e ad k. sed e ad k per octauam
+huius adequatur proportioni a ad c primi ad tertium: et e ad g proportioni b ad d secundi ad quartū
+Est igitur proportio primi ad tertium maior q; secundi ad quartum quod proponitur.
+
+---
+
+<margin>13</margin>
+# Si fuerit proportio totius ad totum maior q; detracti ad detractum : erit residui ad residuum proportio maior q; totius ad totum.
+
+<image-desc>Diagram for proposition 13: Two sets of semicircles at the top. The first shows the number 8 split into 3 and 5, labeled a and b. The second shows the number 4 split into 2 and 2, labeled c. Below these are mathematical representations: 64 (split into 24 and 40) labeled e, f, g; 32 (split into 16 and 16) labeled h; and straight lines for 12 and 20 labeled k and l.</image-desc>
+
+Sit a b totum et ab eo detractus a et residuus b. sit item c d aliud totum et ab eo detractus c et resi-
+duus d. sitq; totius a b ad totũ c d pportio maior q; a ad c: dico b ad d residuũ ad residuum maiorem
+esse proportiõem q; a b ad c d totius ad totũ. duco enim a b in a et in b et proueniat e f cuius detractus
+sit e et residuus f. et duco itẽ a b in c et in d et proueniat g h: cuius g sit detractus et residuus h. Item
+duca[m] a in cd et pueniat k: substrahaturq; k ab toto g h et relinquatur l. cum eni per nonam primi qd
+fit ex ductu alicuius numeri in om[n]es partes alicuius totius: equũ sit ei qui fit ex ductu illi[us] numeri in
+eũdez totum: totus e f equabitur ei qd fit ex ductu a b in seip[su]m a b. et cũ idem a b in seip[su]m a b puxerit
+e detractum e f. per septimã huius que pportio a b ad a: eadem erit e f ad e. et eadẽ rõne que a b ad b:
+eadem e f ad f. et que a b ad c d: eadem e f ad g h. et vt c d ad c: ita g h ad g. et g h ad h: vt c d ad d. et cũ
+duo numeri scz totus a b et a detractus: ducti sint in eundem c d: et pourerit numerus a b numerũ g h
+et a numerum k: per octauam que proportio a b ad a: eadem est g h ad k. sed et cũ e pducatur ex a in a
+b: et k ex a in c d. per septimam q proportio a b ad c d: eadez erit e ad k. quare vt e f ad g h: ita t e ad k
+detractus ad detractum. per quintam igitur vt e f ad g h: ita f ad l residuus ad residuum. et cũ e ad g
+sit proportio que a ad c: erit proportio e ad g minor q; e ad k. quare per decimam k minor est g. igitur
+et l qui ostabitur ex h et differentia k ad g: maior erit h. igitur per eandem decimam pportio f ad h minorẽ
+numerum maior est q f ad l. at proportio f ad l pbata est eadem pportioni e f ad g h: quare et pportiõi
+a b ad c d totius ad totum. Est igitur pportio f ad h: q est eadem pportioni b ad d residui ad residuũ:
+maior proportione a b ad c d totius ad totum. quod est propositum.
+
+---
+
+<margin>14</margin>
+# Si vero detracti ad detractum fuerit proportio maior q; totius ad totum: erit residui ad residuum proportio minor q; totius ad totum. Ex his quoq; perspicuum euadit si fuerit proportio residui ad residuum sicut detracti ad detractum: proportionem detracti ad detractum esse tanq; totius ad totum.
+
+<image-desc>Diagram for proposition 14: Two semicircles. The first represents the number 10 split into 6 and 4, labeled a, b, c. The second represents the number 5 split into 2 and 3.</image-desc>
+
+Sit a b aliquis totus nu[m]erus et ab eo detractus a et residuus b: et c d alter totus et ab eo detractus
+c et residuus d. sitq; a ad c maior proportio q; a b ad c d. dico b ad d minorem esse proportionem q; a b
+ad c d. quia eni a ad c est pportio maior q; a b ad c d: per undecimam huius ecõtra minor erit pportio
+c ad a q; c d ad a b. cũ itaq; maior erit pportio c d ad a b totius ad totũ q; c ad a detracti ad detractũ.
+per precedentem igitur maior est proportio d ad b residui ad residuum q c d ad a b totius ad totum.
+Intelligo igit q primũ numerum. b scdm. c d tertium. et a b quartum. q d ad b maior est proportio q
+c d ad a b: per undecimam ecõtra miõr est proportio b ad d q a b ad c d. est itaq; notum totius ad totũ
+maiorem esse proportionem q residui ad residuum et propositum. Correlarium patet: nam si totius
+ad totum maior esset proportio q detracti ad detractum: ergo per precedentem residui ad residuum
+maior erit proportio q totius ad totum. qre multo fortius residui ad residuum maior esset proportio
+q detracti ad detractum. quod est cõtra hypothesim. Si autem totius ad totum miõr est proportio q
+detracti ad detractum: ergo per presentem residui ad residuum minor erit pportio q totius ad totũ.
+quare et multo fortius residui ad residuum minor erit proportio q detracti ad detractum. qd est itez
+otra hypothesim. cum itaq; pportio totius ad totum nec maior neq; minor esse possit q detracti ad
+detractum: relinquitur eidem equalis.
+
+---
+
+<margin>15</margin>
+# Si primi ad scdm fuerit proportio maior q; tertij ad quartum: erit primi et secundi ad secundum maior proportio q; tertij et quarti ad quartum: ad primum vero minor q; tertij et quarti ad tertium.
+
+<image-desc>Diagram for proposition 15: Two semicircles. The first represents the number 8 split into 6 and 2, labeled a, b, c. The second represents the number 10 split into 5 and 5, labeled d.</image-desc>
+
+Sit a a b maior proportio fuerit q c ad d: dico pmo a b ad b maiorem eẽ pportiõem q c d ad d. scdo
+a b ad a minorem esse q c d ad c. Primũ patet: nã si a b ad b et c d ad d ponãtur equales: vt q pportio
+a b ad b: ea sit c d ad d. ergo pmutatim p tertia huius erit pportio a b ad c d: que b ad d. qre p quintã
+que proportio a b ad c d: ea erit et a ad c residui ad residuum. quare et q b ad d. et cũ similes sint a ad
+c et b ad d: ergo permutatim per tertiam que proportio a ad b ea est c ad d. quod est contra hypothesim.
+Si aut ponatur a b ad b minor et c d ad d proportio maior: cũ c d ad d sit proportio maior q a b ad b
+ergo per duodecimam huius c d ad a b maior q d ad b detracti ad detractum. ergo per decimãtertiã
+c ad a maior residui ad residuũ q c d ad a b. quare multo potius q d ad b. cũ itaq; c ad a sit maior q
+d ad b: ergo per undecimam minor est a ad c q b ad d. Intelligo ergo quattuor numeros: b primum.
+d scdm. a tertiũ. c quartũ: quia maior est pportio b ad d q a ad c: ergo per duodecimã maior est b ad
+a q d ad c proportio: ergo p undecimam minor a ad b q c ad d. qd est contra hypothesim. Relinquit igit
+proportio a b ad b: cũ neq; eqlis neq; miõr. pbatu est eẽ possit: maior eẽ pprotiõe c d ad d. qd est pmu.
+
+<vocab>proportio, detractum, residuum, totum, numerus, decimam, undecimam, duodecimam, hypothesim</vocab>

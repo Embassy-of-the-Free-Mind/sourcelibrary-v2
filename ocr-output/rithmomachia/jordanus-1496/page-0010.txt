@@ -1,0 +1,49 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<meta>The page contains geometric diagrams in the left margin corresponding to the numbered propositions in the main text.</meta>
+
+<image-desc>A series of geometric diagrams along the left margin. Most consist of a large semicircle containing two or more smaller semicircles or segments, representing mathematical divisions of a whole. Labels include Arabic numerals (2, 4, 6, 8, 12, 16, 24, 32, 36, 40) and letters (a, b, c, d, f). One diagram shows a triangle within a semicircle. At the bottom, two horizontal line segments are shown with labels 4 and 2.</image-desc>
+
+<margin>14</margin>
+¶ Numero in duo diuiso quod fit ex ductu totius numeri in alteru illoz: est q̃tum qđ fit ex ductu eiusdem in se ⁊ in reliquum.
+
+¶ Sit a b nūerus in duo a ⁊ b diuisus: dico qđ fit ex ductu a b in a equū esse ei qđ fit ex ductu a in se ⁊ in b. et ita quoq; qđ fit ex a b in b: equale eē ei qđ fit ex b in se ⁊ b in a. ducatur ergo a b in a: tunc qđ fiet ex ductu a b in a p octauam equū erit ei qđ fit ex ductu a in b. at qđ fit ex ductu alicuius in at in b equū est per nonā factō ex ductu in compositū a b. ergo cū a ducit in seipm a ⁊ in b: tm facit q̃tum a b in a. et ita argumentare si a b ducatur in b. et consimili modo concludes propositum. Poterq; id clarius videre si bis ponis a et bis ponis b.
+
+---
+
+<margin>15</margin>
+¶ Si numerus in duo diuidatur: qđ fit ex ductu totius in se tm est: q̃tum quod fit ex ductu vtriusq; diuidentium in se ⁊ vnius bis in alteru.
+
+¶ Sit a b numerus in duo a ⁊ b diuisus: dico qđ fit ex ductu a b in se equū eē ei quod fit ex ductu a in se ⁊ b in se: et ex ductu bis a in b. Nam qđ fit ex a b in se: equū est ei quod fit ex ductu eius in a ⁊ b p tridecimam. At qđ fit ex ductu a b totius in a ⁊ in b p precedentem bis sumptam: equū est ei quod fit ex ductu a in se ⁊ in b et b in se ⁊ in a. seu qđ fit ex a in b ⁊ b in a alternatim p octauā equat ei qđ fit ex ductu bis a in b. quod sit igit̃ ex a b in se: equat ei quod fit ex a in se ⁊ b in se: et ex bis in b qđ pponebatur. Et ex hoc cognoscit̃ modus eliciendi latus tetragonum.
+
+---
+
+<margin>16</margin>
+¶ Si numerus in duo diuidat̃: qđ fit ex toto in se cū eo qđ fit ex altero in se fit: equū est ei qđ qđ ex toto in illud idem bis: qđq; ex reliquo in se ductu pducitur.
+
+¶ Sit vt prius a b nūmer⁹ in duo a ⁊ b diuisus: dico qđ pducit̃ ex a b in se cū eo quod fit ex a in se: equū esse ei quod fit ex a b bis in a / ⁊ b in se. Nam qđ fit ex a b in se: p precedentem tm est q̃tū quod fit ex a in se ⁊ b in se: et a bis in b. quod ergo fit ex a b in se cū eo quod fit ex a in se: tm erit q̃tum quod ex a in se bis ⁊ a in b bis ⁊ b in se. sed quod fit ex a in se bis ⁊ et bis in b per 14 equat ei quod fit ex a b in a bis. cui adde quod fit ex b in se. tunc q̃q; quod fit ex a b in se cū eo quod fit ex a in se: equabit̃ ei quod fit ex a b in a bis ⁊ b in se. quod est propositum.
+
+---
+
+<margin>17</margin>
+¶ Si numerus in duo diuidatur qđ fit ex toto in se: equū est ei qđ fit ex ductu vnius partis in aliud quater: cum eo qđ fit ex differentia in se.
+
+¶ Sit a b nūerus in duo a ⁊ b diuisus sitq; b mai⁹: diuidat̃q; itez b in duo scz in d equale a: ⁊ c d̃sam b ad a. dico quod fit ex a b in se: equū eē ei quod fit ex ductu quater a in b ⁊ c in se. Nā p decimāquintā quod fit ex a b in se: equū est ei quod fit ex a bis in b ⁊ a in b in se. at p pcedentē quod fit ex b i se cū a in se equali d vni ptiū b: equat̃ ei quod fit ex b bis in a ⁊ c in se: q̃re alternatim p octauam ⁊ ei quod fit ex a bis in b ⁊ c in se. Igit̃ a b in se tantus est q̃tus a quater in b cū differētia c in se. quod intendit̃.
+
+---
+
+<margin>18</margin>
+¶ Qđ fit ex minore diuidētium in se cum eo qđ fit ex toto in eoz differentiam tm est q̃tum quod puenit ex maiore eorūdem per se multiplicato.
+
+¶ Sit a numerus diuisus in b maius ⁊ c minus: sitq; d differentia b ad c. dico quod fit ex c in se: cum eo quod fit ex a in d: tm esse q̃tum quod fit ex b in se. Nam per decimam quod fit ex a in d: equat̃ ei qđ fit ex b in d ⁊ c in d. Sit itaq; illđ e. et quia b diuisum est in c ⁊ d differentiam: per 14 quod fit ex b in d altey diuidentium: equum est ei quod fit ex d in se ⁊ in c. et cum per octauam c in d etiam equet̃ d in c: erit igit̃ a in d equum ipsi d in se ⁊ bis d in c simul. quibus si addas c in se quod sit f: totum quod puenit ex a in d ⁊ c in se scz e ⁊ f equabit̃ d in se / c in se / et bis d in c. at b in se (cum ipm diuisum sit in d ⁊ c aut equale) per decimāquintā tm etiā est q̃tū d in se c in se ⁊ bis d in c. scz q̃tum fit ex ductu vtriusq; partium in se: ⁊ vnius in alteram bis. Est igit̃ quod fit ex a in d toto scz in differentiam: cum c minore parte in se: q̃tum fit ex b maiori parte in se multiplicata. quod intendit propositio.
+
+---
+
+<margin>19</margin>
+¶ Si numerus per duo equalia duoq; inequalia secetur: qđ ex ductu vnius equaliū in se producitur tm est: q̃tum qđ fit ex ductu vnius inequalium in reliquū cum eo qđ fit ex differentia in differentiam.
+
+¶ Priusq; veniamus ad demonstrationem: notatu dignum arbitroz qđ quādo aliqs numerus vt a b in duo equalia pariter ⁊ in duo inequalia vt in a minus ⁊ b maius diuidit̃: illa duo inequalia ad vnū equaliū quod totius medietas est: eandem atq; cōem habere differentiam. nam cum illozū duorum inequalium simul iunctorum illud equale sit medietas: illa ab eo equidistare per secūdaz partem secūde huius necesse est: quare ad ipm cōem habebunt differentiam. Hic fit etiā vt differētia vnius inequaliū ad reliquum: dupla sit ad differentiam cōem ipsius equalis ad ipsa. Nam cum ipsa inequalia vt a ⁊ b extrema sint et ipsum equale medium: per octauam conceptionem differentia ipsoz constituta est ex differentijs eorum ad ipm medium. Sed hec statim nota sunt. Nos ergo ad propositi demōstratōem cōuertamus. Sit a b nūerus diuisus in a maiorem portionem ⁊ b minorem: sitq; c vna eius medietas: et d sit differētia cōmunis c ad a et ad b. Nam vt ostēsum est c ad vtrunq; eandē cōmunēq; habebit differentiā. Dico qđ fit ex c in se tm esse quantū qđ fit ex a in b cum eo qđ ex d in se. q2 enī c diuisum ē in d et b. ideo per decimāquintā qđ fit ex c in se equū ē ei qđ fit ex d in se et b in se et b in d bis. et q2 a maioz poztio est totū et eius partes b et differētia dupla ad d. ergo per decimāquartā a in b tantū est quantū qđ fit ex b in se et b in d bis in d. addē igitur ei qđ fit ex a in b numerū qui fit ex d in se: ⁊ tunc totū qđ fit ex a in b et d in se equabit̃ ei quod fit ex d in se b in se et b in d bis: cui demonstratum est equari
+
+<meta>catchword: qđ fit</meta>
+
+<vocab>arithmetic, geometry, proportions, demonstrations, squares, products, differences</vocab>

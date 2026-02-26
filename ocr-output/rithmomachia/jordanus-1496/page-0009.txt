@@ -1,0 +1,41 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>I</page-num>
+<sig>a 3</sig>
+
+¶ Sint a.b.c.d.e.f quotlibet numeri: sintq; d e f eq̄ multiplices a b c singulis singuli: intelligo itaq; a primum. d scđm. b tertium. e quartum: eritq; per penultimā compositus ex a b p̄mo et tertio tota pars compositi ex d e secūdo et quarto quota pars a est d. quare compositus ex d e eque multiplex ad compositum ex a b vt d ad a. Facio itaq; numerum ex a b compositum primum: et compositum ex d e scđm et c tertium et f quartū: et cōsimiliter argumentoz. quia quota pars a ad d: tota pars c ad f. cōpositus igitur ex a b c primo et tertio tota pars erit compositi ex d e et f secūdo et quarto: quota pars a b ad d e. qre compositus ex d e f eque multiplex ad cōpositū a b c vt d ad a. et ita si cōplures nūeri succrescerēt: sempvtare precedentium cōposito vsq; dum advltimū decūbas: efficiefq; ppositū.
+
+<image-desc>A semi-circular diagram at the top right labeled 18, containing nested semi-circles labeled 8, 6, and 4. These correspond to variables f, e, and d. Below are labels a, b, and c. Further semi-circles at the bottom contain numbers 2, 3, and 4, which are summed to 5 and then 9.</image-desc>
+
+## 7 Si quoties vnitas in primo toties secundus in tertio: quoties vnitas in scđo: toties primus in tertio.
+¶ Sint a b c tres numeri: a primus. b secundus. c tertius: sitq; vt quoties fuerit vnitas in a: toties sit b in c. dico ergo qđ quoties fuerit in b: toties a esse in c. diuido enī a primum nūerū in vnitales et c tertium in totidem partes: quaz quelibet erit equalis b secundo. quia eniz quotiens prima pars a in prima part e c toties secūda in secūda: et tertia in tertia: et ita deinceps. ergo per precedentem cōpositus a tota pars erit compositi c: quota pars prima pars eius ad primam partem c: et eque multiplex ad vteius prima pars ad primam ptem a. at quoties vnitas in b: toties prima pars a in pma parte c. Nam vnitas equatur pme parti a: et b prime parti c. ergo quoties vnitas in b secūdo: toties a primus in c tertio. quod erat demonstrandum.
+
+<image-desc>A semi-circular diagram labeled 20 at the top, containing two smaller semi-circles labeled 5 and 4, with labels b and a respectively.</image-desc>
+
+## 8 Si alterna fiat duoꝝ numerorum multiplicatio: idem numerus vtrobiq; pueniet.
+¶ At si a multiplicat b et proueniat c: dico etiā si b multiplicat a itidem prouenire c. nam si a multiplicat b et pueniat c: per diffinitionem quoties erit vnitas in a: toties erit b in c. ergo per premissam quoties vnitas in b secūdo: toties a primus in c tertio. per diffinitionem igitur si a sibi toties coceruatur quoties vnitas in b: per diffinitionem a per b multiplicatur. at cum hoc sit prouenit c. nam pbatu est a toties coaceruari in c: quoties vnitas in b. constat ergo propositum.
+
+<image-desc>A semi-circular diagram labeled 48 at the top, containing two smaller semi-circles labeled 12 and 4, with labels c, b, and a.</image-desc>
+
+## 9 Quod fit ex ductu alicuius numeri in quotlibet: tm̄ est qtum est quod fit ex ductu eiusdem in compositum ex illis.
+¶ Sit a numerus qui ducatur in b et proueniat d: et in c et proueniat e: dico ergo qđ compositus ex d e pducitur ex ductu a in compositum b c. cū enim b multiplicet v' scđm a: b per diffinitionem nūerat d scđm a: et per idem c numerat e scđm a. sunt igitur d et e eque multiplices b et c: quare per sextam compositus ex d e eque multiplex ad compositum ex b c. Sit igitur f productus ex ductu a in opōsito b c. cū itaq; b multiplicet f scđm a: nūerabit igitur numerus b c ipm̄ f scđm a. quare eque multiplex f ad b c vt d ad b. sed eidem b c aggregatus d e pbatus ē eque multiplex. sunt igitur d e et f eidem b c eque multiplices: per tertiam conceptionem adinuicem equales. Est igitur qđ fit ex ductu alicuius numeri in quotlibet tm̄: qtum qđ fit ex ductu eiusdez in cōpositum ex illis quēadmodū erat ppositū.
+
+<image-desc>A semi-circular diagram labeled 14 at the top, containing semi-circles labeled 6 and 8 (marked f and e). Below these are the numbers 3 and 4 (marked b and c), and at the base the number 2 (marked a).</image-desc>
+
+## 10 Quod fit ex ductu quotlibet numerorum in aliquem: equum est illi quod fit ex cōposito illorum in eundem.
+¶ Sit eadem cū precedenti hypothesis sed cōuerso ordine: vt ducātur b et c in a et proueniant d et e dico quod fit ex ductu b et c in a singillatim equū esse ei quod fit ex composito b e in a. nam p precedētē qđ fit ex ductu a in b et c singillatim: equū est ei quod fit ex ductu a in compositum b c. qđ alternatim per octauam qđ fit ex ductu b et c in a: equū est ei quod fit ex composito b c in eūdem. qđ ē ppositū.
+
+<image-desc>A series of very faint, nested semi-circular shapes, following the style of the previous diagrams.</image-desc>
+
+## 11 Quod fit ex ductu quotlibet numerorum in quotlibet numeros: equale ē ei quod fit ex composito ipsorum in compositum ex aliis.
+¶ Sint a b c quotlibet numeri qui ducātur in d e f quotlibet alios vt quilibet primorum ducatur in quēlibet secūdoꝝ: dico quod fit ex ductu a b c singillatim in quelibet aliǫ d e f eq̄le esse ei quod fit ex ductu compositi a b c in compositum d e f. nam qđ fit ex ductu a b c singillatim in d: equū est ei qđ fit ex opōsito a b c in d. et cōsimiliter de ductu a b c singillatim in e et f argumētabere qđ nichil aliud est q̄ qđ fit ex ductu a b et c in d e et f singillatim: per precedentem equale esse ei qđ fit ex composito a b c in d e et f singillatim. At per nonam qđ fit ex composito a b c singillatim in d e et f: equum est et quod fit ex opōsito a b c: in compositum d e f. quare cōstat quod fit ex ductu quotlibet numerorum in quotlibet numeros equum esse ei quod fit ex composito illoz in compositum ex aliis. Et hę quattuor octaua: nona: decima: et vndecima: pratim multiplicandiq; modum: plane declarāt.
+
+<image-desc>A large semi-circular diagram labeled 162 at the top, containing three sections labeled 18. Below these are numbers 5, 6, and 7 (marked d, e, and f). These rest on a section labeled 9, which contains nested sections labeled 2, 3, and 4 (marked a, b, and c).</image-desc>
+
+## 12 Quicunq; numerus numerat totum et detractum: numerat et residuum.
+¶ Sit a b totum: a detractū et b residuum. dico qđ si c numerat a b et a: ipm̄ nūerare b. numeret enī a b scđm numerum d e et a quidē scđm d. quia igitur per nonam qtum est c in d e: tm̄ est c in d et c in e At a equale est ei qđ fit ex c in d: igitur a cū eo qđ fit ex c in e: equū est a b. quare qđ fit ex c in e: equū est b. sed c numerat qđ fit ex c in e per diffinitionem: igitur et b suū equale numerabit. qđ est ppositū.
+
+## 13 Tm̄ est qd fit ex ductu nūeri in se: qtū qd fit ex ductu eiusdem in oēs suas partes.
+¶ Sit a quicūq; nūerūs quē semel pono diuisum in oēs suas ptes q̄ sint b c d e: a semel indiuisū: tūc qđ fiet ex a in b et in c in d et e p nonā equū est ei qui fit ex a in opōsitū ex b c d e. at opōsitū b c d e: est a. qđ fit igiť ex dūctu numeri in oēs suas partes: equū est ei qđ fit ex ductu eiusdez numeri in se. qre t alternatim per octauam qđ fit ex ductu nūeri in se: tm est qtum qđ fit ex ductu eiusdē in oēs suas ptes.
+
+<vocab>multiplicatio, numerus, compositus, vnitas, eque multiplex, demonstrandum, Arithmetica</vocab>

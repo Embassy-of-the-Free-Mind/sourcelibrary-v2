@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>235</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>14.cap:</margin> machet / des K. Rochens-Soldaten/ auf acht und funfzig/ zur Köni-
+gin / und beut Schach : Er / nimt ihn / mit dem Schützen: der
+Weisſe / denselben / mit dem Rochen : rucket folgendes / densel-
+ben / auf ein und sechszig/ und nimt der S. K. Soldaten : Gibt Er/
+aber mit dem Rochen / auß ein und vierzig/ gleich Schach : so rucket
+der Weisſe / (zu beschützen den Soldaten) den Rochen / auf zwey
+und vierzig : und kan Ihm / gantz leichtlich abhelfen : Dan der-
+selbe / es werden die Rochen gewechszlet / oder nicht : des K. Sol-
+daten / bald zur Königin machet ) der Weisſe / ſetzet den König /
+auf drey und vierzig : der Schwarze / der K. Rochen / auf eylfe /
+und helt der W. K. Reuter / gefangen : der Weisſe / rucket / des
+K. Rochen / auf vier und dreyssig : der Schwarze / (dofern Er
+keine ursache / zur verwechszlung / der Rochen / Schützens und
+Reuters / geben wil : Dan ſonsten der Weisſe / nach itziger an-
+ordnung ſeines Spieles / einen ſeiner Soldaten / durch hülffe des
+Königes / gar bald / zur Königin machen würde ) des K. Ro-
+chen / hinwider auf neune : der Weisſe / beut / mit der K. Reuter /
+auß zwey und funfzig / Schach : der Schwarze / weichet / mit dem
+Könige / auf neun und vierzig : der Weisſe / rucket / des K. Ro-
+chens-Soldaten / auf acht und funfzig / und beut mit ihm / alsz mit
+einer Königin / Schach : der Schwarze / nimt ihn / mit der K. Schüt-
+zen : (Dan ſonsten ſein König / wan derſelbe / auf ein und vierzig / ge-
+rucket würde / wegen der newen W. Königin / auß funfzig : ſieben und
+funfzig : oder zwey und vierzig / gleich Schach-Mat wehre) der Weis-
+ſe / denſelben / mit der K. Reuter / und verhindert / dasz des S. K. Ro-
+che / auß ein und vierzig / nicht kan Schach-geben : der Schwarze /
+beut / mit der K. Rochen / auß eylfe / Schach : der Weisſe / rucket
+den König / auf der S. K. Soldaten / auf zwey und funfzig : der
+Schwarze / beut / mit der K. Rochen / auß zwelfe / Schach : der
+Weisſe / (ſo fern Er / der S. K. Soldaten / mit dem Könige / nicht
+wil wegnehmen : noch / wan Er den König / auf vier und funfzig ge-
+zogen / ſeines K. Soldaten / zur Königin / folgendes machen ) ru-
+cket den König / auf ein und funfzig : der Schwarze / beut /
+mit der K. Rochen / auß eylfe / Schach : der Weisſe / bedecket
+den König / mit ſeiner K. Reuter / auf drey und vierzig / und
+beut Schach : der Schwarze / rucket nicht den König / auf ſie-
+ben und funfzig / oder ein und vierzig / (Dan ihm ſonsten der
+Weisſe / mit des K. Rochen / auß acht und funfzig : zwey und
+
+<sig>Gg iij</sig>
+<meta>catchword: vierzig-</meta>
+
+<vocab>Schach, Rochen, Soldat, Schütze, Reuter, Königin, König, Schach-Mat, Weisſe, Schwarze</vocab>

@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>37</page-num>
+<header>2.cap: Vom Schach-Spiel. 37</header>
+
+Spiel/und sonsten/noch ein kunstreich Stein-Spiel/von zweyhun-
+dert Steinen/gefunden. Wie dan von ihnen/Nicolaus Trigautius,
+Soc: Jesu P. ex Commentar-Matthæi Ricij, Ejusdem S. P. de Christia-
+nâ Expeditione, apud Sinas, sivè Chinenses, lib: 1. pag: 90. 91.
+bezeuget/do Er schreibet.
+
+> *Aleæ Ludus atq; Chartarum, quem etiam, in has partes,* ,,
+> *usus invexit, plebejus est, & vulgaris. Graviores, fallendo tem-* ,,
+> *pori, & ludicro etiam quæstui, adhibent Latrunculos, nostris non* ,,
+> *omninò absimiles. In his discrepant. Regius enim Calculus nun-* ,,
+> *quàm egreditur quatuor cellulas, suo loco viciniores, sed neq; lite-* ,,
+> *rati duo, Regis assessores. Reginâ carent. Alios porrò duos habent* ,,
+> *Calculos, non parùm ingeniosos, quos ipsi pulveris bellici Lebetes,* ,,
+> *vocant, ij Equos duos præeunt, & pedites subsequuntur, qui, in his* ,,
+> *duabus cellulis, unâ cellulâ præcedunt: Incedit hic Calculus, eo fer-* ,,
+> *mè modo, quo Turriti nostrates Elephanti: Inimici tamen Exerci-* ,,
+> *tus Ductorem Regem, non petit, nisi inter ipsum & Regem, qui pe-* ,,
+> *titur, alius fit Calculus, vel proprius, vel Collusoris. Hinc fit, ut* ,,
+> *tribus modis, ictum vitare possit, Rex appetitus; primùm, exiguâ,* ,,
+> *ut ità loquar, corporis declinatione, & honestâ fugâ, in proximam* ,,
+> *cellulam vel stationem, deindè oppositu alterius Calculi; postremò,* ,,
+> *si penitus nudet latus, jubeatq; facessere militem suum, à quo te-* ,,
+> *gebatur.* ,,
+>
+> *Gravissimum inter eos Ludi Genus est, hujusmodi. In Al-* ,,
+> *veo trecentarum cellularum, plures, ducentis Calculis colludunt, è* ,,
+> *quibus, alij Candidi sunt, alij Atri. His Calculis, alter alterius* ,,
+> *Calculos procurat, in medium Alveum relegare, ut reliquis deindè* ,,
+> *Cellulis, dominetur. Ad extremum, qui plures in Alveo cellulas* ,,
+> *sibi subjecit, Victor appellatur. Hunc Ludum avidissimè arripi-* ,,
+> *unt Magistratus, & sæpè maximam diei partem, ludendo consu-* ,,
+> *munt; Nam inter Ludendi peritos, horam integram, Ludus unus* ,,
+> *tenet. Qui hujus Ludi peritus est, tametsi aliâ nullâ re, insignis* ,,
+> *fuerit, ab omnibus colitur & evocatur. Imò nonnulli etiàm, eos so-* ,,
+> *litis sibi ritibus, Magistros legunt, ut ab ijs, accuratè, hujus Ludi* ,,
+> *rationem, ediscant.* Das ist: ,,
+>
+> Das Würffel und Karten-Spiel/so durch den gebrauch/ ,,
+> auch an diesen orten/ (verstehe/im Königreich China) eingefüh- ,,
+> ret/ist alhie fast gemein/und zu eines Jedern hand. Die Schach- ,,
+> Steine/werden zur zeit vertreibung/und Spiel gewinst/etwa ,,
+
+<meta>catchword: höher</meta>
+
+<vocab>Schach-Spiel, Nicolaus Trigautius, Matthæus Ricij, China, Aleæ Ludus, Latrunculos, Calculus</vocab>

@@ -1,0 +1,59 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIII</page-num>
+<sig>e3</sig>
+
+<margin>65</margin>
+### ¶ Multiplicem superparticularem inuestigare: que multiplicem superparticularem duplicata producat.
+
+¶ Capio a numerū quēcunq; quem duco in se r proueniāt b cui addo vnitatē:sitq; totus c manifestū est proportionē c ad a esse multiplicē superparticulatē:que si in se ducatur est tātun q̄tum a in se r in partē bis et pars in se:sed a in se r in partem bis numerū producit: et pars in se producit partē. igit̄ quod producitur est numerus et pars. erit itaq; proportio composita multiplex superparticularis. Posses itenı probare vt quinquagesimanonam huius.
+
+<image-desc>A diagram with three horizontal lines. The top line is labeled 'c' with the number 5, the middle line 'b' with 4, and the bottom line 'a' with 2.</image-desc>
+
+<margin>66</margin>
+### ¶ Multiplicem superparticularem inquirere:que bis sumpta multiplicem superpartientem componat.
+
+¶ Sit quilibet impar a et b proximus par eius medietas sit c. sumo multiplicē superparticularem cuius multiplicis numerus sit c et pars dicta ab a. que proportio sit d ad e: dico proportionem multiplicem superparticularē d ad e bis sumptā constituere multiplicē superpartientē. nam si hec in se ducatur, pueniet quadratus c et partes similes sumpte fm b r pars a quadrato a dicta. ille autē partes vnum constituūt et vna supfluit cū illa. et qz ille due partes per duodecimā huius vnā non cōstituunt productum erit numerus et partes. quare proportio composita erit multiplex superpartiēs. r in proposito esset quincupla superquadrupartiens nonas.
+
+<image-desc>A line diagram showing numerical relationships. It includes the numbers 49 and 9 at the top. Below, lines are labeled b (4), a (3), c (2). Calculations lead to 7 and 9, with 4 at the base.</image-desc>
+
+<margin>67</margin>
+### ¶ Multiplicem superpartientem perscrutari:que duplicata multiplicem superparticularem componat.
+
+¶ Sumo per sexagesimāterciam huius superpartientē que duplicata multiplicē superparticularē cōponat et numerꝰ denominā's partes sit a r numerās sit b et vno maior q̄ a sit c:atq; c ducatur in a: et producto addatur b. sitq; totus d manifestū proportionē d ad a esse multiplicē superpartientē cuiꝰ numerus denominā's multiplicis est c et denominā's partiū est a r numerus earū est b:quā duplicatā dico esse multiplicē superparticularē. nam denominatio ipsius in se ducta produceret numerū et partē quod vt in precedentibus videre promptum est.
+
+<image-desc>A diagram with four lines: line d is 161, line c is 13, line a is 12, and line b is 5.</image-desc>
+
+<margin>68</margin>
+### ¶ Multiplicem superpartientem: ex qua geminata multiplex superpartiens proueniat:demum restat inspicere.
+
+¶ Queratur per sexagesimāsecundam huius suppartiēs que geminata multiplicē superpartientē constituat:qua inuenta vt in precedente procedendū est.
+
+<margin>69</margin>
+### ¶ Datam proportionem in proportiones: quarum quotlibet sint superparticulares equales redigere.
+
+¶ Sint minimi termini date pportiōis a et b: sitq; c numerus fm quem sumēde sunt superparticulares equales. deinde maior c ducatur in a et in b r fiant d et e: ita tamen vt inter d r e sint plures numeri q̄ vnitaties in c et primus post d qui erit maximus eorū sit f. manifestū est pportionē f ad d esse proportionem superparticularē r minimā omnium que continue sunt inter numeros ab d vsq; ad e: qz denominata est a minore parte. continuo proportiōē f ad d sumptis secundū numerum c. r quia l l m: eritq; proportio h ad m composita ex pportionibus f ad d sumptis secundū numerum c. r quia b per decimānonam tertij est aliquoties in h sit e toties in n manifestū est h ad n eē vt d ad e. quare vt a ad b. constat ergo proportionē a ad b esse diuisam in pportiones quarū aliquot sumpte erunt equales superparticulares secundū numerum assignatū:quod est propositū.
+
+<image-desc>A diagram showing lines labeled f (13), d (12), e (6), c (3), b (1). Below are the letters g, h, k, l, m.</image-desc>
+
+<margin>70</margin>
+### ¶ Propositis quotlibet equalibus terminis ex illis totidē in ordine duplos: atq; ex illis triplos procreare: atq; ex prius inuetis totidē in proxima multiplicitate cōtinue pportionalis producere. itemq; ex illis similes elicere superparticulares.
+
+---
+
+### ¶ Figura equalitatis quotcumq; terminorum equalium.
+
+| | | | | | | | | | | | | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | **S E N A R I A** | | | **16** | **16** | **S E P T E N A R I A** | | **16** | **16** | **16** | | | |
+| | **E Q U A L I T A S** | | **4** | **4** | **4** | **E Q U A L I T A S** | | **4** | **4** | **4** | | | |
+| Equalita: | **A** | 1 | 1 | 1 | 1 | tes. | 1 | 1 | 1 | 1 | 1 | 1 | |
+| Dupl. | **B** | 1 | 2 | 4 | 8 | 16 | 32 | | 1 | 2 | 4 | 8 | 16 | 32 | 64 |
+| Tripli. | **L** | 1 | 3 | 9 | 27 | 81 | 243 | | 1 | 3 | 9 | 27 | 81 | 243 | 729 |
+| Quadrupli | **D** | 1 | 4 | 16 | 64 | 256 | 1024 | | 1 | 4 | 16 | 64 | 256 | 1024 | 4096 |
+| Sesalteri. | **E** | 32 | 48 | 72 | 108 | 162 | 243 | | 64 | 96 | 144 | 216 | 324 | 486 | 729 |
+| Sesqtiti. | **F** | 243 | 324 | 432 | 576 | 768 | 1024 | | 729 | 972 | 1296 | 1728 | 2304 | 3072 | 4096 |
+| Sesqqrti. | **G** | 1024 | 1280 | 1600 | 2000 | 2500 | 3125 | | 4096 | 5120 | 6400 | 8000 | 10000 | 12500 | 15625 |
+| | | **D** | **K** | **L** | **M** | **N** | | | **D** | **K** | **L** | **M** | **N** | **P** |
+
+<vocab>proportio, multiplex, superparticularis, superpartiens, duplicata, senaria, septenaria, equalitas, Sesquialtera, Sesquitertia, Sesquiquarta</vocab>

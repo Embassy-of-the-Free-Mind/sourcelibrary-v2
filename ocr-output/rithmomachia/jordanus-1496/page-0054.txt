@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<meta>Printed page from a mathematical or arithmetical treatise, likely Jordanus de Nemore's Arithmetica with commentary by Jacques Lefèvre d'Étaples. The text contains numerous abbreviations (macrons for 'm/n', 'q̄' for 'quam/quantum', 'ꝑ' for 'per', 'qđ' for 'quod', 'ꝫ' for 'que'). Marginal diagrams illustrate figurate numbers and proportions.</meta>
+
+nore latere ꝛ latere triangūli cuius summā petit. per quartā ergo huius summa triangūli petiti est medietas altera parte longioris inuenti: sicqꝫ constat propositum. ¶ Correlariū ex demostratione conclusionis adiuuāte decima primi notū est. et haec cū correlario suo praxim pgressiōis demōstrat.
+
+# Omne perfectum est trinum.
+
+<margin>
+<image-desc>A triangular arrangement of 36 dots, representing the eighth triangular number (base 8).</image-desc>
+| 1 | 3 | 6 | 10 | 15 | 21 | 28 | 36 |
+|---|---|---|----|----|----|----|----|
+| 1 | 2 | 3 | 4  | 5  | 6  | 7  | 8  |
+</margin>
+
+¶ Ternarius totus est religione sacer et a Pythagoricis Magis et Sacerdotibꝰ olim in arcanis mirum in modum veneratus. et Aristoteles Pythagoricor̄ symbolis insistens corporeā magnitudinē ipsumqꝫ vniuersum perfectū astruit qꝫ ipsum trinū sit imo vero trinū est: qꝫ ipsum perfectū est qđ prius Pythagoras cōperit in numeris: numerozūqꝫ mysterijs. hic ergo suscipiṭ demonstrādum omnē numerum perfectū esse trigonum. Nam per tricesimāsecundam septimi quotcunqꝫ nūeri pariter pares cōnumerata vnitate coaceruati efficiunt numerū proximo sequente pariter pare: vnitate minorē qui quidem proxime sequens pariter par per vicesimānonam septimi est coaceruatoꝝ maximi duplus: quare totus coaceruatus est impar. at per sexagesimā septimi ōis numerus perfectus gignitur ex coaceruatione vnitatis et pariter pariū quoties coaceruat⁹ est primus qui vt dictū est ꝑ vicesimānonā septimi sola vnitate distat a proximo pariter pari: qui ad aggregatoꝝ maximū duplus est. ergo maximus aggregatoꝝ subduplus parīs numerū aggregatoꝝ imparē pro xime sequentis: in ipsum imparē ductus: per primā partem correlarij precedētis cōstituit numerū triangularē. est igitur ōis numerus perfectus trīgularis atqꝫ trigonus: qđ est propositū. Et eius latus ꝑ precedētem ꝛ correlariū prime huius erit ille impar ex omnibus coaceruatus.
+
+## Omnis numerus par media sui parte multiplicatus tanto minorē summā producit q̄ omnes summe que in ipso sunt coaceruate : q̄tum sua ipsius medietas.
+
+¶ Hoc ex analyticis numeroꝝ depzōpta est. et ex scđ̉a parte correlarij suptoris cōclusionis adiuuāte nona primi ꝛ cōi dignitate: vnitatē in quēcunqꝫ numerū ductā: ipsum pducere: statim cognita esse pōt.
+
+<margin>7</margin>
+## Si sumantur triangulares ab vnitate: duos primos impares et sequētes duos pa res atq; ita vicissim duos et duos impares atq; pares inueniri necesse est.
+
+¶ Quia enī per correlariū prime hui⁹ trīgulares creatur ex nūeris ordine cōtinuo ab vnitate dispositis et vnitas ꝑmus est potētia trīgularis ꝛ potētia impar. addita igit̄ numero sequēti qđ est par cōstituet ꝑ correlariū prime huius fm triangularē ꝛ per secundā septimi imparē. erunt ergo duo primi trīgūli nūeris hoc pacto dispositis ipares. Sed ꝛ qđ tertius numer⁹ est ipar et cū precedēti triāgulo ꝑ idē correlariū cōstituit triangulū ꝛ p̄cedens mōstratus est ipar: ergo ꝑ tertiā septimi tertius trīgularis erit par. et qđ quartus ab vnitate nūerus est par qđ cum p̄cedēti triāgulo pari ꝑ idē cōstituit quartum triangulum. ergo quartus triāgularis per primā septimi est par. erunt ergo duo sequentes pares. et iisdem rationibus mōstrentur duo sequētes esse impares ꝛ vicissim alij duo sequētes pares sicqꝫ sine difficultate certum apparebit propositum.
+
+<margin>
+8
+<image-desc>A diagram with horizontal lines labeled with letters and numbers to represent magnitudes: m (8), l (7), n (6f-28), k (5e-21), h (4d-15), g (3c-10), f (2b-6), a (3).</image-desc>
+</margin>
+## Si post vnitatem sumantur numeri triangulares : inter duos et duos disiunctim: erunt que inter numeros ab vnitate naturali serie: sumpte proporciones.
+
+¶ Sit primus triāgularis post vnitatē a ꝛ b c d ex ordine ꝛ sequētes sitqꝫ vnitas et g h l ꝛ nūeri ab vnitate naturali serie. p̄cedētes: dico que pportio g ad vnitatē eā esse b ad a: et q̄ h ad g eā esse d ad c: ꝛ que l ad h eā esse f ad e. ꝛ ita p̄cedēdo in hīs disiūctim: in illis vero cōiuncti. nam ꝑ precedētem a est ipar b c pares: d e ipares: et f par. sumo enī quattuoꝝ pares ab vnitate qđ sint g l z m et medij inter eos impares sint h n o. et qꝫ g est binari⁹ est latus a qđ est ternari⁹. ꝛ per cozrelariū prime hui⁹ h latus b ꝛ l latus c et n latus d ꝛ l latus e et o latus f: ergo ꝑ quartā huius g in h facit altera pte longiorē duplū a et h in l duplū b ꝛ l z in n duplū c et n in l duplū d ꝛ l in o duplū e: atqꝫ per eandē o in m duplū f. qꝫ ergo g in h et l in h cōstituunt duplū ad a et ad b. erit ergo per octauā secundi vt que pportio l ad g ea sit dupli b ad duplū a: sed ꝑ b ad a subduplus ad subduplū per cozrelariū decimequarte secūdi sicut eoꝝ duploꝝ duplus ad duplum. ergo sicut l ad g ita b ad a. et per idē sicut l ad l ita d ad c. ꝛ sicut m ad l: ita f ad e. ꝛ cū g l z m sint sumpti ab vnitate cōtinue pares: ergo ꝑ decimāoctauā septimi est pportio b ad a vt g ad vnitatē ꝛ d ad c vt h ad g et f ad e vt l ad h: quod est propositum.
+
+<margin>
+9
+<image-desc>A marginal diagram showing proportional lines labeled: g (5), f (4), e (3h-5b-10), d (2), a (3), b (6), c (10).</image-desc>
+</margin>
+## Si tres continui triangulares statuantur : qui sub extremis continetur erit altera parte longioꝛ : cuius laterum maius erit illorum trium medius.
+
+¶ Sint a b c tres continui triangulares ꝛ eoꝝ latera d e f: sitqꝫ g vno maioꝛ f. dico qđ fit ex a in c esse altera pte longiorē cui⁹ maius latus erit b. nā qꝫ a b c sunt cōtinui triāgulares: ergo ꝑ cozrelariū p̄se huius d e f sunt fm continuā seriē numeroꝝ sumpti. et qꝫ per quartā huius d in e cōstituit duplū ad a ergo si d est par quēadmodū hic est: medietas d in e cōstituit a. et per idē medietas f in e cōstituit b. et medietas f in g cōstituit c. si aūt d esset impar numeraret a fm medietatē e: ꝛ f b fm medietatē e. et sic cōsequenter fm medietatē parium ipares numerarēt triāgulares. ergo per octauā primi adiuuāte cozrelario decimequarte secūdi que pportio f ad d: ea est b ad a. et q̄ g ad e: ea est c ad b. ꝛ qꝫ a b c sunt continue sumpti triāgulares: ergo ꝑ cozrelariū prime huius b superat a q̄tum est e. sumo ergo h vno minoꝛē b: manifestū est h superare a q̄tum est d. et quo abūdat c super b est f. ꝛ quia b ad a sicut f ad d vt iam h ad a. et sicut detractus ad detractū: ita residuus ad residuū. erit ergo sicut b ad a ita c ad h totus ad totū: quod igit̄ fit ex a in c ꝑ vicesimāquintā secūdi tm est q̄tum qđ fit ex h in b. at manifestū est qđ fit ex h in b esse altera parte longiorē. igitur et qđ fit ex a in c. est altera pte longioꝛ cuius maius latus est b illorum trianguloꝝ medius. et propositum.
+
+<vocab>numerus perfectus, trigonum, numerus triangularis, Pythagoras, Aristoteles, propositio, medietas, coaceruati, proporcio</vocab>

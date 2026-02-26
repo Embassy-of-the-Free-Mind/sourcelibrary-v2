@@ -1,0 +1,33 @@
+<language>German</language>
+<page-type>title-page</page-type>
+
+<image-desc>An elaborate architectural engraved title border. At the very top center, the figure of Pythagoras reclines, labeled "Pythagoras." above his head. He points to a large triangle (a Pythagorean table) containing rows of numbers. To his left and right are tiered towers composed of numbered blocks (powers of 9 on the left: 81, 153, 289; powers of 10 on the right: 100, 190, 361). On the left side of the page, a bearded scholar stands in an arched niche, holding a compass and a book. On the right side, a younger man stands in a similar niche, holding a scroll inscribed with numbers. The central text of the title page is framed by these niches. Below the text is a floor with a checkered pattern representing the Rythmomachia game board. At the bottom, an ornate cartouche decorated with three grotesque mask-like faces contains the publisher's imprint.</image-desc>
+
+# Rythmomachia.
+
+## Ein vortrefflich / und uhraltes Spiel/
+
+->deß<-
+->**PYTHAGORÆ**:<-
+->Welches<-
+->**GUSTAVUS SELENUS**,<-
+->auß des<-
+->**FRANCISCI BAROZZI**,<-
+->**Eines Venedischen Edelmans/**<-
+->welchem Tractätlein/ ins Deutsche<-
+->ubergesetzet / seinem vorgehenden Tractat,<-
+->vom König-Spiele/ (dieweil es ebenmessig/<-
+->ein scharffes nachdencken/ erfodert) zugeord-<-
+->net/ und mit nützlichen glossen/ auß dem<-
+->**Claudio Buxero Delphinate**,<-
+->verbessert.<-
+
+->**Cum PRIVILEGIO S. C. MAIEST.**<-
+
+---
+
+->Apud<-
+->**HENNINGUM GROS. Jun.**<-
+->**M. DC. XVI.**<-
+
+<vocab>Rythmomachia, Pythagoras, Gustavus Selenus, Franciscus Barozzi, Claudio Buxero Delphinate, König-Spiele, Henning Gross, 1616</vocab>

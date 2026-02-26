@@ -1,0 +1,39 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>II</page-num>
+<header>II</header>
+
+<image-desc>A horizontal line representing a monochord or string length, divided by vertical strokes. Labels above the line from left to right are 'a', 'c', 'd', 'e', and 'b' at the far right.</image-desc>
+
+¶ Intelligit̃ semitonium subiūgi qñ ex acutiori parte duob⁹ quidē tonis ad grauiorē ptē relictis ĩpm semitonium collocat̃ . preiūgi x̄o qñ ĩpm ex parte remissiori duob⁹ tonis adhibet̃ . Cōtinuo ergo per scđam huius duos tonos in chorda a b per notas a c d b . sitq; a b c b : primus . et scđs sit c b d b qui quia per diffinitiōem in sesquioctaua ꝓportiōe cōsistūt : et per decimāseptimā primi hui⁹ due sesquioctaue minores sunt sesquitertia ꝓportiōe . erit ergo a b et d b minus sesquitertio . diuido ergo a b in quatuor partes equas : et initiū tertie sectiōis facio notam e . ita vt e b tres eaz quartaz cōtineat : per diffinitiōem igitur a b ad e b sesquitertiā ꝓportio est . sed sesquitertia ꝓportio a b ⁊ e b superat duos tonos a b et d b in ꝓportiōe d b et e b . est igit̃ d b et e b per descriptionem semitontiū minus duobus tonis : vt propositum erat subiunctum.
+
+16 ¶ **Semitonium minus : duobus tonis p̄ponere.**
+
+<image-desc>A horizontal monochord diagram with division marks. Labels above the line from left to right are 'a', 'e', 'd', 'c', and 'b' at the far right end.</image-desc>
+
+¶ Facio a b ad c b sesquitertiū intervallū et diuido c b in octo equas partes et supra c versus a : facio d c vni eaz octo partiū equā : ita vt d b eaz partiū nouem ꝓtineat . et per diffinitiōem d b ⁊ c b vnum ꝓstituūt tonum . Similit̃ diuido d b in octo equas partes : et vnā eaz adiūgo supra d ꝑ notam e . quare iteꝝ e b ⁊ d b erit tonus . suntq; duo toni eb et cb . sed a b et c b sesquitertia ꝓportio : maior est duobus illis tonis in ꝓportione a b ⁊ e b . est igitur per diffinitionem a b ⁊ e b semitonium minus . qđ cum sit duobus tonis p̄positum : qm̄ ex parte remissa illis adiūctum . factum est propositum.
+
+17 ¶ **Duobus tonis : diesim / semitoniūq; minus interponere.**
+
+<image-desc>A horizontal monochord diagram. Labels above the line from left to right are 'a', 'd', 'e', 'c', and 'b' at the far right.</image-desc>
+
+¶ Idem diesim atq; semitoniū minus hic (vt iam quoq; dictum est) intelligimus . Sit ergo a b ⁊ c b vt in precedenti sesquitertiā ꝓportio in tota chorda a b . ab a : c versus : intēdo tonum per notam d . et ab c versus a remitto tonū vt in p̄cedēti factū est per notam e : ita vt a b et d b sit tonus / et similit̃ e b et c b tonus . manifestum a b et c b sesquitertiā ꝓportiōem superare duos illos tonos in media ꝓportiōe d b et e b . est igitur per diffinitionem d b et e b semitoniū minus duobus tonis interceptū et ꝓpositū.
+
+18 ¶ **Semitonij minoris mimos numeros reperire : et quomodolibet semitoniū minus in chordavna aut pluribus collocare.**
+
+| 324 | 288 | 256 | 243 |
+| :--- | :--- | :--- | :--- |
+| **f** | **g** | **h** | **k** |
+| 81 | 72 | 64 | |
+| **c** | **d** | **e** | |
+| 9 | 8 | | |
+| **a** | **b** | | |
+| 4 | 3 | | |
+| **l** | **m** | | |
+
+¶ Sit a nouenarius ⁊ b octonarius minimi numeri toni . duco a in se / et a in b / et b in se / et cōsurgant numeri c d e . inter quos per septam quarti Arithmetices erūt duo sesquioctaui / duoq; toni in mīmis ꝓtinuati . Sit p̄eterea l quaternarius et m ternarius . duco l in c d e ⁊ prodeat f g h : inter quos ꝑ septimā secūdi Arithmetices similit̃ cōiucti sunt duo sesquioctaui / ⁊ ꝓinde duo toni . duco p̄eterea iteꝝ m in c et ꝓueniat k ꝑ octauā secūdi Arithmetices fađ k est ꝓportio sesquitertia q̄ ꝑ 17 primi hui⁹ maior est f h et differētia ē h k . dico ergo h k esse mīmos numeros semitonij minoris . qđ cni sint numeri semitonij minoris per diffinitiōem notū est . sed ꝙ mīmi : iđ iam declarandū est . Nam qꝛ c e sunt in sua ꝓportiōe mīmi : per decimāoctauā tertij Arithmetices sūt ꝓtra se p̄mi . et qꝛ etiā l ⁊ a quaternarius ⁊ nouenarius sunt cōtra se p̄mi . ergo per vndecimam tertij Arithmetices l est p̄mus ad c . et per decimā eiusdem h qui nascit̃ ex l ⁊ e p̄mis eidē numero c : erit primus m ⁊ b ternarius atq; octonarius sunt adinuicem p̄mi . ergo ꝑ vndecimā tertiā m̄ primus est ad e sed ⁊ cū l/m quaternarius ⁊ ternarius sint etiā primi : ergo per decimam eiusdem m etiā primus est ad h . Cū ergo c ⁊ m mōstrati sunt primi ad h ergo per eādem decimā tertiā numerus k ex c ⁊ m ꝓductus : primus est ad h . sunt itaq; h ⁊ k semitonij minoris numeri adinuicem primi : quare per vicesimam tertij Arithmetices in sua ꝓportione mīmi . qđ est ꝓpositū quo ad hoc . Et data quacunq; chorda si eā diuides scđm nūerū h ⁊ eaz partiū accipias scđm numerum k numeros scz semitonij minoris vbilibet in eadem chorda ꝓstitutū erit semitonij minoris intervallum . In diuersis aūt facillime idem feceris : si eas chordas equales eqliter tensas vnisonasq; posueris / et partiaris eaz quācūq; voles scđm h quaz partium alterius acceperis scđm k erit tum in pluribus chordis semitonij minoris constitutum intervallum . quod est totum propositum.
+
+19 ¶ **Semitonium minus in minore ⁊ sesquiseptimadecima sit : proporcione consistit .**
+Quo sit vt regula semitonij sumendi : non sit differentiam extremorū toni in duo equa partiendo.
+
+<vocab>semitonium minus, monochord, sesquioctaua, Arithmetices, sesquitertia, tonus, diesis</vocab>

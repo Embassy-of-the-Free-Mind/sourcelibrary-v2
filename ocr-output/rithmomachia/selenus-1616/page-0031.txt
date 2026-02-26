@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>1.</page-num>
+<sig>A ij</sig>
+<meta>catchword: der</meta>
+<warning>Page shows significant foxing and water staining, particularly in the left margin and top right corner.</warning>
+
+<image-desc>A rectangular woodcut headpiece containing decorative foliage, acanthus scrolls, and two birds perched within the symmetrical vine patterns.</image-desc>
+
+## Das Erste Buch /
+# Der Beschreibung / des
+# Schach-Spieles.
+### Das Erste Capittel.
+#### Von der Natur / Art und Eigenschaften /
+##### der Schach-Kunst.
+
+<margin>1. cap.</margin>
+Es ist nichtes in dieser Welt / welches mit Raht / und Verstande / fürzunehmen ist / das nicht nohtwendig / zur Kunst / gezogen werden müsse. Dan die geschwechete Natur / vermag / ohne gewisse Ordnung / Gesetze / Regeln / Masse oder Weyse / nicht / wie es wol / der Sachen notturft / erforderte / sich hierinnen zu erzeigen. Dannenhero / mit der Zeit / von den weysesten / und fürtreflichsten / die Künste erfunden / und von ihren Nachkommen / zur Vollenkommenheit / ferner gebracht worden : Welches dan / die gantze Philosophey / und daraus herfliessende allerhand Künste / gnugsam erweisen.
+
+Diesem nach / werden wir / unserm Vorhaben / einen guten anfang machen / wan wir / von dem Schach-Spiele / gleichesfalles / daß es eine Kunst sey / setzen : weyl jah den beweiß / das Werck selbsten / verhoffentlich / mitbringen wird. Dan solches thut uns / erstlich / dieses Spieles Natur und Eigenschaft / folgendes / die Maß und Weyse / wie mans ordentlich fassen / lehren und lernen möge / an die Hand geben / und entdecken.
+
+Das Erste anbelangend : so saget Aristoteles, in prooem: Metaph: daß alle Künste / der Menschlichen Notturften / und Gebrechlichkeiten / Artzeneien seynd. Nuhn begibt sichs zun zeiten / daß ,,
+
+<vocab>Schach-Spiel, Schach-Kunst, Aristoteles, Metaphysik, Philosophey, Artzeneien</vocab>

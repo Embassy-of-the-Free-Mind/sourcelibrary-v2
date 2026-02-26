@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>484</page-num>
+<header>Das Sechste Capittel/</header>
+<meta>catchword: bringet</meta>
+
+Diese letzte überwindung nuhn / durch welche / das Spiel / geendene wird / ist die aller-höheste / und fürtreflichste / und werden die Spieler / wan Sie / mit mühe / und durch nachdencken / dergleichen Abtheilungen / auf vier Steine verfasset haben / eine sonderbare ergätzung / auß derselben schepfen : in erwegung / in diesen vierfachen Zahlen / alle Abtheilungen / von welchen / die lieblichen überein Stimmungen / der Singe-Kunst / herrühren / sich erzeigen : welche Sie auch / auf allerhand SeitenSpiel / oder Pfeifwerck / durch gewichte oder maß / mit lust versuchen und erfahren können.
+
+> (Buxer. fol : 35. a.
+> „ Hae Rationes, si Pondere examinentur, ut in Metallis, aut si
+> „ Mensurâ experiantur, ut in Chordis, Musicam semper Harmo-
+> „ niam suppeditant, ac exhibent.
+> Idem fol : 39. b.
+> „ Sunt praetereà quaedam Rationes, ut 5. 9. 45. 81. aut 5. 25.
+> „ 45. 225. & ejusdem paris & generis, quae in acutiorum & subtilio-
+> „ rum, recreationem cadunt : ideò & relinquendae sunt eis, qui, ut
+> „ inquit Faber, optimos imitantur Venatores, qui in indagan-
+> „ dis persequendis q; feris, quam in captis & oblatis, magis dele-
+> „ ctantur.)
+
+Zur bessern nachrichtung / wollen wir / die vier ersten Zahle / alsß 2. 3. 4. 6. auß diesen vierfachen Zahlen / für uns nehmen / und die überein Stimmungen der Singe-Kunst / darauß erweisen :
+
+Dan / wan man unter diesen / die zwo letzte / alsß 4. 6. oder die beede ersten / alsß 2. 3. vergleichet : der unterscheid / in anderthalbber Abtheilung / sich befinden wird : das ist / daß die geringere / in den höhern / ein gantzes / und ein halbes mahl / begriffen werden : Auß dieser Abtheilung / entspringet die Gleich-Stimmung / welche / die Griechen <term>Diapente</term>, die itzigen Senger / die <term>Quintam</term> nennen.
+
+Ferner / wan die beede mittelste / alsß 3. 4. verglichen werden / entstehet darauß / die Abtheilung / eines gantzen / und eines dritten Theiles : das ist / daß die höhere / die geringern / einmahl / zusamt ihrem dritten Theile / in sich haben : darauß dan die Gleich-Stimmung / welche die Griechen / <term>Diatessaron</term>, die heurigen Senger / die <term>Quartam</term> nennen / herrühret.
+
+Weyter / so die erste Zahl / (2) gegen die dritte / (4) oder aber die andere / (3) gegen die vierte / (6) gehalten / und verglichen wird : befindet man / eine zwiefache Abtheilung / das ist / daß die höhere Zahle / die wenigere / zweymahl in sich begreiffen : diese Abtheilung /
+
+<vocab>Singe-Kunst, Diapente, Quintam, Diatessaron, Quartam, SeitenSpiel, Pfeifwerck</vocab>

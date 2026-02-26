@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>302</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+<meta>catchword: beſon=</meta>
+
+deſſen Rochen: Der Weiſſe/denſelben/auf drey: Der Schwar=
+tze/der K. Schützen/auf die W. Königin/auf ſechs und zwantzig:
+Der Weiſſe/des K. Rochen/auf die S. Königin/auf eylfe/und be=
+ſchützet deſſen Soldaten: Der Schwarze/beut/mit der Köni=
+gin/auß zwey/Schach: Der Weiſſe/muß den König/mit ſeinem
+Rochen/auf drey/bedecken: Der Schwarze/nimt denſelben/mit
+der Königin/und beut Schach: Der Weiſſe/nimt dieſelbe/mit
+dem Könige: Der Schwarze/die W. Königin/mit ſeiner K.
+Schützen: Hat alſo einen Rochen/und Soldaten/zum Vortheil/
+und kan/gegen dem Weiſſen/wan Er/ſeine beede Rochen/und des
+K. Reuter/zu felde bringet/den Sieg wol erhalten.
+
+<margin>21.</margin> Wan aber der Weiſſe/(umb verhütung dieſes alles) den Reu=
+ter/nicht auf 26. (n. 18.) beſondern / (umb den Schach=Mat/zu ver=
+hindern) auf des S. K. Schützen/auf ein und zwantzig/ziehet : ſo
+nimt der Schwarze/mit der Königin/des W. K. Soldaten/ziehet
+dieſelbe/auf des W. K. Reuters=Soldaten/und beut Schach: Der
+Weiſſe/bedecket den König/mit der Königin/(welches dan zum
+beſten iſt) auf zwelfe: Der Schwarze/nimt dieſelbe/mit ſeiner
+Königin/und beut Schach: Der Weiſſe/raubet dieſelbe/mit dem
+Könige: Der Schwarze/ziehet/des K. Schützen/(auf daß ihn/
+des W. K. Reuter/nicht erhaſche) auf ſieben und viertzig: Der
+Weiſſe/(umb denſelben/entweder zu gewinnen/oder einzuſperren)
+der K. Schützens=Soldaten/(welches dan/ein guter Zug ſcheinet)
+<margin>22.</margin> auf dreyſſig: * Der Schwarze/der K. Schützen/auf des W. K.
+<margin>23.</margin> Reuter/auf fünf und dreyſſig: * Der Weiſſe/der K. Schützens=
+Soldaten/auf des S. K. Schützen/auf acht und dreyſſig: Der
+Schwarze/denſelben/auf viertzig: Der Weiſſe/auf ihn/der K.
+Reuters=Soldaten/auf ein und dreyſſig: Der Schwarze/(umb
+denſelben zu erretten) nimt/mit der K. Schützen/des W. K. Reu=
+ter/und beut Schach: Der Weiſſe/nimt denſelben/mit dem Kö=
+nige: Der Schwarze/des W. K. Reuters=Soldaten/mit des K.
+Schützen: Der Weiſſe/ſetzet/der K. Schützen/(umb ſeinen Sol=
+daten/zu verthetigen) auf vier und zwantzig/und rucket ihn/auf des
+S. K. Schützen: Der Schwarze/gibt/mit der K. Rochen/auß
+ein und ſechſſig/Schach: Der Weiſſe/rücket den König/auf zwel=
+fe: deſſen Rochen/auf fünfe: und den König/auf drey/und ordnet
+dergeſtalt/ſeine Steine/nicht undienlich.
+<margin>24.</margin> Wan aber der Weiſſe/nicht den Soldaten/auf 38. (n. 23.)
+beſon=
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Schützen, Soldaten, Schach-Mat, Weiſſe, Schwarze</vocab>

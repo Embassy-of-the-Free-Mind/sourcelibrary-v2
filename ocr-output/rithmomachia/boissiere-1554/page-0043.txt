@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+nombre 10.en recompense du premier 2 qui ne
+nous a peu seruir d'opposite & iceluy 10 sera
+commode pour estre opposite à 9.
+
+<image-desc>
+A numerical diagram for the game of Rythmomachia, organized into two main sections: odd numbers (Nompair) and even numbers (Pair). The sections are divided by a central intersection of lines and decorative floral motifs.
+
+Top Section (Nompair):
+- Three groupings labeled on the left with left braces:
+    - Superptie. { 361. 225. 121. 49 / 181. 120. 66. 28
+    - Superptie. { 100. 64. 36. 16 / 90. 54. 30. 12
+    - Multip. { 81. 49. 25. 9 / 9. 7. 5. 3
+- These three groupings are enclosed by a large right brace labeled "Nompair".
+
+Bottom Section (Pair):
+- Three groupings labeled on the left with left braces:
+    - Multip. { 2. 4. 6. 8 / 4. 16. 36. 64
+    - Superpt. { 6. 20. 42. 72 / 9. 25. 49. 81
+    - Superpt. { 15. 45. 91. 153 / 25. 81, 169. 289
+- These three groupings are enclosed by a large right brace labeled "Pair.".
+- The number 10 is placed to the right of the Pair brace.
+
+The center features lines radiating from a single point to the base numbers of the progressions (9, 7, 5, 3 for Nompair; 2, 4, 6, 8, 10 for Pair).
+</image-desc>
+
+Presque ceste mesme forme de disposition a-
+uoit inuentée Marcial Rogier nostre tresaimé
+compagnon, non toutesfois en ceste ordonnan-
+ce.
+
+<meta>catchword: Des</meta>
+
+<vocab>Rythmomachie, Nompair, Pair, Superptie, Superpt., Multip., Marcial Rogier, arithmétique</vocab>

@@ -1,0 +1,44 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>i2</sig>
+
+# Numeri paris proprietates
+
+1 Cum numerus par in duo partitur: si earum partium una par est et alterā parem esse necesse est.
+2 Cum par itidem in duo partitur si earum partiū vna impar est:altera erit impar.
+3 Par parem si multiplicet semper nascitur par.
+4 Par imparem si multiplicet nascitur par.
+
+# Numeri imparis proprietates
+
+1 Quilibet numerus impar in duo partitus:ut unam partem parem & alterā imparem habeat necesse est.
+2 Impar imparē si multiplicet protinus nascitur impar.
+3 Impar si multiplicet parem: procreabitur par.
+
+# Numeri pariter paris proprietates
+
+1 Quilibet numerus pariter par partem quālibet & nomine et quātitate parem habet.
+Nomine quidem q̃ denominationē habeat a numero pariter pare:quātitate vero q̃ ea ipsa numerus sit pariter par.
+2 Omnis numerus pariter par est aliquis dupliciū ab uno continue sumptoꝝ. Et quelibet duploꝝ ab uno et solum talem:pariter parem esse necesse est.
+3 Quotcūqȝ parit' pares ab uno cōnumerata unitate collecti:sequēti min' uno restituūt
+4 Omnis numerus pariter par est diminutus.
+5 Omnis numerus pariter par: ex respondentibus sibi mutuo partibus procreatur.
+Partes mutuo sibi respondentes:pars denominās/et denominata.
+9 Numerorū pariter parium cōtinue dispositoꝝ si series est impar : quod sub extremis cōtinetur equū est ei qui continetur sub medio in se ducto . deinde sub circūpositis usqȝ ad seriei expletionē. Si vero fuerit par:equum est ei qui sub duobus mediis ꝑtinet.deinde iis q̃ altrinsecus adiūciūtur et hoc pacto usqȝ ad seriei expletionē
+
+# Numeri pariter imparis proprietates
+
+1 Quilibet numerus pariter impar: medietatē habet imparem.
+2 Omnis numerus pariter impar qualibet sui partē alterius quātitatis retinet/ pariter et denōiationis. Nā si quātitas est par:denōiatio erit impar/& contra semp' eueniat.
+3 Omnis numerus pariter impar gignitur ex imparibus continue ab unitate sumptis: in quos binarius ducitur.
+4 Omnes numeri pariter impares sese quaternaria numerositate trāscendūt : quattuor naturali serie inceptos cōtinue relinquētes/ & ab sese cōtinue quinto loco distātes
+5 Omnis numerus pariter impar: duoꝝ simul pariter impariū altrinsecus equidistāter iacentium et naturali serie collectoꝝ est medietas.
+6 Omnium numeroꝝ pariter impariū pari/& cōtinuaqȝ serie dispositoꝝ:duas medietates simul iunctas suis proxime altrinsecis numeris et illis qui super illos sunt usqȝ ad unitatē: simul/in unūqȝ collectis equari necesse est.
+
+# Numeri impariter paris proprietates
+
+1 Omnis numerus impariter par aliquas eius partes habet & denominatione et quantitate respondentes: aliquas vero denominatione/quātitateqȝ dissentientes.
+2 Omnis numerus impariter par ex numero pariter pari et pariter impari procreat'.
+3 Completa ad longitudinē & latitudinē impariter parium serie: qui per longitudinē descripti sunt:sextam pariter parium seruāt proprietē.qui aut̄ in latitudine sextā seruant pariter imparium.Longitudo seriei est que a sinistro porrigitur in dextrū. Latitudo vero que ab imo euadit ad sursum.
+
+<vocab>numerus, par, impar, pariter par, pariter impar, impariter par, proprietates, medietas, binarius</vocab>

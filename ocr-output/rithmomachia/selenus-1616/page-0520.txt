@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>478</page-num>
+<header>Das Fünffte Capittel/</header>
+
+entweder alle / oder etliche / nachdem es ihm gelegen fallen wird /
+gebrauchen möge.
+(Buxer : fol : 47.
+> » Omnis *Calculus captus, evertetur, & colorem Victoris osten-*
+> » *tabit, & ad extremam Agminis partem adhaerebit, ut ipsi, tan-*
+> » *quam proprius Calculus, inserviat.*)
+
+9.) Wan die zween Viereckete Steine / eines Turnes / ge-
+nommen seynd: so kan man ihn / wie die Vierecketen / nicht mehr
+rucken: Gleiche meynung hat es / wan die Dreyeckete / und runde
+Steine / hinweg geschaffet.
+
+10.) Wan ein Turn belagert ist / so kan er sich mit eines Reu-
+ters Sprunge / (wie derselbe im Schach = Spiele / geschicht) er-
+retten: oder aber / es muß ihm / ein Stein / auß seinem Hauffen /
+zu hülffe kommen / und einen von den Vieren / welche ihm zuse-
+tzen / hinwegnehmen. Wan aber einer / des andern Turn / derges-
+talt belagert hat / daß ihm keinerley weyse / kan geholffen werden /
+so nime Er ihn / gantz vom Spiele / wendet seine Staffen
+umb / machet ihn seiner farbe / gleichförmig /
+->und brauchet ihn / wie seine andere<-
+->Steine.<-
+
+<image-desc>A decorative woodcut tailpiece featuring a central mascaron (a stylized human face) framed by elaborate symmetrical scrollwork, drapery, and floral ornaments.</image-desc>
+
+---
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiele, Reuters Sprunge, Viereckete Steine, Turn, Calculus, Buxer</vocab>

@@ -1,0 +1,127 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<columns>3</columns>
+
+# Jacobi Fabri Stapulensis Epitome in duos libros Arithmeticos diui Seuerini Boetij ad Magnificum dñm: Joannem Stephanum Ferrerium Episcopum Vercellensem.
+
+Inter disciplinas mathematicas quibus neglectis omnis obscuratur disciplina: tanq̃ ceterarũ parens/dux atq̃ domina: primum sibi vendicat rithmetice locum que vt rite cognoscať quẽadmodũ et cetere certis eget adminiculis. inter que primo menti figenda est vniuersorũ circa que versatur subiecta formula/mox singuloꝝ diffinitiones/post quas numeroꝝ affectiones/proprietatesq̃/post proprietates: quo ex loco vniuersę sunt monstrande.
+
+## Formula uniuersorum circa que negociat Arithmetica.
+
+Numerus
+&nbsp;&nbsp;&nbsp;&nbsp;Secundum se 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Ad aliquid 4. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Scõm figurã 3.
+Numerus scõm se
+&nbsp;&nbsp;&nbsp;&nbsp;Par 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Impar 3.
+Par
+&nbsp;&nbsp;&nbsp;&nbsp;Pariter par 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Pariter impar 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Imparit' par 12.
+&nbsp;&nbsp;&nbsp;&nbsp;Perfectus 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Diminutus 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Abundans 12.
+Impar
+&nbsp;&nbsp;&nbsp;&nbsp;Primus 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Compositus 9.
+&nbsp;&nbsp;&nbsp;&nbsp;Ad aliũ ꝑ 9. 25.
+Numerus ad aliquid
+&nbsp;&nbsp;&nbsp;&nbsp;Equalitas 10. 10.
+&nbsp;&nbsp;&nbsp;&nbsp;Inequalitas 10. 5.
+Inequalitas
+&nbsp;&nbsp;&nbsp;&nbsp;maioꝝ ineq̃. 10. 5.
+&nbsp;&nbsp;&nbsp;&nbsp;mioꝝ ineq̃. 5. 10.
+Maioꝝ inequalitas
+&nbsp;&nbsp;&nbsp;&nbsp;Multiplex 2. 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Superp'ticular' 3. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Supparties 5. 3.
+Multiplex
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus 2. 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus 3. 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Quadrupl' 4. 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Quincuplus 5. 1.
+Superparticularis
+&nbsp;&nbsp;&nbsp;&nbsp;Sesqualter 3. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Sesquitert' 4. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Sesq̃quart' 5. 4.
+
+<column-break/>
+
+Sesquiquintus 6. 5.
+Superpartiens
+&nbsp;&nbsp;&nbsp;&nbsp;Superbipartiens 5. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Supertripartiens 7. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Superquadripartiens 9. 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Superquintupartiens 11. 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Supersextupartiens 13. 7.
+Multiplex superparticularis
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus sesqualter 5. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus sesquitertius 7. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus sesquiquartus 9. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus sesqualter 7. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus sesquitertius 10. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus sesquiquartus 13. 4.
+Multiplex superpartiens
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus superbipartiens 8. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus suptripartiens 11. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Duplus sup̃q̃dripartiẽs 14. 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus superbipartiens 11. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus suptripartiens 15. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Triplus sup̃q̃dripartiẽs 19. 5.
+Numerus scõm figuram
+&nbsp;&nbsp;&nbsp;&nbsp;Linearis 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Planus 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Solidus 8.
+Planus
+&nbsp;&nbsp;&nbsp;&nbsp;Trigonus 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Tetradonus 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Pentagonus 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Hexagonus 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Heptagonus 7.
+&nbsp;&nbsp;&nbsp;&nbsp;Octogonus 8.
+&nbsp;&nbsp;&nbsp;&nbsp;Ennagonus 9.
+&nbsp;&nbsp;&nbsp;&nbsp;Decagonus 10.
+&nbsp;&nbsp;&nbsp;&nbsp;Endecagonus 11.
+&nbsp;&nbsp;&nbsp;&nbsp;Dodecagonus 12.
+&nbsp;&nbsp;&nbsp;&nbsp;Altera parte longior 6.
+
+<column-break/>
+
+Ante longior 15.
+Solidus
+&nbsp;&nbsp;&nbsp;&nbsp;Pyramis 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Cubus 8. latus 2.
+Pyramis
+&nbsp;&nbsp;&nbsp;&nbsp;Trigona 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Tetragona 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Pentagona 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Hexagona 7.
+&nbsp;&nbsp;&nbsp;&nbsp;Curta pyramis 29. <margin>Sui tetragoni sũt 16. 9. 4.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Biscurta 25. <margin>Sui tetragoni sunt 16. 9.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Tricurta 41. <margin>Sui tetragoni sunt 25. 16.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Laterculus 18. <margin>Latera sunt 3. 3. 2.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Asser 12. <margin>Latera sunt 2. 2. 3.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Cuneus 24. <margin>Latera sunt 2. 3. 4.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Mucrus circularis 25.
+&nbsp;&nbsp;&nbsp;&nbsp;Sphericus 125.
+&nbsp;&nbsp;&nbsp;&nbsp;Parallelepipedus 12. <margin>Latera sunt 2. 3. 2.</margin>
+Medietas 6. 4. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Arithmetica 6. 4. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Geometrica 9. 6. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Musica 6. 4. 3.
+Arithmetica
+&nbsp;&nbsp;&nbsp;&nbsp;Continua 6. 4. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Disiuncta 7. 5. 6. 4.
+Geometrica
+&nbsp;&nbsp;&nbsp;&nbsp;Continua 9. 6. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Disiuncta 9. 6. 3. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Quarta medie. 6. 5. 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Quita medietas 5. 4. 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Sexta 6. 4. 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Septima 9. 8. 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Octaua 9. 7. 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Nona 7. 6. 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Decima 8. 5. 3.
+
+<vocab>Jacobus Faber Stapulensis, Boethius, Arithmetica, medietas, pyramis, numerus, proportion, geometry, music, classification of numbers</vocab>

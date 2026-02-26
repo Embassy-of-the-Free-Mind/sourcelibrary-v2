@@ -1,0 +1,20 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>18V</page-num>
+<header>RIHMOMACHIE, 18V</header>
+
+## De rencontre.
+
+*Si vn nombre rencontre vn autre à son pas de mesme valeur & quantité que luy, il l'emportera, sans transporter iceluy au lieu du vaincu.*
+
+## Exemple.
+
+*Ie presuppose que la table triangulaire des pairs ou il y a 25, est diposée à la tierce loge, cõptãt des le 25, qui est du champ des impairs comme apert en la premiere colomne du tablier. Voyant doncq' que la table triangulaire des pairs peut aller trois loges, elle prẽdra lediCt 25 des impairs, le mesme coup que tu la ioueras au lieu ou tu la vois estre & verras au nombres suiuans ceux qui se peuuent prendre par rencontre: car il en ya de semblables au champ des pairs & au champ des impairs.*
+
+->9, 16, 36, 25, 49, 64, 81.<-
+
+## De l'assault.
+
+*Si vn nombre trouue vn autre plus grãd auquel il puisse estre faict egal estant multiplié par les loges qui sont entre eux deux, ou obliquement ou droiCte-*
+
+<vocab>Rihmomachie, rencontre, table triangulaire, pairs, impairs, tablier, assault</vocab>

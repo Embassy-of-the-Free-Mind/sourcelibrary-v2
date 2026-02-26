@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>28</page-num>
+<header>Das erſte Buch / 2. cap:</header>
+
+,, ἐν δὲ τῇ πεττείᾳ αὐτὸ μόνον τὰς ψήφους μετακίνεσι: **Das iſt:**
+,, Aber im Stein-Spiel / (ohne das würflen / und blinde Glü-
+,, cke) nuhr allein / die Steine fort-geſezet und gerücket werden.
+
+Hievon wollen wir nuhn / etliche Arten / anzeigen.
+
+Die Erſte / wird uns geben / das Stein-Spiel / welches die Proci, oder Buhler / beym Homero, in der Odyſſ: a, geſpielet: davon ſchreibet Athenæus Deipnoſophiſtarum lib: 1. pag: 16, 17. alſo:
+
+> ,, Appion Alexandrinus, ſe ab Ithacenſi Cteſone, audiviſſe
+> ,, memorat, qualis eſſet, apud Procos, ille Latrunculorum Ludus. Cen-
+> ,, tum enim, ac octo fuiſſe Procos, qui totidem quot eſſent ipſi, calculos,
+> ,, inter ſe contrarios, numero pares ſtatuerint — ut ex utrâq; parte,
+> ,, quinquaginta quatuor eſſent, intermedio quodam relicto ſpatio,
+> ,, quod vacuum eſſet. In eâ, quæ acies & ordines diſcernebat, areâ,
+> ,, calculum unum collocaſſe, quem Penelopen, nominabant. Pro ſi-
+> ,, gno ac ſcopo is erat, ſi quis altero calculo, ferire poſſet. Cui jacien-
+> ,, di fors, obvenerat, in illum collimans, dirigebat calcem, & ſi fortè
+> ,, attigiſſet Penelopen, antrorfumq; è ſuâ ſede propuliſſet, calculus
+> ,, ejus, qui miſerat, in ejecti ac protruſi locum, deponebatur: &
+> ,, cùm denuò Penelopen, in eam ſedem, quam obtinebat priùs, reſti-
+> ,, tuiſſet, ſecundò, alterum calculum, rurſum mittebat, ac ſi percuſſiſ-
+> ,, ſet, nullo ex cæteris calculis icto, vincebat, optimamq; ſpem con-
+> ,, cipiebat, de Penelopes conjugio. Hoc luſu, pluries Eurimachus,
+> ,, victoriam adeptus, Penelopes nuptias, ſibi magnâ ſpe polliceba-
+> ,, tur. **Das iſt:**
+> ,, Es erzehlet Appion Alexandrinus, daß Ihm / von Cteſone
+> ,, Ithacenſi, berichtet worden / was maſſen / bey den Procis,
+> ,, (welche / umb des Ulyſſis, zu Hauſe hinterlaſſene Ehefrau / bu-
+> ,, leten) das Stein-Spiel / geſpielet worden. Dan es waren
+> ,, ihrer hundert und achte geweſen / welche / ſo viel Steine / alß
+> ,, ihre zahle vermöchten / doch zum halben theile / unterſchieden /
+> ,, auf einen plaß / gegen einander / folgender geſtalt / geſezet hat-
+> ,, ten: daß auf einer jeden ſeite / vier und funfzig geſtanden / und
+> ,, zwiſchen ihnen / gleichſam in der mitte / ein lediger plaß / gelaſ-
+> ,, ſen worden: Auf dieſen plaß / welcher ihre Schlacht-Ord-
+> ,, nungen unterſcheidete / hatten Sie / einen Stein geſtellet / wel-
+> ,, chen ſie / Penelopen nenneten. Derſelbe war nuhn das Zeichen /
+> ,, und der Zweck / welchen Sie mit ihrem Steine / zu treffen /
+> ,, verſuchen müſten. Welcher nuhn / durchs loos darzu erwehlet /
+
+<meta>catchword: werffen</meta>
+
+<vocab>Stein-Spiel, Proci, Buhler, Homer, Odyssey, Athenaeus, Appion Alexandrinus, Cteson, Penelope, Eurimachus, Latrunculorum Ludus, Ulyſſes</vocab>

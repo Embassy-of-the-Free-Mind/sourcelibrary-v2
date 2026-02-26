@@ -1,0 +1,37 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+## ¶ Of the men.
+
+The men be in number. 48. wher-
+of. 24. be of one side & must be kno-
+wen by one colour, and. 24. on the
+other syde, whyche also must be marked
+with a contrarye colour, as white and
+Blacke, Blew and Redde, or what co-
+lours els you lyke best. But in the cole-
+ring these. 3. thinges must be obserued,
+the bottome or lower part of euery man
+(excepte the two kinges) muste be mar-
+ked wyth hys aduersaryes colour, that
+when he is taken, he maye chaunge hys
+coate and serue hym vnto whome he is
+prisoner.
+
+The seconde thinge considered in the
+men, is their fashion: for of eyther syde.
+8. are roundes, other. 8. are triangles & . 7.
+(the king making . 8) are squares. There
+fashion is such roundes triangles squares
+
+<image-desc>A horizontal row of geometric shapes representing the game pieces: three circles (the first containing a concentric circle), three triangles, and three squares.</image-desc>
+
+The kynges because they consist of all
+three sortes, as it is knowen by the lear-
+ned speculation of the numbers, beare
+
+<sig>A. iij.</sig>
+<meta>the</meta>
+
+<vocab>Philosophers game, Rythmomachia, roundes, triangles, squares, kinges, numbers, William Fulke</vocab>

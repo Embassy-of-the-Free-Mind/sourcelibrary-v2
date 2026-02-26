@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>367</page-num>
+<header>12.cap: Vom Schach-Spiel.</header>
+
+<term>Ab-Schach</term> : Der <term>Schwartze</term>/bedecket/den <term>König</term>/mit der K. <term>Reuter</term>/auf sechs und viertzig: Der <term>Weisse</term>/nimt ihn/mit der <term>Königin</term>/und beut <term>Schach</term>: Der <term>Schwartze</term>/muß den <term>König</term>/mit der <term>Königin</term>/auf drey und funfzig/bedecken: Der <term>Weisse</term>/nimt sie/mit der <term>Königin</term>/und gibt <term>Schach-Mat</term>.
+
+<margin>7.</margin> Nimmt aber der <term>Weisse</term>/den S. <term>Soldaten</term>/nicht/(n. 3.) besondern/rucket/der K. <term>Rochens-Soldaten</term>/auf der S. K. <term>Reuter</term>/auf ein und dreyssig: so setzet/der <term>Schwartze</term>/denselben/auf funf und funfzig: Der <term>Weisse</term>/nimt/mit der K. <term>Soldaten</term>/der S. K. <term>Schützens-Soldaten</term>/und ziehet ihn/auf denselben: Der <term>Schwartze</term>/denselben/auf des W. K. <term>Soldaten</term>/auf funf und viertzig: Der <term>Weisse</term>/denselben/auf ihn/(so fern Er ihn/mit der K. <term>Schützen</term>/nicht nehmen: noch der K. <term>Soldaten</term>/wan des S. K. <term>Soldat</term>/diesen <term>Schützen</term>/genommen: auf die S. <term>Königin</term>/auf 54: noch des K. <term>Schützen</term>/umb zu erlangen die S. <term>Königin</term>/wan sie etwa/den gedachten <term>Schützen</term>/weggenommen/und den <term>König</term>/auf 53. bedecken müssen: auf 39. ziehen wil) auf sechs und dreyssig: Der <term>Schwartze</term>/denselben/auf der W. K. <term>Reuter</term>/auf acht und zwantzig: Der <term>Weisse</term>/der K. <term>Soldaten</term>/auf die S. <term>Königin</term>/auf vier und funfzig/und beut/von der <term>Königin</term>/<term>Ab-Schach</term>: Der <term>Schwartze</term>/muß den <term>König</term>/mit der <term>Königin</term>/auf drey und funfzig/bedecken: Der <term>Weisse</term>/rucket/auf sie/des K. <term>Schützen</term>/auf neun und dreyssig: Der <term>Schwartze</term>/darf/der W. K. <term>Reuter</term>/mit seiner K. <term>Reuter</term>/nicht nehmen/(dan der <term>Weisse</term>/mit des K. <term>Schützen</term>/seine <term>Königin</term>/nehme/und gleich <term>Schach-Mat</term> gebe) * 
+
+<margin>8.</margin> besondern/rucket/der K. <term>Schützen</term>/auf funf und dreyssig: Der <term>Weisse</term>/nimt/die S. <term>Königin</term>/mit des K. <term>Schützen</term>/und beut <term>Schach</term>: Der <term>Schwartze</term>/nimt ihn/mit der K. <term>Schützen</term>/und ziehet denselben/auf die W. <term>Königin</term>: *
+
+<margin>9.</margin> Der <term>Weisse</term>/dieselbe/auf der S. K. <term>Reuter</term>/auf vierzehen/und beschützet ihren <term>Reuter</term>: Der <term>Schwartze</term>/muß denselben/mit ihm nehmen: Der <term>Weisse</term>/denselben/mit der <term>Königin</term>: und kan dem <term>Schwartzen</term>/(welcher/ohn seiner <term>Königin</term> beystand/spielen muß) ferner leichtlich abgewinnen.
+
+<margin>10.</margin> Wan aber der <term>Weisse</term>/die <term>Königin</term>/auf 14. (n. 9.) nicht rucket/besondern/mit derselben/der S. K. <term>Schützen</term>/nimt/und <term>Schach</term> beut: so nimt sie/der <term>Schwartze</term>/mit dem <term>Könige</term>/und rucket ihn/auf dero <term>Soldaten</term>: Der <term>Weisse</term>/nimt der S. K. <term>Reuter</term>/mit seiner K. <term>Reuter</term>: Der <term>Schwartze</term>/der W. K. <term>Soldaten</term>/mit dem <term>Könige</term>: Der <term>Weisse</term>/rucket/des K. <term>Soldaten</term>/auf des
+
+<sig>Aaa</sig>
+<meta>catchword: auf des</meta>
+
+<vocab>Schach, König, Königin, Reuter, Soldaten, Schützen, Rochens-Soldaten, Ab-Schach, Schach-Mat, Weisse, Schwartze</vocab>

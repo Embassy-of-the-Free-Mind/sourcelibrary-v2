@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>294</page-num>
+<header>Das Dritte Buch/ 4. cap:</header>
+<meta>catchword: wenig</meta>
+
+49. * Der Schwarze / ziehet den König / auf sechs und zwantzig :
+Der Weisse / gibt / mit der Königin / auß neunzehen / Schach : Der
+Schwarze / muß den König / auf funf und zwantzig / rucken : Der
+Weisse / gibt / mit des K. Reuters=Soldaten / auß achtzehen / Schach :
+Der Schwarze / muß den König / auf siebenzehen / rucken : Der
+Weisse / gibt / mit des K. Schützen / auß drey / Schach : und (weil
+der Schwarze / seinen König / auf neune / rucken muß) mit der Kö=
+nigin / auß zehen / Schach=Mat.
+
+50. Rucket aber der Schwarze / den König / nicht auf 26. (n. 49.)
+besondern / auf funf und zwantzig : so gibt / der Weisse / mit des
+51. K. Reuters=Soldaten / auß achtzehen / Schach : * Der Schwar=
+ze / rucket / den König / auf siebenzehen : Der Weisse / gibt / mit der
+Königin / auß drey und dreyßig / Schach : Der Schwarze / ziehet
+den König / auf zehen : Der Weisse / gibt / mit des K. Schützen / auß
+sieben und dreyßig / Schach : Der Schwarze / muß / mit dem Kö=
+nige / auf zwey / weichen : Der Weisse / gibt / mit der Königin / auß
+eins / Schach=Mat.
+
+52. Stellet aber der Schwarze / den König / nicht auf 17. (n. 51.)
+besondern auf sechs und zwantzig : so gibt der Weisse / mit des K.
+Schützen / auß zwelfe / Schach : Der Schwarze / muß / den Kö=
+nig / auf siebenzehen / rucken : Der Weisse / gibt / mit der Königin /
+auß drey und dreyßig / Schach : Der Schwarze / muß den König /
+auf zehen / rucken : Der Weisse / gibt / mit des K. Schützen / auß
+neunzehen / Schach : Der Schwarze / muß den König / auf zwey /
+setzen : Der Weisse / mit der Königin / auß eins / Schach=Mat.
+
+53. Gibt aber der Weisse / nicht / mit der Königin / (n. 48.) beson=
+dern / mit des K. Schützen / auß 51. Schach : so rucket / der Schwar=
+ze / den König / auf funf = oder sechs und zwantzig : Setzet Er ihn / in
+dieses feld : so gibt der Weisse / mit der Königin / auß acht und zwan=
+tzig / Schach=Mat: ziehet Er ihn aber / auf jenes plätzlein : so nimt
+der Weisse / mit der Königin / des S. K. Schützen / und gibt Schach:
+Er / muß den König / auf sechs und zwantzig / rucken : Der Weisse /
+gibt / mit der Königin / auß siebenzehen / Schach=Mat.
+
+54. Wan aber der Schwarze / den W. Soldaten / mit des K. Reu=
+ter / (n. 47.) nicht nimt / besondern denselben / auf sechzig / oder drey
+und funfzig / oder acht = oder sechs und zwantzig / stellet : so wird der
+Weisse / wan Er / des K. Schützen / auf ein und zwantzig / ziehet / seine
+Königin / (wan Er / dieselbe / auf acht und funfzig / rucket) nach
+
+<vocab>Schach, Schach-Mat, König, Königin, Reuters-Soldaten, Schützen, Schachzug, Schachpartie</vocab>

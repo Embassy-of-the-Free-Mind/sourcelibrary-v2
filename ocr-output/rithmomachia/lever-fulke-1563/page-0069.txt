@@ -1,0 +1,18 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>C.iij.</sig>
+<meta>Catchword: The</meta>
+<vocab>roundes, cossicall signes, roote, quadrate, triangles, Philosophers game, Rythmomachia</vocab>
+
+The second order of roundes founde out as before, be not all marked with <term>cossicall signes</term>, but onely .4. and .9. with the <term>roote</term>, and .81. with the <term>quadrate</term>. The rest haue none, because amonge their aduersaries men there is none that can be cossicall roote to them in such maner as this game requireth.
+
+<image-desc>Two rows of circular game pieces (roundes) for the game Rythmomachia. 
+The top row contains four circles with the numbers 64, 36, 16, and 4. Beneath the number 4 is a cursive-style symbol representing a 'roote'. 
+The bottom row contains four circles with the numbers 81, 49, 25, and 9. Beneath the 81 is a 'quadrate' (square) symbol, and beneath the 9 is a 'roote' symbol.</image-desc>
+
+The first order of triangles (hauyng the same numbers that haue bene taught before) do all lack the cossicall signes, except onely .6. which is signed with the roote.
+
+<image-desc>Two rows of triangular game pieces. 
+The top row contains four triangles with the numbers 72, 42, 20, and 6. Beneath the number 6 is a 'roote' symbol. 
+The bottom row contains four triangles with the numbers 81, 56, 30, and 12.</image-desc>

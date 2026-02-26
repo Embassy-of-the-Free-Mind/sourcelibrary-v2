@@ -1,0 +1,27 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>10</page-num>
+<header>VIII</header>
+
+¶ SI sumātur primi post vnitatem par et impar : ⁊ cōposito ex ipsis minor addatur: itemq3 ex his confecto minor aduciatur: erit vt cum primorũ primus sit par: sequētes sint impares. tertiorũ primus par et sequentes impares ac sic deinceps. duploq3 quadrati parium et quadrato extremi impariũ: tetragoni triāgulares terminētur.
+
+<image-desc>
+A complex mathematical diagram organized within a grid of 9 columns.
+- The top two rows contain interlocking circles:
+  - The first set spans columns 1-2, with a large circle containing the Roman numeral "I" and two smaller circles containing "2 a" and "3 b".
+  - The second set spans columns 3-4, with circles "5 c" and "7 d".
+  - The third set spans columns 5-6, with circles "12 e" and "17 f".
+  - The fourth set spans columns 7-8, with circles "29 g" and "41 h".
+- Row 3 contains square numbers in columns 1 through 8: 4, 9, 25, 49, 144, 289, 841, 1681.
+- Row 4 contains small circles with letters: k (col 3), l (col 4), m (col 5), n (col 6), o (col 7), p (col 8).
+- Row 5 contains ornate Gothic calligraphic letters in boxes.
+- Row 6 contains the word "Duplus" written diagonally across pairs of columns, with numbers below: 8 (cols 1-2), 50 (cols 3-4), 288 (cols 5-6), 1682 (cols 7-8).
+- Row 7 contains larger numbers resulting from calculations: 36 (cols 1-2), 1225 (cols 3-4), 41616 (cols 5-6), 1413721 (cols 7-8).
+- Row 8 contains the word "Tetragoni triangulares" broken into syllables across the 9 columns: "Te", "tra", "go", "ni", "tri", "an", "gu", "la", "res".
+</image-desc>
+
+¶ Sint a et b numeri primi post vnitatem par ⁊ impar binarius scz atqz ternarius q̃ iuncti faciāt c cui addito a fiat d. item c et d cōponent e cui addat c ⁊ fiat f atqz e ⁊ f componant g et e addatur g ⁊ fiat h. dico primo a esse parē et b imparē ⁊ c d impares. item e parē f et g h impares. a enĩ esse parem ⁊ b imparem est hypothesis. et qz c cōponitur ex a ⁊ b: per secundā septimi c etiā est impar. et qz d constat ex a pari et c impari per eandē secundā d est impar. ⁊ qz e constat ex c d duobus imparibus e per quartā eiusdē erit par. et qz f constat ex c e impari atqz pari per secundā eiusdē f est impar et per eandē erũt g et h impares: qđ intendebat. Secũdo dico duplū quadrati a terminare tetragonicũ triangularem. terminare enĩ tetragonicũ triangularẽ est esse latus quadrati qui pariter est ⁊ triāgularis. Patet iō nā qz vnitas duplicata cōstituit a et a bis sumptus suum perficit quadratũ: duabus igit̃ vnitatibus d distat a suo quadrato et vnicum suscitpit mediū scz b: cuius differētia ad a est vnitas. et qz per septimā sexti quo abundat quadratus b super quadratū a est quod fit ex vnitate in b et a simul. sed b et a simul sunt vno maius quadrato a qui duplus erat ad a. igitur quadratus b est vno maior duplo quadrati a. sed ⁊ duplū quadrati a in quadratū b cum sola vnitate distent pducit per diffinitionē altera partē lōgiorẽ quadratus a qui est medietas in quadratũ b per octauam secundi pducit illius altera parte lōgioris medietatē. ergo per quartā huius quadratū a in quadratū b producit triāgularem. ⁊ qz producitur ex ductu quadrati in quadratū: ergo per decimāquartam sexti idem erit ⁊ tetragonicus. effectum est ergo qđ dicebat. Tertio dico quadratū d extremi impariū terminare tetragonicũ triangularem. sumo enĩ quadratū c qui sit k ⁊ quadratū d qui sit l: dico k duplicatũ excedere vno l. nam quadratum c duplicatũ per decimāquintam primi est tanq̃ duplū quadrati a et duplū quadrati b. et quod fit ex b in a quater et qz per eandē decimāquintam quadratū d est q̃tum c in se et a in se ⁊ a in c bis: sed c in se est tātum per eandem q̃tum b in se et a in se et a in b bis. et a in c bis est tm̃ per nonā primi q̃tum a in se bis et a in b bis. ergo qđ fit ex d in se est q̃tum quod fit ex b in se et quadruplū quadrati a ⁊ quadruplum pducti ex a in b. sed cum duplū quadrati c sit monstratū q̃tum duplũ quadrati b et duplū quadrati a et quadruplū altera parte longiorem cuius longius latus quadratū b excedat vno duplum quadrati a. sit ergo v duplum quadrati c cōtinens quadratū b loco huius q̃ quadrati d ⁊ tinet duplũ quadrati a ceteris omnibus cōstimilibus excedat vno quadratū d. duplū ergo quadrati c in quadratū d per diffinitionē producit altera parte longiorem cuius longius latus excedit vno quadratū d. illius ergo duplū dimidius qui est quadratus k in l quadratū d producit illius altera parte longioris dimidium per octauam secundi qui per quartam huius est triangularis et cuius latus est l quadratus extremi imparium qui et idem per decimāquartam sexti est tetragonus. et hac ratione de sequentibus molire id quod propositũ est ostendere : et omnino constabit propositum.
+
+<sig>g i</sig>
+
+<vocab>tetragoni, triangulares, binarius, ternarius, hypothesis, septimi, sexti, octauam, decimāquartam, decimāquintam</vocab>

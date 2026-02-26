@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>57</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>h ii</sig>
+<meta>catchword: wer Kü-</meta>
+
+<margin>3.cap:</margin> heit: der Ritter / den Sieg: der Verweser / den gewalt und <<
+kraft: die Künigin keuschheit / und alles Volck einmühtigkeit: <<
+daß gibt man alles dem Künig zu eren. Wan Er sich / von der <<
+stat erst erhebt / so get Er aufs dritte veld / das bedut / das die <<
+erst volkumenheit / sich anhebt an dryen / wan eins und zwey / <<
+machet drey / und zwirnet drey / machet sechs / deß beteut <<
+sechs person / die hoch genant seynt / auf dem SchachZabel / die <<
+ein rechte volkumenheit machent / daß ist der Künig / und die <<
+Künigin / der Richter / und der Ritter / der Verweser / und die <<
+gemein. Der Künig / get ir aller vart / und also / sol Er ir aller <<
+volkumenheit haben / und wan der Künig von stat get / so mag <<
+Er die Künigin / mit ihm füren / das beteut / das die Frawen / <<
+nit sollent geloben und geheiß thun / on der Mann willen / kirch- <<
+fert / noch Pilgrim gefert. Ist aber daß sie antheiß und ge- <<
+lupt tut / und daß der Man widerspricht / so mag sie es / on <<
+seinen willen nit tun: aber der Man / mag wol geheißen ge- <<
+lüpt / und mags auch thun und leisten / on der Frawen willen. <<
+Ist aber / das sie sein nit entberen wil / so mag sie / mit Ihm <<
+faren / und das ist davon / daß die Fraw / sol underthon sein / <<
+des Mannes gebot / und das auch der Man / ein Haubt ist / <<
+der Frawen / und die Frawe / des Mannes Haubt nicht ist. Je- <<
+doch nach der schuld der Ehe / so ist ihr ietweder / seines leibes <<
+geweltig / sunder der Frawen Leib / ist des Mannes / und des <<
+Mannes Leib / ist der Frawen. Und davon / so sol Er sie / mit <<
+ihm führen / und ihr geben / daß ihr ist / ob sie es / an ihm for- <<
+dret: und wan der Künig vorgehet / so mag die Künigin / mit- <<
+gehen / get aber die Künigin für / so beleibt der Künig / ob es ihm <<
+gefelt: Zum folgenden Zuge / get Er nuhr / auf das nechst <<
+Veld / daß bedüt / dieweil Er in dem Rych sey / so sey er sicher / <<
+Wan Er aber daraus komt / so sol Er sicherlich gen / wan Er <<
+allein nützer ist / wan ander tausent / und ob Er allein gefan- <<
+gen wurd / oder erschlagen / so wer des Heeres kraft / alle ver- <<
+nicht: und dovon / das die Künige / zu ein ander / nicht türrent <<
+gen / dovon mögent sy / ein ander nicht geschaden / und wan <<
+man ihm / die seinen all gefecht / so hat Er niemand / damit Er <<
+sich / geretten möge / das Er den Sieg behabe: Wes wil sich / <<
+ein Künig frewen / der niemand hat / des Er Künig sey / und <<
+ihm unterthon / und gehorsam sey. Es ist ein üppiger rum / <<
+
+<vocab>Schach-Spiel, Ritter, Verweser, Künigin, Künig, SchachZabel, Richter, Ehe, Sieg, Rych</vocab>

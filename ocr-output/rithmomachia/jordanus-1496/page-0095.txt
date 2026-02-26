@@ -1,0 +1,75 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>II</page-num>
+
+<margin>c</margin>
+**Consonātia** est soni grauis/ acutiq; mixtura: suauit/ vniformiterq; auribus
+incidens: ex multiplici aut superparticlari ratione pfecta ■. ¶ **Dissonātia**
+est duorum sonorū non se natura suauiter miscentium: ad aurem pueniens
+aspera/ iniocūdaq; percussio. ¶ **Tonus** est consonātia principiū: ex soni ad
+sonum sesquioctaua pportione pueniens. ¶ **Semitonium minus** quod et diesis dicitur:
+est toni pars: qua sesquitertia pportio duobus tonis maior est. ¶ **Semitoniū maius**
+quam et vocant **Apothomen**: est toni reliqua ps: et qua ipse semitoniū minus superat.
+¶ **Comma** est quo sesquioctaua pportio: duobus semitoniis minoribus maior est: qđ
+et idem est quo apothome semitonium minus vincit ac superat ¶ **Schisma** est cōma
+tis dimidiū. ¶ **Diaschisma** ē dimidium semitonij minoris. ¶ **Hemispherium:** musicū
+est instrumētum per qđ aut neruo aut chordæ vt decet suppositum: semitonia/ tonos/
+consonātiasq/ et consonantiarū particulas: ad sensum puestigamus. ¶ **Sonus emmelis**
+is est quo apte vtimur in melo. ¶ **Ecmelis** vo is dicitur: quē melos/ concentusq; non
+admittit. ¶ **Equales soni** atq; similes dicūtur: q̇ ex eadem interualli pportione nascū
+tur ¶ **Numerozū** atq; interuallorum pars ea maior est: quæ a minore nūero denoiat.
+et mīor que denoiatur a maiore. ¶ **Multiplex pportio** maior est: quā maior denoiat
+numerus. et minor: que denoiatur a minore. ¶ **Supparticularis pportio** maior est:
+que a maiore denomiatur parte. minor autē: quæ denominatur a minore.
+
+<margin>1</margin>
+### ¶ Tonum super datam chordam collocare.
+
+<image-desc>A horizontal line representing a string labeled "a b". A point "c" is marked near the left end "a". Above the line, letters "a", "c", and "b" mark specific points, with several vertical tick marks in between "c" and "b".</image-desc>
+
+¶ Sit a b c chorda quecūq; supra quā iubeamur tonū collocare: diuido p tertiam petitionem chordā
+a b in nouem equas portiones: ita vt c b illarū nouenariū octo teneat et a c vnam. dico qñ a b et c b tonū
+otinēt/ ostitutūq; supra datā chordam esse tonum. Nā totū chordæ spaciū a b otinet spaciū c b et insup
+octauam eius partē: quia a c vni illaz octauaz equa est. Igit per diffinitionē spaciū a b epogdoū: sesqui-
+octauūq; est spacio c b. quare per primam petitionē ea erit soni totius chordæ a b ad sonum c b ppor
+tio. Est itaq; tonus in chorda a b qui in epogdoa/ sesquioctauaq; ratione consistit: collocatus.
+
+<margin>2</margin>
+### ¶ Tonum tono et quotquot libuerit: in data chorda subiungere.
+
+<image-desc>A horizontal line representing a string "a b" with points "c", "d", and "e" marked successively to the right of "a". Vertical tick marks indicate various divisions along the line towards the right end "b".</image-desc>
+
+¶ Sit data chorda a b in qua ppositum sit tres cōsequētes tonos subiūgere partior per tertiam peti
+tionem vt in præcedēti factum est spaciū totius chordæ a b in nouem equas portiōes. et in nota octaue
+portionis pono c: ita vt b c octauas illarum nouem partium teneat. manifestū est per præcedētem a b et
+b c esse tonum. et per eādem petitionē partior spatium c b in nouem equas portiōes. et in tertio octaue
+particule pono d: ita vt d b otineat octo eaz partium quaz c b nouem otinet. per precedentem c b ad d b
+sonat tonum/ estq; iam vni tono: tonus vnus subiūctus. Rursum spacium d b osimili modo in nouem
+equas portiōes diuido: et notam octaue sectionis littera e designo: ita vt e b octo eaz partiū cōtineat:
+quaz d b otinet nouem per precedentem d b ad e b resonat tonum. sunt igitur in data chorda a b tres
+ōtinue subiūcti toni: scilicz a b / c b . c b / d b . d b / e b. qđ erat ppositum. et hoc pacto quotquot lubet subiū
+gere q̄facillimū est. Et si id sensu experiiri/ deprēhēdereq; cupias post pulsus toti⁹ chordæ a b suppone
+hemispherium chordæ a b in signo c: ita vt sola perstrepat resonetq; particula c b et sensus iudicio dep-
+hēdes soni totius a b ad sonū c b esse toni iteruallū. q̄ si hemispheriu trāffers ad notam d: ex pulsu
+c b et d b itez tonum deprēhēdas. sed ex totius a b sono ad sonū particule d b duos tonos/ duorūq; to-
+norum intuallū perpendet auditus. et hoc pacto sensuum iudiciis quotq̄t voles tonos dephēdēdos
+cōmitteres: et eoz mixturas tum suaues/ tum incōcinnas (quas auditus tanq̄ offensus horret refu-
+gitq;) decernendas.
+
+<margin>3</margin>
+### ¶ Tonorum continuatorum: minimos numeros assignare.
+
+| 59049 | 52488 | 46656 | 41472 | 36864 | 32768 | Quinq; tonorum adinuicem conti- |
+|-------|-------|-------|-------|-------|-------|--------------------------------|
+| **n** | **o** | **p** | **q** | **r** | **s** | nuatorum minimi numeri. |
+| 6561  | 5832  | 5184  | 4608  | 4096  |       | Quattuor tonorum adinuicem cō- |
+| **h** | **i** | **k** | **l** | **m** |       | tinuatorum minimi numeri. |
+| 729   | 648   | 576   | 512   |       |       | Trium tonorum adinuicem conti- |
+| **d** | **e** | **f** | **g** |       |       | nuatorum minimi numeri. |
+| 81    | 72    | 64    |       |       |       | Duorum tonorum adinuicem con- |
+| **a** | **b** | **c** |       |       |       | tinuatorum minimi numeri. |
+
+¶ Si duo/ tres/ q̄ttuor/ quinq; aut quotlibet toni sint ōtinue in neruo ostituti: sic eoz mīmos nūeros
+reperiemus. Qm̄ eni nouem et octo mīmi sunt numeri toni duco nouem in se et pueniat a: et nouem in
+
+<vocab>Consonantia, Dissonantia, Tonus, Semitonium, Comma, Schisma, Diaschisma, Hemispherium, Sonus emmelis, Proportion, Chorda, Epogdous</vocab>

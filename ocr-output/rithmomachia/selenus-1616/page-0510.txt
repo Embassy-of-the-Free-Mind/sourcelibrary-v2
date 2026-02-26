@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>468</page-num>
+<header>Das Fünffte Capittel/</header>
+<meta>catchword: (Buxer:</meta>
+
+<image-desc>Decorative woodcut banner across the top of the page featuring a central coat of arms or crown ornament, flanked by scrolling foliage and two cherubic or human faces looking inward.</image-desc>
+
+## Das Fünffte Capittel.
+
+### Wie man das Spiel/ recht anstellen/ und diesen Zahl-Streit/ führen sol.
+
+Die art und weyse/ diese kempfende Zahle/ an einander zu führen/ und den Sieg/ mit ihnen zu erhalten/ beruhet nuhr/ im rauben oder nehmen der Steine/ auß des Gegentheiles Hauffen: Dan jeh weniger Steine/ derselbe behelt/ jeh ehe und leichter/ die unterschiedene überwindungen/ (davon/ im folgenden letzten Capittel/ bericht erfolget) benebest dem Spiele/ bey Ihm erhalten/ und erlanget werden.
+
+Es geschicht aber/ dieses Rauben/ auf sechserley Art: alsnemlich:
+
+->Durchs { Zehlen/ Zusammen-rechnen/ Abziehen/ Vermehren/ Theilen/ und Einsperren.<-
+
+Mit dem Zehlen/ nimt man der widerpart Steine/ dieser gestalt:
+
+Wan ein Stein gezogen wird/ welcher zum folgenden Zuge/ in ein feld/ darinnen ein Stein auß des Gegeners Hauffen/ welcher/ mit gleichen Zahlen/ gezeichnet ist/ stehet/ dem Spiele oder seinem gange gemäß/ kan gezogen werden. Dan derselbe/ auf den fahl geraubet/ der gezogene Stein aber/ in dessen Stelle/ nicht gerucket wird/ sondern/ auf seinem orte/ verbleibet: Als/ zum Exempel: (welches/ nebest den folgenden/ in der Tafel/ dieses Capittels/ auf die lincke seiten/ verzeichnet/ zu befinden) Wan der Schwartze Runde Stein/ mit 25. verzeichnet/ auf A, stehet: und der Weisse Dreyeckete/ auf welchen/ auch 25. geschrieben/ auf B, gezogen wird: so kan man/ den Schwartzen Stein/ zwar wegnehmen/ aber der Weisse Stein/ verbleibet/ auf B.
+
+Die Zahle/ welche obgerürter gestalt/ gewinnen/ oder erleget werden können/ seynd folgende:
+
+<insert>| 9. 16. 25. 36. 49. 64. 81. |</insert>
+
+<vocab>Zahl-Streit, Rauben, Zehlen, Zusammen-rechnen, Abziehen, Vermehren, Theilen, Einsperren, Schwartze Runde Stein, Weisse Dreyeckete</vocab>

@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>11</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap.</margin>
+für sich trachtet / hinterlistiger weyse / ihm solches zu verhindern / nachstellet / reden wil : und gehet diese Art zu spielen / an der Herren Höfen / und auf den Raths-Häusern / in den Stäten / mehr dan zuviel / im schwange. Von gedachtem Spiele / hat nuhn das Schach-Spiel / wie es sich ansehen lasset / seinen ursprung genommen.
+
+Hingegen / gibts zur Tugend / eine gute anleitung. Dan wie / in diesem Spiele / ein erfahrener <term>Schach-Zieher</term> / wegen mannicherley unfall / und verwechselungen des Glückes / den muth nicht fallen lasset / sondern / denselben / mit guter vernunft / klüglich zu begegen weisz / also sol ein Ieglicher / anlasz nehmen / allen widerwertigkeiten / und unfall / Menschliches Lebens / kecklich / doch mit guter bedacht und bescheidenheit / unter die augen zu treten / und dieselbe weiszlich zu überwinden.
+
+Wolte man aber / kurtz vor erwehntes Sprichwort / *Ludimus Civitates*, oder wie es *Seneca*, *Epist : 106. circ. f.* auszspricht / *Ludimus Latrunculis* : das ist : wir Spielen / mit <term>Schach-Steinen</term> : nach anleitung desselben / auszlegen / so würde dasselbe / was es / umb das studieren / für eine gelegenheit hette / uns eröfnen. Dan gleich wie Zween / sich im <term>Schach-ziehen</term> / nicht wenig bemühen / in dem einer dem andern / mit grosser spitzfündigkeit / nachstellet : und dennoch / ob sie zwar / ihre zugelassene freude und ergötzlicheit / nebest guter übung des verstandes / erlangen / weder ihnen selber / (dan sie hiedurch / nicht frömmer / auch nicht böser geworden) noch dem gemeinen leben / einigen nutzen schaffen / sondern ihren witz / dieszfals / vergeblich anwenden / und nuhr gespielet haben : also wird hiemit angedeutet / dasz viele / auch ernste sachen / welches zubeklagen / (alsz zum Exempel / das Studiren) nuhr zu allerhand spitzfündigkeit und grüblen anlegen / sich auch nuhr / auf dasselbe / welches zur scherfung des verstandes fürstendig / und zu wissen / nuhr belästiget / sonsten aber wenig nutzet und frommet / begeben : und darentgegen / was zu des Gemühtes unterweisung und anführung zum guten / und damit dem gemeinen leben / gedienet wehre / nicht achten / sondern gantz unterlassen. Dieses hat nuhn der *Seneca*, mit diesem Sprichworte / (welches *Iohan : Alex : Brassicanus*, *J.C.* in *proverb : Symmictâ, prov : 80.* so völlig / nicht auszgelegt) in gedachter Epistel / in welcher Er / den rechten gebrauch der Philosophey, und des Studierens uns fürstellet / anzeigen wollen : seine wort seynd / umb mehrers nachsinnens willen / auch anhero gesetzet :
+
+> *Latrunculis Ludimus, in supervacuis subtilitas teritur. Non*
+
+<sig>B 3</sig>
+<meta>catchword: faciunt</meta>
+
+<vocab>Schach-Spiel, Schach-Zieher, Seneca, Brassicanus, Latrunculis, Tugend, Studiren, Philosophie</vocab>

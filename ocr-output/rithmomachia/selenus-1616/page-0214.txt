@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>184</page-num>
+<header>Das Ander Buch / 9.cap:</header>
+
+Soldaten/ auf funf und zwanzig: Der Schwartze/ des K. Reu-
+ters=Soldaten/ auf des W. K. Reuter/ auf sechs und zwanzig:
+Der Weisse/ denselben/ auf ihn/ und des S. K. Schützen-Solda-
+ten/ auf sechs und dreyßig: Der Schwartze/ (umb Sie/ zu beschü-
+tzen) des K. Reuter/ auf ein und vierzig: Der Weisse/ dieweyl
+Er leichtlich kan absehen/ daß allerhand gute Züge vorhanden/ muß
+dieselben/ mit bedacht anstellen: und/ zu beschützen/ der K. Solda-
+ten/ etwa ihres Schützens-Soldaten/ auf zwey und zwanzig/ rü-
+cken/ oder sonsten/ andere Züge verrichten. Es ist aber zum besten/
+(umb den feind/ gefangen und eingeschlossen zu halten) daß Er/ des
+S. K. Soldaten/ mit der K. Schützen nehme/ und auf dessen Reu-
+ter/ ziehe: Der Schwartze/ nimt/ der W. K. Soldaten/ mit sei-
+nes K. Schützen/ ziehet ihn/ auf der W. K. Reuters-Soldaten/ und
+verhindert dadurch/ daß ihm/ der Weisse/ seines K. Reuter/ mit der
+K. Schützen/ nicht nehmen darf: (dan sonsten derselbe/ seines K.
+Reuter/ oder der K. Reuters=Soldaten/ nebest dero Rochen/ dage-
+gen auch verlieren würde) der Weisse/ (umb denselben zu beschü-
+tzen) rucket auf ihn/ der K. Schützens=Soldaten/ auf zwey und
+zwanzig: Der Schwartze/ (auf daß Er/ keinen Stein umbsonst
+verliere) nimt des W. K. Reuter/ mit des K. Schützen: Der
+Weiße/ denselben/ mit der K. Schützen/ und ziehet ihn/ auf den S.
+K. Rochen: Der Schwartze/ (ihn zu verthetigen) spielet/ auf der
+W. K. Schützen/ des K. Schützens-Soldaten/ auf drey und vierzig:
+Der Weisse / denselben / auf funf und vierzig: hält also / des
+Schwartzen Steine/ eingeschlossen/ und gefangen/ und wird das
+Spiel/ so fern Ers nuhr zu führen weiß/ ob Er schon/ einen Solda-
+ten verloren / mit gewalt gewinnen: Dan der Schwartze/ auf
+seines Königes seite / sehr entblöset ist/ und kan denselben/ auf die
+andere seite/ füglich nicht wol bringen/ noch sich/ daselbsten/ mit den
+übrigen Steinen/ frey herauß/ ins feld wagen.
+
+3. Derowegen/ wan der Schwartze/ nicht den W. Soldaten/ (n. 2.)
+besondern/ des W. K. Reuter / mit seines K. Schützen / wegrau-
+met: so nimt ihn/ der Weisse/ mit des K. Rochen: Der Schwar-
+tze/ des W. K. Schützens-Soldaten/ mit des K. Soldaten: Der
+Weiße/ ziehet der K. Soldaten/ auf neun und zwanzig/ und ent-
+blößet/ der K. Schützen/ auf des S. K. Soldaten: Der Schwartze/
+beut/ mit der Königin/ auf funf und zwanzig/ Schach: Der Weiße/
+(auf daß Er/ seines K. Rochens-Soldaten/ nicht verliere/ sondern
+mit der
+
+<vocab>Soldaten, Reuter, Schütze, Rochen, Königin, Schach, Züge, Schwartze, Weisse</vocab>

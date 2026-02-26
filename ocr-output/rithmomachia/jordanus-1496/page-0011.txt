@@ -1,0 +1,75 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>1</page-num>
+
+c in se. constat igitur quod sit ex ductu vnius equalium in se tantum esse quantum quod est ex vno inequalium in reliquum cum eo quod fit ex differentia in differentiam.
+
+### 20 Si numerus per duas quaslibet diuisiones diuidatur: quod fit ex ductu maximi diuidentium in minimum cum eo quod fit ex differentia ipsius maximi ad alterum mediorum in differentiam eiusdem ad minimum tantum est quantum quod sit ex ductu duorum mediorum vnius in alterum.
+
+<margin>
+<image-desc>
+Diagram for Proposition 20 consisting of horizontal segments and numerical labels.
+Segment b: 8
+Segment d: 6
+Segment e: 5
+Segment c: 2
+Vertical lines labeled f and g indicate differences between the segments.
+A sum of 15 is indicated at the bottom left of the diagram.
+</image-desc>
+</margin>
+
+Ut in precedenti id ante animaduertere licet quod cum quilibet numerus duabus hoc pacto diuisionibus secetur ut a vna diuisione in b & c et secunda in d e. quorum b sit maximus et c minimus d e mediorum maior et minor que differentia primi ad secundum eandem esse tertij ad quartum ipsis sic ordinatis. Nam quoniam d e equales sunt circumpositis b c: ab illis per secundam partem tertie equidistāt. quare que differentia b ad d que sit f: eadem erit e ad c. et etiam que differentia b ad e que sit g: eadem erit d ad c. Nam per octauam conceptionem differentia extremorum b c constituitur ex differentiis b ad d et d ad e. & differentia d ad c extremorum per idē constituitur ex differentiis d ad e & e ad c. Sed differentia d ad e est vtrique communis: et differentia e ad c probata est equalis differentie b ad d. erunt igitur differentie b ad e & d ad c ex equalibus quidem constitute adinuicem equales. Esto ergo a numerus eo qui positus est modo diuisus et differentie ut posite sunt assignate. dico ergo quod fit ex ductu b maximi diuidentium in c minimum cum eo quod sit ex f in g: equale esse ei quod sit ex d in e vniusvidelicet mediorum in reliquum. quod enim fit ex ductu d in e per nonam adiuuante octaua tantum est quantum quod fit ex d in c et in f. Nam e diuisum est in c et unam f. Sed quod fit ex d in c et f per octauam equum est ei quod fit ex c et f in d. ut quod sit fit f in d equatus per nonam ei quod fit ex f in c & g. at quod sit ex f in c tantum est per octauam quantum quod est ex c in f. quod autem ex c in d & f in f tantum est per nonam quantum quod est c in b. constat igitur quod fit ex d in e tantum esse quantum quod est c in b cum eo quod fit ex f in g & propositum.
+
+### 21 Si quota pars totius totius tota pars detractus detracti: erit residuus residui tota pars quota totus totius.
+
+<margin>
+<image-desc>
+Diagram for Proposition 21 using semicircular arcs.
+Large arcs for 24: 18 (a) and 6 (b).
+Smaller arcs for 12: 9 (c) and 3 (d).
+Labels a, b, c are placed below the arcs.
+</image-desc>
+</margin>
+
+Sit a b numerus cuius detractus sit b & residuus a. sitque alius numerus c d cuius detractus sit d et residuus c & quota pars totus c d est totius a b: tota pars sit d detractus detracti b. dico ergo totām partem c residuum esse residui a: quota pars est totus c d totius a b. capio numerum e cuius c tota pars sit quota d est b. et intelligo quattuor numeros c primi e secundum d tertium b quartum. constat enim per quartam quod c tota pars est e quota d est b: compositum c d totam partem esse compositi e b quota pars c est e & tota pars positus est c d ad a b. est igitur a b eque multiplex ad c d ut e b ad c d et per tertiam conceptionem adinuicem equales. quare e est equalis a. ut c ad e: ita quoque c ad a. sed c ad e est ut detracti ad detractum & totius ad totum. est igitur c ad a residuus ad residuum ut totus ad totum et quota pars totus totius quod est propositum.
+
+### 22 Si quote partes totus totius tote partes fuerit detractus detracti: erit residuus residui tote partes quote totus totius.
+
+<margin>
+<image-desc>
+Diagram for Proposition 22 with semicircular arcs.
+Arc for 12: divided into 9 (a) and 3 (b).
+Arc for 8: divided into 6 (c) and 2 (d).
+Labels a, b, c below.
+</image-desc>
+</margin>
+
+Sit a b numerus cuius detractus sit b et residuus a. & c d alius numerus cuius detractus sit d et residuus c & quote partes totus c d est totius a b: tote sit d detracti b. Dico ergo c totas partes esse a quote c d est ipsius a b. Pone numerum e cuius c tote partes sint quote d est b & argumentare penitus eodem modo per quintam quomodo in precedenti argumentatus es per quartam.
+
+### 23 Omnis pars partis: est pars totius denominata a numero qui fit ex ductu duorum numerorum vnius in alterum partes illas denominantium.
+
+<margin>
+<image-desc>
+Diagram for Proposition 23 showing six parallel segments.
+a (24), b (6), c (3), d (4), e (2), f (8).
+</image-desc>
+</margin>
+
+Sit a totus uumerus: b eius pars et c pars b & numerus denominans b in a sit d et denominans c in b sit e. sitque f numerus qui fit ex ductu d in e. Dico ergo c denominari in a ab f numero scilicet qui fit ex ductu duorum denominantium vnius in alterum. Diuido enim f in partes equales c: f similiter a in partes equales b. et quoniam quoties b est in a: toties e est in f. est enim d denominator vtriusque communis per hypothesim cum b secundum ipsum numeret in a: et c secundum eundem numeret in f. Ideo quot partes numero habet a ad b: tot habet f ad e. at quoniam c numerat b secundum e cum ex hypothesi e sit denominans quoties c in b. numerabit igitur c primam partem a equalem ipsi b per primam partem f equalem ipsi e. et eadem rationē secundam per secundam et tertiam per tertiam. et ita de ceteris si plures sunt. quare c per decimam numerabit a secundum f. per diffinitionem igitur denominabitur quoties c in a secundum f atque f erit ipsum denominans. est itaque c pars partis denōminata pars totius a ab f numero quidem qui fit ex ductu duorum numerorum illas partes denominantium vnius in alterum quod intenditur.
+
+### 24 Si fuerit primus secundi tota pars quota tertius quarti: itēque secundus quinti quota pars quartus sexti: erit primus quinti tota pars quota tertius sexti.
+
+<margin>
+<image-desc>
+Diagram for Proposition 24 showing line segments with relationships.
+First set: a (12), b (4), e (2).
+Second set: c (18), d (6), f (3).
+Relationships indicated: g (3), h (2), l z (6).
+</image-desc>
+</margin>
+
+Sint sex numeri: a primus: b secundus: c tertius: d quartus: e quintus: f sextus. sitque a tota pars b quota c est d & b tota pars e quota d fuerit f. dico igitur a totam partem esse e quota pars c est ipsius f. sit enim g denominans quoties a in b et h quoties b in e. cum a sit pars b & b pars e. ducatur g in h ut proueniat l z. quoniam igitur a est pars b partus scilicet ipsius e per precedentem a denominatur pars e a numero l z qui fit ex ductu g in h numerorum illas partes denominantium vnius in alterum. at numerus h denominans b in e est etiam numerus denominans d in f & g denominans a in b etiam denominat c in d. denoiabitur igitur per eandem precedentem c in f ab eodem numero l z qui fit ex ductu g in h denominantium illas
+
+<sig>a iij</sig>
+
+<vocab>diuisiones, numerus, differentia, mediorum, extremorum, propositum, pars, residuus, denominans, multiplex, proportio, Jordanus de Nemore</vocab>

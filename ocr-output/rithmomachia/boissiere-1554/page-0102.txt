@@ -1,0 +1,35 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>50</page-num>
+<header>DES PHILOSOPHES</header>
+<sig>G ij</sig>
+
+volontiers desirerions quelque ieu duquel vous
+autres (exerçant les nombres) grădement vsez
+pour aleger voz esprits, apres trop grands estu-
+des. Alcm. Peut estre (Bathille mon amy) que
+tu entends la <term>Rythmomachie</term>. Bathille: C'est-elle
+mesme, Alcmeon mon amy. Alcm. Or me dis
+donc, mon fils Bathille, combien y a-il de simples
+inequalitez de nõbres? Bathille. Trois: multipli-
+ce, superparticuliere, & superpartiente. Alcm.
+Il est vray, & ce par le respect & habitude du
+plus grand nombre au moindre: & en ce confi-
+ste le ieu que toy & Brontin m'auez demandé.
+Mais qu'est-ce que grăd harmonie & moindre?
+Bat. C'est quand des quatre termes de nombres,
+disposez selõ la proportiõ de Geometrie, les deux
+extremes font proportions auec les deux du mi-
+lieu: l'vn par le moyen de Musique, & l'autre
+d'Arythmeticq. Et l'harmonie mineur est, quãd
+ausdits quatre termes de nombres, seulement se
+trouue deux moyens. Or quant au moyen d'A-
+rythmeticque, Geometrie, & Musique il n'est be
+soing que t'en dõnons fascherie: car nous estimõs
+bien entendre ces choses. Alc. Tu entens beau-
+coup de bonnes choses, Bathille: Reste qu'en telles
+grãdes harmonies il faut que les quatre termes
+soient disposez de reng. Et quant est de la dispo-
+sition du ieu, elle est telle: premierement on dispo-
+
+<vocab>Rythmomachie, Alcmeon, Bathille, Geometrie, Musique, Arythmeticque, harmonie, nombres, inequalitez, multiplice, superparticuliere, superpartiente</vocab>

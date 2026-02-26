@@ -1,0 +1,43 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<warning>Page shows significant water staining along the top and right edges, as well as heavy bleed-through from the verso page (including a visible "(9)" and reversed text in the background).</warning>
+
+**FALLOR N?** Latronum hæc pugna, adumbrat humanæ
+Vicissitudines, molestias, casus
+Vitæ; quibus mederier licet curâ : Et
+Sorti obviam, fas, asperæ ire Mortales.
+->G. REMUS. J. C. P. A. Norimbergæ.<-
+
+---
+<image-desc>A rectangular decorative woodcut header featuring elaborate scrollwork, foliage, and a central face mask.</image-desc>
+
+### In lode del col<sup>mo</sup> Sig<sup>r</sup>. GUSTAVO SELENO,
+### sopra l' Opera, del Giuoco De' Scacchi, Madriga-
+### le, di FILIPPO HAINHOFER, Patricio
+### della Città d' Agoſta.
+
+Apugne allettatrici,
+A vendette pietoſe,
+A finti aſſalti, a ſimulati acquiſti,
+In breve campo, in carte,
+O GUSTAVO SELENO, addeſtril' arte.
+Ma con ombre vezzoſe
+Ai bellicoſi uffizzi
+A glorioſi ardori,
+L' ingegno e l' arte apriſti,
+Che ſpeſſo avien, ch' i generoſi cuori
+(Inganno Luſinghiero)
+Alletti il Giuoco, a l' armi, il finto al vero.
+
+---
+<image-desc>A rectangular decorative woodcut divider with symmetrical floral and foliate motifs.</image-desc>
+
+### UN ALTRO.
+
+Dimperar in città, regger guerriere
+Armate ſquadre, & farle in un iſtante
+Veloci, cangiar loco, & hor d' avante
+Girar, hora d' intorno ardite e fiere,
+
+<meta>Catchword: U fia</meta>
+<vocab>GUSTAVO SELENO, Giuoco De' Scacchi, FILIPPO HAINHOFER, Madrigale, Norimbergæ, chess, chess strategy</vocab>

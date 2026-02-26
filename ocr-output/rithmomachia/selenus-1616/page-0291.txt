@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>257</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap:</margin>
+
+5. ten: * Der Schwartze/ ziehet auf ihn/ der K. Reuter/ auf drey «
+und funfzig: Der Weisse/ (umb die Königin/ zu verthetigen) dero «
+Reuter/ auf zwey und zwanzig: Der Schwartze/ nimt/ der W. «
+K. Soldaten/ mit des K. Schützens-Soldaten: Der Weisse/ «
+ziehet/ der K. Reuter/ auf die S. Königin/ auf sieben und dreyß- «
+6. fig: * Der Schwartze/ dieselbe/ (auf daß Er dero Schützens- «
+Soldaten/ und Rochen/ nicht verliere) auf funf und vierzig: «
+Der Weisse/ nimt/ des S. K. Schützens-Soldaten/ mit seines «
+K. Schützens-Soldaten/ und ziehet ihn/ auf die S. Königin: «
+7. * Der Schwartze/ nimt denselben/ mit der K. Reuter: Der «
+Weisse/ ziehet der K. Schützen/ auf denselben/ auf sieben und «
+zwanzig/ und gewinnet ihn also mit gewalt. «
+8. Wan aber der Schwartze/ mit dem Reuter/ den W. Sol- «
+daten/ (n. 7.) nicht nimt: so verlieret Er/ einen Soldaten mehr/ «
+alß der Weisse: Nimt Er ihn aber/ mit der Königin: so vertwechslen «
+Sie beederseits/ die Königinne: und der Weisse/ nimt mit der «
+K. Reuter/ der S. K. Schützens-Soldaten/ beut Schach/ «
+und gewinnet hiemit/ dero Rochen/ ohne einigen widerstand. «
+9. Nimt aber der Schwartze/ den W. Soldaten/ weder mit «
+dem Reuter/ noch mit der Königin/ (n. 7. 8.) sondern rucket «
+dieselbe/ auf sechs und vierzig: so ziehet der Weisse/ auf sie/ des «
+10. K. Schützen/ auf neun und dreyßig: * Der Schwartze/ nimt «
+ihn/ mit derselben: Der Weisse/ der S. K. Schützens-Solda- «
+ten/ mit der K. Reuter/ beut/ dem Könige/ und der Königinne «
+Schach/ und gewinnet dieselbe/ durch diesen Zug. «
+11. Wan aber der Schwartze/ deßwegen/ den W. Schützen/ «
+mit der Königin/ (n. 10.) nicht nimt/ sondern dieselbe/ auf ihn/ «
+auf acht und dreyßig/ ziehet: so rucket der Weisse/ auf dieselbe/ der «
+K. Schützen/ auf zwanzig/ und wird ihrer/ (weyl Sie/ niergens «
+des kan hinflichen) nichtes desto weniger/ mächtig. «
+12. Wan aber der Schwartze/ die Königin/ nicht auf 46. (n. 9.) «
+besondern auf acht und dreyßig/ spielet: so ziehet der Weisse/ auf «
+dieselbe/ der K. Schützen/ auf zwanzig: Der Schwartze/ beut/ «
+mit derselben/ auß vierzig/ Schach: Der Weisse/ bedecket den «
+König/ mit itztgedachtem Schützen/ und ziehet ihn/ auf dieselbe/ «
+auf drenzehen: Der Schwartze/ setzet abermahl die Königin/ auf «
+acht und dreyßig: Der Weisse/ auf dieselbe/ der K. Reuters-Sol- «
+daten/ auf ein und dreyßig: Der Schwartze/ dieselbe/ auf sechs «
+
+<sig>Kk ij</sig>
+<meta>catchword: und vier-</meta>
+
+<vocab>Schach-Spiel, Reuter, Königin, Soldaten, Schützen, Rochen, Schach, Zug, verthetigen, vertwechslen</vocab>

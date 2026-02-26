@@ -1,0 +1,26 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>42</page-num>
+<header>Das erste Buch / 2. cap:</header>
+
+->Plautus, in Milit: Glor: Act: 1.<-
+> <margin>,,</margin>Nam Rex Seleucus, me opere oravit maximo
+> <margin>,,</margin>Ut sibi Latrones cogerem & conscriberem.
+->Idem ibid: Act: 4.<-
+> <margin>,,</margin>Nam ego hodiè, ad Seleucum Regem, misi parasitum meum,
+> <margin>,,</margin>Ut Latrones, quos conduxi, hinc ad Seleucum duceret.
+> <margin>,,</margin>Qui ejus Regiam, tutarentur. ---
+->Virgil: Æneid: lib: 12.<-
+> <margin>,,</margin>--- --- --- --- fixumq́; Latronis,
+> <margin>,,</margin>Impavidus frangit telum, --- ---
+<margin>,, ,,</margin>Id est, Venatoris; Nam & Venatores operas suas locare consueverunt. Vid: Jac: Pontani, de S. J. lib: 17. Symbolarum, ad 12. Æneid: col: 2215. 2216.
+
+Heutiges Tages / wird es fast überall / das Schach-Spiel / oder das Schach-Zabel-Spiel / für dem / als wir itzt reden / das Schach-tafel-Spiel / genand. Dan die Alten Deutschen / haben auß dem T. ein Z. gemachet; wie mit der Stadt Zabern in Elsaß / Zürich / und Zug / &c. (welche die Römer / Tabernam, Thurigium, und Thugiam genennet) geschehen. Woher es aber diesen Nahmen bekommen / ist nicht leichtlich zu vermercken.
+
+Etliche nehmen von den Steinen / die benamsung / doch nicht / auf einerley weyse.
+
+Dan der eine Theil wil / daß die itzigen Persen und Mauritannen / (sinthemahl / was von den Chaldeern / VVielius, cap: 3. dießfals fürgibt / auß der Chaldeischen Sprache / nicht zu befinden ist) einen König und Herscher / entweder Xa, (wie Garcias ab Ortâ, sup: citato loco) oder Saha, (wie Ioh: Thom: Minadous, lib: 2. Persischer Histor: pag: 42.) oder Scaha, Scah, Scach, (wie Petr: Bizarrus, lib: 10. rer: Persic: pag: 357. in f. VVencesl: Budovvitz à Budovva, in Ep: ad D. Chyt: de statu Eccles: in Græciâ, &c. wollen) nennen. Nuhn stehet in diesem Spiele / bey den Königen / alsz welche häupter / dieser gedichteten Schlacht seynd / der gewinst und verlust des Spieles. Dahero es nuhn / nicht unbillig / das Schach- oder Königs-Spiel / gleich wie / von den Currierern / alsz auch / von den besten Steinen / das Currier-Spiel / heisset / genand worden. Ob nuhn wol / dieser Nahm / auf gegenwärtiges Spiel / sich gantz wol schicket / wie wir ihn dan / in unserer Mutter-Sprache / uns sehr belieben lassen: so scheinet es doch / nicht glaublich / daß bey so langem gebrauch dieses Spieles / man erst / von den Barbarischen Völckern / den Nahmen habe entleihen wollen.
+
+<meta>catchword: Der</meta>
+
+<vocab>Schach-Spiel, Schach-Zabel-Spiel, Latrones, Plautus, Seleucus, Virgil, Zabern, Zürich, Zug, Persen, Mauritannen, Xa, Saha, Scaha, Scach, König, Herscher, Currier-Spiel</vocab>

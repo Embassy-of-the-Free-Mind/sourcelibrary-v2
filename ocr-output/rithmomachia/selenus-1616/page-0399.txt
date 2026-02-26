@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>365</page-num>
+<header>12. Cap: Vom Schach-Spiel. 365</header>
+
+<image-desc>A decorative rectangular woodcut headpiece with floral scrolls, acanthus leaves, and a central architectural or shield-like motif.</image-desc>
+
+## Das Zwölfte Capittel.
+
+### Wie man auf beeden Theilen / ein Spiel / welches / von der Königinne Soldaten / angefangen wird / ziehen / und sich dabey / in acht haben sol.
+
+Nachdem des Damiani meynung entdecket / und / was nötig / erachtet worden / dabey erinnert ist / also sol in diesem Capittel / oder Exempel / welcher gestalt / dergleichen Spiel / welches / durch der K. Soldaten / angefangen ist / ferner hinausz zuführen / und anzustellen seyn möge / gesetzet / und den Liebhabern dieses Spieles / auch mitgetheilet werden.
+
+<margin>1.</margin> Dan wan der Weisse / und der Schwartze / der Königinne Soldaten / auf neun und zwanzig : und sieben und dreyffig / ziehen : so spielet der Weisse / der K. Schützen / auf sieben und zwanzig : Der Schwartze / seiner K. Schützen / auf fünf und dreyffig : Der Weisse / der K. Schützens-Soldaten / auf der S. K. Soldaten / auf dreyffig : Der Schwartze / nimt denselben / mit ihm : Der Weisse / ( demselben / den Pass zu verlegen ) ziehet / der K. Reuter / auf zwey und zwanzig : Der Schwartze / seiner K. Reuter / auf der W. K. Soldaten / auf sechs und viertzig : Der Weisse / des K. Soldaten / auf der S. K. Schützen / ( umb den Pass / des K. Schützen / auf der S. K. Soldaten / zu eröfnen ) auf acht und zwanzig : Der Schwartze / der K. Schützen / auf zwey und viertzig : Der Weisse / ( so fern Er / der S. K. Soldaten / mit des K. Schützen / nicht nehmen wil ) der K. Soldaten / auf der S. K. Reuter / auf sieben und dreyffig : Der Schwartze / denselben / ( auß der gefahr / und / umb der K. Soldaten / zu beschützen ) auf viertzig : Der Weisse / auf denselben / der K. Reuters-Soldaten / ( für der S. K. Soldaten / über ) auf ein und dreyffig : und wird demselben / ( so ferne man die Soldaten / für des gegeners Soldaten / unangefochten / fürüber ziehen darf ) dergestalt / in seine gewalt / bringen : Beut Er aber / ( an stat des itzgedachten Zuges ) mit der Königin / auß zwey und dreyffig / Schach / und ziehet dieselbe / auf der S. K. Reuter : so bedecket / der Schwartze / den Kö-
+
+<meta>catchword: den Kö-</meta>
+
+<vocab>Damiani, Königinne Soldaten, Schützen, Reuter, Schach-Spiel, Weisse, Schwartze, Schach</vocab>

@@ -1,0 +1,33 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>.B.1</sig>
+<meta>catchword: one</meta>
+
+# The Philosophers game.
+the fathiõ of all three kinds, his foundati-
+ons are two ſquares, on which are ſette,
+two triangles & upõ them rounds. But
+this difference is betwene the kinges, y^t
+the king of the euen nūbers, hath a poin-
+ted toppe, the king of y^e odde numbers is
+not pointed, the cause dependeth upõ y^e
+cõſideratiõ of there numbers by which
+they ariſe into piramidall fathiõ. The
+third thing considered in the men, is the
+number that muſt be written or graue
+upõ them which to learne plainly for
+practiſe marke these short rules.
+  There be of eche kynde of men, two
+rankes or orders.
+  The first ranke or order of roundes be y^e
+digites euen or odde namely of the euen,
+2. 4. 6. 8. of the odde. 3. 5. 7. 9.
+  The second order of rounds are foūd by
+multiplyinge these digites by thẽſelues
+as . 2. times . 2. is . 4. 3. times . 3. is . 9. Of the
+euen they be . 4. 16. 36. 64. . of the odde
+they be . 9. 25. 49. 81.
+  The first order of the triangles are foūd
+by addinge two of the roundes together
+
+<vocab>Philosophers game, Rithmomachia, squares, triangles, rounds, even numbers, odd numbers, piramidall, digites</vocab>

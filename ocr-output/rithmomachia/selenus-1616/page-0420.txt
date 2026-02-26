@@ -1,0 +1,61 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>386</page-num>
+<header>Das Vierte Buch/ 3.cap:</header>
+
+und an stat des K. Soldatens/ der K. Schützens=Soldaten/ auf zwey
+und zwantzig/ ziehet: so rucket/ der Schwarze/ des K. Solda-
+ten/ auf sechs und dreyssig: Der Weisse/ auf denselben/ der K. Sol-
+daten/ auf neun und zwantzig: Der Schwarze/ denselben/ auf
+acht und zwantzig: Der Weisse/ der K. Schützen/ auf sieben und
+zwantzig: Der Schwarze/ der K. Soldaten/ auf sieben und
+dreyssig: Der Weisse/ des K. Soldaten/ auf zwantzig: Der
+Schwarze/ der K. Schützens=Soldaten/ auf der W. K. Solda-
+ten/ auf acht und dreyssig: 
+
+## Das Vierte Buch/
+
+<margin>5.</margin>
+* Der Weisse/ nimt (doch/ mit seinem
+schaden) der S. K. Reuter/ mit seiner K. Schützen: Der Schwar-
+ze/ denselben/ mit der K. Rochen: Der Weisse/ beut/ mit der Kö-
+nigin/ auß zwey und dreyssig/ Schach/ und ziehet dieselbe/ auf der
+S. K. Rochens-Soldaten: Der Schwarze/ auf dieselbe/ der K.
+Schützen/ und bedecket mit ihm/ den König/ auf drey und funfzig:
+Der Weisse/ nimt/ mit derselben/ der S. K. Rochens-Soldaten:
+
+<margin>6.</margin>
+* Der Schwarze/ der W. K. Soldaten/ mit seiner K. Schü-
+tzens=Soldaten: Der Weisse/ denselben/ mit der Königin/ er-
+rettet dieselbe/ auß der gefahr/ und machet endlich/ des K. Reuter/
+mit derselben/ einen freyen außgang.
+
+<margin>7.</margin>
+Wan aber der Schwarze/ den W. Soldaten/ mit seinem
+Soldaten/ (n.6.) nicht nimt/ sondern/ denselben/ umb der W. Kö-
+nigin/ und des W. K. Schützen/ den Paß zu verschliessen) auf dreyß-
+sig/ ziehet: so spielet/ der Weisse/ der K. Reuter: Soldaten/ auf
+
+<margin>8.</margin>
+ein und dreyssig: * Der Schwarze/ (umb/ die W. Königin/ so
+fern Ihm/ so viel zeit/ daß Er/ der K. Rochen/ auf dieselbe/ auf vier
+und sechsszig/ ziehen kan/ gelassen wird/ zu erlangen/ und der K. Reu-
+ters Soldaten/ ins künftige/ zu verthetigen) der K. Schützen/ auf
+sechs und viertzig: Der Weisse/ (diesem unheyle/ so seine Köni-
+gin/ zu gewarten hat/ bey zeiten fürzubawen) errettet sie/ für diess-
+mahl/ auf vier und zwantzig.
+
+<margin>9.</margin>
+Wan aber der Schwarze/ die Schach=Züge/ verstehet/ und
+an stat der K. Schützens/ (n.8.) des K. Reuter/ (umb/ der K. Solda-
+ten/ auf alle fälle/ zu beschützen) auf zwey und funfzig/ ziehet: so
+muß der Weisse/ die Königin/ (so fern Er dieselbe/ oder das gantze
+Spiel/ nicht wil verscherzen) auf vier und zwantzig/ ziehen/ Dan/
+wan Er/ solches/ nicht thut/ sondern/ dero Reuters=Soldaten/
+auf neun und dreyssig/ ziehet: Der Schwarze/ der K. Schü-
+tzen/ auf vier und viertzig/ setzet: Der Weisse/ der K. Reuter/ auf
+vier und zwantzig: Der Schwarze/ auf die W. Königin/ der K.
+
+<meta>catchword: Rochen/</meta>
+
+<vocab>Schach, Rochen, Reuter, Schützen, Soldaten, König, Königin, Gustavus Selenus, Schachspiel</vocab>

@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>327</page-num>
+<header>5. cap: Vom Schach-Spiel.</header>
+<sig>Le</sig>
+
+n. 7. jz.
+<image-desc>An 8x8 grid diagram of a chessboard. Pieces are denoted by abbreviations: SR (Schwarzer Roche/Black Rook), SS (Schwarzer Stein/Black Pawn), SK (Schwarzer König/Black King), WR (Weißer Roche/White Rook), WS (Weißer Stein/White Pawn), and WK (Weißer König/White King). Numerical markers 39 and 30 are present on the board.</image-desc>
+
+n. j5. 48.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces. The number 22 is marked on the lower half of the board.</image-desc>
+
+n. j9. zo.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces arranged in a specific problem layout.</image-desc>
+
+n. z6. 46.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces. The numbers 15 and 17 are present on the board, and the WK is positioned in the lower center.</image-desc>
+
+<column-break/>
+
+n. 9. jo.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces. Numerical markers 20 and 13 are positioned on the board.</image-desc>
+
+n. j8. zj.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces. The numbers 26 and 21 are present. One square in the middle-right area contains the combined label S&WS.</image-desc>
+
+n. zz. 47.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces. Numerical markers 38 and 35 are present on the board.</image-desc>
+
+n. z8. 33.
+<image-desc>An 8x8 grid diagram of a chessboard containing SR, SS, SK, WR, WS, and WK pieces. The number 19 is marked on the board.</image-desc>
+
+<vocab>Schach-Spiel, Roche, Stein, König, Springer</vocab>

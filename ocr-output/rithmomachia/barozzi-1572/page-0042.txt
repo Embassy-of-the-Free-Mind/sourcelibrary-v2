@@ -1,0 +1,28 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<warning>Significant bleed-through and ghosting from the verso and facing pages are visible throughout the sheet.</warning>
+<meta>catchword: Tauola</meta>
+
+# Tauola di tutte le proportioni Geometriche che poſſono occorrer in queſto giuoco
+
+| | | |
+|---|---|---|
+| 2 | 4 | 8 |
+| 3 | 6 | 12 |
+| 4 | 6 | 9 |
+| 4 | 8 | 16 |
+| 4 | 12 | 36 |
+| 4 | 16 | 64 |
+| 9 | 12 | 16 |
+| 9 | 15 | 25 |
+| 9 | 45 | 225 |
+| 16 | 20 | 25 |
+| 20 | 30 | 45 |
+| 25 | 30 | 36 |
+| 25 | 45 | 81 |
+| 36 | 42 | 49 |
+| 36 | 90 | 225 |
+| 49 | 56 | 64 |
+| 81 | 90 | 100 |
+
+<vocab>Tauola, proportioni Geometriche, giuoco, progressione</vocab>

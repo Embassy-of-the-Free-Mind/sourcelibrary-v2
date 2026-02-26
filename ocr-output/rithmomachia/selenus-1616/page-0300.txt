@@ -1,0 +1,49 @@
+<language>German</language>
+<page-num>266</page-num>
+<page-type>text</page-type>
+<header>Das Dritte Buch / 1. cap:</header>
+<meta>catchword: ein schade</meta>
+
+nigin / (so ferne Der Schwarze / den König / auf 60. gezogen) mit
+des K. Rochen / und gibt / von dessen Schützen / Ab-Schach-Mat.
+
+<margin>26.</margin> Wann aber der Schwarze / ehe Er den Reuter / auf 53. (n. 5.)
+ziehet / der W. K. Soldaten / mit des K. Schützens-Soldaten /
+<margin>27.</margin> raubet: * so nimt der Weiße / denselben / mit des K. Schützens
+Soldaten: Der Schwarze / ziehet auf ihn / der K. Reuter /
+auf drey und funfzig: Der Weiße / (ihn zu beschützen) der K.
+Schützen / auf sieben und zwanzig: Der Schwarze / auf den-
+selben / des K. Reuters-Soldaten / auf vier und dreyssig: Der
+Weiße / denselben auf achtzehen: Der Schwarze / des K. Schüt-
+zen / auf funfzig / und gewinnet also / ob gleich das Spiel / in et-
+was unordentlich gestellet / des W. K. Schützens-Soldaten / mit
+gewalt.
+
+<margin>28.</margin> Wann nuhn der Weiße / den S. Soldaten / nicht mit seinem
+Soldaten / (n. 27.) besondern / (umb einen Soldaten / zu gewin-
+nen) mit der Königin / raubet: so nimt sie / der Schwarze / mit
+seiner Königin / und beut Schach: Der Weiße / nimt dieselbe /
+mit des K. Schützens-Soldaten: Der Schwarze / ziehet / der
+K. Schützen / auf der W. K. Schützens-Soldaten / auf fünf und
+<margin>29.</margin> dreyssig: * Der Weiße / (umb die Schützen / zu verwechslen /
+und die Soldaten näher zusammen zu bringen) des K. Schützen /
+auf ein und zwanzig: Ob nuhn wol / dieser Zug / gut und nützlich
+scheinet / so ist er doch in etwas gefährlich: Dan / der Schwar-
+ze / mit seiner K. Schützen / diesen W. Schützen / hinwegnimt:
+Der Weiße / denselben / mit der K. Schützens-Soldaten: Der
+Schwarze / ziehet / der K. Reuter / auf des W. K. Schützens-
+Soldaten / auf sechs und vierzig: Der Weiße / (denselben zu be-
+schützen) der K. Schützen / auf sieben und zwanzig: Der Schwar-
+ze / auf der W. K. Schützens-Soldaten / der K. Rochen / auf ein
+und sechsszig: Der Weiße / kan denselben / (wan Er gleich den
+König / auf zwölfe / oder dreyzehen ziehet) nicht beschützen: Dan der
+Schwarze / rucket der K. Reuter / auf ein und dreyssig / und ge-
+winnet / durch diesen gedachten Zug / (nachdem der Weiße / den
+König / gezogen) entweder der W. K. Schützens-Soldaten: oder
+dero Rochen: oder / (so fern der König / auf seinem felde / verblieben /
+und der K. Reuter / umb / vierzehend feld / zu beschützen / auf vier und
+zwanzig / gezogen worden) dero Schützen.
+
+<margin>30.</margin> Ist demnach der Zug / * des W. K. Schützens / auf 21. (n. 29.)
+
+<vocab>Schach, Schach-Mat, König, Königin, Rochen, Schützen, Reuter, Soldaten, Weißer König, Schwarzer König</vocab>

@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>140</page-num>
+<header>Das Ander Buch/ 14. cap:</header>
+
+zwantzig: so beut / der Weisse/ mit der K. Reuter / auß funf und
+dreyßig/ Schach: Der Schwarze/ rucket/ den König / auf sieben-
+zehen: Der Weisse/ der K. Reuter / (zu beschützen des K. Reuters-
+Soldaten) auf ein und vierzig: Der Schwarze/ der K. Rochen/
+(auf daß / des W. K. Roche/ auf die fünfte Zwerch-linie / umb folgen-
+des / auß drey und dreyßig / Schach-Matt zu geben: nicht könne gezo-
+gen werden) auf sechs und dreyßig: Der Weisse/ des K. Rochen/
+auf neun und vierzig: Der Schwarze/ auf ihn / der K. Schützen /
+auf acht und zwantzig: Der Weisse / denselben / auf sieben und
+funfzig: Der Schwarze / des K. Schützens-Soldaten / (umb / der
+K. Rochen / zu bewahren) auf drey und vierzig: Der Weisse/ der
+K. Reuter / auf des S. K. Rochen/ auf ein und funfzig / und beut/ von
+des K. Rochen / Ab-Schach: Der Schwarze / muß mit dem Kö-
+nige / des W. K. Reuters-Soldaten / wegnehmen: Der Weisse /
+raubet / mit der K. Reuter / der S. K. Rochen / und beut Schach: Kan
+also das Spiel / gegen dem Schwarzen / gar leichtlich / erhalten.
+Dan / ob Er gleich / seiner K. Reuter / auch verlieret / Er nichts desto
+weniger / mit seines K. Rochen/ die S. Soldaten / endlich wegneh-
+men / und seines K. Soldaten / auf ein und sechßzig / (dahin der S. K.
+Schütze / nicht zu treffen vermag) zur Königin / machen kan.
+
+<margin>29.</margin>
+Rucket aber der Schwarze/ nicht den Soldaten / auf 33.
+(n. 25.) besondern / der K. Schützen / auf funf und funfzig / und ent-
+blöset seiner K. Rochen / gegen des W. K. Rochen: so ziehet / der
+Weisse / denselben / auf des S. K. Schützens- und Rochens- Solda-
+ten / auf funfzig: Der Schwarze / der K. Schützens- Soldaten /
+auf acht und dreyßig: Der Weisse / nimt / des S. K. Rochens- Sol-
+daten / mit seines K. Rochen / und beut Schach: Der Schwarze /
+raubet / des W. K. Reuters- Soldaten / mit dem Könige: Der
+Weisse / des S. K. Schützens- Soldaten / mit des K. Rochen: Der
+Schwarze / beut / mit der K. Rochen / auf sechsßzig / Schach: Der
+Weisse / bedecket / den König / mit des K. Rochen / auf zwey und funf-
+<margin>30.</margin>
+zig: * Der Schwarze / nimt denselben / mit seiner K. Rochen:
+Der Weisse / denselben / mit des K. Soldaten: und machet ihn / fol-
+gendes auf sechsßzig / zur Königin.
+
+<margin>31.</margin>
+Rucket aber der Schwarze / der K. Rochen / an stat der
+verwechselung der Rochen / (n. 30.) auf der W. K. Reuter / auf
+neun und funfzig: so beut / der Weisse / mit des K. Rochen / auß
+funfzig / Schach: Der Schwarze / muß den König / auf funf
+und dreyßig / ziehen: (dan / wan Er ihn / auf funf und zwantzig /
+
+<meta>catchword: setzet:</meta>
+
+<vocab>Schach, König, Rochen, Reuter, Schützen, Soldat, Königin, Schach-Matt, Ab-Schach, Zwerch-linie</vocab>

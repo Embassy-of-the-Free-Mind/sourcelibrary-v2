@@ -1,0 +1,14 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>260</page-num>
+<header>Das Dritte Buch / 1. cap:</header>
+
+den/ und seiner K. Reuter/ für diesen S. Soldaten/ verloren ist: alß rucket Er dieselbe / (umb / ihren Reuter zu verthetigen / und einen anschlag/ auf das vier und funffzigste feld / zu machen) auf dreyßig.
+
+<margin>17. *</margin> **Der Schwartze** / setzet die Königin / (umb des Weissen / anschlag/ zu hintertreiben / und die Königinne / zu verwechseln) auf acht und dreyßig : **Der Weisse** / nimt / der S. K. Schützens-Soldaten/ mit der K. Reuter / beut Schach / und lauret / auf der S. K. Rochen : **Der Schwartze** / darf ihn / mit der Königin / nicht nehmen/ besondern ziehet den König/ auf ein und sechßzig : **Der Weisse** / nimt / die S. Königin/ mit seiner Königin : **Der Schwartze** / dieselbe/ mit des K. Schützen : **Der Weisse** / der S. K. Rochen/ mit der K. Reuter/ und hat ein gutes Spiel.
+
+<margin>18.</margin> Wan aber der **Schwartze** / die Königin/ auf 38. (n. 17.) nicht setzet/ besondern/ der W. K. Reuter / mit seiner K. Reuter / raubet : so nimt / der **Weisse** / denselben / mit der Königin : **Der Schwartze** / des W. K. Schützens=Soldaten/ mit seines K. Schützens=Soldaten/ und beut/ von der Königin / Ab=Schach : **Der Weisse** / bedecket / den König / mit seinem Schützen / auf zwelfe : **Der Schwartze** / rucket / auf denselben / der K. Schützen / (umb dem Weissen / auß zwelfe / Schach=Mat zu geben) auf sechs und zwanzig : **Der Weisse** / (demselben vorzubawen) die Königin / auf ein und zwantzig : **Der Schwartze** / auf dieselbe / der K. Rochen / auf <margin>19.</margin> ein und sechßzig : **Der Weisse** / dieselbe / auf dreyßig : * **Der Schwartze** / der K. Schützens=Soldaten / auf sechs und vierzig : **Der Weisse** / des K. Rochens=Soldaten / auf der S. K. Schützen / auf siebenzehen : **Der Schwartze** / der K. Reuters=Soldaten / auf die W. Königin / auf neun und dreyßig : **Der Weisse** / nimt / mit ihr / der S. K. Schützens=Soldaten / und beut Schach : **Der Schwartze** / (auf daß Er / der K. Schützen / und Reuters=Soldaten / nicht verliere) bedecket / den König / mit demselben Schützen / auf drey und funfzig/ und rucket ihn/ auf die W. Königin : **Der Weisse** / dieselbe / auf des S. K. Schützens=Soldaten / auf neunzehen : **Der Schwartze** / (ihn zu beschützen) des K. Reuters=Soldaten / auf vier und dreyßig : **Der Weisse** / beut / mit der Königin / auß drey und dreyßig / Schach : **Der Schwartze** / muß den König / mit der Königin / auf ein und funfzig / bedecken : **Der Weisse** / nimt / des S. K.
+
+<meta>catchword: Reuters=</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schützen, Rochen, Soldaten, Ab-Schach, Schach-Mat</vocab>

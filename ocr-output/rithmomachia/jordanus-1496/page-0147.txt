@@ -1,0 +1,26 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+¶ Minores victorias paucas posui: vt vos venatoribus similes relinquā: qui magis fere inuētionē
+oblata sine venatione gaudere solent. Ex tribus tamē Bathille preceptis minorum victoriarum
+cognitio pendet.
+¶ Primum. Datos duos camporū numeros iunge: iūctoꝝ dimidium est inter eos in Arithmetica
+medietate medius numerus.
+¶ Secundum. Datis itidem duobus nūeris: duc primū in scōm: et pducti accipe latus tetragonicū.
+et illud est eorum rationis geometrice medius numerus.
+¶ Tertium. Datos duos numeros aggrega: et qui aggregatus est serua. duc primū in scōm/ et pdu
+ctum dupla/ et duplatū diuide per seruatum aggregatū: et qui puēnit est illox numeroꝝ harmonice
+pportiōalitatis medius. Et si hoc pacto quēadmodū hec tria docēt precepta integros numeros non
+repias: numeri dati nullos habebūt in illa rōne/ pportiōalitateq; medios. et nō modo minores victo-
+rias: sicu sint ex Arithmetica et Geometrica/ seu ex Arithmetica et Harmonica/ seu ex Geometrica et
+Harmonica reperias: sed et si volueris maximas. Uerū solent o Bathille aliter cāpos/ aciēs duces/
+comitesq; ordinare. vt area sit camporū sexagintaquattuor. aut limite cāporum medio aciem vtranq;
+dirimēte superadiecto duorum atq; septuaginta.
+
+<image-desc>A large game board for Rithmomachia, consisting of an 8x12 grid of alternating black and white squares. The board is populated with circular, triangular, and square pieces, each marked with specific numbers representing mathematical values. The pieces are divided into two opposing groups: light-colored pieces at the top and dark-colored pieces at the bottom. The light pieces' numbers (such as 361, 225, 121, 49) are oriented toward the top of the page, while the dark pieces' numbers (such as 2, 4, 6, 8, 16, 25, 81, 159, 289) are oriented toward the bottom. To the right of the board are two diagrams of pyramids. The upper pyramid consists of five stacked square layers labeled 16, 25, 36, 49, and 64, with the text "Pyramidis summa. 190" printed upside down below it. The lower pyramid consists of six layers labeled 1, 4, 9, 16, 25, and 36, with the text "Pyramidis summa. 91" printed above it.</image-desc>
+
+¶ Ex campis hoc modo digestis rudes adhuc et quos ad mysteria ipse cetus silētiū candidissimus
+pater nondum admittit ex supioribus preceptis inter se concertant. mox v'o puerilibus actis/ iocisq;
+reiectis ad silentia hymnosq; assuefacti: presentia preceptoris tanq' numinis cuiusdā fruūtur/ solan
+
+<vocab>Rithmomachia, Arithmetica, Geometrica, Harmonica, Bathillus, medius numerus, proportionalitas, tetragonicum, Pyramidis summa</vocab>

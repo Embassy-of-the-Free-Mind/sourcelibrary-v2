@@ -1,0 +1,91 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VII</page-num>
+
+p̄mo scz impariter parium eiusdem linee: tñ q̄tum est quod fit ex b in differentiam g ad h. et quia iteꝝ per eandem primam p̄mi tñ est quod fit ex b in h t̄ in differentiam k ad h: q̄tum qō fit ex b in k. addit igitur qō fit ex b in k sup eo qō fit ex b in h scz tertius impariter parium sup secūdum: q̄tum est qō fit ex b in differentiam k ad h. sed differētia k ad h tanta est: q̄p̄bata est: q̄ta differētia h ad g. est igiť eqlis d̄ria illoꝝ impariter parium. et ita ꝯsequēter p̄ nonam de reliquis experies. Et ex hoc facile demōstrabile est p̄ scōam p̄mi q̄ qlibet illoꝝ duplatus tñ est: q̄tum duo circūpositi ꝯiūcti. et p̄ tertiaz eiusdem primi: q̄ duo medij ꝯiūcti tñ sunt: q̄tum circūpositi: et equali inuallo ab eis distātes pariter accepti.
+
+<margin>41</margin>
+¶ Quēcunq; numerat impariter par: idem etiam est impariter par.
+¶ Sit a quicūq; nūerus impariter par: qui numeret b. dico b esse impariter parem. Nam quia a par numerat b: ergo per duodecimam huius b erit par. quo fit vt quoties a numerat b: toties medietas a numeret medietatem b. sed medietas a cū sit impariter par est par. igitur p̄ duodecimā huius t̄ medietas b est par. sed t̄ aliq̄s impar numerat a numerum impariter parem: igitur idem numerabit b p̄ vicesimātertiam primi. est igitur b per diffinitiōem numerus impariter par. quod est propositum.
+
+<margin>42</margin>
+¶ Si pariter impari impariter par: siue pariter par sup binarium ꝯiūgatur: ꝯpositus erit pariter impar.
+¶ Sit a quicūq; pariter impar: cui adiūgať b quicūq; imparit' par aut pariter par sup binariū: sitq; c compositus. dico c esse pariter imparem. nam q̄ a est pariter impar: ei' medietas est impar. et quia b est impariter par: per tricesimāseptimam huius: eius medietas est par. medietas igiť b t̄ medietas aistmul p̄ scōam huius ꝯstituūt numerum imparem. at numerus ex medietate a t̄ medietate b ꝯstitutus: est medietas compositi c. igiť per tricesimāsextam huius c est pariter impar. t̄ ita argumētabere si pariter impari additur numerus pariter par sup binarium. quod est propositum.
+
+<margin>43</margin>
+¶ Si pariter impares nūero pares ꝯiūganť: ꝯposit' erit pariter par vl' imparit' par.
+¶ Nam quia cuiuslibet illoꝝ medietas est impar: per quartam huius compositi medietas erit par. non est igitur compositus per tricesimātertiam huius: pariter impar. quare a sufficiēti diuisione erit aut pariter par / aut impariter par. quod est propositum.
+
+<margin>44</margin>
+¶ Si pariter impares numero impares coniūganť: componetur pariter impar.
+¶ Nam quia cuiuslibet illoꝝ pariter imparum medietas est impar / et sunt in numero imparit: igitur per quintam huius illoꝝ medietates coaceruate ꝯstituūt numerum imparem. ꝯpositi igiť medietas est impar. ergo per tricesimātertiam huius: compositus est pariter impar. quod intenditur
+
+<margin>45</margin>
+¶ Si diuersi pariter pares q̄tlibet supra binarium sibi coaceruētur: ex iṕis cōstitutus erit impariter par.
+¶ Sint a/b/c/d quotlibet nūeri parit' pares supra binarium t̄ d maximus: sitq; e duplus ad d: sitq; f ꝯpositus ex a/b/c/d. dico f eē impariter parem. nam q̄ a b c d sunt pares: p̄ primam huius f est par. et q̄ sunt a b c d pariter pares supra binarium: eoꝝ medietates sunt numeri pares. addite ergo simul per primam huius ꝯstituūt parem. et q̄ p̄ tricesimāscōam huius a / b / c / d simul aggregati minus sunt q̄ e: ergo f est minoꝝ e. at e est p̄mus pariter par post d: igitur f non est pariter par. et cum eius medietas sit par: ergo per tricesimāseptimam huius: est impariter par. quod est propositum.
+
+<margin>46</margin>
+¶ Pariter impares fm datū nūcrum parem inuenire: qui ꝯiūcti faciāt pariť parem.
+<margin>a</margin>
+¶ Sit primo a nūcrus par fm quem iubeimur pariť impares tales qui ꝯponūtur inuenire: q̄ t̄ idem a sit pariter par. quot ergo sunt vnitates in a: tot ꝯtinuo pariter impares ab vnitate quoꝝ medietas sit b c: sitq; d p̄rimus ascēdendo pariter par. et si inter c t̄ d sit iteꝝ aliq̄s pariter impar: circa d hinc t̄ inde sumo pariter impares fm dimidium a: itavt oēs sint sumpti fm numerum a. sintq; inferioꝝes: c g / e / f superiores e. f. quia enī d est par / t̄ nō est parit' impar: per tricesimāquartam huius primi pares hīc t̄ inde g t̄ e sunt pariter impares. quare g t̄ e equalit' distant a nūero d. et q̄ siliter p̄ eādem vno part infp̄osito post e seq̄tur f: t̄ vno interposito post g seq̄tur c. etiā equidistabūt hīc t̄ inde c t̄ f ab numero d. ergo p̄ scōam p̄mi g t̄ e simul sunt duplum d eusdez pariter paris d. quare p̄ vicesimānonam huius g t̄ e sūt: sunt pariter par. et p̄ eādem scōam primi c t̄ f simul: sunt duplum d eiusdez pariter paris. sunt igitur pariter impares simul sumpti fm numerum a scz g / e / f c f quadruplum d: t̄ duplū duplo ad d. quare per vicesimānonam huius c/g/e/f simul sunt parit' par siue sunt tñ q̄tum qō fit ex a pariter par: in d pariter parem. quare p̄ tricesimā huius: d inde pducitur est pariter par. quod est propositum: quo ad hoc. At si a non sit pariter par: capio quēcunq; numerum pariter parem vt a alterū: qui vltro / citroq; hēat pariter impares: vt b/c/d/e. et sumo duplum a: q̄ sit g. qui etiā per vicesimānonam huius est pariter par. sintq; f / h sui circūpositi pariter impares. deinde capio l duplū g: qui etiam est pariter par. t̄ k/m circūpositos pariter impares. siliter capio o duplum l t̄ r circūpositos pariter impares n / p et hoc toties eoq; vsq; fiat quoufq; habeamus pariter impares acceptos fm numerum datum a: quos quia hic totto ē accept dico numerum ex b / c / d / e / f / h / k / z ceteris sumptis pariter imparibus: ꝯpositū esse pariter parem. et sit q pariter par acceptus duplus ad o. quia enī per scōam primi c t̄ d simul: sunt q̄tum g duplum a. et etiam per eādem b e: q̄tum g duplum a. igitur c / d / 2 b / e simul: q̄tum l duplū g. sed per eandem scōam primi f h q̄tum l duplum g. ergo b/c/d/e/f/h: q̄tum o duplum l. sed k m: q̄tum o duplum l p̄ eādem scōam. igitur b / c / d e f h k m: q̄tum q duplum o. sed r p̄ eādem scōam n p q̄tum q duplum o. igitur b / c / d e f h k m n p simul: q̄tum s duplum q. qui per vicesimānonam huius est pariter par. sicq; constat propositum.
+
+<column-break/>
+
+<image-desc>Margin diagrams consisting of horizontal line segments labeled with letters and numerical values.</image-desc>
+<margin>
+48
+b —————
+12
+a ———
+
+c —————
+a ———
+b —————
+
+e ————— 48
+d ————— 18
+c ————— 14
+b ————— 10
+a ————— 6
+
+d ————— 30
+c ————— 14
+b ————— 10
+a ————— 6
+
+f ————— 120
+e ————— 128
+d ————— 64
+c ————— 32
+b ————— 16
+a ————— 8
+
+      22
+   4 ———— f
+a — e ————— 18
+    d ————— 16
+    g ————— 14
+    c ————— 10
+    b ————— 6
+
+    r ————— 504
+    q ————— 252
+    p ————— 130
+    o ————— 128
+    n ————— 126
+    m ————— 66
+    l ————— 64
+    lz ————— 62
+    h ————— 34
+    g ————— 32
+    f ————— 30
+    e ————— 22
+    d ————— 18
+      15
+  10 ————
+    a —————
+    c ————— 14
+    b ————— 10
+</margin>
+
+<vocab>impariter par, pariter impar, pariter par, numerus, medietas, duplum, propositum</vocab>

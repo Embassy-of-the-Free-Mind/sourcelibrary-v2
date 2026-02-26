@@ -1,0 +1,121 @@
+<language>German</language>
+<page-type>diagram</page-type>
+<columns>2</columns>
+<page-num>241</page-num>
+<header>14. cap: Vom Schach-Spiel.</header>
+
+#### n. 4. 32.
+
+<image-desc>
+Chessboard diagram labeled "n. 4. 32." showing an 8x8 grid.
+Row 1: SR, [blank], SS with subscript c, SK, [blank], SR, [blank], [blank]
+Row 2: SS, SS, SS, SS, S&, SS, SS, SS
+Row 3: [blank], [blank], SR, [blank], [blank], SR, [blank], [blank]
+Row 4: [blank], [blank], [blank], 36, [blank], [blank], [blank], [blank]
+Row 5: [blank], SS with subscript c, [blank], WS, WS, SS, [blank], [blank]
+Row 6: [blank], [blank], WR, WS with subscript c, [blank], 19, [blank], [blank]
+Row 7: WS, WS, WS, [blank], W&, [blank], WS, WS
+Row 8: WR, [blank], WS, [blank], WK, [blank], WR, WR
+</image-desc>
+
+#### n. 7. z0.
+
+<image-desc>
+Chessboard diagram labeled "n. 7. z0." showing an 8x8 grid.
+Row 1: SR, [blank], SS, WR, [blank], [blank], [blank], [blank]
+Row 2: SS, SS, [blank], SS, [blank], SS, [blank], SS
+Row 3: [blank], [blank], SS, WS, [blank], [blank], [blank], SK
+Row 4: [blank], [blank], [blank], 36, [blank], [blank], [blank], WR
+Row 5: [blank], [blank], [blank], [blank], [blank], z6, [blank], [blank]
+Row 6: [blank], [blank], [blank], WK, [blank], [blank], WS, [blank]
+Row 7: WS, WS, WS, [blank], [blank], [blank], [blank], WS
+Row 8: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+</image-desc>
+
+#### n. j0. jj.
+
+<image-desc>
+Chessboard diagram labeled "n. j0. jj." showing an 8x8 grid.
+Row 1: SR, [blank], [blank], [blank], [blank], [blank], 58, 57
+Row 2: SS, [blank], [blank], SS, [blank], [blank], [blank], SK
+Row 3: SS, SS, [blank], WS, [blank], WR, WS, SS
+Row 4: [blank], [blank], SS, [blank], [blank], [blank], [blank], WR
+Row 5: [blank], [blank], [blank], [blank], [blank], [blank], [blank], WS
+Row 6: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 7: WS, WS, WS, WK, [blank], [blank], [blank], [blank]
+Row 8: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+</image-desc>
+
+#### n. j3. j6.
+
+<image-desc>
+Chessboard diagram labeled "n. j3. j6." showing an 8x8 grid.
+Row 1: [blank], [blank], WR, [blank], [blank], [blank], [blank], [blank]
+Row 2: [blank], [blank], [blank], SS, [blank], [blank], [blank], [blank]
+Row 3: [blank], SS, [blank], WS, [blank], [blank], [blank], [blank]
+Row 4: [blank], 39, [blank], [blank], SK, [blank], [blank], [blank]
+Row 5: [blank], WS, [blank], [blank], z8, [blank], WK, [blank]
+Row 6: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 7: [blank], [blank], SS with subscript c, [blank], [blank], [blank], [blank], [blank]
+Row 8: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+</image-desc>
+
+<column-break/>
+
+#### n. 5. 6.
+
+<image-desc>
+Chessboard diagram labeled "n. 5. 6." showing an 8x8 grid.
+Row 1: SR, [blank], SS with subscript c, SK, SR, [blank], [blank], [blank]
+Row 2: SS, SS, SS, SS, 5z, SS, [blank], SS
+Row 3: [blank], [blank], [blank], 45, [blank], [blank], [blank], [blank]
+Row 4: [blank], [blank], [blank], WS, [blank], [blank], [blank], [blank]
+Row 5: [blank], SS with subscript c, [blank], [blank], [blank], WS with subscript c, [blank], [blank]
+Row 6: [blank], [blank], WR, WK, [blank], [blank], WS, [blank]
+Row 7: WS, WS, WS, [blank], [blank], [blank], [blank], WS
+Row 8: [blank], [blank], [blank], [blank], WR, [blank], [blank], WR
+</image-desc>
+
+#### n. 8. 9.
+
+<image-desc>
+Chessboard diagram labeled "n. 8. 9." showing an 8x8 grid.
+Row 1: SR, [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 2: SS, [blank], [blank], [blank], SS, [blank], [blank], SK
+Row 3: [blank], [blank], SS, SS, WS, [blank], WR, 4z, SS
+Row 4: [blank], [blank], [blank], [blank], [blank], [blank], WS, WR
+Row 5: [blank], [blank], [blank], SS with subscript c, [blank], [blank], [blank], WS
+Row 6: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 7: WS, WS, WS, WK, [blank], [blank], [blank], [blank]
+Row 8: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+</image-desc>
+
+#### n. jz. j7.
+
+<image-desc>
+Chessboard diagram labeled "n. jz. j7." showing an 8x8 grid.
+Row 1: [blank], [blank], [blank], [blank], [blank], [blank], SK, [blank]
+Row 2: SS, [blank], [blank], [blank], SS, [blank], SS with subscript c, WS, [blank]
+Row 3: [blank], [blank], SS, SS, WS, 44, [blank], [blank], WK
+Row 4: [blank], [blank], [blank], [blank], [blank], [blank], WR, [blank], [blank]
+Row 5: [blank], [blank], [blank], [blank], [blank], [blank], [blank], WR with subscript c, [blank]
+Row 6: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 7: WS, WS, WS, [blank], [blank], SR, [blank], [blank], 9
+Row 8: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+</image-desc>
+
+#### n. j8. j9.
+
+<image-desc>
+Chessboard diagram labeled "n. j8. j9." showing an 8x8 grid.
+Row 1: [blank], [blank], [blank], [blank], [blank], [blank], [blank], 57
+Row 2: SS, [blank], [blank], [blank], SS, [blank], [blank], SK
+Row 3: [blank], [blank], SS, SS, WS, [blank], WK, 4j
+Row 4: [blank], [blank], [blank], [blank], [blank], [blank], WR with subscript c, [blank]
+Row 5: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 6: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+Row 7: WS, WS, WS, [blank], [blank], [blank], [blank], [blank]
+Row 8: [blank], [blank], [blank], [blank], [blank], [blank], [blank], [blank]
+</image-desc>
+
+<vocab>Schach-Spiel, SR, SS, SK, WR, WS, WK, chess diagrams, Selenus</vocab>

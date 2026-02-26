@@ -1,0 +1,12 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+
+<image-desc>
+A faint diagram of an 8x8 checkered game board, identified as a layout for the medieval and Renaissance mathematical game Rythmomachia (The Philosopher's Game). The board is populated with geometric pieces on its left half:
+- The first and second columns on the far left contain rows of square pieces, eight in each column, with very faint numerical characters inscribed within them.
+- The third column contains eight triangular pieces.
+- The fourth and fifth columns contain circular pieces, specifically four circles in the central rows of each column.
+The remaining three columns on the right side of the grid are empty. The print is heavily faded, and the paper shows characteristic aging and light foxing.
+</image-desc>
+
+<vocab>Rythmomachia, game board, geometric pieces, squares, triangles, circles, mathematical game</vocab>

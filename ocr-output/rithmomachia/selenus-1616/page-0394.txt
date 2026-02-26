@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>360</page-num>
+<header>Das Dritte Buch) 10.cap:</header>
+
+<image-desc>A decorative woodcut banner at the top of the page featuring symmetrical scrollwork, foliage, and floral patterns.</image-desc>
+
+# Das Zehende Capittel.
+
+## Wie das Spiel / wan der Weisse / des Königes / der Schwarze aber / darauf der Königin / Soldaten ziehet / angestellet werden sol.
+
+<image-desc>A decorative ornamental drop cap 'E' featuring intricate scrollwork and foliage.</image-desc>
+
+Ehe wir nuhn die Art / wie man beeder Königes-Soldaten / zum anfange deß Spieles / auf den plan führen sol / schliessen : so wollen wir / mit wenigem / noch gedencken / wie man / die Züge / wan der Schwarze / auf des W. K. Soldaten / mit seiner K. Soldaten / gleich / im ersten Zuge / an der gräntze / einen angriff thut / anstellen müsse.
+
+Ziehet nuhn der Weisse / des K. Soldaten / auf acht und zwantzig : so rucket / der Schwarze / nicht seines K. Soldaten / (wie in den vorigen Exempeln / vielfältig angedeutet) auf sechs=besondern der K. Soldaten / auf sieben und dreyssig : Der Weisse / des K. Soldaten / (welches zwar kein unebener Zug ist) auf sechs und dreyffig : doch ists besser / daß Er / der S. K. Soldaten / (dieweyl Er dahero / gegen dem Feinde / einen Zug / gewinnet) hinwegnehme : dan / wan der Schwarze / des W. K. Soldaten / mit der Königin / nimt : Er / alsdan / der K. Reuter / auf dieselbe / auf zwey und zwanszig / ziehet : Der Schwarze / dieselbe hinwider / auf ein und sechßzig : Er / der K. Soldaten / auf neun und zwantzig : und bringet folgendes / die sechs Haupt-Steine / (umb / mit denselben / den Feind anzugreiffen / und gestalten sachen nach / zu beschädigen) fein fürsichtig zu felde.
+
+<image-desc>A large woodcut tailpiece ornament featuring a central grotesque mask or face surrounded by complex symmetrical scrollwork, stylized wings, and foliate motifs.</image-desc>
+
+<meta>Catchword: Das</meta>
+
+<vocab>Schachspiel, Königes-Soldaten, Reuter, Haupt-Steine, Züge, grantze</vocab>

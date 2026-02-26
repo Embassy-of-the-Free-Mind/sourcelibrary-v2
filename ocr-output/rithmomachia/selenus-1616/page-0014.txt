@@ -1,0 +1,82 @@
+<language>Latin, German</language>
+<page-type>index</page-type>
+<columns>2</columns>
+<meta>catchword: E. Empe-</meta>
+
+# Verzeichnus der Authorum, und Bücher / welche zu diesem Tractat, entweder gebrauchet / oder in demselben / angezogen worden.
+
+### A.
+
+<image-desc>Decorative woodcut initial T featuring scrolling foliage and floral motifs.</image-desc> Thomas Actius, Foro-Semproniensis.
+Luisius ab Alcafar, Hispalenfis.
+Alexander ab Alexandro.
+Amatus, Lusitanus.
+Vitus Amerbachius.
+Fr. Cunrad von Ammenhusen.
+Joannes Andrea.
+Andreas, Presbyter Ratisponenfis.
+Apomasar: alij, Albomazar.
+Appion, Alexandrinus.
+Archidiaconus.
+Aristoteles.
+Artemidorus, Daldianus.
+Athenæus.
+Averroës, Cordubensis, Commentator.
+Augustinus ad Angelam.
+Ausonius, Burdegalenfis.
+
+### B.
+
+Francesco Barozzi, Venetiano.
+Bavarica Chronica, Mss. duo.
+Petrus Bellonius, Cenomanus.
+Cornelius Benincasius.
+M. Francesco Berni.
+Johannes Bertachinus.
+Biblia Sacra.
+Petrus Bizarus.
+Giovanni Boccaccio.
+Joannes Alexander Brassicanus.
+VVenceslaus Budovvitz, à Budovva.
+
+<column-break/>
+
+Bartholomeo Burchelato.
+Claudius Buxerius, Delphinas.
+
+### C.
+
+Joannes Baptista, Caccialupus.
+Cælius Calcagninus.
+Philippus Camerarius.
+Baptista Campofulgofus.
+Joannes Cario.
+Marcus Aurelius Cassiodorus.
+Vincentius Castellionius.
+Balthasar Castilionius Comes.
+Paulus de Castro.
+Catullus.
+Fra Domenico Cavalca.
+David Chytræus.
+Cicero.
+Julius Clarus.
+Carolus Clusius, Atrebas.
+Johannes Cochanovius, Polonus.
+Codex Justiniani Imp:
+Hermannus Contractus.
+Janus Cornarius.
+Stephanus Costa.
+Cratinus.
+Jacobus Cujacius.
+
+### D.
+
+Jodocus Damhouderius.
+Damiano, Porthugese.
+Lambertus Danæus.
+Dante Alighieri.
+Digesta.
+Matthæus Dresserus.
+Gregorio Ducchi, Bresciano.
+
+<vocab>Verzeichnus, Authorum, Biblia Sacra, Aristoteles, Cicero, Codex Justiniani, Dante Alighieri, Chronica</vocab>

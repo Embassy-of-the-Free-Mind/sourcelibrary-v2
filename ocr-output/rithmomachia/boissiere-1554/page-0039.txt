@@ -1,0 +1,22 @@
+<language>Latin</language>
+<page-type>diagram</page-type>
+
+<image-desc>
+A rectangular diagram representing a game board for Rithmomachia (The Philosophers' Game), featuring an 8x16 grid divided by a central vertical line. The board contains pieces in various geometric shapes—circles, triangles, squares, and stepped pyramids—each containing numerical values. The pieces are divided into two opposing sides: a dark (black) side on the left and a light (white) side on the right.
+
+**Left Side (Dark Pieces):**
+- The pieces are arranged in the first four columns from the left.
+- **Circles:** Two columns. The innermost contains 9, 7, 5, and 3. The second column contains 81, 49, 25, and 9.
+- **Triangles:** Two columns. Pieces include values such as 100, 90, 64, 56, 30, 36, 12, and 16.
+- **Squares:** Located at the far left edges. The top-left square is divided into 361 and 225. Below it is a piece marked 120. At the bottom-left, one square is divided into 121 and 49, with another nearby marked 66 and 28.
+- **Pyramid:** A stepped pyramid icon is located in the second column from the left, at the top.
+
+**Right Side (Light Pieces):**
+- The pieces are arranged in the first four columns from the right.
+- **Circles:** Two columns. The innermost contains 8, 6, 4, and 2. The second column contains 64, 36, 16, and 4.
+- **Triangles:** A single column of eight pieces with values (from top to bottom): 2, 6, 25, 20, 42, 49, 72, and 81.
+- **Squares:** Located at the far right edges. The top-right includes a square divided into 81 and 25, and pieces marked 45 and 15. The bottom-right includes a square divided into 289 and 169, and a piece marked 153.
+- **Pyramid:** A stepped pyramid icon is located in the second column from the right, near the bottom.
+</image-desc>
+
+<vocab>Rithmomachia, ludus philosophorum, arithmetica, proportio, pyramis, triangulus, quadratus, rotundus</vocab>

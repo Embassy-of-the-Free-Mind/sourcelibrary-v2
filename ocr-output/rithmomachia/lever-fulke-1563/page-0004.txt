@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>dedication</page-type>
+<header>THE EPISTLE</header>
+<meta>catchword: You</meta>
+
+I thought therfore your honour ſhould
+not lacke ſome godly game:
+VVhereby you might at vacant times
+your ſelf to paſtyme frame.
+
+VVhereby I ſay you might releaſe,
+ſuch trauailes from your mynde:
+And in the meane vvhile honeſt mirth
+and prudent paſtyme fynde.
+
+Remembring then this auncient play,
+vvhere vviſdome doth abound:
+Called the Philoſophers game,
+me thinkth I haue one found.
+
+VVhich may your honour recreate,
+to read and exerciſe:
+And vvhich to you I here ſubmit,
+in rude and homly vviſe.
+
+Pithagoras did firſt inuent,
+this play as it is thought:
+And therby after ſtudies great,
+his recreation ſought.
+
+<vocab>The Philosophers game, Pithagoras, recreation, pastime, Rythmomachia, epistle</vocab>

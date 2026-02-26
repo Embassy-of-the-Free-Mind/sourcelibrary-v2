@@ -1,0 +1,26 @@
+<language>English</language>
+<page-type>text</page-type>
+<meta>This page contains a bookplate and a library barcode. There is a metal clip at the bottom right and a "Digitized by Google" watermark.</meta>
+
+COOK
+42843
+.1465
+
+# LIBRARY OF PRINCETON UNIVERSITY
+
+### PRESENTED BY
+#### THE ESTATE OF
+
+## EUGENE B. COOK
+
+### CLASS OF 1850
+
+---
+
+<insert>
+Princeton University Library
+<image-desc>Barcode sticker</image-desc>
+32101 075891588
+</insert>
+
+<vocab>Eugene B. Cook, Princeton University Library, bookplate</vocab>

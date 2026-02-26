@@ -1,0 +1,37 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>6</page-num>
+<warning>Significant bleed-through from the reverse side of the page creates ghosting behind the text and images.</warning>
+<meta>catchword: bian-</meta>
+
+Si come accozzando li numeri delli quattro primi trian-
+goli bianchi, con li numeri delli 4 primi tondi neri, si ge-
+nerauano li numeri delli 4 secondi triangoli bianchi: così
+accozzando li numeri delli 4 primi triangoli neri già ri-
+trouati con li numeri delli primi tondi bianchi, si produ-
+ranno li numeri delli 4 secondi triangoli neri. Auertendo
+però di lasciar il numero del primo tondo bianco,
+che è il 2, & cominciar dal 4, accozzando il 4. col 12, il
+6 col 30, l'8 col 56. & perche ne vien à mancar vno, ha-
+uendo lasciato il 2 : bisogna aggiunger il 10, che seguita
+nell'ordine delli numeri pari doppo l'8, accozzando esso
+10 col 90. perche à questo modo dal 12 accozzato col 4,
+si crearà il 16: & dal 30 col 6, il 36: & dal 56 col 8, il 64:
+& dal 90 col 10, il 100. & così haueremo ritrouato li nu-
+meri, che vanno dipinti sopra li altri 4 triangoli neri, co-
+me si vede nella seguente figura.
+
+---
+
+<image-desc>A mathematical diagram consisting of three rows of geometric shapes. The top row contains four circles with the numbers 4, 6, 8, and 10 inside them; each number has one or more small dots or marks beneath it. Below these circles are two rows of solid black upward-pointing triangles. The first row of triangles contains the numbers 12, 30, 56, and 90. The second row of triangles contains the numbers 16, 36, 64, and 100. Thin vertical lines connect each circle to a corresponding triangle in the row immediately below it, and further lines connect those triangles to the bottom row, illustrating the summation described in the text (e.g., 4 + 12 = 16).</image-desc>
+
+---
+
+Hauēdo fin q ritrouati li numeri, che si doueano scriuer
+sopra li tōdi, & sopra li triāgoli così biāchi, cōe neri: seguita,
+che ritrouiamo quelli, che si dieno scriuer sopra li quadra-
+ti. Cōminciādo adunq; dalli bianchi, dico, che si come con
+giongendo li 4 primi tondi bianchi con li 4 secōdi tondi
+bian-
+
+<vocab>triangoli bianchi, tondi neri, triangoli neri, tondi bianchi, numeri pari, quadrati</vocab>

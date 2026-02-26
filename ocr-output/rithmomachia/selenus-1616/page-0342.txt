@@ -1,0 +1,55 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>308</page-num>
+<header>Das Dritte Buch/ 5. cap:</header>
+
+Rochen/ auf zwey: und gibt/ zum folgenden Zuge/ auß drey und
+dreyssig/ mit des K. Rochen/ ungehindert Schach-Mat.
+
+44. &emsp;&emsp; Wan aber der Weisse/ den König/ nicht auf 25. (n. 43.) beson-
+dern auf achtzehen/ ziehet: so rucket der Schwarze/ der K. Ro-
+chen/ auf zwey/ und beut Schach: Der Weisse/ setzet/ den König/
+auf fünf und zwanzig/ oder siebenzehen: Der Schwarze/ beut/
+mit des K. Rochen/ auß drey und dreyssig/ Schach-Mat.
+
+45. &emsp;&emsp; Rucket aber der Weisse/ den König/ nicht auf 18. (n. 44.) be-
+sondern auf zehen: so beut der Schwarze/ entweder/ mit des K.
+Rochen/ auß eilfe: oder mit dessen Reuter/ auß zwanzig/ Schach.
+Der Weisse/ ziehet/ den König/ auf achtzehen: Der Schwar-
+ze/ beut/ mit der K. Rochen/ auß zwey/ Schach: Der Weisse/
+rucket/ den König auf fünf und zwanzig/ oder siebenzehen: Der
+Schwarze/ nimt/ mit des K. Rochen/ entweder/ des W. K. Ro-
+chens-Soldaten: oder rucket denselben/ (so fern Er/ mit des K.
+Reuter/ auß 20. Schach-geboten) auf drey und dreyssig/ und gibt
+Schach-Mat.
+
+46. &emsp;&emsp; Wan aber der Weisse/ nicht den König/ auf 13. (n. 26.) beson-
+dern dessen Rochens-Soldaten/ (auf daß der Schwarze/ des K.
+Reuter/ auf seiner K. Schützen/ für der verwechslung/ der Schü-
+tzen/ auf sechs und zwanzig/ nicht ziehen/ noch durch diesen zug/ das
+Spiel gewinnen möge) auf siebenzehen/ setzet: so ordnet Er/ sein
+Spiel/ zwar in etwas besser: gleichwol/ nimt Er/ (wie auß dem
+vorigen bericht/ n. 15. in f. zu ersehen) mit seinem schaden/ des S. K.
+Soldaten/ mit des K. Reuter.
+
+47. &emsp;&emsp; Wan aber der Schwarze/ nicht den Schützen/ auf 35. (n. 22.)
+besondern/ der K. Soldaten/ auf acht und dreyssig/ rucket: so kan
+Er/ (wan Er der K. Schützens-Soldaten/ auf sechs und vierzig/
+rucket) des K. Schützen/ zur zeit der noth/ auf vier und funfzig/
+gleich wol erretten/ und davon bringen: Rucket Er ihn dan/ (an
+stat des Soldatens/ auf 38.) auf neun und zwanzig/ so kan Er ihn/
+eben wol/ sicher wider zu rücke setzen.
+
+48. &emsp;&emsp; Wan aber der Weisse/ den S. Reuter/ mit dem Schützen/
+nicht nimt/ (n. 15.) besondern/ der K. Schützens-Soldaten/ auf zwey
+
+49. und zwanzig rucket: * so spielet der Schwarze/ der K. Solda-
+ten/ auf fünf und vierzig: Der Weisse/ seiner K. Soldaten/ auf des
+
+50. S. K. Schützen/ auf neun und zwanzig: * Der Schwarze/ den-
+selben/ auf sieben und viertzig: Der Weisse/ der K. Soldaten/ auf
+der S. K. Reuter/ (welchen seiner K. Schütze/ vorhin gefangen hielt)
+
+<meta>catchword: auf sie=</meta>
+
+<vocab>Schach-Mat, König, Rochen, Reuter, Schütze, Soldat</vocab>

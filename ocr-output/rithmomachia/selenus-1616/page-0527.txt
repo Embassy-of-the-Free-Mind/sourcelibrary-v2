@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>485</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+bringet zu wege / die gleich-Stimmung / welche die Griechen /
+Diapason, die unserige / die Octavam, nennen.
+Ferner / wan die erste Zahle / (2) mit der letzten (6) verglichen /
+werden / erlanget man eine dreyfache Abtheilung: das ist: daß die hö-
+here / die wenigere Zahle / dreymahl in sich halten: dahero die gleich-
+stimmung / welche die Griechen Diapason und Diapente, zusammen /
+die unserige / die Duodecimam heissen / herkomt.
+Endlich / so der unterscheid / welcher ist zwischen 3. 4. (das ist
+eins) mit 4. verglichen wird / befindet sich / die vierfache Abthei-
+lung / und begreiffet die höhere / die geringere Zahle / viermahl in
+sich: diese gleich-Stimmung / welche die Griechen Disdiapason
+heissen / wird von unsern Sengern / die Quinta Decima genennet.
+Gleicher gestalt / wan die andere / vier unterschiedene Zahle /
+betrachtet werden / finden sich / in einer jeden linie / (vermöge der
+folgenden erklärung) ausser den dreyen / welche mit einem * gezeich-
+net / alle gleich-Stimmungen / der Singe-Kunst.
+Ob nuhn wol diese nachsuchung und betrachtung / dem jehni-
+gen / welcher / in diesem Spiele / den Sieg erhalten wil / (die-
+weyl ihm diese Zahle / ohne das wol bekandt seyn müssen) wenig
+nötig ist: so habe Ich sie doch / gleichwol / (umb / nicht allein /
+den jehnigen / die in der Zahl- und Singe-Kunst / geübet / we-
+gen der herlichen belüstigung / welche Sie / auß dieser letzten
+überwinnung / und zum außgange dieses Spieles / schepfen und
+erlangen können / eine andeutung / in etwas zu geben / besondern
+auch / die gemühter derselben / welche gantz keine wissenschaft /
+von solchen freyen Künsten haben / auf daß Sie / den wahren uhr-
+sprung und anfang / der gleich-Stimmungen / in der Singe-
+Kunst / von den erfahrenen Sengern / erlernen möchten / zu er-
+muntern) dieses ortes kürtzlich andeuten / und berüren wollen.
+Das Erste und Vierte Exempel / der vier Zahlen / in
+welchen / die drey vielgedachte Abtheilungen / begrieffen: seynd
+folgende:
+
+| D. | C. | B. | A. |
+| :---: | :---: | :---: | :---: |
+| 2. | 3. | 4. | 6. |
+| 4. | 6. | 8. | 12. |
+
+Die Diapente oder Quinte, zeigen uns an / die Zahle / un-
+ter dem buchstaben A, mit den Zahlen / des buchstabens B, oder
+mit dem unterscheide / der Zahlen / unter A, D, (welcher / in die-
+sem Exempel 4. oder 8, ist) Item die Zahle unter C. oder der un-
+terscheid der Zahlen / unter A, C, (welcher ist 3. oder 6) mit den
+
+<sig>Ppp ij</sig>
+<meta>Catchword: Zahle/</meta>
+
+<vocab>Zahl-Kampf, Diapason, Octava, Diapente, Duodecima, Disdiapason, Quinta Decima, Singe-Kunst, freye Künste</vocab>

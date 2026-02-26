@@ -1,0 +1,30 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>catchword: On</meta>
+<page-num>7</page-num>
+
+wynne. 348. men he hath obtayned two
+ſtāderds if he wynne. 522 he hath gotten
+thre ſtanderds and ſo forth of the reſt.
+
+If the odde armye wynne. 260. they
+wyn two ſtanderds. 390. three ſtanderds
+and ſo of the reſt.
+
+## ¶ A Table of the victorye of ſtanderds.
+
+| | |
+| :--- | :--- |
+| One ſtanderd of y^e euen, conteyneth. | 130. |
+| Two ſtanderds. | 260. |
+| Three ſtanderds. | 390. |
+| Foure ſtanderds. | 520. |
+| Fyue ſtanderds. | 650. |
+| Sixe ſtanderds. | 780. |
+| Seuen ſtanderds. | 910. |
+| Eyght ſtanderds. | 1040. |
+| Nyne ſtanderds. | 1170. |
+| Tenne ſtanderds. | 1300. |
+
+<vocab>The Philosophers game, standerds, even army, odde armye, victorye</vocab>

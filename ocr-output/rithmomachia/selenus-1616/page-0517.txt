@@ -1,0 +1,54 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>475</page-num>
+<header>Vom Zahl-Kampf.</header>
+<sig>Goo</sig>
+<meta>catchword: nen/</meta>
+
+circumvallarint, ut ejus greſſus legitimus fit impeditus, is, cum cc
+primùm quartum eorum Calculum extremum, ludere voles, capie- cc
+tur: ut in ſequenti Exemplo, (Tabulæ primi Capitis) ſatis eſt mani- cc
+feſtum: Nam Calculus adverſus Orbiculatus, intercipietur, in A, cc
+ſi alij quatuor, ſint, in B, C, D, E, collocati: at ſi Triangulum ſit in cc
+A, tui quatuor Calculi, in V, Y, T, S, ponantur, neceſſe eſt. cc
+
+->Sequentes Numeri, ſola tantùm Obſidione, domantur: cc<-
+->Pares ſivè Albi. Impares, vel Nigri. cc<-
+->2. 4. 6. 153. 3. 5. 7. 190.) cc<-
+
+Ehe wir nuhn/ nachdem die ſechs Kampf-Stücke/ beſchrieben
+ſeynd/ zu der erhaltung des Sieges/ und wie man/ das Spiel/ zum
+ende bringen müſſe/ ſchreiten: ſo wollen wir/ zuvoderſt/ Zehen Re-
+geln/ welche zu dem oberwehnten Kempfen/ noch dienlich ſeynd/
+demſelben fürſetzen.
+
+1.) Es kan einer/ des Andern Stein/ nicht wegnehmen/ mit
+ſeinem Steine/ ſo ferne derſelbe/ ſeinem gange gemäſs/ nicht ge-
+zogen wird: doch werden vier Fälle/ auſzgeſetzet:
+
+<margin>(Buxer: fol: 47. a.</margin>
+*Calculi non poſſunt loco moveri, ad alios, eodem tempore &* cc
+*iactu capiendum, niſi eorum motus legitimus ſit, & rectus, præ-* cc
+*terquàm in Obſidione.* cc
+
+->*Omnibus in Captionibus, unus tantùm greſſus, fieri debet.)* cc<-
+
+2.) Der Erſte auſzgenommene fall iſt dieſer: Wan einer/
+einen Stein/ welcher zwiſchen zween andere Steine/ ſo ein ander
+nehmen können/ einſtehet/ und dieſelben/ unter einander bedecket/
+auf ein anders feld/ rucket: ſo darf Er zwar denſelben/ von die-
+ſen beeden/ gegen einander/ entblöſeten Steinen/ welchen Er/
+Spieles gebrauch nach/ nehmen kan/ von der Tafel ſetzen/ aber
+keinen andern Stein/ zugleich ziehen/ beſondern/ es wird ihm/
+dieweyl Er einen Stein/ wie gedacht/ gerucket/ den andern aber
+weggenommen/ für einen Zug/ (welcher dem Ab-Schache/ nicht
+uneben/ zu vergleichen) gerechnet. Läſſet Er aber/ den Stein/
+welchen Er hette nehmen können/ und ſollen/ ſtehen/ und der an-
+der wirds gewahr/ daſs Ers überſehen/ ſo kan dieſer/ nicht allei-
+ne/ deſſen Stein gebührlich nehmen/ beſondern auch/ einen ſeiner
+Steine/ nichts deſto weniger ziehen.
+
+3.) Der Ander iſt folgender: Wan einer/ ſeinen Stein/
+an einen ſolchen ort/ auſz welchem derſelbe/ von des Gegeners Stei-
+
+<vocab>Zahl-Kampf, Rhythmomachia, Calculus, Obſidione, Kampf-Stücke, Buxer, Spielregeln</vocab>

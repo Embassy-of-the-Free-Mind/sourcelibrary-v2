@@ -1,0 +1,47 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>II</page-num>
+
+Scðm pater:nam p immediate mōstratum a b ad b: maioꝛ est ppoꝛtio q̄ c d ad d.ergo p duodecimā ppoꝛtio a b ad c d:maioꝛ q̄ b ad d detracti ad detractū.ergo p decimātertiā a ad c residui ad residuū maioꝛ ppoꝛtio q̄ a b ad c d.quare iteꝛ per duodecimā a ad b maioꝛ q̄ c ad d.per undecimā igit a b ad a:minoꝛ q̄ c d ad c.quod est scðm ⁊ totum pꝛopositum.
+
+<margin>16</margin>
+## Si inequales nūeri equalibus addātur:erit ɔpositoꝝ minoꝝ ppoꝛtio q̄ adiūctoꝝ.
+
+<image-desc>Geometric diagram showing two systems of arches representing proportions. The first system consists of a large arch labeled "8" spanning two smaller arches labeled "6" and "2" respectively, situated over points a, b, and c. The second system consists of a large arch labeled "5" spanning two smaller arches labeled "3" and "2", situated over points c and d.</image-desc>
+
+Sint a c numeri inequales:b ⁊ d equales ⁊ cōpositi a b ⁊ c d:sitqꝫ a maioꝛ c.dico a ad c adiūcti ad adiūctum maiorem esse pꝛopoꝛtiōem q̄ a b ad c d cōpositi ad cōpositum.nam cū b ⁊ d idem sint numerus:⁊ a sit maioꝛ c:per nonam igitur maioꝛ est pꝛopoꝛtio a ad b q̄ c ad d.ergo per duodecimam maioꝛ pꝛopoꝛtio a ad c detracti ad detractū q̄ b ad d residuī ad residuū.ergo maioꝛ pꝛopoꝛtio a ad c detracti ad detractum:q̄ a b ad c d totius ad totum.nam si a ad c:⁊ a b ad c d eadem esset pꝛopoꝛtio: per quintam eadem eēt a ad c:⁊ b ad d.cuius oppositū dēmōstratum est.Si autem maioꝛ eēt a b ad c d pꝛopoꝛtio q̄ a ad c:ergo per decimātertiā esset pꝛopoꝛtio b ad d residuī ad residuū:maioꝛ q̄ a ad c detra cti ad detractū.cuius etiā oppositum modo monstratum est.relinqꝛtur igitur a ad c pꝛopoꝛtio maioꝛ adiuncti scz ad adiūctum:⁊ a b ad c d cōpositi ad cōpositum ⁊ pꝛopositum.
+
+<margin>17</margin>
+## Si fuerit ppoꝛtio pꝛimi ad scðm maioꝛ q̄ tertij ad quartū: fueritqꝫ pꝛimus minoꝛ tertio:erit secundus minoꝛ quarto.
+
+<image-desc>Geometric diagram with two systems of arches. The first shows a large arch "8" over two smaller arches "6" and "2" at points a, b, and c. The second shows a large arch "12" over two smaller arches "8" and "4" at points b, c, and d.</image-desc>
+
+Sint quattuoꝛ numeri:a pꝛimus/b secūdus/c tertius/d quartus:sitqꝫ a ad b pꝛopoꝛtio maioꝛ q̄ c ad d:et sit a minoꝛ c.dico b esse minoꝛem d.nam cū c sit maioꝛ a:ergo per nonā maioꝛ est pꝛopoꝛtio c ad b:q̄ a ad b.quare multo foꝛtius c ad b maioꝛ est pꝛopoꝛtio q̄ c ad d.per decimam igitur d maioꝛ est b. quod est pꝛopositum.
+
+<margin>18</margin>
+## Cum fuerit ppoꝛtio pꝛimi ad scðm maioꝛ q̄ tertij ad quartum:et compositum ex pꝛimo et secundo equale composito ex tertio et quarto:pꝛimum tertio maioꝛem esse necesse est.
+
+<image-desc>Geometric diagram with two systems of arches. Both have a large arch labeled "10". The first covers two smaller arches "8" and "2" at points a, b, and c. The second covers two smaller arches "6" and "4" at points b, c, and d.</image-desc>
+
+Sit a ad b maioꝛ pꝛopoꝛtio q̄ c ad d:et nūerus cōpositus a b equalis cōposito c d:dico a eē maioꝛē c.nam pꝛimo non erit equalis:qꝫ si a eēt equalis c:etiā b eēt equalis d per conceptiōem.alioquin si equalibus inequalia adderētur:tota fierent inequalia.quare equalis eēt pꝛopoꝛtio a ad b: ⁊ c ad d.qð est ɔtra hypothesim.neqꝫ erit c maioꝛ a:⁊ t a minoꝛ.nam per pꝛecedentem b scðs esset minoꝛ d quarto a per conceptionem igitur a et b duo minoꝛes simul sumpti minus sunt q̄ c ⁊ d duo maioꝛes simul.quod iteꝛ est ɔtra hypothesim.relinqꝛtur igitur a eē maioꝛem c ⁊ pꝛopositum.
+
+<margin>19</margin>
+## Si pꝛimus fuerit maioꝛ tertio: ⁊ compositus ex pꝛimo ⁊ secundo equalis cōposito ex tertio ⁊ quarto:maioꝛ erit ppoꝛtio pꝛimi ad scðm q̄ tertij ad quartum.
+
+Hec est ɔuersa pꝛecedentis.Sit vt pꝛius a pꝛimus nūerus maioꝛ c tertio:et cōpositus a b equalis cōposito c d.dico maioꝛem eē a ad b pꝛopoꝛtionē q̄ c ad d.Nam qꝛ a ē maioꝛ c:⁊ a b ⁊ c d equales:erit b minoꝛ d.non enī esse potest b equalis d.nam ipsia ⁊ c inequalibus additis:tota non fierent equalia. neqꝫ est b maioꝛ d.nam per cōceptionem qð fieret ex a ⁊ b duobus maioꝛibus plus esset.quod est ɔtra hypothesim. et cū sit maioꝛ c:ergo p nonam pꝛopoꝛtio a maioꝛis ad d:maioꝛ est pꝛopoꝛtio c ad d.sꝫ ⁊ cū b dēmōstratus sit minoꝛ d:per decimam igitur a ad b maioꝛ pꝛopoꝛtio q̄ a ad d.quare multo foꝛ tius a ad b maioꝛ q̄ c ad d.quod est pꝛopositum.
+
+<margin>20</margin>
+## Si quotlibet numeroꝝ ad totidem alios fuerityna ppoꝛtio:que vnius ad vnum ea oīm ad omnes pariter acceptos erit ppoꝛtio.
+
+Sint a/b/c qꝫlibet nūeri:et d/e/f totidem alij.et sit a ad d:et b ad e:⁊ c ad f pꝛopoꝛtio vna.dico que pꝛopoꝛtio a ad d:eadē eē totius a b c ad totū d e f.nam facile ex scða huius cognoscis tres añcedētes eē eque aut maioꝛes aut minoꝛes aut equales ad suos ɔsequētes. Si aūt sint eꝫ minoꝛes:quota pars vel pꝛes erit a ad d tota ps vel pꝛes erit b ad e:⁊ c ad f.ergo p quartā ⁊ quintā pꝛimi sub disiunctione quoties opoꝛtuerit repetitas erit totus a b c tota ps vel pꝛes totius d e f:quota pars vel pꝛes a ad d. quare eadeꝫ erit pꝛopoꝛtio a ad d:et totius a b c ad d e f.At si sint tres añcedētes eque maioꝛes quia q̄ pꝛopoꝛtio a ad d:ea est b ad e ⁊ c ad f.ergo p pꝛimā huiꝫ q̄ pꝛopoꝛtio d ad a:ea est e ad b ⁊ f ad c.qꝛe q̄ta ps vel pꝛes d ad a:tota vel tote est e ad b.⁊ f ad c.per quartā igit ⁊ quintā pꝛimi sub disiūctione q̄ties opus fuerit repetitas quota ps vel pꝛes est d ad a:tota ps vel pꝛes est d e f ad a b c.qꝛe q̄ pꝛopoꝛtio d ad a:eadē erit totius d e f ad totū a b c.ergo p pꝛimā huius q̄ pꝛopoꝛtio a ad d:eadē totius a b c ad totum d e f.qð iteꝫ est pꝛopositum.Si xo singuli singulis sint equales: statim adiuuāte ɔceptione si equales numeros equalibus addas totos fieri equales:idem efficies.est itaqꝫ totum pꝛopositum notum.
+
+<image-desc>Diagram representing numerical proportions with two parallel horizontal line segments. The upper segment is divided by points a, b, c with interior numerical labels 4, 6, 8; it has a top bracket labeled 18. The lower segment is divided by points d, e, f with interior numerical labels 2, 3, 4; it has a bottom bracket labeled 9. Vertical dotted lines connect points a to d, b to e, and c to f.</image-desc>
+
+<margin>21</margin>
+## Si fuerint quotlibet numeri/alijqꝫ fm eundem numerum ɔtinue in eadem ppoꝛti one sumpti:extremoꝝ eandem esse ppoꝛtionem necesse est.
+
+Hec declarat equā pꝛopoꝛtionalitatem que est quoties sumptis quotlibet numeris ad alios totidē in cōtinua pꝛopoꝛtionalitate se hñtibus:cōcludimus vt illoꝝ pꝛopoꝛtio extremi ad extremum:ita hoꝛ extremi ad extremū pꝛopoꝛtiōem esse. quio asit fit cōtinua pꝛopoꝛtionalitas:iam dictū est.et hec equā pꝛopoꝛtionalitas bifariā foꝛmari potest ꝓmo directe:oꝛdineqꝫ recto.vt si hunc in modum dixero:sicut a ad b:ita d ad e.et sicut b ad c:ita e ad f.qꝫ sicut a ad c:ita d ad f p quo eque pꝛopoꝛtionalitatis modo ponitur pꝛesens pꝛopositio. Scðo xo foꝛmat indirecte ⁊ uersoqꝫ oꝛdine.vt si dixero que pꝛopoꝛtio a ad b ea est e ad f:et que b ad c ea d ad e.ergo que a ad c:ea est d ad f, p quo quidē eque pꝛopoꝛtionalitatis
+
+<image-desc>Proportionality diagram with two parallel horizontal lines. The top line has points a, b, c with intermediate values 2, 4, and 6. The bottom line has points d, e, f with intermediate values 4, 8, and 12. Vertical dotted lines connect a to d, b to e, and c to f.</image-desc>
+
+<vocab>proportio, inequalis, numerus, compositus, adiunctus, antecedens, consequens, continua proportionalitas, eque proportionalitas</vocab>

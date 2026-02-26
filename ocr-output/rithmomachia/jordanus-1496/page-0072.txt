@@ -1,0 +1,85 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+### ¶ Sola superparticulariū sesquialtera multiplicē superparticularē procreat. <page-num>59</page-num>
+
+<margin>
+<image-desc>Line diagram showing proportions. 
+a ——— 9 b ——— 6 ——— 4
+d ——— 3 e ——— 2
+Lines connect 9 to 6, 6 to 4, and 3 to 2.</image-desc>
+</margin>
+¶ Esto a ad b sesquialtera et b ad c similiter. manifestū est pportione̅ a ad c compositā esse ex duabus sesquialteris et a continet b z eius medietatē que sit d: et b cōtinet c z eius medietatē que sit e. et quia per quintā secundi d ad e sicut b ad c: ergo d continet e z eius medietatē. d ergo et e simul tantū sunt i̅tum c et vna pars dicta ab c. cōtinet ergo a numerū c bis: et vnā eius partē. q a cōtineat c et d e totā differentiā a ad c: quare due sesquialtere cōstituunt multiplicē superparticulare̅. Secundo ostendit nullā aliām superparticulare̅ duplicatā constituere multiplicē superparticulare̅. et sūto a b c pportionales alie superparticulares: vt pportio a ad c sit pportio a ad b duplicata. a cōtinet b et partem eius que sit d: que quivē bis sumpta minuit a toto aut seipsaz semel si esset tertia: aut bis si quarta: aut pluries fm q minor pars fuerit. et simili b continet c z similē partem eius que sit e. et qꝛ d ad b sicut e ad c: ergo d ad e sicut b ad c. cōtinet ergo d semel e et eius vnā similē partem: ergo d et e simul minus sunt c. quare a ad c nō est multiplex sed et cu̅ d z e sint contra se primi vt supponimꝰ: d et e simul per nonā tertij est primus ad e. sed et per undecimā eiusdē c etiam erit primus ad d et e simul. ergo d et e simul nō numerabūt c. est ergo a ad c pportio suppartiens: quod erat ppositum.
+
+<margin>
+<image-desc>Line diagram with letters and numbers.
+a ——— 16
+b ——— 12 ——— 9
+d ——— 4 ——— 3</image-desc>
+</margin>
+
+### ¶ Multiplicē pportiō in aliqt equales pportiones distribui non pōt pter mltiplices. <page-num>60</page-num>
+
+<margin>
+<image-desc>Line diagram showing a series.
+a ——— 16
+c ——— 8
+d ——— 4
+b ——— 2
+Vertical lines connecting labels on the left.</image-desc>
+</margin>
+¶ Sit pportio a ad b multiplex que diuidatur in quotlibet pportiones equales q sint a ad c: c ad d et d ad b. qꝛ enim b ad d z d ad c et c ad a sunt continue pportionales et b primus per hypothesim numerat a ultimum: ergo per decimāseptiam quarti b numerabit d secundū. quare z d numerabit c et c itidem a. diuisa est igitur a ad b in pportiones multiplices: quod itēdebatur.
+
+### ¶ Nulla supparticularis pportio in aliquot equales pportiones est diuisibilis. <page-num>61</page-num>
+
+<margin>
+<image-desc>Line diagram with labels and brackets.
+a —— b c —— h
+d —— f g —— k
+i —— l
+Brackets group labels vertically.</image-desc>
+</margin>
+¶ Sit a ad b quelibet pportio superparticularis: que diuidat si possibile est in pportiones equales a ad b: b ad c: et c ad d. capio e f g h pportiones in minimis terminis pportionis a ad b: et per equam pportionalitàte̅ que proportio a ad d ea est e ad h. sed a cōtinet d et eius partē: igitur et e cōtinebit h et eius partē que sit l: que si fuerit numerus cu̅ l z numerabit h z etiā e. ergo h et e nō erunt minimi quod per quintā quarti repugnat hypothesi. alioqui si l z est vnitas est pars denoi̅ata ab h. addo ad h vnitātē: sitqꝛ cōpositus l: eritqꝛ que proportio a ad d ea l ad h. ergo per duodecimā quarti quot medij pportionales intercidūt inter a et d: totīdē z inter l et h sola unitate distātes: qꝛ est ipossibile. Ex hac cognoscit tonus in musica qui ex sesqoctaua pportione nascitur: In duo equa parti nō posse.
+
+### ¶ Superpartientē proportionē que duplicata suppartientē constituat: inuenire. <page-num>62</page-num>
+
+¶ Sumo quālibet proportionē que minor sit dupla quā per quinquagesimāquartā huius partior in duas superpartientes quartū minor si dupletur efficietur proportio minor dupla: quare qualibet multiplice. que qꝛ per precedente̅ nō erit superparticularis alioquin superparticularis in duo equa secaretur: constat eam esse superpartientē: factumqꝛ esse propositum.
+
+### ¶ Multiplicē supparticulare̅ qꝛ ex duabꝰ suppartiētibus equalibꝰ pponatꝛ: reperire. <page-num>63</page-num>
+
+<margin>
+   289   204   144
+a ——— c ——— b
+</margin>
+¶ Sumo secundū exigentiā decime octaui quadratos a et b p̅ter primos quoru̅ a addat super duplū b vnitātē manifestū est pportione̅ a ad b esse multiplicē superparticulare̅. at ex illa decima facile cognosces proportione̅ lateris a ad latus b esse superpartientē. sumo ergo secundū exigentiā correlarij quarte sexti mediū pportionale inter a et b: eritqꝛ per tertiā eiusdē sexti proportio a ad c tanqꝛ pportio lateris a ad latus b. quare constat proportione̅ multiplicē superparticulare̅ a ad b compositā esse ex proportionibus a ad c et c ad b duabus scz equalibus suppartientibus: qꝛ est propositū.
+
+### ¶ Superpartientē inuenire que duplicata multiplicē superpartientē constituat. <page-num>64</page-num>
+
+<margin>
+<image-desc>Complex alphanumeric and numeric diagram.
+g ———— 16   25
+f ———— 12   15
+e ————  4    9
+d ———— 9 b ———— 4    5
+a ———— 3 c ———— 2    3
+
+Numerical table below:
+      2 9
+        7
+    —————
+    1 3 3 9
+      2 2 4
+        1 3
+    —————
+        2
+      1 3
+    —————
+        2
+      1 3
+    —————
+        2
+</image-desc>
+</margin>
+¶ Sit a quilibet impar et b proximus par maior cuius medietas sit c. capio superpartientē sumptā a partibus denominatis ab a z numeratis ab c: quam duplicatā dico esse petitam. nam si illa in se ducatur proueniet numerus et partes numerate ab a z a quadrato c qui sit e: et denominate a quadrato a qui sit d. sed cum a z c sint contra se primi alioquin a et b cōmunicarēt. ergo per undecimā tertij a est primus ad c: z per nonā eiusdem a et e simul sunt primus ad a. quare a et e simul per undecimā eiusdē sunt primus ad d. ergo partes numerate ab a et e nō numerabūt d. quare pportio superpartiēs que assignata erat duplicata cōstituit multiplicē superpartientē. Al'r si hec demōstratio tibi suboscura videtur pro hac z sequētibus declarationē accipe. qꝛ enī in presenti superpartiēs inuenta erat superbipartiēs tertias que denominatꝛ ab vno z duabus tertiis. due ergo denominationē superbipartientis tertias per octauā huius in denominationē superbipartiētis tertias scz ducēdo primo duas tertias in duas tertias. et per quartā huius proueniūt quatuor none. secūdo duas tertias in vnū z pueniūt due tertie. tertio vnū in duas tertias et iterum prouenit due tertie. z quartovnū in vnum: et puenit vnum: habebisqꝛ quartuor nonas duas et duas tertias z vnū: sed due z due tertie: id e̅ quattuor tertie faciunt vnum integrū et vnam tertiam: quod quidē vnum alteri vni additū constituit binarium et vna tertia est tres none: quod per secundā huius facile cognoscas. que siquidem tres none aliis quattuor nonis primo inue̅tis addantur fiunt septem none. Patet itaqꝛ proportionē superbipartiēte̅ tertias duplicatam: constituere duplam et superseptupartientē nonas que est multiplex superpartiens: vt proponebat propositio: quod est propositū declaratum.
+
+<vocab>proportio, sesquialtera, superparticularis, multiplex, music, tonus, superbipartiens, sesquioctava, superpartiens, geometric progression</vocab>

@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>247</page-num>
+<header>15. cap: Vom Schach-Spiel.</header>
+
+<image-desc>A rectangular decorative woodcut header at the top of the page, featuring symmetrical floral scrolls, acanthus leaves, and small human figures embedded within the ornamentation on the left and right sides.</image-desc>
+
+## Das Funffzehende Capittel.
+
+### Wie das Spiel / wan der Schwartze / nicht
+### den Reuter / wie das vierzehende Capittel besaget:
+### besondern einen Soldaten / oder Schützen /
+### ziehet / zu spielen.
+
+<margin>1.</margin>
+Damit wir nuhn / die Andere Art / (deren das 12. Cap: meldung gethan) nebest diesem Andern Buche / zum ende bringen: nachdem / wie der Schwartze / mit des K. Reuter / sein angefangenes Spiel / fortsetzen sol / im vorigen Capittel / berichtet: alsz folget / welcher gestalt / die züge / * wan derselbe / an stat des Reuters / (n. 1. in f. des 14. Capit: ) seiner K. Soldaten / auf fünf und viertzig / ziehet: zu verfolgen seyn: dan der Weisse / darauf / des K. Schützen / auf dreyfzig / rucket: der Schwartze / nimt / des W. K. Schützens-Soldaten / mit seines K. Soldaten: der Weisse / ziehet / der K. Soldaten / auf neun und zwantzig: der Schwartze / gibt / mit der Königin / auß fünf und zwantzig / Schach: der Weisse / ziehet den König / auf drey: der Schwartze / der K. Schützen / auf die W. Königin / auf sechs und zwantzig: der Weisse / (umb seine Königin / zu bedecken) des K. Reuter / auf die S. Königin / auf neunzehen: der Schwartze / (so fern Er / keine ursache / zur verwechslung der Königinne / geben wil) nimt ihn / mit der K. Schützen: der Weisse / denselben / mit der Königin / und ziehet sie / auf des S. K. Soldaten: der Schwartze / (denselben zu beschützen) des K. Reuters-Soldaten / auf vier und dreyssig: der Weisse / die Königin / (auf dasz Er / mit derselben / der S. K. Reuters- oder mit seines K. Schützen / des S. K. Schützens-Soldaten / nehmen könne) auf drey und zwantzig: der Schwartze / springet / mit seinem Könige / (umb der Königin quartier / nicht zerreissen zu lassen / noch dero Rochen / zu verschertzen) auf zwey und sechfzig: der Weisse / nimt / des S. K. Schützens-Soldaten / mit seines Königes Schützen / und ziehet ihn / auf des S. K. Reuter: der Schwartze / denselben / auf des W. K. Soldaten / auf drey und viertzig:
+
+<margin>2.</margin>
+* der Weisse / gibt / mit der Königin / auß vier und viertzig / Schach: der Schwartze / bedecket den König/
+
+<sig>Ii</sig>
+<meta>catchword: nig/</meta>
+
+<vocab>Schach, Reuter, Soldaten, Schützen, Königin, König, Rochen, Capittel</vocab>

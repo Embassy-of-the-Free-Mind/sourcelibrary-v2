@@ -1,0 +1,32 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>44</page-num>
+<header>Das Erste Buch / 2. cap.</header>
+<meta>catchword: Das</meta>
+
+ferthumb/ überfallen/ und Italien, *Hispanien*, und *Franckreich* eins-
+genommen/ dieses Spiel/ mit samt dem Nahmen/ zum meisten
+theile/ auf diese Völcker kommen/ und den Nahmen behalten ha-
+be. Und dörffte dieses/ keinem/ so gar frembd/ fürkommen. Dan/
+daß wir/ der *Hispanier*, welche von den *Gothen*: der *Gallier*/ oder
+*Frantzosen*/ so von den Teutschen *Francken*/ ihre Sitten und
+Sprache/ zum theil genommen/ und mit ihrer vermischet/ (davon
+*Nicod: Frischlini, Julius Redivivus, pag: 308.* nebest den *Historicis*,
+zu besehen) geschweigen: wie viel Teutscher Worte/ haben die *Ita*-
+*liener* oder *Welschen*/ von den Teutschen/ *Gothen*/ und *Longobar*-
+*den*/ von welchen/ *Welschland* lange besessen/ (wie dessen gedachter
+*Frischl: d. l. pag: 331.* nebest Andern/ gedencket) erlernet/ und ihrer
+Sprache/ einverleibet? Gebrauchen sich nicht/ ihre *Juristen*, der
+wörter/ *Feudi, Fodri*, und dergleichen unzählig viel mehr/ so die
+Gelarten wissen/ daß sie Teutsch seynd? Wie *germaniçiren* Sie/
+so sehr/ in diesen und dergleichen: *Io ho havato*, Ich habe gehabt:
+*Io sono stato*, Ich bin gewesen/? Ist nicht bey ihnen/ unser Teut-
+sches/ lassen / *lasciare*? Solten Sie/ nicht ebener massen/ ihr *scac*-
+*ciare*, das ist/ auffjagen/ vertreiben/ von unserm Alten Teutschem
+worte/ *Schacken* oder Weg-jagen/ hergenommen haben?
+->Doch können wir alhie/ einen bessern/ und bestendi-<-
+->gern Bericht/ wol leiden. etc.<-
+
+<image-desc>An ornate woodcut tailpiece featuring a central human mask or face with a crown-like headpiece. The face is surrounded by elaborate symmetrical scrolls, foliage, and decorative elements including two animal-like heads at the top corners and a small pendant hanging at the bottom center.</image-desc>
+
+<vocab>Hispanien, Franckreich, Gothen, Gallier, Frantzosen, Teutschen, Francken, Nicod: Frischlini, Julius Redivivus, Longobarden, Welschland, Feudi, Fodri, germaniçiren, Schacken</vocab>

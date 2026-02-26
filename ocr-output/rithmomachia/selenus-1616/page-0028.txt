@@ -1,0 +1,5 @@
+<language>Latin</language>
+<page-type>blank</page-type>
+<warning>This page contains no original text on this side. There is significant water staining at the top and bottom edges, and mirrored bleed-through (ghosting) of text from the reverse side of the leaf is visible.</warning>
+
+<vocab>blank page, water damage, bleed-through</vocab>

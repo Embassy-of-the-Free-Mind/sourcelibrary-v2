@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>title-page</page-type>
+<warning>This page consists of a mirrored ink-transfer (offset) from the facing title page. The text is transcribed here in its intended reading orientation, despite being backwards and faint in the original manuscript.</warning>
+
+<image-desc>A mirrored woodcut title-page border with an ornate architectural design. At the top, two cherubs support a small tablet. The central opening contains the main title. Flanking the center are two arched niches containing standing figures of Church Fathers; the left figure is labeled "Ambrosius" and the right figure "Augustinus". At the bottom, a decorative cartouche with scrollwork contains two lines of Latin text. The entire frame is surrounded by a trellis-like border with climbing vines and flowers.</image-desc>
+
+<margin>
+Ambrosius
+</margin>
+
+<margin>
+Augustinus
+</margin>
+
+### ❦ Das iſt ❦
+
+# Evangelium
+
+## von Jeſu
+## Chriſto.
+
+-> ❦ <-
+
+---
+
+-> Profeſſoris Henningii <-
+-> Claromontano. <-
+
+<vocab>Evangelium, Jesu Christo, Henningius, Claromontano, Ambrosius, Augustinus</vocab>

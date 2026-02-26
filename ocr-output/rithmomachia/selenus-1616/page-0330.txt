@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>296</page-num>
+<columns>2</columns>
+<header>4. cap: Das Dritte Buch /</header>
+
+<margin>
+4. cap:
+
+Das Dritte Buch /
+</margin>
+
+->n. 2. 7.<-
+<image-desc>A rectangular grid pattern containing character codes for needlework or weaving, such as SR, SS, S&, SK, WR, WS, and WK. Specific numerical values like 42 and 37 are placed within the grid cells.</image-desc>
+
+->n. 8. 11. 12. 13. 14. 15. 25. 46.<-
+<image-desc>A rectangular grid pattern for textile work. The cells contain shorthand codes (SR, SS, S&, SK, WR, WS, WK) and sequence numbers including 52, 45, 43, 41, 37, and 33. Some characters appear with superscript or subscript notations.</image-desc>
+
+->n. 18. 24.<-
+<image-desc>A rectangular grid pattern using a system of abbreviations (SR, SS, WS, WR, WK, SK) and symbols like "W&" and "WS_c" to denote specific stitches or colors.</image-desc>
+
+->n. 22. 23.<-
+<image-desc>A rectangular grid pattern containing various coded abbreviations and the numbers 41, 25, and 41 again, likely representing a complex weaving or embroidery layout.</image-desc>
+
+<column-break/>
+
+->n. 3. 4.<-
+<image-desc>A rectangular grid pattern containing character codes (SR, SS, S&, SK, WR, WS, WK) and the number 45. The grid is organized into specific rows and columns of pattern instructions.</image-desc>
+
+->n. 9. 10.<-
+<image-desc>A rectangular grid pattern featuring color or technique codes and the number 50 placed prominently within a cell in the second row.</image-desc>
+
+->n. 20. 21.<-
+<image-desc>A rectangular grid pattern for textile production, including numerical markers 58 and 42 alongside standard abbreviations like SR, SS, WS, WR, and WK.</image-desc>
+
+->n. 26. 27. 40.<-
+<image-desc>A rectangular grid pattern containing shorthand instructions for needlework, featuring specific numbers 51 and 41 within the grid layout.</image-desc>
+
+<vocab>Das Dritte Buch, cap:, Modellbuch, weaving pattern, embroidery codes, textile shorthand</vocab>

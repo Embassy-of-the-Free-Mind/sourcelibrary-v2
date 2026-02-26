@@ -1,0 +1,42 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>24</page-num>
+
+che contiene in ſe molt'altri giuochi, & non minuiſſe la di-
+lettatione di quelli, ma la creſce, & la rende piu perfetta;
+& non ſolamente rende diletto, & utilità à gli indotti, &
+rozi, ma anchor alli dotti, & ſottili ingegni: Però non die
+reſtar ogn'uno di abbracciarlo, & acquiſtarlo per eccitar
+la mente ſua da coſe giuocoſe à piu ſerie, & graui; & re-
+crearla, tal'hor, che dalli ſtudii ſi ſente affaticata, e
+ſtanca.
+
+---
+
+->*I L  F I N E .*<-
+
+## Tauola de gli errori occorſi.
+
+A car.1.a nella riga 7. doue ſi legge cucurato, legaſi curato.alla medeſima b, linea 6, doue ſi
+legge ſexta, legaſi ſeſta. à car.4.a. nella riga 11 doue ſi legge perilche, legaſi pche. à car.4.b. nella
+figura nel tondo terzo di ſotto doue è ſcritro 41 ſcriuaſi 49. à car.6.b. doue ſi legge due uolte:
+coſi accozzando li 4 primi triangoli bianchi : legaſi una uolta ſola. à car.7.b. nel terzo tondo
+della figura doue è ſcritto 125. ſcriuaſi 225. à car.8.a. nella 3 riga, doue ſi legge il notaremo, le
+gaſi notaremo. à car.9.b. nel quarto tondo nero di ſopra della figura, doue è ſcritto 7, ſcriuaſi
+9. à car.10.a. nella 1. riga, doue ſi legge queſto modo, legaſi à queſto modo: Et nella 4 riga, do
+ue ſi legge tirandoli li 4, legaſi tirando li 4. à car.10.b. nella figura nel triangolo bianco che
+è appreſſo il quadrato 45, nel qual è ſcritro 20 ſcriuaſi 25 : & nel tondo, nelqual è ſcritto 38
+ſcriuaſi 36. à car.11.b. nella terza riga, doue ſi legge 7, leggaſi 6: & nella riga 11, doue ſi legge da
+qual, legaſi dal qual: & nella penultima riga, doue ſi legge maggiori, legaſi minori; & la figura
+di detta facciata uol eſſer fatta a queſto modo.
+
+<image-desc>A diagram consisting of three diamond shapes (rhombuses) connected side-to-side in a horizontal chain. The first diamond on the left contains the letter "B", the middle diamond is empty, and the third diamond on the right contains the letter "A".</image-desc>
+
+à car.12.a. la prima figura deue eſſer à queſto modo.
+
+<image-desc>A diagram consisting of four diamond shapes connected side-to-side in a horizontal chain. The first diamond on the left contains the letter "B", the second is empty, the third contains the letter "C", and the fourth on the right contains the letter "A".</image-desc>
+
+à car.12..a nella quarta riga, doue ſi legge il 16 triangolo legaſi il 16 tondo. & doue ſi legge
+col 9 tondo legaſi col 9 triangolo. à car. 12. b. la figura uol ſtar coſi.
+
+<vocab>giuochi, Tauola de gli errori, errata, triangles, diamonds, rhombi</vocab>

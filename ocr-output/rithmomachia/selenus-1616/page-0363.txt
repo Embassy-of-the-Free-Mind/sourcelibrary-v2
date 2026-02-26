@@ -1,0 +1,115 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>329</page-num>
+<header>5. Cap: Vom Schach-Spiel.</header>
+<sig>Tt ij</sig>
+
+### n. 66. 114.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | | | SR |
+| SS | SS | SS | SS | SR | SS | SS | SS |
+| | | SR | | | SR | | |
+| WS | SS | | SS | | | WS | |
+| | | | WS | | | | |
+| | | WS | | | WR | | |
+| WS | WS | 14 | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | WR | 2 | |
+
+### n. 69. 90.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | | SR | SK | | SR |
+| SS | SS | | SR | SR | | SS | SS |
+| | 47 | | 45 | WR | SS | | |
+| | | SS | | | | | |
+| | WS | WS | | | | | |
+| | | | | | WR | | |
+| WS | | | WS | WR | WS | WS | WS |
+| | | | | WR | | WK | |
+
+### n. 74. 75. 87.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | SK | 6j | | | | SR |
+| SS | SS | 54 | 53 | SR | | | SS |
+| | | | WR | WR | SS | SS | WS |
+| | | | | | | | |
+| | WR | | | | | | |
+| | | | | | | | |
+| WS | | SR | | | WS | WS | WS |
+| | | | WR | | | WK | |
+
+### n. 80. 8j.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | WR | | | | | |
+| SS | | SR | WR | 52 | SK | | SS |
+| | | | | 44 | SS | SS | |
+| | WR | SR | | | | | |
+| | | | | WS | | | |
+| | | | | | | | |
+| WS | | | | WS | WS | WS | |
+| | | | | | WK | | |
+
+<column-break/>
+
+### n. 67. 98.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | SR | SK | | | SR |
+| SS | SS | SS | | SR | | SS | SS |
+| | SS | SR | | SS | SS | | |
+| | WS | | | | | WS | |
+| | | 30 | WS | WR | | | |
+| | | | | | WR | | |
+| WS | WS | | | | 12 | WS | WS | <margin>WS</margin> |
+| WR | | | WR | | | WK | |
+
+### n. 70. 71.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | 62 | SK | 60 | | SR |
+| SS | SS | SR | | | SR | | SS |
+| | | | | WR | SS | SS | WS |
+| | | | | | | | |
+| | WR | | WR | | | | |
+| | | | | | | | |
+| WS | | | | | WS | WS | WS |
+| | | | WR | | | WK | |
+
+### n. 76. 77. 78. 86.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | 63 | 62 | | | SR |
+| SS | SS | | SK | SR | | | SS |
+| | | | 46 | WR | WR | SS | SS |
+<margin>WS</margin>
+| | | | | 37 | | | |
+| | WR | | | | | | |
+| | | | | | | | |
+| WS | | SR | | | WS | WS | WS |
+| | | | WR | | | WK | |
+
+### n. 83. 84.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | | | | | SR |
+| SS | | WR | SK | | | | SS |
+| | | | WR | WR | SS | SS | WS |
+| | | | SR | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| WS | | | | | WS | WS | WS |
+| | | | | WR | | WK | |
+
+<vocab>Schach-Spiel, SR, SS, SK, WS, WR, WK, König, Turm, Springer</vocab>

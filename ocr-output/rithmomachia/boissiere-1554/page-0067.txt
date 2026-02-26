@@ -1,0 +1,36 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, IEV</header>
+
+font 12 du nombre 1312. reste 1300 hommes de
+pied que vous diuiferez en 10 pars. par ainsi
+chafque port'enseigne sera suyui de 130 pietons.
+
+   Les tables rouges & leur pyramide contien-
+nent 1752 poincts, sans les Racines des nombres
+quarrez estans cõprins en ladicte pyramide, les
+deux derniers de ladicte somme seront faicts Ca-
+pitaines de l'armée Turquoise, & les 10 d'apres
+port'enseignes. Il fault oster de la somme 1752,
+ces deux Capitaines, & les 10 port'enseignes;
+parquoy 1740 seront prets à combattre: mais les
+fault partir en 10 pars. par ainsi 174 Ianisseres
+auront vn port'enseigne.
+
+   A l'entrée du combat & du ieu les deux Em-
+pereurs accorderõt que celuy sera Vainqueur &
+maistre de la campagne qui aura gaigné sur
+son ennemy plus grand nombre d'enseignes. Par
+quoy, Si l'Empereur des Chrestiens surmonte le
+Grand Turc de deux enseignes, es deux ensei-
+gnes turquoise gagnées par l'Empereur feront
+348 Ianisseres.
+S'il gagne trois enseignes: Les trois feront 522
+Turcs.
+Si quatre: Les quatre feront 696 Turcs
+Si cinq: Les cinq feront 870
+Les six 1044
+
+<meta>catchword: Les</meta>
+
+<vocab>Rithmomachie, Turcs, Chrestiens, Ianisseres, pyramide, enseignes, Capitaines, port'enseigne</vocab>

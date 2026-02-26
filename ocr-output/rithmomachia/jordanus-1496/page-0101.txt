@@ -1,0 +1,68 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>II</page-num>
+<warning>The image contains some bleed-through from the reverse side and archaic typography (blackletter/Gothic).</warning>
+
+<margin>
+2187
+2048
+139
+102
+37
+28
+9
+1
+</margin>
+
+intervallo e d: ergo e d sunt nũeri semitonij maioris. Si autẽ iidẽ sint minimi facile ex decimaquinta tertij arithmetices cognoscas distrahẽdo d ab e r quod reliquũ fuerit itẽz quoties potes distrahẽdo ab d. et hoc pacto deinceps r videbis ad ultimum relictam unitatẽ: eritqz modo qui ad latus apparet distractio. quare per eandem decimaquintam d et e sunt invicem primi. sunt igitur per vicesimam eiusdem in sua proportione minimi: quod est propositum.
+
+---
+
+<margin>24</margin>
+
+### C Semitonij maioris habitudo: sesquiquintadecimam superat proporonẽ.
+
+| 2187 | 2184 8 | 2048 | 136 8 |
+| :---: | :---: | :---: | :---: |
+| a | c 15 | b | d 15 |
+
+C Sint a b minimi termini habitudinis semitonij maioris per precedẽtem reperti: dico habitudinẽ a ad b maiorẽ esse sesquiquintadecima. sumo enĩ ut in precedentibus iam sepe factũ est per decimã huius quintãdecimam partẽ numeri b et haec invenitur centũ trigintafex et octo quintedecimevnius q̃ sit d adictio ergo d ad b et fiat c: certũ est c ad b esse sesquiquintadecimã. at c minor numer⁹ est q̃ a. est enĩ a numerus duum miliũ centũ octuagintaseptẽ. c autem solum duũ milium centũ octuagintaquatuor et fere semis paulo amplius. Est igitur pervnocdecima huius semitonij maioris habitudo sesquiquitadecima pportione maior: eamqz superans: quod est propositum.
+
+---
+
+<margin>25</margin>
+
+### C Apotomes intervallum: minus est sesquiquartodecimo intervallo. Unde manifestum est semitonij maioris proporonem inter sesquiquintãdecimam r sesquiquartã decimam reperiri collocatam.
+
+| 2194 4 | 2187 | 2048 | 146 4 |
+| :---: | :---: | :---: | :---: |
+| c 14 | a | b | d 14 |
+
+C Apotomẽ r semitoniũ maius: idem esse iam dixim⁹. Sint ergo a b mimi nũeri semitonij maioris vt duo milia centũ et octuagintaseptẽ r duo milia quadragintaocto. sumo per decimã huius quartã decimã partem b scz duum miliũ et centũ trigintafex r centũ quadragintafex et quattuoz quartedecime que sit d. addo eam quartãdecimam ad b: et fiat numerus aggregatus c. tunc numeri c ad b sesquiquartadecima pportio est. at c maior numerus est a siquidẽ duo milia quadraginta octo et centũ quadragintafex et quattuor quartedecime summã simul attollant c: duum miliũ centũ nonagintaquatuor et fere quartãvnius. et a solum summa sit duum miliũ centum octuagintaseptẽ. constat ergo sesquiquartãdecimam proportionẽ maiorem esse semitonio maiore: atqz propositum. Correlarium vt precedentium notum est.
+
+---
+
+<margin>26</margin>
+
+### C Semitonium minus atqz semitonium maius in superparticulari proporone non cadunt: sed ea in superpartiente ratione consistere necesse est.
+
+C Nam semitoniũ minus per correlariũ vicesimeprime huius cadit inter sesquioctauã decimam et sesquinonãdecimam. atqui inter sesquioctauãdecimam et sesquinonãdecimã nulla cadere valet intercepta mediacz superparticularis habitudo. sunt enĩ ille superparticulares proxime maior atqz minor igitur semitoniũ minus in superparticulari ratione non consistit. neqz per idem semitonium maius. Nam per correlariũ precedẽtis cadit in aliqua pportione media inter sesquiquintãdecimã et sesquiquartãdecimam duas proximas superparticulares: que superparticulare mediã nullã admittunt nõ igitur semitoniũ maius cadit in superparticulari ratione. sed et cum rationes semitonij minoris atqz maioris multis superparticularibus vt iam visum est sint minores: erũt etiam minores ratione duplari que multiplicium minima est: vt que a minimo numero denominetur. nullus enim numerus binario minor. nō est ergo semitonij minoris habitudo multiplex: siliter neqz semitonij maioris. relinquitur igitur a sufficienti diuisione cum ille sint inter maiorẽ terminum r minorẽ: eas esse in suppartienti genere. quod est propositũ. C Id tamẽ propter sophistas aduertere licet q̃ tonus r sue partes cōsonantie r consonantiarum partes intense: semper in supparticulari/ superpartiẽti aut multiplici habitudine cadunt: remisse vero in subsuperparticulari subsuperpartiẽti aut submultiplici. Atvero et si ita sit: solumus tamen eas omnes dicere esse in superparticulari habitudine superpartienti/ aut multiplici idem supparticulare et subsuperparticulare reputãtes r pro vno computantes. similiter superpartiens et subsuperpartiens r multiplex et submultiplex.
+
+---
+
+<margin>27</margin>
+
+### C Musicum comma in chorda reperire.
+
+<image-desc>A horizontal line representing a monochord string divided by points labeled a, f, g, c, and b from left to right. Below the line, segments are further identified with the letters d and e. The values 256 and 243 are positioned under specific intervals.</image-desc>
+
+| a | f | g | c | b |
+|---|---|---|---|---|
+| 256 | | | 243 | |
+| d | | | e | |
+
+C Sit a b chorda supra quam sit propositũ reperire musicũ comma: in qua a b et c b sit sesquioctaua proporio atqz tonus. sint preterea d e minimi termini semitonij minoris. diuido spaciũ a b in partes equales secundũ d: ex quarum numero ab ipso b versus a: capio secundũ numerũ e: r in termino earũ pono notam f. tunc que proporzio d ad e: ea erit a b ad f b. quare a b ad f b semitoniũ minus. Rursum c b spacium seco in equas partes secundũ numerum e r earum partium ab ipso b versus a metiendo: sumo secundũ numerum d: et in earum termino pono notam g. manifestu etiam est g b et c b esse semi...
+
+<sig>g i</sig>
+
+<vocab>semitonium maius, semitonium minus, apotome, sesquiquintadecima, sesquiquartadecima, superparticularis, superpartiens, comma, chorda, tonus, sesquioctava</vocab>

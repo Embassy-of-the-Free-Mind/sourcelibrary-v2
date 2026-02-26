@@ -1,0 +1,42 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>267</page-num>
+<header>1. cap: Vom Schach-Spiel.</header>
+
+<margin>1. cap:</margin>ein schädlicher Zug / und rucket der Weisse / an dessen stelle / mit
+besserm Vortheil / der K. Schützens-Soldaten / auf zwey und
+zwantzig: ziehet dan der Schwartze / der K. Reuter / auf des W.
+K. Schützens-Soldaten / auf sechs und viertzig: so hat der Weisse /
+so fern Er / die Steine / zu rucken weiss / einen Soldaten zum Vor-
+theil / und den Sieg / in seinen Händen.
+
+<margin>31.</margin>Wan aber der Schwartze / den W. Soldaten / mit dem
+Reuter / (n. 2.) nicht nimt / besondern die Königin / auf des W. K.
+Reuter / auf zwey und funfzig / ziehet: so spielet der Weisse / (ihn
+zu beschützen) der K. Soldaten / auf neun und zwantzig: der
+Schwartze / ferner auf den W. Reuter / der K. Soldaten / auf
+fünf und viertzig: der Weisse / denselben / auf neunzehen: der
+Schwartze / nimt / mit der Königin / des W. K. Soldaten / und
+beut Schach: Der Weisse / bedecket den König / mit seinem Schü-
+tzen / auf zwelfe: Der Schwartze / (umb der W. K. Schützens-
+Soldaten / mit gewalt zu erlangen) der K. Schützen / auf fünf und
+dreyssig: Der Weisse / denselben / auf zwey und zwantzig: Der
+Schwartze / der K. Reuter / auf drey und funfzig: Der Weisse /
+seiner K. Reuter / auf die S. Königin / auf dreyzehen: Der
+Schwartze / dieselbe / auf vierzehen: dahero Er / die verwechsl-
+lung der beeden Königinnen / verursachet / und sein Spiel / dieweyl
+der Weisse / keinen Vortheil hat / in eine gute ordnung / bringet.
+
+Wer nuhn vorgemeltes / welches man / zum nutzen und from-
+men / der Schach-Zieher / bey der Ersten Art / des Damiani Spie-
+les / hat andeuten / und erinnern wollen / sich wol einbildet und in-
+acht nimt / derselbe kan sein Spiel / ob gleich der Anfang /
+den Damianus, fürgeschlagen / nicht so gar gut
+ist / nicht undienlich / anordnen.
+
+<image-desc>A decorative baroque-style woodcut tailpiece featuring a central grotesque mask or face. The mask is framed by elaborate scrolling foliage, floral motifs, and symmetrical ornamental drapes ending in tassels.</image-desc>
+
+<sig>Ll iiij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Damiani, Damiano, Reuter, Soldaten, Königin, Schützen, Schach-Zieher, Schach, Vortheil</vocab>

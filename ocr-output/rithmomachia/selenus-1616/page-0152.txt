@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>122</page-num>
+<header>Das Ander Buch / 1. cap:</header>
+
+Mat/ein verlornes Spiel sey : so ist doch/ auß dem 5. Capit: drun=
+ten zu ersehen / daß man mit dem blinden / oder unangezeigten
+Schach=Mat/eben so wol gewinne/ und denselben/ für einen rechten
+Schach=Mat/halten und erkennen solle. Man kan ferner/ mit allen
+Steinen / (außer dem Könige) Schach : Matten. Wan aber das
+Spiel/aufs letzte kommen/ und beym Könige/nuhr ein Stein / noch
+verhanden/so kan man/(es wehre dan / die Königin : oder ein Sol=
+dat/welcher zur Königin könte gemachet werden : oder ein Roche)
+nicht Schachmat geben.
+
+Warumb man aber/den König/nuhr Schach=mattet/ (das ist
+jaget/und sich zu ergeben/nötiget) nicht aber/gleich andern Steinen/
+raubet / mochte die ursache / nicht leichelich / anzuzeigen seyn. Wir
+vermeinen sonsten/daß nicht unglaublich/diese zu seyn/scheine : daß/
+wan man vorzeiten/umb Königreiche/Land und Leuthe/gestritten/
+die Heupter selber/mit zu felde gezogen : nicht daß Sie selbsten stret=
+ten/(dan darzu die Krieges=Wacht/bestellet : Dahero *Scipio Africa-*
+*nus*, wie ihm / daß er keinen guten Kempfer gebe / fürgeworffen
+<margin>„</margin>ward/wol geantwortet : *Mater mea, non Bellatorem, sed Impe-*
+<margin>„</margin>*ratorem, me peperit* : *Frontin : lib : 4. stratag : c. 7.* Warumb hat
+wol die Natur/dem Bienen=Könige / den Stachel versaget ? *Plin :*
+*lib : 11. c. 7. Natur : hist :)* besondern nuhr / dem gantzen Krieges=hee=
+re / ein hertz und muth / mit dem Feinde ritterlich zu kempfen / ma=
+chen solten. Dahero Sie/unter den ihrigen/gleich wie die Seele/in
+des Menschen Leibe/geachtet werden : und ist an ihrer Person/des
+Krieges=Volckes/und zun zeiten / des gantzen Landes / Heyl und
+Wolfart gelegen. Geschichts nuhn/daß einer vom Feinde angefal=
+len wird/so lasset sich / ein kluger Regent/durchauß in keinen Streit
+ein/besondern weichet/auß liebe/gegen seinem Krieges=Volcke und
+Landen/auf daß Er dieselben/nicht in gefahr setze/fein gemächlich/
+und fuß für fuß/in besser gewahrsamb. Welches Er / ob schon das
+Krieges=Heer / fast aufs Haupt erleget/so lang/als Er kan/antrei=
+bet : doch gleichwol / wan es die noth erheischet/seinem Feinde/wel=
+cher oft ohne entsatz/zu nahe oder gantz durstiglich/auf ihn zugetrun=
+gen/oder welchen Er sonsten/auf den seiten/(dan Er keinem Fein=
+de / auß erwehneten ursachen / das Haupt beut) antrifft / mit vor=
+sichtigem nieder hawen/abbruch zu thun/sich bemühet. Hierauf
+haben nuhn/die Kluge Spieler gesehen/den König/mit nebest dem
+Krieges=Hauffen/auf den Schach=Platz gebracht / und des Spie=
+les gewinst und verlust/auf ihn gesetzet. Dahero Sie zwar gewolt/
+daß
+
+<meta>catchword: daß</meta>
+
+<vocab>Schach, Schach-Mat, Schach-Matten, König, Königin, Soldat, Roche, Scipio Africanus, Mater mea non Bellatorem sed Imperatorem me peperit, Frontinus, Plinius, Bienen-König, Krieges-Heer, Schach-Platz</vocab>

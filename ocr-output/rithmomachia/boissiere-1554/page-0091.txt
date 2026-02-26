@@ -1,0 +1,36 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV.</header>
+
+que mes deux nombres 15 & 6 peuuent aller en
+la loge A & que l'vn qui est 6, estant substraict
+de l'autre 15 restera 9 nombre egal à celuy de
+l'aduersaire qui est aussi 9, que lors que ie pose-
+ray le dernier des deux en L ou B ie prendray le
+neufiesme aduersaire & sert à prēdre les nōbres
+propres pour substraction en la presente table.
+
+->Nombre,<-
+
+| Pair contre Impair | | | | Impair contre Pair. | | |
+|:---|:---|:---|:---:|:---|:---|:---|
+| 2 | de 9 | reste 7 | | 3 | de 5 | reste 2 |
+| 4 | 16 | 12 | | 3 | 7 | 4 |
+| 4 | 20 | 16 | | 3 | 9 | 6 |
+| 4 | 9 | 5 | | 3 | 12 | 9 |
+| 6 | 36 | 30 | | 5 | 7 | 2 |
+| 6 | 42 | 36 | | 5 | 9 | 4 |
+| 6 | 72 | 66 | | 5 | 25 | 20 |
+| 6 | 9 | 3 | | 7 | 9 | 2 |
+| 6 | 15 | 9 | | 7 | 56 | 49 |
+| 8 | 36 | 28 | | 7 | 16 | 9 |
+| 8 | 64 | 56 | | 7 | 49 | 42 |
+| 8 | 20 | 12 | | 9 | 25 | 16 |
+| 8 | 72 | 64 | | 9 | 81 | 72 |
+| 9 | 16 | 7 | | 9 | 90 | 81 |
+| 9 | 25 | 16 | | 16 | 25 | 9 |
+| **Pairs à substrai-re.** | **Pairs d'ou est faicte la multiplication.** | **Impairs residu du pair.** | | **Impairs à sub-straire.** | **Impairs d'ou est faicte la substractiō.** | **Le nom-bre pair residu de l'impair.** |
+
+<meta>catchword: Prinse</meta>
+
+<vocab>Rythmomachie, substraction, multiplication, pair, impair, residu, loge</vocab>

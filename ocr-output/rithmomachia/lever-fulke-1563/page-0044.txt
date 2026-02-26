@@ -1,0 +1,13 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>catchword: Of</meta>
+
+The rounde .2. standyng in .A. maye be taken by .30. the Triangle standynge in B. and the square .28. standynge in .B. for take .28. out of .30. and there remaineth .2.
+
+### ¶ Of takynge by multipli-
+### cation.
+
+When two numbers stande so, that being multiplied one by the other, the producte is all one with their aduersaryes man standynge in bothe their draughts, they may take that man so sone as the latter is placed. And if they lye so before thei remoue, being so left of the aduersarie, one of them shal succede in his place that is taken, as in example. The rounde .3. standeth in .D. and 5. standeth in .C. these two shal take the square 15. standynge in .A. because three tymes fyue is .15. another example. The rounde 2. standing in .B. and the triangle .6. standynge in .I. shall take their enemye the triangle .12. standing in .A. by multiplication for .2. tymes .6. is .12.
+
+<vocab>Philosophers game, Rythmomachia, multiplication, rounde, triangle, square, producte, draughts</vocab>

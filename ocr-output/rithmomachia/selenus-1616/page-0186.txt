@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>156</page-num>
+<header>Das Ander Buch/ 5. cap:</header>
+
+oder sechs Spiele / in einer stunde: Dan / es geschehe / in wenig / oder 
+in vielen Zügen / so fern einer nuhr Mat gibt / so hat er gewonnen.
+
+Daß man (4.) die bey des Lucæ VVielij, Teutschem Tractät=
+lein / angefügete Arten vnd Manieren / (wie man nemlich / bald zu 
+anfange / in etlichen gewissen / und wenigen zügen / Schach=Mat zu 
+geben / vermöge) welche man / den jehnigen / so obgedachtes büchlein / 
+nicht haben / insonderheit den *tyronibus*, und angehenden Schach=
+Ziehern / auf unsere Art / durch welche die Exempel beschrieben / 
+verendert / zu weyterm nachdencken / hiemit auch mittheilen wol=
+len: nicht undienlich inacht nehmen könne: Dan / ob wol / diese 
+aufgesetzete anschläge / und Schach=Matten / wan der Gegentheil / 
+dieselben / mit fürsichtigen Zügen / verhindert / nicht können / nach 
+einander / wie folget / ins werck gerichtet werden: Sie gleichwol 
+im anfange / einem / einen guten *Process*, wie dieses Spiel / wol zu 
+üben sey / zeigen / und an die hand geben. So kan auch der jehnige / 
+welcher / mit solchen gewissen / und ordentlichen zügen / den ersten 
+angrif / anstellet / umb so viel mehr / gelegenheit haben / dem Fein=
+de / abbruch zu thun / und den Sieg / endlich zu erlangen.
+
+Die Erste Art ist: Wan der Weisse / im Vierten Zuge / (verste=
+he / daß beederseit Heere / albereit geordnet / und in voller Schlacht=
+Ordnung / aufwarten) dem Schwarzen / wil Schach=Mat geben: 
+so stellet Er / seines Königes=Soldaten / auf acht und zwanzig: die 
+Königin / auf neunzehen: des Königes=Schützen / auf dreyssig: und 
+gibt entweder / mit der Königin / oder dem Schützen / auß ein und 
+funfzig / Schach=Mat.
+
+Wil aber der Weisse / im fünften Streiche / Matten: so setzet 
+Er / des Königes=Soldaten / auf zwanzig: der Königin=Schützens=
+Soldaten / auf zwey und zwanzig: die Königin / auf drey und zwan=
+zig: des Königes=Schützen / auf dreyssig: und beut mit demselben / 
+auß ein und funfzig / Schach=Mat.
+
+Wil dan / der Schwarze / im fünften Zuge / Schach=Mat 
+geben: so Ziehet Er / des Königes=Soldaten / auf sechs und dreyß=
+sig: die Königin / auf drey und viertzig: des Königes=Reuter / auf 
+ein und viertzig: und auf sechs und zwanzig: und erleget / mit der 
+Königin / den Weissen / auß eylffe.
+
+So fern der Schwarze / in acht Zügen / mit den beeden Reu=
+tern / das Spiel / zum ende bringen wil: so rucket Er / des Köni=
+ges=Reuter / auf ein und viertzig: fünf und dreyffig: und funf und 
+zwanzig: der Königin=Reuter / auf sechs und vierzig: einsund sieben 
+und
+
+<vocab>Schach-Mat, Lucæ VVielij, tyronibus, König, Königin, Schützen, Reuter, Soldaten, Züge</vocab>

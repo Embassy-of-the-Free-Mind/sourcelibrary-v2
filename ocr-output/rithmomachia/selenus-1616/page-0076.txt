@@ -1,0 +1,54 @@
+<language>German</language>
+<page-num>46</page-num>
+<page-type>text</page-type>
+<header>Das Erſte Buch / 5. cap:</header>
+
+dieſer Kunſt / und Spiele unterworffen : alß da ſeynd / die Schach=
+Steine / und das Brett : Zum andern / den Zweck / welcher hie=
+rinnen geſuchet wird / nemlich / den / zur Luſt / und ergetzlichkeit /
+erdichteten Sieg / und überwindung : Letzlich / beede / die Mit=
+tel / welche zur Erhaltung des Sieges / und hintertreibung des ver=
+luſts / fürſtändig : und den Gebrauch / in vielerley Arten und Ma=
+nieren / für uns nehmen / und ordentlich Abhandlen.
+
+Weyl nuhn der Gebrauch / der rechte Mayſter / aber doch /
+ohne die künſtliche wiſſenſchaft / faſt blind iſt : ſo hat man zwar / in
+dieſem Tractat, die *Theoriam*, nicht vorbey gehen / gleichwol die ge=
+dancken / fürnehmlich dahin richten wollen / den Liebhabern dieſes
+Spieles / den rechten *Praxin*, und gebrauch deſſelben / ſo viel müg=
+lich / an die Hand zu geben : Alles zu beſſerer und deutlicherer auſz=
+führung / (ſo weit mans verſtanden) dieſer herlichen Schach=Kunſt /
+alß vorhin etwa geſchehen ſeyn mag.
+
+Dan / ob ſich wol bißhero / viele unterſtanden / dieſes ſehr al=
+te / weitgerühmte / und kunſtreiche Spiel / zu beſchreiben / ſo haben ſie
+doch / faſt alle / an der erklärung / der bloſſen wiſſenſchaft / ſich nuhr
+begnügen laſſen / oder aber das Jehnige / welches etliche wenige /
+ihres mittels / von deſſen Hand-grieffen / andeuten wollen / ſo kurtz
+und unvernehmlich / herfür gebracht / daß auch der Jehnige / dem
+dieſes Spiel / nicht unbekant / ihren fürgeſetzten Zweck / was ſie
+nemlich damit gemeinet / faſt nicht erreichen können.
+
+Ehe wir nuhn / zur ſonderbahren Abtheilung / kommen / iſt zu
+wiſſen : Daß das Schach-Spiel / heutiges Tages / wegen deſſen /
+daß die eine Tafel / in mehr felder abgetheilet iſt / und dahero mehr
+Steine / alß die andere / von nöten hat : oder ja / daß die Tafeln /
+und Steine gleich / aber wegen der gänge / dieſer Steine / eines vol=
+lenkommener / alß das ander iſt / auf dreyerley Art / mag geſpie=
+let werden.
+
+Das Erſte / zu welchem man / eine gröſſere Taffel / und
+mehr Steine / gebrauchet / iſt faſt / nicht mehr gebräuchlich / und
+wird / das Alte Current- oder Currier-Spiel / genant : wie wol=
+lens / das Älteſte Schach-Spiel / nennen.
+
+Das Andere / welches eine kleinere Tafel / und weniger
+Steine / doch derſelben gänge / mit dem Erſten / unverendert hat /
+iſt für etlichen hundert Jahren / üb= und gebräuchlich geweſen / itzt
+aber faſt gantz erloſchen / und wird dieſes kleine / von uns / das Elte=
+re Schach-Spiel / genennet.
+
+Das dritte / welches einerley Tabel / mit dem vorigen / auſz
+
+<meta>catchword: dem</meta>
+<vocab>Schach-Spiel, Current-Spiel, Currier-Spiel, Schach-Kunſt, Tafel, Steine</vocab>

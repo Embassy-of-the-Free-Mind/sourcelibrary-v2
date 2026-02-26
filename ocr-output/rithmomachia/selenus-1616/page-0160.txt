@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>130</page-num>
+<header>Das Ander Buch / 1. cap:</header>
+
+raumen. Sie bestehet aber / darinnen / daß der Ort / da der Kö-
+nig / hingestellet ist / so wol mit den Haupt- alsz geringern Steinen /
+(welche / zu diesem behuf / alle bereit und geschicket seyn müssen ) wol
+befestiget / und gleich beschantzet werde: Auf daß also der König /
+so viel müglich / von des Feindes einfällen / ferne genug sey / auch
+seine Steine / ihren gang / umb demselben / desto geschwinder / zu
+hülfe zu kommen / und den feind / mit besserm vortheil und geles
+genheit / abzuhalten / und ihm schaden zu zufügen / umb so viel
+freyer und kecker / verrichten mögen. Es hat auch zweyfels ohn /
+der Erfinder / hiemit andeuten wollen / welcher gestalt ein Potentat,
+der einem Andern / ins Land / fallen wil / sein eigen Land und Fe-
+stungen / zufoderst bewahren / und nach notturft besetzen müsse.
+Wie nuhn diese unsere Schantzen können gemachet werden / das
+von findet man / im anfange / des 10. Capit: im letzten Buche /
+weitere nachrichtung.
+
+Die Verthetigung des Königs / beruhet in deme: daß
+Er / wan Er vom Feinde angerant und geschachet wird / entweder
+auf ein lediges / oder in dasselbe feld / darinnen des Gegeners
+Stein / welcher Er aufgereumet / gestanden / weiche: oder einen
+seiner Steine / so ferne dieselben / den Schacher nicht nehmen
+können / fürziehe / und den Schach / dergestalt verhindere. Dies
+ses fürzihen aber / kan nicht alzeit geschehen: Dan / wan einer /
+mit seinem Reuter / unvermuthsam / sich angibt: oder mit eis
+nem Soldaten / welcher von einem andern Steine / beschützet
+wird / Schach beut: man / zwischen denselben / und den König /
+nichts stellen kan / besondern / den König / entweder wegziehen /
+oder diesen Reuter / oder Soldaten / nehmen muß. Wan aber
+dem Könige / ein doppelter Schach / gegeben wird / so kan Er /
+weil Er / von zween Feinden / zu einer zeit wird angegriffen / und
+zwar von unterschiedenen orten / anderer gestalt / wider dieselben /
+nicht verhütet / oder beschützet werden / dan daß Er sich / entweder
+in die flucht begebe / und eine andere stelle / darinnen Er hülffe
+und beystand erlangen könne / suche / oder aber / einen von dens
+selben / dofern Er kan / mit eigener hand erlege / und dergestalt /
+dem andern / auß dem wege rucke. Vorzeiten hat der König /
+wan Ihm Schach geboten worden / dofern es sein erster außgang
+gewesen / (ob ihm gleich vorhin / unterschiedene Schache / geges
+ben / welche Er mit seinen Steinen bedecket / und sich / von
+seinem ersten platze / noch nicht begeben gehabt) in ein drit-
+tes feld / wol Springen können: doch hat Er / in solchem seis
+nem außgange / durch kein Schach / gehen dörffen: das ist / so
+
+<meta>catchword: fern</meta>
+
+<vocab>Schach, König, Reuter, Soldaten, Schantzen, Verthetigung, außgang</vocab>

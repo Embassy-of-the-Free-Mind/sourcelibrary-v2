@@ -1,0 +1,18 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>231</page-num>
+<warning>Extremely faded, blurry, and degraded image. Most of the text appears to be bleed-through from the reverse side and is illegible.</warning>
+
+<unclear>
+[Several lines of extremely faint, illegible text at the top of the page]
+</unclear>
+
+<image-desc>Faint circular impression or stamp in the center-left area of the page.</image-desc>
+
+<image-desc>A dark, circular ink stamp, likely an institutional or library seal, is located at the lower right. The stamp features a circular border with text and a central emblem, though both are too obscured by ink to read.</image-desc>
+
+<unclear>
+[Approximately five lines of faint text located at the bottom of the page, largely illegible due to fading]
+</unclear>
+
+<vocab>manuscript, library stamp, folio 231</vocab>

@@ -1,0 +1,38 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>E</sig>
+
+<margin>3</margin> Omnes tetragoni ex naturali serie ordinatis imparibus in vnam summā coaceruati collectisq; nascuntur.
+<margin>4</margin> Omnis tetragonus ex duobus proximis quibusq; trigonis exurgit cōpositus.
+<margin>5</margin> Tetragoni: sumptis quārucunq; ab vnitate continue similiū habitudinū numeris: locis imparibus vno semper in medio intermisso sumuntur.
+<margin>6</margin> Omnes tetragoni vna medietate iunguntur.
+<margin>7</margin> Si tetragonus tetragonū multiplicet: tetragonus prouenit.
+<margin>8</margin> Si vero tetragonus altera parte longiorē: nunq̃ proueniet tetragonus.
+<margin>9</margin> Penthagoni surgūt ex numeris naturali serie ab vnitate sequētibus: duoꝝ continuo post penthagonū facta int’missionevna cū priorevel prioribꝰ pēthagonis collectis
+<margin>10</margin> Omnis penthagonus ex toto tetragono et proxime minori trigono cōponitur.
+<margin>11</margin> Hexagoni hoc pacto tribus in medio dimissis generātur.
+<margin>12</margin> Omnis hexagonus ex trigono et proxime sequenti penthagono cōstituitur.
+<margin>13</margin> Heptagoni quattuor in medio hoc pacto dimissis numeris generantur.
+<margin>14</margin> Omnis heptagonus ex hexagono et proxime inferiori trigono constituitur. In crea tione huius figure duo trigoni proxime minores debent eminus constitui.
+<margin>15</margin> Octogoni: quinq; gignuntur intermissis.
+<margin>16</margin> omnis octogonus ex heptagonoꝝ proximo sub se trigono surgit cōpositus. Et hoc pacto de ennagonis/ decagonis/ endecagonis/ dodecagonis continue vno plura intermittendo sentiēdū est. et ex proximis minoribus figuris ꝛ trigonis proxime sub illis minoribus instar alioꝝ constituūtur. Quo fitvt omnes figure ex trigonis consurgere ꝛ in eosdē resolui facillime deprehendātur: quod cum ad Pythagoricā tum ad nōnulloꝝ Platonicoꝝ intelligentiā nōnihil pręsidij affert ꝛ momenti
+
+---
+
+->Al te ra par te lon gi o ris pro pri e ta tes.<-
+
+<margin>1</margin> Altera parte lōgiores ex dispositis naturaliter paribus adinuicē coaceruatis perinde ac quadrati ex imparibus procreātur omnes.
+<margin>2</margin> Omnis altera parte longior procreabitur si naturaliter ordinati pares: in naturaliter dispositis imparibus singulatim ducantur.
+<margin>3</margin> Omnes longilateri/ alteraꝯ parte longiores circūstant angulares quadratos duabꝰ naturaliter numeroꝝ seriebus scđm longum latūq; dispositis et in seinuicē ductis
+<margin>4</margin> Singuli altera parte longiores naturaliter dispositi singulis quadratis itidem dispo sitis comparati: omnē numeroꝝ partem gignunt/ et procreant.
+<margin>5</margin> Singuli altera parte longiores naturaliter siti singulis tetragonis a secundo natura liter ordinatis comparati: similiter omnes restituent superparticulares.
+<margin>6</margin> Altera parte longiores differentiis paribus perinde ac quadrati īparibus diuiūgunt̃.
+<margin>7</margin> Altera parte longiores cōtinue in proximoꝝ quadratoꝝ medio collocati: eādē proportionis habitudinē seruant. iterūq; a dupla proportione in omnē superpar- ticularium speciem se porrigunt atq; diffundunt.
+<margin>8</margin> Omnis altera parte longior bis sumptus cum duobus altrinsecis quadratis coacer uatus: quadratum efficit.
+<margin>9</margin> Proximi quiq; altera parte longiores cum duplo medij quadrati itidem tetragonū efficiunt.
+<margin>10</margin> Parte altera longiores duplati suis duobus altrīsecis quadratis aggregati: quadra- tos reddunt sed quos aliquis impar numeret.
+<margin>11</margin> Proximi altera parte lōgiores cum duplo medij quadrati itidē quadratos sed quos numerus par numeret: efficiunt.
+<margin>12</margin> Altera parte longiores naturaliter ordinati: singuli singulis naturalem seriem seruā- tibus quadratis copulati: continua serie triāgulares numeros cōstituunt.
+<margin>13</margin> Omnes altera parte longiores: continuo ex quadratis vno detracto latere nascunt̃.
+
+<vocab>tetragonus, penthagonus, hexagonus, heptagonus, octogonus, altera parte longior, Pythagoricā, Platonicoꝝ, superparticulares</vocab>

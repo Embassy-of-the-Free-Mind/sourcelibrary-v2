@@ -1,0 +1,39 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>E</sig>
+
+Numerus est multitudo ex vnitatibus aggregata.
+<margin>n</margin> Numerus scōm se sumptus est numerus qui in comparatione ad alterum minime consideratur/neqȝ vt ad figuras geometricas applicatur.
+Numerus ad aliquid: est qui in comparatione ad alterum sumptus: consideratur.
+Numerus scōm figuram dicitur: prout ad figuras geometricas applicatur.
+Numerus par: est qui in duo equa diuidi potest.
+Numerus impar: est qui in duo equa minime diuidi potest.
+Numerus pariter par : est numerus par cuius partes in duo equa ad vnitatem vsqȝ sectionem recipiunt.
+Numerus pariter impar est numerus par cuius media : equalium partitionem non admittunt.
+Numerus impariter par: est numerus par cuius media equaliū partiōem admittūt sed partium in duo equa partitio citra vnitatem deficit.
+Numerus perfectus est numerus par: cuius omnes cōposite simulqȝ accepte partes: sui totius summam implent. Pars est que aliquoties sumpta neqȝ excrescēdo neqȝ deficiendo suum totum metitur.
+Numerus diminutus est cuius collecte partes: minus ipso toto reddunt. qui z imperfectus dicitur.
+Numerus abundans: est cuius in vnum adacte partes totius summam excedunt: qui et idem superfluus nuncupatur.
+Numerus primus est numerus impar: qui sola vnitate metitur. et idem quoqȝ incōpositus nominatur.
+Numerus compositus est numerus: quem nō sola vnitas sed z alter numerus ipsum mensurat: qui z idem secundus appellatur.
+Numerus solum ad alterū primus est numerus: qui fm se compositus est: ad alterū vero comparatus sola cū illo cōmuni metitur vnitate. Par. impar.
+Equalitas: est cum equalis numerus ad equalem comparatur.
+Inequalitas vero est cum inequalis ad inequalem comparatur.
+Maior inequalitas: est cum numerum maiorem ad minorem comparamus.
+Minor vero inequalitas contra: quoties minorem maiori comparamus.
+Numerus multiplex est cum maior nūerus minori comparatus: eūdem plusq̄ semel continet vt bis/ter/quater: et ita deinceps.
+Unitatem numerorum fontem/principiūqȝ: etiam numeri appellatiōe censemus.
+Duplus est cum maior numerus minori comparatus: minorem bis continet.
+Triplus cum ter continet.
+Quadruplus cum quater.
+Quincuplus cũ quinquies: et hoc pacto deinceps fm naturalē nūerorū pgressiōem.
+Numerus superparticularis est cum maior numerus minori comparatus totum in se numerum minorem continet: et eius partem aliquam.
+Sesqualter est numerus supparticularis cum maior totum cōtinet minorem : et eius medietatem. et idem dicitur hemiolius.
+Sesquitertius est cum maior continet totum minorem : et eius tertiam partem. qui z dicitur epitritus.
+Sesquiquartus est cũ maior continet totum minorem : et eius quartam partem. Et si quintam cōtinet vocatur sesquiquintus. et ita deinceps fm numerorum seriem.
+Numerus suppartiens est cū maior continet in se totū minorem : et eius insup aliquot partes vt duas/tres/q̄ttuor aut quotquot attulerit ipsa cōparatio. De us partibus id intelligitur: que minoris vnam partem non efficiunt.
+Superbipartiens est cum maior continet minorem et duas eius partes.
+Supertripartiens est cum tres eius partes insuper continet.
+Superquadripartiens cum quattuor: et hoc pacto deinceps.
+
+<vocab>arithmetica, numerus par, numerus impar, numerus perfectus, ratio, sesquialter, sesquitertius</vocab>

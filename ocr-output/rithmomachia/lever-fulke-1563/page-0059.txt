@@ -1,0 +1,42 @@
+<language>English</language>
+<page-type>text</page-type>
+
+# The Philosophers game.
+
+## ¶ To finde the midle betwene the first and the last.
+
+Multiplie the first by the last , then
+double the producte , and deuide
+the whole by the first and the laste
+added together, the quotient is then the
+mydle number. As hauyng .6. and .12. I
+woulde knowe the mydle in Musicall
+proportion. First I multiplie one by the
+other, the product is .72. that doubled is
+144, this deuided by .18. which is the ad-
+dition, of .6. and 12. geueth the quotient
+8. so haue I .6. 8. 12. in musicall proporti-
+on: And thus must you worke to fynde
+out the thyrde in musicall proportion.
+But if you had rather playe then
+worke , this table folowing
+shall serue your
+torne.
+
+| | | |
+|---|---|---|
+| 3 | 4 | 6 |
+| 6 | 8 | 12 |
+| 12 | 16 | 24 |
+
+### ¶ A table
+
+<insert>
+the rule to fynde out y^e last numb^r 
+is by multiplieng y^e firste & second 
+togethir & thin deuyde y^e product 
+by y^e difference of y^e first & second 
+taken from the first number
+</insert>
+
+<vocab>The Philosophers game, Rythmomachia, Musicall proportion, harmonic mean, mathematical table</vocab>

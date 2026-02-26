@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>
+A series of mathematical diagrams and tables arranged in the left margin next to the corresponding text blocks.
+Top diagram (Prop. 40): A grid connecting numbers and letters. Row 1: 4 (c), 16 (f), 15 (k). Row 2: 3 (b), 9 (e), 8 (h). Row 3: 2 (a), 4 (d), 3 (g). Below them is a '1' labeled 'I'. Lines connect c-f-k, b-e-h, and a-d-g.
+Second diagram (Prop. 41): Lists of numbers in columns. Groups include (16, 15, 9, 8), (5, 4, 4, 3, 3, 2), and (4, 1, 3, 1, 2, 1, 1). Below are two specific numerical sets: "20 12 12 1" and "18 10 10 1".
+Third diagram (Prop. 42): A schematic with numbers 6, 5, 4, 3 on the left (f, e, d, o) connecting to 9, 7, 5 in the center and 5, 4, 3 on the right (c, b, a).
+Fourth diagram (Prop. 43): A grid with columns (5, 4, 3, 2 labeled d, c, b, a), (9, 7, 5, 3 labeled h, g, f, e), and (26, 17, 10, 5 labeled n, m, l, k).
+Fifth diagram (Prop. 44): A grid with columns (6, 5, 4, 3 labeled f, e, d, b), (35, 24, 15, 8 labeled g, h, i, l), and (11, 9, 7, 5 labeled k). A lone 'a' and '3' are at the bottom.
+</image-desc>
+
+<margin>40</margin>
+
+## ¶ Si ppositis ab vnitāte quadratis: nūeri eis vno minores sumātur: supparticulares ab illis dicte: pportionum ab vnitāte erunt differentie.
+
+¶ Sint vnitās: et numeri post ipsam a b c: et quadrati eorū d e f: et minores eis vno g h k. dico supparticulares denoiātas ab g/h/k que sint d ad g. e ad h. et f ad k: esse differentiās pportionum ab vnitāte sumptarum d ad g esse proportionem qua abundat dupla sup sesqualteram et e ad h esse qua abundat sesqualtera sup sesquitertiam: hūcqꝫ in modum ꝭsequēter. Nam p primam quūti differentiā qua abūdat a ad vnitātē. et b ad a est pportio q̃ fit ex pductis ā in se z vnitātis in b: sed a in se facit d quiquidē d est eius quadratus z vnitās in b per scōam z decimānonam primi q̃tum g. igitur pportio d ad g est differentiā pportionis a ad vnitātem z b ad a. et hac rōne ostēdetur pportiōem e ad h esse differentiām pportiōis b ad a et c ad b. et ita de quibuslibet cōsequēter. quod est propositum.
+
+<margin>41</margin>
+
+## ¶ Si ordinētur ꝭtinue multiplices z supparticulares: erit vt extremarū multiplicium quelibet due coniūcte minus sint q̃ media duplicata vel due medie coniūcte: supparticulares vero maiores.
+
+¶ Sint primo ꝭtinue multiplices a b c: dico cōpositām ex a z c minorem esse proportiōem q̃ pportio b duplicata. nam quia denominātes ꝭtinue equaliter se excedūt: ergo per scōam primi denoiāns b est medietas denoiāntiū a z c simul sumptorū. et p decimānonam eiusdē denoiāns b in se maiorem pducit numerum q̃ a in c. at p octauam huius b in se pducit equalē composite ex pportione b duplicata que per vicesimāscōam huius erit multiplex. et denoiāns a in denoiāntem c: pducit denoiāntem per idem mltiplicis ex a z c. igitur multiplex ex b duplicata: a maiore nūero denoiāta q̃ multipler ꝭposita ex a et c maiore est multiplice cōposita ex a z c. qđ est primum. Sint secūdo d e f ꝭtinue sumpte supparticulares quarū d sit maxima: z differentiē earū g z h. dico pportiōes d z f simul maiorem ꝭstituere proportiōem q̃ sit pportio e duplicata. nam qẕ per precedētem partes g denoiānt a minori numero et partes h ab maiori: nam a numeris cōtinuorū quadratorū vno minoribus. ergo per primam huius pportio g maior est pportiōe h. at d z f sunt tanq̃ e g z f. nam d per se t̄m est q̃tum e g. et e bis tanq̃ e f et h. et monstrata est e maior h. igitꝫ per quintam quinti erūt d z f maius q̃ e duplicata. et hoc modo facile idem p vtraqꝫ parte ostendas si due ponātur medie pportiōes. sicqꝫ cōcluditur propositum.
+
+<margin>42</margin>
+
+## ¶ Si impares post ternarium ꝭtinue sumpti: ad nūeros post binarium naturali serie ordinatos comparētur: eribunt suppartientes ꝭtinua denoiatiōe crescentes.
+
+¶ Sint a b c numeri post binarium cōtinue sumpti: et d e f sumpti cōtinue impares post ternarium. dico d ad a / e ad b / et f ad c suppartientes ꝭtinua denoiatiōe crescētes. nam cū differentiā imparium sit binarius d addit sup a binarium qui minor est eo vno. igitur d ad a est suppartiēs. et itez cum differentiā imparium sit binarius: et nūerorum ab vnitāte dispositorū differentiā sit vnitās: addet e sup b vno plus q̃ d sup a. sed et qꝫ e / f sunt continue impares: addet f sup c adhuc vno plus q̃ e sup b. crescunt igitur differentiē imparium sup nūeros ab vnitāte sumptos sicut z ipsi nūeri: ita qꝫ cōtinue precedēs est differentiā imparis sup sequētem. sed numeri vnitāte distātes sunt ꝭtra se primi. igitur differentiā q̃ est numerus precedētis ad sequētem numerorū ab vnitāte dispositorū: non est pars sequētis. est igitur p primam pmi eius ptes. erit igitꝫ pportio e ad b suppartiens / z f ad c suppartiēs. et qꝫ sue partes fm numerorū vnitāte dispositorū q̃titatem crescunt: erūt z eax ꝭtinue crescētes denoiatiōes: imo z quia denoiantur a numeris ꝭtra se primis z ꝭtinue pcedēt diuerse suppartientiū species. qđ est propositum.
+
+<margin>43</margin>
+
+## ¶ Si compositus ex primo pari z impari z qui ex reliquis imparibus eidem piūctis aggregātur: ad numeros a duobus dispositos comparētur: pveniēt diuerse multiplices supparticulares fm nūeros multiplicium z denoiationes partium siles habētes.
+
+¶ Sint a b c nūeri a binario ꝭtinue succedētes: sintqꝫ e / f / g / h nūeri a ternario ꝭsequēter impares sintqꝫ k compositus ex a z e primo pari z impari. et l compositus ex f z k. et m cōpositus ex g z l. et n ex h z m: dico k/l/m/n cōpatos ad a/b/c/d/ facere multiplices supparticulares fm nūerum multiplicitū z siles partium denoiationes. nam k ꝭponit ex a z e binario z ternario. at e addit sup a partem vnam ab ipso denoiatam scz vnam mediām seu sedām qđ idem valeat: ergo k compatus ad a bis ipm ꝭtinet et eius mediām et ad īpm est primus multiplex supparticularis. sed p decimānonam septimi f cōponitur ex a et b. et g ex b et c. et h ex c et d. et per septimā sexti quadratū cuiuslibet addit sup quadratū primi qđ ex ipsis cōponiť vt quadratum b sup quadratum a: q̃tum qđ cōponiť ex a z b. et quadratū c sup quadratum b q̃tum cōponiť ex b z c. et ita deinceps. et quia k addit quadratū a vnitatem: l similiter addet sup quadratum b: et m sup quadratum c: et n super quadratum d vnitatem. quare singuli eorū singulos illorū cōtinent fm se et partem p conceptiōem ab ipis dictam. erūt igitur ꝭsequēter fm ipsos: multiplices supparticulares. quod est propositum.
+
+<margin>44</margin>
+
+## ¶ Si duo pmi impares piūganť: cōpositoqꝫ reliqui ipares applicētur: erit vt ppo²- tiones cōpositorū ad nūeros post binarium sumptos sint diuerse multiplices suppartientes z ab eodem numero z partes numeratas z multiplices denoiatas habētes.
+
+¶ Sint duo primi ipares a z b: et cōpositꝰ sit c: sintqꝫ reliq̃ ipares d e f qui addāť ꝭposito c: sintqꝫ aggregati g/h/k/ et l/m/n/o / numeri ꝭtinue post binariū sūpti. dico c ad l / et g ad m / et h ad n / et k ad o diuersas eē multiplices suppartiētes z singulas ab eodem numero multiplices denoiatas z partes
+
+<vocab>proportio, quadratus, multiplex, supparticularis, numerus, binarium, ternarium, aggregatus, denoiatio, suppartiens</vocab>

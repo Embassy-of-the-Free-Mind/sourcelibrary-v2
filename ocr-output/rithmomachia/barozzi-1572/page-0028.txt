@@ -1,0 +1,24 @@
+<language>Italian</language>
+<page-type>diagram</page-type>
+<meta>The page depicts a Rithmomachia (the Philosopher's Game) board with pieces in their starting positions. Numbers on the dark (black) pieces are inverted relative to the top of the page. Heavy bleed-through of Italian text from the reverse side is visible.</meta>
+<warning>Significant ink bleed-through from the verso page obscuring parts of the diagram; the inverted text in the background is from the reverse and not part of this page's primary content.</warning>
+
+<image-desc>
+A game board for Rithmomachia, consisting of an 8x16 rectangular grid. The board features two sets of geometric pieces (dark/black and light/white) placed at opposite ends. Each piece contains a number.
+
+The dark pieces occupy the top four rows:
+- Row 1: Squares with numbers 361 and 225; followed by four empty squares; then Squares with 121 and 49.
+- Row 2: A tiered pyramid-shaped piece (composed of multiple squares); Square 120; then a series of triangles with numbers 64, 56, 30, 36, 66, and 28.
+- Row 3: Square 100; Triangles 90 and 15; Circles 64, 25, and 9; then Triangles 12 and 81.
+- Row 4: Two empty squares; four Circles with numbers 8, 6, 4, and 2; two empty squares.
+
+The light pieces occupy the bottom four rows:
+- Row 13: Two empty squares; four Circles with numbers 2, 4, 6, and 8; two empty squares.
+- Row 14: Triangles with numbers 9 and 6; Circles with 4, 16, 36, and 64; then Triangles with 72 and 81.
+- Row 15: Squares with numbers 15 and 45; Triangles with 20, 20, 42, and 49; a tiered pyramid-shaped piece; then Square 153.
+- Row 16: Squares with numbers 25 and 81; four empty squares; then Squares with 169 and 289.
+
+Faint, mirrored Italian text from the reverse side is visible across the entire grid, including phrases like "ordine della prima," "seconda, & terza," and "le bianche sono."
+</image-desc>
+
+<vocab>Rithmomachia, Philosopher's Game, geometric pieces, mathematical game, arithmetical proportions</vocab>

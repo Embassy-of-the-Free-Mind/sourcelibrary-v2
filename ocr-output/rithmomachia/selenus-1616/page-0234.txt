@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>204</page-num>
+<header>Das Ander Buch / 12. cap:</header>
+<meta>catchword: zu ver</meta>
+
+auf ſieben und dreyſſig/ nicht gezogen werde) der K. Schützen-Sol-
+daten/ auf ſechs und vierzig: Der Weiſſe/ der K. Reuter/ auf acht
+und zwanzig: und wird alſo/ ob Er ſchon/ einen Soldaten / minder
+hat/ wan Er ſich nuhr darein zu ſchicken weiß/ ſeine Steine / in ei-
+ner guten ordnung / den feind zu verletzen / geſetzet haben: Beym
+Gegentheil aber / ſeynd ſie faſt alle verſchloſſen. Wan nuhn der
+Schwartze/ (umb ſeinen Steinen luft zu machen) etwa der K.
+Soldaten/ auf den gedachten der W. K. Reuter/ auf ſieben und dreyſ-
+ſig/ rucket: ſo ziehet/ der Weiſſe/ denſelben / auf funf und vierzig /
+und beut Schach: Der Schwartze/ ſetzet den König/ auf drey und
+funfzig/ oder/ auf ein und ſechſſzig: Der Weiſſe/ nimt / der S. K.
+Schützen / mit der K. Reuter: Der Schwartze/ denſelben / mit
+dem Könige: Der Weiſſe/ rucket/ des K. Reuters-Soldaten / auf
+ſecho und zwanzig / und erlanget des S. K. Reuter / mit gewalt:
+Ziehet folgendes/ der K. Soldaten/ auf neun = oder ein und zwanzig:
+und wird ſeine Schützen/ ferner wol zu felde bringen.
+
+<margin>4. 5.</margin> Wan aber der Schwartze/ nicht die Königin / auf 52. (n. 3.)
+beſondern des K. Reuter/ auf drey und dreyſſig/ ziehet: * ſo rucket/
+der Weiſſe/ auf denſelben / des K. Reuters = Soldaten/ auf ſechs und
+zwanzig/ (dofern es auffgedinget) für des S. K. Soldaten / über /
+und erleget den S. Reuter/ mit gewalt.
+
+<margin>6.</margin> Wan aber der Weiſſe/ (ſo fern man ſchlagen / und nicht für-
+bey ziehen muß) nicht des Reuters auf 26. (n. 5.) beſondern/ der K.
+Soldaten/ auf neun und zwanzig/ ziehet: ſo rucket / der Schwar-
+tze/ (umb des K. Soldaten / gegen der W. K. Schützen / ferner zu ver-
+thetigen) des K. Reuters = Soldaten / auf vier und dreyſſig: Der
+Weiſſe/ des K. Reuter/ auf dreyzehen/ und öffnet ſeiner Königin/ auf
+des S. K. Reuter/ den Paß: Der Schwartze/ ziehet denſelben /
+auf funfzig: Der Weiſſe/ des K. Reuter / (umb der K. Schützen /
+den Paß wider zu eröffnen) auf acht und zwanzig: Der Schwar-
+tze/ (zu verhindern / daß des W. K. Reuter / auf drey und vierzig /
+keinen Schach = gebe) des K. Schützen/ auf zwey und funfzig: Der
+Weiſſe/ (umb des Andern vorhaben / zu hintertreiben) des K. Ro-
+chens = Soldaten/ auf funf und zwanzig: Der Schwartze/ (umb/
+zu beſchützen/ ſeines K. und deſſen Reuters = Soldaten) dieſen Reu-
+ter/ auf vier und vierzig: Der Weiſſe/ auf denſelben / der K. Sol-
+daten / auf ſieben und dreyſſig: Der Schwartze/ denſelben / auf
+des W. K. Reuter/ auf acht und dreyſſig: Der Weiſſe/ (denſelben
+zu ver
+
+<vocab>Schach, Reuter, Schützen, Soldaten, Königin, König, Rochens-Soldaten</vocab>

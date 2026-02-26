@@ -1,0 +1,20 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>23</page-num>
+<header>DES PHILOSOPHES.</header>
+
+*ameine à la base de la pyramide parfaicte : car la racine d'icelle est .6 . laquelle pyramide parfaicte apres ne s'arreste point & ne finit point en .4. ains poursuit & conduict ses nombres au trine & vng, aussi le moyen & modestie tenue parmy les choses terrestres, non seulement nous adresse à perfection: ains est la racine mesme de la base de perfection par laquelle apres ne nous arrestons au quaternaire elemētaire: ains paruenons aysement à l'vnion du trine & vng.*
+
+## Aultre sorte de disposition pour aisement trouuer les nombres :
+
+->Et, Premierement.<-
+
+### Pour trouuer les requis des multiplices.
+
+Mvltiplcie (comme dessus auons dict) les requerants en chacun par soy, & ayras les requis multiplices comme .2. foys .2. font . 4. et ainsi des aultres.
+
+### Pour trouuer les requis superparticuliers
+
+Adiouste vne vnité d'vng chacun de ceulx du premier ordre qui font les requerants
+
+<vocab>pyramide parfaicte, trine & vng, quaternaire elemētaire, multiplices, superparticuliers, requerants</vocab>

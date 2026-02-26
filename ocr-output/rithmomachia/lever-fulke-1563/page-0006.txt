@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>preface</page-type>
+<header>THE EPISTLE</header>
+<meta>catchword: VVherby</meta>
+
+But novv in stead of pleasant mirth,
+great passions do arise:
+In stead of recreation novv,
+reuengings vve practise.
+
+In stead of loue and amitie,
+long discords do appeare:
+In stead of trueth and quietnes,
+great othes and lyes vve heare.
+
+In stead of frendship, falshode novv,
+mixed vvith cruell hate:
+VVefinde to be in playes & games,
+vvhich dayly cause debate.
+
+Pithagoras therfore I saye,
+to make redresse herein:
+Inuented first this godly game,
+therby to flye from sinne.
+
+Since vvhich time it continued hath,
+in Frenche & Latin eke:
+Still exercisde vvith learned men,
+their comforts so to seeke.
+
+<vocab>Pithagoras, Frenche, Latin, amitie, passions, recreation, godly game</vocab>

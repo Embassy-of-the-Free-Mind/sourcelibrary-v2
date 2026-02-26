@@ -1,0 +1,10 @@
+<warning>Significant bleed-through from the reverse side of the page creates mirrored text overlays that may obscure the primary content.</warning>
+
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>E</sig>
+
+If anye of the kynges quadrates be taken, he maye redeme it by anye of his men hauing the same number, and muste remoue into hys place, whiche redemed hym . But yf he haue none of the same number, he maye redeme hym for anye man of hys, that his aduersarye wyll chuse, and lykewyse remoue into hys place by whome he is redemed.
+
+<vocab>kynges, quadrates, redeme, aduersarye, Philosophers game</vocab>

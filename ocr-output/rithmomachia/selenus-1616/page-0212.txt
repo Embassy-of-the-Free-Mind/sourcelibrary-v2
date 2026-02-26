@@ -1,0 +1,117 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>182</page-num>
+
+<margin>
+8. cap:
+Das Ander Buch
+</margin>
+
+### n. 2. 9. 16
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | 46 | SS | | 43 | | |
+| | | SS | | SS | | | |
+| | | WS | | WS | | | |
+| | | WS | | | | | |
+| WS | WS | | WS | W& | WS | WS | WS |
+| WR | WR | WS | | WK | | WR | WR |
+
+### n. 4. 5.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | | | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | SR | SS | | | | |
+| | | | | | | | S& |
+| | | WS | WS | WS | | SR | |
+| | | WS | | | | WR | |
+| WS | WS | | WS | | | W& | WS |
+| WR | WR | | | WK | | | |
+
+### n. 10. 15.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | | 58 | SR |
+| SS | SS | SS | 53 | | SS | | SS |
+| | | | SS | | SR | | |
+| | | | | | | WS | |
+| | | WS | | WS | | | |
+| | | WS | WS | | | | |
+| WS | WS | | | | | | W& |
+| WR | WR | | | WK | | WR | |
+
+### n. 17. 18.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | | SR | SR |
+| SS | SS | | | | SS | SS | SS |
+| | 47 | SS | SS | | | | |
+| | | SS | | | | | |
+| | | WS | WS | WS | SS | 26 | S& |
+| | | WS | | | | | |
+| WS | WS | | | W& | | WS | WS |
+| WR | WR | WS | WK | | | WR | WR |
+
+<column-break/>
+
+### n. 3. 6.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | S& | SK | | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | SR | SS | | | | |
+| | | SS | | SS | | | |
+| | | WS | | WS | WS | | |
+| | | WS | | | | | |
+| WS | WS | | WS | W& | | WS | WS |
+| WR | WR | WS | | WK | | WR | WR |
+
+### n. 7. 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | S& | SK | | SR | SR |
+| SS | SS | SS | | | SS | | SS |
+| | | SR | SS | | | | 41 |
+| | | SS | | | 36 | | WR |
+| | | WS | | WS | SS | SS | WS |
+| | | WS | | | | | |
+| WS | WS | | WS | W& | | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+### n. 13. 14.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | 59 | SR | |
+| SS | SS | SS | 53 | | SS | | SS |
+| | | | | | SR | | |
+| | | | | W& | | WS | |
+| | | WS | | | | | |
+| | | WS | WS | | | | |
+| WS | WS | | | | | | |
+| WR | WR | | | WK | | WR | |
+
+### n. 19. 20.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | | | SR |
+| SS | SS | | | | SS | SS | SS |
+| | | SS | SS | SS | | SR | |
+| | | | | | | | |
+| | | WS | WS | WS | SS | | |
+| | | WS | | | WR | S& | WS |
+| WS | WS | | WR | W& | | WS | |
+| WR | | WS | WK | 4 | 3 | | WR |
+
+<vocab>weaving pattern, technical draft, grid notation, Weberbuch</vocab>

@@ -1,0 +1,25 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>9</page-num>
+<meta>catchword: Fatta</meta>
+
+taſi il primo tondo bianco, che è il 2: & dopò quello im-
+mediatamente il 4 uerſo la parte anterior del tauoliero: &
+dopò il 4, mettaſi il 6: & dopò il 6, l'8. ſotto alliquali 4 pri
+mi tondi bianchi metterai li altri 4 ſecondi bianchi tondi
+ſecondo l'ordine, che tu ſeruaui nel produr li lor numeri,
+cioè ſotto al 2, il 4: ſotto al 4, il 16: ſotto al 6, il 36: & ſotto al
+8, il 64. Poi ſotto à queſti metterai li 4 primi triangoli
+bianchi, & ſotto à queſti li 4 ſecondi, & ſotto à queſti li 4
+primi quadrati bianchi. Et finalmente ſotto à queſti, li 4
+altri quadrati ſecondi ſeruando ſempre in tutti l'ordine,
+che tu teneui nel produr li loro numeri. Et il medeſimo
+ſi farà delli pezzi neri nell'altra bãda del tauoliero. Auuer
+tẽdo di metter le due pyramidi in quelli luoghi, che anda
+rebbono li dui quadrati inſcritti di quelli numeri, che han
+no le pyramidi ſotto le loro baſi, come chiaramente ſi può
+uedere nella ſeguente figura.
+
+<image-desc>A diagram illustrating the setup of a board game, likely Rithmomachia. It features a rectangular grid. On the right half of the grid, multiple rows of geometric game pieces are arranged. Starting from the top, there are two rows of circular pieces (tondi), followed by two rows of triangular pieces (triangoli), and ending with two rows of square pieces (quadrati). Each piece contains a number (such as 2, 4, 6, 8, 16, 36, 64, etc.). The bottom row includes more complex square pieces which represent the "pyramidi" (pyramids) described in the text.</image-desc>
+
+<vocab>Rithmomachia, tauoliero, tondi, triangoli, quadrati, pyramidi</vocab>

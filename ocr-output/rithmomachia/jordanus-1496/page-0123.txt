@@ -1,0 +1,41 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>IIII</page-num>
+<sig>b 4</sig>
+<meta>
+catchword: transire
+</meta>
+
+¶ Sint numeri a b c d e f g h k l m n o p q in primo loco cōstituti numeri pētadecachordi diatonici per octauam huius reperti. pono iterum a b e h k n q in secūdo loco: in respōdentibus locis rursum c in secūdo loco transmuto ad d 7 f ad g: l ad m et o ad p. quibus ita in secundo loco dispositis: ex ipsis quidem in secundo loco capio differentiam b d: et eius medietatem adiicio ad b et fiat c. similiter differentiā e g et medietatem addo ad g 7 fiat f. et differentiām k m 7 medietate differentiæ adiecta ad m fiat l. et differentiam n p 7 medietate adiecta ad p fiat o. dico a b c d e f g h k l m n o p q numeros secundo loco positos esse numeros pentadecachordi enarmonici. Nam a b erit tonus. b c | 7 c d duē dieses cōstituentes semitoniū minus b d. quod enī est b c in diatonico factum est b d in enarmonico et d e est ditonus. Nam quōd est in diatonico c e est hic in enarmonico d e. at diatonice modulationis c e ditonus est. Nam cōtinens c d tonū et d e tonum. 7 hoc pacto reperiētūr e f g due dieses 7 g h diton⁹. h k tonus: k l m due dieses: m n ditonus. n o p due dieses: p q ditonus Sunt itaq; collecti numeri pentadecachordi enarmonici quēadmodum propositum fuerat. quod est propositum.
+
+<margin>17</margin> ¶ QUod diatonici parhypate hypaton: in enarmonica modulatione transit in lichanon: et parhypate meson in lichanon meson atq; trite in paranetas.
+
+¶ Id prospici statim promptū est. Nam in diatonico pētadecachordo a proslābanomeno ad hypatē hypaton incidit tonus. et ab hypate ad parhypaten hypaton semitoniū minus. in enarmonico vero a proslābanomeno ad hypaten hypaton similiter incidit tonus. et ab hypate ad lichanon hypaton semitoniū minus. diatonica igitur parhypate: in enarmonica modulatione permutatur: transitq; in lichanon. et hoc pacto de reliquis ostēdatur. quod 7 facile sensu deprēhēdetur: si in utroq; emodulādī genere 7 diatonico et enarmonico proslābanomeni ponantur unisoni. tunc enī manifestū erit huius lichanos: illius parhypatis esse equisonos: unisonosq;: pariter et huius paranetas: illius tritis esse equisonas.
+
+<margin>18</margin> ¶ Consentiunt in tribus modulationū generibus: proslābanomeni / hypate principales / hypate medie / mese / paramese / nete / cum disiuncte / tum coniuncte / atq; excellētibus netis excellētes.
+
+¶ Nam in tribus generibus per quartā / quintam / sextam / septimā / decimam / undecimā / duodecimā et quintādecimam huius proslābanomeni ad hypatas hypaton sonant tonum. et iidem ad hypatas meson sonant diapente. ad mesas diapason. ad netas disiūctas sonant diapason ac diapēte. ad netas autem cōiunctas dempto tono sonarent diapason ac diatessaron. et ad netas excellētes: cōsonant ubi libet proslāmbanomeni bis diapason. cōsentiunt igitur in tribus generibus quæ adducte sunt voculæ. quod est propositum.
+
+<margin>19</margin> ¶ Quæ chordæ mobiles quæque imobiles in pētadecachordis existant: inuestigare.
+
+| | | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| Proslambanomeni | a | Stabiles | | |
+| Hypate hypaton | b | Stabiles | | |
+| Parhypate hypaton | c | Instabiles | | |
+| Lichani hypaton | d | Instabiles | | |
+| Hypate meson | e | Stabiles | | |
+| Parhypate meson | f | Instabiles | | |
+| Lichani meson | g | Instabiles | | |
+| Mese | h | Stabiles | | |
+| Paramese diezeugmenon | k | Stabiles | Trite synezeugmenon. | Instabiles |
+| Trite diezeugmenon | l | Instabiles | Paranete synezeugmenon. | Instabiles |
+| Paranete diezeugmenon | m | Instabiles | Nete synezeugmenō. | Stabiles |
+| Nete diezeugmenon | n | Stabiles | | |
+| Trite hyperboleon | o | Instabiles | | |
+| Paranete hyperboleon | p | Instabiles | | |
+| Nete hyperboleon | q | Stabiles | | |
+
+¶ Chordas stabiles imobilesq; vocamus: quæ in omni pentadecachordū diuisione: eandem seruant interualla: eandēq; ad proslābanomenon habitudinem. Instabiles vero atq; mobiles: quæ id nō seruant. sic ergo stabiles ac instabiles reperiemus. cum enim per prēcedentem in tribus generibus consentiant proslābanomeni: prīcipales hypate: medie hypatæ: mese: paramese: nete tum synezeugmene tum diezeugmene ac hyperbolee: ex eadem ut ex demonstratis iam patet seruant interualla. erunt ergo proslambanomenos hypate hypaton: hypate meson: mese: paramese nete synezeugmenon: nete diezeugmenon: et nete hyperboleon: simpliciter immobiles atq; firme. Sed cum decimaseptima huius monstrauerit parhypatas diatonice modulationis: in enarmonico meso transire
+
+<vocab>pentadecachord, diatonic, enharmonic, proslambanomenos, hypate hypaton, parhypate hypaton, lichanos, meson, mese, paramese, trite, paranete, nete, diezeugmenon, synezeugmenon, hyperboleon, stabiles, instabiles</vocab>

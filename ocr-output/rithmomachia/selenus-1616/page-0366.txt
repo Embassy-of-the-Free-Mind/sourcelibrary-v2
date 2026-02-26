@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>332</page-num>
+<header>Das Dritte Buch / 6. cap:</header>
+
+tzens: Soldaten / und ziehet ihn / nochmaln / auf des W. K. Schü-
+tzen: Der Weisse / beut / mit demselben / auß neun und dreyßig /
+Schach: Der Schwarze / bedecket den König / mit der K. Schü-
+<margin>3.</margin> tzen / auf drey und funfzig: * Der Weisse / nimt ihn / mit sei-
+nes K. Schützen / und beut Schach: Der Schwarze / nimt den-
+selben / mit der K. Reuter / und verthetiget zu gleich / des K. Sol-
+daten: Der Weisse / ziehet / die Königin / auf der S. K. Schü-
+tzens- und Reuters- Soldaten / auf drey und zwantzig: Der
+Schwarze / des K. Soldaten / auf des W. K. Reuter / auf acht
+und zwantzig: Der Weisse / denselben / auf neun und zwantzig:
+Der Schwarze / (umb / der K. Schützens- und Reuters- Sol-
+daten / zu beschützen) dero Reuter / auf die W. Königin / auf acht
+und dreyßig: Der Weisse / beut / mit der Königin / auß neun und
+dreyßig / Schach: Der Schwarze / bedecket den König / mit sei-
+ner Königin / auf drey und funfzig: Der Weisse / nimt sie / mit
+seiner Königin / und beut Schach: Der Schwarze / nimt diesel-
+be / mit dem Könige / und nicht / mit der K. Reuter: dan Er / den-
+selben / (umb / des Andern Steine / dadurch einzusperren / und sein
+Spiel / zu verbessern) mit mehrem nutzen / auf ein und zwantzig /
+folgendes ziehen kan.
+<margin>4.</margin> Nimt aber der Weisse / nicht den S. Schützen / mit seinem
+Schützen / (n. 3.) besondern ziehet / (umb / denselben zu beschützen)
+die Königin / auf der S. K. Schützens- Soldaten / auf drey und
+zwantzig: so nimt / der Schwarze / mit seiner K. Schützen / des
+W. K. Schützen: Der Weisse / denselben / mit der Königin /
+rucket sie / auf der S. K. Reuters- Soldaten / und beut Schach:
+Der Schwarze / (umb / denselben zu entsetzen) bedecket den
+<margin>5.</margin> König / mit der Königin / auf drey und funfzig: * Der Weisse /
+nimt dieselbe / mit seiner Königin / und beut Schach: Der
+Schwarze / raubet dieselbe / mit der K. Reuter / und verhütet sei-
+nes K. Soldaten.
+<margin>6.</margin> Nimt aber der Weisse / nicht die S. Königin / (n. 5.) beson-
+dern / spielet seine Königin / auf des S. K. Soldaten / auf zwelfe:
+so setzet / der Schwarze / (umb / denselben zu behüten) des K.
+Schützens- Soldaten / (welches dan zum besten ist) auf drey und
+vierzig: Stellet Er aber / des K. Soldaten / auf des W. K. Reu-
+ter / auf acht und zwantzig: so ziehet / der Weisse / denselben / auf
+<margin>7.</margin> die S. Königin / auf sechs und dreyßig: * Der Schwarze / auf
+denselben /
+
+<vocab>Schach, König, Königin, Schützen, Reuter, Soldaten, Weisse, Schwarze, beut, zwantzig, dreyßig, funfzig</vocab>

@@ -1,0 +1,36 @@
+<language>Latin</language>
+<page-type>preface</page-type>
+<sig>a ij</sig>
+
+->### Jacobus Stapulensis Jacobo Labinio & Jacobo Turbelino Musicis: suis charissimis præceptoribus.<-
+
+Quod inter oratorem atq[ue] rhetora: id inter cantorem & musicum interesse volunt: neq[ue] oratorem quemq[ua]m dici mereri qui idem rhetor non sit. ita vestrum semper iudicium fuit: vt ne cantor quide[m] dici mercatur unq[uam]: qui idem musicus non fuerit: pulchræ mimos/et hystriones a cantorum honesto cetu sequestrātes tanq[uam] Epicureos a sobria mensa/castoq[ue] philosophorũ dogmate. nec iniuria nam Homerus diuinus Poeta ubiq[ue] doctum et scria modulatū introducit cantorem vt apud Odysseam vbi Penelope Phemiū Fidicinē ad neruos verba mouẽtem his verbis allocutam effingit.
+
+> Præterea illachrimans diuum est affata canentem
+> Phemi multa tenes hominum mulcentia pectus
+> Facta hominum atq[ue] deum: et que laudẽ autoribus addunt.
+> Ex iis pange aliquid.
+
+Et quales Homerus probat: vos minime tales esse dubito vt qui dudū a vobis p[ro]pria musices rudimenta perceperim. Quapropter ad vos nostros labores examinandos cõmitto. quos eo libentius me suscepisse fateor: quo musicalẽ scientiā neq[ue] apud grecos neq[ue] latinos quide[m] vnq[uam] elementis traditam esse legerī: at introductiones p[lu]rimas inter quas ca omniū nobilissima est quam diuus Seuerinus Boecius sui monumentū reliquit. quem vnū in hac re præsertī delegi meorū studiorū ducē. Si ergo probaueritis satis michi est. In re enim nostra malumus aliorū iudicia sequi: q[uam] p[ro]pria probare. Valete.
+
+| Antiqui qui de musica scripserunt | | Insignes ex recentiorib[us] qui de eadē scripsere. |
+|-----------------------------------|---|---------------------------------------------------|
+| Democritus | Plato | Albinus |
+| Heraclides ponticus | Aristoteles | Diuus Seuerinus |
+| Thimotheus milesius | Theophrastus | Basilius |
+| Philolaus Pythagoricus | Nichomachus | Hylarius |
+| Architas tarentinus | Aristoxenus | Augustinus |
+| Duo Theodori | Ptolomeus | Ambrosius |
+| Xanthus atheniensis | | Bclasius. |
+
+### Argumentum quattuor librorū musices.
+
+Primus liber interualla musicis modulationibus acõmoda discutit. multiplex: duplare/triplare/quadruplare. superparticulare: sesquialter/sesquitertiũ/sesquioctauũ/ bis sesquioctauũ/ter sesquioctauũ/quater sesquioctauũ/quinq[ue] series sesquioctauũ
+
+Secundus de tono/integro toni dimidio/semitonio minore/semitonio maiore/comate/schismate/atq[ue] diaschismate.
+
+Tertius de sesquitono/ditono diatessarũ/diapente/diapente & tono/diapason/diapason & trisemitonio/diapason et ditono/diapason et diatessarũ/diapason & diapẽte/ diapason diapente & tono/bisdiapason/ac integro toni & cõsonantiarũ oĩm dimidio. Et de maximarum harmoniarum consonantijs: et quarundā medietatum.
+
+Quartus de monochordo/tetrachordo/pentachordo/heptachordo/octochordo/ pentadeccachordo/diatonicis/chromaticis/enarmonicis melodiis. Et de melodiariũ modis. et hec sub breuitate contracta: argumentū libri sunto.
+
+<vocab>Jacques Lefèvre d'Étaples, music theory, Boethius, Homer, Odyssey, interval ratios, sesquialtera, sesquitertia, monochord, tetrachord</vocab>

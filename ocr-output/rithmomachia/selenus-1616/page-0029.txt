@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>title-page</page-type>
+
+<image-desc>The title text is framed within a detailed architectural engraving. At the top, two putti flank a square chessboard; the putto on the left holds a small lidded vessel. On the left side of the frame, a bearded man in scholarly robes stands on a pedestal, holding a book. On the right side, a man in royal or oriental costume (turban, armor, boots, and cloak) stands on a pedestal. At the bottom of the page is a decorative cartouche with scrolled ornaments and a shell motif at the base.</image-desc>
+
+### Das
+# Erste Buch/
+## der Beschrei-
+## bung/ des Schach-
+## Spieles.
+
+<insert>
+Monasterij Wessobrunnen,
+sis.
+</insert>
+
+<margin>Xerxes Philomater.</margin>
+<margin>Amilinus Evilmerodoch.</margin>
+
+---
+
+->Prostat apud Henningum Grossium Juniorem.<-
+
+<vocab>Erste Buch, Beschreibung, Schach-Spieles, Monasterij Wessobrunnensis, Xerxes Philomater, Amilinus Evilmerodoch, Henningus Grossius Junior</vocab>

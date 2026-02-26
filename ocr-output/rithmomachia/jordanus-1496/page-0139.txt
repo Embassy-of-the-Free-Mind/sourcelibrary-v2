@@ -1,0 +1,61 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>14</page-num>
+
+14 Altera parte longiores continue alternatim quadratis interiecti: ad quadratos habi-
+tudinũ similitudine: non autem differentiarũ seruant. Contra vero intercepti qua
+drati ad altera parte longiores relati: continue differentiarũ equalitatẽ: non autẽ
+proportionũ retinent, obseruantqʒ similitudinẽ
+15 Alternati constitutis altera parte longioribus atqʒ quadratis: a binario differentiæ du
+plantur et adinuicẽ eandẽ que ⁊ totorũ est inter se: seruant habitudinẽ.
+
+### Py ra mi dis pro pri e ta tes
+
+1 Omnis pyramis ex aliqua numeroꝝ multangula figura: cui oēs congenee, similesqʒ
+figuræ superponātur: consurgit.
+2 Cuiuslibet pyramidis basis est multanguloꝝ numeroꝝ in pyramidis structurã apta
+totum maximus
+3 Pyramis trigona ex continue trigonis ad vnitatẽ vsqʒ supra seinuicẽ erectis gignit̃.
+4 Et tetragona ex tetragonis et penthagona ex pēthagonis/ hexagona ex hexagonis
+hoc pacto supra seinuicē erectis et ita deinceps.
+
+### Cu bi pro pri e ta tes
+
+1 Cubi producentur omnes si dispositis naturaliter post vnitatẽ imparibus duo primi
+coniūgantur. post quos alij tres. post quos quattuor. et hoc pacto cõsequẽter.
+2 Numeri cubi duabus eiusdẽ proportionis medietatibus iungūtur.
+3 Si cubus cubum multiplicet: cubi forma conficitur.
+4 Si cubus altera parte longiorẽ numeret: nunq̃ nascetur cubus.
+
+### Me di e ta tis A rith me ti ce pro pri e ta tes
+
+1 Medietas Arithmetica suoꝝ terminoꝝ semper proportionũ dissimilitudinẽ gerit
+2 Medietas Arithmetica cõtinue nascetur si naturalis numeroꝝ series indiscontinuata
+protrahatur. Similiter et numeris hoc modo digestis si simili intercapedine abin-
+uicem distantes: continue accapiātur. Quo fit vt pares: naturaliter sese cõsequẽtes
+itidē et impares hanc medietatis normam inuiolabiliter seruẽt.
+3 Arithmetice medietatis coniuncte medius terminus extremoꝝ simul iunctoꝝ est
+medietas.
+4 Arithmetice medietatis disiuncte extremi simul iuncti collectis/ coniunctisqʒ mediis
+adequantur.
+5 Eiusdẽ medietatis vt termini ad seipsos: ita differentiæ ad differentias.
+6 Medietas Arithmetica cõiuncta: sub extremitatibus minus continet eo numero qui
+ex medietate conficitur quantũ possunt sub se due differentiæ que inter ipsos sunt
+terminos constitutæ.
+7 Disiuncta vero tanto minus sub extremitatibus cõtinet eo qui cõtinetur sub mediis:
+quantum est quod fit ex differentia maximi ad vnum medioꝝ in differentiã medij
+eiusdem ad minimum.
+8 huius medietatis quotcunqʒ cõtinue dispositoꝝ numeroꝝ minores tẽmini maiores
+proportiones: maiores vero: minores proportionũ habitudines cõtinue seruāt.
+9 Arithmeticæ medietatis determinatoy extremoꝝ medius reperitur numerus: si ex-
+tremoꝝ coniunctoꝝ medietas accipitur.
+
+### Ge o me tri ce me di e ta tis pro pri e ta tes.
+
+1 Geometricę medietatis quoꝝcunqʒ terminoꝝ continue dispositoꝝ et maioꝝ et
+minoꝝ terminoꝝ equales sunt proportionũ habitudines.
+2 Geometrica medietas fuoꝝ terminoꝝ conuersam seruat proportionalitatẽ vt semp
+si primus ad secundũ quẽadmodũ secundus ad tertiũ: ita ecõuerso tertius ad scdʒ
+vt secundus ad primũ quod ⁊ in disiūcta medietate sĩliter euenire cognoscat.
+
+<vocab>pyramis, cubus, medietas arithmetica, medietas geometrica, habitudo, proportio, multangula figura, arithmeticę medietatis, geometricę medietatis</vocab>

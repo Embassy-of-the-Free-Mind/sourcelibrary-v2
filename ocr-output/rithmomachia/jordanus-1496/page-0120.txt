@@ -1,0 +1,73 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>ab</sig>
+
+# ¶ Chromaticum principalium tetrachordorum: constituere.
+<page-num>10</page-num>
+
+| | | | |
+| :--- | :---: | :--- | :---: |
+| Proslambanomenos | A | | A |
+| Hypate hypaton | b | Tonus | b |
+| Parhypate hypaton | c | Semi. minus | c |
+| Lichanos hypaton | d | Apotome | d |
+| Hypate meson | e | Trisemitonium | e |
+
+¶ Chromata apud Lachedemonios induxit olim Timotheus milesius molliorē cātum superiore dia-
+tonico: in quo canendi modo hic tetrachordū hypaton querimus. Sit ergo b c d e tetrachordū ad hy-
+patas in chromatic melo ōstituendas assignatū. prepono chordā a: que sit proslambanomenos: quā
+facio sesquioctauā ad b hypaten hypaton primam tetrachordi cōstituendi chordam: deinde facio a
+sesqualterā ad e hyppaten meson: eritqꝫ ut in omnibus a ad b tonus / et a ad e diapente. deinde facio b
+ad c semitoniū minus et b ad d tonum. erit ergo c ad d apotome. ⁊ qꝫ per decimā tertiā dēpro a b tono
+ab a e cōsonantia diapente: relinquitur diatessaron. ergo b e modulabitur diatessaron. Sed cum per
+sextā tertij diatessaron ex duobus tonis et semitonio minore constet ⁊ b c et c d simul sint tonus: ergo
+d e continet tonum et semitoniū minus. est igitur d e trisemitoniū. Cum ergo b c hyppate hypaton et
+parhypate hypaton sit semitoniū minus. ⁊ c d parhypate hypaton ⁊ lichanos hypaton sit semitoniū
+maius et d e lichanos hypaton ⁊ hypate meson trisemitoniū ut mōstratum est. constat ergo ꝑ diffini-
+tionē tetrachordū b c d e in gñe chromatico eē ōstitutū. idē enī trisemitoniū et trihemitoniū dicimꝰ.
+
+# ¶ Chromaticum tetrachordum meson: subiungere.
+<page-num>11</page-num>
+
+| | | | |
+| :--- | :---: | :--- | :---: |
+| Proslambanomenos | A | | A |
+| Hypate hypaton | b | Tonus | b |
+| Parhypate hypaton | c | Semi. minus | c |
+| Lichanos hypaton | d | Apotome | d |
+| Hypate meson | e | Trisemitoniū | e |
+| Parhypate meson | f | Semi. minus | f |
+| Lichanos meson | g | Apotome | g |
+| Mese | h | Trisemitoniū | h |
+
+¶ Sint pro tetrachordo meson in gñe chromatico ōstituēdo e f g h: facio a ad h duplā et concinētem
+diapason. ⁊ e ad f semitoniū minus ⁊ idē e ad g facio tonū. erit gꝫ f ad g apotome. sed cū a ad e mōstra-
+ta sit ōsonātia diapente. ea igitur subtracta ab a h cōsonantia diapason: per vicesimasecūdā tertij reli-
+quitur diatessarō. Est ergo e ad h hypate meson ad mesen diatessaron. ⁊ cum diatessaron duos tonos
+et semitoniū minus impleat: ⁊ e g sit tonus ergo g h cōtinet tonum et semitoniū minus. erit ergo g h tri-
+semitoniū. erit igitur e f g h ex duobus semitoniis e f ⁊ f g: et trisemitonio g h constitutum in genere
+chromatico tetrachordum. quod erat monstradum.
+
+# ¶ Reliqua duo tetrachorda: in eodem genere predictis adiicere. et in pētadeccachor-
+# do consonantiam bis diapason collocare.
+<page-num>12</page-num>
+
+| | | | | |
+| :--- | :---: | :--- | :--- | :---: |
+| Proslambanomenos | A | | | A |
+| Hypate hypaton | b | Tonus | | b |
+| Parhypate hypaton | c | Semi. min⁹ | | c |
+| Lichanos hypaton | d | Apotome | | d |
+| Hypate meson | e | Trisemitoniū | | e |
+| Parhypate meson | f | Semi. minus | | f |
+| Lichanos meson | g | Apotome | | g |
+| Mese | h | Trisemitoniū | | h |
+| Paramese diezeugmenon | k | Tonus | Trite syn. Semi. minus | k |
+| Trite diezeugmenon | l | Semi. mi. | Paranete syn. Apotome | l |
+| Paranete diezeugmenon | m | Apotome | Nete syn. Trisemitoniū | m |
+| Nete diezeugmenon | n | Trisemitoniū | | n |
+| Trite hyperboleon | o | Semi. minus | | o |
+| Paranete hyperboleon | p | Apotome | | p |
+| Nete hyperboleon | q | Trisemitoniū | | q |
+
+<vocab>tetrachordum, chromaticum, hypaton, meson, diezeugmenon, hyperboleon, proslambanomenos, Timotheus milesius, Lachedemonios, diapason, diapente, diatessaron, trisemitonium, apotome</vocab>

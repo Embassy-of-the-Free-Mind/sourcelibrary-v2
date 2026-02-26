@@ -1,0 +1,21 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>B.i.</sig>
+<warning>The lower half of the page is heavily obscured by show-through (mirrored text) from the verso side. While some right-reading fragments are visible, they are largely illegible against the background noise.</warning>
+
+| Fourth | <unclear>sixt</unclear> | eight | tenth |
+| :--- | :--- | :--- | :--- |
+| 7. | 11. | 15. | 19. |
+| 28. | 66. | 120. | 190. |
+
+<image-desc>A woodcut diagram of a rectangular grid with two rows and four columns. The cells have a black background with light-colored numerals. Top row: 28, 66, 120, 190. Bottom row: 49, 121, 225, 361.</image-desc>
+
+| Supertri- | supquin. | supsep. | supnon- |
+| :--- | :--- | :--- | :--- |
+| partiens. | tuparties. | tupartiens. | partiens. |
+| quartas. | septimas. | octauas. | decimas. |
+
+->sextas.<-
+
+<vocab>The Philosophers game, Rythmomachia, proportions, Supertripartiens, supquin, supsep, supnon, quartas, septimas, octauas, decimas, sextas</vocab>

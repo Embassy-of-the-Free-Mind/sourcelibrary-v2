@@ -1,0 +1,39 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>21</page-num>
+<header>Tauola de tutti li numeri che in queſto giuoco ſi poſſono uincer col partire</header>
+
+| **Bianchi contra Neri** | | | **Neri contra Bianchi** | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 6 | 2 | 3 | 12 | 3 | 4 |
+| 9 | 3 | 3 | 12 | 2 | 6 |
+| 15 | 5 | 3 | 12 | 6 | 2 |
+| 15 | 3 | 5 | 16 | 4 | 4 |
+| 20 | 4 | 5 | 16 | 2 | 8 |
+| 25 | 5 | 5 | 16 | 8 | 2 |
+| 36 | 4 | 9 | 30 | 5 | 6 |
+| 36 | 3 | 12 | 30 | 2 | 15 |
+| 36 | 12 | 3 | 28 | 7 | 4 |
+| 42 | 14 | 3 | 36 | 4 | 9 |
+| 45 | 5 | 9 | 36 | 9 | 4 |
+| 45 | 9 | 5 | 56 | 7 | 8 |
+| 49 | 7 | 7 | 64 | 8 | 8 |
+| 64 | 4 | 16 | 64 | 4 | 16 |
+| 72 | 2 | 36 | 66 | 11 | 6 |
+| 72 | 6 | 12 | 81 | 9 | 9 |
+| 72 | 8 | 9 | 90 | 2 | 45 |
+| 81 | 9 | 9 | 90 | 6 | 15 |
+| | | | 90 | 10 | 9 |
+| | | | 100 | 5 | 20 |
+| | | | 100 | 4 | 25 |
+| | | | 120 | 6 | 20 |
+| | | | 225 | 9 | 25 |
+| **Biāchi par-** | **Caſelle** | **prodotti** | **Neri par-** | **Caſelle** | **prodotti** |
+| **titi** | | | **titi** | | |
+
+---
+
+Hauemo fin qui eſplicato li ſei modi di far prigioni li pezzi, cioè il numerar, il ſummar, il ſotrar, il moltiplicar, & il partir, che ſono le ſei prime, & principali operazioni che inſegna l'Arithmetica prattica, le quali giuocando à queſto giuoco ſi eſſercitano mirabilmente nella memoria. Hora ci reſta eſplicar il ſettimo, & ultimo modo; che è l'aſ- ſedio, il qual ſi fà à queſto modo. Quando un pezzo ſarà
+
+<meta>catchword: talmen-</meta>
+<vocab>numerar, ſummar, ſotrar, moltiplicar, partir, Arithmetica prattica, aſſedio, Bianchi, Neri, Caſelle, prodotti</vocab>

@@ -1,0 +1,6 @@
+<language>None</language>
+<page-type>blank</page-type>
+
+<image-desc>This image shows a historical book cover, likely from the 16th or 17th century. The binding is made of light-colored leather, possibly pigskin, and is decorated with extensive blind-stamping. The design consists of several nested rectangular frames, each filled with intricate ornamental patterns including scrollwork and floral motifs. In the center of the inner rectangle is a lozenge-shaped (diamond) ornament featuring similar decorative stamping. On the left edge of the cover, there are two metal clasp hinges. The leather shows signs of age, including some staining and wear on the surface.</image-desc>
+
+<vocab>blind-stamped binding, pigskin, lozenge, scrollwork, metal clasps</vocab>

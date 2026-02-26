@@ -1,0 +1,35 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>29</page-num>
+<header>DES PHILOSOPHES.</header>
+
+se. Et si elle n’en a point d’egale, l’aduerse partie
+en choisira vne à son plaisir. Exemple: entre la
+Pyramide & 5. il y a cinq interualles, cinq donc
+multiplié par les 5. interualles, deuront prendre la
+base 25, qui est en la Pyramide: parquoy se rache
+tera baillant vne autre table de 25. Et si elle n’en
+a point, l’aduerse partie en choisira vne à son plai
+sir. Mais quand tel accident vient à la plus grãd
+base de la Pyramide, alors ne se peut racheter:
+ainsi est prinse. Or me dira quelcun ceux qui ont
+traicté ce ieu n’ont faict mention que la Pyra-
+mide peust racheter ses bases mineurs sinon par
+egales tables, comme si la Pyramide estoit vain
+cue en sa base 25, ne se pouuoit racheter que de 25
+& en cas que le vaincu n’eust plus de tables
+marquées de 25 que le victorieux, n’en pouuoit
+demander vn autre. ie te respons qu’il n’est point
+raisonnable que le victorieux soit priué de son
+droit, & que par la mesme raison que ledit vi-
+ctorieux eust peu estre vaincu & rançonné par
+ledit 25 de la Pyramide: aussi l’ayant vaincu te
+pourra contraindre & rançonner. Toutesfois la
+Pyramide emprisonnée ne se pourra racheter.
+
+->Des victoires.<-
+
+Pource que souuent par inconsideration de la
+victoire gaignée le victorieux peut estre fru
+
+<vocab>Pyramide, bases mineurs, tables, victorieux, rançonné, ieu, Rythmomachie</vocab>

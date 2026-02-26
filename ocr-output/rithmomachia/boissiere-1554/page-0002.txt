@@ -1,0 +1,23 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<warning>Ink blots on the lower left and center of the page.</warning>
+
+Hunc authorem Georgius Draudius in Bibliothecā claſſicā
+Claudium Buxerium vocat p. 1028.. qui Latinè editus eſt
+Parisiis in 8.
+
+Extant ſine nomine authoris deſcriptiones duae rythmomachiae
+ſiue arithmomachiae. Erphordiae 1577. in 4.
+
+Gui. Falconis metromachia ſiue ludus geometricus. Londini in 4
+
+Hermanni Contracti de conflictu rythmimachiae lib. i.
+
+Claude de Boissiere a auſſi eſcrit de la proprieté et l'uſage
+des quadrans in 8.
+
+Item l'art d'arithmetique in 8.
+
+Item l'expoſition ſur la mappemonde de Gemma Frizon in 8.
+
+<vocab>Georgius Draudius, Bibliotheca classica, Claudius Buxerius, rythmomachia, arithmomachia, Gui. Falconis, metromachia, Hermanni Contracti, Claude de Boissiere, Gemma Frizon</vocab>

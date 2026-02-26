@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>179</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>I. cap:</margin>
+<margin>16.</margin>Wan aber der Schwarze/ nicht die beede Reuter/ (n. 2. 9.) spielen wil/ besondern der K. Schützens-Soldaten/ auf sechs und vierzig setzet: so thut der Weisse/ ebenmessig den angrif/ mit des K. Schützens-Soldaten/ auf sieben und zwanzig: Der Schwarze/ nimt ihn/ mit seines K. Soldaten: Der Weisse/ spielet/ der K. Soldaten/ auf des G. K. Schützen/ auf neun und zwanzig: Der Schwarze/ beüt/ mit der Königin/ auf fünf und zwanzig/ Schach: Der Weisse/ ziehet den König/ auf fünfe:
+
+<margin>17.</margin>* Der Schwarze/ der K. Schützen/ auf die W. Königin/ auf sechs und zwanzig: Der Weisse/ des K. Reuter/ auf neunzehen/ bedecket/ mit demselben seine Königin/ und trachtet/ der S. Königin/ nach: Der Schwarze/ auf daß Er/ des K. Schützen/ nicht verliere) nimt/ mit seiner K. Schützen/ des W. K. Reuter: der Weisse/ denselben/ mit der Königin/ und gewinnet also/ mit hülffe ihres Schützens/ des G. K. Soldaten.
+
+<margin>18.</margin>Wan aber der Schwarze/ nicht der Königin- auf 26. (n. 17.) besondern/ des K. Schützen/ auf sieben und vierzig/ ziehet: so spielet der Weisse/ auf die S. Königin/ (und zu beschützen/ des K. Rochens-Soldaten) dessen Reuter/ auf neunzehen: der Schwarze/ dieselbe/ (umb ihres K. Soldaten/ ferner zu beschützen) auf sechs und zwanzig: der Weisse/ des K. Rochens-Soldaten/ auf dieselbe/ auf siebenzehen: der Schwarze/ dieselbe/ (umb nochmaln/ des K. Soldaten/ zu beschützen) auf achtzehen: der Weisse/ der K. Reuter/ auf dreyzehen: der Schwarze/
+
+<margin>19.</margin>des K. Reuter auf drey und vierzig: * der Weisse/ der K. Reuter/ auf die S. Königin/ auf drey: der Schwarze/ dieselbe/ (weil sie sonsten/ nirgendes hin/ fliehen kan) auf zwey und vierzig: der Weisse/ nimt des S. K. Soldaten/ mit seiner K. Schützen/ oder rucket/ des K. Schützen/ auf ein und zwanzig.
+
+<margin>20.</margin>Wan aber der Weisse/ nicht den Reuter/ auf 3. (n. 19.) besondern des K. Rochen/ auf viere/ ziehet: so rucket/ der Schwarze/ (wegen künftiger beschützung/ seines K. Soldatens) dessen Reuter/ auf drey und dreyffig: der Weisse/ des K. Soldaten/ auf der S. K. Soldaten/ auf sechs und dreyffig/ und wird mit diesem/ wol-geordnetem Spiele/ so fern Er sich vorsiehet/ leichtlich gewinnen.
+
+<image-desc>A decorative woodcut ornament featuring a symmetrical arrangement of floral scrolls and foliage.</image-desc>
+
+<sig>Z iij</sig>
+<meta>catchword: An den</meta>
+
+<vocab>Schach-Spiel, Reuter, Schützen, Königin, König, Soldat, Schach, Rochen, Schützens-Soldaten</vocab>

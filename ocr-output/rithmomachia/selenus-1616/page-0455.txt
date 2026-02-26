@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>421</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: ten/ auf</meta>
+
+<margin>8. cap:</margin>
+
+<image-desc>A rectangular woodcut headpiece ornament featuring symmetrical scrollwork, foliage, and grotesque masks or figures.</image-desc>
+
+### Das Achte Capittel.
+### Welcher gestalt der Weisse/ seine Züge/ sol in acht haben/ wan Er dem Schwarzen/ den Vorzug/ vergönnet / und derselbe/ ohne des Königes-Reuter / Spielet.
+
+Wan aber der Weisse/ nicht der S. Königin = (wie in den vorigen dreyen Capitteln/ beschrieben) sondern des S. K. Reuter / nimt: und dem Schwarzen/ dagegen/ den Vorzug/ zum Vortheil gibt: so wird die Sechste Art/ dieser gestalt/ entstehe.
+
+<margin>1. 2. sig:</margin>
+Der Schwarze/ rucket/ des K. Soldaten/ auf sechs und dreyssig: Der Weisse/ seines K. Soldaten/ auf acht und zwanzig: * Der Schwarze/ (umb/ des Weissen vornehmen/ fürzubauen) der K. Schützens-Soldaten/ auf sechs und viertzig: Der Weisse/ (des Schwarzen/ anschläge/ auch zu brechen) der K. Soldaten/ auf des S. K. Soldaten/ auf neun und zwanzig: Der Schwarze/ nimt ihn/ mit demselbe: Der Weisse/ denselbe/ (dieweil es ohne besorgung/ einiger gefahr/ geschehen kan) mit d Königin: Der Schwarze/ ziehet auf sie/ der K. Schützens-Soldaten/ (auf daß/ dero Reuter/ herauß kommen könne) auf/ acht und dreyssig: Der Weisse/ beut/ mit der Königin/ auß sechs und dreyssig/ Schach: Der Schwarze/ bedecket/ den König/ entweder mit der Königin: (auf welchen fahl/ die Königinne/ beederseits geraubet werden) oder aber/ mit seinem Schützen/ auf zwey und funffzig: Der Weisse/ nimt/ (auf diesen letzten fahl) des S. K. Reuters-Soldaten/ mit der Königin/ rucket dieselbe/ auf des S. K. Rochen/ erlanget dadurch/ dessen Soldaten/ und trennet dem Schwarzen/ seine ordnung.
+
+<margin>3.</margin>
+Wan aber der Schwarze/ nicht/ den Soldaten/ auf 46. (n. 2.) sondern des K. Schützen/ auf acht und dreyssig/ rucket: so ziehet/ der Weisse/ der K. Schützens-Soldaten/ auf zwey und zwanzig: Der Schwarze/ der K. Reuter/ auf sechs und viertzig: Der Weisse/ auf denselben/ des K. Schützen/ auf neun und dreyssig: Der Schwarze/ des K. Rochen/ auf neun und funffzig: Der Weisse/ auf des S. K. Soldaten/ des K. Reuter/ auf neunzehen: Der Schwarze/ des K. Schützens-Soldaten/ auf des W. K. Soldaten/ auf
+
+<vocab>Schach-Spiel, Reuter, Königin, Soldat, Schützens-Soldaten, Rochen, Schach, Vorzug, Züge</vocab>

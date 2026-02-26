@@ -1,0 +1,23 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTMOMACHIE, IEV</header>
+
+9 <image-desc>floral ornament</image-desc> Et par mesme raison si vne moindre table
+est faicte egale à quelqu'vne desdictes bases
+par multiplication.
+
+10 La victoire est gaignée, si on peut disposer la
+tresgrãd harmonie au camp de l'aduersaire,
+ou biẽ la moindre harmonie, iaçoit que la vi-
+ctoire ne soit si grande ne si noble.
+
+11 Les tables gaignées seruirõt à parfaire l'hara-
+monie.
+
+12 Alors que les tables se rencontreront acom-
+plissans vne harmonie, au cãp de l'aduersai-
+re, ledit aduersaire ne doit icelles remuer n'ẽ-
+pescher la victoire, encores qu'il en y eust des
+siennes propres.
+
+<vocab>Rythmomachie, victoire, harmonie, tables, multiplication, camp, aduersaire, iaçoit</vocab>

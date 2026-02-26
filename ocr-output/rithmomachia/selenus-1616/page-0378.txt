@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>344</page-num>
+<header>Das Dritte Buch/ 9. cap:</header>
+
+K. Soldaten / auf sieben und zwanzig : Der Schwarze / der k.
+<margin>2.</margin> Schützen / auf die W. Königin / auf sechs und zwanzig : * Der
+Weiße / dieselbe / auf funf und zwanzig : Der Schwarze / des k.
+Schützens = Soldaten / auf des W. K. Reuter / auf drey und viertzig :
+<margin>3.*</margin> Der Weiße / des K. Rochens = Soldaten / auf der S. K.
+Schützen / auf siebenzehen : Der Schwarze / nimt / des W. K.
+Reuter / mit des K. Schützens = Soldaten / und ziehet ihn / auf die
+W. Königin : Der Weiße / raubet denselben / mit des K. Schü=
+tzens = Soldaten / und rucket ihn / auf des S. K. Reuter : Der
+Schwarze / der K. Schützen / auf drey und funfzig : Der Weiß=
+se / (damit Er / seine Königin / nicht verschertze) nimt nicht / des
+S. K. Reuter / mit des K. Schätzens = Soldaten / sondern / beut /
+mit der Königin / auß drey und dreyßig / Schach : Der Schwarze /
+bedecket den König / mit seinem Reuter / auf ein und funfzig :
+Der Weiße / ziehet / auf denselben / und des S. K. Rochens = Sol=
+daten / des K. Schützens = Soldaten / auf zwey und viertzig : Der
+Schwarze / sol / des K. Reuter / stehen lassen / und der K. Schützen /
+auf vier und viertzig / stellen : Dan Er dergestalt / in betrachtung
+der Weiße / kein sonderliches Vortheil / für ihm erlanget hat : sein
+Spiel / besser anordnen wird.
+<margin>4.</margin> Wan aber der Weiße / den Soldaten / auf 17. (n. 3.) nicht zie=
+het / sondern des S. K. Soldaten / mit seines K. Schützens =
+<margin>5.</margin> Soldaten / wegkraumet : * so nimt / der Schwarze / des W. K.
+Reuter / mit seines K. Schützens = Soldaten / und ziehet ihn / auf die
+W. Königin : Der Weiße / nimt ihn / mit der K. Schützen / und
+ziehet denselben / auf die S. Königin / und des S. K. Reuter :
+<margin>6.*</margin> Der Schwarze / die Königin / auf neun und funfzig : Der
+Weiße / auf dieselbe / (umb sie / so fern Er / des S. K. Reuter / mit
+der K. Schützen / nicht nehmen / noch zur verwechslung / beederseits
+Königinne = Schützen / ursach geben wil : gewiß zu ertappen / und
+<margin>7.</margin> sich des Sieges / zu versichern) des K. Rochen / auf drey : * Der
+Schwarze / bedecket dieselbe / mit des K. Reuter / auf ein und
+funfzig : Der Weiße / nimt denselben / mit des K. Schützen / und
+beut Schach : Der Schwarze / rucket / den König / auf drey
+und funfzig : Der Weiße / beut ferner / mit des K. Schü=
+tzen / auß vier und viertzig / Schach / und entblöset des K. Ro=
+chen / auf die S. Königin : Der Schwarze / nimt / des W. K. Schü=
+
+<meta>catchword: gen/mit</meta>
+
+<vocab>K. Soldaten, Schützen, Königin, Reuter, Rochens-Soldaten, Schach, Rochen, Selenus notation</vocab>

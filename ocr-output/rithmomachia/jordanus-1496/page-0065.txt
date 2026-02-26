@@ -1,0 +1,51 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIIII</page-num>
+<vocab>multiplices, supparticularis, sesqualtera, dupla, superpartiente, proportio, septupla, sesqualt̃a</vocab>
+
+<margin>26</margin> ### **¶ Quotlibet multiplices inuenire:que cũ data ſupparticulari multiplicem ſupparticularem conſtituant.**
+¶ Sit a data ſupparticularis/z b numerus denoians eius ptem/z m tota eius denoiatio cui q̃tlibet multiplices ſuppaſſumatur:vt quoz nũeri denoiantes ſint c/d/e/f:manifeſtũ eſt per viceſimãtertiam huius/b in c/z in d/z in e/z in f/ɔſtitutre nũerũ multiplicis/z dẽoiatiõis. capio ergo g/h/k/l totidem multiplices vno maioris denoiationis. et qz g addit vnũ ſup multiplicẽ c:ſi ergo m totalis denoiatio pportionis ſupparticularis ducatur in g pveniet numerus cũ parte denoiata ab b:quare propoztio multiplex ſupparticularis. vt in p̃ſenti figuratiõe pueniet ppoztio ſeptupla/ſeſqualt̃a. et ita de h/k/z l demonſtrabis.
+
+<image-desc>A ratio diagram showing letters connected to numbers with lines. On the left: f-10, e-8, d-6, c-4. On the right: i-11, k-9, h-7, g-5. In the center: numbers 3, 2, and letters a-2, b-1.2, m-I.</image-desc>
+
+---
+
+<margin>27</margin> ### **¶ Data multiplice quotlibet ſupparticulares inuenire quæ quelibet cũ eadem multiplice ſuppartientem componat.**
+¶ Sit a data multiplex/z b numerus ipſam denomiñans:ſumo quotlibet numeros eo maiozes ſed nõ multiplices qui ſint g h k l et partes ab ipſis denomiãte ſint c d e f. vt c ſit denoiata ab g/z d ab h:ſicq̃ de ſequẽtẽr. dico q̃ b in c/in d/in e/z in f non partem ſed partes pducit. nam ſi ducat b in c:p uentat m ptes denoiate ab g:p correlariũ vndecime hui’ q̃ propoztio b ad g:ea ẽ m ad vnũ. ſed p hypotheſim b eſt ptes g:igit̃ r m eſt ptes vnius. et ita ſi b ducat̃ in d e z f pvenient ptes. itaq̃ ſupparticulares ab illis partibus dicte cum data multiplice quelibet ɔſtituet multiplicem ſuppartientem.
+
+<image-desc>A diagram with four lines on the left: l-9 f-I, k-7 e-I, h-5 d-I, g-3 c-I. Below are letters a and b with numbers 2, 2, and scattered values 3, 2, I.</image-desc>
+
+---
+
+<margin>28</margin> ### **¶ Sola ſupparticularium ſeſqualtera: eſt q̃ cũ nulla multiplice/multiplicem ſuppartientem producit.**
+¶ Nam qz ſeſqualt̃a denoiatur a ſcđ̃a quae eſt vnius dimidium et dimidiũ in oẽm numerum ductum aut vnum pducit aut numerum aut dimidium addit. nam binarius oẽm nũerũ numerat aut ſupfluit vnitas ergo denoians partis ſeſqualte in denoiantem multiplicis:aut multiplicem pducet/aut multiplicem ſupparticularem. non itaq̃ cũ multiplice multiplicem ſuppartientem pducet. at qz ois alia ſupparticularis cũ aliqua multiplice multiplicem ſuppartientem efficere poſſit hinc cognoſcitur. q̃ ſi ſumas numerum denoiantem multiplicem vno minorem numero denoiante partem date ſupparticularis ex precedẽte efficies ppoſitum. potes z pzimam partem facile ex modo demõſtrandi viceſime ſexte huius cognoſcere:quẽadmodum ſecundam partem ex precedente cognoſcis.
+
+<image-desc>A vertical diagram labeled "Compoſite" containing a table of letter-number pairs: f 10 9 | 20 9, e 8 7 | 16 7, d 6 5 | 12 5, c 4 3 | 8 3, a 2 1.</image-desc>
+
+---
+
+<margin>29</margin> ### **¶ Sola multiplicium dupla: cũ nulla ſuppartiẽte multiplicem efficit propoztionem.**
+¶ Hec ɔpponit duplam cũ nulla ſuppartiẽte multiplicem ɔſtituere z oẽm aliã multiplicem cũ aliqua ſuppartiẽte:poſſe multiplicem conſtituere. Pzimum patet et ſit a ppoztio dupla et b numerus ipſam denoians:ſitq̃ c quecũq̃ ppoztio ſuppartiẽs. dico a cum c non conſtituere ppoztiõem multiplicem. Sumo eni partes c q̃ denomiñẽtur ab d et numerẽtur ab e:et duco b in illas partes z pueniẽt partes ſiles r numerate a numero qui fit ex binario:id eſt b in e. ſit ergo nũerus illaz partium f:quẽ dico nõ eſſe numerum. nam nõ erit equalis d:qz e numeraret d. neqz d ip̃m numerabit. nam ſm vnitatem non numerabit:qz eẽt ei equalis. neqz ſm binarium qz d et e equarẽtur. neqz ſm maiozem binario: quia d maioz eſt e. cũ ergo b in e denoians in partes altius non ɔſtituat numerum non pducetur multiplex. Scđm patet nam data quacũq̃ alia multiplice vt a:capio b numerum ipſam denoiantem quem facio aliquaz partium denoiatorem:et ſumo numerum partium vno minozem b qui ſit c:ſitq̃ d ſuppartiẽs partium c. dico a et d ſimul ɔſtituere multiplicem. nam qz b eſt denoians a et denoians ptiũ d:ideo b in c ɔſtituet nũernm. denoiabitur itaq̃ cõpoſita a numero:quare erit multiplex. qđ eſt ppoſitum.
+
+<image-desc>Two diagrams for composite ratios. The first labeled "Compoſita" contains e 15 3, a 3 I, b 3, c 2, d 5.3. The second shows letters b, e, f, b associated with values 3, 2, 4, 2, and further numbers 3, 2, I, 5 . 3.</image-desc>
+
+---
+
+<margin>30</margin> ### **¶ Data ſuperpartiente multiplices quotlibet reperire: quæ quelibet in illam ducta producat multiplicem.**
+¶ Sit a data ſuppartiẽs:et numerus partium ſit b:z nũerus illas denoians ſit c. capio p̃mo multiplicem que denoiẽtur ab c que ſit d:deinde que denoiẽtur ab multiplicib’ c quotquot voluero:ſintq̃ ſui denoiantes e f g. dico a datam ſuppartiẽtẽ cũ qualibet multipliciũ d e f g ɔſtituere multiplicẽ. nam b in c ɔſtituet numerum z in e etiã numerum qz duplum et in f triplũ z g quadruplum acceptis ſcz per ordinem multiplicibus denoiantis c. ergo ſuppartiẽs a cũ qualibet illaz multipliciũ cõſtituit multiplicem. quod eſt propoſitum.
+
+<image-desc>A ratio diagram labeled "Compoſite" on the left side with a column of values: 60-3, 45-3, 30-3, 15-3. On the right: f-12, e-9, d-6, c-3.I, a-5.3, b-2.</image-desc>
+
+---
+
+<margin>31</margin> ### **¶ Quotlibet ſuppartientes/quar̃ quelibet cum pposita multiplice multiplicem ſupparticularem conſtituat/inuenire.**
+¶ Sit ppoſita multiplex a cuius numerus denoians ſit b:ſumo quẽlibet nũerum maiozem b qui ſit c. et duco b in c z fiat d. et capio e minozem vno d. capio item partes denoiatas ab e ſm nũerum c que ſint f. qm̃ enim b in c ɔſtituit d:ideo b in f cõſtituet ſiles partes ſm numerum d. at ipe ſm numerum d ſumpte faciũt vnũ z vnã amplius. ſit itaq̃ g ſuppartiens denoiata a ptibus dictis ab e r ſumptis ſm numerum c q̃ (qz b in f ɔſtituit numerum r partem) eadem ſuppartiẽs cũ a ɔſtituet ſupparticularem z quotq̃t voles eadem rone tibi ſumas ſuppartiẽtes q̃ cũ a ɔſtituent ſupparticularem. qđ eſt ppoſitũ.
+
+<image-desc>A ratio diagram with numbers 26 and 5 at the top, and letter-number pairings below: f-8.5 e-5, d-6, c-2.I, b-2.</image-desc>
+
+---
+
+<margin>32</margin> ### **¶ Multiplices aliquot ſumere: que in datam ſupparticularem ducte: pcreent multiplices ſuperparticulares.**
+¶ Sint a z b mĩmi date ppoztionis ſuppartiẽtis:qui qz ſunt ɔtra ſe p̃mi quero p vltimã tertij a multiplicem a q̃ addat ſup multiplicẽ b vnitatem que ſit c:ſitq̃ nũerus ſm quẽ a numerat c nũerus d. ſumo vnitatem que ſit e. eritq̃ d ad e multiplex denoiata ab d. at per demõſtratũ in principio tertie
+
+<image-desc>A diagram showing letter-number pairings: d-2 e-1, b-3 c-10, a-2 e-1, b-1 8.</image-desc>

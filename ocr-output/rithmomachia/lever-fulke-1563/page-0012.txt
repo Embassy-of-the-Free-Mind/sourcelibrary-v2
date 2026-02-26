@@ -1,0 +1,30 @@
+<language>English</language>
+<page-type>preface</page-type>
+<header>To the Reader.</header>
+<warning>Significant bleed-through from facing page; text on right edge is from the adjacent leaf and should be ignored; right margin is tight to the gutter.</warning>
+<meta>catchword: play</meta>
+
+did nothing els, but inuent,
+speake, and write that which
+might exhort, moue, & persuade
+them to the furtherance of the
+same. But if after honest labour
+and trauell recreatiō be requisit,
+(and that nede no further pro-
+bation because we fauour the
+cause wel inough) I had rather
+teach men so to play, as both
+honestye may be reserued, their
+wittes exercised, they them sel-
+ues refreshed, and some profit
+also attayned, then for lacke of
+exercise to see them either passe
+the tyme in idlenes, or els to
+haue pleasure in thyngs fruitles
+and vncomely. And if great
+Emperours and mighty Mo-
+narches of the world haue not
+bene ashamed by writing boo-
+kes to teache the art of Dyce-
+
+<vocab>inuent, recreatiō, honestye, idlenes, vncomely, Monarches, Dyce-play</vocab>

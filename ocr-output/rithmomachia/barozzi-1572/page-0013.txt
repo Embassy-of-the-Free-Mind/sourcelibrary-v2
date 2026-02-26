@@ -1,0 +1,38 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<sig>B</sig>
+<meta>catchword: Seconda</meta>
+
+lati vguali: l’vltima terza parte, che sono li altri 16 pezzi
+hauranno la forma quadrata. & ciascuno di questi 48 pez-
+zi farai dipinger dall’vna faccia bianco, & dall’altra nero,
+& sia di grossezza d’vn dito. Poi farai fabricar due pyra-
+midi graduate, l’vna di cinque, & l’altra di sei gradi, la ba-
+se ouer fondamento delle qual fia vn quadrato della gran-
+dezza d’vno delli già detti 16 pezzi quadrati, anci vno de
+quelli medesimi. sopra lo qual quadrato fia posto vn’altro
+quadrato di equal altezza al precedente: ma di menor lar-
+ghezza, & lunghezza. Et sopra questo vltimo quadrato
+aggiungasi vn triangolo equilatero menor di esso vltimo
+quadrato, sopra ilqual triangolo si pona vn’altro triango-
+lo equilatero più picolo del precedente, & sopra l’vltimo
+triāgolo si aggiūga vno pezzo tōdo simile ad vno delli 16
+pezzi tondi, ma più picolo dell’vltimo triangolo nelle py-
+ramidi posto. Di modo che seranno fin qui fabricate due
+pyramidi graduate di cinque gradi ciascuna, cioè di dui
+quadrati, dui triangoli, & vno tondo. Ma accicche l’vna di
+esse diuenti di sei gradi, aggiungasi sopra l’vltimo grado
+tondo dell’vna vn’altro tondo più picolo di esso, che à que
+sto modo si farà l’vna pyramide di sei gradi, & aduertiscasi
+di congionger insieme questi gradi con tal artificio, che fi
+possa leuar via à beneplacito di coloro, che giuocano, qua
+lunque grado gli piace, & che li altri restino vn sopra l’al-
+tro secondo l’ordine suo. Di più si dipingerà ciascuno di
+detti gradi dall’vna faccia bianco, & dall’altra nero, & cosi
+haurai tutti li 48 pezzi, che si adoperano in questo giuo-
+co, cioè 16 tondi, 16 triangoli, & 16 quadrati computan-
+do le due pyramidi per dui quadrati, hauendo esse per ba-
+fi dui delli 16 quadrati; la forma delli qual pezzi ti dimo-
+stra chiaramente la seguente figura.
+
+<vocab>pyramidi, gradi, equilatero, giuoco, bianco, nero, tondi, triangoli, quadrati</vocab>

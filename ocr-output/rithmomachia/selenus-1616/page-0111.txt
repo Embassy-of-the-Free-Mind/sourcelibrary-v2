@@ -1,0 +1,55 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>81</page-num>
+<header>9. cap: Vom Schach-Spiel. 81</header>
+<sig>L ii</sig>
+<meta>Catchword: entpfach/</meta>
+
+sein Schätze / nicht trift : davon dan / ein Exempel / im 14. Cap: n. 12.
+des Andern Buches / zu finden.
+
+2. Wan der eine Spieler / nuhr seine Schützen / der Ander /
+nuhr seine Reuter / noch übrig behalten hat : so kan dieser / mit den
+Reutern / die Schützen / im Schachen / weyl dieselben / ein ander /
+nicht / wie die Reuter / entsetzen und verwachen können / leichtlich
+hinwegnehmen.
+
+3. Die Schützen / werden durch ihres = oder des Feindes
+hauffens Steine / wan Sie dieselben / mit ihrem schaden müsten
+wegnehmen / oftmaln eingeschlossen und eingesperret : welches
+den Reutern / weyl dieselbe / wie Sie hinein / also auch herauffer zu
+wischen / über die andere zu springen / und sich / mit dem außreissen /
+dergestalt zu erretten / macht haben / nicht widerfahren kan.
+
+4. Die Schützen können nuhr / auf eine farbe : die Reuter
+auf beede farben / treffen und gezogen werden.
+
+Zum Beschluß ist zu erinnern / daß man durch ihr übersprin-
+gen / vielleicht andeuten wollen / daß die Reuter / immer an solche
+örter / da ihnen das Fuß-Volck / nicht hinderlich sein kan / sollen ge-
+stellet und geordnet werden : oder aber / daß die mechtigen / die
+schwachen unter zudrücken pflegen : welches aber unrecht / und auß
+ihrem ungeraden gange / abzunehmen. Daß Sie auch / auß ihrem
+felde / nuhr in wenig felder kommen können / gibt zu verstehen : daß
+Sie / weyl Sie noch bey ihrem Hauffen und bekanten / sich aufhal-
+ten / stets demütig und freundlich seyn = wan Sie aber / zu den fein-
+den / auf den platz kommen / sich zu aller stund hüten / und tapfer ge-
+gen dieselbe verhalten sollen.
+
+Sie sind endlich / an die flügel des Fuß-volckes / nebest den
+Rochen / (umb dasselbe zu beschützen) gestellet worden.
+
+Was nuhn von diesen Haupt-Steinen / auß des Fr. Jacobi de
+Casallis, verdolmetschetem Buche / aufgezeichnet worden / thut
+man / dem versprechen nach / dem vorigen / hiemit auch anfügen :
+
+> <margin>,,</margin> Der Ritter auf dem Schach-Zabel / sol sitzen / auf
+> <margin>,,</margin> einem Roß / mit ganzem Wapen / und das Roß / sol sein ver-
+> <margin>,,</margin> deckt. Der Ritter / wen man den gesegnet / so sol Er des Er-
+> <margin>,,</margin> sten / gewidmet oder gebadet sein / das er ein newes leben / für-
+> <margin>,,</margin> baß trage und füre : Er sol auch Got anligen mit andacht /
+> <margin>,,</margin> das Ihm Gott geb von gnaden / das / das er nicht gehaben
+> <margin>,,</margin> mag / von Natur. Ihn soll auch der Fürst schlahen / auf
+> <margin>,,</margin> den Hals / und rittern / daß Er rittterlich wirdikeit von ihm
+
+<vocab>Schach-Spiel, Schützen, Reuter, Rochen, Fuß-Volck, Schach-Zabel, Jacobus de Cessolis, Ritter, ritterlich wirdikeit</vocab>

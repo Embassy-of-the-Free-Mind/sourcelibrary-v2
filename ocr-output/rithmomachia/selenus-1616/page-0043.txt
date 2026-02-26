@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>13</page-num>
+<header>Vom Schach-Spiel. 13</header>
+
+<margin>1. cap.</margin>
+bezeuget/ gewesen/ und deren Sprache/ wie David Chytræus, lib: 1.
+Saxon: pag: 3. und Reinerus Reineccius, in seinem Tractätlein / von
+der Meißner anfänglichem herkommen/ pag: 38. setzen/ (sich gebraus
+chet haben) wol verstanden: wie dan solches/ von ihnen / auß den
+folgenden/ des Olai Magni, Gothi, Archi-Ep: Upsalensis, (de diversis
+Hominum Exercitijs, lib: 15. c. 12. 13.) worten/ zu vernehmen:
+
+> Cùm nihil difficiliùs sit, in humanis rebus, quàm mentes & cc
+> affectus hominum, quo judicio ferantur, intelligere, aut omnigenis cc
+> voluptatibus, vel tristitijs immersos, quomodo passiones, moderari cc
+> valeant, perspicaciter intueri: mos est ergò, apud Illustriores Go- cc
+> thos & Sueones, filias suas, honesto conjugio collocaturos, Proco- cc
+> rum animos, miris ingenijs & passionibus examinare, præsertim cc
+> in Ludo Latrunculorum, seu Schachorum. Eo enim Ludo, ira, a- cc
+> mor, petulantia, avaritia, focordia, ignavia, aliæq; plures demen- cc
+> tiæ, passiones & animi motus, fortunæq; vires & proprietates, de- cc
+> monstrari solent: scilicet an Procus, agrestis animi sit, quòd subi- cc
+> tò triumphando, indiscretè exultet, aut injurias illatas, cautiùs pa- cc
+> ti, vel modestius avertere nôrit, &c. Hisq; visis auspicijs, provi- cc
+> di Parentes, charorum liberorum connubia, discretiùs amplecten- cc
+> da vel refutanda, moderantur. *Das ist;* cc
+
+> Dieweil der Menschen gemühter / Sinne und gedan- cc
+> cken/ und was sie im Schilde führen / zum aller schweresten / in cc
+> diesem Menschlichem Leben/ können gemercket und gespüret/ cc
+> auch / wie sich dieselben / in gar zu grossem glücke oder unglü- cc
+> cke/ zuschicken/ und zu verhalten wissen/ eigentlich wahrge- cc
+> nommen werden: Alß haben / die fürnemste Geschlechter/ cc
+> unter den Gothen und Schweden / im Gebrauche gehabt/ wan cc
+> Sie ihre Töchter außzusteuern / vorhabens gewesen / derer ge- cc
+> mühte / welche umb Sie geworben / auf vielerley art und wege / cc
+> insonderheit aber / durch das Stein- oder Schach-Spiel / zu cc
+> erforschen/ und auf die probe zustellen. Dan/ in demselben / cc
+> der Zorn/ die liebe / die leichtsinnigkeit / der geitz / die nachlässig- cc
+> heit / und faulheit: auch andere mehr närrische bewegungen cc
+> des Gemühtes / nebest des Glückes vermögen und eigenschaf- ..
+> ten / sich sehen und vernehmen lassen. Ob nemlich / der Freyer ..
+> oder Werber / eines bäurischen groben gemühtes sey / und ..
+> sich / im glücke oder gewinnen / für freuden / nicht zu mäßigen / ..
+> noch einzuhalten / oder die zugefügte schmach / und den ver- ..
+
+<meta>Catchword: lust/</meta>
+
+<vocab>Schach-Spiel, Olaus Magnus, Gothi, Sueones, David Chytræus, Reinerus Reineccius, Ludo Latrunculorum, Procus, Gemüht, Freyer, Werber</vocab>

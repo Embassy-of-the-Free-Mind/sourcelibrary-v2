@@ -1,0 +1,36 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>A.v.</sig>
+<meta>catchword: Of</meta>
+
+### vpon the lowest square. 64.
+
+Finally it shalbe good for the auoy-
+dance of confusion, to drawe a line vnder
+euery number. Ells may you take one
+for another, as <image-desc>circular game piece with the number 6</image-desc> the euen round & <image-desc>circular game piece with the number 9</image-desc> the
+odde rounde, may be taken one for ano-
+ther with oute this lyne or some suche
+marke, lykewise <image-desc>triangular game piece with the number 4</image-desc> and <image-desc>triangular game piece with the number 25</image-desc> Tryangles
+bothe of one syde. And this is suffici-
+ent for the men, the fashion, colours and
+numbers.
+
+## ¶ The reason of these num-
+## bers and the knowledge of
+## their proportione.
+
+<insert>
+<image-desc>A rectangular box with a double-line border, containing text superimposed over a background of six faint circular game pieces arranged in two rows of three.</image-desc>
+For them that seke the speculati-
+on of these numbers, rather then
+the practise for playing, and haue
+some sight in the sciens of *Arithmetike*,
+some thyng must be sayde of *proportion*.
+For this purpose there be three kyndes
+of *proportion*. *Multiplex*, *superparticu-*
+*ler* and *superpartiens*.
+</insert>
+
+<vocab>The Philosophers game, Arithmetike, proportion, Multiplex, superparticuler, superpartiens</vocab>

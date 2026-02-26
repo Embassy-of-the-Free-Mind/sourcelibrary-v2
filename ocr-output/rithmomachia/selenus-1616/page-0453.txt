@@ -1,0 +1,31 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>419</page-num>
+<header>7. cap: Vom Schach-Spiel.</header>
+
+**Schwartze** / (umb / sein Spiel / in keine unordnung zu bringen)
+nimt ihn nicht / besondern ziehet / der K. Schützens-Soldaten /
+(umb ihn zu beschätzen) auf sechs und viertzig: Der **Weiße** /
+nimt / des S. K. Reuters-Soldaten / mit der K. Rochens-Sol=
+daten: Der **Schwartze** / denselben / mit der K. Schützens-Sol=
+daten: Der **Weiße** / ziehet / auf denselben / der K. Reuter / auf
+zwey und zwantzig / und wird auf die weyse / dofern Er sich nuhr
+inacht hat / wol gewinnen.
+
+Es wird gleichwol dem **Weißen** / zu mehrem nutzen / ge=
+reichen / daß Er / damit der **Schwartze** / (welcher ohne zweyfel /
+dieweyl Er ihm / einen Reuter / zum Vortheil gegeben / das
+Spiel / besser / dan Er / verstehen muß) nicht gar zu viel wil=
+lens / in seinen hauffen zu tringen / erlange / und dadurch / das
+Spiel / gewinne: seine Züge / auf diese / (von n. 13. bißhero / ge=
+dachte) Art / nicht anstelle / besondern des K. Soldaten /
+(umb den **Schwartzen** / dadurch in eine unord=
+nung / zu bringen) mit mehrem nutzen /
+auf 20. (n. 2.) zufoderst rucke:
+
+<image-desc>An ornamental woodcut tailpiece featuring a central grotesque face or mask flanked by symmetrical foliage and architectural scrollwork.</image-desc>
+
+<sig>Ggg iij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Soldaten, Reuter, Schütze, Roche, Schwartze, Weiße</vocab>

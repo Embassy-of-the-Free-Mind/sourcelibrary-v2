@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>89</page-num>
+<header>10. cap: Vom Schach-Spiel.</header>
+
+angedeuteter massen / in dem folgenden Zuge / alszbald wider er-
+langet werden könne / verwechszlen. Dan sonsten der Soldat /
+zu keiner Königin / wan man gleich / die rechte Königin / in fol-
+genden zügen verliere / gedeyen möge : besondern werde / vom ge-
+gentheil / in seiner eussersten / oder Haupt-linie / wie unbewege-
+lich / und dahero unschädlich / gelassen / und nicht verjaget. Die-
+ses wil man ferner / nuhr von den vier Soldaten / welche / gleich den
+Amazonen, auf der Königin seite / aufwarten / und ihre diene-
+rinne seynd / verstehen: Dasz nemlich / nach der Königin ablei-
+ben / der König / eine ausz ihrem mittel / (so fern dieselbe / auf
+die eusserste linie / wie gemeldet / durch ihre tapferheit kommen /
+und daselbsten / der vorigen Königin macht und gewalt / gleich
+alszbald / weyl Sie nicht nötig hat / noch etliche züge / in
+gefahr und im zweifel / ob sie genommen werde / oder nicht / zu
+stehen : theilhaftig worden ) an ihre stat / hinwieder erwehlen
+und nehmen dörffe. Dasz nuhn die / auf des Königes seite / sotha-
+nes Wortheil / nicht haben sollen : vermeinet man dahero zu be-
+weisen / dasz es wider die Natur lauffe / dasz eine Mannes-Per-
+son / in ein Weibes-Bild verwandelt werden solle: wie solches /
+Franciscus Tidicæus Ph. ac M. D, in dem Appendice, seiner be-
+schreibung / des Microcosmi, pag: 637. 638. ausführlich beweiset:
+aber darneben zugibt / und etliche Exempel / ausz dem Rali, Ga-
+leno, Plinio, Empedocle Agrigentino, Licinio Mutiano, Ausonio
+Burdegalensi, Volaterrano, Joanne Langio, Joanne VViero, Livio,
+Hippocrate, Amato Lusitano, Baptista Campofulgoso, pag: 634.
+635. 636. 638. 639, einführet: dasz Weibes-Bilder in Mannes-
+Personen / warhafftig / und ausz natürlichen ursachen / verwandlet
+seyn / und auch werden können. Es ist aber / (damit wir widerumb zu
+unserm Spiele kommen) von guten Spielern / für Alters und noch
+an itzo / dieses ohne unterscheid / von allen / so wol des Königes-alsz
+der Königin-Soldaten / Ja auch / wan gleich / die erste Königin /
+noch verhanden / (davon in folgenden Büchern / unterschiedene Ex-
+empel / zu befinden) also verstanden worden. Dan es nicht die
+meinung hat / alsz wan derselbe Soldat / des Königes Ehe-Gemah-
+lin werde / in betrachtung demselben / in der ersten Ordnung / nuhr
+eine Gemahlin beygesetzt worden : besondern / dasz von ihm /
+tapfere Soldaten / nicht weniger / dan seine eigene Königin / in eh-
+ren / sollen gehalten werden.
+
+Für Alters / hat ein Soldat / welcher zur Königin gemachet /
+zufoderst / ins dritte feld springen müssen : folgendes aber / ist Er /
+über die spitzen der felder / ins andere Feld / gerucket worden.
+
+<sig>N ij</sig>
+<meta>catchword: Sonsten</meta>
+
+<vocab>Schach-Spiel, Königin, Soldat, Bauernumwandlung, Franciscus Tidicæus, Microcosmus, Amazonen, Promotion</vocab>

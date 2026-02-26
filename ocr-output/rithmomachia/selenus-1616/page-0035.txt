@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>5</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Er/vie</meta>
+
+<margin>1. cap.</margin>
+Steph. Costa, J. U. D. in tractatu de Ludo, Papiæ, A. D. 1478, impresso, Cosmas Guimier, d. loco: Innocent: in c. Lator, de Homic: Joan: Andreæ, in c. Clerici, de vitâ & honest: Clericor: Hug: Laur: & Archidiac: & Præpos: in c. Episcopus, dist: 35. Jul: Clarus, lib: 5. Sentent: recept: Ludus, n. 2. Augustin: ad Ang: de Malefic: in verbo; Meridore de mali dadi, n. 3. Bertachin: in tractat: de Episc: in 1. parte, causæ final: quæst: 7. Rosel: de Rosellis, inter consil: crim: divers: cons: 46. n. 5. lib: 1. bezeugen: und hat die ursachen / Gregor: Lopez, à Touar, in gl: leg: 57. tit: 5. partitæ primæ, fol: 49. b. col: 2. in dehme / weyl dieses Spiel / zur ergötzlichkeit / und dan zur übung des Gemühtes / angesehen sey / und dahin / in seinem rechten gebrauche / muß gerichtet werden: für andern / insonderheit wol getroffen.
+
+Gleich wie andere Künstliche Spiele / eine lustige nachfolge und nach Affung eines ernsthaften gescheftes seynd: also sey (3.) dieses Spiel / nichtes anders / alß einer ernsten und rechtschaffenen Feldschlacht / sinreiche / und lustige Abbildung: Daher es die Römer *Ludum Latronum*, das ist / das Soldaten-Spiel / (davon dan / im folgenden andern Cap: weiter bericht / zu finden) nicht unbillig genennet.
+
+Auf diese aigenschafft / haben die Indianer, Persianer, Ægyptier und Araber, in außlegung der Träume vom Schach-Spiel / ein auge gehabt: wie solches / nach ihrer Lehre / Apomasar, ein Griechischer Scribent, im 241 Cap: seiner kurtzen außlegung / und bedeutung der Träume / anzeiget / da Er saget:
+
+> Wan einem träumet / wie Er / mit einem andern bekannten / das Schach-Spiel spiele / so sie umb gewinst willen / spielen / und der im Traum gewinnet / der wird auch sonst gewinnen / und sein wunsch / wird ihm gelingen: Spielt Er aber / mit einem unbekanten / so wird Er / mit den Feinden streiten / doch ohne Blut-vergiessung / und welcher im Traum gewint / der wird den Andern / überwinden.
+
+> Wan einem Könige / oder einem gewaltigen Manne / oder einem Krieges-Obersten / träumet / wie Er / das Schach-Spiel spiele / das bedeut / daß Er / mit dem Feinde / ein treffen thun sol / mag sich dessen / gewißlich versehen: Hat Er nuhn im Traum gewonnen / so wird es ihm auch / im Kriege / nach seinem wunsch / ergehen: Ist Er aber / überwunden worden / so wird Er auch / von seinen Feinden / im kriege überwunden: Träumt ihm / wie er im Spiele / viele Steine wegnehme / so wird
+
+<vocab>Schach-Spiel, Ludum Latronum, Soldaten-Spiel, Apomasar, Traumdeutung, Steph. Costa, Feldschlacht, Indianer, Persianer, Ægyptier, Araber</vocab>

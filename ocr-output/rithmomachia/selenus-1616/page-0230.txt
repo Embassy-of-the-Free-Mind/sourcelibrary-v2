@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>200</page-num>
+<header>Das Ander Buch / 11.cap:</header>
+
+mit demſelben / des W. K. Rochens = Soldaten : der Weiſse / gibe mit der Königin / auß drey und dreyſſig Schach : der Schwartze / ziehet / den König / auf neun und funfzig : der Weiſse / nimt des S. K. Reuters = Soldaten / mit der K. Schützen : der Schwartze / denſelben mit ſeines K. Schützens = und nicht / mit deſſen Rochens = Soldaten : Dan ihm ſonſten / des K. Roche / durch die W. Königin / genommen würde ) der Weiſse / beut mit des K. Rochen / auß drey / Schach : und / mit der Königin / auß ein und funfzig / Schach = Mat. Spielet aber / der Schwartze / des K. Reuter / ( deſſen im anfange dieſes S. gedacht ) auf andere felder : oder rucket / an ſeiner ſtat / einen andern Stein : ſo muſs der Weiſse / wol acht haben / und ſich / ſein Spiel / weyl Er / nach gelegenheit / der obererwehneten züge / daſſelbe / wol kan gewinnen / recht zu führen / und zuziehen / bemühen.
+
+<margin>22.</margin> Ferner / wan der Schwartze / nicht den Soldaten / auf 43. (n. 19.) beſondern / des K. Reuter / auf vier und viertzig / ziehet : ſo nimt / der Weiſse / des S. K. Reuters = Soldaten / mit des K. Rochens = Soldaten : der Schwartze / rucket auf ihn / ( weyl er / die W. Königin / bedecket ) ſeines K. Rochen / auf acht und funfzig = Der Weiſse / die Königin / auf des S. K. Rochens = Soldaten / auf neune : <margin>11.</margin>
+
+<margin>23.</margin> * Der Schwartze / nimt / mit demſelben / des gedachten W. K. Reuters = Soldaten : Der Weiſse / ſpielet des K. Schützen / auf ſechs und zwanzig : Der Schwartze / die Königin / auf zwey und funfzig : Der Weiſse / auf des S. K. Rochen / ſeine Königin / auf neun und viertzig : Der Schwartze / auf dieſelbe / den gedachten Rochen / auf funfzig : der Weiſse / dieſelbe / auf ein und viertzig :
+
+<margin>24.</margin> * Der Schwartze / den gedachten Rochen / nochmaln auf dieſelbe / auf zwey und viertzig : der Weiſse / beut / mit derſelben / auß ſieben und funfzig / Schach : der Schwartze / bedecket den König / mit der Königin / ( welches dan / der beſte zug iſt / den Er thun kan ) auf neun und funfzig : der Weiſse / nimt die S. Königin / mit ſeiner Königin / und beut Schach : der Schwartze / nimt dieſelbe / mit des K. Reuter : der Weiſse / ziehet / des K. Schützen / auf den S. Rochen / auf funf und dreyſſig / erlanget auf die weyſe / des S. K. Reuters = Soldaten / mit gewalt / und ſein Spiel / ſtehet in guter ordnung.
+
+<margin>25.</margin> Wan aber der Schwartze / nicht den Rochen / auf 42. (n. 24.) beſondern / des K. Schützens = Soldaten / ( damit gedachter ſeines K. Roche / auch von ſeiner Königin / verhätet werde ) auf drey und vierzig / rucket : ſo ſcheinet es zwar / ein guter zug zu ſeyn : Es iſt aber weit gefehlet : <margin>12.</margin>
+
+<vocab>Schach, Schach-Matt, Rochen, Königin, Reuter, Schützen, Soldaten, Weiſse, Schwartze, Schachspiel</vocab>

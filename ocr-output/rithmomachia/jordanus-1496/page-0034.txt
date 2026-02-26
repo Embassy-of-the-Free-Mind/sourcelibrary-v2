@@ -1,0 +1,52 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>A marginal diagram consisting of four horizontal lines with alphabetical labels and numerical values. The first two lines show 'a-b' and 'c-d' both divided into segments of 3 and 4. Below these, two lines 'a-c' and 'b-d' are both divided into segments of 2 and 3.</image-desc>
+
+IN duobus nūeris in fōma pmo vidēdum est. sint ent a et b duo numeri / et cd duo alij qui duobus p̄mis comparent: dico eādē pportiōem cōpositam esse ex a ad b / et c ad d / et ex c ad d / et a ad b. Si enī nūeri illi eent equales: statim de se notum eēt. Siliter si duo primi eēnt equales inter se / et duo secūdi inter se: et sicut si tres eēnt equales r vnus inequalis. sed esto proportio a ad b maior proportiōe c ad d facio a ad b primā pportiōem / c ad d scōam / r itex a ad b tertiam / r c ad d quartam. et quia q̄tum a ad b prima addit sup c ad d scōam t̄m addit a ad b tertia supra c ad d quartam. ergo p tertiā hui⁹ pposita ex a ad b et c ad d prima r quarta equat cōposite ex c ad d et a ad b secūda et tertia. quod intēdebat. Idem quoq in tribus efficies. Sint a/b/c: et tres nūeri qui pparenf b/d/f. dico eandem compositam eē ex a ad b / c ad d / e ad f: et ex c ad d / a ad b / e ad f: nam per immediate mōstrata eadem ē pposita ex a ad b / c ad d / et ex c ad d et a ad b: ergo pportiōe e ad f vtriq addita: pportiōes erūt equales. qđ erat pbandum. dico item eādem eē compositam ex a ad b / e ad f / c ad d: et ex e ad f / a ad b / et c ad d. Nam per nup mōstratu eadē est pportio cōposita ex a ad b et e ad f: et ex e ad f / a ad b. ergo ppor tione c ad d: vtriq adiecta fūt pportiōes a ad b / e ad f / et c ad d. item e ad f / a ad b / r c ad d: apinuicem equales. qđ pponebat pbandum. Et ita alias cōbinatiōes pba et adiuuatibus trib⁹: de q̄ttuor expedi Et ita cōsequēter.
+
+->¶ Quinti elementox Arithmeticis Jordani finis.<-
+
+---
+
+Altera numero% dicitur: quox multiplicatiõe: numeri pducūtur. Superficialis appellat numerus: qui duobus lateribus continetur. Solidus vo qui sub tribus: ex quox ptinua multiplicatione habet pcreari. Quadratus est numerus supficialis equalibus lateribus cōtētus. Altera parte longioz: est cuius latera sunt inēqlia sed sola vnitate distātia. Cubus est numerus solidus equalibus consistens in lateribus. Similes dicūtur numeri siue supficiales siue solidi: quox latera sunt proportionalia.
+
+---
+
+<margin>1</margin>
+<image-desc>A marginal diagram for Proposition 1. Three horizontal lines labeled 'a', 'b', and 'c'. Line 'a' is length 4. Line 'b' is length 6. Line 'c' is length 9. Numerical markers 2 and 3 are shown with curved brackets between the lines. Below the lines is the Roman numeral I.</image-desc>
+¶ Si tres numeri fuerint in sua proportione mīmi: duo extremi erunt quadrati.
+¶ Sint a b c tres nūeri cōtinue proportionales in sua pportiōe mīmi: dico a esse numerum quadratū atq siliter c esse numerum quadratum. Nā per septimā quarti erit vnus medius pportiōālis int a r vnitatē qui sit d: et siliter vnus inf c et vnitatem qui sit e. quia ergo quoties vnitas in d toties d est in a: ergo d in se ductus multiplicat / atq pducit a. est g a quadratus. nam d r d eius latera sunt equalia Et qz etiam quoties vnitas in e toties e est in c: ergo e in se ductus pducit c. quare c etiam quadratus. quod est propositum.
+
+---
+
+<margin>2</margin>
+<image-desc>A marginal diagram for Proposition 2. Four main horizontal lines labeled 'a' (8), 'b' (12), 'c' (18), and 'd' (27). Below them are three lines labeled 'e' (4), 'f' (6), and 'g' (9). At the bottom, further labels 'h' and 'i' (possibly 'l') appear below line segments. The numeral I is centered at the bottom.</image-desc>
+¶ Si fuerint quattuoz numeri in sua proportione mīmi: duo extremi erunt cubi.
+¶ Sint a/b/c/d quattuoz numeri ptinue proportiōales: in sua proportiōe minimi. dico a cubum esse atq d cubum esse. Nam p septimam quarti erūt duo medij pportiōales inter a et vnitatem qui sint e et f: et siliter duo inter d r vnitatem qui sint g et h. et quia quoties vnitas in e toties e in f: ergo e in se pducit f. et quoties vnitas in e toties f in a: ergo e in f siuū quīdē quadratū pducit a. est igit a cubus. et per idem quia quoties vnitas in g toties g in h: ergo g in se pducit h. et quoties vnitas in g toties h in d: ergo g in h suum quadratum: pducit d. quare etiā d cubus. quod est propositum.
+
+---
+
+<margin>3</margin>
+<image-desc>A marginal diagram for Proposition 3. Three horizontal lines labeled 'a' (16), 'e' (20), and 'b' (25). Below these are two smaller lines labeled 'c' (4) and 'd' (5).</image-desc>
+¶ Oīs q̄drati ad quadratū est tanq̄ lateris ipius ad latus altius pportio duplicata.
+¶ Sint duo quadrati a et b: r latus a sit c: et latus b sit d. dico pportiōem a ad b eē tanq̄ pportio c ad d duplicata. duco enī c in d r fiat e. et erit per septimam secūdi a ad e sicut c ad d. et p octauā eiusdez e ad b vt c ad d: est ergo a ad e vt e ad b. at pportio a ad b constat ex pportiōib⁹ a ad e et e ad b: quax quelibet equatur c ad d. est ergo a ad b tanq̄ pportio c ad d duplicata: vt pponebatur.
+
+---
+
+<margin>4</margin>
+<image-desc>A marginal diagram for Proposition 4. Two main lines 'a' (8) and 'b' (27). Intermediate lines 'h' (12) and 'k' (18) sit below them. Further down are lines 'e' (4), 'g' (6), and 'f' (9). At the bottom are the root lines 'c' (2) and 'd' (3).</image-desc>
+¶ Proportio cubi ad cubū: est tanq̄ lateris ad latus triplicata. vnde manifestum est inter quolibet duos quadratos vnū: atq int cubos duo pportiōalik media psistere.
+¶ Sint duo cubi a r b. et latus a sit c: et latus b sit d. sitq e quadratū c: et f quadratū d. inter quos ex demōstratione precedētī est vnus medius pportiōalis qui sit g. dein duco c in e et certū est puenire a: et c in g et pueniat h: et d in f et certū est puenire b: et d in g r pueniat k. manifestū est ex precedētī eandem esse pportiōem e ad g et c ad d: et eādem g ad f et c ad d. sed p septimā secūdi a ad h vt e ad g. quare vt c ad d: et per octauam eiusdem h ad k vt c ad d. et per septimam eiusdē k ad b vt g ad f. q̄re vt c ad d. est igitur quelibet trium pportiōum a ad h / h ad k / k ad b alteri equalis: atq equalis c ad d. sed proportio a ad b ɔstat ex illis tribus. est igit proportio a ad b tanq̄ pportio c ad d triplicata. Et corzelarium ex modo demōstrationis cognitum est r propositum.
+
+---
+
+<margin>5</margin>
+<image-desc>A marginal diagram for Proposition 5 showing three vertical columns.
+Column 1: g (1), a (1), d (1).
+Column 2: h (8), k (4), e (2), and a label b.
+Column 3: c (64), f (16), l (4).</image-desc>
+¶ Quox latera pportiōalia sunt quadratos pportiōales eē: atq si quadrati pportiōales sunt: et latera pportiōalia esse necesse est.
+¶ Sint a/b/c tres numeri ptinue proportiōales: quox quadrati sint d/e/f. dico quadratos d/e/f esse ptinue pportiōales. Itē dico si d/e/f sunt ptinue pportiōales: r a/b/c eox latera eē pportiōalia. Prima pars statim ex decima quinti cognoscitur. et scđa ostendit. Nam quia pportio d ad e p nonā quinti est composita ex pportiōibus a ad b r a ad b: et siliter pportio e ad f ɔposita ex pportiōibus b ad c et b ad c: q̄ pportiōes a ad b et b ad c sunt equales. alioquin p quintam eiusdem singulis addite sue equales: non ɔstituerēt d ad e et e ad f pportiōes equales. qđ est ɔtra hypothesim.
+
+<vocab>Jordanus de Nemore, Arithmetica, proportio, quadratus, cubus, numerus, latus, superficialis, solidus</vocab>

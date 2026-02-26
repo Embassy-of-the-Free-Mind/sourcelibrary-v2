@@ -1,0 +1,24 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, 15V</header>
+
+la prinse, & quand la pyramide se rachetera sera mise au lieu de celle qui l'a rachetée, autrement ne mettras table au lieu de prinse.
+
+## Les nombres lesquels ne se peuuent prendre que par emprisonnement.
+
+<image-desc>A horizontal curly brace spans over the column headers "Pair" and "Nompair".</image-desc>
+
+| Pair | Nompair |
+|:---:|:---:|
+| 2 | 3 |
+| 4 | 5 |
+| 6 | 7 |
+| 153 | 190 |
+
+## Du Priuilege de Pyramide.
+
+Quant à la Pyramide elle represente en soy autant de tables comme elle a de bases et degrez, parquoy prendra ou sera prinse d'autant de tables qu'elle represente en ses bases, par le nōbre quarré en icelles cōtenuz. Et par les mesmes reigles que dessus auons dit des autres tables, reste que si elle tombe en embusche ou assault, ou bien rencontre quelque nombre egal, au respect d'aucunes de ses bases: elle se rachetera (excepté de la plus grande base) baillant vne autre table egale à la base, au respect de laquelle elle est prin
+
+<meta>catchword: se</meta>
+
+<vocab>Rythmomachie, pyramide, emprisonnement, Pair, Nompair, base, degrez, nōbre quarré, prinse</vocab>

@@ -1,0 +1,41 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>283</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>4.cap:</margin>
+
+<image-desc>A decorative woodcut banner with symmetrical floral and foliage patterns, commonly used as a chapter headpiece.</image-desc>
+
+## Das Vierte Capittel.
+### Gründliche verbesserung / des Spieles / so im vorigen dritten Capittel / nach des Damiani, Bericht / gesetzet worden.
+
+Nachdem im vorhergehenden Capittel / des Schwartzen vierter zug / (da Er erstlich / mit dem Soldaten / auf 42. dem Schache / von der W. Königin / n. 2. cap: 3. fürbawet: folgendes / an dessen stat / den König / auß dem Schache / auf 52. n. 18. d. cap: 3. ziehet) nach des Damiani anweisung / außgeführt / und das Spiel / doch daß die nothwendige erinnerungen / dabey nicht unterlassen / vortge- spielet worden: Alß sol nuhn / in diesem Cap: die Andere Art / wan der S. Kö= nig / im vierten zuge / auß dem Schache / auf 52. (d. n. 18.) gezogen wird / (auf daß / die zween fehler / welche Damianus, bey des Schwartzen / sechsten zuge / be- gangen / und drunten n. 2. 7. zu befinden / umb so viel besser erscheinen / und auf seiten des Weissen / die züge / gründlich verbessert mögen) hinwider zur hand genommen werden.
+
+<margin>1.</margin> Wan demnach der Weisse / des K. Soldaten / auf 28. Der cc
+Schwartze / seines K. Soldaten / auf 36: Der Weisse / auf denselben / cc
+des K. Reuter / auf 19. ziehet: Der Schwartze / denselben / mit des K. cc
+Schützen / Soldaten / auß 43. verhütet: Der Weisse / des S. K. Sol= cc
+daten / mit des K. Reuter: Der Schwartze / denselben / mit des K. cc
+Schützen / Soldaten / nimt: und der Weisse / mit der Königin / auß cc
+33. Schach=beut: so ziehet / der Schwartze / den König / (d. n. 18.) auf 52: cc
+Der Weisse / nimt des S. K. Schützen / Soldaten / mit der Königin / cc
+und beut abermahl Schach: Der Schwartze / muß den König / auf cc
+51. ziehen: der Weisse / beut / mit des K. Schützen / auß 30. Schach: cc
+<margin>2. *</margin> Den besten zug / welchen der Schwartze / dagegen gebrauchen cc
+kan / ist der / daß Er / der K. Soldaten / auf 37. ziehe / und den Kö= cc
+nig / mit demselben / bedecke. cc
+
+Oberwehntes setzet nuhn Damianus, im vorigen Capittel / (n. 18.) und hat zwar / so weit recht: Es läst sich aber / auß demselben berichte / ansehen / daß Er / die ursache / warumb das Spiel / auf diese Art / besser sey / nicht verstanden habe: Dan / wan mans also / wie Er anzeiget / vortspielete / es das schlimmeste / und ge= fährlichste Spiel / auf seiten des Schwartzen / das auf der Schach=Tabel / (wie auß folgenden zuersehen) möchte erdacht werden / seyn würde.
+
+Dan / wan der Weisse / mit des K. Schützen / der S. K. Solda= cc
+ten / nimt / und zum zweyten mahl / Schach=beut: (n. 25. des 3. cap: ) cc
+Der Schwartz / den König / auf 42. ziehet: Der Weisse / des K. Ro= cc
+chens / Soldaten / auf 25: Der Schwartze / seines K. Rochens / Sol= cc
+daten / auf 41: Der Weisse / (umb / dem Schwartzen / einen blawen cc
+Dampf / zu machen) nimt der S. K. Reuters / Soldaten / mit des K. cc
+
+<sig>Nn iij</sig>
+<meta>catchword: Schützen</meta>
+
+<vocab>Schach-Spiel, Damianus, Weisse, Schwartze, Schach, König, Königin, Soldat, Reuter, Schütze, Rochen, Capittel, blawen Dampf</vocab>

@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>87</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>image quality: good, some foxing</meta>
+
+<margin>10.cap:</margin>
+
+Ihren gang betreffend / so gehet der eine / wie der ander: (anzudeutend / daß das **Fuß-Volck** / ohne Ordnung und Zwang / wenig nütze sey) gerade für sich: doch / mit diesem unterscheide: daß Sie / wan Sie zum ersten=mahl / auß der Ordnung schreiten wollen / über ein feld / in ein drittes / (umb den Haupt=Steinen / welche hinter ihnen stehen / auf daß dieselbe / nicht alleine zu Scharmützeln / sondern auch / die Strassen zu berennen / und zu beschliessen: und dem Feinde / daß Er so leichtlich nicht gewahr werden möge / was man etwa in der Schlacht-Ordnung vorhabe / oder gegen ihm / ins werck zu richten / gemeinet sey / das gesichte zu verhindern / gelegenheit erlangen: Platz zu geben) für sich hinauß Springen können: so fern es nemlich / dem Spiele zuträglich: dan es ihnen sonsten frey stehet / zum ersten Zuge / auch wol in das nächste feld / nuhr zu treten.
+
+Ob nuhn dieses über=hüpfen der Soldaten / nuhr allein / von des Königes = der Königin = und der **Rochen**-Soldaten / zu verstehen / ist man nicht einerley meynung. Es wird aber gemeiniglich / der **Schützen**- und **Reuter**-Soldaten / insonderheit / dofern kein Schach geboten / noch einiger Stein genommen worden: diese macht auch gegeben.
+
+Sonsten schreiten Sie / nuhr / ein feld für sich / und wird damit angedeutet / daß die Reuter / darunter alle Haupt-Steine / alhie verstanden werden / im felde / besser / alß das Fuß-Volck / marschiren / und fortgeführet werden können.
+
+Wan aber diese Soldaten / auf des Gegeners Soldaten / und andere Haupt-Steine / welche in der nächsten linie / und felde / nach der schräge wertz / auf ihrer farbe / für ihnen stehen / treffen / alsdann können Sie / es sey auf der rechten / oder lincken seite / dieselben hinwegnehmen / und in derselben feld / dergestalt treten: welches dan / die dritte Art ihres ganges ist / und geschicht für sich / nach den ecken zu / wie die Schützen gezogen werden / doch nuhr ins nächste feld / welches dem ihrigen / von farben gleich ist.
+
+Es ist aber der gebrauch / so an etlichen Orten / gehalten wird / alhie auch anzumercken / daß / wan ein Soldat / auf einen andern / auß des Gegeners Hauffen / an den gräntzen / im ersten angriff stosset / keiner für dem andern fürüber gehen / und des geraden ganges / für sich hinauß / ohne schaden sich gebrauchen mag / sondern muß in das eckfeld weichen / und den andern Soldaten darauß nehmen. Gehet Er aber für über / so wird Er doch / vom andern Soldaten / so fern es etwa / dessen hauffen / einigen vortheil bringet / heraußer gehoben / und zwar folgender gestalt: (davon auch / im 4. Cap: des 2. Buches /
+
+<sig>F 3</sig>
+<meta>catchword: weiterer</meta>
+
+<vocab>Schach-Spiel, Soldaten, Fuß-Volck, Haupt-Steine, Rochen, Schützen, Reuter, Schach geboten, en passant</vocab>

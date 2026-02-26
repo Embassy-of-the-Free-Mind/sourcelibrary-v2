@@ -1,0 +1,28 @@
+<language>Italian</language>
+<page-type>dedication</page-type>
+<sig>A 2</sig>
+<meta>catchword: uendo; handwritten library stamps and accession numbers at bottom</meta>
+
+->A<-
+
+# AL MOLTO MAGNIFICO
+## ET ILLVSTRE SIGNOR
+### IL SIGNOR CAMILLO PALEOTTO.
+
+->*Vno delli Signori Quaranta della Magni-fica Città di Bologna.*<-
+
+---
+
+<image-desc>A large decorative initial 'Q' featuring an engraving of a rider on a horse, set within a landscape with foliage.</image-desc>
+
+Quel bellissimo, & diletteuolissimo Giuoco ritrouato dal sapiẽtissimo Pythagora, che gia sei anni dichiarai à uoce à V. S. Illustre in quel libretto composto in lingua latina da Claudio Buxero; & à pena cominciai sopra il tauoliero con li pezzi mostrarglielo, che subito quella col suo bellissimo spirito, & acutissimo ingegno lo apprese di tal maniera, che ne restò di esso padrona; & spesso col signor Francesco Caporacia nostro academico, & meco giuocãdolo la si pigliaua trastullo: hora essendo stato da me composto in lingua italiana, & ridotto in quella maggior facilità, chiarezza, & breuità che ho potuto: e do-
+
+<insert>
+428
+103
+146
+</insert>
+<insert>333726</insert>
+<insert>(RCPXR)</insert>
+
+<vocab>Camillo Paleotto, Pythagoras, Claudio Buxero, Francesco Caporacia, Bologna, Giuoco, Italian, Latin</vocab>

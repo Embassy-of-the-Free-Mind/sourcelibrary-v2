@@ -1,0 +1,31 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>4</page-num>
+<sig>A iiij</sig>
+
+<image-desc>A rectangular woodcut headpiece featuring elaborate symmetrical foliate scrolls, flower blossoms, and vine motifs. Below the headpiece is the title of the work, followed by a text block starting with a large decorative initial 'P' embellished with leaves and vines.</image-desc>
+
+# L'EXCELLENT IEV DE
+## Pythagoras dict Rythmomachie.
+
+Plusieurs de grande do-
+ctrine & erudition, pour
+le soulas & allegement
+des esprits greuez & ap-
+pesantiz par trop grands
+trauaulx & estudes, ia-
+dis ont cherché & in-
+uenté maintes belles recreations & ieux: qui au
+iour d'huy par la nōchallāce d'aucuns, & iniure
+du temps, sont periz. Parquoy voyant les ver-
+tueux par vn tas de ieux vains, & inutils qui
+font restez, couler et perir le temps de leur aage:
+tant s'en faloit que tels ieux les eussent peu rele-
+uer de fascherie que plustost par le regret du tēps,
+lequel en telles vanitez se consumoit: leur ame-
+noient & accroissoient beaucoup plus grand
+dueil & tristesse. Pour donc supplier à l'infir-
+mité humaine, & contenter les Vertueux: nous
+sommes voulu efforcer de choisir vn ieu, qui
+
+<vocab>Rythmomachie, Pythagoras, ieux, recreation, doctrine, erudition</vocab>

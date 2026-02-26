@@ -1,0 +1,52 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>A semicircular diagram at the top left containing the numbers 16 at the top, 10 in the middle arch, and 4 and 6 at the bottom. To the right of it is a horizontal line labeled 'b' with the number 8.</image-desc>
+
+¶ Sit a ad b superpartiens: et oppositus ex a et b sit c. dico c ad a esse superpartientem: et c ad b esse multiplicem superpartientem. Sumo enim ex maiore a: numerum d equalem b: sitque e residuus qui quia a est superpartiens ad b: per diffinitionem erit partes b. et quia c est tamquam a et b: et b: d: et b: b: duplum est ad b: addatque et d: tum est e sup duplum b. at e monstratus est esse partes b: ergo c continet aliquoties b et partes eius. est igitur per diffinitionem c ad b multiplex superpartiens. quod est presentis theorematis secundum. Primum autem quod c sit superpartiens ad a patet. nam quia e est partes b erit ut b sit partes a: alioquin a esset multiplex ad b. quod est contra hypothesim. at c addit sup a quantum est b. est igitur c ad a superpartiens. quod est propositum.
+
+<margin>20</margin>
+¶ Omnis compositi ad maiorem proponentium superparticulari vel superpartiens: ad minorem vero multiplex/multiplex superparticularis vel multiplex superpartiens proportio reperitur.
+¶ Primum quod compositus ad maiorem proponentium sit superparticularis aut superpartiens patet. nam compositus addit super maiorem componentium quantum est minor qui per primam primi erit pars vel partes maioris si pars maioris per diffinitionem compositus ad maiorem componentium est superparticularis. si partes erit superpartiens. multiplex autem ad maiorem nunquam esse potest. Secundum quod compositus ad minorem sit multiplex/multiplex superparticularis aut multiplex superpartiens ostenditur. nam maioris proponentis ad minorem proportio: a divisione aut est multiplex aut superparticularis aut superpartiens aut multiplex superparticularis aut multiplex superpartiens. Si autem maioris proponentium ad minorem proportio sit multiplex: cum minor maiorem numeret et etiam seipsum ipse aliam tres sumptus numerabit totum. quare tunc compositus erit multiplex ad ipsum. et si maior ad minorem sit superparticularis aut multiplex superparticularis per decimam octavam huius compositus ad minorem erit multiplex superparticularis. et si maior ad minorem sit superpartiens aut multiplex superpartiens: per decimam nonam huius erit compositus ad minorem multiplex superpartiens. est igitur totum propositum notum.
+
+<image-desc>A diagram with three horizontal bars of varying lengths. The top bar is labeled 'a' with '8', the middle 'b' with '4', and the bottom 'c' with '3'.</image-desc>
+
+<margin>21</margin>
+¶ Quicunque maioris ad minorem proportio multiplici addatur: tota erit aut multiplex/aut multiplex superparticularis/aut multiplex superpartiens.
+¶ Sit quecunque proportio multiplex data: et alia quecunque maioris ad minus: que per sextam quinti continetur in minimis terminis a/b/c. ita ut a ad b sit data proportio multiplex: et b ad c sit altera maioris habitudinis. dico totam proportionem a ad c esse multiplicem aut multiplicem superparticularem aut multiplicem superpartientem. nam quia a est maior b/et b maior c/ et a ad b proportio est multiplex: per nonam secundi proportio a ad c maior est proportione a ad b. addit igitur proportio a ad c super proportionem a ad b vel numerum. sicque tota erit multiplex vel partem aut numerum cum parte: et sic erit multiplex superparticularis: vel partes aut numerum cum partibus et sic erit multiplex superpartiens. est itaque notum quod dicitur.
+
+<margin>22</margin>
+¶ Si due multiplices coniungantur: composita erit multiplex.
+¶ Nam utraque a numero denominat: quorum si alter in alterum ducatur proveniet numerus a quo per octavam huius denominatur composita: quare erit multiplex. quod est propositum.
+
+<margin>23</margin>
+¶ Data multiplice superparticularem invenire: que cum illa multiplicem constituat. unde perspicuum est ex qualibet multiplice cum tota superparticulari: multiplice uno maioris denominationis provenire.
+¶ Multiplices et superparticulares tote dicuntur: quarum denominatio multiplicis et denominatio partis superparticularis ab eodem numero sumitur. ut dupla et sesqualtera. dupla enim a duobus et sesqualtera similiter sumitur. nam sesqualtera continet totum et unam secundas. tripla et sesquiquarta/quadrupla/et sesquiquarta: et sic deinceps. Sit a quecunque multiplex proportio data et b numerus eam denominans: et sit c proportio superparticularis cuius numerus d denotet partem. sitque d equalis b. et sit e totalis denominatio proportionis superparticularis c: que quidem denominatur ab uno et numero partis. est quia unus in b facit b et pars denotata ab b in b facit unum: ergo tota denominatio educta in b facit numerum uno maiorem b qui sit f: per octavam huius est denominans proportionis composite ex a et c. est igitur proportio composita ex a et c a numero sesdenominata: multiplex. et quia numerus denominans compositam est uno maior numero denominante proportionem a: ex hoc correlarium et totum propositum notum est.
+
+<image-desc>A complex diagram involving arcs and bars. Top left shows arcs connecting letters and numbers: b-4, a-5, c-10, d-20. To the right, another set: a-5, b-2, b-2, c-12 with 1 at the bottom. Below this are more horizontal bars labeled with letters a through f and corresponding numbers.</image-desc>
+
+<margin>24</margin>
+¶ Data superparticulari quotlibet multiplices reperire: quarum quelibet cum illa multiplicem componat.
+¶ Sit enim a data proportio superparticularis et pars que cum uno eam denominat sit b. capio quotquot multiplices voluero: quarum cuiuslibet numerus denominans: sit totu ad b et b pars. et ex modo demonstrationis precedentis a: cum qualibet illarum multiplicium constituet multiplicem/efficieturque propositum.
+
+<margin>25</margin>
+¶ Data multiplice quotlibet sumere superparticulares: quarum quelibet cum ea efficiat multiplicem superparticularem.
+¶ Sit a data proportio multiplex ad quam iubemur quotlibet superparticulares invenire: quarum quelibet cum ea constituat multiplicem superparticularem. capio b numerum denominantem proportionem multiplicem a: et sumo c/d/e/f quotquot voluero multiplices ad b: et partes ab ipsis denotatas per ordinem. et capio superparticulares denotatas a partibus c/d/e/f: que sint g/h/k/l quarum qualibet cum data multiplice dico constituere multiplicem superparticularem. nam quia g superparticularis sumpta ab c et sua parte: denominata a toto et parte denotata ab c. et b in toto c semel est: tuit multiplicet: et in parte constituit totam ptem quota pars ipse positus sit ad composita per ex a data multiplice et g superparticulari sumpta a pte c constituit multiplicem superparticularem. et eadem ratione composita ex a et h/ et ex a et k/ et ex a et l. quod est propositum.
+
+| 4 | 6 | | 8 | 10 |
+|---|---|---|---|---|
+| d | | | e | f |
+| 2 | 1 | | | |
+| a | | | | |
+| b | | 2 | | |
+| 11 | 10 | | 22 | 10 |
+| 1 | | | | |
+| | 8 | | 18 | 8 |
+| k | | | | |
+| | 6 | | 14 | 6 |
+| h | | | | |
+| 5 | 4 | | 10 | 4 |
+
+<margin>composite</margin>
+
+<vocab>superpartiens, multiplex, superparticularis, proportio, compositus, theorema, denominatio, sesquialtera, Arithmetica, Jordanus de Nemore</vocab>

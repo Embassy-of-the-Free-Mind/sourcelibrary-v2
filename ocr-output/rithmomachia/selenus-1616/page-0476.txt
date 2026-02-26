@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>442</page-num>
+<header>Das Vierte Buch/ vom Schach-Spiel. 10. cap:</header>
+
+9.) Wie/ (2.) der Weisse/ (wan die Steine semtlich/ in ihrer ersten ordnung/ gegen einander stehen) dem Schwartzen/ gleich/ im Andern Zuge/ könne Schach-Mat geben: Dan/ wan der Schwartze/ des K. Schützens-Soldaten/ auf drey und viertzig/ ziehet:
+
+Der Weisse/ des K. Soldaten/ auf zwantzig/ oder acht und zwantzig/ setzet: Der Schwartze/ seines K. Reuters-Soldaten/ auf vier and dreyßig:
+
+Der Weisse/ die Königin/ auf drey und dreyßig/ und gibt Schach-Mat: Dan der Schwartze/ mit seinem Könige/ nicht kan außreissen/ minder denselben bedecken/ noch die W. Königin wegnehmen. Es ist aber/ dieser geschwinde Schach-Mat/ nuhr so weit zu verstehen/ daß er möglich zu geben sey: Dan man sonsten/ keinen finden wird/ der auf gedachte weyse/ sein Spiel anhebe/ und die Steine/ ordne.
+
+Was nuhn/ in diesen beeden letzten Capitteln/ dem gantzen Wercke/ weyter angefüget/ worden/ das hat man/ dem Leser/ zum Beschluß desselben/ noch andeuten/ und damit/ nuhnmehr abbrechen/ und diese Gedancken/ Andern/ (doch daß es mit fleiß/ und in erwesgung aller Züge/ und der intention des *Authoris*, geschehe) zu verbessern/ und zu vermehren/ anheim stellen wollen: Mit dem begehren/ Sie wollen von dieser wolgemeinten Beschreibung/ dieses gantz Sinn-reichen Spieles/ ehe und zuvor/ nicht urtheilen/ biß daß Sie auch/ einen rechten grund/ darinnen geleget/ und nach nottürftiger unterweisung/ sichs wol bekand/ und gemein/ gemachet haben.
+
+---
+
+->F I N I S.<-
+
+<image-desc>A decorative woodcut tailpiece featuring a central stylized mask or grotesque face, surrounded by elaborate scrolling acanthus leaves, architectural swags, and ribbon-like flourishes.</image-desc>
+
+<meta>catchword: Rythmo-</meta>
+
+<vocab>Schach-Mat, K. Schützens-Soldaten, K. Reuters-Soldaten, K. Soldaten, Königin, Authoris</vocab>

@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>131</page-num>
+<header>1. cap: Vom Schach-Spiel.</header>
+<sig>R iij</sig>
+<meta>catchword: Zuges</meta>
+
+fern man Ihm/ auf dem felde/ dadurch Er gehen sollen/ einen
+Schach/ bieten können/ so hat Er durch dasselbe/ nicht schreiten/ be=
+sondern es sonsten/ umbgehen müssen.
+
+Wan aber die noth herantrit/ so muß der König/ auch Ange=
+führet werden. Und kan derselbe/ alle/ des Andern hauffens Stei=
+ne/ außgenommen den König/ und die Königin/ (weil dieselbe/ so
+wol der Rochen/ alß der Schützen ganges/ sich gebrauchet) doch
+nicht ihren gängen nach/ im nächsten felde/ anfallen/ im folgenden
+Zuge/ wegraumen/ und von der Tafel heben. Ferner/ wan Sie
+Ihm/ in einem felde/ welches nahe an seinem felde/ darauf Er alß=
+dan angetroffen wird/ gelegen/ bloß und ohne entsatzung/ Schach=
+bieten/ kan Er dieselben/ Jah auch die Königin/ (so fern Sie ihm/
+ohne entsatzung/ so nahe gezogen würde: wie dan ein Exempel/ drun=
+ten/ im 4. Buche/ cap: 3. n. 23. zu finden) alßbald hinwegnehmen/
+und sich dergestalt selber der gefahr/ entnehmen. Er kan aber/ dem
+Andern Könige/ nicht Schach-bieten: dan Er sonsten/ sich selber/ in
+den Schach stellen/ und im folgenden Zuge/ von dem Andern/ ge=
+nommen würde. Welches aber zuvoderst/ (wie droben erwehnet)
+wider dieses Spieles gebrauch/ lauffet/ sonsten auch/ vernünftige ur=
+sachen hat. Dan/ wan zween *Potentaten*, in der Schlacht-Ord=
+nung/ gegen ein ander halten/ der anfang der Schlacht/ nicht von den
+hohen Hauptern/ welche über das Krieges-heer/ zu gebieten haben/ es
+seyn Könige oder andere Herren/ angefangen/ viel weniger außge=
+führet wird/ besondern/ die Befehligs-habere/ machen anordnung/
+welcher hauffe/ auf den Feind treffen/ und welche/ denselben entse=
+tzen sollen. Die Könige/ oder Feld-Herren aber/ (welche/ weil an
+ihnen/ nicht wenig gelegen/ und unter ihren Soldaten/ im felde/
+gleichsam/ wie die Seele/ in des Menschen Leibe seynd/ sich billig in
+etwas vorzusehen haben) werden selber nicht zusamen gelassen/ beson=
+dern haben die ihrigen/ von außerlesenen Volcke/ zum schutze/ umb
+sich/ und thun den Obersten und Capiteynen befehlig/ wie die Sol=
+daten/ recht angeführet/ und in acht genommen werden sollen: *(vid:*
+*2. Sam: 18. v. 1. 3.)* Wan es aber/ so ferne gereichet/ daß die Ordnung
+gebrochen/ und es zur Haupt-Schlacht geräht/ auch dahero/ die Feld=
+Herren/ sich nohtwendig selber beschützen müssen/ so hat die Noth/
+alßdan kein Gesetz/ besondern es muß Herr und Knecht/ sei=
+ne Haut schützen/ und auf was wege Er kan/ sich entsetzen/ wer Alß=
+dan streitet/ der streitet: wer liegt der liegt: wer rent der rennet: 2c.
+*(vid: 1. Sam: 31. v. 2. 3. und 1. Reg: 22. v. 32. 33.)* Endlich kan ein Kö=
+nig/ nicht in den Schach ziehen/ wan gleich der Stein/ so ihm/ des
+
+<vocab>Schach, Schach-Spiel, König, Königin, Rochen, Schütze, Potentaten, Schlacht-Ordnung, Feld-Herren, 2. Sam, 1. Sam, 1. Reg</vocab>

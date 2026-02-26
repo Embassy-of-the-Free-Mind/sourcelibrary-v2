@@ -1,0 +1,54 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>461</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+auf dieselbe/ wie folget/ geschrieben: Auf die grösseste/ und unter-
+ste Staffel/ des Weissen/ Turnes/ (welcher sechs Stuffen hat/
+und zu dem hauffen/ der geraden Zahlen/ gehöret) schreibet man
+36: auf die andere/ 25: auf die dritte/ 16: auf die vierte/ 9:
+auf die fünfte/ 4: und dan/ auf die sechste/ und oberste/ 1. Un-
+ten an den fuß aber/ die Summen/ der ietzgedachten zusamen- ge-
+rechneten Zahlen/ nemlich/ 91. Gleicher gestalt/ wird auf die
+erste/ unterste Staffel/ des Schwartzen Turnes/ (welcher der-
+selben fünfe hat/ und bey dem hauffen/ der ungleichen Zahlen ist)
+64: auf die andere 49: auf die dritte/ 36: auf die vierte/ 25: auf
+die fünfte/ und höheste/ 16: Unten am fusse/ die Summe/ dieser
+zusamen gerechneten Zahlen/ nemlich 190, gezeichnet.
+
+> (Buxer: fol: 16. a.
+> *Basis Prima, Pyramidis Parium Numerorum, notetur 6: cc*
+> *Secunda, 5: Tertia, 4: Quarta, 3: Quinta, 2: Sexta, 1. Ab cc*
+> *his sex Numeris, inscriptio Calculorum, & Inferioris Quadra- cc*
+> *ti, pendet. Imparium verò Numerorum Pyramidis, Basis Pri- cc*
+> *ma, notetur 8: Secunda, 7: Tertia, 6: Quarta, 5: Quinta, 4. cc*
+> *Sed quia, tribus gradibus adhuc indiga, quibus ad unitatem cc*
+> *pervenire prohibetur, ideò Tricurta appellatur. Dependet au- cc*
+> *tem, ab istis quinque Numeris, etiam inscriptio Calculorum & cc*
+> *Inferioris Quadrati.)* cc
+
+Diese oberwehnte Zahle/ ob sie wol/ durch ein sonderbares
+künstliches nachdencken/ von dem ersten Erfinder dieses Spie-
+les/ erdacht/ und auß den Abtheilungen/ der Zahl-Kunst/ ge-
+nommen worden: So habe Ich doch/ dieselbe Abtheilungen/ mit
+sonderm fleiß/ stillschweigend vorbey gegangen/ und meinen Be-
+richt/ viel lieber dahin/ wie man gedachte Zahle/ ehe durch den
+Gebrauch/ dan durch die blosse wissenschaft/ erfinden möge/ rich-
+ten wöllen. In erwegung/ die gemühter und gedancken der jeni-
+gen/ welche dieses Spiel/ ohne sonderliche mühe/ zu erlernen be-
+gierig/ mit diesen schweren Abtheilungen/ sonsten verwirret wür-
+den: So könten auch die jenigen/ welche/ von diesen Abtheilun-
+gen/ gantz keine wissenschaft tragen/ dieselben/ so leichtlich/ nicht
+fassen/ noch erlernen.
+
+Zum Beschluß/ sol man bey dem verzeichnen dieser gedachten
+Zahle/ folgendes fleissig inacht nehmen.
+
+1.) Daß Sie/ auf beede seiten/ der Steine/ auf die Weisse/
+mit schwartzer: auf die Schwartze/ mit weisser farbe/ geschrie-
+ben werden.
+
+<sig>Mmm ij</sig>
+<meta>catchword: 2.) Daß</meta>
+
+<vocab>Zahl-Kampf, Rithmomachia, Turnes, Pyramis, Buxer, Tricurta, Parium Numerorum, Imparium Numerorum</vocab>

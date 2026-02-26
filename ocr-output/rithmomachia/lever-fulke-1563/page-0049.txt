@@ -1,0 +1,14 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>C.i.</sig>
+<meta>catchword: ¶ Of</meta>
+
+# The Philosophers game.
+
+By this Table any man though he haue small or no skyll in Arithmeticke, maye learne to playe at this game, and in playinge learne some parte of Arithmeticke.
+
+## ¶ Of takynge by proportion.
+
+If the Gamesters be disposed, they maye take men also by proportion, Arithmettical, Geometrical, or Musicall. But bicause it is not necessarily required that they shoulde so do, I wyll fyrst prosecute the maner of triumph, in which also they maye learne to take by proportion, as afterwarde shalbe seene. For when they can ioyne two or three of their men to one of their aduersaries men in such order as the triumph is set, so that those three or foure numbers haue anye of these three proportions they maye take their aduersaries man.
+
+<vocab>Philosophers game, Arithmeticke, proportion, Arithmettical, Geometrical, Musicall, triumph</vocab>

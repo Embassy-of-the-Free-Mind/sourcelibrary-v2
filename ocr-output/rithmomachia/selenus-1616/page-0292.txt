@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>258</page-num>
+<header>Das Dritte Buch / 1. cap:</header>
+
+> » und vierzig: Der Weisse / auf dieselbe / des K. Schützen / auf
+> » neun und dreyssig: Der Schwartze / dieselbe / (umb sie / mit der
+> » W. Königin zu verwechslen) auf zwey und vierzig: Der Weisse /
+> » nimt sie / mit seiner Königin / und beut Schach: Der Schwartze /
+> » dieselbe / mit des K. Rochens Soldaten: Der Weisse / der S. K.
+> » Schützens Soldaten / mit der K. Reuter / beut Schach / und
+> » gewinnet also / deren Rochen / zusamt dem gantzen Spiele.
+
+Dieses ist nuhn / des Damiani bericht / von dieser Ersten Art / die Schach-Züge zu ordnen / wiewol Er / denselben / mit etwas veränderten worten / nuhr bloß / und unangezeiget einiger ursachen / gefasset und fürgebracht. Es wird aber ein jeder / der diese Züge / also anstellen wil / ob ein solcher anfang zu spielen / fein und zierlich sey / leichtlich abnehmen können. Ob auch wol dem jenigen / welcher ordnung / unterricht und lehr / von diesem Spiele / geben wil / nicht allein / die Art / wie man den Feind sol angreiffen / sondern auch / wie man sich könne beschützen und vertheidigen: zu beschreiben / gleichmessig oblieget und gebühret: So ist doch solches / von obermelterm Portugeser / gantz nicht / inacht genommen: in erwegung / Er / nuhr solche sachen / deren sich kein Spieler gebrauchet / auch nimmer / mit nutzen gebrauchen wird / außgibt. Wie dan ein jeglicher / der dieses Spieles / nuhr ein wenig kündig / itztgeregte Art und anfang / für eine schädliche weyse / zu spielen / muß erkennen.
+
+<margin>13.</margin> Welches dan zufoderst / auß dem erscheinet / da Er / (n. 7 in f.)
+» setzet: Daß * der S. K. Reuter / wan auf denselben / der W. K.
+» Schütze / auf 27. gezogen / mit gewalt müsse verloren seyn: In betrachtung derselbe / (wie auß folgendem Bericht / bestendig / thut erscheinen) wol kan errettet werden: Wan nemlich / der Schwartze / der K. Schützens Soldaten / auf der W. K. Reuter / auf sechs und vierzig ziehet: Dan Er / mit dem Könige / (umb diesen Reuter / ferner zu beschützen: Ob schon der Weisse / der K. Reuter / auf zwey und zwanzig / ziehet: den Schach / von seiner Königin / auß ein und dreyssig / dergestalt abwehret: keine ursache zur verwechslung der Königinne gibt: und seiner K. Reutern / keine luft machet) folgendes auf drey und vierzig / zu springen / und / denselben / dofern Er das Spiel verstehet / dergestalt wol zu vertheidigen / vermag. Ob nuhn schon das Spiel / wegen dessen / daß der König / aufs freye feld / gezogen wird / so gar gut nicht ist: So ist doch dieser Zug / dahin angesehen / auf daß / seiner Steine einer / hiedurch erhalten und beschü-
+
+<meta>catchword: zet werd</meta>
+<vocab>Schach, Damiani, König, Königin, Rochen, Reuter, Schütze, Soldaten, Portugeser</vocab>

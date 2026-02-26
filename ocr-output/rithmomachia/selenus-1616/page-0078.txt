@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>48</page-num>
+<header>Das erste Buch / 4. cap:</header>
+
+<image-desc>A decorative woodcut headpiece consisting of a rectangular border filled with symmetrical, ornate scrolling foliage and floral patterns, featuring a central stylized mask or face.</image-desc>
+
+### Das Vierte Capittel.
+## Von den Schach-Steinen / deren Nahmen / Zahle / Abtheilungen: Imgleichen / dem Schach-Brete / in gemein.
+
+Die sachen / welche diesem Spiele / unterworffen / und / so zu sagen / demselben / die Materie geben / ohne welche es nicht mag insz werck gerichtet werden / sind / (wie im vorigen Cap: erwehnet) die Schach-Steine / oder die kleine Krieges-Mänlein / und dan die Tafel / welche denselben / den Platz und das Feld / darreichet.
+
+Was nuhn die Steine betrift / werden dieselben / (vermöge des vorigen Andern Capitels) von den Griechen / πεσσοὶ ψήφοι ; von den Lateinern Calculi, eigentlich / Latrunculi, Milites; von dem Polyd: Vergilio, Scaci; von uns Schach-Steine / oder Bilder / Schach- oder Krieges-Mänlein genennet.
+
+An der Zahl / sind derselben / zween und dreyssig; und werden / zu vorstehender Schlacht / genug erachtet. Dan / ob wol / die anzahl derselben / etwa zu wenig scheinen möchte / in ansehung / es sich begeben könte / dasz / zu eines angefochtenen platzes beschützung / so wol auch / eines anfalles verrichtung / viele Steine / von nöten seyn müsten / dadurch andere dermassen / dasz zugleich alles hiemit gewaget / und in die Schantze / geschlagen zu seyn / scheinete / geschwechet würden: so kan man doch / nichtes desto weniger / auch mit einem Steine / des anfallenden Feindes / zween oder dreyen / zuzeiten / wol begegnen: sonsten auch / mit einem oder zween / einen guten anschlag / verrichten: davon das ende / des vierten Capitels / im Andern Buche / und die vielfaltige Manieren und Arten des Spiesles / im Andern / Dritten / und Vierten Buche / ein mehrers / berichten werden.
+
+Man theilet Sie aber in zween Hauffen: und ist der eine / von Weisser / der Ander / von Schwarzer farbe. Dadurch dan angedeutet worden / dasz in einem Krieges-Heere / so viel müglich / einerley Art Volckes / bestellet vnd gebrauchet werden solle: in betrachtung / unter vielerley Volckern / misverstand / vernunft und untrew / liederlich zu befahren / auch wenig Nationen, von ihrem
+
+<meta>catchword: Obersten</meta>
+
+<vocab>Schach, Schach-Steine, Krieges-Mänlein, Schach-Brete, Calculi, Latrunculi, Polydore Vergil, πεσσοὶ ψήφοι</vocab>

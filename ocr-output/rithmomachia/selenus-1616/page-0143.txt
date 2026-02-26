@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>113</page-num>
+<header>12. cap: Vom Schach-Spiel.</header>
+
+<image-desc>An ornate rectangular woodcut headpiece featuring symmetrical foliage, scrollwork, and a central human face or mask.</image-desc>
+
+# Das Zwelfte Capittel.
+
+## Von dem nächsten ziel / dieses kunstreichen Spieles / nemlich / dem Siege / und der über-winnung / in demselben.
+
+Nachdem wir nuhn / in den vorigen Acht Capitteln / die Materie / was Sie sey / und wie Sie / auf diesem Spiele / geartet seyn müsse / gnugsam erkläret haben / so wollen wir an itzo / den eigentlichen und nächsten Zweck des Spieles / (welcher / warumb / und was Er sey) ferner betrachten.
+
+Gleich wie nuhn / der Music, eigentliches thun ist / eine liebliche Harmoney / und übereinstimmung / dadurch das gemühte / erfrischet werde / anzurichten: Also gehet die Schach-Kunst / nuhn damit umb / daß sie / durch eine erdichtete lustige Schlacht der Schach-Männlein / einen löblichen Sieg / und über-winnung / dadurch das gemühte / zur freude und ergetzlichkeit / zu bewegen seyn möge / darstelle. Von itztgerürtem eusserstem Ziel / nemlich des Gemühtes erlüstigung: ist im ersten Cap: dieses Buches / gehandlet worden: Der Nächste und aigentliche Zweck / aber / nemlich der Sieg / oder die über-winnung / gehöret / in dieses Capittel.
+
+Es ist aber derselbe / erstlich ein Mittel zu jenem. Dan durch den Sieg / kommen und gelangen wir / zur erlüstigung des gemühtes / nicht allein / wan derselbe / durch das Spielen / (welches ausser zweifel) erlanget / oder / im Spielen / mit allerhand lustigen anordnungen / anschlägen / und anrennen / (wie droben / im ersten Cap: dargethan) gleichsam gezeuget / besondern auch / vor dem Spielen / von den Schach-Ziehern / so zu reden / nuhn concipieret und empfangen worden. Dessen wir zum Zeugen / den Averroëm, (welcher in paraphr: lib: i. Rhet: Aristot: c. 14. pag: 39, also davon schreibet) anziehen wollen:
+
+> Et quadam sunt, quæ illic delectant, sicuti est Venatio, & Scachorum Ludus. Nam Initians, illas res communicat, cum Perito in illis, in Fine, quem intendunt, quæ est Victoria, & delectatur solo Intuitu. Et ab initio rei, sicut delectatur perfectus in eis, & recta Victoria, est jucunda: Das ist:
+
+<sig>P ij</sig>
+<meta>catchword: Es</meta>
+
+<vocab>Schach-Spiel, Sieg, über-winnung, Schach-Kunst, Averroëm, Aristoteles, Victoria, Venatio</vocab>

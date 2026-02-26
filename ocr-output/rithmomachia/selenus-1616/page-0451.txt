@@ -1,0 +1,54 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>417</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Sgg ij</sig>
+<meta>catchword: Wan</meta>
+
+## 7. cap:
+
+ben / zu verhindern) der K. Schützens-Soldaten / auf der S. K. Sol-
+daten / auf dreyßig : **Der Schwartze** / (umb denſelben zu beſchü-
+tzen) der K. Schützens-Soldaten / auf ſechs und viertzig : **Der**
+**Weiſſe** / nimt / der S. K. Soldaten / mit ſeiner K. Schützens-
+Soldaten : **Der Schwartze** / denſelben / mit der K. Schützens-
+Soldaten : **Der Weiſſe** / beut / mit des K. Schützen / auß neun und
+dreyßig / Schach : **Der Schwartze** / bedecket den König / (ſo fern
+Er denſelben nicht ziehen wil) mit der K. Schützen / auf drey und
+funffzig : **Der Weiſſe** / (umb des K. Schützen / zu entſetzen : und
+die Königinne / nebeſt den Schützen / zu verwechſlen) ziehet die
+Königin / auf zwey und dreyßig : ſtercket der geſtalt ſein Spiel / gibt
+anlaß / daß dieſelben Steine / welche ihm etwa überlaſt thun möch-
+ten / weggeſchaffet werden / und erlanget / zu dem gegebenen Reu-
+ter / ſo fern Er ſich nuhr inacht hat / den Sieg dieſes Spieles.
+
+Wan aber **der Schwartze** / (umb dieſen wexel / der Steine /
+zu verhüten) des K. Reuter / auf drey und viertzig / ziehet : ſo ru-
+cket / **der Weiſſe** / der K. Reuter / auf zwey und zwantzig : **Der**
+**Schwartze** / des K. Schützen / auf funf und viertzig : **Der Weiſſe** /
+des K. Reuter / auf zwelfe : **Der Schwartze** / der K. Rochens-Sol-
+daten / auf des W. K. Schützen / auf acht und viertzig : **Der Weiſſe** /
+nimt / mit demſelben / der S. K. Schützen / und beut Schach : **Der**
+**Schwartze** / nimt ihn / mit des K. Reuter : **Der Weiſſe** / der S.
+K. Schützens-Soldaten / mit der K. Reuter : **Der Schwartze** / zie-
+het / auf denſelben / und des W. K. Reuters-Soldaten / die Königin /
+auf vier und dreyßig : **Der Weiſſe** / (umb den Soldaten / zu beſchü-
+tzen) der K. Reuter / (auß der gefahr) auf ſieben und zwantzig : und
+bringet dergeſtalt / ſeine Steine / in eine gute ordnung.
+
+<margin>13.</margin>
+Wan aber **der Weiſſe** / nicht des Königes / auf 20. (n.2.) beſon-
+dern / (umb / den Schwartzen / in eine unordnung zu bringen) der
+<margin>14.</margin>
+K. Soldaten / auf neun und zwantzig / rucket: * ſo ſpielet **der**
+**Schwartze** / des K. Soldaten / auf acht und zwantzig : **Der Weiſ-**
+**ſe** / der K. Schützens-Soldaten / auf dreyßig : **Der Schwartze** /
+ſeiner K. Schützens-Soldaten / auf ſechs und viertzig : **Der Weiſſe** /
+der K. Schützen / (auf daß derſelbe / nicht eingeſchloſſen werde) auf
+ſieben und zwantzig : **Der Schwartze** / der K. Soldaten / auf der
+W. K. Schützens-Soldaten / auf ſieben und dreyßig : **Der Weiſſe** /
+(umb / denſelben / durch des K. Schützen / zu verthetigen) deſſen Sol-
+daten / auf zwantzig : wird alſo / ſeine Steine / frey haben / und mit
+denſelben / dem Schwartzen / wol obſiegen.
+
+<vocab>Schach, König, Königinne, Soldaten, Schützen, Reuter, Rochens-Soldaten, Schach-Spiel</vocab>

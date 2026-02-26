@@ -1,0 +1,106 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>I</page-num>
+<meta>
+catchword: multipliciter
+signature: e
+</meta>
+
+<margin>
+<image-desc>
+A vertical stack of five horizontal lines of decreasing lengths. From top to bottom:
+- a: length 12
+- b: length 8
+- c: length 7
+- d: length 6
+- e: length 4
+</image-desc>
+</margin>
+
+# COmnis numerus minor: maioris aut pars est aut partes. <margin>1</margin>
+
+¶ Sint a/b/c/d quolibet numeri: a maior: et b c d minores. dico b esse partem aut ptes a: et c et d silr' Nam aut minor numerat maiorem vt d numerat a: et tunc ꝓ diffinitionem est pars a. aut mioꝛ nō numerat maiorem quēadmodum b non numerat a: sed est alius eos cōiter numerans qui sit e. et tunc quoties e fuerit in b minoꝛe: tot partes b minoꝛ per vltimam diffinitionem erit a maioris. qđ si mioꝛ non numerat maiorem vt c: non numerat a: neq; numerus cōis eos numerat: cum per quintam conceptionem cuiuslibet numeri vnitas sit pars ab ipso denomiata: per vltimam diffinitionem idem efficis. constat igitur oēm minorem maioris esse partem aut partes.
+
+<margin>
+<image-desc>
+A diagram of eight horizontal lines of varying lengths, labeled from top to bottom:
+- e: 12
+- b: 8
+- f: 6
+- d: 2
+- a: 6
+- g: 8
+- h: 6
+- c: 4
+</image-desc>
+</margin>
+
+# OMnis numerus / circum se positorum & equaliter ab eo distantium est medietas. <margin>2</margin>
+# ¶ Et si eorūdem fuerit medietas: illos ab eo equidistare conueniet.
+
+¶ Sit a quicunq; numerus: et b et c circumpositi et ab eo equidistantes. b maior: et c minor. et sit d differentia cōmunis eadem b ad a: et a ad c. sitq; e numerus cōpositus ex b & c. dico a esse medietatem e. et si a sit medietas e: dico b et c circumpositos equidistare ab a. Primum autem sic ostenditur. nam a cum a superat c: tm̄ b superat a. dempta ergo d cōi differentia ab b: per scđam partem none dignitatis residuū b equatur a. sed et eadem differentia d addita c qđ sit f per primam partem eiusdē dignitatis equatur a. ergo per decimū ꝓloquiū residuū b et f que eidem numero a equātūr: int' se equabūtūr. sed residuum b et d et c sit f ꝓ decimasextā dignitatem equatur e. igitur & residuū b & f que equant' residuo b et d et c simul etiā equātūr e. et residuū b & f monstrata sunt equalia. igitur f est medietas e sed f monstratus est equari a: igitur a medietas est e. qđ est primum. et in oibus alijs cōsimili agatur argumento. Scđm aut sic pʒ: sit a medietas numerorū b & c simul iunctorū. si b & c non equidistant nūero a: eoꝛ differentie ad a per diffinitionem nō sunt equales. sit igitur d differentia a ad c illoz numeroꝛ minimum addo d ad a: & compositus sit g. qʒ igitur a ad c differētia est d eadem differētia est g ad a igitur per diffinitionem g & c equidistāt nūero a. qʒ ergo g & c equidistant a per immediate mōstratū a ipsoꝛ simul iunctoꝛ est medietas. sed a ponit medietas b & c simul iunctoꝛ. per tertiā igit' ꝓceptionem b c simul: et g c simul eiudē numero a eque multiplices adinuicem sunt equales. ab utroq; igitur dempto cōi numero c per undecimā cōem scientiam residuū b et g adinuicem sunt equales. que igitur differentia g ad a: eadem erit b ad a. quare equidistabūt b & c ab numero a. qđ est cōtra hypothesim et propositum.
+
+<margin>
+<image-desc>
+Seven horizontal lines labeled:
+- c: 16
+- e: 12
+- a: 10
+- g: 6
+- b: 6
+- f: 2
+- d: 4
+</image-desc>
+</margin>
+
+# SI duo numeri a duobus numeris circum se positis equaliter distant: illis ꝓiūctis erunt equales. <margin>3</margin>
+# ¶ Et si eis equales fuerint: ab ipsis equidistare necesse est.
+
+¶ Eadem que in precedenti demōstratio est. Sint igit' a et b inter c et d equidistātes: c maximus et d minimus et f differētia cōis: sitq; e ꝓpositus ex c & d: et quia e ad a sit g. dico numeros a b simul iunctos equales esse c d simul iūctis. et ꝓtra si c d simul iuncti sunt equales a b simul iūctis: a b equidistantes esse c & d. Primū patet: nam cũ d differētia sit a ad c est eniz d numerus quo superat a numerū c: qđ oĩa extremorū a & c cōstabit ex d & differētijs scđ extremoz ad medium c. est eni vt ostensum est d differētia a ad c et f differētia c ad a per hypothesim: cū posita sit f cōis differētia c ad a et b ad d. at qʒ b cōstat ex eisdem: qđ patet nam cū f sit differētia b ad d: ea liquitē differētia f addita minori numero d ꝓ nonā ꝓceptiōem reddit b. est itaq; b equalis g. quare e cōstabit ex a b: cū per ꝓceptiōē ꝓstituatur e ex a et g sua quidem differentia ad a: que equatur ipsi b. Sunt igitur a b iūcti et c d iuncti eidem tertio e equales: adinuicem equales. qđ est primum.
+
+<margin>
+<image-desc>
+Seven horizontal lines labeled:
+- c: 16
+- e: 12
+- h: 10
+- h: 10
+- a: 6
+- b: 6
+- d: 4
+</image-desc>
+</margin>
+
+Rursum dico si c d simul equantur a b simul: etiā a b equidistare c & d. Nam capio h qui equidistet ad c qđ tum b ad d: qui h b quia sic equidistabunt: per immediate monstratum h b simul equātūr c d. sed et a b ponūtur eisdem c d simul iunctis equari. quare h b et a b eidem tertio equales: adinuicem equabūtur. Subtracto igitur ab utroq; cōi b: remanent ꝓ cōem sciām h et a adinuicem equales. ergo equalis differētia a ad c et b ad d. quare ꝓ diffinitionem adinuicem equidistabunt. quod est scđm atq; totum propositum.
+
+<margin>
+<image-desc>
+Two mathematical diagrams using arches. 
+Left diagram: A large arch labeled 10 covers two smaller arches labeled 2 and 8, with letters a, b, c.
+Right diagram: A large arch labeled 30 covers several smaller segments. Another arch labeled 24 covers three segments. Below are fractions or divisions: b | 2 | 2 | 2 | 8 | 8 | 8 | d.
+</image-desc>
+</margin>
+
+# SI fuerit primus secūdi quota pars tertius quarti: erunt primus et tertius tota pars secundi & quarti: quota primus secundi. <margin>4</margin>
+
+¶ Sit a primus numerus: b secundus: c tertius: et d quartus. quia a tota pars est ipsius b: quota ps c est ipsius d: intelligo b et d in similes illas partes diuisos. et quia prima vnius cum prima alterius est tanḡ a c: et similiter scđa cum secūda. et hec coniūctio toties fieri potest quoties ꝓmus in secūdo. toties igitur numerus equalis a c ꝓmo et tertio: sumi potest in b secūdo & quarto: quoties a in b. quare a c simul primus et tertius per diffinitionem erūt similis et tota pars secundi et quarti quota primus secundi. quod est propositum.
+
+<margin>
+<image-desc>
+Two arched diagrams. The first has 12 over two parts 3/1 and 9/3 labeled a, g, h. The second has 20 over parts 5 and 15 labeled c, b.
+</image-desc>
+</margin>
+
+# SI fuerit primus tote partes secundi quote tertius quarti: erunt primus et tertius tote partes secundi et quarti: quote primus secundi. <margin>5</margin>
+
+¶ Sit ut prius primus numerus a: secundus b: tertius c: et quartus d. sitq; a partes b sumpte fm e et denominate in b fm f. sitq; g vna illaz partium a: et h vna partium c. cũ igitur ꝓ primus tota pars sit b secūdi quota h tertius est d quarti: per premissam compositum ex g et h ꝓmo & tertio tota ps erit b & d secūdi et quarti: atq; denominata fm f. at partes a et c sumūtur fm e: erunt igitur partes a et c ad b & d sumpte fm e: et denominate fm f. quare et similes et quote partes fuerit a in b. qđ est propositum
+
+<margin>
+<image-desc>
+Two lines labeled f (length 5) and e (length 3).
+</image-desc>
+</margin>
+
+# SI fuerint quolibet numeri totidem aliis eque multiplices: erit quoq; compositus ex eis composito ex illis eque multiplex. <margin>6</margin>
+
+<vocab>arithmetica, medietas, pars, partes, multiplex, equidistare, differentia, denominata, propositum</vocab>

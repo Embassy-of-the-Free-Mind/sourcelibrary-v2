@@ -1,0 +1,33 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>15</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap.</margin>
+*Quem gens illa, canens prisca, vocat nunc Osigerium, ,,*
+*Primates Procerum consilij clavibus intimis, ,,*
+*Aulam corde tenent, sed manibus prælia digerunt, ,,*
+*Coram Rege. Duci nempe tener Filius extitit, ,,*
+*Urbanos sales, intra genus, tum puer imbibit, ,,*
+*Huic Ludo Tabulæ, Regis erat Filius obvius, ,,*
+*Donec doctior hic, obtinuit promptiùs Aleam, ,,*
+*Rixam victus agit, corde Patris fortè potentius ,,*
+*Et Rocho jaculans mortiferè — — — adegerat. ,,*
+*Sublatum Puerum consequitur Mors properantior, ,,*
+*Clàm funus tegitur, — — — ,,*
+
+Diese itzt erzehlte Historie / hat auch / das *Chronicon Bavariæ, Andreæ Presbyteri, Ratispon: à Marq: Frehero, editum, pag: 17.* nebest Andern / fast gleiches Schlages / beschrieben.
+Eine alte geschriebene Bayerische Chronick / meldet / von H. Albrecht / und H. Okarus / wie folget :
+> Die zween Fürsten / hetten nit mer / dan einen Sun / ,,
+> der ward erschlagen / in seinen Jungen tagen / mit einem ,,
+> SchachZabelpret / an König Pipinus Hofe von Franckrich / ,,
+> von einem Andern Jungen Fürsten. ,,
+
+Daß (8) ein Schachzieher / wan Er schon verlieret / keinen Schaden empfindet / dieweil das Spiel / ohne Jehnigen unkosten / und geld-Spildung / seiner Art nach / (davon droben / in der 3. Aigenschaft erinnert) sol verrichtet werden. Und / ob Er gleich / den kürtzern Ziehen / und dem Andern / den Lob des Sieges / überlassen muß / ihm selber / daß Er seine Steine / nicht besser geordnet / und inacht gehabt; nuhr zu zuschreiben hat / und kan deswegen / mit dem Andern / seinem Gegener / keinen Zanck / billig anfahen.
+
+Es hat diese affecten, begierden oder bewegnußen des gemühtes / in zwoen Personen / (deren die eine / im spielen sehr sittsam / und ihre begierden / im Zaum zu halten gewust : die Andere aber / auf beeden seiten / denselben / den Zügel / gar schiessen lassen) *M. Giouanni Boccaccio*, (welcher im 1313 Jahre / nach Christi Geburt / gebohren / und im 1375 Jahre / cœlebs gestorben) *nel libro sesto, del suo Filocopo, carte 262*, für etwa dritte halb hundert Jahren / sehr artig abgebildet : dessen wort wir / dem Leser zur lust / zum beschluß / der beeden / itzt vorerzehleten nutzen / anhero setzen wollen :
+
+<sig>C</sig>
+<meta>catchword: Et do-</meta>
+
+<vocab>Schach-Spiel, Chronicon Bavariæ, Andreas Presbyter, Ratispon, Marquard Freher, König Pipin, SchachZabelpret, Giovanni Boccaccio, Filocopo, Schachzieher</vocab>

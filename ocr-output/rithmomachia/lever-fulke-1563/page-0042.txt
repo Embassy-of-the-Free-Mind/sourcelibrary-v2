@@ -1,0 +1,12 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>catchword: angle</meta>
+
+men or some of them (the rest standing nearer) doe stande in L.M.P.R. And this is sufficient for Obliuion, by which euery man may be taken in maner and forme as it hath bene taught.
+
+### Of taking by Addition.
+
+When two numbers are so brought that they fynde one of their enemies, which is as muche as bothe they beyng added together, standing in such place as bothe they might remoue into, they shall take hym up, without remouing into his place, so soone as the latter of those two is set downe, but if the aduersaries men be in their daunger before they remoue, one of them whether the player lyst, shalbe remoued into the place of that man which is taken by Addition. As for example .12. the triangle is in .A. if you can bring sixe the rounde, to stande in .B. and .6. the triangle to stande in .G. because .6. and .6. beyng added make .12. and bothe maye remoue to .A. you maye take up the tri-
+
+<vocab>The Philosophers game, Rythmamachia, Addition, Obliuion, William Fulke</vocab>

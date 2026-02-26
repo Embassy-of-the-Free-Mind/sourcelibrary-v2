@@ -1,0 +1,32 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Heavy bleed-through from the reverse page; high contrast scan.</warning>
+<meta>catchword: wynne</meta>
+
+men and .9. caracters conteyne somewhat 
+more then .100. so that there be not .100. 
+upon one man, as in the victorie before.
+
+### Victorie of standers.
+
+They haue inuented another victo- 
+rie, that is of standerdes, by coun- 
+terfeyting two armies, one of the 
+Christians, another of the Turkes. 
+The whyte men, that is the euen hoste, 
+conteyneth .1312. footemen (not compting 
+the rootes of squares expressed in the 
+kynges) let the first and last be captaines 
+and let them deuide the whole armye 
+into .10. standerds so euery standerd shall 
+haue .130. men, besyde the two captaines 
+and the ten standerd bearers. The black 
+men, the is the odde armie (except the kings 
+rootes) be .1752. The two captaynes and 
+ten standerd bearers taken out, there re- 
+mayneth .1740. souldyers, to euery stan- 
+derd .174. He that wynneth more stan- 
+ders hath the victorie. If the euen hoste
+
+<vocab>Philosophers game, Rythmomachia, standerds, Christians, Turkes, rootes of squares, captaines, souldyers</vocab>

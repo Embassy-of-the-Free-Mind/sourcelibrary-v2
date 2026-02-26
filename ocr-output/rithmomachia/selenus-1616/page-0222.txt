@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>192</page-num>
+<header>Das Ander Buch / 10. cap:</header>
+
+nimt/besondern des K. Schützen / auf sieben und vierzig / ziehet: so 
+nimt der Weisse / des S. K. Soldaten/ mit seiner K. Soldaten/ und 
+ziehet / auf des S. K. Reuter: Der Schwarze / nimt mit demsel- 
+ben / des W. K. Soldaten / und ziehet ihn / auf des W. K. Schützens-
+<margin>11.</margin> Soldaten: * Der Weisse / rucket auf ihn / und des S. K. Schü- 
+tzens=Soldaten / seine Königin / auf sieben und dreyßig / erlanget durch 
+diesen Zug/ entweder einen Soldaten / oder Reuter / und bringet sein 
+Spiel/ nicht allein/ in einē bessern stand/ besondern etwa/ gar zum ende.
+<margin>12.</margin> Wan aber der Weisse / seine Königin / auf 37. (n. 11.) nicht zie- 
+het / besondern / des S. K. Schützens=Soldaten / mit seines K. Schü- 
+<margin>13.</margin> tzen/ wegnimt / und Schach=beut: * so nimt ihn / der Schwarze / 
+mit dem Könige / nicht weg/ (dan Ihm sonsten / der Weisse / mit der 
+Königin / auf neunzehen / Schach-gebe/ und seines K. Reuter / noch zu 
+dem Soldaten / erlangete) besondern rucket denselben / auf neun und 
+funfzig: Der Weisse / die Königin / auf des S. K. Reuter / und zu be- 
+schützen / seines K. Schützen / auf neunzehen / und hat also / es ziehe 
+der Schwarze / gleich was Er wil / ein gutes Spiel. Dan/ wan der- 
+selbe / den gedachten Reuter / auf die W. Königin / und des W. K. 
+Schützen / auf vier und dreyßig / ziehet: Der Weisse / denselben / 
+mit der K. Schützen / nimt / und ihn / auf die S. Königin / ziehet 
+Der Schwarze / nimt ihn / mit derselben / und ziehet / auf der W. 
+K. Soldaten: Der Weisse / setzet / des K. Schützen / auf sieben und 
+dreyßig / und beut / von seiner Königin / Ab=Schach: Der Schwar- 
+ze / muß den König / entweder / auf sechzig / oder zwey und funfzig / 
+ziehen: Der Weisse / beut / mit der Königin / auß ein und funfzig / 
+abermaln Schach: Der Schwarze / ziehet den König / (weil er / 
+nach keinem andern orte / die flucht / nehmen kan) auf ein und sechzig: 
+Der Weisse / des K. Schützens=Soldaten / auf die S. Königin / auf 
+sieben und zwanzig / beschützet also / obgedachten der K. Soldaten / 
+und verhindert / daß die S. Königin / Schach / (dessen wegen sonsten / 
+seiner K. Roche / wan diese S. Königin / der K. Reuters= Soldaten 
+nehme / verloren würde) auß sechse / nicht geben kan.
+<margin>14.</margin> Wan aber der Schwarze / seinen König / nicht auf 59. (n. 13.) 
+besondern / auf zwey und funfzig / ziehet: so rucket der Weisse / die 
+Königin / nicht auf neunzehen / besondern / mit mehrem nutzen / auf 
+sieben und dreyßig: Der Schwarze / nimt / des W. K. Schützens- 
+Soldaten / mit seines K. Schützen / und beut Schach: Der Weisse / 
+(weil der S. Schütze / einen aufwarter / an seines K. Reuter hat / und 
+ihn / deßwegen nicht wegnehmen kan) ziehet / den König / auf zwelfe:
+
+<sig>d 2</sig>
+<meta>catchword: * der</meta>
+
+<vocab>Schach, Königin, Reuter, Schütze, Roche, Soldat, Ab-Schach, Spiel</vocab>

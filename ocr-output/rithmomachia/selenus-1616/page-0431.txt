@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>397</page-num>
+<header>4. cap: Vom Schach-Spiel.</header>
+
+Schwartze / wan der Weiße / des K. Reuters Soldaten / auf sei- „
+nes K. Reuter / auf 34. ziehet: denselben / auf 37. setzen sol: Der „
+Weiße nuhn / kan des S. K. Soldaten / entweder / mit der Königin /
+oder mit des K. Schützen / nehmen: Ob nuhn wol besser ist / ihn /
+mit der Königin zu nehmen: so setzet Er doch (n. 10.) daß es / mit des „
+K. Schützen / verrichtet werden sol: darauß doch / die schädlichsten „
+Züge / so da seyn mögen / erfolgen.
+
+<margin>22.</margin> Wan aber der Weiße / nach unser meynung / nicht / mit dem
+Schützen / (n. 10. und n. 21. in f.) besondern / mit der Königin / des S.
+K. Soldaten / mit mehrem nutzen / nimt: so raubet / der Schwartze /
+des W. K. Soldaten / mit seiner K. Schützen / und ziehet ihn / auf die
+W. Königin: Der Weiße / nimt / mit derselben / die S. Königin /
+und beut Schach: Der Schwartze / nimt dieselbe / mit des K. Reu-
+ter: (dan sonsten / der Weiße / mit des K. Schützen / denselben wür-
+de wegnehmen) Der Weiße / der S. K. Reuters-Soldaten / mit des
+K. Schützen / ziehet auf dero Rochen / gewinnet einen Soldaten /
+zum Vortheil / und erlanget also / (unangesehen der Damianus, daß
+ihm gantz nicht zu helfen sey / vermeynet) ein gutes Spiel.
+
+<margin>23.</margin> Nuhn gesetzet / daß der S. Soldat / nicht mit der W. Köni- „
+gin / (n. 22.) besondern / mit dem W. Schützen / (d. n. 10.) wegge- „
+nommen werde: so spielet / der Schwartze / des K. Reuter / auf die „
+W. Königin / auf 27: Der Weiße / dieselbe / auf ihn / auf 19: Der „
+Schwartze / nimt / des W. K. Soldaten / mit der K. Schützen: „
+
+<margin>24. *</margin> Der Weiße / (n. 11.) des S. K. Reuter / mit der Königin (unan- „
+gesehen dero Soldat / umb des K. Schützen / zu verthetigen / und
+der K. Schützen / auf den gedachten S. Reuter / den Paß zu eröff-
+nen: auf ein und zwantzig / mit mehrem nutzen / gezogen würde)
+Der Schwartze / des W. K. Schützen / mit der K. Schützen / „
+und ziehet ihn / auf des W. K. Rochen: Der Weiße / denselben / „
+auf 2. auf ein schwartzes feld: (auß ursachen / deren d. n. 11. er- „
+wehnung geschehen) Der Schwartze / beut / von der Königin / „
+mit dero Schützen / auf 21. Ab-Schach: Der Weiße / stellet / „
+den König / auf 11: Der Schwartze / beut / mit der Königin / auß „
+12. Schach: Der Weiße / ziehet / den König / auf 18: Der Schwar- „
+tze / die Königin / auf 44: Der Weiße / seine Königin / (umb das „
+jehnige / welches n. 13. angedeutet / zu verhüten) auf dieselbe / „
+(n. 13.) auf 26: Der Schwartze / beut / mit des K. Schützen / auß „
+45. Schach: Der Weiße / (n. 15.) ziehet den König / auf 25: Der „
+Schwartze / der K. Schützen / auf die W. Königin / auf 35: „
+
+<meta>catchword: Der</meta>
+
+<vocab>Schach, Königin, Reuter, Soldat, Schütze, Rochen, Damianus, Ab-Schach, Züge, feld</vocab>

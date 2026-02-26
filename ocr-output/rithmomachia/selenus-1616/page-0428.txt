@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>394</page-num>
+<header>Das Vierte Buch / 4. cap:</header>
+
+>> nicht vermag herfür zu bringen : Er aber / kan seine Steine /
+>> füglich und wol / ins feld ziehen.
+
+<margin>6.</margin> >> Wan aber der Weiße / den S. Soldaten / (*n. 4.*) nicht
+>> nimt / besondern / seines K. Reuters-Soldaten / (umb / des K.
+>> Soldaten / zu bewahren) auf sechs und zwanzig / ziehet : so
+>> spielet / der Schwartze / auf des W. K. Reuter / des K. Solda-
+>> ten / auf acht und zwanzig : Der Weiße / (umb denselben / zu be-
+>> schützen) nimt / den S. Soldaten / mit der Königin / auß zwel-
+>> fe / gefangen : Der Schwartze / (umb denselben / auf freye füsse /
+>> hinwider zu stellen) ziehet / die Königin / auf zwey und funfzig :
+>> Der Weiße / (dieweil Er keinen bessern Zug hat) des K. Reu-
+>> ter / auf neun und zwanzig : Der Schwartze / auf denselben / der
+<margin>7.</margin> >> K. Schützens-Soldaten / auf acht und dreyßig : * Der Weiße /
+>> beut / mit der Königin / auß neun und dreyßig / Schach : Der
+>> Schwartze / ziehet / den König / auf ein und funfzig : Der Weiße /
+>> muß / seines K. Reuter / nohtwendig entsetzen : Der Schwartze /
+>> beut / mit der Königin / auß funf und zwanzig / Schach : und er-
+>> langet / mit dero Schützen / des W. K. und dessen Reuters-
+>> Soldaten.
+
+<margin>8.</margin> >> Wan aber der Weiße / mit der Königin / nicht Schach-beut /
+>> (*n. 7.*) besondern / des K. Reuter / (auß der gefahr) auf neun
+>> und dreyßig / ziehet : so spielet / der Schwartze / (umb der W. K.
+>> Reuter / den außfall zu wehren) der K. Soldaten / auf neun
+>> und zwanzig : Der Weiße / des K. Schützen / (welcher Zug /
+>> nicht uneben ist) auf des S. K. Soldaten / auf zehen : Der
+>> Schwartze / der K. Rochens-Soldaten / auf des W. K. Reu-
+>> ter / auf acht und vierzig : Der Weiße / denselben / auf vier und
+>> zwanzig : Der Schwartze / (umb des K. Soldaten / zu beschü-
+<margin>9.</margin> >> tzen) des K. Reuter / auf drey und vierzig : * Der Weiße / auf
+>> denselben / des K. Reuters-Soldaten / auf vier und dreyßig :
+>> Der Schwartze / denselben / auf sieben und dreyßig / und entde-
+<margin>10.</margin> >> cket / auf diesen W. Soldaten / die Königin : * Der Weiße / nimt /
+>> des S. K. Soldaten / mit seines K. Schützen / und ziehet ihn /
+>> auf des S. K. Reuter : Der Schwartze / denselben / auf die W.
+>> Königin / auf sieben und zwanzig : Der Weiße / dieselbe / auf
+>> ihn / auf neunzehen : Der Schwartze / nimt / mit der K. Schü-
+<margin>11.</margin> >> tzen / des W. K. Soldaten : * Der Weiße / des S. K. Reuter /
+>> mit der Königin : Der Schwartze / des W. K. Schützen / mit
+
+<meta>catchword: seiner</meta>
+
+<vocab>Schach, Königin, Reuter, Schütze, Soldat, Rochen, Weiße, Schwartze, Schach-beut, entsetzen</vocab>

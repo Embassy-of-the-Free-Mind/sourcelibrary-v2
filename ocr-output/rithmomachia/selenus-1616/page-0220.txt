@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>190</page-num>
+<header>Das Ander Buch / 10. cap:</header>
+
+<image-desc>An ornamental rectangular woodcut headpiece featuring symmetrical scrolling foliage, floral motifs, and a central stylized blossom.</image-desc>
+
+# Das Zehende Capittel.
+
+## Ist eine beschreibung / der vierten Art / wie / nach derselben / die Züge / anzuordnen.
+
+Die Vierte Art ist : Wan der Weisse / den dritten Zug / (welcher im anfange / des Achten Capittels / zu befinden) endert / für die Königin / auf 12. derselben Schützen-Soldaten / auf zwey und zwanzig / stehet : und der Schwarze / darauf / mit des K. Reuter / auf des W. K. Soldaten / den ein= und anfahl / auß drey und vierzig / folgender massen / thut :
+
+<margin>1.</margin> Der Weisse / ziehet des K. Soldaten / auf 28 : Der Schwarze / seines K. Soldaten / auf 36 : Der Weisse / des K. Schützen / auf 30 : Der Schwarze / des K. Schützen / auf 38 : Der Weisse / nicht die Königin / auf 12 / (wie bey den vorhergehenden dreyen Arten / geschehen) besondern dero Schützens-Soldaten / auf zwey und zwanzig :
+<margin>2.</margin> * Der Schwarze / thut / mit des K. Reuter / auf des W. K. Soldaten / auß drey und vierzig / einen angrif :
+<margin>3.</margin> Der Weisse / rucket der K. Soldaten / auf des S. K. Schützen und Soldaten / auf neun und zwanzig :
+<margin>4.</margin> * Der Schwarze / nimt ihn / mit diesem Soldaten :
+<margin>5.</margin> * Der Weisse / denselben / mit der K. Schützens-Soldaten / und ziehet ihn / auf des S. K. Schützen : * Der Schwarze / beut / mit demselben / auß ein und dreyssig / Schach : Der Weisse / bedecket den König / mit der K. Schützen / auf dreyzehen : Der Schwarze / nimt ihn / mit des K. Schützen / und beut abermal Schach : Der Weisse / nimt denselben / mit der K. Reuter / und beschutzet zugleich / seines K. Soldaten / erlanget auch dadurch ein ziemliches Spiel. Wan aber der Schwarze / gleich darauf / der K. Soldaten / auf des W. K. Schützen und Soldaten / auf sieben und dreyssig / ziehet : so wird dem Weissen / sein Spiel verdorben / derselbe / in einen zweyfel / ob Er schlagen sol / oder nicht / gesetzet / auch seiner K. Schützens-Soldat / gantz unverthetiget / gelassen werden.
+<margin>6.</margin> Wan aber der Schwarze / mit dem Schützen / auß 31. (v. 5.) nicht Schach gibt / besondern denselben / auf sieben und vierzig / ziehet / so stellet der Weisse / die Königin / auf ein und zwanzig / und ordnet auf die weyse / sein Spiel / nicht übel.
+
+<meta>catchword: Wan</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schützen-Soldaten, Weisse, Schwarze, Spiel</vocab>

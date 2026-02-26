@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>289</page-num>
+<header>4. cap: Vom Schach-Spiel.</header>
+
+30. chens-Soldaten : * Der Schwarze/ denselben / mit der Königin : Der Weisse/ gibt/ mit seiner Königin / auß drey und viertzig/ Schach / und kan dieselbe/ von des S. K. Schützen / (weyl derselbe/ von ihrem Schützen/ wird gefangen gehalten) nicht genommen werden : Der Schwarze/ bedecket den König / mit der Königin / auf zwey und viertzig : Der Weisse/ nimt sie/ mit des K. Rochens-Soldaten / und beut / von des K. Rochen / Ab-Schach-Mat.
+
+31. Wan aber der Schwarze/ mit der Königin / den W. Schützen/ (n. 30.) nicht nimt / besondern/ mit seines K. Schützen / der W. K. Schützen / raubet : so ziehet/ der Weisse / des K. Schützen / auf der S. K. Schützen / auf fünf und dreyffig / und gibt / von der Königin / Ab-Schach : Der Schwarze / darf den König / auf neun und viertzig / mit der Königin / nicht bedecken / (dan sonsten dieselbe / mit ihrem Schützen / verloren wehre) besondern / muß ihn / auf vier und dreyffig / ziehen : Der Weisse / beut / mit der Königin / (weyl Er / weder mit derselben / noch des K. Schützen / der S. K. Schützen / nehmen wil) auß acht und funfzig / Schach : Der Schwarze / muß den König / nicht auf ein- oder drey und viertzig / (dan Er sonsten / durch die W. Königin / auß zwey und viertzig / gleich erleget würde) besondern / auf sieben und zwantzig / rucken : Der Weisse / beut / mit der Königin / auß sechs und zwantzig / Schach : Der Schwarze / rucket den König / auf zwantzig : Der Weisse / die Königin / auf des S. K. Schützen / (umb / der Königinne-linie / damit auf derselben / der S. König / wan / ihr Soldat / mit demselben genommen würde / nicht
+
+32. aufreisse / zu verwahren) auf fünfe : * Der Schwarze/ den König/ (auf daß Ihm der Weisse / mit des K. Rochen / auß siebenzehen / nicht Schach-biete/ noch mit der Königin / wan Er/ mit dem Könige / auf sieben und zwantzig / weichen müste / auß sechs und zwantzig/ gleich Schach-Mat gebe) auf sieben und zwantzig : Der Weisse/ nimt des S. K. Schützen / mit der Königin / und beut Schach : Der Schwarze/ rucket den König/ auf achtzehen : Der Weisse/ beut/ mit des K. Rochen / auß siebenzehen / Schach : Der Schwarze/ muß / mit dem Könige / des W. K. Reuters-Soldaten / nehmen : Der Weisse / beut / mit der Königin / auß dreyzehen / Schach : Der Schwarze/ muß / mit dem Könige / auf zwey / rucken : Der Weisse/ beut/ mit der Königin / auß eylfe / oder neune / Schach-Mat.
+
+33. Rucket aber der Schwarze/ nicht den König/ auf 27. (n. 32.) besondern / nimt / mit der K. Schützen / (umb das siebenzehende
+
+<sig>Go ij</sig>
+<meta>catchword: feld/</meta>
+
+<vocab>Schach-Spiel, Königin, König, Schach-Mat, Ab-Schach, Rochens-Soldaten, Reuters-Soldaten, Schützen</vocab>

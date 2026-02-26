@@ -1,0 +1,54 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>22</page-num>
+
+za dc, & la differenza ad alla differenza dc, & la differenza
+ab alla differenza bc, e la differenza bd alla differenza cb.
+La Disdiapasson, l'A alle differenze ab & bd, & il c alla dif-
+ferenza cd, & la differenza ac alla differenza bc.
+Il To no li Bc.
+
+### Quinto Essempio.
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 12. | 15. | 16. | 20. |
+
+La Diapente, il d dalla differenza ad.
+La Diatessaron, li ac, & li bd, & la differenza ab alla diffe-
+renza cd, & la differenza bd alla differenza cd.
+La Diapasson il b alla differenza ad, & la differenza da
+alle differenze ab & bd.
+La Diapasson con la Diapente insieme, il d alle differen-
+ze db & ba & il c alla differenza ca.
+La Disdiapasson, l'A alla differenza ac, & il d alla diffe-
+renza dc, & il b alle differenze db & ba, & la differenza db,
+alla differenza cb, & la differenza ba alla differenza cb.
+
+Hor non ci resta se non scriuer alcuni auuertimenti, o-
+uero regole generali circa le gia dette tre uittorie, & poi
+dar fine al presente trattato.
+
+La prima regola è questa, che bisogna far primamente
+la grande uittoria, poi la maggiore, & ultimamente la mas-
+sima; & che non si puo far la massima, se non si ha prima
+fatto la maggiore : & similmente non si può far la maggio
+re, se prima non si ha fatto la grande.
+
+La seconda regola è, che bisogna far le uittorie giuocã
+do & menandó li pezzi secondo il loro proprio camino.
+
+La terza regola è, che bisogna far le uittorie più che si
+puo con li pezzi dell'auuersario che sono in giuoco, cioè ac-
+commodar i tuoi pezzi appresso quelli dell'auuersario in
+modo che facciano insieme con quelli le uittorie, & astren
+gerlo giuocãdo di menar li suoi pezzi in luoghi, che faccia-
+no le uittorie ò soli, ò insieme con li tuoi; & doue nō suppli
+scono i pezzi dell'auuersario, & li tuoi, che sono in giuoco,
+tu poi seruirti anchor di quelli, che hai fatto prigioni.
+
+La quarta regola è, che bisogna far le uittorie in caselle
+
+<sig>I</sig>
+<meta>catchword: del</meta>
+<vocab>Diapente, Diatessaron, Diapasson, Disdiapasson, Tono, uittorie, pezzi, prigioni, caselle</vocab>

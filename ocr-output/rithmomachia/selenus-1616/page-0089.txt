@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>59</page-num>
+<header>6. cap: Vom Schach-Spiel.</header>
+<sig>H 3</sig>
+<meta>catchword: Ducit</meta>
+
+---
+
+## Das Sechste Capittel.
+
+# Von beeder hauffen Königinnen / ihren Stel-
+# lungen / und Gängen.
+
+<image-desc>A woodcut illustration of a chess queen piece. The queen is depicted as a female bust with a crown and jewelry, resting on a pedestal that resembles a chalice or an ornate lathe-turned wooden base. At the bottom of the illustration frame, the text "Die Königin" is inscribed.</image-desc>
+
+Den Königinnen / weil Sie / in diesem Krieges-heer / das höchste Ampt / eines Feld-Marschalcks / bedienen / seynd vom Erfinder / diese aigenschafften / gegeben worden : daß Sie / ihren Herren / in geschwinder eyl / können zuspringen / und dem Feinde / dürfftiglich zusetzen. Es müssen auch diesselben / wegen dessen / daß bey ihnen / des Spieles Vortheil / und schaden gelegen / billig / mit allem fleiß / in acht genommen werden : in betrachtung / wan sie hinweg sind / man schwerlich / und gar selten / das Spiel / wider kan zu rechte bringen / oder gewinnen.
+
+Es mag aber / vielen / etwa wunder nehmen / warumb eben den Weibern / dieses hohe Ampt / anbefohlen ? Der Erfinder / wird vielleicht / auf die Amazones, (welche / beym Trojanischen Kriege / zu dessen zeiten / dieses Spiel / anfänglich erfunden / das beste gethan : und deren / Virgilius, in folgenden Verschen / seines Ersten Buches / Eneid :
+
+<vocab>Schachspiel, Königin, Feld-Marschalck, Amazones, Trojanischer Krieg, Virgilius, Eneid</vocab>

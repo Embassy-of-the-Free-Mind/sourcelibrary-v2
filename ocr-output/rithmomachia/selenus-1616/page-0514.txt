@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>472</page-num>
+<header>Das Fünffte Capittel/</header>
+
+| Ein Weiſſer Stein. | Die Felder. | Ein Schwartzer Stein. | Ein Schwartzer Stein. | Die Felder. | Ein Weiſſer Stein. |
+|:---|:---|:---|:---|:---|:---|
+| 4. | 3. | 12. | 3. | 2. | 6. |
+| 6. | 2. | 12. | 3. | 3. | 9. |
+| 2. | 6. | 12. | 3. | 5. | 15. |
+| 4. | 4. | 16. | 5. | 3. | 15. |
+| 8. | 2. | 16. | 5. | 4. | 20. |
+| 2. | 8. | 16. | 5. | 5. | 25. |
+| 4. | 7. | 28. | 9. | 4. | 36. |
+| 6. | 5. | 30. | 12. | 3. | 36. |
+| 15. | 2. | 30. | 3. | 12. | 36. |
+| 9. | 4. | 36. | 3. | 14. | 42. |
+| 4. | 9. | 36. | 9. | 5. | 45. |
+| 8. | 7. | 56. | 5. | 9. | 45. |
+| 8. | 8. | 64. | 7. | 7. | 49. |
+| 16. | 4. | 64. | 16. | 4. | 64. |
+| 6. | 11. | 66. | 36. | 2. | 72. |
+| 9. | 9. | 81. | 12. | 6. | 72. |
+| 45. | 2. | 90. | 9. | 8. | 72. |
+| 15. | 6. | 90. | 9. | 9. | 81. |
+| 9. | 10. | 90. | | | |
+| 20. | 5. | 100. | | | |
+| 25. | 4. | 100. | | | |
+| 20. | 6. | 120. | | | |
+| 25. | 9. | 225. | | | |
+
+Folgen die Zahle / welche in dieſem Spiele / durchs Theilen / erlanget / und abgeſchaffet werden können : Vnd ſeynd / auf die lincke ſeite / die Zahle / der Weiſſen / und Schwartzen Steine / und leeren plätze / welche einen Schwartzen / oder Weiſſen Stein / wegtreiben können / geordnet und gezeichnet.
+
+| Ein Weiſſer Stein. | Die Felder. | Ein Schwartzer Stein. | Ein Schwartzer Stein. | Die Felder. | Ein Weiſſer Stein. |
+|:---|:---|:---|:---|:---|:---|
+| 6. | 2. | 3. | 12. | 3. | 4. |
+| 9. | 3. | 3. | 12. | 2. | 6. |
+| 15. | 5. | 3. | 12. | 6. | 2. |
+| 15. | 3. | 5. | 16. | 4. | 4. |
+| 20. | 4. | 5. | 16. | 2. | 8. |
+| 25. | 5. | 5. | 16. | 8. | 2. |
+| 36. | 4. | 9. | 28. | 7. | 4. |
+| 36. | 3. | 12. | 30. | 5. | 6. |
+| 36. | 12. | 3. | 30. | 2. | 15. |
+
+<meta>catchword: 42. 4.</meta>
+
+<vocab>Rithmomachia, Weiſſer Stein, Schwartzer Stein, Felder, Theilen, Spiele</vocab>

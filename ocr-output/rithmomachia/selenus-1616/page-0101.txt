@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>71</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>8.cap:</margin>
+dritte der Königin : und viertes ihres Schützens : (so weit sich dan /
+seines hauffens gräntze erstrecket) folgendes / auf des gegentheiles
+felder / in der Schwartzen Königin = Reuters vierte = und dero Ro=
+chens / dritte feld / gezogen wird. Befindet Er sich aber / mitten auf
+dem plan / etwa im vierten felde / seines Königes : so kan Er / auf vier
+örter treffen / auf zwey / nach seinem gegentheil / und auf zwey / nach
+seinem hauffen. Dan / nach dem gegener hin / auf die rechte seite / für
+sich / trift Er / in des Schwartzen Königes Schützens / vierte : dessen
+Reuters / dritte : und dessen Rochens / andere feld : Auf die lincke seite /
+für sich / in der Schwartzen Königin / vierte : ihres Schützens / drittes
+ihres Reuters / andere : und endlich / in ihres Rochens feld : Nach sei=
+nem hauffen her / auf die lincke seite / in seiner Königin / drittes : Ihres
+Schützens / andere : und ihres Reuters feld : Auf die rechte hand / in
+sein drittes : des Königes = Reuters / andere : und in dessen Rochens feld.
+Ist Er / oder die übrigen drey Schützen / nuhn anderswoh : so rechnet
+man / nach den ecken / von einem felde / zum Andern / und kan / ausz ob=
+gerürtem Berichte / wohin sie können treffen / leichtlich ersehen
+werden.
+
+Man achtet Sie ferner / den Reutern / (von welchen / im folgen=
+den Capittel / weitleuffiger Bericht / erfolgen wird / ) fast gleich :
+Doch / nachdem das Spiel geordnet / könen biszweilen die Schützen /
+biszweilen auch die Reuter / einem mehr dienen / und zu hülfe kom=
+men : so spielen auch etliche / besser / mit den Reutern / dan mit den
+Schützen. Ob man auch wol / in der frage / von dem vorzuge / unter
+den Reutern und Schützen / eigentlich dahin sehen sol / welche / unter
+ihnen / dem Könige / alsz dem fürnehmesten Steine / auf seiner seiten /
+zum meisten helffen und nutzen / oder auf der andern seiten / den grös=
+sesten schaden / zufügen können : so liegets doch gleichwol am Spieler /
+mit welchen Er sich / zum besten behelfen mag. Die fürnehmsten /
+und besten Schach-Zieher aber / können die Schützen / besser / alsz die
+Reuter / zu ihrem vortheil gebrauchen / und das ausz folgenden grün=
+den / und ursachen :
+
+Dan / (1.) wan es auf die letzte kommen / dasz in beeden hauffen /
+nicht viele Steine / mehr verhanden / man mit zween Schützen / oder
+mit einem Schützen / und einem Reuter / nebest dem Könige / leichter
+Schach=Mat geben kan / dan mit zween Reutern / denselben / (wie ausz
+beygefügten Abrissen / zu ersehen) ohn einsperrung des Königes / zu
+wercke richten : es wehren dan etwa / noch etliche Soldaten / welche
+immittelst / (bisz der König / an den rechten Ort / da ihn die Reuter
+fassen möchten / getrieben würde) könten gezogen werden / verhanden.
+
+<sig>K</sig>
+<meta>catchword: Ein</meta>
+
+<vocab>Schach-Spiel, Königin, Schützen, Reuter, Rochen, König, Schach-Zieher, Schach Mat, Soldaten</vocab>

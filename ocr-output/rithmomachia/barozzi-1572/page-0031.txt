@@ -1,0 +1,41 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>13</page-num>
+<sig>D 2</sig>
+<meta>catchword Col</meta>
+<warning>Considerable bleed-through from the verso page is visible, especially at the top and around the table. The diagram at the top is quite faint.</warning>
+
+<image-desc>A rectangular diagram divided into a row of square cells. Two specific cells are marked with the capital letters 'B' and 'C'.</image-desc>
+
+nella casella A, & il 9 triangolo bianco, nella B: & il 25 tõ-
+do nero, nella C. dico che subito che si trouaranno questi
+pezzi in tal sito, si leuarà uia il 25 tõdo nero col summare,
+<margin>tõdo</margin>perche il 16. triangolo bianco accozzato col 9 tondo bian- <margin>triāgol</margin>
+co, fanno la summa del 25 tondo nero, & tutti dui potriano
+andar doue si troua esso tondo nero col proprio loro cami-
+no. Ma quali siano in questo giuoco li numeri, che si posso-
+no uincer col summare, ci dimostra la seguente tauola.
+
+### Tauola de tutti li numeri che in questo giuoco si uincono col summare
+
+| numeri | | | numeri | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Bianchi contra Neri** | | | **Neri contra Bianchi** | | |
+| 4 | 8 | 12 | 3 | 5 | 8 |
+| 8 | 20 | 28 | 3 | 12 | 15 |
+| 16 | 20 | 36 | 7 | 9 | 16 |
+| 9 | 16 | 25 | 9 | 16 | 25 |
+| 4 | 45 | 49 | 12 | 30 | 42 |
+| 15 | 49 | 64 | 9 | 36 | 45 |
+| 2 | 64 | 66 | 28 | 36 | 64 |
+| 9 | 72 | 81 | 16 | 56 | 72 |
+| 36 | 45 | 81 | 25 | 56 | 81 |
+| 9 | 81 | 90 | 25 | 66 | 91 |
+| 9 | 91 | 100 | 49 | 120 | 169 |
+| 49 | 72 | 121 | 64 | 225 | 289 |
+| 72 | 153 | 225 | | | |
+| 72 | 289 | 361 | | | |
+| **Bianchi ac-** | **cozzati.** | **Neri pro-** | **Neri accoz-** | **zati.** | **Bianchi pro-** |
+| | | **dotti.** | | | **dotti.** |
+
+<vocab>giuoco, summare, triangolo, tondo, Bianchi, Neri, accozzati, prodotti</vocab>

@@ -1,0 +1,21 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>3.</page-num>
+
+# PRIMA PARTE
+## NELLA QVAL SI DESCRIVE
+### IL TAVOLIER,
+### ET LI PEZZI.
+
+Il Tauoliero deue esser fatto simile al scachie-
+ro quanto alli quadri bianchi, e neri, nelli
+quali è tutto partito; ma quanto alla forma
+da esso differente, douendosi questo fabri-
+care più lungo, che largo il doppio, cioè di
+8 quadri largo, & di 16 lungo, come se fussero coniunti
+dui scachieri insieme . ilqual chiaramente si uede nella se-
+guente figura.
+
+<image-desc>A vertical rectangular grid representing a game board (tavoliero). The grid consists of alternating light and dark squares in a checkered pattern, measuring 8 squares in width and 16 squares in height, which the text describes as the equivalent of two chessboards joined together.</image-desc>
+
+<vocab>Tauoliero, scachieri, quadri bianchi, quadri neri</vocab>

@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIII</page-num>
+
+->Longitudo.<-
+
+<image-desc>A multiplication table showing the products of numbers 1 through 10. The table is labeled "Longitudo" horizontally and "Latitudo" vertically on the left. The rightmost column provides descriptive names for the ratios of each row relative to the first row. Below the table, there are vertical labels for each of the ten columns.</image-desc>
+
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Compartio ubiq(ue) ad primā |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | Dupla ad eandem. |
+| 3 | 6 | 9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | Tripla ad eandem |
+| 4 | 8 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | Quadrupla ad eandem |
+| 5 | 10 | 15 | 20 | 25 | 30 | 35 | 40 | 45 | 50 | Quincuplā ad eandem. |
+| 6 | 12 | 18 | 24 | 30 | 36 | 42 | 48 | 54 | 60 | Sescupla ad eandem. |
+| 7 | 14 | 21 | 28 | 35 | 42 | 49 | 56 | 63 | 70 | Septupla ad eandem. |
+| 8 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80 | Octupla ad eandem. |
+| 9 | 18 | 27 | 36 | 45 | 54 | 63 | 72 | 81 | 90 | Nōcupla ad eandem |
+| 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100 | Decupla ad eandem. |
+
+<note>Vertical labels below the table columns: 1: Cōpatio ad al- trinsec⁹ primā; 2: Dupla.; 3: Sesqualtera.; 4: Sesquitertia; 5: Sesquiquarta; 6: Sesquiquinta; 7: Sesquisexta; 8: Sesquiseptia.; 9: Sesquioctaua; 10: Sesquinona.</note>
+
+¶ Formata ergo hac mēsula Pythagore ꝛ dispositis ut proponit propositio numerorum ordinibus: dico primo q(uod) si singuli ordines ad primum comparētur puenire per ordinem multiplices. nam cum unitas sit caput prime linee: et secūde linee caput pmusq(ue) numerus sit binarius. est ergo primus numerus scde linee pmo numero duplus ꝛ pmus multiplex. et quia binarius multiplicat omīs nūeros prime linee: et ex multiplicatione ꝛtinue scda linea pcreat ꝛ secūdus numero꛷ ordo. ergo p diffinitiōem quoties unitas in binario toties ꝛtinue singuli pmi ordinis in singulis secundi existunt. igitur singuli secūdi ordinis ad singlos primi dupli sunt atq(ue) eque multiplices. et q2 primus tertij ordinis est triplus pmo primi qui est unitas et ex ꝛtinua multiplicatione singulo꛷ primi ordinis per ipm pducūtur singuli tertij ordinis: ergo p idē qd prius singuli tertij ordinis sunt tripli ad singulos primi ordinis. hac q(uo)q(ue) rōne pbabis singulos quarti ad singulos pmi esse quadruplos: et quinti quincuplos: sicq(ue) deinceps.
+
+Secūdo dico q(uod) si fiat comparatio tertij ordinis ad scōm: ꝛ quarti ad tertium / et quinti ad quartum / et sexti ad quintum: et ita psequēter ꝛtinue supparticularium ordines surgere. nam ꝛtinue videmus singulos horū ꝛ singulos illo꛷ ex ductu duo꛷ primo꛷ numerorum descēdendo ab unitate sumpto꛷ in eos enasci. at per precedētem illi numeri ꝛtinue seriem supparticularium complent. igit(ur) ꝛ singuli posteriois ordinis ad priorem ordinem silēm retinebunt pportiōem. qd est scdm. Tertio dico nūeros qui constant circa diametrum esse quadratos. illi eni sunt quo꛷ caput est unitas: et supremus est oīm maximus quasi lōgissima linea: et numero꛷ ordines quasi ex equo p medium secātes. quos dictmus esse quadratos. nam illos ꝛtinue videbis ex lateribus equalibus pductos uno sp scdm nūero꛷ seriem crescentibus. erūt igit oēs quadrati. et si lineas ad eo꛷ latera equidistāter ptraxeris: ꝛtinue quadratam cōcludes figuram. Quarto dico numeros hinc ꝛ inde quadratis atrinsecus prime adiacētes: esse altera parte longiores. nam oēs illi fm numerorum seriem pducūtur ex lateribus vno distātibus: q(uod) vnum eo꛷ latus sit quadrati latus: et alterū sit vno latere eiusdē quadrati minus. sicq(ue) tota cognoscit(ur) ppositio. Et ex hoc q(uo)q(ue) notum eē potest q(uod) si singuli altera parte lōgiores singulis quadratis quibus atrinsecus circūstātur comparētur: a pportione dupla oēs supparticularium species pcreantur: vt duo primus altera parte lōgio꛷ vnitati primo quadrato cōparatus est duplus. et 6 altera pte longio꛷ ad 4 scōm quadratum relatus per scdm partem huius est sesqualter. et 12 tertius alta parte lōgio꛷ ad 9 tertium quadrati p idem est sesquiti9: et hoc pacto psequēter. ¶ Et idem de supparticulariū speciebus euenerit: si primum altera parte longio꛷em secūdo quadrato / et scōm alta parte lōgio꛷em tertio / et tertium quarto. et hoc pacto deinceps comparaueris. ¶ Et rursum si primum altera parte longio꛷em inter primum quadratū ꝛ scōm collocaueris: similis pportiōū habitudo seruatur / eritq(ue) ꝛtinue pportio dupla. ¶ Et si scōm alta parte longio꛷em / inter scōm quadratum ꝛ tertium collocaueris: ꝛtinue sesqualt(er)a habitudo seruabitur ex prima ꝛ scda parte huius. et ita psequenter reliquas supparticulariū cōiūctas hitudines reperias si reliquos lōgilateros nūeros suis quadratis medios inserueris: ex quibus digna illa ꝛtemplatio ad Pythagoricā ꝛ Platonicam intelligentiam momētum habens q(uod) de quadratis ꝛ alta parte longio꛷ibus diuus Seuerinus 33 capite scōi sue Arithmetices elegantissime affert: vel perfectissima esse potest.
+
+<margin>39</margin> ¶ Si supparticulares ab unitate sumātur: binis ꝛ binis disiūctim cōiunctis prima multiplicium: ac consequēter oīm supparticularium species puenire cōueniet.
+
+<image-desc>A vertical diagram on the right margin mapping letters to a numerical scale.
+k ————— 10
+h ————— 9
+g ————— 8
+f ————— 7
+e ————— 6
+d ————— 5
+c ————— 4
+b ————— 3
+a ————— 2
+    ————— 1</image-desc>
+
+¶ Sint a / b / c / d / e / f / g / h / k / ꝛ tinue ab unitate sumpti supparticulares numeri: ꝛ iungātur distiūctim bini ꝛ bini scz c a . e c . g e . et k g. dico cad a esse primam multiplicium et e ad c et g ad e ꝛ k ad g ꝛtinue pstituere species supparticularium. nam p penultimam erit a / b / c / d / e / f / g / h / k numeri ꝛtinue ab unitate sumpti: sed ꝛ vno sp intermisso hoc pacto binis ꝛ binis disiunctim sumptis: sumuntur oēs ab unitate pares. quare per decimāoctuauam septimi ipso꛷ ꝛtinue sunt eedem pportiões que numero꛷ ab unitate cōtinue disposito꛷. at binarij ad unitatem est prima multiplicium et sequētiū ad suū precedentem est series supparticularium. constat igitur quod erat demonstrandum.
+
+<vocab>mensula Pythagorae, Arithmetica, Seuerinus, Boetius, numerorum ordo, multiplices, supparticulares, dupla, sesqualtera, sesquitertia, quadratus, altera parte longior, proportio</vocab>

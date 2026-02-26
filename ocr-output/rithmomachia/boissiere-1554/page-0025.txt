@@ -1,0 +1,35 @@
+<language>Middle French</language>
+<page-type>diagram</page-type>
+<meta>catchword: &c. se-</meta>
+
+<image-desc>
+A mathematical diagram divided into two sections, upper and lower, both titled under a large bracket labeled "Nombre". 
+The upper section consists of three rows and four columns. The first row contains triangles with numbers (6, 20, 42, 72); the second row contains triangles with square numbers (9, 25, 49, 81); the third row contains rectangles with the sums of the values above them (15, 45, 91, 153). 
+The lower section mirrors this structure but with a dark background and white text. It contains triangles with numbers (12, 30, 56, 90) in the first row, square numbers (16, 36, 64, 100) in the second, and rectangles with sums (28, 66, 120, 190) in the third. 
+Brackets on the left label the rows with mathematical terms.
+</image-desc>
+
+<margin>Nōbre.</margin>
+<margin>Addition des particul.</margin>
+<margin>Pair.</margin>
+<margin>Le p num si req̃rant superp-tiëte</margin>
+
+| 6 | 2.0 | 4.2 | 7.2 |
+|---|---|---|---|
+| 9 | 2.5 | 4.9 | 8.1 |
+| 1 5 | 4 5 | 9 1 | 1 5 3 |
+
+---
+
+<margin>Addition des p ticul.</margin>
+<margin>Nom pair,</margin>
+<margin>premiere grāt superp-tiëte</margin>
+
+| 1 2 | 3 0 | 5 6 | 9 0 |
+|---|---|---|---|
+| 1 6 | 3 6 | 6 4 | 10 0 |
+| 2 8 | 6 6 | 1 2 0 | 1 9 0 |
+
+Apres auoir ainsi marqué par ceste addition huict quarrez pour nombre requerāt, pour trouuer quel nōbre cōuiēt avec vn chacū d’iceux en proportiō superpartiëte: faudra que consideres le nō d’vne chacune espece superpartiëte cy apres
+
+<vocab>Nombre, Addition, particul., Pair, superpartiëte, proportion, quarrez</vocab>

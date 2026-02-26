@@ -1,0 +1,16 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>474</page-num>
+<header>Das Fünffte Capittel/</header>
+
+<image-desc>A large rectangular diagram of a checkerboard grid, 8 squares wide by 17 squares high. The squares alternate between dark (textured) and light. Scattered throughout the board are letters oriented towards the reader. In the upper half, letters like B, D, I, F, A, E, M, K, C, L, N, H, G, P, L, and O are placed in specific squares. The lower half contains a similar but less dense arrangement of letters including H, A, K, E, B, I, C, L, D, F, and G. This appears to be a board for Rithmomachia or a similar mathematical game involving numbered or lettered pieces (calculi).</image-desc>
+
+(Buxer: fol: 28. a. 47. a.)
+
+>> *Interclusio, Obsessio, sive Interceptio, ita peragitur: Qua-*
+>> *tuor Calculi, quocunq; modo, collocati, sive ordine & rectè, si-*
+>> *vè per gyrum, tanquam Sonipedes, si adversum Calculum, ita*
+
+<meta>circum-</meta>
+
+<vocab>Interclusio, Obsessio, Interceptio, Calculi, Sonipedes, Buxerius, Rithmomachia</vocab>

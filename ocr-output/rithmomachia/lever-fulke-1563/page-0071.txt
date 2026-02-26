@@ -1,0 +1,23 @@
+<warning>Heavy bleed-through from the reverse page obscures some portions of the layout and text.</warning>
+
+<language>English</language>
+<page-type>text</page-type>
+<sig>D.iiij.</sig>
+<meta>catchword: And; significant mirror-text visible due to thin paper</meta>
+
+# The Philosophers game.
+
+<image-desc>Two woodcut illustrations of stepped pyramids constructed from numbered square blocks. Between the pyramids are three geometric shapes: a triangle, a circle, and a square, the latter two containing stylized floral or branching emblems. The left pyramid has five tiers (values: 1, 4, 2; 9, 3; 16, 4; 25, 5; 36, 6). The right pyramid has six tiers (values: 1, 4, 9; 16, 4; 25, 5; 36, 6; 49, 7; 64, 8).</image-desc>
+
+<image-desc>A rectangular grid divided into four sections. The first section contains the number 153; the second contains a tiered pyramid under the number 91; the third contains the number 45; the fourth contains the number 15 with a mark resembling "ze" written below it.</image-desc>
+
+<image-desc>A rectangular grid divided into four sections. The first section contains a tiered pyramid under the number 190; the remaining three sections contain the numbers 120, 66, and 28 respectively.</image-desc>
+
+The seconde order of squares hath.3.
+numbers marked with <term>cossicall</term>
+signes, that is.25.and.225.wyth the
+signe of the quadrate.81.is marked with
+the sygne of the quadrate and the foure
+squared quadrate.
+
+<vocab>Philosophers game, Rythmomachia, cossicall signes, quadrate, squares</vocab>

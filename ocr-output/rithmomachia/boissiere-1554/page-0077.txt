@@ -1,0 +1,21 @@
+<language>French</language>
+<page-type>text</page-type>
+<meta>catchword: des</meta>
+
+### RITHMOMACHIE, IEV
+
+d'entre eux que au respect d'vn autre n'engendre armonie & liesse & doiuent estre disposées autour de quelque loge ou carreau du tablier sur quatre aultres loges respondantes au quatre coins de la loge du millieu, quelle quelle soit. Lesquelles victoires ie proposeray par ordre en la suivante table au costé senestre. Et affin que mieux puisse cõtempler les 3 proportions, les disposeray chacun en son lieu à la dextre audroict desdictes victoires. A laquelle disposition si aucuns veulent obuier quelque chose, auront vn peu pacience, car apres la disposition d'icelles, leurs responderons.
+
+---
+
+| Arythmetique, Geometrie, & Musique, ensemble. | Arythmetique seule. | Musique, seule. | Geometrie seule. |
+|:---|:---|:---|:---|
+| **D C B A** | | | |
+| 2 3 4 6 | 2 4 6 | 2 3 6 | 2 3 4 6 |
+| 4 6 8 12 | 4 8 12 | 4 6 12 | 4 6 8 12 |
+| 6 8 9 12 | 6 9 12 | 6 8 12 | 6 8 9 12 |
+| 4 6 9 12 | 6 9 12 | 4 6 12 | 4 6 9 |
+| 3 5 15 25 | 5 15 25 | 3 5 15 | 3 5 15 25 |
+| 12 15 16 20 | 12 16 20 | 12 15 20 | 12 15 16 2<unclear>0</unclear> |
+
+<vocab>Rithmomachie, proportions, Arythmetique, Geometrie, Musique, tablier, victoires</vocab>

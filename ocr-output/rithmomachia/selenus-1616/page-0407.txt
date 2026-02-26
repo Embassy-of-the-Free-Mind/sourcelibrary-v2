@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>373</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: zig: so</meta>
+
+<margin>13. cap:</margin> men) durch diesen Zug/ dergestalt bezogen/ und eingesperret/ daß Er ihn/ nicht gebrauchen kan.
+
+Wan dan (3.) der Weisse/ mit der K. Schützens-Soldaten/ anhebet/ und denselben/ auf dreyßig/ ziehet: so rucket/ der Schwarze/ des K. Soldaten/ auf sechs und dreyßig: Der Weisse/ demselben entgegen/ seines K. Soldaten/ auf acht und zwantzig: Der Schwarze/ des K. Schützen / auf acht und dreyßig: und hat also sein Spiel/ dieweil Er/ seiner K. Reuter/ auf neun und zwantzig/ ungehindert ziehen kan/ und des K. Schützen/ der Weg/ den Feind zu verletzen/ ziemlich frey ist/ nicht uneben/ angeordnet: in erwegung/ Der Weisse/ keinen Soldaten/ der ihn leichtlich/ aufhalten oder verhindern kan/ gezogen hat: Hievon auch zu sehen/ das 3. Cap: n. 4. des viersten Buches.
+
+Wan aber (4.) der Weisse/ mit des K. Schützens-Soldaten/ (nach der Lehr/ der alten Schach-Meister: Wiltu das «
+Spiel behalten/ So ziehe den ersten/ für den Alten) anhe- «
+bet/ und ihn/ auf sieben und zwantzig/ rucket: so spielet/ der Schwarze/ der K. Soldaten/ auf sieben und dreyßig: Der Weisse/ der K. Soldaten/ auf neun und zwantzig: Der Schwarze/ der K. Schützen/ auf fünf und dreyßig/ und wird/ mit demselben/ so fern Er/ sein Spiel/ nach dem ihm anlaß/ gegeben wird/ auf die Art/ verfolget/ viel bessere gelegenheit haben/ dan der Weisse/ seine Steine/ zum angriff/ anzuordnen: So kan Er auch/ mit des K. Reuter/ auf acht und zwantzig/ frey und ungehindert rucken.
+
+Wan nuhn (5.) der Weisse/ sein Spiel/ mit einem Soldaten/ der Reuter/ (umb des Schwarzen/ Schützen/ den Paß/ zu verlegen) anhebet: so sol derselbe/ umb nichts anders sich bemühen/ alß des K. oder der K. Soldaten/ nach der Seiten/ da der Weisse/ anziehet/ zu setzen/ und sein Spiel/ dergestalt zu stercken.
+
+Wan dan (6.) der Weisse/ sein Spiel/ mit der K. Rochens-Soldaten/ anfanget/ und denselben/ (umb der K. Rochen/ auf vier und zwantzig/ zu rucken) auf zwey und dreyßig/ ziehet: so sol der Schwarze/ des K. Soldaten/ auf sechs und dreyßig/ ziehen/ und dessen Schützen/ das Schieß-loch/ auf 24. eröfnen: Ziehet aber der Weisse/ des K. Rochens-Soldaten/ auf funf und zwanzig: so
+
+zig: so
+
+<vocab>Schach, Weisse, Schwarze, Soldat, Schütze, Reuter, Rochen, Schach-Meister, Schieß-loch</vocab>

@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>269</page-num>
+<header>2. cap: Vom Schach-Spiel. 269</header>
+<meta>catchword: K. Reu</meta>
+
+<image-desc>A decorative rectangular woodcut headpiece featuring elaborate scrollwork and various human figures amidst foliage and architectural elements.</image-desc>
+
+# Das Ander Capittel.
+
+## Wie ein Spiel / nach des Damiani fürgeben / durch beschützung / des Königes-Soldaten / auf des Schwartzen seite / weyter / doch mit verbesserung / außgeführet werden sol.
+
+Die Andere Art / welche Damianus, in beschreibung des Schach-Spieles / gebrauchet : geschicht / durch entsetzung des S. K. Soldaten / und kan / nach dessen meynung / folgender gestalt / ins Werck gerichtet werden :
+
+<margin>,,</margin> Wan nemlich / der Weisse / des K. Soldaten / auf acht und zwantzig : Der Schwartze / seines K. Soldaten / <margin>,,</margin> auf sechs und dreyssig : und der Weisse / auf denselben / <margin>,,</margin> des K. Reuter / auf neunzehen / ziehet : so kan ihn der Schwar- <margin>,,</margin> tze / auf dreyerley weyse / beschützen : alß / mit der K. Reuter / <margin>,,</margin> (welche dan die beste ist /) auß sechs und viertzig : oder / mit des <margin>,,</margin> K. Soldaten / (welche aber / dieweil des K. Schütze / dadurch <margin>,,</margin> eingesperret wird / und man denselben / nicht gebrauchen kan / <margin>,,</margin> nicht so gut ist) auß fünf und viertzig : oder / mit des K. Schüt- <margin>,,</margin> zens-Soldaten / (welche die ärgste und gefährlichste / ist) auß <margin>,,</margin> drey und viertzig. <margin>,,</margin>
+
+<margin>,,</margin> Was aber / von dieser / des Damiani meynung / zu halten sey / das sol / (nachdem wir / seinem andeuten nach / das Spiel / doch <margin>,,</margin> mit verbesserung / in diesem / in den beeden folgenden Capitteln / mit <margin>,,</margin> ihm außgeführet) im sechsten Capittel / dieses Buches / gnugsam <margin>,,</margin> erkläret werden. <margin>,,</margin>
+
+<margin>,,</margin> Nehmen derowegen / in diesem Capittel / für uns / die Erste beschützung / (alß welche / die beste seyn sol) mit der K. Reuter / <margin>,,</margin> auß sechs und viertzig : die Andere aber ; werden / (auß dem drit- <margin>,,</margin> ten und vierten Capittel) drunten zu vermercken seyn. <margin>,,</margin>
+
+<margin>1. ,,</margin> Wann nuhn der Weisse / und der Schwartze / der beeden Kö- <margin>,,</margin> nige-Soldaten / an die gräntzen rucken : und der Weisse / des <margin>,,</margin> S. K. Soldaten / mit des K. Reuter / auf 19. ansprenget : so <margin>,,</margin> rucket der Schwartze / (ihm sein vorhaben zu verhindern) der <margin>,,</margin>
+
+<vocab>Schach-Spiel, Damianus, Das Ander Capittel, Weisse, Schwartze, K. Soldaten, S. K. Soldaten, K. Reuter, K. Schütze, beschützung</vocab>

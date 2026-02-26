@@ -1,0 +1,35 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>13</page-num>
+<sig>E 3</sig>
+<meta>catchword: nella</meta>
+
+# Tauola de tutti li numeri, che in queſto giuoco ſi uincono col ſotrar.
+
+| Bianchi contra Neri. | | | Neri contra Bianchi. | | |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 4 | 16 | 12 | 3 | 5 | 2 |
+| 4 | 20 | 16 | 3 | 7 | 4 |
+| 6 | 36 | 30 | 3 | 12 | 9 |
+| 6 | 42 | 36 | 5 | 7 | 2 |
+| 6 | 72 | 66 | 5 | 9 | 4 |
+| 6 | 9 | 3 | 5 | 30 | 25 |
+| 6 | 15 | 9 | 7 | 9 | 2 |
+| 8 | 36 | 28 | 7 | 56 | 49 |
+| 8 | 64 | 56 | 7 | 16 | 9 |
+| 8 | 20 | 12 | 7 | 49 | 42 |
+| 8 | 72 | 64 | 9 | 25 | 16 |
+| 9 | 16 | 7 | 9 | 81 | 72 |
+| 9 | 25 | 16 | 9 | 90 | 81 |
+| | | | 16 | 25 | 9 |
+| **Biãchi ſottrati.** | **Bianchi da' quali ſi ſottragge.** | **Neri reſidui.** | **Neri ſottrati.** | **Neri da' quali ſi ſottragge.** | **Bianchi reſidui.** |
+
+---
+
+Col moltiplicar, & col partir ſi pigliano li pezzi à queſto modo. Se ſi trouaranno dui pezzi, l'uno bianco, & l'altro nero in tal ſito, che tra eſſi ui siano tante caſelle quante uolte il numero de uno d'eſſi ſi troua nel numero dell'altro : all'hora il menar de queſti dui può far prigion il maggiore col moltiplicar, & eſſer preſo da quello col partire ; & quello che farà primo andar à trouar l'altro, ſarà il uincitore, come nel ſottoſcritto eſſempio. Se ſi trouerà il 12
+
+<image-desc>A rectangular diagram divided into four sections by vertical lines. The second section from the left is labeled with the letter "A" and the fourth section (the rightmost) is labeled with the letter "B".</image-desc>
+
+nero triangolo nella caſella A, & il quatro tondo bianco
+
+<vocab>Tauola, Bianchi, Neri, ſottrati, reſidui, moltiplicar, partir, caſelle, uincitore</vocab>

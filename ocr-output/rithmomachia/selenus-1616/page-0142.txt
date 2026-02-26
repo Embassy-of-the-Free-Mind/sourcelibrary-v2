@@ -1,0 +1,30 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>112</page-num>
+<header>Das erste Buch. 11.cap:</header>
+
+<image-desc>A square 8x8 grid representing a chessboard. Each cell contains two numbers: one oriented normally at the top and one inverted (rotated 180 degrees) at the bottom. The cells are numbered 1 through 64, starting with 1 in the bottom-right corner and proceeding right-to-left across each row, and moving upwards row by row, ending with 64 in the top-left corner.</image-desc>
+
+Zum beschluß dieses Capittels/ ist zu mercken/ daß man den
+kurtz vorher gesetzeten Abriß/ auch zu den Exempeln/ welche drun-
+ten/ in den dreyen folgenden Büchern/ beschrieben worden/ gebrau-
+chen kan. Dan dieselben/ (zur verhütung/ der verdrießlichen viel-
+faltigen widerholung/ und umbstendlichen beschreibung der Felder)
+auf diese zahle/ mit besonderm fleiß/ gerichtet seynd. Sol demnach/
+das Schach=bret/ darauf man/ die folgende Exempel/ etwa nach=zie-
+hen und üben wil/ auf obgemelte Art/ mit zahlen/ der ordnung nach/
+gezeichnet werden/ und der mit den Weissen Steinen Spielet/ die
+zeile/ darinnen die Zahle/ angehen: der mit den schwartzen Stei-
+nen/ dieselbe/ darinnen die zahle sich enden: für sich geleget haben.
+-> Dahero/ deß Weissen König/ auf viere: des Schwartzen/ <-
+-> aber auf sechsszig: die Weisse Königin/ auf fünfe: <-
+-> die Schwartze/ auf ein und sechsszig/ zum <-
+-> anfange/ geordnet werden. <-
+
+---
+
+<image-desc>An ornamental horizontal divider featuring a symmetrical floral and vine pattern in a woodcut style.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach=bret, König, Königin, Weissen Steinen, schwartzen Steinen, Abriß, Felder, Exempel</vocab>

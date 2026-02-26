@@ -1,0 +1,7 @@
+<language>None</language>
+<page-type>blank</page-type>
+<meta>Marbled paper pattern, likely a book cover or endpaper.</meta>
+
+<image-desc>This image shows a sheet of marbled paper with a "stone" or "agate" pattern. The design consists of dark, organic, cell-like shapes in shades of deep black, burnt umber, and dark burgundy. Fine veins and spots of muted ochre and tan highlight the boundaries between the darker forms. The overall tone is very dark and aged, typical of hand-marbled papers used in 18th and 19th-century bookbinding.</image-desc>
+
+<vocab>marbled paper, bookbinding, decorative arts</vocab>

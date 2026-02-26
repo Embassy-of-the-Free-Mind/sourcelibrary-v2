@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>54</page-num>
+<header>Das Erste Buch / 5. cap:</header>
+
+und setzet: welches doch/ wie drunten / im 4. Cap: des 2. Buchs/ zu sehen / wider dieses Spieles gebrauch / lauffet) verwechselt wird: besondern/ dieses Springen / läßt man ihm nuhr zu/ wan etwa die Steine / in gefahr stehen / oder aber / daß dem Feinde / dadurch abbruch und hindernuß geschehen kan/ oder man Ihn / an einen sichern Ort/ stellen / und verschantzen muß.
+
+Diese Sprünge nuhn / geschehen / auf folgende weyse: Auß seinem Felde / kan Er anfangs / auf neun felder: Alß/ auf der ersten Zwerch-linie / nach seiner seite / in (1.) seines Reuters / auf derselben linie / nach der Königin seite / in (2.) dero Schützens / auf der nechst hinauf- steigenden linie / in (3.) seines Reuters andere : in (4.) der Königin-Schützens andere: auf der dritten / hinauf folgenden linie / in (5.) seines Reuters drittes: in (6.) der Königin - Schützens drittes in (7.) sein eigenes drittes: in (8.) der Königin drittes: und endlich / in (9.) seines Schützens / dritte feld springen.
+
+Ist Er dan/ mitten in die Schach-Tabel/ etwa in sein drittes feld gesprungen: So kan Er/ auß demselben / in (1.) sein: in (2.) seiner Königin: oder in (3.) seines Schützens vierte: und in (4.) seines Schützens: oder in (5.) der Königin dritte: in (6.) sein: in (7.) seiner Königin: oder in (8.) seines Schützens / andere / und also in Acht felder gezogen werden. Dieses verstehet man auch / von den übrigen kurtz erwehneten acht Sprüngen: Auß seines Reuters = und der Königin = Schützens felde aber / kan Er nuhr / gleich / alß wan Er / in seinem eigenen felde stunde / auf fünf felder kommen.
+
+Warumb Er aber den Sprung/ gleich dem Reuter / und / wie ein Roche / Schütze / und Soldat / seinen gang / berürter massen / verrichten kan/ geschicht wegen dessen / daß Er das Haupt / und ein König / der andern Steine ist / und es / dem Erfinder / dieses löblichen Spieles / die Art und eigenschafften der Steine / auf sothane weyse/ anzuordnen / also gefallen. Andere ursachen / kan man nicht anzeigen. Es hetten dan etwa die Alten / dadurch wollen zu vernehmen geben / daß ein König/ so lang Er/ in seinem Lande / noch verharrete/ sicher / und ohn alle gefahr / weit genug / vom Königlichem Hofe / sich ja wol dürfte / ins feld begeben: (wiewol man / in kurtzen Jahren / in Franckreich / und Engelland / das widerspiel / erfahren) Wan Er aber / ausserhalb seines Königreiches / sich müste verfügen / oder der Feind Ihm albereit / ins Land gefallen / alsdan langsam / solte hereintreten / und Ihm / gute aussicht / hut und wacht / wol vonnöten thäte.
+
+Dieser Haupt=Stein/ wird in des <term>Fr: Jacobi de Casallis</term>, gedachtem
+
+<meta>catchword: dachtem</meta>
+
+<vocab>Schach-Tabel, Reuter, Königin, Schütze, Roche, Soldat, Haupt-Stein, Jacobi de Casallis, Franckreich, Engelland</vocab>

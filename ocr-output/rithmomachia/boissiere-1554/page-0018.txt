@@ -1,0 +1,27 @@
+<language>French</language>
+<page-type>diagram</page-type>
+<page-num>8</page-num>
+<header>DES PHILOSOPHES.</header>
+<warning>The image contains significant foxing and dark spotting throughout the page.</warning>
+
+<margin>
+Nombre multiplié.
+Regue-rant.
+Re-quis.
+</margin>
+
+<image-desc>
+A large rectangular border containing a mathematical diagram divided into two sections. 
+
+On the left side of the border, marginal text is organized by brackets. A primary bracket labeled "Nombre multiplié." encompasses the entire height of the diagram. Within this, the top section is bracketed and labeled "Regue-rant." and the bottom section is bracketed and labeled "Re-quis."
+
+The top section of the diagram is headed by the text: "double.quadruple.sexcuple.octocuple." Below this are two rows of four white circles. The first row contains the numbers 2, 4, 6, and 8. The second row contains their squares: 4, 16, 36, and 64.
+
+The bottom section of the diagram is headed by the text: "Triple. Quintuple. Septuple. Nocuple." Below this are two rows of four solid black circles with white text. The first row contains the numbers 3, 5, 7, and 9. The second row contains their squares: 9, 25, 49, and 81.
+</image-desc>
+
+->*double.quadruple.sexcuple.octocuple.*<-
+
+->*Triple. Quintuple. Septuple. Nocuple.*<-
+
+<vocab>Nombre multiplié, Reguerant, Requis, double, quadruple, sexcuple, octocuple, Triple, Quintuple, Septuple, Nocuple, carrés</vocab>

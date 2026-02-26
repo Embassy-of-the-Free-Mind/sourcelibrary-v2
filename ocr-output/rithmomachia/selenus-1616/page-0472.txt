@@ -1,0 +1,61 @@
+<language>German</language>
+<page-num>438</page-num>
+<header>Das Vierte Buch / 10. cap:</header>
+<page-type>text</page-type>
+
+Der Schwarze / den König / auf achtzehen: Der Weisse /
+seinen König / auf eins / daselbsten er / zum anfange gestanden:
+Der Schwarze / beut / mit dem andern Rochen / auß drey /
+Schach = Matt.
+
+4.) Der Weisse / stellet den König / auf sieben: einen Fen-
+den oder Soldaten / auf fünf und zwanzig: der Schwarze /
+den König / (umb den W. Soldaten / aufzuhalten) auf drey
+und dreyßig: und vier Soldaten / nebeneinander / auf zwan-
+zig: ein, zwey, und drey und zwanzig: Auf daß nuhn / ei-
+ner / von diesen vier S. Fenden / den W. König / im zwölften
+zuge / entweder auf achte / oder auf sechse / Matte:
+
+So ziehet der Schwarze / einen Soldaten / (von 21.) auf
+dreyzehen: Der Weisse / den König auf achte:
+
+Der Schwarze / einen Soldaten / (von 20.) auf zwölfe:
+Der Weisse / den König / auf sieben:
+
+Der Schwarze / einen Soldaten / (von 12.) auf viere / und ma-
+chet ihn zur Königin: Der Weisse / ruckket den König / auf achte:
+
+Der Schwarze / die new erlangte Königin / auf eylfe: Der
+Weisse / den König / auf sieben:
+
+Der Schwarze / die Königin / auf zwanzig: Der Weiss-
+se / den König auf achte:
+
+Der Schwarze / die Königin / auf neun und zwanzig: Der
+Weisse / den König / auf sieben:
+
+Der Schwarze / die Königin / auf acht und dreyßig: Der
+Weisse / den König / auf achte:
+
+Der Schwarze / die Königin / auf ein und dreyßig / Der
+Weisse / den König auf sieben:
+
+Der Schwarze / die Königin / auf vier und zwanzig: Der
+Weisse / den König / auf achte:
+
+Der Schwarze / einen Soldaten / (von 13.) auf fünfe / und
+machet / noch eine Königin: Der Weisse / ziehet / den König
+auf sieben:
+
+Der Schwarze / beut / mit der itzt gedachten Königin / auß
+vierzehen / Schach: Der Weisse / ziehet / den König / auf achte
+oder sechse:
+
+Der Schwarze / die erstgemachte Königin / (von 24.) auf
+fünfzehen / und gibt Schach = Matt.
+
+5.) Der Weisse / stellet den König / auf sieben: einen Sol-
+daten
+
+<meta>catchword: daten</meta>
+<vocab>Schach, Schach-Matt, König, Rochen, Fenden, Soldaten, Königin, Weisse, Schwarze</vocab>

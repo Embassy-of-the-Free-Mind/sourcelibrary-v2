@@ -1,0 +1,20 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>453</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+<image-desc>Two rows of four white circular counters. The top row contains the numbers 2, 4, 6, and 8, each with a small dot below it. The bottom row contains the squares of these numbers: 4, 16, 36, and 64, each with a small dot below it.</image-desc>
+
+Vnd demnach erstlich/ die vier erste Gerade oder Gleiche Zahle/ (alsz 2.4.6.8.) auf vier Runde Weisse Steine/ und zwar auf einen jeden/ eine Zahl/ verzeichnen: folgendes/ wan sie/ neben ein ander/ nach ordnung/ der gedachten Zahlen/ gestellet/ die übrigen/ vier Weisse Runde Steine/ unter dieselben legen/ und die Summen/ welche/ auß den gedachten vier einfachen Zahlen/ wan sie/ in sich selber vermehret werden/ entspringen/ (alsz/ auf den Stein/ welcher unter denselben/ der mit 2. gezeichnet worden/ geleget ist/ 4: auf den/ so unter 4. 16: auf den/ so unter 6. 36: und endlich/ auf den/ welcher/ unter 8. 64.) darauf schreiben/ und setzen.
+
+(Buxer : fol : 7. a.
+
+<margin>cc cc cc cc</margin>
+> *Hi Numeri, (2.4.6.8.) monadis & decadis ambitu, continentur, & Postulatores sivè Petitores, appellantur. Nam cùm solus & singularis Numerus, nullam valeat Proportionem, exercere, alium paris coloris & forma, ad ineundam cum illo, rationem, postulat.*)
+
+<image-desc>Two rows of four black circular counters with horizontal hatching. The top row contains the odd numbers 3, 5, 7, and 9, each with a small dot below it. The bottom row contains the squares of these numbers: 9, 25, 49, and 81, each with a small dot below it.</image-desc>
+
+<sig>Lll ij</sig>
+<meta>catchword: Oders</meta>
+
+<vocab>Zahl-Kampf, Gerade Zahlen, Gleiche Zahle, Weisse Steine, monadis, decadis, Postulatores, Petitores, Arithmomachia</vocab>

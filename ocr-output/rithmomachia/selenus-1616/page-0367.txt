@@ -1,0 +1,13 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>333</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: 9. Wan</meta>
+
+<margin>6. cap:</margin> denselben / die Königin / auf vier und funfzig: Der Weisse / beut / mit der Königin / auß neun und dreyssig / Schach / und rucket sie / auf der S. K. Schützens = Soldaten: der Schwartze / (dieweyl Er / zur verwechselung der Königinne / keinen anlaß geben wil: Dan / wan Er den König / mit der K. Reuter / auf drey und funfzig / bedeckete: die Reuter / und Königinne / verwechselt würden) den König / auf zwey und funfzig: Der Weisse / (umb / seines K. Reuter zu entsetzen) nimt / mit der Königin / der S. K. Schützens = Soldaten / und stellet sie / auf des S. K. und dessen Schützens = Soldaten: Der Schwartze / des K. Reuter / (umb / dessen Schützens = Soldaten / dieweyl Ihm / der Weisse / daselbsten / allerhand ungelegenheiten / machen könte / zu beschützen) auf ein und viertzig: Der Weisse / nimt / mit der Königin / des S. K. Soldaten: Hat also / zween Soldaten / zum Vortheil / und wird sein Spiel / dieweyl des Schwartzen Steine / in etwas zertrennet seynd / so fern Ers verstehet / wol erhalten.
+
+8. Wan aber der Schwartze / die Königin nicht auf 54. (n. 7.) besondern / (umb / den Schach / von der W. Königin / auß neun und dreyssig / zu verhindern) auf zwey und dreyssig rucket: so spielet / der Weisse / (umb der K. Reuter / raum zu verschaffen / und den feind / dergestalt / in eine unordnung zu bringen) dero Schützens = Soldaten / auf dreyssig: Der Schwartze / kan für dießmahl seine Züge / nicht besser anordnen / dan daß Er / des K. Schützen / auf des W. K. Reuter / auf fünf und viertzig / ziehe: Der Weisse / stellet / der K. Reuter / auf die S. Königin / und dero Schützens = Soldaten / auf zwey und zwantzig: Der Schwartze / dieselbe / auf acht und viertzig: Der Weisse / (umb / des K. Reuter / zu beschützen / und hiedurch / so fern Er / der züge kündig: ein besser angestelletes Spiel / dan der Schwartze / zu erlangen) der K. Soldaten / auf neun und zwantzig.
+
+Sol demnach der Schwartze / (auf daß / seines K. Soldat / beschützet sey: Der Weisse / auch / des K. Reuter / auf seine Königin / auf sechs und dreyssig / nicht ziehe: besondern seine Steine / nützlich und bequäm / ins feld / gezogen werden mögen) nicht des K. Soldaten / auf des W. K. Reuter / auf 28. besondern / dessen Schützens = Soldaten / auf 43. (n. 6.) rucken.
+
+<vocab>Schach-Spiel, Königin, Schützens-Soldaten, Reuter, Schwartze, Weisse, Züge, Vortheil</vocab>

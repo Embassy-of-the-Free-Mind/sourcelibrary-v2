@@ -1,0 +1,30 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>43</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>F iij</sig>
+<meta>catchword: serthumb/</meta>
+
+<margin>2. cap:</margin>
+
+### Der Ander Theil / bey welchem Polydor: Vergil: lib: 2. c. 13. de Rer: Invent: den Reyen hält / vermeinet / daß dieses Spiel / von allen Steinen / welche man heutiges Tages / Scacos nennet / das Schach / oder Stein = Spiel / genennet werde : Seine wort lauten also:
+
+> *Vocavit hodiè hosce Calculos, seu scrupulos, furunculosvè quibus præliando ludimus, (Est enim certamen, instar prælij) Scacos, à scandendo, forsitan dictos, quod Calculi, cùm moventur, in alteram adversariam partem, scandere videantur.*
+
+->Das ist:<-
+
+> Die Steine / die man in diesem Spiele / (welches einer Schlacht / nicht unähnlich) gebrauchet / werden heutiges Tages / Schach-Steine / vielleicht vom Lateinischen wort / <term>scandere</term>, weil / die Steine / wann sie gezogen werden / nach des gegners Seiten / gleichsam hinauffsteigen / genennet.
+
+Diese meynung / möchte vielen / daß sie zu weit gesuchet wehre / bedüncken : derentwegen / Andere / auß dem gebrauche / welchen dieses wörtlein / bey diesem Spiele hat / den ursprung des Nahmens / heraußer suchen.
+
+Aber wir haltens dafür / daß man / den Nahmen eines dinges / aus dessen Natur und weise / zufoderst erforschen / und so viel müglich / herführen solle. Mag derowegen / Vitus Amerbachius, in Expos: lib: 2. Ovidij de Tristibus, am besten getroffen haben / da Er von diesem Nahmen / dergestalt schreibet:
+
+> *Ludus Latrunculorum, nunc dicitur, Ludus Scachorum, fortasse à fugando, si licet à nostrâ linguâ, Etymologiam sumere, dicitur. Est enim, in eo, pugna quoddam simulacrum.*
+
+->Das ist:<-
+
+> Das Spiel / welches die Lateiner, <term>Ludum Latrunculorum</term> geheißen / wird ißo / das Schach-Spiel / vielleicht / (sofern man / auß unserer Teutschen Sprache / den ursprung dieses wörtleins / nehmen wolte) wegen des Schackens / treibung / verjagung / (davon dan / weiterer Bericht / drunten erfolgen sol) der Steine des Gegeners / genant : dan in demselben / ein fürbild / einer Schlacht / und verjagung des Feindes verborgen.
+
+Zwar ists nicht unglaublich / daß / von den Teutschen / (welche dieses Spieles / wie man auß dem / was zuvor / auß dem Olao Magno, Chronicis Bavaricis, und dem Metello, angezogen / mußmassen kan / wol kündig gewesen) nachdem Sie / das Römische Kayserthumb/
+
+<vocab>Schach-Spiel, Polydorus Vergilius, Scacos, Ludus Latrunculorum, Vitus Amerbachius, Olaus Magnus, Chronica Bavarica, Metellus, scandere, Etymologia</vocab>

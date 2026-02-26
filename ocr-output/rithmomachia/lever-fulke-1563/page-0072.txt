@@ -1,0 +1,26 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+<image-desc>A diagram illustrating game pieces for the "Philosopher's Game" (Rythmomachia). It consists of a grid of eight squares arranged in two rows of four. The squares contain the following numbers and cossic (algebraic) symbols:
+- Top row: 289; 169; 81 with three symbols resembling cursive 'ʒ'; and a stack of square pieces labeled 25 with one 'ʒ' symbol.
+- Bottom row: 361; 225 with one 'ʒ' symbol; 121; and 49.
+Behind the grid are drawings of stacked square or pyramidal pedestals representing game pieces of various heights.</image-desc>
+
+And thus haue you all the men that be
+marked with coſſicall ſygnes.
+
+### ¶ The ſetting in aray.
+
+The teachers of this kynde of play-
+ing, doe not ſo well allowe, the for-
+mer kynde of placing or any other,
+as the naturall placing of euery man
+vnder him of whome he aryſeth. So thei
+conteyne. 6. ranks in length, extending
+to the furthermoſte edge of the Table
+after this ſorte.
+
+<sig>D. iii.</sig>
+
+<vocab>Philosophers game, Rythmomachia, cossicall sygnes, ranks, Table, arithmetic</vocab>

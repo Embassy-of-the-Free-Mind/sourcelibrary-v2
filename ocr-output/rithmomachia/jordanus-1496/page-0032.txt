@@ -1,0 +1,44 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<vocab>proportio, latera, numerus, media et extrema, terminus</vocab>
+
+<image-desc>A geometric diagram consisting of three interlocking semicircles. The top arcs are labeled with the letters b, l, and a. The central intersection points and base points are labeled g, f, d, c, a, l, b, and e.</image-desc>
+
+<image-desc>A numerical diagram showing three semicircles representing ratios. The top numbers are 12, 8, and 6. The middle numbers are 4, 3, 3, and 2. The base line is labeled with letters a, g, b, c, d, e, and f.</image-desc>
+
+<image-desc>A numerical diagram with three semicircles. The top numbers are 36, 12, and 4. The middle numbers are 4, 2, and 1. The bottom numbers are 9, 6, and 4. Letters g, h, k, a, b, l, c, d, e, and f mark the points.</image-desc>
+
+<image-desc>A horizontal line segment divided into parts, labeled with letters a, d, e, c, and b.</image-desc>
+
+<image-desc>A complex diagram of multiple horizontal line segments of varying lengths. They are annotated with numbers: 4, 3, 3, 1, 2, 36, 4, 32, 9, 8, 1, 4, 3, 2, and 1. Letters h, e, a, g, b, c, d, k, l, and f label the segments.</image-desc>
+
+<column-break/>
+
+e ad i. ergo p indirectam ppoztiōalitatem ā ppoztiō l ad h: eadē est c ad l. et si l: iñserat̄ duabus alijs ita vt c ad d sit ppoztiō a t̄ d ad l sit l: 7 l ad e sit b. item f ad g sit b/ et g ad l sit l: 7 l ad h sit a. que ppoztiō l ad h ea ē c ad d: et que g ad l ea est d ad l: et que f ad g ea l ad e. ergo p equā ppoztiōalitatem directam ā ppoztiō f ad h: eadē est c ad e. et si hic postponat̄ l: illic d: iñserat̄ vt sit in duabus vltimis figuratiōibus: quia ā ppoztiō d ad l ea est e ad l. et que l ad e ea est d ad e. ergo p indirectam ppoztiōalitatem que ppoztiō d ad e: ea ē f ad l. addita ergo vtriq̄ eadē ppoztiōe c ad d: erit tota ppoztiō c ad e: equalis toti c ad l. at ppoztiō f ad h equat̄ ppoztiōni c ad e: ergo 7 ppoztiōni c ad l. quod est propositum. Et si de quattuor ppoztiōibus id desideras adiuuātibus tribus adinuicem ɔtinuatis id efficere studeas. nam idem demōstrandi modus est.
+
+<margin>9</margin>
+¶ **Cum duoz̄ compositoz̄ ppoztiō que est vnius ad alterum : est ex laterum suorū ad latera alterius composita ppoztiōnibus.**
+
+¶ Latera ppositi dicūtur nūeri qui in seinuicem ducti: ppositū pducūt. Sint ergo duo ppositī a. et b. et latera a: sint c et d: e quibz māius c d minus. et latera a b sint e f: e qdō maius/ f minus. dico ppoztiōem a ad b ɔpositam eē ex ppoztiōibus c ad e 7 d ad f. duco enī c in maius laterū a: in f minus laterum b: 7 proueniat g. quia enī c in d facit a: 7 c in f facit g: ergo p septimā secūdi que ppoztiō d ad f ea est a ad g. et quia f in c facit g et f in e facit b: ergo p eādez̄ septimam que ppoztiō c ad e est g ad b. at ppoztiō a ad b ɔstituit̄ ex ppoztiōibus a ad g 7 g ad b: ergo 7 ex ppoztiōibus c ad e 7 d ad f. quod est propositum.
+
+<margin>10</margin>
+¶ **Si numeri continue ppoztiōales in totidem alios ɔtinue etiam ppoztiōales ducantur: et qui inde prouenient continue ppoztiōales erunt.**
+
+¶ Sint a b c numeri ɔtinue ppoztiōales itidē d e f alij totidē ɔtinue ppoztiōales: 7 ducat̄ d i a 7 proueniat g/ 7 e in b 7 proueniat h/ 7 f in c 7 proueniat l. dico productos g h l eē ɔtinue ppoztiōales. Nam cū latera g sint d a: 7 latera h sint e b: 7 latera l sint f c: ergo p pcedētem ppoztiō g ad h cōstat ex ppoztiōibus d ad e 7 a ad b. 7 ppoztiō h ad l ex ppoztiōibus e ad f 7 b ad c. s; ppoztiōes a ad b 7 b ad c: eedem sūt ppoztiōib⁹ d ad e 7 e ad b: ergo 7 ppoztiō h ad l ex illis ɔtās: eadē est ppoztiōi g ad h. que igit̄ ppoztiō g ad h ea est h ad l. qd̄ demōstrandum erat 7 propositum.
+
+<margin>11</margin>
+¶ **Numerum ita diuidere vt q̄ totius ad maiorē portionem: ea maioris ad minorē sit ppoztiō est impossibile.**
+
+¶ Si ei hoc pacto quisq̄ nūerus diuideret̄: diceret̄ diuidi fm̄ ppoztiōem hñtem mediū 7 extrema. hec itaq̄ pponit nullū numerum fm̄ ppoztiōem hñtez mediū et extrema diuidi posse. Nam si aliqs hūc in modū diuidi potest: sit ille a b d sit diuisus in a d minorē portionē 7 d b maiorē: sitq̄ vt a b ad d b: ita d b ad a d. detraho ab maiori portione d b numerum c d equalem a d. et q2 ppoztiō a b ad d b: ea est d b ad a d. et quia a b 7 d b equant̄: q2 ā ppoztiō totius a b ad totum d b ea est d b ad c detracti ad detractū. ergo p quintam secūdi q̄ ppoztiō a b ad d b: ea est a d ad c b residui ad residuū quare 7 eadem d b ad c b. quare itez̄ q̄ ppoztiō d b ad d c: ea est d c ad c b. capio itez̄ d e equalē c b. et quia sicut d b ad d c: ita d c ad c b: d d e equat̄ c b. ergo sicut d b ad d c totus ad totū: ita d c ad d e detractus ad detractum. quare per quintam secundi sicut d b ad d c totus ad totum: ita c b ad e residuū ad residuum. quare itez̄ simili argumentatione detracto e c ab c b: erit residuus ad residuum perinde vt totus ad totum. atq̄ hoc abibit in infinitum. qd̄ per quartam petitionem ē impossibile certū est ergo numerum aliquem ita diuidi non posse.
+
+<margin>12</margin>
+¶ **Numerum ex duobus constātē inuenire: cuius ad maiorē ppoztiō addet sup ppoztiōem eorūdē data ppoztiōne minus.**
+
+¶ Sint a b mīmi termini ppoztiōis date: a maioz et b minoz: et sit d̄mō differentia a ad b numerus c 7 maior ppoztiō a ad b q̄ b ad c: et sit d numerus ɔstitutus ex duobus scz a 7 b quē dico minorē hñe ppoztiōem ad a maiorē eius portionem q̄ sit a ad b ppoztiō assignata: sit e pposit̄ ex b c. quiae enī ppoztiō a ad b p̄mi ad scd̄m maior est q̄ b ad c tertij ad quartū: ergo p primam p̄tē deciequinte secūdi d ad b ppoztiō maior q̄ e ad c. et per scd̄am ptem eiusdez̄ erit d ad a ppoztiō miōz q̄ e ad b. at cū e ɔstituat̄ ex b 7 c d̄fia a ad b: equabit̄ ipsi a. ergo d ad a ppoztiō minor q̄ a ad b. qd̄ ē ppositū. Sit scd̄o vt minor sit ppoztiō a ad b q̄ b ad c: capio quēcunq̄ numerum maiorē a qui sit d: a quo detraho f equalē c 7 residuum sit e. et intelligo c detractū ab a 7 b residuū. et q2 maior est ppoztiō d ad a totius ad totum q̄ f ad c detracti ad detractū: ergo p decimātertiam secūdi: maior est ppoztiō e ad b residui ad residuū q̄ d ad a totius ad totum. et vltra maior est ppoztiō e ad b q̄ d ad a. ergo p duodecimam eiusdē maior est ppoztiō e ad d q̄ b ad a. quare per vndecimam eiusdem erit ppoztiō d ad e minor q̄ a ad b. et cū d̄ e ɔstituat̄ d̄ r e maioz sit f: si vterq̄ e 7 f sit nūerus ɔstat d numerum ex duobus e 7 f ɔstitutū eē quem querimus. q̄ si f sit vnitas: duco aliquē numerum vt g in e et f. pueniat h/ et in d et proueniat k. et in f proueniat l. per septimam secūdi que ppoztiō e ad d et d ad f: ɔsitis est h ad k et k ad l. et cū per nonam p̄mi quod fit ex g in e 7 in f equeī ei qui fit ex g in d: ergo k ɔstituit̄ ex duob⁹ numeris h et l. quare k est talis numerus qui queritur.
+
+<margin>13</margin>
+¶ **Duabus ppoztiōibus inequalibus ppositīs: tertiam reperire que duplicata: miōre sit maioz/ et maioze minoz.**
+
+<meta>catchword: q̄dratis</meta>
+<vocab>proportionibus, numeris, minor, maior, residuum, differentia, termini</vocab>

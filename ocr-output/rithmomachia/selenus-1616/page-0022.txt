@@ -1,0 +1,47 @@
+<language>Italian, Latin</language>
+<page-type>text</page-type>
+
+E foſsero da Giove, in guerra accinti.
+Se per te, il Baldi vuoi, ſu via, non ſcampo;
+Voi tu, un Giudice ancor? piglialo, ch' io
+Hor voglio entrar, con le mie genti in campo.
+Certo, e ſicuro ſon, che queſto mio
+Cavalier forte, aſſalirà li tuoi
+Gli abbatterà, farà di ſangue un rio.
+Non creder pria, ſe non lo vedi poi,
+Quanto, che l' haſte mia terribil, vaglia,
+E torni onuſta, de la preda, à i ſuoi.
+Però che ſpeſſo, in mezo à la battaglia
+Pigliò de gl' inimici il Capitano;
+E tal fè ſtragge, qual non fu in Farſaglia.
+Hor, perch' io, non ti paja un Traſon vano,
+E che mi dia fuor di ragion, tal vanto,
+Diſponi i tuoi qui, in queſto vario piano;
+Che ti farò veder, s' io vaglio, e quanto.
+
+<image-desc>Horizontal woodcut divider featuring scrolling foliage and a central grotesque or cherub face.</image-desc>
+
+---
+
+### In OPVS ipſum.
+
+Ingenium ſolers, & agendi nobile velle
+Hæc porrexerunt, Momule da melius.
+
+->Joannes Schwartz / J. C. Authori<-
+->ex. intimis.<-
+
+<image-desc>Horizontal woodcut divider featuring scrolling vines and bird-like figures at the outer edges.</image-desc>
+
+---
+
+### Aliud, Ejusdem.
+### In EMBLEMA ære inciſum,
+### Operiq; præfixum.
+
+Mens hominum varia eſt, nec rectum ſponte capeſcit,
+Irruit in vetitum magis, & bona deſpicit altè,
+
+<meta>image quality: water stains at right edge; catchword: Qui</meta>
+
+<vocab>Giove, Baldi, Farſaglia, Traſon, Momule, EMBLEMA, Joannes Schwartz</vocab>

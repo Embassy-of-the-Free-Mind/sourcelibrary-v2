@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>295</page-num>
+<header>4. cap: Vom Schach-Spiel.</header>
+
+wenig zügen / hinwider erledigen / und dem Schwartzen / wol
+beykommen können. Weyl nuhn / diese züge / auf allerhand Art /
+können fürgenommen werden / alsz hat man dieselben / geliebter kür=
+tze halber / (wie in den vorigen / und folgenden Exempeln / in der=
+gleichen fällen / zum öfftern / geschehen müssen) hiebey bewenden
+lassen wollen.
+
+<margin>55.</margin> Setzet aber der Schwartze / den Reuter / (n. 54.) nicht weg / be=
+sondern nimt / mit der K. Soldaten / des W. K. Soldaten: so darf
+der Weisse / mit seiner K. Soldaten / denselben / nicht nehmen / (dan
+der Schwartze / mit des K. Schützen / auß ein und dreyssig / Schach=
+geben / und seine Königin / erlangen würde) besondern rucket / der
+K. Schützens = Soldaten / auf zwey und zwantzig: Der Schwartze
+be / nimt / der W. K. Soldaten / mit seiner K. Soldaten: Der
+Weisse / ziehet / des K. Schützens = Soldaten / auf des S. K. Reu=
+ters = Soldaten / auf sieben und zwantzig: Der Schwartze / muß
+ihn / mit demselben / nicht nehmen / (dieweyl Ihm / Der Weisse /
+wan Er / mit der K. Schützen / diesen Soldaten / hinwider neh=
+me / gleich Schach = Mat gebe) besondern / (zu dessen beschützung)
+des K. Reuter / auf acht und zwantzig / rucken: Der Weisse / auf
+denselben / der K. Schützen / auf ein und zwantzig: Der Schwartze
+be / (ihn zu beschützen) die Königin / auf sechssig: Der Weisse /
+auf dieselbe / und auf des S. K. Reuter / seine Königin / auf sechs
+und dreyssig: hat also ein wolgeordnetes Spiel / und einen Rochen /
+für einen Reuter / erhalten.
+
+Auß diesem / kan nuhn / ein jeglicher guter Spieler / abnehmen /
+ob *Damianus*, diese Art zu spielen / recht beschrieben habe: (Weyl
+Er sie / weiter / nicht auszuführen / noch ein mehrers / dan nuhn /
+es habe der Weisse / drey Soldaten / zum Vortheil erobert: davon
+zu berichten gewust. Wollen nuhn hiemit / bey diesem Spiele / ab=
+brechen / und nuhn dieses erinnern / daß der Schwartze / wan man /
+auf eine andere Art spielet / umb so viel zeitiger überwunden / und
+fertig werden wird: Insonderheit / wan der Weisse / sich nicht
+lässet irre machen / besondern aufs Spiel / und die züge acht
+hat / sich dieselben wol einbildet / und deren / wie ihm
+->vorgezeiget / zu rechter zeit<-
+->gebrauchet.<-
+
+<margin><unclear>18 10 11 12</unclear></margin>
+
+<image-desc>A rectangular decorative typographical ornament (fleuron) composed of repeated floral and scrolling motifs.</image-desc>
+
+<sig>Pp</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Damianus, Weisse, Schwartze, Reuter, Soldaten, Königin, Rochen, Schützen, Schach-Mat</vocab>

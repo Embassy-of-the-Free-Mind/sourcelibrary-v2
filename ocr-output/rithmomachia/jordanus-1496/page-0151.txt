@@ -1,0 +1,2 @@
+<language>None</language>
+<page-type>blank</page-type>

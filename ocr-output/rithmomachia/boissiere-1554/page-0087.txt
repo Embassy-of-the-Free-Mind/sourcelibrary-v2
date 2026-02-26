@@ -1,0 +1,18 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>184</page-num>
+<header>RITHMOMACHIE, 184</header>
+
+# De la desmarche des tables.
+
+<margin>Ainsi peuuēt marcher les tables.</margin>
+
+*Les rondes au lieu suiuant à trauers par les coings, comme les fols des eschets des le lieu A, aux lieux B.C.D.E.*
+
+*Les triangles si au troisiesme cōtāt le lieu ou ils sont, cheminant droictement comme les rochs des eschets des le lieu A en F. G.H.I.*
+
+*Les quarrees au quatriesme lieu cōtant celuy ou ils sont & peuuent se remuer à tous costez comme la Royne des eschets le lieu A en K.L. M.N,O. P. Q.R.*
+
+*Les Pyramides comme maistresses, ou roys ayans en eux la forme & figure de tous autres, iouissent aussi de tous priuileges & peuuēt choisir en toutes ces desmarches, et vser de celle que bon leur semblera.*
+
+<vocab>Rithmomachie, desmarche, tables, rondes, triangles, quarrees, Pyramides, eschets, fols, rochs, Royne</vocab>

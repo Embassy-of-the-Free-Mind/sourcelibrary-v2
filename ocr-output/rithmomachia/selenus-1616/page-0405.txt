@@ -1,0 +1,92 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>371</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>12. cap: in top-left margin</meta>
+
+->n. 2. 12.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SSc | SR | SR |
+| SS | SS | | | SS | SS | SS | SS |
+| | 47 | SS | | 44 | | SSc | |
+| SR | | | WS | | | | |
+| WR | | | | WS | WS | | |
+| | WS | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | WS | WR | WR |
+
+->n. 8. 11.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | SSc | SR | SR |
+| SS | | WS | SR | SS | SS | SS | SS |
+| | SS | | | | | SSc | |
+| | WS | | | WS | 35 | | |
+| WR | WS | | | SR | WS | | |
+| | | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | | WR | WR |
+
+->n. 13. 14. 17. 18.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SSc | SR | SR |
+| SS | SS | | | | SS | SS | SS |
+| | | SS | 45 | SS | | SSc | |
+| SR | | | WS | | | | |
+| WR | 31 | | | WS | WS | | |
+| | WS | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | WS | WR | WR |
+
+<column-break/>
+
+->n. 4. 5. 6.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SSc | SR | SR |
+| SS | | | | SS | SS | SS | SS |
+| | 48 | SS | WS | | 44 | | SSc |
+| SR | | | | | | | |
+| WR | | | | WS | WS | | |
+| | WS | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | WS | WR | WR |
+
+->n. 9. 10.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | SSc | SR | SR |
+| SS | | WS | SSc | SS | SS | SS | SS |
+| | SS | | | | | | |
+| | | | | WS | | | |
+| WR | WS | | | SR | WS | | |
+| | | WR | | | | | |
+| | | | 14 | | WS | WS | WS |
+| WR | | | | WK | | WR | WR |
+
+->n. 15. 16.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | 61 | SK | SSc | SR | SR |
+| SS | | WR | SR | 52 | SS | SS | SS |
+| | | | | | | SS | |
+| SR | WR | | | | | | |
+| | WS | | | WS | WS | | |
+| | | | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | | WR | WR |
+
+---
+
+<sig>Aaa iij</sig>
+
+<vocab>Schach, Spielbrett, Figuren, Gustavus Selenus, SR, SK, SSc, SS, WS, WR, WK</vocab>

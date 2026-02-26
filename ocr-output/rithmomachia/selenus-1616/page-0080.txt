@@ -1,0 +1,32 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>50</page-num>
+<header>Das Erste Buch / 4. cap:</header>
+<meta>catchword: Durch</meta>
+
+Wie nuhn der König / so wol auch die andere funfzehen Steine /
+sollen gebildet / geschnitzlet / gedrähet oder gegossen seyn: stellet man /
+zu eines jeden Künstlers Invention und einfällen. Ist demnach uns
+nötig / weyl man nuhr / wegen der Felder / darinnen Sie stehen; und
+der Art halber / wie man sie ziehen sol / den Spieler / unterrichten
+wil / etwas gewisses / davon zu verzeichnen. Doch kan man Sie / der-
+gestalt / wie auß den Figuren und Abrissen / welche / den folgenden
+sechs Capitteln / fürgesetzt worden / zu ersehen / nicht undienlich ab-
+bilden und gebrauchen.
+
+Ehe wir nuhn von diesen Steinen / insonderheit etwas berich-
+ten / so mußen wir / den Ort und Platz / darauf diese Krieges-Männ-
+lein / ihr Lager / Ordnung / und Schlacht / folgendes anstellen wer-
+den / zuvor besehen. Dieser ist nuhn / die Schach-Tabel und Bret /
+oder / wie es die Alten ansprechen / die Schach-Zabel.
+
+Sie ist / ihr Form und gestalt betreffend / vierecket / gleich so
+lang / wie sie breit ist / mit vier Leisten / umbgeben: und begreiffet
+in sich / acht brette linien hinaufwertz / und eben so viele / in die quäre:
+dahero sie vier und sechzig felder / welche / eines umbs andere / bald
+weiß / bald schwartz / ( wie folgende Figur außweiset ) zum spielen
+bequäm / unterschieden werden / erlanget und bekommet.
+
+<image-desc>A woodcut illustration of a square chessboard consisting of an 8x8 grid of alternating light and dark squares, enclosed within a double-line border.</image-desc>
+
+<vocab>König, Steine, Schach-Tabel, Schach-Zabel, vierecket, Krieges-Männlein, Felder</vocab>

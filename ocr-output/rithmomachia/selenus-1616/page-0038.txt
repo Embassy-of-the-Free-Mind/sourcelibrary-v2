@@ -1,0 +1,52 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>8</page-num>
+<header>Das erste Buch. 1.cap.</header>
+
+>> erzeigete : und nam in diesem / wan Er / von den Rechts : und
+>> Gerichts-Sachen / zimlich ermattet war / gleichsam einen Ab-
+>> trit zur ruhe.
+
+Dass man (3.) kein geld / noch andere sachen / gewinsts halber /
+auf dass / dieses löbliche Spiel / den Andern / nicht gleich geachtet / od
+vernichtet werde / aufsetze. Doch geben die Juristen zu / dass man
+wol einen goldgulden / aber nichts darüber / (wie solches auss dem
+Guimier, in d. loco, und Claro, §. Ludus, n. 3. zu ersehen) aufsetzen
+dürfe : arg : l. alearum C. de Aleator: doch vermeynet Thom: Actius,
+quæst : 11. n. 45. 47. 54. 55. nachdem Er / hievon zur genüge / disputie-
+ret : dass man wol / wegen des Aufsatzes / so wol in diesem / alsz andern
+zugelassenen Spielen / auf die Landes-gebräuche / und Gewonheiten /
+(durch welche / das Käyserl: Gesatze / in d. l. Alearum, aufgehoben ist)
+sehen / und nach denselben / doch mit guter bescheidenheit / sich verhal-
+ten möge.
+
+Das sey nuhn / von den Eigenschaften gnug berichtet.
+Die mannicherley Nutzen / so gleichmessig / hierauss entsprin-
+gen / können folgendes / vermercket werden: alsz :
+
+Dass in diesem Spiele / (1.) der verstand geübet / und zu an-
+dern höhern / und wichtigern geschäften / weisslich darinnen zu ver-
+fahren / gleich angewiesen werde : Nicht / dass diese des Gemühtes ü-
+bung / der Schach-Zieher / fürnehmster Zweck oder Ziel sey / (wie
+Steph: Costa, in d. tract: de Ludo, wol vermeynet) sondern / dass die-
+ses / so wol auch folgendes / (welches wol / mus in acht genommen
+werden) nuhr nutzen und früchte sind / welche das Schach-Spiel /
+nebst der erlüstigung des Gemühtes / als des Haupt-Zweckes /
+mit sich bringet / und ein erfahrener Schach-Zieher / mit sonderer lust /
+abbrechen und geniessen kan.
+
+Dass auch (2) der Gedächtnüs / gedienet werde : inmassen es /
+dieselbe stercket / und Jacob: Publicius Florentinus, in seinem Tractat:
+de Arte Memoriæ & Imaginibus, lib : 2. in f. bezeuget / dass die Schach-
+Tafel / mit ihren Feldern und Bildern / gute Zeichen und abbildun-
+gen / der Gedächtnüs-Kunst / sehr fürstendig / überreiche und dargebe.
+
+Dass (3.) zu diesem Spiele / das rechnen / gräntze vergleichen /
+Geometrische Triangel / Quadrangel / und Dialectische Ordnun-
+gen / können gebrauchet / und ins werck gerichtet werden : wie dan sol-
+ches / Jacobus Horstius, im 44. Cap: des von ihm verdeutscheten Le-
+vini Lemnij, anzeiget. Worbey wir gleichwol / auss dem Averroë
+Cordubense, Commentatore, in Aristotelem celeberrimo, (qui vixit
+circa
+
+<vocab>Juristen, goldgulden, Schach-Spiel, Schach-Zieher, Gedächtnüs-Kunst, Geometrische Triangel, Averroë Cordubense, Jacobus Horstius, Jacob: Publicius Florentinus</vocab>

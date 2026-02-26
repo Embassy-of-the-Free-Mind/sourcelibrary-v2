@@ -1,0 +1,32 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RIHMOMACHIE, IEV</header>
+
+*tiente : Consequemment venant au troisiesme*
+*nombre requerant, qui est 45, au nõbre des pairs,*
+*prenons le nom de la tierce espece superpartiẽte,*
+*qui est superquadrupartiente quinte, qui est au-*
+*tant à dire comme quatre cinquiesmes plus, &*
+*par ainsi choisis un nombre qui contienne le pre*
+*dict 45, & 4 quintes plus. or la cinquiesme partie*
+*de 45. est 9. parquoy prenant quatre cinquiesmes*
+*auras 36. eslis donc un nombre qui contienne*
+*les quatre cinquiesmes, lesquelles sont 36. en-*
+*semble le predict nombre trouué requerant 45,*
+*& s'offrira 81. diras iceluy requis conuenir a-*
+*uec 45, en proportion superpartiente, ie repete-*
+*ray icy les predicts nombres requerans, & affin*
+*que ne trauailles à trouuer les nõbres requis, pour*
+*parfaire auec eux la proportion superpartiente,*
+*au dessus d'un chacun d'iceux requerans, situe-*
+*ray le nombre de leurs parties lesquelles doiuent*
+*estre reprises & adioustées à eux pour trouuer*
+*leur nombre requis à un chacun des predicts*
+*nombres requerans. Et procede ledict nombre*
+*des parties tousiours selon le naturel ordre des*
+*nõbres impairs, & commence sa progression*
+*à 5, & leurs nommeurs escrips au dessus, pro-*
+*cedent par le nombre pair comme biquadri. &*
+*à l'ordre des impairs au contraire.*
+
+<vocab>Rihmomachie, superpartiente, superquadrupartiente quinte, biquadri, nombres impairs</vocab>

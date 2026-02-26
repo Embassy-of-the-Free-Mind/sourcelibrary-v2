@@ -1,0 +1,58 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III</page-num>
+<sig>b 2</sig>
+<vocab>proportio, numerus, minimus, primus, commensurabilis, propositio</vocab>
+
+simãquintã secundi q proportio a ad b ea est h ad g: quare et q c ad d. et q2 a pducit e scdm v et idem a pducit f scdm g. ergo p septimã secudi q proportio d ad g: ea est e ad f. at cũ c ad d sicut h ad g: ergo pmutatim sicut c ad h: ita d ad g. quare sicut c ad h: ita e ad f. sed c numerat h per decimãnonã huius ergo et e numerat f: et f positus est minoz e. numerat igitur maioz minozẽ: quod est impossibile z pzo= positum. Et ex modo demonstrationis patet cozrelarium.
+
+<margin>25</margin>
+¶ **Propositis quotlibet numeris: minimũ ab eis numeratũ inuestigare.**
+
+¶ Sint a b c d quotlibet numeri: quoz proponit minimũ ab eis numeratũ inuenire. quero pzimo mi nimũ quem numerãt a et b: q si a numerat b certũ est b esse minimũ ab eis numeratũ. et si a et b sunt cõtra se pzimi duco vnũ in alterũ. et q2 illi sunt pmi: ergo p vicesimã hui? erũt in sua pportione mimi p precedentẽ igit pductus ab ipsis erit mimus quẽ numerabũt. at si ipsi fuerint cõicantes sumo per pcedentẽ minimũ quẽ numerãt q sit e: et consil'r capiã minimũ quẽ numerãt c e q sit f et minimũ quẽ numerãt d f q sit g quẽ dico eẽ minimũ numez quẽ numerãt a b c d. numerabunt eni eum p 23 primí. at q nõ numerẽt minozẽ pz. nã si sit dabilis nũerus minoz g quẽ numerãt a b c d sit ille h: q2 ergo a b numerãt h. ergo p cozrelariũ pcedẽtis e mimus ab eis numerat? nũerat h. et qz e r c numerãt h: ergo p idẽ cozrelariũ f mimus ab eis nũeratus nũerat h. et qz f et d posit? est etiã ipsũm nũerare ergo per idem cozrelariũ g mimimus ab f d numeratus numerabit h. at h positus est minoz g: nume rat igitur maioz minozẽ: quod est impossibile.
+
+<image-desc>A diagram of several horizontal lines of varying lengths, labeled from top to bottom as h, f, e, d, c, b, and a. A point 'o' is marked to the right of lines b and c.</image-desc>
+
+<margin>26</margin>
+¶ **Si minimũ numez a quotlibet numeratum aliquis pzimus numezet: eundẽ quoqz aliquem illozum numerare necesse est.**
+
+¶ In duob? numeris id facile ppendit. Sint ergo a b duo nũeri: e mimus ab eis numerat?: et d nũe rus pzimus numerans e: dico d nũerare a vel b. numeret eni a minimũ numeratũ scdm e: ergo per 24 hui? e est vnus mimoz pportiõis a ad b numeras b. tũc sic d numer? pzim? nũerat e pductũ a duob? nũeris a et e. ergo p quartã huius d nũerat alterũ numeroz a aut e. si a cõstat ppositũ: si e itidẽ. nã p vicesimãquartã numerabit b. In pluribus aut cõsil'r ostẽditur. Sint a b c quotlibet nũeri d mimus ab eis nũeratus: e nũerus pzim? numeras d: dico e nũerare a b aut c. capiõ eni fm exigentia pcedẽtis mimũ numez quẽ numerãt a b q sit f: et mimũ numez quẽ numerãt f c quẽ ex pcedẽti manifestũ est eẽ d et nũeret e mimũ d scdm g per 24 huius est vnus nũeroz pportiõis f ad c et g numerat f. Lum itaqz e numerus pimus numeret d pductũ ex duob? numeris c g: ergo p quartã huius e nũerat alterũ numeroz c g. si numerat c cõstat ppositũ: si numerat g ergo p vicesimãquartã numerat f. qz ergo f est mimus numer? quẽ numerãt a b. nũeret ergo a minimũ f scdm h q per sepe sumptã vigesimãquartam hui? erit vnus mimoz pportiõis a ad b et numerãs b. cum ergo e pbatus sit nũerare f productũ ex duobus numeris a h: ergo per quartam huius numerat a aut h. si numerat a constat propositum. si h itidẽ. nam h numerat b: quare e per vicesimãtertiam primi etiã numerabit b: et propositũ.
+
+<image-desc>A diagram of several horizontal lines labeled a, b, c, d, e, f, g, and h. The lines are arranged to show mathematical relationships described in the text.</image-desc>
+
+<margin>27</margin>
+¶ **Lum fuerint quotlibet numeri ad aliquem primi: et minimus quem numezant ad eundem erit primus.**
+
+¶ Sint a b c quotlibet numeri primi ad d: sitqz e mimus numer? quẽ numerãt a b c: dico e esse pzimũ ad d. nã si d est cõmẽsurabilis ad e: ergo est aliqs numer? eos cõiter numerãs q sit f. si eni f sit nũer? pimus cũ numeret e: ergo p pcedẽntẽ nũerabit a b aut c. et cũ etiã nũeret d nõ sunt ergo a b c pmi ad d qd est contra hypothesim. at si f sit nũerus pposit? ergo p sedam huius f ab aliquo pmo numeratur q sit g: qui p vicesimãtertiã pzimi numerabit d et e: q2 ergo g est pzimus z nũerat e. ergo p pzeceedentẽ nũerabit a b aut c et etiã numerat d. nõ sunt igitur a b et c primi ad d: quod est contra hypothesim.
+
+<image-desc>A diagram of horizontal lines labeled a, b, c, d, e, f, and g.</image-desc>
+
+<margin>28</margin>
+¶ **Si sumatur minimus numerus quẽ numezant aliquot primi numeri assignati: aliũ ab illis numezum pzimũ: eundem numerare impossibile est.**
+
+¶ Sit e mimus nũerus quẽ nũerãt a b c quotlibet nũeri pmi: dico nullũ ipsĩs pzũ aliũ ab ipsis nũe rare e. nã si daret' alius vt d: qz ipse nũeraret e. ergo p 26 nũeraret etiã a b aut c: qd est cõtra hypothesim.
+
+<image-desc>A diagram of horizontal lines labeled a, b, c, and e.</image-desc>
+
+<margin>29</margin>
+¶ **Numerũ minimũ: pzopositarũ denoiationum partes habentẽ inuenire.**
+
+¶ Si pzopositarũ partium vt verbi cã vnius secũde tertie quarte z sexte ppositũ sit minimũ numez ptes illas hñtem reperire. capiõ a b c d nũeros partes illas denoiantes quoz mimus ab eis nũerat? sit e: nũeretqz a minimũ e scdm f: et b eundẽ scdm g: et c eundẽ scdm h: z d eundẽ scdm k. alternatim ergo p octauã pzimi f g h k numerabũt e fm a b c d datos nũeros: erũt ergo in e partes denoiate ab a b c d quẽ z dico esse minimũ in quo ptes ille reperiãtur. q eni partes illas habeat: iam notũ est: sed si nõ sit mimus sit ergo ille l minoz eo filas habẽs: z eius partes ab illis denominate sint m n o p. erunt ergo alternatim per octauam a b c d partes l denominate ab m n o p. nõ erat ergo e minimus quẽ numerabant a b c d. nam l ponitur minoz: quod est contra hypothesim.
+
+| Label | Ruler Line | Value | Label | Ruler Line | Value |
+|-------|------------|-------|-------|------------|-------|
+| e     | ---------  | 12    |       |            |       |
+| a     | ---------  | 2     | f     | ---------  | 6     |
+| b     | ---------  | 3     | g     | ---------  | 4     |
+| c     | ---------  | 4     | h     | ---------  | 3     |
+| d     | ---------  | 6     | k     | ---------  | 2     |
+| l     | ---------  |       |       |            |       |
+| m     | ---------  | 6     | n     | ---------  | 4     |
+| o     | ---------  | 3     | p     | ---------  |       |
+
+<margin>30</margin>
+¶ **Sumptis duob? numeris contra se pzimis quozũ minoze de maioz quoad potest detracto residua sit vnitas: multiplicem cuiuslibet eorum qui super alterius multiplicem: solam apponat vnitatẽ reperire.**
+
+¶ Sint a b nũeri cõtra se pmi: a maioz b mioz: detractoqz b de a quoties pőt reliquat' vnitas: ppositũ est dare mltiplice ad a: sola vnitate multiplicẽ ad b supantẽ. detraho ergo q̃tũ possum b ptiale de tota a et sit totus detract? a ptialis: q̃ quide est idẽ aut mltiplex ad b. et sit c relicta vnitas z addo ad b vnitatẽ q sit d. et duco a totũ in b d z pueniat e quẽ manifestũ est eẽ multiplicẽ totalis a. Deide duco
+
+<image-desc>A complex geometric diagram consisting of several semi-circles and arcs arranged within a larger semi-circle. Numbers are inscribed within the sections, including 45, 44, 40, 5, 4, 1, 9, 8. Points are labeled with letters a, c, b, g, h, k, e.</image-desc>

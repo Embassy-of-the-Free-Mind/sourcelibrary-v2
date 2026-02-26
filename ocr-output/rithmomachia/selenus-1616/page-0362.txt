@@ -1,0 +1,45 @@
+<language>German</language>
+<page-num>328</page-num>
+<page-type>diagram</page-type>
+<columns>2</columns>
+
+<margin>
+Das Dritte Buch /
+3. cap:
+</margin>
+
+### n. 30. 31.
+
+<image-desc>A 10x10 square grid used for dance notation. The grid contains various abbreviations including "SS" (repeated in the second row), "SK", "WK", "SR", "WS", and "WR". The numbers "31" and "30" are written in the middle rows.</image-desc>
+
+### n. 38. 39.
+
+<image-desc>A 10x10 square grid containing dance notation abbreviations such as "SR", "SS", "SK", "WS", "WK", and "WR". The number "19" appears in the center, and the number "3" appears in the lower middle section.</image-desc>
+
+### n. 49. 52. 61.
+
+<image-desc>A 10x10 square grid with abbreviations including "SR", "SS", "SK", "WS", "WK", and "WR". The numbers "45", "52", and "2" are distributed in the middle rows. The bottom rows are densely filled with "WS" and "WR" abbreviations.</image-desc>
+
+### n. 53. 59.
+
+<image-desc>A 10x10 square grid featuring dance notation symbols. Abbreviations include "SR", "SS", "SK", "WS", "WK", and "WR". The numbers "32" and "45" are present. The bottom rows contain multiple entries of "WS", "WR", and "WK".</image-desc>
+
+<column-break/>
+
+### n. 34. 35.
+
+<image-desc>A 10x10 square grid. It contains abbreviations "SS", "SK", "WK", "WS", "SR", and "WR". The number "30" is written in the middle-left area of the grid.</image-desc>
+
+### n. 42. 43. 44. 45.
+
+<image-desc>A 10x10 square grid with various notation abbreviations including "SS", "SK", "SR", "WS", "WR", and "WK". The numbers "25", "15", and "10" are written in the right-hand columns of the grid.</image-desc>
+
+### n. 53. 56.
+
+<image-desc>A 10x10 square grid containing dance notation abbreviations "SR", "SS", "SK", "WS", "WK", and "WR". The numbers "47" and "31" are written in the upper half. The bottom rows are filled with "WS", "WR", and "WK" abbreviations.</image-desc>
+
+### n. 64. 65.
+
+<image-desc>A 10x10 square grid. Abbreviations include "SR", "SS", "SK", "WS", "WK", and "WR". The numbers "47" and "43" are visible in the middle. The bottom rows feature multiple "WS", "WR", and "WK" entries.</image-desc>
+
+<vocab>Das Dritte Buch, Scelete, choreography, SS, SK, WK, SR, WS, WR</vocab>

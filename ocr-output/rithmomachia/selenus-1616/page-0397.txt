@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>363</page-num>
+<header>11. cap: Vom Schach-Spiel.</header>
+<sig>Z iij</sig>
+<meta>catchword: Sol</meta>
+
+Er/mit seines K. Schützen/der S. K. Reuter/genommen/und «
+der S. K. Rochens/Soldaten/erobert) des K. Reuter/heraus «
+zu bringen: sich der Rochen/zu gebrauchen/und/(auf daß Er/ «
+des Sieges möge versichert seyn) ursach und anlaß/ zur ver- «
+wechslung der Steine/ zu geben/ fleiß anwenden. «
+
+<margin>7. *</margin> Dieses ist zwar / auß des Damiani Büchlein / also / (doch deutlicher) anhero gesetzet worden: und ob es wol / nach seiner anweisung/ zimlich gut zu seyn/ sich ansehen lässet/ dannoch muß der jenige / so dieses Spieles / gründlich sich gebrauchen wolte/ dessen / was folget / hiebey noch erinnert werden: Daß nemlich der Weisse/ der K. Soldaten / (wan der Schwarze / der K. Reuter / auf denselben / auf 46. n. 5. ziehet) nicht/ mit der K. Schützen / auf 20. (d. n. 5.) beschirmen / besondern / denselben Soldaten / (auf daß ihm des Schwarzen Steine / keinen schaden / leichtlich zufügen mögen) auf den S. Reuter / auf sieben und dreyssig/ ziehen sol: Der Schwarze / rucket denselben/ auf die W. Königin/ und des W. K. Schützen/ auf neun und zwanzig: Der Weisse/ (dieweyl Er/ auß der noht/ eine tugend machen muß) nimt der S. K. Schützen/ mit seines K. Schützen/ und beut Schach: Der Schwarze/ nimt ihn/ mit der Königin: Der Weisse/ setzet seine Königin/ (auß der gefahr) auf der S. K. Reuter/ auf ein und zwanzig: Der Schwarze/ ihn zu verthetigen) des K. Soldaten / auf sechs und dreyssig: (dahero/ der W. K. Soldat/ frey und ungehindert/ desto ehe/ zu einer Königin/ ins künftige/ kan gemachet werden) Der Weisse/ der K. Schützen/ nochmaln / auf der S. K. Reu-
+
+<margin>8. *</margin> ter/ auf zwanzig: * Der Schwarze / (umb ihn ferner zu verthetigen) des K. Schützen / auf acht und dreyssig: Der Weisse/ noch/ auf der S. K. Reuter / des K. Reuter/ auf zwelfe/ und wird / sein Spiel/ dergestalt / umb ein ziemliches verbessern.
+
+<margin>9.</margin> Rucket aber der Schwarze / nicht den Schützen / auf 38. (n. 8.) besondern des K. Schützens-Soldaten/ auf des W. K. Soldaten / auf fünf und dreyssig: so ziehet / der Weisse / der K. Reuter / auf zwey und zwanzig: folgendes / (nach verursachen / des Schwarzen) des K. Reuter/ (umb/ dem Schache / auß zwey und zwanzig/ abzuwehren) auf zwelffe: und erwartet ferner / was der Schwarze/ wider ihn / wil fürnehmen.
+
+<margin>10.</margin> Spielet dan der Schwarze / auf eine andere Art / alß von n. 7. biß hieher gedacht: so wird der Weisse / gleichwol / (doch / daß Er im Schache / zu ziehen weiß) gewinnen.
+
+<vocab>Schach-Spiel, Damiani, Reuter, Schützen, Soldaten, Königin, Rochen, Schach</vocab>

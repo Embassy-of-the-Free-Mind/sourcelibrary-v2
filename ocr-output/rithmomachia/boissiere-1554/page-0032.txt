@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>15</page-num>
+<header>DES PHILOSOPHES.</header>
+
+de de 16. Apres pourſuiuras iuſques au ſommet,
+mettãt, touſiours une marche ou baſe ſur l'autre,
+en diminuant le coſté d'une chacune baſe d'un
+grain: Tellemetã ta premiere baſe, en ſon coſté à
+6 grains, la ſecõde 5, la tierce 4, auſsi la quatrief-
+me n'eaura q̃ 3, la cinquieſme 2, la ſixieſme 1. Deſ-
+quelz 6 coſtez marqueras les quarrées ou baſes,
+cõme auons monſtré, & cy apres mõſtrerons en
+figure: Reſte à marquer la ſuperfice d'icelle ou au
+deſſus du ſommet, ou au parauãt auois laiſſé pla-
+ce pour y appliquer 2 nõbres, pour marquer celle
+place du ſommet, ramaſſe les nombres quarrez:
+Aſçavoir les 6 degrez ou baſes des precedens
+quarrez mis au degrez de la pyramide, qui ſont
+36, 25, 16, 9, 4, 1: & auras 91, le nombre conue-
+nable pour le ſommet de ta pyramide. Et parce
+que deſia tu auois une des tables quarrées du rẽg
+des nombres pairs, marquée du meſme nombre
+91: Icelle table oſteras & mettras ceſte pyrami-
+de en ſon lieu, & ainſi riẽ n'y aura de ſuperflu.
+Quant à la pyramide de nompair, n'auras autre
+difficulté qu'en la precedente, ſauf que la baſe
+premier eſt 64 avec ſon coſté 8: la ſecõde 49, &
+ſon coſté 7: la tierce, 36 avec ſon coſté 6: la qua-
+trieſme 25, avec ſon coſté 5: la cinquieſme 16, a-
+vec ſon coſté 4, & pour paruenir iuſq̃s à l'unité
+reſteroit encores 3 baſes, mais ceſte pyramide eſt
+
+<vocab>pyramide, nombres quarrez, degrez, sommet, baſe, grain, nompair</vocab>

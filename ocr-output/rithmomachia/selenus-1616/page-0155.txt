@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>125</page-num>
+<header>1. cap: Vom Schach-Spiel.</header>
+<meta>catchword: Aber</meta>
+
+ſolle/ und daß die Deutſche Sprache/ dieſen gebrauch/ in den wor-
+ten/ Schach und Mat/ eigentlich andeutet: Dan/ wan man dem
+Könige/ einen Schach anſaget/ es ſo viel heiſſet/ alß/ ſey gejaget/
+oder weiche von deiner ſtelle: Welches dan der König/ auch thun
+muß: es ſey dan/ daß Er/ ſeiner Steine einen/ noch fürziehen/ oder
+den Schacher/ mit denſelben/ von der Tabel/ wegraumen könne.
+Wan man aber Schach-Mat ſaget: daß bedeutet/ du ſolt mit dieſem
+anfall/ dermaſſen/ mat und Kraftlos gejaget und gemachet ſeyn/
+daß du nicht weiter fortgehen könneſt/ beſondern dich ergeben müſ-
+ſeſt. Dahero nuhn folgen wil/ daß es nicht nötig ſeyn wird/ die
+*derivationes*, auß andern Alten/ oder/ weit abgelegener Völcker
+Sprachen/ zu ſuchen. Vnd obſchon/ dieſe wort/ auß denſelben/ auf
+des vorerwehnten gebrauches/ bedeutung/ gezogen werden könten/
+ſo wollen ſie ſich doch allerdings/ nicht darauf *appliciren* und dre-
+hen laſſen. Vnd geſetzet/ daß Sie auch dergleichen etwas mit ſich
+brächten und bedeuteten/ (dan/ wie Lutherus, im Geneſi, pag: 617.b.
+ſetzet: *Multæ dictiones, compluribus linguis, communes ſunt.
+Non enim ſic diſtortæ ſunt linguæ, ut non ſit aliqua vocum inter-
+dum ſimilitudo & congruentia.*: Das iſt: Es ſind viele wort/
+die da vielen Sprachen/ gemeyn ſeynd. Dan die Sprachen/
+ſind nicht ſo gar von einander geriſſen/ daß nicht bißweilen/ et-
+liche einander/ gleich ſeyn/ und ſich mit einander reymen ſolten)
+ſo möchten wir doch etwa/ ſolche *derivationes*, mit jenen/ welche/
+die *Sileſios*, von den *Eliſijs*, und die *Vliſſinger* in Seeland/ vom
+*Vlyſſe*, (wie Matth: Quad, pag: 177. 358. ſetzet) herrechneten/ auch
+gar zu weit und zu ſorgfeltig ſuchen.
+
+Warumb aber dieſe wörter/ allein bey den Königen/ und
+nicht bey den andern Steinen/ auch gebrauchet werden/ (ſinthe-
+mal es allen Steinen gemein/ daß man Sie/ von der Tabel/ weg-
+jaget: wir auch/ im 2. Cap: des vorigen Buches/ daß dieſes Spiel/
+den nahmen des Schach-Spieles/ dahero vielleicht möchte bekom-
+men haben/ geſchloſſen) deſſen ſcheinet dieſes/ die urſache zu ſeyn:
+daß die andere Steine/ nach dem feindlichen anfal/ können geraus-
+bet/ die Könige aber nuhr gejaget/ und letzlich ſich zu ergeben/ genö-
+tiget werden. Bey dem erſten/ wan man/ einen anſchlag/ und ans-
+fal auf den feind gethan/ ſcheinet es ungereymt/ daß man ihn noch
+darzu verwarnen ſolte/ daß ſeine Steine nicht geraubet wür-
+den: Derowegen das wort Schach/ billig unterlaſſen wird/ und
+mag Er ſelbeſt/ auf ſeine Schantze/ fürſichtig achtung geben.
+
+<vocab>Schach, Mat, König, derivationes, Lutherus, Geneſi, Matth: Quad, Sileſios, Eliſijs, Vliſſinger, Vlyſſe, Tabel</vocab>

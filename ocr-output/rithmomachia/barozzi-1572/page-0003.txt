@@ -1,0 +1,6 @@
+<language>None</language>
+<page-type>blank</page-type>
+<warning>The page is a blank flyleaf or endpaper, displaying significant foxing, staining, and some bleed-through from other pages.</warning>
+<meta>Digitized by Google watermark in the bottom right corner.</meta>
+
+<image-desc>A blank, aged piece of paper with numerous brown foxing spots and stains across the surface. There is a small tear or uneven edge at the bottom right corner where a digital watermark is visible.</image-desc>

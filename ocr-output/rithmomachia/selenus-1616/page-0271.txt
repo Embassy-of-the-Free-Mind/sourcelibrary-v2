@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>237</page-num>
+<header>Vom Schach = Spiel.</header>
+
+<margin>14. cap:</margin>
+
+zwantzig / Schach : der Schwartze / rucket / den König / auf zwey
+und viertzig : der Weiſſe / des K. Rochen / auf ſechs und dreyſſig : der
+Schwartze / auf denſelben / des K. Schützens-Soldaten / auf drey
+und viertzig : der Weiſſe / denſelben auf fünf und dreyſſig : der
+Schwartze / ſeiner K. Rochen / (umb zu bewahren / ſeines K. Schüt-
+zens-Soldaten) auf neun und funfzig : (und nicht / der K. Schützen /
+auf des W. K. Rochen / auf acht und zwantzig : dan ſonſten der Weiſ-
+ſe / des S. K. Schützens-Soldaten / mit des K. Rochen / nehmen /
+und Schach-Mat / bieten würde) der Weiſſe / beut / mit der K. Reu-
+ter / auß ſieben und zwantzig / Schach : der Schwartze / rucket den
+König / auf funfzig : der Weiſſe / des K. Rochen / auf drey und dreyſ-
+fig : der Schwartze / der K. Schützen / auf der W. K. Schützens-Sol-
+daten / auf acht und zwantzig : der Weiſſe / denſelben / auf zwey und
+zwantzig : der Schwartze / des K. Schützens-Soldaten / auf des W.
+K. Reuters-Soldaten / auf fünf und dreyſſig : der Weiſſe / denſelben /
+auf vier und dreyſſig : der Schwartze / der K. Rochen / auf ein und
+funfzig : der Weiſſe / der K. Reuter / auf ſiebenzehen : der Schwarz-
+ze / den König / auf neun und funfzig : der Weiſſe / ſeinen König /
+auf ſieben und zwantzig : der Schwartze / der K. Schützen / auf der
+W. K. Rochens-Soldaten / auf ſieben und dreyſſig : der Weiſſe /
+denſelben / auf vier und zwantzig : der Schwartze / der K. Schüt-
+zen / auf vier und viertzig : der Weiſſe / den König / auf ſechs und
+dreyſſig : der Schwartze / der K. Schützen / auf dreyſſig : der Weiſſe /
+der K. Reuter / auf ſieben und zwantzig : (wodurch Er verhindert /
+daß / der S. K. Schütze / auf ſeines K. Rochen / auf zwelfe / nicht
+kan gezogen werden) der Schwartze / der K. Schützen / (vermei-
+nend auß fünfe / des W. K. Rochem <gloss>the 'm' has a macron, likely for 'Rochen'</gloss> / gleichwol / beyzukommen) auf
+drey und zwantzig : der Weiſſe / denſelben / auf ein und viertzig :
+der Schwartze / der K. Schützen / auf fünfe : der Weiſſe / des K.
+Reuters-Soldaten / auf der S. K. Rochen / und des S. K. Rochens-
+Soldaten / auf zwey und viertzig : der Schwartze / muß ihn /
+mit des K. Rochens-Soldaten / nehmen : (dan Er ſonſten / wan
+Er / der K. Rochen / auf funfzig / ſetzete / und der Weiſſe / ſeines K.
+Rochens-Soldaten / wegnehme : entweder der K. Rochen / ver-
+lieren : oder daß dieſer / des W. K. Reuters-Soldat / zu ei-
+ner Königin / gemachet würde / nachgeben müſte) der Weiſſe / nime <gloss>the 'm' has a macron, likely for 'nimme' or 'nimmt'</gloss>
+denſelben / mit des K. Rochen / der Schwartze / rucket ſeiner K. Ro-
+chen / auf des W. K. Rochens-Soldaten / auf neun und viertzig :
+
+<meta>catchword: der Weiß</meta>
+
+<vocab>Schach, König, Rochen, Schütze, Reuter, Soldaten, Schützens-Soldaten, Reuters-Soldaten, Schach-Mat, Königin, Weiſſe, Schwartze</vocab>

@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>380</page-num>
+<header>Das Vierte Buch / 1. cap:</header>
+
+->n. 2. 7.<-
+
+<image-desc>An 8 by 8 square grid representing a chess position. The first row contains the abbreviations SR, SR, SSc, SR, SK, SSc, SR, and SR. The second row contains SS, SS, two blank squares, and four SS abbreviations. The third row contains a blank square, a blank square, SS, and five blank squares. The fourth row contains three blank squares, SS, the number 36, and three blank squares. The fifth row contains two blank squares, WS, WS, WS, and three blank squares. The sixth row is entirely blank. The seventh row contains WS, WS, three blank squares, and three WS abbreviations. The eighth row contains WR, WR, WS, WR, WK, WS, WR, and WR.</image-desc>
+
+->n. 3. 6.<-
+
+<image-desc>An 8 by 8 square grid representing a chess position. The first row contains the abbreviations SR, SR, SSc, SR, SK, SSc, SR, and SR. The second row contains SS, SS, two blank squares, and four SS abbreviations. The third row contains four blank squares, the number 44, the number 43, and two blank squares. The fourth row is entirely blank. The fifth row contains three blank squares, WS, a blank square, WS, and two blank squares. The sixth row contains two blank squares, WR, and five blank squares. The seventh row contains WS, WS, three blank squares, and three WS abbreviations. The eighth row contains WR, two blank squares, WR, WK, WS, WR, and WR.</image-desc>
+
+->n. 4. 5.<-
+
+<image-desc>An 8 by 8 square grid representing a chess position. The first row contains the abbreviations SR, SR, SSc, a blank square, SK, SS, a blank square, and SR. The second row contains SS, SS, two blank squares, and four SS abbreviations. The third row is entirely blank. The fourth row contains SR, WR, a blank square, SR, and four blank squares. The fifth row contains three blank squares, WS, and four blank squares. The sixth row contains four blank squares, WS, and three blank squares. The seventh row contains WS, WS, a blank square, the number 13, a blank square, and three WS abbreviations. The eighth row contains WR, two blank squares, WR, WK, WS, WR, and WR.</image-desc>
+
+->n. 8. 9.<-
+
+<image-desc>An 8 by 8 square grid representing a chess position. The first row contains the abbreviations SR, SR, SSc, SR, SK, SSc, SR, and SR. The second row contains SS, SS, two blank squares, and four SS abbreviations. The third row contains two blank squares, SS, and five blank squares. The fourth row contains three blank squares, SS, WS, the number 35, and two blank squares. The fifth row contains two blank squares, WS, WS, and four blank squares. The sixth row is entirely blank. The seventh row contains WS, WS, three blank squares, and three WS abbreviations. The eighth row contains WR, WR, WS, WR, WK, WS, WR, and WR.</image-desc>
+
+<vocab>Schach, chess, Das Vierte Buch, Spielstellungen, SR, SS, SSc, SK, WS, WR, WK</vocab>

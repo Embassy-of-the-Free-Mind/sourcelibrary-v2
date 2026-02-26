@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>63</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>6. cap:</margin>
+
+Endlich haben Sie/auf ihrer Seite/eben so viel Steine/und
+Soldaten/alsz ihre Könige/und werden/(zum unterscheide der Kö-
+nige-Steine) ihre Steine/genennet.
+Von diesem Steine/findet man/in vorgedachten Alten *ma-
+nuscriptis*, folgende wort verzeichnet:
+> Der Königin gestalt/auf dem Schach-Zabel/sol sein/ «
+> eine schöne Fraw/in vergültem gezierten gewand/umbscheift «
+> mit vehem: und sol die Fraw steh/zu der gelincken Hand / des «
+> Küniges/auf dem Schach-Zabel/darumb/daß die der König/ «
+> mit der rechten Hand/mög halten und <unclear>...</unclear>; Cantic: c.1. «
+> v.6. Sye stet/ und sezt man sye auch darumb/zu der rechten «
+> Hand des Künigs/daß Sie hab von genaden/daß Er hat von «
+> Natur: Es ist besser/daß man habe Künig/die geerbet seien von «
+> Natur / und nach der Art der Ersten geburt/dan daß man sy/ «
+> von der Fürsten Chur erwelet. Dan/wan das Reich/ledig «
+> wirt/so geschicht dick/ von krieg der Walherren/ daß das «
+> Rich/lang verweiset wird/und blibt : dovon wirt das Reich «
+> beschediget/und das Recht vertruckt: Auch geschicht/ daß die «
+> wal Fürsten/mehr ansehen ieren besunderen eigen nuz/dan der «
+> gemeine frummen : und under den Sachen wirt verzogen/des «
+> Reichs hab/und wirt dovon verermet. Ist aber/daß man es «
+> erbet/so zeucht man denselben erben / von Jugent auf/darzu/ «
+> daß er gut werd/zu eim Künig/und nach eines weisen Vaters «
+> willen/und nach des Vaters sitte/wercken und tugenden: Auch «
+> müssent sich die Fürsten und Herren/die in dem Land / und un- «
+> der dem Riech seint/hüten / das sie icht krieg erwecken/in dem «
+> Rich/noch daß sie/des Reichs gut icht vergeben/wan der Herr «
+> von Natur/helt sein nit stat. Es sol die Künigin / mit fünf Tu- «
+> genden bekleidet sein: des Ersten/mit sitten / alt perig und vol- «
+> kummen / nit bald unschemig: wan es geschicht oft/daß ein «
+> fraw/pald scham vergist: 2. sol die Künigin rein vnd keusch sein/ «
+> also daß sie andern frawen sey ein Spiegel/und ein Bild ; und «
+> als sie füst ist/für den Andern/ an wirdigkeit/ also sol sie sein/ «
+> vor den Andern/an Keusch und an Erberkeit: 3. die Künigin sol «
+> weiß sein/mit bescheiden sitten/gemessen worten/ und geheim «
+> Helen: wan man fint selten/das die frawen heimlich sach helen «
+> künden/oder verborgen tragen: daß zimpt ihn doch nicht wol : «
+> 4. die Künigin/sol ir kind/ sun und tochter ziehen an tugenden «
+> und
+
+<sig>J</sig>
+<meta>catchword: und</meta>
+
+<vocab>Schach-Spiel, Königin, Schach-Zabel, Walherren, Erbrecht, Tugenden, Keuschheit</vocab>

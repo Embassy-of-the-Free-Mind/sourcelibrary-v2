@@ -1,0 +1,36 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<meta>catchword: detto qua-</meta>
+
+Finalmente uolendo ritrouar li numeri delli altri 4 ne-
+ri quadrati, operaremo al modo che faceuimo nel uoler ri-
+trouar li numeri delli 4 ultimi quadrati bianchi, eccetto
+che in queſti non cominciaremo dal 5 à pigliar li quattro
+numeri impari ſeguenti, interponendo uno, come in quel
+lo faceuimo: ma cominciaremo dal 7, liquali numeri impa
+ri ſaranno queſti 7, 11, 15, 19. & moltiplicati in ſe medeſi-
+mi, ne produrranno li numeri deſiderati, quali ſaranno
+49, 121, 225, 361. perche dal 7 moltiplicato in ſe ſteſſo na-
+ſce il 49, dal 11 il 121, dal 15 il 225, & dal 19 il 361. Come di-
+moſtra la ſeguente figura.
+
+<image-desc>A horizontal row of four solid black squares. Positioned above each square are the numbers 7, 11, 15, and 19 respectively. Inside each square, their corresponding square numbers are printed in white: 49, 121, 225, and 361.</image-desc>
+
+Fin qui hauemo ritrouato tutti quelli numeri che ſi do-
+ueano dipinger ſopra li 48 pezzi del noſtro giuoco, cioè ſo
+pra li 16 tondi, 16 triangoli, & 16 quadrati coſi bianchi, co
+me neri. Hora ſolamente ci reſta inanzi che diamo fine al-
+la ſecõda parte del noſtro trattato di trouar ãchor li nume
+ri, che ſi hãno à ſcriuere ſopra li gradi delle due pyramidi,
+lequali hauemo detto computarſi in queſto giuoco per dui
+quadrati. Cominciaremo adũq; dalla pyramide biancha,
+la qual hà ſei gradi, & notaremo ſopra il ſeſto grado, che è
+il primo fõdamẽto di ſotto, ouer la ſua baſe il numero 36:
+& ſopra il ſecõdo grado uenẽdo dalla baſe alla ſũmità ſcri
+ueremo il 25: & ſopra il terzo, il 16, & ſopra il quarto, il 9:
+& ſopra il quĩto, il 4: & ſopra l'ultimo, l'unità: & ſotto la ba
+ſe notaremo il numero della ſũma delli già detti ſei nume
+ri, iquali accozzati iſieme fanno il 91. Et pche q̃ſto nume
+ro 91 ſi troua in vno delli quadrati biãchi, però ſi getta uia
+
+<vocab>quadrati, numeri impari, pyramide, giuoco, bianchi, neri, tondi, triangoli, rithmomachia</vocab>

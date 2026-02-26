@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>99</page-num>
+<header>10.cap: Vom Schach-Spiel. 99</header>
+
+so füget im warm artzeny : ist sie von hitze / so füget im ,,
+küle artzeny : oder ob er kum / von trauren / von schrecken / ,,
+oder von freud. Es geschicht dick / das ein Man / der von trau- ,,
+rigkeit siechet / und beider wider gesund wirt / dan einer / der ,,
+vor unverlingenfreuden / krancket : wan sy seint oft funden / ,,
+daß sy snel tod sint / oder doch ire glieder werden vergichtig und ,,
+unnütze. Nuhn ist zu wissen / und auch ze mercken / daß frede / ,,
+ist ein weit giessen des muets / in ain begreiffend das ziemlich ,,
+ist / und lutsam : ein weyß man / ist nimer freden an / die auf ,,
+kraft get / der gewissen / und aus ubung wird geboren / und ,,
+wirt niendert undertrungen noch zerstört / nun wan der kraft ,,
+entprist / wen was gelick hant gegeben / daß reucht sie nicht : daß ,,
+Liebe und fraede / mag dasselben geton / daß da thut ein schlag / ,,
+ainß Himels blitzen / oder des tonders. Zu dem andern mahl / ,,
+sollent sy keusch sein des leibes / und altes gebär an sitten / mit ,,
+geerten und geordneten worten kommen / und sollent die siechen ,,
+trösten / sie werden schier gesund. Darumb setzet man sie / auf ,,
+dem <term>Schachzabel</term> / für die Künigin / wan die Frawen haben ,,
+viel Sichtumbs und besunder gebresten / dovon sollent sie / mit ,,
+sitten / an Zuchten / und an erberkeit erscheinen / vor allen ,,
+leuten. Daß drit / daß die <term>Apotecker</term> / unter den fordren leu- ,,
+ten / haben sollent / das ist / daß Sie mit grossem fleiß berei- ,,
+ten / was zu der artzeney gehöret / nach der <term>Artzet</term> wort und ,,
+kunst / das sy nit / ein wurz für die andere / darunter tuend / ,,
+und das sie es nit velschend / und das sie nit alt und faul ,,
+wurzen / für newe frische dar legen / und das sye nit / un- ,,
+gelerten artzeten / und einfeltigen leuthen / giftige sachen ge- ,,
+bent / und daß sy nit domit yemant / ursach / zu dem tode ge- ,,
+bent / oder bringent. Zu dem vierten mahl / sollent die ,,
+<term>WundArtzt</term> / den vorgenanten leuthen / sein mitleidig / und ,,
+sollent nit geneigt oder ze gach sein / ze snieden / oder ze brennen / ,,
+wunden oder geschwür / das sie verlieren ihren laumden / und ,,
+mer metzger werden gehaisen / den heiler der wunden : Es sol- ,,
+lent auch / alle Artzet sich fleissen / das sie mit sitten tunt / was ,,
+sie tun / und das sie den Siechen / von erst / an dem muet gesund ,,
+machent / und ee helfent dem leiden der seel / dan dem leiden des ,,
+lebens / das sie nit habent / ungeordnete wort / gedingen / leit ,,
+oder frede.
+
+<sig>N iij</sig>
+<meta>catchword: Der</meta>
+
+<vocab>Schachzabel, Künigin, Apotecker, Artzet, WundArtzt, artzeny, Sichtumbs, gebresten, laumden</vocab>

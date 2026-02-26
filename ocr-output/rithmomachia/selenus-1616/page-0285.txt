@@ -1,0 +1,30 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>251</page-num>
+<header>Vom Schach=Spiel.</header>
+<warning>Faded text with significant ink bleed-through from a grid/table on the reverse side of the leaf.</warning>
+
+<margin>15.cap:</margin>
+derſelbe / mit der Königin / ſeines K. Soldaten / hinwegnehme:
+demſelben / ſo fern Er ihn / auf zwelfe / ruckete: Schach = Mat ge=
+ben würde) der **Schwarze** / nimt / des **W. K.** Soldaten / mit
+der Königin / ziehet dieſelbe / auf des **W. K.** Reuter / und beut noch=
+maln / **Schach**: der **Weiſſe** / bedecket den König / mit der Kö=
+nigin / auf zwelfe / und verthetiget deſſen Reuter: der **Schwar=**
+**ze** / nimt / des **W. K. Rochen** / mit der Königin: der **Weiſſe** / ſpie=
+let / des **K. Reuter** / auf des **S. K. Rochen** / auf zwey und vierzig /
+und beut / von der Königin / **Ab = Schach**: der **Schwarze** / bede=
+cket / den König / mit ſeinem Reuter / auf zwey und funfzig: der
+**Weiſſe** / nimt / des **S. K. Rochen** / mit ſeines K. Reuter: der
+**Schwarze** / ziehet / der **K. Schützen** / auf des **W. K. Schützen** /
+auf ſiebenzehen: verwechſſlet alſo die Schützen und Köni=
+ginne: rucket den König / auf acht und funfzig / und
+erlanget auch / den **W. Reuter** / zu=
+ſamt dem gantzen Spiele.
+
+<image-desc>A decorative woodcut tailpiece vignette featuring an ornamental lion mask in the center, flanked by symmetrical baroque scrollwork, acanthus leaves, and floral motifs.</image-desc>
+
+<sig>Ii iij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Schach-Mat, König, Königin, Soldat, Reuter, Rochen, Schütze, Ab-Schach, Schwarze, Weiſſe</vocab>

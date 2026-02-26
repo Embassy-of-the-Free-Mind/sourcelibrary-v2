@@ -1,0 +1,33 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>402</page-num>
+<header>Das Vierte Buch / 5. cap:</header>
+
+<image-desc>A rectangular horizontal woodcut headpiece featuring elaborate scrolling foliage and floral patterns. Integrated into the design are three expressive, mask-like faces: one in the center looking forward and two on the sides in profile or semi-profile, characteristic of 17th-century decorative printing.</image-desc>
+
+## Das Fünfte Capittel.
+
+### Welcher gestalt / der Weisse / (so wol nach des Damiani, alß des Authoris meynung) wan Er / seines Königes Schützens = Soldaten / von seinen andern Schach = Steinen / abgesondert / mit dem Schwartzen / welcher seiner Königin = Reuter / ebenmessig / auf eine seiten / gesetzet / und den Vorzug hat / das Spiel / auf dreyerley art / könne anfahen und vollenführen.
+
+Wan aber der Weisse / nicht die Züge / besondern einen Haupt = Stein / alß nemlich / der Königin = oder des K. Reuter / zum Vortheil nimt / und dagegen / einen andern Vortheil gibt / so thun hierauß / die drey letzte Arten / herfür springen. Dan / wan der Weisse / der S. K. Reuter / nimt / und dem Schwartzen / den Vorzug / und des K. Schützens = Soldaten / erstlich / zum Vortheil gibt : man die Vierte Art / welche Damianus, im 6. und 7. Capitt: seines Schach = Büchleins / auf dreyerley weyse / außführet : und in diesem Capittel / folgender massen gesetzt und verbessert wird ) erlanget.
+
+<margin>1. „</margin> Die Erste weyse dieser Vierten Art / ist: Wan der Weisse /
+<margin>„</margin> der S. K. Reuter / zum Vortheil nimt / und seines K. Schützens Soldaten / mit dem Vorzuge / dem Schwartzen / überlässet : so fahet derselbe / darauf an / und ziehet / des K. Soldaten / auf sechs und dreyssig: * Der Weisse / des K. Soldaten /
+<margin>„</margin>
+<margin>„</margin>
+<margin>2. „</margin> auf zwanzig: Der Schwartze / der K. Soldaten / auf sieben und dreyssig: Der Weisse / auf des S. K. Soldaten / sei-
+<margin>„</margin>
+<margin>3. „</margin> ner K. Soldaten / auf neun und zwanzig: * Der Schwartze / nimt ihn / mit des K. Soldaten : Der Weisse / denselben / mit seines K. Soldaten : Der Schwartze / beut / mit der Königin / auß fünf und zwanzig / Schach : Der Weisse / ziehet / auf dieselbe / ( umb / den König / zubedecken ) dessen Reuters Soldaten / auf achtzehen : Der Schwartze / beut / mit der Königin / auß acht und zwanzig / Schach : Der Weisse / bedecket / den König / mit seiner Königin / auf zwölfe / gibt ursach und anlaß / daß die Königinne / ( dieweyl die eine / die andere gefangen helt ) müssen ver-
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+<margin>„</margin>
+
+<meta>catchword: wechßlet</meta>
+
+<vocab>Damiani, Damiano, Authoris, Schützens-Soldaten, Schach-Steine, Königin-Reuter, Vorzug, Vierte Art, Schach-Büchlein, König, Schach</vocab>

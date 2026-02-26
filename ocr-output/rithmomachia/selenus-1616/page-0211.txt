@@ -1,0 +1,26 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>181</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap.</margin>
+Die anderen Kupfer / so hin und wider / in diesem
+tractat / sich finden / seynd ebenmessig / wie diese / zu
+verstehen: nuhr alleine / daß / in denselben / (R) ei-
+nen Rochen: (Sp) einen Sprenger oder Reuter: und
+(B) einen Bawern / oder / (wie derselbe / in dieser be-
+schreibung / genennet wird) einen Soldaten / bedeu-
+te. Die Abbreviaturen , in den Exempeln / seynd
+(wie folget) gemeynet: (des K.) des Königes: (der
+K.) der Königin: (des W. K.) des Weissen Königes:
+(des S. K.) des Schwartzen Königes: (der W. K.)
+->der Weissen Königin : (der S. K.) der<-
+->Schwartzen Königin: (seines K.) sei-<-
+->nes Königes: (seiner K.) sei-<-
+->ner Königin.<-
+
+<image-desc>A decorative woodcut vignette or tailpiece featuring a central grotesque mask or face flanked by symmetrical, elaborate foliate scrollwork and floral flourishes.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Rochen, Sprenger, Reuter, Bawern, Soldaten, Abbreviaturen, König, Königin</vocab>

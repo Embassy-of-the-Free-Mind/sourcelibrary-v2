@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>414</page-num>
+<header>Das Vierte Buch / 7. cap:</header>
+
+<image-desc>A rectangular decorative woodcut headpiece featuring intricate floral scrolls, vines, and two cherub-like figures or masks on either side of a central floral motif.</image-desc>
+
+## Das Siebende Capittel.
+
+### Wie man / das im vorigen Capittel / vom Damiano, beſchriebene Spiel / mit beſſern zügen / anſtellen / und zum ende / bringen könne.
+
+<image-desc>An ornate woodcut initial letter 'D' decorated with scrolled acanthus leaves and floral patterns.</image-desc>
+
+Dieweyl etwa jemand / die Art / wie man das Spiel / davon / nach anleytung des Damiani, im vorigen Capittel / gehandlet worden / beederſeitz / recht führen möge / beſchrieben zu ſehen / luſt hette : Alß ſol / in dieſem Capittel / welcher geſtalt / man ſich / in anſtellung deſſelben / daß der Feind / in die Schlacht = Ordnung / einen zu beſchädigen / nicht leichtlich dringe / auf beeden theilen / fürzuſehen habe / in etwas erinnerung gethan / und angezeigt werden.
+
+<margin>1.</margin> Ziehet demnach / der Schwarze / (welcher den Vorzug hat / und der K. Reuter / dagegen / dem Weiſſen / überlaſſen ) des K. <margin>2.</margin> Soldaten / auf ſechs und dreyſſig : * Der Weiſſe / ſeines K. Soldaten / auf zwantzig : Der Schwarze / der K. Soldaten / auf ſieben und dreyſſig : Der Weiſſe / ſeiner K. Soldaten / auf des G. <margin>3.</margin> K. Soldaten / auf neun und zwantzig : * Der Schwarze / nimt ihn / mit demſelben : Der Weiſſe / denſelben / mit des K. Soldaten / verleget alſo / des G. K. Schützen / den Paß / daß er ihm / von acht und dreyſſig / auß eilfe / keinen ſchaden zufügen könne / und wird ſein Spiel / durch verhinderung dieſes angriffes / füglich und gantz wol anordnen : Dan Ihm der Schwarze / mit ſeinen Zügen / keine ſonderliche überlaſt / thun kan : So iſt auch / der ſchwächeſte ort / an welchem der gefährlichſte / einfahl und angrif zu vermuten / wol verwaret und verſehen.
+
+Wan nuhn ferner / der Schwarze / (wegen deſſen / daß ihm / der Reuter / auf der Königin ſeinen / manglet) dero Schützen-Soldaten / auf des W. K. Soldaten / auf acht und dreyſſig / ziehet : ſo beut der / der Weiſſe / mit des K. Schützen / auß neun und dreyſſig / Schach : Der Schwarze / bedecket / den König / mit der K. Schützen / auf drey und funfzig : Der Weiſſe / beut / mit der Königin / auß zwelfe / Schach : Der Schwarze / bedecket den König / mit ſeinem Schützen / auf zwey und funfzig : Der Weiſſe /
+
+<meta>catchword: Weiſſe/</meta>
+
+<vocab>Schach, König, Reuter, Schützen, Soldaten, Damiano, Gustavus Selenus, Eröffnung, Zug, Schlacht-Ordnung</vocab>

@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>479</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+<image-desc>A decorative horizontal woodcut banner featuring scrolling acanthus leaves, floral patterns, and a central ornamental mask or grotesque face, typical of 17th-century book ornamentation.</image-desc>
+
+# Das Sechste / und letzte Capittel.
+## Welcher gestalt das Spiel geendet / und der Sieg / gegen dem Feinde / erhalten wird.
+
+Auf daß man den Sieg / und die drey-fache / überwindung dieses Spieles / umb so viel besser / verstehen möge: so muß man zuoderst / die dreyerley Abtheilungen: als / der Zahl = der Meß = und der Singe-Kunst / welche / zur erhaltung derselben / gebrauchet werden / gantz wol wissen / und sich bekant machen.
+
+Die Abtheilung der Zahl-Kunst / ist diese:
+Wan drey fürgegebene Zahle / sich mit gleichem unterscheide / übertreffen: Als / wie die Abtheilung ist / zwischen 2. 4. 6. dan der unterscheid / welcher bleibet / wan die geringere Zahle / von den höhern / abgezogen werden / nemlich / zwey (welche zwischen 2. und 4 seynd) eben derselbe / ist auch / zwischen 4. und 6: Dan dieselben auch zwey Zahle / von einander seynd.
+
+> (Buxer: fol: 33. b.
+> *Proportio Arithmetica est, quæ Medium, pari intervallo a* cc
+> *Numerum, ab Extremis, ostendit distare.*) cc
+
+Die Abtheilung der Meß-Kunst / ist folgender gestalt beschaffen.
+Wan drey Zahle / aufgesetzet werden / und die geringere / so oft in den mittelsten / als die Mittelste / in den höhern / zu finden seynd. Als zum Exempel: in 2. 4. 8. dan 2 ist zwey-mahl / in 4: und 4 zwey-mahl / in 8.
+
+> (Buxer : fol : 34. b.
+> *Proportione Geometricâ conjunguntur Numeri, cum Diffe-* cc
+> *rentiâ Extremorum ad Medium, eam habent inter se rationem,* cc
+> *quam Extremorum alter ad Medium.*) cc
+
+Die Abtheilung / der Singe-Kunst / ist folgende:
+Wan drey Zahle / gesetzet werden / und der unterscheid / der beeden geringern Zahlen / so oft in dem unterscheide / der beeden grössern Zahlen / zu finden ist / als die wenigste / in den höchsten können gerechnet werden : als / in 2. 3. 6. unter denen / der unterscheid / zwischen 2 und 3. eins / und zwischen 3 und 6. drey ist: wie nuhn eins / drey-mahl in 3 ist / also seynd 2. drey-mahl in 6.
+
+<sig>Ooo 3</sig>
+<meta>catchword: (Buxer.</meta>
+
+<vocab>Zahl-Kampf, Zahl-Kunst, Meß-Kunst, Singe-Kunst, Proportio Arithmetica, Proportione Geometricâ, Buxer</vocab>

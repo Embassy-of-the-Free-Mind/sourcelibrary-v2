@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>272</page-num>
+<header>Das Dritte Buch / 3. Cap:</header>
+
+<image-desc>A decorative horizontal woodcut banner featuring a central floral motif surrounded by symmetrical scrolls, foliage, and stylized fruits.</image-desc>
+
+## Das Dritte Capittel.
+
+### ->Wie ein Spiel / wan der Schwaꝛtze / des Kö-<-
+### ->niges Soldaten / mit deſſen Schützens-Sol-<-
+### ->daten / nach des Damiani Art / vertheidiget /<-
+### ->geführet und verbeſſert werden kan.<-
+
+Es ſolte nuhn folgen / wie der Schwaꝛ-
+tze / ſeines K. Soldaten / mit der K. Soldaten / auß
+fünf und viertzig / beſchützen könte : weyl aber / dieſe
+Art / vom Damiano, nichtes geachtet / minder be-
+ſchrieben worden : Alß wollen wir / mit ihm / zur
+Dritten beſchützung / welche durch des K. Schützens-Soldaten /
+füꝛgenommen wird / alßbald ſchreiten.
+
+<margin>1.</margin> ,, Beſchützet nuhn der Schwaꝛtze / ſeines K. Soldaten / (nach-
+,, dem ihn der Weiſſe / zum andern zuge / mit des K. Reuter / auß
+,, 19. angefallen) mit des K. Schützens-Soldaten / auß drey
+,, und viertzig : ſo achtet *Damianus*, dieſelbe weiſe / füꝛ die aller
+,, äꝛgſte und gefährlichſte : Dan auf dieſen zug / Der Weiſſe / des
+,, S. K. Soldaten / mit ſeines K. Reuter / raubet : nimt ihn dan
+,, der Schwaꝛtze / mit itztgedachtem Soldaten : ſo beut / der Weiſ-
+<margin>2.</margin> ,, ſe / mit der Königin / auß drey und dreyſſig / Schach : * Der
+,, Schwaꝛtze / bedecket den König / mit ſeines Reuters-Solda-
+,, ten / auf zwey und viertzig / oder ziehet ihn / auf zwey und
+,, funfzig : Der Weiſſe / (ſo fern der Schwaꝛtze / des gemelten
+,, Reuters, Soldaten / füꝛgezogen hat) nimt / des S. K. Schü-
+,, tꝛens-Soldaten / mit der Königin / beut abermahl Schach /
+,, und ziehet ſie / auf des S. K. Rochen : Der Schwaꝛtze / bede-
+,, cket / den König / mit der Königin / auf zwey und funfzig : Der
+<margin>3.</margin> ,, Weiſſe / nimt / des S. K. Rochen / mit der Königin : * Der
+,, Schwaꝛtze / des W. K. Soldaten / mit ſeiner Königin / und beut
+,, Schach : Der Weiſſe / (umb / ſich deſſelben zu entledigen / und
+,, der K. Schützens-Soldaten / zu hülfe zu kommen ) zie-
+,, het / den König / auf fünfe : Der Schwaꝛtze / kan Ihm /
+,, füꝛ dießmahl / keinen ſchaden weyters zufügen : Dan Er /
+,, auf des K. Reuter / und deſſen Rochens-Soldaten /
+,, dieweyl deren einer / gewiß veꝛloren / gute acht haben muß :
+
+<meta>catchword: Spielet</meta>
+
+<vocab>Schach, Damianus, König, Schwaꝛtze, Weiſſe, Königin, Reuter, Rochen, Soldaten</vocab>

@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>378</page-num>
+<header>Das Vierte Buch / 1. cap:</header>
+
+der K. Schützens-Soldaten / auf dreyßig : **Der Schwartze** / auf
+denselben / und des W. K. Soldaten / der K. Soldaten / auf sieben
+2. und dreyßig : * **Der Weiße** / nimt ihn / mit des K. Soldaten :
+**Der Schwartze** / denselben / mit der K. Schützen-Soldaten :
+**Der Weiße** / denselben / mit seiner K. Schützen-Soldaten : **Der**
+**Schwartze** / denselben / mit der Königin : **Der Weiße** / ziehet / auf
+dieselbe / der K. Reuter / auf zwey und zwantzig : Ob nuhn wol
+der Weiße / hiedurch / einen Zug gewinnet : und der Schwartze /
+wegen dieses gegebenen Vortheiles / sein Spiel / (auf daß die Stei-
+ne / frey gezogen werden / und nicht eingeschlossen / verbleiben
+mögen ) brechen und zerreissen muß : so kan doch dieser / dasselbe /
+(unangesehen / des Weissen Steine / gantz frey und ungehindert /
+wohin man ihrer benötiget / gezogen werden können) gleichwol /
+in eine ziemliche ordnung / wan Er die Königin / (auß der gefahr)
+auf ein und sechßig / hinwider rucket : (wie auß den nechstfolgenden
+Zügen / zu ersehen) noch bringen : **Der Weiße** / ziehet hierauf /
+3. der K. Schützen / auf sieben und zwantzig : * **Der Schwartze** /
+des K. Reuter / auf drey und viertzig : **Der Weiße** / der K. Reu-
+ter / (umb / mit demselben / auß vier und funfzig / Schach zu ge-
+ben / und der S. K. Rochen / zu erlangen) auf neun und dreyßig :
+**Der Schwartze** / (umb denselben Schach / zu verhindern) des
+K. Reuter / auf der W. K. Schützen / auf sieben und dreyßig :
+**Der Weiße** / denselben / auf zwantzig : **Der Schwartze** / beut /
+4. mit der Königin / auß vierzig / Schach : * **Der Weiße** / rucket seine
+Königin / dazwischen / auf dreyzehen : **Der Schwartze** / nimt sie /
+mit seiner Königin / und beut abermaln Schach : **Der Weiße** / nimt
+dieselbe / mit dem Könige : und der Schwartze / bringet / auf diese
+Art / sein Spiel / in eine ziemliche ordnung.
+5. Bedecket aber der Weiße / den König / nicht / mit der Königin /
+(n. 4.) sondern mit dero Schützen / auf 13. und ziehet denselben /
+auf die S. Königin : so rucket / der Schwartze / dieselbe / auf sieben
+und viertzig : **Der Weiße** / der K. Rochens-Soldaten / auf zwey und
+dreyßig : **Der Schwartze** / der K. Reuter / auf der W. K. Soldaten /
+auf sechs und viertzig : **Der Weiße** / des K. Schützen / auf des S. K.
+Reuter / auf dreyßig : **Der Schwartze** / (umb / ihn zu beschützen)
+des K. Soldaten / auf vier und vierzig : **Der Weiße** / (umb densel-
+ben gefangen zu halten) die Königin / auf zwelfe : **Der Schwartze** /
+(denselben zu erledigen) des K. Schützen / auf zwey und funfzig : **Der**
+**Weiße** / der K. Schützen / (umb dero Soldaten / zu entsetzen) auf
+
+<meta>catchword: zwey</meta>
+<vocab>Schach, Königin, Rochen, Reuter, Schützen, Soldaten, Der Weiße, Der Schwartze</vocab>

@@ -1,0 +1,15 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>449</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+---
+
+## Das Erste Capittel.
+### Wie die Tafel/ und Steine/ dieses uhralten Spieles/ sollen beschaffen seyn.
+
+<image-desc>A rectangular game board for the game of Rhythmomachia (Zahl-Kampf), consisting of an 8x16 grid of checkered black and white squares. In the central section of the board, specific squares are marked with letters and symbols. The arrangement of characters is as follows: in the second column from the left, O, N, Z, and M; in the third column, & and I; in the fourth column, P, G, V, A, S, F, and L; in the fifth column, D, T, and C; in the sixth column, E, Y, B, and X; in the seventh column, H; and in the eighth column, Q, R, and K.</image-desc>
+
+<meta>catchword: Die</meta>
+
+<vocab>Zahl-Kampf, Tafel, Steine, Capittel, Rhythmomachia</vocab>

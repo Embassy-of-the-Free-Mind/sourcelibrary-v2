@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>408</page-num>
+<header>Das Vierte Buch / 5. cap:</header>
+
+> " nicht gezogen werde) seines K. Soldaten / auf der S. K. Sol-
+> " daten / auf acht und zwanzig: Der Schwartze / (umb denselben
+> " zu beschützen) der K. Schützens-Soldaten / auf sechs und vier-
+> " zig: Der Weisse / der K. Schützens-Soldaten / (umb / des S.
+> " K. und der S. K. Soldaten / von ein ander zu trennen) auf dreyß-
+> " sig: Der Schwartze / der K. Soldaten / (welches dan besser ist /
+> " als wan Er / des W. Königes / oder der W. K. Schützens-Sol-
+> " daten / genommen: dieweyl sonsten / sein Spiel / in eine ziem-
+> " liche unordnung / nebest dem mangel / des einen Reuters / gerah-
+> " ten würde) auf neun und zwanzig: Der Weisse / der K. Schütz-
+> " zen / auf die S. Königin / auf vier und dreyßig: Der Schwartze /
+> " auf denselben / (umb die Königin / zu bedecken) des K. Schütz-
+> " ens-Soldaten / auf drey und vierzig: Der Weisse / denselben /
+> " auf fünf und zwanzig: Der Schwartze / auf denselben / des K.
+> " Reuters-Soldaten / auf vier und dreyßig: Der Weisse / den-
+> " selben / auf achtzehen: Der Schwartze / (umb des Weissen Spiel
+> " zu brechen) des K. Schützens-Soldaten / auf des W. K. Sol-
+> " daten / auf funf und dreyßig: Der Weisse / nimt ihn / mit dem
+<margin>21.</margin>
+> " selben: Der Schwartze / denselben / mit der K. Schützen: * Der
+> " Weisse / ziehet / der K. Reuter / (umb / denselben folgendes / auf
+> " acht und zwanzig / zu rücken: Dem Schwartzen / daß Er des
+> " K. Soldaten / für sich rucke / nicht zu verstatten: oder da es ge-
+> " schehe / ihn wegzunehmen: und auf diesen Schlag / sein Spiel /
+> " in eine gute ordnung / dieweyl diese verthetigung nicht böse ist /
+> " zubringen) auf dreyzehen.
+
+Nachdem wir nuhn / biß hieher / von dem *Damiano*, (wiewol
+derselbe / in seinem büchlein / die Züge sehr dunckel und unvernehm-
+lich herfür gebracht) uns haben unterweisen lassen: alß wollen auch
+wir / denselben / in etwas weyter nachdencken / und dem jehnigen /
+welcher sich beschützen muß / für beschliessung dieses Capittels / fol-
+<margin>22.</margin>
+gendes / bey diesem Exempel / erinnern: daß nemlich / * der Weisse /
+seine Züge / sicherer und nützlicher anstellet / wan Er nicht den Reu-
+ter / auf 13. (*n. 21.*) sondern die Königin / auf des S. K. Soldaten /
+(weyl alßdan / demselbē / drey Steine / nemlich gedachte Königin: dero
+Schütze: und des K. Reuter / nachtrachtē) auf zwelfe / zufoderst rucke:
+Der Schwartze / (auf daß Er / denselben / oder der K. Soldaten / weyl
+die W. Königin / jenen / welcher diesen beschütze solte / gefangen hiel-
+te / durch den W. K. Reuter / nicht verliehre) ziehet / auf diesen W. Reu-
+
+<meta>catchword: ter / der</meta>
+
+<vocab>Damiano, Schachspiel, Züge, Königin, Reuter, Schütze, Soldat, Gustavus Selenus</vocab>

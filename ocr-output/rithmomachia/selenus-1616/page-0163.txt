@@ -1,0 +1,31 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>133</page-num>
+<header>2. cap: Vom Schach-Spiel.</header>
+
+<image-desc>An ornamental woodcut headpiece featuring intricate floral and vine scrolls with a central mask or face motif.</image-desc>
+
+### Das Ander Capittel.
+
+## Von den Zween Spielern / welcher gestalt / dieselben / die obgedachte Mittel / gebrauchen / und sich dagegen schicken sollen.
+
+Die Mittel / dadurch der Sieg dieses Spie- les / erhalten werden muß / seynd im vorigen Ca- pittel / erzehlet und angezeiget: nuhnmehr wil es von nöten seyn / wie man dieselben / klüglich ins werck richten solle / abzuhândlen: Worbey zwey- erley zu betrachten: (1.) von wem / und dan (2.) auf was maß / es geschehen solle / und müsse.
+
+Was das Erste betrift: So haben wir schon / im 1. Cap: des 1. Buches / derer / welche zu diesem Schach-Spiele zugelassen / mit wenigem erwehnet: Von denen nuhn / welche unter ihnen / die Hand / an dieses außbündige Spiel / und Ziehen / legen wollen / wird ins gemein / (1.) ein feiner verstand / gute gedächt- nus / einbildung al- lerhand erfindungen / übung / und für allen dingen / eine gute zunei- gung / erfodert.
+
+Sie müssen auch / (2.) wan Sie dieses Spiel / an die hand nehe- men wollen / zu demselben / wol qualificiret seyn / und ein siche- res ruhiges gemüthe / welches ohne ienige / frembde gedancken sey / mit sich bringen: in erwegung / Sie sonsten des Sieges verfehlen / möchten / und sich / mit dem Catullo, 
+<margin>cc</margin>
+> (Nos aliò mentes, aliò dimisimus aures
+<margin>cc</margin>
+> Jure igitur vincemur. Amat victoria curam) 
+beklagen müsten.
+
+Sie sollen / (3.) den Sieg / (davon im letzten Capittel / des Ersten Buches / gehandlet worden) nicht bloß / besondern / wie er mit den besten Mitteln / und am löblichsten / könne erhalten wer- den / sich steiff und fest fürsetzen.
+
+Sie müssen / (4.) aller Steine / der höhesten so wol / alsz der geringesten Natur / aigenschafften und gänge / so gewiß / alsz beym rechnen / das ein mahl eines / wissen: Wie dan imgleichen auch / der Tabel Quartiere, Linien / Felder und Zahle / in frischer gedechtnus haben / und auf den fingern / gleichsam zehlen können.
+
+Was nuhn über das oberwehnete / insonderheit inacht zu neh- men / von denselben / erfodert wird / das hat man auß dem eingange
+
+<meta>des fol-</meta>
+
+<vocab>Schach-Spiel, Sieg, Catullo, Steine, Tabel, Quartiere, Linien, Felder, Zahle, gedechtnus</vocab>

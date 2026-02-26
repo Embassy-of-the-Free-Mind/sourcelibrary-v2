@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>114</page-num>
+<header>Das erste Buch / 12. cap:</header>
+<meta>catchword: ben wir</meta>
+
+> Es seynd etliche dinge / so alßdan / (verstehe im Anfan-
+> ge) belůstigen : Alß da ist / das Jagen / und Schach-Ziehen : dan
+> welcher ihm / solche sachen fůrnimt / derselbe kommet mit einem /
+> der dinge erfahrnem / so weit es / das Ziel / welches Sie ihnen
+> fůrsetzen / nemlich den Sieg und ůberwinnung / betrift / ůber-
+> ein / und belůstiget sich alßbald im anschauen / in demselben :
+> Wie Er sich nuhn / vom anfang / biß zum ende / darein belůsti-
+> get / also ist ihm / ein wolgerahtener Sieg / anmuhtig und an-
+> genehm.
+
+Fürs Ander weyset und bringet uns / dieser Zweck / auf den gebrauch der Materien / oder <term>Schach-Steine</term> / darzu sie / formieret / und von der Kunst dargestellet seynd / und wie wir Sie / zu unserm nutzen / gebrauchen sollen.
+
+Letzlich / so fůret Er uns / zu den Mitteln selbst : weyl Er diesel- ben / Ihn ins werck zu setzen / in seinem umbcirck / (wie solches auß der beschreibung desselben / zu ersehen) begreiffet. Dan was ist der Sieg / in diesem Spiele / anders / als eine niderlegung des <term>Kůniges</term>? Wan nemlich derselbe / von einem / auß des Gegeners hauffen / der- gestalt / daß Er nicht entweichen kan / besondern sich gefangen geben muß / angesprengt und angerennet wird.
+
+Hierauß nuhn zu ersehen / was eigentlich der Sieg / auf die- sem Spiele / benebenst den Mitteln / dadurch man / zu demselben / kom- men mőge / sey. Weyl aber / die ganze Kunst / auf den letzten puncten / beruhet ; (dan wie <term>Galenus</term>, in Meth : cur : lib : 9. c. 7. bezeuget ;
+
+> *Totius Artis summa, in eo consistit, ut Instrumenta tibi pares, ad*
+> *obtinendum Finem :* Das ist : Darinnen stehet einer ganzen
+> Kunst summe und einhalt / daß man sich / bey ihr / umb mittel /
+> das vorgesatzete Ziel / zu erlangen / bewerbe
+
+alß wirds damit genug seyn / daß alhie / was der Sieg / aigentlich sey / nuhr inacht ge- nommen werde : Von den Mitteln / an sich / und wie Sie / ins werck / mőgen gerichtet werden / wird in den folgenden dreyen Bůchern / et- wa / ein Bericht / zur genůge / zu finden seyn.
+
+### Anhang.
+
+Folgendes Cartel / welches fůr etlichen Jahren / im offentli- chen Druck / außgegangen / und zum theile / in den sechs ersten Gesatz- tzen / dessen / was in dem 4. 5. 6. 7. 8. 9. und 10 Capitteln / droben er- wehnet / summarischer weyß / meldung thut : zum theil aber / in den dreyen letzten Gesatzen / was wir / in diesem letzten Capittel / des Ersten Buches / von dem Siege / außgegeben / etwa erleutert : ha- ben wir
+
+<vocab>Schach-Ziehen, Sieg, Kůnig, Galenus, Cartel, Schach-Steine, Anhang, Kunst</vocab>

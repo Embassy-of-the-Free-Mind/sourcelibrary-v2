@@ -1,0 +1,25 @@
+<warning>Low contrast blackletter text with significant bleed-through from the reverse side of the page.</warning>
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+## Of the kings.
+
+<image-desc>A woodcut illustration depicting two pyramidal game pieces (from the board game Rythmomachia) placed upon a grid of six squares. The pyramid on the left, which the text identifies as the "king of odde," consists of five tiers with the numbers 16, 25, 36, 49, and 64 visible on its faces. The pyramid on the right, the "king of euen," consists of six tiers with the numbers 1, 4, 9, 16, 25, and 36 visible on its faces.</image-desc>
+
+The kinges conteine in them suche
+numbers, as beyng all added toge-
+ther , make the whole piramidall
+number,the lowest square of the euen,is
+36.which riseth of the multiplying of .6.
+in it selfe. The next square that must be
+lesse,is.25.arisinge by the multiplyinge
+of fyue in it self and so followeth.16.of.4
+then.9.of.3.laste.4.of.2.and single.1.all
+these added together,make.91. After the
+same maner consisteth the king of odde.
+The lowest square is.64.arisinge of .8.
+multiplied in himselfe. The next.49.of
+7.times
+
+<vocab>The Philosophers game, Rythmomachia, pyramidal number, king of euen, king of odde, square numbers</vocab>

@@ -1,0 +1,5 @@
+<language>None</language>
+<page-type>blank</page-type>
+<meta>This page is a blank leaf, likely an endpaper or flyleaf. There is no visible historical text or manuscript content. The page shows signs of age-related foxing and a small tear at the bottom-left corner. A modern "Digitized by Google" watermark is visible in the bottom-right corner.</meta>
+
+<vocab></vocab>

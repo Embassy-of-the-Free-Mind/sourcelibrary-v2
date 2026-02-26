@@ -1,0 +1,47 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>A schematic diagram in the left margin showing a correspondence between letters and numbers. On the left: f is 12, e is 6, d is 2. On the right: c is 16, b is 9, a is 4. Below these are two marks representing the number 1.</image-desc>
+
+<margin>11</margin>
+**Si abvnitate continue designentur parte altera longiores et quadrati: duo z duo cōiuncti: triangulares omnes efficient.**
+
+¶ Designo ab vnitate a b c quadratos et ab vnitate altera parte lōgiores qui sint d e f: dico quoslibet duos primos quadratū et altera parte lōgiorem simul: cōstituere triāgularem. nā si fuerit prim⁹ quadrat⁹ q̄ est vnitas z primus altera parte lōgioꝛ qui est binarius manifestū est illos simul additos p correlariū prīme huius cōstituere triāgularē. qꝛ si fuerit a secūd⁹ quadrat⁹ z d primus abvnitate altera pte lōgioꝛ fīēt per vicesimāsextā septimi quadratis a cōstat ex iparibus abvnitate scz ex vnitate z prīo ipari 3 z d est prīus par: quare si resoluat a erūt accepti cōtinue numeri ab unitate. p correlariū igitur prīe hui⁹ cōstituūt triāgularē. z ita ostēde a et e cōstituere triāgularē resoluto a in suis iparibus p 26 septimi z e in suis partibus p vicesimāsextā eiusdē. et ita de quibuslibet duobus hoc mō sumptis.
+
+---
+
+<image-desc>A series of dot diagrams illustrating the composition of pentagonal numbers. It shows triangular dot patterns (1, 3, and 6 dots) and a square dot pattern (4 dots) being combined to form pentagonal arrangements of dots.</image-desc>
+
+<margin>12</margin>
+**Si sumantur triangulares et tetragoni: fuerintqƺ illi toti triangularium ab vnitate quoti isti tetragonorū post vnitatem: coniuncti facient numeros pentagonos.**
+
+¶ Nam si vnitatī que est primus trigonus adiungas primū quadratū post vnitatē qui est quaternari⁹ fiet pētagonus post vnitatē habēs quinqƺ latera equalia. et si capis scōm trigonū ab vnitate habebit binariū in latere z secūdus tetragonus post vnitatē habet ternariū in latere. adiecto ergo latere quadrati fiet per correlariū prīme hui⁹ triāgulus sequēs habens latus trium vnitatū et figura pētagona recipiens totidē in quolibet eius latere vnitates. et qꝛ semper totus tetragonus post vnitatē habebit vno plus in latere q̄ trigonus totus ab vnitate: hac rōne z alias ppositum efficere. z qꝛ latera illorū pentagonoꝛ equalia sunt lateribus tetragonoꝛ datoꝛum: hinc etiā fit vt illi pentagoni toti sint post vnitatē quoti z tetragoni. ¶ Et ex hac z vicesimāsexta septimi cognoscit qđ diu⁹ Seue rinus asserit boetius: 14 capite secundi sue institutionis arithmetice: pētagonoꝛ generationē nasci ex numeris naturali serie ordinatis quādo cōtinue duo a monade duoꝛ semper in medio facta intermissione iungūtur. Nam per prēmissam accepta vnitate que est primus trigonus z quaternario tetragon⁹ duoꝛ in medio binary scz atqƺ ternarij facta inmissione iunctis: fit secūdus pētagonus duo in latere gerēs. At rursum duobus intermissis septenarius acceptus quinariū includit z binarium. At quinarius impar per vicesimāsextam septimi additus tetragono quaternario: proximū cōstituit tetragonū z binarius vnitatī adiectus per correlariū prime proximū vnitati cōstituit trigonum. ergo p presentē vnitas 4 et 7 cōstituunt pentagonū. At rursum duobus dimissis post septenariū accepto denario qui 7 includit sequentē imparē z ternarium: qui septenarius quadrato prioris pentagoni additus p vicesimāsextam septimi succedētem constituit quadratū et ternarius trigono pentagoni adiectus propinquum trigonum. erit igitur per presentē numerus ex vnitate 4/ 7 et 10 constitutus pentagonus: z ita de quibuslibet aliis argumentabere.
+
+---
+
+<image-desc>A dot diagram showing a 3x2 rectangular arrangement (6 dots) alongside a 3-dot triangle, followed by a combined pentagonal dot shape of 12 dots.</image-desc>
+
+<margin>13</margin>
+**Si parte altera longioꝛ cum toto post vnitatem triangulari coniungatur: compo- situs erit pentagonus post vnitatem totus.**
+
+¶ Sit a aliquotus ab vnitate altera parte longioꝛ vt secūdus: cuius ideo minus latus erunt due vnitates: sitqƺ b triāgulus totus post vnitatē cui⁹ latus ideo erit ternarius z equale maiori lateri altera parte lōgioris. adiungo ergo maius latus trigoni b maiori lateri altera parte longioris a: et fiet tetragonus sed z illud quod restat dempto maiore latere b per secundam huius est triangulus minor descendendo ergo per precedentem ille cum quadrato ex altera parte longioꝛe z lōgiore latere trianguli cōstituēt: erit pentagonus: quod est propositū.
+
+---
+
+<image-desc>A complex, large hexagonal dot diagram. It consists of concentric hexagonal layers of dots around a single central dot, representing the structure of a hexagonal number.</image-desc>
+
+<margin>14</margin>
+**Quilibet pentagonorū post unitatē cum toto triangulari ab unitate: hexagonum post unitatem simili loco positū constituit: et huiusmodi tetragonicus dicatur.**
+
+¶ Unitas oēs numeri potestatē obtinere dicit cuius equalia latera designātur. hinc ipsa est primus triangulus primus tetragonus pentagonus hexagonus z ita deinceps. et predictoꝛū numeroꝛum primus post ipsam est cuius latus fuerit binarius: secūdus post ipsam cuius latus fuerit ternarius secūdus vero ab vnitate cuius latus fuerit binarius. et dicitur hexagonus tetragonicus cuius latus est equale lateri medij tetragoni. dico ergo qđ si capiatur aliquotus pētagonus post vnitatē vt a: qui verbi causa post vnitatē sit tertius et b totus triāgulus ab vnitate: dico a cum b cōstituere hexagonū post vnitatē totum pariterqƺ z tetragonicū. nam per duodecimā huius quotius pentagonus fuerit post vnitatē ex toto post vnitatē tetragono constat et triāgulari ab vnitate toto. ergo equalis triāgularis qui est quē ppoꝛ proponit ex opposito tetragoni latere appositus hexagonū constituet: cuius latus erit equale lateri medij tetragoni. et qꝛ latus eius ē equale lateri medij tetragoni est z equale lateri pentagoni quare z hexagonus totus erit post vnitatē quotius et pētagonus. z qꝛ eius latus est equale lateri medij tetragoni est idē z tetragonicus: qđ est propositū. Ex hac et duodecima hui⁹ z correlario prīme cognoscē promptū est gnātionē hexagonoꝛ eo pacto qđ docet Boeci⁹ 15 capite scđī arithmetices.
+
+---
+
+<image-desc>Diagrams of dots arranged in different polygonal forms: a 4x4 square (16 dots), a 3x4 rectangle (12 dots), and a 2x3 rectangle (6 dots).</image-desc>
+
+<margin>15</margin>
+**Is tetragonus cū precedēte altera pte longiore: hexagonū tetragonicū cōstituit.**
+
+¶ Prīmus enim altera parte lōgioꝛ post vnitatem est qui habet vnitatem minus latus z secundus qui hʒ duitate z ita deinceps. z precedēs tetragonū est cuius minus latus est vno minus latere tetragoni qui z post vnitatē totus ē quotius z altera parte lōgioꝛ ab vnitate. dico ergo quēcunqƺ tetragonū vt a cũ precedēte altera parte lōgiore vt b cōstituere hexagonicū tetragonū. nā p quartā hui⁹ altera
+
+<vocab>triangulares, tetragoni, pentagonos, hexagonum, Boetius, arithmetice, quadratis, unitate, trigonus, quaternarius, binarius, ternarius</vocab>

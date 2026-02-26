@@ -1,0 +1,35 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>49</page-num>
+<header>DES PHILOSOPHES.</header>
+<sig>G</sig>
+
+ceste vertueuse recreation luy sera plus agreable.
+Et ce pẽdant prieray le bening lecteur, qu'auant
+qu'il iuge m'estre amusé aux ieux & non aux
+choses graues & vtiles il aye l'intelligence du-
+dit ieu & du proffit d'iceluy: & suis asseuré qu'il
+n'estimera telle recreation inutile: Voyant mesme
+que plusieurs se recreans en tel ieu, non seule-
+ment pourront euiter les autres vains et vicieux
+(ausquels on ne peut que perdre) mais aussi pour
+ront acquerir chose vertueuse. Si tu conferes ce-
+ste recreation, auec les ieux vulgaires, tu trouue-
+ras qu'elle t'amenera vn grand profit, & que des
+autres il ne te restera que perte non seulement de
+biens, mais qui pis est du temps irrecuperable &
+bien souuent de tes amys. I'espere donc que les
+vertueux pour lesquels ay preparé cest œuvre, ne
+choisiront ceste recreation par conuoitise auari-
+tieuse, ains plustost pour communiquer & con-
+ferer l'usage & propriété, des tant nobles nom-
+bres, se saisissant du fruict & vtilité prouenant
+d'iceux. Parquoy n'estime auoir trauaillé en vain
+si de mon trauail peut prouenir à aucuns vtilité.
+Reste que si ay vsé de quelques termes non assez
+elegans en langue Françoise, ou bien si quelque
+fois exprimant les proporcions, i'ay abregé les
+termes pour les accommoder aux tiltres des figu-
+res, comme multipl. pour multiplice, ou bien par-
+
+<vocab>recreation, ieux, proffit, nombres, vtilité, proporcions, multiplice, Françoise</vocab>

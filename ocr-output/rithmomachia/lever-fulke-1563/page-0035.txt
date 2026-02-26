@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+7.times.7.then.36.of.6,25.of.5.and.16.of
+4.these numbers make the whole pyra-
+midall number.190. which because it ri-
+seth not to the poynt of one, oughte not
+to be sharpe poynted, as hathe beene
+sayde before.
+
+<image-desc>A small rectangular grid representing a portion of a game board, containing symbols for game pieces: triangles in the top row and circles in the middle row, some containing faint numbers or symbols.</image-desc>
+
+### ¶ Of the placing, encamping or letting in araie.
+
+To retorne againe to the plaine and
+easye playing of this game, next to
+the armie & their armour, follow
+ether the order of their battel or encam-
+ping. ¶ Whiche bicause it is more playne
+and easely seen with the eye, then lear-
+ned by the eare, I referre thee unto the
+table where the battell is appoynted in
+suche order as thys kynde of playe
+requireth.
+
+<sig>B.ii.</sig>
+
+<image-desc>A large grid diagram of a game board (Rythmomachia). The board is divided into squares, with various geometric pieces (circles, triangles, and squares) placed at the top and bottom ends in a starting formation. Each piece contains a printed numeral, representing its value in the game.</image-desc>
+
+<vocab>Philosophers game, Rythmomachia, pyramidall number, battel, encamping, araie</vocab>

@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>379</page-num>
+<header>1.cap: Vom Schach-Spiel.</header>
+<sig>Bbb iij</sig>
+<meta>catchword: Das</meta>
+
+zwey und zwantzig: Der Schwartze/des K. Rochen / (umb / den König / auf acht und funfzig / zu ſetzen) auf neun und funfzig / und wird ſein Spiel / dergeſtalt wol ordnen.
+
+6. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wan aber der Schwartze/ nicht den Reuter / auf 43. (n. 3.) beſondern des K. Soldaten / (umb deſſen Schützen / luft zu machen) auf vier und viertzig / ziehet : ſo ſetzet der Weiſſe / der K. Reuter / (umb auß vier und funfzig / mit demſelben / Schach zu bieten) auf neun und dreyſſig : Der Schwartze / (umb den Schach abzuwehren) der K. Reuter / auf acht und viertzig : Der Weiſſe / die Königin / auf zwey und dreyſſig : Der Schwartze / (umb den Schach / von der W. K. Reuter / auß 54. und Ab-Schach / von der W. Königin / zu verhüten) der K. Schützen / auf drey und funfzig : Der Weiſſe / des K. Reuter / (umb denſelben / auf ſechs und dreyſſig / zu ziehen) auf neunzehen : Der Schwartze / (umb den König zu verſetzen) deſſen Schützen / auf zwey und funfzig : und wird alſo / ſein Spiel / nicht allein wol ordnen / beſondern auch / dem Weiſſen / nicht geringen abbruch / thun können.
+
+7. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wan aber der Weiſſe / den S. Soldaten / nicht nimt / (n. 2.)
+8. beſondern / ſeines K. Soldaten / auf ſechs und dreyſſig / ziehet : * ſo ſpielet / der Schwartze / der K. Schützen / auf fünf und dreyſſig : Der Weiſſe / (umb / den Schwartzen / daß Er / ſeine Steine / füglich / nicht ziehen könne / aufzuhalten) der K. Schützens-Soldaten / auf acht und dreyſſig : Der Schwartze / (umb des Weiſſen / anſchläge / zu brechen ) der K. Reuters-Soldaten / auf ſieben und viertzig.
+
+9. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wil aber der Schwartze / den Schützen / auf 35. (n. 8.) nicht rucken / beſondern / nimt / der W. K. Schützens-Soldaten / mit ſeiner K. Soldaten : ſo raubet / der Weiſſe / denſelben / mit des K. Schützen : Der Schwartze / (umb / ſeines K. Schützen / einen freyen paß zu machen / oder / des K. Reuter / auf zwey und funfzig: und folgendes / auf ſieben und dreyſſig / zu ziehen) rucket / des K. Soldaten / auf vier und viertzig : doch iſts beſſer / daß Er / der K. Schützen / (auf daß derſelbe / nicht eingeſperret werde) ehe Er / der W. K. Schützens-Soldaten / nimt / auf den platz herauß rucke.
+
+<vocab>Schach-Spiel, Reuter, Soldaten, Rochen, König, Königin, Schützen, Schach, Ab-Schach, Weiſſe, Schwartze</vocab>

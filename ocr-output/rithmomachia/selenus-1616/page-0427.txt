@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>393</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>4.cap:</margin>ge/nimt/ mit der Königin/ des W. K. Rochen : Der Weisse/ <margin>„</margin>
+setzet/ des K. Reuter/ auf des S. K. Rochen/ auf zwey und <margin>„</margin>
+vierzig/ und gibt/ von der Königin/ Ab-Schach: Der Schwar- <margin>„</margin>
+ze/ bedecket/ den König/ mit seinem Schützen/ auf zwey und <margin>„</margin>
+funfzig: Der Weisse/ nimt/ mit des K. Reuter/ des S. K. Ro- <margin>„</margin>
+chen: Der Schwartze/ ziehet/ die Königin/ auf acht und zwan- <margin>„</margin>
+zig/ gibt ursach/ zur verwechslung der Königinne/ und muß <margin>„</margin>
+ihm/ des W. K. Reuter/ (dessen untergang/ weyl er/ auß der <margin>„</margin>
+ecke/ nicht kan gezogen werden/ albereit für der thür) nebest dem <margin>„</margin>
+gantzen Spiele/ endlich zu theile werden. <margin>„</margin>
+
+<margin>3.</margin> Wan aber der Weisse/ nicht den S. Soldaten/ mit dem <margin>„</margin>
+Reuter/ (n. 2.) besondern des S. K. Schützens/ Soldaten/ <margin>„</margin>
+mit seines K. Soldaten/ nimt: so ziehet/ der Schwartze/ der K. <margin>„</margin>
+Soldaten/ auf sieben und dreyssig/ und eröfnet/ der K. Schü- <margin>„</margin>
+
+<margin>4.</margin> tzen/ den weg/ auf des W. K. Soldaten: * Der Weisse/ nimt/ <margin>„</margin>
+des S. K. Soldaten/ mit des K. Reuter: (n. 2.) der Schwar- <margin>„</margin>
+ze/ beut/ mit der Königin/ auß 25. Schach: Der Weisse/ ziehet <margin>„</margin>
+auf sie/ des K. Reuters/ Soldaten/ auf 18. und bedecket derge- <margin>„</margin>
+stalt/ den König: Der Schwartze/ nimt/ des W. K. Soldaten/ <margin>„</margin>
+mit der Königin/ und beut wider Schach: (den irrthum dieses <margin>„</margin>
+nehmens/ suche drunten/ n. 36.) Der Weisse/ bedecket den Kö- <margin>„</margin>
+nig/ mit der Königin/ auf 12: Der Schwartze/ nimt/ mit seiner <margin>„</margin>
+Königin/ des W. K. Rochen: Der Weisse/ (wie n. 2. weiter <margin>„</margin>
+folget) gibt/ mit des K. Reuter/ auß 42. Ab-Schach: etc. <margin>„</margin>
+
+<margin>5.</margin> Wan aber der Weisse/ von der Königin/ (n. 4. in f.) nicht <margin>„</margin>
+Ab-Schach/ besondern/ mit derselben/ auß drey und dreyssig/ <margin>„</margin>
+Schach beut: so spielet der Schwartze/ den König/ auf ein und <margin>„</margin>
+sechßzig: Der Weisse/ beut/ mit des K. Reuter/ auß ein und <margin>„</margin>
+funfzig/ abermahl Schach/ und ziehet ihn/ auf des S. K. Ro- <margin>„</margin>
+chen: Der Schwartze/ rucket/ den König/ auf zwey und funf- <margin>„</margin>
+zig: Der Weisse/ nimt/ des S. K. Rochen/ mit seines K. Reu- <margin>„</margin>
+ter: Der Schwartze/ gibt/ mit der Königin/ auß acht und zwan- <margin>„</margin>
+zig/ Schach: Der Weisse/ bedecket/ den König/ mit seinem <margin>„</margin>
+Schützen/ auf zwelfe: Der Schwartze/ nimt/ des W. K. Sol- <margin>„</margin>
+daten/ mit der Königin: verwechsllet folgendes die Königinne/ <margin>„</margin>
+und gewinnet endlich/ das Spiel: Dan der Weisse/ (Er führe <margin>„</margin>
+dasselbe/ wie Er wolle) des K. Reuter/ auß seinem hauffen/ <margin>„</margin>
+
+-><sig>DDD ii</sig><-
+<meta>catchword: nicht</meta>
+
+<vocab>Schach-Spiel, Königin, Rochen, Reuter, Schützen, Soldaten, Ab-Schach, verwechslung</vocab>

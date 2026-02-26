@@ -1,0 +1,37 @@
+<language>English</language>
+<page-type>text</page-type>
+
+# The Philosophers game.
+
+## The first order of squares.
+
+<margin>
+suppar-
+ticulres
+added
+</margin>
+
+<margin>
+being
+the
+squares
+</margin>
+
+<image-desc>
+A diagram illustrating the numerical values and shapes of pieces for the "Philosophers' Game" (Rithmomachia). 
+
+The diagram contains two grids of 4x3 cells. 
+
+The top grid is light-colored:
+- The first row contains four triangles within boxes with values 6, 20, 42, and 72. 
+- The second row contains four triangles within boxes with values 9, 25, 49, and 81.
+- The third row contains four boxes with values 15, 45, 91, and 153.
+To the right of the first row is the marginal note "suppar-ticulres added", and to the right of the second row is the note "being the squares".
+
+The bottom grid is dark (black background with light text):
+- The first row contains four triangles within boxes with values 12, 30, 56, and 90.
+- The second row contains four triangles within boxes with values 16, 36, 64, and 100.
+- The third row contains four boxes with values 28, 66, 120, and 190.
+</image-desc>
+
+<vocab>Philosophers game, Rithmomachia, superparticulars, squares, mathematical diagrams</vocab>

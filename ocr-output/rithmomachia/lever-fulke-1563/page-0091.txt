@@ -1,0 +1,35 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>catchword: Victorie</meta>
+
+## ¶ Victorie of bodies.
+
+Victorie of bodies is only to take a cer-
+tain number of men, as if the game-
+sters agree, that he which first ta-
+keth 4. or. 5. or. 6. or. 10. men etc, shall wyn
+the game.
+
+## ¶ Victorye of goods.
+
+Victorie of goods, is to take a certain
+number without respect of the men.
+As if it be couenanted, that he whi-
+ch first taketh men amounting to the num-
+ber of .100. or .200. shall haue the victorie.
+
+## ¶ Victory of quarell.
+
+Victorie of quarell is when neither
+the men, nor the number, but the
+characters of the number be consi-
+dered. As if it be determined that he whi-
+ch first taketh .100. in .8. characters not re-
+garding in how many men they stande,
+shall winne. As .2. 4. 6. 8. 24. 64. so you
+haue .100. in .8. characters it skilleth not,
+although there be more then .100. as in
+this example there is more then .100. by .4.
+
+<vocab>Philosophers game, Victorie of bodies, Victorye of goods, Victory of quarell, characters, game-sters</vocab>

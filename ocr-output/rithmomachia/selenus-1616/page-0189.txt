@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>159</page-num>
+<header>5. cap: Vom Schach-Spiel.</header>
+
+auf zwey und ſechszig: Der Weiſſe/den Reuter/auf funf und funfzig: Der Schwartze/den König/auf drey und ſechszig: Der Weiſſe/den Reuter/auf funf und vierzig: Der Schwartze/den König/auf vier und ſechszig: Der Weiſſe/den Reuter/auf zwey und ſechszig: Der Schwartze/den König/auf drey und ſechszig: Der Weiſſe/ſeinen Reuter/auf ſechsz und funfzig: Der Schwartze/den König/auf vier und ſechszig: (dan er in dieſes/und das drey und ſechszigſte feld/biß der W. K. Reuters-Soldat/ihm näher komt/nuhr kan gezogen werden) Der Weiſſe/ſeiner K. Reuters-Soldaten/zwey felder für ſich/auf ein und dreyſſig: Der Schwartze/den König/auf drey und ſechszig: Der Weiſſe/den gedachten Soldaten/auf neun und dreyſſig: Der Schwartze/den König/auf vier und ſechszig: Der Weiſſe/den Soldaten/auf ſieben und vierzig: Der Schwartze/den König/auf drey und ſechszig: Der Weiſſe/beut/mit ſeinem Reuter/auf ſechs und vierzig/Schach/und verhütet mit demſelben/drey felder/in welche/der S. König/ſeinentwegen/nicht kommen darf: das eine/nebeſt dem Rochen: die andern beede/alleine: alß/auf der ſeite/der S. Königin/das ſechs und funfzigſte: das ein und drey und ſechszigſte: Der Schwartze/kan den König/auf zwey= oder vier und ſechszig/ſtellen: Der Weiſſe/gibt/mit ſeinem Soldaten/dem S. Könige/(weil ihm/von ſeinem Rochen und Reuter/alle päſſe/verleget ſeynd/und dieſer Soldat/von dem Rochen/beſchützet wird) auf funf und funfzig/(wie der Abriß zeiget) Schach-mat.
+
+<image-desc>A rectangular diagram representing a partial chessboard, three rows high and eight columns wide, with a checkered pattern. It illustrates a specific chess endgame position with labeled pieces: 'S. K.' (Schwarzer König) appears in the first and third squares of the top row; 'W. B.' (Weißer Bauer) is in the second square of the middle row, and 'W. R.' (Weißer Rochen/Rook) is in the eighth square of the same row; 'W. Sp.' (Weißer Springer/Knight) is in the third square of the bottom row.</image-desc>
+
+Rucket aber Der Weiſſe/ſeinen Rochen/anfänglich/nicht auf 49. beſondern/auf ſechs und funfzig/ſo kan Er/mit ſeines K. Reuters-Soldaten/auf funfzig/eben ſo wol/den Schach-Mat verrichten/und ſeine Züge/nach angegebener art/anſtellen und vollenbringen.
+
+Daß/(7.) der jenige/welcher verſpricht/Er wolle/mit einem gewiſſen/und gezeichneten Soldaten/Schach-Mat bieten/auf
+
+<sig>X</sig>
+<meta>catchword: den</meta>
+
+<vocab>Schach-Spiel, König, Reuter, Rochen, Soldat, Schach-mat, Abriß, Feld, Zug</vocab>

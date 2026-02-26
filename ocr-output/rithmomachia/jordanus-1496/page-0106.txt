@@ -1,0 +1,47 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>41</page-num>
+
+<margin>7</margin>
+¶Quinq toni:duas diatessaron consonantias vno commate vincunt/evaduntq̃ maiores.
+¶Putauit Aristoxenus musicus diatessaron cõsonantiam duobus tonis et integro semitonio constare.7 proinde duas diatessaron cõsonantias:quinq tonos iplere.cuius error ex tertio musices diui Seuerini boetij et ex hac precedẽte facile cõuincitur.Nam per precedẽtem cõsonantia diatessaron nõ er duobus tonis et semitonio integro constat:verū ex duobus tonis 7 semitonio minore. quod ex vicesimapzima secūdi inter sesquioctauā decimam et sesquinonā decimā propozitionē collocatur.integrū autẽ semitoniū per decimāquartam eiusdem:inter sesquisextā decimā 7 sesquiseptimā decimā collocaretur.diminutius est ergo semitoniū minus integro semitonio.Quia ergo vt per precedẽtem dictū est:cõsonantia diatessaron duos tonos et semitoniū minus cõtinet:due igitur diatessaron cõsonantie cõtinebunt tonos quattuor et duo semitonia minora. et qz per tricesimātertiam secūdi tonus cõtinet duo semitonia minora et vnum cõma.ergo due diatessaron cõsonantie quinq tonos vno commate minus:cõtinent. quinq igitur toni: duas diatessaron cõsonantias vno cõmate vincũt atq̃ evadunt maiores.quod intẽdebatur.
+
+---
+
+<margin>8</margin>
+¶Consonantiã diapente:in assignato neruo constituere.
+
+<image-desc>A diagram representing a musical string (monochord) as a horizontal line with division points. Above point 'a' is the number '3'. Above point 'c' is the number '2'. A further point 'd' is marked. To the right end of the line is point 'b'. The text "Consonãtia diapẽte." is placed horizontally to the right of the segment between points 'd' and 'b'.</image-desc>
+
+¶Sit assignatus numerus a b supra quẽ iussum sit cõsonantiã diapente collocari:diuido a b in tres adinuicẽ equas partes per notas a c d b:ita vt a b tres cõtineat et c b earum contineat duas.erit per diffinitionẽ a b ad c b hemioliū/sesqualterūq̃ interuallū.sed cum cõsonãtia diapẽte:per diffinitionẽ ex ea interualli ratione nascať.ergo a b ad c b cõsonabit diapẽte. eritqz a b ad c b in data chordā assignatoue neruo cõsonantia diapẽte collocata.
+
+---
+
+<margin>9</margin>
+¶Tres toni:consonantia diapente minus sunt.7 quattuor eandem consonantiam transcendunt.
+¶Etsi ex quinta huius satis cognoscať tritonū nõ posse efficere diapẽte cõsonantiã: hic etiã ostẽdit tritonum diapẽte cõsonãtia esse minorem.Nam per decimãoctauam primi huius tres sesquioctaui minus sunt sesqualtero interuallo . et per decimānonam eiusdẽ quattuor sesquioctaui sesqualterum superāt interuallū.consonãtia autẽ diapẽte in sesqualtero sita est.ergo tres toni in tribus sesquioctauis constituti:minus sunt cõsonantia diapente. 7 quattuor toni in quattuor ɔsistentes sesquioctauis eādem cõsonãtiam magnitudine transcẽdunt:quod est tortum propositum.
+
+---
+
+<margin>10</margin>
+¶Consonantia diapente:tribus tonis/semitonioq̃ minore constat. Quo fit vt a diapente subducto tono:diatessaron consonantia relinquatur.subducta autẽ diatessaron consonantia : relinquatur et tonus.
+¶Nam per decimāquintam primi si a sesqualtero interuallo sesquitertiū demptū fuerit: relinquet sesquioctauum. sed vt in demõstratione sexte huius visum est: sesquitertiū continet duos tonos cum semitonio minore.ergo cõsonantia diapente sesquioctauū hoc est tonum vltra duos tonos cum semitonio minore continens: tribus tonis et semitonio minore cõstabit quemadmodum propositum est. Cozrelariū cognoscitur.Nam diapente per presentem continet tres tonos cum semitonio minore. at subtracto tono residuī sunt duo toni:atq̃ semitoniū minus. et per sextam huius duo toni cũ semitonio minore constituunt cõsonantiam diatessaron.subtracto igitur tono a cõsonãtia diapente:relinquitur diatessaron.sed et cum diapẽte constet ex tribus tonis cum semitonio minore:subtracta ergo diatessaron cõsonantia que duobus tonis et semitonio minore completur : relinquet̃ quemadmodum secunda pars cozrelarij proponit:tonus. quod est totum cozrelarium.
+
+---
+
+<margin>11</margin>
+¶Diapente consonantia: minus octo semitoniis minoribus continet.
+¶Nam cum tonus vnus duo semitonia minora et vnum cõma cõtineat:tres toni 7 vnum semitoniū minus septem semitonia minora 7 tria commata cõtinebunt.ac tria commata per tricesimāquintam secundi huius semitonio minore sunt contractiora.ergo diapente que per precedẽtem tribus tonis et semitonio minore constat:minus octo semitoniis minoribus cõtinebit.sed quẽadmodum facile monstratum est diapente cõsonantiam nōdum octauum attingere semitoniū minus/octauāq̃ diesim: ita quoqz facile monstratu esset:eandem cõsonãtiam nōdum septimam attingere apotomē.
+
+---
+
+<margin>12</margin>
+¶Diapente consonantia : ditono/sesquitonoq̃ coniungitur.
+¶Nam diapente per penultimā tribus tonis et semitonio minore constat. et ditonus 7 sesquitonus simul tres tonos et semitoniū minus efficiunt.igitur ditonus atq̃ sesquitonus pariter copulati cõsonantiam diapente iungunt:quod intenditur.
+
+---
+
+<margin>13</margin>
+¶Consonantiarū diapente 7 diatessaron:tonus differentia est. quo fit vt diatessaron consonantia adiuncto tono: consonantiam diapente restituat.
+
+<vocab>Aristoxenus, Severinus Boetius, diatessaron, diapente, tonus, semitonium, comma, hemiolium, sesqualterum, sesquioctavum, sesquiteritium, tritonum, apotome</vocab>

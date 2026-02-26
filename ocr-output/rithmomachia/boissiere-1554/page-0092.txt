@@ -1,0 +1,10 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>45</page-num>
+<header>DES PHILOSOPHES.</header>
+
+## Prinſe par aſſault en multiplication ou diuiſion.
+
+*Si tu peux faire qu'en deſcouurãt quelqu'vne de tes tables ou la tranſportant par ſon mouuement regulier qu'il ſe puiſſe trouuer entre elle, & quelque table de l'aduerſaire autant de loges vuides, obliquement ou droictement comme elle eſt contenue de fois en celle de l'aduerſaire, ſoudainement qu'auras ioué en iceluy lieu prendras celle de l'aduerſaire par aſſault en multiplication & au contraire d'autant que le nombre de la table aduerſaire contient la tienne autant de fois comme il y a entre deux de loges vuides, iceluy euſt peu prendre la tienne par diuiſion, incontinent qu'elle feuſt iouée en iceluy lieu. Exemple de multiplication, ſoit le nõbre de l'aduerſaire 12 logé en L, & le rond 4 en D, ſi tu ioues le 4 en D (d'autant qu'à lors entre ton 4, & le 12 ſe trouue trois eſpaces, par lequel nombre ton 4 eſtãt multiplié produira 12 ſemblable au nombre de l'aduerſaire) ſoudainement prendras iceluy 12. Par multiplication au contraire incontinãt que l'aduerſaire aura mis ſon nombre 12 en L, prendra ton 4 en V par diuiſion ou bien ſi tes*
+
+<vocab>multiplication, diuiſion, loges vuides, aduerſaire, nõbre, eſpaces, rond 4, nõbre 12</vocab>

@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>450</page-num>
+<header>Das Erste Capittel / 1.cap:</header>
+
+Die Tafel / welche zu diesem Spiele / gebrauchet wird / stimmet / wegen der weissen und schwartzen Felder / in welche Sie / ebenmessig unterschieden / mit dem Schach-Brete / überein.
+
+Ihre form oder gestalt / anbelangend: ist Sie / noch einmahl so lang / als Sie breit ist / und wird / die Länge derselben / in sechszehen - die Breite aber / in acht felder / (gleich als / wan zwey Schach-Breter / zusamen gefüget wehren) abgetheilet.
+
+<image-desc>A background of a checkered board (8 by 16 grid). Three geometric playing pieces are shown resting on the board: a low cylinder (marked with 'a'), a low triangular prism (marked 'e'), and a low rectangular prism (marked 'i').</image-desc>
+
+Die Steine betreffend : seynd derselben / acht und viertzig : nemlich sechszehen Runde / so viele Dreyeckete / und dan Viereckete : Sie werden aber / eines fingers hoch / gemachet / und auf der einen seiten / mit weisser - auf der andern / mit schwartzer farbe / angestrichen.
+
+<margin>
+»
+»
+»
+</margin>
+
+>(*Claudius Buxerius Delphinas, in Rythmomachia, fol: 42. b. Calculorum Extremitas altera, Inferior nempè, diverso Colore, quô utitur Acies adversa, coloretur: ut, si Calculus in Hostis potestatem veniat, Victoris Colore, decoretur.*)
+
+<image-desc>The checkered board continues as a background. Two complex "towers" (Türne) are illustrated, consisting of stacked geometric shapes (squares and triangles) topped with a small cylinder. The board around them features the letters 'K' on the left and 'M' on the right.</image-desc>
+
+Es werden auch / zween Türne / (welche von unten für breyt /
+und
+
+<vocab>Rythmomachia, Schach-Brete, Steine, Türne, Claudius Buxerius Delphinas, Geometrie</vocab>

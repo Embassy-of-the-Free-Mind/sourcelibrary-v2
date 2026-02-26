@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>38</page-num>
+<header>Das erste Buch / 2. cap:</header>
+<meta>catchword: abge-</meta>
+
+» höher und fürnehmer / geachtet und gebrauchet. Sie seynd
+» zwar / unsern Schach-Steinen / nicht fast ungleich / aber doch in
+» folgendem / unterschieden. Dan der König / gehet nicht / über die /
+» seinem felde / am nähesten / vier plätz / oder häuselein : wie imglei-
+» chen auch / die beede Alten : welche / Ricius, des Königes gelärte
+» Beysitzere / nennet. Sie gebrauchẽ sich / der Königin nicht / beson-
+» dern zweenner anderer Steinen / welche Sie / Pulver / oder Feu-
+» er-Mörser / nennen / und sinnreiche eigenschaften / an sich haben.
+» Diese gehen zween Reutern für / und folgen zween Fußgän-
+» gern / (welche ihnen / in diesen beeden feldern / oder linien / im
+» nechsten felde / fürgehen) auf dem fusse nach. Dieses Steines
+» gang / ist fast auf unsers Rochens oder Elephantens gang / ge-
+» artet. Doch trift Er nicht / mit des Gegentheiles heerführer /
+» dem Könige : es wehre dan / daß zwischen Ihm / und dem Köni-
+» ge / welchen man anfallen wil / ein Stein / entweder auß seinem /
+» oder des gegeners hauffen / stehe. Dahero es dan komt / daß der
+» König / auf dreyerley weyse / diesen anlauf verhüten und abweh-
+» ren kan : Erstlich / wan Er / mit seiner person / (so zu reden) in et-
+» was weichet / und ohne schimpf und nachrede / aufs nechste feld /
+» mit der flucht / sich errettet : Zum andern / wan Er ihm / noch ei-
+» nen Stein / entgegen setzet : Letzlich / wan Er die seite / da Er an-
+» gefallen worden / ganz entblöset / und den Stein / welcher ihn be-
+» deckete / läßt weichen / und auf ein ander feld / stellet.
+
+» Sie haben ferner / noch ein fürtreflichers Spiel / unter
+» ihnen / auf folgenden schlag :
+» Es spielen ihrer viele / mit zweyhundert Steinen / deren
+» etliche weiß / etliche schwarz seynd / auf einem Brete / so in drey-
+» hundert felder / getheilet. Mit diesen Steinen / versuchet ein
+» Jeder / des andern Steine / mitten ins Bret / (damit Er der ü-
+» brigen felder / sich desto baß bemechtigen könne) zu jagen / und
+» einzuschliessen. Wer nuhn die meisten felder / auf dem Brete /
+» eingenommen hat / dem wird / auf die letzte / der Sieg / zugeschrie-
+» ben. Dieses Spiel / wird von denen / so im Regiemente sitzen /
+» heftig beliebet / und gebrauchet : Bringen auch oft / den ganzen
+» Tag / damit zu. Dan die Jehnigen / so auf diesem Spiele geübet /
+» und verschlagen / wol eine ganze Stunde / dasselbe aufhalten
+» können. Welcher nuhn / in diesem Spiele erfahren / und wol
+
+<vocab>Schach, König, Ricius, Pulver-Mörser, Feuer-Mörser, Reutern, Rochens, Elephantens, Brettspiel, Sieg, Regiemente</vocab>

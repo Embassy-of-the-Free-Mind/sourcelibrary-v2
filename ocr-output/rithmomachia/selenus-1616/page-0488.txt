@@ -1,0 +1,35 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>454</page-num>
+<header>Das Ander Capittel/</header>
+
+Oberwehnte Ordnung / welche / mit den acht Weissen Run-
+den Steinen / gehalten wird / sol man auch / mit den Schwar-
+tzen Runden Steinen / anstellen: Jedoch / daß an stat der Glei-
+chen / die vier ersten Ungleichen Zahle / alß 3. 5. 7. 9. ) gebrau-
+chet / und folgendes / auf die Vier unterste schwartze Runde
+Steine / die Summen / welche auß der Vermehrung der gedach-
+ten Zahle / in sich selber / entspringen / (alß 9. 25. 49. 81.) geschrie-
+ben werden.
+
+( Buxer : fol : 7. a. )
+
+> » Hi Numeri, (3. 5. 7. 9.) etiam monadis & decadis ambitu,
+> » continentur : qui licèt, uti & præcedentes Pares Numeri, sin-
+> » gulares sint, omnis tamen Numerorum ratio, ab eis, tanquàm
+> » a fonte & origine, manat. Porro cùm in Proportione Multipli-
+> » ci, alter Numerus, alterum omnino complectitur, Orbibus de-
+> » scribendis, aptissimus erit.)
+
+<image-desc>A mathematical diagram consisting of twelve figures arranged in three rows of four. The top row features four circles containing the numbers 2, 4, 6, and 8. The second row features four circles containing the numbers 4, 16, 36, and 64 (representing the squares of the numbers above). The third row consists of four triangles, each inscribed within a larger, lightly shaded circle; the triangles contain the numbers 6, 20, 42, and 72 respectively.</image-desc>
+
+Der Weissen Dreyecketen Steinen / Zahle / findet man / folgend-
+der gestalt : Erstlich / verbleiben / die acht Weisse Runde Steine / in
+ihrer ordnung / wie / in erfindung ihrer Zahle / dieselben / ge-
+leget worden : folgendes / stellet man / unter dieselben / Vier /
+Weisse / Dreyeckete Steine / und Zeichnet auf sie / die Sum-
+
+<sig>P lll</sig>
+<meta>catchword: men/</meta>
+
+<vocab>Ordnung, Weissen Runden Steinen, Ungleichen Zahle, monadis, decadis, Numeri, Dreyeckete Steine, Buxer</vocab>

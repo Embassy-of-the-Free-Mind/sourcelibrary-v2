@@ -1,0 +1,56 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>47</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>3. cap:</margin>dem Eltesten / behalten / aber derselben gänge / darauß / also und
+dergestalt / daß dieses / eben das Elteste Spiel / doch enger zusamen
+gezogen / zu seyn scheinet / verbessert / ist nuhnmehr fast üblich / wird
+auch / für das beste und vollkommenste / gehalten / und mag / das
+newe Current-Spiel / genennet werden.
+
+Wollen demnach / dieses letzte / alßbald für uns nehmen / und / in
+den nachfolgenden Capitteln / des Ersten / Andern und Dritten- biß
+zum Neuntē Capittel / des Vierten / und Letzte Buches / abhandeln:
+dannenhero / wan wir dieses / fleissig werden begrieffen haben / nicht
+schwer seyn wird / die andere zwey Spiele / auß dem Neuntē und Ze-
+hendē Capitteln / des vierte Buches / mit wenigem / auch zu verstehē.
+
+Zu welcher Zeit aber / und von wehme / dieses Newe Spiel /
+auß dem Eltesten Current-Spiel / dermassen / in die enge / zusamen
+gezogen: dessen haben wir / nicht eigentliche nachrichtung: Nuhr daß
+wir muhtmassen / daß die Hispanier, demselben / den anfang gege-
+ben: Von welchen es / auf die Italiener, und folgendes / innerhalb hun-
+dert Jahren / auf uns kommen.
+
+Es beschreiben dieses Spiel / Damianus: Rui Lopez: Th. Actius:
+Lucas VVielius; und Arthur Saul.
+
+Was die Ordnung / und abtheilung / anlanget: so ist derselben
+grund / im vorigen albereit angezeigt / und bestehet in folgenden
+stücken und theilen.
+
+Der Erste Theil / wird in den übrigen Neun Capitteln / dieses
+Erstē Buches / begrieffen / und handlet Erstlich / im Vierten- von den
+Schach-Steine / und zu denselben / gehörigem Brete / in gemein:
+Im Fünften- Sechsten- Siebenden- Achten- Neunten- und Zehen-
+den- von den Steine / insonderheit: Im Eylften- von der Schach-
+Tafel: Zum Andern / im Zwölften / und Letzten Capittel / von
+dem Ziel / und Zwecke dieses Spieles.
+
+Der Ander Theil / begreiffet in sich / die Mittell / durch welche /
+itztgeregtes Ziel / in diesem Spiele / zu erlangen. Von diesem nuhn /
+wird im Andern Buche / Erstlich in gemein / im Ersten- Andern
+und Dritten: dan insonderheit / wie man dieselben / durch gewisse
+Ordnungen / Reguln / und Satzungen / erlernen möge / im Vier-
+ten- und Fünfften: Letzlich / wie im völligen Gebrauch / durch man-
+nichfaltige Arten / und Exempel / das Spiel / zu wercke gerichtet
+werden könne / in gemein / im Sechsten- und insonderheit / im Sie-
+benden Capittel / (in welchem / sonderbare Abtheilungen / der folgen-
+den Bücher / und Capittel / biß zum Neunten / des Vierten
+Buches / zu befinden) gehandelt. ꝛc.
+
+<sig>G</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Current-Spiel, Damianus, Rui Lopez, Th. Actius, Lucas VVielius, Arthur Saul, Schach-Steine, Schach-Tafel</vocab>

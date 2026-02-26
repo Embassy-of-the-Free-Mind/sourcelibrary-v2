@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>158</page-num>
+<header>Das Ander Buch/ 5. cap:</header>
+
+Rochens-Soldaten/ der auf funf und zwantzig/ stehet/ gefangen ge-
+nommen ist) noch übrig hat: dem Schwartzen Könige / mit seiner
+Königin-Reuters-Soldaten / auß funf und funfzig / auf vier- oder
+zwey und sechszig / zu ermatten / und zu erlegen / sich verpflichtet: set-
+tzen / und aufzeichnen.
+
+Muss demnach der Weisse / (umb dieses / ins werck zu stellen)
+den Schwartzen König / zufoderst treiben und nötigen / daß er in die-
+selbe linie / auf welcher er / im anfange des Spieles / nebest seinen für-
+nemsten Steinen gestanden / hinwider weichen müsse: folgendes auf
+der andern Zwerch- oder Soldaten-linie / mit seiner Rochen einem /
+ihm den Paß / daß er nicht / wider / ins freye feld / kommen möge / ver-
+sperren / und denselben / da es nicht anders seyn / noch der S. König / zu
+anfangs / enger eingetrieben werden kan / auf neun und vierzig / zie-
+hen: Rucket nun der Schwartze / seinen König / auf neun und
+funfzig: so ziehet / der Weisse / (auf daß der S. König / auf acht und
+funfzig / zum W. Rochen / nicht kommen könne / besondern umb ver-
+kürzung des Spieles / weiter vortgetrieben werde) den Reuter / auf
+zwey und funfzig: nicht aber / auf drey und viertzig: (weil sonsten der
+König / eingesperret würde) noch auf ein und viertzig: (weil Er als-
+dan zween Züge / nemlich diesen / auf 41. den andern auf acht und funf-
+zig / zum überfluß thun müste) der Schwartze / (vermeinend / hin-
+ter dem W. Reuter / auf drey und funfzig / wider außzureissen) den
+König / auf sechszig: Der Weisse / (auf daß der S. König / vortge-
+trieben / und seinem Rochen / die Zwerch-linie / umb dieselbe zu be-
+schützen / und den Paß zu verwahren / wider aufgemachet werde) den
+Reuter / (umb das neun und funfzigste feld zu bewahren) auf zwey
+und vierzig: Der Schwartze / den König / auf ein und sechszig:
+Der Weisse / den Reuter / auf neun und funfzig: Der Schwar-
+tze / (umb zu versuchen / ob Er / den W. Reuter / könne erhaschen) den
+König / abermahl auf sechszig: Der Weisse / den Reuter / auf drey
+und funfzig: Der Schwartze / (weil Er sonsten nirgendes hin
+kan) den König / auf ein und sechszig: Der Weisse / den Reuter / auf
+drey und viertzig: Der Schwartze / den König / auf zwey und sechsz-
+ig: Der Weisse / den Reuter / auf sechszig: Der Schwartze /
+auf denselben / den König / auf ein und sechszig: Der Weisse / den
+Reuter / auf vier und funfzig: Der Schwartze / den König / auf
+zwey und sechszig: Der Weisse / den Reuter / auf vier und vierzig:
+Der Schwartze / den König / auf drey und sechszig: Der Weisse /
+seinen Reuter / auf ein und sechszig: Der Schwartze / den König /
+
+<meta>Catchword: auf</meta>
+
+<vocab>Schach, Schachspiel, Rochen, Reuter, König, Soldaten, Weisse, Schwartze, ermatten, Zwerch-linie, Paß, Spielzug</vocab>

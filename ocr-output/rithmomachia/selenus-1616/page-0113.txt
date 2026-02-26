@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>83</page-num>
+<header>9.cap: Vom Schach-Spiel.</header>
+<sig>L iij</sig>
+<meta>catchword: alß</meta>
+
+dern auch / an dem gemuͤht: Man findet manigen grossen /
+der Starck ist / an dem Leib / und der kranck ist / an dem ge=
+muͤhte. Starckmuͤtig und mittel leuthe / seynd gut und
+warhaft an den noͤten / und gefellig an den streiten. Es
+sol auch der Ritter / mit fleis beschirmen / seine Arbeiter /
+darumbe / wan sie zum streit nit folgent / das sie doch ihre Ar=
+beit fridlichen muͤgent gewuͤrcken: wie mag der BawMan
+gearbeiten / ob ihn der Ritter / im Krieg nit beschirmet: wan
+alß not dem Kunig ist / das Er Ritter habe / alß noth ist
+dem Ritter gemeiner leuthe / das Sie Jhm arbeiten. Es sol
+auch ein Ritter / rechter gesetze / ein hitziger schirmer und be=
+halter seyn.
+
+Der Ritter zu der rechten Hand / ist Weiß: der zu der
+lincken ist schwartz: Ihr gang ist / wan ir jeglicher hat die
+Natur also / das der weiß gat / auf das schwartz Veld / das
+sich naiget in der Alten Veld / alß offenbar ist / von den Rit=
+tern / zu der rechten hand / der da wyß ist / und hat drey auß=
+genge / da Er an seiner stat stant / eine zu der rechten hand /
+auf das schwartz Veld / fuͤr den Ackerman: und das ist bil=
+lig / wen alß der Ackerman arbeit / und die ecker bawet / so
+sol der Ritter ihn behuͤten / das er im selber / und dem Ritter /
+und den Pferden / futter / samen und hand reiche: den andern
+gang helt Er / so er gant und sich setzet / fuͤr den lotter / auf
+daß schwartz leere Veld / wen er den behuͤten und beschirmen
+sol / der da kleider und ander ding / nottuͤrftig ist / wircket und
+machet: Der dritte gang / hant er / zu der glingen hand / auf
+das schwartz Veld / fuͤr den kaufman stant / das
+billig ist: wan der Ritter / sol des Kuͤniges Person behuͤten und
+beschirmen / alß syn eigen person / und wen er die ersten stat / gen
+der rechten hand folt / so findet er fier Veld: wen er aber fuͤr
+den Koͤnig gesetzet wirt / so mag er sechs Veld ergan: Wan Er
+aber in der mitte des Bretes gelauffet / so begriffet er acht Veld:
+also ist es auch / von dem zu der glincken hand / der nach si=
+nem aigen schwartz ist / der wird alweg weiß / und so er zu
+der urleug gant / mit seiner macht / wechslet er / und nimt
+zu / an feldern: wen alß der schwartz bey dem Kuͤnig / und
+der Weiß / bey ihm gant / so setzet sich einer fuͤr die Kuͤnigin /
+
+<vocab>Schach-Spiel, Ritter, Ackerman, BawMan, Veld, Koͤnig, Kuͤnigin, lotter, urleug</vocab>

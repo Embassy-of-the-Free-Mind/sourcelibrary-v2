@@ -1,0 +1,49 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>
+To the left of the text are several diagrams composed of horizontal line segments and numerical annotations illustrating arithmetical ratios:
+1. Three segments labeled a, b, and c.
+2. A complex representation of proportions with lines a and b on the left, and on the right, sets of lines and numbers: c (12) over f (4) and g (9) over h (3).
+3. Four horizontal lines labeled a, b, c, and d.
+4. Four horizontal lines labeled a, b, c, and d.
+5. Four horizontal lines labeled a, b, c, and d.
+6. A diagram with multiple lines labeled a through h, and a vertical arrangement of c and h.
+7. A final set of horizontal lines labeled a through h.
+</image-desc>
+
+## ¶Quilibet duo numeri in sua proportione minimi: sunt contra se primi. <margin>18</margin>
+
+Sint a & b duo nuẽri in sua pportione mĩmi: dico eos esse contra se p̃mos. nã si sint ppositi sit cõis eoꝝ mẽsura c q̃ nũeret a fm d et b fm e ꝑ septimã scđĩ q̃ pportio d ad e ea est a ad b. at cũ d sit minor a et e minor b non erant a & b in sua pportione minimi: quod est contra positum.
+
+## ¶Numeri quilibet in sua proportione minimi numerant quoslibet in eadem propor- <margin>19</margin>
+## tione sumptos minor minorem & maior maiorem equaliter.
+
+Sint a et b mĩmi in sua pportione: a maior b minor: sintqꝝ eiusdẽ proportionis c d: c quidẽ maior d minor. dico a numerare c et b numerare d equalit̃. nã ꝙ t a ad b ita c ad d: ergo permutati ꝑ tertiã secundĩ vt a ad c ita b ad d. quota ergo pars vel ptes est a ad c tota pars vel ptes est b ad d. si tota pars constat propositũ a equalr̃ nũerare c z b numerare d. si tote partes ergo ꝑ tricesimã primi qꝝ toties erit a in c quoties b in d. et quota pars vel ptes a remãserint in c: tota pars vel ptes b remanebũt in d. substraho ergo quoties possum a de c z d retractũ sit e et residuus f. similr̃ substraho quoad possum b de d. et detractus sit g z residuus h. ꝙ ergo a nũerat e: z b numerat g equalit̃ atqꝝ fm eundẽ numerũ. ergo per octauã scđĩ que pportio a ad b ea est e ad g: ergo ꝑ q̃ pportio c ad d totius ad totũ: ea est e ad g detracti ad detractũ. igitur ꝑ quintã secundĩ q̃ pportio c ad d totius ad totũ: ea est f ad h residui ad residuũ. quare iterum q̃ pportio a ad b: ea est f ad h. at cum f et h relicta sint minora a z b: nõ erant itaqꝝ a et b in sua proportione minimi: quod contra hypothesim. constat ergo quoscũqꝝ in sua proportione minimos ceteros vt dictum est numerare.
+
+## ¶Si fuerint duo numeri adinuicẽ primi ipsi erunt in sua pportione minimi. <margin>20</margin>
+
+Sint a et b nũeri adinuicẽ p̃mi: a maior b minore. dico eos in sua pportione esse mĩmos. nã si sint alij q̃ sint in illa pportione mĩmi: sint ergo illi c d: ꝙ ergo c d sunt in illa pportione mĩmi ꝑ p̃cedetẽ numerabũt quoslibet in eadẽ pportione minor minorẽ z maior maiorẽ equalit̃. nũeret ergo c numerũ a scđm e z d numeret b secundũ eundem numerũ e manifestũ est ꝙ e numerabit a et b: quare nō sunt a z b contra se primi: quod est contra hypothesim.
+
+## ¶Positis duobus numeris contra se primis si alter ducatur in numerũ quē reliquus <margin>21</margin>
+## nō numerat productus quoq; ab eodem non numerabitur.
+
+Sint a b numc̃ri contra se primi et a ducatur in c z p̃ueniati d et b nō numerat c: dico b nō numerare d. Si ergo b numeret d: numeret ergo ipsum fm e intelligo p̃imũ numerũ a: secundũ b: tertiũ e et quartũ c. ꝙ ergo ꝙd cōtinetur sub extremis a c equũ est ei quod cōtinetur sub mediis b e. ergo per vicesimãquintã secundĩ que proportio a ad b: ea est e ad c. ꝙ ergo a b sunt primi per p̃cedẽtem sunt in sua pportione minimi: ergo per ante p̃cedetẽ a numerabit e: z b numerabit c equaliter: quod est contra hypothesim. positũ enim erat b nō numerare c.
+
+## ¶Si numerum a duobus productum tertius numeret: idem alterum eorum nume- <margin>22</margin>
+## rabit aut erit vtriq; commensurabilis.
+
+Sit a numerus productus ex b in c quẽ d numeret: dico d numerare b aut c aut esse vtriqꝝ cōmensurabilem. Si enĩ alteri fuerit incōmensurabilis vt verbi causa b: cũ ergo b et d sint contra se primi z b in c producat a: ergo per p̃cedente si d nō numerat c neqꝝ quidẽ d numerabit a. at positus est d numerare a. numerat igitur d alterũ eoꝝ. Si itaqꝝ vni fuerit incōmensurabilis necessario numerat alterũ ideo vtriqꝝ incōmẽsurabilis eẽ nequit q̃ sit vt aut nũeret alterũ aut vtriqꝝ sit mẽsurabilis z ppositũ.
+
+## ¶Numeros minimos: fm proportionē numeroꝝ assignatoꝝ perscrutari. patetq; ex <margin>23</margin>
+## hoc maximũ duos numeros cōiter numerantē: fm mĩmos illius pportionis nũerare
+
+Sint a b in aliqua pportione: ppositũ est mĩmos numeros pportionis a ad b reperire. aut enim a z b sunt contra se primi et tunc per vicesimã huius illi sunt in sua pportione minimi neqꝝ alij q̃rēnt sunt. aut sunt cōpositi z tunc per decimãsextam hui⁹ quero maximũ numerũ eos numerantẽ qui sit c nũeretqꝝ a fm d: et b fm e. ꝑ septimã ergo scđĩ eadẽ est pportio a ad b z d ad e. dico itaqꝝ d et e esse mĩmos nũeros in illa pportione. si enĩ sint alij sint f z g: q̃ f et g sunt mĩmi in illa pportione. ergo ꝑ decimānonā huius numerāt a b: maior maiorẽ z minor minorẽ fm eundẽ numerũ qui sit h. intelligo ergo quattuoꝝ nũeros: c primũ: f secundũ: h tertiuz: et d quartũ. ꝙ a cōtinetur sub extremis c d: z idẽ a sub mediis f h: ergo ꝑ vicesimãquintã secundĩ q̃ pportio c ad f ea est h ad d. ergo ꝑ mutati ꝑ tertiã scđĩ eadẽ est pportio c ad h et f ad d. sed f posit⁹ est mĩoꝝ d: ergo et c minor h. tũc sic c est maxim⁹ numerus numerãs a b ꝑ hypothesim et h positus est etiã numerare a b: ergo h p correlariũ decimesexte huius numerabit c maiorẽ scz minorẽ quod est ipossibile. nō dabũtur igitur alij ab ipsis d e in illa pportione minimi quod est propositũ: et in hoc etiam correlariũ notum est.
+
+## ¶Quilibet duo numeri minimos numeros sue proportionis maior minorē et minor <margin>24</margin>
+## maiorē multiplicantes: minimū ab ipsis numeratum producunt. Ex quo constat mi-
+## nimū quē duo numerant: quēlibet ab eis numeratū nūcrare.
+
+Sint duo nũeri a b multiplicātes c mĩmos sue pportionis maior minorẽ z minor maiorẽ: dico ipsos minimũ ab ipsis numeratũ pducere. nã ꝙ sicut a ad b ita c ad d: ergo per vicesimãquintã scđĩ qui cōtinetur sub extremis a d equus est ei q̃ continet sub mediis b c qui sit e quem dico esse minimũ ab ipis numeratũ. Si enĩ sit alter esto ergo ipse f quẽ a fm g pducat et b scđm h. positis ergo ordine mĩis a b h g: qz qui cōtinetur sub extremis a g equat̃ ei qui cōtinetur sub mediis b h. ergo per vice
+
+<vocab>Euclides, Elementa, Arithmetica, proportio, numerus, minimi, contra se primi, commensurabilis</vocab>

@@ -1,0 +1,19 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+## The second order followeth.
+
+<image-desc>A mathematical diagram illustrating the "second order" of pieces for the game Rythmomachia. The layout consists of four vertical columns. At the top of each column, within a triangular outline, is a rank label ("thirde", "fyft", "seuenth", and "ninth"). Below these are two rows of numbers (5, 9, 13, 17 and 10, 36, 78, 136). The middle section contains two rows of double-bordered squares, each containing a number and a small dot centered below it. The first row contains 15, 45, 91, and 153; the second row contains 25, 81, 169, and 289. Beneath the squares, Latin terms describe the mathematical ratios of the columns. At the very bottom are four large shaded triangles pointing upward.</image-desc>
+
+| thirde | fyft | seuenth | ninth |
+| :--- | :--- | :--- | :--- |
+| 5. | 9. | 13. | 17. |
+| 10. | 36. | 78. | 136. |
+| 15 <br> . | 45 <br> . | 91 <br> . | 153 <br> . |
+| 25 <br> . | 81 <br> . | 169 <br> . | 289 <br> . |
+| superbi- <br> partiens <br> tertias. | supquadru <br> partiens <br> quintas. | supsextu- <br> partiens <br> septimas. | supoctu- <br> partiens <br> nonas |
+
+<meta>catchword: Fourth</meta>
+
+<vocab>Rythmomachia, Philosopher's Game, superpartient, proportions, triangles, squares, arithmetic</vocab>

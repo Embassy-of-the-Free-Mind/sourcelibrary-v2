@@ -1,0 +1,7 @@
+<language>None</language>
+<page-type>blank</page-type>
+<warning>This page is blank and contains no legible text. There is visible foxing and ghosting/bleed-through from the reverse side of the leaf.</warning>
+
+<image-desc>A blank page of aged, foxed paper with significant yellowing and scattered brown spots (foxing). The paper shows signs of wear and handling. In the bottom right corner, a modern "Digitized by Google" watermark is visible. A torn fragment or overlapping piece of paper is present at the bottom left edge.</image-desc>
+
+<vocab></vocab>

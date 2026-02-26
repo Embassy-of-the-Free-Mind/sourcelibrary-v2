@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>94</page-num>
+<header>Das erste Buch / 10. cap:</header>
+
+» zierern und den müntzern) maurn umb die stat/türn/Keller/
+» Kematen/schetz und ander sach viel/die menschlichem geschlecht/
+» nütz und gut seyend: und wan den Menschen/in aller weiß/Kü-
+» nig/Fürsten/Freyen und Grafen/Ritter und Dienstleut/pür-
+» ger und bauren/seint hie in etlicher weiß/undertan: und davon
+» bedürffen sy/wol trewer leuthe: wan wer sein trew verleust/
+» der hat nichts mer/das Er verlieren mög: Er gethar halt/mit
+» keym Man frölig gereden/wan man im nichts mag und dar ge-
+» lauben: Trew ist das allerheiligst gut/daß das herze hat / daß
+» kein noth bezwingen mag/ze betriegen / und kein gut /noch kein
+» leid/mag gescheiden. Und es ist eine grosse kintheit/daß du dem
+» gelabest/an der stund/von dem du einest betrogen bist. Die
+» Werckleut seint der Welt gut /und gar nütze: recht alß / alles
+» das/daß aus der erden wechst und entspringet/das ist alles /
+» des Menschen/und durch den Menschen willen/wechst es also/
+» daß hie eins dem Andern hinhilft: Also sollen wir/der Natur/
+» nachfolgen/das wir des gutes der gemein/fleissig seynd vor al-
+» len dingen: Der erste same / der gerechtigkeit ist / daß man ge-
+» meins gut vordere: wan eß ist ein sprichwort: Es geet an dich/
+» wan deines nachpeurn want prinet. 2. Sollent dieselben Werck-
+» leut haben/weißheit und warheit/also/das einer den andern/
+» nicht nyd/noch arckwene / das nit war sey: Gott der hat also/
+» die welt geschaffen/daß Sie zweier ding begeren seind / heilig-
+» keit und weißheit/und eins/mag ohn das ander nit gesein. Er
+» betreugt sich selb/der spricht/er sey geistlich und heilig/ohn weiß-
+» heit/oder er sey weiß/der nit heilig ist: wan es gehört eigent-
+» lich zu/einem man/der weiß ist/das er ichts thu/das in gerev/
+» noch das er gleichsenlich sey: sein thun sol sein beschaut / und
+» nit snel/gfellig und erber/und der dinge/sol Er keines haben/
+» neid/noch haß/noch arckwon: Wan wer neidet den andern /
+» der ist klein: wer aber niemand neidet / der ist groß: wan der
+» neidig redet/so saget Er/von seines nachpauren gelück/so ist sein
+» saat schöner/und sein Schwein veister/und sein rinder/nützer.
+» Sie sollent auch nit argwonig sein/ wan wer arckwonig ist/der
+» went/es sey yederman alß untrew/als er ist/und wüte auch je-
+» derman / wan er selbs unsinnig ist. Sy sollen auch haben /
+» unerschreckliche sterck/und besunderlich die Schiffleut/das sie
+
+<meta>catchword: in freisa</meta>
+
+<vocab>Trew, Werckleut, Gerechtigkeit, Weißheit, Heiligkeit, Nachpauren, Schiffleut, Müntzern, unerschreckliche</vocab>

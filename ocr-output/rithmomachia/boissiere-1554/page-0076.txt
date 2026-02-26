@@ -1,0 +1,31 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>37</page-num>
+<header>DES PHILOSOPHES.</header>
+<warning>Slight bleed-through and foxing throughout the page.</warning>
+
+# Exemple.
+
+| Geometrie & Musique ensemble. | | | | Geometrie seule. | | | Musique seule. | | |
+|---|---|---|---|---|---|---|---|---|---|
+| 2 | 3 | 6 | 12 | 3 | 6 | 12 | 2 | 3 | 6 |
+| 3 | 4 | 6 | 9 | 4 | 6 | 9 | 3 | 4 | 6 |
+| 3 | 4 | 6 | 12 | 3 | 6 | 12 | 4 | 6 | 12 |
+| 3 | 6 | 8 | 12 | 3 | 6 | 12 | 6 | 8 | 12 |
+| 4 | 6 | 12 | 36 | 4 | 12 | 36 | 4 | 6 | 12 |
+| 5 | 9 | 45 | 225 | 9 | 45 | 225 | 5 | 9 | 45 |
+| 9 | 15 | 25 | 45 | 9 | 15 | 25 | 9 | 15 | 45 |
+| 9 | 25 | 45 | 225 | 9 | 45 | 225 | 25 | 45 | 225 |
+| 9 | 12 | 16 | 72 | 9 | 12 | 16 | 9 | 16 | 72 |
+| 9 | 15 | 45 | 225 | 9 | 45 | 225 | 9 | 15 | 45 |
+| 15 | 20 | 30 | 45 | 20 | 30 | 45 | 15 | 20 | 30 |
+| 20 | 30 | 36 | 45 | 20 | 30 | 45 | 30 | 36 | 45 |
+| 25 | 45 | 81 | 225 | 25 | 45 | 81 | 25 | 45 | 225 |
+
+---
+
+## De victoire excellente.
+
+*Victoire excellente est la situation & ordre de 4 tables au camp de l’ennemy, equippez & armez de tels nombres, qu’en leurs grandeur & accord contiennent 3 proportions: sçauoir est Arithmetique, Geometrie et Musique: qui sont d’un si grãd accord et cõuenãce qu’il n’y a nulle*
+
+<vocab>Geometrie, Musique, Arithmetique, proportions, victoire excellente, nombres</vocab>

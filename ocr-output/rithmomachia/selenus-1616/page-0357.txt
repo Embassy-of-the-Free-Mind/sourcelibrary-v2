@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>323</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>S iij</sig>
+<meta>catchword: mit des</meta>
+
+<margin>5. cap:</margin> Könige: Der Weisse/ beut/ mit des K. Rochen/ auß acht und zwantzig/ Schach: Der Schwartze/ muß/ den König/ (so fern Er denselben/ mit seinem Schätzen/ auf neun und zwantzig/ nicht bedecken wil: Auf welchen fahl/ der Weisse/ mit der K. Reuters-Soldaten/ auf drey und zwantzig/ Schach-beut/ und entweder seines K. Rochen oder Schützen/ nebest dem gantzen Spiele/ erlanget) auf ein und zwantzig/ setzen: Der Weisse/ rucket/ des K. Rochen/ auf des S. K. Rochen/ auf sechsszig/ und gibt/ von der Königin/ Ab-Schach: Der Schwartze/ ziehet/ den König/ auß dem Schache/ und verlieret des K. Rochen/ zusamt dem gantzen Spiele.
+
+<margin>104.</margin> Rucket aber der Schwartze/ den König/ nicht/ auf 62. noch 45, (n. 102. 103.) besondern/ auf ein und sechsszig: so ziehet/ der Weisse/ die Königin/ auf der S. K. Rochen/ auf vier und viertzig: und gibt folgendes auß drey und funffzig/ mit derselben/ Schach-mat.
+
+<margin>105.</margin> Wan aber der Weisse/ nicht/ mit dem Rochen/ auf 52. (n. 101.) besondern/ mit der Königin/ auf ein und zwantzig/ Schach-beut/ und dieselbe/ auf der S. K. Rochen/ ziehet: so rucket/ der Schwartze/ den König/ auf zwey und sechsszig: Der Weisse/ nimt/ mit der Königin/ der S. K. Rochen: Der Schwartze/ rucket/ den König/ (umb dessen Rochen/ im Ab-Schache/ von der W. Königin/ und Schache/ von des W. K. Rochen/ auß sechsszig/ nicht zu verlieren) auf funf und funffzig: Der Weisse/ nimt/ mit der Königin/ des S. K. Schützens-Soldaten: Dahero dessen Roche/ so wol auch/ der S. K. Reuters-Soldat/ in gefahr stehen: und kan der Schwartze/ Er mag ziehen/ was Er wil/ in wenig Zügen/ erleget werden.
+
+<margin>106.</margin> Wan aber der Schwartze/ den W. Reuter/ (n. 100.) nicht nimt/ besondern den König/ auf zwey und sechsszig/ rucket: so beut/ der Weisse/ mit des K. Reuter/ auß zwey und funffzig/ <margin>107.</margin> Schach/ und ziehet ihn/ auf der S. K. Rochen: * Der Schwartze/ den König/ auf ein und sechsszig: Der Weisse/ nimt/ mit der K. Rochen/ die S. Königin/ und beut Schach: Der Schwartze/ nimt ihn/ mit dem Könige: Der Weisse/ rucket/ seine Königin/ (auß der gefahr) auf der S. K. Rochen/ auf ein und zwantzig/ und gibt Schach: Der Schwartze/ muß/ den König/ auf sechsszig/ rücken: Der Weisse/ nimt/ der S. K. Rochen/
+
+<vocab>Schach-Spiel, Schach-mat, Ab-Schach, König, Königin, Rochen, Reuter, Schützen, Soldaten</vocab>

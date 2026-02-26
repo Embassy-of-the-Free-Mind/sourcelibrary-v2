@@ -1,0 +1,28 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>91</page-num>
+<warning>Visible ghosting/bleed-through of text and tables from the reverse side of the page is present in the lower half.</warning>
+
+## Tauola di tutte le proportioni Geom. & Mus. che possono occorrer in questo giuoco
+
+| Geom. & Mus. insieme | | | | Geometrica sola | | | Musica sola | | |
+|----------------------|---|---|---|-----------------|---|---|-------------|---|---|
+| 2 | 3 | 6 | 12 | 3 | 6 | 12 | 2 | 3 | 6 |
+| 3 | 4 | 6 | 9 | 4 | 6 | 9 | 3 | 4 | 6 |
+| 3 | 4 | 6 | 12 | 3 | 6 | 12 | 4 | 6 | 12 |
+| 3 | 6 | 8 | 12 | 3 | 6 | 12 | 6 | 8 | 12 |
+| 4 | 6 | 12 | 36 | 4 | 12 | 36 | 4 | 6 | 12 |
+| 5 | 9 | 45 | 225 | 9 | 45 | 225 | 5 | 9 | 45 |
+| 9 | 15 | 25 | 45 | 9 | 15 | 25 | 9 | 15 | 45 |
+| 9 | 25 | 45 | 225 | 9 | 45 | 225 | 25 | 45 | 225 |
+| 9 | 12 | 16 | 72 | 9 | 12 | 16 | 9 | 16 | 72 |
+| 9 | 15 | 45 | 225 | 9 | 45 | 225 | 9 | 15 | 45 |
+| 15 | 20 | 30 | 45 | 20 | 30 | 45 | 15 | 20 | 30 |
+| 20 | 30 | 36 | 45 | 20 | 30 | 45 | 30 | 36 | 45 |
+| 25 | 45 | 81 | 225 | 25 | 45 | 81 | 25 | 45 | 225 |
+
+---
+
+La Massima uittoria non è altro, che situar nel campo dell'auuersario 4 pezzi in maniera, che li loro numeri con-tengano tutte tre le già dette proportioni, cioè l'Arithme-tica, la Geometrica, & la Musica insieme. Ma quali siano in questo giuoco li numeri, che possono contener dette tre proportioni insieme, la seguente tauola dimostra.
+
+<vocab>proportioni, Arithmetica, Geometrica, Musica, Massima uittoria, giuoco, Rithmomachia</vocab>

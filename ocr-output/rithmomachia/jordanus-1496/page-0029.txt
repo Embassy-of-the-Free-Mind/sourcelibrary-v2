@@ -1,0 +1,84 @@
+<language>Latin</language>
+<page-num>LXIIII</page-num>
+<page-type>text</page-type>
+<columns>2</columns>
+
+<margin>25</margin> **SI sumantur numeri ab unitate cōtinue proportionales: nullus eorum numerabit vltimum nisi fm aliquem in illa serie dispositorum.**
+¶ Sint a b c d e f numeri cōtinue pportiōales ab unitate: dico nullū eoz numerare f nisi fm aliquē in illo ordine pofitoz. nam qz quoties vnitas in a toties e in f: ergo per diffinitionem e numerat f scōz a. Item qz vt vnitas ad a: ita d ad e. et vt a ad b: ita e ad f. ergo per equā pportionalitatem vt vnitas ad b ita d ad f. quoties ergo vnitas in b: toties d in f. per diffinitionē igit d nūerat f scōm b. et qz itez per equā pportionalitatem per vicesimāmprimā secundi vt vnitas ad c: ita c ad f. quoties ergo vnitas in c toties c in f: quare c numerat f scōm se. et qz mōstratus est d numerare f scōm b: ergo alternatim per octauam primi b numerat f scōm d. et qz etiā e mōstratus est nūerare f scōm a: alternatim a nūerabit f scōm e. est itaqz ostensum a b c d e numerare f vltim fm aliquē in illo ordine pofitoz. qd erat ppositū.
+
+<margin>26</margin> **SI numerorum ab unitate continue proportionaliū secundus ab unitate fuerit numerus primus: nullus numerabit vltimū nisi aliquis in ordine antecedentiuū.**
+¶ Sint a b c d numeri ɔtinue ab vnitate pportiōales: et a numerus pmus. dico q nullus numerabit d: nisi aliqs precedentiū d in ordine numeroz a b c d. Si enī aliqs alius numeret d sit e qui nūeret eū scōm f. qz ergo a nūerus pmus nūerat d pductū ex e in f: ergo p quartā tertij a nūerat e aut f. sit ergo vt numeret e intelligo qttuor nūeros: a/e/f/c: et qz per precedētēm a in extremus in extremū pducit d t eūdē pducit e in f medius in mediū. ergo per vicesimāquintam scōi vt a ad e: ita f ad c. fz a nūerat e: ergo et f numerat c. numeret ergo f nūerū c scōm g: eadē rōne f vel g nūerabit b: sitqz id scōz h. p tōē quoqz tandē ɔclūdes g aut h nūerare a: qre a non ē nūerus pmus. qd ē ɔtra hypothesim. at si g aut h ponat eqālis a: argumētaberis p pmissam reliquos ēē equales iis qui sunt in or dīe a b c d: et ppositū.
+
+<margin>27</margin> **Numeris ab unitate proportionalibus si aliquis primus vltimum numeret: secundum quoqz ab vnitate numerabit.**
+¶ Sint a b c d ɔtinue pportiōales ab vnitate: sitqz e numerus primus qui nūeret d vltimū: dico ipm e numerare a scōm ab vnitate. Si enī e pimus non nūerat a: ergo p primā tertij e erit primus ad a. et cũ quoties vnitas in a toties a sit in b: ergo a scōm se numerat b. quare per vndecimā tertij b est pm' ad e. et cũ quoties vnitas in a toties b sit in c: g b nūerat c secūdū a. quare per decimā tertij c est pmus ad e. et itez quoties vnitas in a toties c in d: ergo c numerat d secūdum a. per eādem ergo decimam: e est primus ad d. non ergo e numerat d. quod est oppositum positi.
+
+<margin>28</margin> **SI numerorum continue proportionalium primus de secundo et vltimo tollatur: que proportio fuerit residui secundi ad primū ea est residui vltimi ad cōpositum oīm precedentium.**
+¶ Sint a.b.c.d.e.f.et g k: numeri ɔtinue pportiōales t detrahat a b primus de c d secūdo: sitqz rēsiduus secūdī l d. Itē detrahat a b de vltimo g k / sitqz residuus h k. dico que pportio l d ad a b: eā esse h k ad ɔpositū ex a.b.c.d.et e f. sumo enī e r g k nūer e g m equalē e f t g n equalē c d. et intelligo g k. g m. et g n. vt tria tota. qz ergo g m equat e f: que proportio g k ad e f: ea est totius g k ad totū g m. et qz g n equat cd: video que pportio e f ad c d: ea est totius g m ad totū g n. et per idem q pportio c d ad a b: ea est g n ad g h. et vltra q pportio totius g k ad totū g m: ea est g m detracti g k ad g n detractum g m / qz numeri g.k.e.f t c.d positi: sint ɔtinue pportiōales. et q pportio totī g m ad totū g n: ea est g n detracti g m ad g h detractū g n. quare p quintā scōi m k ad n m t n m ad h n residuoz ad residua vt totoz ad tota: id est m k ad n m: sicut e f ad c d. et n m ad h n sicut c d ad a b. ergo pmutatim per tertiā secūdī sicut m k ad e f: ita n m ad c d et h n ad a b: ergo p vicesimām secundā h n m l k sit qui fūt h l: l k ad h pofitū ex e f c d et a b: sicut h n vnius illoz ad a b vnum hoz. at cũ g n equetur c d et g h equetur a b: ergo g h equabitur c l. equat ergo h n nūero l d. ablatis enī equalibus ab equalibus: residua sūt equalia. qre ergo que proportio l d ad a b: ea erit h k ad ɔpositū ex oibus precedētibus. qd est ppositū.
+
+<margin>29</margin> **Propositis duobus numeris sumptisq; quotlibet scōm proportionem eor pproportionalibus: si minor in minorem et maior in maiorem ducatur et pductorum differentia per differētiam ppositor diuidatur: exibit numerus qui ex omnibus aliis coaceruat.**
+¶ Sint a et a h duo numeri et h b eoz differētia: et sint c d / e f / f g: quotlibet in ɔtinua pportiōe a b ad a h: ducaturqz a b in c d t pueniat l m. item a h in f g t pueniat l n: sitqz differentia l m t l n numerus n m. dico q si n m diuidatur ph b: differētiām primi ad scōm puenire c g numer e x c d e f g cōpositum. Nam ex a b in d e fiat l o et in e f fiat l p et in f g fiat l q. qz per decimā primi qd fit ex ductu a b in f g: equū est ei quod fit ex ductu a h t h b in eūdē nūerū f g: et ex a b in f g sit l q: et ex a h in eūdē fit l n. ergo ex h b in f g per eādem decimā fit n q. Preterea intelligo quattuor numeros: a b primum / a h secūdū: e f tertiū et f g quartū. et qz q proportio primi ad scōm ea est tertij ad quartū: q p vicesimā quintam secūdi quod fit ex ductu a b in f g primi in vltimū: equū est ei qui fit ex ductu a h in e f medio in medium. at quod fit ex a b in f g est l q: ergo quod fit ex a h in e f est l q. at qz qō fit ex toto a b in e f est l p: ergo per decimam primi quod fit ex h b in e f est p q. Et eadē ɔsimiliqz argumētatione: quod fit ex h b in d e est p o: et in c d est o m. quare per nonam primi h b in toto c g pproducit n m. ergo per sextam partitionem primi si productus n m diuidatur per eiūdem numerū h b: redibit prior numerus c g. qd erat demonstrandum.
+
+->¶ Quarti elementorum Arithmetices Jordani finis.<-
+
+<column-break/>
+
+<image-desc>
+A set of three horizontal parallel lines representing proportions.
+Top line: 8 (c) --- 64 (f)
+Middle line: 4 (b) --- 32 (e)
+Bottom line: 2 (a) --- 16 (d)
+</image-desc>
+
+<image-desc>
+A vertical sequence of horizontal lines with numeric values:
+81
+27 (letters c, e)
+9 (letters b, g)
+3 (letters a, h)
+1 (I)
+</image-desc>
+
+<image-desc>
+A vertical list of numeric values associated with letters:
+1296 (d)
+216 (c)
+36 (b)
+6 (a)
+1 (l)
+3 (e)
+</image-desc>
+
+<image-desc>
+A complex geometric diagram for Proposition 28 involving arcs and points on a baseline. 
+Top arcs are labeled with numbers 27, 18, 12, 8. 
+Smaller arcs below are labeled 18, 12, 8 and 9, 6, 4. 
+Letters g, h, n, m denote points or segments. 
+Baseline points are e and f. 
+Additional numbers 8, 12, 1, 40, 58 are present near the center.
+A smaller arc diagram below shows 8, 4 and labels a, b.
+</image-desc>
+
+<image-desc>
+A nested arc diagram for Proposition 29. 
+Top arc numbers: 324, 216, 144, 96, 64. 
+Associated points: m, o, p, q, n. 
+Below the arcs are boxes containing the values 32, 48, 72, 108. 
+A summation value of 260 is indicated at the bottom.
+</image-desc>
+
+<image-desc>
+A semi-circular arc diagram with a top value of 65. 
+Smaller arcs below are labeled 27, 18, 12, 8. 
+Points on the baseline are c, d, e, f, g.
+</image-desc>
+
+<image-desc>
+The final small arc diagram at the bottom right. 
+Top value: 12. 
+Lower values: 8, 4. 
+Points: a, h, b.
+</image-desc>
+
+<meta>Catchword: demonstrandum.</meta>
+
+<vocab>Arithmetica, Jordanus de Nemore, proportionalitas, numerus, unitas, pproportiōales, residuum, coaceruat</vocab>

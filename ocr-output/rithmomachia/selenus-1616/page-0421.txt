@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>387</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>3.cap:</margin>
+10. **Rochen** / auf vier und ſechßig : * **Der Weiſſe** / nimt / mit derſels
+11. ben / der **S. K. Reuters = Soldaten** : * **Der Schwartze** / ziehet /
+der **K. Schützen** / auf drey und funfzig / und ſperret / die **W. Kö-**
+12. **nigin** / ein : * **Der Weiſſe** / rucket / der **K. Rochen** / (unanges-
+ſehen Er / der **S. K. Schützens = Soldaten** / mit der **K. Reuter** /
+etwa mit beſſerm Vortheil nehme) auf ſieben : **Der Schwar-**
+**tze** / (ſo fern Er / der **W. K. Reuter** / mit der **K. Rochen** / nicht
+nehmen wil) die **Königin** / auf der **W. K. Reuter** / und **Schü-**
+**tzens = Soldaten** / auf viertzig : **Der Weiſſe** / der **K. Reuters =**
+**Soldaten** / (vermeyned auß vier und funfzig / mit der **Königin** /
+auffzureiſſen) auf ſieben und viertzig : **Der Schwartze** / des **K.**
+**Reuter** / auf des **W. K. Soldaten** / auf fünf und dreyſſig : **Der**
+**Weiſſe** / der **K. Reuter** / auf neun und dreyſſig : **Der Schwar-**
+**tze** / auf denſelben / und auf die **W. Königin** / des **K. Reuter** /
+13. auf fünf und viertzig : * **Der Weiſſe** / (ſo ferne Er / mit der
+**K. Reuter** / auß vier und funfzig / nicht wil **Schach = bieten** : auf
+welchen fahl / der **S. K. Roche** / ertappet / und die **Königinnen** /
+verwechſlet werden möchten : und dahero der **Schwartze** / mit
+ſchaden / im vorigen n. 12. des **K. Reuter** / auf 35. und 45. ziehet)
+nimt ihn / mit demſelben / und gibt **Schach** : **Der Schwartze** /
+nimt denſelben / mit des **K. Schützen** : **Der Weiſſe** / ziehet / der
+**K. Rochen** / auf die **S. Königin** / auf neun und dreyſſig : **Der**
+**Schwartze** / nimt mit ihr / der **W. K. Schützens = Soldaten** / zie-
+het dieſelbe / auf des **W. K. Soldaten** / und gibt **Schach** : (dan wan
+Er / mit der **K. Schützen** / den **W. Rochen** / nehme / die **W. Königin** /
+ſeiner **K. Soldaten** / nehmen / und dergeſtalt / aufzureiſſen würde : Neh-
+me Er ihn dan / mit der **Königin** / ſo wehren / ſeine beede **Rochen** /
+durch die **W. Königin** / verloren) * **Der Weiſſe** / ziehet / den **König** /
+14. auf eylfe : **Der Schwartze** / der **K. Rochen** / auf vier und zwantzig :
+**Der Weiſſe** / (auf daß Er / wegen des folgenden / des **Schwar-**
+**tzen** Zuges / nicht gleich **Schach = Mat** werde) des **K. Schützen** / auf
+zwelfe : **Der Schwartze** / nimt / mit der **Königin** / des **W. K. Sol-**
+**daten** / und beut **Schach** : **Der Weiſſe** / rucket den **König** / auf drey
+oder vier : **Der Schwartze** / nimt / mit der **K. Rochen** / der **W. K.**
+**Rochens = Soldaten** : **Der Weiſſe** / (auf daß ihm / der **Schwar-**
+**tze** / mit der **K. Rochen** / auß achte : oder / wan Er / des **K. Schü-**
+**tzen** fürgezogen : auß fünfe / nicht gleich erlege) rucket / der **K. Ro-**
+**chen** / auf ſieben : **Der Schwartze** / (umb die **W. Königin** / der-
+haft / noch nicht zu erlaſſen) nimt / ihren **Soldaten** / mit der **Köni-**
+
+<sig>Eee iij</sig>
+<meta>catchword: gin ;</meta>
+
+<vocab>Schach-Spiel, Rochen, Reuter, Schützen, Königin, Soldaten, König, Schach = bieten, Schach, Schach = Mat</vocab>

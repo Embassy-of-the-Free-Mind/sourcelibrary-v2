@@ -1,0 +1,39 @@
+<language>French</language>
+<page-type>text</page-type>
+
+# RYTHMOMACHIE IEU,
+
+ſe en deux ordres les multiples prouenus, nom-
+mez des quatre pairs premiers : ſçauoir eſt dou-
+bles, triples, quadruples, ſexcuples, & octocu-
+ples, & ce en vn tablier ayant 64 loges. & a-
+pres ceux cy, deux ordres de ſuperparticuliers
+meſmes, qui ſoient ſeſquialtre, ſeſquiquarte, ſex-
+quiſexte, ſeſquihuictieſme. & apres les ſuper-
+partiens comme ſuperbipartientes, ſuperquadri-
+partientes, ſuperſextupartientes, ſuperoctupar-
+tientes. Et les loges dirons eſtre les camps, &
+les nombres, le bataillon des nombres pairs. Et
+contre ceux cy, en autant de loges & en meſme
+ſorte diſpoſerons le bataillon des impairs, telle-
+mēt que les deux premiers rengs ſeront des multi-
+plices, ſçauoir est triple, quintaple, ſextuple, octu-
+ple. Les autres deux rengs ſuiuants, ſeront les ſu-
+perparticuliers, & les deux apres les ſuperpar-
+tiens ayant meſme affinité. Et ainſi ſeront par-
+faicts tes deux bataillons, icy des impairs, & lá
+des pairs.
+
+## Boissiere.
+
+La diſpoſition eſt meſme que deſſus, fors qu’il
+veult apeller les moindres nombres de chaſque
+proportion, Contes, & les plus grands Ducs.
+
+### Reigles.
+
+1 Les tables ſe peuuent remuer à tous coſtez
+
+<meta>catchword: les</meta>
+
+<vocab>Rythmomachie, multiples, pairs, impairs, superparticuliers, sesquialtre, sesquiquarte, sesquisexte, sesquihuictiesme, superpartiens, superbipartientes, superquadripartientes, supersextupartientes, superoctupartientes, bataillon, Claude de Boissière, Contes, Ducs</vocab>

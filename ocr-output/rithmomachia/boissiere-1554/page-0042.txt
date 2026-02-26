@@ -1,0 +1,14 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>20</page-num>
+<header>DES PHILOSOPHES. 20</header>
+
+<image-desc>A mathematical diagram illustrating numerical relationships. At the top left, a bracket labeled "Le chãp des Nõpair" groups two rows of numbers: the top row (81, 49, 25, 9) and the second row (9, 7, 5, 3). Two diagonal lines form an 'X' crossing between these numbers and the section below. To the right, a bracket labeled "Multip." connects these upper rows to the lower ones. The lower section consists of four rows of numbers: the first row is 2, 4, 6, 8 (labeled "pair"); the second row is 4, 16, 36, 64; the third row is 6, 20, 42, 72; and the fourth row is 9, 25, 49, 81. A bracket to the right of the last two rows is labeled "Superp." In the center of the crossed lines are two small decorative woodcut icons, appearing to be a plant and a scorpion-like figure.</image-desc>
+
+### Pour auoir les nombres superparticu- liers, au champ des nompair.
+
+CEste operation ne differe de la precedente, scauoir est que pour trouuer les requerants fault multiplier les premiers & moindres nom- bres des nompair, par les premiers & moindres du champ opposite, et pour auoir les requis fault multiplier iceux opposites par eux mesmes: mais te fault noter que ne prendras pas pour opposite le premier qui est 2, ains commenceras au suiuãt 4 par lequel multipliãt le 3, auras 12 le premier requerant, & iceluy 4 multiplié en soy raporte- ra le premier des requis 16. & ainsi feras des autres comme te conduiront les lignes de la sui- uante table en laquelle verras estre adiousté le
+
+<sig>C iiij</sig>
+
+<vocab>nompair, pair, superparticuliers, multiplier, requerants, requis, champ</vocab>

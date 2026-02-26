@@ -1,0 +1,26 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philoſophers game.</header>
+<sig>B.iiij.</sig>
+<meta>catchword: By</meta>
+
+of all theyr draughts when they liſt, in-
+to the nexte with the rounde, into the
+thyrde with the triangle, and into the
+fourth with the ſquare, and finally in all
+poyntes lyke the Queene at the Cheſſe,
+ſauing that he can not paſſe aboue foure
+ſpaces at the moſt.
+
+## ¶ Of the maner of taking.
+
+The men may be taken ſixe wayes,
+namely by Equalitie, Obliuion,
+Addition, Subſtraction, Multipli-
+cation and Diuiſion, and alſo if you
+wyll, and ſo agree, by
+<image-desc>The word "Proportion" is followed by a large curly brace that groups three stacked terms: "Arithmetricall.", "Geometricall.", and "Muſicall."</image-desc>
+
+## ¶ Of Equalitie.
+
+<vocab>Philosophers game, Equalitie, Obliuion, Addition, Subſtraction, Multiplication, Diuiſion, Proportion, Arithmetricall, Geometricall, Muſicall</vocab>

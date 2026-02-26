@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>396</page-num>
+<header>Das Vierte Buch / 4. cap:</header>
+
+Ob dieses aber/ was in diesen dreyen vorhergehenden n. n. gesetzet
+worden/ geschehen kan/ wird folgender n. 25. berichten/ und entdecken.
+
+<margin>19.</margin> » Hat dan etwa/ der Weisse/ (wie/ der Damianus, am ende die=
+» ses Capitels/ setzet) die Königin/ an einen solchen ort gestellet/ da
+» sie dem Schache/ der S. Königin/ auß acht und zwanzig/ kan
+<margin>20.</margin> » abwehren: so spielet/ *der Schwartze/ (auf daß Er hernacher/
+» mit des K. Rochen/ Schach-bieten: und der Weisse/ den König/
+» dem Schach-Mat / nicht entziehen könne) des K. Schützen/
+» auf sechs und dreyßig.
+
+Dieses ist also/ auß des Damiani Bericht/ ob es wol/ mit etwas
+andern worten/ und ohne andeutung der ursachen/ von ihm/ an den
+tag/ gegeben worden/ anhero gesetzet. Nuhn wollen wir ferner/ etli=
+che fehler/ welche in demselben/ sich finden lassen/ anzeigen: und
+gleichwol/ noch etlicher arten und weysen/ (alß insonderheit deren/
+welche/ von ihm/ in dem fünfften Capittel / seines Tractätleins/
+gedacht worden: wie nemlich/ der Schwartze/ wan Er/ in diesem
+fall/ den Vorsprung/ oder anzug hat/ ziehen/ und das Spiel/ füh=
+ren sol) und zwar auß vorsatz/ geschweigen: In erwegung/ die=
+selben/ weyl Er sie/ sehr dunckel/ mit vielen verwirreten zügen/ da=
+rauß Er sich selber/ wie zu vermuten/ schwerlich hat wicklen kön=
+nen/ auch wider dieses Spieles gebrauch/ an den tag/ gegeben und
+herfürgebracht: so leicht/ nicht zu begreiffen seynd. Dan/ seinem
+Berichte nach/ zween Steine/ alß der K. Reuter/ und des K. Schü=
+tzens-Soldat/ auf ein und funfzig/ (das ist/ in des S. K. Schü=
+tzens/ anderm felde) bey einander stehen müsten/ und derselbe Sol=
+dat/ endlich/ dessen ungeachtet/ zwey felder/ für sich/ gezogen wer=
+den könte: im gleichen/ würden etliche Steine weggenommen/ oder
+mit einander verwechselt werden/ welche doch/ aufm Schach-Bres=
+te/ nicht mehr vorhanden. Wan auch gleich/ diese Züge/ deutlicher
+aufgezeichnet/ und nach möglichkeit/ geendert würden/ so seynd sie doch
+denen/ welche nicht zu spielen wissen/ wenig/ oder gar nichts nütze.
+
+Es wird aber dieses/ was des Damiani halben/ bißhero erinnert
+» worden/ und drunten ferner noch möchte gedacht werden/ nicht geset=
+» tzet/ umb denselben zu verunglimpfen/ besondern/ umb/ die Schach-
+» Zieher/ auf daß Sie nicht/ in dergleichen anstellungen/ dieses Spie=
+» les/ wan Sie/ solchen schädlichen weysen/ folgen wolten/ sich selber/
+» betriegen möchten/ nuhr abzumahen/ und ihnen dasselbe/ (auf daß
+» es nicht/ das ansehen habe/ alß wan man/ das Jäh-wort/ auch zum
+» unrechten/ unbedachtsamer weyse/ gegeben) zu entdecken.
+
+<margin>21.</margin> Es schreibet demnach der Damianus, droben (n. 9.) daß der
+
+<meta>catchword: Schwarz</meta>
+
+<vocab>Damianus, Schach, Königin, Schach-Mat, K. Rochen, K. Schützen, K. Reuter, Schach-Breste, Jäh-wort</vocab>

@@ -1,0 +1,30 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>R</sig>
+
+### ¶ The Philosophers game.
+
+The king of the euen must be foure
+square, hauyng sice steppes, euery
+one lesser then other, on one syde he
+muste haue on him these rootes .1. 2. 3.
+4. 5. 6. on the other syde the quadrates a-
+rising of these rots, that is 1. 4. 9. 16. 25. 36.
+
+¶ The king of the odde men, muste
+haue but fyue steppes, that is .4. 5. 6. 7. 8.
+lackyng the rootes that he can not ende
+in .1. The quadrates of hys rootes be
+these. 16. 25. 36. 49. 64. These muste be
+so set on, that the least must be hyghest
+and the greatest lowest.
+
+¶ The Kinges be taken by Obsidion,
+or yf theyr pyramidall number, be
+taken by anye of the aforsayde meanes.
+Also yf by suche meanes you can take
+all his quadrates one after another.
+
+### ¶ The priuilege of the King.
+
+<vocab>Philosophers game, Rythmomachia, King, euen, odde, quadrates, rootes, Obsidion, pyramidall</vocab>

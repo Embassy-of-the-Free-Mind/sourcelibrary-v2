@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>339</page-num>
+<header>7. cap: Vom Schach-Spiel.</header>
+
+der Schwarze/(umb/den Weissen/ auf die probe / zu setzen) der
+K. Schützens-Soldaten/ auf sechs und viertzig: Der Weisse/ nimt/
+des S. K. Soldaten/ mit seines K. Reuter : Der Schwarze/ zie-
+het/ auf ihn/ die Königin/ auf zwey und funffzig: Der Weisse/ densel-
+ben/ auf des S. K. Rochen/ auf ein und funfzig: Der Schwarze/
+nimt / des W. K. Soldaten / mit der Königin / beut Schach /
+und ziehet dieselbe / auf des W. K. Schützen : Der Weisse/ (auf
+daß Er / denselben/ nicht verliere) bedecket den König / mit der
+Königin/ auf zwölffe: Der Schwarze/ nimt sie / mit seiner Köni-
+gin: Der Weisse/ dieselbe / mit dem Könige : Der Schwarze/
+ziehet der K. Soldaten / auf des W. K. Schützen / auf sieben und
+dreyssig: Der Weisse / nimt ihn / mit demselben / und beschützet
+nochmaln/ seines K. Reuter : Der Schwarze/ nimt denselben /
+mit der K. Schützens-Soldaten: Der Weisse/ des S. K. Rochen /
+mit des K. Reuter : Der Schwarze/ (weyl dieser W. Reuter /
+auß der haft/ nicht wider erlediget / werden kan) gewinnet einen
+Stein/ zum Vortheil/ und wird ihm/ der Sieg / so fern Er/ der Zü-
+ge unterrichtet / wol zu theile werden.
+
+Spielet aber der Weisse / auf eine andere Art : so muß der
+Schwarze/ auf sein Spiel/ stets wol acht haben / und in einer gu-
+ten ordnung/ (wiewol sie / nicht / so gar frey und ungehindert / durch
+diesen weg/ Als in der Andern Art / gemachet werden kan : Daher-
+ro Sie auch / mit einander/ nicht zu vergleichen) immer daher zie-
+hen/ und sich erzeigen.
+
+-> n. 3. 4. 5. &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; n. 6. 7. <-
+
+<image-desc>Two side-by-side 8x8 diagrams representing chess boards with abbreviations for pieces and numbers on specific squares. The left board is titled "n. 3. 4. 5." and the right board is titled "n. 6. 7.". Abbreviations include SR (Schwarz Rochen/Reuter), SS (Schwarz Soldat), SK (Schwarz König), WR (Weiß Rochen), WS (Weiß Soldat), and WK (Weiß König).</image-desc>
+
+<sig>Vu iij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach, Königin, Reuter, Rochen, Schütze, Soldat, Zug, Spiel</vocab>

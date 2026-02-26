@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>20</page-num>
+<header>Das erste Buch / .cap.</header>
+
+,, des *Philocopi*, daß derselbe sich mehr befleißigete / zu ver-
+,, lieren/dan zu gewinnen/bey sich selber sagend : Mir ist/in war-
+,, heit/noch kein edelerer oder höflicherer Jüngling / fürkommen.
+,, Endlich/sie setzeten die Steine abermaln/zum behuf des drit-
+,, ten Spieles/vermehreten auch die summe des Aufsatzes / umb
+,, ein ziemliches : Ehe aber dasselbe Spiel / wider angefangen
+,, ward/ermanete der <term>Wacht-Meister</term> den *Philocopum*, sehr hoch/
+,, zu ihm sagend : Mein Jüngling/ich bitte / und beschwere dich /
+,, bey der macht/aller Götter/daß du spielest/wie du es aufs beste
+,, kanst/vnd verschone meiner nicht/wie du in den vorigen Spie-
+,, len/gethan. *Philocopus* antwortete : Mein Herr/ein Schüler/
+,, kan übel/mit seinem <term>Meister</term>/spielen/daß Er nicht solte erleget
+,, werden: weyl es euch aber/so gefällig/als wil ich dergestalt /
+,, so weit ich den <term>Schach</term> verstehe/meine Züge anstellen. Fiengen
+,, demnach/das dritte Spiel/an/und des *Philocopi* Spiel/nach-
+,, dem Sie/eine geraume Zeit/gezogen hatten/ward das beste :
+,, wie nuhn der <term>Wacht-Meister</term> solches vermerckete/fieng Er an
+,, zornig/ und im gesichte/roth zu werden/suchete auch/alle seine
+,, rencke herfür/ob Er könte/sein verdorbenes Spiel/hinwider/
+,, in einē guten stand bringen : Aber jeh mehr Er sich dessen unter-
+,, stund/je schlimmer sein Spiel ward. *Philocopus* nuhn/ nahm ihm/
+,, mit seiner <term>Schützen</term> einem/einen <term>Reuter</term>/und bot seinem <term>Köni-</term>
+,, <term>ge</term>/<term>Schach</term> : der <term>Wacht-Meister</term> / erzürnete sich / wegen deß
+,, Zuges/über die maaß/mehr wegen verlusts/der aufgesetzten
+,, gülden/alß des Spieles: Stoßete/die <term>Schach-Steine</term>/über
+,, einen Hauffen/so starck/daß das Bret/zusamt den Steinen/
+,, auf den Boden fiel. Wie nuhn der *Philocopus* dieses sahe / sa-
+,, gete Er : Mein Herr/dieweil die klugen und verständige leuthe/
+,, sich/auf diesem Spiele/wol pflegen zu erzürnen / alß halte Ich
+,, euch/darumb/nicht weniger verständig/ob ihr euch gleich/über
+,, die <term>Schach-Steine</term>/in etwas entrüstet habet: Alleine / wan
+,, ihr hettet genaue achtung aufs Spiel gegeben / ehe ihrs zer-
+,, rüttetet und vermengetet/so würdet Ihr/daß Ich von euch/in
+,, zween Zügen/hette können erleget werden/gewißlich befunden
+,, haben : Ich halte es auch dafür/daß ihrs wol gewahr worden
+,, seyet/alleine ihr habet gegen mir höflichkeit gebrauchen/und das
+,, Spiel/mit dem/daß ihr euch zornig/anstelletet/mit fleis verlie-
+,, ren wollen. Aber das sol so nicht seyn : besondern dieses geld/
+
+<meta>catchword: ist alles</meta>
+
+<vocab>Philocopus, Wacht-Meister, Schach, Schach-Steine, Schützen, Reuter, Könige, gülden</vocab>

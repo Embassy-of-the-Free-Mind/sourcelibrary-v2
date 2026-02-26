@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>168</page-num>
+<header>Das Ander Buch / 6. cap:</header>
+
+<image-desc>Decorative woodcut headpiece featuring symmetrical acanthus leaf scrolls and floral motifs.</image-desc>
+
+## Das Sechste Capittel.
+
+### Von dem völligen gebrauch dieses Spieles /
+### durch mannichfaltige Arten und Exempell / ins
+### gemein / wie man in dieselben / sich
+### richten sol.
+
+Nachdem der Erste Theil / wie man zum Gebrauch dieses Spieles komme / in den vorigen fünf Capitteln / durch gewisse Mittel / Satz: und Ordnunge / nuhnmehr abgehandelt: Als ist / (vermöge des Anfanges / des ersten Capitels / dieses Buches) der Ander Theil / welcher / wie die angedeutete Mittel / und Satzungen / in mannichfaltigen Arten und Manieren / zum völligem / dieser Kunst / und Spieles / Gebrauche / gerichtet müssen werden / mit allerhand Exempeln / darstellet / noch übrig: Auß welchem nuhn der jenige / so Lust und liebe / zu diesem künstlichem Spiele hat / nicht alleine diese züge / deren in demselben / erwehnung geschicht / besondern auch / viele andere dergleichen: Item welcher gestalt / und auf welche seiten / man den feind angreiffen; ihn unversehens gefangen nehmen / und sonsten abbruch thun: Hingegen / wie er sich gegen demselben beschützen: dessen einfällen und angreiffen dienlich begegenen / und ihm den garauß machen könne / wol erlernen und fassen / kan und mag.
+
+Warumb man aber / diese so mannichfaltige Arten / fürstellen wil / ist die ursache diese: Daß wie die Kunst an sich / in allen sachen / auf gewissen Mitteln / und Regeln beruhet: Der Gebrauch aber / weyl derselbe / in dem particular / und sonderbaren stücken / bestehet / und dahero sehr weitleuffig ist / also genawe / mit wenigerm / nicht gefasset / noch eingespannet werden mag: Also auch hie / die Mittel und Satzungen / welche nuhr dahin / wie man *absolute*, für sich selber / zum Zweck dieses Spieles gelangen möchte / gehen / in gewisser masse / zwar anhero gesetzet seynd: Aber / es wird sich / wan nuhnmehr diese Mittel und Regeln / auf der Schach:Tabel / *appliciret*, und an die hand müssen genommen werden / befinden / daß man dieselbe / wegen dessen / daß so viele Steine und Felder / auf dem Schach=Bret-te / vorhanden / nicht auf einerley Art / zu wercke richten könne.
+
+<meta>catchword: Dan</meta>
+
+<vocab>Schach, Schach:Tabel, Schach=Bret-te, Spiel, Kunst, Exempell</vocab>

@@ -1,0 +1,57 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>7</page-num>
+<header>Vom Schach-Spiel.</header>
+<warning>Water stain on the left margin; page edges slightly darkened; some text fading but remains legible.</warning>
+
+<margin>1. cap.</margin>
+Daß er (1) mässig sey / und alszdan / wan es die notturft er-
+heischet / ins werck gerichtet werde.
+
+Daß er (2) nicht ungebührlich sey. Ungebührlich ist er /
+wan das hinterste zu forderst gesetzet / das Spiel höher / dan andere
+wichtige / und Amtes-geschäfte / geachtet wird: welches wie unge-
+reimt es sey / der *Seneca Epist: 117. circa f.* mit einem feinen Bey-
+Spiel / artig zu verstehen gibt:
+
+> *Nemo, (schreibet Er) qui ad incendium domus suae currit, cc*
+> *Laterunculariam perspicit, ut sciat, quomodo alligatus exeat cc*
+> *Calculus.* Das ist: cc
+> Es wird keiner / der hinlauffen muß nach seinem Hau- cc
+> se / umb dasselbe / auß der gefahr des Feuers zu erretten / ihm cc
+> das Schach-Spiel / lieber seyn lassen / und wie er etwa / sei- cc
+> nen Stein / der in Gefahr gerahten / erretten möge / zufoderst cc
+> erwegen / und sich lange darauf bedencken.
+
+Alß sol nuhn auch ein Ieder / was nohtwendig ist / und zu ern-
+sten sachen / gehörig / (weil uns jah die Natur / dahin / und nicht
+zufoderst zum Spielen und Kurtzweilen angewiesen) ihm angele-
+gen seyn lassen / und des Spielens nuhr zu seiner zeit / sich ge-
+brauchen.
+
+Dessen / wollen wir / den *Scævolam*, einen fürtreflichen Rö-
+mischen Gesetzgeber / und Juristen / welcher nicht *Quintus*, (wie ihn
+*Pomponius l. 2. §. 41. ff. de Orig: jur: nennet*) sondern *Publius Mutius*,
+(nach der meynung *Bernhard: Rutilij*: in beschreibung seines lebens /
+pag: 197. 198. und 134.) sol geheissen haben: Zum Exempel / (wie
+von ihm / *Valer: Maximus, lib: 8. c. 8.* schreibet) darstellen:
+
+> *Scævola, Alea & Calculis vacasse, interdum dicitur, cum cc*
+> *benè ac diù, jura Civium & caeremonias Deorum, ordinasset. Ut cc*
+> *enim, in rebus serijs Scævolam, ita & in scurrilibus lusibus, Homi- cc*
+> *nem agebat, quem rerum natura, continui laboris, patientem esse, cc*
+> *non finit, & ad hoc diverticulum, animum suum, forensibus mini- cc*
+> *sterijs fatigatum, transferebat:* Das ist: cc
+
+> Die Historien berichten / daß der *Scævola*, wan Er / den cc
+> Welt- und Geistlichen Sachen / eine geraume zeit / wol obgele- cc
+> gen / und dieselben angeordnet / im Würffel- und Schach- cc
+> Spiele / sich unterweilens belüstiget / und ergötzet habe. Dan cc
+> Er sich / in wichtigen Sachen / seinem Stande / und Ampte cc
+> gemäß / in den lustigen / kurtzweiligen Spielen aber / wie ein cc
+> Ander Mensch / der immerwährende Arbeit / nicht ertrage kan / cc
+
+<sig>B</sig>
+<meta>catchword: erzei</meta>
+
+<vocab>Schach-Spiel, Seneca, Scævola, Publius Mutius, Valerius Maximus, Roman Law, recreational ethics, Seneca Epistulae, Quintus Mucius Scaevola</vocab>

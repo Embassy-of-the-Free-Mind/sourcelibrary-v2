@@ -1,0 +1,17 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>11</page-num>
+
+### *Quarta parte, nellaqual si mostra il modo di mouer li pezzi.*
+
+<image-desc>Woodcut decorative initial 'D' depicting a seated figure, possibly a scholar or a man of authority, gesturing with one hand.</image-desc>Doppò l'hauer insegnato à situar li pezzi sopra il tauoliero, seguita che noi mostriamo il modo di mouerli. Tutti li pezzi adunque caminano auanti, indietro, alla destra, & alla sinistra così per la longhezza, come per la larghezza del tauoliero: ma ciascuno hà il suo proprio camino, cioè li tōdi caminano sempre rettamēte dall'vna casella nell'altra immediatamente seguēte à guisa delli Pedoni nel giuoco delli schachi. Li triangoli caminano sempre obliquamēte à similitudine delli Alfieri del detto giuoco, ma saltando sempre alla terza casella da quella che si trouano, intermittendo sempre vna casella. Li quadrati si moueno per dritto, & per obliquo, si come fa la Regina nelli schachi, ma saltando sempre alla quarta casella da quella che si ritrouano, interponendo sempre due caselle. Le pyramidi portando seco la forma de tutti tre li pezzi del tondo, del triangolo, & del quadrato, hanno libertà di usar hor il camino del tondo, hor del triangolo, hor quel del quadrato, come gli torna commodo; & di piu possono in tutte tre le sorti di questi mouimēti interponer quante caselle vogliono, & non interponer alcuna, come à quelle torna più cōmodo, ilqual mouimento si assomiglia in tutto, e per tutto à quello della Regina nelli schachi. Oltra di questo possono le pyramidi far il salto, che fa il cauallo delli schachi ma non sempre se nō in un caso solo, quādo fossero assediate, come à suo loco diremo, ilqual priuilegio non hà alcun altro pezzo se non la pyramide, che rapresenta il Re di questo giuoco.
+
+---
+
+### *Quinta parte, nella qual si esplica il modo di combattere.*
+
+<image-desc>Woodcut decorative initial 'S' with foliate and floral ornamentation.</image-desc>Seguita che noi esplichiamo il modo di combattere, ilqual non consiste in altro, che in spogliar l'auersario di pezzi, perche manco pezzi che ha l'auersario piu facilmente si possono far le uittorie, come più giù 
+
+<sig>D</sig> <meta>inten-</meta>
+
+<vocab>Rythmomachia, schachi, pyramidi, tondi, triangoli, quadrati, Alfieri, Pedoni, Regina, cauallo</vocab>

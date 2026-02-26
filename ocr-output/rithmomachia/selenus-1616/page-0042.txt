@@ -1,0 +1,57 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>12</page-num>
+<header>Das Erste Buch / 1.cap.</header>
+
+> faciunt bonos ista, sed doctos: Apertior res est, sapere, imò simpli-
+> cior. Paucis, opus est, ad mentem bonam, literis. Sed nos, ut ce-
+> tera, in supervacuum diffundimus. Ità Philosophiam ipsam:
+> quemadmodùm omnium rerum, sic literarum quoq; intemperan-
+> tiâ, laboravimus. Non vitæ sed scholæ discimus.
+
+Daß (5) hiedurch / wie es umb die Regiemente / und Poli-
+ceien / beschaffen / angezeiget wird. Dahin dan / der Erfinder dies
+ses Spieles / nach des Polydori Vergilij bericht / ein gutes auge ges
+habt: Seine wort / lauten lib: 2. c. 13. de Rer: Inventor: hies
+von also:
+
+> Ostendit, Majestatem, sinè viribus, hominumq; adminicu-
+> lis, parùm admodùm valere, atq; tutam esse, quin, per istiusmodi
+> Ludum, satis patebat, Regem facilè oppressum iri, nisi invigilaret,
+> à suisq; defenderetur. Das ist:
+
+> Der Erfinder dieses Spieles / wolte / alß mit einem fin-
+> ger zeigen / und gleich beweißlich darthun / daß die Majestät /
+> macht und hoheit eines Fürsten / ohne der unterthanen bey-
+> stand und hülfe / nicht bestehen / noch sicher seyn möge: Ja
+> auch / daß Er / von Ausländischen / und Feinden / so fern
+> Er / seine Schanze / nicht fleissig achten / noch von den seinen /
+> treulich beschützet würde: leichtlich könne überwältiget werden.
+
+Daß (6) hierauß allerhand Kriegersche anschläge / Solda-
+tische klugheit / Raht- und Vorschläge / (wie auß folgendem / zur
+genüge / zuersehen / und Cæl: Calcagninus, in lib: sing: de Talorum
+Ludo, pag: 299. erweiset) mügen erlernet werden.
+
+Daß (7) hiedurch die Gemühter / Begierden / und was einer
+im schilde führet / oft geprüfet und entdecket werden können: Das
+hero der Ovidius, lib: 3. de arte Amandi, pag: 440. nach dem Er / das
+Jungfräulein / wie es / das Schach-Spiel / fürsichtig / und klüglich /
+spielen sol / unterwiesen / dasselbe / mit diesen verschen:
+
+---
+
+> --- Turpè est, nescire Puellam
+> Ludere: Ludendo sæpè paratur Amor.
+> Sed minimus labor est, sapienter jactibus uti:
+> Majus opus, mores composuisse suos.
+> Tunc sumus incauti, studioq; aperimur in ipso:
+> Nudaq; per lusus pectora nostra patent, &c.
+
+auch wol verwarnet / sich / beym Spielen / sitsamb / und ohne bewen
+gungen der begierden / zu verhalten. Welches auch die Gothen /
+(so deutsche Völcker / wie Phil: Melanchton, lib: 3. Chron: pag: 227.
+
+<meta>catchword: bezeu</meta>
+
+<vocab>Schach-Spiel, Polydorus Vergilius, Ovidius, Cæl: Calcagninus, Phil: Melanchton, Regiemente, Policeien, Majestät, Kriegersche anschläge</vocab>

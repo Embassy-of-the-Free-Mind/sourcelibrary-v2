@@ -1,0 +1,19 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<meta>bleed-through from the verso page is visible throughout the background</meta>
+<meta>catchword: Hauen-</meta>
+
+bianchi, si produceuano li quatro primi triangoli bianchi: cosi accozzando li quatro primi triangoli bianchi: cosi accozzandoli 4 primi triangoli bianchi con li 4 secondi bianchi triangoli, si produranno li 4 primi quadrati bianchi, li quali faranno questi 15, 45, 91, 153. perche dal 6 accozzato col 9, nasce il 15: & dal 20 col 25, il 45: & dal 42 col 49, il 91: & dal 72 col 81, il 153. Come la seguente figura ti mostra.
+
+<image-desc>
+A geometric diagram arranged in four vertical columns. Each column contains two triangles pointing upwards and a square below them, representing the addition of triangular numbers to form square or rectangular results.
+- Column 1: A triangle containing the number '6' over a triangle containing '9', with a square below containing '15'.
+- Column 2: A triangle containing '20' over a triangle containing '25', with a square below containing '45'.
+- Column 3: A triangle containing '42' over a triangle containing '49', with a square below containing '91'.
+- Column 4: A triangle containing '72' over a triangle containing '81', with a square below containing '153'.
+Faint circular marks and numbers from the reverse side of the page are visible through the paper.
+</image-desc>
+
+Ritrouati già li numeri delli 4 primi bianchi quadrati, desiderando ritrouar anchor quelli delli altri 4, operarai à questo modo. Commincia dal numero, 5 & piglia 4 numeri impari seguenti interponendo sempre uno impare, li quali faranno questi 5, 9, 13, 17: & moltiplica detti numeri in se stessi, che nasceranno li numeri, che tu desideri, li quali faranno questi 25, 81, 169, 289. perche dal 5 moltiplicato in se stesso, nasce il 25: & dal 9, l'81: & dal 13, il 169: & dal 17, il 289. come nella seguente figura si uede.
+
+<vocab>triangoli, quadrati, accozzato, numeri impari, moltiplicato, bianchi</vocab>

@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>343</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Xx</sig>
+<meta>Catchword: K. Sol-</meta>
+
+<margin>9. cap:</margin>
+
+<image-desc>A rectangular woodcut ornament strip featuring symmetrical foliate scrolls, acanthus leaves, and a central grotesque mask with a stylized human face.</image-desc>
+
+## Das Neunte Capittel.
+
+### Wie des Schwarzen Königes Soldat / auf die fünfte und letzte Art / zum Anfange / könne beschützet / und entsetzet werden.
+
+<margin>1.</margin>Folget ferner / welcher gestalt / auf die fünfte und letzte Art / des S. K. Soldat / mit dessen Schützen / verhütet werde.
+
+Spielen demnach / der Weisse / und der Schwarze / der Könige-Soldaten / (wie oft erwehnet) auf acht und zwantzig: und sechs und dreyssig: Der Weisse / (wegen des Vorzuges) des K. Reuter / auf des S. K. Soldaten / auf neunzehen: Der Schwarze / verhütet ihn / auf die fünfte Art / (deren im 5. Cap: n. 5. dieses Buches / erwehnung geschehen) mit des K. Schützen / auff fünf und viertzig.
+
+Mit einem worte / auch / von dieser Art / zu gedencken: So ist dieselbe / die schlimmeste / und gefährlichste / unter allen andern: dieweyl / die Steine / und Soldaten / dadurch sehr eingeschlossen / und füglich / nicht wol können gezogen werden: Ob sichs auch schon / nicht wol thun lest / ein solches Spiel / wie dieses ist / zu spielen / so kan mans doch / etlicher massen / noch füglich anordnen: Und pflegen gemeiniglich / die jenigen / welche dieses Spiel / erst lernen / diesen Schützen / dergestalt / (wie es dan auch / ein rechter Schülers-Zug ist) zu ziehen / und ins feld zu rucken.
+
+Wan nuhn der Weisse / des K. Schützen / ferner / auf dreyssig / ziehet: so spielet / der Schwarze / die Königin / auf zwey und funfzig: Der Weisse / der K. Soldaten / auf ein und zwantzig: Der Schwarze / des K. Schützen / auf acht und dreyssig: Der Weisse / des K. Reuter / auf des S. K. Schützens-Soldaten / auf vier und dreyssig: Der Schwarze / (umb ihn zu beschützen) des K. Reuter / auf ein und viertzig: Der Weisse / (auf daß / des S. K. Schützens-Soldat / auf seines K. Reuter / nicht gerucket werde) die Königin / auf drey und dreyssig: Der Schwarze / (umb / der K. Schützens / sich zu gebrauchen) derselben Soldaten / auf fünf und viertzig: Der Weisse / des K. Schützens-Soldaten / auf des S. K.
+
+<vocab>Schach-Spiel, Neunte Capittel, Schwarzen Königes, Soldat, Schützen, Weisse, Schwarze, Reuter, Königin, Schülers-Zug</vocab>

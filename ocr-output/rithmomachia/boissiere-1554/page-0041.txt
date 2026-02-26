@@ -1,0 +1,10 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+<meta>catchword: Le champ</meta>
+
+# Des tables triangulaires contenantes la proportion superparticuliere, & premierement du nombre pair.
+
+*Considere diligemment en la suivante figure quel nombre est lié par certaines lignes droites, & apres tu pourras aisement trouver les tables triangulaires de la proportion superparticuliere, lesquelles doivent estre disposées apres les precedentes rondes & multiplices, ainsi que s’ensuit. Multiplie le premier nombre pair des Multiplices qui est 2, par le premier des nompair qui luy respond opposément de l’autre costé sçavoir est par 3. & proviendra 6. le premier triangle pour la proportion superparticuliere, & ainsi feras des autres & auras tous les nombres pair requerans pour la proportion superparticuliere qui feront 6. 20. 42. 72. Mais pour avoir leur nombres requis multiplie en soy un chacun des predicts opposites qui leur respondent de l’autre costé sçavoir est 3. 5. 7. 9. & proviendront les nōbres qui font requis pour acomplir la proportion superparticuliere des nombres pair qui seront 9. 25. 49. 81.*
+
+<vocab>Rythmomachie, tables triangulaires, proportion superparticuliere, nombre pair, multiplices, nompair, nombres, triangle</vocab>

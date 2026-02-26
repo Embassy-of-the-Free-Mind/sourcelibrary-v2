@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>47</page-num>
+<header>DES PHILOSOPHES.</header>
+
+ront les deux quarrées de deſſous, & ſi ne mar-
+chera plus icelle ſelon les quarres, d’autant qu’elle
+eſt degradée de la forme quadrangulaire, & tout
+ainſi pourra eſtre degradée de la forme & priui-
+lege des tables triangulaires & rondes en elle cõ-
+tenues, tellemēt que lors qui ne luy reſtera riẽ, ſe-
+ra prinſe, & peut auſsi eſtre icelle prinſe en vn
+coup par ēpriſonemēt: car tout ſon pouuoir en vn
+coup eſt alors perdu, & le ſemblable aduiendra
+ſi on peut prendre le nombre qui contient toutes
+les baſes: lequel aucuns marquent au coupeau de
+la pyramide, & aucuns au deſſous.
+
+## Reigles generales.
+
+1 Aucune table ne peut deſmarcher pour pren-
+dre, ou faire prendre vne autre table par mouue-
+ment irregulier, ſinon en obſidion: car, irregulie-
+rement on peut empriſonner.
+2 En toutes prinſes ſe faict vne deſmarche ſans
+plus.
+3 Pour autant que multiplication, & diuiſion
+ſont operations reciproques ſi l’aduerſaire fault à
+prendre par multiplication quelqu'vne de tes ta-
+bles deſcouuertes, tu pourras prendre apres la ſien-
+ne par diuiſion, ou s'il a failli à prendre par diui-
+ſion tu la pourras prendre par multiplication, lors
+
+<vocab>Rythmomachie, quarrées, triangulaires, rondes, pyramide, obſidion, multiplication, diuiſion</vocab>

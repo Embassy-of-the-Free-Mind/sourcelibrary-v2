@@ -1,0 +1,93 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>51</page-num>
+<vocab>numerus quadratus, cubus, differentia, proportio, latus, unitas, binarius, medietas, medius proportionalis, hypothesis</vocab>
+
+---
+
+<margin>
+1681
+q —————— e
+1       841
+r — e v ————— e
+I   29    41
+v —————— q
+      840
+Differentia trium quadrato-
+rum continue eadem
+I     25     49
+— — — — — — — — — —
+I     5      6     7
+— — — b a — — — c
+   4         2
+e — — — f
+</margin>
+
+ergo l g in duo media eq̃lla: sitq; r differētia vni⁹ illoz dimidioz ad g. et v numerus equalis dimidio. et q differētia dimidij l g: ad totū l m g. dico tres q̄dratos numeroz r/v/q sint r: e: v: q: eē qui petūtur. Nam cū differētia quadratoz sint p septimam huius q̄ ex differētijs laterum in opoſita ex ipis pducitur: ɔtinue videbis ex dña r ad v in opoſitū r v qđ est g. et ex dña v ad q in opoſitum v q qđ est l m g: eq̃lem numerū pduci p viceſimamquintam ſecūdi z eadem ſit pportio differētiarū ad v ad dñiam v ad q. ſicut aggregati q v ad aggregatum r v. ſiue ſicut l m g ad m g: quod idem est. Sed hoc vltimum facilius forte capies in minoribus numeris z eodē ingenio inuentis. vt ſit a ſenarius. et primi hinc z inde ſint b z c. b minoz: z c matoz. certū est b eē quinariū: cuius dñia ad a ſit v. quā certū est eē vnitatē ſitq; e differētia v ad b vnitatis ad quinariū: quā ɔstat eſſe quaternarium. ſitq; f differētia b ad c. que quia dupla differētie b ad a: ideo erit binarius. est itaq; e ad f duplus. ſed d b per pceptiōem ſunt a. et per ſcđam primi b c ſimul ſunt duplus ad a. igit z b c ſimul: ſunt duplus ad d b. quare que pportio e ad f differētie ad differentiam ea est aggregati b c ad aggregatum d b. ergo per viceſimāquintam ſecūdi m est quod fit ex e in d b q̄tum qđ ex f in b c. ergo per ſeptimam huius tres quadrati numerorū d b z c ſunt quales propoſiti ſunt inueniri poſſibiles. quod est propoſitum.
+
+<margin>
+h ———— 100
+k ———— 64  a ———— 36
+f ———— 10  b ———— 18
+e ———— 9   c ———— 6
+g ———— 8   d ———— 2
+— — — — — — — — — —
+a —————— 25
+b —————— 24
+d —————— 13
+c —————— 12
+I  6  9
+—————
+I  4  4
+f ——————
+</margin>
+
+### Numerum quadratū invenire: q' cū quadrato dato numerum quadratū p̄stituat. 13
+
+**Numerum** quadratū invenire: q' cū quadrato dato numerum quadratū p̄stituat. 13
+SIt p̄mo datus nūerus quadratus a: qui diuiſibilis ſit in duo equalia. cuius medietas ſit b. latus aūt eius ſit c. ſitq; d binarius. quia ergo qđ fit ex d in b: equał ei quod fit ex c in ſe: erit p viceſimāſextā ſecūdi c pportiōaliter medius inter binariū z b. et quia d binarius est numerus primus: z p primā quarti cōicat cū c z c cū b: etiā d cōicabit cū b. p p̄mā q̄ tertij d nūerabit b. cuius qđē b: medietas ſit e. et nūeri circūpoſiti ſint f maioz z g minoz: quoz q̄drata ſint h z k. dico q̄ quadratū h eē tanq̄ numerū quadratum l: numero quadrato a additum. Nam differētia f z g ē binarius z opoſitus ex ipſis per ſecūdam primi est b. et quia ex binario in b per hypotheſim fit a: ergo per ſeptimam huius cū a ſiat ex differētia laterū in cōpoſitū ex ipſis a est dña q̄dratoz h z k. q̄rat' ergo l z additus quadrato dato a p̄stituit numerum quadratum h. qđ est ppoſitum. Sed esto ſecūdo vt ſit quadratus a aſſignatus: ſed in duo equalia partiri nō poſſit. cū ergo binarius eum nō numeret: et ſit binarius numerus primus: ergo per primam tertij binarius ad ip̄m erit primus. quare p decimāquintam tertij binari⁹ nūerabit inferiorem numerum quadrato a: vnitate dempta quā ſit b. cuius medietas ſit c: z matoz eovnitate ſit d: cuius quadratus ſit e: et quadrat' c ſit f. dico ergo quadratum e abūdare ſup quadrato a q̄tum est f quadratus c. Nam quia c bis cū vnitate p̄stituit a: ergo per decimāoctauam primi quod fit ex c in ſe cū eo qđ fit ex a in dñiam d maiozis partis ad c: equū est ei qđ fit ex d maioze parte in ſe. excedit igitur quadratus d quadratum nūeri c in quadrato dato a. nam differētia d z c erat vnitas. qđ est ppoſitū.
+
+### Si quadratus in quadratum ducatur: pducet' quadratus. Si xo in non quadratū non quadratus pveniet. Unde pz si quadratus quadratum numcret: ipm secundum quadratum numerare. 14
+
+<margin>
+      c —— 36
+   4  g —— 6   b —— 9
+———— ———— ———— ————
+a —— 4  b —— 8
+      c —— 32
+</margin>
+
+SInt p̄mo a z b duo quadrati: ducaturoq; a in b et pveniat c. dico c eē quadratū. Nam p correlariū quarte huius inſ a et b est vnus pportiōaliz medius. ſit ergo ille d. quia ergo a d z b ſūt ɔtinue ppoz tiōales: ergo p viceſimāſextam ſecundi quod fit ex a in b: equū est ei quod fit ex d in ſe. at quod ex a in b pducitur est c. est igitur c quadratus. qđ intēditur. Secūdo: ſit a quadratus z b non quadratus: duca turq; a in b et pveniat c: dico c non eſſe quadratum. Nam ſi c eſſet quadratus p ſcđam ptem viceſime ſexte ſecundi latus quadrati c eēt medius proportiōalis inter a z b. quare cū a primus ſit quadratus p decimā huius z b eēt q̄dratus. qđ est ɔtra hypotheſim. Correlariū ex his duabus ptib⁹ ſatis p̄stat.
+
+<margin>51</margin>
+
+### Quadratus non quadratum: scdm non quadratum numerat. 15
+
+Nam ſi ponat poſſibile quadratū ſcđm quadratū: ip̄m numerare: ergo per primam ptem p̄cedētis pductus erit quadratus. at ponitur q̄dratus numerare nō quadratum: ſeqtur igitur ex hoc ɔtrariū hypotheſis. quod est propoſitum.
+
+### Si cubus in cubum ducatur: qui producetur erit cubus. 16
+
+<margin>
+      c —— 216
+   a —— 8  g —— 108
+   e —— 4  f —— 54
+   d —— 2  b —— 27
+   I       a —— 8
+</margin>
+
+**SInt** a z b duo cubi: z ducatur a in b et pneniat c: dico c eſſe cubum. Sumo enī latus cubi a quod ſit d: et quadratum lateris d qđ ſit e. manifestum est d z e eē pportiōales inter vnitatem et a. et qz q̄ties vnitas in a toties b in c. cū a multiplicet c ſcđm b. per decimāquartam quarti quot medij pportiōales erūt inter vnitatem z a: totidem erūt inter b et c. ſunt ergo duo medij ſil iter pportiōales inẗ b et c q̄ ſint f g. cū ergo b f g c ſint quattuoz numeri pportiōales: et b primus per hypotheſim ſit cubus: ergo per vndecimam huius z c quartus erit cubus. quod est propoſitum.
+
+### Si in non cubum cubus ducatur: producetur nō cubus. Ex quo liquet q si cubus cubum numeret: ipm scdm cubum numerare. 17
+
+<margin>
+   c —— 160  g ——
+   a —— 8    f ——
+   e —— 4    b —— 20
+   d —— 2
+</margin>
+
+**Ducatur** a cubus in numerum b nō cubum et pneniat c: dico c non eſſe cubum. Nam ſi c pductus ponatur eē cubus: manifestum estvt in precedenti per decimāquartam quarti quod medij pportiōa les erūt inter vnitatem et a: totidem eſſe inter b z c. ſint ergo ſimiliter duo ſcil; f z g. quia ergo c g f b ſunt ɔtinue proportiōales: z c est poſitus cubus. ergo per vndecimam huius: b etiam erit cubus. at b per hypotheſim poſitus ē non cubus: accidet itaq; ɔtrariū hypotheſis. qui igitur inde pducetur: nō erit cubus. quod est propoſitum. Correlarium ſatis ex hac z precedenti cognitum est.
+
+### Si non cubum cubus numeret: scdm non cubum eum numerabit. 18
+
+<image-desc>A circular geometric diagram with intersecting lines and points labeled with lowercase letters. It appears to illustrate geometric proportions related to circles and triangles.</image-desc>

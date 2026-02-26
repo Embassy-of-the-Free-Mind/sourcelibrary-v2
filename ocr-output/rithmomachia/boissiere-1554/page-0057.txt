@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>i</page-num>
+<header>RYTHMOMACHIE, IEV</header>
+
+nombres qui par embusches peuuent seduire ou
+estre seduicts: car le nõbre de la colomne du mil-
+lieu peut estre prins s'il se trouue être les deux nõ-
+bres & colomnes extremes: car les nombres des
+deux colomnes extremes adioustez ensemble,
+vallent autant que le nombre d'entre eux .
+
+### Nombres.
+
+<image-desc>
+A table of numbers organized into two main sections: "Pair contre Impair" and "Impair contre pair." Above the columns are curly brackets grouping the first two columns of each section. Similar brackets appear at the bottom, designating which columns are to be added (adiouster) and which are the result (prouenus).
+</image-desc>
+
+| Pair contre Impair. | | | Impair contre pair. | | |
+|:---|:---|:---|:---|:---|:---|
+| 4 | 8 | 12 | 3 | 5 | 8 |
+| 8 | 20 | 28 | 3 | 12 | 15 |
+| 16 | 20 | 36 | 7 | 9 | 16 |
+| 9 | 36 | 45 | 9 | 16 | 25 |
+| 4 | 45 | 49 | 12 | 30 | 42 |
+| 15 | 49 | 64 | 9 | 36 | 45 |
+| 2 | 64 | 66 | 28 | 36 | 64 |
+| 9 | 72 | 81 | 16 | 56 | 72 |
+| 36 | 45 | 81 | 25 | 56 | 81 |
+| 9 | 81 | 90 | 25 | 66 | 91 |
+| 9 | 91 | 100 | 49 | 120 | 169 |
+| 49 | 72 | 121 | 64 | 225 | 289 |
+| 72 | 153 | 225 | | | |
+| 72 | 289 | 361 | | | |
+| **Les pairs à adiouster** | | **Impairs prouenus** | **Impairs à adiouster** | | **Les pairs prouenus** |
+
+<vocab>Rythmomachie, nombres, pairs, impairs, adiouster, prouenus, embusches</vocab>

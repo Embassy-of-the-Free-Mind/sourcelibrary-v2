@@ -1,0 +1,35 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+<meta>catchword: d'hon-</meta>
+
+stré de sa couronne & gloire: pour l'edification
+des combatans proposerons toutes especes de vi-
+ctoires, & dirons au present combat auoir deux
+genres de victoires sçauoir est victoires commu
+nes & propres. Victoires communes, font celles
+lesquelles ne sont propres du ieu, ains permises
+pour exercer les rudes & les rẽdre capables pour
+apres pouuoir pratiquer les victoires propres. Et
+d'autant qu'elles font plus faciles, premierement
+les declarerons. Ce pendant prieray les plus do-
+ctes suporter que ie m'accommode aux rudes et
+non exercitez en ce ieu.
+
+## Des victoires communes.
+
+Nous auõs cinq especes de victoires, qui sont:
+victoire de corps, victoire de biens, victoi
+re de proces, victoire d'honneur, & victoire de
+proces & d'honneur ensemble. Victoire de corps
+a seulement respect aux tables sans auoir esgard
+aux characteres n'aux valeurs d'iceux. Victoi-
+re de biens, a seulement respect aux valeurs,
+mesprisant le nombre des tables ou characteres.
+Victoire de proces, a seulement egard à la plu-
+ralité des characteres, sans la cõsideration de la
+valeur d'icelles ou de la quantité des tables. Vi-
+ctoire d'honneur a respect à la quantité des ta-
+bles & de la valeur de leurs nombres. Victoire
+
+<vocab>Rythmomachie, victoires communes, victoire de corps, victoire de biens, victoire de proces, victoire d'honneur, characteres, tables</vocab>

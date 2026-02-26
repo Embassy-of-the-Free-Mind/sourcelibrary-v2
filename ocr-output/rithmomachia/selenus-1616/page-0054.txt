@@ -1,0 +1,31 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>24</page-num>
+<header>Das erste Buch / 2. cap:</header>
+
+<image-desc>A decorative woodcut headpiece featuring classical figures, possibly deities or muses, reclining among floral and foliate scrolls.</image-desc>
+
+## Das Ander Capittel.
+
+### Von den Authorn / Scribenten / Künstlern / und Nahmen / dieses gantz kunstreichen Spieles.
+
+Das sey nuhn genug / von der Natur / und Wesen / dieses weitgeräumten Spieles : itzt wollen wir / desselben uhrsprung / und Erfindung / auch was dem weiter anhängig / besehen. Es seynd aber davon / mannicherley muthmaß= und meynungen.
+
+Dan fürs Erste / wollen etliche / den Ægyptiern, dieses Spieles Erfindung / zuschreiben : wie solches / auß dem Cœlio Rhodigino, lib : 20. c. 14. Antiq : Lection : und Jodoco Damhouderio, in Paranæf : Christ : in Admon : ad Milit : pag : 229, zu vernehmen ist : des Damhouderij worte / lauten wie folget :
+
+> „ Inter omnes Ludos Ingenij, haud vulgaris habetur Scachius, ab Ægyptijs, rerum abstrusarum indagatoribus, & ingenij cultoribus, inventus : quamvis alij, eum Palamedi asscribant :
+
+->Das ist :<-
+
+> „ Unter denselben Spielen / darinnen der Verstand / muß
+> „ gebrauchet werden / ist / das Schach-Spiel / nicht das geringe
+> „ sie zu achten : welches / von den Ægyptern, alß die scharffsinnige
+> „ Erfindere / schwerer / und fast unerforschlicher Sachen / gewesen / auch / ihren verstand zu scherffen / keine gelegenheit / unterlassen / auff die bahn / gebracht worden : doch wollen etliche / dem Palamedi, die ehre der Erfindung / geben.
+
+Es vermeinet gleichwol / gedachter Rhodiginus, daß Sie solches / nicht zum Spielen / oder zur lust / besondern / geheime / und wichtige sachen / darunter / alß unter einem deck=Mantel / wie sonsten ihr gebrauch / in andern dingen / gewesen / zu verstecken / und verdecket an den Tag zu geben / nuhr erfunden haben.
+
+Andere / (wie Thomas Actius Forosemproniensis, in Tract : de Schach : Ludo, erzehlet) erkennen Lydum und Tyrrhenum, welche / mit in der Belagerung / der Stat Troyen gewesen / für Erfindere dieses Spieles : Aber mit was grunde / ist nicht leichtlich / zu errathen. Zwar Herodotus, lib : 1. schreibet wol / ins gemein /
+
+<meta>Catchword: daß</meta>
+
+<vocab>Schach-Spiel, Ægypter, Palamedes, Cœlius Rhodiginus, Jodocus Damhouderius, Thomas Actius Forosemproniensis, Lydus, Tyrrhenus, Troyen, Herodotus</vocab>

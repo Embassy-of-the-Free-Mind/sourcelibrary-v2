@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>213</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Solda</meta>
+
+<image-desc>A decorative horizontal woodcut headpiece featuring symmetrical acanthus leaf scrolls and floral motifs. In the center, there is a small architectural or vase-like element, flanked by reclining human figures or cherubs woven into the foliage.</image-desc>
+
+### Das Dreyzehende Capittel.
+## Wie ein Spiel / wan der Weisse / nicht den Reu-ter oder Soldaten / wie im vorigen Capittel erweh-net / sondern / des Königes-Schützen / zie-het / hinaus zu führen.
+
+WAn nuhn der Weisse / (nachdem der Schwartze / mit der K. Soldaten / des W. K. Schü-tzens-Soldaten genommen) nicht den Reuter / auf 19. noch den Soldaten auf 29, (n. 2. und 15. des vorigen Capittels) sondern des K. Schützen / auf dreyssig / ziehet: so kan ihm der Schwartze / auf dreyerley Art / alß / mit dem Reuter / auß drey und viertzig: mit der Königin / auß fünf und zwantzig: oder mit den Soldaten / auß sechs und viertzig / und fünf und dreyssig / begegnen.
+
+<margin>1.</margin> Belangend die Erste Art: so ziehet der Schwartze / (wan / der Könige-Soldaten / zu felde gerucket: der Weisse / des K. Schü-tzens-Soldaten / auf 27. gezogen: der Schwartze / denselben / mit des K. Soldaten / geraubet: und der Weisse / des K. Schützen / auf dreyssig / gezogen) des K. Reuter / auf des W. K. Soldaten / auf drey und viertzig: der Schwartze / (denselben zu beschützen)
+<margin>2.</margin> die Königin / auf des S. K. Soldaten / auf neunzehen: * Der Schwartze / seine Königin / auch / auf des W. K. Soldaten / auf zwey und funfzig: der Weisse / (denselben ferner zu bewahren) der K. Reuter / auf zwey und zwantzig: der Schwartze / (zu vertheigen seines K. Soldaten) dessen Reuters Soldaten / auf vier und dreyssig: der Weisse / (des feindes Spiel / und vorhaben zu brechen) des K. Rochens-Soldaten / auf fünf und zwantzig: kan also / wan Er sich nuhr / in etwas in acht hat / das Spiel wol gewinnen.
+<margin>3.</margin> Wan aber der Schwartze / nicht die Königinne / auf 52. (n. 2.) sondern des K. Schützen / auf acht und dreyssig / rucket: so ziehet der Weisse / der K. Schützens-Soldaten / auf zwey und zwantzig:
+<margin>4.</margin> * Der Schwartze / (seines K. Soldaten / zu beschützen) dessen Reu-ters-Soldaten / auf vier und dreyssig: der Weisse / der K. Soldaten / auf des S. K. Schützen / auf neun und zwantzig: der Schwartze / denselben / auf sieben und viertzig: der Weisse / des K. Rochens-
+
+<vocab>Schach-Spiel, Weisse, Schwartze, Reuter, Soldat, Königes-Schütze, Königin, Rochens-Soldaten</vocab>

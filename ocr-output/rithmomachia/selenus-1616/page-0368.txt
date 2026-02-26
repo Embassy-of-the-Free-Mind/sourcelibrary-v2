@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>334</page-num>
+<header>Das Dritte Buch / 6.cap:</header>
+
+<margin>9.</margin> Wan aber der Schwarze / nicht den Soldaten / auf 46. (n. 2.)
+besondern / der K. Schützen / auf des W. K. Schützen / (umb / die-
+selben / zu vertauschen) auf vier und viertzig / ziehet : so nimt ihn /
+der Weiße / mit seinem Schützen : des Schwarze / denselben /
+mit des K. Schützens = Soldaten : der Weiße / ziehet / der K. Schü-
+tzens = Soldaten / auf zwey und zwantzig : Der Schwarze / der
+K. Reuter / auf sechs und viertzig : Der Weiße / die Königin / auf
+des S. K. Schützens = und der S. K. Reuters = Soldaten / auf drey
+und zwantzig : Der Schwarze / (umb / diese beede Soldaten / zu
+verthetigen / und dem Schache / auß vier und viertzig / von der W.
+Königin / zu wehren) die Königin / auf zwey und sechszig : Der
+Weiße / des K. Reuter / auf des S. K. Schützens = Soldaten / auf
+vier und dreyssig : Der Schwarze / (umb / denselben zu entse-
+tzen) der K. Reuter / auf ein und sechszig / und hat ein wol geord-
+netes Spiel.
+
+Mit obgemeltem / ist nuhn gnugsam erwiesen / und beyge-
+bracht / daß diese Andere Art / (des K. Soldaten / zu beschützen)
+sicherer / besser und tüchtiger sey / das Spiel / oder / die Steine zu ord-
+nen / alsz die Erste : unangesehen der Damianus, das gegen Spiel /
+unvorsichtig / droben fürgegeben.
+
+Endlich können / auf diese Andere weyse / auch folgende züge /
+(wiewol sie nicht so gut / wie die vorigen / und gleichwol / wan sie
+recht geordnet werden / nicht aller dinge zu verwerffen seynd)
+<margin>10.</margin> angestellet werden : * Wan nemlich / der Schwarze / seine züge /
+nicht / (wie n. 2. und 9. angedeutet) anordnet / besondern / des K.
+Schützens = Soldaten / auf des W. K. Soldaten / auf fünf und
+dreyssig / ziehet : so nimt / der Weiße / mit des K. Schützen / des
+<margin>11.</margin> S. K. Reuter : * Der Schwarze / denselben / mit des K. Ros-
+chen : Der Weiße / der S. K. Schützens = Soldaten / mit des
+K. Soldaten : Der Schwarze / denselben / mit der K. Schützen :
+Der Weiße / ziehet / der K. Schützens = Soldaten / auf zwey und
+<margin>12.</margin> zwantzig : * Der Schwarze / des K. Schützen / auf zwey und funf-
+zig : Der Weiße / die Königin / auf des S. K. Rochen / und der
+S. K. Reuters = Soldaten / auf drey und zwantzig : Der Schwar-
+ze / (umb diese beede Steine / zu entsetzen) springet / mit dem Kö-
+nige / über die Königin / auf die zwey und sechszig.
+
+Ob nuhn wol dieses / auch ein gutes Spiel ist / dieweyl mans
+leichtlich / in eine gute ordnung bringen kan / und der Weiße / mit
+seinen Steinen / ziemlich eingeschlossen ist : Der Schwarze
+
+<meta>catchword: aber/</meta>
+
+<vocab>Schach, Königin, Reuter, Rochen, Schützen, Soldaten, Damianus, Spiel, Steine, Ordnung</vocab>

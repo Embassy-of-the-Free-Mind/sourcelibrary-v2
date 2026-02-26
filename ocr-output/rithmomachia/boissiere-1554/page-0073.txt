@@ -1,0 +1,15 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+tions prinſes ſelon le pois, comme aux metaux:
+ou ſelon meſure, comme aux cordes: touſiours
+te rapporteront vraye armonie de muſique.
+
+## De victoire grande.
+
+Victoire grande dicte mineur par les anciēs au reſpect de la ſuyuante excellente, conſiſte en la diſpoſition de 4 tables au camp de l’ennemy leſquelles en leur equipage & ordonnance pourront rapporter deux proportions enſemble, ſoit d'Arythmeticque & Geometrie, d'Arythmeticque & Muſique: ou bien de Geometrie & Muſique. leſquelles pour mieux t'expliquer propoſeray en la ſuyuante table diſpoſant en la premiere colōne à ſeneſtre, ladicte grande victoire des deux proportiōs cōtenues en quatre nombres, & autres deux colomnes à dextre, diſcerneray icelles deux proportions chacune à part au droict des predictes tables, auſquelles ſont contenues.
+
+<meta>catchword: Exem-</meta>
+
+<vocab>Rythmomachie, victoire grande, Arythmeticque, Geometrie, Muſique, proportions, ſeneſtre, dextre</vocab>

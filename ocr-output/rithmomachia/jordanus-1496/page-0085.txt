@@ -1,0 +1,25 @@
+<language>Latin</language>
+<page-type>dedication</page-type>
+<page-num>I</page-num>
+<sig>f i</sig>
+
+# Jacobi Fabri Stapulensis Elementa Musicalia ad clarissimū virū Nicolaum de haqueuille inquisitorum Presidētem.
+
+**D**ecreuera clarissime vir nulli meas elemento[rum] musicaliū qualescunq[ue] sunt prius dicare vigilias:q[uam] probatas cognouisse. Quis id me minie lateret/demo[n]strationes:in quibusvel solisvis scie[n]tie cōfistit:nō probari non potuisse. Verū si presentiu[m] iudicia parui ducis/reputasq[ue]:hi tibi ex āntiquis sūmopere musicos cōmendare labores iure valebunt.
+
+| | | |
+|----------|----------|----------|
+| Mercurius | Lamyras | Ptolomeus |
+| Orpheus | Hylmenias Thebanus | Eubolides |
+| Pythagoras Samius | Terpander lesbius | Hippasus |
+| Amphion thebanus | Lycaon Samius | Aristoxenus |
+| Linus | Prophrastus Periotes | Philolaus Pythagoricus. |
+| Arion lesbius | Estiacus Lolophonius. | Archytas tarentinus |
+| Abydas Phrygius | Tymotheus milesius | Albinus |
+| Lorebus lydius | Nicomachus | Diuus Seuerin' Boecius. |
+| Hyagnis Phryx | Plato | |
+| Marsias | Aristoteles. | |
+
+Et similium q[uam]plurimi quos oēs eterna memoria disciplinarū eblāditissima Musica reddidit insignes inter quos:duos p[re]ceptores meos Jacobū Labiniū & Jacobū turbelinū ānumero:tanq[uam] ea arte posteritati victuros. Comēdant & eā mirifici eius effect[us]. Pythagorici eni animo[rum] ferociā tibus/fidibufq[ue] emolliebant. Asclepiades fremētis vulgi seditiones crebro cantu compescuit. Idēq[ue] tuba surdis medebatur. Damon pythagoricus ebrios et proinde petulātes adolesce[n]tes:grauiorib[us] modulis ad tēperantiam reduxit. Febre[m] vulneraq[ue]:musica modulatione curauit antiquitas Eadē quoq[ue] suauitate schias/corendicūq[ue] dolores emēdauit: qd hylmenias theban' tētaste memoratur. Theophrastus ad animi pturbationes moderādas musicos adhibuisse memora[tur] modulos. Nec iniuria quidē. est eni musica vt quedā moderationis lex atq[ue] regula. Quamobrē bono iure eos ridebat diogenes musicos: qui cū citharā ad harmonicos cōcensus haberent temperātā:animū gererent incōpositū et prorsus harmonia vite destitutū. Xenocrates organicis modulis lymphaticos liberauit. Tales Cretensis suauitate cithare:morbos/pestilentiāq[ue] fugauit. Terpāder et arion Aones & lesbios cantu a grauissimis morbis leuasse: diuus Seuerinus autor est. Herophilus medicus egrozum venas musicis pensiculabat numeris. Tymotheus aūt musicus dum voluit efferatū reddidit alexandrū ad arma q[ue] furentē atq[ue] aliter cū libuit ab armis ad cōuiuia retraxit emollitū. Thracius Orpheus fera[rum] sensus fidibus/cātuq[ue] inflexit. hoc est ferinos hoīm mores leges ad citharā canendo ad moderatā humanitatē reduxit. Cerui fistulis capiūtur studioq[ue] modulationū detinentur. Cygni hyperborei cithare cātibus alliciūtur. Elephātes indi organica dulce dine permulcetur. Auicule fistulis irretiūtur. Teneros adhuc infantiū sensus permouent cātus/crepitaculaq[ue] vagientiū sedāt. Delphinos suis sibi fidibus cōciliauit arion Serpenties cātibus rūpuntur. Sepulto[rum] manes cantibus excitatur. In actiaco littore mare citharā personare memoratur. Megaris citharā personat saxū: et ad cuiuslibet pulsantis ictum fidicinat. Et possem pleraq[ue] talia vir clarissime ad musicā cōmendationē adducere. at tot/tantisq[ue] & recentiū & prisco[rum] cōmendatā autoritatibus tibi nūc ab me atq[ue] bonarū litteraz studis dicatā disciplinā:equo suscipias animo tuis auspi ciis lucem habiturā. Et me vnum inter tuos cliētulos tuarum virtutū/tuicq[ue] nominis obseruatore[m] esse cognoscito. Vale.
+
+<vocab>Jacobus Faber Stapulensis, Elementa Musicalia, Nicolaus de Haqueville, Pythagoras, Boethius, music therapy, mathematical music theory</vocab>

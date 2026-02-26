@@ -1,0 +1,42 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>134</page-num>
+<header>Das Ander Buch / 2. cap:</header>
+<meta>catchword: Das</meta>
+
+des folgenden dritten / so wol auch auß dem sechsten Capittel / dieses
+Buches / mit mehrem zu vernehmen.
+
+Es seynd aber der Spieler nuhr zween. Dan weyl nuhr
+zweene Könige seynd / alsz bedarf man nicht mehr / dan zween Füh-
+rer / welche denselben fürstehen sollen. Welcher nuhn den Weissen
+König / mit den Weissen Steinen führet / wird der Weisse: welcher
+den Schwartzen / mit seinem Zeuge führet / der Schwartze / ge-
+nennet. Sie regieren aber / nuhr diese beede Hauffen: es
+wehre dan / daß einer / gegen zween / oder mehr / zu spielen / sich un-
+ternehme: oder / dem Segener / sich bey dem andern Rathe zu er-
+holen / zuliesse.
+
+Hiebey zu erinnern / daß keiner von den Zusehern / dem ei-
+nen / oder andern Spieler / mit worten oder wincken / einrähtig seyn
+solle / (Dan Sie ihnen / ohne das / wegen des Zusehens / einen nicht
+geringen nutzen schaffen / und sich in acht zu haben / erlernen können)
+besondern dem Spiele / mit stilleschweigen / beywohnen / und sich /
+(auf daß Sie hernachmaln / wan etwa einiges <term>disputat</term>, unter den
+Spielern / entstünde / sich / umb so viel füglicher / und mit wenigerm
+verdacht / dazwischen schlagen können) in allem / neutral und unpar-
+theylig / erzeigen. Dan Sie sonsten / für Richter / nicht würden zu-
+gelassen werden / besondern man hette / den dahero entstandenen
+schaden / vielmehr und billicher weyse / von ihnen zu fodern. Ge-
+schicht dan etwa ein Spiel / zur lust / und nicht umb gewinstes wil-
+len: auf den fahl / mag / ein Zuseher / demselben / der zum wenigsten
+darauf abgerichtet / (auf daß derselbe / umb so viel erfahrner werde /
+und der ander / weyl er so viele Spieler / gegen ihm hat / desto besser
+und fleissiger / seine Züge / in acht habe) wol einen guten rath / mit-
+theilen: in erwegung / Derselbe / gemeiniglich / viel ehe /
+->dan einer unter den Spielern / einen ir-<-
+->thumb kan gewahr werden.<-
+
+<image-desc>A decorative woodcut tailpiece featuring symmetrical floral scrollwork and foliage surrounding a central stylized mask or face.</image-desc>
+
+<vocab>Schachspiel, Spieler, Zuseher, Weisser König, Schwartzer König, disputat, Rath, unpartheylig</vocab>

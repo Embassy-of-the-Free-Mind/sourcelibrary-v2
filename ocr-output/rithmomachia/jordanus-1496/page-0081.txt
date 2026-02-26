@@ -1,0 +1,51 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>X</page-num>
+
+¶ Sint a b c tres nũeri in harmonica medietate cõstituti:sitqz a ad b maiorem esse ppoztione quam b ad c. Sit enĩ d differẽtia a ad b:et e differẽtia b ad c. erit enĩ per diffinitionem d ad e sicut a ad c. et per nonam secũdi a ad c maiorẽ ppoztionẽ quam a ad b. quare a ad b minorẽ ppoztionẽ quam d ad e totius scilicet ad totũ minoẽ pportiõẽ quam detracti ad detractum. ergo per decimãquartam secũdi b ad c residui ad residuum minorẽ pportiõẽ quam a ad b totius ad totum. quod est ppositũ.
+
+35 ¶ **In eadem medietate duo extremi iũcti:maiũs medio duplicato efficient.**
+¶ Nam per scđam secũdi differẽtia maiorum est maior quam differẽtia minorum. sumpto ergo numero minore maximo extremoz qui addat sup medium quantum medium sup mũimum:per scđam primi ille cũ mimo equabunt medio duplicato. igitur per cõem sciẽtiam maximus extremorum qui eo est nũerus maior cũ eodem mũimo constituet numerum medio duplicato maiorem. quod est propositum.
+
+<margin>
+<image-desc>A line diagram representing three values labeled 'a', 'b', and 'c' with horizontal lines. Above the diagram is the number 150. Beside the lines are calculations: '3 a' for 15, '2 b' for 12, and 'c' for 10. The differences d and e are indicated on a vertical axis.</image-desc>
+</margin>
+36 ¶ **In eadem medietate qđ cõtinetur sub extremis est quantum quadratum medij cũ eo quod fit ex differentia in differentiam.**
+¶ Sint vt prius a b c tres numeri in hac medietate cõstituti: et eoz differẽtie d 7 e. dico qđ fit ex c in a esse tam quantum quod fit ex b in se cũ eo quod fit ex d in e. nam qđ fit ex c in a est tam quantum quod fit ex e in b 7 in d per nonam primi. et per vicesimãquintam secũdi qđ fit ex c in d est quantum qđ fit ex e in a. et qđ fit ex e in a quantum qđ ex e in b et d. et quod ex e 7 c in b per decimam primi quantum quod ex b in se. ergo quod fit ex c in a est quantum qđ b in se et e in d. quod pponitur.
+
+<margin>
+<image-desc>A simple line diagram with three horizontal lines labeled a (15), b (12), and c (10). A point e is marked below line c.</image-desc>
+</margin>
+37 ¶ **In eadem quoque medietate quod fit ex medio in extremos: duplum est eius quod continetur sub eisdem.**
+¶ Nam quod fit ex b in a est quantum quod ex c in a et e in a per decimam primi. et quia ex e in a quantum quod ex d in c per vicesimãquintam secũdi 7 per decimam primi itez quod ex d in c cũ eo quod ex b in c quantum quod ex a in c. quare quantum quod ex c in a. est itaqz quod astruitur notum.
+
+38 ¶ **Inter vnitatem 7 aliquem numerum: siue inter numeros in sua pportiõe mũimos: scđm harmonicam medietatem non est assignare medium.**
+¶ Inter numerum 7 vnitatem non assignabir. nam cũ que pportio numeri dati ad vnitatem ea esset differẽtie numeri dati ad medium ad differẽtiam medij ad vnitatem. et dñia numeri dati ad medium minoẽ eẽt numero dato: oporteret mediũ numeri dati 7 vnitatis ad vnitatem: minorem eẽ differẽtiam vnitate. de numeris autẽ in sua pportiõe mimis idem statim patet. nam cum eadem eẽt differẽtie ad differentiam que illoz nũerorũ adinuicem. pportio 7 eoz differentie sũt minores. illi ergo non essent in sua proportione minimi. quod est contra hypothesim.
+
+<margin>
+<image-desc>A semi-circular diagram showing the number 12 divided into 8 and 4. Below are proportional lines marked h (24), k (16), e (12), l (12), f (6) and lines a (4) and b (2).</image-desc>
+</margin>
+39 ¶ **Scđm datam proportiõem: musicam inuenire medietatem.**
+¶ Sint a 7 b extrema date proportiõis: et c differẽtia eoz: et cõpositus ex eis sit d. ducãtur igitur a et b in d et pueniãt e 7 f. sitqz eoz differẽtia g. quã per nonam primi diuiserabit fm c. et quia d est tamquam a 7 b. ergo c ductus in a 7 in b facit g. et eo quod fit ex c in a quod sit h: dempto de g remaneat k: quẽ pducet b in c. sumatur ergo l medius inter e 7 f cuius differentia ad e sit h: certum est differentiam eius ad f esse k. et quia per septimam secũdi h ad k tanquam a ad b. et per octauam eiusdem etiam e ad f tanquam a ad b. constat ergo per diffinitionem factum esse propositum.
+
+<margin>
+<image-desc>A semi-circular diagram showing the number 5 divided into 3 and 2. Below are horizontal lines e=75, d=25, a=15, c=12, b=10, with points f and g indicated.</image-desc>
+</margin>
+40 ¶ **Terminis extremis ppositis: medium inter eos fm harmonicam medietatẽ repire.**
+¶ Sint a 7 b extremi harmonice medietatis quoz iubeas medium inuenire. capio eoz differentiam que sit c: et cõpositum ex ipsis qui sit d. deinde duco a in c et pueniat e qui diuidatur per b: et diuidens sit f. eritqz per cõuersam vicesimequinte secundi que proportio d ad a eadem c ad f. dempto ergo f de c remaneat g. eritqz f ad g sicut a ad b. quod ostẽdo. nam qz sicut d ad a: ita c ad f. ergo pmutatim d ad c totus ad totum vt a ad f detractus ad detractum. quare itez vt a ad f: ita b ad g residuus ad residuũ. ergo permutatim a ad b sicut f ad g. sumo igitur inter a 7 b medium numerum cuius differentia ad a sit f. et quia relinquetur differentia eius ad b esse g: per diffinitionem cõstat factum esse propositum.
+
+<margin>
+<image-desc>A diagram showing four horizontal lines of varying lengths labeled a=24, c=18, d=16, b=12.</image-desc>
+</margin>
+41 ¶ **Si inter duos numeros duo statuantur medij: alter fm arithmeticam 7 alter scđm harmonicam medietatem: qui fm arithmeticam maior est 7 proportionem maximi ad ipsũ eadem alterius ad minimum proportio.**
+¶ Sint extremi a b. et mediũ fm arithmeticam medietatem c. et fm harmonicam d. dico c eẽ maiorẽ d: et eam eẽ pportiõem a ad c quam d ad b. quod autẽ c maior sit d: statim patet qz per diffinitiõem ea sit pportio dñie a ad d ad dñiam d ad b que a ad b. sed dñia a ad c 7 c ad b equãtur: ergo maioz erit dñia a ad d quam a ad c. et quia est pportio a ad c que d ad b patet. nam per quintam huius c est medietas a 7 b si iunctorum et per tricesimam septimam huius quod ex d in a 7 in b pducitur duplum est ad id quod fit ex a in b. igitur qđ fit ex d in c dimidiũ per scđam primi a 7 b: equabitur ei qđ fit ex a in b. igitur per vicesimam quintam secundi a c d b sunt proportionales vt dicitur. quod est propositum.
+
+<margin>
+<image-desc>A diagram with multiple lines and numerical values. Labels include a, g, e, h. Values are given in two columns: 15/30, 12/24, 10/20, 8/16. Additional small numbers 6, 4, 1 are present at the ends of the lines.</image-desc>
+</margin>
+42 ¶ **Si inter numeros proportionales medij fm harmonicam medietatem statuãtur: extremorum ad illos erit proportio vna.**
+¶ Sit pportio a ad b sicut c ad d. et sit e medius harmonice inter a 7 b. et sit f medius inter c 7 d. dico a ad e sicut c ad f. Sint eni dñie g h et k l. quia qñ pportio a ad b ea est c ad d. et qñ a ad b ea est g ad h. et que c ad d ea ẽ k ad l. idcirco erit g ad h vt k ad l. quare pmutatim g ad k vt h ad l. quare p vicesimã quintam secundi a c e f sũt ppor... vt dicitur. quod est propositum.
+
+<sig>k</sig>
+
+<vocab>harmonica medietas, proportio, arithmetica medietas, medius, extrema, differentia, quadratum, duplum, vnitatem</vocab>

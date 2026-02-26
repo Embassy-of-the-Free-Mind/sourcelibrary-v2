@@ -1,0 +1,45 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>486</page-num>
+<header>Das Sechste Capittel/</header>
+<meta>catchword: Die</meta>
+
+Zählen/ unter D, oder mit dem unterscheide / der Zahlen / unter B, D, (welcher ist 2, oder 4) verglichen.
+
+Das Diatessaron, oder die Quarte, kan man / auß dem B, oder dem unterscheide A, D, (4, oder 8) mit dem unterscheide / A, C, (3, oder 6) oder mit C, verglichen / finden und haben.
+
+Das Diapason, oder die Octave, geben A, gegen C, oder gegen den unterscheid / A, C, (oder 6) Imgleichen B, gegen D, oder gegen die unterscheide B, A, und B, D, (2, oder 4) gehalten / zu verstehen.
+
+Das Diapason, mit der Diapente, oder die Duodecime, setzen an A, gegen D, oder gegen die unterscheide B, A, und B, D, (2, oder 4) Item / das C, oder der unterscheid / A, C, (3, oder 6) gegen die unterscheide / C, B, und C, D, (1, oder 2) verglichen und gehalten.
+
+Das Disdiapason, oder die Quintadecime, zeiget an / das B, oder der unterscheid / A, D, (4. oder 8.) gegen die unterscheide / B, C, und C, D, (1) verglichen.
+
+## Das Dritte.
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 3. | 5. | 15. | 25. |
+
+Die Quinte, ist / das B, gegen die unterscheide / B, A, und B, C, (10) Imgleichen / das D, gegen den unterscheid D, C, (2) verglichen.
+
+Die Quarte, der unterscheid / A, C, (20) mit dem B, verglichen.
+
+Die Octave, der unterscheid A, C, (20) mit den unterscheiden A, B, und B, C, (10) verglichen.
+
+Die Duodecime, das B, gegen C, gehalten.
+
+Die Quintadecime, der unterscheid / zwischen B, D, (12) gegen D, verglichen.
+
+## Das Fünfte.
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 4. | 6. | 9. | 12. |
+
+Die Quinte, B, C, Item C, oder der unterscheid / A, C, (6) mit D, Item die unterscheide B, C, und A, B, (3) mit dem unterscheide / C, D, (2) Item A, mit dem unterscheide A, D, (8) verglichen.
+
+Die Quarte, A, B, Item der unterscheid / A, D, (8) gegen C, oder gegen den unterscheid / A, C, (6) gehalten.
+
+Die Octave, A, C, Item der unterscheid / A, D, (8) gegen D, Item / der unterscheid A, C, (6) oder das C, gegen die unterscheide B, C, und A, B, (3) gehalten und verglichen.
+
+<vocab>Diatessaron, Quarte, Diapason, Octave, Diapente, Duodecime, Disdiapason, Quintadecime, Quinte, unterscheid</vocab>

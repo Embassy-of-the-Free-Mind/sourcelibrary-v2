@@ -1,0 +1,24 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>452</page-num>
+<header>Das Ander Capittel/</header>
+
+<image-desc>An ornamental woodcut headpiece spanning the width of the text block, featuring scrolling leaf patterns and three stylized faces or masks in the center.</image-desc>
+
+## Das Ander Capittel.
+
+### Von den Zahlen / mit welchen / die Runde / Drey: / und Viereckete Steine / so wol auch / die beeden / Türne / gezeichnet und beschrieben werden.
+
+Wan man die Zahle / auf diese acht und viertzig Steine / verzeichnen wil : so sol man dieselben / für sich legen / und / (dieweyl sie / eine weisse / und eine schwartze seite haben) den halben theil derselben / mit der Weissen - den andern halben theil / mit der Schwartzen seiten / übersich wenden : einen Weissen / und einen schwartzen hauffen / dergestalt darauß machen / und zu einem jeglichen / acht runde / acht dreyeckete / und acht viereckete Steine / (auß welchen zween / zu grund Steinen / der Türne / gebrauchet werden) verordnen. Man helt aber mit denselben / gleiche ordnung / wie mit den beeden hauffen / und kehret die Weisse seiten / der sechs Steine / des einen - und die Schwartze seiten / der funf Stucke / des andern Turnes / übersich.
+
+<margin>(Buxer : fol : 5. a. b.)</margin>
+
+> *Harum trium Quantitatum, mediam partem, ab alterâ separabis, atq; distingues ; eas, coloribus variis pingens : sic ut alter color, Paribus Numeris, alter contrà, Imparibus, attribuatur.*
+> *>> Pyramis, quæ à Pari Numero, stare debet, teneat sex gradus :*
+> *>> Imparis vero Numeri Pyramis, uno gradu sit minor.*
+
+Wan nuhn diese beede hauffen / von ein ander gesondert seynd / so sol man ferner / die Zahle / auf die Weisse und schwartze Steine : Und zwar erstlich / auf die Runde : (dieweyl die Runde figur / die erste / einfeltigste / doch fürtreflichste / in der Meßkunst ist) hernach / auf die Dreyeckete : (Dan / die Dreyeckete / der ordnung nach / in derselben / die andere figur ist) und endlich / auf die Viereckete Steine : (dieweyl die Viereckete / die dritte figur / derselben ist) verzeichnen. Man sol aber / diese ordnung / eins umbs ander / mit den Weissen und schwartzen Steinen / halten / auf jene / die Zahle / mit schwartzer / auf diese / mit weisser farbe / schreiben :
+
+<meta>catchword: Vnd</meta>
+
+<vocab>Zahlen, Steine, Runde, Dreyeckete, Viereckete, Türne, Meßkunst, Buxer, Pyramis</vocab>

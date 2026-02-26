@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>437</page-num>
+<header>10. cap: Vom Schach-Spiel.</header>
+
+Der Schwarze/ beut/ mit dem andern Rochen/ auß zehen/
+Schach: Der Weisse/ rucket/ den König/ auf drey:
+Der Schwarze/ den itztgedachten Rochen/ (wiewol Er/
+mit dem ersten Rochen/ auß eins/ Schach = Mat/ geben könte) auf
+zwey und vierzig: Der Weisse/ springet/ mit dem Schützen/ auf
+neun und dreyßig.
+Der Schwarze/ beut/ mit dem ersten Rochen/ (unangese-
+hen des Schach-Mat-gebens/ auß 1.) auß eylfe/ Schach: Der
+Weisse/ ziehet/ den König/ auf viere:
+Der Schwarze/ beut/ mit dem andern Rochen/ (ob Er gleich
+mit demselben/ auß zwey/ könte Schach = Mat geben) auß vier und
+viertzig/ Schach: Der Weisse/ ziehet/ den König/ auff fünfe:
+Der Schwarze/ den ersten Rochen/ auf zwelfe: Der Weis-
+se/ (dieweyl Er den König/ wegen des S. Schützens/ auf sechse/
+nicht rucken kan) springet/ mit seinem Schützen/ auf ein und
+zwantzig:
+Der Schwarze/ rucket/ den König/ auf zwantzig: Der
+Weisse/ springet/ mit dem Schützen/ auf neun = oder fünf und
+dreyßig: oder sieben: oder drey:
+Der Schwarze/ beut/ mit dem andern Rochen/ auß fünf
+und viertzig/ Schach: Der Weisse/ bedecket/ den König/ mit dem
+Schützen/ auf ein und zwantzig:
+Der Schwarze/ (dieweyl Er dem Weissen/ einen Stein/
+nebest dem Könige/ muß lassen/ und derhalben/ den W. Schützen/
+nicht kan wegnehmen) ziehet/ den ersten Rochen/ (umb luft zu ma-
+chen/ dem W. Könige/ welcher sonsten/ eingesperret verbliebe) auf
+sechszehen: Der Weisse/ den König/ auf viere:
+Der Schwarze/ beut/ mit dem ersten Rochen/ auß achte/
+Schach: Der Weisse/ bedecket/ den König/ mit dem Schützen/
+auf sieben:
+Der Schwarze/ ziehet/ den andern Rochen/ auf dreyzehen:
+Der Weisse/ den König/ auf drey:
+Der Schwarze/ den andern Rochen/ auf zwelfe: Der
+Weisse/ den König/ auf zwey:
+Der Schwarze/ den andern Rochen/ auf eylfe: Der
+Weisse/ den König/ auf eins:
+Der Schwarze/ den König/ auf neunzehen: Der Weisse/
+seinen König/ (dieweyl derselbe/ sonsten niergendes hin/ kan ge-
+zogen werden/ und sein Schütze/ gefangen ist) auf zwey.
+
+<sig>Zii iiii</sig>
+<meta>catchword: Der</meta>
+<vocab>Schach, Schach-Spiel, Rochen, Schütze, König, Schach-Mat</vocab>

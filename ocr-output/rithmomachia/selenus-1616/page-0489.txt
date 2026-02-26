@@ -1,0 +1,42 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>455</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+men / welche / auß den Zusammen= gerechneten Zahlen / zweyer
+Runder Steine / herrühren: alß / auf den ersten 6, welche / 2 und
+4: auf den andern 20, welche 4 und 16: auf den dritten / 42,
+welche 6 und 36: auf den vierten / 72, welche 8 und 64: zu wege
+bringen.
+
+<image-desc>
+A diagram illustrating numerical relationships for game pieces in Rythmomachia (the "Zahl-Kampf"). It features four columns of shapes with Latin labels.
+Row 1 (Top Labels): Secunda. | Quarta. | Sexta. | Octaua.
+Row 2 (Black Circles): Contains numbers 3, 5, 7, and 9.
+Row 3 (Middle Labels): Sesquialtera | Sesquiquarta | Sesquisexta | Sesquioctaua
+Row 4 (First Row of Triangles): Contains numbers 6, 20, 42, and 72.
+Row 5 (Second Row of Triangles): Contains numbers 9, 25, 49, and 81.
+There are faint visual artifacts/bleed-through from the back of the page visible behind the shapes.
+</image-desc>
+
+Die Zahle / der Vier übrigen Weissen Dreyecketen Stei-
+nen / werden / wie folget / gefunden: Man stellet / die kurz ge-
+zeichnete / vier Dreyeckete Steine / unter die Vier erste / schwartze
+Runde Steine: unter dieselbe aber / diese Vier übrige / noch un-
+beschriebene Dreyeckete Steine / und beschreibet sie / mit den
+Summen / welche auß den zusammen gerechneten Zahlen / eines
+schwartzen Runden: und eines Weissen / Dreyecketen Steines:
+oder auß den Zahlen / welche / auf den ersten schwartzen Runden
+Steinen / begriffen / wan sie / in sich selber vermehret werden /
+entspringen. (Dahero dan / diese vier letzte Weisse Dreyecke-
+te / und die vier letzte schwartze Runde Steine / gleiche Zahle ha-
+ben) Alß mit 9, welche / von 3 und 6: oder von dreymahl 3:
+mit 25, welche / von 5 und 20: oder von fünf= mahl 5: mit 49,
+welche von 7 und 42: oder von sieben = mahl 7: und endlich /
+mit 81, welche / von 9 und 72: oder von neun = mahl 9: her-
+rühren.
+
+<sig>Ell iij</sig>
+<meta>catchword: Gleicher</meta>
+
+<vocab>Zahl-Kampf, Rythmomachia, Runder Steine, Dreyeckete Steine, Secunda, Quarta, Sexta, Octaua, Sesquialtera, Sesquiquarta, Sesquisexta, Sesquioctaua</vocab>

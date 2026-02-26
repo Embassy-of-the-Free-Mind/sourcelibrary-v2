@@ -1,0 +1,44 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III</page-num>
+
+¶ Sit a ad b proportio maior q̃ c ad d: dico p̄mo qđ sit ex a in d maius esse eo qđ sit ex b in c. Secundo si qđ sit ex a in d maius est eo qđ sit ex b in c proportionē a ad b maiorem esse proportione c ad d. p̄rimū patet et duco a in d et pueniat e et b in c et pueniat f: dico e maiorem esse f. Duco p̄terea b in d et fiat g. quia q̃ a in d producit e t b in d producit g: ergo per octauam huius q̃ proportio a ad b ea est e ad g et q̃ f sit ex b in c: et g ex b in d: per septimā huius q̃ proportio c ad d ea est f ad g. monstratū est igitur vt que proportio a ad b: ea sit e ad g. et que c ad d: ea sit f ad g. At proportio a ad b posita ē maior pportiōe c ad d: ergo proportio e ad g maior est proportiōe f ad g. ergo per nonā huius e maior est f qđ est p̄mū Ecōuerso dico si e est maior f pportionē a ad b maiorem esse proportiōe c ad d. Nam quia e est maior f: per nonam maior est proportio e ad g q̃ f ad g. At pportio e ad g ea est q̃ a ad b. et proportio f ad g ea q̃ c ad d vt ostensum est. igitur proportio a ad b maior pportiōe c ad d qđ est scđm atqꝫ totū ppositū.
+
+<image-desc>A vertical column of horizontal line segments illustrating numerical proportions. The segments are labeled with letters and numbers as follows: f (20), g (10), e (30), d (5), c (10), b (2), and an unlabeled segment with 6.</image-desc>
+
+<margin>28</margin> ¶ Positis duobus numeris an sit tertius cū illis continue pportionalis: perscrutari.
+¶ Datis ergo duobus nūcris ponatur eoz quilibet quē voles secundus: quē duc in seipsm: si reliquus pductum scđm aliquē numeret numerus scđm quē pductū numerabit erit tertius nūerus in ɔtinua proporzionalitate ipis per vicesimamsextam adiungēdus. Sin reliquus pductum fm aliquē numerū non numerabit: per eadem nullus ipsis adhibebitur ɔtinue proporzionalis.
+
+<margin>29</margin> ¶ Datis trib⁹ nūcris an sit tertius ad aliquē fm pportiōem p̄mi ad scđm: iuestigare.
+¶ Eadem facilitate hec pateat. nam datis tribus numeris duc secundū in tertiū: et si primus numeret pductum fm aliquem: is fm quem pductum numerat est per vicesimāquintam ad quem tertius vt primus ad secundum se habet. At si primus productum fm aliquem non numeret per eadem vicesimā quintam nullus tertio in proportione primi ad scđm adiungetur.
+
+->Secundi elementoz arithmeticor Iordani finis.<-
+
+<margin>n</margin> Numerus primus dicitur: qui non habet partem p̄reter vnitatem. Compositus vero qui habet alium numerum ipm numerantem. Commensurabiles siue cōicātes vocātur: quos cōiter aliquis nūerus numerat. Cōtra se primi autē dīcūtur: qui a nullo cōiter numcrātur excepta sola vnitate.
+Termini pportionis dicūtur numeri minimi: inter quos inuenitur illa pportio.
+
+<image-desc>A single horizontal line segment labeled 'a' with the number 7.</image-desc>
+
+<margin>1</margin> ¶ Omnis numerus primus: ad oēm quem non numerat est primus.
+¶ Sit a quicūqꝫ numerus primus: dico a ad quēcunqꝫ numerū quē numerat esse cōmensurabilē atqꝫ cōicantē et ipm et quēcunqꝫ alterz quē non numerat esse ɔtra se primos. P̄rimū patet nā si a aliquem numerū numerat illū fm seipm aliquoties sumptum numerabit: quare ipe a seipm ꝛ alterz nūerabit: erit vtiqꝫ per diffinitionem cōmeusurabilis atqꝫ cōicans ad alter. Scđm patet: nam si a aliquem numerum non numerat nullus numerus vtrūqꝫ cōiter numerabit: alioquin numeraret a: et a nō esset primus. quod est ɔtra hypothesim. p diffinitionem igitur a ꝛ numerus quem non numerat sunt ɔtra se primi/ et a primus ad illum quod est scđm.
+
+<image-desc>A diagram representing the number 576 and its divisions into parts: 72 (a, b), 8 (c), 12 (d), 6 (e), 3 (f), and 4 (g).</image-desc>
+
+<margin>2</margin> ¶ Omnis numerus compositus: ab aliquo primo numeratur.
+¶ Sit a quicūqꝫ numerus compositus pductus ex b in c. aut ergo b aut c est p̄rimus: ꝛ sic de eo hētur propositum. aut vterqꝫ est cōpositus. qđ si sic: fiat ergo b ex d i e: si itez vterqꝫ d et e sit compositus: fiat itez d ex f in g. si itez vterqꝫ eoz est compositus: hac rōne in infinitum numeri decrescent. qđ est cōtra petitionem et impossibile: nisi deueniatur tādem ad numerum quem nullus alius numerabit. deueniemus igitur tādem ad aliquem numerum quez nullus alius numerabit et p̄pter hoc primū: qui cum erit pars partis: ergo et per vicesimaterciam primi erit ꝛ ps totius. quare per diffinitionem partis numerabit ipm totum quod est propositum
+
+<image-desc>A diagram representing the number 24 and its parts: 4 (i at a), 6 (b), 3 (c), 2 (f), 8 (g, e).</image-desc>
+
+<margin>3</margin> ¶ Omnis numerus aut est primus: aut a primo numeratur.
+¶ Nam omnis numerus aut est primus aut compositus. atqui per precedentem omnis numerus cōpositus a primo numerat. igit oīs numerus aut est p̄mus aut a p̄mo numeratur. qđ intēdit ppositio
+
+<image-desc>A complex diagram for the number 48 with horizontal segments representing parts: 15 (a), b, 8 (f), 8 (c), h (3), 10 (g), 16 (e), and k.</image-desc>
+
+<margin>4</margin> ¶ Si aliquis numerus primus numerum ex duobus pductum numeret: necesse est eundem alterum eorum numerare.
+¶ Sit a numerus pductus ex b in c: quē numeret numerus primus d scđm e: dico numerū p̄rimū d numerare alterz duozb aut c. Et esto non numeret b: dico ipm nūerare c. Intelligo eni primū numerū d: scđm b: tertium c: quartū e. quia qđ cōtinetur sub extremis d et e: equū est ei qđ cōtinetur sub med iīs b et c. ergo per secūdam partem vicesimequinte secūdi: d b c e sunt proporzionales. vt proportio d ad b: ea sit c ad e. si ergo b fuerit maior d: etiā et c maior e. vt ex demōstratiōe secūde scđm cognoscitur. Detractis ergo quoties fieri poterit d et c de b et e relinquantur f et g. eritqꝫ per tricesimam primi vt quota pars v' partes f relicta sit d: tota pars vel partes g sit c. q si f relicta sit pars d: cuz d sit nūerus primus f est vnitas. quota ergo vnitas est in d: tota pars g est in c. ergo per septimā primi quota pars vnitas est in g: tota pars d erit in c. numerabit igitur d ipm c. At hō si f relictus sit partes d: est vnitates vt ostensum est: et tote partes erit g ipius c. capiam ergo vnā vnitatem ab f que sit h: ꝛ vnā partem ab g que fit k: ꝛ argumentabor vt prius per septimam p̄mi. quota pars h vnitas est ad d: tota ps est k ad c. ergo per septimā primi qta pars h ad k: tota d ad c. quare itez d numerat c. At hō si d maior est b per scđaz scđı: c est maioꝛ e. et qđ ā pportio d ad b eadē est c ad e: s̄ p primā scđı etiā que pportio b ad d: eadē erit e ad c. quare quota pars vel partes b est ad d: tota ps vel ptes e ad c. Diuido ḡ b ꝛ e in illas
+
+<image-desc>A diagram representing the number 40 and its parts: 4 (a), 1 (i), 10 (b, f), c, 5 (d), 8 (e, g).</image-desc>
+
+---
+
+<vocab>Jordanus de Nemore, Arithmetica, proportio, numerus primus, numerus compositus, commensurabiles, contra se primi, unitas, productum</vocab>

@@ -1,0 +1,30 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Significant bleed-through from verso page makes some text areas appear cluttered with mirrored characters.</warning>
+<meta>catchword: straction</meta>
+
+your mans draught, you may take him
+by not remouyng into his place, unlesse
+you espye him standing in your draught
+before you playe, then muste you take
+him by and remoue into his place.
+
+### ¶ Of takynge by Addition.
+
+The takyng by Addition is all one
+with the first kynde of play, in all
+respectes, sauing that some require
+the men that shoulde take by Addition
+to stande in the next spaces to him that
+is taken, either directly, or cornerwyse,
+but the former waye is better.
+
+### ¶ Of taking by subtraction.
+
+That whiche was sayde in the first
+kinde of subtraction and that whi
+che was last sayde of Addition may
+be bothe referred hyther. For this sub
+
+<vocab>Philosophers game, Addition, subtraction, draught, takynge, remouyng</vocab>

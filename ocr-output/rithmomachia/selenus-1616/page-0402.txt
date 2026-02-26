@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>368</page-num>
+<header>Das Dritte Buch / 12. cap:</header>
+
+auf des S. K. Schützens-Soldaten / auf vier und viertzig / und gibt /
+von der K. Schützen / Ab-Schach: Der Schwartze / ziehet / den Kö-
+nig / auf ein und sechßig: Der Weisse / nimt / des S. K. Schützens-
+Soldatē / mit des K. Soldaten / und ziehet ihn / auf des S. K. Reuters:
+Der Schwartze / auf ihn / denselbē / auf ein und viertzig: Der Weiss-
+se / nimt ihn / mit der K. Schützen: Der Schwartze / denselben /
+mit des K. Reuters-Soldaten: Der Weisse / gibt / mit der K. Ro-
+chen / auß fünfe / Schach: Der Schwartze / muß / mit dem Könige /
+auf der Königinne-Schützen Linie / weichen: Der Weisse / (die-
+weyl Er zween Reuter / gegen einen Schützen / zu gebrauchen) wird
+dem Schwartzen / (dessen Steine / Er eingesperret / und deren ord-
+nung zerrissen hat) wan Er den König / hinter seine Soldaten / ge-
+bracht / ferner wol abgewinnen können.
+
+<margin>11.</margin> Wan aber der Schwartze / den Schützen / nicht auf 35. (n. 8.)
+rucket / sondern / mit der Königin / des W. K. Schützen / nimt: so
+raubet sie / der Weisse / mit seiner Königin / und beut Schach-Mat.
+
+<margin>12.</margin> Wan aber der Schwartze / nicht / des Reuters - auf 47. (n. 2.)
+sondern des K. Soldaten / auf der W. K. Soldaten / auf vier
+
+<margin>13.</margin> und viertzig / rucket: * so nimt / der Weisse / der S. K. Reuter /
+mit seiner Königin: Der Schwartze / dieselbe / mit der Köni-
+gin: Der Weisse / dieselbe / mit der K. Rochem: Der Schwar-
+tze / ziehet / des K. Schützen / zwischen der W. K. Rochem / und
+Reuter / auf ein und dreyssig / und verursachet / dem Weissen / ein
+böses Spiel.
+
+<margin>14.</margin> Sol demnach der Weisse / den S. Reuter / (n. 13.) nicht
+nehmen / sondern / der K. Rochens-Soldaten / auf denselben /
+auf ein und dreyssig / ziehen: Der Schwartze / nimt / der W.
+K. Soldaten / mit seines K. Soldaten: Der Weisse / densel-
+ben / (so fern Er / der S. K. Reuter / mit der K. Rochens-Solda-
+ten / noch nicht nehmen wil) mit der K. Reuter: (Dan ihn / der
+S. K. Schützens-Soldat / weyl derselbe / von seiner Königin /
+wird gefangen gehalten / nicht kan wegnehmen) Beut folgendes /
+mit demselben / (so fern Er nicht verhindert wird) auß vier und
+funfzig / Schach / und erlanget / der S. K. Rochem: Der Schwar-
+tze / (diesem fürzukommen) ziehet / der K. Reuters-Soldaten /
+auf die W. Königin / auf neun und dreyssig: Der Weisse / nimt
+ihn / mit des K. Schützen: Der Schwartze / denselben / mit der
+K. Schützens-Soldaten / und ziehet nochmaln / auf die W.
+Königin: Der Weisse / nimt ihn / mit derselben / und beut Schach-
+
+<meta>catchword: Der Schwarz</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schütze, Roche, Rochem, Soldat, Schach-Mat, Ab-Schach, böses Spiel</vocab>

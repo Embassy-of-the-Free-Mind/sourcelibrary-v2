@@ -1,0 +1,18 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>Catchword: The</meta>
+
+**S**o .2. referred to .4. is a rote of a square, referred to .8. it is a roote of a cube. 2. referred to .16. is the roote of a foure squared quadrate. 2. referred to .32. is the rote of a surfolide. 2. referred to .64. is the rote of a quadrate of a cube. These numbers muste haue the proper cossicall signes. Also one number hauing diuers relations, may haue diuers cossicall signes, as 9. referred to .81. being roote, hathe the signe of a roote <term>℞</term>, but beyng referred to .3. it hath the signe of a quadrate, for it is a quadrate of .3. and is thus signed. <term>ℨ</term>. and so of the rest that haue like relation.
+
+### ¶ The marking of the men.
+
+**T**he first order of roundes in bothe nūbers, must haue the signe of the rote upō them al after this maner.
+
+<image-desc>A diagram showing eight circular game pieces ("roundes") arranged in two rows. Each circle contains a digit at the top and a mathematical "cossicall" symbol for "root" (resembling a stylized 'z' with a crossbar) at the bottom. 
+Top row: 8, 6, 4, 2. 
+Bottom row: 9, 7, 5, 3.</image-desc>
+
+---
+
+<vocab>Philosophers game, Rithmomachia, rote, square, cube, surfolide, cossicall signes, quadrate</vocab>

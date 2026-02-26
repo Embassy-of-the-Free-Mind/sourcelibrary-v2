@@ -1,0 +1,21 @@
+<warning>Heavy bleed-through from the reverse side of the page makes some text and lines difficult to distinguish.</warning>
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+### The second order be these.
+
+->doble. quadruple. sextuple. occuple.<-
+
+<margin>
+pro-
+por-
+tion.
+</margin>
+<image-desc>A rectangular diagram containing two rows of circular game pieces. The top row consists of four light-colored circles with black outlines containing the numbers 2, 4, 6, and 8. The bottom row consists of four light-colored circles containing the numbers 4, 16, 36, and 64. Each number in both rows has a small dot printed directly beneath it.</image-desc>
+
+->triple. quintuple. septupl. noncuple<-
+
+<image-desc>A rectangular diagram containing two rows of circular game pieces. The top row consists of four dark-colored circles containing the white numerals 3, 5, 7, and 9. The bottom row consists of four dark-colored circles containing the white numerals 9, 25, 49, and 81.</image-desc>
+
+<vocab>Philosophers game, Rythmomachia, second order, doble, quadruple, sextuple, occuple, triple, quintuple, septupl, noncuple, proportion</vocab>

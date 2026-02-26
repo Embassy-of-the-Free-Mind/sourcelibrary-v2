@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>320</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+
+89. Wan aber der Weisse / mit dem Reuter / auss 51. (n. 88.) nicht Schach-beut / sondern / mit demselben / der S. K. Reuters-Soldaten nimt: auss dessen felde / den Schach- und von der K. Rochen / einen Ab-Schach / andeutet: so muss der Schwarze / den König / auf zwey und sechsszig / oder vier und funfzig / rucken; (dan / wan Er ihn / auf sechsszig / stellete / Er / durch die W. Königin / auss zwey und funfzig / gleich erleget würde) der Weisse / stellet / der K. Rochen / auf die S. Königin / auf sechse: Der Schwarze / nimt ihn / mit derselben / und beut Schach: Der Weisse / raubet dieselbe / mit der K. Schützen: Der Schwarze / muss der K. Reuter / entweder entsetzen / oder / auss der gefahr / ziehen: Der Weisse / weyl Er noch die Königin / und einen Schützen / gegen dem Schwarzen / zu gebrauchen / kan seine Züge / zum Siege / ferner leichtlich anstellen.
+
+90. Wan aber der Schwarze / den Schützen nicht auf 45, (n. 69.) besondern / auf sieben und vierzig / ziehet: so rucket / der Weisse / auf die S. Königin / und dero Rochen / des K. Schützen / auf neun und dreyssig: Der Schwarze / die Königin / auf ein und sechsszig: Der Weisse / nimt / mit des K. Schützen / der S. K. Rochen: Der Schwarze / denselben / mit der Königin: Der Weisse / der S. K. Reuter / mit des K. Rochen / und ziehet ihn / auf die S. Königin: Der Schwarze / dieselbe / auf sechs und viertzig: Der Weisse / beut /
+
+91. mit des K. Rochen / auss sechsszig / Schach: * Der Schwarze / nimt ihn / mit der Königin: Der Weisse / dieselbe / mit seiner Königin / und gibt Schach-Mat.
+
+92. Nimt aber der Schwarze / den W. Rochen / nicht / (n. 91.) besondern ziehet den König / auf ein und funfzig: so beut / der Weisse / mit der Königin / auss zwey und funfzig / Schach: Der Schwarze / muss / mit dem Könige / auf zwey und vierzig / weichen: Der Weisse / beut / mit des K. Reuter / auss sechs und dreyssig / Schach /
+
+93. und ziehet ihn / auf die S. Königin: * Der Schwarze / nimt ihn / mit des K. Schützens-Soldaten: Der Weisse / beut / mit der Königin / auss vier und dreyssig / Schach: Der Schwarze / muss / den König / auf des W. K. Rochen / auf ein und funfzig / setzen: Der Weisse / gibt / mit demselben / auss zwey und funfzig / Schach: Der Schwarze / rucket / den König / auf acht- oder neun und funfzig: Der Weisse / nimt / mit der Königin / des S. K. Reuters-Soldaten / und gibt Schach-Mat.
+
+<meta>catchword: Wan</meta>
+<vocab>Schach, Schach-Mat, Reuter, Rochen, Schützen, König, Königin, Ab-Schach, Reuters-Soldaten</vocab>

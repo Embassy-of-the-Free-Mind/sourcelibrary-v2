@@ -1,0 +1,25 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Heavy bleed-through from the reverse side obscures parts of the page, showing a faint grid and geometric shapes.</warning>
+<sig>* ¶ C.iij.</sig>
+
+THe fashion is as hath bene last de-
+clared both of the men, and of the
+kynges, the inscription of num-
+bers the same, but without cosical signes.
+
+## ¶ Of the order of the battell.
+
+THe order of battell is after the firste
+maner, but not so farre from the
+bordes end, namely the 4. squares
+standynge in the plattes nearest to the
+bordes end the rest accordingly
+->joyned to them, as in the<-
+->firste kynde of<-
+->playing.<-
+
+<image-desc>The bottom half of the page contains heavy bleed-through from a diagram on the reverse side. It depicts a game board grid for Rythmomachia, featuring squares containing triangles, circles, and squares with various numbers. Faint words like "trianguls" and "squares" are visible in the bleed-through.</image-desc>
+
+<vocab>Philosophers game, Rythmomachia, battell, kynges, cosical signes, plattes</vocab>

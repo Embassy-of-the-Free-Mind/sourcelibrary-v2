@@ -1,0 +1,32 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<header>DES PHILOSOPHES.</header>
+<sig>C ij</sig>
+
+Avoir ainsi parfaict ta situation dissimulée
+& saincte, prens les deux proportions su-
+perpartientes, qui font les 4. tables quarrées, de
+chacun costé, & les transporte inseparemẽt aux
+4. quarres d'vn chacun des deux coings du ta-
+blier. En apres au deuant desdicts quarres qui
+font d'vn chacun costé, disposeras les deux trian-
+gulaires de la proportion plus prochaine à vn
+chacun costé posant le plus grand nombre de-
+uers le bord du tablier & les autres deux pro-
+portions du triangle qui restent au mellieu, esten-
+dras au reng de la Pyramide: posant le plus grãd
+nombre de chacune des deux proportions aupres
+des quarreaux ou Pyramide, & ainsi occuperõt
+les 4. triangles, les 4. carreaux des seconds rengs
+aupres desquelles ioindras les rondes multiplices
+ainsi qu'elles sont disposées cy deuant. Et ainsi
+sera parfaicte la situation du nombre pair. Quãt
+aux nombres impair, feras le semblable, & sera
+parfaicte la situation de tes tables & tablier.
+
+->Exemple.<-
+
+## La vraye disposition de tout le ieu.
+
+<vocab>proportions, tables quarrées, tablier, Pyramide, nombre pair, nombre impair, ieu, Rythmomachie</vocab>

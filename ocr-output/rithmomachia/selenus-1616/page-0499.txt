@@ -1,0 +1,24 @@
+<language>Latin</language>
+<page-type>diagram</page-type>
+
+<image-desc>
+A perspective engraving of a Rythmomachia (The Philosophers' Game) board and its pieces. The board consists of an 8x12 checkered grid. Centered on the board is a rectangular formation of twenty-four geometric pieces arranged in four rows and six columns. 
+
+The pieces are categorized by shape and inscribed with numerals:
+- Columns 1 and 2 (from the left) contain circular discs.
+- Columns 3 and 4 contain triangular prisms.
+- Columns 5 and 6 contain square cubes.
+- One piece in the fifth column of the third row is a multi-layered stacked pyramid, with the number "91." inscribed on its base.
+
+The numerals are Western Arabic numerals, each followed by a period.
+</image-desc>
+
+->2. 4. 6. 9. 15. 25.<-
+
+->4. 16. 20. 25. 45. 81.<-
+
+->6. 36. 42. 49. 91. 169.<-
+
+->8. 64. 72. 81. 153. 289.<-
+
+<vocab>Rythmomachia, Philosophers' Game, pyramid, geometric pieces, arithmetic, board game</vocab>

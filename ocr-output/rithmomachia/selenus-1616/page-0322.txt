@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>288</page-num>
+<header>Das Dritte Buch / 4.cap:</header>
+
+nehmen: Der Weisse/beut/mit der Königin/auß funfzig/Schach:
+Er/muß den König/auf sieben und zwantzig/setzen: Der Weisse/
+nimt seiner K. Schützen/mit der Königin/und gibt Schach-Mat/
+auf zwey und viertzig: Der Weisse/beut/mit des K. Rochens-
+Soldaten/auß drey und dreyßig/Schach-Mat.
+25.      Wan aber der Schwartze/nicht die Königin/auf 52. (n. 15.) be-
+sondern/dero Soldaten/auf des W. K. Schützen/(auf daß/der
+Weisse/mit der Königin/auß fünf und dreyßig/nicht Schach-ge-
+be) auf sieben und dreyßig/rucket: so setzet/der Weisse/des K.
+26. Rochens-Soldaten/auf drey und dreyßig/und beut Schach: * Der
+Schwartze/ziehet/den König/auf ein und funfzig: Der Weisse/
+nimt/der S. K. Soldaten/mit des K. Schützen/und beut Schach: Der
+Schwartze/muß die Königin/(dieweyl Er/den itztgedachten/W.
+Schützen/mit ihrem Schützen/auf vier und viertzig/nit bedecken darf/
+besondern/mit derselben/zur verhütung des Schach-Mattes/noht-
+wendig/muß wegnehmen) ohne mittel/und entsetzung/verlieren.
+27.      Ziehet aber der Schwartze/den König/nicht auf 51. (n. 26.)
+besondern auf ein und viertzig: so beut/der Weisse/(wie oft gedacht)
+von der K. Schützen/Ab-Schach/und ziehet/dero Soldaten/auf
+neun und zwantzig: Der Schwartze/(umb/den König zu bede-
+cken) des K. Reuters-Soldaten/auf vier und dreyßig: Der Weisse/
+(umb/dem S. Könige/den garaus zu machen) auf denselben/des
+K. Schützens-Soldaten/auf sieben und zwantzig: Der Schwar-
+tze/(umb/dasselbe zu verhüten) des K. Schützen/(welches dan zum
+besten ist) auf zwey und funfzig: Der Weisse/nimt/der S. K. Sol-
+daten/mit des K. Schützen: Der Schwartze/rucket/seines K.
+Schützen/(welcher Zug/sehr gut scheinet) auf die W. Königin/auf
+drey und viertzig: Der Weisse/nimt/des S. K. Reuters-Solda-
+28. ten/mit seines K. Schützens-Soldaten/und beut Schach: * Der
+Schwartze/nimt denselben/mit des K. Schützen: Der Weisse/
+des S. K. Rochen/(umb dessen Reuter/mit gewalt zu erlangen) mit
+29. der Königin: * Der Schwartze/ziehet/der K. Schützens-Soldat/
+auf des W. K. Schützen/auf sechs und viertzig: Der Weisse/nimt/
+mit demselben/des S. K. Reuter/und ziehet ihn/auf dessen Rochens-
+Soldaten: Der Schwartze/(umb denselben/weyl Er sonsten/
+wan ihn/der Weisse/mit der Königin/nehme/Schach-Mat würde/
+zu vertheidigen) die Königin/auf zwey und funfzig: Der Weisse/
+(umb des K. Soldaten/auf daß ihn/die S. Königin/nicht nehme/noch
+Schach-biete/zu verhüten) nimt/mit des K. Schützen/des S. K. Ro-
+
+<meta>catchword: chens=</meta>
+<vocab>Schach, Königin, König, Roche, Schütze, Reuter, Soldat, Schach-Mat, Ab-Schach</vocab>

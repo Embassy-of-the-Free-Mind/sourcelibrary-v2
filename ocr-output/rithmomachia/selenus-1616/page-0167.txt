@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>137</page-num>
+<header>3.cap: Vom Schach-Spiel.</header>
+
+Verstehet Er dan / das Spiel / so wird Er / wegen des ersten Zuges / ob schon derselbe / den Sieg / noch nicht gewiß machet / dasselbe / umb so viel sicherer und behutsamer führen und anordnen. In erwegung / Er / seine Züge / dergestalt / daß sich der Ander / nuhr immer beschützen / und / wan derselbe / einen seiner Züge / nicht recht versetzen kan / das feld / endlich verlieren müsse / anzu-stellen / als-dan gelegenheit erlanget. So sol man auch / das ungewiß / dem sichern / nicht fürziehen: weyl oftermaln / die starcke einbildung / als-wan man der Sachen / gantz versichert wehre / betrieglich: und / daß man / einen Zug / wegen der Begierde / etwa durch ein newes fürnehmen / ehre zu erlangen / nicht hoch geachtet hat / einen grossen schaden / einem zufüget. Zu deme / eröfnet oftermaln / das jetz-nige / was man auß übermuth und vermessenheit / nicht gesehen: dem feinde / ob Er gleich / so verschlagen nicht darauf ist / auß noth / welche eine Meisterin ist / aller sachen / die Augen / dasselbe / was Er sonsten wol nicht gemercket / in acht zu haben.
+
+Man gibt ferner / nicht alleine / besondern nimt auch wol / das gegen vortheile / welche / von den Spielern / zum öftern / zwar gleich geachtet werden / aber in warheit sehr ungleich / und unterschieden seynd. Darumb dan / sehr von nöten seyn wird / sich in diesem / auf daß man / nicht mehr außgebe / als-einnahme / und an stat / eines wider eingenommenen Vortheiles / grössern schaden bekomme: wol fürzusehen: dessen wollen wir etliche Exempel / zur nachrichtung / anhero setzen.
+
+Es wird (1.) von etlichen gleich geachtet / daß man dem Gegener / des Königes=Schützens-Soldaten / nebest dem vorzuge / hingebe / und hingegen zum Vortheil nehme / daß man den König / in einen winckel oder eine ecke / auf eines Rochens feld / ziehen dürfe: Alleine / es ist besser / den König / auf seiner stelle / verbleiben zu lassen / und von dem Andern / den Soldaten / und ersten Außzug zu nehmen. In betrachtung / dem Feinde / durch mangel desselben Soldaten / (weyl er / vermöge des 10. Cap: im Ersten Buche / unter die fürnehmeste / gerechnet wird) mit dem anzuge / grosser schade / kan zugefüget werden: So ist es auch sehr nütz- und dienlich / den Feind / seiner Waffen / nach bester möglichkeit / zu entblösen / und zu berauben.
+
+Es gibt (2.) einer zun zeiten / dem Gegener / einen Reuter zum Vortheil / und nimt dagegen von ihm / entweder des Königes=Schützens-Soldaten / und zween Züge: oder daß sein König / in einen winckel / oder Rochens feld / gestellet werde / und dagegen dessen König / welcher den Reuter / weggegeben / nicht springen dörffe /
+
+<sig>S ij</sig>
+<meta>catchword: vermey-</meta>
+
+<vocab>Schach-Spiel, König, Soldaten, Reuter, Rochens feld, Gegener, Zug, Sieg, Segener, Außzug</vocab>

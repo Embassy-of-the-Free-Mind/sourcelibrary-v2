@@ -1,0 +1,33 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>Ad</header>
+
+<margin>1</margin>
+¶ Si interuallum multiplex binario multiplicetur: id quod fit ex hac multiplicatione interuallum multiplex est.
+
+| a | b | c | |
+| :--- | :--- | :--- | :--- |
+| 16 | 8 | 4 | Multiplex ex duplatione. |
+| 4 | 2 | 1 | Multiplex interuallum. |
+
+¶ Interuallum binario multiplicare: est interualli habitudinem duplare que quo pacto duplada sit duorum tertia propositione quinti Arithmetices notum esse potest. vt si a b sit interuallum quodcunq; quod binario multiplicare iubeamur: ipsum per tertiam quinti multiplicabimus si ducimus a in se et b in se proueniantq; d c eritq; productorum d et c duplex interuallum interuallo producentiū a b. Ast si rursum ducimus a in b proueniatq; productum e erit per sextam quarti que proportio d ad e eadē e ad c et interuallum d c in duo equa partitum. Sed esto nunc vt interuallum a b sit multiplex quemadmodum proponit propositio quod modo pauloante dicto: binario multiplicetur: sitq; duplum d c et ea proportio d ad e et e ad c: dico interuallu d ad c esse multiplex. Nam cum a ad b multiplex sit interuallum cum geminatur manifestum est multiplex addi multiplici quare per vicesimasecundam noni Arithmetices statim notum est interuallum compositum multiplex esse. et propositū. Sed idem aliter hic demonstratur. Quonia enim que proportio a ad b ea est d ad e et e ad c. nam vtraq; proportionis duplate a ad b medietas. Proportio aut a ad b posita est multiplex: igitur et proportio d ad e multiplex est. metit igitur per diffinitionē multiplicis: e ipsum d vel bis vel ter vel deinceps. Et eodē quoq; iure c toties metitur ipsum e. quare et c per primū communē conceptū etiam metitur ipsum d. Quicquid enim alterū metitur: metitur et omne quod mensuratū est ab illo. est itaq; per diffinitionē interuallum d c multiplex. quod erat ostendendum.
+
+<margin>2</margin>
+¶ Si fuerint termini pportionaliter constituti: cum primus fuerit vltimo cōparatus si primus vltimum fuerit mensus: metietur et secundum.
+
+| 2 | 4 | 8 | | 1 | 2 | 4 | A b c tres termini proportio- |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| a | b | c | | d | e | f | nales quorū a numerat b. |
+
+¶ Tametsi hanc decimamtertia quarti demōstret sufficienter: eam tamen āplius hoc in loco volumus manifestare. Sint enim a b c termini proportionabiliter constituti et a numeret c: dico idem a numerare b. capio enim d e f terminos in ea proportione minimos. Quonia enim d ad e vt a ad b: et e ad f vt b ad c. igitur per equam proportionalitatē quam vicesimaprima secundi Arithmetices monstrat d ad f vt a ad c. sed a per hypothesim metitur c: igitur d metietur f. Et quia d e f positi sunt in sua proportione minimi. ergo per quintam quarti d et f sunt adinuicem primi. Et cum d seipsum metiat pariter et f per diffinitionē est vnitas. At vero cum vnitas sit omnis numeri pars: d ergo metietur e Et cum a ad b vt d ad e: metietur igitur a ipsum b secundū terminum: quod erat cognoscendum atq; propositum.
+
+<margin>3</margin>
+¶ Si interuallum binario multiplicatū: multiplex effecerit interuallum: ipsum quoq; multiplex erit.
+
+| 2 | 4 | 8 | A b interuallum binario multiplicatū |
+| :--- | :--- | :--- | :--- |
+| a | b | c | multiplex efficiens. |
+
+¶ Hec est conuersa prime: cuius hec est ratio. Nam cum interuallum compositū multiplex sit et per secundam cōmunem scientiam resoluatur in id interuallum ex cuius multiplicatione creuit siquidē compositū omne: in ea simplicia dissoluitur ex quibus coalitū (concretum) compositūq; esse cognoscit per sexagesimā noni interuallum simplex multiplex erit. At id idem aliter ostenditur. Nam si a b c geminatum interuallū sit multiplex sic vt c multiplex sit ad a et ea proportio a ad b et b ad c: quonia c ad a erit multiplex: a per diffinitionē metietur ipsum c. quare et per precedentem a metietur ipsum b. est igitur interuallum simplex b ad a per diffinitionem multiplex. et propositum.
+
+<vocab>interuallum multiplex, binario multiplicare, Arithmetices, diffinitio, proportio, duplatio</vocab>

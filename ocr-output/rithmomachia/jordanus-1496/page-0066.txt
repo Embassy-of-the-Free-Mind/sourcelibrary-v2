@@ -1,0 +1,93 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III v</page-num>
+
+<margin>
+10 —————— 3
+25 —————— 3
+40 —————— 3
+Composite.
+</margin>
+quinti proportio composita ex a ad b z b ad e est que est inter pductum ex d in a: ad pductum ex e in b: at e in b facit b: r d in a facit c cōtinens altāties b z eius vna partem. nam positus est c maior vnitate multiplice ad b. igitur pposita ex data suppartiente z multiplici d ad e est multiplex supparticularis: quod intenditur. et ita quālibet aliam inuenias.
+
+---
+
+<margin>33</margin>
+### ¶ Suppartientes quotlibet que cum data multiplice pficiant suppartientes multiplices: inquirere.
+
+<margin>
+b ———— 5   c ———— 4
+      a ———— 2
+e ———— 10 d ———— 14
+f ———— 7
+g 1 7 ———— 10
+3 4 ———— 10
+Composita.
+</margin>
+¶ Sit a denotāns multiplicem: sumo duos numeros c d quoz vnus non nueret altum: sitqz b maior z primus ad a per vltimam tertij quero multiplicem ad a: qui addat sup multiplicem b nūerum c. sitqz huiusmodi multiplex ad a numerus d quē numerat a fm f: et multiplex ad b sit e. dico suppartientem cuius denoians partium sit e multiplex b: et nūerus partium sit f esse vnam suppartientum q queritur. nam a in f partes illas ductus fikes partes pducit: quaz numerus est d: ideo numerum pducunt sed z supersunt partes fm numerum c que non numerant b: ergo a z suppartiens prius f denoiata ab e que sit g cōstituunt pportiōem multiplicem suppartientem. et hoc pacto quotquot voles quere.
+
+---
+
+<margin>34</margin>
+### ¶ Proposita suppartiente multiplices perscrutari: que cum eadem multiplices suppartientes constituant.
+
+<margin>
+f ———— 10  50 ———— 3
+e ———— 7   35 ———— 3
+d ———— 4   20 ———— 3
+      Composite.
+a 5 ———— 3
+b ———— 3
+c ———— 2
+</margin>
+¶ Sit a suppartiens data/ z b denoiāns ptes: c vero numerus partium: et sit d maior b vno/ ducaturqz c in d z pveniet multiplex b/ z insup totidem ptes. quare multiplex denoiata ab d cum suppartiente assignata a pstituet multiplicé suppartientem. et ita fiet si qlibet multiplex ad b maior vno sumat vt e r f Neq has ppōnes que inuētionem pponūt accuratius erequi curaui: que vbi exactioz psecutio facta fuisset etiam legentibus allatura fuisset fastidium.
+
+---
+
+<margin>35</margin>
+### ¶ Supparticularis z simul multiplex supparticularis cum eadem multiplice: similes producunt proportiones.
+
+<margin>
+c 6 ———— 4   12 ———— 4
+b 3 ———— 2    6 ———— 2
+a 2 ———— 1   Composite.
+</margin>
+¶ Sit a pportio multiplex/ et b pportio supparticularis/ et c pportio multiplex supparticularis sic dico pportioes compositas ex b r a: et ex c et a esse siles. nam cũ supparticularis denoiētur ab vno r parte/ z multiplex supparticularis denoiētur a numero r eadem parte: numerus igitur multiplicis in vnum r numerum ductus semp facit numerū. addito igitur vtrobiqz qd sit ex eodē multiplicis nūero in partem que supest si cum vno nūerum facit et cũ reliquo facit eundem: et si cum vno pars vel partes supsunt: itidem z cum reliquo. quare puenient siles pportiōes. Id tamen aduerte q si q̃ntitas denoiatiōis crescit in altera pportiōe qd maxime in suppartientibus accidere solet: non tñ inde genus pportionis mutabitur.
+
+---
+
+<margin>36</margin>
+### ¶ Quacunqz proportioem suppartiens cum multiplice constituit: eiusmodi etiā cum eadem efficit simul multiplex suppartiens.
+
+<margin>
+16 ———— 3  c 8 ———— 3
+10 ———— 3  b 5 ———— 3
+Composite. a 2 ———— 1
+</margin>
+¶ Sit a multiplex: b suppartiens/ quocunqz: et c simul suppartiens multiplex. dico b et a simul/ item c et a simul similem constituere proportioem. huius vt precedentis demonstratio est.
+
+---
+
+<margin>37</margin>
+### ¶ Si ab vnitate numeri cōtinue disponātur: et singuli ad primos descēdendo comparetur: fient oēs supparticulares proportiones: tanto minores q̃nto remotiores. ad vnitatem vero omnes multiplices: tanto minores quāto ppinquiores
+
+<margin>
+k ———— 10
+h ———— 9
+g ———— 8
+f ———— 7
+e ———— 6
+d ———— 5
+c ———— 4
+b ———— 3
+a ———— 2
+I
+</margin>
+¶ Sint a/b/c/d/e/f/g/h k numeri ab vnitate continue sumpti: dico pmo k ad h esse supparticularem proportionem. et h ad g. et g ad f. sicqz deinceps vsqz ad vnitatem. et k ad h minorem esse proportioem q̃ h ad g et cetere inferiores. et h ad g minorem q̃ cetere inferiores. nam cū vnitas sit cuiuslibet nūeri pars: et quilibet superiozum addat vnitatem ipsam tñ excludendo sup primum inferiozem: ergo per diffinitionem k ad h et h ad g atqz ita deinceps: est pportio supparticularis. et quia per conceptiōem pars ea minor est que maiorem habet denoiationem et vnitas similiter per conceptiōem sit cuiuslibet numeri pars ab ipo denoiata: ergo pportioues ille ab vnitate remotiores: que a minori parte denoiantur sunt minores. et quāto ipsi vnitati ppinquiores a maiori parte denoiantur: quare tum erūt maiores. et si tota series numerorum esset ordiata: oms supparticulares specie quidem habite essent non aut fm numerum accepte. nam ea pportio que est ternarij ad binarium: est senarij ad quatnariū et duodenarij ad octonarium: non tamen due vltie in ordine proximorum numerorum essent accepte. Secūdo dico omnes cōsimiliter ptinue ad vnitatem sumptas esse multiplices tanto minores q̃to ipsi vnitati viciniores. nam a primus post eam nūerus bis eam ptinet et b ter z c quater. et ita psequēter fm oēs species multiplicium sed z ptinue a maiore numero denoiat multiplex. et q̃to vnitati vicinioz a minore: nullus enim binario minoz est. est igitur cognitum quod erat demonstrandum.
+
+---
+
+<margin>38</margin>
+### ¶ Si a comuni angulo naturalis series numerorum in longum z latum extendatur: et ipsis inuicem multiplicatis: r qui pueniūt in angulari cōuētu positis: si singuloz ordinum ad primum fiat collatio ordo cōtinuus multiplicium pcedet: si ad primos preterqz ad primum ordo supparticulariū. et qui circa diametrum collocati sunt: oēs erunt quadrati. qui vero his hinc inde proximi: sunt altera parte longiozes.
+
+<vocab>proportio, multiplex, suppartiens, supparticularis, numerus, unitas, series naturalis, quadrati, altera parte longiores</vocab>

@@ -1,0 +1,30 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+<sig>DC B</sig>
+
+uerras iceux eſtre en proportion ſexquialtre, la-
+quelle proportion comme appert par noſtre mu-
+ſique, raporte la conſonăce de dyapenté qui vault
+vne quinte. De rechef ſi tu prens les deux nom-
+bres moyens 3 & 4, uerras entre eux proportion
+ſexquitierce, qui n'eſt autre choſe que la conſo-
+nance de dyateſſaron qui vault vne quarte. Et
+ſi tu prens le premier 2. au reſpect du tiers 4, ou
+bien le ſecond 3. au regard du dernier 6, auras
+proportion double, laquelle proportion reſonne
+dyapaſon qui eſt vne octaue. Oultre trouueras le
+premier 2 au reſpect du dernier 6, auoir propor-
+tion de triple, laquelle repreſente dyapaſon &
+dyapente enſemble, qui eſt vne douzieſme. Con-
+ſequemment la difference de trois à quatre, la-
+quelle eſt vne vnité, à proportion quadruple au
+reſpect du tiers nombre 4 qui eſt la conſonance
+de dyapaſon, qui eſt vne quinzieſme. Et note
+que ce qu'auons dit de la premiere Victoire 2,3,
+4,6, s'entendra auſſi de la ſuivante 4,6,8,12.
+Toutesfois pour mieux te ſpecifier ces choſes, te
+propoſeray icy toutes icelles victoires par figures
+& demonſtrations mathematiques.
+
+<vocab>Rythmomachie, proportion, sesquialtre, diapente, quinte, sesquitierce, diatessaron, quarte, diapason, octave, douziesme, quadruple, quinziesme, Victoire</vocab>

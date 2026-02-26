@@ -1,0 +1,46 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>19</page-num>
+<sig>F</sig>
+<meta>catchword: Tauo-</meta>
+<warning>Heavy ghosting/bleed-through from the reverse side of the page is visible throughout the text and table area.</warning>
+
+### Tauola di tutte le proportioni Arithmetiche & Musiche insieme, che possono occorrer in questo giuoco.
+
+| Arithmetica & Mus. insieme | Arithmetica sola | Musica sola |
+|:---|:---|:---|
+| 3 4 5 15 | 3 4 5 | 3 5 15 |
+| 3 4 5 6 | 4 5 6 | 3 4 6 |
+| 3 5 7 15 | 3 5 7 | 3 5 15 |
+| 3 4 6 9 | 3 6 9 | 3 4 6 |
+| 3 5 9 15 | 3 5 9 15 | 3 5 15 |
+| 3 9 15 45 | 3 9 15 | 9 15 45 |
+| 3 4 6 8 | 4 6 8 | 3 4 6 |
+| 4 6 8 12 | 4 8 12 | 4 6 12 |
+| 4 6 12 20 | 4 12 20 | 4 6 12 |
+| 5 7 9 45 | 5 7 9 | 5 9 45 |
+| 8 15 120 225 | 15 120 225 | 8 15 120 |
+| 9 12 15 20 | 9 12 20 | 12 15 20 |
+| 9 12 15 45 | 9 12 15 | 9 15 45 |
+| 9 15 30 45 | 15 30 45 | 6 15 45 |
+| 9 15 45 81 | 9 45 81 | 9 15 45 |
+| 12 15 20 25 | 15 20 25 | 12 15 20 |
+| 15 20 25 30 | 20 25 30 | 15 20 30 |
+| 15 20 30 45 | 15 30 45 | 15 20 30 |
+| 15 30 36 45 | 15 30 45 | 30 36 45 |
+| 15 30 45 90 | 15 30 45 | 30 45 90 |
+| 30 36 42 45 | 30 36 42 | 30 36 45 |
+| 72 81 90 120 | 72 81 90 | 72 90 120 |
+
+ne i vengono à sentir quelli, che giuocano vna diletto-
+ne mirabile, contemplando in quelli 4 numeri talmente
+situati ritrouarsi tutte quelle proportioni, dalle quali nas-
+cono tutte le musicali consonanze, le quali proportioni si
+vorranno anchor esperimentar in corde de varij sorti, ò in
+instromenti di fiato con li pesi, & misure de questi numeri
+sentiranno la dolcezza di tutte quelle consonanze che la
+Musica può dare. Il che acciò che sia più chiaro darò
+vn'essempio in 4 numeri di quelli della sopradetta
+Tauola. Pigliando adunque
+
+<vocab>proportioni, Arithmetiche, Musiche, musicali consonanze, instromenti di fiato</vocab>

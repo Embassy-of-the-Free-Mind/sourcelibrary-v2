@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>425</page-num>
+<header>9. cap: Vom Schach-Spiel.</header>
+<sig>Ggg ii</sig>
+<meta>catchword: Das</meta>
+
+<image-desc>A rectangular woodcut ornamental border with scrolling foliage and floral motifs, enclosing the chapter title.</image-desc>
+
+# Das Neunte/ Capittel.
+## Wie die Einwohner zu Ströpeke/ den Schach/ auf dreyerley Art ziehen/ und ihn/ (1.) das Currier-Spiel: (2.) den Alten- und (3.) den Welschen Schach/ wegen der unterschiedenen Züge/ und Taflen/ nennen.
+
+Nachdem nuhn / zur genüge / verhoffentlich / angezeigt worden / was / so wol in Theoriâ, als / und zwar fürnehmlich / in Praxi, von dem neuen / und heutiges tages / üblichem Current-Schach-Spiel / möchte zu wissen / vonnöten seyn: So wollen wir / nuhmmehr / auch der anderen zwo Arten dieses Spieles / nemlich des Grossen / oder Currier-Schach-Spieles / und dan des Kleinen / (welches auß dem Grossen / nebest dem vorigen Current- oder völligem Schach-Spiele / vermöge des dritten Capittels / des ersten Buches: genommen) mit wenigem gedencken / und den Liebhabern dieses Spieles / zur anmuhtigkeit / kürtzlich endecken.
+
+Es ist aber dieses Grosse / fast in drey hundert und mehr Jahren / in Deutsch- und Welsch-land / (wie man dan solches / auß des von Ammenhausen / Deutschen Reymen / welche zum ende / dieses Capittels gesetzet: zu ersehen hat) nicht sehr üblich gewesen / besondern / mit der zeit / fast gar erloschen: und wird / nuhr alleine noch gefunden / und als ein eignes Spiel behalten / bey den Einwohnern / des Dorfes Ströpeke / welches in der uhralten Graffschaft Ascanien / so der Alten Churfürsten zu Brandenburg / und Sachsen: so wol auch der itzigen Nieder-Sächsischen Hertzogen: und der Fürsten zu Anhalt / (welche dahero / noch den Titul / der Grafen zu Ascanien / führen) Stam-Sitz gewesen / belegen: und itzo der Dum-Propstey des Stiftes Halberstadt / unterworffen. Dieser sonderbahre Schach-Zieher / gedencket auch der berümte Jurist / Petrus Heigius, in poster: quæst. 10. n. 49.
+
+Das Ander / und Kleinere / ist / an dessen stat / kommen: doch gleichwol / (nach erfindung / des vorigen und völligen Schach-Spieles) innerhalb hundert Jahren / sehr in die enge / gespannet worden: Davon dan im folgenden Capittel / etliche Exempel aufgesetzet / und zu befinden seynd.
+
+Des Grossen / oder des Currier-Spieles / gelegenheit / ist nuhn folgender gestalt / beschaffen.
+
+<vocab>Schach-Spiel, Ströpeke, Currier-Spiel, Welscher Schach, Ammenhausen, Ascanien, Petrus Heigius, Halberstadt</vocab>

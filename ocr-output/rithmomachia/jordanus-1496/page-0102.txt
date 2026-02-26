@@ -1,0 +1,68 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+tentum minus. sed et cum a b ꝛ f b probatum sit etiam semitonii minus. ergo intervallum f b et g b est quo sesquioctava proportio a b et c b: maior est duobus semitoniis minoribus. est igitur per diffi= nitionem f b et g b inventum musicum comma: quod erat monstrandum.
+
+<margin>28</margin>
+### ¶ Comma: in minimis numeris constituere.
+
+| 531441 | 524288 | 497664 | 472392 |
+| :--- | :--- | :--- | :--- |
+| lz | g | h | i |
+| | 65536 | 62208 | 39049 |
+| | c | d | e |
+| | 256 | 243 | |
+| | A | b | |
+| | | 8 | |
+| | | f | |
+
+<margin>
+531441
+524288
+7153
+2119
+796
+527
+269
+258
+11
+5
+1
+</margin>
+
+¶ Sint a b minimi numeri semitonii minoris. duco a in se ꝛ in b, et b in se ꝛ erurgant c d e: eruntqʒ c d ꝛ d e duo semitonia minora cōiuncta. sit præterea f octonarius qui ex decimaoctava huius est primus ad b. quare per undecimā tertij arithmeticæ et primus ad e. non habet igitur e octavam. duco ergo f octonariū in c d e: ꝛ proveniant g h i: vt i scilicet oriatur ex f in e. certū est etiam inter g h et h i esse duo se= mitonia minora. et qʒ e est octava pars i addo e ꝛ i simul, sitqʒ eorum aggregatus lz. dubiū nullum est lz ad i esse sesquioctavā: et lz g esse proportionem qua sesquioctava maior est g h et h i duobus semi= toniis minoribus. sunt igitur lz g numeri cōmatis. sed qʒ sint minimi ex decimaquinta tertij arithme= ticæ notum est. Nam subtracto vt caipsa docet g ab lz, et eo quod relictū est subtracto quoad potest ab g. et sic deinceps tandē vt ad latus adiectū apparet: relinquitur unitas. Et quēadmodum comma duabus diesibus est præpositum: ita quoqʒ qᷓ facillimū est comma duabus diesibus subiungere, aut duabus interferere.
+
+<margin>29</margin>
+### ¶ Sesquiseptuagesimaquarta: commatis proportione transcenditur.
+
+| 531441 | 531372 72 | 524288 | 7084 72 |
+| :--- | :--- | :--- | :--- |
+| A | d 74 | b | c 74 |
+
+¶ Sint enim a b minimi numeri cōmatis per præcedentē reperti. elicio per decimā huius septuagesimā quartā b que sit c. adiicio itaqʒ b et c simul, ꝛ coalescat aggregatusqʒ numerus d. qui si ad b conferaṯ cōperitur, sesquiseptuagesimusquartus. atqui idē d minor a esse deprehēditur. superat ergo per unde cimam huius ratio cōmatis septuagesimāquartam proportionem
+
+<margin>30</margin>
+### ¶ Cōmatis ratio: sesquiseptuagesimatertia pportione minor est. vnde fit vt cōmatis ratio inter septuagesimāquartā et septuagesimatertiā constituta reperiaṯ habitudinē
+
+| 531470 2 | 531441 | 524288 | 7182 2 |
+| :--- | :--- | :--- | :--- |
+| d 73 | A | b | c 73 |
+
+¶ Sint a b vt prius minimi numeri cōmatis. capio septuagesimatertiam partē b que sit c. iūgo b ꝛ c simul et aggregetur d. eritqʒ d ad b sesquiseptuagesimustertius. et d maior a esse conspicitur. ergo cō matis ratio sesquiseptuagesimatertia proportione minor est: quod erat monstrandum. Correlarium vt alia notum est.
+
+<margin>31</margin>
+### ¶ Commatis ratio: in superpartiente ratione consistit.
+
+¶ Non enī in superparticulari cōsisset quādoquidē due superparticulares proxīme sesquiseptuagesima quarta et sesquiseptuagesimatertia: omnē prorsus mediā excludant superparticularē. ttanto minus in gñe multiplici cōsistere valebit. vt quæ septuaginta duas superparticulares habeat se maiores. relin= quitur ergo vt ea in superpartiēte genere consistere possit. est enī ea maioris et minoris habitudo.
+
+<margin>32</margin>
+### ¶ Rationes schismatis atqʒ diaschismatis sunt ignote, atqʒ irrōnales. quo fit vt quaꝝ mimi nūcri tetragonicū latus nō habēat: medietatū rōnes ignote irrōnalesqʒ sint oēs
+
+| 256 | 243 | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| A | b | c | d | e |
+| 531441 | 524288 | | | |
+
+¶ Eas rationes ignotas atqʒ irrationales dicimus que nullo certo, cōstitutoqʒ numero designari va lent vnqᷓ: vt neqʒ in geometricis diametri et coste quadrati pportio: quales schismatū, diaschismatūqʒ
+
+<vocab>comma, sesquioctava, semitonia minora, arithmetice, sesquiseptuagesimaquarta, sesquiseptuagesimatertia, superpartiente ratione, schismatis, diaschismatis, irrationales</vocab>

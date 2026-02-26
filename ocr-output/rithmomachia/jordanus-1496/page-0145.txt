@@ -1,0 +1,35 @@
+<warning>The text contains numerous abbreviations and ligatures typical of 16th-century Latin printing (e.g., macrons for missing nasals, '9' for '-us', and '7' for 'et').</warning>
+
+<language>Latin</language>
+<page-type>text</page-type>
+
+<header>Bathillus / Alcmeon / Brontinus.</header>
+
+Alcmeon & tempestiuus ades. Alc. quid hoc o adolescentes. Bat. qm̄ non nichil abs te ego & Brōtin̄. perdiscere cupimus. Alc. quid nam id o Bathille. Bat. Priusq̄ in secentozum numero Pythagoram cōgrediamur : cupimus in rudibus aliqtulū formari. Et cū iam e nocturno cōgressu redeunt Pythagore discipuli scititatur leuiora quedā que filenda non tradiderit. Atq̄ nosipsi iam Abacum atq̄ mensulam pervidicimus. nūc aut̄ ludum quendā querimus inter vos conflictū : plerūq̄ vestras curas post seria studia leuantem & quemvos ipsi in numeris vt et pleraq̄ alia exercere soletis. Alc. Rithmimachiam o Bathille forsitan itelligis. Bat. Eam ipsam Alcmeon. Alc. Dic age igitur Bathille quot numerorū simplices inequalitates. Bat. Tres : multiplex / superparticularis / & superpartiens. Alc. Maioris scz habitudinis ad minorem. et in his tribus gñib⁹ oīno cōsistit ludus a te & Brōtino nūc a me petitus. Quid maxima harmonia : et quid harmonia minor. Bat. Maxima harmonia est cū quattuor numeroz in geometrica medietate cōstitutoū : extremi ad vnū mediozū Arithmeticam / ad alterū v̄o Musicam seruāt medietatē. Et harmonia minor solum in q̄ttuor terminis duas seruat medietates. Et quid medietas Arithmetica / quid Geometrica / et quid Musica vocet : dudum perdis- uimus / atq̄ satis q̄o sint nos ipsi nobis tenere psuademus. Alc. Recte multa tenes o Bathille. attñ paulo latius hoc in loco noīe vtūtur maxime harmonie : vt eaīpa dicaē quoties in quattuor terminis minozibus quidē maiores gravatim sequētibus : he tres repiātur pportiōnū medietates. mox dispo nunt p̄mo duobus ordinibus multiplices ex quattuor primis paribus ortos atq̄ ab ipīs denoiatos : duplos / quadruplos / sescuplos / octuplos in leui / planāq̄ area q̄ sit sexaginta q̄ttuor quadris spaciīs dirempta alternis se intersectibus lineis. post quos itidem duobus ordinibus cōīmiles supparticu lares locant : sesqualteros / sesquiquartos / sesquisextos / atq̄ sesquioctavos. dehinc cōsimiliū suppar- tientes illis quidē affines / atq̄ cōgeneos : supbipartietes / supquadripartiētes / superfextupartiētes / atq̄ supoctupartiētes. et spacia illa campos vocant et ordinatos in ipsis numeros parium aciem. Et e regione in totidem campis / similiq̄ processu multiplices ordinant a quattuor p̄mis imparibus du ctos atq̄ ab eisdem denoiatos : triplos / quincuplos / septuplos / nōcuplos. post quos cōsiīles suppar- ticulares. post superparticulares cōsimilis affinitatis suppartiētes / structeq̄ erūt e regione duobus ordinibus hic imparium / illic vero parium acies hoc pacto
+
+->Acies Parium in Rithmimachia.<-
+
+| | | | | | | | | |
+|:---|---|---|---|---|---|---|---|:---|
+| Duces superpartientium. | | | 25 | 81 | 169 | 289 | | Calculi quadrā |
+| Comites superpartientium. | | | 15 | 45 | 91 | 153 | | tales. |
+| Duces superparticularium. | | | 9 | 25 | 49 | 81 | | Triquetri. |
+| Comites superparticulariū. | | | 6 | 20 | 42 | 72 | | Triquetri. |
+| Duces multiplicium. | | | 4 | 16 | 36 | 64 | | Rotundi. |
+| Comites multiplicium. | | | 2 | 4 | 6 | 8 | | Rotundi. |
+| | | | | | | | | |
+| **Primi campi primae aree.** | | | | | | | | |
+| **Primi campi secundae aree.** | | | | | | | | |
+| | | | | | | | | |
+| Comites multiplicium. | | | 3 | 5 | 7 | 9 | | Calculi rotundi. |
+| Duces multiplicium. | | | 9 | 25 | 49 | 81 | | Rotundi. |
+| Comites superparticulariū. | | | 12 | 30 | 56 | 90 | | Triquetri. |
+| Duces superparticularium. | | | 16 | 36 | 64 | 100 | | Triquetri. |
+| Comites superpartientium. | | | 28 | 66 | 120 | 190 | | Quadrātales. |
+| Duces superpartientium. | | | 49 | 121 | 225 | 361 | | Quadrātales. |
+
+->Acies Imparium in Rithmimachia.<-
+
+Bat. Satis hanc numerorum assituationem apprehendo. Alc. Ubiq̄ consilium respōsus vt campi sibi inuicem subiecti duplos / sesqualteros / mox superbipartietes tenent : et iterū sibi mutuo subiecti quadruplos / hinc sesquiquartos / atq̄ supquadripartiētes. Et hoc pacto de reliquis. Attñ assignati numeri designatos sibi vendicant calculos eisdē numeris inscriptos : multiplices quidē rotūdos sup- particulares trīgonos / suppartiētes tetragonos : excepto decimi noni loci parium numero qui tetra- gona Pyramis est ex p̄mis tetragonis orta : & hinc fer basiū / sex facierū ¶ Pyramis dicitur. Huic ergo numero mete Pyramidis forma debita est : que primos sex quadratos miorib9 quidē maio- ribus suppositis : habeat inscriptos. et hec pfecta Pyramis nūcupatur q̄ citra vnitatem eius Pyra- midis mucro atq̄ vertex non deficiat. Cōsimili quoq̄ modo vicesimi loci imparium nūero imperfecte Pyramidis tetragonice forma debita est cui Pyramidi tres p̄mi tetragoni ad complementū desunt atq̄ iccirco triccurta dicitur et quia ex quinq̄ sequentibus tetragonis surgit : iccirco quinq̄ basiū / facierūq̄ eadem Pyramis nūcupatur. et illi quinq̄ tetragoni suis lateribus suo modo inscribūtur.
+
+<vocab>Rithmimachia, Pythagoras, Bathillus, Alcmeon, Brontinus, Pyramis, harmonia, superparticularis, superpartiens, calculi, triquetri, rotundi, quadrātales</vocab>

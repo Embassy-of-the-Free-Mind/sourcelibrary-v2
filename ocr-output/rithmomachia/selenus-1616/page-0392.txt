@@ -1,0 +1,117 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>358</page-num>
+
+<margin>
+9. cap:
+Das Dritte Buch /
+</margin>
+
+### n. 1. 2. 3. 4. 5.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | | SR | SS | SS | SS |
+| | | | SS | | | | SR |
+| | | SS | | SS | | WR | WR |
+| | | WS | | WS | WS | SS | 25 |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | | | WR |
+
+### n. 7. 8. 36.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SR | | SR |
+| SS | SS | SS | | 51 | SS | SS | |
+| | | | SS | | | | SR |
+| | | SS | | WS | 35 | WS | |
+| | | WS | | WS | | SS | WR |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### n. 11. 12.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SK | | SR |
+| SS | SS | SS | SR | | WS | | SS |
+| | | | SS | 44 | | WS | 41 |
+| | | | SS | | WS | | WS |
+| | | | | | | WR | |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### n. 17. 18.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | 60 | SK | | SR |
+| SS | SS | SS | SK | | | | SS |
+| | | | | WS | WS | | SS |
+| | | | SS | | SR | WS | |
+| | | | | WR | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+<column-break/>
+
+### n. 5. 46. 51.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | | SS | SS | SS | SR |
+| | | | | SS | SS | | SR |
+| | | | SS | | WS | | WR |
+| | | | WS | | WS | SS | WR |
+| | | | | | WS | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | | WK | | WR |
+
+### n. 9. 10. 35.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | 53 | | | SR | SS |
+| | | | 46 | SS | | WS | |
+| | | SS | | WS | | WS | |
+| | | WS | | WS | | WR | |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### n. 13. 14.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | 60 | SK | | WS |
+| SS | SS | SS | SR | 52 | | | SS |
+| | | | | SS | WS | | WS |
+| | | | SS | | WS | | |
+| | | | | | | WR | |
+| | | | | WS | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### n. 19. 22.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SR | 58 | SR |
+| SS | SS | SS | WS | | SK | 50 | SS |
+| | | | | WS | | SS | |
+| | | | SS | | | WS | |
+| | | | | | WR | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+<vocab>Weber-Handbuch, SR, SS, WS, WR, SK, WK, Webmuster, Patrone, German weaving notation</vocab>

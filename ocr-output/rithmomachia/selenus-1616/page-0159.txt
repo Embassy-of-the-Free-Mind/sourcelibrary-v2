@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>129</page-num>
+<header>1. cap: Vom Schach-Spiel.</header>
+
+Dan sonsten / möchte etwa ein König / an ort und enden gefunden werden / daß demselben / ob schon der Soldat / zur Königin worden / Schach-Mat gegeben würde: Als / wan der König / des Weissen Hauffens / in der Schwartze Königin=Rochens / anderm: die Schwartze Königin / in ihrem: der Schwartze König / in seiner Königin=Schützens / drittem felde / stehet: und / der mit den Weissen Steinen /
+
+<image-desc>A 4x4 grid representing a section of a chessboard. The grid uses hatching to indicate black squares and contains abbreviated labels for pieces: 
+- Row 1 (top): Empty (white), WB (black), SR (white), Empty (black).
+- Row 2: Empty (black), WK (white), Empty (black), Empty (white).
+- Row 3: Empty (white), Empty (black), SK (white), Empty (black).
+- Row 4 (bottom): SR (black), Empty (white), Empty (black), Empty (white).</image-desc>
+
+seiner Königin=Reuters=Soldaten / in der Schwartzen Königins Reuters feld / ziehet / und ihn daselbsten / zur Königin machet: so gibt der Schwartze / dessen ungeachtet / mit seiner Königin / in ihres Rochens / viertem felde / gleichwol Schach-Mat: Imgleichen / wan beederseits Rochen / nuhr übrig / ob schon der eine Theil / noch darzu einen Reuter und Schützen hette: oder bey beeden hauffen / zween Schützen / oder zween Reuter / oder zween Soldaten / nuhr vorhanden. Wie sich aber der eine / oder ander / unter den Spielern / in diesen und dergleichen fällen / zu verhalten habe / davon hat man / auß dem folgenden fünften Capittel / fernere nachrichtung / aufszusuchen.
+
+Dieses sey nuhn genug / von den Mitteln / so man gegen den König / fürnehmen kan / unter welchen / der Schach-Mat / die thür zuthut. Folgen ferner die Mittel / welche für den König / geordnet seynd: Alsz / die beschantzung: die verthetigung: der anzahl / und die raubung der Steine / des Gegners.
+
+Die Beschantzung des Königes betreffend: ist dieselbe / eine / von den nötigsten Mitteln / auf diesem Spiele / und hat den verlust / und die erhaltung desselben / bey sich. Dan / wan der König / ruhig stehen / und des Schach-bietens halber / durch den schirm seiner Steine / sicher seyn mag / solches / ein gar grosser vortheil / und behelf / in diesem Spiele / ist: Stehet Er aber bloß / und kan / zu seiten / oder sonsten / mit dem Schache / immer erreichet werden / so wird Er / gar leichtlich feldflüchtig / und muß einen Ort / nach dem andern / räumen.
+
+<sig>R ij</sig>
+<meta>catchword: räumen.</meta>
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Schütze, Reuter, Soldat, Schach-Mat, beschantzung, verthetigung</vocab>

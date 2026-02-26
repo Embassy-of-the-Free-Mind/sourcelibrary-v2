@@ -1,0 +1,49 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>ab</sig>
+
+| 324 | 288 | 257 | 5 | 256 | 243 |
+|-----|-----|-----|----|-----|-----|
+| f | g | l | 17 | h | k |
+
+¶ Sint vt in precedenti h k minimi numeri semitonij minoris vt ducenta quinquaginta sex & ducēta quadraginta tria. capio p decimam huius: septimādecimā partem nūeri k ducentoz scz quadrāginta triū / eritq; quattuordecim & quinq; septimedecime. addo itaq; quattuordecim et 5 septimādecimas ad k & fiat l numerus 257 et 5 septimedecime. erit ergo nūerus l ad k sesquiseptimusdecimus. at l ducēta qnquaginta septē et qnq; septimedecime trāscēdit h qui solū est ducētoz qnquaginta sex. ɔsistet itaq; semitoniū minus per vndecimam huius in minore pportiōe q̃ sit pportio sesquiseptimadecima. quare et a fortiori in minore cōsistit pportiōe q̃ sit sesquiseptadecima. Correlarium hinc notum est. Nam hoc pacto partiēdo extremo rū toni spacium: ex quita huius cognoscūtur sesquiseptadecima atq; sesquiseptimadecima altrinsecus constitui: quarū vtraq; prēsens mōstrauit semitonij minoris habitu dinem esse minorem.
+
+<margin>20</margin>
+## ¶ Sesquioctauadecima proportio: semitonio minore rursus maior euadit.
+
+| 256 | 1 | 256 | 243 |
+|-----|---|-----|-----|
+| c | 2 | a | b |
+
+¶ Sint a b mīmi numeri semitonij minoris per decimāoctauā huius reperti scz ducēta quinquaginta sex / et ducenta quadraginta tria. capio per decimā huius octauā decimā partem nūeri b: quā reperio esse tridecim & semis: quā quidē addo numero b / fiatq; aggregatus c. tunc c ad b sesquioctauadecima pportio est. at c maior numerus est a. nam a dūtaxat cōtinet ducenta quinquaginta sex: c v'o equalitē partiū totidē & insup semissē vnius. est igit sesquioctauadecima pportio semitonio minore maior.
+
+<margin>21</margin>
+## ¶ Sesquinonadecima: est semitonio minore minor. Quo fit vt semitoniū minus inter sesquioctauādecimam / et sesquinonadecimam consistat collocatum.
+
+| 256 | 255 | 15 | 243 |
+|-----|-----|----|-----|
+| a | c | 19 | b |
+
+¶ Sint vt prius mimi termini semitonij minoris a et b: dico sesquinonadecimā pportiōem minorem esse pportione a ad b. capio enī per decimam huius: nonādecimā partem numeri b: quā inuenio esse duodecim & quindecim nonasdecimas. quā partem adijcio numero b & fiat c. pportio c ad b est sesquinonadecima. sed a maius est q̃ c. igitur p vndecimam huius maius est semitoniū minus sesquinonadecima pportiōe / atq; sesquinonadecima pportio semitonio minore minor. Correlariū v'o vt decima quarta huius notum esse potest.
+
+<margin>22</margin>
+## ¶ Semitonium maius: in data chorda constituere.
+
+<image-desc>A line diagram representing musical string division. It consists of a horizontal line divided by several vertical marks. The points are labeled from left to right: 'a', then 'c' very close to it, followed by a long interval, and finally 'b' on the far right. The letters are placed below the line within segmented boxes.</image-desc>
+
+¶ Sit a b & c b semitonij minoris interuallum. diuido c b in octo partes equas: quibus equam facio partem c d. ita vt d b nouem ɔtineat. ergo d b & c b erit tonus. demo igitur a tono d b et c b semitoniū minus scz a b & c b / relinquet' q' d b & a b toni reliqua pars & qua ipe semitonium minus superat. igit per diffinitiōem d b & a b semitonium maius est in data chorda (vt ppositū erat) cōstitutū. et quēadmodum semitoniū maius collocasti ad partem grauiorem ita quoq; ad partem acuminis collocare facillimum esset.
+
+<margin>23</margin>
+## ¶ Semitonij maioris: minimos numeros reperire.
+
+| 2187 | 2048 | 1944 |
+|------|------|------|
+| e | d | c |
+| | 256 | 243 |
+| | a | b |
+| | | 8 |
+| | | f |
+
+¶ Sint a b minimi numeri semitonij minoris ex decimaoctaua huius reperti et f octonarius. qm ex demōstratiōe decimeoctaue huius f octonarius primus est ad b. ergo f non numerat b. non habet igi tur b octauam partem. duco igitur f in b et a et cōsurgant c d: per septimam secūdi elementoz Arithmetices d ad c vt a ad b. est igitur inter d c semitonium minus / semitonijsq; minoris interuallum. et q2 c habet ptē octauā vt b: addo eidem nūero c ptē octauam eius b: et coaceruatus fiat e. cōtinet igit e numerum c / et partem eius octauam. quare e c tonus. et quia tonus e c superat semitoniū minus d c
+
+<vocab>semitonium minus, semitonium maius, sesquiseptimadecima, sesquioctauadecima, sesquinonadecima, tonus, Arithmetices, proportio</vocab>

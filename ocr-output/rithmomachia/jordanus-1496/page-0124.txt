@@ -1,0 +1,76 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>ab</sig>
+<meta>Marginal line number 20 is present on the right. Top center signature 'ab'. Abbreviations preserved where possible with modern equivalents (e.g. ō for o with macron).</meta>
+
+permutatiōes in lichanas & tritas in paranetas: cōstat ergo reliquas a predictis esse mobiles: vt par
+hypaten hypaton lichanon hyparon parhypaten meson lichanon meson triten synezeugmenon pa
+ranete synezeugmenon triten diezeugmenon paranete diezeugmenon triten hyperboleon paranete
+hyperboleō. Id tamen animaduerti dignū est q̄ cum per decimāquartam huius parhypate & trite in
+diatonicis et chromaticis respōdeant similiaq̄ possideāt interualla: eas nō vsq̄ adeo (vt cetere sunt)
+esse instabiles. Et proinde partī mobiles partimq̄ imobiles bono iure dici posse videntur.
+
+<margin>20</margin>
+¶ In tetrachordis diatonicis ab hypate hypaton pꝛimo limite consonantiarum: ad
+quartum usq̄ limitem ter diatessaron cōtinetur sed semel dumtaxat in stabilibus/im
+mobilibusq̄. Et ad quintū limitem idētidem ter diapente: semel in mobilibus/semel
+partim variabilis/et semel penitus inuariabilis atq̄ firma. ad octauum vero septies
+consonabit diapason: ter in imobilibus/et quater in mobilibus.
+
+---
+
+->Hypate hyp[at] & cōsequentes suis locis.<-
+
+| | | Semi | Ton⁹ | Ton⁹ | Semi | Ton⁹ | Ton⁹ | Semi | Ton⁹ | Ton⁹ | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Stabiles** | **b** | | | **e** | | | **h** | **i** | | **m** | | | **p** |
+| **Instabiles** | | **c** | **d** | | **f** | **g** | | | **k** | **l** | **n** | **o** | |
+
+---
+
+¶ Cum dicitur a pꝛimo limite ad quartū usq̄ limitē quintū/ac octauum: pꝛimus limes nō excludit
+sed quartū. quintū/ac octauū excludi intelligimus. Sint ergo b c d e f usq̄ ad p quattuoꝛ tetrachorda
+et b hypate hypaton/cetereroꝛe cōsequētes. Dico pꝛimo ab b vsq̄ e ter cōtineri diatessaron: sed semel
+solū in imobilibus. Nam per quartā huius b ad c continet semitoniū minus et c ad d tonum et d ad e
+tonū. ergo b ad e cōsonat diatessaron: eritq̄ b ad e pꝛima diatessarō cōsonantia reperta. Et cum ostē
+sum sit c ad d et d ad e esse duos tonos et per quintā huius e ad f sit semitoniū minus: ergo c ad f con
+sonat diatessaron. eritq̄ c ad f secūda diatessaron. Item mōstratus est d ad e esse tonus et e ad f semi
+toniū minus: et per quintā huius f ad g est tonus. ergo d ad g est diatessaron/eritq̄ d ad g tertia dia
+tessaron. Sed cū pꝛima harū triū que est b ad e sit ab hypate hypaton ad hypaten meson: quas mō
+strauit precedēs stabiles imobilesq̄: et secunda ab c in f parhypate hypaton in parhypaten meson: et
+tertia ab d in g lichano hypaton in lichanon meson. solū ter contineri diapente. Nam per decimā
+tertiā diapente tribus tonis semitoniōq̄ minoꝛe constat. sed per quartā & quintā huius b ad f solum
+duos tonos & duo semitonia minoꝛa ōtinet: q̄ duo semitonia minoꝛa ꝑ 24 scđm minus vno tono: cōmate
+restituit. q̄ vt b ad f diapente cōsonantiā ōpleat: plena deest apotome. nō ōstituit ergo b ad f diapēte.
+Itē c ad g per quartā et quintā huius cōtinet tres tonos qui sunt c ad d: d ad e: & f ad g: et vnum semi
+toniū minus quod est e ad f. igitur per decimā tertiā c ad g cōsonat diapēte. eritq̄ c ad g pꝛima diapēte
+et per easdem d ad h continet tres tonos: qui sunt d ad e: f ad g: et g ad h: & semitonium minus e ad f.
+ergo d ad h cōsonat diapente: eritq̄ d ad h secūda diapente. & ab e ad i per quartā et sextā cōsimiliter
+continētur tres toni et semitoniū minus. erit ergo e ad i tertia diapēte. ter igitur ab b vsq̄ ad f conti
+netur diapēte. sed cū pꝛima sit ab c parhypate hypatō in g lichanō meson. et parhypatas & lichanas
+mōstrauerit decimanona huius esse mobiles. erit ergo c ad g pꝛima diapēte in mobilibus constituta.
+& cum secunda sit ab d lichano pꝛincipalitū in h mesen: lichanos autē mobilis sit/et mese imobilis: se
+cunda igitur diapēte partim variabilis existit. Et cũ tertia sit ab e hypate meson ad i paramesen que
+per eandē decimanonam stabiles mōstrate sunt. erit igitur tertia diapēte omnino stabilis atq̄ firma.
+¶ Tertio dico ab b hypate hypaton vsq̄ ad i paramesen septies cōtineri diapason: sed solū ter in imo
+bilibus/quater autē in mobilibus. Nam b ad i per quartā/quintā et sextam huius cōtinet quinq̄ to
+nos et duo semitonia minoꝛa. ergo per vicesimāpꝛimā tertiꝛ b ad i cōsonat diapason/eritq̄ b ad i pma
+diapason. Et per idē c ad k: d ad l & e ad m: singule intercipiūt quinq̄ tonos et duo semitonia minoꝛa
+erit ergo c ad k secūda diapason. et d ad l tertia. & e ad m quarta. sed per quartam/quintā/sextam atq̄
+septimā simul f ad n similiter continebit quinq̄ tonos & duo semitonia minoꝛa. similiter et g ad o & h
+ad p. erit ergo quīta diapason f ad n. sexta g ad o. et septima h ad p. igitur ab b ad i vsq̄: cōtinetur sep
+ties diapason. atqui pꝛimam pꝛebent hypate hypaton & paramese diezeugmenō. et quartam hypate
+meson & nete diezeugmenō. et septimā mese & nete hyperboleō. hypatas autem mesas paramesas et
+netas mōstrauit decimaoctaua imobiles atq̄ stabiles. igitur inter illas septē diapason cōsonantias:
+diapason ter in imobilibus reperir. Sed secūdam pꝛebent parhypate hypaton et trite diezeugmenō
+Tertia lichanos hypaton et paranete diezeugmenō. Quintam parhypate meson & trite hyperboleō
+Sextā lichanos meson et paranete hyperboleon sed decimanona parhypatas/tritas/lichanas & para
+netas: mōstrauit esse mobiles. igitur inter illas septem cōsonantie diapason vices: quater in mobilib⁹
+mutabilibusq̄ facta reperitur: quod est totum pꝛopositum. ¶ Quod autem diuus Seuerinus sapientū
+latinoꝛū disciplinas sectantiū pꝛimus: quē & in hoc opere quātum valem⁹ imitamur suis disciplinis
+nō parū adiuti decimotertio capite quarti sue musices species diapēte numero eas quattuor fa
+ciat: id introductoꝛie factum putetur: vbi pꝛecisam nō curauit veritatē. sed cōmunem secutus illic est
+extimationē. quod facile ex eius superioꝛi determinatione cognoscitur. hic autem nō introductionis
+sed exacte determinationis locus est.
+
+<vocab>diatessaron, diapente, diapason, hypate hypaton, parhypate, lichanos, mese, paramese, trite, paranete, nete, Seuerinus (Boethius), tetrachordis, diatonicis, chromaticis</vocab>

@@ -1,0 +1,26 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>384</page-num>
+<header>Das Vierte Buch / 2. Cap:</header>
+<warning>Significant ghosting and bleed-through from the verso page is visible across the center and bottom of the sheet, though the primary recto text remains legible.</warning>
+<meta>catchword: Das</meta>
+
+Soldaten / mit des K. Schützen / und deut Schach : Der Schwar=
+ße / ziehet auf ihn / (umb / den König / zu bedecken) der K. Schützen /
+auf drey und funfzig : Der Weiſſe / (umb denſelben zu entsetzen)
+nimt / mit der Königin / der S. K. Soldaten / bringet ſein Spiel / hie=
+durch / in eine gute ordnung / und kan den Weiſſen / welcher / ſich nuhr
+zu vertheidigen / und zu verſchantzen / mehr / dan Ihn / zu verletzen /
+oder anzugreiffen / muß acht haben / ſicher und ohne gefahr / beſchedie=
+gen / und alſo / ohne ein ſonderliches nachdencken / das Spiel ge=
+winnen.
+
+->n. 2. 3. <- ->n. 6. 7.<-
+
+<image-desc>Two square 8x8 grids representing chess boards are printed side-by-side to illustrate positions. 
+
+The left grid, labeled "n. 2. 3.", contains piece abbreviations in specific squares: 'SR' (Schwarzer Roche/Rook), 'SS' (Schwarzer Springer/Knight), 'SK' (Schwarzer König/King), 'WR' (Weiſſer Roche), 'WS' (Weiſſer Springer), and 'WK' (Weiſſer König). The grid also includes alphanumeric markers for specific squares: 'WS' appears in the middle of the board, 'S 8' is on the seventh file, 'j 8' on the sixth, and 'j 3' on the fourth.
+
+The right grid, labeled "n. 6. 7.", shows a more advanced game state. It utilizes the same abbreviations but with pieces scattered across the board. Key markers include the number '46' in the upper half and various 'WS' and 'SS' pieces positioned in the central ranks.</image-desc>
+
+<vocab>Schach, König, Königin, Schützen, Soldaten, Roche, Springer</vocab>

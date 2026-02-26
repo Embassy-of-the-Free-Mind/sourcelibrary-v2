@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>377</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<image-desc>A decorative horizontal woodcut headpiece depicting two long-necked birds, possibly cranes or phoenixes, facing an ornate central vase filled with flowers and scrolling foliage.</image-desc>
+
+<margin>1.cap:</margin>
+
+# Das Vierte Buch /
+# Der Beschreibung / des Schach-Spieles.
+### Das Erste Capittel.
+### Von der Ersten Art zu spielen / wan einer / nuhr einen Vortheil genommen / und nicht außgegeben hat.
+
+<image-desc>A large decorative historiated initial 'E' featuring scrolling vines and floral motifs.</image-desc>
+
+Es sey nuhn genug / von den gewöhnlichen / und beeden Spielern / gleichen Arten / und weysen / zu spielen : Folgen itzo / die sonderbahre : wan nemlich / ein Spieler / dem andern / einen Vortheil gibt / oder von demselben nimt. Es werden aber / derselben / für andern sechse / so wol nach des Authoris, alß des Damiani, anleitung / (doch diese / mit gründlicher und volliger verbesserung) in folgenden acht Capitteln / fürgestellet / und mit denselben / der Bericht / von dem kleinen Currier-Spiel / geschlossen.
+
+Die Erste Art / belangend : so entstehet dieselbe / wan Einer / unter den Spielern / (zum Exempel / der Weisse / ) nuhr einen Vortheil / alß etwa zween Züge / im anfange des Spieles / zu gebrauchen : genommen und bekommen.
+
+<margin>1.</margin>
+Ziehet nuhn der Weisse / zum anfange / und zugleich / des K. und der K. Soldaten : diesen / auf neun- und zehnen / auf acht und zwanzig : so sol der Schwarze / des K. und der K. Soldaten / auf ihren feldern / verbleiben lassen / (Dan Er sonsten / seine Steine / selber einsperren / und dem Weissen / damit / noch mehr Züge / zum Vortheil / geben würde) und seiner K. Schützens-Soldaten / (umb / was der Weisse / weyter fürzunehmen / im willen habe / zu erfahren) auf sechs und viertzig / rucken : Der Weisse / ziehet /
+
+<sig>Bbb ij</sig>
+<meta>catchword: der K.</meta>
+
+<vocab>Schach-Spiel, Damiani, Currier-Spiel, Weisse, Schwarze, K. Soldaten, Schützens-Soldaten, Vortheil</vocab>

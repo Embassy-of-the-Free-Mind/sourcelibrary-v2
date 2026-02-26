@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>21</page-num>
+<header>DES PHILOSOPHES.</header>
+
+## Des superpartients.
+
+Tout ainsi que dessus auons dict que les pre-
+mieres tables quarrées ou sont contenus les
+nombres requerans en proportion superpartiente
+se trouuerõt par l'addition des deux nombres qui
+procedent en proportion superparticuliere, sem-
+blablement en vseras en ceste disposition: Mais
+pour trouuer les dernieres tables de leurs nōbres
+requis, faudra choisir en chaque rengée les deux
+tables des nombres qui estoient requis aux deux
+proportions desia disposées, sçauoir est de la pro-
+portion multiplice & superparticuliere, et pour-
+ce q̃ tous les nombres requis sont nombres quar-
+rez, prẽdras les racines d'iceux deux nombres re-
+quis precedens, & les adiousteras, Apres multi-
+plieras en soy tout le prouenu, et auras les nōbres
+requis pour la proportion superpartiente. exẽple ie
+veulx auoir le nombre requis qui duict apres .15.
+à l'endroit de deux en premier lieu, ie choisi les
+deux tables des nōbres requis, aux deux propor-
+tions multiplices & superparticuliere qui sont
+desia disposées en icelle rẽgée sçauoir est 4 & 9.
+desqls la racine est 2 et 3. apres ie adiouste icelles
+& prouiẽt 5. duquel nombre le quarré est 25. qui
+sera conuenable pour monstrer le nombre requis
+en la proportion superpartiente. & ainsi pourras
+
+<vocab>superpartients, superpartiente, superparticuliere, multiplice, quarré, racine</vocab>

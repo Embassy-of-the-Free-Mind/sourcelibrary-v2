@@ -1,0 +1,19 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, IEV</header>
+
+nombres estans ainsi disposez, quelque table des
+tiennes se trouuoit entre deux qui couurist &
+empeschast ta prinse, soudainement que tu au-
+rois ladicte empeschante par son mouuement
+regulier & descouuert ton 4, prendras le 12:
+& par mesme raison se peut descouurir l'aduer-
+saire & prendre ton 4, si estoit à luy à iouër,
+sans toutesfois transporter les tables prenantes
+au lieu des prinses: Car on ne doit iouër deux fois
+& à ces prinses seront propres les nombres con-
+tenus en la table que dessus auons mis en la prin
+se d'assault, semblablement celles qui s'ensuy-
+uent par la diuision.
+
+<vocab>Rithmomachie, iouër, prinse, diuision, nombres, tables</vocab>

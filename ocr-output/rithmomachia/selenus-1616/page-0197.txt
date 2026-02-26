@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>167</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin>
+zu bemechtigen. Doch sol Er nicht leichtlich/ aufz des Rochens felde/ weichen. Dan der gedachte Soldat / alszdan zu keiner Königin/ kan gemachet/ minder auf die weyse/ (dan der König/ nuhr eingeschlossen wird) Schach=Mat werden. Hilft also oftmaln/ der Ort mehr/ dan die tapferheit/ oder des Feindes vermögen.
+
+Wan aber Einer/ von den Schach=Ziehern / nachdem Sie viele Steine verloren/ und der Eine/ so viel derselben noch hat/ alsz der Ander/ und also das Spiel/ auf die letzte/ gleiche starck/ auf beeden seiten ist/ die Steine aufnimt/ und zu sich ziehet : Der Ander aber/ sich dadurch/ (umb dasz seine Steine etwa besser/ alsz dessen/ der sie aufgehoben hat/ gestanden) verkürtzet zu seyn/ vermeinet/ und zu demselben saget: Habt ihr das Spiel/ auszgespielet/ Ich hette es noch wol gewinnen können ? und derselbe replicirend fraget / was Er noch weiter/ auf das Spiel/ setzen wolle? darauf der Ander/ eine Krone/ oder Ducaten/ mehr anbeut / und sich/ dasz Er das Spiel/ gewinnen wolle/ anheissig machet : So ist dabey eine bedingung / dadurch der jennige/ welcher dieselbe/ nicht halten wird/ beede/ sein erstes/ und dieses letzte Spiel/ verlieret. Der beste weg nuhn/ dieses bedingte Spiel/ zu gewinnen/ ist der : dasz einer des Andern Steine/ immer wegnehme/ gegen seine verwechsle/ das Spiel/ zu einem tod=Spiele bringe/ und also/ durch dieses mittel/ die beygesetzte gelder / (in erwegung/ der Ander/ sich verpflichtet/ und verbunden hat/ Was zu geben) gewinne. Musz demnach ein jeder zu sehen / wie Er/ eine solche bedingung annehme. Dan der jennige/ welcher dieses bedinge/ daran henget/ gibt dem Andern allezeit einen Vortheil/ es sey im anfange des Spieles/ oder darnach/ es gilt gleich.
+
+Wan nuhn das Spiel/ auf die letzte/ dergestalt beschaffen ist/ dasz man vermercken / und abnehmen kan/ dasz es keiner zu gewinnen vermag/ und gleichwol einer/ unter den Spielern/ es etwa noch zu erhalten/ vermegnet/ und derwegen/ solches/ nicht wil/ für gleich achten/ noch ein newes Spiel anfahen/ besondern seine Steine/ umb den feind zu ermatten / und nachlässig zu machen/ hin und wider rucket/ alszdan und nicht ehe/ sol man einen termin/ von funfztig gezähleten Zügen/ welche die beeden Kämpfer/ noch verrichten dörfen/ setzen und ordnen. Dan diese züge/ alle mittel und wege/ die man zu gewinnen haben möchte / noch zu versuchen/ genugsam seynd. Sol man demnach / wan dieser Termin, den Sieg zu erhalten/ nicht zulangen wil/ nach der fürnehmen Spieler meynung/ das Spiel für gleich achten/ die Steine aufnemen/ und ein newes anfahen/ 2c.
+
+<sig>L 2</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Schach-Ziehern, König, Königin, Soldat, Rochens felde, Schach-Mat, Ducaten, Krone, funfztig Züge, tod-Spiel</vocab>

@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>432</page-num>
+<header>Das Vierte Buch/ 9. cap.</header>
+<meta>catchword: Das</meta>
+
+” Der achtôw jeklicher han
+” Sol vor jm ein Vendelin
+” Die zellent / so muͤgent ir sechzehen sin/
+” Das wirt jetwedert achter me
+” Die tünd zu dien/ die ich namô e
+” So werdent ir/uf das bret ze vil
+” Alsz ich uch bescheiden wil.
+” Und ich sach an dem Buche/ <gloss>(verstehe des Fr. Iacobi)</gloss> stan
+” Das Brett/ sol nit me Velden han
+” Wan vier und sechszig uñ wenn es stat
+” Alsz mans von erst gesetzet hat
+” So sol alsz menges lere wesen
+” Alsz vol ist / das hab ich gelesen
+” Daich es vand an dem Buche stan
+” Darab ich es genomen han
+” Und darumbe duncket mich
+” Disz si gerechter sicherlich
+” Dasz da hat minr Steine
+” Wan es ist ôch gemeine
+” War ich je kam in dehein lant
+” Doch ist mir/ze guter masz bekant
+” In Proventz und in franckenrich
+” Und in Kurwalchen. Doch gesach ich
+” Wie dasz da mere Steine hat
+” Wan ze Costentz in der Stat
+” Da sach ich eins/ kein anders nie
+” Wan das. War ich reit oder gie
+” Was jeman andersz hat gesehen
+” Dem gan ichs wol/ wil erz versehen
+” Och wën ich wer sin mer gesin
+” Der Meister der disz buchelin
+” In Latin hat gedicht
+” Er hetts des mer / alsz wol bericht
+” Alsz das minrn / dasz wenn ich
+” Jedoch wolt ich nit sicherlich
+” Das sin icht mer were
+” Wan mir ist dis ze swere
+” Desz ich mich hab angenomen
+” Ich môcht im nimer ze ende komen
+” Were sin icht mere sicherlich
+” Dasz minder / sere bekümert mich
+” Wan min Kunst ist ze kleine
+” An dem minsten Steine
+” Dett ich zeschaffenne ze vil
+” Dasz ich berichte wol.
+
+<vocab>Fr. Iacobi, Jacobus de Cessolis, Schach, Schachbrett, Steine, Proventz, Franckenrich, Kurwalchen, Costentz</vocab>

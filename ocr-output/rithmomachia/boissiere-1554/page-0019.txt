@@ -1,0 +1,13 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+Oras tu tous les nombres & proportiõs distinguées appartenãtes à la proportion multiplice designée par les premieres 16. tables rondes: reste que venions aux particulieres.
+
+### Des superparticulieres.
+
+Proportion superparticuliere, est quand un nombre contient un autre nombre une fois & en outre une de ses parties: comme un liard contient un double une fois & une de ces deux parties, qui est un tournois. Et à ceste proportion superparticuliere bien sera conuenable la figure du triangle lequel (apres la ronde) obtient le premier lieu. Apres donc auoir separé les triangles d'une couleur de l'autre: trouueras les huict nombres conuenables à marquer les huict premieres tables en ceste proportion superparticuliere, & ce feras par l'addition des deux nombres contenus en une chacune desdictes precedentes proportions multiplices, obseruant & appliquant les unes tables aux autres de mesmes livrée & couleur. Et d'autant qu'icelles huict tables desirent huict autres, pour avec elles parfaire la proportion superparticuliere, seront appellées requerantes.
+
+<meta>catchword: Exem-</meta>
+
+<vocab>Rythmomachie, proportion multiplice, proportion superparticuliere, triangle, liard, double, tournois, requerantes</vocab>

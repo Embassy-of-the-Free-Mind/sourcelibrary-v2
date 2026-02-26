@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>217</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>13.cap:</margin>
+Der Schwartze / (des K. Soldaten / weiter zu beschützen) dieselbe
+auf achtzehen : Der Weisse / der K. Reuter / (mit welchem Er /
+die S. Königin / wan Er ihn folgendes auf zwölfe : oder / so ferne der
+Schwartze / mit des K. Schützen / seiner K. Soldaten / genommen /
+auf acht und zwanzig / ziehet : in seine gewalt / bringet) auf zwey und
+zwanzig. Ob nun gleich / in diesem letzten fahl / die S. Königin /
+auf zwey und vierzig / gerucket wird : so beut / der Weisse / mit der
+K. Reuter / auß funf und vierzig / Schach / und ertappet dieselbe / ent-
+weder mit des K. Schützen / oder Soldaten.
+
+<margin>35.</margin>
+Wan aber der Schwartze / nicht den Schützen / auf 38, (n.10.)
+besondern des K. Reuters-Soldaten / auf vier und dreyssig / ziehet :
+so spielet / der Weisse / seines K. Reuter / auf die S. Königin / auf
+neunzehen : Der Schwartze / dieselbe / auf drey und dreyssig : Der
+Weisse / der K. Soldaten / auf neun und zwanzig : Der Schwar-
+tze / des K. Reuter / auf der W. K. Soldaten / auf drey und vierzig :
+Der Weisse / (denselben zu beschützen) die Königin / auf zwölfe : Der
+Schwartze / der K. Reuter / auf der W. K. Soldaten / auf sechs und
+vierzig : Der Weisse / des K. Soldaten / auf des S. K. Reuter / auf
+sechs und dreyssig : Der Schwartze / denselben / auf sechs und zwan-
+zig : Der Weisse / der K. Reuter / auf zwey und zwanzig : Der
+Schwartze / des K. Schützen / auf zwey und funfzig : Der Weisse /
+der K. Reuter / auf der S. K. Schützens-Soldaten / auf neun und
+dreyssig : Der Schwartze / (denselben zu beschützen / und / daß dieser
+W. Reuter / seinem Könige / nicht Schach gebe / noch seiner K. Ro-
+then / erlange / zu verhindern) des K. Schützen / auf ein und sechßzig :
+Der Weisse / der K. Soldaten / auf der S. K. Reuter / auf sieben
+und dreyssig : Der Schwartze / denselben / auf des W. K. Schüt-
+zen / (welches dan / ein guter Zug scheinet) auf vierzig : Der Weisse /
+den König / (auf daß Er / seinem Rochen / mit demselben / ins künf-
+tige / möge beystand leisten) auf zwey : Der Schwartze / die Köni-
+gin / (auf daß Sie nicht endlich gefangen genommen werde) auf ein
+und vierzig : Der Weisse / des K. Rochens-Soldaten / auf des S.
+K. Reuter / auf siebenzehen : Der Schwartze / denselben / (auf daß
+Er nicht / mit ihm / das gantze Spiel / verliere) auf des W. K. Schüt-
+zen / auf zwanzig : Dahero dan der Weisse / ein gutes wolgeord-
+netes Spiel hat / mit welchem Er / das Gegentheil / so fern Ers ver-
+stehet / leichtlich erlegen / und seine scharte / wegen verlustes / des K.
+Schützens-Soldaten / wol wider außwetzen wird.
+
+<sig>Ee ij</sig>
+<meta>catchword: Wan</meta>
+
+<vocab>Schach, Königin, Reuter, Soldaten, Schützen, Rochen, Weiss, Schwartz</vocab>

@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>441</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>10. cap:</margin>machen) auf funf und vierzig : Der Schwarze/ den König/ auf sechs und funfzig :
+Der Weisse/ beut / mit dem Rochen / auß achte / Schach : Der Schwarze/ ziehet/ den König/ auf sieben und viertzig.
+Der Weisse/ seinen König/ (umb / das sechs und viertzigste feld / zu beschützen) auf drey und funfzig : Der Schwarze/ den König/ auf acht und dreyffig :
+Der Weisse/ den König/ (umb / das sieben und viertzigste feld / zu bewahren) auf vier und funfzig : Der Schwarze/ den König/ auf sieben und dreyffig :
+Der Weisse/ beut/ mit dem Rochen / auß viertzig / Schach : Der Schwarze/ rucket/ den König/ auf vier und viertzig :
+Der Weisse/ den Rochen/ (umb/ das drey und viertzigste feld/ in acht zu nehmen) auf fünf und dreyffig : Der Schwarze/ den König/ auf zwey und funfzig :
+Der Weisse/ einen Soldaten/ (von 51) auf neun und funfzig/ und beut / mit demselben / gleich einer Königin / Schach : Der Schwarze/ setzet/ den König/ auf vier und viertzig :
+Der Weisse/ beut/ mit der Alten Königin/ auß ein und funfzig/ Schach-Mat.
+
+8.) Schliesslich thut/ der Author, den vorigen sieben Exempeln/ noch folgende zwey/ hinzusetzen : Alß nemlich (1.) wie der Weisse/ mit seinen beeden Rochen/ (welche / auf sechs- und acht und dreyffig / gestellet) und mit den beeden Reutern/ (welche / auf zwanzig : und zwey und zwanzig / gezogen) des Schwarzen Könige/ (welcher / auf neun und zwanzig / stehet) im vierten Zuge / Schach-Mat/ geben könne.
+Der Weisse/ rucket/ einen Reuter/ (von 20) auf funfe : Der Schwarze/ den König/ (vermeygnend/ hinter dem andern Reuter/ auß vierzehen/ aufzureissen) auf ein und zwanzig :
+Der Weisse/ denselben/ (umb das dreyzehende feld/ zu beschützen : von 22) auf sieben : Der Schwarze/ den König/ auf neun und zwanzig :
+Der Weisse/ den letztgedachten Reuter / auf vier und zwanzig : Der Schwarze/ den König/ auf ein und zwanzig :
+Der Weisse/ einen Rochen / (von 38) auf sieben und dreyffig / und beut / (dieweyl der Schwarze / seinen König / auf vierzehen : zwey und zwanzig : und dreyffig / wegen der beeden W. Reuter/ nicht ziehen kan) Schach-Mat.
+
+<meta>catchword: 9.) Wie/</meta>
+
+<vocab>Schach, Schach-Spiel, Rochen, Reuter, Soldaten, Königin, König, Schach-Mat, Exempeln</vocab>

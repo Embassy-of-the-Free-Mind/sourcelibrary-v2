@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>236</page-num>
+<header>Das Ander Buch/ 14. cap:</header>
+
+vierzig : oder drey und dreyſſig / Schach-Mat gebe ) beſon-
+dern / nimt denſelben W. Reuter / mit der K. Rochen : der
+<margin>18.</margin>Weiſſe/denſelben/mit dem Könige : * der Schwartze/rucket ſei-
+nen König/auf ſieben und funfzig : der Weiſſe/den König/auf ein
+und funfzig : und gibt folgendes/ mit des K. Rochen/ auß drey und
+dreyſſig/ (es laſſe der Schwartze/ den König ſtehen / oder rücke
+ihn/ auf neun und vierzig ) ungehindert Schach-Mat.
+
+<margin>19.</margin>Rucket aber der Schwartze/ den König/ auf ein und vierzig/
+und nicht auf 57: (n.18.) ſo ziehet der Weiſſe/ den König/ auf fünf
+und dreyſſig: der Schwartze/ ſeinen König/ auf neun und vierzig:
+Der Weiſſe/ des K. Rochen/ auf zwey und dreyzig : der Schwar-
+tze/ den König/ auf ſieben und funfzig: der Weiſſe/ ſeinen König/
+auf drey und vierzig: der Schwartze/ den König/ auf neun und vier-
+zig: der Weiſſe/ den König/ auf ein und funfzig: der Schwartze/
+den König/ auf ſieben und funfzig: der Weiſſe/ gibt/ mit ſeines K.
+Rochen/ auß ein und vierzig/ Schach-Mat : ziehet dan der Schwar-
+tze/ ſeine Soldaten/ zwiſchen obgedachte züge: ſo kan der Weiſſe/
+mit ſeinen Soldaten/ weyl deren/ eben ſo viele ſeynd/ ihnen den Paß
+ſperren/ und ſein Vornehmen/ weyl Er den S. König/ in der ecke hat
+eingeſchloſſen/ gleichwol erreichen. Es wird ſonſten/ dem Schwar-
+tzen/ zu rahten ſeyn/ daß Er/ mit der K. Rochen/ die Soldaten/ ſo
+oft Ers füglich thun kan/ (wie ſich dan/ in den vorigen n n. und zü-
+gen/ etliche mahl/ gelegenheiten erzeiget) auß der W. Königin quar-
+tier/ nuhr wegraume.
+
+<margin>20.</margin>Wan aber der Weiſſe/ den Rochen/ auf 36. (n. 7.) nicht ziehet/
+beſondern der K. Reuter / mit ſeines K. Reuters-Soldaten / auß
+ſechs und zwantzig/ verthetiget : ſo ſetzet der Schwartze/ der K.
+Reuters-Soldaten/ auf ſieben und vierzig: (vermeinend/ wan Er/
+mit der K. Schützen/ auß acht und vierzig/ Schach-bieten könte/ des
+W. K. Rochen/ zu ertappen) der Weiſſe/ (dieſem vorzubawen) ru-
+cket/ den König/ auf zwantzig: der Schwartze/ des W. K. Reuters-
+<margin>21.</margin>Soldaten/ zu erhaſchen) ſeinen König/ auf vier und dreyſſig: * der
+Weiſſe/ (ihn zu beſchützen / ) den König / auf neunzehen: der
+Schwartze/ (in willens/ mit der K. Schützen / auß fünf und funf-
+zig/ Schach zu bieten/ und des W. K. Rochen/ zu erlangen) deſſen
+Soldaten/ auf acht und dreyſſig: der Weiſſe/ den König auf acht-
+zehen: der Schwartze/ der K. Schützen / auf fünf und funfzig:
+der Weiſſe/ beut/ mit des K. Rochens-Soldaten/ auß fünf und
+
+<meta>catchword: zwans-</meta>
+
+<vocab>Schach-Mat, König, Reuter, Rochen, Weiſſe, Schwartze, Soldaten, Schützen, Schach</vocab>

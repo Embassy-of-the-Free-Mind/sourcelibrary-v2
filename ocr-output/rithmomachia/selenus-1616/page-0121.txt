@@ -1,0 +1,52 @@
+<language>German</language>
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>91</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>M iij</sig>
+<meta>catchword: entsas</meta>
+
+<margin>10. cap:</margin>
+Ihre aigenschafte und tugende/ferner anbelangende: so wer-
+den/die Soldaten/welche/für dem Könige/und der Königin stehen/
+für die besten/den Scharmützel/mit dem Feinde/anzufahen/geach-
+tet: wie Sie dan auch/zur Brust-wehr/gegen die anläuffe des Gege-
+ners/umb demselben/den eingang und Paß/daß er nicht/über das
+ganze feld/hin und her/wie sonsten geschehen würde/schweiffen mö-
+ge/zu versperren/geordnet seynd/und kan man ihnen auch/sicher und
+leichtlich zu hülffe kommen: Werden Sie aber genommen/so muß
+man/an ihre stelle/so viel müglich/andere verordnen.
+
+Diesen nach/werden die Jehnige / welche für den Schützen
+stehen/fur gut erachtet: dan Sie/des Feindes vorhaben zu brechen/
+ihren Steinen die bahn zu eröffnen/den feind / in etwas irre zu ma-
+chen/und daß Er/mit solcher freyheit / nicht scharmützle / noch den
+seinigen/wie in manglung dieses/geschehen würde/zu hülfe komme/
+aufzuhalten/vermögen. Sie sind ferner/dem Könige/und der Kö-
+nigin näher/und dero/so wol auch ihrer beeder Soldaten/hüter und
+wächter:und wan Sie zu zeiten/ jah fast gemeinlich/in dieser stelle/
+treten müssen/tüchtig gnügsam/den König/zu verthetigen und zu
+bedecken: auch des Feindes Schützen/welche/die versetzung des Kö-
+niges/an einen sichern Ort/zu hindern sich unterstehen/den eingang/
+zu verlegen: Deßwegen Sie auch/(insonderheit aber/des Königess
+Schützens-Soldat/welchen die <term>Itali</term>, nicht vergebens <term>electum pedo-
+nam</term>, die außerwehlete/nennen: <term>Act: quaest: 6. n. 12.</term>) auf begehren/
+gemeinlich zum vortheil/gegeben werden: Sintemahl der König/
+wan dieser hinweg/in grosser gefahr/umb gänzlich geschlagen und
+aufgereumet zu werden/sich befindet: Imgleichen/muß Er/den
+Schach/von des Andern Königin/und Steinen/welche dem Könige/
+etwa zusetze wollen/auf dieser seite/allein aufhalten/und wird von
+des Königes-Reuters-Soldaten/nuhr entsetzet. Endlich/wan der-
+selbe verloren/ists auch unmüglich/an dieselbe seite des platzes/zur
+erhaltung des Spieles/ein glied von Soldaten/(welches dan demsel-
+ben / einen grossen schaden verursachet) hinwider zu machen. Ob
+nuhn wol der König/auf die andere seite des Platzes/in der Königin
+quartier/und dero Schützens feld/daselbsten mehr Soldaten/ihm zu
+helffen/vorhanden/kan gezogen werden/so muß man doch mit ihm /
+biß dahin/mehr Züge/alß wan Er/nach seinem quartier/dahin Er
+nuhr ein feld hat/gerücket würde/verrichten. Dahero Er/so ferne
+sein Führer/mit einem/welcher sich/eines andern vergebliche Züge/
+zu seinem vortheil/wol kan zu nütze machen/spielet / bald wird erle-
+get werden. Der Königin-Schützens-Soldat aber / hat mehr
+
+<vocab>Schach-Spiel, Soldaten, Schützen, König, Königin, Scharmützel, electum pedonam, Brust-wehr</vocab>

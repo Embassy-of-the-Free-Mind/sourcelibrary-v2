@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>colophon</page-type>
+<meta>Heavy show-through from the verso page. This is the final page of William Fulke's 1563 book on Rythmomachia.</meta>
+
+# The Philosophers game.
+
+| | |
+|:---|:---|
+| One stāderd of the odde, conteyneth. | 174. |
+| Two standers. | 348. |
+| Three standerds. | 522. |
+| Foure standerds. | 696. |
+| Fyue standerds. | 870. |
+| Sixe standerds. | 1044. |
+| Seuen standerds. | 1218. |
+| Eyght standerds. | 1392. |
+| Nyne standerds. | 1566. |
+| Tenne standerds. | 1740. |
+
+You maye vse anye of these syxe kyndes of common victorie, in euery one of the three kyndes of playing.
+
+->FINIS.<-
+
+->Prynted at London by Rowland Hall,<-
+->for Iames Rovvbothum, and are to<-
+->be solde at his shoppe in<-
+->chepeside vnder Bovve<-
+->churche.<-
+->1563.<-
+
+<vocab>The Philosophers game, Rythmomachia, standerd, Rowland Hall, Iames Rovvbothum, Chepeside, Bovve churche, common victorie</vocab>

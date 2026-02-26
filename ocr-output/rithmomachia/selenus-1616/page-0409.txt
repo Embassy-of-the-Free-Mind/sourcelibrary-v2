@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>title-page</page-type>
+
+<image-desc>An ornate engraved title page for the fourth book of a treatise on chess. The central text is framed by an architectural structure. At the top, two cherubs sit atop the cornice, flanking a square chessboard. On the left side, a bearded man in scholarly robes holds a large book; he stands on a pedestal inscribed "Xerxes Philomater." On the right, a royal figure in classical military attire and a turban stands on a pedestal inscribed "Amilinus Evilmerodach." At the bottom of the frame, an oval cartouche contains the Latin publication details.</image-desc>
+
+<margin>Xerxes Philomater.</margin>
+<margin>Amilinus Evilmerodach.</margin>
+
+❦ Das ❦
+# Vierte Buch/
+->der Beschrei-<-
+->bung/des Schach-<-
+->Spieles.<-
+❦
+
+---
+
+->LIPSIAE,<-
+->Sumtibus HENNINGI<-
+->GROSSII Junioris.<-
+
+<vocab>Vierte Buch, Beschreibung, Schach-Spiel, Xerxes Philomater, Amilinus Evilmerodach, Lipsiae, Henningi Grossii Junioris</vocab>

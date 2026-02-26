@@ -1,0 +1,40 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>45</page-num>
+<header>Vom Schach-Spiel.</header>
+<margin>3. cap:</margin>
+
+<image-desc>A rectangular woodcut headpiece featuring elaborate symmetrical scrollwork, foliage, and several small human faces/masks integrated into the design.</image-desc>
+
+## Das Dritte Capittel.
+### Von der Abtheilung dieser Kunst.
+
+Was in gemein / von dieser Schach-Kunst / Natur und Wesen / uhrSprung und Nahmen / zu wissen / nötig / wird / in vorigen Capitteln / zur genüge außgeführet seyn.
+
+Wie man aber / zu derselben gelangen mag / auf was Art und weyse / dieselbe / ordentlich fürzutragen / und erlernet werde / ob es wol schwer scheinet / so wird uns doch / die Kunst selber / wan wir uns nuhr / daß sie unter die Zunft derer gehöre / so man Artes Operatrices nennet / auß dem vorigen ersten Cap : erinnern / solches an die hand geben.
+
+Dan von denselben / Averroës lib: 1. c. 1. Colliget, also schreibet:
+
+> Artes Practicæ, in quantùm sunt Artes, continent tria: cc
+> Primum est, scire Loca suorum Subjectorum; Secundum est, scire cc
+> Finem quæsitum, ad adducendum ipsum, in Locum subjecti; Ter- cc
+> tium est, scire Instrumenta, cum quibus valeamus ducere, illum cc
+> Finem, in Locum subjecti. Das ist: cc
+> Die Künste / so auf einen Handel und Werck gerichtet / cc
+> so weit sie aigentlich Künste seynd / begreiffen in sich dreyerley / cc
+> welche wol auf- und anzumercken: Als/ furs Erste / daß man cc
+> wisse und erlerne / die dinge / welche einer Kunst / so viel zu ih- cc
+> rem behuf vonnöten seyn mag / unterworffen seynd: Zum An- cc
+> dern / daß man den Zweck / welchen diese Kunst / ihr zum nech- cc
+> sten / fürgesetzet / und durch welchen / der Gebrauch / der ietweh- cc
+> renden dinge / fürgebildet / erkenne : Letzlich / daß man verstehen cc
+> lerne / die mittel und wege / mit und durch welche man / ange- cc
+> deuteten Zweck / denselben dingen beybringen / und also das- cc
+> jehnige / was man sich fürgesetzet / erlangen könne. ec
+
+Die Ersten zwey / gehören / so zu reden / zur wissenschaft: das Letzte / wan neben den Mitteln / der Gebrauch / und die Handgriffe / zugleich mit angewiesen werden / sonderlich zum wercke selber.
+
+Diesem nach / wollen wir zu erst / dieselbe sachen / welche /
+<meta>dieser</meta>
+
+<vocab>Schach-Spiel, Averroës, Colliget, Artes Practicæ, Subjectum, Finis, Instrumenta, Schach-Kunst</vocab>

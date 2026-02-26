@@ -1,0 +1,59 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>IIII</page-num>
+
+sonāntias diapēte & diapason in duo equa esse partitas. et re $\times$ a hoc pacto $\times$ a schismata atq$\mathfrak{z}$ diaschis-
+mata / et dieses tetrartemerias reperias assignat$\mathfrak{s}$ cōmatis | dieseos | atq$\mathfrak{z}$ cōpleti semitoniū interuallis
+et sumptis vt in precedentibus factum est medijs $\mathfrak{p}$portiōalibus chordis. sed hẹc statim ali$\bar{\mathfrak{q}}$tulum in
+geometricis exercitatis nota esse possunt. Hec aut̃ postea$\bar{\mathfrak{q}}$ repereris disce (si libet) per chordam in
+voce tonum mediare | et semitonium: et quācunq$\mathfrak{z}$ voles in arte musica consonantiam.
+
+->$\mathbb{C}$ Tertij elementorum Musices finis.<-
+
+---
+
+<margin>b</margin>
+Armonica regula instrumentū est: quo cum (ratiōis adhibito iudicio)
+consonantie / consonātiarūq$\mathfrak{z}$ partes: in chorda perquirūtur. Ad melozū
+tria sūt genera: Diatonicum / Chromaticū / Enarmonicū. Diatonicum
+genus: melos est cuius partitio per semitonium minus & duos tonos
+cōtinue pcedit. Chromaticum: qd̀ per duo inequalia semitonia & tri-
+hemitonium cōscēdit. Enarmonicū vō: qd̀ per duas dieses conscēdit
+et ditonum. Diesis hoc in loco semitonij minoris medietas est: ex differētię extremō$\mathfrak{z}$
+habitudinis eius: partitione $\mathfrak{p}$ueniens: que & tetrartemeria dicta est. sed vt eay$\mathfrak{z}$ semp
+maior que acutiōr / et minor $\bar{\mathfrak{q}}$ grauiōr: reperiatur necesse est. Voces / nerui / chordę /
+spacia: hoc ordīe à graui in acumen nitentia in vnoq$\mathfrak{z}$ melorum gñe sunt nūcupata.
+
+| Grece nuncupationes | Nuncupationes latine. |
+|---------------------|-----------------------|
+| $\mathbb{C}$ Proslambanomenos | Acquisitus |
+| Hypate hypaton | Principalis principalium |
+| Parhypate hypaton | Subprincipalis principalium |
+| Lichanos hypaton | Index principalium |
+| Hypate meson | Principalis mediarum |
+| Parhypate meson | Subprincipalis mediarum |
+| Lichanos meson | Index mediarum |
+| Mese | Media |
+| Trite syneuzgmenon | Tertia coniunctarum |
+| Paranete syneuzgmenon | Penultima coniunctarum |
+| Nete syneuzgmenon | Vltima coniunctarum |
+| Paramese diezeugmenon | Submedia disiunctarum |
+| Trite diezeugmenon | Tertia disiunctarum |
+| Paranete diezeugmenon | Penultima disiunctarum |
+| Nete diezeugmenon | Vltima disiunctarum |
+| Trite hyperbolion | Tertia excellentium |
+| Paranete hyperbolion | Penultima excellentium |
+| Nete hyperbolion | Vltima excellentium |
+
+$\mathbb{C}$ Monochordum: est qd̀ vnica chorda cōtinet modulationē. Tetrachordum: quod
+chordis quattuor. Polichordum vō: quod pluribus chordis id cōtinet $\bar{\mathfrak{q}}$ quattuor.
+vt pentachordum: qd̀ quinq$\mathfrak{z}$. hexachordum: quod sex. et ita de heptachordo / octo-
+chordo / ennachordo / decachordo / endecachordo / dodecachordo / tridecachordo / tes-
+saradecachordo / & pentadecachordo est intelligendum: qd̀ vltimum oīno quindecim
+constat chordis. $\mathbb{C}$ Proslambanomenos: est in vnoq$\mathfrak{z}$ genere: primo tetrachordorū
+grauissimus neruus adiūctus: à primo $\mathfrak{p}$imi tetrachordi neruo: toni intūallo distās.
+Tetrachordum coniūctū: est cuius principiū est precedentis tetrachordi finis. Disiū-
+ctum vō: cuius primordialis neruus in vnoquoq$\mathfrak{z}$ melorum genere: à primo $\mathfrak{p}$ece-
+dentis tetrachordi finali neruo: vno tono disiungitur.
+
+<vocab>Armonica regula, Diatonicum, Chromaticum, Enarmonicum, Diesis, Tetrachordum, Monochordum, Proslambanomenos, Hypate, Mese, Nete, Syneuzgmenon, Diezeugmenon, Hyperbolion</vocab>

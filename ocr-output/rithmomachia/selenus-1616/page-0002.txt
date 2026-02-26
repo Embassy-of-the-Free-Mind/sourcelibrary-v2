@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+
+2.° Gymn. 47<sup>a</sup>
+
+---
+
+->das letzte Blatt mit dem Druckervermerk fehlt<-
+
+<insert>
+<36611584710010 
+<36611584710010
+
+Bayer. Staatsbibliothek
+0, E 1
+</insert>
+
+<vocab>Druckervermerk, Bayer. Staatsbibliothek, Gymn.</vocab>

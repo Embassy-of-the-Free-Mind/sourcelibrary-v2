@@ -1,0 +1,47 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>39</page-num>
+<header>DES PHILOSOPHES.</header>
+
+| | |
+|---|---|
+| **D C B A** | **A B** *dyapenté* |
+| **2 3 4 6** | **B C** *dyateffaron* |
+| **4 6 8 12** | **A C** *dyapafon* |
+
+**A D** *dyapafon* & *dyapenté*.
+Les differences **C D** & **D A** *dyfdiapafon*.
+
+---
+
+<image-desc>A horizontal curly bracket spans the top of the following section.</image-desc>
+
+| | |
+|---|---|
+| **D C B A** | **A B** *dyateffaron* |
+| **6 8 9 12** | **B C** le tō qui eft cōmencemēt de Consonance. |
+
+**A C** *dyapētē*. **A D** *dyapafon*. **A**, au refpect de la difference **A C**, *dyapētē*. **C**, à la differēce **C D**, *dyfdyapafon*.
+
+---
+
+| | |
+|---|---|
+| **D C B A** | **A B** *dyateffaron*. |
+| **4 6 9 12** | **D C** *dyapenté* |
+
+**A C** *dyapafon*. **A D** *dyapafon* & *dyapētē*
+**A**, au refpect de la difference **C B**, *dyfdyapafon*.
+
+---
+
+<image-desc>A horizontal curly bracket spans the top of the following section.</image-desc>
+
+| | |
+|---|---|
+| **12 15 16 20** | **A C** *dyateffaron*. |
+| **D C B A** | **D** au refpect de la difference **A D**, *dyapenté*. **B** à la difference **A D**, *dyapafon*. **A** à la difference **A C** *dyfdiapafon*. |
+
+Il eny a encore aucunes comme 5, 9, 45, 81: ou bien, 9, 25, 45, 225, & autres semblables, lesquelles laifferons pour la recreation des plus fubtilz: lesquels (comme dit Faber) à limitation des chaffeurs, plus fe delectent à fuyuir & chercher
+
+<vocab>dyapenté, dyateffaron, dyapafon, dyfdiapafon, consonance, Faber, music theory, proportions</vocab>

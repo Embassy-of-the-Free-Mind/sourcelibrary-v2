@@ -1,0 +1,62 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<margin>
+<image-desc>Diagram for proposition 6: three horizontal line segments labeled d, c, b. Below b is a mark '1'.</image-desc>
+</margin>
+**Si duoꝝ quolibet in reliquum ducatur: quæ pducūtur equa esse necesse est.** <margin>6</margin>
+C Hec fere est octaua p̄mi sed paulo cōior ꝙ etiā ad minutias / fractiones se extendat. vt si a nūerus pars vel partes multiplicet b numerum ptem vel ptes et pueniat c: et b multiplicet a et proueniat d. dico c ⁊ d eē equālia. nā ex diffinitiōe erit c ad b sicut a ad vnū: ergo ꝑmuratim c ad a sicut b ad vnum. ergo ex ꝑuersiōe diffinitiōis b in a pducit c. est igit̄ d qđ fit ex b in a equū c. quod erat demōstrandū.
+
+---
+
+<margin>
+<image-desc>Diagram for proposition 7: two horizontal lines labeled c and b. To the right of c is the number 28. To the right of b are numbers 4 and 7. Below b is a '1'.</image-desc>
+</margin>
+**Productū ex duobus erit ad vtrūqƺ proportio a reliquo denoiata. ꝙ si eius ad alterū fuerit proportio a reliquo dicta: idem ex ductu alterius in alterum pducetur.** <margin>7</margin>
+C Ex duobus nūeris a in b pducatur c: dico proportiōem c ad a eē denoiatam ab b: et proportiōem c ad b esse denoiatam ab a. nam ꝑ p̄cedentē ex a in b fit c: et ex b in a fit etiā c. et ꝑ diffinitiōem ea ē ppor tio b ad vnū: que c ad a. at proportio b ad vnū denoiatur ab b: igitur ⁊ proportio c ad a denoiabitur ab b. et sīlit̄ ꝙ ex a in b fit c: ꝑ diffinitiōem que proportio a ad vnū: ea est c ad b. at proportio a ad vnū denoiā tur ab a: igitur pportio c ad b denoiabitur ab a. quod est propositum. Cōuerſum ꝑsīmili ꝑuersiō modo pbabit̄. Et ex hac ad quēlibet numerum quātūlibet multiplicem demōstrare poſſumus. capiēdo totum numerum ab vnitate quotus numerus multiplex ad nūerū ſit petitus ⁊ ducēdo numerum ab vnitate totum acceptū in nūerū aſſignatū. et per preſentem totus pueniet ad numerū aſſignatū multiplex.
+
+---
+
+<margin>
+<image-desc>Diagram for proposition 8: a complex arrangement of horizontal lines. Top lines are f (labeled 6) and e (labeled 3). Below is d (labeled 2) and b (labeled 4). At the bottom is c (labeled 12). A '+' symbol is placed between the b and c lines.</image-desc>
+</margin>
+**C Si proportio ex duabus cōposita: ex ductu vnius caꝝ in reliquam pducatur.** <margin>8</margin>
+C Ducere proportiōem aliquā in aliam: est ducere denoīationē vnius in denoīationē altius. hic duas pportiōes aliquā ꝙpoſitā pducē: est denoīatiōes illaz duaz pportiōū denoīatiōem ꝙpoſite pducē. Esto ꝙ pportio c ad a ꝙpoſita ex pportiōibꝰ c ad b ⁊ b ad a. dico pportiōez c ad a pduci ex ductu ppor tiōis c ad b in pportiōez b ad a. capio enī d denoīantē pportiōis c ad b ⁊ e denoīantē pportiōis b ad a et f denoīantē totiꝰ c ad a. qꝛ enī pportio c ad a denoīat̄ ab f: ergo ꝑ ſcđam ptem p̄cedēt̄ f in a facit c et pēadē e in a facit b. ergo ꝑ ſeptimam ſcđī ſicut c ad b ita f ad e: ſed d est denoīans pportiōem c ad b per hypotheſim. ergo ꝑ ſcđam partem p̄cedēt̄ d in e pducit f denoīans ſcz vnius illaz proportionū in denoīatiōē alterius pducit totius denoīatiōem. quod est propositum.
+
+---
+
+<margin>
+<image-desc>Diagram for proposition 9: four horizontal lines labeled f, e, d, b with numbers 16, 2, 8, 4 respectively in the margin next to them.</image-desc>
+</margin>
+**C Trium ꝑtinue proportionalium qđ fit ex primo in vltimū equū est ei: quod ex medio in se ducto pducitur.** <margin>9</margin>
+C Hec fere in vicesimaseptā secūdi mōstrata est: niſi ꝙ hec paulo latior est / atqƺ hic alio demōſtrandi modo innititur. Sint ergo a b c tria ꝑtinue proportiōalia / atqƺ ex b in ſe fiat d: et ſit e denoīans ppor tionis b ad a. dico equū eſſe qđ fit ex a in c: ⁊ b in ſe. nā qꝛ e denoīat proportiōem b ad a: etiā denoīabit proportionem c ad b. ergo ꝑ ſcđam ptem penultime e in b pducit c. ergo ꝑ octauam ſecūdi q̄ pportio d ad c ea est b ad e: ſed ꝑ eādē ſcđam ptē penultime a in e facit b. ergo per primam partem eiuſdē: a denoīat pportiōem b ad e: quare ꝑ proportiōem d ad c. ergo a in c per eiuſdē ſcđam ptem pducit d. constat igitur quod fit ex b in ſe: equū eſſe ei qđ fit ex a in c. et propositum.
+
+---
+
+<margin>
+<image-desc>Diagram for proposition 10: four horizontal lines e, d, b, c with numbers 12, 3, 6, 2. The number 4 is placed at the end of the line for c.</image-desc>
+</margin>
+**C Si primum ad sċđm sicut tertiū ad quartū: quod fit ex primo in quartum: equale est ei qđ ex secundo in tertium pducitur.** <margin>10</margin>
+C Hec ſile qđ viceſimaquinta ſecūdi pponit. Sit ergo proportio a ad b vt c ad d: et ex b in c fiat e. dico etiā eſſe q̄tum qđ fit ex a in d. ſit enī f denoīans proportiōem b ad a: denoīabit etiā pportiōem d ad c. ergo ꝑ ſcđaz partem ſeptime huius f in c ꝙſtituit d. ergo ꝑ octauam ſcđī e ad b ſicut d ad f. ſed ꝑ f in a per eādem ſcđam partem ſeptime huius facit b: ergo ꝑ primā ptē eiuſdē a denoīat pportiōem b ad f. quare ⁊ proportiōem e ad d. per ſcđam ergo partem eiuſdem a in d facit e. qđ est p̄poſitum.
+
+---
+
+<margin>
+<image-desc>Diagram for proposition 11: three horizontal lines a, b, c with numbers 2, 3, 2 and a '1' below.</image-desc>
+</margin>
+**C Si sċđm alterꝝ duorū nūerorum sumātur partes a reliquo dicte: erit ab eo quod ex eis ꝑponit proportio eiusdem ad reliquum denoiata. vnde manifestum est qđ oēs ille se habent ad vnum sicut reliquus ad denoiantem.** <margin>11</margin>
+C Sint a ⁊ b duo nūeri: sumāturqƺ ſm a p̄tes denoiate ab b: ſitqƺ e cōpoſitum ex ipīs. dico pportiōem a ad b denoiari ab c. nam qꝛ tot ſunt in vno partes ſīles: quot ſunt vnitates in b. erit vt ſicut a ad b: ita partes ille advnum. ſeu vnū in illis pducit ipm c: ergo ꝑ ſeptimā huius proportio c ad vnum denoiat̄ ab c cōpoſito ex ipīs partibus. ergo ⁊ proportio a ad b eodem denoiatur. Correlarium ex modo demōſtrandi notum est. pponebat enī hinc eſſe notū ſicut c ad vnū: ita a ad denoiantem b qui poſitus erat denoiāre c. et hoc fuit oſtenſum.
+
+---
+
+<margin>
+<image-desc>Diagram for proposition 12: six horizontal lines f, c, a, b, d, e with corresponding numbers 6, 5, 3, 2, 1.</image-desc>
+</margin>
+**C Quæ a ꝑtra se primis partes denoiantur: vnam non cōstituūt.** <margin>12</margin>
+C Sint a ⁊ b numeri ꝑtra se p̄mi: et aggregatus ex ipīs ſit c qui ꝑ nonam tertiꝝ est primus ad vtrūqꝫ a ⁊ b: et ſit d pars denoiata ab a / et e pars denoiata ab b. dico d et e nō ꝙstituere partem vnā. duco enī a in b: et pueniat f qui ꝑ viceſimāquirtam tertij est minus quē nūerant a b: quī ⁊ idem f per decimam eiuſdem tertij est primus ad c. et ꝑ ſcđam huius: d est reducte ptes denomiate ab f ꝑ ſumpte ſm b. et e reducte partes denoiate ab f et ſumpte ſm a. quare d e ſimul ſunt ptes denoiate ab f: et ſumpte ſm c. quare per correlarium p̄cedentis d e ſimul ad vnū: ſicut c ad f. at c nō est f: cū ipſi mōstratus ſit eſſe primus: igitur neqƺ d e pars vnius non ꝙstituūt igitur d e partem vnam. qđ est propoſitum.
+
+---
+
+**C Si a quotlibet nūeris numerorꝝ ab unitate proportionalium partes denominentur: vnam ex eis componi est impossibile.** <margin>13</margin>
+
+<vocab>proportio, proportionalium, denominata, productum, numerus, unitas, diffinitio, propositum</vocab>

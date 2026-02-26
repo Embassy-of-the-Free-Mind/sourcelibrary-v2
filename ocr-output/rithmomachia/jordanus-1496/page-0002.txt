@@ -1,0 +1,33 @@
+<language>English</language>
+<page-type>frontispiece</page-type>
+
+<insert>
+34051
+*m*
+Villa 103
+</insert>
+
+**Accessions**
+**Shelf No.**
+<insert>Q. 404.31</insert>
+
+<image-desc>At the top center of the bookplate is the seal of the City of Boston, featuring two stars above it. The seal depicts a ship in a harbor and is surrounded by two concentric rings of text.</image-desc>
+
+> SICUT PATRIBUS SIT DEUS NOBIS
+> BOSTONIA CONDITA AD. 1630. REGIMINE DONATA AD. 1822.
+
+<image-desc>Centered on the plate is a portrait of Nathaniel Bowditch inside an ornate circular frame decorated with scrolls and foliage.</image-desc>
+
+-> NATHL. BOWDITCH OB. MAR. XVI MDCCCXXXVIII <-
+
+-> **BOSTON PUBLIC LIBRARY** <-
+
+-> FROM THE <-
+
+-> **Bowditch Fund.** <-
+
+-> *Rec'd* ___________________ <-
+
+-> Heliotype Printing Co. <-
+
+<vocab>Boston Public Library, Bowditch Fund, Nathaniel Bowditch, Heliotype Printing Co., ex-libris</vocab>

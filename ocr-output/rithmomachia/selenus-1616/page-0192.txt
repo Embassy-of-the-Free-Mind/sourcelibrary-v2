@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>162</page-num>
+<header>Das Ander Buch/ 5. cap:</header>
+
+ehehafften/vorhanden/so sol man sie/unverrucket stehen/und sonsten/ auf der andern seite/ die Steine und Soldaten/wan etwa des Feindes König/des ortes hin/stünde/nicht ruhen lassen/besondern / umb demselben/sein vorhaben/auf daß Er daselbsten/da sein König/nicht hingestellet worden/nicht einbreche/zu verhindern/oder ihn gantz zu erlegen/sich/eufferstes fleisses bemühen.
+
+Daß Er/ (3.) wan sein Gegener/den König/ auf die eine seiten/verschantzet hat/seinen König/ nicht gegenüber/ besondern auf die andere seite stelle/und daselbsten/(umb seinen Feind/ so fern Er nuhr/denselben zu überwinnen/ sich getrawet/ desto füglicher anzureiffen) ebenmessig verschantze. Dan die Alten haben pflegen
+<margin>»</margin> zu sagen: Hut gegen hut/Thet selten gut. Wan Er aber denselben stärcker erachtet/ und sich schwächer zu seyn/ befindet/ so stehet ihm zu rahten/ daß Er/ damit Er nicht/ umb so viel zeitiger/ und leichter/von demselben angegriffen / und erleget werde / besondern/ im angreiffen und beschützen/zugleich / und an einem Orte/ seine sachen könne inacht haben/ seine Schantze/ gegen des feindes Schantze/aufwerffe/und nach muglicheit erhalte.
+
+Wan aber das Spiel/auf die letzte kommet/ und man beeder seitz/mit gleichen Steinen/noch zu streiten hat/so muß ein **Schach-Zieher**/nach folgenden Regeln/sich verhalten.
+
+Eüre Erste/kömte das Spiel/so beschaffen seyn/ daß es noch wol zu gewinnen stünde: Als/ / zum Exempel: wan auf beeden seiten/ein Roche/ ein Reuter / und zween Soldaten/ noch vorhanden: auf den fahl/sol man/ (wan das Spiel anderer gestalt nicht zu gewinnen stehet/und man/durch diesen weg/etwa noch Schach-Matt geben kan) den Reuter/mit den beeden Soldaten/ des andern hauffens/zu verwechseln sich bemühen. Dan sonsten/wan das nicht geschehen mag/ das Spiel/ nuhr gleich ist / und keiner gewinnet : In erwegung / ein Reuter / nebest einem Rochen / gegen einen eintzigen Rochen/das Spiel nicht kan erhalten/insonderheit/dofern der/mit dem einigen Rochen/des Spieles kündig: Dan sonsten der selbe/auß unwissenheit/die Schantze versehen/und das Spiel / verlieren möchte. Es muß aber dieses / zu rechter zeit / und daß der König/an keinem gefährlichen Orte stehe / zu wercke gerichtet werden. Dan derselbe könte / an einem solchen Orte / vielleicht eingesperret seyn/daß man / (umb dieses Spiel zu erhalten / und nicht zu verschertzen) dieses wechsels/sich nicht unterfangen dörfte.
+
+Imgleichen/wan der Eine hauffe/so wol alß der Ander/einen Reuter/und zween Soldaten : oder einen Schützen/und zween Sol-
+
+<meta>catchword: daten/</meta>
+
+<vocab>Schach, König, Roche, Reuter, Soldaten, Schütze, Schach-Matt, Regeln, Schantze</vocab>

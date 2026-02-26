@@ -1,0 +1,13 @@
+<language>English</language>
+<page-type>text</page-type>
+<meta>catchword: A table</meta>
+
+## The Philosophers game.
+
+The game is neuer wonne, untyll the king be taken: The kings (as hath bene sayde) may remoue anye way, so they passe not the fourth space. They can not be taken by equalitie. But by obsidion the whole kyng maye be taken away. Also his whole number at ones, that is. 91. or. 190. by Addition, by Substraction, by Multiplication, or by Diuision. Also he maye be taken by partes, when any of hys syde numbers maye be taken then leseth he that draughte, as when anye of hys square numbers is gone he can not remoue the square draught, and so of the rest, tyl no thyng of him be left, then muste he be taken away, and the triumph prepared.
+
+### ¶ The lawe of prisoners.
+
+When any is taken captiue, he must be tourned with his conquerers colour upward & placed in the hindermost space of his victors campe, and from thens being remoued must fight against his conquerours enemies, and serue him also to make his triumphe.
+
+<vocab>Philosophers game, Rithmomachia, king, obsidion, Addition, Substraction, Multiplication, Diuision, triumph</vocab>

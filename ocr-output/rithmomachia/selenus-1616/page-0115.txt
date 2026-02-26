@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>83</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: meldung</meta>
+
+<image-desc>A decorative woodcut header featuring elaborate ornamental scrolls, foliage, and figures.</image-desc>
+
+<margin>10.ca:</margin>
+## Das zehende Capittel.
+
+### Von den Steinen / welche für die Haupt = Steine gestellet / und in dieser beschreibung / Soldaten genennet werden : ihrer stellung und gange : ihren Tugenden und nutze : auch vorzuge / welchen der eine für dem Andern hat.
+
+<image-desc>A woodcut illustration within a rectangular border showing a chess piece. The piece is depicted as a bust of a soldier wearing a helmet, mounted upon a goblet-shaped pedestal. Below the image is the caption: Ein Soldat.</image-desc>
+
+Nach den Acht vornehmesten / seynd noch / auf jeglicher seiten / Acht gemeine Steine / oder Krieges = Mänlein : welche in etlichen Anderen Sprachen / Pedinæ oder Pedonæ : in unserer Mut = ter = Sprache / von denen / so dieses Spiel / auf ein gantz Regiement / dessen Stände und Ampter / (davon droben albereit / in den fünf vorigen Capitteln / gedacht / und zu ende dieses Capittels / ferner etwas sol angezeiget werden ) zie = hen / Bawren : (Dan man vorzeiten / nuhr Zween Stände / alsz den Regenten / dahin die Acht fürnehme gezogen werden : und dan / welche den Acker bawen / dahero sie bey uns Bawere / und von un = erfahren / Bauren sind genant worden / gehabt : diesen seynd gleicche wol darneben / ihre unterschiedene Ampter zugeordnet / und / wie hernacher folgen wird / sonderbahre nahmen / gegeben worden) Von andern / Linden / Lenden / quasi Wenden oder Wenden / das ist / geringe leuthe / (wie noch das geringe häuflein der Wenden / in Deutschland vorhanden : Welche man sonsten / nachdem Sie vor = längst / von den Sachsen überwunnen / und ausgetrenget worden : Davon dan neben Andern Historicis, D. Chytræus, lib : 1. Saxon :
+
+<vocab>Schach-Spiel, Soldaten, Bawren, Krieges-Mänlein, Regiement, David Chytræus, Wenden, Pedinæ</vocab>

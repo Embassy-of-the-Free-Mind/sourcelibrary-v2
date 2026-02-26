@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>25</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>2. cap:</margin>
+daß die Lydier, welche vom Lydo, alſo genennet worden / faſt alle
+Spiele / außgenommen / welches die Latini, Ludum Talarium genand /
+erfunden : doch wird hiemit / nichtes gewiſſes / beſtetiget.
+
+Dahero Andere / vielleicht / mit beſſerer nachrichtung / ſolches /
+einem weyſen und klugen Manne / Palamedes genand / zueignen :
+Welcher zu dem Griechiſchen Alphabeth, noch vier Buchſtaben / alß
+das θ ξ χ φ, und bey langwieriger Belagerung / der Stat Troye / umb
+das 2780 Jahr / nach Erſchaffung der Welt / des mäſſigen Krieges-
+Volckes / auffruhr / und empörungen / zu ſtillen / zwey Spiele / alß κυ-
+βειαν Cuborum, oder Teſſerarum ludū, das Würffel-Spiel / (welches
+auch Plinius Secundus, lib : 7. c. 56. Natur : Hiſtor : ihm zueignet) und
+dan πεττειαν, Calculorum, Peſſorum, und Latrunculorum ludum, das
+Stein- oder Schach-Spiel / (wie ſolches / Euſtathius, ein vornehmer
+Commentator, und Außleger / des ſehr berümten Poeten, Homeri,
+in Iliad : fol : 490. Cæl : Rhod : lib : 20. c. 27. Ant : Lect : Alexand : ab
+Alexandro, lib : 3. c. 21. gen : dier : Paris de Puteo, in tract : de Ludo;
+Benin : caſius, inſt : de Actio : in præfat : nu. 377. Hadrian : Junius,
+Adag : 215. und Franc : Philelphus, lib : 1. Convivior : bezeugen) erfun-
+den. Deſſen zu guter nachrichtung / gedencket ſchon / Homerus, in
+Odyſſ : α ; daß die Proci oder Buhler der Penelopes, mit dem Stein-
+Spiele / davon wir / auß dem Athenæo, ferner gedencken wollen / ſich
+beluſtiget haben. Caſsiodorus, lib : 8. c. 31. nennet die Steine / Cal-
+culos Palamediacos, alß von dem Palamede, herrührende.
+
+Noch ſeynd verhanden / welche es dem Perſiſchen Monarchen
+Xerxi, zugeſchrieben : Wie dan ſolches / inſonderheit die Hispanier,
+in ihren tractaten vom Schach-Spiel / vor dieſem außgeben dörfen :
+und daſſelbe deßwegen Axedres genennet. Weyl aber dieſes gar kei-
+nen grund / und dahero wenig glauben möchte : Alß haben die Itali-
+ener, damit ſie der ſachen / einen ſchein gäben / auß einem Könige / ei-
+nen Philoſophum gemachet : ihn Xerſem Philomatorem genennet :
+und ihme die erfindung zugeleget : Auf daß es aber / an authoritet
+nicht ermangelte / ſetzet Bruder Jacobus de Caſallis, (alij Cæſolis,
+Theſſolis) Prediger Ordens / (welcher / umb das 1300 Jahr / nach
+Chriſti Geburt / etwa gelebet hat) daß Er dieſe meynung / auß ei-
+nem Griechiſchen Philoſopho, welchen Er Diamedem nennet / ge-
+nommen : dem ſelben / iſt / (nach dem Conrad von Ammenhuſen) D.
+Jacob Mennel / Polydorus Vergilius, und andere / ſo / vom Schach-
+Spiel / zu unſern Zeiten / etwas außgehen laſſen / gefolget. Wie
+dan gedachter Mennel / und Polydorus, ſehr umbſtendlich hievon /
+
+<sig>D ij</sig>
+<meta>catchword: nebeſt</meta>
+
+<vocab>Schach-Spiel, Lydier, Palamedes, Troye, Würffel-Spiel, Plinius Secundus, Homerus, Xerxes, Hispanier, Italianer, Jacobus de Casallis, Conrad von Ammenhusen, Jacob Mennel, Polydorus Vergilius</vocab>

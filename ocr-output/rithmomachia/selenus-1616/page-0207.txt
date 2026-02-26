@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>177</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>8. cap:</margin>
+Der Weiſſe / rucket des K. Reuters-Soldaten / auf des S. K.
+Soldaten / auf achtzehen: Der Schwarze / nimt ihn / mit dem-
+ſelben: Der Weiſſe / (umb einen anſchlag / auf die S. Königin / zu
+machen) des S. K. Reuters-Soldaten / mit der K. Schützen:
+Der Schwarze / des W. K. Rochens-Soldaten / mit ſeines K.
+Soldaten / und ziehet ihn / auf den Rochen: Der Weiſſe / nimt
+<margin>10.</margin> denſelben / mit der Königin: <margin>11.</margin> * Der Schwarze / ziehet des K.
+Rochen / auf der W. K. Schützen / auf acht und funfzig: * Der
+Weiſſe / nimt mit demſelben / des S. K. Reuter / ziehet ihn / auf
+die S. Königin / und erlanget dadurch / des S. K. Schützens =
+Rochens-Soldaten: Dan / wan Der Schwarze / ſeines K.
+Rochen / mit des K. Rochen / wegnimt / und Schach beut : Er /
+denſelben / mit der Königin / nimt: Der Schwarze / ſeiner K.
+Schützen / mit der Königin: Er beut / mit der Königin / auß acht und
+funfzig / Schach: Der Schwarze / (auf daß Er / der K. Schüt-
+zen / nicht verliere) Ziehet den König / auf drey und funfzig: Er /
+nimt / mit des K. Schützen / des S. K. Schützens-Soldaten:
+Der Schwarze / (auf daß der König / von ſeiner Königin / auß
+ſechzig / nicht Mat werde) ſpielet die Königin / auf zwey und
+funfzig: Er / nimt ungehindert / des S. K. Rochens-Soldaten /
+mit ſeiner Königin / und hat alſo / ein freyes ungeſchloſſenes Spiel /
+nebeſt einen Soldaten / zum Vortheil.
+
+<margin>12.</margin> Wan aber Der Weiſſe / den S. Reuter / mit dem Schützen
+nicht nimt / (n. 11.) beſondern / ſeines K. Soldaten / auf des S.
+K. Reuter / und der S. K. Soldaten / auf ſechs und dreyſſig /
+mit mehrern nutzen / ziehet: ſo nimt ihn / Der Schwarze /
+(weil Er den Reuter / wegen ſeiner Königin / nicht darf weg-
+ziehen) mit der K. Soldaten: Der Weiſſe / denſelben / mit ſeiner
+Königin / und beut Schach: Der Schwarze / (ſo fern Er / die
+Königin / nicht fürziehet: Auf welchen fahl / Er doch / des K.
+Rochen und Reuter / nach verwechſlung der Königinne / für den
+einzigen W. Schützen / verlieret / etc:) kan den König / nuhr
+<margin>13.</margin> auf neun - oder drey und funfzig / rucken: * Ziehet Er ihn / in
+jehnes feld / ſo werden ihm zufoderſt / durch der W. K. Schützen /
+der Roche / Reuter / und die Königin / genommen: Dan der Weiſ-
+ſe / beut / mit dem gedachten Schützen / auß ein und vierzig /
+Schach: Er / muß den König / mit ſeinem Rochen / auf funfzig / be-
+decken: Der Weiſſe nimt ihn / mit der K. Schützen / und beut aber-
+
+<sig>Z ij</sig>
+<meta>catchword: maln</meta>
+
+<vocab>Schach-Spiel, Weiſſe, Schwarze, König, Königin, Reuter, Schützen, Rochen, Soldaten, Schach, Mat, Vortheil</vocab>

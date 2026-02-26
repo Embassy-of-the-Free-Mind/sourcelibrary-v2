@@ -1,0 +1,14 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>8</page-num>
+
+<image-desc>At the top of the page are geometric diagrams. From left to right: a circle, an equilateral triangle, and a square. To the right are two stepped pyramids. The first pyramid consists of six levels labeled from top to bottom with the numbers 1, 4, 9, 16, 25, and 36; below it is the sum 91. The second pyramid consists of six levels labeled from top to bottom with the numbers 9, 16, 25, 36, 49, and 64; below it is the sum 199. Below these diagrams is the section title and the start of the text, beginning with a large decorative drop cap 'D' that contains an illustration of a scholar seated at a desk.</image-desc>
+
+## Seconda parte nellaqual si tratta delli numeri, che si dieno dipinger sopra li pezzi.
+
+Dovendo in questa seconda parte del nostro Trattato trattar delli numeri, che si dieno dipinger sopra li pezzi (ilche non è altro che ritrouar quali numeri, à quali pezzi si dieno attribuir) si metteremo auanti gli occhi li pezzi di sopra già descritti, liquali hauendo due faccie; vna bianca, & vna nera, voltaremo la mettâ di essi con la faccia bianca in sù; & l’altra mettâ con la nera in modo che venghino à far due schiere di pezzi; vna bianca; & vna nera, & che in ciascuna di esse siano 8 tondi, 8 triangoli, & 8 quadrati computando però le base delle pyramidi per dui quadri, li gradi delle qual pyramidi essendo mobili, & hauendo due faccie, vna bianca, & vna nera si accommodaranno di tal sorte, che si faccia l’vna pyramide bianca ( & questa sia quella delli sei gradi) & l’altra nera. Separate adunque che saranno le due schiere à questo modo, cominciaremo à scriuer li numeri sopra li pezzi dell’vna, & dell’altra schiera con questo ordine. Primieramente scriueremo li numeri sopra li tondi, per esser questa la prima, & la più semplice, & la più nobile figura della Geometria: poi sopra li triangoli, per esser questa la seconda figura della Geometria: Poi sopra li quadrati, per esser questa la terza figura di essa Geometria. Et primamente scriuerò li numeri sopra li tondi bianchi, & poi sopra li tondi neri: & parimente prima sopra li triangoli bianchi, & poi sopra li neri: & similmente prima sopra li quadrati bianchi, & poi sopra li neri. Et bisogna auuertir, che sopra li pezzi
+
+<sig>H</sig>
+<meta>catchword: bian-</meta>
+
+<vocab>Geometria, pyramidi, tondi, triangoli, quadrati, numeri, schiere</vocab>

@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>366</page-num>
+<header>Das Dritte Buch / 12. Cap:</header>
+
+den König / mit der K. Schützen-Soldaten / auf sechs und vier-
+zig: (Ziehet ihn / auf der W. K. Soldaten / und öfnet seiner Kö-
+nigin / die Strasse / diesen ihren Reuter / zu beschützen) **Der Weiße /**
+rucket / auf denselben / nochmaln / der K. Reuter-Soldaten / auf ein
+und dreyssig: **Der Schwarze /** (so fern man / nicht für über zie-
+hen / sondern schlagen muß) nimt ihn gleichwol / als wan er / auf /
+drey und zwantzig / gestanden / und setzet / seiner K. Soldaten / auf /
+der W. K. Rochens-Soldaten / auf gedachtes 23 feld: **Der Wei-
+sse /** nimt ihn / mit demselben / und eröfnet der K. Rochen / den /
+<margin>2.</margin>Paß / zu der S. K. Reuter: * **Der Schwarze /** (ihn ferner zu
+beschützen) ziehet / der K. Reuter-Soldaten / auf sieben und vier-
+<margin>3.</margin>zig: * **Der Weiße /** nimt / mit der K. Soldaten / der S. K. Schü-
+<margin>4.</margin>tzens-Soldaten: * **Der Schwarze /** denselben / mit der K.
+Reuter: **Der Weiße /** denselben / mit der Königin / beut Schach /
+und ziehet dieselbe / auf der S. K. Rochen: **Der Schwarze /** muß
+den König / mit der Königin / auf drey und funfzig / bedecken: **Der
+Weiße /** nimt / mit der Königin / der S. K. Rochen / und beut
+Schach: **Der Schwarze /** muß den König / mit der Königin / auf
+ein- oder zwey und sechsszig / bedecken: **Der Weiße /** gibt / mit des
+K. Schützen / (so ferne die S. Königin / auf 61. gerucket) auff neun
+und dreyssig / Schach-Mat: Hat Sie aber / der Schwarze / auf 62.
+gestellet: so nimt Sie / der Weiße / mit der Königin / und gibt
+ebenmessig / Schach-Mat.
+
+<margin>5.</margin>Wan aber der Schwarze / den W. Soldaten / (n. 4.) nicht
+nimt / sondern des K. Soldaten / auf vier und viertzig / rucket: so
+setzet / der Weiße / der K. Soldaten / auf die S. Königin / auf vier
+und funfzig / und beut / von der Königin / Ab-Schach: **Der
+Schwarze /** (so fern Er den König / nicht auf zwey und funf-
+zig / ziehen: oder denselben / mit der K. Reuter / auf sechs und viers
+zig / bedecken wil: Auf welchen fahl / seine Königin / im andern Zu-
+ge / nichtes desto weniger verloren) muß den König / mit der Köni-
+gin / auf drey und funfzig / bedecken: **Der Weiße /** rucket auf sie /
+des K. Schützen / auf neun und dreyssig / und erlanget sie / derge-
+stalt / mit gewalt.
+
+<margin>6.</margin>Setzet aber der Schwarze / nicht des Königes-auf 44. (n. 5.)
+besondern / der K. Rochens-Soldaten / auf acht und viertzig: so
+rucket / der Weiße / auf die S. Königin / der K. Rochen / auf fünfe:
+**Der Schwarze /** dieselbe / auf zwey und sechsszig: **Der Weiße /**
+gibt / von der Königin / mit ihrem Soldaten / auf vier und funfzig /
+Ab-Schach:
+
+<vocab>Schach, König, Reuter, Rochen, Schützen-Soldaten, Schach-Mat, Ab-Schach, Weiße, Schwarze</vocab>

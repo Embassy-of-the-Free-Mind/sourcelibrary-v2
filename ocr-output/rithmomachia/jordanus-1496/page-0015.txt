@@ -1,0 +1,47 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>II.</page-num>
+
+hoc intēdit. si ḡ sit differētia d ad e: et f differētia b ad c. q̄ qz d et e sunt sumpti eque mltiplices ad b et c: pꝓortionem g ad f esse eque multiplicem vt d ad b. et sint b d duobus reliquis maiores. quia ꝓ presentem ea est pꝓoztio d ad e: que b ad c. ergo permutatim per tertiam ꝙ pzoꝓoztio d ad b totius ad totum: ea est e ad c detracti ad detractum. ergo per quintam g ad f residuus ad residuum vt d ad b totius ad totum. qđ est pzoꝓositum.
+
+---
+
+<margin>8</margin>
+¶ **SI duo nūcri eiūdem multiplicent: erit multiplicantiū ac pductoꝝ eadem ꝓp̄ortio.**
+¶ Ut si in figuratione precedētis b multiplicet a: et ꝓueniat d. et itidēm multiplicet a: ꝛ ꝓueniat e. Dico q̄ pꝓoztio b ad c multiplicātio ad multiplicantem: eādē esse c ad e producti ad productum. Nam per octauam primi idem ꝓuenit multiplicando a ꝑ b ꝛ b per a scz d. et siliter idem ꝓuenit multiplicando a per c et c per a scz e. sed per precedētē b ꝛ c multiplicatis per a: eadem est ꝓp̄oztio b ad c ꝛ d ad e. ergo ꝛ multiplicātibus b ꝛ c: eādē erit pzoꝓztio b ad c ꝛ d ad e. qđ est pzoꝓositum.
+
+<image-desc>A geometric diagram showing three parallel horizontal lines of different lengths with numerical labels. The top line is labeled 9, the middle line is labeled 3 and b, and the bottom line is labeled 6 and a.</image-desc>
+
+---
+
+<margin>9</margin>
+¶ **SI duo nūeri ad tertiū ꝓparenť: maiozis ad ip̄m maioꝛ erit ꝓp̄ortio ꝛ minoꝛis minoꝛ: ip̄ius v̇o ad maioꝛem ꝓp̄ortio minoꝛ/ ad minoꝛē maioꝛ. vñ manifestū est si duo nūeri ad eiūdem cōparati: eādē seruent ꝓp̄oꝛtiōis habitudinē: illūs vnū/ eūdēqz cē nūerū.**
+¶ Cōpareť b a ad tertium c: sitqz a maioz b: dico ip̄ius a ad c maiozem eē ꝓpzoztionem ꝙ b ad c: dico etiā c ad a minozem esse pzoꝓoztionem ꝙ c ad b. Pzimū patet et sit pzimo c tertius vtroqz a et b maioz. qm̄ c est maioz a ꝛ maioz b: erit a pars vel partes c ꝓ pzimam pzimi: et per eadem b eiusdē erit pars vel partes. et cū a positus sit maioz b ip̄e erit plures ptes c ꝙ b. quare maioz pzoꝓoztio a ad c ꝙ b ad c. Sit sċđo c tertius vtroqz a ꝛ b minoꝛ: si a pluries ꝓtinebit c ꝙ ip̄m c ꝓtineat: cōstat ꝓpositū. Et si a ꝛ b equaliter ꝓtinebūt c: qz a maioz b plures partes ip̄ius vltra ꝓtinebit a ꝙ ꝓtineat ip̄e b. q̄re idem cōcluditur a scz ad c maiozem eē pzoꝓoztionem ꝙ b ad c. Sit tertio c tertius minoꝛ a ꝛ maioz b: quia denoiatio pzoꝓoziōis a ad c sit a toto multiplicit aut a toto ꝛ parte aut partibus: et denomiarto pzoꝓoziōis b ad c est a parte aut partibus: ꝓstat ꝛ hoc mō maiozem eē pzoꝓoztionem a ad c ꝙ b ad c. et cū nō possit c tertius esse maioz a ꝛ minoz b. qz quicūqz est maioz maioze maioz est ꝛ minoze: ꝓstat pzima ps quo ad oēs eius modos firma. Scđa pꝓ: t sit pzito c tertius maioz a ꝛ b cū c sit maioz a et b: a sit maioz b. li c ꝓtinet pties b minozē ꝙ a maiozē: ꝓstat pzoꝓoztionē c ad b esse maioꝛē ꝙ c ad a. et si c cōtinet b ꝛ a equalit̄: cōtinebit insuper plures partes b minozis ꝙ a. quare iteꝛ idem cōcluditur. Sit scđo c vtroqz minoz. erit itaqz sumptis vnitatibus totidem partes maiozis quot minozis. sed maiozis per conceptionem erit toridez partes minozes: cum partes ille a maioze numero sint denoiate. quare ip̄sius ad maiozem iteꝛ minoz pzoꝓoztio. Sit tertio c tertius minoz a ꝛ maioz b: tūc sit solum pars vel partes a ꝛ excedat ip̄m b: maioz erit ip̄ius: ad b ꝓpoztio ꝙ ad a. et cū nō possit vt dictum est eē maioz a et minoz b: cōstat secūda pars quo ad oēs eius partes monstrata. Cozrelariū ex pzima parte facile cognitum esse potest.
+
+<image-desc>Two sets of diagrams for proposition 9. Each set contains horizontal lines with numbers and letters. The upper set has three lines: the top is labeled 4, the middle is labeled 8 and b, and the bottom is labeled 9. The lower set also has three lines: the top is labeled 6, the middle is labeled 3 and b, and the bottom is labeled 9.</image-desc>
+
+---
+
+<margin>10</margin>
+¶ **SI idem numerus ad duos cōpareť ad quē ip̄ius maioꝛ ꝓp̄oztio fuerit: minoꝛem/ et ad quem minoꝛ: maioꝛem esse necesse est.**
+¶ Hec est p̄uersa pzecedētīs. Sint ergo a b duo nūeri ad quos cōparetuꝛ c tertius. et sit c ad a minoz pzoꝓoztio: et c ad b pzoꝓoztio maioz. dico a eē maiozem: et b minozem. Nam pzo mō non erunt equales: quia c ad vtrūqz eēt eadem pzoꝓoztio. neqz a erit minoz b. nam per pzimam partem pzecedētīs: minoz eēt a ad c pzoꝓoztio ꝙ b ad c. et per scđam partem eiusdem maioz c ad a pzoꝓoztio: ꝛ minoz c ad b. qđ est ꝓtra hypothesim. relinq̄tur igitur pzoꝓositum verum.
+
+<image-desc>A diagram for proposition 10 consisting of three horizontal lines. The top line is labeled 3. The middle line is labeled 6 and b. The bottom line is labeled 9.</image-desc>
+
+---
+
+<margin>11</margin>
+¶ **SI fuerit ꝓp̄oztio primi ad sċđm maioꝛ ꝙ̇ tertii ad quartum: erit secūdi ad primū ꝓp̄oztio minoꝛ ꝙ̇ quarti ad tertium.**
+¶ Hanc in multiplicibus demōstrare facile est: vt si sit a ad b in genere multiplici maioz pzoꝓoztio ꝙ c ad d: dicam b ad a minozem esse pzoꝓoztionem ꝙ d ad c. capiam enī e eque multiplicem ad d: vt a ad b. qz ergo a ad b et e ad d eque multiplices: erit a ad b ꝛ e ad d eadem pzoꝓoztio. at pzoꝓoztio a ad b posita est maioz ꝙ c ad d: ergo ꝛ pzoꝓoztio e ad d maioz est ꝙ c ad d. per sċđam partem igitur none maioz est pzoꝓoztio d ad c ꝙ d ad e. at qz eadem est pzoꝓoztio a ad b ꝛ e ad d. per pzimā igitur huius eadem erit pzoꝓoztio b ad a ꝛ d ad e. sed d ad c ꝓbata est maioz pzoꝓoztione d ad e: maioz igitur erit ꝛ sua equali b ad a. qđ est pzoꝓositum. at qz demōstratio hec non eque aptanda est aliis gñibus: idcirco alia vniūsalioz adhibenda est. Sit ergo a ad b maioz pzoꝓoztio ꝙ c ad d: dico b ad a minozem eē ꝓpoztionem ꝙ d ad c. duco enī c in b et pzoueniat c: et idē c in a ꝛ pzueniat f. per septimā huius q̄ pzoꝓoztio a ad b: eadem erit f ad e. Rursus duco d in a ꝛ pzueniat g. qz c ꝛ d multiplicauerūt a ꝑ octauam eadem erit pzoꝓoztio f ad g producti ad productum: q̄ c ad d multiplicātis ad multiplicantem. Est igitur f ad e pzoꝓoztio vt a ad b: et f ad g vt c ad d. sed pzoꝓoztio a ad b posita est maioz pzoꝓotiōe c ad d: igitur pzoꝓoztio f ad e maioz est pzoꝓotiōe eiusdē f ad g. ꝑ pzecedētēm igitur e minoz est ꝛ g maioz. igitur per pzimam partem none huius ꝓpzoztio e ad f minoz est ꝙ g ad f. sed pzoꝓoztio e ad f est eadē ꝓpzoꝛtionī b ad a: et ꝓpzoztio g ad f eadem pzoꝓoztioni d ad c vt facile per pzimam huius cognoscere potes: igiť pzoꝓoztio b ad a sċđi ad pzimū minoz est ꝙ ꝓpzoztio d ad c quarti ad tertiū. qđ erat demōstrāvū.
+
+<image-desc>Two sets of diagrams for proposition 11. The top set has two columns of horizontal lines. Left column: 3, 9 (labeled b below), and a letter a below the block. Right column: 2, 4 (labeled d below), 6 (labeled c below). The bottom set has horizontal lines labeled 4 (b), 6, 8 (d), 10, then below those 40 (e), 60 (f), and 48 (g).</image-desc>
+
+---
+
+<margin>12</margin>
+¶ **SI fuerit primi ad sċđm pzoꝓoztio maioꝛ ꝙ̇ tertii ad quartum: erit primi ad tertiū maioꝛ ꝙ̇ secūdi ad quartum.**
+¶ Sint vt pzius q̄ttuoz numeri: a pzimus. b sċđs. c tertius. d quartus: et sit a ad b pzoꝓoztio maioz ꝙ c ad d. dico maiozem esse pzoꝓotiōem a ad c pzimi ad tertiū: ꝙ b ad d secūdi ad quartū. duco enī a in b
+
+<image-desc>A diagram for proposition 12 with horizontal lines in two columns. Left column from top: 3 (labeled a), 9 (b), 27 (e), 81 (f). Right column from top: 2 (c), 4 (d), 18 (g), 36 (h), 12 (k).</image-desc>
+
+<vocab>pzoꝓoztio, ꝓp̄ortio, mltiplices, permutatim, residuum, multiplicantiū, pductoꝝ, cōpareť, denoiatio, p̄uersa, demōstrāvū</vocab>

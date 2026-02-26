@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>341</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>6. cap:</margin>
+dreissig / besondern / (umb / beederseit Schützen / zu verwechseln / und sein Spiel / dahero / wol anzuordnen) auf vier und vierzig / ziehen: Dan Er sonsten / wan Er denselben / auf 33. zöge / entwe- der denselben / oder / die Königin / (wie auss folgenden zügen / zu ersehen) verlöre: Dan / wan auf diesen Zug / der Weisse / des K. Reuters = Soldaten / nochmaln / auf seiner K. Schützen / auf
+
+<margin>3.</margin> sechs und zwanzig: und * Er denselben / auf zwey und vierzig / rucket: Der Weisse / des K. Reuters Soldaten / weiter / auf seine Königin / auf vier und dreyßig / ziehet: Er / dieselbe / auf sieben und zwanzig: Der Weisse / der K. Reuter / (umb / dero Schützen / den Pass / oder das Schieß=loch / auf dieselbe / zu eröfnen) auf drey und zwanzig / oder sieben: und kan also / dessen Königin / ungehindert / in seine gewalt bringen.
+
+<margin>4.</margin> Ziehet aber der Schwartze / den Schützen / nicht auf 42. (n 3.) besondern / nimt mit demselben / (weil Er auss zweien bösen / das geringere zu erwehlen / vorhabens ist) des W. K. Reuters = Soldaten : so nimt ihn der Weisse / mit / des K. Rochens =
+
+<margin>5.</margin> Soldaten: * Der Schwartze / rucket / auf denselben / die Königin / auf zwey und vierzig: Der Weisse / (umb ihn zu entsetzen) des K. Reuter / auf neune: folgendes / der K. Reuter / auf neunzehen: verschantzet dergestalt hinwider / des Königes quartier / und ist dem Schwartzen / mit einem Schützen / überlegen.
+
+<margin>6.</margin> Wan aber der Schwartze / die Königin / auf den W. Soldaten / nicht auf 42. (n. 5.) besondern / auf sieben und zwanzig / rucket : so ziehet / der Weisse / (umb denselben / zu erretten) des K. Reuter / auf neune:
+
+<margin>7.</margin> * Der Schwartze / ferner auf denselben / des K. Reuter / auf ein und vierzig: Der Weisse / der K. Reuter / auf neunzehen / und eröfnet dero Schützen / die strasse / auf die S. Königin : Der Schwartze / muß / Sie / auf drey und vierzig / setzen: Der Weisse / rucket auf sie / und des S. K. Reuter / des K. Rochens = Soldaten / auf vier und dreyßig: Der Schwartze / dieselbe / auf zwey und vierzig: Der Weisse / der K. Reuter auf funf und zwanzig: und erlanget die S. Königin / mit gewalt.
+
+<margin>8.</margin> Stellet aber der Schwartze / nicht den Reuter / auf 41. (n. 7.) besondern / die Königin / auf drey und vierzig: so rucket / der Weisse / der K. Reuter / auf neunzehe: Der Schwartze / des K. Reuters = Soldaten / (umb / der Königin / luft zu machen) auf zwey und vierzig: Der
+
+<margin>9.</margin> Weisse / der K. Reuter / auf vier und dreyßig: * Der Schwartze / die Königin / auf funfzig: Der Weisse / nimt / mit der K. Reuter / des S.
+
+<meta>catchword: K. Schü</meta>
+
+<vocab>Schach-Spiel, Königin, Reuter, Soldaten, Schützen, Rochen, quartier, verschantzet, Schieß-loch</vocab>

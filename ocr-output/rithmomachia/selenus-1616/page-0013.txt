@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>preface</page-type>
+
+<margin>Hälts</margin>
+Zu Groß und weitleuffig / nie waar /
+Dehm nichts zu nehmen / auf ein Haar.
+auch / fürs ander / mit dem Franc: Philelpho da-
+für / daß man nicht eben / alleine / den wichtigen / be-
+sondern auch / wol geringen Sachen / umb so viel mehr /
+dieselben / bey würden zu behalten / ihr recht thun müs-
+se: *Non solùm is, (schreibet Er / lib: 1. Conviv:) lau-*
+*dandus admirandusq. videtur, qui magnis in rebus, se ma-*
+*gnum praeclarumq. ostendit, sed hic multò magis, qui Par-*
+*va, quae dicuntur, & Maxima & splendidissima efficit:*
+*Atq. magno & praestanti Viro, nihil neq. parvum, neq. hu-*
+*mile esse potest. Tum enim rectè mihi quisquam videtur fa-*
+*cere, si omnia, pro suâ dignitate fecerit.*
+
+Hierauf hat auch / ein vornehmer ex Duûmviris
+Augustanis, wie demselben / folgender Tractat, (nuhr
+in etwas entworffen) zur zeit gezeiget worden / gesehen:
+in dehm Er / auf den umbschlag / nachfolgende / des
+Virgilij versus:
+<margin>an statt seines bedenckens / verzeichnet.</margin>
+*In tenui Labor, at tenuis non Gloria; Si quem*
+*Numina laeva sinunt, auditq. vocatus Apollo:*
+Wie weit aber der
+Author, deßfahls vom Apolline, (so fern es sich derge-
+stalt zu reden / oder nuhr / dahin zu alludiren, einem
+Christen geziemet) angesehen / darauf kan ein jeglicher
+Biderman / zur Kunst rechtmessigen urtheil / schliessen.
+Geschrieben zu Jetzelffließ. Anno 1 6 1 6. den 25
+Iulij.
+
+->):( ij<-
+
+<sig>):( ij</sig>
+<meta>Catchword: Der</meta>
+<vocab>Franc: Philelpho, Convivia, Duûmviris Augustanis, Virgilij, Apollo, Jetzelffließ, Biderman</vocab>

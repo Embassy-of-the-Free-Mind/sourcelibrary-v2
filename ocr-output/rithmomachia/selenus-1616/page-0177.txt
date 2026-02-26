@@ -1,0 +1,56 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>147</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>4.cap:</margin>
+viele anstöße/ und zu rücke treibens/ auf den gräntzen / und des fein=
+des gebiethe/ gewertig seyn muß: insonderheit/ wan er nicht sicher /
+und ohne gefahr/ hinein/ und wider zu rücke gehen / oder von andern
+Steinen/ leichtlich entsetzet werden kan. Ihrer viele/ welche mit ein
+ander einig/ und einander füglich zu hülffe kommen/ können dem fein=
+de/ stärckern widerstand leisten/ und sich besser/ alß einer alleine/ oder
+ihrer viele/ die hin und wider/ zerstrewet aufwarten/ beschützen. So
+kan mans auch/ für keinen Sieg rechnen/ dem feinde zwar/ denselben
+verhindern/ ihn selber aber / ohne Vortheil / und mit Schaden / auch
+verlieren: gleich alß / wan einer / seinen feind zwar erlegte / selbes
+aber auch/ auf dem platze / bliebe. Da doch ein vernünftiger / seine
+Sachen/ billig dahin richten sol/ daß Er dem feinde / ohne seine ge=
+fahr/ möge obsiegen/ und ihn/ in seine gewalt bringen.
+
+Ziehet man aber (3.) den Reuter ins feld/ so sol man ihn / nach=
+dem er/ durch die erste wacht/ des feindes/ getrungen/ und kommen/
+dergestalt setzen/ daß er/ wan er / des Andern hauffens Könige /
+<term>Schach:beut</term> / zugleich der Königin/ einem Rochen/ oder anderm
+Haupt-Steine / den untergang dräwe / und weyl ihm / der ander
+König / so fern er / nicht kan genommen werden / weichen muß /
+in dem folgenden Zuge / derselben einen / sicher und ungehindert /
+hinwegnehme.
+
+Wan nuhn ferner (4.) ein Schach=Zieher / welcher den ersten
+Zug hat/ den feind/ in seinem quartier / anzugreiffen gedencket / so
+muß Er solches fürnehmen zu verfolgen wissen/ und seine Strasse/
+umb/ wan es die noth erfodert / wider zu rücke zu kehren / allezeit /
+frey und offen halten: dan in verbleibung dessen / wan er zu rücke zu
+weichen / getrungen würde/ dieses/ eine ursache / seines verderbens
+wehre.
+
+Es sol auch (5.) ein Spieler / bey dem Anfal sich erinnern /
+daß etliche leichter/ etliche schwärer zu erhaschen und zu überraschen
+seynd: Alß/ die <term>Soldaten</term>/ (dieweyl Sie/ umb sich selber zu erlösen/
+nicht dörfen zu rücke gehen) werden leichtlich und geschwinde: Die
+<term>Schützen</term> und <term>Rochen</term> aber/ (umb daß Sie/ wan ein unglück / auf sie
+trift/ von der einen seiten des Platzes/ biß zur andern / lauffen kön=
+nen) viel beschwerlicher: Die <term>Reuter</term> und die Königinne endlich /
+(auß ursachen / daß Sie viele plätze und felder / insonderheit aber
+die Königin/ zu weichen / und sich zu erretten / haben) zum aller be=
+schwerlichsten/ ertappet und ergriffen.
+
+Was das Rauben betrift/ gleich wie ein Schach=Zieher / sei=
+ne eigene Steine / nicht liederlich anrühren muß / alß sol Er sich
+auch / der Steine des Gegeners / gar enthalten: es wehre dan /
+
+<sig>T iij</sig>
+<meta>catchword: daß</meta>
+
+<vocab>Schach-Spiel, Reuter, Königin, Rochen, Schützen, Soldaten, Schach:beut, Rauben</vocab>

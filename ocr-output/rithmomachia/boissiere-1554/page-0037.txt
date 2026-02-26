@@ -1,0 +1,20 @@
+<language>Latin</language>
+<page-type>diagram</page-type>
+
+<image-desc>
+A diagram of a game board for Rithmomachia (The Philosophers' Game), an early modern mathematical board game. The board consists of an 8x16 rectangular grid, divided into two 8x8 squares by a thick central vertical line. 
+
+The game pieces, represented by circles, triangles, and squares with inscribed numbers, are arranged in the center of each half of the board, leaving the four central columns empty.
+
+On the left side (dark/filled pieces):
+- Two columns of circles: the innermost column contains the numbers 3, 5, 7, and 9 (top to bottom); the next column contains 9, 25, 49, and 81.
+- Two columns of triangles: the next column contains 12, 30, 56, and 90; the following contains 16, 36, 64, and 100.
+- Two columns of squares: the next column contains 28, 66, and 120, followed by a stepped pyramid piece; the leftmost column contains 49, 121, 225, and 361.
+
+On the right side (light/outline pieces):
+- Two columns of circles: the innermost column contains the numbers 8, 6, 4, and 2 (top to bottom); the next column contains 64, 36, 16, and 4.
+- Two columns of triangles: the next column contains 72, 42, 20, and 6; the following contains 81, 49, 25, and 9.
+- Two columns of squares: the next column contains 153, a stepped pyramid, 45, and 15; the rightmost column contains 289, 169, 81, and 25.
+</image-desc>
+
+<vocab>Rithmomachia, Philosophers' Game, arithmetic, proportions, game board, numerical progression, pyramid</vocab>

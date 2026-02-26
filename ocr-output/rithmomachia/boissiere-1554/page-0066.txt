@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>32</page-num>
+<header>DES PHILOSOPHES.</header>
+
+Ceste fuyvante & derniere espece des sim-
+ples victoires a esté assez heureusement
+inventée par nostre bon amy le seigneur
+Iean Pierre de Mesmes Marsanois estu-
+diant à Paris en Mathematiques & Ob-
+servations Astronomiques.
+
+->Or escoutez en quelle sorte.<-
+
+VN des ioueurs tiendra (posé le cas) le lieu
+de l’Empereur prest à combattre contre les
+mescreans. I’enten celuy qui voudra iouer des
+tables blanches: car aussi biẽ la couleur blanche
+apartient aux Chrestiens.
+
+L’autre ioueur se dira estre le grand Soliman
+Empereur des Turcz ayant en main les tables
+rouges, car aussi bien le Turc aime la couleur
+rouge: ioinct aussi que le nombre des tables blan-
+ches est plus petit que celuy des rouges, aussi les
+victoires des Turcs se font à force de gẽns.
+
+Les tables blanches & leur pyramide con-
+tiennent 1312 poincts (il en fault oster les Raci-
+nes qui sont specifiées en la pyramide) nous don-
+nerons autãt de gens d’armes à nostre Empereur.
+
+Les deux dernieres de ce nōbre 1312, seront les
+deux Capitaines de l’armée chrestienne: ils aurõt
+10 port’enseignes. ostez donc les 10, & 2, qui
+
+<vocab>Iean Pierre de Mesmes, Marsanois, Mathematiques, Observations Astronomiques, Soliman, Turcz, Chrestiens, pyramide, Rythmomachie</vocab>

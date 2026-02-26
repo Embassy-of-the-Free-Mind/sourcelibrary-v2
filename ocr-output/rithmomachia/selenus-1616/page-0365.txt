@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>331</page-num>
+<header>6.cap: Vom Schach-Spiel.</header>
+
+<image-desc>A rectangular woodcut headpiece with a central mask or face surrounded by symmetrical, swirling acanthus leaves and decorative scrolls. Below, an ornamental drop cap 'F' is intertwined with similar botanical scrollwork.</image-desc>
+
+# Das Sechste Capittel.
+
+## Welcher gestalt / des Schwartzen Königs. Soldat / auff die Andere Art / kan beschützet / und inacht genommen werden.
+
+<margin>1.</margin>Folget ferner / wie der Schwartze / nach der Andern manier / des K. Soldaten / mit seiner K. Soldaten / beschütze.
+->Der Weisse / und der Schwartze / ziehen<-
+zu foderst / ihrer Könige = Soldaten / auf acht und zwantzig: und sechs und dreyßig: Der Weisse / auf des S. K. Soldaten / des K. Reuter / auf neunzehen: Der Schwartze / beschützet ihn / auf die Andere weyse / (deren im vorigen 5. Cap: n. 2. gedacht worden) mit der K. Soldaten / auß fünf und vierzig.
+
+Diese Art nun / ist die sicherste / und freyeste / die Steine / zu ziehen: unangesehen / dieselbe / nicht so wol und gut / alß die Erste / in des Damiani augen / sich wil ansehen lassen. Dan Er die Art des angriffes und einfals / nebens den ungelegenheiten / welche / auß der Ersten / (vermöge des vorigen Berichtes) entstehen / nicht angemercket / noch nach notturft betrachtet / minder vermeinet gehabt / daß man auch / in dieser Art / des K. Soldaten / zu beschützen / (umb den Steinen / nicht alleine / einen freyen gang / zu verschaffen / besondern auch dem feinde / daß ihm derselbe / keinen schaden zufügen möge / zu wehren) mittel und wege / finden könne. Da doch / auß dem folgenden / daß diese Andere gattung / des K. Soldaten / zu entsetzen / weit besser und nützlicher / dan die Erste / sey : etwa zu ersehen / und zu spüren seyn möchte.
+
+<margin>2.</margin>Wan demnach / (auf des Schwartzen zug) der Weisse / des K. Schützen / auf dreyßig / ziehet : *so spielet / der Schwartze / der K. Schützens = Soldaten / auf sechs und viertzig: Der Weisse / seiner K. Schützens = Soldaten / auf zwey und zwantzig: Der Schwartze / der K. Soldaten / (umb seines K. Schützen / den verschlossenen Paß / zu eröffnen) auf des W. K. Schützen und Soldaten / auf sieben und dreyßig: Der Weisse / nimt ihn / mit des K. Soldaten: Der Schwartze / denselben / mit der K. Schü-
+
+<sig>Tt iij</sig>
+<meta>catchword: zens</meta>
+
+<vocab>Schach-Spiel, Damiani, K. Soldat, K. Reuter, K. Schützen, Schützens-Soldaten</vocab>

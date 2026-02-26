@@ -1,0 +1,9 @@
+<language>N/A</language>
+<page-type>blank</page-type>
+<page-num>333</page-num>
+<meta>The page contains library or archival shelfmarks. There is a cluster of ink splatters in the center-right area.</meta>
+
+->V 2143<-
+->2<-
+
+<vocab>shelfmark, catalog number</vocab>

@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>preface</page-type>
+<sig>A</sig>
+<meta>catchword: FAL-</meta>
+
+<image-desc>A rectangular decorative woodcut headpiece featuring symmetrical arrangements of stylized foliage, floral blooms, and scrolling vines.</image-desc>
+
+## In Πολύγλωττον juxtaq; luculentißimum DE LUDO LATRUNCULORUM OPUS, Auctore GUSTAVO SELENO.
+
+**P**ROcul fritillus; tesseræ; tali; alea,
+Nihil ingenI vestris inest jocis, reor.
+Procùl Petauristæ; procùl Funambuli;
+Inanijs inaniores, quos datis,
+Sunt Ludi: Abeste, quos Plato è Republica
+Pellit; Lanistæ, Bestiarij, procùl
+Palæstritæ. Cruenta vos quidem
+Crudis Theatris editis spectacula.
+   Huc ora verò, animosq; læti advortite.
+**SELENUS** en **GUSTAVUS** exhibet, sinè,
+Quod cæde confit Prælium, sinè sanguine;
+In quo sagax dominatur Indoles, nequè
+Hilum sibi Sors cæca juris vindicat,
+Nil casus adscribit sibi, nil mobilis
+Jactus: sed una pervigil solertia
+Jubet ire, vel redire: seu prosternere
+Hostem cohortis militis suæ; Nigra
+Quippè una; Candida, altera est: Numero pari
+Stipatus armatorum in aciem Rex venit.
+Gravi perustus Seirio Æthiops, Niger;
+Septem à trionibus Albus in campis adest.
+Uterq; Nuptam ducit ad latus suam,
+Peditesq; Cornipedesq; Barros, Lanceâ in-
+structos, Pharetratosq;: qui indemnem & pede
+Inambulantem libero adsiduè Ducem
+Servant, salutem ac morte defensant suâ.
+Concurritur: Post mille sed discrimina,
+Victoriâ potitur, & palmam refert,
+Ductore qui usus maximè est industrio.
+Inclusus alter, turpiter latet angulo.
+
+->(?)<-
+
+<vocab>Gustavus Selenus, De Ludo Latrunculorum, Chess, Scacchi, Rex, Nupta, Pedites, Cornipedes, Barri, fritillus, alea, Plato</vocab>

@@ -1,0 +1,60 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>493</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+*mero Militum, sic singuli AnteSignani Turcarum, superant no- ,,*
+*stros Christianos 44 Militibus; ita ut omnis Turcarum Exercitus, ,,*
+*fit numero 440 Militum major, quàm noster: nihilominùs Rubri ,,*
+*Calculi grandiores Numeros exprimunt, quàm Albi. ,,*
+*In ipso congressu & exordio, pugnæ Ludicræ, Duo Imperato- ,,*
+*res, ad hanc pactionem venient. Ille scilicet, erit Victor, & ,,*
+*triumphabit, qui plura signa, ab Hoste referet. ,,*
+*Quòd si Noster Cæsar, superet ipsum Turcam, Duobus ,,*
+*Signis, ,,*
+
+<image-desc>A table layout where three columns of values are grouped by large curly braces. The first column lists quantities of signs (Duo to Decem), the second column lists corresponding infantry numbers (348 to 1740), and the third column lists comparison values (Tribus to Decem).</image-desc>
+
+| | | | | | | |
+|:---:|:---|:---:|:---|:---:|:---|:---:|
+| | Duo | | 348 | | Tribus | ,, |
+| | Tria | | 522 | | Quatuor | ,, |
+| | Quatuor | | 696 | | Quinque | ,, |
+| | Quinque | **Signa,** | 870 | **Pedi-** | Sex | ,, |
+| **Hæc** | Sex | **dabunt** | 1044 | **tes: Si** | Septem | **Signis;** ,, |
+| | Septem | | 1218 | | Octo | ,, |
+| | Octo | | 1392 | | Novem | ,, |
+| | Novem | | 1566 | | Decem | ,, |
+| | Decem | | 1740 | | | ,, |
+
+*Ecce strages Maxima Tur- ,,*
+*carum. ,,*
+*At si Noster Imperator, superetur à Turcâ, Duobus Signis; ,,*
+
+| | | | | | | |
+|:---:|:---|:---:|:---|:---:|:---|:---:|
+| | Duo | | 260 | | Tribus | ,, |
+| | Tria | | 390 | | Quatuor | ,, |
+| | Quatuor | | 520 | | Quinque | ,, |
+| | Quinque | **Signa,** | 650 | **Mili-** | Sex | ,, |
+| **Hæc** | Sex | **dabunt** | 780 | **tes: Si** | Septem | **Signis;** ,, |
+| | Septem | | 910 | | Octo | ,, |
+| | Octo | | 1040 | | Novem | ,, |
+| | Novem | | 1170 | | Decem | ,, |
+| | Decem | | 1300 | | | ,, |
+
+*Et hæc est Maxima Clades ,,*
+*Christianorum. ,,*
+*Idem fol: 41. a. ,,*
+*Quòd ad cæteras spectat Victorias, quas hùc contuli, id ,,*
+*feci, ut Ludus hic, qui Majorum memoriâ, à paucis attinge- ,,*
+*batur, nostrâ, non tantùm à doctis, sed etiam ab indoctis, in- ,,*
+*telligatur. Neq; enim unquàm mihi persuadere potui, justum ,,*
+*esse, hæc bona à paucis possideri, quæ ad omnes attinerent, ,,*
+*quæq; Reip. omniúmq; essent communia, inter privatos, pau- ,,*
+*cosq; delitescere.) ,,*
+
+<sig>Qqq ij</sig>
+<meta>Catchword: Siebey</meta>
+
+<vocab>Zahl-Kampf, AnteSignani, Turcarum, Christianos, Calculi, pugnæ Ludicræ, Cæsar, Pedites, Milites, Rithmomachia</vocab>

@@ -1,0 +1,44 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>50</page-num>
+<meta>catchword: di</meta>
+
+6, che sono li 4 primi nella detta tauola, & fanno la Massi-
+ma vittoria: trouaremo in quelli tutte le proportioni, dal-
+le quali nascono tutte le Musiche consonante. Perche se
+compararemo li dui vltimi tra loro, il 4, & il 6: ouer li dui
+primi il 2, & il 3: li trouaremo congionti in proportion
+sesquialtera, cioè che il maggior cōtiene il minor vna vol-
+ta e mezza, la qual proportion fa nascer la cōsonantia chia-
+mata dalli Greci Diapente, & dalli volgari Musici, Quin-
+ta. Poi se compararemo li dui, che sono in mezzo, cioè il
+3, & il 4: ne apparerà la proportion sesquiterza, cioè che
+il maggior cōtiene il minore, & la sua terza parte, dalla qual
+nasce la consonantia chiamata dalli Greci Diatessaron, &
+dalli volgari Quarta. Dipoi, se compararemo il primo che
+è il 2 al terzo, che è il 4: ouero il secondo, che è il 3, a l'vl-
+timo, che è il 6: trouaremo la proportion dupla, cioè che
+il maggior cōtiene il minor due volte, la qual proportione
+genera la consonantia chiamata da Greci Diapasson, & da
+volgari Ottaua. Di piu se faremo comparatione del pri-
+mo, che è il 2, a l'ultimo che è il 6: ne renderà la proportiō
+tripla, cioè che'l maggior cōtiene il minor tre uolte, la qual
+produce la consonantia chiamata da Greci Diapasson &
+Diapente insieme, & da moderni volgari Duodecima.
+Finalmente se cōpararemo la differentia che è tra il 3, & il
+4, cioè l'unità con il terzo numero, che è il 4: trouaremo
+la proportion quadrupla, cioè che il maggior cōtiene il mi
+nor quatro volte, dalla qual nasce la consonantia musica
+chiamata da Greci Disdiapasson, & da uolgari Qintadeci-
+ma. Et similmente se cōtēplaremo qualūq; altra schiera de
+quattro numeri cōtenuti nella soprascritta tauola trouare
+mo in ciascuna di esse tutte le musiche consonantie, eccetto
+nelle tre schiere segnate cō croce: cōe nella seguēte tauola
+si può cōtēplare. la qual cōtēplatione anchor che non sia
+necessario, che la sappiano tutti quelli, che giuocādo à que
+sto giuoco, uogliono far questa uittoria; nientedimeno l'ho
+uoluta toccar breuemēte sì per accēnar à qlli che sono uer
+sati nell'Arithmetica, & Musica, la gran dolcezza, & dilet
+tatione, che possono prender, nell'ultima uittoria, & fine
+
+<vocab>proportioni, Musiche consonante, sesquialtera, Diapente, Quinta, sesquiterza, Diatessaron, Quarta, dupla, Diapasson, Ottaua, tripla, Duodecima, quadrupla, Disdiapasson, Qintadecima, Arithmetica</vocab>

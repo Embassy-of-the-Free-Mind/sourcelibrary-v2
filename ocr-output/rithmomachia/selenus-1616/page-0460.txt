@@ -1,0 +1,35 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>426</page-num>
+<header>Das Vierte Buch / 9.cap:</header>
+
+<image-desc>
+A drawing of a rectangular chessboard with 12 columns and 8 rows, totaling 96 squares. The board shows a starting configuration for a variant of chess (Courier Chess). 
+The top and bottom rows contain abbreviations and symbols for the primary pieces: R., Sp., Sc., C., M., K., a King symbol (a crown with a cross), S., C., Sc., Sp., R.
+The second row from the top contains the script letters "d i e x i i b a u r e n" (interpreted as "die xii bauren", the 12 peasants/pawns) distributed across the squares.
+The second row from the bottom (row 7) contains the script letters "d i e x i i f e n d e n" (interpreted as "die xii fenden", the 12 footmen/pawns).
+The board squares alternate between white and black, beginning with a white square in the bottom-left corner from the perspective of the player.
+</image-desc>
+
+Das Bret/oder die Tabel/welche/die zu Ströpeke/hiezu
+gebrauchen/haben Sie/(wie auß dem Abriß zu sehen) in sechs und
+neunzig/felder/deren sie zwölf/in die breyte/und acht/in die länge/
+begreifft/außgetheilet: und stellen dieselbe/dergestalt/daß/das
+eußerste feld/nach der rechten hand/in der untersten Zwerch=linie/
+(welche zwölf felder/begreiffet) Schwartz=nach der lincken aber/
+Weiß sey.
+
+Die Steine/anbelangend: hat ein jeder Spieler/über die
+gebreuchliche sechzehen/in diesem Spiele/noch Acht/(und also
+vier und zwanzig) Steine: nemlich/zween Currierer: einen
+Geheymen= einen Kurtzweyligen Raht: und (zu den achten/
+noch) vier Soldaten/zu gebrauchen.
+
+Ihre Stelle/betreffend: werden die Rochen/Reuter und
+Schützen/in ihre gewöhnliche felder/von den leisten/anzurechnen/
+(wie dan solche/in dem 7. 9. und 8. Capp: des Ersten Buches/zu be-
+finden) von ihnen gestellet: doch seynd ihre felder/von denen/das
+
+<meta>catchword: rauf die</meta>
+
+<vocab>Ströpeke, Currierer, Geheymen, Kurtzweyligen Raht, Rochen, Reuter, Schützen, Bauren, Fenden, Soldaten</vocab>

@@ -1,0 +1,32 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>B.b.</sig>
+<warning>Heavy bleed-through/ghosting from the reverse side of the leaf, though text remains legible.</warning>
+
+# ¶ Of taking by obliuion.
+
+By obliuion anye man maye be taken
+euen the kinge him selfe, if he be so
+compassed with 4. men, that hys law-
+full draught be hindered, as for example
+the round standing in the place of .1. and
+4. men of what kynd it skylleth not, oc-
+cupping the places of .2.3.4.5. after you
+haue set your last man in hys place may
+be taken by, also if a triangle be enclo-
+sed, as in .a. with any foure mē standing
+in .b.c.d.e. he may be taken, euen so may
+a square be taken. Also Triangles and
+squares may be beseged, if al the foure mē
+or any of them, the rest standyng nearer,
+doe stande in the thyrde or fourth space
+from them so that they haue no waye to
+remoue, as a triangle or square stāding
+in. A. may be beseged by .4. men or anye
+of them (the reste standynge nearer) in.
+F.G.H.I. Also a square standyng in .A.
+maye be taken by obsidion, of the former
+men.
+
+<vocab>Rithmomachia, obliuion, obsidion, triangle, square, round, capture rules, besieged</vocab>

@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>226</page-num>
+<header>Das Ander Buch / 14.cap:</header>
+
+<image-desc>Decorative woodcut headpiece featuring elaborate scrollwork, foliage, and small human figures within the design.</image-desc>
+
+## Das Vierzehende Capittel.
+
+### Wie das Spiel/wan der Schwarze/den Weissen Soldaten/davon im zwölften Capittel/droben/erwehnung geschehen: nicht nimt/besondern des Königes-Reuter ziehet/volführet werden muß.
+
+Belangend die Andere Art/welche/in diesem Capittel/(vermöge der/im 12. Cap: dieses Buches/geschehenen zusage) sol abgehandlet werden: so siehet man/bey derselben/auf dieselben drey Steine/welche/der Schwarze/an stat des raubens / ruckat : als nemlich / (1.) auf des K. Reuter : (2.) auf der K. Soldaten : und (3.) auf des K. Schützen : welche/auf drey- oder auf fünf und vierzig/oder auf acht und dreyssig/gezogen werden: Vom Reuter/wird in diesem - vom Soldaten und Schützen aber/im folgenden letzten Capittel/gehandlet.
+
+<margin>1.</margin>
+<margin>2.</margin>
+Ziehet nuhn der Schwarze/(nachdem die beede Soldaten der Könige/aufgezogen: und der Weisse/auf des S. K. Soldaten/des K. Schützens-Soldaten/angeführet) seines K. Reuter / auf des W. K. Soldaten / auf drey und viertzig: * so nimt / der Weisse / (so fern Er wil) des S. K. Soldaten/mit seines K. Schützens-Soldaten/und ziehet ihn/auf des S. K. Reuter: Der Schwarze / nimt/mit demselben/des W. K. Soldaten: Der Weisse / (umb des K. Schützens-Soldaten/zu entsetzen) ziehet/seines K. Reuter/auf neunzehen/und ordnet sein Spiel/dergestalt nicht undienlich.
+
+<margin>3.</margin>
+Wan aber der Weisse/den S. Soldaten / nicht wegnimt / (n. 2.) besondern (zu verthetigen des K. Soldaten) der K. Reuter / auf zwey und zwantzig/ziehet: so nimt der Schwarze/des W. K. Schützens-Soldaten/mit seines K. Soldaten: Der Weisse / spielet/der K. Soldaten/auf neun und zwantzig/und entdecket dero Schützen/gegen des S. K. Soldaten: Der Schwarze/ziehet des K. Schützen/(umb der W. K. Reuter / gefangen zu halten) auf ein und dreyssig: Der Weisse/(umb des K. Soldaten/wan ihm etwa/der K. Reuter/genommen würde/zu beschützen) des K. Schützen/auf ein
+
+---
+
+<image-desc>A partial diagram of a game board or coordinate system with faint grid lines. Letters such as "S.R", "S.S", "W.R", "W.S" are visible within some of the squares, likely representing pieces like Schwarz-Reuter, Schwarz-Soldat, Weiß-Reuter, and Weiß-Soldat.</image-desc>
+
+<meta>catchword: auf ein</meta>
+
+<vocab>Schachspiel, Reuter, Soldaten, Schützen, Schwarze, Weisse, Capittel, Spielzug</vocab>

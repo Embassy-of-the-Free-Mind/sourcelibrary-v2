@@ -1,0 +1,66 @@
+<language>French</language>
+<page-type>diagram</page-type>
+
+<image-desc>
+A mathematical diagram illustrating "Proportion superparticu." (superparticular proportions). The layout is divided into two primary horizontal sections, distinguished by a large bracket on the left margin.
+
+The top section, labeled "Pair" (Even), corresponds to the even-numbered ordinal positions of the columns. It contains:
+- Vertical headers: Deuxiesm., Quatries., Sixiesme., and Huieties.
+- Numbers: 3, 5, 7, and 9.
+- A descriptive line: "Sexquialtre, sexq. quarte, sexq. sixies., sexq. huitiesme".
+- Two rows of four white triangles. The first row (Regirans plic.) contains the products: 6, 20, 42, and 72. The second row (Requis pro unus.) contains the squares: 9, 25, 49, and 81.
+
+The bottom section, labeled "Non pair" (Odd), corresponds to the odd-numbered ordinal positions of the columns. It contains:
+- Vertical headers: Troisiesme., Cinquiesme., Septiesme., and Neufiesme.
+- Numbers: 4, 6, 8, and 10.
+- A descriptive line: "Sexquitierce, sexq. quint, sexq. septiesme, sexquineuf.".
+- Two rows of four black triangles with white numbers. The first row (Regirans partic.) contains the products: 12, 30, 56, and 90. The second row (Regs pro unus.) contains the squares: 16, 36, 64, and 100.
+</image-desc>
+
+<margin>
+Proportion superparticu.
+</margin>
+
+<margin>
+Pair
+parties.
+</margin>
+
+-> Deuxiesm. <- -> Quatries. <- -> Sixiesme. <- -> Huieties. <-
+-> 3 <- -> 5 <- -> 7 <- -> 9 <-
+
+-> **Sexquialtre, sexq. quarte, sexq. sixies., sexq. huitiesme** <-
+
+<margin>
+Regirans plic.
+</margin>
+-> 6 <- -> 20 <- -> 42 <- -> 72 <-
+
+<margin>
+Requis pro unus.
+</margin>
+-> 9 <- -> 25 <- -> 49 <- -> 81 <-
+
+---
+
+<margin>
+Non pair
+parties.
+</margin>
+
+-> Troisiesme. <- -> Cinquiesme. <- -> Septiesme. <- -> Neufiesme. <-
+-> 4 <- -> 6 <- -> 8 <- -> 10 <-
+
+-> **Sexquitierce, sexq. quint, sexq. septiesme, sexquineuf.** <-
+
+<margin>
+Regirans partic.
+</margin>
+-> 12 <- -> 30 <- -> 56 <- -> 90 <-
+
+<margin>
+Regs pro unus.
+</margin>
+-> 16 <- -> 36 <- -> 64 <- -> 100 <-
+
+<vocab>Proportion superparticu., Sexquialtre, Sexquitierce, sexq. quarte, sexq. quint, Regirans, Requis pro unus, pair, non pair</vocab>

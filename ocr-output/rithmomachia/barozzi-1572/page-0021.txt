@@ -1,0 +1,26 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>7</page-num>
+<sig>C Final-</sig>
+
+<image-desc>A series of four squares. Above each square is a number: 5, 9, 13, and 17 respectively. Inside each square is a number followed by a small dot: 25, 81, 169, and 289. These represent the squares of the numbers above them (5², 9², 13², 17²).</image-desc>
+
+Hauendo hor mai ritrouato li numeri, che si doueano
+scriuer sopra li quadrati bianchi, resta ritrouar quelli, che
+si debbono scriuer sopra li neri. Volendo adunq; ritrouar
+li numeri delli 4 primi quadrati neri, operaremo al modo
+che hauemo fatto, quando uoleuimo ritrouar li numeri
+delli 4 primi quadrati bianchi. cioè congiungeremo li 4
+primi triangoli neri con li 4 secondi neri triangoli, & ha-
+ueremo li numeri, che desideremo, i quali saranno questi
+28, 66, 120, 190. Imperoche dal 12 accozzato col 16 na-
+sce il 28: dal 30 col 36, il 66: dal 56 col 64, il 120: & dal
+90 col 100, il 190. come nella seguente figura si uede.
+
+<image-desc>A diagram illustrating the summation described in the text. It consists of three rows of shapes:
+- The top row contains four black triangles pointing upwards, containing the numbers 12, 30, 56, and 90.
+- The middle row contains four black triangles pointing upwards, containing the numbers 16, 36, 64, and 100.
+- The bottom row contains four black squares, containing the numbers 28, 66, 120, and 190.
+The numbers in the squares are the sums of the two triangles vertically above them (e.g., 12 + 16 = 28).</image-desc>
+
+<vocab>quadrati bianchi, quadrati neri, triangoli neri, numeri figurati, accozzato</vocab>

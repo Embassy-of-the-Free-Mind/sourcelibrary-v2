@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>52</page-num>
+<header>Das Erste Buch / 5. cap:</header>
+<warning>Bleed-through from the reverse page; slight fading at the right margin.</warning>
+
+<image-desc>A decorative woodcut border at the top of the chapter features symmetrical floral scrollwork and two small grotesque faces.</image-desc>
+
+### Das Fünffte Capittel.
+
+# Von den zween Königen/des Schwartzen/und des Weissen Hauffens: ihrer Stelle/ und Felder/ in welche Sie / zum anfange müssen gesetzet werden/ und derselben gange.
+
+<image-desc>A woodcut illustration of a chess king piece. The piece is depicted as a pedestal or chalice shape supporting the bust of a bearded king wearing a crown. Beneath the illustration, a small label reads "Der König."</image-desc>
+
+Nun wollen wir/ insonderheit/ die Schach- Mänlein / umb ihre Nahmen/ Würde/ Stelle/ und Gänge/ welche Sie/ von der Kunst / alß der Natur Nach-Affin/ bekommen / und wir ihnen / in diesem Ersten Buche/ alß wan Sie selbst stünden und giengen/ zueignen wollen/ (auf daß wir ihrer/ im ziehen und vortrucken/ hernacher recht zu gebrauchen haben) zu erlernen/ für uns nehmen.
+
+Und zwar/ unter den fürnehmsten/ und anderen gemeinen Steinen/ ist der König/ das Haupt/ und die Seele/ des gantzen Krieges-hauffens. Dan bey diesem/ der verlust/ und gewin des Spieles/ beruhet/ und die Andere Steine/ mit demselben/ entweder gewinnen oder verlieren.
+
+Seine Stelle betreffend/ ist ihm/ das vierte feld/ von der Rechten: (so fern Einer/ mit den Weissen Steinen/ spielet) oder von der Lincken Hand/ (wan Einer/ die Schwartzen Steine/ gebrauchet)
+
+<meta>catchword: anzu</meta>
+
+<vocab>Schach, König, Schach-Mänlein, Spiel, Krieges-hauffens, vierte feld</vocab>

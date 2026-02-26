@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>111</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>11.cap:</margin>hauffens Ordnung/(wie erwehnet) sich wol eingebildet/des Andern
+hauffens stellung/auch ohne mühe/wißen kan. Dan wan einer/die
+erste Linie/und das feld/des Steines derselben/ob es schwartz oder
+weiß sey/verstehet/so kan er auch wißen/daß das dritte/eben dieselbe
+farbe habe/wie das erste: und das vierte/wie das ander: Als/ist das
+erste feld des Rochens/weiß/so muß das dritte/auch weiß seyn: ist
+das ander/schwartz/so ist das vierte/auch schwartz: dahero Er/eine
+gewiße nachrichtung und rechnung hat/daß dieselbe felder / welche
+dem Weißen/weiß/dem Schwartzen/schwartz: die aber dem Weis-
+sen/schwartz/dem Schwartzen/weiß sind.
+
+Obgedachte gänge und Züge/muß nuhn ein Schach-Zieher/
+insonderheit/ders außwendig/im fahren/reiten oder spatzieren/spie-
+len wolte/sehr wol wißen/und in acht haben: auch/auf welche seite /
+oder in welches feld er treffen/und welchen Stein / er wegnehmen
+könne/oder weggenommen habe / in der gedechtnus / (welches aber
+zimlich schwer/ins werck zu richten) behalten.
+
+Die Andere Art/das Schach-bret sich einzubilden / ist diese :
+daß man ein jedes feld/mit einer zahl/zeichne/und immer / biß alle
+felder/von dem ersten an/biß aufs letzte/auf der tabel/verzeichnet
+sind/vortzehle/mit der vier und sechßigsten zahl/schließe / und die
+felder/(auf daß mans/desto ehe begreiffen möge) mit der Weißen
+und schwartzen farbe/nicht unterscheide. Werden demnach / in des
+Weißen Königes-Rochens feld/eins : in deſſen Reuters/zwey : in
+deſſen Schützens/drey : in ſein eigenes/viere : in der Königin/fünfe:
+in dero Schützens/sechs : in dero Reuters/sieben : in dero Rochens/
+achte: Im widerkehren / auf der folgenden Zwerch-linie/hinauf-
+wertz/in dero erstes feld / neun : ins ander/zehen/geschrieben / und
+auf die weiſe/die übrige felder und linien/biß zum ende / der letzten
+linie/verzeichnet. Wan nuhn auf die art/eine Tafel/mit ihren lini-
+en und zahlen/beſchrieben worden / ſo darf man / die nahmen der
+Steine oder Soldaten/denen nach man/die felder/müſte nennen :
+imgleichen die zahle derſelben felder/und derſelben farbe/in der ge-
+dechtnus/nicht behalten/beſondern/auf die zahle / welche in einem
+jedern felde / verzeichnet ſtehen / nuhr acht haben: Als : ziehet der
+Weiße/des Königes-Soldaten/in die vierte Zwerch-linie / daſelbs-
+sten/acht und zwantzig/gezeichnet ſind. So spielet der Schwartze/
+ſeines Königes-Soldaten/auf die fünfte Zwerch-linie/ins feld / das
+rinnen sechs und dreyßig/ gefunden werden: & cæt:
+
+<sig>P</sig>
+<meta>catchword: Zum</meta>
+
+<vocab>Schach-Spiel, Rochens, Reuters, Schützens, Soldaten, Zwerch-linie, gedechtnus, Weiße, Schwartze</vocab>

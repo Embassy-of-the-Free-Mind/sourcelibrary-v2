@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>264</page-num>
+<header>Das Dritte Buch I. Cap:</header>
+<meta>catchword: (wan Es</meta>
+
+zig: Der Weiße / die Königin / auf sechßig / und beut Schach: Der
+Schwarße / rucket den König / (so fern Er denselben / mit der K.
+Rochen / auf neun und funfzig / nicht bedecket / wiewol es ihn / fur
+dem Schach-Mat / nuhmmehr nicht versichern kan) auf funfzig: Der
+Weiße nimt / der S. K. Roche / mit seiner Königin / und beut Schach:
+Der Schwarße / stellet den König / auf sieben und funfzig: Der
+Weiße / gibt / mit der Königin / auß neun und funfzig / Schach-Mat.
+
+<margin>24.</margin> Wan aber der Schwarße / mit der Königin / den W. Rochen /
+(n. 21.) nicht raubet / besondern / (umb ihren Rochen zu beschützen / und
+den König / mit derselben / auf zwey und vierzig / zu bedecken) diesel-
+be / auf sechßzig / stellet: so rucket der Weiße / der K. Schützen / auf
+des S. K. Rochen / auf drey und vierzig / und beut / von der Königin /
+Ab-Schach: Der Schwarße / darf den König / auf ein- oder neun
+und funfzig / nicht ziehen / (dan sonsten / im Ab-Schach / von des W.
+K. Rochen / der W. K. Schütze / dessen Rochen / ohne hinderung / weg-
+nehme) besondern bedecket den König / mit der Königin / auf zwey
+und vierzig: Der Weiße / rucket / der K. Rochen / auf zwey: Der
+Schwarße / seiner K. Rochen / auf die W. Königin / auf dreyßig:
+Der Weiße / (umb dem Spiele / so viel zeitiger / ein ende zu geben)
+nimt / mit derselben / die S. Königin / und beut Schach: Der
+Schwarße / raubet dieselbe / mit des K. Rochens-Soldaten: Der
+Weiße / mit seiner K. Schützen / des S. K. Rochen / Der Schwar-
+ße / denselben / mit dem Könige: Der Weiße / (der K. Schützen-
+Soldaten zu erretten) rucket denselben / auf zwey und zwanzig: Der
+Schwarße / der K. Rochen / auf zwey und sechßzig: Der Weiße /
+den König / auf neune / und entblösset der K. Rochen / auf des S.
+K. Rochens-Soldaten: Der Schwarße / (ihn zu entsetzen) ru-
+cket den König / auf neun und viertzig / Der Weiße / beut / mit des
+K. Rochen / auß ein und funfzig / Schach: Der Schwarße / ziehet
+auf ihn / den König / auf acht und funfzig: Der Weiße / denselben /
+auf fünf und funfzig: Der Schwarße / (des K. Rochens-Solda-
+ten / zu beschützen) der K. Rochen / auf sechs und vierzig: Der Weiße /
+seiner K. Rochen / auf fünfe: Der Schwarße / (auf daß sein König /
+von demselben / auß ein und sechßzig / nicht gleich Mat werde) der K.
+Rochen / auf zwey und sechßzig: Der Weiße / der K. Rochen / auf
+des S. K. Rochens-Soldaten / auf funf und vierzig: Der Schwar-
+ße / den König / auf neun und funfzig: Der Weiße / nimt des oftge-
+dachten S. Rochens-Soldaten / mit seiner K. Rochen: setzet folgen-
+des des K. Rochen / auf neun und viertzig / und gibt mit demselben /
+
+<vocab>Schach, König, Königin, Rochen, Schütze, Soldat, Schach-Mat, Ab-Schach</vocab>

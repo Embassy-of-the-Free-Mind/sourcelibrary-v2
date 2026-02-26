@@ -1,0 +1,61 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>299</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Pp iij</sig>
+<meta>catchword: Wan</meta>
+
+<margin>5. cap:</margin>
+che Er noch viel schlimmer schätzet) auß drey und viertzig: Wie-
+wol diese Art / etliche / welche derselben sich gebrauchen wolten /
+nicht würden dergestalt / (wie Er davon schreibet / und im vor-
+gehenden 3. und 4. Capitt: zur notturft erkläret worden / auch
+drunten / im 7. Cap. weiter sol gezeiget werden) vielleicht ordnen
+und stellen.
+
+<margin>4.</margin>
+Zum Vierten: mit der Königin / auß zwey und funfzig:
+Ob sie nuhn wol / zur beschützung dieses Soldatens / auf drey
+und viertzig / auch könte gezogen werden: So wird sie doch / auf
+iehnes feld / weyl derselbe / dadurch / ebenmessig / gnugsam ver-
+sehen ist / nützlicher gesetzet: Sie auch / diesem Soldaten / des-
+sen beystandes / man unterweylens hoch benöthiget / den gang nuhr
+sperret und verhindert.
+
+<margin>5.</margin>
+Zum fünften: mit des K. Schützen / auß fünf und viertzig.
+
+<margin>6.</margin>
+Die Erste Art / anbelangend / so spielet der Schwartze / ꝛc.
+(umb seines K. Soldaten zu vertheidigen) der K. Reuter / ꝛc.
+
+<margin>7. (n. 1.)</margin>
+auf 46: * Der Weisse / des K. Schützen / auf dreyß- ꝛc.
+sig: Der Schwartze / seines K. Schützen / auf acht und dreyß- ꝛc.
+sig: Der Weisse / der K. Schützens-Soldaten / auf zwey ꝛc.
+und zwanzig: Der Schwartze / auf des W. K. Soldaten / ꝛc.
+nicht des K. Reuter / (*wie Damianus* vermeynet) auf drey und ꝛc.
+viertzig / besondern / (umb dem Weissen / zu etlichen zügen / wel- ꝛc.
+che droben / im 2. Cap: dieses 3. Buches / zu finden / kein anlaß zu
+
+<margin>8.</margin>
+geben) die Königin / auf zwey und funfzig: * Der Weisse / der
+K. Soldaten / auf der S. K. Schützen / und Soldaten / auf neun
+und zwanzig: Der Schwartze / nimt ihn / mit dem Soldaten:
+Der Weisse / denselben / mit der K. Schützens-Soldaten / und
+ziehet ihn nochmaln / auf des S. K. Schützen: Der Schwartze /
+nimt / des W. K. Soldaten / mit der Königin / und beut Schach:
+
+<margin>9.</margin>
+* Der Weisse / ziehet den König / auf dreyzehen: Der Schwar-
+ze / gibt / mit des K. Schützen / auß ein und dreyßig / Schach: Der
+Weisse / muß den König mit der K. Reuter / auf zwey und zwan-
+zig / bedecken / und ziehet ihn / auf die S. Königin: Der Schwar-
+ze / gibt / mit derselben / auß sieben und zwanzig / Schach: Der
+Weisse / rucket den König / auf vierzehen / und entblöset / seiner
+K. Schützen / gegen die S. Königin: Rucket nuhn der Schwar-
+ze / die Königin auß der gefahr: so gibt / der Weisse / mit des
+K. Rochen / aus viere / Schach / und ordnet dergestalt / sein Spiel /
+nicht übel.
+
+<vocab>Schach, Königin, Soldaten, Damianus, K. Schützen, K. Reuter, K. Rochen, Schwartze, Weisse</vocab>

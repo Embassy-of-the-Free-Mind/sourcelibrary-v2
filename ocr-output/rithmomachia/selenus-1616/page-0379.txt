@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>345</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>9.cap:</margin>
+zen/ mit der K. Schützen : Der Weisse/ mit des K. Rochen/ die
+S. Königin : Der Schwarze/ denselben/ mit des K. Rochen :
+Der Weisse/ des S. K. Rochens-Soldaten/ mit der Königin/ und
+ziehet sie/ (auß der gefahr/ welche ihr/ von des S. K. Schützen/
+auß eylfe/ könte verursachet werden) auf dessen Reuters-Solda=
+ten: wird auch/ dem Schwarzen/ (welcher/ ohne seine Königin/
+spielen muß) ferner wol abgewinnen können.
+
+8. Wan aber der Schwarze/ den Reuter/ nicht auf 51. (n. 7.)
+besondern/ auf die W. Königin/ auf funf und dreyßig/ rucket: so
+nimt der Weisse/ mit derselben/ der S. K. Schützen: Der Schwar=
+ze/ (umb der Königin/ luft zu machen) ziehet/ des K. Reuters=
+Soldaten/ auf zwey und viertzig: Der Weisse/ nimt/ des S. K.
+Reuter/ mit des K. Soldaten: Der Schwarze/ rucket/ die Köni=
+gin/ auf funfzig: Der Weisse/ nimt/ mit des K. Soldaten/ des S.
+K. Reuters-Soldaten: 
+
+<margin>9.</margin>
+* Der Schwarze/(auf daß der Weisse/
+mit der Königin/ auß zwey und sechßig/ nicht Schach-Mat gebe)
+rucket / der K. Reuter / auf sechs und viertzig: Der Weisse /
+beut / mit der Königin / auß vier und viertzig / Schach : Der
+Schwarze / bedecket den König / mit der K. Reuter / auf zwey
+und funfzig : Der Weisse / rucket / des K. Rochen / auf die S. Kö=
+nigin/ und dero Reuter/ auf ein und funfzig : Der Schwarze/ nimt
+des W. K. Schützens-Soldaten/ mit der Königin/ und gibt Schach :
+Der Weisse/ nimt sie/ mit der Königin: Der Schwarze/ diesel=
+be/ mit der K. Soldaten: Der Weisse / ziehet / der K. Schützens=
+Soldaten/ auf zwey und zwantzig : Der Schwarze/ des K. Ro=
+chen/ auf des W. K. Rochen/ auf neun und funfzig : Der Weisse /
+nimt/ mit demselben/ dessen Soldaten: Der Schwarze/ rucket/
+der K. Reuter/ (auß der künftigen gefahr) auf funf und dreyßig :
+Der Weisse / gibt / mit des K. Schützen / auß ein und funfzig /
+Schach: Der Schwarze/ rucket/ den König / auf drey und funf=
+zig : Der Weisse/ des K. Schützen/ auf der S. K. Reuters-Sol=
+daten/ auf sieben und dreyßig / und gibt/ von des K. Rochen/ Ab=
+Schach: Der Schwarze / bedecket / den König / mit der K. Reu=
+ter/ auf zwey und funfzig : Der Weisse/ ziehet/ der K. Solda=
+ten/ auf des S. K. Rochen/ auf funfzig : Der Schwarze/ den=
+selben/ (umb/ der K. Reuters-Soldaten/ zu hülfe zu kommen)
+auf drey und sechßig : Der Weisse / des K. Soldaten / auf acht
+und funfzig / und machet ihn zur Königin : Der Schwarze /
+
+<sig>Xx ij</sig>
+<meta>catchword: nimt</meta>
+
+<vocab>Schach-Spiel, Königin, Rochen, Reuter, Soldaten, Schützen, Schach-Mat, Ab-Schach, Weisse, Schwarze</vocab>

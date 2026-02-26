@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+<meta>catchword: ohne</meta>
+
+sagtem Henning Grossen / oder seinen Erben /
+nach billichen dingen verglichen / vnd derhal-
+ben bewilligung erlangt / vnd gepietten dar-
+auf allen vnd yeden vnsern vnd deß heiligen
+Reichs / auch vnserer Königreich / Erblichen
+Fürstenthumb vnd Landen / Vnderthanen
+vnd getrewen / was Würden / Standt / oder
+weesens die sein / vnd sonnderlich allen Buech-
+druckhern / Buechfüerern / Briefmahlern vnd
+<term>Kupfferstechern</term> / bey vermeidung vnserer Vn-
+gnade vnd Straff hiemit ernstlich / vnd wol-
+len / daß Ir / noch ainiger auß Euch / durch sich
+selbst / oder jemandes von Eurwegen / oban-
+geregt Werckh / so ernanter Henning Groß in
+Truckh vnd Kupfferstück außgehen lassen
+würdet / in bestimpten Sechs Jahren / nit
+nachdrucket / oder also nachgedruckt vmbtra-
+get / failhabet / oder verkaufft / noch deß andern
+zuthue gestattet / in kain weiß / bey vermeidung
+vnserer Vngnade vñ verlierung desselben Ew-
+ers Drucks / auch darzue ainer <term>Peen</term> / Nemb-
+lich zehen <term>Marckh löttigs Goldts</term> / halb in vn-
+ser <term>Kay: Camer</term> / vnd den andern halbē Thail /
+offtbesagtem Henning Grossen / oder seinē Er-
+ben / vnnachleßlich zubezahlen / die auch mehr-
+gemelter Hening Groß / durch sich selbst / od sei-
+ne Befehlchhaber / wo Sy dergleichē bey Eu-
+er jedem finden werden / auß aignem gewaldt /
+
+<vocab>Henning Groß, Buchdrucker, Kupferstecher, Nachdruck, Privileg, Peen, Kay: Camer, Marckh löttigs Goldts</vocab>

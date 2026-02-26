@@ -1,0 +1,86 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>424</page-num>
+<header>Das Vierte Buch / 8. cap.</header>
+
+dern seine Königin / (umb sie noch in etwas zu gebrauchen) auf sechs-
+und viertzig: so nimt / der Weisse / der S. K. Schützen / mit sei-
+nes K. Reuters-Soldaten / und ziehet ihn auf des S. K. Reuters-
+Soldaten: Der Schwartze / beut / mit der Königin / auß acht-
+und zwantzig / Schach / und rucket sie / auf des W. K. Schützen / und
+der W. K. Schützen-Soldaten: Der Weisse / bedecket / mit
+dem selben / den König / auf zwölfe: Der Schwartze / (umb der
+W. K. Schützen / zu nehmen) raubet / mit der Königin / dessen Sol-
+daten: Der Weisse / (so fern Er denselben / nicht / mit der K.
+Reuter / auß zwey und zwantzig / auf welchen fahl Er / die S.
+Königin / einsperret: besondern / mit seiner Königin / entsetzen wil)
+ziehet / dero Soldaten / auf ein und zwantzig: Der Schwartze /
+beut / mit des K. Schützen / auß ein und dreyssig / Schach: Der
+Weisse / bedecket / den König / mit der K. Reuter / auf dreyzehen /
+ordnet also / sein Spiel wol an / und muß ihm endlich / der Schwart-
+ze / (alsz welchem / ein Schütze / und ein Reuter / manglen) wei-
+chen / und das feld räumen:
+
+---
+
+->n. 5. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | 60 | SK | | SR |
+| SS | SS | SS | | | | 50 | SS |
+| | | | | | SR | SS | WR |
+| | | SS | | SS | SS | | |
+| | | WS | | | | | |
+| | | | | WR | | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WR | WR | WS | | WK | WR | | |
+
+<column-break/>
+
+->n. 6. 7.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SK | | SR |
+| SS | SS | SS | | | | SR | SS |
+| | | | | | | SS | WR |
+| | | SS | | SS | SS | | |
+| | | WS | WS | | | | |
+| | | | | WR | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WR | | |
+
+---
+
+->n. 9. j0.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | 59 | | SR |
+| SS | SS | SS | | | | | SS |
+| | | | | | SR | SS | WR |
+| | | SS | | SS | SS | | |
+| | | WS | | | | | WR |
+| | | | | | | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WR | WR | WS | | WK | WR | | |
+
+<column-break/>
+
+->n. jj. jz.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SR | | |
+| SS | SS | SS | | | 52 | | SS |
+| | | | 46 | | SR | SS | WR |
+| | | SS | | SS | SS | 34 | |
+| | | WS | | | WS | WR | |
+| | | | | | | | |
+| WS | WS | WS | WS | | | | WS |
+| WR | WR | WS | | WK | WR | | |
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schütze, Soldat, Weißer, Schwarzer, Schachbrett</vocab>

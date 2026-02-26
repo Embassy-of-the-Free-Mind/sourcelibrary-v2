@@ -1,0 +1,118 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>410</page-num>
+<meta>The text in the left margin is oriented vertically. Eight 8x8 grids represent board game positions (likely a chess variant) with abbreviated pieces and numbers.</meta>
+
+<margin>
+5. cap:
+**Das Vierte Buch/**
+</margin>
+
+### n. 3. 4.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | SR | SK | SS | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | | | | | | |
+| | | | SS | SS | | | |
+| | | | WS | 28 | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | WR | WS | WR | WK | WS | WR | WR |
+
+### n. 7. 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | SR | SK | SS | | SR |
+| SS | SS | | 53 | 52 | SS | SS | SS |
+| | | | | SR | | | |
+| | WS | | SS | | | | |
+| | | | WS | SS | | | |
+| | | WR | | WS | | | |
+| WS | WS | | | | | WS | WS |
+| WR | | WS | WR | WK | | WR | WR |
+
+### n. 13. 14. 15.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | SS | SR | WR |
+| SS | SS | SS | SS | SR | | | SS |
+| | | | | 43 | SS | | |
+| | | | | | | | |
+| | | | | SS | | | |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WS | WR | WR |
+
+### n. 19. 20.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | SR | SK | SS | SR | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | | 45 | | | | |
+| | | | SS | SS | | | |
+| | | | | 28 | | | |
+| | | | WS | | WR | | |
+| WS | WS | WS | | WS | | WS | WS |
+| WR | WR | WS | WR | WK | WS | | WR |
+
+<column-break/>
+
+### n. 5. 6.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | SR | SK | SS | SR | SR |
+| SS | SS | | | | SS | SS | SS |
+| | | | 45 | 44 | 43 | | |
+| | | | | SS | | | |
+| | | | | WS | SS | | |
+| | | | WR | | WS | | |
+| WS | WS | | | | | WS | WS |
+| WR | | WS | WR | WK | WS | WR | WR |
+
+### n. 10. 11.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | SR | SK | SS | SR | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | | | | |
+| | | | | 37 | SS | 35 | |
+| | | | | | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | WS | | WS | WS |
+| WR | WR | WS | WR | WK | WS | WR | WR |
+
+### n. 16. 17.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | SS | WR | |
+| SS | SS | SS | SS | | | | SS |
+| | | | | | | SS | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | WS | | | |
+| WS | WS | WK | | WR | | | WS |
+| WR | WR | WS | | | | | SR |
+
+### n. 21. 22.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | | SR | SR |
+| SS | SS | | | | | | SS |
+| | | | SS | SS | | | |
+| | | | | | SS | SS | SS |
+| | | | WS | SS | | | |
+| | | | | WS | | WR | WS |
+| WS | WS | | 13 | 12 | | WS | WS |
+| WR | WR | | WR | WK | WS | | WR |
+
+<vocab>SR, SS, SK, WS, WR, WK, Schwarz, Weiß, Soldat, Schütze, Roß, König, Schach</vocab>

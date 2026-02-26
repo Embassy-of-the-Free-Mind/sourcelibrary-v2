@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>281</page-num>
+<header>3.cap: + Vom Schach-Spiel.</header>
+
+Schützen / (n. 30.) besondern / ziehet die Königin / ( umb / ihres K. Schützen / zu verthetigen ) auf drey und zwanzig : so werden die Schützen verwechszlet : der S. K. Reuter / auf drey und funfzig / gezogen : und dero Roche / nichtes desto minder / ( weyl ihn / die Königin / beschützet ) errettet.
+
+<margin>32.</margin> Rucket aber der Weisse / die Königin nicht / auf 23. (n. 31.) besondern / auf ein und zwanzig : und der Schwarze / des W. K. Schützen / mit seiner K. Schützen / nimt : Der Weisse aber / des K. Soldaten / auf des S. K. Schützen / auf sechs und dreyfsig / ziehet / und von der Königin / Ab=Schach gibt : so hat Er nuhr / mit den Schützen / getauschet / und ist Ihm sein anschlag / auf den S. Rochen / nichtes desto minder / mißgelungen.
+
+Dieses ist nuhn / nach anleytung des Damiani, ob Er wol / mit andern worten / fürgibt / also gesetzet worden / und endet / sich hiemit / seine Beschreibung / der Art und Weyse / wan mit des K. Soldaten / ein Spiel wird angefangen.
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mask or lion's head surrounded by elaborate symmetrical scrolling foliage and floral ornaments.</image-desc>
+
+<sig>An ij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Damiani, Königin, Schützen, Reuter, Roche, Ab-Schach, Soldat, verwechszlet, mißgelungen</vocab>

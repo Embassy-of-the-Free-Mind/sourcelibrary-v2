@@ -1,0 +1,5 @@
+<language>None</language>
+<page-type>blank</page-type>
+<meta>This page contains no handwritten or printed text from the original manuscript. A "Digitized by Google" watermark is visible in the bottom right corner, and two metal clips are used to hold the page in place during digitization.</meta>
+
+<vocab>blank page</vocab>

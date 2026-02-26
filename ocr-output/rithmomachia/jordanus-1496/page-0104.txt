@@ -1,0 +1,72 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>36</page-num>
+<header>AD</header>
+
+ſeptimam ſecundi eiusdē ad h eſſe ſemitonium minus. Deinde duco d in h/et c in k/et d in l: ꝛ eo oꝛ-
+dine veniant m n o : per eandem ſextam quarti cognitu facillimū eſt n m continere tria commata. et
+per ſeptimam ſecundi:o m cōtinere ſemitonium minus. at n numerus cognoſcitur eſſe minoꝛ o. ergo
+o ad m ſemitonium minus triā vincit/exſuperatqʒ commata. Deinde duco h in h/et k in k/et h in l.
+et ſuo oꝛdine eſſurgāt/oꝛianturqʒ p q r. manifeſtū eſt per idē qđ pꝛius q ꝑ cōtinere quattuoꝛ cōmata
+et r ꝑ cōtinere ſemitoniū minus. at numerus r minoꝛ eſt numero q. igitur quattuoꝛ cōmata amplius
+ſunt ſemitonio minoꝛe. Coꝛrelariū autem hinc notū eſt ꝙ ſemitoniū maius ſolo cōmate ſuperat ſemi
+tonium minus. atqui ſemitoniū minus plura tribus ꝛ paucioꝛa quattuoꝛ vt modo viſum eſt continet
+cōmata. igitur vnico ſuperadiecto cōmate ſemitoniū maius quod vocant apotomē: plura quattuoꝛ ꝛ
+paucioꝛa quinqʒ continere eſt neceſſe.
+
+## ¶ Tonum:plura ſeptem continere commata neceſſe eſt.
+
+¶ Nam tonus ex ſemitonio minoꝛe ꝛ apotome coaleſcit atqʒ cōſtituitur. at ſemitoniū minus per pe-
+nultimā tria continet cōmata ꝛ amplius:et per pꝛecedentē apotome quattuoꝛ et amplius tria autem
+et quattuoꝛ ꝛ amplius: ſeptē ſunt et āplius. igitur tonus plura ꝙ ſeptē cōtinet commata.
+
+### ¶ Secundi Elementorum Musicalium finis.
+
+> ¶ Seſquitonus: eſt qui tonum ac ſemitonium minus continet . quem et
+> trihemitoniū/triſemitoniūqʒ: inferius dicemus.
+> Ditonus eſt qui duos cōplectitur tonos.
+> Tritonus vero qui tres.
+> Conſonantię ſimplices ſunt: diateſſaron/diapente ꝛ diapason.
+> Compoſitę vero: diapason diapente/bis diapason.
+> Diateſſaron eſt conſonantia: que ex interualli ſeſquitertia ratione naſcitur.
+> Diapente: que naſcitur ex ſeſquialtera.
+> Diapason vero: que ex dupla.
+> Diapason diapente: eſt quā adinuicē iuncte conſtituūt diapason ac diapēte cōſonātie
+> Bis diapason: eſt quam coniūgunt due diapason conſonantię.
+
+¶ Hec altius ascēdunt Pythagorici ꝙ altius ascēdētibus voces quoqʒ pacto illis ſtridule viſe ſint
+ꝛ vnicūqʒ ferme ſue vocis modū/limitesqʒ ad conſonātiā bis diapason natura fecerit qm habita
+contēplatione muſica aduicē cōſonantiam bis diapason: reliquā vt habeatur ꝙ facillimā putauerunt
+vt qui ad ter atqʒ quater diapason muſicos modulos aptare voluerint. et hac quoqʒ de cauſa muſicī
+ferme oēs in definiēda/determinādaqʒ atqʒ tradēda diſciplina muſica limites Pythagore nō trans-
+cendūt: putātes eius limitibus cōtēti: et pꝛiſcam/veterēqʒ autoꝛitatē ſecuti ſufficiēter determinaſſe.
+quod ꝛ nos in hoc opere tētabimus imitari.
+
+¶ Seſquitonus inter ſeſquiquintam atqʒ ſeſquiſextam collocatus eſt. vnde fit vt etſi
+ſeſquitonus iocunde/ſuauiterqʒ auditū feriat: nondū tamen conſonātia ponēdus ſit.
+
+<sig>i</sig>
+
+| 291 3 | 288 | 283 3 | 256 | 243 | 48 3 | 40 3 |
+|-------|-----|-------|-----|-----|------|------|
+| 10 5 d|  A  | e 6   |  b  |  c  | f 5  | g 6  |
+
+¶ Sit ergo a ducenta octuagintaocto: b vero ducenta quinquagintaſex: et c ducenta quadragintatria.
+per decimāoctauam ſecūdi huius manifeſtū eſt a ad b eſſe tonū ꝛ b ad c eſſe ſemitoniū minus. quare
+a ad c per diffinitionē erit ſequitonus. quē dico in ꝑportione minoꝛe conſiſtere ꝙ ſit ſeſquiquinta et
+maioꝛe ſeſquiſexta. Nam capio per decimam ſecundi huius quintā partem c et veniet numerus 48 et
+tres quinte qui ſit f. addo igitur f ad c et aggregatus fiat d: qui maioꝛ inuenitur ꝙ a. igitur per vnde-
+cimam ſecūdi huius d ad c ꝑpoꝛtio maioꝛ eſt ꝙ a ad c. At vero d ad c ſeſquiquinta eſt. eſt itaqʒ ſeſqui-
+tonus in ꝑpoꝛtione minoꝛe cōſtitutus ꝙ ſit ſeſquiquinta pꝛopoꝛtio. Capio deniqʒ per eandē decimam
+ſecundi ſextā partem c et veniet michi numerus 40 et semis qui fit g. aggregatus igitur g ad numerū
+c reſtituat numerū e. certum eſt numerū e minoꝛē eſſe ꝙ a. quare vt pꝛius a ad c ſeſquitonus maioꝛ eſt
+ꝙ e ad c: qui in ſeſquiſexta ꝑportione cōſtituitur. quod eſt pꝛopoſitū. Coꝛrelariū enim cognoſcitur. ꝛ
+pꝛimū ꝙ ſeſquitonus ſuauiter feriat auditum: cuiuſlibet muſicis modulationibus intēti fidem facit
+ſenſus. ꝙ vero nōdum conſonantia ſit: iccirco euenit ꝙ ſeſquitonus in ſuperparticulari ratione nō con-
+ſiſtit: quādoquidem inter ſeſquiquintā ꝛ ſeſquiſextā pꝛoximas ſuperparticulares nulla cadit interſte-
+medias ſuperparticularis habitude. neqʒ quide̅ eſt in multiplici genere: quoniā per vndecimā pꝛimi
+huius dupla ꝑpoꝛtio que multipliciu̅ minima eſt: ex ſeſquialtera et ſeſquitertia ꝑpoꝛtione maximis
+quide̅ ſuperparticularibus: exurgit atqʒ naſcitur. conſonantia autem omnis per diffinitionē in ſuper-
+particulari aut multiplici ratione conſiſtit . eſt ergo totum pꝛopoſitum notum.
+
+<vocab>tonus, semitonium minus, apotome, commata, sesquitonus, ditonus, tritonus, diatessaron, diapente, diapason, sesquiquinta, sesquisexta, Pythagoras</vocab>

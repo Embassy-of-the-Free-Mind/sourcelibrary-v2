@@ -1,0 +1,7 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+<header>Ad pag. 463.</header>
+
+<image-desc>A copperplate engraving depicting an 8x8 grid resembling a chessboard. The squares follow a standard checkerboard pattern of alternating shaded and unshaded boxes. Several squares in the center and towards the right contain faint outlines of geometric symbols. Specifically, circles appear in the third column (rows four and five), triangle or arrowhead shapes pointing to the left appear in the fifth column (rows four and five), and squares or rectangles appear in the sixth column (rows four and five). The image is a technical diagram or game board layout intended to accompany text on page 463 of the original volume.</image-desc>
+
+<vocab>Ad pag., grid, chessboard, geometric symbols</vocab>

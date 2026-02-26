@@ -1,0 +1,40 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>40</page-num>
+<header>Das erste Buch/ 2.cap:</header>
+<meta>catchword: dritten</meta>
+
+Was sonsten/ einzehle Persohnen/ so sich dieses Spieles/ für andern gebrauchet/ belangen thut: so wird man/ beym Homero, Odiss: α. die vorerwehnte Buhler / oder Werber : Beym Euripide, Iphigeniâ in Aulide, Protesilaum und die Ajaces, welche sich/ mit den pellsis, oder Schach=Steinen/ belästiget haben/ befinden. Deßgleichen/ bezeuget gedachter Justus Ecloviensis, vom Augusto und Vero, beeden Römischen Kaysern: Mecœnate, und Q. Galbâ, daß Sie/ gute Schach=Zieher/ gewesen. Des Scevolæ, gedencket Valer: Max: lib: 8. c. 8. vom Carolo Magno, ist kurtz vorhero/ meldung geschehen.
+
+Vom Bapst Leone dem Zehenden/ schreibet Paulus Jovius, Ep: Nucerinus, lib: 4. de vitâ ejus, pag: 86. also:
+
+> ,, *Aleam semper damnavit, ut, rei familiari, moribusq; pesti-*
+> ,, *feram: Latrunculis autem, adeò subtiliter & acutè, vel cum exer-*
+> ,, *citatissimis, colludebat, ut nemo ei, vel peritiâ, vel celeritate, com-*
+> ,, *mittendi, conficiendiq; prælij, æquari posse, videretur.* Das ist:
+> ,, Bapst Leo/ des Nahmens der Zehend/ hat das Würffel-
+> ,, Spiel/ alß/ dem Menschen/ in seinem Wandel und Nahrung/ sehr
+> ,, schädlich/ und gleichsam ein pestilenzisch gift/ immer gehaffet
+> ,, und verworffen: Den Schach aber/ zog Er/ sehr scharffsinnig/
+> ,, auch mit den aller geübtesten Meistern/ und zwar fast allen/ an
+> ,, erfahrung und geschicklichkeit/ diesen Stein=Streit zu füh=
+> ,, ren/ und in geschwinder eyl/ zu erhalten/ weit überlegen.
+
+Giouanni Villani, nel' libro 7. c. 12. n. 3. à carte, 195. gedencket eines Sarracenen oder Turcken/ mit folgenden worten:
+
+> ,, *In questi tempi, (nell' Anno di Cristo, 1266) venne in Fi-*
+> ,, *renze, un Saracino, che havea nome Buzecca, grandissimo mae-*
+> ,, *stro, di giuocare à scacchi, e in ful palagio del popolo, dinanzi, al*
+> ,, *Conte Guido Novello, giuocò ad un' ora, à tre Scacchieri, co' mi-*
+> ,, *gliori maestri, di Scacchi, di Firenze, giuocando, con due a mente,*
+> ,, *& coll terzo, a veduta, e i due giuochi vinse, e' l terzo, fece tavo-*
+> ,, *la: la qual cosa, fu tenuta, gran maraviglia.* Das ist:
+> ,, Umb dieselbe Zeit/ (nemlich/ im 1266/ Jahre/ nach Chri=
+> ,, sti geburt) kam ein Türcke/ gehn Florenz/ mit nahmen Buzec=
+> ,, ca, ein verschlagener und geübter Schach=Zieher: Dieser spie=
+> ,, lete/ in gegenwart des Grafen/ Guidonis Novelli, auf dem
+> ,, grossen gemeinen Pallast/ oder Saal/ zugleich/ auf dreyen
+> ,, Schach=Tafeln/ mit den vornehmsten Schach=Ziehern in
+> ,, Florenz/ mit zween im Sinne/ oder außwendig/ mit dem
+
+<vocab>Schach, Schach-Zieher, Würffel-Spiel, Bapst Leo X., Paulus Jovius, Giovanni Villani, Buzecca, Florenz, Guido Novello, Latrunculis</vocab>

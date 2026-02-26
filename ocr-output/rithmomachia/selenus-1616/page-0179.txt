@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>149</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: dem Ans</meta>
+
+<margin>4.cap:</margin>
+vermöge der anordnung desselben/ solches verrichten können/ zu neh-
+men. So würde es auch/ für eine leichtfertigkeit / und hinderlist/ auf
+genante unrechte weyse/ einen Stein zu rauben/ erachtet werden.
+
+Es ist hiebevor/ im 10. Cap: des 1. Buches / erwehnet wor-
+den/ daß kein Soldat/ ohne/ des Andern Hauffens Führers/ bewil-
+ligung/ dessen Soldaten/ fürüber gehen könne. Ziehet nuhn der eine/
+unter den Spielern/ einen Soldaten/ mit welchem Er / des Gege-
+ners Soldaten / hette rauben sollen / gleichwol furüber / und setzet
+denselben/ aufs nächste feld / für sich/ so hat der ander macht/ densel-
+ben/ auf der linie/ da er stehet/ hinweg zu nehmen : doch muß Er/ sei-
+nen Soldaten / in das hinterste feld / darinnen / der Ander Soldat/
+welcher ihn / von dannen hette schlagen sollen / vorhin gestanden/ rü-
+cken und stellen. Thut Er aber hie zwischen / einen andern Zug/
+so hat Er nicht macht/ ihn ins künfftige / hinweg zu nehmen. Dan
+es vorhin / in seiner gewalt gestanden / itztgesetzeter massen / ihn
+zu nehmen/ oder stehen zu lassen: Als/ zum Exempel : Wan einer/
+der Weissen Königin-Soldaten/ so weit derselbe / an die gräntze/
+gezogen werden kan / ( das ist/ in derselben vierte feld/ Ziehet: und
+der Ander / des Schwartzen Königes-Soldaten / auch/ so weit er/
+zum erstenmahl/ gezogen werden kan/ (nemlich / in dessen vierte
+feld ) rucket: und jener/ des Schwartzen Königes-Soldaten/ nicht
+wegnehmen wil / besondern seinen Soldaten/ ins vierte feld / der
+Schwartzen Königin/ für sich ziehet: so nimt diesen jener / und set-
+zet seinen Soldaten/ nicht in das feld / darauß Er ihn genommen/
+und ihm auf der seite ist / besondern in das vierte feld/ der Weissen
+Königin / welches hinter demselben ist/ und auß welchem jener /
+diesen vorhin/ weyl es nicht außgedinget/ hette schlagen und angreif-
+fen sollen. Dieses ist aber/ nuhr von den gränz-feldern/ zu ver-
+stehen : Dan wan die Soldaten/ das erste/ oder *respectivè*, das vier-
+te feld / des feindes eingenommen / es ihnen folgendes (so ferne es
+nicht anderer gestalt außgedinget) frey stehet/ entweder zu schlagen/
+oder vorüber zu ziehen.
+
+Es sol aber/ bey der Soldaten raubung/ ein Schach-Zie-
+her/ so viel müglich/ sich hüten / daß Er nicht/ einen Soldaten/ für
+den Andern / ( weyl des hintersten Soldaten gang / dadurch ge-
+hemmet wird ) rücke besondern / mit einem Haupt-Steine / des
+andern Stein/ welcher etwa hinderlich seyn möchte / hinwegnehme.
+Er könte dan etwa / einen guten Stein/ dadurch erlangen / und das
+Spiel besser anordnen / oder Er müste solches nothhalber / we-
+gen eines Steines / dafür Er sich zu hüten / thun/ Dan man/
+zu jederzeit / die Steine / dergestalt setzen sol/ auf daß keiner /
+
+<vocab>Schach-Spiel, Soldat, Königin-Soldat, Schach-Zieher, Haupt-Stein, gränz-feld</vocab>

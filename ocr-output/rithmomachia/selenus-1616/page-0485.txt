@@ -1,0 +1,35 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>451</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+und ſich endlich in eine ſpitze / verlieren) einer von ſechs / der ander /
+von fünf Stafflen oder Stuffen / zugerichtet. Dieſer beeden
+Grund = Stein / iſt vierecket / und den obgedachten ſechszehen
+Vierecketen / an der gröſſe gleich / jah / (wie drunten / weiter
+in bericht erfolget) einer auſſ ihrem Mittel: auf dieſen / wird ein
+ander / Vierecketer Stein / von gleicher höhe / wie der unterſte /
+doch in etwas ſchmäler: über dieſe beede Viereckete / ein Drey =
+ecketer / doch ſchmäler / als der nechſte unterſte Viereckete: auf
+dieſen / noch ein ſchmälerer Dreyecketer: endlich auf dieſe Vier
+Steine / ein noch ſchmälerer / runder Stein / geleget / und der Turn /
+dergeſtalt zugeſpitzet. Setzet man alſo ( zween Türne / von fünf
+Stafflen / nemlich von zween Vierecketen / zween Dreyecketen /
+und einem runden Steine) Zuſamen. Auf daſſ Sie aber / umb
+ſo viel baſſ unterſchieden werden / alſz leget man / auf den einen /
+zween runde Steine / doch daſſ ſich / der oberſte / in etwas verklei =
+nere / und machet ihn alſo / von ſechs Stuffen. Es werden aber /
+dieſe itztgedachte / und über ein ander gelegete Steine / (auf daſſ die
+Spieler / einen von denſelben / wan es ſeyn muſſ / ihres gefallens
+können hinwegnehmen / und die übrigen hinwider darauf ſtecken /
+und feſte machen) etwa mit einer ſchrauben / durchs mittel
+derſelben / zuſammĕ = gefüget / auch / gleich den andern
+->Steinen / auf der einen ſeiten / weiſſ = auf<-
+->der andern / ſchwartz gefärbet.<-
+
+<image-desc>A large decorative woodcut tailpiece featuring a central stylized mask-like face with a leafy headdress, integrated into elaborate scrollwork and volutes. The ornament is further decorated with draped garlands of fruit and leaves, and several beaded tassels hanging from the lower scrolls.</image-desc>
+
+<sig>Ell</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Zahl-Kampf, Grund-Stein, Vierecketen, Dreyecketer, Turn, Stafflen, Stuffen, ſchrauben, weiſſ, ſchwartz</vocab>

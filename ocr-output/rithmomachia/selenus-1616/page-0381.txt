@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>347</page-num>
+<header>9.cap: Vom Schach-Spiel.</header>
+
+<margin>13.</margin>nimt/ mit der K. Schützen / des S. K. Rochen / und beut/ von sei-
+nes K. Rochen / Ab=Schach=* Der Schwarze/ rucket den Kö-
+nig/ auf sechszig: Der Weisse/ nimt / die S. Königin/ mit des K.
+Schützen/ und gibt Schach: Der Schwarze/ ziehet den König/
+auf zwey und funfzig: (Dan/ wan Er ihn/ auf ein und sechszig zöge:
+Der Weisse/ mit der K. Schützen/ auß drey und viertzig/ Schach=
+Mat gebe) Der Weisse/ die Königin/ auf vier und viertzig/ und gibt
+Schach: Der Schwarze/ stellet/ den König/ auf ein und sechszig:
+Der Weisse/ gibt/ mit der Königin / auß sechszig: oder mit des
+K. Rochen/ auß neun und funfzig: oder mit der K. Schützen / auß
+drey und viertzig/ Schach=Mat.
+
+<margin>14.</margin>Rucket aber der Schwarze/ den König/ nicht auf 60. (n. 13.)
+besondern/ auf zwey und funfzig: so gibt/ der Weisse/ mit der K.
+Schützen / auß drey und viertzig/ Schach: Der Schwarze/
+stellet den König/ auf sechszig: (Dan/ wan Er ihn/ auf neun
+und funfzig/ ruckete: Der Weisse/ seine Königin/ mit des K.
+Schützen / nehme/ und die Königin / umb / folgendes / mit dersel-
+ben / auß ein und funfzig/ Schach=Mat zu geben / auf vier und vier-
+tzig/ stellete) der Weisse/ nimt / mit des K. Schützen / die S.
+Königin/ und gibt Schach: Der Schwarze/ muß/ den König/
+auf neun und funfzig/ rucken: Der Weisse/ die Königin/ auf vier
+und viertzig: und gibt/ auß ein und funfzig/ Schach=Mat.
+
+<margin>15.</margin>Wan aber der Schwarze/ die Königin / nicht auf 53. (n. 10.)
+rucket/ besondern/ mit derselben / des W. K. Schützens=Sol-
+daten/ nimt / dieselbe auf der W. K. Reuters / und des W. K.
+Rochens=Soldaten/ ziehet / und Schach-beut: so rucket / der
+Weisse/ den König/ (dieweyl Er / keine ursach / zur verwechsl-
+lung der Königinne / auf acht und zwantzig/ geben wil) auf
+fünfe: Der Schwarze/ nimt / mit der Königin/ der W. K.
+Reuters-Soldaten / und ziehet sie / auf derselben Rochen: Der
+Weisse/ beut / mit der Königin / auß vier und viertzig / oder
+zwey und sechszig/ Schach=Mat. Lasset aber der Schwarze/
+die Königin/ stehen/ und ziehet/(umb/ den Schach-Mat / zu verhüten)
+dero Reuter / auf sechs und viertzig / oder drey und funfzig: so rucket/
+der Weisse/ auf sie / des K. Rochen/ auf viere/ und erlanget sie/
+mit gewalt.
+
+<margin>16.</margin>Wan aber der Schwarze/ die Königin/ nicht/ mit dem Reu-
+ter / (n. 8.) besondern/ mit ihrem Schützen / auf 35. bedecket: so
+
+<sig>Xx iij</sig>
+<meta>catchword: nimt</meta>
+
+<vocab>Schach-Spiel, König, Königin, Schützen, Rochen, Reuter, Schach=Mat, Ab=Schach</vocab>

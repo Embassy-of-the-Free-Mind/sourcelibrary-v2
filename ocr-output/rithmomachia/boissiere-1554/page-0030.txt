@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>14</page-num>
+<header>DES PHILOSOPHES.</header>
+
+quatriesmes, qui est 21, si tu adioustes avec 28,
+qui est le predit nombre requerant auras 49, au
+provenu qui est le nombre requis en proportion
+superpartiente, quartes avec le predit nom-
+bre reprenant 28. Et ainsi comme tu vois quand
+au nom il y a bi, comme bipartiente, avons
+reprins 2 fois la partie cinq, & est provenu 10
+au reng des pairs, lequel ioinct au requerant 15.
+a raporté le nombre requis 25. Et aussi quand
+nous avons dit tripartientes quartes avons re-
+prins trois fois la partie 7, & est provenu 21,
+au nombre reprins lequel adiousté au nombre re-
+querant 28, a rapporté 49. le nõbre requis. Ain-
+si le commencement du nom de la proportion te
+monstrera combien de fois dois reprendre la par-
+tie dessus escrite du nombre requerant: et l'ayant
+reprins ou multiplié, le nombre reprins te mon-
+strera la quantité, laquelle ioincte au nombre re-
+querant, tousiours te rapportera le nombre requis
+proportional, cõme assez appert par l'exemple.
+
+Or as-tu toutes tes 3 proportions, & toutes
+tes tables notées, ne reste à marquer que les deux
+pyramides. Prenons donc la premiere, qui est des
+nombres pairs & de leur couleur, ayant 6 de-
+grez: pour laquelle marquer & entendre, fai-
+sons semblant vouloir bastir une pyramide de
+grains d'orge, & presupposons que pour faire la
+
+<sig>i</sig>
+
+<vocab>proportion, superpartiente, bipartiente, tripartiente, pyramides, grains d'orge, nombres pairs</vocab>

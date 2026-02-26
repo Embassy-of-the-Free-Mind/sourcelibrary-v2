@@ -1,0 +1,15 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Significant bleed-through from the reverse side of the page shows circular diagrams and text overlapping with the primary content.</warning>
+
+The seconde order of triangles, haue all excepte one (whiche is the number of .100.) their <term>cossicall</term> signes, as 9. bothe of the rote and of the quadrate, 25.36.and.49. haue the signe of the quadrate .64. of the quadrate and the cube, and also the quadrat of cube .16. and .81. of the quadrate, and the foure squared quadrate.
+
+<image-desc>Two rows of four triangles each. The top row contains the numbers 81, 49, 25, and 9. The bottom row contains the numbers 100, 64, 36, and 16. Most triangles include small handwritten-style algebraic or "cossic" symbols below the numbers. Ghosted images of circular game pieces from the reverse side are visible above and behind the triangles.</image-desc>
+
+In the firste order of squares, onely 15. is marked with the roote, all the rest doe want theyr <term>cossicall</term> sygnes in thys game.
+
+<sig>.D.ij.</sig>
+<meta>catchword: The</meta>
+
+<vocab>Philosophers game, Rythmomachia, triangles, squares, cossicall, quadrate, cube, quadrat of cube, roote</vocab>

@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<header>Vom Schach-Spiel.</header>
+<page-num>135</page-num>
+
+<image-desc>A decorative woodcut headpiece banner featuring ornate foliage scrolls and several human faces/masks integrated into the design.</image-desc>
+
+# Das Dritte Capittel.
+
+## Worauf die Schach-zieher / ehe das Spiel angefangen wird / weiter bedacht ſeyn ſollen.
+
+<margin>3. cap:</margin>
+Wer dieſes Spiel / recht lernen wil / der muß ſich / deſſen Ordnunge und Geſätze / welche / die gute Spieler / und der lange gebrauch / demſelben gegeben / (wie ſie nuhmehr / auf einander / biß zum ſechſten Capittel / folgen) und zu foderſt / die unterſchiedene Reguln / welche / von dehm / was den Schach-Ziehern / ehe das Spiel angefangen wird / inacht zu haben / inſonderheit obliege / handlen: wol einbilden und bedencken.
+
+Daß (1.) die Schach=Zieher / die Schach=Tafel / dergeſtalt für ſich legen ſollen / damit ein jeglicher / an der euſſerſten näheſten ecken der Tafel / zu ſeiner rechten Hand / ein weiſſes feld und plätzlein / (darauf der / welcher die Weiſſen Steine führet / ſeines Königes: welcher aber die Schwartzen / ſeiner Königin: Rochen / ſetzen oder ſtellen könne) habe.
+
+Daß (2.) ein Kluger Spieler / mit ſtellung der Tabel / folgender geſtalt / einen vorthel / ihm ſchaffen könne: Wan Er nemlich / ſo fern man beym Tage ſpielet / dieſelbe / dergeſtalt / daß dem gegentheil / des Tages Liecht / gegen die augen ſcheine / zu ordnen: oder bey Abends=zeiten / das liecht / auf deſſen rechte Hand / ihm das geſichte damit zu verwirren / und einen ſchatten / zu verurſachen / zu ſtellen / ſich bemühet. In erwegung / weyl dieſes Spiel / einen Krieges=Kampf andeutet / man alle mögliche Vortheil zu ſuchen / ſich befleiſſigen ſol.
+
+Daß auch (3.) dieſes / nicht ein geringer Vortheil und überraſche ſey: wan einer / dem es gleich gilt / mit den Weiſſen / oder Schwartzen Steinen / den Schach zu Ziehen / und / daß ſeine widerpart / lieber mit den Weiſſen / alß / mit den Schwartzen Steinen / ſpielet / auch ſich mehr zu jehnen gewehnet / vermercket: auf den fahl / die weiſſen Steine / für ſich rucket / und alſo dieſelbe / weyl Sie / mit ſolchen Steinen / deren Sie nicht gewohnet / ihr Spiel führen muß / in dero gedancken und vorhaben / gantz irre machet und verleitet.
+
+<sig>S</sig>
+<meta>catchword: Daß</meta>
+
+<vocab>Schach, Schachspiel, Schach-Zieher, Schach-Tafel, Schachsteine, Rochen, Vortheil, Krieges-Kampf</vocab>

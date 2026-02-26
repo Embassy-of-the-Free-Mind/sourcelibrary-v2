@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>277</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1.cap:</margin>
+
+<margin>16.</margin> (denselben / nebest dessen Soldaten / zu beschützen) der K. Reuter / auf drey und zwanzig : **Der Schwarze** / beut / mit der Königin / auß zwey und zwanzig / Schach : **Der Weiße** / ziehet / den König / auf fünfe : * **Der Schwarze** / (umb / des K. Reuter / zu vertheitigen) die Königin / auf sechs und vierzig : **Der Weiße** / der K. Schützen / auf des S. K. Schützen / auf ein und vierzig : **Der Schwarze** / (umb denselben zu beschützen / und den Schach-Mat zu verhüten) die Königin / auf fünf und vierzig : **Der Weiße** / (dieweyl Er / zur verwechslung der Schützen / und Königinnen / nicht lust hat) des K. Schützen / auf dreyßig : **Der Schwarze** / der K. Reuters-Soldaten / (umb ihrem Schützen / platz zu machen /) auf sieben und vierzig : **Der Weiße** / beut / mit des K. Rochen / auß viere / Schach : **Der Schwarze** / muß mit dem Könige / auf ein und sechßig weichen : hat dessen Schützen verloren / und die **W. Königin** / wird dadurch gefreyet.
+
+<margin>17.</margin> Wan aber **der Schwarze** / den Reuter / nicht / mit der Königin / auf 46. (n. 16.) besondern / mit dem Könige / auf ein und funfzig / beschützet : so rucket **der Weiße** / auf denselben / der K. Schützen / auf vier und dreyßig : Ziehet ihn / **der Schwarze** / auf ein ander feld / so ist die **W. Königin** / auf freye füsse / gestellet : beschützet Er ihn aber / mit des K. Schützen / auf funfzig : so nimt **der Weiße** / mit der Königin / der S. K. Schützen / und bricht daselbsten / mit ihr durch : Ziehet Er aber / des K. Schützen / auf zwey und funfzig : so nimt **der Weiße** / des S. K. Reuter / mit der K. Schützen / folgendes / mit der Königin / des S. K. Rochens-Soldaten / und beut Schach : oder / (wie kurtz gedacht) der S. K. Schützen / und bringet Sie / hinwider zu felde.
+
+Auß diesem / was von n. 6. biß hieher gesetzet worden / erscheinet nuhn / daß **der Weiße** / wan Er sich / nuhr nicht übereylet / besondern / in etwas vorsiehet / seine Königin / (wan Er gleich den König / nicht mit der Königin = auf 20, n. 16. in f. besondern mit dessen / eigenem Schützen / auf welchen fahl Er / der K. Schützen / entweder auf ein und viertzig / oder vier und dreyßig / mit nutzen / folgendes rucket : auf zwelfe / bedecket) auß der ecke / ins freye feld / wol hinwider bringen könne.
+
+<margin>
+18. >>
+,,
+,,
+</margin>
+Wan aber **der Schwarze** / (auf daß wir / mit dem **Damiano**, sein Spiel / weiter verfolgen) den König / mit dem Soldaten / auf 42. nicht bedecket / (n. 2.) besondern / (weyl Er keinen andern
+
+<meta>catchword: dern</meta>
+
+<vocab>Schach-Spiel, Reuter, Schützen, Rochen, Königin, Schach-Mat, Damiano, Soldat</vocab>

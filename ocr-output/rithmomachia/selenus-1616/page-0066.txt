@@ -1,0 +1,52 @@
+<language>German</language>
+<page-num>36</page-num>
+<header>Das erste Buch/ 2. cap:</header>
+<page-type>text</page-type>
+
+,, Man findet bey ihnen/ zu zeiten/ Helfen-Beine Schach-Stei-
+,, ne/ welche/ wie gantze Personen/ gebildet und geschnitzlet sind.
+,, Sie gebrauchen aber/ meines bedünckens/ an statt des Steines/
+,, welchen man/ bey uns die Königin nennet/ einen andern Stein.
+
+Sehen wir nun weiter/ so finden wir/ die Persen: folgendes
+in *Africa*, die *Mauritanen* und *Moren*/ welche/ ihre lust und kurtz-
+weil/ ebener massen/ hierinne suchen: Von welchen dan/ *Garcias ab*
+*Ortâ*, in *Epitomen* à *Car: Clusio*, *contractus*, *d. lib: 2. c. 28.* folgender
+gestalt/ schreibet:
+
+,, *Xa, vocabulum, me invitat, ut aliquid, de Ludo Latruncu-*
+,, *lorum, hîc addam, qui admodum familiaris est, Persis & Mau-*
+,, *ritanis, tametsi apud eos, alia fit ludendi ratio. Regem, Xa, nun-*
+,, *cupant: quoties verò eum impetunt, minimè Xaque dicunt, sed*
+,, *xa, quasi dicerent, moneo te Rex, ut loco te moveas. Reginam ap-*
+,, *pellant Goazir, id est, præfectum Regni, seu quem Conestabilem*
+,, *vocant. Delphinum sivè Sagittarium, Fil, id est, Elephantum.*
+,, *Equitem, Guora, id est , Equum. Turrim autem, seu quam Ele-*
+,, *phantum dicimus, Rochba, id est Tygridem. Peditem, Piada,*
+,, *hoc est, Virum, qui Pedes præliatur.* *Das ist kürtzlich:*
+,, Bey den Persen und Mauritanen/ ist das Schach-Spiel/
+,, gantz gemein und gebreuchlich. Es wird aber/ von ihnen/ auf
+,, eine andere Art/ dan von uns gespielet.
+
+Deßgleichen/ schreibet *Petrus Martyr, ab Angleriâ , Mediola-*
+*nensis, in libello, de Insulis nuper inventis, & de moribus Incolarum*
+*earundem, pag: 360.* auch von den Americanern.
+
+,, *Lodices varias gossampinas, candido, nigro, & flavo, colo-*
+,, *ribus intextas, duas auro & gemmis dites, tresq; alias pennis &*
+,, *gossampino intextas scaccorum ludo: quod argumentum est, &*
+,, *scacorum fritillos habere eos, in usu.* *Das ist:*
+,, Es brachten und zeigeten uns/ diese Völcker/ mannichers
+,, ley/ auß einer sondern Art baumwolle/ gemachte decken/ mit
+,, weisser/ schwartzer und gelber farbe/ eingewircket: Zwo/ mit
+,, golde und edelgesteinen besetzete: Drey andere aber/ auf wels
+,, chen/ die Schach-felder/ mit federn/ und dergleichen baumwols
+,, le/ unterschieden. Welches dan/ eine anzeigung gibt/ daß Sie
+,, sich auch/ der Schach-Tabel/ gebrauchen.
+
+Von den Americanern, kommen wir/ zu den Chinesern/ wels
+che in dem eussersten *Asiâ* wohnen. Bey diesen/ wird das Schach-
+
+<meta>catchword: Spiel/</meta>
+
+<vocab>Schach, Schach-Spiel, Helfen-Beine, Persen, Mauritanen, Garcias ab Ortâ, Petrus Martyr, Americanern, Chinesern, Xa, Goazir, Fil, Guora, Rochba, Piada, baumwolle</vocab>

@@ -1,0 +1,24 @@
+<language>English</language>
+<page-type>preface</page-type>
+
+# The bookes verdicte.
+
+VVanting I haue bene long truly,
+In english language many a day:
+Lo yet at laſt novv here am I,
+Your labours great for to delay,
+And pleaſant paſtime you to ſhovve,
+Mynding your vvits to moue I trovve.
+
+For though to mirth I do prouoke,
+Vnto VVifdome yet moue I more:
+Laying on them a pleaſant yoke,
+VVifdome I meane, vvhich is the dore,
+Of all good things and commendable:
+Dout this I thinke no man is able:
+
+->CATO.<-
+> *Interpone tuis interdum gaudia curis:*
+> *Vt poſsis animo quemuis ſufferre laborem.*
+
+<vocab>verdicte, VVifdome, mirth, Cato, english language, pastime</vocab>

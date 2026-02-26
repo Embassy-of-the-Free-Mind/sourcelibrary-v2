@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>201</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Cc ij</sig>
+<meta>catchword: Das</meta>
+
+<margin>II.cap:</margin> gefehlet: Dan der Weisse / (wan Er des K. Rochen / auf drey zie- / het) diesen des S. K. Schützen-Soldaten / gefangen nimt / und das / Spiel / so Ers verstehet / gewinnet.
+
+<margin>26.</margin> Ferner / wan der Schwartze / den W. Soldaten / nicht / mit / seinem Soldaten / (n. 23.) besondern / mit des K. Reuter / nimt: so sprin- / get der Weisse / mit seinem Könige / auf vierzehe / und erlanget durch / diesen Sprung / ein gutes Spiel: Dan Ihm sonsten / Der Schwar- / tze / (so fern Er / mit der Königin / seines K. Rochens-Soldaten / ge- / nommen) mit des K. Reuter / auß neunzehen Schach- bieten / gegen / seines K. Rochen / des K. Rochen zugleich entdecken / und denselben / erlangen würde: Ob nuhn schon der Schwartze / einen Soldaten / mehr gewonnen / so ist gleichwol / dessen Spiel / übel geordnet.
+
+<margin>27.</margin> Wan aber der Schwartze / den Reuter / nicht auf 50. (n. 18.) / besondern auf drey und vierzig / ziehet: so spielet der Weisse / auf des / S. K. Soldaten / seines K. Reuters-Soldaten / auf achtzehen: Der / Schwartze / nimt ihn / mit demselben: Der Weisse / denselben /
+
+<margin>28.</margin> mit des K. Rochens-Soldaten: * Der Schwartze / (auf daß ihm / der Weisse / wan Er / des K. Reuters-Soldaten / mit der K. Schü- / tzen nimt / kein böses Spiel / verursache) verhütet ihn / mit seines K. / Rochens-Soldaten / auß ein und vierzig: der Weisse / ziehet des K. / Rochen / auf drey: der Schwartze / (zu beschützen / seines K. Reu- / ter) springet / mit dem Könige / auf funfzig: der Weisse / rucket / des / K. Soldaten / auf des S. K. Reuter / auf sechs und dreyssig: Der / Schwartze / ziehet / mit verlust desselben / (dieweyl Er / so ferne Er / denselben / auf ein anders feld setzet / auß ein und funfzig / durch die / W. Königin / gleich Schach-Mat wird) den kürtzern.
+<margin>(schau p. 211 am Ende)</margin>
+
+<margin>29.</margin> Wan aber der Schwartze / des Reuters-Soldaten / nicht mit / des Rochens-Soldaten / auf 41. (n. 28.) besondern mit seiner Königin / (in dehme Er des K. Reuter / auf acht und funfzig / setzet / und diesel- / be / dadurch / gegen den Soldaten / aufdecket) verhütet: so spielet der / Weisse / des K. Rochen / auf drey: der Schwartze / (zu verhüten sei- / nes K. Schützens-Soldaten / damit ihm / derselbe nicht genommen / noch Er deßwegen Schach-Mat werde) des K. Reuter / (welches dan / zum besten ist) auf ein und vierzig: Der Weisse / auf ihn / die Köni- / gin / auf neune: Der Schwartze / denselben / (weyl Er ihn sonsten / verlieren müste) auf acht und funfzig: Der Weisse / die Königin / auf drey und dreyssig: und wird also / wan Er gesetzter wei- / se / die Steine ziehet / das Spiel / ohn allen zweyfel / wol gewinnen und erlangen.
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Reuter, Schützen, Soldat, Schach-Mat</vocab>

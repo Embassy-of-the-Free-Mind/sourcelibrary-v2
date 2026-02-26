@@ -1,0 +1,15 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+leur proye, que non pas à la receuoir prinse.
+
+->Exemple en musicque.<-
+
+<image-desc>A musical diagram showing intervals on a horizontal staff. On the left side, the intervals are labeled: "Diateßar.", "Diapenté", "Diateßar.", and "Diapenté". On the right side, brackets group these into two "Diapason" intervals, which are further enclosed by a large bracket labeled "Disdiapason". The notes on the staff are diamond-shaped.</image-desc>
+
+Nous auons monstré au parauant comme les victoires se doiuent faire au camp de l’aduersaire, mais s’il aduenoit que toutes les tables de la victoire ne se trouuassent disposez audit camp de l’ennemy, ainsy en eust vne partie au tien: Ie t’aduertis qu’il suffira que la moitié ou plus part si trouue. Note auẞi que les tables gaignées te seruiront à parfaire ta victoire auec les autres qui sont au camp de l’aduersaire, Au demeurant nous ne voulons pource deroger à la liberté des ioueurs: lesquels si autremẽt que nous, veulent limiter ou determiner leurs ieux, qu’ils ne le puissent faire: Car si les ieux n’estoient au plaisir des ioueurs, ne seroient ieux, ains cõtrain-cte. Et pourront par les mesmes tables iouer aux eschetz: prenant vne Pyramide pour vn roy, deux quarrez l’vn sur l’autre pour la royne: vn quarré, pour vn roc: vn triangle deẞus vn quarré,
+
+<meta>catchword: ré,</meta>
+
+<vocab>Rythmomachie, musicque, Diateßar, Diapenté, Diapason, Disdiapason, victoires, tables, eschetz, Pyramide, royne, roc</vocab>

@@ -1,0 +1,11 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<page-num>.viii.</page-num>
+<sig>C.i.</sig>
+
+By equality men may be taken, when one man after hys motion, seeth hys enemye beyng of the same number that he is, standing in such place as he may remoue into, then maye he take awaye hys enemye and not remoue into his place, as in this example .9. a triangle of the euē army, after he hath remoued, espyeth .9. a rounde of the odde army, hym may he take up and not remoue into his place. But if .9. the triangle, espye nine the rounde, before he remoue, standing in his draught, he maye take hym up and remoue into his place.
+
+These men may be taken by equalitie: 9. 16. 25. 36. 49. 64. 81. because they are found in both the armies, and in asmuch as anye man taken beinge torned wyth hys bottome upward, that beareth hys aduersaries colloure, may serue his enemye on whose syde he is taken, there maye yet be taken by equalitie, 4. and 6.
+
+<vocab>Philosophers game, Rithmomachia, equality, triangle, rounde, draught, equalitie</vocab>

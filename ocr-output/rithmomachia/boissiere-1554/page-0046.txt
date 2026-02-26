@@ -1,0 +1,10 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>22</page-num>
+<header>DES PHILOSOPHES.</header>
+
+qui est. 2. pour le multiplier & luy aider à composer le premier de ses superparticuliers qui est 6: car 2 foys 3 font six qui est le premier des superparticuliers du chãp des pair & ainsi ont faict les aultres d’ond c’est ensuiuy que le chãp des pair se recognoissant auoir receu vn tel bien par les nombres du champ des impair a voulu receuoir des nombres impair en son chãp composant d’yceulx la seconde rengée de ses superparticuliers par l’addition de l’impair avec son pair, comme 3 & 6 font 9 & apres auoir ainsi receu l’impair en son champ a icelluy nombre impair de la seconde rengée de superparticuliers marie, avecques les impairs de la premiere rengée pour en apres en faire le premier ordre des superpartients comme vous voyez que les superparticuliers. 6 & 9 ioins ensemble font. 15. le premier superpartiẽt des deux champs des pair. parquoy desia appert sufisamment la noble alliance de ces nombres. Reste voir la procreation d’iceulx. Les Pithagoriens appelloiẽt les nombres impair masle, & les pair femelles. Parquoy si ainsi sont prins les nombres, il apert desia aisemẽt l’alliãce d’iceulx & que plus est si au chãp des pair tu prens 2 la racine du requis multiplice. 4, (qui est nombre feminin) & assemblez icelle avec trois la racine du requis superparticulier. 9 (qui
+
+<sig>∴</sig>
+
+<vocab>superparticuliers, superpartients, Pithagoriens, impair, pair, masle, femelles, racine, multiplice</vocab>

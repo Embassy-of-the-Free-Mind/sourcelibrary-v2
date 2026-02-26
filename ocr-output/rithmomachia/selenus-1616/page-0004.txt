@@ -1,0 +1,21 @@
+<language>German, Latin</language>
+<page-type>blank</page-type>
+<warning>The text on this page consists of mirrored bleed-through from the title page on the recto (reverse side) of the leaf. The ink has permeated the paper, making the content of the other side visible in reverse.</warning>
+
+<image-desc>The page features a large, ornate architectural engraving frame. The border is decorated with elaborate Baroque-style scrolls, volutes, and flourishes. At the bottom of the frame is an oblong rectangular illustration depicting an interior scene. In this scene, several men in 17th-century dress are gathered around a table; two are seated and appear to be playing a board game (likely chess or rithmomachia), while others stand by as spectators. The central area of the frame is filled with the faint, reversed impressions of printed text.</image-desc>
+
+<note>The following text is transcribed from the mirrored bleed-through and is presented here in its intended orientation for readability.</note>
+
+->Das<-
+->Schach- oder<-
+->König-Spiel<-
+->von<-
+->**GUSTAVO SELENO**<-
+->In vier unterschiedliche Bücher<-
+->mit besonderem fleiß<-
+->[...]<-
+->**RYTHMO-MACHIA**<-
+->[...]<-
+->LIPSIAE<-
+
+<vocab>Schach, König-Spiel, Gustavo Seleno, Rythmo-machia, board games, 17th century, Leipzig, engraving, bleed-through</vocab>

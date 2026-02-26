@@ -1,0 +1,21 @@
+<warning>This page displays a mirrored impression (bleed-through or offset) of a title page. The transcription below reflects the intended text and layout as if viewed from the recto side.</warning>
+
+<language>German</language>
+<page-type>title-page</page-type>
+
+<image-desc>An architectural title border featuring two classical columns with niches containing standing figures (likely saints or biblical figures). The top of the border consists of an ornamental frieze with a central crest. The text and a bottom cartouche are visible as a mirrored ink transfer, suggesting the page is the verso of a title leaf or has been stored against one.</image-desc>
+
+## Ein
+# Gebetbuch
+### der Geistlich-
+### keit des Fürst-
+### lichen Hauses
+### Brandenburg
+### Culmbach.
+
+---
+
+->Professio fidei<-
+->Christianae<-
+
+<vocab>Gebetbuch, Geistlichkeit, Fürstlichen Hauses, Brandenburg, Culmbach, Professio fidei Christianae</vocab>

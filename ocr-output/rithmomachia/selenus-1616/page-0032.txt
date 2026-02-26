@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>2</page-num>
+<header>Das Erste Buch / 1. cap.</header>
+
+der Menschen gemühter/ wegen einständiger arbeit und mühe/ ermüdet
+und abgemattet / oft auch/ von mannicherley fällen des Glückes / ge-
+ängstiget und verwirret werden. Jah es kan/ das Gemühte/ in keiner
+ruhe stehen : es ist allezeit unmüssig: Hat es nicht/ in ernsten sachen
+zu schaffen/ so seynd/ in= und ausserhalb verhanden/ welche es auf ei-
+nen bey= und irreweg/ bald bringen und verleiten mögen. Hiegegen/
+die fürsichtige Natur/ nicht allein / den Schlaf eingeführet/ beson-
+dern auch/ zu der lieblichen Music, zur kurtzweil/ und zum spielen/ als-
+terley anlaß gegeben hat. Die Kunst/ alß eine fleissige aufwarters-
+und nachfolgerin/ der Natur / hat nuhn solches/ in gute aufacht genom-
+men/ und mannicherley Arten/ (unter welchen/ auch dieses fürtreffi-
+che Spiel) zu sonderer/ ihrer Frawen fürhabens/ beförderung/ auf die
+Bahn/ und den Schau= Platz/ öffentlich herfürgebracht: derer sich/
+viele fürnehme Leuthe/ zu ihrem besondern nutzen / hernach unter-
+nommen/ und wol zu gebrauchen/ gewust haben. Worauf dan klär-
+lich erfolget/ daß/ weder das Spielen / noch desselben erfindung oder
+übung / noch die Spieler / an sich zu tadlen/ und zu verwerffen seynd.
+Hiemit stimmet nuhn / Pascalius Justus, Ecloviensis, Phil: & Medicin:
+D. in sua Aleâ, sive, de curandâ Ludendi, in Pecuniam, cupiditate, libris,
+Anno 1560. editis, in Epist: Dedic: gar wol überein: dessen wort/ wie
+allhie / (weyl sie/ unsere Meinung fein erleutern / auch zu etlichen
+mahlen/ des Schach= Spieles/ erwehnen) nicht unbillig anziehen
+also lautende:
+
+> <margin>„</margin> Non tamen Ludum, qui sine cupiditate, sine ullo affectu &
+> <margin>„</margin> perturbatione, servato tempore & modo, leniendarum aegritudinum,
+> <margin>„</margin> aut laborum, causâ, exerceatur, omninò vitupero: non herclè magis,
+> <margin>„</margin> quàm si, cùm gravibus seriùsque negotiis satisfecimus, tùm vel fidibus
+> <margin>„</margin> canamus, vel ocio, somno, aut cateris quietibus, utamur. Neque enim,
+> <margin>„</margin> vitiosa fuisse, prima Aleae inventio, perhibetur: Nam Lydi, ob re-
+> <margin>„</margin> rum varietatem, quò faciliùs famem tolerarent, Aleam invenisse
+> <margin>„</margin> traduntur: sicut & talos & pilae ludum. Latrunculi verò etiam,
+> <margin>„</margin> (Scachos vulgus vocat) ut ocium, in obsidione longâ, Milites confu-
+> <margin>„</margin> merent, inventi dicuntur. Sed & Horatius ajt, non Lusisse pudet, sed
+> <margin>„</margin> non Incidere Ludum. Et boni viri, Cato, Portius, Aleâ lusit, & Do-
+> <margin>„</margin> mitianus & Claudianus, qui etiam Librum ejus Artis edidit. Item
+> <margin>„</margin> Verus Imp: & Augustus, Mecaenas verò etiam, & Q. Galba, La-
+> <margin>„</margin> trunculis Lusores: Caesar & Scaevola, ac Ticinius quidam, (de quo
+> <margin>„</margin> Cicero scribit) Pilâ Lusores optimi fuêre. **Das ist:**
+
+Ich verwerffe das Spiel / nicht gantz und gar / insonder-
+
+<meta>catchword: insonder-</meta>
+
+<vocab>Gemüther, Music, Kunst, Schach= Spiel, Alea, Latrunculi, Scachos, Pascalius Justus, Cato, Horatius</vocab>

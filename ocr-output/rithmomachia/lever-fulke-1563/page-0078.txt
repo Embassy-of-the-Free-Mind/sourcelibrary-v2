@@ -1,0 +1,16 @@
+<warning>The page exhibits significant ink bleed-through from the reverse side, resulting in mirrored text (e.g., "Multiplication") appearing behind the main content.</warning>
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>I. i.</sig>
+<meta>catchword: The</meta>
+
+Lykewise by Diuision, yf your man beyng greater then the aduersarye, stande so, that beyng deuyded by the voyde spaces, the quotient is all one with the aduersarye, you maye take hym vp, not remouyng into hys place, unlesse you see hym so standynge before you drawe.
+
+## ¶ Of taking by Cossicall signes.
+
+By Cossicall sygnes anye man that hath these signes, Ʒ. ꝛ. Ʒꝛ. ꝛꝛ. meeting wth his roote in his ordinary draught that hath this signe Ʒ taketh him up, or elles is taken of him, without remouyng into his place, except he maye take him before he remoue.
+
+## ¶ Of the kynges and their taking.
+
+<vocab>Diuision, Cossicall signes, Philosophers game, Rythmomachia, kynges, roote</vocab>

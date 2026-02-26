@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>102</page-num>
+<header>Das erste Buch / 10.cap:</header>
+
+» und ieres rechtens / also das sy icht mehr nehmen / dan sy sol-
+» len: Wan kein Man / der zu tief glück / hat gewonnen dovon
+» lange freud.
+» Der achtet Wend / auf dem SchachZabel / sol billig sten /
+» vor dem Roch / daß do stet zu der lincken hand des Königes /
+» wan der bedeut Spieler / schelter / und ribalter / die sollent dem
+» land ze wissen tun / was einem verweser oder vistum / schand und
+» schaden bringen mag. Die Spieler / wan sich die verspielet ha-
+» bent / das sie bloß und nackend seind / daß Sie dan drat bereit
+» seint / botschaft ze tragen / durch die land / und trachten / umb an-
+» der gut. Er sol auch auf dem SchachZabel also gestalt sein / das
+» er habe ein rotes preides har / und sol haben / auf seiner rechten
+» hand / ein wenig pfenning / und darbey seint beteut die gystigen /
+» und in der lincken hand / drey würffel / das beteut Spicier und
+» ruffian, und under der gürtel ein brief fas oder büchsen / das be-
+» teut leuffer und briefeträger: Die ersten / dye do heissent gusar /
+» und irer hab verstörer / dem sol ir herr pfleger geben / über ir
+» hab / und sol sie machen irer hab und gut ungewaltig / darumb
+» wan es geschicht / so sie ir habe vertun / und verzert habent / so
+» künnent sy nit arbeiten / dovon so werdent sy mörder / rauber /
+» brenner und übelthäter. Güstigkeit ist ein Laster und eine grosse
+» missetat / wan wie daß sy / das es zu einer weil frumbt den frün-
+» den / doch schat es zu jüngst / dem nechsten: Ist demnach besser /
+» daß man das behalte / das man hat / dan das man / noch einem
+» tracht / das man nit hat: Und dovon ist ein gemein Sprich-
+» wort: Wer mer verzert / dan er hat / wirt er arm / des wirt gut
+» rat: Wan wer zehrung nit besorget / der verderbet ee er sein nie-
+» mer empfinden mag. Darnach seint etliche Spieler und ruffia-
+» ner / dye verzerent ir hab bößlichen / und die werdent dan rau-
+» ber / mörder und verräter. Es ist tümlich fremde hab / wan man
+» die eigen verzehret / sollich fügent nit zu Richter und weisen / der
+» gemein. Nach dem seint brieffträger / die sollent sich fleissen / daß
+» sye ihre botschaft werben auf die Zeit / alß sie ieren Herren sen-
+» den und heissen widerkommen / daß kein bot / vor in nicht kom /
+» und wider in werben wolte / und ihn vertreiben mit seiner sache /
+» und darumb sollent sy snell sein / und sich hüten / das sy sich des
+» morgens nicht überladn mit essen / und mit trincken / sye sollent
+
+<meta>catchword: auch</meta>
+
+<vocab>SchachZabel, Wend, Roch, König, Spieler, ribalter, vistum, pfenning, ruffian, leuffer, briefeträger, gusar, Güstigkeit</vocab>

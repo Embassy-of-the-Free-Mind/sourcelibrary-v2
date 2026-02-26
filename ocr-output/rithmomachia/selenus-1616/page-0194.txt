@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>164</page-num>
+<header>Das Ander Buch/ 5. cap:</header>
+
+verurſachet/und ſein König/mit dem Schützen/folgendes nuhr eins geſperret wird.
+
+Ferner/wan der Eine/nuhr einen Reuter/der Ander aber/ einen Rochen hat: ſo muß jehner/nicht den Reuter/an einen ſolchen Ort/welchen ihm/der mit dem Rochen/auch wan Er ſich/ihn zu erlangen / mit allem fleiß bemühete / nicht beſser wünschen möchte/ rücken: noch den König/auf die euſsersten vier Linien/an die leiſten des Bretes/daſelbſten Er/eines Schaches/wegen des andern Königs-Rochens/ſich müſte vermuhten/ſetzen: noch den gedachten Reuter/(auf daß Er demſelben/zu jederzeit / zu hülffe kommen könne) weit von ſich laſsen: dan ſonſten der Ander / die Päſse / demſelben/ verlegen/den weg verhindern/und mit ſeinem Rochen/Schach-Matt geben würde.
+
+Weyter/wan Einer/einen Schützen hat/der Ander/einen Rochen: ſo ſol ſich jehner/bemühen / weyl Er deſsen verſichert iſt/daß ſein Schütze/welcher allein/aufz den funfzehen/noch verhanden/nach Spieles gebrauch / nicht müſse genommen werden: ſeinen König/ (auf daß ihn der Schütze bedecken könne) in eines Rochens feld/zu ſtellen: Alſz/wan Einer/aufz dem Schwartzen hauffen/nebeſt dem Könige/der Königin-Schützen/noch hat: ſo ſol Er/den König/ (das mit ihn der Schütze/in ſeines Reuters oder Rochens/andern felde/ wan er etwa/von dem Weiſsen Rochen / auf der Königes-Rochens oder/auf ſeiner Haupt-Steine Linie/einen Schach erlangete / verſthetigen könne) in ſeines Rochens feld ziehen: dan ihm / der ander König/nicht hindern kan/oder den Paß/daß er nicht könte/hinter
+
+<image-desc>A 4x4 section of a chessboard diagram. The squares are shaded in a checkered pattern. Specific squares contain piece abbreviations: Row 1, Column 1 (light square) has 'R'; Row 1, Column 3 (light square) has 'Sc.'; Row 1, Column 4 (dark square) has 'K.'; Row 2, Column 4 (light square) has 'Sc.'; Row 3, Column 4 (dark square) has 'R'.</image-desc>
+
+ſeinem Schützen/herauſſer kommen / verlegen: In erwægung / ein König/dem andern/nicht Schach-bieten/beſondern denſelben nuhr einſperren/und verſchlieſsen kan / dadurch aber / nichtes gewonnen wird. Stehet nuhn der Schütze ſtille/ſo ziehet Er/den König/ins ander feld/ſeines Rochens. Gleiche meynung hat es / wan auf einem felde/der anderen dreyen Rochen/entweder der Weiſse/oder Schwartze König/gezogen und geſetzt worden.
+
+Wan auch Einer/einen Soldaten: (welchem/noch zwey felder/
+
+<meta>catchword: ehe</meta>
+
+<vocab>Rochen, Reuter, Schütze, Schach-Matt, König, Königin-Schützen, Soldat</vocab>

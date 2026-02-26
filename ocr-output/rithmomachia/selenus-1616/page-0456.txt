@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>422</page-num>
+<header>Das Vierte Buch/ 8. cap:</header>
+<meta>catchword: denselben/</meta>
+
+ten/ auf fünf und dreyßig: Der Weiße/ (ihn zu beschützen) der K.
+Soldaten/ auf ein und zwanzig: Der Schwarze/(umb des Köni=
+ges- und dessen Schützens- Soldaten/ ferner zu verthetigen) der K.
+Soldaten/ auf fünf und viertzig: Der Weiße / nimt/ des S. K.
+Schützens-Soldaten/ mit des K. Soldaten: Der Schwarze/ den=
+selben/ mit der K. Schützen: Der Weiße/ ziehet/ der K. Schützen/
+(umb denselben/ mit des S. K. Schützen/ zu verwechßlen) auf zwan=
+zig: und kan also/ wan Er/ des Schwarze Steine/ welche ihm et=
+wa hinderlich seynd/ mit vortheil abschaffet: das Spiel wol gewinnē.
+
+<margin>4.</margin> Wan aber der Schwarze / nicht den Soldaten/ oder Schü=
+tzen/ auf 46/ oder 38, (n. 2. 3.) besondern/ des K. Schützens- Soldaten/
+auf des W. K. Soldaten/ auf fünf und dreyßig/ ziehet: so nimt ihn/
+der Weiße/ mit demselben: Der Schwarze/ ruckket/ des K. Schü=
+tzen/ (auf daß/ sein König/ im nohtfahl/ wan etwa/ die W. Königin/
+auß drey und dreyßig/ Schach- böte: in sein feld/ weichen könne) auf
+acht und dreyßig: Der Weiße/ auf des S. K. Soldaten/ seines K.
+Schützens - Soldaten/ auf sieben und zwanzig: Der Schwarze/
+nimt ihn nicht/ mit demselben: noch/ des W. K. Reuter/ mit des K.
+Schützen/ besondern/ ziehet der K. Soldaten/ (umb/ obgedachten des
+K. Soldaten/ zu beschützen/ und der K. Schützen/ den Paß/ auf des
+W. K. Soldaten/ zu eröffnen) auf fünf und viertzig: Der Weiße/
+beut/ mit der Königin/ auß drey und dreyßig/ Schach/ und beschützet/
+des K. Soldaten: Der Schwarze/ ziehet/ den König/ auf neun und
+funfzig: Der Weiße/ nimt/ des S. K. Soldaten/ mit des K. Schü=
+tzens- Soldaten: Der Schwarze/ denselben / mit der K. Solda=
+ten: Der Weiße/ ziehet / auf ihn/ des K. Reuter / auf neunzehen:
+Der Schwarze / (umb denselben zu beschützen) die Königin/ auf
+des W. K. Soldaten / auf drey und viertzig: Der Weiße/ des K.
+Schützen / auf dreyßig: Der Schwarze/ nimt / des W. K. Sol=
+daten / mit der K. Schützen / und ruckket ihn / auf der W. K. Schü=
+tzens - Soldaten: Der Weiße / des K. Rochen / auf drey: Der
+Schwarze/ des K. Reuters - Soldaten/ auf die W. Königin / auf
+zwey und viertzig: Der Weiße/ beut/ mit derselben / auß ein und
+<margin>5.</margin> viertzig/ Schach: * Der Schwarze/ bedecket / den König/ mit
+der Königin/ auf funfzig: Der Weiße / (auf daß seine Königin/
+vom ihrem Schützen / verthetiget werde) ziehet / dero Soldaten/
+auf des S. K. Schützen/ und der S. K. Soldaten/ auf neun und zwan=
+<margin>6.</margin> zig: * Der Schwarze / nimt denselben / mit des K. Schützen:
+Der Weiße/ denselben/ mit seines K. Reuter: Der Schwarze/
+
+<vocab>Schach, König, Königin, Reuter, Rochen, Soldaten, Schützen</vocab>

@@ -1,0 +1,96 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<margin>
+| | | |
+|---|---|---|
+| f | 7 | 14 |
+| e | 6 | sesquisepti. 12 |
+| d | 5 | sesquiquanti. 10 |
+| c | 4 | sesquiquarti. 8 |
+| b | 3 | sesquitertii 6 |
+| a | 2 | sesquialteri. 4 |
+| | | Dupli 2 |
+| 1 | | 1 |
+</margin>
+<image-desc>A vertical diagram associating a natural number series (1-7) with their doubles (2-14) using arcs and terminology for musical/arithmetic ratios like Dupli, sesquialteri, etc.</image-desc>
+
+<margin>18</margin> ¶ ¶ Si dispositozum ab unitate numeroz secundū naturalem seriem: omniū dupli su= mantur: proueniēt omnes pares ab unitate: eruntq; partium eodē ordine sumpte que et numerozum ab unitate dispositozū proportiones.
+
+¶ Dispono numeros ab unitate secundū naturalē seriem unitas a b c d e f: quoz per ordinē sumo duplos g h k l m n o. dico primo oēs pares ab unitate vsq; o esse acceptos. secūdo q̄ proportiones sunt numeroz ab unitate dispositoz: vt a ad vnitātē: b ad a: c ad b: d ad c: e ad d: f ad e: tales esse per ordinē in ordine partium: vt h ad g et k ad h ⁊ l ad k et ita ceteraz. Primū patet. nam primo duplos esse pares manifestū est cum quilibet eorum in duo dimidia que equa sunt diuidi possit. et q nullus alius ab acceptis sit par certū est qz talis nō haberet mediū in numeris: q si haberet vllū coincideret cū aliquo assignatoz. certū est ergo oēs pares fuisse acceptos. Secundū patet. nā que pportio a ad h: ea est vnitatis ad g. ergo pmutati per tertiā secūdi q̄ pportio a ad vnitātē: ea est h ad g. Itē que b ad l: ea est a ad h. ergo p eandē q̄ b ad a: ea est l ad h. et ita p eandē consistr pcede ⁊ totū firmū pcludes ppositū.
+
+<margin>
+| | | | |
+|---|---|---|---|
+| f | 7 | n | 13 |
+| e | 6 | m | 11 |
+| d | 5 | l | 9 |
+| c | 4 | k | 7 |
+| b | 3 | h | 5 |
+| a | 2 | g | 3 |
+| | 1 | | 1 |
+</margin>
+<image-desc>A diagram showing the relationship between natural numbers (1-7) and odd numbers (1-13) created by adding successive natural numbers.</image-desc>
+
+<margin>19</margin> ¶ Si numeroz ab vnitate naturali serie dispositozū: duo ⁊ duo continue cōiungātur fient oēs īpares ab vnitate. ipsozūq; impariū proximi quiq; erunt contra se primi.
+
+¶ Disponat ordo numeroz ab vnitate fm eorum naturalē seriem: cōiungāturq; quiq; duo ⁊ duo proximi, dico primo omnes ab vnitate fieri ipares. scđo vero quosq; duos primos esse contra se primos. Primū patet. nā quicunq; duo primi in naturali serie numeroz p diffinitionē sola vnitate distāt: q̄re eoz alter est par et alter īpar. ipsi igitur simul additi p secundā huius totū constituūt impare. Sed q nullus sit impar preter illos sic cōstat alioquin nō posset ille impar diuidi in pmas partes quarz vna super alterā addit vnitate quod est contra diffinitionē. aut si diuidat cōstituetur ex duobus numeris in naturali serie numeroz proximis qđ est propositum. Secundū patet. nā cum oīs impar ab vnitate addita vnitate ⁊ unitate substracta habeat circūpositos pares: et oīs par circūpositos impares ab eo sola vnitate distātes per cōceptionē igitur dīia quozūcunq; primoz impariū est binarius. at binari' est numerus primus cū a nullo alto nūero preter vnitate numereť. additus igitur binarius qđ est numerus primus vnitati cōstituet primū imparē numerz primum: qđidem binarius numerus primus additus ternario numero etiā primo: per pꝛimā tertiÿ cōstituet numerz ad alterum primū. Itidē ⁊ per nonā tertiÿ argumētabere: ⁊ ita de quibuſlibet duobus primis ostendere pfacile est: qđ est propositū.
+
+<margin>
+| | | | |
+|---|---|---|---|
+| f | 64 | n | 729 |
+| e | 32 | m | 243 |
+| d | 16 | l | 81 |
+| c | 8 | k | 27 |
+| b | 4 | h | 9 |
+| a | 2 | g | 3 |
+| | 1 | | 1 |
+</margin>
+<image-desc>A diagram comparing powers of 2 (up to 64) and powers of 3 (up to 729).</image-desc>
+
+<margin>20</margin> ¶ Si numeroz ab vnitate pportionaliu secundus ab vnitate fuerit par reliquos oēs pares esse: q si idem fuerit impar: reliquos itidem ipares esse necesse est.
+
+¶ Nā si secundus est par qz numerat ab vnitate scđus nūerabit tertiū ⁊ tertius quartū: sicq; deīceps quare p vicesimanonā primi scđus q̄ est par nūerabit oēs reliquos. sunt igit reliq̄ oēs p duodecimā hui' pares qđ est ppositū quo ad hoc. et si scđus est impar qz nūerať ab vnitate: tō ipse in se duct' nūerabit tertiū et per vicesimāquintaz scđi tertius fm eundē quartū ⁊ ita deinceps. igitur per vnuecimā huius eorum quilibet erit impar: quod est totum propositū.
+
+<margin>
+| | | | |
+|---|---|---|---|
+| b | 8 | e | 7 |
+| c | 6 | f | 5 |
+| a | 4 | d | 3 |
+</margin>
+
+<margin>21</margin> ¶ Inter quoslibet duos numeros quoz vterqz par est aut vterqz impar: vnus est medius q si vnus fuerit medius vtrūq; parē aut imparē esse necesse est.
+
+¶ Nā si vterq; fuerit par: ipsi simul additi p primā huius cōstituunt numerū parem. ⁊ si vterq; fuerit impar p tertiā huius idē eueniet. si itaq; illius sumať medietas p scđam partē secunde primi illa erit nūerus a quo illi numeri eqūdistabūt p diffinitionē. igit numer' ille erit inter illos medius. Scđm pz nā si int eos sit medius p primā partē scđe primi idē duplicat' est tanq̄ illi cōiūcti q̄ cū sit par eo q est dupl' si alter eoz sit par: p sextā huius et reliquus. et si alter eoz sit īpar p septimā eiusdē ⁊ reliquus quod est propositum.
+
+<margin>
+<image-desc>Diagram for proposition 22 showing values related to the proof of means between even and odd numbers.</image-desc>
+c —— 13
+a —— 4
+d —— 6
+e —— 7
+b —— 9
+</margin>
+
+<margin>22</margin> ¶ Inter parem et imparem vel nullus est medius vel duo: q si duo fuerint inter eos mediÿ: alterum parem ⁊ alterum imparem esse cōiuncitur.
+
+¶ Si vnitate distiterit par atq; īpar: inter eos nullus incidet medius. qđ si āplius q̄cunq; distiterint vt par a et ipar b: dico int a ⁊ b eē duos medios. nā p secundā huius a et b iūcti cōstituūt numerz īparē vt c. q̄ per nonā eiusdē diuidi poterit in duos vnitate distātes q̄ ſunt d e: quos dico p tertiā primi equis distare a et b. quare per diffinitionē sunt mediÿ qđ est primū. Scđo dico q si inter a ⁊ b sint duo mediÿ alterū esse parē ⁊ alterū imparē. nā si duo vt d e interiacēt mediÿ: p diffinitionē vnitate distabūt. quare eoz alter erit par et alter impar. cōiuncti igit d e p scđam huius constituent imparē. at a b coniuncti per tertiā primi cōstituunt eandē. quare si alter fuerit par per nonam huius reliquus erit impar. et si alter fuerit impar per octauā huius reliquus erit par: quod est propositū.
+
+<margin>
+<image-desc>Diagram for proposition 23 showing a calculation of a mean between an odd number and unity.</image-desc>
+a —— 5
+c —— 4
+d —— 2
+f —— 3
+e —— 2
+1
+b —— 1
+</margin>
+
+<margin>23</margin> ¶ Inter quēlibet imparē et vnitatem vnus est medius: idēq; est maioz ipsius portio. q si inter vnitatē ⁊ impvnus medi' extiterit: quēlibet talē numerz imparē esse p ueniēt.
+
+¶ Sit a quilibet impar et b vnitas: dico inter a ⁊ b esse vnum mediū qui est maioz portio a. dico etiā q si inter a ⁊ b vnus sit medius numerū a esse imparē. Primū patet. nā cum a numerus īpar superet b vnitātē in numero parivt in c qđ est differentia a ad b. et qz c est par diuidať in duo equa d atq; e. capto ergo numerū f cuius e sit differentiā ad b: quē dico esse mediū inter a ⁊ b. nā qa per conceptionē differentia a ad b cōstituta est ex differentiis a ad f et f ad b: ⁊ differentia a ad b sit c. erit ergo c cōstitutus ex e differentiā f ad b eius dimidio et d altero eius dimidio: quare d equalis e differentiā est a ad f. est igit...
+
+<vocab>numerus, par, impar, unitas, proportio, medius, differentia, binarius, naturalis series</vocab>

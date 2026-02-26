@@ -1,0 +1,37 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>392</page-num>
+<header>Das Vierte Buch/ 4.cap:</header>
+
+<image-desc>A decorative rectangular woodcut ornament featuring symmetrical scrolling acanthus leaves and floral motifs.</image-desc>
+
+## Das Vierte Capittel.
+
+->Wie nach anweisung des Damiani, die dritte<-
+->Art/ zu spielen sey: auch gründlich geendert/ und besser<-
+->ausgeführt werden mag.<-
+
+---
+
+Nachdem nuhn/ in den vorigen Capitteln/ wie ein Spiel/ wan einer/ des K. Schützens-Soldaten/ dem andern/ zum Vortheil gibt/ zu führen/ und anzustellen sey/ gnugsam entdecket/ und zugleich/ mit mehrem/ nicht alleine/ daß der jenige/ welcher diesen Schach-Stein/ gibt/ zu einer widererstattung/ einen zwie- oder einfachen vorzug/ genommen/ angedeutet/ besondern auch/ wie man sich/ beederseits beschätzen/ und den feind/ angreiffen sol: Imgleichen/ wie der geber dieses Soldaten/ wegen des Vorzuges/ sein Spiel/ dagegen wol inacht haben kan: Der nehmer aber desselben/ auß gleicher ursache/ nicht so grosse gelegenheit habe/ den andern/ ob Er gleich/ einen Schach-Stein mehr hat/ zu beschedigen: augenscheinlich/ an die hand/ gegeben worden: alß sol ferner/ des (droben gedachten) Damiani, meynung/ und anordnung/ hierüber auch vernomen/ und die/ in derselben/ befundene fehler/ nebest ihrer gebührlichen enderung/ wie in den vorigen geschehen/ angezeiget werden.
+
+Es fanget aber gedachter Portugeser/ dieselbe/ folgender ge-
+<margin>1. »
+»
+»
+»
+»
+»
+»</margin>stalt/ an : * Der Schwartze/ wan ihm/ der Weisse/ des K. Schützens-Soldaten/ zum Vortheil gegeben/ und wegen des genomenen Vorzuges/ des K. Soldaten/ auf acht und zwantzig/ gezogen: rucket/ seines K. Soldaten/ auf sechs und dreyſſig: Der Weisse/ auf denselben/ des K. Reuter/ auf neunzehen: Der Schwartze/ des K. Schützens-Soldaten/ auf des W. K. Soldaten/ auf funf und dreyſſig : 
+<margin>2. »
+»
+»
+»
+»
+»
+»
+»
+»</margin>* Der Weisse/ nimt/ des S. K. Soldaten/ mit des K. Reuter: Der Schwartze/ beut/ mit der Königin/ auß funf und zwantzig/ Schach: Der Weisse/ bedecket den König/ mit seines Reuters-Soldaten/ und ziehet ihn/ auf die S. Königin/ auf achtzehen: Der Schwartze/ nimt/ mit derselben/ des W. K. Soldaten/ beut Schach/ und hat zugleich/ ein auge/ auf des W. K. Rochen/ und Reuter : Der Weisse/ bedecket/ den König/ mit der Königin/ auf zwölfe : Der Schwar-
+<meta>catchword: tze/ nimt/</meta>
+
+<vocab>Damiani, Schach-Stein, K. Schützens-Soldat, K. Reuter, Königin, Rochen, Vortheil, Schach, dreyſſig, zwantzig</vocab>

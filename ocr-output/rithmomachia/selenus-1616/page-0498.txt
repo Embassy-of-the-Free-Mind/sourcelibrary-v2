@@ -1,0 +1,17 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+
+<image-desc>
+A full-page engraving of a Rithmomachia game board, showing a portion of a checkered grid. Twenty-four game pieces are arranged in the central area of the visible board, spanning four rows and six columns. The pieces are rendered with three-dimensional shading.
+
+The pieces are arranged in four horizontal rows:
+
+*   **Top Row:** A square piece numbered **49**, a square piece numbered **28**, a triangular piece numbered **16**, a triangular piece numbered **12**, a circular piece numbered **9**, and a circular piece numbered **2**.
+*   **Second Row:** A square piece numbered **121**, a square piece numbered **66**, a triangular piece numbered **36**, a triangular piece numbered **30**, a circular piece numbered **25**, and a circular piece numbered **4**.
+*   **Third Row:** A square piece numbered **225**, a square piece numbered **120**, a triangular piece numbered **64**, a triangular piece numbered **56**, a circular piece numbered **49**, and a circular piece numbered **6**.
+*   **Bottom Row:** A square piece numbered **361**, a tiered pyramid piece (the base is marked **91**, with the individual layers' values **1**, **4**, **9**, **16**, **25**, and **36** visible on the side), a triangular piece numbered **100**, a triangular piece numbered **90**, a circular piece numbered **81**, and a circular piece numbered **8**.
+
+The checkered pattern of the board continues to the edges of the engraved frame. A large water stain is visible at the top right of the paper.
+</image-desc>
+
+<vocab>Rithmomachia, arithmomachia, game board, mathematical game, pyramid, roundels, triangles, squares, numbers</vocab>

@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>285</page-num>
+<header>4. cap: Vom Schach-Spiel. 285</header>
+
+König/ auf funfzig/ weichen muß) auß ein und funfzig/ Schach-Mat.
+
+<margin>11.</margin> Wann aber der Schwarze/ an des Soldatens statt/ (n. 8.) des K. Reuter/ (umb/ den Schach/ von der W. Königin/ auß fünf und dreyßig/ zu verhindern) auf ein und vierzig/ ziehet: so beut/ der Weiße/ mit des K. Rochens-Soldaten/ auß drey und dreyßig/ Schach-Mat.
+
+<margin>12.</margin> Spielet aber der Schwarze/ den Reuter/ nicht auf 41. (n. 11.) besondern auf zwey und funfzig/ oder drey und vierzig: so gibt/ der Weiße/ mit der Königin/ auß vier und dreyßig/ Schach-Mat.
+
+<margin>13.</margin> Ziehet dan der Schwarze/ nicht den Reuter/ (n. 11. 12.) besondern des K. Schützen/ auf die W. Königin/ auf fünf und vierzig: so beut/ der Weiße/ mit derselben/ auß fünf und dreyßig/ Schach: Der Schwarze/ muß den König/ auf ein und vierzig/ ziehen: Der Weiße/ rucket/ der K. Soldaten/ auf neun und zwanzig/ und beut/ von der K. Schützen/ Ab-Schach: Der Schwarze/ bedecket den König/ mit seines Reuters-Soldaten/ auf vier und dreyßig: Der Weiße/ nimt ihn mit des K. Rochens-Soldaten/ beut/ mit demselben Schach/ und vom Rochen/ Ab-Schach: Der Schwarze/ ziehet/ den König/ auf funfzig: Der Weiße/ gibt/ mit der Königin/ auß ein und funfzig/ Schach-Mat.
+
+<margin>14.</margin> Wan aber der Schwarze/ nicht den Schützen/ auf 45. (n. 13.) besondern seine Königin/ auf die W. Königin/ auf drey und vierzig/ ziehet: so beut/ der Weiße/ mit derselben/ auß sechßig/ Schach: Der Schwarze/ muß den König/ auf ein und vierzig/ rucken: Der Weiße/ ziehet der K. Soldaten/ auf neun und zwanzig/ und beut/ von der K. Schützen/ Ab-Schach: Der Schwarze/ muß den König/ mit seines Reuters-Soldaten/ auf vier und dreyßig/ bedecken: Der Weiße/ nimt ihn/ mit des K. Rochens-Soldaten/ und beut/ dem S. Könige/ und der S. Königin/ mit demselben Schach/ und auch/ von des K. Rochen/ Ab-Schach: Der Schwarze/ muß/ wegen des doppelten Schaches/ mit seinem Könige/ auf funfzig/ fliehen: Der Weiße/ nimt/ die S. Königin/ mit des K. Rochens-Soldaten/ und beut abermaln Schach: Der Schwarze/ nimt ihn/ mit dem Könige/ oder dessen Reuter: Der Weiße/ beut/ mit der Königin/ auß ein und funfzig/ Schach-Mat.
+
+<margin>15.</margin> Wan aber der Schwarze/ seine Königin/ auf die W. Königin/ nicht auf 43. (n. 14.) besondern/ auf zwey und funfzig/ rucket:
+
+<margin>16. *</margin> so ziehet/ der Weiße/ des K. Rochens-Soldaten/ auf drey und dreyßig/
+
+<meta>catchword: dreyßig/</meta>
+
+<vocab>Schach, Schach-Mat, König, Königin, Reuter, Rochen, Soldat, Schütze, Ab-Schach</vocab>

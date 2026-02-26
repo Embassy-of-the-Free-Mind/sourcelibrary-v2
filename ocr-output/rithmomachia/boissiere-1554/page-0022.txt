@@ -1,0 +1,36 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>10</page-num>
+<header>DES PHILOSOPHES.</header>
+
+et ſõ autre partie: à ſçauoir ſa moytié. Alors trou-
+ueras que le nombre qui cõtient 6, & ſa moytié,
+ceſt 9: car 9 cõtiẽt 6, & la moytié de 6. qui eſt
+3: diras dõc 6 eſtre le nõbre requis conuenant a-
+uec le nõbre requerãt 9, en proportiõ particuliere
+ſexquialtre. Apres viẽdrons au ſecõd nõbre, qui
+eſt 12, nõbre nõpair, & conſidererons le nom de
+la ſeconde eſpece particuliere, qui eſt ſeſquitierce
+& ainſi diſant tierce, regarderas quel eſt la tier-
+ce partie, & trouueras que ceſt 4. Ainſi trou-
+ue vn nõbre qui cõtiene 12, & ſa tierce partie 4,
+& tu verras que ſera 16, lequel diras eſtre requis
+nõbre particulier auec 12. conſequẽment au tiers
+nõbre particulier qui eſt 20. au nõbre pair, cõſide
+re le nõ de la 3 eſpece qui eſt ſeſquiquarte, et ayãt
+veu & mis au deſſus eſtre ſa quarte partie, trouue
+vn nõbre qui le cõtiẽne, & ſa quatrieſme partie
+cinq, & auras le nõbre requis 25: & ainſi des au
+tres: mais ie repeteray icy les predits nõbres trou
+uez: Et à fin que trauailles à trouuer leurs cõpa-
+gnõs en proportiõ particuliere, au deſſus vn cha-
+cun d'iceux ſitueras le nombre qui fait la partie
+d'eux, lãqlle doit eſtre cõtenue auec eux au nõbre
+requis, conuenant à vn chacun des predictz re-
+querans en proportion particuliere, meſme le
+nombre deſignant les parties precedẽtes, ſelõn
+l'ordre naturel des nombres commençant à 3.
+
+<sig>B ij</sig>
+
+<vocab>nombre, proportion, ſexquialtre, ſeſquitierce, ſeſquiquarte, partie, moytié</vocab>

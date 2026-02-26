@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>318</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+<meta>Catchword: Setzet</meta>
+
+82. Wan aber der Schwarze/ den König/ nicht/ mit der K. Reu-
+ter/ (n. 79.) besondern mit der Königin/ auf 54. bedecket : so nimt
+sie / der Weisse / (dieweyl Er / dem Schwarzen / mit einem
+Schützen und Rochen / überlegen) mit seiner Königin / und gibt
+
+83. Schach : * Der Schwarze / nimt sie / mit dem Könige : Der
+Weisse / gibt / mit des K. Reuter / auß neun und dreyssig / Schach /
+und ziehet ihn / auf der S.K. Rochens=Soldaten : Der Schwar-
+ze / darf den König / auf drey und funfzig / oder ein und sechszig /
+nicht rucken / (Dan der Weisse / mit des K. Rochen / auß fünf
+und viertzig / Schach / bieten / und seiner K. Reuter / erlangen wür-
+de) sondern stellet ihn / auf zwey= oder drey und sechszig : oder
+funf und funfzig : Der Weisse / (welcher / wie gedacht / einen Ro-
+chen und Schützen / zum Vortheil hat) kan in wenig Zügen / des
+Schwarzen Oberherr werden.
+
+84. Wan aber der Schwarze / die W. Königin / nicht / mit
+dem Könige / (n. 83.) besondern / mit der K. Reuter nimt / und
+denselben / auf des W. K. Rochen / ziehet : so nimt / der Weisse /
+mit demselben / (umb / ihn zu erretten / und des K. Reuter / zu be-
+schützen) des S.K. Schützens=Soldaten / und kan / dem Schwar-
+zen / mit seinen Steinen / ferner wol beykommen.
+
+85. Wan aber der Schwarze / den König / mit der Königin /
+auf 54. (n. 82.) nicht bedecket / besondern / auf ein und sechszig /
+denselben rucket : so gibt / der Weisse / mit des K. Rochen / auß
+sechszig / Schach : Der Schwarze / muß ihn / mit des K. Ro-
+chen / nehmen : Der Weisse / raubet denselben / mit der K. Ro-
+chen / und gibt Schach=Mat.
+
+86. Rucket aber der Schwarze / nicht den Reuter / auf 62,
+noch 37, (n. 77. 78.) besondern / des K. Rochen / (umb / der K. Reu-
+ters=Soldaten zu beschützen) auf drey und sechszig : so nimt /
+Der Weisse / mit des K. Rochen / der S. K. Reuter / und beut
+Schach : Der Schwarze / rucket den König / auf ein und sechsz-
+zig : Der Weisse / beut / mit des K. Reuter / auß ein und funf-
+zig / Schach : Der Schwarze / muß / den König / auf zwey und
+sechszig / rucken : Der Weisse / der K. Rochen / auf die S. Kö-
+nigin / auf sechs : Der Schwarze / nimt ihn / mit derselben /
+und beut Schach : Der Weisse / raubet dieselbe / mit der K. Schü-
+tzen / und gibt folgendes / mit der Königin / auß der Königinnes
+Schützen linie / Schach=Mat.
+
+<vocab>Schach, Schach-Mat, König, Königin, Reuter, Rochen, Schütze, Soldat, Schwarze, Weisse</vocab>

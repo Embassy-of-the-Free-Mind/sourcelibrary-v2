@@ -1,0 +1,8 @@
+<language>None</language>
+<page-type>illustration</page-type>
+
+<image-desc>
+A detailed copperplate engraving from the early 17th century depicting a chess game. The central figure is a bearded man in period attire, including a ruff collar and an embroidered doublet, seated in a high-backed wooden chair with turned legs. He looks directly at the viewer while gesturing with his right hand toward a large chessboard set on a table. To the left, a second player is partially visible. Standing behind the central figure is a younger man, also in period dress with a high collar, observing the game with his hand on his hip. The table is draped with a fringed cloth. In the background, a side table holds several drinking vessels and a feathered hat. The image is rendered with fine line-work and cross-hatching, typical of Northern European engravings of the era (notably associated with Augustus the Younger, Duke of Brunswick-Lüneburg).
+</image-desc>
+
+<vocab>chess, engraving, 17th century, ruff collar, doublet, interior scene, recreation</vocab>

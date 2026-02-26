@@ -1,0 +1,63 @@
+<language>Latin</language>
+<page-type>errata</page-type>
+<columns>2</columns>
+
+<image-desc>A decorative horizontal border consisting of repeating, intricate symmetrical scrollwork and floral motifs.</image-desc>
+
+# Sequentia , sic inferenda vel legenda.
+
+| Pagina. | Linea. | | Pag: | Lin: | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 5. | 5. | § Ludus. | 229. | 14. | noch. |
+| 10. | 28. | competitorisq; | 231. | 25. | auf. |
+| 16. | 16. | <insert><s>pose, l’altro.</s></insert> <note>Manual ink strikethrough</note> | 233. | 7. | <note>Entries for p. 233 and 234 are bracketed to the correction: siehet den König.</note> |
+| 16. | 38. | <insert><s>il tuo Falcon,</s></insert> <note>Manual ink strikethrough</note> | 234. | 24. | siehet den König. |
+| 18. | 32. | vermerckte. | 234. | 5. | |
+| 25. | 17. | Benincasius. | 247. | 13. | <note>Entries for p. 247 are bracketed to: seynd. Königin.</note> |
+| 28. | 25. | vom. | 247. | 19. | seynd. |
+| 34. | 9. | denselben. | | | Königin. |
+| 44. | 16. | chavuto. | 256. | 1. | auf die rechte. |
+| 48. | 13. | *ψῆφον* | 256. | 10. | seines K. |
+| 51. | 11. | den. | 256. | 15. | und der Weisse. |
+| 53. | 13. | seynd. | 262. | 29. | auf vierzehen. |
+| 73. | 3. | auf des Weissen. | 266. | 36. | das vierzehend. |
+| 85. | 16. | die Regenten. | 269. | 24. | und den beeden. |
+| 89. | 28. | seynd. | 277. | 32. | n. 6. in F. |
+| 96. | 32. | wan die. | 306. | 3. | nimt / bey W. K. |
+| 98. | 1. | nicht. | 311. | 2. | vierzig / ziehet. |
+| 98. | 12. | der gromantrey. | 314. | 16. | ein und funfzig. |
+| 101. | 16. | wie'schest. | 318. | 25. | taubet. |
+| 106. | 18. | die lincke. | 331. | 29. | <note>Entries for p. 331 and 334 are bracketed to: des S. K. auf zwey und sechfzig.</note> |
+| 119. | 17. | <note>Entries for p. 119, 124, and 128 are bracketed to: seynd.</note> | 334. | 36. | des S. K. |
+| 124. | 31. | seynd. | | | auf zwey und sechfzig. |
+| 128. | 28. | | 362. | 5. | Soldat. |
+| 135. | 29. | raschen. | 365. | 30. | denselben. |
+| 142. | 19. | daß Er ihn gleicher. | 414. | 29. | setten. |
+| 154. | 41. | ein schrupstoch. | 415. | 1. | <note>Entries for p. 415 are bracketed to: der Schwärze / siehet. der Weisse.</note> |
+| 155. | 23. | seynd. | 415. | 27. | der Schwärze / siehet. |
+| 157. | 6. | ein und vierzig. | | | der Weisse. |
+| 168. | 26. | in den. | 422. | 36. | von. |
+| 171. | 8. | Lust hat. | 429. | 12. | ziehen Sie. |
+| 188. | 16. | Weisse, gibt. | 446. | 8. | Faber. |
+| 209. | 20. | auf fünf und dreyssig. | 456. | 4. | schwarzen. |
+| 210. | 4. | denselben. | 461. | 6. | Summe. |
+| 213. | 20. | der Weisse. | 464. | 34. | Steine / mit. |
+| 214. | 27. | seynd. | 476. | 16. | denselben. |
+| 221. | 9. | auf 2 oder 4. | 486. | 7. | 3. oder 6. |
+| | | | 490. | 2. | suspiciendus. |
+| | | | 491. | 36. | donere. |
+
+---
+
+Cætera leviuscula Errata, circà distinctiones, aut signum unum atq; alterum parentheseos, quandoque omissum, Lector ipse, facilè corriget, & festinanti Typographo, ignoscet.
+
+<image-desc>A circular woodcut emblem depicting a heraldic crest with an eagle or similar bird of prey.</image-desc>
+
+<insert>
+Bayerische
+Staats-
+Bibliothek
+MÜNCHEN
+</insert>
+
+<vocab>Ludus, competitorisq, Falcon, Benincasius, ψῆφον, Regenten, gromantrey, wie'schest, schrupstoch, Soldat, Typographo, suspiciendus</vocab>

@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>430</page-num>
+<header>Das Vierte Buch / 9. Cap.</header>
+
+Doch können wir alhie / unangezeiget nicht lassen / daß in obgeregter Graffschaft Ascanien / die Stadt Aschersleben / eine Schach-Tafel / im Wapen führe: Dannenthero auch / ein theil derselben / in der Fürsten von Anhalt (alß Grafen zu Ascanien) Wapen / verzeichnet wird. Möchte also vermuhtlich / das Schach-Spiel / des Ortes / mehr / alß in dem einigen Dorffe Ströpeke / in üblichem gebrauche / und nicht geringem ansehen / vorzeiten gewesen seyn. Welches dan auch nicht wenig / unserer meynung / (daß nemlich die Teutschen / vermöge des 2. Cap: im 1. Buche / pag. 39. und 43. von undencklichen Jahren hero / gute Schach-Spieler müssen gewesen seyn) beypflichtet. Und ist demnach / nicht zu verwundern / daß auch ihre benachbarte die Sclaven oder Wenden / gleicher massen / des Schach-Spieles kündig zu seyn / zu der zeit sich in etwas herfür gethan: in dem sie wegen desselben / einer Stadt in Ober-Laußnitz den nahmen Rochlitz / mögen gegeben haben: Wie dan / Matthæus Dresserus, in descriptione Urbium Germaniæ, in folgenden worten / fast muthmassen thut:
+
+> Rochlicium vel a Slavis sic nominatum, quasi Ludus Latruncularius, quo delectata fuerunt plurimæ gentes. Cujus notam in Insigni suo gerit oppidum. Das ist: Rochlitz / ist entweder von den Wenden also genennet worden / von wegen des Schacht-Spieles / welches viel Völcker gerne gebrauchet haben: Wie dan die Stadt auch noch davon ein Rochen zum Wapen führet.
+
+Es ist aber / auß gedachtem weytleuffigem Spiele das Kleinere / auf folgende maaß / entstanden:
+
+Man hat die Tabel / dieses Currier-Spieles / oder Grossen Schaches / umbgewendet: das oberste Theil derselben / auf die seite / gerucket / und also / das eusserste Weisse feld / (wie es noch anitzo / im gebrauch ist / und wegen dieser verenderung / etwa / noch in acht genommen wird) auf die rechte hand gestellet: vier zwerch-linien / oder zwey und dreyßig felder / davon abgesondert: in einen vierecketen platz gebracht: sechszehen Steine / (nemlich acht Soldaten: vier Currierer: zween Männer: und zween Schleiche) hinweg gethan: und das gantze Spiel / an der felder und Steinen Zahl / enger zusamen gezogen.
+
+Dieses Spiel / haben / Fr. Jacobus de Casallis: Fr. Conradus von Ammenhusen: und D. Jacob Mennel, beschrieben: und wird / von den Einwohnern zu Ströpeke / das Alte Schach-Spiel / genennet / und ohne die 16. genante Steine / gleich dem weitleuffigem Currier-Spiele / gezogen.
+
+<meta>catchword: Es wird</meta>
+
+<vocab>Schach-Spiel, Schacht-Spiel, Aschersleben, Ströpeke, Currier-Spiel, Rochlitz, Wenden, Ludus Latruncularius, Rochen, Jacobus de Casallis, Conradus von Ammenhusen, Jacob Mennel, Soldaten, Currierer, Männer, Schleiche</vocab>

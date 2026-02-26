@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>title-page</page-type>
+<warning>Extremely faded and degraded image. The text appears to be a faint impression or "ghost image" (possibly bleed-through from the reverse or an offset from a facing page). Most of the text is illegible.</warning>
+
+<image-desc>An architectural title-page border or frontispiece. The design features a decorative top piece with scrolls and foliage. On the left and right sides are vertical niches or pedestals containing standing figures, likely saints or allegorical characters. At the base is a large ornamental cartouche or shield intended for publication information. The entire image is very faint and sepia-toned.</image-desc>
+
+-> Ein <-
+-> <unclear>buch</unclear> <-
+-> <unclear>...</unclear> <-
+-> <unclear>...</unclear> <-
+-> <unclear>...</unclear> <-
+
+---
+
+<insert>
+<unclear>...</unclear>
+</insert>
+
+<vocab>Ein, Buch</vocab>

@@ -1,0 +1,23 @@
+<warning>The text on this page consists entirely of mirrored ghosting (ink transfer or bleed-through) from the reverse side of the leaf or a facing title page. The primary surface of this page is blank, with the architectural border and text appearing in reverse and extremely faded.</warning>
+
+<language>German, Latin</language>
+<page-type>blank</page-type>
+
+<image-desc>
+A faint, mirrored architectural title-page border. The design includes a central space for the title framed by classical columns. On the left and right (mirrored from the other side), standing figures are depicted within niches. The top features a decorative pediment, and the bottom contains a large ornamental cartouche for the printer's imprint.
+</image-desc>
+
+<note>The following text is transcribed from the mirrored ghost image and is largely illegible.</note>
+
+<unclear>Der Romischen</unclear>
+<unclear>Kayserlichen</unclear>
+<unclear>Majestat</unclear>
+<unclear>...</unclear>
+
+---
+
+->Apud<-
+->IOANNEM KINCKIUM<-
+->MDCXX<unclear>X</unclear><-
+
+<vocab>Johann Kinckius, Cologne, bleed-through, 17th century, architectural border</vocab>

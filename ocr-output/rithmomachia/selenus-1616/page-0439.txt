@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>405</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: S. K.</meta>
+
+<margin>5. cap:</margin> niginne/ (alß wan Er ſonſten/ das Spiel verlieren müſte) urſach ge=
+ben ſol. Dan/ ſo fern Ers zu dem ende alſo geſchrieben/ daß der jehe=
+nige/ welcher von dieſem Spiele/ nicht viel verſtehet/ ſich / wan er
+nuhr etwas erlanget / und gewinnet/ ſol begnügen laſſen / und mit
+dem Andern / welcher ſein Meiſter/ gleichſam darauf iſt / in keine
+weitleuffigkeit einlaſſen: es auf gewiſſe maſſe/ ſo fern nemlich/ durch
+andere mittel/ das Spiel zu erhalten ſtünde/ und man/ weyl es noch
+zweyfelhaftig wehre/ ſo gar vorſichtig/ und ſchnur gleich / noch nicht
+ſpielen dörfte) nachgegeben und zugelaſſen werden könte: Hat Ers
+aber/ darumb geſetzet / daß Er das Spiel / (dieweyl Er ihm etwa/
+die gedancken geſchepfet/ es möchte dem Leſer/ deſſen beſchreibung/
+wegen / der ſo mannigfaltigen / und unterſchiedenen Regeln/ und
+Spielen / die Er albereit gezeiget / verdrießlich fürkommen ) nicht
+weiter vollenführen wolte: ſo kan es doch / deſſen ungeachtet/ wol
+zum ende/ gebracht werden: fürnemlich/ dieweyl dieſes Spiel bloß/
+eintzig/ und alleine/ auf einen gantz gewiſſen beweiß / und den au=
+genſchein/ beruhet.
+
+Wan nuhn etwa/ der mangel / daranne ſeyn ſolte/ daß der
+Weiſſe/ wegen des Ab-Schaches / von der S. Königin/ (ſo ferne/
+der Schwartze/ mit des K. Schützens-Soldaten/ ſeiner K. Solda=
+ten nehme) ſich einer gefahr/ befürchten müſte: ſo wird ihm doch der=
+ſelbe / zur erhaltung des Spieles / wenig hindern: oder aber/ durch
+nehmung/ des S. K. Rochens/ die Königin zu verlieren ſich einbilden
+möchte: ſo hette ihm/ urſachen herfür zu ſuchen/ oder dieſelbe Züge/
+durch welche man/ wie und mit was mitteln/ es geſchehen müſte/ be=
+greiffen könte/ zu verzeichnen/ billig gebüren wollen. In erwegung/
+ein Roche/ ſolche tugende bey ſich hat / daß man denſelben/ ſo ferne
+man ſeiner bemichtiget ſeyn kan/ nicht leichtlich/ oder gerne / (Es
+wehre dan/ eine augenſcheinliche gefahr/ oder ſchaden/ ſo dahero/ wan
+er genommen würde/ entſpringen möchte/ vorhanden) ſtehen läſſet.
+Warumb ſolte dan der jehnige/ welcher einen Reuter albereit zum
+Vortheil hat/ und einen Rochen/ gewinnen kan/ ſolches/ zumahl/ die=
+weyl Er / keine öffentliche gefahr/ deßwegen vermercket/ unterlaſ=
+ſen? Und ob man wol die Königin/ wegen erlangung zweyer/ oder
+auch mehrerer Haupt-Steine/ nicht leichtlich/ in gefahr ſetzet: ſo hat
+doch der Weiſſe / nach ſeines Spieles itziger anordnung / vielmehr
+Hofnung/ daſſelbe durch dieſen Zug/ zu gewinnen/ alß/ ſo fern Ers
+nuhr verſtehet/ zu verlieren.
+
+Sol demnach der Weiſſe/ (wan das Spiel / auf dieſe Art des
+*Damiani*, angefangen/ und biß dahin/ da Er / mit der Königin/ des
+
+<vocab>Schach-Spiel, Königin, Ab-Schach, Roche, Reuter, Haupt-Steine, Damiani</vocab>

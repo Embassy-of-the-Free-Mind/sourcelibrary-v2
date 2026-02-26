@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>404</page-num>
+<header>Das Vierte Buch / 5. cap:</header>
+
+8. " Bedecket aber der Schwartze / den König / nicht / mit dem
+" Schützen / auf 53. (n. 7.) besondern / ziehet denselben / auf zwey
+" und funfzig: so wird sein Spiel / in einer bösen ordnung ste-
+" hen: Dan der Weisse / ziehet / der K. Reuters-Soldaten / auf
+" drey und zwantzig: Der Schwartze / (umb / den Schach / wel-
+" cher ihm etwa / von der W. K. Schützen / auß vier und zwan-
+" zig / widerfahren möchte / zu verhindern) die Königin / auf
+" der W. K. Reuter / auf viertzig: Der Weisse / (umb densel-
+" ben zu vertheidigen / und frey zu machen / auch durch den-
+" selben / die S. Königin / in gefahr / zu bringen) der K.
+" Schützen / auf dreyzehen: Dan der Schwartze / dieselbe / (so
+" fern Er sie nicht / bey zeiten / hinwegrucket: und der Weisse /
+" mit der K. Reuter / dero Schützens Soldaten / nimt / und
+" Schach-beut) dergestalt verlieret: Ziehet Er sie aber / auß
+" der gefahr / so hat Er / gleichwol / ein gefährliches Spiel.
+
+Die Andere Art / wird vom *Damiano*, folgender gestalt be-
+9. " schrieben: Wan der Weisse / nicht des Königes-auf 20. (n. 2.)
+" besondern / der K. Soldaten / auf ein und zwantzig / ziehet:
+10. " * so rucket / der Schwartze / des K. Schützens-Soldaten /
+" auf fünf und dreyssig: Der Weisse / auf denselben / des K.
+" Soldaten / auf acht und zwantzig: Der Schwartze / nimt
+" ihn / mit demselben: Der Weisse / beut / mit der Königin /
+" auß drey und dreyssig / Schach: Der Schwartze / bedecket
+" den König / mit des K. Reuters-Soldaten / auf zwey und
+11. " viertzig / und ziehet ihn / auf dieselbe: * Der Weisse / nimt /
+" mit derselben / des S. K. Soldaten / beut abermahl Schach /
+" und nimt entwieder / die S. Königin: (so ferne der Schwartze /
+" den König / mit derselben / auf zwey und funfzig / bedecket)
+" oder des S. K. Rochen: oder dessen Schützens Soldaten:
+" Doch ist es besser / und nützlicher / daß der Weisse / nicht / des
+" S. K. Rochen / besondern die S. Königin / nehme: dan sonsten /
+" der Schwartze / gewinnen würde.
+
+Dieses nuhn / so bißdahero erwehnet worden / fliesset eigentlich /
+auß des *Damiani* unterrichtung. Man kan aber / nicht absehen / auß
+was ursachen / Er / zu dieser meynung bewogen worden / daß der
+Weisse / (welcher / vom Schwartze / der K. Reuter / zum Vortheil /
+erlanget) mit seiner Königin / nicht / des S. K. Rochen / besondern /
+die S. Königin / nehmen / und also / zur verwechslung / der beeden Kö-
+
+<meta>catchword: niginne/</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schützen, Rochen, Damiano, Damiani, Schachspiel, Damiano's Defense</vocab>

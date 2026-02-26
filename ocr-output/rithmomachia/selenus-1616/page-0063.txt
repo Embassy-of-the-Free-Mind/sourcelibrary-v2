@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>33</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>2.cap:</margin>mites, ad congressum mutuum atq; conflictum, ad eum modum, ut dum hi illos, in se, ex adversâ acie procedentes, invadere nituntur, ut vel sede suâ repulsos summovere vel perimere, muniantur, aut adhibitis circumpositis custodibus, aut area ceu arcis naturâ, ne incidant in insidias, aut pateant, illorum incursibus. **Das ist:**
+
+**Das Stein-Spiel/** hatte auf einer vierecketen Tabel/ viereckete plätze/ oder felderlein/ welche man Stäte nennete: in denselben stunden/ gegen ein ander über/ zween hauffen/ von unterschiedenen Steinen/ welche/ auf eine bequâme Art/ umb/ sich untereinander anzugreiffen/ und nachzustellen/ geordnet waren. Diese wurden/ **Hunde/** oder **Steinlein** genennet. Sie werden aber/ zwischen gewisse gesatzte Ziele/ oder gräntze/ umb/ ein treffen/ mit ein ander zu thun/ auf den plan/ dergestalt heraußgeführet/ daß diese/ wan sie Zehne/ welche auß des Gegners Hauffen/ sie anzugreiffen/ auß dem felde zu schlagen/ und zu erlegen/ sich herfür thun/ mit gleichen gedancken/ anfallen/ wol beschützet und in acht genommen werden: in dehm man ihnen/ entweder geleidsleuthe/ welche auf sie warten/ zugibt/ oder aber/ dieselben/ in festen plätzen/ gleichsam wie auf Schlössern/ auf daß Sie nicht/ in der Feinde hinderhalt gerahten/ oder von denselben können angezapfet und ereylet werden/ verwahret.
+
+Letzlich beschreibet dieses Spiel/ wie es auch bey den Alten/ gebreuchlich gewesen/ Alexander ab Alex: lib: 3. c. 21, Gen: dier: mit nachfolgenden worten:
+
+> Ludus Calculorum Veteribus, præcipuus fuisse traditur, qui & Latrones dicti. Hi enim, in duas divisi turmas erant, colore diversi, quorum alij Milites, alij Hostes. Horum Lusus erat, ut turmis instructis, velut qui congredi acie parant, hinc indè, sub Hostium imagine, procederent, ac præscripto fine, quoad quisq; progredi debeat. Ità cavere oportebat, ut, dùm hostem quisq; invadere nititur, alterius non pateat incursibus: qui etiam ex gemmâ fuêre, viris & mulieribus frequens. **Das ist:**
+
+Es ist bey den Alten/ wie die Historien melden/ das Schach- oder Stein-Spiel/ im Höhesten Preyß gewesen/ und seynd die Steine/ (Latrones) geworbene Soldaten/ genennet worden. Dan sie waren/ in zween Hauffen: alß nemlich/ in Soldaten/ und in Feinde abgetheilet/ auch mit farben unter-
+
+<sig>E ij</sig>
+<meta>catchword: schieden.</meta>
+
+<vocab>Schach-Spiel, Stein-Spiel, Ludus Calculorum, Latrones, Alexander ab Alexandro, Genialium Dierum, Hunde, Steinlein</vocab>

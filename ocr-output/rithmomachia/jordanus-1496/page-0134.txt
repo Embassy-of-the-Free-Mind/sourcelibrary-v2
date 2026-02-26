@@ -1,0 +1,80 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>E</sig>
+
+Perfecta pyramis ea est cuius laterū ad verticē erectio: citra vnitatē non deficit.
+Curta vero pyramis ea est cuius laterū erectio ad vnitatē vsq; nō ascendit: cui si sola
+monas deest ā est prima pyramis: curta dicit̄. Si vnitas et planus vnus: biscurta.
+Si duo tricurta nominatur. et hoc pacto deinceps.
+
+Cubus est nūerus solidus sex equis supficialibus / planisq; numeris contentus: equā
+de se longitudini et latitudini altitudinē prębens. et iidē numeri: tessere nūcupant̄
+que duodecim equa latera semp habent / solidos angulos octo / atq; supficies sex.
+
+Laterculus is solidus est: qui longitudini latitudinem equam habens: altitudinem
+possidet contractiorem.
+
+Aster: cuius cū longitudo latitudini sit equa: altitudinē habet maiorem.
+
+Luneus vero qui longitudinē / latitudinem / et altitudinē in se cōtinet inequales
+
+Circularis numerus est cū latus in se ducitur et tetragonus inde nascens in idē ter
+minatur. et rursum cū idem latus in tetragonū: nascitur cubus qui in idē reuoluit̄
+et is cubus sphera / sphericusq; cubus appellat̄. Et cum rursus quoties idem latus
+in cubum vel si in infinitū duxeris: qui inde nascitur numerus: in eiusdē lateris nu=
+merum terminat̄ / reuoluiturq;.
+
+Parallelepipedus solidus numerus est equidistātibus supficialibus / planisq; nūeris
+cōtentus neq; omnino quidē equalibus neq; omnino inequalibus.
+
+Medietas est duarū / pluriūue proportionū similis habitudo.
+
+Medietas arithmetica est medietas: cuius termini equas seruant drīas.
+
+Termini sunt numeri: medietatis proportiones constituentes.
+
+Differentia est quo numerus numerum superat ac vincit.
+
+Continua medietas arithmetica ea est que in tribus continue numeris continetur.
+
+Si vero in quattuor discōtinue cōtineat̄: diiūncta medietas arithmetica nūcupat̄.
+
+Medietas geometrica est medietas cuius termini equas seruat proportiones. Que
+si in tribus continue terminis cōtinetur: cōtinua. Sin vero in quattuor discōtinue:
+disiuncta nominatur.
+
+Medietas harmonica ea est in qua quēadmodum maximus terminus ad minimum
+ita differētia maiorum ad differentiā minorum sese habet.
+
+Quarta medietas est in qua quēadmodum maximus terminus ad minimū: ita diffe
+rentia minorum ad differentiam maiorum.
+
+Quinta medietas in qua quēadmodum medius ad minimū: ita minorum differentia
+ad differentiam maiorum.
+
+Sexta est in qua quēadmodum maximus ad medium: ita minorū differentia ad diffe
+rentiam maiorum.
+
+Septima vt quēadmodum maximus ad minimū: ita extremorum differētia ad diffe=
+rentiam minorum.
+
+Octaua quemadmodum maximus ad minimum: sic eorum differentia ad differentiā
+maiorum.
+
+Nona quēadmodum medius ad minimum: sic extremorū differentia ad differentiam
+minorum.
+
+Decima quēadmodum medius ad minimū: ita extremorū differentia ad differentiā
+maiorū. Et hę septem vltime pręsertim adiectę: quo Pythagorę denarius impleat̄
+in tribus terminis consistunt.
+
+->Nu me ri pro pri e ta tes.<-
+
+<margin>I</margin>
+Omnis numerus circum se proxime positorum atq; simul iunctorum comperitur
+
+<margin>2</margin>
+Omnis numerus duorū quozūcunq; extrinsecus iacentium et ab eo equaliter distan
+tium: iidem est medietas.
+
+<vocab>pyramis, cubus, laterculus, aster, luneus, circularis numerus, parallelepipedus, medietas arithmetica, medietas geometrica, medietas harmonica, Pythagore denarius, tessere</vocab>

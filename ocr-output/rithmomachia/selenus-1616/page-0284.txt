@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>250</page-num>
+<header>Das Ander Buch / 15. cap:</header>
+
+gendes / mit demselben / oder mit der Königin / seiner K. Reuters = 
+Soldaten / und gibt Schach = Mat.
+
+<margin>13.</margin> Bedecket ihn dan der Schwarze / mit dessen Rochen / und 
+nicht / mit den beeden Reutern / (n. 12.) auf 53: so nimt ihn der 
+Weiße / mit des K. Schützen / und beut nochmals Schach: der 
+Schwarze / nimt denselben / mit des K. Reuter: der Weiße / 
+beut / mit der Königin / auß acht und funfzig / Schach: der 
+Schwarze / bedecket den König / (welches dan / der beste zug ist / 
+den Er / in diesem nothfall kan gebrauchen) mit dessen Reuter / auf 
+neun und funfzig: der Weiße / nimt / mit des K. Rochen / des S. 
+K. Soldaten / ziehet denselben / auf des S. K. Reuter / und wird 
+dem Schwarzen / also / auf allerhand weyse / abgewinnen.
+
+<margin>14.</margin> Wan aber der Schwarze / weder den Reuter / auf 28. (n. 8.) 
+weder den Rochen auf 61. (n. 11.) besondern des K. Schützen / 
+(umb der W. K. Reuter / mit demselben: und des W. K. Ro= 
+chen / mit der Königin / zu nehmen) auf zwanzig / ziehet: so nimt / 
+der Weiße / des S. K. Reuter / mit des K. Soldaten: der 
+Schwarze / der W. K. Reuter / mit des K. Schützen: der Weiß= 
+se / beut / mit seines K. Schützen / auß vier und vierzig / Schach: der 
+Schwarze / bedecket den König / mit der K. Reuter / auf drey 
+und funfzig: der Weiße / (umb / des K. Rochen / zu beschützen) 
+ziehet / seine Königin / auf der S. K. Reuter / welcher von seines K. 
+Schützen / albereit handfest gemachet worden / auf ein und zwan= 
+tzig: Ist also das Spiel / so fern Er zu spielen weiß / gewiß / 
+in seiner Hand.
+
+<margin>15.</margin> Wan aber der Schwarze / nicht den Soldaten / auf 45. 
+(n. 1.) besondern des K. Schützen / auf acht und dreyßig / ru= 
+cket: so nimt / der Weiße / nicht des S. K. Soldaten / (Dan / 
+der Schwarze / mit der Königin / auß fünf und zwanzig / 
+Schach / geben / und ihm / ein böses Spiel / verursachen würde) 
+besondern / ziehet auf denselben / des K. Reuter / auf neunzehen: 
+der Schwarze / (denselben zu beschützen) der K. Soldaten / auf 
+fünf und vierzig: der Weiße / nimt / des S. K. Soldaten / mit 
+seines K. Schützens = Soldaten: der Schwarze / denselben / mit 
+der K. Soldaten: der Weiße / denselben / mit des K. Reuter: der 
+Schwarze / beut / mit der Königin / auß fünf und zwanzig / 
+Schach: der Weiße / bedecket / den König / mit seines Reuters = 
+Soldaten / auf achtzehen: (dan sonsten / der Schwarze / wan / 
+
+<meta>catchword: dersel=</meta>
+
+<vocab>Schach-Mat, König, Königin, Reuter, Rochen, Schütze, Soldat, Schachspiel</vocab>

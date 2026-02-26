@@ -1,0 +1,112 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<margin>
+<image-desc>
+A diagram of horizontal lines representing mathematical proportions.
+The first line is labeled 'a', the second 'b'.
+Below them are segments labeled with numbers:
+- A segment 'c' associated with 8.
+- Parallel segments with numbers 43 and 98.
+- Parallel segments with numbers 32 and 43.
+- A final segment with number 12.
+</image-desc>
+</margin>
+
+Inter a et b ꝑportio dupla que ꝙ vt demõstratum est in quadragesimaquinta huius constat ex sesqual=
+tera ⁊ sesquittertia substrahatꝑ ꝑ primã quinti ꝑportio superparticularis e ad d quecũqz minor sesqui=
+tertia a ꝑportione a ad b: sitqz residua e ad f qua abũdat a ad b super e ad d. ⁊ ꝙ maior est ꝑportione
+sesqualtera que est maxima superparticulariũ neqz est multiplex: ꝙ ꝑportio a ad b est minima multi=
+pliciũ que nõ resoluitur in multiplices. relinquitur ergo ꝑportione e ad f esse superpartiẽtem. et ꝙ e ad
+b ⁊ e ad f cõstituunt ꝑportionẽ a ad b constat ꝑportionẽ duplam in superparticulare ⁊ superpartiẽtem
+esse diuisam. Quarto sit inter a et b quelibet ꝑportio a dupla ad triplã cõstituta: sitqz inter c et d ꝑ=
+portio cõposita ex dupla ⁊ sesquitertia si ꝑportio a ad b est minor ꝑportione c ad d. ergo substracta
+ꝑportione sesquittertia a ꝑportione a ad b remanebit proportio minor dupla: sed maior sesqualtera.
+quare illa residua erit superpartiẽs: ⁊ sic ꝑportio a ad b esset cõposita ex superparticulari vt sesq̃tertia
+et superpartiente atqz in eas diuisibilis. ⁊ si a ad b sit equalis c ad d aut maior: ꝙ ꝑportio addita duple
+in ꝑportione a ad b: erit minor sesqualtera cũ dupla ⁊ sesqualtera ꝑ correlariũ vicesimetertie huius
+cõstituãt triplã. et sesqualtera addita sesqualtere minus cõstituat ꝙ dupla cũ sesquittertia ꝙ sesqual=
+tera et due sesquittertie plus sint ꝙ sesqualtera sesquittertia sesquioctaua. at ꝑ primã quinti hę co=
+gnoscũtur equari duple sesqualtere: ⁊ illi duple et sesquittertie. ergo substracta sesqualtera de ꝑpro=
+portiõe a ad b remanebit ꝑportio minor dupla: sed ⁊ maior sesqualtera. quare superpartiẽs. esset itaqz
+ꝑproportio a ad b in ꝑportione superparticulare sesqualterã et superpartiẽtem quomodo ꝑpropositũ est
+secabilis: quod est ꝑpropositum.
+
+<margin>
+<image-desc>
+A diagram with three pairs of lines:
+a ----- 15 ---- f ----- 8
+c ----- 5 ----- d ----- 4
+e ----- 3 ----- b ----- 2
+</image-desc>
+</margin>
+<margin>50</margin>
+¶ **Maximã superpartientẽ inuenire: que ex duabus superparticularibus ꝑducitur.**
+¶ Sit a ad b ꝑportio sesqualtera et c ad d ꝑportio sesquiquarta: sitqz e ad f ꝑportio ex his cõposita
+dico proportionẽ e ad f esse maximã superpartientem que ex duabus superparticularibus ꝑducitur. nã ꝙ
+dupla ex quadragesimaquinta huius producitꝑ ex sesqualtera ⁊ sesquiquarta que sunt maxime superparticu=
+lares: ergo ꝑportio e ad f est minor ꝑportione dupla. sed ⁊ eadẽ maior est sesqualtera: ꝙ ex ea cum al=
+tera cõposita sit. ergo e ad f est ꝑportio superpartiens: sed ⁊ quelibet minor superparticularis cũ propor=
+tione a ad b sesqualtera: aut c ad d sesquiquarta ꝑ quintã quinti minorẽ ꝑportionẽ cõstituet ꝙ e ad f.
+est igitur e ad f maxima superpartiẽs ex duabus superparticularibus ꝑducta: quod est ꝑpropositum.
+
+<margin>
+<image-desc>
+A diagram with horizontal lines:
+a ------------ e --- 29
+- ------------ c --- 15
+b ----- 8 ----- d --- 14
+- ----- 7 -----
+</image-desc>
+</margin>
+<margin>51</margin>
+¶ **Superpartientẽ inuenire: que in duas superparticulares diuidi non possit. vnde patet qualibet superpartiente aliam esse maiorem.**
+¶ Sit b ad a maxima ꝑproportio superpartiens ꝑ ꝑcedentẽ cognita: que ex duabus superparticularibus
+ꝑducta sit ⁊ differẽtia b ad a sit c: manifestũ est a esse maiorẽ c suis quidẽ parti bus. capio itẽ numerũ
+vno minorẽ b: ⁊ tunc ꝑproportio a ad c: ꝙ a maiore parte denoiatur maior est ꝑproportio b ad a. addo
+ergo v cũ b et fiat e: manifestũ est e ad b esse superpartiẽtem cum cõtineat b ⁊ eius ꝑtes. et ꝑ secundã
+parte decimequite secundi erit maior ꝑportio e ad b ꝙ b ad a. et ꝙ ꝑportio b ad a diuiditꝑ in marias
+superparticulares cõstituẽtes superpartiẽtem vt ꝑprecedenti cognoscitꝑ et superpartiens e ad b sit maior
+superpartiẽte b ad a. nõ diuideꝑ ergo superpartiens e ad b in duas minores ꝙ b ad a: neqz in easdem in
+quas diuiditꝑ b ad a. relinquitꝑ ergo in nullas duas superparticulares superpartiẽtẽ e ad b posse diuidi
+quod est ꝑpropositũ. Et correlariũ ex modo demõstrationis cognoscitꝑ.
+
+<margin>52</margin>
+¶ **Sola multiplice qualibet non potest sumi minor: et sola superparticulari qualibet non potest sumi maior.**
+¶ Dico primo qualibet multiplice posse sumi maiorẽ. nã ꝑ tricesimãseptimã huius oẽs numeri ab
+vnitate ꝑparati cõstituunt multiplices et tãto maiores quãto ab vnitate remotiores ꝑ series nũeroꝝ
+in imensum euadit. Igitur qualibet multiplice potest sumi maior. Scđo dico ꝙ nõ qualibet multiplice
+põt sumi minor. nã ꝑ eãdem quãto numerus ꝑpinquior vnitate fuerit: tanto ille ad vnitatẽ minorẽ
+cõstituit multiplicẽ. at descẽdendo nõ abitur in infinitũ. non igit qualibet multiplice est dare minorẽ
+qđ in aliis minime quẽadmodũ monstrabitꝑ accidet. Tertio dico qualibet superparticulari esse minorẽ:
+nã ꝑ primã huius que a minori numero denotatur maior est: et quãto a maiori minor. et ꝙ se=
+ries numeroꝝ in infinitũ succrescit: nõ dabitur pars adeo parua qua minor dari non possit. qualibet
+igitur superparticulari potest dari minor. Quarto dico nõ qualibet superparticulari esse maiorẽ. nã ꝑ
+que a numero ꝑpinquiore vnitati denominatꝑ maior est: ⁊ ꝙ nõ contigit numerũ in infinitũ decrescẽ
+dabitꝑ ergo tandẽ superparticulariũ maxima. at vtriusqz oppositũ vt iam ostẽsum est in multiplicibus
+accidebat. Quinto dico qualibet superpartiente esse maiorẽ. hoc ex correlario ꝑcedentis notũ est. Sexto
+dico omni superpartiente esse minorẽ. nam quacuqz data vtverbi causa supbipartiẽte tertias sumo aliã
+a totidẽ partibus: denominatis a maiore numero que nõ numerẽt: vt supbipartiẽtẽ quitas ãquidẽ
+ꝙ a totidẽ minoribus ptibus denominat: neqz pluribus erit minor superpartiente data. qua supbipar=
+tiente quitas supbipartiens septimas minor est hac supbipartiens nonas: sicqz cõsequent fm cre=
+mentum numeroꝝ infinitũ: quod est ꝑpositum. Potest ⁊ id vltimũ ostendi ex tertia parte presentis:
+adiuuante quadragesima nona huius.
+
+<margin>
+<image-desc>
+A diagram with three lines:
+c ----- 5 -----
+b ----- 5 -----
+a ----- 7 -----
+</image-desc>
+</margin>
+<margin>53</margin>
+¶ **Quelibet due superpartientes coniũcte: proportionẽ quadrupla minorẽ cõstituẽt.**
+¶ Sit inter a et b ꝑproportio superpartiẽs: itidẽ inter b ⁊ c. dico proportionẽ a ad b et b ad c simul:
+minorẽ quadrupla cõstituere proportionem. nam a est minus duplo b: et b similiter minus duplo c.
+ergo a ad c ꝑ quintam quinti est minor proportione quadrupla: que ꝑ octauam huius ex duabus
+duplis constat. est ergo clarum propositum.
+
+---
+
+<vocab>proportio dupla, sesqualtera, sesquitertia, superpartiens, superparticularis, multiplex, quadrupla, proportio, numerus</vocab>

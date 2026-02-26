@@ -1,0 +1,46 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>VI</header>
+
+¶ Quadratus cubicus est quadratus q pariter est et cubus. Posita enī unitate a b c d e f g h i l m n o p: vel quotquot voles numeris cōtinue ab unitate pportionalibus hec statim ex decima 7 undecima huius cognoscit̃. qũ enī unitas potētia et quadrat' est 7 cubus. ideo per decimā huius c erit quadrat' et p undecimā d erit cubus. 7 per eandē decimā e iterum erit quadratus et iterū per decimā: qz e est quadratus g erit quadrat'. Sed et qz d est cubus p undecimā g etiā erit cubus q venit vt liqdo cōstat septimus ab unitate: quare septimus ab unitate quadratus ē cubicus. et ita cōtinue procede similēqz offendes demonstrandi modum vbiq.
+
+<image-desc>Diagram for proposition 29 showing three columns of numbers: Column 1 (16, 8, 4, 2, 1) labelled with letters e, i, h, g, f; Column 2 (512, 256, 128, 64, 32); Column 3 (8192, 4096, 2048, 1024) labelled with p, o, n, m. Below this is another sequence: (256, 64, 16, 4, 1) and (4096, 512, 64, 8, 1) with labels e, d, c, b and o, n, m, b.</image-desc>
+
+<margin>29</margin>
+¶ Si numerorū ab unitate cōtinue pportionaliū secundus ab unitate fuerit quadrat' omnes erunt quadrati. q si idem fuerit cubus: erunt et omnes cubi.
+¶ Prima pars patet. nā per pmissā etiā terti' erit quadratus. 7 qa secundus est quadratus p decimā huius tertius ab illo q est quartus etiā est quadratus. et per pmissam qa tertius est quadratus vno intermisso quintus erit quadratus. et ita deinceps quare numeror ab unitate cōtinue pportionaliū si secundus est quadratus oēs erunt quadrati. Scđa pars mōstratur. nā si secundus fuerit cubus: cum quoties unitas in secūdo toties secūdus in tertio. scđus in se q est cubus producet tertiū: quare p decī mamsextā huius tertius erit cubus. et per pmissam quartus etiā erit cubus. et per undecimā huius a quolibet illorū assumptus quartus erit cubus. at illis cōtinue sumptis oēs sumentur. constat itaq si secundus fuerit cubus omnes cubos esse.
+
+<margin>30</margin>
+¶ Si proximorū altera parte longiorū unus in aliū ducať: pveniet altera pte longior.
+¶ Sint a et b duo hunc in modū altera parte lōgiores et medius inter eos quadratus sit c cui' latus sit d qđ per vicesimāquartā huius erit differētia inter a et c 7 inter c et b. sitqz a minoris altera parte longioris latus alterū e. eritqz d maius e unitate. 7 qz d in se facit c et d in e facit a erit pportio c ad a tanqđ d ad e. Sit itē vt d in f fiat b erit f unitate maior d. addat itaq e ad a et sit cōpositus g: qz ex d in e fit a et f in e fiet g: vt facile p decimā primi ostēdar cu numerus f numerū d solā unitate superet et qz f in e facit g et d in e facit a: erit per octauā secundā ea pportio g ad a q est f ad d. sed 7 p septimā eiusdē etiā b ad c sicut f ad d: quare 7 b ad c sicut g ad a. quare pmutatī b ad g sicut c ad a: ergo p vice: simāquintā secundi qđ fit ex b in a datis altera parte lōgioribus equale est ei q fit ex g in c at q fit ex g in c est altera pte longior p diffinitionē: cũ g et c sola unitate differāt. qz g sit cōpositus ex a et e 7 d rĩa a ab ipso quadrato c fit d: a qua qdem dĩa d numerus e additus a in cōpositione sola distat unitate. cōstat igitur numerū qui pducetur ex b in a esse altera parte longiorē. 7 propositum.
+
+<image-desc>Numerical labels for proposition 30: 72 (h), 12 (b), 8 (g), 4 (f), 9 (c), 3 (e), 6 (a), 2 (e).</image-desc>
+
+<margin>31</margin>
+¶ Si primi quicq pter altera lōgiorēs cũ duplo quadrati inter eos cōstituti pponant̃ pveniet quadrat' cui' radix erit ex minore mioris 7 maiore maioris laterib' cōstituta.
+¶ Sint enī a et b duo quicūqz proximi altera pte longiores et eorū medius quadratus c. sintqz d e latera altera pte lōgioris a: 7 f latera altius altera pte longioris b. dico q si a b cōponātur cũ duplo c totū aggregatū vt g esse quadratū: cuius radix est cōposita ex d et f. nā per vicesimāquartā huius e est dĩa a ad c et b ad c: ergo p secundā primi cōpositum ex a 7 b est duplū ad c. at duplū c cum a b duplo eiusdē erunt eius quadruplū quodqdem cōpositum est g. quonā uero igit in c pducit g. at quattuo r nūerus est quadratus cum producat ex duobus in se ductis 7 sic cōpositus est quadratus. ergo p decimāquar tam p̄sentis et g est quadratus. et cũ g quadratus quadrupl' sit ad c quadratū: ergo per tertiā huius pportio latis g ad latus c erit dupla. at cū e sit radix c et d f circūpositi equidistent ipsi e. ergo p scđaz primi d et f simul sunt duplū e lateris c: quare radix quadrati g est cōposita ex d et f: qđ est ppositū.
+
+<image-desc>Numbers for proposition 31 arranged as a tree: 100 (g) at top, then 20, 25 (c), 30 (b), and at the base 4 (a), 5 (d), 6 (f).</image-desc>
+
+<margin>32</margin>
+¶ Si duo quilibet proximi quadrati cũ duplo medij inter eos altera pte longioris cō iungat̃: cōpositus erit quadratus latusqz ipsius ex laterib' ipsorū cōpositiū.
+¶ Sint a b duo quilibet proximi quadrati et c medius inter eos altera parte lōgior et d e eorū latera dico quadratos a b cū duplo c efficere quadratū vt f cui' latus erit cōpositum ex d 7 e. Nam p vicesimā quartā huius ex d in e fiet c altera parte lōgior inter a et b: quare per nonā primi erunt a et c tanq qđ fit ex d in cōpositū ex d e: quodqdem cōpositum sit g et per eandē c ũ b tanq quod fit ex e in g positū a de io est in g. et p eandē nonā qđ ex d et e in g tanq quod fit ex g in se. erit igit quadratū numeri g tm qtum a 7 c 7 c 7 b: ergo qtum a et b 7 c bis. fuit enī c bis scz semel cū a et semel cum b sumptū: sed illud quod fiebat ex a et b 7 c bis positū est esse f. est igitur f quadratus cuius latus est g. et qa g est cōposit' vt positum est ex d et e lateribus quadratorū a et b: constat totum propositum.
+
+<image-desc>Diagram for proposition 32: 25 (f) at top, middle row 4 (a), 6 (c), 9 (b), bottom row 2 (d), 5 (g), 3 (e).</image-desc>
+
+<margin>33</margin>
+¶ Si ad duos usq nūeros unitate distātes: oēs numeri ab unitate coaceruēt̃: q ex coaceruatione proueniet erit nūerus quadratus ipsius coaceruatoꝝ maxim'.
+¶ Sint nūeri ab unitate dispositi p duos ordies vsq ad e 7 d duos qđē nūeros unitate distātes pmus hoc mō unitas a b c d e: 2 scđus hoc mō unitas a b c d: 7 sit quadrat' e numerus f. dico quadratū f esse tanq oēs numeri illorū duorū ordinū coaceruati Signo enī oēs quadratos iseriores f q sint dispositi p ordinē f g h i l unitas. eritqz g quadrat' d: et h quadrat' c: 7 i quadrat' b: et l quadrat' a: 7 postea unitas q est pme unitatis quadrat'. Intelligo simil'r m n o p medios altera pte lōgiores. et qa per vice simāquartā huius dĩa f ad m est e: 7 dĩa m ad g est d. ergo p octauā conceptionē dĩa extremoꝝ f g ē e d. et sic argumēto dĩa g ad h est d c. et dĩa h ad l est c b: 7 dĩa l ad l est b a: et dĩa l ad unitatē est a et unitas. addita ergo unitate ad a et unitatē: fiet l. et additis b a dĩa fcz l ad l: k. ad l: k ad a 7 duplā unitatē. i. a d l: fiet l z. addita insup c b dĩa l z ad h ad b a 7 a et duplā unitatē. i. l z fiet h: 7 similr addita d c dĩa h ad g ad c b: b a: a et duas unitates: hoc est ad h: fiet g. et cōt addita e d dĩa g ad f ad d c: c b: b a: a et duas unitates fiet f. per nonam igitur conceptionē constat ppositum demonstratum.
+
+| | | | |
+|---|---|---|---|
+| 6 | | 36 f | 30 m |
+| 5 | 5 | 25 g | 20 n |
+| 4 | 4 | 16 h | 12 o |
+| 3 | 3 | 9 i | 6 p |
+| 2 | 2 | 4 l | 2 q |
+| 1 | 1 | 1 | 1 |
+
+<sig>c 2</sig>
+
+<vocab>quadratus cubicus, unitas, proportio, latus, differentia, coaceruatio, numerus</vocab>

@@ -1,0 +1,81 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>A series of geometric diagrams on the left margin. The first shows two parallel lines divided into segments labeled a-b and c-d-e-f. The second shows lines labeled a-b-c and d-e-f-g-h. The third shows lines labeled a-b, c-d, e-f, with isolated points h, g, and l. The fourth is a numerical proportionality diagram with values 64, 512, 64, 4, 16, 256, 2, 4, 8, and 16.</image-desc>
+
+facient e. sunt ergo d 7 e solidi et latera d sunt p f g 7 latera e sunt q k l. sed illa probata sunt proportio=
+nalia: ergo d et e sunt etiã similes: quod est totum propositũ monstratũ.
+
+<margin>52</margin>
+¶ Inter quoslibet duos solidos similes: duo numeri in cõtinua proportionalitate medij intercidunt.
+¶ Nam p penultima ppositionẽ erit pportio vnius illoz solidorũ ad reliquũ tanq̃ lateris ipsius ad
+latus alterius pportio triplicata. Sumam ergo quattuoz nũeros in pportione lateris ad latus. 7 qz
+p̃mi ad quartũ erit pportio lateris ad latus triplicata: illa erit eadẽ pportioni solidi ad solidũ. ergo
+per duodecimã quarti quot media sunt inter primũ 7 vltimum tot erunt inter solidum et solidum. at
+media sunt duo: ergo inter solidum 7 solidũ itidẽ erunt duo: quod est propositũ
+
+<margin>53</margin>
+¶ Si fuerint quattuoz numeri cõtinue proportiõales: duo extremi erunt solidi siles.
+¶ Hec est cõuersa precedẽtis. Sint a b c d quattuoz numeri cõtinue pportionales: dico a et d esse soli
+dos similes. Sumo eni e f g h quattuoz illius pportiõis mĩmos q̃ si cũ assignatis tidẽ fuerint cum p
+scõam hui⁹ e 7 h sint cubi sitr a et d erüt cubi. quare solidi similes sicq̃ firmũ stabit ppositũ. Pozro si
+itidem nõ sint cũ e 7 h per quintã quarti sint contra se primi: quare per vicesimã tertiã in sua pportiõe
+mimi et p decimãnonã eiusdẽ equaliter numerabũt a et d. sed e 7 h cum p secundã huius sint cubi ip̃i
+sunt solidi similes. ergo iterũ per quinquagesimãprimã huius a et d sunt solidi siles: qd̃ est propositũ.
+
+<margin>54</margin>
+¶ Omniũ duozũ solidorũ similiũ: est pportio vnius ad alterũ tanq̃ cubi ad cubum.
+¶ Sint a et d solidi siles: dico pportionẽ a ad d esse pportionẽ tanq̃ cubi ad cubũ. qz p quinquage
+simãsecundã huius inter a 7 d sunt duo medij pportionales. sint ergo illi b c: capio vt prius e f g h in
+illa pportione mĩmos quoz p scõam hui⁹ cõstat e 7 h esse cubos q̃ si itidẽ sint cũ pdictis ̃stat ppositũ.
+si nõ itidẽ: qz p equã pportiõalitatẽ q̃ pportio e ad h cubi ad cubũ eadẽ ẽ a ad d: qd̃ iterũ ẽ ppositũ
+
+<margin>55</margin>
+¶ Quod si vnius ad alterum fuerit proportio tanq̃ cubi ad cubum: quoslibet duos nu-
+meros solidos similes esse necesse est.
+¶ Hec est cõuersa pcedẽtis q̃ ideo vera esse cõuincit: qz p cozrelariũ quarte hui⁹ int quoslibet cubos
+duo incipiũtur medij pportionales. igit̃ p duodecimã quarti et int illos solidos itidẽ duo intlacebũt
+medij pportiõales. ergo p 53 hui⁹ duo extremi q̃ erunt solidi assignati erũt solidi siles: qṽ est ppositũ
+
+<margin>56</margin>
+¶ Si fuerint duo solidi vni solido similes: ipsi quoq̃ inter se erunt similes.
+¶ Sint a b duo solidi similes solido c: dico a et b esse solidos inter se similes. Mã qz a c sunt solidi int̃
+se similes: ergo per quinquagesimãsecundã huius inter a 7 c sunt duo medij pportionales q̃ sint d e. et
+similiter per eandẽ inter b et c q̃ sint f g. igitur p decimãseptimã quarti duo similiat̃ erunt inter a 7 b.
+quare a 7 b per quinquagesimãtertiam huius inter se sunt solidi similes: qd̃ erat demõstrandũ.
+
+<margin>57</margin>
+¶ Si fuerint quattuoz numeri proporzionales et duorum extremorum quilibet in
+quadratum alterius ducatur: prouenient cubi aliorum.
+¶ Sint a b c d quattuoz numeri cõtinue pportionales: sitq̃ e quadratũ a et f quadratũ d ducaturq̃ d
+in e 7 pueniat g et a in f 7 pueniat h. dico igitur g et h esse cubos b 7 c. duco eni b in se 7 fiat k: qz e 7 k
+sunt quadrati quoz latera sunt a b erit per tertiã hui⁹ pportio e ad k tanq̃ pportio a ad b duplicata:
+quare tanq̃ b ad d: ergo per vicesimãquintam secundi idem est qui fit ex b in k et e in d. sed qui fit ex b
+in k est cubus b. qui autẽ ex e in d est g: igitur g est cubus b. similiter si ducatur c in se 7 fiat l erit per
+eandẽ tertiã huius pportio l ad f tanq̃ a ad b duplicata. quare tanq̃ a ad c: quare per vicesimãquintã
+secundi vt prius idem erit qui fit ex c in l et a in f: qui autẽ fit ex c in l est cubus c: 7 qui fit ex a in f est h
+igitur h est cubus c: quod est propositum.
+
+<margin>58</margin>
+¶ Datis lateribus siue laterũ pportionibus: solidoz summã hitudinẽq̃ inuestigare.
+¶ Hec in solidis cõtinuis eq̃ et discretis eandẽ hʒ veritatis certitudinẽ. si primo dẽtur latera duc quõ
+cunq̃ illa in se inuicẽ tria scz vni⁹ et tria alterius et puenient statim p quadragesimãoctauã huius so
+lidozũ sũme. si autẽ laterũ pportiones dẽtur cõpone per tertiã quinti laterũ pportiones: siue eas per
+sextã quinti continua et pportio ex laterũ pportionibus cõposita per quinquagesimã huius aut q̃ ex
+cõtinualis cõponetur: erit pportio solidi ad solidũ sicq̃ nota erit solidorũ habitudo atq̃ totum quod
+propositio proponit notum. ->Sexti elementox arithmetices Jordani finis.<-
+
+---
+
+Par numerus est qui in duo equalia diuidi potest. Impar est in quo aliqua
+puma pars est absq̃ pari: additq̃ supra parem vnitate. Parium numerorũ
+alius pariter par: alius pariter ipar: et alius impariter par. Pariter par est
+quẽ nullus impar numerat. Pariter ipar est quẽ quicunq̃ pares numerãt: eum scdm
+iparẽ numerãt. Imparit̃ par est quẽ quidã par fm parẽ 7 quidã fm imparẽ numerãt
+Medius inter duos numerus dicitur: qui inter eos positus equalit̃ ab vtroq̃ distat.
+Medij dicũtur duo numeri qui nõ habẽtes aliquẽ interpositũ: equales habent ad ex
+tremos differẽtias. Perfectus numerus appellatur qui ex omnibus suis partibus cõ
+iunctis perficitur. Abundans dicitur: ad quem omnes sue partes cõparate: maius ha
+bere reperiũtur. Diminut⁹ vero cuius partes cõiuncte oẽs minus ipso constituũt.
+
+<vocab>proportio, solidus, cubus, Jordanus de Nemore, Arithmetica, par numerus, impar numerus, pariter par, perfectus numerus</vocab>

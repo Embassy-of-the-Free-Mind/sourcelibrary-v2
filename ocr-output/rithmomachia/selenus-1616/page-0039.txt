@@ -1,0 +1,50 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>9</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>Catchword: ten wer-</meta>
+<sig>B ij</sig>
+
+<margin>1.cap.</margin>
+circa A.C. 1150.) eines Mannes / welcher auß den Zahlen der Felder / des Schach-Bretes / anlaß genomen / einen König gewaltig zu über- / vortheilen / und sich bald zu bereichen: beyleuffig gedencken wollen: Seine worte / so an einem Orte / da Er / *de multiplicatâ analogiâ, quæ citò crescit,* handlet: zu befinden / lauten hievon / also:
+
+> "Quemadmodùm dicitur, de quodam viro, qui petijt, à quo- "
+> "dam Rege, ut sibi exhiberet, pro mercede suâ, frumenti grana, in "
+> "numero multiplicato, per numerum domorum Ludi Scacchorum. "
+> "Et recusavit hoc Rex, postquam eò indè proveniebat, præmium ni- "
+> "mis magnum. "
+
+->Das ist:<-
+
+> "Zum Exempel / wie von einem gesaget wird / der / an einen "
+> "König / gesonnen habe / daß Er ihm / an statt seines verdienstes / "
+> "so viel getreides Körnlein / alß man / durch die Zahle der felder "
+> "des Schach-Spieles / vermehren könte / reichen uñ folgen liesse: "
+> "Dahero / (wan man / an stat des ersten Feldes / ein Körnlein: an stat "
+> "des andern / zwey: des dritten / viere: des vierden / achte: des fünf- "
+> "ten / sechzehen: des sechsten / zwey und dreyffig: des siebenden / vier "
+> "und sechzig: des achten / hundert und acht und zwanzig: und so wey- "
+> "ter / legete) folgende Summe / so vieler tausent-mahl tausent Körn- "
+> "lein / alß nemlich: "
+
+->1 8 4 4 6 7 4 4 0 7 3 7 0 9 5 5 1 6 1 5.<-
+
+> "erfolgen müste: welches ihm aber der König / weil Er dahero / "
+> "eine uberauß grosse belohnung erlangen würde / abgeschlagen "
+> "und verweigert. "
+
+Daß (4.) mit diesem Spiele / des gemeinen Bürgerlichen / und Hof-Lebens zustand / gantz artig / abgebildet werde. Dan / wolte man die freundschaft / so in demselben gemeinlich / nuhr umb eines nutzens willen / gepflogen wird / erwegen / so hat man dessen / an den Schach-Steinen / ein feines Bey-Spiel: wie solches <term>Petronius Arbiter</term>, pag: 70. in folgenden verschen / zu verstehen gibt:
+
+> "Nomen Amicitiæ, si quatenus expedit, hæret, "
+> "Calculus, in Tabulâ, nobile (al: mobile) ducit opus. "
+
+Das ist / wie es <term>Turnebus</term>, Advers; lib: 1. cap: 15. außleget:
+
+> "So fern wir die freundschaft / nuhr wegen des nutzens / "
+> "und nicht vielmehr der Tugend und Erbarkeit halber / hoch ach- "
+> "ten / und halten wollen / so wird / das Menschliche Leben / dem "
+> "Schach-Spiele / nicht uneben verglichen. Dan / in demsel- "
+> "ben / die Steine in zween Hauffen / dergestalt abgetheilet seynd / "
+> "daß etliche untereinander / für freunde / etliche für feinde / gehal- "
+
+<vocab>Schach-Spiel, Petronius Arbiter, Turnebus, multiplication, arithmetic progression, grains of wheat</vocab>

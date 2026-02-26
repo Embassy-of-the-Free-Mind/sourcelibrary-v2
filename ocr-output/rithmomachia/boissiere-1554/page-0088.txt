@@ -1,0 +1,22 @@
+<language>French</language>
+<page-type>diagram</page-type>
+<page-num>43</page-num>
+<header>DES PHILOSOPHES,</header>
+<sig>F iij</sig>
+<warning>Speckled background and heavy ink bleed-through; some faint marks in peripheral squares.</warning>
+
+<image-desc>
+A large checkerboard diagram consisting of a grid with 14 columns and 8 rows. The squares alternate between black and white in a standard checkerboard pattern. The diagram contains several capital letters and an ampersand arranged symmetrically, mostly within the central area of the board:
+
+- **Row 1:** 'Q' in the 5th column, 'R' in the 8th column, and 'K' in the 11th column.
+- **Row 2:** 'H' in the 8th column.
+- **Row 3:** 'E', 'Y', 'B', and 'X' in columns 7 through 10.
+- **Row 4:** A horizontal line of letters consisting of 'P', 'G', 'V', 'A', 'S', 'F', and 'L' in columns 5 through 11.
+- **Row 5:** 'D', 'T', and 'C' in columns 7 through 9.
+- **Row 6:** An ampersand '&' and 'I' in columns 7 and 8.
+- **Row 7:** 'O' in the 5th column, 'N' in the 8th column, and 'Z' and 'M' in the 10th and 11th columns.
+
+The text "DES PHILOSOPHES," and the page number "43" are printed in the right margin. The printer's signature "F iij" is located in the left margin, rotated 90 degrees counter-clockwise relative to the orientation of the board.
+</image-desc>
+
+<vocab>Jeu des philosophes, Rythmomachia, checkerboard, diagram, game board</vocab>

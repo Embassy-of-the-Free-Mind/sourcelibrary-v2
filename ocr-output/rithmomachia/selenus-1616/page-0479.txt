@@ -1,0 +1,41 @@
+<language>German</language>
+<page-type>preface</page-type>
+<page-num>445</page-num>
+<header>Vorrede.</header>
+<sig>Kkk ij</sig>
+<meta>catchword: Nachdem</meta>
+
+<image-desc>An ornate woodcut headpiece featuring two birds (resembling peacocks or pheasocks) facing outward, surrounded by elaborate leafy scrollwork and a central floral or crown-like motif.</image-desc>
+
+## Fr. Barozzus, dem Leser.
+
+Eshaben die Alten Weltweisen /
+umb die gemühter der Menschen /
+wan dieselben / im studiren / oder der
+Kopf-Arbeit / in etwas ermüdet wah-
+ren / zu belustigen / und zu ergätzen /
+viele und mannicherley lustige Spie-
+le / vor diesem / erfunden: Es seynd
+aber dieselben / wegen langheit der
+Zeit / durch Krieg: oder auch / auß mangel der jehni-
+gen / welche sich / wie dieselben / in ein wesen und stand
+hinwider zu bringen / bemühet hetten / fast alle / in ab-
+gang kommen.
+
+Dannenhero wir / zu unsern Zeiten / von derglei-
+chen Spielen / ausser diesem einzigen / welches der sehr
+weise Man Pythagoras, erfunden / und in seiner
+Mutter-Sprache / <term>Rythmomachian</term>, (das ist / einen
+Kampf und Zusamen-stimmen der Zahlen) genen-
+net hat / fast keine wissenschafft tragen.
+
+Es wird aber dieses Spiel / ins gemein / von al-
+len verstendigen / für ein sinreich, nutzbar, und an-
+muhtig, jah in warheit / eines so fürnehmen berümb-
+ten Erfinders / würdiges Spiel / erachtet / und gehal-
+ten: in erwegung / es / auf die Zahle / und das Zusamen-
+stimmen / der <term>Singe-Kunst</term> / (welches / auß densel-
+ben / seinen ursprung hat) gegründet und gerich-
+tet ist.
+
+<vocab>Weltweisen, Rythmomachian, Zusamen-stimmen, Singe-Kunst, Barozzus, Pythagoras</vocab>

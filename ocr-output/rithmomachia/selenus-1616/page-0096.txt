@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>66</page-num>
+<header>Das erste Buch / 7. Cap:</header>
+
+der Weissen Königin / im Schwartzen : der Schwartzen / im Weiß-
+sen felde: Wird demnach mit ihnen / die Schlacht = Ordnung / auf
+derselben Linie / beschlossen: Die ursache / ist kurtz zuvor / bey dem
+worte Stat-halter / angedeutet = Andere sehen / auf den gebrauch /
+der Barbarischen Völcker / welche die Elephanten / an die seiten ih-
+res Krieges-Volckes / gestellet: Etliche meynen / es werde hiemit
+zu verstehen gegeben / daß es / ein nutzbar werck sey / an den Grän-
+zen / Festungen zu haben / auf daß zur zeit des unglükes / und unver-
+sehenen überfals des Feindes / die unterthanen / wan sie alles ver-
+suchet / und sich nicht mehr enthalten können / dahin fliegen mögen.
+
+> >> *Barbari quidam,* (schreibet Actius in Indic : lit : A.) *locant Arces,*
+> >> *ubi nos, Vexilliferos,* (die Schützen) *& in locum earum Aves,*
+> >> *arcium gressibus utentes, quae apud eos Racchi vocantur: & in-*
+> >> *dè fortasse secundum aliquos, Rocchi vulgò, apud nos, scil.*
+> >> *Italos.*
+
+Ihr gang / ist über die breyte / und nicht über die winckel
+der felder / für sich / auf beede seiten / und zu rücke: Sie werden
+nuhn / in ein / oder in mehr felder / von Weisser oder Schwartzer
+farbe / wie es / dem Schach-Zieher / seinem Spiele zum besten / ge-
+legen fället / und ihnen der weg / von ihren mitgesellen / geöfnet ist /
+gezogen. Wan Sie auch ihre feinde / auf denen Linien / darauf ih-
+nen / zu gehen zugelassen / antreffen / alsß können Sie dieselben ab-
+schaffen / und hinweg-raumen. Dan Sie / auß ihrem felde / in
+welches Sie erstmaln gesetzet / auf den gantzen Linien / welche Sie
+für sich / und an der seite haben / biß an die leiste / der Schach-Ta-
+bel / gezogen werden können. Stehen Sie aber / mitten auf
+dem Brete / so haben Sie gleichsam Vier Strassen / darauf Sie
+können hereintreten / zwo auf den seiten / eine für- und dan eine
+hintersich. Daß Sie aber / den geraden und breiten weg gehen /
+damit wird angedeutet / daß die Hauptleuthe / und Befehligs-Ha-
+bere / auf den Festungen / aufrichtig und getrew seyn sollen.
+
+Sie werden ferner / wegen dieses freyen ganges / nechst der
+Königin / für die beste Steine / ja wie eine halbe Königin / weyl
+Sie die helfte ihrer gänge haben / gehalten. Dan Einer ihres
+Mittels / einzig und alleine / (wie der folgende Abriß / zu ver-
+stehen gibt) mit seinem Könige / (welches sonsten ausser der Köni-
+gin / kein Stein / ohn andere gehülfen / nebest dem Könige / vers-
+mag /) kan Schach-Mat geben.
+
+Weyl Sie nuhn die letzten Steine / auf der ersten Linie
+seynd / und dahero / nicht ehe / biß der hauffe getrennet / und offen
+
+<meta>catchword: stehet/</meta>
+
+<vocab>Schach, Königin, Elephanten, Festungen, Schützen, Rocchi, Schach-Mat, Actius, Schachtabel</vocab>

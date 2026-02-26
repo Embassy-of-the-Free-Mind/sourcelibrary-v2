@@ -1,0 +1,22 @@
+<language>English</language>
+<page-type>blank</page-type>
+<meta>Front cover of a bound volume with modern library stickers.</meta>
+
+<image-desc>A historical book cover featuring a marbled paper design. The pattern consists of dark brown and black "stones" or "shells" outlined with vibrant blue and tan veins. On the left side, a portion of the spine is visible, covered in a plain tan material. Three modern library labels are affixed to the surface.</image-desc>
+
+<insert>
+Princeton University Library
+32101 075891588
+</insert>
+
+<insert>
+RECAP
+</insert>
+
+<insert>
+Cook
+42843
+.14 65
+</insert>
+
+<vocab>marbled paper, library binding, call number, barcode</vocab>

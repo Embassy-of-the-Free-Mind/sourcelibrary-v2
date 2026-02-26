@@ -1,0 +1,32 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>IIII</header>
+
+ad q fiat p. eruntq; idētīcū a ad h l ad m et p ad q sesquioctaui & numeri tonōrum. et h comperitur habere nonam partē: illam augeo per octo et veniat k: eritq; h ad k per octauā secundi arithmetices sesquioctauus. Et si ḡ octauā partem haberet facerē f sesquioctauū ad g. At vero qm̄ ea caret: augeo oēs numeros tertio loco repertos per octo et exurgant in quarto loco a b c d e g h k l m n p q: qui per eandē septimā erunt in eisdem adinuicē habitudinibus vt et numeri tertij loci. adiecta igitur octaua eius parte ad g facio f. & octaua parte ad p facio o. dico ergo numeros quarto loco cōstitutos esse numeros pētadecachordi. Nā a ad b est diatessaron / et a ad d tonus: & c ad d tonus. ergo per sextā tertij b ad c semitoniū minus. et q̄ a h est diapason & a e diapente: ergo per vicesimā tertij e h est diatessarō et g h & f g monstrati sunt sesquioctaui atq; toni. ergo per sextā tertij e f est semitoniū minus. et eodē pacto ostendas k l et n o esse semitonia minora: & ceteri adinuicē sunt cogniti toni. igitur pentadecachordi diatonici numeri sunt reperti. Est eni numerus proslābānomeni ad numerū hypates hypatō tonus: & hypates hypaton ad parhypatē hypatō semitoniū minus. parhypates hypaton ad lichanō hypaton: et lichanī ad hypaten meson duo toni. hypates meson ad parhypaten meson semitoniū minus. parhypates meson ad lichanō meson: et lichanī ad mesen: & meses ad paramesen disiunctarum: tres toni. parameses ad triten semitoniū minus. trites ad paranetē / & paranetes ad neten: duo toni. Netes ad triten hyperboleon semitoniū minus. trites ad paraneten et paranetes ad neten duo toni. est igitur notum propositum.
+
+¶ Tres diatonice diatessarō consonātie species a proslambanomeno ad parhypatē meson cōcinunt. et quattuor diapente species a proslambanomeno ad triten diezeugmenon. septē vero diapason spēs inter proslambanomenon & paraneten hyperboleon.
+
+| | Species diatessarō | | | Species diapente | | | | Species diapason | | | | | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | pma | scda | tertia | pma | scda | tertia | qrta | pma | scda | tertia | qrta | quita | sexta | septia |
+| Proslamba. a | | | | | | | | | | | | | | |
+| Hypate hyp. b | To. | o | o | To. | o | o | o | To. | o | o | o | o | o | o |
+| Parhyp. hyp. c | Se. | Se. | o | Se. | o | o | o | Se. | Se. | o | o | o | o | o |
+| Licha. hyp. d | To. | ton⁹ | ton⁹ | To. | ton⁹ | o | o | To. | ton⁹ | tonus | o | o | o | o |
+| Hypate me. e | | ton⁹ | tonus | To. | ton⁹ | o | o | To. | ton⁹ | ton⁹ | ton⁹ | o | o | o |
+| Parhyp. me. f | | | Semit | | Se. | Se. | o | Se. | Se. | Se. | Se. | Se. | o | o |
+| Licha. me. g | | | | | ton⁹ | tonus | ton⁹ | To. | ton⁹ | ton⁹ | ton⁹ | ton⁹ | o | o |
+| Mese h | | | | | | tonus | ton⁹ | To. | ton⁹ | tonus | ton⁹ | tonus | tonus | o |
+| Para. die. k | | | | | | | tonus | ton⁹ | | ton⁹ | tonus | to⁹ | ton⁹ | ton⁹ | tonus |
+| Trite die. l | | | | | | | | Se. | | | Se. | Se. | Se. | Sc. | Se. |
+| Para. die. m | | | | | | | | | | | | ton⁹ | ton⁹ | ton⁹ | tonus |
+| Nete die. n | | | | | | | | | | | | | ton⁹ | ton⁹ | tonus |
+| Trite hyper. o | | | | | | | | | | | | | | Se. | Se. |
+| Para. hyp. p | | | | | | | | | | | | | | | tonus |
+| Nete hyp. q | | | | | | | | | | | | | | | |
+
+¶ Prima species diatessaron tono semitonio minore atq; tono constat. Secūda semitonio et duob⁹ tonis. Tertia duobus tonis et sequēte semitonio. ¶ Prima species diapente est que constat ex tono semitonio minore & duobus tonis. Secūda duobus tonis/semitonio/atq; tono. Tertia semitonio et tribus tonis. Quarta tribus tonis et semitonio. ¶ Prima species diapason est que constat ex tono/ semitonio minore/duobus tonis/semitonio minore/atq; duobus tonis. Secunda semitonio/duobus tonis. semitonio et tribus tonis. Tertia duob⁹ tonis/semitonio/trib⁹ tonis/atq⁹ semitonio. Quarta tono/semitonio/tribus tonis/semitonio/atq⁹ tono. Quinta semitonio/tribus tonis/semitonio/duobus tonis. Sexta tribus tonis/semitonio/duobus tonis/semitonio. Septima duobus tonis/semitonio/duobus tonis/semitonio/atq⁹ tono. ¶ Erit itaq; p diffinitionē prima diatessarō spēs a proslāba nomeno in lichanō hypaton. Nā proslābanomenos ad hyppaten hypatō tonus est: et hypate hypaton ad parhyparē hypaton semitoniū minus: & parhypate vero hypatō ad lichanō hypaton tonus. & itidē per diffinitionē secūda diatessaron species ab hypate hypaton in hypaten meson reperiet. & tertia a parhypate hypaton in parhypaten meson. ¶ Species vero diapente hoc pacto per diffinitiones sumentur. Prima a proslābanomeno in hypaten meson. Secunda a parhypate hypaten in lichanon meson. Tertia ab hypate meson in paraneten diezeugmenon. Et quarta a parhypate meson in triten diezeugmenon. ¶ Et septē species diapason cōsimiliter per diffinitiones querentur. Prima a proslābanomeno in mesen. Secūda a parhypate hypaton in paramesen diezeugmenō. Tertia a parhypate hypaton in triten diezeugmenon. Quarta a lichano hypaton in paranetē diezeugmenō. Quinta ab hypate meson in neten diezeugmenō. Sexta a parhypate meson in triten hyperboleō. Septima vero a lichano meson in paranete hyperboleō. s; haec cognitu facilia sunt: inspecta diligēter supiore figura.
+
+<sig>h 2</sig>
+
+<vocab>diatessaron, diapente, diapason, proslambanomenos, hypate hypaton, parhypate hypaton, lichanos hypaton, hypate meson, parhypate meson, lichanos meson, mese, paramese, trite diezeugmenon, paranete diezeugmenon, nete diezeugmenon, trite hyperboleon, paranete hyperboleon, nete hyperboleon, semitonium, tonus, pentadecachordum</vocab>

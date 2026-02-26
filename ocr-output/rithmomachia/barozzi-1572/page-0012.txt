@@ -1,0 +1,11 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+<warning>The page features a primary illustration with significant ink show-through (ghosting) from the reverse side or adjacent leaves, which makes fragments of unintended text visible through the paper.</warning>
+
+<image-desc>
+A large, full-page illustration of a rectangular grid in a checkerboard pattern. The grid consists of 8 columns and 12 rows of alternating white and black squares. The black squares are shaded with dense, parallel horizontal hatching. The entire grid is enclosed by a thin black border line, which is interrupted by a small gap at the center of the bottom edge (between the fourth and fifth columns). 
+
+Across the upper half of the grid, there is faint, non-mirrored ghost text visible through the paper. This show-through text appears to be Latin and includes discernible fragments such as "solis", "non", "bis", "ills", and "quid". These characters are not aligned with the grid squares and appear to be unintended.
+</image-desc>
+
+<vocab>checkerboard, grid, Latin, illustration, woodcut, show-through</vocab>

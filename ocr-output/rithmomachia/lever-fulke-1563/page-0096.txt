@@ -1,0 +1,23 @@
+<language>English</language>
+<page-type>text</page-type>
+<warning>The text on this page consists primarily of mirrored show-through from the reverse side of the leaf. The institutional stamp and the central woodcut device are on the visible side and are correctly oriented.</warning>
+
+<image-desc>At the top of the page is a circular institutional ink stamp featuring a crown in the center, with "G.R. III" (Georgius Rex III) above and "BR. MUS." (British Museum) below. In the center of the page is a square woodcut printer's device featuring a double-headed eagle in the upper section and a composite flower in the lower section (the left half is a Tudor rose and the right half is a pomegranate). The device is flanked by the large letters "I" and "R".</image-desc>
+
+<note>The following text is visible as mirrored show-through from the reverse side of the leaf and is transcribed here in its intended readable orientation.</note>
+
+# THE
+### SECOND PART OF
+# THE HISTORIE
+# OF THE WORLD.
+### By Sir WALTER RALEIGH Knight.
+
+---
+
+->Printed at London by Iohn Haviland<-
+->for Iames Boler and are<-
+->to be sold at his shop in<-
+->Paules Church-yard<-
+->1631<-
+
+<vocab>John Haviland, James Boler, Walter Raleigh, The Historie of the World, London, Paules Church-yard, printer's device, Iacobus Rex, British Museum, George III</vocab>

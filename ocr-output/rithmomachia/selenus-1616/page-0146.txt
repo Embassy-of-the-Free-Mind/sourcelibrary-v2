@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>116</page-num>
+<header>Das erſte Buch/ 12.cap:</header>
+
+->8.<-
+> ,, Wan der König/keinen Stein mehr brauchen/und ſelbſt
+> ,, auſſer anbietung eines Schaches / niendert hinziehen kan / iſt
+> ,, auch kein Schach/ſondern Tavola * genant.
+
+->9.<-
+> ,, Und auf dieſe beede weiſe / mag nichtes gewonnen
+> ,, werden/ ſondern das Spiel/ hebt ſich/ gleich auf.
+
+->*Vide Pythagoras.*<-
+->**Decretum Scachariſtarum**<-
+->**Aulicorum, 21. Junij, 77. &c.**<-
+
+---
+
+* Tavola,) Von dieſem worte / hat **Th. Actius**, in Indic: lit: T. nachfolgende gedancken/ aufgeſetzet:
+,, *Cùm neuter vincit, Ludus nuncupatur Tabula: 1. quia olim Tabulæ, dicebantur, Codicilli ex ligno, in quibus acta publica, ſcribebantur: Et cùm pax ad publicam ſpectet utilitatem, l. congruit, ff. de offic: præſid: conditiones ipſius, conſequens eſt, ut in Tabulis ſcriberentur; undè, cùm pax facta cenſeatur, quando neuter vincit, ad id oſtendendum, Ludum dicimus eſſe Tabulam: 2. vel ità contingit, quia ſicut in Bello, Campus ipſe, quodammodò Victor cenſetur, ſi pauci ſuperſunt, & neuter victor exiſtit; ſic pariter in Ludo, Tabula, quodammodò Victrix cenſenda eſt, cum neuter ludentium, victoriam conſequitur: Undè dicimus tabula eſt ludus, i.e. ludus eſt tabula: quemadmodùm, ſi quis affirmares; Petrum eſſe divitem, nihil aliud ſibi vellet, niſi quod divitiæ ſunt Petri: 3. ſivè dicatur, ex ſententiâ unius viri doctiſſimi, id fieri; quia Tabula ipſa, repræſentat & imitatur, campum, in quo fiunt, bellici conflictus; & quoniam, cum neuter victoriâ potitur, præbetur occaſio, ſpectandi potiùs, campum ipſum, quàm bellantium virtutem; Ideò dicimus ludum eſſe Tabulam; h. e. campum ipſum, ſpectabilem factum eſſe. Circà quod, non eſt prætereundum, Pactam apud Æthiopes ſignificare, quod Tabula apud nos.*
+,, *Ipſi enim hac voce utuntur, (ut Æthiops, non vulgaris, ſed valdè nobilis, mihi retulit) cum neuter Ludentium vincit.*
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach, Tavola, Th. Actius, Pythagoras, Decretum Scachariſtarum, Tabula, Æthiopes</vocab>

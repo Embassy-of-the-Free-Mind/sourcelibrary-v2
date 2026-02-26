@@ -1,0 +1,15 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>22</page-num>
+<warning>Significant ink bleed-through from the reverse side of the page making some areas difficult to read.</warning>
+<meta>catchword: La</meta>
+
+del color della parte auuersa in che forma che ti piace, pur che siano li pezzi che fanno le uittorie situati in caselle seguenti una dietro l'altra ; come nel seguente essempio si può uedere le uittorie ABCD, AEFG, AHEI, BIEK, IHKL.
+
+<image-desc>An 8x8 grid resembling a chessboard with alternating dark and light squares. Specific squares are marked with capital letters to illustrate "vittorie" (winning patterns). In the first row (starting from the left), the 2nd, 4th, 6th, and 8th squares contain the letters A, B, C, and D. In the second row, the 1st square contains H and the 3rd contains I. In the third row, the 2nd square contains E. In the fourth row, the 1st square contains K and the 3rd contains L. In the fifth row, the 2nd square contains F. In the seventh row, the 2nd square contains G.</image-desc>
+
+La quinta regola è, che quando si mena il penultimo pezzo, per far l'ultima uittoria, bisogna proclamarla, per auuertir l'inimico di remediar, se può, acciò poi quando non potrà piu rimediare, tu possi honoratamente menar l'ultimo pezzo, che finisse l'ultima uittoria.
+
+La sesta regola è, che proclamata l'vltima vittoria non si può più prender alcuno delli pezzi, che sono già disposti, & situati à farla.
+
+<vocab>uittorie, regole, caselle, inimico, pezzo</vocab>

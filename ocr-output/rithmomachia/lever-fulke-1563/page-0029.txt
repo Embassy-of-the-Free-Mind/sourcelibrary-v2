@@ -1,0 +1,23 @@
+<language>English</language>
+<page-type>text</page-type>
+<warning>Heavy bleed-through from the reverse side of the page shows mirrored text throughout the background.</warning>
+
+# The Philosophers game.
+
+*sesquialter. sesquiquart. sesqui.sext. sesqu. oct.*
+
+->3 5 7 9<-
+
+<image-desc>A rectangular grid composed of eight squares in a 2x4 arrangement. Each square contains an outlined equilateral triangle. 
+The top row of triangles contains the numbers: 6, 20, 42, 72. 
+The bottom row of triangles contains the numbers: 9, 25, 49, 81.</image-desc>
+
+*sesquiter. sesquiquint. sesquisept. sesquinona.*
+
+->4 6 8 10<-
+
+<image-desc>A second rectangular grid composed of eight squares in a 2x4 arrangement. Each square contains a solid black equilateral triangle with a number printed in its center. 
+The top row of triangles contains the numbers: 12, 30, 56, 90. 
+The bottom row of triangles contains the numbers: 16, 36, 64, 100.</image-desc>
+
+<vocab>The Philosophers game, Rythmomachia, sesquialter, sesquiquart, sesquisext, sesquioctave, sesquitertian, sesquiquintal, sesquiseptimal, sesquinonal, superparticular proportion, mathematics, arithmetic game</vocab>

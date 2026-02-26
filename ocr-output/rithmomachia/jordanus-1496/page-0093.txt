@@ -1,0 +1,53 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>I</page-num>
+
+<margin>15</margin> **Si** sesquialtero interuallo sesquitertium demptum fuerit interuallum: erit qđ relinquitur sesquioctauum.
+
+---
+
+| 9 | 8 | 6 | A c sesquialter. B c sesquitertius. |
+|---|---|---|---|
+| a | b | c | A ad b sesquioctauus. |
+
+---
+
+Sit c terminus ad quem ꝑ precedētē assignati sint a sesquialter: & b sesquiter.⁹ Ab a c sesquialtero subduco interuallum sesquitertium b c: relicto interuallo a ad b: quod dico esse sesquioctauū. qm̄ enim a eius quod est c est sesquialter: a semel habet c et eius dimidiam partem. quare per octauā huius duo a equi sunt tribus c. & quatuor a sex c. et octo a ad duodecim c. Rursus qm̄ b huius quod est c sesquiter. tertius est. b igit̄ habet in se c & eius tertiā partem. quo fit vt ꝑ eandē octauā tres b equi sint q̄ttuor c. et sex b octo c et nouē b ad duodecim c. at octo a quidē equi erāt ad duodecim c: igit̄ octo a equi sunt ad nouem b. ꝑ decimam igit̄ a ɔtinet b & eius octauā partem. estqꝫ a sesquioctauus ad b et, ꝓpositū.
+
+<margin>16</margin> **Interualli** quarta & duodecima: vnam eius tertiam restituunt.
+**Nam** quatuor interualli quarte: totū cōplet̄ interuallū. & duodecim eiusdē interualli duodecime: totū itidem cōplent interuallū. quare quattuor quarte & duodecim duodecime adinuicē equātur. due igitur quarte sex duodecimīs / & vna quarta tribus duodecimis sunt eque. quoz̄ enī tota equa sunt: & eoz̄ dimidia. At quattuoꝛ duodecime: duodecim duodecimarū sunt vna tertia: q̄re & vna totius tertia cui quidē duodecim ille duodecime cognoscūtur esse idem atqꝫ eque. vna igit̄ totius quarta q̄ tribus duodecimis equa esse mōstrata est et vna duodecima illi adiuncta: totius tertiam partem restituunt. Equātur enī vna tertia & vna duodecima quattuoꝛ duodecimis. qđ erat demōstrandum. Et ꝙuis hec demonstratio sequētis gratia particulariter facta sit: possis tn̄ modo ꝭimili monstrare oēm minorem cuiuscūqꝫ totius interualli partem: prime maiorem partem efficere: illi adiecta vna partium a nūero qui ex ductu denoiationū vtriusqꝫ partium enascitur: denoiata. vt totius tertia pars minor est: & scđ̄a prime maior: et si duo in tria duxeris sunt sex: iccirco vna tertia atqꝫ vna sexta vnam restituūt scđ̄am. Similiter quoqꝫ quarta & quinta partes sunt ꝓxime maioꝛ atqꝫ minoꝛ: et si ducis quiqꝫ in quattuoꝛ surgunt viginti: proinde vna quinta & vnauicesima: vnā quartam restituūt. et hoc pacto in sequētibus vt subiecta monstrat formula.
+
+| | |
+|---|---|
+| Tertia et sexta | vnam secundam efficiunt. |
+| Quinta et vicesima | vnam quartam. |
+| Sexta et tricesima | vnam quintam. |
+| Septima & quadragesimasecūda | vnam sextam. |
+| Octaua & quinquagesimasexta | vnam septimam. |
+| Nona & septuagesimasecūda | vnam octauam. |
+
+<margin>17</margin> **Due** proportiones sesquioctaue: minores sunt sesquitertio interuallo.
+
+---
+
+| 81 | 72 | 64 | A c duo sesquioctaui coniūcti. |
+|---|---|---|---|
+| a | b | c | A d sesquitertiū interuallū. |
+
+---
+
+**Cōtinua** ꝑ sextam quarti Arithmeticis duas sesquioctauas inter a & c: ita vt a sesquioctauus sit ad b / et b sesquioctauus ad c. et sit a ad d sesquitertium interuallū. dico a ad c minus eē interuallum: q̄ a ad d. qm̄ enī a sesquioctau⁹ est ad b: ergo ꝑ octauam huius octo a equi sunt ad nouem b. sed & qꝫ b etiam sesquioctauus est ad c: ꝑ eādem octo b tm̄ sunt atqꝫ nouem c. Et cum vnus b equus sit vni c & octaue eius: ergo nouem b equi sunt decem c & octaue vnius c. Atqui nouem b mōstrati sunt equi esse octo a: igitur octo a equi sunt decem c & octaue vnius. at decem c & octaua vnius ɔtinet octo semel / eius quartam & eius vnā sexagesimāquartā. ergo ꝑ decimā huius vnus a ɔtinet vnū c / vnā quartā / & vnam sexagesimāquartam: et vna quarta & vna sexagesimaquarta ꝑ precedētem minus sunt vna tertia: cōplent enī quarta & duodecima vna tertiam. duo igit̄ sesquioctaui minus sunt vno sesquitertio interuallo. quod erat demonstrandum.
+
+<margin>18</margin> **Tres** sesquioctaui: amplius sunt sesquitertio: minus aut̄ sesquialtero interuallo.
+
+---
+
+| 729 | | | 512 | A d tres sesquioctaui cōiūcti |
+|---|---|---|---|---|
+| a | b | c | d | |
+
+---
+
+**Sint** a b c d tres coniūcti sesquioctaui: vt a ad b primus sit sesquioctauus / b ad c secūdus / et c ad d tertius: dico primo a ad d amplius esse sesquitertio. qm̄ eni a ad b & b ad c duo sūt sesquioctaui: ergo ꝑ octauam huius octo a equi sunt decem c & octaue vnius. Sed & cum c iterū ad d positus sit sesquioctauus: ergo ꝑ eādem octo c equi sunt nouem d / et nouē c equi decem d & octaue vni⁹. et decem c equi vndecim d & duabus octauis. et cū octo octaue c ɔtineant nouem d: ꝑ decimam huius vna octaua c continet octauam d & eius octauam partem: hoc est vnam sexagesimāquartam. decem ergo c et vna octaua vnius equātur vndecim d / tribus octauis / et vni sexagesimequarte. et ꝑ decimā vt vndecim res octaue & vna sexagesimaquarta ad octo: ita a ad d. sed vndecim cōtinent octonos semel tres eoz̄
+
+<vocab>sesquialter, sesquitertius, sesquioctauus, Arithmetica, proportio, interuallum, denominatio, quadragesimasecūda, septuagesimasecūda</vocab>

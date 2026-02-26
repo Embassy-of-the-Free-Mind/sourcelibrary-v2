@@ -1,0 +1,26 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>51</page-num>
+<header>DES PHILOSOPHES.</header>
+
+*les rondes au second lieu, les triangulaires au tiers, & les quarrées au quatriesme: contant le lieu ou elles sont.*
+
+2 *Les tables peuuent prendre l’vne l’autre endroit soy, non autrement cheminant que le Roch des eschets.*
+
+3 *Le nombre trouuant vn autre semblable à soy, l’emporte.*
+
+4 *Si deux nombres sont egaux à vn autre, & se peuuent camper autour de luy: ils l’emporteront.*
+
+5 *Si tu multiplies le petit nombre par les loges vuides, qui sont entre luy, & le plus grand, si le prouenu de telle multiplication est egal au plus grand nombre, le nombre l’emportera.*
+
+6 *Le nombre lequel ne peut aller droit comme le Roch, estant assiegé de l’ennemy, sera prins.*
+
+7 *Si aucune table, egale à la plus grand base de la Pyramide rencontre icelle Pyramide, elle l’emportera, ou sera emportée: si elle est rencontrée.*
+
+8 *Si aucun nombre multiplié par les loges interposées se faict egal à la grand base de la Pyramide, il l’emportera.*
+
+9 *S’il aduient que les autres bases de ta Pyramide soient rencontrées par aucunes tables à elles egalles, sera prinse ladicte base, si elle y est.*
+
+<sig>G iij</sig>
+
+<vocab>Rithmomachie, jeu des philosophes, rondes, triangulaires, quarrées, Pyramide, Roch des eschets, loges vuides, base</vocab>

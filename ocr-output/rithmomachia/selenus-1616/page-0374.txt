@@ -1,0 +1,19 @@
+<language>German</language>
+<page-num>340</page-num>
+<header>Das Dritte Buch | 8. cap:</header>
+<page-type>text</page-type>
+<meta>catchword: dreyssig/</meta>
+
+<image-desc>A decorative woodcut horizontal headpiece featuring scrolling foliage and ornamental grotesque faces or masks.</image-desc>
+
+## Das Achte Capittel.
+
+### Wie des Schwa**r**zen Königin / seines Königes Soldaten / beschützen könne.
+
+<margin>1.</margin> In diesem Capittel/ folget die **Vierte Art**/ des **S. K.** Soldaten/ zu entsetzen/ nemlich/ mit der Königin. Dan/ wan der **Weiße**/ und der **Schwarze**/ der Könige Soldaten/ auf acht und zwanzig: und sechs und dreyssig/ ziehen: und der **Weiße**/ des **K.** Reuter/ auf des **S. K.** Soldaten/ auf neunzehen/ setzet: so verhütet ihn/ der **Schwarze**/ auf die **Vierte Art**/ (davon im 5. Cap: n. 4. dieses Buches/ meldung geschehen) und rucket die Königin / auf zwey und funfzig.
+
+Von dieser Art/ sollen die Schach-Zieher/ auch kürtzlich berichtet seyn: daß Sie/ (dieweyl dadurch des **K.** Schützen/ der Paß verleget/ und das feld/ in welches dessen Reuter/ wan er etwa / auß dem wege zu weichen/ gezwungen würde/ springen könte/ eingenommen wird) bey weytem/ nicht so gut/ wie die obangeregte/ zu achten. Dan/ so gut sie sonsten ist/ wan gedachter Schütze/ albereit ins feld gezogē/ sie so gefähr- und schädlich ist / wan derselbe / auf seinem plätzlein/ noch verharret/ und herauß zu rucken / verhindert wird.
+
+Man kan gleichwol / (oberwehntes ungeachtet) folgender gestalt/ vorspielen: dan der **Weiße**/ ziehet hierauf/ des **K.** Schützen/ auf dreyßig: **Der Schwarze** / der **K.** Schützens-Soldaten/ auf sechs und vierzig: **Der Weiße** / (umb/ den König/ zu versetzen) dessen Rochen/ auf drey: **Der Schwarze** / der **K.** Soldaten / auf fünf und vierzig: **Der Weiße**/ springet/ mit dem Könige/ auf zwey: **Der Schwarze**/ ziehet/ der **K.** Schützen/ auf des **W. K.** Reuter/ auf sechs und zwanzig: **Der Weiße**/ der **K.** Soldaten / auf ein und zwanzig: **Der Schwarze** / (umb die ordnung der Soldaten / an dem orte/ da der **W.** König / hingesprungen/ zu zertrennen) die Königin / auf des **W. K.** Reuter/ auf drey und vierzig: **Der Weiße**/ (diesem vor- und zu hülfe zu kommen) der **K.** Reuter / auf dreyzehen: **Der Schwarze**/ des **K.** Schützen/ auf zwey und funfzig: **Der Weiße**/ des **K.** Rochens-Soldaten/ auf der **S. K.** Schützen/ <margin>2.</margin> auf siebenzehen: * **Der Schwarze** / sol ihn nicht / auf drey und dreyssig/
+
+<vocab>Schach, Königin, Reuter, Schützen, Soldaten, Rochen, S. K., W. K., entſetzen</vocab>

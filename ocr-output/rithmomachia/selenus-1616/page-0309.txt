@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>275</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>3. cap:</margin> ſe / (umb denſelben / zu vertheidigen) den König / auf dreyzehen : Der **Schwarze** / (umb denſelben / mit gewalt zu erlangen) der K. Schü=tzen / auf fünf und dreyſſig : Der **Weiſſe** / (dieſem einfahl fürzubawen) der K. Rochen / auf ſechs : Der **Schwartze** / (umb die W. Königin / wan Er / der K. Rochen / auf dieſelbe / auf ſieben und funfzig / ruckete / zu erlegen) der K. Reuter / auf drey und funfzig : Der **Weiſſe** / des K. Schützens-Soldaten / auf die S. Königin / auf neunzehen : Der **Schwartze** / dieſelbe / auf zwey und funfzig : Der **Weiſſe** / der K. Schützen / auf ein und vierzig : Der **Schwartze** / der K. Rochen / auf acht und funfzig : Der **Weiſſe** / nimt / des S. K. Schützen / mit ſeiner K. Schützen : Der **Schwartze** / (ſo fern Er / mit der Königin / auſſ vier und dreyſſig / nicht wil Schach-geben : auf welchen fahl / der **Weiſſe** / den König / auf zwelfe / ſtellen / oder denſelben / mit ſeines Schützens-Soldaten / auf ſieben und zwanzig / bedecken / und auf dieſelbe / ihn rucken würde) denſelben / mit dem Rochen : Der **Weiſſe** : ziehet / die Königin / auf ein und vierzig / und errettet ſie dergeſtalt nicht unſchwer.
+
+<margin>10.</margin> Wan aber der **Schwartze** / den König / mit dem Soldaten / auf 37. (n. 9.) nicht bedecket / beſondern / denſelben / (umb deſſen Reuter / ferner zu beſchützen) auf zwey und funfzig / ziehet : ſo gibt / der **Weiſſe** / mit der K. Reuter / auſſ ſieben und dreyſſig / Schach : Der **Schwartze** / nimt ihn / mit ſeines K. Reuter : Der **Weiſſe** / beut / mit der Königin / auſſ ſechs und dreyſſig / Schach : erlanget den gedachten S. Reuter / mit des K. Schützen / ziehet denſelben / auf die S. Königin / und vertheidiget zugleich / (ſo fern / der S. König / auf ein und ſechfzig / gerucket) des K. Rochen : Iſt aber derſelbe / auf ein und funfzig / gezogen / ſo erlanget Er / die S. Königin / durch dieſen Schützen : dan der **Schwartze** / denſelben / (zu verhüten den Schach-Mat) mit ihr / muſſ wegnehmen.
+
+<margin>11.</margin> Nimt aber der **Schwartze** / nicht den W. Soldaten / mit der Königin / (n. 8.) beſondern / rucket dieſelbe / auf fünf und vierzig : ſo beut / Der **Weiſſe** / mit des K. Schützen / auſſ dreyſſig / Schach : Bedecket nuhn der **Schwartze** / den König / mit ſeinem Reuter / auf ſieben und dreyſſig : ſo iſt die W. Königin / erlediget : Ziehet Er aber / den König / auſſ dem Schache : ſo rucket der **Weiſſe** / der K. Schützen / auf des S. K. Reuter / auf vier und dreyſſig / und errettet dergeſtalt / ſeine Königin.
+
+<margin>12.</margin> Wan aber der **Schwartze** / die Königin / (umb der S. K. Schützen / gefangen zu halten) auf vier und vierzig / und nicht
+
+<sig>Mm iij</sig>
+<meta>catchword: auf 45.</meta>
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Reuter, Schützen, Soldat, Schach-Mat, Weiſſe, Schwartze</vocab>

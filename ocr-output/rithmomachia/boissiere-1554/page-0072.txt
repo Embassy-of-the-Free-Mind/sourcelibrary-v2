@@ -1,0 +1,28 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>33</page-num>
+<header>DES PHILOSOPHES.</header>
+<warning>The bottom of the page is faded with some text partially cut off at the right margin.</warning>
+
+## De la proportion de musique.
+
+Proportion de musique est, quand les differences que les deux extremes ont au moyen ont mesme proportion que les deux extremes conferez l'vn à l'autre. Exemple 3, 4, 6. Il est facile à voir que la differēce du premier 3 au second nombre est vn, & la difference du dernier qui est six au moyen 4 est 2 : lesquelles differences 1, & 2, voyant entre soy auoir proportion double comme les deux extremes qui font 3, & 6, conclurons estre proportion de musique & ainsi des autres.
+
+---
+
+### Exemple de celles qui se trouuent au ieu.
+
+| | | | | | | | | | | |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2 | 3 | 6 | \|\| | 5 | 9 | 45 | \|\| | 12 | 15 | 20 |
+| 3 | 4 | 6 | \|\| | 6 | 8 | 12 | \|\| | 15 | 20 | 30 |
+| 3 | 5 | 15 | \|\| | 7 | 12 | 42 | \|\| | 25 | 45 | 225 |
+| 4 | 6 | 12 | \|\| | 8 | 15 | 120 | \|\| | 30 | 36 | 45 |
+| 4 | 7 | 28 | \|\| | 9 | 15 | 45 | \|\| | 72 | 90 | 120 |
+| 5 | 8 | 20 | \|\| | 9 | 16 | 72 | \|\| | | | |
+
+Quand à l'accord & armonie respondans à telles proportions de musique, nous en dirons plus am<unclear>plement</unclear> apres le traicté des vi- ctoires excellen<unclear>tes</unclear>. Il te suffise que telles propor-
+
+<sig>E iij</sig>
+
+<vocab>proportion de musique, extremes, moyen, armonie, traicté</vocab>

@@ -1,0 +1,60 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+altera parte longioris d est latus b: quodquidē idem est latus e. ergo per quartā huius d erit duplus e: sed ꝛ b c mōstrata sunt vno maius duplo d. sunt ergo b c vno maius q̃duplo e: ergo b c d simul sunt vno maius sextuplo e. et par pcedentē e sexies sumptus addita vnitate tertiū post vnitatē creat hexagonum equiāgulum qui sit f. constat ergo f ex b c et d: sed a solū constat ex c d vt ostensum est. abundat ergo f hexagonus equiangulus ab a hexagono tetragonico toto post vnitatē ꝛ tum est b totus ab vnitate tetragonus: qđ est propositū. ¶ Animaduerte quēadmodum diuus mōstrat seuerinus heptagonos continue fieri ex hexagonis et inferioꝛibus trigonis duobus equis inferioꝛibus emin⁹ adiūctis trigonis. quod ꝛ idem euenit si dispositis naturaliꝛ numeris: extremi cōtinue quattuor inmedijs relictis iungātur. vt secūdus heptagon⁹ sit ex senario scđo hexagono ꝛ vno: pmo trigono emin⁹ equali adiūcto trigono. qui idē fit ex vno et senario quattuor in medio ꝑtermissis numeris: ꝛ tertius heptagonus sit ex 15 tertio hexagono ꝛ ternario scđo trigono e regiōe adiūcto equali trigono hexagoni qui idē fit ex vno senario ꝛ vndenario. et hoc pacto in figuratione ꝛ collectione suoꝛū numeroꝛū in ceteris est procedendum.
+
+---
+
+<margin>
+<image-desc>A dot diagram showing an equiangular octagon composed of 19 dots. The dots are arranged in five rows of 3, 4, 5, 4, and 3 dots respectively.</image-desc>
+</margin>
+<margin>22</margin>
+### ¶ Supra datum numerum octogonum equilaterum constituere.
+
+¶ Sit a datus nūerus supra quē iubemur octogonū equilateralē cōstituere. pcedo ei apponēdo oꝛdīes vno semper se excedētes donec totidē sint quot sunt vnitates i latere: erūtqꝫ facta tria latera equalia et maximo oꝛdini addo oꝛdīes equales quousqꝫ tot sint quot sunt vnitates in latere erūtqꝫ facta quīqꝫ latera equalia. deinde ab vltimo oꝛdine pcedendo appono oꝛdīes cōtinue vnitate minoꝛes donec tot sint quot in dato latere vnitates fientqꝫ sic descēdendo tria latera pdictis equalia eruntqꝫ simul octo equalia latera atqꝫ octogonus equilaterus cōstitutus: qđ erat faciendū. ¶ Alia apud diuū seuerinū octogonoꝛū inueniēdoꝛum ratio mod’qꝫ est vt cōtinue ex toto heptagono et sub se trigono surgant. ꝛ idē fiunt si ex dispositis naturaliꝛ numeris cōtinue in medio quinqꝫ relictis: extremi iungātur. vt si 7 scđo heptagono iungas vnum primū trigonū surgit octonarius et scđus octogonus. qui idē fit ex vno et septe quinqꝫ numeris binario ternario quaternario quinario senario iterstitis: dismissis. et si 18 tertio heptagono iungas ternariū: secundū trigonū: fiet 21 tertius octogonus. qui idem colligitur ex 1/7/13/ ꝛ hoc pacto in reliquis est procedendum
+
+<margin>
+<image-desc>A dot diagram of an equiangular octagon, identical to the one above, but with labels. The inner 9 dots (forming a 3x3 square) are labeled 'a', and the outer dots are labeled 'b'. A horizontal line separates this diagram from the text below.</image-desc>
+</margin>
+
+---
+
+<margin>23</margin>
+### ¶ Si cuilibet hexagono equiangulo post vnitatē: totus tetragonus ab vnitate cum sequēte altera parte lōgioꝛe iungatur pueniet octogon⁹ post vnitatē sili loco sumpt⁹.
+
+¶ Sit quilibet hexagonus equiāgulus cuius latus sit a et maximus oꝛdinū eius sit b qui addat sup a numerū c. qm enim hexagonus datus habet triāguloꝛ in medio vnitate cōtinentiū latera equalia: hinc oꝛdinis b maximi: linea minoꝛ est vno: duplo lateris a ergo c minoꝛ vno q̃ a. addo ergo ad b oꝛdines equales secundū c. et qꝛ ab a ad b fiunt tria latera equalia fient rursus ab b cum additis oꝛdinib⁹ duo alia equalia quibus addo relictos hexagoni post b: fientqꝫ rursus tria alia reliquis equalia eritqꝫ foꝛmatus octogonus. et qꝛ ꝑ nonā primī c in b ꝑm oꝛdines additos est tantum qđ tum c in se ꝛ in a. at qđ in se facit est tetragonus: et quod in a facit est altera parte lōgioꝛ. cum c et a sola vnitate distent: et tetragonus ille totus sit ab vnitate quotus octogonus foꝛmatus post vnitatem. nam hexagonus vno maius latus habet latere tetragoni: ꝛ altera parte longioꝛ sequēs tetragonū. cōstat ergo qđ herāgulo equiāgulo assignato post vnitatē: aditus totus ab vnitate tetragonus cũ sequēte altera pte lōgioꝛe cōstituit octogonū qui cũ equalia hexagono latera hēat: totus erit post vnitatē octogonus: ꝛ propositū.
+
+---
+
+<margin>24</margin>
+### ¶ Foꝛmarū sex equilateraꝝ quālibet fm vnitatū dispōnem figuraliter cōstituere.
+
+¶ Si enim triāgulos tetragoneos pētagonos hexagonos tetragonicos hexāgulos equiāgulos ꝛ octogonos secundū vnitatū dispōnem figuraliter cōstituere desideras: ex prima huius trigonos figurare disce. ex quīta tetragones: ex duodecima pētagonos: ex decimaquarta hexagonos tetragonicos: et ex decimaseptima ꝛ decimaoctaua hexagonos equiangulos: et evicesimasecunda octogonos. sicqꝫ per uium habebis propositum.
+
+---
+
+<margin>
+| 58 | 12 |
+| :--- | :--- |
+| q | p |
+| 37 | 9 |
+| o | n |
+| 28 | 14 |
+| m | g |
+| 22 | 11 |
+| l | f |
+| 16 | 8 |
+| k | e |
+| 10 | 5 |
+| h | d |
+| | 3 |
+| | c |
+| 4 | 2 |
+| a --- | --- b |
+</margin>
+<margin>25</margin>
+### ¶ Latere dato figurarum pꝛeassignatarū cuiuslibet summā reperire.
+
+¶ Sit latus datū a qui ponat esse ꝛ medietas a sit b: sitqꝫ c minoꝛ vno a ꝛ d eodē vno maioꝛ. additoqꝫ c ad d fiat e. ꝛ iterū c addito ad e fiat f. et sifr c addito ad f fiat g: ducaꝫqꝫ b in d et sequentes ꝛ pueniant h l l m. qꝛ enī a in d cōstituit altera pte longioꝛē cuius triāgularis lateris a est medietas. ergo p quartā huius b medietas a in d pducit triāgularē lateris a: sicqꝫ h ostēdit summā triāgularis lateris dati. et qꝛ c d simul cōstituūt e qui ꝑ secundā primi est duplus a. ergo b a e sunt cōtinue ꝑpꝛotionales qđ ergo fit ex b in e ꝑ uicesimāsextā secundi est quadratū a. et cũ id sit l: ostendet l: summā tetragoni lateris dati a. ꝛ qꝛ qđ fit ex b in f ꝑ nonā primī tm est qđ tum qđ ex b in e ꝛ in c. et cum c in a cōstituat altera parte longioꝛē cuius medietas est triāgulus c ꝑ quartā huius. ergo b medietas a in c pducit triāgularē cuius latus est c. sed et b in e pducit tetragonū a qui totus est post vnitatē quotus trian gularis c abvnitate. ergo per duodecimā huius b in f pducit totum post vnitatē pentagonū. at ille est pentagonus a et productus est l. ostendet igitur l summam pentagoni lateris a. ꝛ qꝛ quod fit ex b in g est tātum qđ tum quod fit ex b in c et in f. ꝛ dictum est ex b in c fieri triāgularem totum ab vnitate quo= tus est post vnitatē pentagonus ex b in f factus. ergo per decimāquartā huius b in g cōstituet hexa= gonum tetragonicū totum post vnitatē quotus ꝛ post vnitatē est pentagonus at hexagonus ille erit hexagon⁹ a ꝛ pductus m monstrat itaqꝫ m summam hexagoni a: lateris assignati. Duco item c in se ꝛ pueniat n qui erit totus ab vnitate tetragonus quotus hexagonus tetragonicus m est post vnitatē. addo ergo m et n simul ꝛ proueniat o qui per vicesimā primam erit hexagonus equiangulus a. nam totus post vnitatē quotus hexagonus m. duco item c in a: et pueniat p qui erit altera parte longior
+
+<vocab>octogonum, tetragonus, hexagonus, Boetius, Severinus, equiangulus, pentagonus, figurate numbers, arithmetic</vocab>

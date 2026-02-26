@@ -1,0 +1,59 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>30</page-num>
+
+<image-desc>A diagram at the top left consisting of horizontal lines and brackets. The lines are labeled with letters 'a', 'b', 'c', 'd' and assigned the values 1, 2, 3, 4. A larger horizontal line above them is labeled 'm' and assigned the value 5.</image-desc>
+
+<margin>34</margin>
+¶Quicunq3 ex numeris ab unitate bis sumptis coaceruatur: est parte altera longioz minusq3 laterum ipsius: coaceruatozū maximus
+¶Sint huiusmodi nūeri bino ozdine sumpti vnitas a b c d q̄ simul aggregētur fiātq3 m: quē dico eē altera pte longiozē: eiusq3 minus latus eē d. nā per p̄cedentē si p̄dictis nūeris addo e fiet quadratus f: cuius drĩa a medio altera pte lōgioze est e. remoto igiť nūero e a quadrato f remanet altera pte longioz med i⁹ int' f z pzozimū minozē quadratū. Sed q̄ remanet amoto e est aggregat⁹ duoz assignatoz ozdinū scz m: igit' m est altera pte longioz medi⁹ inter f et pzozimū minozē quadratū. Sed ille medi⁹ altera pte lōgioz fit ex d in e illozū quadratoz laterib⁹ per vicessimāquārtā pñtis d aut̄ minus est: ergo altera pte lōgiozis m min⁹ latus ē d. vt ozdinū assignatoz maxim⁹ ē nūerus. p̄stat q̄ tota ppō firma.
+
+---
+
+<image-desc>Diagram featuring lines labeled with letters and numbers: 'a' is 64, 'e' is 16, 'b' is 8, 'c' is 4. A separate horizontal line 'o' is marked as 512.</image-desc>
+
+<margin>35</margin>
+¶Si fuerit nūerus q̄dratus cubicus: latus quidē q̄drati erit cub⁹ latus vo cubi q̄drat⁹
+¶Sint a nūerus q̄drat⁹ cubicus cui⁹ quatenus quadrat i latus sit b: quatenus vero cubi latus sit c: dico b esse cubuz et c esse quadratū. Primū pz. duco eni b in a z fiat d ppalā est d esse cubū et a cubus ip̄m numerat fm b: ergo p cozrelariū decimeseptime huius b est cubus qz est primū. Scdm̄ ostēditur sit e quadratū c: qz q̄d sub c et e extrems cōtinetur equū est ei qd̄ fit ex b in se. ergo p vicesimāsextam secundi e b c sunt continue proportionales sed e primus est positus quadratus: igitur et c per decimā huius est quadratus: sicq3 totum constat propositum.
+
+---
+
+<image-desc>Diagram with letters and large numbers: 4096 and 262144 at the top. Below, a series of lines: 'a' is 256, 'd' is 512, 'e' is 128, 'b' is 64. A line 'f' is indicated on the right.</image-desc>
+
+<margin>36</margin>
+¶Si fuerint duo numeri quadrati cubici: medius inter illos in cōtinua pzozoztionalitate erit cubus: duozum vero mediozū vterq3 quadratus.
+¶Sint a et b duo quadrati cubici: qz a z b sunt quadrati p cozrelariū quarte huius ē inter eos vnus medius pzoztionalis q̄ sit c. et qz a z b sunt cubi p idem cozrelariū inter eosdē sunt duo mediij pzoztionales q̄ sint d z e. dico ergo c esse cubū et d z e esse quadratos. casū esse cubū sic declarā. nam duco a in b et pueniat f: qz a z b sunt cubi: f etiā per decimāsextam huius erit cubus et cū a c z b sint pzoztionales: ergo p vicesimāsextam secūdi f cubus fier ex c in se. quare f est quadratus ipsius c. est igitur f quadrat⁹ cubicus: quare c latus f vt quadrati per p̄cedentē est cubus qd̄ est primū. sed d et e esse quadratos hinc liquet: qz b e d sunt cōtinue proportionales et b primus est quadratus. igitur z tertius d per decimā huius. Item a d et e sunt numeri pzoztionales et a primus est quadratus igiť per eandē decimā r e tertius quadratus. Est igitur tota pzozozitio nota.
+
+---
+
+<image-desc>A large branching tree diagram. The left branch contains numbers 729 (g), 243 (h), 81 (k), 27 (l), 9 (m), 3 (n). The right branch contains larger numbers: 386691489 (o), 14348907 (p), 531441 (q), 19683 (r), 729 (s), 27 (t).</image-desc>
+
+<margin>37</margin>
+¶Duos q̄dratos cubicos iuenire: int' quos nūeri quotlibet mediij ppoztionaĺ sūmāt
+¶Si duos q̄dratos cubicos iubeoz iuenire inter quos quotlibet mediij pzoztionales sumo nūeros ppoztionales plcs duobus: ip̄is mediis: quos iubeoz iuenire. verbi cā si iubeoz iuenire duos quadratos cubicos int' quos sint quattuoz mediij ppoztionales sumo sex nūeros cōtinue ppoztiōales vt a b c d e f: quozū per ozdinē sumātur cubi g h z k l m n: q̄ per sextā huius sunt etiā ppoztionales quis quidē cubi in se per ozdinē ducātur et proueniāt o p q r s t. dico itaq3 o et t esse duos tales quadratos cubicos. nā cum g h et ceteri in se ducātur o p q r ceteri sunt quadrati: et qz g h z ceteri eozū scz late ra sunt ppoztiōales: per quintā huius o p q et ceteri eozū quadrati sunt ppoztionales. at cum g et n sint cubi ergo per decimāsextā huius o et t erunt cubi. sunt igitur o et t quadrati cubici inter quos quattuoz numeri p q r s sunt mediij ppoztionales: qd̄ est propositū.
+
+---
+
+<image-desc>A small diagram showing numbers 12, 2, 3 and various letter labels including qm, pl, ok, nh, mg, and r.</image-desc>
+
+<margin>38</margin>
+¶Duos q̄dratos cubicos repire: int' q̄s medios fm datōs nūeros sumē sit possibile
+¶Sint dati nūeri a z b: ppositūq3 sit duos quadratos cubicos iuentre: inter quos sint numeri ppoztionales fm a z etiā fm b: sitq3 a binarius et b ternari⁹. q̄a eni ppoztiones semp sunt vno plures ip̄is mediis et a est binarius: iō vt mediij inueniātur fm a opoztet tres esse ppoztiones. et q̄a b est ternari⁹ vt inueniātur mediij scdm̄ b opz quattuoz esse ppoztiones. Duco ergo tria in quattuoz et proueniāt e et scdm̄ e ozdino cōtinue ppoztiōes in nūeris r d e f g h z l m n o p q: quoz q et r per p̄cedentē ponantur quadrat i cubici: et p̄ūq3 quattuoz ex illis ppoztiōib⁹ vt hic scdm̄ quafnos et q̄ternos ozdies: r hēbo tres medios ppoztiōales scz n l z f per equā ppoztionalitatē. r silr̄ ptungo tres ex illis vt hic per quinos r q̄nos ozdines et hēbo m r g duos medios ppoztiōales int' q et r quadratos cubicos: qd̄ est ppositū
+
+---
+
+<image-desc>A diagram of vertical lines with numbers 6, 3, 2 on the left and 24, 6, 4 on the right, labeled with letters a, g, d, b, e, f.</image-desc>
+
+<margin>39</margin>
+¶Int' q̄slibet duos superficiales sīles: tertiū in ɔtinua ppoztionalitate mediū eē ncc̃e est
+¶Sint a et b nūeri superficiales sīles: et latera a sint c z d: et latera b sint e z f. dico int a et b eē vnū numerū in cōtinua ppoztionalitate. nā q̄a a et b sunt sīles per diffinitionē eius latera sunt ppoztionalia. ideo q̄ ppoztio c ad d: ea est e ad f. quare pmutatā q̄ ppoztio c ad e: ea est d ad f. duco ergo e in d et fiat g: et q̄a c in d facit a: et b in eundē d facit g: ergo per octauā scd̄i ppoztio a ad g vt c ad e. r q̄a itez̃ e in d facit g et e in f facit b: ergo ppoztio g ad b vt d ad f. sed p̄bata est ppoztio c ad e vt d ad f: ergo pzoztio a ad g vt g ad b. est igitur inter a et b nūerus g medius ppoztionalis: qd̄ erat demōstrandum
+
+---
+
+<image-desc>A diagram with lines and numbers 9, 3, 4 and 16, 3, 4, labeled with letters a, d, e, c, f, g, b.</image-desc>
+
+<margin>40</margin>
+¶Q’ si terti⁹ int' eos medi⁹ ppoztionaĺ ceciderit: duo q̄libet nūeri er̄t superficiales sīles
+¶Hec est cōuersa p̄cedētis. Sint eni a et b qūcunq3 duo nūeri inter quos sit c medi⁹ ppoztionalis: dico a et b superficiales eē r sīles. captio eni d e mimos in ppoztione a ad c q̄ qz mimi per decimānonā tertij numerabūt a et c equaliť: sitq3 iō scdm̄ f et sit k nūerabūt c et b equaliť: sitq3 iō scdm̄ g manifestū itaq3 est cū a sub duobus lateribus d et f: et b sub duobus e g cōtineat̃: a et b per diffinitionē esse superficiales. Sed q̄ sint similes pz. nā qz per hypothesim d et e numerāt c et b secundū g: d numerat c scdm̄ g: et e numerat c secundū f vt et positū est. igitur per vicesimāquintā secundi d f et e g sunt pzoztionales: sz d f sunt latera a: et e g sunt latera b. sunt igiť a et b per diffinitionē superficiales sīles: qd̄ est ppositū.
+
+<vocab>numerus, quadratus, cubicus, proportionalis, superficialis, unitate, latus, medius, coaceruatur</vocab>

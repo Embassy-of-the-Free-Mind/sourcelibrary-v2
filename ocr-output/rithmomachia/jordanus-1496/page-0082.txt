@@ -1,0 +1,72 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+secũdũ g h ad k l sicut g ad k. et itey q̃ pmutatim a ad c sicut b ad d: erit per idem a ad c sicut g h ad k l quare sicut g ad k. et qza t c sūt tota et g t k detracta: erit ergo a ad f residuus ad residuum p quintam secundi vt a ad c totus ad totum. quare pmutatim a ad e sicut c ad f. quod est propositum.
+
+---
+
+<margin>43</margin>
+
+### ¶ Si inter duos numeros alij duo medii pporzionaliter sumantur: sumaturqz maior fm arithmeticam medietatẽ: sumetur minor fm harmonicam. q̃ si minor fm harmonicam: maior fm arithmeticam sumetur.
+
+¶ Sit enim a ad c sicut d ad b. et c maior sit medius fm arithmeticam medietatem inter a t b. dico d esse mediũ fm harmonicam medietatē inť a t b. et p̃uertitur. Sumo enı̃ p quadragesimāprimā hui⁹ e r f q̃ sint in pportiõe a ad b. inter q̃s sit g fm arithmeticam medietatē medi⁹ / t h fm harmonicam. quia igiť p quadragesimāprimam e ad g sicut h ad f. et p decimānonam huius e ad g sicut a ad c. q̃re c ũ v ad b vt a ad c: et h ad f vt e ad g. erit g̃ h ad f vt d ad b. sed r qz h est medius harmonicus ad quem extremum habet eam proportiõem q̃ b ad d: facile p precedenrem inuenies d eē in harmonica medietate inter a et b. cōuersum aũt facile pbabis per quadragesimāprimā hui⁹ ostēdēdo mediū arithmeticæ medietatis quēcunqz inuentum: esse equalem c maiori.
+
+<image-desc>A line diagram representing Proposition 43 with two sets of four lines. Top set: e-48, f-36, g-32, h-24. Bottom set: a-24, b-18, c-16, d-12.</image-desc>
+
+---
+
+<margin>44</margin>
+
+### ¶ Numeros quotlibet in arithmetica medietate ɔtinuare: inter quoz binos t binos fm harmonicam medietatem possint assignari medı̃.
+
+¶ At si iubeat continuare tres numeros in arithmetica medietate inter quoz binos t binos possint assignari in harmonica medietate medij. capio a b c totidem numeros in arithmetica medietate cōstitutos: quoz differētia sit par: t inter illos sumātur medı̃ in eadem medietate qui sint d r e. et multplicentur oēs per e. et pueniant f/g/h/k/l qui p decimāseptimam huius erūt in arithmetica medietate. ducaturqz itey c in b t fiat m. et quia p septimam secūdı̃ que ppoztio c ad e ea est h ad k. et p octauam eiusdem itex q̃ c ad e ea est m ad l. et inter h r l numerus k maior est in arithmetica medietate medi⁹. igitur p precedētem m est medius inter h t l in harmonica medietate. multiplicētur item oēs hi per v. et pueniāt n/o/p/q/r/s et erūt vt prius n/o/p/q/r/s in arithmetica medietate: et r inter p t s in harmonica medietate. ducatur item a in h r pueniat t. et eadem rōne qua prius mōstrabis ip̃m eē mediū in harmonica medietate per precedentem inter n t p. sicqz erūt ɔtinuati vt ppositum est in arithmetica medietate numeri / factũqz apparebit propositum. ¶ Et si de pluribus ageretur: quoties erit apponendus medius harmonicus: toties facienda erit modo p̃dicto multiplicatio.
+
+<image-desc>Two columns of lettered values. Left column: f-27, g-21, h-15, k-9, m-5, n-3. Right column: n-189, o-147, p-105, q-63, r-35, s-21.</image-desc>
+
+---
+
+<margin>45</margin>
+
+### ¶ Duobus numeris ad alios duos ppozionalibus: vtrozũqz alterũ inter reliquos medium esse in harmonica medietate: est impossibile.
+
+¶ At sit a ad b sicut c ad d: dico cnō eē medium fm medietatem harmonicam inter a t b: neqz b inter c et d. si enĩ possibile sit: esto ergo c in harmonica medietate inter a t b: et b inter c t d. quia enı̃ a ad b sicut c ad d. et inter a t b et c t d numeros quidẽ pportionales: ɔstituūtur c t b medı̃ fm medietatem harmonicam. igitur per quadragesimāsecũdam huius erit ppoztio a ad c sicut c ad b maximı̃ scz ad medium que medı̃ ad mimum. quod per tricesimāquartam huius est impossibile et propositum.
+
+<image-desc>Two small sets of line segments. Top set: a-9, b-7, c-5, d-3, e-1. Bottom set: a-8, b-6, c-4, d-3.</image-desc>
+
+---
+
+<margin>46</margin>
+
+### ¶ Si tres numeri in arithmetica medietate sumpti aliquem numerum numcrent: illi fm quos cum numerant in ordine harmonice medietatis inuenietur.
+
+¶ Sint a b c in medietate arithmetica sumpti: numerētqz d fm e f g. dico e f g esse in harmonica medietate ordinatos. Sint enı̃ tres dupli eoz h k l qui vt <unclear>factũ</unclear> erit vt patebit in harmonica medietate et sit m inter h t l in arithmetica medietate medius. qz enĩ a in e t c in g cōstituūt d: ergo p vicessımāquintam secundi que ppoztio a ad c ea est g ad e: et que g ad e per quintam secūdı̃ ea est l ad h. sed per decimānonam huius l ad m sicut a ad b. et qz per eādē vicessimāquintam secūdı̃ a ad b sicut f ad e: erit ob hoc l ad m sicut k ad h. sed p quadragesimātertiam huius k est medius harmonice inter l t h. igiť et f harmonice medius inter g t e. quod est propositum.
+
+<image-desc>A complex diagram with letters a, b, c, e, f, g, h, k, l, m and numbers 12, 4, 3, 2, 6, 4, 12, 8, 9, 6 showing connections between harmonic and arithmetic means.</image-desc>
+
+---
+
+<margin>47</margin>
+
+### ¶ Numeros quattuor perscrutari: quoz secundus inter primum & tertium: & tertius inter secundum & quartum in harmonica medietate cōstituatur.
+
+¶ Sint a b c d quattuoz numeri in arithmetica medietate cōstituti qui numerent eiusdem numerum e fm f/g/h/k. dico f g h k esse quattuoz numeros quoz g secundus est in harmonica medietate inter f t h primum t tertiũ. et h tertius itidem eē in harmonica medietate inter g t k scōmz quartum. nam qz tres nũeri a b c in arithmetica medietate ɔstituti numerant e fm f/g/h: g̃ per precedētem f/g/h sunt in harmonica medietate. et per idem quia b/c/d tres alı̃ arithmetice medietatis numerant eundem e fm g/h/k. ergo g h k sunt in harmonica medietate. est igit vt pponebať g medius harmonice inter f et h: et h itidem medius harmonice inter g t k. quod est propositum.
+
+<image-desc>A line diagram showing values e-24, a-8, f-3, b-6, g-4, c-4, h-6, d-2, k-12.</image-desc>
+
+---
+
+<margin>48</margin>
+
+### ¶ Si tres numeri geometrice medietatis aliquem numerum numerent: et illos scōm quos numerant in eadem inueniri necesse est.
+
+¶ Ut sint a b c in geometrica medietate ɔstituti q̃ nũerent d fm e/f/g: dico g/f/e in eadem ppoztione reperiri. nam per vicessimāquintam secundı̃ vt a ad b ita f ad e: et per eandem vt b ad c ita g ad f. quare erit e ad f vt f ad g: et f in geometrica mediate medius. quod est propositum.
+
+<image-desc>A line diagram showing geometric means: d-24; a-8, b-4, c-2; e-3, f-6, g-12.</image-desc>
+
+---
+
+<margin>49</margin>
+
+### ¶ Si tres numeri musice medietatis aliquem numerum numerent: alli fm quos cum numerant in arithmetica medietate disponētur.
+
+<vocab>arithmetica medietas, harmonica medietas, geometrica medietas, proportio, numerus, medius harmonicus, musice medietas</vocab>

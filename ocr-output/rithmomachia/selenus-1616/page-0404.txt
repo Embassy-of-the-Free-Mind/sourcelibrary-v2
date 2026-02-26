@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>370</page-num>
+<header>Das Dritte Buch/ 12. cap:</header>
+
+allein/ des S. K. Schützen/ dadurch den paß/ berennet/ besondern
+auch/ der S. K. Reuter/ zusamt dem Spiele/ gewinnet: dan/ wan
+der Schwarze/ diesen seiner K. Soldaten/ mit des K. Schützen/
+nimt: Er/ denselben/ mit der K. Schützen/ ergreiffet: Der
+Schwarze/ denselben/ mit der Königin: Er abgerůrten/ der S.
+K. Reuter/ mit seiner Königin/ und erlanget dergestalt zween
+Haupt=Steine/ für einen.
+
+<margin>18.</margin> Nimt aber der Schwarze/ nicht den W. Soldaten/ (wel=
+cher/ auf 45. n. 17. gezogen) mit des K. Schützen/ besondern rucket/
+der K. Reuter=Soldaten/ auf die W. Königin/ auf neun und dreyf=
+sig: so nimt ihn/ der Weisse/ mit der K. Reuter: Der Schwar=
+ze/ denselben/ mit der K. Schützens=Soldaten/ und ziehet ihn/ auf
+die W. Königin: Der Weisse/ nimt denselben/ mit des K. Schü=
+zen/ und beut Schach: Der Schwarze/ muß den König/ mit der
+K. Reuter/ auf sechs und viertzig/ bedecken: Der Weisse/ nimt ihn/
+mit des K. Schützen/ ziehet denselben/ auf der S. K. Rochen/ und
+gibt Schach: Der Schwarze/ muß den König/ mit der Königin/
+auf drey und funfzig/ bedecken: Der Weisse/ nimt sie/ mit des K.
+Schützen/ und gibt Schach: Der Schwarze/ setzet den König/ auf
+ein und sechszig: Der Weisse/ des K. Schützen/ auf der S. K. Ro=
+chen/ auf sechs und viertzig: Der Schwarze/ der K. Rochens=Sol=
+daten/ (umb/ den Schach/ von der W. Königin/ auß viertzig: darauf
+der Schach=Mat/ auß vier und funfzig/ gleich erfolgen würde/ in et=
+was aufzuhalten) auf viertzig: Der Weisse/ nimt/ mit des K. Schü=
+tzen/ der S. K. Rochen: Der Schwarze/ rucket/ des K. Reuter/
+auf drey und viertzig: Der Weisse/ nimt/ mit der Königin/ der S.
+K. Rochens=Soldaten/ und gibt Schach: Der Schwarze/ rucket
+den König/ auf sechszig: (dan/ so Er ihn/ auf zwey und sechszig/ zö=
+ge: Der Weisse/ mit der Königin/ auß vier und funfzig/ gleich
+Schach=Mat gebe) der Weisse/ gibt/ mit des K. Schützen/ auf
+sechs und viertzig/ Schach: Der Schwarze/ bedecket/ den
+König/ mit seinem Reuter/ auf drey und funfzig: Der
+Weisse/ gibt/ auß vier und sechszig/ mit der
+Königin/ Schach=Mat.
+
+<image-desc>A decorative woodcut or printer's ornament featuring symmetrical floral and foliate scrollwork patterns.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Schützen, Reuter, Königin, Soldaten, Rochen, Schach, Schach-Mat, Weisse, Schwarze</vocab>

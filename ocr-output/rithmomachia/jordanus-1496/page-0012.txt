@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<columns>2</columns>
+
+<image-desc>
+A vertical arrangement of mathematical diagrams in the left margin, each corresponding to the adjacent proposition in the main text.
+1. Diagram for Proposition 25: Six horizontal lines. On the left, labeled 'e' with 12, 'b' with 4, 'a' with 2. On the right, labeled 'f' with 18, 'd' with 6, 'c' with 3. Brackets indicate groupings.
+2. Diagram for Proposition 26: Three horizontal lines labeled 'g', 'h', and 'k' with the numbers 2, 6, and 8 written above them respectively.
+3. Diagram for Proposition 27: A visual representation of parts using arches. The left part shows a large arch labeled 'b' with a '+' symbol above it, containing two smaller arches each labeled '2'. The right part shows a large arch labeled 'f' with '6' above it, containing two smaller arches each labeled '3'. Between the two large arches are the labels 'c e'. Below are two horizontal lines labeled 'a' with 2 and 'd' with 3.
+4. Diagram for Proposition 28: Two large arches. The left arch has '3' above it and contains two boxes labeled '1'. Below it are horizontal lines labeled 'a' and 'b'. The right arch has '12' above it and contains two boxes labeled '4'. Below it are lines labeled 'd', 'e' and 'c', 'e'.
+5. Diagram for Proposition 29: Two horizontal lines. The top line is labeled 'a' with the number 20, and the bottom line is labeled 'b' with the number 7.
+</image-desc>
+
+<column-break/>
+
+partes quare quota pars est a primus e quinti tota pars est c tertius f sexti vtpote que ab eodem numero 12 denominatur: quod est propositum.
+
+<margin>25</margin>
+¶ Si primus in secundo quotiens quartus in sexto: itemqz tertius in quarto quotiens scđs in quinto: necesse est toties esse primū in quinto quotiens fuerit tertius in sexto.
+
+¶ Sint vt prius sex numeri: a primus: b secundus: c tertius: d quartus: e quintus: f sextus. sitqz a tota pars b quota d est f et c tota pars d quota b est ipsius e. dico a totam partem esse e quota c est f. hoc penitus vt precedens demonstratur.
+
+<margin>26</margin>
+¶ Si fuerit primus tota pars scđi quota tertius quarti: itemqz primus quinti quota tertius sexti erit primus tota pars secundi et quinti quota tertius quarti z sexti.
+
+¶ Sint sex numeri: a primus: b secundus: c tertius: d quartus: e quintus: f sextus. sitqz primus in secūdo vt tertius in quarto et primus in quinto vt ternus in sexto. dico a primū esse totā partem b z secundi et quīti quota c tertius est d quarti z sexti. qz per hypothesim primus in secūdo vt tertius in quarto sit ergo g numerus denominās quoties a in b et c in d. z qz etiam per eandem hypothesim primus in quinto vt tertius in sexto. sit ergo h numerus denominās vtriusqz fex quoties a in e z c in f. sitqz a pōsitū ex g h numerus 12. tunc sic: qđ fit ex ductū a in g h: tantū est q̄tum b z e. et per nonam quod fit ex a in g z h: tantū est qm̄ qđ ex a in 12 cōpositū ex ipsis. Similiter quod fit ex c in g et h: tantū est q̄tum d z f. et qm̄ qđ fit ex c in 12. igitur a primus tota pars est b z secundi et quinti quota c tertius est d quarti et sexti: vt qum̄ numerātur in illis fm eundem numerū 12: quod vult propositio.
+
+<margin>27</margin>
+¶ Si fuerit primus secundi tota pars quota tertius quarti primis quidē minoribus erit primus tertij tota pars aut partes quota pars aut partes secundus quarti.
+
+¶ Sit a primus numerus: b secundus: et d tertius: e quartus: a z b simul existētibus minoribus et quota pars a est b c tota pars d sit e f. dico igitur quota pars aut partes b fuerit e f totam partē aut partes numeri a esse d. Diuido enī b in partes suas equales a que sint b et c. item diuido e f in partes suas equales d. et qz est eque multiplex ab d vt b ad a ex hypothesi: ideo tot partes numero erunt ipsius e f quot posite sunt b c. Sint igitur ille e z f. cum igitur b prima pars b c sit equalis a z e prima pars ipsius e f sit equalis d qualis quota pars aut partes b erit e tota pars aut partes a est d. et ita de parte c respectu partis f et reliquis partibus vnius ad reliquas partes alterius si plures essent. In- tellige igitur b esse primū numerū: c secundū: e tertium: f quartū. et quia b est e partes e argumētor per quintā: qz primus b probatus est tote partes e secūdi quote ptes est c tertius f quarti. ergo b c primū et tertius tote partes sunt e f secūdi et quarti quote partes b primus est e secūdi. at a ad d monstrat tota parte quote b est e. igitur et quote b c secundus est e f quarti. et si b esset pars omnino consi- mili modo per quartā vt nunc quoque factum est per quintam elicierem argumentū. Manifestū itaq; est si primus in secūdo vt tertius in quarto primis existentibus minoribus: primum totam partem aut partes esse tertij quota pars aut partes secundus ē quarti.
+
+<margin>28</margin>
+¶ Si primus tote partes secundi quote tertius quarti primo z secundo minoribus erit primus tota pars aut partes tertij quota ps aut partes secundus quarti.
+
+¶ Sint quattuor numeri: a primus: c secundus: d tertius: et f quartus. quorum a z c duo primi duobus reliquis sint minores: et sit a b tota partes c: quote d e est f. dico a b totam partē vel partes c e quota pars vel partes c est f. diuido enī a b in suas partes ad c que sint a z b et similiter d e i suas ad f que sint d z e. cum igitur per hypothesim a b tot partes sit c quot partes d e est f: tot erunt ptes numero a b diuisi quot d e. et a prima pars a b tota erit c sui totius quota d prima pars d e est sui totius f. quare per precedentē a prima pars a b ad d primaz partem d e tota pars aut partes quota aut quote c ad f. et similiter b secunda pars primi ad e secundam partem tertij tota pars aut partes quota vel quote c ad f. sicqz de reliquis partibus primi ad reliquas tertij si plures sint partes. At si a ad b sit pars facio a primum numerū: d secundum: b tertium: e quartum. et argumentor per quartam: quia a tota pars est d quota b est e. ergo a b ad d e tota pars quota a ad d. sed a ad d mōstratus est tota ps quota c ad f. ergo a b primus ad d e tertium tota pars quota c ad f secundus ad quartum. Quod si a ad d sit partes penitus consimili modo per quintam argumentabere quomodo nunc per quartam de parte constat esse argumentatū. Planum itaq; est solidum esse propositum. Et si contingeret duos primos numeros duobus vltimis esse maiores: conuerso modo concludēdum esset tertium primi totam partem aut partes quota quartus secundi. quod facile monstrari potest ordine permutato con- stituendo scz duos vltimos priores et primum z secundū posteriores.
+
+<margin>29</margin>
+¶ Omnis numerus minor maioris pars est: aut co ab maiore quotiens potest de- tracto relinquetur ipsius aut pars aut partes.
+
+¶ Sint a b duo numeri a maior et b minor. dico b esse partem a vel eo detracto quoties poterit ab a remanere ipsius b aut partem aut partes. si enim b minor numerat a maiorem per diffinitionē b est pars a. si secus autem b non metitur a. subtracto igitur b quoties poterit ab a remanebit minor b. Nam si nihil remaneret numeraret a secundi numerum denominantē quoties substraheretur. quo- ties enim aliquis numerus ab aliquo substrahi potest: toties in ipso numerabilis est per sextā peti- tionem qui si remanet minor b per primam propositionem est ipsius b aut pars aut partes: quod est propositum.
+
+<vocab>primus, secundus, tertius, quartus, quintus, sextus, pars, partes, numerus, propositio, quotiens, quota</vocab>

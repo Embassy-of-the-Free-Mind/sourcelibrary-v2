@@ -1,0 +1,45 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>49</page-num>
+<header>Vom Schach-Spiel.</header>
+<margin>4. cap:</margin>
+
+Obersten und Führern / viel besser können erkennet / und wie sie / genaturet seynd / abgemercket werden.
+
+Findet man derowegen / bey Jeglichen Theile / sechszehen Steine : welche / wie Sie / in zween hauffen / von ein ander abgesondert / also an der zahle der Steine / gleich / und nuhr an farben / unterschieden seynd.
+
+Achte derselben / heisset man / die Haupt-Steine / und werden / wie folget / genennet :
+
+<image-desc>A list of chess pieces with hierarchical grouping indicated by large curly brackets.
+1. Der König /
+2. Die Königin /
+3. 4. | (bracketed) | Rochen / | (bracketed) | Einer des Königes /
+5. 6. | Zween | Schützen / | (bracketed) | der Ander / der
+7. 8. | (bracketed) | Reuter / | (bracketed) | Königin.
+</image-desc>
+
+1. Der König /
+2. Die Königin /
+3. 4. { Rochen / } Einer des Königes /
+5. 6. } Zween { Schützen / } der Ander / der
+7. 8. { Reuter / } Königin.
+
+Diese Acht fürnehmste Steine / wan man auf dieses Spieles Zweck / zielen wil : können folgender gestalt / hinwider unterschieden werden : Als / in den General Feld-Herren / bey welchem alles gelegen / und umb dessen willen / die Andere Steine / sich / zu diesem Kriege / begeben : nemlich den König : In den Feld-Marschalck / als / die Königin : In die Obersten und Befehlshabere / als / die Rochen : In die Reuterey / als / die Reuter : In die Doppel Soldner / als / die Schützen : Dan Sie billicher / als / die Spiesse-träger / (wie *Johan : Jacobi von Wallhausen / in seiner Krieges-Kunst zu Fuss / pag : 59.* nicht ohne ursachen / wider den ungrischen gebrauch / vermeynet) des doppelten Soldes würdig.
+
+Die übrigen Acht Steine / welche in der audern Zwerch-linie / und nechsten feldern / für den obangedeuteten Haupt-Steinen / stehen / werden / in diesem *Tractat*, die Soldaten / durch welche / das Fussvolck angedeutet wird / genennet.
+
+*Fr. Jacobus de Casallis, (in Tractatu de Moribus Hominum & Officio Nobilium)* Imgleichen / *Jacobus Publicius Florent : (in suo de Oratore & Artificiali Memoriâ, libro)* theilen diese Steine / in sondersbahre Empter / und geben ihnen dahero / folgende unterschiedene Mahmen.
+
+<image-desc>A tabular diagram mapping noble chess pieces (top row) to their corresponding commoner or pawn counterparts (bottom row) via vertical connecting lines.</image-desc>
+
+| Interrex. | Eques Auratus. | Vir Consularis. | Rex. | Regina. | Vir Consularis. | Eques Auratus. | Interrex. |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | | | | | | | |
+| Colonus. | Faber. | Scriptor. | Thesaurarius. | Medicus. | Caupo. | Teolonarius. | Lusor. |
+
+Diese wollen / wie es scheinet / das *Schach-Spiel* / auf ein gantz Regiement / dessen Stände und Empter / ziehen. Ob es nuhn wol dahin / eigentlich nicht gerichtet / so seynd wir doch vorhabens / zu des Lesers lust und wolgefallen / an seinem Orte / weitleuffigere erinnerung / ins künfftige / hievon zuthun.
+
+<sig>S ij</sig>
+<meta>catchword: Wie</meta>
+
+<vocab>Schach-Spiel, Haupt-Steine, König, Königin, Rochen, Schützen, Reuter, Soldaten, Fussvolck, General Feld-Herren, Feld-Marschalck, Johan Jacobi von Wallhausen, Jacobus de Casallis, Jacobus Publicius Florent, Interrex, Eques Auratus, Vir Consularis, Rex, Regina, Colonus, Faber, Scriptor, Thesaurarius, Medicus, Caupo, Teolonarius, Lusor</vocab>

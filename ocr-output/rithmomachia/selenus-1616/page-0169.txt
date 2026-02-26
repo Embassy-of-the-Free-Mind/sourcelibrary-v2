@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>139</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>S iij</sig>
+<meta>catchword: noch</meta>
+
+<margin>8. cap:</margin>für die andere Steine/ und den vorzug/ mit mehrem nutzen / genom=
+men/ dan gegeben/ und stehet einem Spieler/ daß ers dergestalt ma=
+che/ zu rahten. Er muß aber das Spiel/ also/ daß Er/ die lücke des
+Soldatens/ wider ergänze/ und in der eyle zumache/ anzuordnen
+wissen. So ist auch der Roche / ein fürnehmer gültiger Stein / auf
+welchen man sich/ zu jederzeit/ fürnehmlich aber/ wan das Spiel/ auf
+die letzte/ in etwas gefährlich wird/ und sich/ zum verlust anlasset /
+wol zu verlassen hat.
+
+Es mugens/ (5.) die unerfahrne gleich achten / wan Sie vom
+Gegener/ welchem Sie einen Rochen/ zum Vortheil gegeben/ einen
+Reuter/ hinwider nehmen/ vermeynend / sie wollen sich ihres Reu=
+ters besser/ dan des Rochens/ gebrauchen. Sie legen aber/ die rechen=
+schaft/ nicht recht zu. Dan es ist ein grösserer Vortheil/ einen Ro=
+chen/ für einen Reuter/ alsz des Königes-Schützens-Soldaten/ oder
+den vorzug / weg zu geben : und ist für die / welche / mit demselben
+Soldaten/ und vorzuge/ wenig vortheil und nutzen / ihnen zu schaf=
+fen wissen/ noch gefährlicher : in betrachtung/ dieselben/ einen fehler/
+nach dem andern/ folgendes begehen.
+
+So fern/ (6.) einem die wahl gegeben wird/ nebest dem Reu=
+ter/ entweder des Königes-Schützens-Soldaten/ und zween Züge :
+oder den König in einen Winckel zu stellen/ und zween Züge/ zu neh=
+men : auf den fahl / nimt Er / mit mehrem nutzen/ den Reuter und
+Soldaten/ zusamt den beeden Vorzügen/ alsz den König / dergestalt
+gesetzet/ nebest den zween Zügen. Dan/ auf jenem fahl/ alle Stei=
+ne/ tüchtiger und geschickter seynd/ den Streit/ mit mehrer freyheit/
+anzufahen/ und des Andern Steine/ gefangen zu nehmen : Wie dan
+auch/ der ander/ seinen König/ wegen mangel dessen Schützens-Sol=
+datens/ wol muß in acht nehmen.
+
+Ferner seynd (7.) etliche/ welche dem Gegener/ pflegen zum
+vortheil zu geben/ daß die Königin/ ausser ihrem gewöhnlichem gan=
+ge/ wie ein Reuter/ auf der Schach-Tafel / könne gezogen werden /
+und lassen sich/ dafür / einen Reuter / gleichsam / alsz wan Sie / im
+tauschen gewönnen/ und sehr wol fischeten/ hinwider einantworten.
+Sie irren aber weit : dan die Königin/ ein solcher Stein ist/ der mehr
+thun/ und weiter / alsz die andern alle / gezogen werden kan : und/
+wan ihr / die macht / gleich dem Reuter / herumb zu wandern /
+noch darzu/ gegeben wird / ist ihr / sehr schwer / und mühesam /
+zu widerstehen. Dan Sie / weyl der Schach des Reuters /
+nicht kan bedecket werden / und dieselbe / alle gänge / ohne das /
+zu gehen vermag / ohne Jehmandes hülffe / ob gleich der feind /
+
+<vocab>Schach-Spiel, Roche, Reuter, König, Königin, Soldaten, Schach, Schach-Tafel</vocab>

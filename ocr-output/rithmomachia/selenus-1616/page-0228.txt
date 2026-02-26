@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>198</page-num>
+<header>Das Ander Buch / II. cap:</header>
+
+so nimt der Weisse / des S. K. Schützen / mit der K. Soldaten: Der Schwartze / des W. K. Schützens-Soldaten / mit seines K. Soldaten: Der Weisse / denselben / mit seiner K. Schützen: und kan ihm / auf die weyse / das Spiel / so fern Er zu spielen weiß / nicht entstehen. Dan Er / wan sein König / über seinen Schützen / auf zwey springet / des S. K. Reuter / welcher ihm nicht entfliehen kan / gewißlich ertappet / und des feindes vorhaben / wan Er nuhr ein geringes / auf die Schach-Züge verschlagen ist / ferner leichtlich zu vernehmen hat.
+
+13. Wan aber der Schwartze / nicht den Reuter / (n. 10.) besondern des K. Schützen / auf eylfe / ziehet / und dem W. Könige Schach beut: so spielet ihn / der Weisse / auf zwelfe: der Schwartze / des K. Schützen / auf sieben und viertzig: Dan sonsten / der Weisse / ihm einen Haupt-Stein (wan derselbe / des K. Rochens-Soldaten / auf seines K. Reuter / auf siebenzehen ziehet) oder einen Soldaten / (wan derselbe / mit des K. Schützens-Soldaten / seines K. Soldaten ungehindert folgendes hinweg nimt) abgewinnet / und zum Vortheil erlanget.
+
+14. Wan aber der Schwartze / den Reuter / auf 26. (n. 9.) nicht ziehet / besondern / des W. K. Schützens-Soldaten / mit seines K. Soldaten / nimt: so ziehet der Weisse / der K. Soldaten / auf des S. K. Schützen / auf neun und zwantzig: Der Schwartze / denselben / auf sieben und viertzig: Der Weisse / nimt / des S. K. Soldaten / mit seiner K. Schützen: und ordnet also / sein Spiel / besser / dan sein Gegentheil.
+
+15. Wan aber der Schwartze / ehe Er / den W. Soldaten / (n. 14.) wegraumet / des W. K. Reuter / mit seines K. Schützen / hinweg nimt: so ergreiffet ihn / der Weisse / mit seines K. Rochen: (welches dan (gestalten sachen nach) der beste zug ist: dan / wan Er / erstlich / des S. K. Soldaten / mit seines K. Schützens-Soldaten / nimt / und auf des S. K. Reuter / ziehet: der Schwartze / mit des K. Schützen / seines K. Rochens-Soldaten nimt / und / wan demselben / gleich / der Schütze / durch seines K. Rochen / folgendes genommen wird: einen Soldaten / zum vortheil gewinnet) der Schwartze / nimt / des W. K. Schützens-Soldaten / mit des K. Soldaten: der Weisse / (auf daß Er / auf denselben / der K. Schützen entblöße / und zugleich seines K. Soldaten / beschütze) ziehet der K. Soldaten / auf ein und zwantzig: Der Schwartze / (ihn zu beschützen) des K. Reuter / auf drey und dreyssig: Der Weisse / die Königin /
+
+<meta>catchword: auch</meta>
+
+<vocab>Schach, Weisse, Schwartze, Schützen, Reuter, Rochen, Soldaten, König, Königin, Haupt-Stein</vocab>

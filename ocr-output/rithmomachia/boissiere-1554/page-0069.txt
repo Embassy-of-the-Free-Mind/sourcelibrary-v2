@@ -1,0 +1,13 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+ainſi que le combatant ayant inuadé le camp de ſon aduerſaire & en iceluy rend cōforme l'ex-ercite à ſa volonté ſans contradiction obtient victoire. Semblablement la conformité & armo-nie des nombres, qui au camp de l'aduerſaire con-ſtitue le tant noble equipage des proportions donne à ſon ſeigneur & conducteur victoire treſ-glorieuſe. Or auons nous trois ſortes de victoires propres, A ſçauoir mediocre, grande & excel-lente.
+
+### Des victoires mediocres.
+
+Victoire mediocre eſt quand le combatant peult conſtituer au camp de ſon ennemy trois tables, deſquelles les nombres ſoient diſpo-ſez ſelon vne proportion, ſoit d'Arithmeticque, Geometrie ou Muſique. Proportiō d'Arithme-ticque eſt, quand les differences que les deux ex-tremes nombres ont au moyen, ſont egales: comme tu vois en ces trois nombres 2, 4, 6. La difference qu'à le premier qui eſt 2, au moyen 4, c'eſt 2, & auſſi la difference qu'à le dernier 6, au moyen 4, c'eſt 2, & par ainſi conclueras 2, 4, 6, & toutes autres telles, eſtre proportion d'Arithmeticque.
+
+<meta>catchword: Eexm-</meta>
+
+<vocab>Rythmomachie, proportions, Arithmeticque, Geometrie, Muſique, victoire mediocre, nombres</vocab>

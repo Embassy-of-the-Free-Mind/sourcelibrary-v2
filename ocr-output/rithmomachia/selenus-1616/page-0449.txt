@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>415</page-num>
+<header>7. cap: Vom Schach - Spiel.</header>
+
+Weiße/ nimt / der S. K. Schützens = Soldaten / mit des K. Sol =
+daten : Der Schwarze/ beut / mit der Königin / auß viertzig/
+Schach : Der Weiße/ bedecket/ den König/ mit der K. Reuter/ auf
+zwey und zwantzig/ vertheidiget damit/ des K. Schützen/ und ziehet
+ihn/ auf der S. K. Soldaten : Der Schwarze/ denselben/ auf ihn/
+<margin>4.</margin> auf neun und zwantzig : * Der Weiße/ die Königin/ auf der S. K.
+Schützen/ ihren = und des S. K. Reuters = Soldaten / auf sechs und
+zwantzig : Der Schwarze/ nimt / mit seiner K. Schützen / (die =
+weyl Er denselben / mit dero Rochen / auß ein und sechßzig / nicht
+entsetzen wil) der W. K. Schützen : Der Weiße / der S. K. Sol =
+daten / mit der Königin : Der Schwarze / auf dieselbe / (umb / des
+K. Reuters = Soldaten / zu beschützen) des K. Schützen / auf drey
+und viertzig : Der Weiße / beut / mit derselben / auß acht und zwan =
+tzig / Schach / und rucket sie / auf der S. K. Reuters = Soldaten :
+Der Schwarze / bedecket / den König / mit seinem Reuter / auf zwey
+<margin>5.</margin> und funffzig : * Der Weiße / nimt / mit der Königin / der S. K. Reu =
+ters-Soldaten/ und ziehet dieselbe / auf dero Rochen / und Schützen :
+Der Schwarze / (so fern Er / der K. Schützen / nicht / auf diesel =
+be / auf sechs und viertzig / rucken / und dieselbe / ins drey und zwan =
+zigste feld / treiben wil) nimt / mit des K. Schützen / der W. K. Reu =
+ter / und beut Schach : Der Weiße / raubet denselben / mit dessen
+Soldaten : (Dan / wan Er den König / auf fünfe ruckete : Der
+Schwarze / mit der Königin / auß ein und sechßzig / Schach = und
+folgendes / auß dreyzehen / dieweyl Er / seinen König / mit der K.
+Schützen / bedecken müste : Schach = Mat geben würde) Der
+Schwarze/ nimt ihn/ mit der Königin : beut abermal Schach / und
+<margin>6.</margin> rucket dieselbe / auf der W. K. Rochen : * Der Schwarze / den Kö =
+nig/ auf fünfe : Der Schwarze / der K. Rochen/ (auß der gefahr)
+auf ein und sechßzig / und beut Schach : Der Weiße / (umb demsel =
+ben zu wehren ) muß der K. Schützen / auf dreyzehen / ziehen : Der
+Schwarze / nimt denselben / oder der W. K. Rochen / mit seiner
+Königin / und gibt / Schach = Mat.
+
+<margin>7.</margin> Rucket aber der Weiße / den König / nicht auf 5. (n. 6.) beson =
+dern / bedecket ihn / mit der K. Schützen / auf dreyzehen / und ziehet
+denselben / auf die S. Königin : so nimt / der Schwarze / mit der =
+selben / der W. K. Rochen / und beut Schach : Der Weiße / muß den
+König / mit der K. Schützen / auf sechs / bedecken : Der Schwarze /
+nimt ihn / mit der Königin / und gibt Schach = Mat.
+
+<margin>8.</margin> Ist also das rauben / nicht allezeit / nützlich / besondern * der
+
+<sig>Ggg</sig>
+<meta>catchword: Weiße/</meta>
+
+<vocab>Schach-Spiel, König, Königin, Schützen, Reuter, Rochen, Schach-Mat, Soldaten, viertzig, zwantzig, sechßzig</vocab>

@@ -1,0 +1,58 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>31</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>2, cap:</margin>
+Stein-Spiel / zu spielen wissen: auf daß nicht / ihre widerpart / ,,
+auf einen ihrer Steine / zween zu rücken / gelegenheit erlange / ,,
+noch ihr Stein ohne seinen geferten / streiten / und spielen dörfe / ,,
+und Sie also / dieweil der Gegener / sein angefangenes vorha- ,,
+ben / zum öftern übersiehet / und darauf acht hat / das Spiel / ,,
+zum begerten ende zu bringen / verhindert werde. ,,
+
+Zum dritten / lib: 2. Tristium, pag: 461.
+> Discolor ut recto, grassetur limite Miles, ,,
+> Cum medius gemino, calculus Hoste perit. ,,
+> Ut magè velle sequi, sciat & revocare priorem, ,,
+> Nec tutò fugiens, incomitatus eat. ,,
+
+->Das ist:<-
+Es haben auch etliche geschrieben / wie einer seinen Stein / ,,
+welcher / einer andern farbe ist / alß seines Gegeners Steine ,,
+sind / mit vortheil / und (auf daß / wan derselbe genomen wird / ,,
+der ander / dadurch auch / nicht viele erjagen könne / besondern ,,
+dessen Stein / mit / auf dem platze / bleiben müsse) so viel müg- ,,
+lich / unvermercket ziehen: auch einen seiner Steine / welcher ,,
+vom gegentheil umbringet / und in grosser gefahr / daß er möchte ,,
+genommen werden / stecket / entsetzen: imgleichen / sich mehr / sei- ,,
+nem Steine / zu rücke zu helfen / dan den feind / gar zu hitzig zu ,,
+verfolgen / befleissen: und endlich seine Steine / auf daß sie / ,,
+dem hereintringendem feinde / sicher weichen können / immer ,,
+wol besetzet / auf der Schach-Tabel ziehen und führen sol. ,,
+
+<margin>lib: 14. Epigr: 20.</margin>
+Martialis, gedencket im gleichen fahl / dieses Spieles / lib: 14.
+Epigr: 20.
+> Insidiosorum si ludis bella Latronum, ,,
+> Gemmeus iste tibi, Miles & Hostis erit. ,,
+
+->Das ist:<-
+Wer den Schach / recht wol ziehen wil / ,,
+Der hat der Freund und Feind gleich viel. ,,
+
+<margin>eod: libro, Epig: 17.</margin>
+Weiter schreibet itztgedachter Martialis eod: libro, Epig: 17.
+noch von einer anderen Art / folgender gestalt:
+> Hic mihi Bisseno, numeratur tessera puncto, ,,
+> Calculus hic, gemino, discolor, Hoste perit. ,,
+
+Ebener massen / erwehnet Bernardin: Rutilius J.C. in Vitis Ve-
+terum JCtorum, in vitâ P. Mutij Scævolæ, pag: 197. 198. eines Spie-
+les / von zwelf Steinen / welches dieser fürtrefliche Jurist sehr künst-
+lich sol gespielet haben / und möchte vielleicht / (do ferne nicht / das
+
+<sig>E</sig>
+<meta>catchword: jehni</meta>
+
+<vocab>Schach-Spiel, Stein-Spiel, Gegener, Tristium, Martialis, Miles, calculus, Epigramma, Bernardin Rutilius, P. Mutius Scævola, JCtorum</vocab>

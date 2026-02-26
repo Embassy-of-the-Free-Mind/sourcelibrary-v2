@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>41</page-num>
+<header>DES PHILOSOPHES.</header>
+
+12.15.29. mais ie te diray , si toutes trois y sont
+cōtenues, tu ne peux faillir à y trouuer les deux.
+Quand aux autres victoires que i'ay adioustées,
+ie l'ay faict affin que le ieu, lequel par cy deuant
+estoit de peu de gens cogneu, fust non seulement
+facile aux doctes , mais aussi peust par les rudes
+facilement estre entendu . Et que le bien detenu
+en particulier & presque aboly, fust departy &
+restitué à la republique . Et s'il y a autre chose
+changée ou adioustée, suis prest à en rendre rai-
+son suffisante, quand besoing sera.
+
+### Autre plaisante forme de iouer.
+
+Svyuant le rapport de Thomas Randulphe,
+homme studieux en l'vniuersité de Paris, m'a
+esté communiquée vne copie du ieu de Rythmo-
+machie par treshumaine personne Thomas To-
+clife Anglois, hōme certainement de grand eru-
+dition, & doctrine aux disciplines, laquelle co-
+pie (comme i'ay entendu) a esté extraicte d'vn
+ancien liure Chaldée, & la forme de iouer aucu-
+nement est differente de la precedente, & tou-
+tesfois ne differe beaucoup de la demarche des
+eschets, certainement suis d'opinion ceste ma-
+niere de iouer estre l'acomplissement, & perfe-
+ction de nostre ieu, & presuppose que aucuns an-
+
+<sig>F</sig>
+<meta>catchword: an-</meta>
+
+<vocab>Rythmomachie, Thomas Randulphe, Thomas Toclife, Paris, Chaldée, eschets</vocab>

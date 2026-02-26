@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+
+->Bericht.<-
+
+Damit Du / m. l. Leser / diesen Bericht / ordentlich
+begreiffen wilt / so habe ich denselben in Sechs Capittel / abgetheilet /
+in welchem zu befinden / was in dencklichen / absonderlich / und per
+puncten zu merken ist /
+
+Zum Ersten die Form des Brets / oder Form / so auff der Ta-
+fel / und hernach Creutz / oder Cräutzweiß / werden / auff / und
+durchfahren / auff dreyerley Weise / gebrauchest.
+
+Im andern die Züge / welche man / auff die dreyerley Art /
+zu verrichten /
+
+Im dritten / die Sprünge / auff welche man / die
+Steine / fasset.
+
+Im Vierdten / die Ordnung der Steine / wie man
+die fasset / und angreifet.
+
+Im Fünfften / die Kunst und Vortheil des Brettspiels /
+wie man nemlich gegen ein andern / ein Spiel auffsetzen /
+sol / und wie man / die Steine / und Figuren / am künstreichesten /
+auff das Brett setzen / und die Steine / in den Zügen verlegen /
+und das Spiel zum Ende / bringen / und abschließen / magst.
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mask with wings and a beard, flanked by elaborate scrolling foliage and hanging ornamental tassels.</image-desc>
+
+->ENDE<-
+
+<vocab>Bericht, Brettspiel, Steine, Capittel, Creutz, Züge, Sprünge, Figuren</vocab>

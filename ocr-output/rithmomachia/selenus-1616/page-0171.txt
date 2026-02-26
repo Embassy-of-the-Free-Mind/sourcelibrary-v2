@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>141</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Das</meta>
+
+<margin>3. cap:</margin>
+
+worden) zum vortheil gibt / daß er / den König / in eine ecke ſtellen
+möge : mit ſeinem Könige / wan ihm gleich **Schach** geboten worden /
+und man ſich / nicht anderſt / etwa vorher vertragen / ungehindert zu
+ſpringen / erlaubet ſey.
+
+Nebeſt dem / daß man zuzeiten / ehe man anfanget zu Spielen /
+umb dergleichen vortheil / (wie obgedacht) ſich bekümmert : iſt doch
+faſt nötiger / daß man / umb beſſerer richtigkeit willen / einer gewiſ-
+ſen art und weiſe / deren nach man / das Spiel zu führen gemeinet /
+mit dem Gegener / ſich zuvoderſt auch vereynige. Dan / man muß
+hie eine gründliche / und deutliche erklärung / bey allen ſachen haben :
+Alß : Ob die Soldaten / ſich des ſchlagens zu euſſern / und ein ander
+furüber zu ziehen : Item / ob die Könige / wan ihnen **Schach** geboten
+wird / ſo ferne Sie / von ihrer ſtelle / noch niehe gewichen / demſelben /
+mit einem Sprunge / zu entweichen : Item / ob alle Soldaten / ohne
+unterſcheid / ins dritte feld zu ſpringen / macht haben? ꝛc.
+
+Schließlich hat man ſich auch / wegen des vorzuges / zu verglei-
+chen : Es wehre dan derſelbe / einem albereit zum vortheil gegeben /
+oder gebührete einem von Rechtes wegen : wan nemlich derſelbe /
+dem Andern / einen vortheil gegeben / und dieſer ihm / den vorzug /
+nicht außdrucklich / im vertrage vorbehalten / oder außgedinget het-
+te : Sonſten wer gewonnen hat / der fanget / das folgende Spiel / all-
+zeit wieder an. Man wolte dan / auf den gebrauch etlicher Orter / ſe-
+hen / daſelbſten der uberwundene / ſo ferne das Spiel / umb kein auf-
+geſetztes geld / gezogen worden / einem andern / der mit ſeinem über-
+winder / hinwider ſpiele / ſeine ſtelle / abzutreten ſchuldig. Auſſer die-
+ſen fällen / ſo wird gemeinlich / einer / auß den Acht geringſten Stei-
+nen / auf die Tabel / oder **Schach-Bret** geworffen. Berüret nuhn
+derſelbe / mit dem fuſſe / ein **Weiſſes** feld / ſo fähet derſelbe
+an / welcher den **Weiſſen** hauffen führet : Bleibet er a-
+ber / auf gedachte weiſe / in einem **ſchwartzen** fel-
+->de / ſo machet der / mit den **Schwartzen**<-
+->**Steinen** / einen anfang / ꝛc.<-
+
+<image-desc>A decorative woodcut tailpiece with symmetrical scrollwork and foliage surrounding a central lion-like mask or grotesque face.</image-desc>
+
+<vocab>Schach-Spiel, König, Schach, Soldaten, Schach-Bret, Weiſſen, Schwartzen, Vorzug</vocab>

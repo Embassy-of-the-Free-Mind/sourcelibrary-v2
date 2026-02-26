@@ -1,0 +1,44 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>128</page-num>
+<header>Das Ander Buch / 1. cap:</header>
+
+<image-desc>A woodcut diagram showing two partial sections of a chessboard layout. Each section is a 2x3 grid. In the left section: 'S.K.' is in the top-left square, 'W.Sc.' is in the middle-center square, and 'W.K.' is in the bottom-center square. In the right section: 'S.K.' is in the top-right square, 'W.Sc.' is in the middle-right square, and 'W.K.' is in the bottom-right square. This illustrates stalemating the King.</image-desc>
+
+gens : des Weissen Königes-Schütze / im andern : und der Weisse
+König / im dritten felde / des gedachten Schwartzen Schützens /
+stünden : so wehre der Schwartze König / nahr eingesperret :
+Item, wan der Schwartze König / in seiner Königin-Rochens
+feld gezogen : und der Weissen Königin-Schütze / in der Schwar-
+tzen Königin-Schützens / anderem : der Weisse König aber / in
+dero Reuters drittem felde/ vorhanden : so wehre / der Schwartze
+König / ohn einigen Schach / eingeschlossen. Bey dieser einsper-
+rung nuhn / wird nichts gewonnen / Dan man dem Könige /
+nichts feindliches/ dadurch anmuhtet / besondern Er kan sich / in
+seinem felde / alß in einer Festung wol aufhalten / und hat nicht
+nötig/ weyl an ihm der Zug/ sich selbest / in den Schach zu begeben.
+Mags ihm der Ander/ demnach selber zu rechnen / daß Er / zu die-
+sem falle / kommen lassen: und sich auf ein ander mahl / besser vor-
+sehen / auch des Gegeners Könige / auf daß Er möge gezogen wer-
+den / allezeit / biß Er ihm endlich / gebärender weyse / könne
+<term>Schach-Mat</term> geben / luft und die freyheit lassen. Sonsten in
+Hispanien / daselbsten es die besten Schach-Zieher gibt / ver-
+lieret einer / wan Er den König einschleust / nicht das gantze
+Spiel / besondern man lasset es zum vertrage kommen / und wird
+nuhr der halbe theil des auffatzes / verspielet : anderswoh / ver-
+schertzet der jennige / welcher den König einsperret / den auffatz
+zehenfach.
+
+Endlich kan der <term>Schach-Mat</term> / nicht zu wercke gerichtet
+werden / wan auf beeden seiten / gleiche Steine vorhanden / und des
+einen hauffens Steine / die andern / den <term>Schach-Mat</term> zu geben / ver-
+hindern : oder aber / bey dem sterckesten hauffen / solche Steine / wel-
+che keinen <term>Schach-Mat</term> / zu wege bringen können / noch übrig seyn : zum
+Exempel / wan auf beeden theilen / die Königin : oder auf der einen sei-
+ten zwar die Königin : auf der andern aber / nuhr ein Soldat / welcher
+mit dem nächsten Zuge / zu einer Königin / nicht alleine gemachet /
+besondern auch / von dem Könige / beschützet werden könte / vorhanden.
+
+<meta>Catchword: Dan</meta>
+
+<vocab>Schach-Mat, König, Königin, Schütze, Reuter, Soldat, Rochens, Hispanien, Schach-Zieher, stalemate, stalemate rules</vocab>

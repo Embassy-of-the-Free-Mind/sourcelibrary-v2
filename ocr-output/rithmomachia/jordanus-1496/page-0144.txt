@@ -1,0 +1,38 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>
+E
+Dī uus Se ue ri nus Bo e ti us ¶ Jor da nus.
+</header>
+
+| Numerorum proprietates. | Caput. | Liber. | Propositio. | Liber. |
+| :--- | :---: | :---: | :---: | :---: |
+| **Medietas geometrica.** | | | | |
+| 1 | 43 | 2 | | |
+| 2 | 44 | 2 | 1 | 2 |
+| 3 | 44 | 2 | 3 | 2 |
+| 4 | 44 | 2 | 20 | 10 |
+| 5 | 44 | 2 | 5 | 2 |
+| 6 | 44 | 2 | 25. 26 | 2 |
+| 7 | 44 | 2 | 0 | 0 |
+| 8 | 50 | 2 | 38 | 9 |
+| **Medietas musica.** | | | | |
+| 1 | 45 | 2 | 34 | 10 |
+| 2 | 47 | 2 | 37 | 10 |
+| 3 | 50 | 2 | 40 | 10 |
+| 4 ex musica | 48 | 2 | 32 | 3 |
+| **Quarta medietas.** | | | | |
+| 1 | 51 | 2 | 7 | 2 |
+| **Quinta medietas.** | | | | |
+| 1 | 51 | 2 | 7 | 2 |
+
+---
+
+->¶ Epitomes librorum Arithmeticorum Boetii finis.<-
+
+### ¶ Jacobus Stapulensis Bernardo Ulencario doctori medico numerorum amatori.
+
+<margin>C</margin>
+Considerasti mi Bernarde: oēs disciplinas ad quas generoso spiritu sit annitendum difficiles esse siquidem virtus oīs circa difficile versetur. verū hāc difficultatem nullos vnq̃ absterrere : preter eos solos qui de re litteraria male meriti quod capere diffidunt ceteris dissuadent: aut q̄ ipis inuideant velut felicioribus/ aut potius q̄ cos ipos nescire pudibūdum sit. At scis q̄ procul presertim ab hoc pclarissimo Parisiēsi studio liuor oīs absit/ q̄ ignorātia pellat/ q̄q̄ probent Clitomachū Cartaginiensem qui quadragesimū annum natus: primū studia litterarū petijt. in quibus adeo pfecit vt Carneadi fuerit successor. quominus dubitādum est hūc locum: tutam eē disciplinarum stationem/ securūq̄ portum: et vndecunq̄ aduenerint benigno excipi fauore/ peramicoq̄ hospitio. Quapropter cum Arithmetice & Musice supioribus diebus in studentū fauorem: huic loco tanq̃ asyllo cōmitterētur voluisti Rithmimachiā simul formari : ludum quidem numerorū non illiberalem/ sed quem deceat studiosos adolescentes cognoscere ne nimū tetrice videātur discipline & quo interdum studio defessi primi earum Tyrones solent animum et cum vtili ocio/ tum honesto vires custodiāt incolumes. tale profecto consilium medicum decuit. Et si qui hanc ludi honestatem amabunt: gaudebunt tua opera post serias disciplinas hic esse insertum. Introducunt Alcmeon mathematicus Pythagore discipulus: & Brōtinus & Bathyllus eius temporis adolescentes. Vale.
+
+<vocab>Boethius, Jordanus, Jacobus Stapulensis, Bernardo Ulencario, Rithmimachia, Arithmetica, Musica, Medietas geometrica, Medietas musica, Clitomachus, Carneades, Alcmeon, Pythagoras, Brontinus, Bathyllus</vocab>

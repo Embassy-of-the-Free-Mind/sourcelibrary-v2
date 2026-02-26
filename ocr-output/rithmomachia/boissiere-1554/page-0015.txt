@@ -1,0 +1,38 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+Pyramide pour les
+nombres pairs.
+
+->Des trois diverfi-<-
+->tez de tables.<-
+
+Pyramide pour les
+nombres impairs.
+
+<image-desc>The top of the page features three diagrams illustrating the game of Rythmomachia. On the left is a six-tiered stepped pyramid labeled "Pyramide pour les nombres pairs," showing the square numbers 1, 4, 9, 16, 25, and 36 on its tiers. In the center, geometric shapes (a triangle, a circle containing a cluster of pieces and the number 12, and a square containing a cluster and the number 160) are captioned "Des trois diverfitez de tables." On the right is a five-tiered stepped pyramid labeled "Pyramide pour les nombres impairs," with its top block showing the numbers 100, 16, and 4, and subsequent lower tiers showing pairs: 25 and 5, 36 and 6, 49 and 7, 64 and 8.</image-desc>
+
+## De l'application des nombres aux tables.
+
+Icy faudra repeter ce qu'auons dict des propor-
+tions en l'Arithmetique: à sçauoir qu'il y a
+trois simples proportions: qui font, multiplice,
+particuliere, & superpartiente.
+
+### De multiplice proportion.
+
+Proportion multiplice est quand vn nombre
+contient vn autre nõbre plus que d'vne fois:
+comme vn sols cõtient vn liard quatre fois: sans
+point de reste, de laquelle proportiõ cy apres mon
+strerons les especes. Et par ce qu'en ceste propor-
+tion l'vn nombre contient l'autre rondement, luy
+seront propres, & conuenantes les tables rondes.
+Prens donc icelles tables rondes, & apres auoir
+separé celles d'vne couleur des autres, marques
+en huict selon l'ordre naturel des nombres con-
+
+<meta>catchword: tenuz</meta>
+
+<vocab>Rythmomachie, Arithmetique, proportion multiplice, proportion particuliere, proportion superpartiente, liard, sols, tables rondes</vocab>

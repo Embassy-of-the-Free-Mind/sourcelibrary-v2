@@ -1,0 +1,16 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Heavy bleed-through from the reverse side of the page; however, the primary text remains legible.</warning>
+
+straction differeth not from the former, but for the opinion of them, that would haue the two takers stande onelye in the nexte spaces to hym that is taken.
+
+### ¶ Of takyng by Multiplication.
+
+Takyng by multiplication doth differ. For in this kynde of playng, it is thus. When your man standeth so, that beyng lesser then your aduersaries man, you may multiplie your man by the voyde spaces betwene them, and the product is all one to the aduersarye, you maye take hym up, not remouynge into his place, except you espye hym so, before you remoue your man.
+
+### ¶ Of takynge by Diuision.
+
+<meta>catchword: Lykewise</meta>
+
+<vocab>Philosophers game, Rythmomachia, multiplication, diuision, takers, product</vocab>

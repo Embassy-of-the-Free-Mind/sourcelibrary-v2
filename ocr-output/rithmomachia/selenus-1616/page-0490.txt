@@ -1,0 +1,31 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>456</page-num>
+<header>Das Ander Capittel/</header>
+
+<image-desc>
+Two rows of four dark, shaded circles containing numbers.
+Row 1: 3, 5, 7, 9
+Row 2: 9, 25, 49, 81
+Each number in the second row is the square of the number directly above it.
+Below these is a row of four dark, shaded triangles containing numbers: 12, 30, 56, and 90. These values are the sums of the pairs of circles above them (3+9=12, 5+25=30, 7+49=56, 9+81=90).
+</image-desc>
+
+Gleicher gestalt / werden die Zahle / der schwartzen / Dreyecke-
+ten Steinen / gefunden : Dan auß den zusamen=gerechneten Zahlen /
+der acht schwartzen Runden Steinen die Zahle / der vier ersten
+schwartzer Dreyecketen Steinen / nemlich von 3 und 9, 12 : von 5
+und 25, 30 : von 7 und 49, 56 : von 9 und 81, 90 : herkommen.
+
+<image-desc>
+A diagram illustrating numerical ratios and geometric numbers.
+The first row contains four circles with the numbers 4, 6, 8, and 10, labeled from left to right as "Tertia", "Quinta", "Septima", and "Nona".
+The second row consists of four triangles with the numbers 12, 30, 56, and 90, labeled as "Sesquitertia", "Sesquiquinta", "Sesquiseptima", and "Sesquinona".
+The third row consists of four triangles with the numbers 16, 36, 64, and 100.
+The labels describe the ratios between the numbers (e.g., 16/12 = 4/3 or Sesquitertia; 36/30 = 6/5 or Sesquiquinta).
+</image-desc>
+
+<meta>119</meta>
+<sig>Kkk</sig>
+
+<vocab>Zahle, schwartzen, Dreyecketen Steinen, Runden Steinen, zusamen=gerechneten, Tertia, Quinta, Septima, Nona, Sesquitertia, Sesquiquinta, Sesquiseptima, Sesquinona</vocab>

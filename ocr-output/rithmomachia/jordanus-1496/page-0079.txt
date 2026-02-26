@@ -1,0 +1,70 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>X</header>
+
+¶ Sint a b c numeri in hac medietate cōstituti ⁊ silit'r totidē d e f: sitqꝫ a ad b sicut d ad e. dico qꝫ a ad b vt d ad e ⁊ b ad c vt e ad f. nam si a c ⁊ d f sint equales: constat propositū. si nō: sint ergo d f maiores et a c minores. quia enī que ꝑportio d ad f totus ad totum: ea est a ad c detracti ad detractum: ergo ꝑquitam secūdi differētia d ad f ad differentiam a ad c residuum ad residuum: sicut d ad f totū ad totū quare medietas differētię d ad f que sit h ad dimidiū differētię a ad c que sit g ꝑ correlariū decimę quartę secundi sicut d ad f. etiam que proportio d ad f ea sit a ad c: ergo pmutatim d ad a sicut f ad c. cum itaqꝫ f ad c sicut h ad g: ergo per idem correlariū a ad b sicut d ad a. quare pmutatim d ad a sicut a ad b. et cōstitit ꝑbabilis favē sicut c ad b aut ecōtra. quod est propositum.
+
+<image-desc>A geometric diagram showing two parallel sets of line segments. The top set has a segment labeled 'g' (value 1) above a line divided into a (8), b (4), and c (2). The bottom set has a segment 'h' (value 2) above a line divided into d (4), e (2), and f (1).</image-desc>
+
+---
+
+<margin>20</margin>
+### ¶ Si in geometrica medietate tres numeri statuanr: erit que maximi ad medium: ea differentię ipsoꝝ ad differentiam medii ad mīnum propoꝝtio.
+
+¶ Sint a b c tres numeri in geometrica medietate dispositi ꝑ diffinitōēm que pportio a ad b ea est b ad c. et sit dīia a ad b nūerus d. et differētia b ad c mediij ad mīmū nūerus e. dico eādē eē ꝑportiōem a ad b et d ad e. capio enī b et vt totum et vnt detractum. et qꝫ que ꝑportio a ad b totiꝰ ad totum: ea est b ad c detracti ad detractum. igitur q̄ ꝑportio a ad b totius ad totū ⁊ maximi ad medium: ea est dīie a ad b ad differētiam b ad c per quitam secundi residui ad residuum. quod est propositum.
+
+<image-desc>Diagram with line segments labeled a, b, c and values 8, 4, 2. Below it, segments d and e represent the differences (4 and 2 respectively).</image-desc>
+
+---
+
+<margin>21</margin>
+### ¶ In hac medietate quod sub extremis cōtinetur: equale est quadrato medii.
+
+¶ Hec ex diffinitione et vīcesimasexta secundi statim cognoscitur.
+
+---
+
+<margin>22</margin>
+### ¶ In eadem medietate duo extremi ꝑiūncti: maius sunt q̄ medius duplicatus.
+
+¶ Hec itidem statim cognoscitur per vicesimāquartam secundi: sumpto medio ꝑ secundo ⁊ tertio.
+
+<image-desc>A diagram showing numbers 8, 4, 4, 2 arranged on segments labeled a, b, b, c, illustrating that 8 + 2 > 4 + 4.</image-desc>
+
+---
+
+<margin>23</margin>
+### ¶ In eadem medietate quāto maximi ad medium maior est proportio: tanto etiam maximi ⁊ minimi ad duplum medii maior erit proportio.
+
+¶ Sint a b c ōtinue proportiōales: et d e f idētidem cōtinue proportiōales sed in maiore ꝑportione. dico qꝫ quāto maior est ꝑportio a ad b q̄ d ad e: tāto maiorem esse proportiōem a et c ad duplum b q̄ ꝑportio e et f ad duplum e. sit enī g differētia a ad b / et h differentia b ad c / siliter k differentia d ad e / et l differētia e ad f. et quo g excedit h sit m / quo x k excedit l sit n. quia enī maior est ꝑportio a ad b q̄ d ad e: ergo ꝑ duodecimam secūdi a ad b totius ad totum maior est ꝑportio q̄ b ad c detracti ad detractum. ergo per decimātertiam eiusdem g ad k residui ad residuum maior est ꝑportio q̄ a ad b totius ad totum: quare multo fortius q̄ b ad c detracti ad detractum. qꝫ igitur g ad k maior est pportio q̄ b ad e: igitur ꝑ duodecimam eiusdē g ad b maior ꝑportio q̄ k ad e. quare per undecimam eiusdem b ad g mīor pportio q̄ e ad k. et per vicesimam huius g ad h maior est pportio q̄ k ad l. nam g ad h vt a ad b / et k ad l vt d ad e. quare eadem argumētatiōe qua paulo ante g ad m mīor ꝑportio q̄ k ad n. quare per quintam quinti erit b ad m minor ꝑportio q̄ e ad n. ꝑ eandem igitur duplū b vt o ad m minor ꝑ portio q̄ dupli e vt p ad n. et qꝫ a et c supant duplum b q̄tum est m: et siliter cōpositus ex d ⁊ f excedit p duplum e tūtum est n: vt facile ex precedente cognoscas. et pportio p ad n maior pportione o ad m. igitur per scdām partem decimequite scdi p ⁊ n ad p mīor ꝑportio q̄ o ⁊ m ad o. igitur o ⁊ f simul ad p proportio minor q̄ a et c simul ad o. quod est propositum.
+
+<image-desc>Complex geometric diagram with many horizontal segments and points labeled with various letters (a, b, c, d, e, f, g, h, i, l, m, n, o, p) and numbers (4, 2, 1, 12, 6, 3) illustrating proportional differences.</image-desc>
+
+---
+
+<margin>24</margin>
+### ¶ Si quotlibet numeris in hac medietate sumptis totidem alii eiusdem proportionis maiores maioribus addātur: compositi quoqꝫ in hac medietate inueniētur dispositi.
+
+¶ Nam si que ꝑportio a ad b et b ad c: ea sit d ad e et e ad f. igitur pmutatim que proportio a ad d: ea est b ad e ⁊ c ad f. igitur ꝑvicesimamsecūdi que proportio a ad b: ea erit compositi ex a ad d ad ꝑpositū b e. et compositi b e ad compositum c f. quod est propositum.
+
+<image-desc>Diagram with two sets of lines: a-4b-2c-1 and d-12e-6f-3, showing how sums of proportional numbers maintain their relationship.</image-desc>
+
+---
+
+<margin>25</margin>
+### ¶ Si dispositis aliquot numeris in hac medietate numeri equales singulis addātur: erit inter compositorum maiores proportio maior.
+
+¶ Sint a b c in geometrica medietate dispositi: et d eoꝝ differētie: et f numerus singulis addēdus. quia igit' quo abundat f a sup f b est d. et quo abundat f b sup f c est e. et per nonam secūdi f ad d mīor est ꝑportio q̄ f ad e. et per vicesimam huiꝰ pmutatim argumētando a ad d vt b ad e: per idem erit f a ad d maior ꝑportio q̄ b f ad e. itidem ꝑ proportio b f ad e maior q̄ c f ad e. et quia d ad e vt a ad b vt dictum est: et differentia a f ad b f est d. et differētia b f ad c f est e: erit ꝑportio a f ad b f maioꝝ q̄ b f ad c f. et quāto differētia fuerit maior: tanto dīia vnius ꝑportionis sup differētiam alterius erit maior.
+
+<image-desc>Diagram featuring semicircular arcs connecting numbers 10, 6, 4 and 40, 36, 4, with labels a, b, f and d, e.</image-desc>
+
+---
+
+<margin>26</margin>
+### ¶ Si quotlibet numeris in hac medietate datis: totidem alii in eadem quidē medietate sed non fm eandem proportionem sumpti: maiores minoribus addantur: inter compositorum maiores: maiorem esse proportionem conueniet.
+
+¶ Sint ōtinue ꝑportiōales a b c ⁊ siliter d e f: sed in mīori ꝑportiōe. dico qꝫ a ad b e maioꝝ ꝑportio q̄ b e ad c f. sit enī gꝫ ex a in f pducit/ g. et qꝫ ex b in e/ h. et qꝫ ex d in c: k. per primam quīti ꝑportio g ad h est dīia ꝑportiōis a ad b sup ꝑportiōem e ad f. sed ⁊ ꝑportio h ad k est per eadem dīia ꝑportiōis b ad c sup proportiōem d ad e. quare sicut g ad h: ita h ad k. quare per vicesimāscdm am huiꝰ g et k plus sunt q̄ duplū h. er qꝫ qꝫ ex a in c ⁊ qꝫ ex d in f sūt qꝫtū qꝫ ex b in se ⁊ e in se ꝑ vīcesimāseptam scdī erūt ergo eadez cū g ⁊ k maius q̄ quadrata b ⁊ e cum duplo h. māiꝰ q̄ qꝫ ex a d in c f qꝫ ex b e in se. et ideo maioꝝ ꝑportio a d ad b e q̄ est b e ad c f ꝑ vicesimāseptimam secūdi. qꝫ est propositum.
+
+<image-desc>Linear diagram with points labeled g, a, d, h, b, e, k, c, f and numbers 16, 12, 9 above them.</image-desc>
+
+<vocab>geometrica medietate, proportio, differentia, extremis, quadrato medii, duplum medii, continuae proportionales</vocab>

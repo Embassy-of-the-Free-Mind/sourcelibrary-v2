@@ -1,0 +1,22 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>32</page-num>
+<header>Das Erste Buch/ 2. cap:</header>
+
+jehnige Spiel / so man bey uns / das Dammen-Spiel / nennet / und auf einem Schach-Brete / mit vier und zwantzig / nemlich / zwelf weissen / und zwelf schwartzen / runde Steinen / welche auf sechs Zwerch-linien / jeh vier Steine / auf einer linie / in vier und zwantzig felder / von gleicher farbe / gesetzet / und zwo ledige Zwerch-linien / zwischen diese beede hauffen / gelassen werden / spielet / darunter verstanden wird) der Alte Schach / (dessen beschreibung / drunten / im neunsten Cap: des letzten Buches / zu befinden) auß welchem dieser / zu unserer zeit gebreuchliche / genommen / und auf uns gebracht / gemeinet seyn: Dan man in demselben / zwelf Haupt- und zwelf geringere Steine / gebrauchet: doch kan man nichts gewisses / davon schliessen: es seynd gedancken / und geben in etwas nachdencken: man mag folgende Authores, als / Theod: Zvvingerum, in seinem Theatro Humanæ vitæ, Volum: 21. lib: 3. pag: 3783. 3786. Ciceronem lib: 1. de Orat: und Quintilianum, lib: 12, deßwegen noch auffschlagen.
+
+Es meldet ferner Julius Pollux, de Rerum vocabulis, lib: 9. cap: 7. hievon also:
+
+> Qui complurium Calculorum dicitur Lusus, Latrunculus est, Regiones in se continens, in Lineis sitas. Et Laterunculus quidem ipse, Civitas appellatur, cæterùm unusquisq; Calculus, Canis. Porrò cùm Calculi, duobus sint distincti coloribus, lusus haec Ars est, ut comprehensis duobus Calculis, unicoloribus, eum, qui diversi coloris est, tollas è medio.
+
+->Das ist:<-
+
+> Das Spiel / welches man / mit vielen Steinen spielet / wird in Lateinischer Sprache / Latrunculus genennet / und begreiffet unterschiedene Felder / welche in Linien gefasset sind. Es wird aber / der Laterunculus, eine Stat / oder Gemeine / und ein jeder Stein / ein Hund genennet. Dieweil nuhn dieselben / von zwoerley farben seynd / als ist / auf diesem Spiele / das fürnemste / so in acht zu haben / daß man / mit zween Steinen / welche einerley farbe haben / einen Stein / der einer andern farbe ist / auß dem wege raume und aufreibe.
+
+Diese des Pollucis meynung / erkläret / gedachter Bischof Majolus, pag: 575. mit folgenden worten / noch deutlicher / da Er schreibet:
+
+> Ludus Latrunculorum, constabat distinctis, in orca seu fritillo quadrato, areolis quadratis, quas πόλεις vocabant: Inq; his duabus contrarijs aciebus, distinctorum Calculorum, accommodato positu, instructis, ceù ad mutuas insidias & conflictus, qui πύες & Canes dicebantur, & Latrunculi: Hi educuntur, intrà definitos limites,
+
+<meta>catchword: mites,</meta>
+
+<vocab>Dammen-Spiel, Schach-Brete, Latrunculus, Julius Pollux, Calculus, Canis, Laterunculus, Bischof Majolus, Ludus Latrunculorum</vocab>

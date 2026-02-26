@@ -1,0 +1,31 @@
+<language>English</language>
+<page-type>preface</page-type>
+<header>To the Reader.</header>
+<warning>left margin is slightly cropped; text appears to continue from a preceding page</warning>
+<meta>catchword: that</meta>
+
+playing, of all good men abhor-
+red, and by all good lawes con-
+demned: haue I not some co-
+lour of defence, to teache the
+game, which so wyse men haue
+inuented, so learned men fre-
+quented, and no good man hath
+euer condemned? The inuenti-
+on is ascribed to Pythagoras,
+it beareth the name of Philoso-
+phers, prudēt men do practise it
+godly men do praise it. But be-
+cause many herein (as in a play)
+haue challenged much authori-
+tie, they haue filled this game
+with much diuersitie. In which
+as I could perceiue the most dif-
+ferens of playing to cōsist in thre
+kindes, so haue I plainly and
+briefly set thē forth in Englishe
+not as though there might not
+more diuersities be espied, but
+->that<-
+
+<vocab>Pythagoras, Philosophers, Englishe, diuersitie, game</vocab>

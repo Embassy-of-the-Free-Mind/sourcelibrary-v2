@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>389</page-num>
+<header>3.cap: Vom Schach-Spiel.</header>
+
+<image-desc>A rectangular decorative woodcut headpiece featuring symmetrical scrolling vines, acanthus leaves, and floral motifs.</image-desc>
+
+## Das Dritte Capittel.
+
+### Von der dritten Art/ wan der Weisse/ ohn des Königs Schützens Soldaten/ spielet/ und den ersten Zug/ doch nuhr mit einem steine/ zu gebrauchen hat.
+
+Ferner/ wan der Weisse/ nicht die zween Züge/ (deren/ im vorgehenden Capittel/ gedachte worden) besondern nuhr/ den an- oder vorzug/ für den obgedachten/ seines K. Schützens- Soldaten/ nimt: so entstehet hierauß/ die Dritte Art/ und zwar folgender gestalt:
+
+<margin>1.</margin> Wan der Weisse/ hierauf/ des K. Soldaten/ auf zwanzig/ rucket: so ziehet/ der Schwarze/ seines K. Soldaten/ auf sechs und dreyssig: Der Weisse/ auf denselben/ der K. Soldaten/ auf <margin>2.</margin> neun und zwanzig: * Der Schwarze/ nimt ihn/ mit demselben: Der Weisse/ denselben/ mit des K. Soldaten: Der Schwarze/ beut/ mit der Königin/ auß fünf und zwanzig/ Schach: Der Weisse/ rucket dazwischen/ und auf dieselbe/ des K. Reuters- Soldaten/ auf achtzehen: Der Schwarze/ beut/ mit derselben/ auß acht und zwanzig/ abermahl Schach/ und ziehet sie/ auf des W. K. Rochen: Der Weisse/ (auf daß Er/ denselben/ nicht verliere) bedecket/ den König/ mit der Königin/ auf zwölfe: und werden die Königinne/ zu beeden theilen/ mit gewalt/ genommen: In erwegung/ Sie/ wegen ihrer Könige/ (als welche Sie/ in den Schach/ nicht gerahten/ noch unbedecket/ stehen lassen müssen) nicht vorgerucket werden können. Bringet demnach der weggesetzete Soldat/ wan das Spiel/ ohne die Königinne/ gespielet wird/ einen sehr schlechten schaden.
+
+<margin>3.</margin> Wan aber der Schwarze/ den W. Soldaten/ (n. 2.) nicht nimt/ besondern des K. Soldaten/ auf acht und zwanzig/ ziehet: so spielet/ der Weisse/ der K. Schützens- Soldaten/ auf dreyssig/ ordnet auf die weyse/ sein Spiel/ gantz wol an/ und kan seine Steine/ ferner bedachtsam/ zu felde rücken.
+
+<margin>4.</margin> Wan aber der Weisse/ die verwechslung/ der beeden Königine/ durch die Züge/ welche (n. 1. 2.) verzeichnet: nicht wil verursachen/ besondern das Spiel/ auf itze folgende weyse/ anfanget/
+
+<sig>Ccc ij</sig>
+<meta>catchword: und</meta>
+
+<vocab>Schach-Spiel, König, Königin, Soldat, Schützens-Soldat, Reuters-Soldat, Rochen, Schach</vocab>

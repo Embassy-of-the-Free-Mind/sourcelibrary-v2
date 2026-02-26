@@ -1,0 +1,42 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>467</page-num>
+<header>Vom Zahl-Kampf.</header>
+<warning>Significant bleed-through from the reverse side of the page occasionally obscures text clarity.</warning>
+
+*Orbes in sequentem sedem migrant, obliquo gradu, non* ,,
+*secùs, ac Areiphili; ut, (in Tabulâ primi Capitis) ab A, loco, ad* ,,
+*B.C.D.E.* ,,
+
+*Triangula, tres transmittunt sedes, si primam, in quâ con-* ,,
+*sistebant, etiam numeraveris; gradiuntur semper rectâ, ut Ele-* ,,
+*phanti, seu Rochi, nempè à loco A, in F.G.H.I.* ,,
+
+*Quadrati, in quartam sedem tendunt, ab eâ, ex quâ egressi* ,,
+*sunt, incipientes, quocunq; voluerint, ut Scachorum Regina, mo-* ,,
+*ventur; videlicet ab A, ad K.L.M.N.O.P.Q.R.* ,,
+
+*Pyramides, cùm omnium Calculorum formas cohibeant, ut* ,,
+*Dominæ privilegio gaudent: possunt namq; eum incessum, ex* ,,
+*omnibus eligere, qui ipsis magis arriferit.* ,,
+
+*Calculi omnes, præter Pyramides, quæ Regum personam* ,,
+*sustinent, effugere possunt, aut evolare, quò illis placuerit, dum-* ,,
+*modò curvatos gressus, in gyrum lunent, ut Scachorum Sonipe-* ,,
+*des; scilicet ab B, ad R.V.T.L. Nè aut intercludi, aut inter-* ,,
+*cipi possint: nam tunc non erit liberum evadere. His porrò* ,,
+*saltibus, neminem capere possunt, obsidere tamen possunt.* ,,
+
+->Jacobus Faber Stapulensis, fol: 51. a<-
+
+*Calculi undecunq; in vacuōs dimoveantur campos: Rotun-* ,,
+*di, in Secundum; Trigoni, in Tertium; Tetragoni, cum suâ Py-* ,,
+*ramide, in Quartum, numerato loco, in quo sedent. Calculus* ,,
+*omnis, quomodocunq; recto incessu, calculum tollere po-* ,,
+*test, sed angulari atq; obliquo, nunquàm.)* ,,
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mascaron (a stylized mythological or lion-like face). The face is framed by symmetrical, elaborate scrollwork, acanthus leaves, and floral garlands hanging from the sides.</image-desc>
+
+<sig>Nnn</sig> <meta>catchword: Das</meta>
+
+<vocab>Jacobus Faber Stapulensis, Rythmomachia, Scachorum Regina, Rochi, Areiphili, Orbes, Triangula, Quadrati, Pyramides, Calculi</vocab>

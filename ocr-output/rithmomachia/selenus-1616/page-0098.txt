@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>68</page-num>
+<header>Das Erste Buch / 7. cap:</header>
+
+> » sollent demütig sein : wan als viel / der Man höher und ge-
+> » trawer ist/alß viel/sol er demüttiger sein : 4. gedultig mit wor-
+> » ten/ und ledig an buß / das sie die undertan / nicht leicht peini-
+> » gen/noch übel handlen: 5. Sie sollent nicht begehren/ überigs
+> » Reichtumbs : Wan also theten / die Alten weisen Fürsten / die
+> » begerten mehr reichtumbs / an dem Nahmen / und an den lan-
+> » den oder leuten / dan an dem gut : 6. sollent Sie haben / mil-
+> » tikeit / und leihen auch verleihen die lehen : wan thun sie das /
+> » so betragent sich all leut dester leichter / was sie durch die für-
+> » sten / sollent leiden.
+> » Es ist aber nun ze wissen / von den Rochen / wan alle
+> » gestein / wie die genant seint / an ir stat gesetzt werdent / so hat
+> » jedes sein außgang von der stat / on das Roch allein / dem mus
+> » man vor raumen / ee es von stat mag gan. Vnd daß ist davon/
+> » das die Roch / alß oben geschrieben stet / beteut Bistumb / und
+> » der Herren Pfleger / oder ir Verweser. Vnd dieweil die in der
+> » Herren Hoff seint / so habent sie keinen gewalt : wan sie aber in ir
+> » Bistumb ambt koment / so habent sie gewalt / alß der Herr selb /
+> » ze thun hat / wan er do ist : wan ir gewalt ist groß : wan was
+> » sie thund / daß thund sie / von ieres Herren kraft : und dar-
+> » umbe / wan sie nicht vor in habent / so gen sie von spang zu
+> » Spangen / hindersich oder für sich / zu beeden seiten / ze hut /
+> » oder ze schaden / ob sie nichtes irret / on über eck allein / mögen
+> » sie nit gen : und daß beteut ir grosser gewalt / den sie in urleug
+> » habent : und davon mögent sie gefahen / oder geschlahen / und
+> » richten / was sie wollen / halt den Künig / der ir widers-
+> » fart ist / den mögent Sie niederlegen und
+> » berauben / seins leibs und lebens. etc.
+
+<image-desc>A decorative woodcut tailpiece consisting of elaborate scrolling foliage and floral motifs surrounding a central ornamental mask or lion's face.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Rochen, Bistumb, urleug, Miltikeit, Verweser, Künig, Schachzabel, Fürsten</vocab>

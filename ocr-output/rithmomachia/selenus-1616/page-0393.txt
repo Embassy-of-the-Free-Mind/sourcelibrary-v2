@@ -1,0 +1,108 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>319</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>Catchword: Es</meta>
+
+<margin>9. Cap:</margin>
+
+### n. 24. 25.
+
+<image-desc>An 8x8 chess grid labeled "n. 24. 25." with abbreviations for pieces and numbers.
+Row 1: SR, SR, [empty], SK, [empty], [empty], [empty], SR
+Row 2: SS, SS, SS, SSc, 52, [empty], SS, SS
+Row 3: [empty], [empty], [empty], [empty], [empty], [empty], WS, [empty]
+Row 4: [empty], [empty], SSc, [empty], SS, [empty], [empty], [empty]
+Row 5: [empty], [empty], WSc, [empty], WS, [empty], SSc, WR
+Row 6: [empty], [empty], [empty], WS, [empty], [empty], [empty], [empty]
+Row 7: WS, WS, WS, [empty], [empty], WS, WS, [empty]
+Row 8: WR, WR, [empty], [empty], WK, WR, [empty], [empty]</image-desc>
+
+### n. 28. 29.
+
+<image-desc>An 8x8 chess grid labeled "n. 28. 29."
+Row 1: SR, SR, [empty], WR, [empty], [empty], [empty], SR
+Row 2: SS, SS, SS, [empty], [empty], SK, 50, [empty]
+Row 3: [empty], [empty], [empty], SS, 44, [empty], SS, SS
+Row 4: [empty], [empty], SS, [empty], SR, [empty], WSc, [empty]
+Row 5: [empty], [empty], [empty], [empty], WS, [empty], [empty], WS
+Row 6: [empty], [empty], [empty], WR, WS, [empty], [empty], [empty]
+Row 7: WS, WS, WS, [empty], [empty], [empty], WS, [empty]
+Row 8: WR, [empty], [empty], [empty], WK, WR, [empty], [empty]</image-desc>
+
+### n. 32. 37.
+
+<image-desc>An 8x8 chess grid labeled "n. 32. 37."
+Row 1: SR, SR, [empty], [empty], [empty], 59, [empty], SR
+Row 2: SS, SS, WR, [empty], [empty], [empty], [empty], SS
+Row 3: [empty], [empty], [empty], SS, SK, [empty], SS, [empty]
+Row 4: [empty], [empty], SS, [empty], [empty], [empty], 34, [empty]
+Row 5: [empty], [empty], [empty], [empty], WS, [empty], [empty], [empty]
+Row 6: [empty], [empty], [empty], WS, [empty], [empty], [empty], [empty]
+Row 7: WS, WS, WS, WK, WR, [empty], SSc, [empty]
+Row 8: WR, [empty], [empty], [empty], [empty], [empty], [empty], WR</image-desc>
+
+### n. 39. 40. 41.
+
+<image-desc>An 8x8 chess grid labeled "n. 39. 40. 41."
+Row 1: [empty], SR, [empty], 61, 60, [empty], [empty], SR
+Row 2: SS, WR, [empty], SR, SK, [empty], [empty], SS
+Row 3: [empty], [empty], [empty], SS, 44, [empty], SS, [empty]
+Row 4: [empty], [empty], SSc, WR, [empty], [empty], WS, [empty]
+Row 5: [empty], [empty], [empty], [empty], WS, [empty], [empty], [empty]
+Row 6: [empty], [empty], [empty], WS, [empty], [empty], [empty], [empty]
+Row 7: WS, WS, WS, [empty], [empty], [empty], SSc, [empty]
+Row 8: WR, [empty], [empty], [empty], WK, WR, [empty], [empty]</image-desc>
+
+<column-break/>
+
+### n. 27. 30.
+
+<image-desc>An 8x8 chess grid labeled "n. 27. 30."
+Row 1: SR, SR, [empty], [empty], SK, [empty], [empty], SR
+Row 2: SS, SS, SS, [empty], [empty], SR, [empty], SS
+Row 3: [empty], [empty], [empty], SS, [empty], [empty], SS, 41
+Row 4: [empty], [empty], SSc, [empty], SK, [empty], WSc, [empty]
+Row 5: [empty], [empty], [empty], [empty], WS, [empty], WR, WS
+Row 6: [empty], [empty], [empty], WR, WS, [empty], [empty], [empty]
+Row 7: WS, WS, WS, [empty], [empty], [empty], WS, [empty]
+Row 8: WR, [empty], [empty], [empty], WK, [empty], [empty], WR</image-desc>
+
+### n. 31. 38. 42. 45.
+
+<image-desc>An 8x8 chess grid labeled "n. 31. 38. 42. 45."
+Row 1: SR, SR, [empty], [empty], [empty], 60, 59, [empty], SR
+Row 2: SS, SS, WR, [empty], [empty], SK, [empty], [empty], SS
+Row 3: [empty], [empty], [empty], SS, 44, 43, SS, [empty]
+Row 4: [empty], [empty], SS, [empty], SR, [empty], SR, [empty]
+Row 5: [empty], [empty], [empty], [empty], WS, [empty], [empty], WS
+Row 6: [empty], [empty], [empty], WR, WS, [empty], [empty], [empty]
+Row 7: WS, WS, WS, [empty], [empty], [empty], WS, [empty]
+Row 8: WR, [empty], [empty], [empty], WK, [empty], [empty], WR</image-desc>
+
+### n. 33. 34.
+
+<image-desc>An 8x8 chess grid labeled "n. 33. 34."
+Row 1: SR, [empty], [empty], [empty], 61, [empty], SR, [empty]
+Row 2: SS, [empty], [empty], [empty], SR, SK, 51, [empty], WR
+Row 3: [empty], [empty], [empty], SS, [empty], [empty], SS, [empty]
+Row 4: [empty], [empty], SS, WR, [empty], [empty], [empty], [empty]
+Row 5: [empty], [empty], [empty], [empty], [empty], WS, [empty], [empty]
+Row 6: [empty], [empty], [empty], WS, [empty], [empty], [empty], [empty]
+Row 7: WS, WS, WS, WK, WR, [empty], SSc, [empty]
+Row 8: WR, [empty], [empty], [empty], [empty], [empty], [empty], [empty]</image-desc>
+
+### n. 47. 48.
+
+<image-desc>An 8x8 chess grid labeled "n. 47. 48."
+Row 1: SR, SR, SR, [empty], SK, WR, [empty], [empty]
+Row 2: SS, SS, SS, 53, [empty], 51, WSc, [empty]
+Row 3: [empty], [empty], [empty], SS, SSc, [empty], [empty], [empty]
+Row 4: [empty], [empty], SS, [empty], SS, [empty], [empty], [empty]
+Row 5: [empty], [empty], WS, [empty], WS, [empty], [empty], WR
+Row 6: [empty], [empty], [empty], WS, [empty], [empty], [empty], [empty]
+Row 7: WS, WS, WS, [empty], [empty], [empty], WS, WS
+Row 8: WR, WR, [empty], [empty], WK, [empty], [empty], [empty]</image-desc>
+
+<vocab>Schach-Spiel, Schach, König, Turm, Soldat, Schütze, Springer, Schwarz, Weiß</vocab>

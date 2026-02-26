@@ -1,0 +1,34 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>298</page-num>
+<header>Das Dritte Buch) 5. cap:</header>
+
+# Das Fünfte Capittel.
+
+-> Ist eine probe / der meynung des Damiani, wel- <-
+-> che / im Andern Capittel dieses Buches / erwehnet worden : <-
+-> und zeiget an / wie des Schwartzen Königes-Soldat / mit <-
+-> der Königin-Reuter / beschützet / und das <-
+-> Spiel / darauf geführet werden könne. <-
+
+---
+
+<image-desc>Decorative woodcut headpiece ornament featuring symmetrical acanthus leaves, scrollwork, and a central face mask.</image-desc>
+
+<margin>5. cap:</margin>
+<margin>Vom Ersten Weg:</margin>
+**Des** Damiani meynung / wie man / des S. K. Soldaten / auf dreyerley Art / (nemlich / mit einem Haupt-Steine / und zween Soldaten) beschützen könne : ist / vom Andern Capittel an / biß hieher / nuhnmehr / zur genüge / erzehlet / und verbessert worden : Jetzt wollen auch wir / unsere meynung / davon setzen / unter den beschützungen / eine gewisse ordnung / (in unterschiedenen Capitteln / abgefasset) machen / und bey denselben / den schaden und nutzen / welchen die Spieler / gestalten sachen nach / darinnen befinden werden / auch welche / unter allen / die beste / und sicherste / und die man / zum meisten in acht haben / und gebrauchen sol / sey : zum nutzen und besten / nicht alleine der jeniggen / welche im Spiele / albereit wol erfahren / sondern auch / und fürnehmlich / derer / welche sich / mit demselben / noch so wol / nicht zu behelffen wissen / anzeigen und entdecken.
+
+Und ist zu wissen / daß man / des S. K. Soldaten / nicht nuhr auf drey- sondern auf fünfferley Art / (alß / mit dreyen Haupts-Steinen / und zween Soldaten) wie folget / beschützen und verthetigen könne.
+
+1. Zum ersten : mit der K. Reuter / (welche beschützung / der Damianus, droben im 2. Capittel / dieses Buches / für die beste achtet : Die ungelegenheiten aber / welche auß derselben / dofern der Gegener / des Spieles wol kündig / entstehen / und in diesem Capittel / folgendes / sollen angezeigt werden / nicht bedencket) auß sechs und viertzig.
+
+2. Zum Andern : mit der K. Soldaten : (welche Er : d. c. 2. nicht so gar gut / erachtet : davon drunten / im 6. Capitt : ferner bericht / erfolgen sol) auß fünf und viertzig.
+
+3. Zum Dritten : mit des K. Schützens: Soldaten / (wel-
+
+<meta>catchword: che Er</meta>
+
+<image-desc>A faint diagram at the bottom consisting of a grid (chessboard representation) with abbreviated notations in specific squares such as 'ZW', 'SW', 'RW', and 'AW'.</image-desc>
+
+<vocab>Damiani, Schwartzer Königes-Soldat, Königin-Reuter, Haupts-Steine, K. Schützens-Soldat, Damiano Defense, chess tactics</vocab>

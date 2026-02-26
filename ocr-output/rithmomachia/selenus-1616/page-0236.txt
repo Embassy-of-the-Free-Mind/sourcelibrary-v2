@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>206</page-num>
+<header>Das Ander Buch / 12. Cap:</header>
+
+Reuters-Soldaten/auf vier und dreyffig : Der Weisse / (auf daß 
+derselbe/auf seines K. Reuter/nicht gezogen werde) des K. Rochens= 
+Soldaten/ auf siebenzehen : Der Schwartze/der K. Soldaten/ 
+auf des W. K. Soldaten / (welches dan ein guter Zug scheinet) auf 
+fünf und vierzig : Der Weisse/nimt /ihn nicht / (dan Er sonsten/ 
+der K. Rochen/wan folgendes/die Königinne verwechselt / und des 
+S. K. Reuter/im Schach-bieten/auf denselben/auf vierzehen / gezo= 
+gen würde/verlieren müste) besondern / ziehet/ der K. Reuter / auf 
+zwey und zwanzig : Der Schwartze /des K. Reuters - Soldaten/ 
+auf des W. K. Reuter / auf sechs und zwanzig : Der Weisse/nimt 
+ihn / mit des K. Rochens - Soldaten : Der Schwartze/denselben/ 
+mit der K. Schützen/und ziehet ihn/auf des W. K. Reuter / welcher 
+dessen Königin/bedecket: (Hiebey zu mercken / daß diese vorherge= 
+hende Züge / sehr gut/umb den feind zu verletzen / scheinen) der Weiß= 
+se / rucket/ die Königin/auf des S. K. Soldaten / auf acht und zwan= 
+zig / und beschützet / nichtes desto weniger / das vierzehende feld / fur
+
+<margin>9.</margin> dem einfahl / des S. K. Reuters : * Der Schwartze / nimt / des 
+W. K. Reuter / mit der K. Schützen / und ziehet / auf die W. Köni= 
+gin / und des W. K. Reuters - Soldaten : Der Weisse/ nimt / den= 
+selben / mit dieses Reuters-Soldaten : Der Schwartze/des W. K. . 
+Soldaten / mit der K. Soldaten : Der Weisse/ziehet / der K. Reu= 
+ter/auf die S. Königin/auf sieben und dreyffig : Der Schwartze/ 
+dieselbe / (und zwar nicht undienlich) auf funf und vierzig : Der 
+Weisse / nimt / der S. K. Soldaten / mit seiner K. Soldaten / und 
+ziehet ihn/auf die S. Königin: Der Schwartze/dieselbe/ (auf daß 
+Er nicht / derselben Rochen/wan etwa der Weisse/mit der K. Reu= 
+ter / dem Könige/auß vier und funfzig/endlich Schach = gebe : verlie= 
+re) auf ein und sechffzig : Der Weisse/wan Er zufoderst / mit der 
+K. Reuter / auß drey und viertzig / Schach - geboten : nimt / mit der 
+K. Schützen / entweder des S. Königes - oder aber / mit seines K. 
+Rochen / oder/mit der K. Reuter/desselben Rochens-Soldaten/und 
+erlanget also / das Spiel / so fern Ers / zu regieren verstehet / 
+durch gewalt.
+
+<margin>10.</margin> Wan aber der Schwartze / den W. Reuter/ mit dem Schü= 
+tzen / (n.9.) nicht nimt / besondern/des K. Schützens-Soldaten / auf 
+die W. Königin / auf funf und dreyffig ziehet : so nimt / der Weisse/ 
+(weyl dieses Spiel/so verglichen ist / daß man wider willen / nicht 
+schlagen darf) mit derselben / des S. K. Soldaten : Der Schwartze/ 
+<meta>catchword: (dofern</meta>
+
+<vocab>Schach, Reuter, Rochen, Schützen, Königin, Soldaten, Spiel, Schach-bieten</vocab>

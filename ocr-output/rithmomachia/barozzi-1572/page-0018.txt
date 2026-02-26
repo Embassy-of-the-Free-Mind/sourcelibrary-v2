@@ -1,0 +1,22 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<warning>Significant bleed-through from the reverse side of the page makes some background text visible, though the primary text and diagrams remain legible.</warning>
+
+<image-desc>A series of geometric diagrams organized into four columns. At the top of each column is a solid black circle containing the numbers 3, 5, 7, and 9 respectively. Below each circle are two vertically stacked white triangles with black outlines. The top row of triangles contains the numbers 6, 20, 42, and 72. The bottom row of triangles contains the numbers 9, 25, 49, and 81. Each triangle features a small dot centered at its base.</image-desc>
+
+Parimente volendo ritrouar li numeri, che vanno scrit-
+ti sopra li triangoli neri, congiungerai li numeri delli ton-
+di neri, al modo tu faceui quelli delli tondi bianchi, che
+ageuolmēte tu produrai li numeri delli quatro primi trian
+goli neri, liquali faranno questi 12, 30, 56, 90 prodotti da
+l'accozzar insieme li quatro primi tondi neri con li quatro
+secondi, cioè dal 3 col 9, il 12: dal 5 col 25, il 30: dal 7 col
+49, il 56: dal 9 col 81. il 90. & cosi hauerai li numeri delli
+quatro primi triangoli neri, come si vede nella seguente
+figura.
+
+<image-desc>A second set of geometric diagrams illustrating the addition described in the text. It consists of four columns and three rows. The first row contains four solid black circles with the numbers 3, 5, 7, and 9. The second row contains four solid black circles with the numbers 9, 25, 49, and 81. The third row contains four solid black triangles with the numbers 12, 30, 56, and 90. The numbers in the triangles are the sums of the two circles directly above them (e.g., 3 + 9 = 12; 5 + 25 = 30).</image-desc>
+
+<sig>Si</sig>
+
+<vocab>triangoli neri, tondi neri, tondi bianchi, numeri, geometria, addizione, progressione</vocab>

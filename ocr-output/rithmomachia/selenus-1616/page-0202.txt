@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>172</page-num>
+<header>Das Ander Buch. 7.cap:</header>
+
+<image-desc>A decorative woodcut headpiece featuring symmetrical ornamental scrollwork, foliage, and two reclining figures flanking a central floral motif.</image-desc>
+
+# Das Siebende Capittel.
+## Von den Exempeln insonderheit / wie dieselbe / 
+## in die gewöhnliche / und sonderbahre / und dan die
+## gewöhnliche / hinwider / in drey hauffen / und 
+## dero mannigfaltige Arten / abges
+## theilet werden.
+
+Die Abtheilung der folgenden Exempel / (auf daß wir / zu dero beschreibung / endlich schrei- ten) wird auß folgendem / zu foderst / zu vernehmen seyn : dan /
+
+Erstlich / wollen wir die Arten und weysen / wie man das Spiel / auf gewöhnliche weyse : Her- nach / wan ein Vortheil / (davon drunten / im letzten Buche / vom ersten / biß zum neunten Capittel / bericht erfolgen sol) gegeben worden / wol spielen und hinauß führen kan / aufzeichnen und beschreiben.
+
+Was nuhn die gewöhnliche art / ohn einen gegebenen Vor- theil / zu spielen / anlanget : so wird sich dieselbe / wiederumb drey- fach befinden : Dan die Erste / begreiffet in sich / die Spiele / wel- che mit des Königes = Die Andere / welche mit der Königin = Die Dritte / welche mit eines Rochens = Schützens = oder Reuters = Soldaten / oder auch / mit einem Reuter / angefangen und volfüh- ret werden.
+
+Bey diesen / sol auch / wie in denselben / Andere / und nahm- haft *Damianus* , ein Portugeser / sich verstoffen : ihre irthumbe zu vermeyden : und dieselben / auf einen rechten weg / zu bringen seyn / gnugsame erinnerung geschehen.
+
+Unter diesen dreyen / ist die Erste / mit des Königes = die be- ste : Die Andere / mit der Königin / zu gedulden : Die Dritte aber / mit eines Rochens = Schützens = oder Reuters = Soldaten / jah auch mit einem Reuter / zu verwerffen.
+
+Es wird aber / die erste gewöhnliche Art / wegen des ersten Zuges / hinwider unterschieden : Dan / man kan / entweder mit des Königes = Soldaten / den anfang / zu beeden Theilen machen : oder / (wie im zehenden Capittel / des dritten Buches / mit weni- gem gesetzet worden) der / welcher den ersten Zug hat / gibt zwar
+
+<meta>catchword: den</meta>
+
+<vocab>Exempel, Damianus, König, Königin, Rochen, Schützen, Reuter, Soldaten, Vortheil</vocab>

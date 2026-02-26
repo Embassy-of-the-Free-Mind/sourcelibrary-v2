@@ -1,0 +1,44 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>427</page-num>
+<header>9. Cap: Vom Schach-Spiel.</header>
+<sig>Hhh iij</sig>
+<meta>catchword: Die</meta>
+
+rauf die gedachte Steine/ im vorigen Spiele/ gesetzet werden/ wegen
+der farbe/ unterschieden.
+
+Die Könige/ und Königinne/ stehen auch/ in der mitte/ der
+Tabel: Der Weisse König/ in einem schwartzen = Der Schwartze/
+in einem weissen = Die Weisse Königin/ in einem weissen = Die
+Schwartze/ in einem schwartzen felde.
+
+Den Königen/ (welchen das Regiement anbefohlen/ und dar=
+rauf alle ihre gedancken/ richten sollen) werden/ von ihnen/ die
+Geheyme = den Königinnen/ (welche in etwas müssiger/ ihren Her=
+ren/ gleichwol erfrewen/ und in kurtzweyl/ ergötzen solle) die Kurtz=
+weylige Rähte/ auf dem nechsten felde/ an der seiten/ zugeordnet.
+
+Zwischen diese Rähte/ und die Schützen/ (welche Sie/ die
+Alten/ nennen) werden die Currierer/ gestellet.
+
+Für diese itztgenante zwelf Haupt = Steine/ ordnen Sie/ auf
+der nägsten Zwerch = linie/ die zwelf Soldaten/ oder Fenden.
+
+Ihren Gang betreffend : ziehen Sie/ die Rochen und Reu=
+ter/ gleich wie im 7. und 9. Capitt: des Ersten Buches/ angedeutet
+worden/ und halten sie/ nechst den Currierern/ für die beste Steine.
+
+Die Alten/ oder Schützen/ springen ins dritte feld/ es sey ein
+Stein/ oder keiner/ in dem felde/ welches zwischen ihrem/ darauf
+sie stehen/ und dem dritten felde/ dahinein sie springen/ einlieget =
+nach den spitzen oder ecken der felder : und nehmen auß denselben/
+des Gegeners Steine/ so fern etwa/ welche/ in denselben verhanden =
+Bieten auch/ in ein drittes feld/ (wan gleich/ ein Stein/ auß ihrem/
+oder des Gegentheiles hauffen/ zwischen ihnen/ und dem Könige/ ein=
+stehet) Schach : Weyter aber/ oder näher/ rucke Sie/ dieselben nicht.
+
+<image-desc>A woodcut illustration within a rectangular border depicting a chess piece called the "Currierer" (Courier). The image shows a man riding a horse toward the right; he wears a wide-brimmed hat and is blowing a long trumpet. The horse and rider are positioned atop an ornate, tiered pedestal with circular and bulbous sections. Below the pedestal, the words "Ein Currierer." are printed within the frame.</image-desc>
+->Ein Currierer.<-
+
+<vocab>Schach-Spiel, Könige, Königinne, Geheyme Rähte, Kurtzweylige Rähte, Currierer, Schützen, Alten, Soldaten, Fenden, Rochen, Reuter</vocab>

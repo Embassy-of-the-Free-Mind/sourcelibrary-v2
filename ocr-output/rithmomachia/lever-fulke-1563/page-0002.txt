@@ -1,0 +1,14 @@
+<language>English</language>
+<page-type>frontispiece</page-type>
+<header>The Lord Robert Duddelye.</header>
+
+<image-desc>A woodcut portrait of Robert Dudley, Earl of Leicester, depicted from the waist up. He is shown in three-quarter profile, wearing a flat hat, a starched ruff collar, and highly detailed plate armor decorated with patterns. He wears a heavy decorative chain with a prominent medallion. The portrait is set within an architectural oval frame adorned with scrollwork, acanthus leaves, and two winged cherubs at the upper corners. A blank, curled scroll lies across the bottom of the oval frame.</image-desc>
+
+<margin>Vulnere vireſcit virtus.</margin>
+
+The Phyſnogmie here figured, appeares by Paynters Arte:
+But valyant are the vertues that, poſſeſſe the inward parte.
+Whych in no wiſe may paynted be, yet playnely do appeare.
+& ſhine abrod in euery place with beames moſt bright & clea<unclear>r</unclear>
+
+<vocab>Robert Dudley, Earl of Leicester, Physiognomy, woodcut, Latin motto, armor, portraiture</vocab>

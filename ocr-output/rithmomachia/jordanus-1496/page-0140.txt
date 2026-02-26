@@ -1,0 +1,101 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>E</sig>
+
+<margin>3</margin>
+Eadem quoque medietas quattuor terminis distributa semper permutata proportio=
+nalitatem retinet. vt si quemadmodum primus ad secundū : sic tertius ad quartum.
+ita vt primus ad tertium et secundus ad quartum.
+
+<margin>4</margin>
+Medietatis geometrice termino rū et eorūdem driarū similis est proportio.
+
+<margin>5</margin>
+Medietatis geometrice que in multiplicibus existit: maior numerus ad minorē com
+paratus: ipsum minorē suam habet differentiā / aut multiplicē minoris / vno minus
+ꝫ maioris ad minorē sit habitudo.
+
+<margin>6</margin>
+In continua medietate geometrica: quod continetur sub extremis / equū est ei qui ex
+medio in se ducto nascitur. Et in discōtinua ei q̄ fit ex duab⁹ in se ductis medietatib⁹
+
+<margin>7</margin>
+Continue proportionalitatū species: quadratis ab vnitate ꝛ altera parte lōgiōribus
+alternatim vna serie dispositis: a prima multiplicū medietate in omnes superparti
+cularium habitudines / proportioneseꝫ discurrunt.
+
+<margin>8</margin>
+Geometrice medietatis determinatis extremis medius proportionalis reperitur : si
+numeri sub extremitatibus contenti tetragonicū latus accipiatur.
+
+->Me di e ta tis har mo ni ce pro pri e ta tes<-
+
+<margin>1</margin>
+Medietas harmonica in maioribus terminis maiorē seruat proportionē
+
+<margin>2</margin>
+Musice medietatis medius terminus in collectas extremitates ductus: duplum nu=
+mero qui fit ex extremo in extremū producit.
+
+<margin>3</margin>
+Musice medietatis determinatis extremis : medius reperitur terminus si per extre=
+morū coniunctorū numerū: numerus qui ex differentia extremorū in minimū con=
+surgit diuiditur / isq̄ qui ex diuisione relinquitur accipiatur atqꝫ minimo extremo
+aggregetur. diciturqꝫ is nūerus q̄ ex diuisione relinquitur latitudo / latitudinisqꝫ latus
+
+<margin>4</margin>
+Contingit ex harmonica medietate: primordiū consonantiarū consonatiasqꝫ musicas
+omnes elicere.
+
+->Re li qua rū me di e ta tū pro pri e ta tes<-
+
+<margin>1</margin>
+Si quarte medietatis extremi adinuicē sunt habitudinis duple: quod continetur sub
+maximo et medio duplū est ei qui cotinetur sub medio ꝛ minimo. Et omnino que
+habitudo maximi ad minimū. ea erit eius quod sub maximo et medio continetur
+ad id quod continetur sub medio ꝛ minimo et id in omni medietate cōmune est
+
+<margin>2</margin>
+Si quinte medietatis medius ad minimū sit duplus: quod cōtinetur sub maximo ter
+minorū et medio: duplū erit ad id quod cōtinetur sub extremis. Et omnino q̄ habi
+tudo medij ad minimū: ea erit numeri qui fit ex maximo in medium et minimū. et id
+quoqꝫ omnibus publicū atqꝫ cōmune est.
+
+Diuus Seuerinus medietatū denariā Pythagore plenitudine impleuit: Jordan⁹
+autē denario vnitatē adiecit.
+
+<columns>2</columns>
+### Denarius medietatū Boetij.
+
+| | |
+|----------|----------|
+| Prima | 1. 2. 3. |
+| Secunda | 1. 2. 4. |
+| Tertia | 3. 4. 6. |
+| Quarta | 3. 5. 6. |
+| Quinta | 2. 4. 5. |
+| Sexta | 1. 4. 6. |
+| Septima | 6. 8. 9. |
+| Octaua | 6. 7. 9. |
+| Nona | 4. 6. 7. |
+| Decima | 3. 5. 8. |
+
+<column-break/>
+
+### Undenarius medietatū Jordani.
+
+| | |
+|----------|----------|
+| Prima | 1. 2. 3. |
+| Secunda | 1. 2. 4. |
+| Tertia | 3. 4. 6. |
+| Quarta | 1. 4. 6. |
+| Quinta | 6. 9. 11. |
+| Sexta | 3. 4. 6. |
+| Septima | 3. 4. 7. |
+| Octaua | 4. 6. 7. |
+| Nona | 3. 5. 6. |
+| Decima | 6. 7. 9. |
+| Undecima | 6. 8. 9. |
+
+<vocab>medietas geometrica, medietas harmonica, Boethius, Jordanus Nemorarius, Pythagoras, proportio, tetragonicum, consonantia, latitudo</vocab>

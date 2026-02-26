@@ -1,0 +1,7 @@
+<language>Latin</language>
+<page-type>blank</page-type>
+<warning>This page is physically blank. The visible text and table lines are a mirror-image "bleed-through" or ghosting from the reverse side of the leaf. There is significant water staining along the top and bottom edges.</warning>
+
+<image-desc>A blank manuscript or early printed page showing heavy foxing and a large, dark water stain across the top. Mirrored text and the outline of a table from the verso are clearly visible through the thin paper, including a title that appears to be "TABULA SYNOPTICA".</image-desc>
+
+<vocab>blank page, water stain, bleed-through, foxing</vocab>

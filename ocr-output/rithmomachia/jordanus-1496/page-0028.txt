@@ -1,0 +1,44 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>177</page-num>
+
+pproportionem ad p. at rursum cũ que pportio o ad n ea sit r ad v. ergo pmutati o ad r vt n ad v: sed int n et v cōtinentur r q duo mediij pportionales fm proportionem ad p. ergo per duodecimā huius cum eandē proportionē totidem cōtinebuntur mediij inter o r q sunt y z. at cũ o fiat ex h in d et r ex h in g. ergo per septimā secundi que pportio o ad r ea est d ad g. ergo per duodecimā huius quot mediij pproportionales cōtinentur inter o et r fm proportionē m ad p totidem continebūtur inter d et g. at duo mediij y z vt monstratū est fm pproportione m ad p siue b ad e qđ īdem est continētur inter o et r. igitur et duo fm eandē proportionē continentur inter d r g: qđ erat demonstrandū.
+
+---
+
+### ¶ Si fuerint quotlibet numeri in sua proportione minimi: quicunqȝ aliquem illorum numerat alteri terminoꝝ illius proportionis erit cōmensurabilis.
+<margin>18</margin>
+¶ Termini diffiniti sunt q’ in aliqua pportione sunt mimi. Sint ergo a b c d quotlibet numeri cōtinue pportionales in sua pportione minimi et sint e f termini in pportione a ad b et numeret g numerū a aut b aut c aut d: vt verbi cā: dico g esse cōmensurabilē e aut f. capio tres mīmos in pportione a ad b per sextā huius q’ sint h l z. qz igitur ex correlario eiusdē sexte ex e in l sit c. ergo p quintā tertij g cōmunicabit cum e aut cum l. si cum e constat propositum. si autem cum l: qz per idem correlarium ex f in se sit l per eandem quintam tertij cōmunicabit cum f: quod est propositum.
+
+### ¶ Si fuerint quotlibet numeri in sua proportione minimi: quilibet eorum ad compositum ex reliquis erit primus.
+<margin>19</margin>
+¶ Sint a b c d quotlibet numeri continue pportionales in sua pportione minimi. e f vero termī pproportiōis a ad b. dico ꝓpositū ex a b c esse primū ad d. Nam si aliquis numeraret ꝓpositū ex a b c et d. ergo p precedētē cōicabit cum e aut f erit ergo aliq’s numerus cōiter numerās e aut f. et compositū ex a b c et d: sit g: qz ergo g numerat e aut f et ꝓpositum ex a b c et numerū d et vterqȝ e r f numerat b et c per decimānonā tertij. ergo per vicesimātertia primi g numerabit b et c. ergo et g per quintā scđi numerabit a restituū: sed g positus est etiā numerare d: et a r d per quintā huius sunt contra se primi igitur g numerat contra se primos qđ est impossibile. nō ergo cōpositus ex a b c est cōpositus ad d sed necessario primus: quod est propositū. et ita de quolibet alio ad cōpositum ex reliquis argumētare
+
+### ¶ Si quotlibet numeri fuerint in sua proportione minimi : qui ex omnibus componitur ad quemlibet eorum erit primus.
+<margin>20</margin>
+¶ Hoc ideo est q numerus cōpositus ex duobus contra se primis ad quēlibet eorū per nonam tertij est primus. at p precedētē quilibet numeroꝝ in sua pportione minimoru ad compositū ex reliquis est primus: ergo cōpositus ex illis per eandē nonam ad quēlibet illorum numeroꝝ et compositū ex reliquis est primus. quare ad quēlibet illorum erit primus: quod est propositum.
+
+### ¶ Si fuerint duo numeri contra se primi : tertium eis in continua proportionalitate adiungi est impossibile.
+<margin>21</margin>
+¶ Nam si tertius eis in cōtinua ꝓportionalitate adiūgeretur: ergo per primā huius primus r scđs erunt cōmensurabiles: quare nō erunt contra se primi quod est contra hypothesim r propositū.
+
+### ¶ Si duo numeri contra se primi numerent alios duos fm numerū a neutro eorum numeratum: illis quoqȝ in continua proportionalitate non adiungetur tertius.
+<margin>22</margin>
+¶ Sint a b numeri contra se primi r numerus neqȝ ab a neqȝ ab b numeratus fm quē a numeret c et b numeret d: dico non esse numerū in continua ꝓportionalitate numeris c et d adiungendū. Si enī sit aliquis esto ille f: qz per octauā secūdi pportio c ad d vt a ad b erit: ergo d ad f vt a ad b. et a b sunt contra se primi quare per vicesimā tertij sunt in sua ꝓportione minimi r per decimānonam eiusdem quoties a numerat d toties b numerat f. sit ergo vt equalit numerēt fm g: cum itaqȝ b numeret d fm e r f fm g. ergo per septimā secundi q’ proportio d ad f: ea est e ad g. quare r q̄ a ad b: ea est e ad g. et a b pbatī sunt in illa pportione mimi. igitur p decimānonam secūdi a b numerāt e g equalit. numerabit igit alter numeroꝝ a aut b numerū e: quod est contra hypothesim.
+
+### ¶ Si numeri proporzionales fuerint in sua proporzione minimi: non erit extremi ad aliquem proportio que primi ad secundum.
+<margin>23</margin>
+¶ Sint a b c continue ꝓportionales in sua ꝓportione mimi: dico c ad nullū esse ꝓportionē q̄ a ad b. Si enī sit aliq’s esto ille d. qz ergo a ad b sicut c ad d: ergo pmutati a ad c sicut b ad d. r qz a b c sunt in sua ꝓportione mimi: ergo p quintā hui⁹ a c sunt cōtra se pmi. quare p vicesimā tertij in sua ꝓportiōe mimi quare p decimānonā eiusdē a nūerabit b: r c nūerabit d equalit. at si a nūerat b: etiā b nūerat c. nam eadem pportio quare per vicesimātertiam primi a numerabit c: verūtamen a cerant contra se primi. hoc igitur impossibile r propositum.
+
+### ¶ Si quotlibet numeri in sua proporzione minimi totidē alios numerēt fm numerū a neutro illius proporzionis numeratū: nō erit alius cum illis cōtinue ppozcionalis.
+<margin>24</margin>
+¶ Sint a b c nūeri cōtinue ꝓportionales in sua pportione minimi q’ numerēt totidē d e f fm k q’ neqȝ numeret ab g neqȝ ab h in ꝓportione a ad b mīmis: dico ꝓ d e f nō est adiūgend⁹ aliq’s cũ illis cōtinue pportionalis. Si enī fuerit aliq’s sit l q’ adiūgat post f: nūerabunt ergo a b c tres mīmi tres vltimos illius ꝓportiōis e f l equalit: sitqȝ ex fm m. r qz c numerat f fm k r l fm m: p septimā ergo scđi lz ad m sicut f ad l: quare r sicut a ad b per decimānonam. ergo tertij g h in illa pportione minimi nūerabunt k m equaliter: qđ est contra hypothesim. positi enī erat neqȝ g neqȝ h numerare l z.
+
+<image-desc>A series of mathematical diagrams arranged in the left margin. 
+The first diagram at the top shows a system of horizontal lines with values and labels: a line labeled 8 -- 12 -- 18 -- 27 with labels b, c, d for the segments; below it a row labeled h -- 4 -- k -- 6 -- l -- 9; further below 2 -- f -- 3; and at the bottom the number 6.
+The second diagram shows a semi-circle containing the number 38, with values 8, 12, 18, 27 below it, and labels a, b, c, d. Between a and b is the number 2, and between c and d is the number 3. Below these are lines labeled e and f.
+The third diagram shows two lines with values 10 and 15, labeled a and b, with 2 and 3 below them respectively. Below that are lines e and g, with the number 5 below e.
+The fourth diagram consists of several horizontal lines labeled d, c, b, a with values 9, 6, 4 assigned to d, c, and b respectively.
+The fifth diagram at the bottom is a structured list of numbers and letters: 'd 20 e 30 f 45 l' in the first row, 'a 3 4 b 6 c 9' in the second, 'g 2 h 3' in the third, and 'k 10 m' in the last.</image-desc>
+
+<vocab>proportio, numeri minimi, commensurabilis, propositum, demonstrandum, compositum</vocab>

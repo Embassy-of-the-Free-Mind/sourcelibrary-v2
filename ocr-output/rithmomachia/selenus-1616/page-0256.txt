@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>222</page-num>
+<header>Das Ander Buch / 13. cap:</header>
+
+mit des K. Rochen: der Schwarze / des W. K. Soldaten / mit seines K. Schützens-Soldaten: der Weisse / darf ihn / wegen der S. Königin / mit des K. Schützen / nicht wegnehmen / besondern hat / nebest verlierung dreyer Soldaten / (weil der König / seine vier Soldaten / verlohren / und ganz bloß stehet) ein böses Spiel / auch nichtes gewissers / dan seinen untergang / vom Schwarzen / zu erwarten.
+
+28. Nimt aber der Weisse / den S. Soldaten / nicht / mit dem Rochen / (n. 27.) besondern / mit dem Könige: so rucket der Schwarze / die Königin / auß der gefahr / von des W. K. Rochen / nicht auf sechs und zwanzig / (Dan sonsten die Königinne / etwa verwechselt würden) besondern auf achtzehen / und beut Schach: der Weisse / muß den König / auf drey / rucken: der Schwarze / nimt des W. K. Soldaten / mit seines K. Schützens-Soldaten: der Weisse / denselben / mit des K. Schützen: der Schwarze / rucket / auf denselben / der K. Soldaten / auf sieben und dreyßig: * Der
+
+29. Weisse / denselben / (umb den Schach / von der S. K. Schützen / durch welchen / sonsten seine Königin / wan derselbe Schütze / nachdem sein König / auf zwelfe gewichen / abermahl Schach gebe: oder dessen Roche / wan derselbe diesen Schützen / obgerürter ursachen halber / nehmen müste / verlohren wehre: auß siebenzehen / zu verhindern) auf zehen: der Schwarze / der K. Schützen / auf die W. Königin / auf sechs und zwanzig: der Weisse / muß / zur verwechslung der Königinne / nohtwendig ursache geben / seine Königin / auf viere rücken / und Schach-bieten: der Schwarze / nimt sie / mit seiner Königin / und beut Schach: der Weisse / raubet dieselbe / mit dem Könige: der Schwarze / (zu verthetigen der K. Soldaten) rucket dero Schützen / auf vier und vierzig: und wird dem Weissen / ferner zu zusetzen gute gelegenheit haben.
+
+30. Wan aber der Weisse / des K. Schützen / nicht auf 10. (n. 29.) besondern auf neunzehen / ziehet: so gibt / der Schwarze / mit seiner K. Schützen / auß siebenzehen / Schach: der Weisse / ziehet den König / auf zwelfe: der Schwarze / gibt / mit seiner Königin / auß sechs und dreyßig / Schach: der Weisse / rucket / den König auf eylfe: (dan / wan Er ihn / auf ein und zwanzig / ziehet: der Schwarze / mit der K. Schützen / auß fünf und dreyßig / Schach gibt: Er bedecket den König / mit seinem Schützen / auf acht und zwanzig / der Schwarze / nimt ihn / mit der Königin / und gibt Schach: Er muß den König / auf zwey und zwanzig / ziehen: der Schwarze /
+
+<meta>catchword: gibt/</meta>
+
+<vocab>Schach, Rochen, Schützen, Soldaten, König, Königin, Gustavus Selenus, Schachspiel</vocab>

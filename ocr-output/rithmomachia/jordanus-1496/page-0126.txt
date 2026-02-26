@@ -1,0 +1,83 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+->$\mathfrak{AD}$<-
+
+->$\mathfrak{A}$ b c d e f g h i k l m n o p<-
+
+| | | | | | | | | | | | | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| $\mathfrak{B}$ Hypodorius | | | | | | | | | | | | | | | | | ꝑ 7 dia |
+| $\mathfrak{C}$ Hypophrygius | Tonus | | | | | | | | | | | | | | | | ꝑ to |
+| $\mathfrak{D}$ Hypolydius | Semito. | $\mathfrak{A}$ | | | | | | | | | | | | | | ꝑ ni |
+| $\mathfrak{E}$ Dorius | Tonus | | $\mathfrak{A}$ | | | | | | | | | | | | | ꝑ ci |
+| $\mathfrak{F}$ Phrygius | Tonus | | | $\mathfrak{A}$ | | | | | | | | | | | | ꝑ mo |
+| $\mathfrak{G}$ Lydius | Semitonium | | | | $\mathfrak{A}$ | | | | | | | | | | | di. |
+| $\mathfrak{H}$ Myrolydius | Tonus | | | | | $\mathfrak{A}$ | | | | | | | | | | |
+
+->$\mathfrak{A}$ b c d e f g h i k l m n o p<-
+
+¶ Sit a b c d vsqʒ ad p pentadecachordum diatonicum. sit r p hypodorio pentadecachordū diato=
+nicum a b c d e f g h i k l m n o p grauissimū: qđ vt alioꝝ basis atqʒ fundamētū statuat:extēdo vno
+tono in acumen proslambanomenon pentadecachordi s ampliusqʒ sit proslambanomenos r ad quē
+ceteras voces suo ordine per quartā/quintā ꝛ sextam huius in diatonico modulādi genere subiūgo.
+eritqʒ pentadecachordum s per diffinitionem hypophrygiij modi. similiter extēdo proslambanomenon
+pentadecachordū t semitonio āplius qđ tensus sit proslambanomenos pētadecachordi s cui tetrachorda
+per quartā/quintā/ ꝛ sextam huius vt prius coapto.eritqʒ per diffinitiōem t pentadecachordū hypo=
+lydiij modi.et proslambanomenon v vno tono extēdo amplius qʒ hypolydij:cui ceteras voces suo ordine
+sequētes in diatonico genere coapto.eritqʒ cōcentus pētadecachordi v per diffinitionem dorius.et si
+amplius extēdo x vno tono:erit pentadecachordū x cantus phrygius.et si y semitonio miōre:erit eius
+concētus lydius.At z amplius extenso vno tono:fiet concentus myrolydius.sicqʒ factū ꝑ diffinitiōes
+patebit propositum.
+
+<margin>24</margin>
+¶ Que diuersoꝝ modorum in aliquo genere fuerit p̄me vocis ad primā habitudo:
+ca erit secunde ad secundam et tertie ad tertiam et cuiuslibet totius ad totam similis/
+eademqʒ habitudo.
+
+->$\mathfrak{B}$ b c d e f g h i k l m n o p<-
+
+| | | | | | | | | | | | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| $\mathfrak{B}$ Hypodorius | | | | | | | | | | | | | | | |
+| $\mathfrak{C}$ Hypophrygius | | | | | | | | | | | | | | | |
+
+->q r s t v x $\mathfrak{A}$ b c d e f g h i<-
+
+¶ Sit a/b/c/d ad p vsqʒ pentadecachordum hypodoriū in aliquo gñe vt diatonico: et q/r/s/t sequē=
+tes pentadecachordū hypophrygiū.distabitqʒ iccirco q proslambanomenos hypophrygiij ab a proslā=
+banomeno hypodorij modi acutior vno tono.dico ergo singulas hypophrygiij: singulis hypodorij vt
+hypatas hypatis/parhypatas parhypatis/lichanas lichanis et ita consequētes: flīliter tono/ toniçʒ
+proportione distare. Nam cū pentadecachordum a p et pentadecachordum q g sint vtraqʒ a proslāba=
+nomeno in neten hyperboleon diatonice extēsa:ergo que pportio a ad b ea est per quartā huius q ad
+r:ergo per tertiam secundi Arithmetices permutatim vt a ad q ita b ad r.at a ad q mōstratus est esse
+tonus:igitur et b ad r tonus.et cōsimiliter de sequentibus ostendatur.
+
+<margin>25</margin>
+¶ Totus ordo diatonicus pētadecachordi hypophrygiij modi: totum hypodorium
+vnius acumine toni superat:et totus hypolydius eūdem trisemitonio. singule quoqʒ
+dorij singulas hypodorij diatessaron consonantia.totus vero phrygius consonantia
+diapente.lydius aūt diapēte atqʒ semitonio.et myrolydius diapēte atqʒ sesquitono.
+
+->$\mathfrak{A}$ b c d e f g h i k l m n o p<-
+
+| | | | | | | | | | | | | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| $\mathfrak{B}$ Hypodorius | | | | | | | | | | | | | | | | | ꝑ 7 dia |
+| $\mathfrak{C}$ Hypophrygius | Tonus | | | | | | | | | | | | | | | | ꝑ to |
+| $\mathfrak{D}$ Hypolydius | Semito. | $\mathfrak{A}$ | | | | | | | | | | | | | | ꝑ ni |
+| $\mathfrak{E}$ Dorius | Tonus | | $\mathfrak{A}$ | | | | | | | | | | | | | ꝑ ci |
+| $\mathfrak{F}$ Phrygius | Tonus | | | $\mathfrak{A}$ | | | | | | | | | | | | ꝑ mo |
+| $\mathfrak{G}$ Lydius | Semitonium | | | | $\mathfrak{A}$ | | | | | | | | | | | di. |
+| $\mathfrak{H}$ Myrolydius | Tonus | | | | | $\mathfrak{A}$ | | | | | | | | | | |
+
+->$\mathfrak{A}$ b c d e f g h i k l m n o p<-
+
+¶ Quā proslambanomenos hypophrygiij tono superat acumine proslambanomenon hypodorij. ergo
+per precedētem totus hypophrygius ordo totū hypodoriū ordine:toni superat acumine. et quia
+proslambanomenos hypolydij superat acumine semitoniū minoris hypophrygiū:ergo idem superat
+acumine proslambanomenon hypodoriū trisemitonio.igitur per precedētem totus hypolydius ordo
+totū hypodoriū ordine trisemitonio superauit acutior. sed v qz dorius tonū acutie vincit hypolydiū:
+ergo dorius duobus tonis ꝛ semitonio acutior est hypodorio.ergo per sextā tertij eo acutior est cōso=
+
+<vocab>Hypodorius, Hypophrygius, Hypolydius, Dorius, Phrygius, Lydius, Myrolydius, pentadecachordum, proslambanomenos, diatessaron, diapente, trisemitonio, sesquitono, Arithmetices</vocab>

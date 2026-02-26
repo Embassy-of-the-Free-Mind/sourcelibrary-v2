@@ -1,0 +1,67 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>IIII</page-num>
+<header>IIII</header>
+
+Accipio c planissimã regulam nullaqꝫ ex parte subsultãtem: equalem linee a b: et per primã 7 decimã
+octauam secũdi huius ab c in d intẽdo tonum. et ab d in e semitoniũ minus. et ab e in f 7 g in g intẽdo
+duos tonos. et ab g in h semitoniũ minus. ab h in i et i in k duos tonos. Rursus ab k in l tonum. et ab
+l in m semitonium minus. ab m in n et n in o duos tonos. ab o in p semitoniũ. ab p in q et q in r duos
+tonos. ita qꝫ ꝯtinue semitonio minori subiũcti sint duo toni: dẽptis c d qui ꝑ proslambanomeno pmo
+semitonio prepõsitus est tonus: et k l tono qui tetrachordũ diezeugmenõ hoc est disiũcti principiũ est.
+Rursum applico totam regulã harmonicam et toti chorde a b. itaqꝫ c sit cum a: et r cũ b. et in chorda
+a b vbi applicãtur d/e/f/g/7 relique sectionum regule note: signo d/e/f/g/h/i/k/l/m/n/o/p/q et dico
+monochordũ a b esse in gñe diatonico regulariter diuisum. Qm̃ eniz sua intervalla intervallis regle
+c r rñdent: evadũtqꝫ equalia a b et d b sonat tonũ et d b et e b semitoniũ: et iterũ e b et f b tonũ ꝯtinet.
+igitur a b et f b duos tonos 7 semitoniũ minus ꝯtinẽs: per sextam tertij psonat diatessaron. Et quia
+f b et g b vt in regula ꝯtinet tonum. et g b et h b semitonium minus. et h b: l b 7 k b duos tonos.
+ergo per decimam tertij f b et k b tres tonos semitoniũqꝫ minus ꝯtinens: ꝯcinit diapẽte. Sed 7 mõ=
+stratũ est a b 7 f b modulari diatessaron: ꝑ vicesimam tertij a b et k b qd̃ ex cõsonãtijs diatessaron
+7 diapente cõsurgit coalitum: cõsonat diapason. Rursus k b et l b sonat tonum/ l b et m b semitonium
+minus m b n b et o b duos tonos: quare k b et o b tres tonos 7 semitoniũ minus ꝯtinens: per decimã
+tertij cõsonat diapẽte. Sed a b et k b mõstrata est diapason cõsonãtia: ergo a b 7 o b cõsonat diapason
+ac diapẽte. Pretea qꝫ o b 7 p b semitoniũ est et p b q b et r b duo toni: ergo o b et b cõcinit diatessaron.
+k b igitur et b ex diapente/ diatessaronqꝫ cõstans: per vicesimã tertij cõsonat diapason. At vro a b 7 k b
+trirẽ mõstratũ est cõcinere diapason. ergo a b 7 b ꝯcinũt bis diapason. Et qꝫ hec monochordi partitio
+per semitoniũ. 7 duos tonos facta pcessit: et ee que modo mõstrate sunt cõsonantie harmonice regule
+suffragio pervestigate: ergo monochordi reglaris partitio in genere diatonico per diffinitiõem mõs
+strata est. quod est propositum.
+
+<margin>2</margin> ## ¶ Monochordi regularis constitutionem in genere Chromatico declarare.
+
+<image-desc>
+A large diagram illustrating musical intervals on a monochord. At the top, a series of nested semicircular arcs represent proportional lengths: 'Bisdiapason' (spanning the entire range), 'Diapason diapen', and two smaller 'Diapason' arcs. Below these, four smaller arcs are labeled 'Diapente', 'Diatessaron', 'Diapente', and 'Diatessaron'. 
+
+The arcs connect to a horizontal line representing the monochord string, divided into segments marked with letters: a, d, e, f, g, h, i, lz, l, m, n, o, p, q, b, r. Below this line is a structural grid indicating the species of intervals:
+- T. (Tonus)
+- S. (Semitonium)
+- A. (Semitonium maius)
+- TR. (Trihemitonium)
+
+The grid sequence between the points is: L. | S | A | TR | S | A | TR | L | S | A | TR | S | A | TR.
+The left vertical margin of the diagram is labeled "Monochordũ Chromaticũ."
+</image-desc>
+
+->T. Tonus. S. Semitonium. A. Semitonium maius. TR. Trihemitonium.<-
+
+---
+
+¶ In omni Monochordo / atqꝫ Polyphordo hoc obsuat̃ ꝑpetas vt octaua modo nota / modo chorda
+prime: et decimaquinta octaue: in cõsonãtia diapason recrepet. et vbiqꝫ ꝑ proslambanomeno preiũgit̃
+tonus / inserit̃qꝫ vbiqꝫ inter mesen atqꝫ paramesen ꝑ concẽtu disiũcto tonus. hoc est in monochordis
+a prima nota in sc̃dam et ab octaua in nonam collocatur reperire. capio c r regulam planissimã et illi
+assignare corde equã. facioqꝫ per primam secũdi huius c d tonum: et p decimãoctauã eiusdẽ e semi=
+toniũ minus: et iteꝑ per primam d f toni interuallũ. erit ergo e f semitoniũ maius: et d e et e f duo se=
+mitonta: scz r ab f ad g metior tonum 7 semitoniũ min⁹: que equa erũt trihemitonio: et g h et h i facio
+duos semitonia: minus scz duo semitonio: et n o trihemitoniũ. et iteꝑ o/p/q duo semitonia: q r vro trihemi=
+tonium. Et regulã hoc pacto diuisam applico ex equo linee a b: et in linea a b signo ꝯsimiles 7 ꝯsi~tib⁹
+distãtijs notas: scz a/d/e/f/g/h/i/lz/l/m n/o p q/b. quo pacto dico lineam a b esse reglariter in melodia
+chromatica diuisam. Nã a d tonus et d f tonus et f g tonus 7 semitoniũ minus. quare a 7 g continent
+tres tonos 7 semitoniũ minus. ergo per decimã tertij a ad g cõsonat diapẽte. et g: h i cõtinent tonũ:
+et i lz trihemitoniũ: igitur g ad lz duos tonos 7 semitoniũ minus cõtinens per sextam tertij modulat̃
+diatessaron. sed et a g ꝑbata est diapente: ergo a lz cõstans ex a g et g lz diapente 7 diatessaron per vi=
+cesimam tertij cõcinit diapason. Et penitus eadem rõne ꝑbauens lz o cõsonare diapente/ et lz b dia=
+pason. quare a o diapason ac diapente 7 a b recrepabit bis diapason: quã cõsonãtiaz nos trãscẽdere
+Pythagoricorũ vetat autoritas. qui tñ volet vlterius concẽdere ex his q̃ iam demõstrata sunt r que
+
+<vocab>Monochordũ, Genere Chromatico, Bisdiapason, Diapason diapen, Diapente, Diatessaron, Tonus, Semitonium, Trihemitonium, Pythagoricorum</vocab>

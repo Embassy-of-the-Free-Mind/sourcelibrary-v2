@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>388</page-num>
+<header>Das Vierte Buch / 3. cap:</header>
+<meta>catchword: tzen:</meta>
+
+gin: rücket folgendes dieselbe/ auf acht und dreyffig: und dero Schü-
+tzen/ auf die W. Königin/ auf zwey und sechßig/ und erlanget sie/
+nebest dem Spiele/ mit gewalt.
+
+15. Ziehet aber der Weisse/ den König/ nicht auf 11. (n. 14.) be-
+sondern/ auf fünfe: so nimt der Schwartze/ mit der K. Rochen/
+der W. K. Rochens: Soldaten: und gibt/ mit der Königin/ auß
+dreyzehen/ oder achte/ Schach=Mat.
+
+16. Wan aber der Weisse/ den S. Reuter/ (n. 13.) nicht nimt/
+besondern die Königin/ (so fern Er/ mit derselben/ der S. K. Sol-
+daten/ nicht nehmen wil: Auf welchen fahl/ der Schwartze/ mit
+der K. Schützen/ seiner K. Reuter wegnimt: Er/ gibt/ mit der
+Königin/ auß sechs und dreyffig/ Schach: Der Schwartze/ ru-
+cket/ den König/ auß dem Schache/ und wird Jhm/ dieweyl Er/
+einen Schützen/ mehr zu gebrauchen/ wol beykommen können) auf
+vier und funfzig/ rücket: so nimt/ der Schwartze/ mit der K.
+
+17. Schützen/ der W. K. Reuter: * Der Weisse/ denselben/ mit
+der K. Rochen/ und ziehet ihn/ auf die S. Königin: Der Schwar-
+tze/ nimt ihn/ mit derselben: Der Weisse/ rücket/ der K. Reu-
+ters=Soldaten/ auf der S. K. Rochen/ auf funf und funfzig: Der
+Schwartze/ nimt ihn/ (auf daß er nicht/ zur Königin/ gemas-
+chet werde) mit des K. Reuter: Der Weisse/ rücket/ die Köni-
+gin/ auf achtzehen: Der Schwartze/ nimt/ mit der K. Rochen/
+der W. K. Rochens-Soldaten: Der Weisse/ (wil Er/ auß sieben/
+von der W. Königin/ nicht gleich erleget seyn) rücket des K. Schü-
+tzen/ auf zwölfe: Der Schwartze/ des K. Schützen/ auf die W.
+Königin/ auf fünf und viertzig: und wird dem Weissen/ ferner wol
+beykommen/ und der erlangung des Sieges/ nachhengen können.
+
+18. Nimt aber der Weisse/ nicht/ den S. Schützen/ (n. 17.) be-
+sondern rucket/ die Königin/ (umb/ auß ein und dreyffig/ entwe-
+der außzureissen/ oder die Königinne zu verwechseln) auf acht
+und dreyffig: so nimt/ der Schwartze/ der W. K. Schützens-
+Soldaten/ mit der Königin/ und gibt Schach: Der Weisse/
+rucket/ den König/ auf eylfe: Der Schwartze/ (umb/ das acht-
+zehend feld/ in acht zu haben) der K. Reuter/ auf fünf und dreyf-
+sig: Der Weisse/ (umb/ dem Schach-Mat/ auf zwantzig/ fürs-
+zubawen) der K. Rochen/ auf die S. Königin/ auf drey und zwan-
+tzig: Der Schwartze/ gibt/ mit derselben/ auß dreyzehen/ Schach:
+Der Weisse/ bedecket/ den König/ mit seinem Schützen/ auf
+zwölfe: Der Schwartze/ nimt/ die W. Königin/ mit des K. Schü-
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Schützen, Soldaten, Schach-Mat</vocab>

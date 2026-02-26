@@ -1,0 +1,31 @@
+<language>Latin, German</language>
+<page-type>text</page-type>
+<page-num>466</page-num>
+<header>Das Ander Capittel</header>
+
+<image-desc>A mathematical diagram at the top features four large triangles pointing downwards. Above the triangles are the column headings "Quartæ.", "Sextæ.", "Octavæ.", and "Decimæ." and the numbers 7, 11, 15, and 19. The diagram leads into a structured grid of numbers, some of which are enclosed in dark squares.</image-desc>
+
+| | Quartæ. | Sextæ. | Octavæ. | Decimæ. |
+| :--- | :---: | :---: | :---: | :---: |
+| Partes secundum denominatoris rationem augendae. | 7. | 11. | 15. | 19. |
+| Auctus. | 21. <br> *Tripartiens quartas* | 55. <br> *Quintupartiens sextas* | 105. <br> *Septupartiens octavas* | 171. <br> *Noncupartiens decimas.* |
+| **Postulator** <br> *superpartiens* | **28** | **66** | **120** | **190** |
+| **Postulatus** *productus ex postulatoris et aucti additione:* | **49** | **121** | **225** | **361** |
+
+---
+
+> (Idem, fol: 12. a.
+> » **Proportio Superpartiens nuncupatur, in quâ Numerus Mi-**
+> » **nor, cum aliquot partibus, à Majori cohibetur: ut quinque, tria,**
+> » **cum duabus tertijs, complectuntur. Quare cùm hac Ratio su-**
+> » **perpartiens, præter Numerum Minorem, plures partes, inclu-**
+> » **dat, Quadratis Calculis, qui ex pluribus etiam lateribus, quàm**
+> » **Trianguli, componuntur, non erit inepta.**)
+
+<image-desc>Two three-dimensional diagrams showing stacks of square slabs of decreasing size, forming pyramids. The left pyramid has 6 levels and is labeled with square numbers: 1, 4, 9, 16, 25, 36; its base is labeled with "6" on the side and "91" at the bottom. The right pyramid is shaded dark and has levels labeled with square numbers: 4, 9, 16, 25, 36, 49, 64; its base is labeled with "8" on the side and "190" at the bottom.</image-desc>
+
+**Die Zahle der Staffen / der beeden Türne / welche man / an stat zweyer Vierecketen Steinen / (als dessen / welcher / in der Weißen Steinen / hauffen / mit 91: und dessen / welcher / in der Schwartzen / hauffen / mit 190. gezeichnet ist) gebrauchet / werden /**
+
+<meta>catchword: auf dies</meta>
+
+<vocab>Proportio Superpartiens, Quadratis Calculis, Vierecketen Steinen, Türne, Staffen</vocab>

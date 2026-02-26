@@ -1,0 +1,35 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>IIII</page-num>
+
+¶ Sint pro reliquis tetrachordis complendis k l m n o p q: quoniam tetrachordum meson disiunctum est a tetrachordo netarum diezeugmenon: idcirco facio meses ad paramesen diezeugmenon distantiam esse tonum. et mesen ad neten diezeugmenon facio consonare diapente. et ad neten hyperboleon diapason et tetrachordū k l m n partior ut tetrachordū hypaton. tetrachordū vero n o p q partior ut in precedēti tetrachordoru meson eritque utrūq; in genere chromatico divisum. et quoniam a ad h cognita est esse diapason: et h ad q itidem diapason. ergo a ad q consonat bis diapason. At cum quindecim vocibus atq; chordis contētum sit: constat effectū esse id quod erat propositū. Sed si k l m facis tetrachordū synemmenon ipsū partiaris ut tetrachordū chromaticum meson. et facile factū intuebere propositū.
+
+<margin>13</margin> ¶ Chromatici pentadecachordi numeros assignare.
+
+| | | | | | |
+|---|---|---|---|---|---|
+| Proslambanomenos | A | | 2592 | 5971968 | |
+| Hypate hypaton | b | 256 | 2304 | 5308416 | Tonus |
+| Parhypate hypaton | c | 243 | 2187 | 5038848 | Semi. minus |
+| Lichanos hypaton | d | | 2048 | 4718592 | Semi. maius |
+| Hypate meson | e | | 1728 | 3981312 | Tritemitoniū |
+| Parhypate meson | f | | | 3779136 | Semi. minus |
+| Lichanos meson | g | | | 3538944 | Semi. maius |
+| Mese | h | | 1296 | 2985984 | Tritemitoniū |
+| Paramese diezeugmenō | k | | 1152 | 2654208 | Tonus |
+| Trite diezeugmenon | l | | | 2519424 | Semi. minus |
+| Paranete diezeugmenō | m | | | 2359296 | Semi. maius |
+| Nete diezeugmenon | n | | 864 | 2221056 | Tritemitoniū |
+| Trite hyperboleon | o | | | 2108268 | Semi. minus |
+| Paranete hyperboleon | p | | | 1974272 | Semi. maius |
+| Nete hyperboleon | q | | 648 | 1492992 | Tritemitoniū |
+
+¶ Sint b et c minimi numeri semitonij minoris per decimãoctauam secūdi huius reperti. quoniam b nona parte caret: augeo b et c per nouem et veniat b et c in secundo loco. quoniā igitur in secundo loco b nonam partē habet: eam augeo per octo et fiat d. tunc b ad d per septimā secūdi arithmetices erit sesquioctauus. quare b d continentia tonum. et b c per eādē est semitonium minus. ergo c d est apotome. Rursum quoniam b habet octauā adiicio eidem suam octauā et fiat e: eritque a ad b sesquioctauus atque tonus et quoniā a habet tertiā facio a ad e sesquialterū. et quoniam h habet secundum facio itidem a duplum ad h. Reperio item h habere nonam. tertiā et secūdam. facio igitur h sesquioctauū ad k: sesquialterū ad n et duplū ad q. quo facto duco b secundi loci in a b c d e h k n q et veniant in tertio loco a b c d e h k n q. Deinde duco c d secundi loci in e secundi et veniant f g in k: et veniant l m et in n et veniant o p in tertio loco. eruntque per septimā et octauā secundi arithmeticæ numeri pētadecachordi chromatici in tertia: e et sunt numeri diapente. et a b numeri toni. dempto igitur a b tono relinquitur b e diatessaron et b c c d simul sunt tonus. igitur per sextam tertij d e sunt tritemitoniū. Et a h est diapason et a e diapente. igitur e h est diatessaron. et per octauam secundi arithmeticæ e f et f g sunt semitoniū minus et apotome. igitur g h est tritemitonium et cōsimiliter monstrabis h k esse tonū k l et l m duo semitonia et m n tritemitoniū n o p q duo semitonia et p q tritemitoniū, clarum igitur euadit propositum.
+
+<margin>14</margin> ¶ Quodorum diatonici et chromatis parhypate parhypatis : paramese paramesis / atque trite tritis correspondent.
+
+¶ Nam in utrisque generibus hypate ad parhypatas semitonij minoris obseruāt intervallū. et mese ad paramesas tonum. et trite ad tritas minus semitonii. est igitur notum illas voculas in utroque canendi modo sibiinuicē respōdere. et nō modo id verum sit: sed et hypate hypatis et mese mesis et nete netis correspondēt. Nam utrobiq; proslambanomenon ad hypatas hypaton cōcinunt tonum. et ad hypatas meson diapente. ad mesas diapason. ad netas disiunctarum diapason ac diapente. et ad netas hyperboleon bis diapason. est ergo quod proponebatur et amplius: facile cognitū.
+
+<sig>b 5</sig>
+
+<vocab>tetrachordum, chromaticus, pentadecachordus, diapason, diapente, diatessaron, tritemitonium, semitonium, apotome, Proslambanomenos, Hypate, Mese, Nete, Paramese, arithmetica</vocab>

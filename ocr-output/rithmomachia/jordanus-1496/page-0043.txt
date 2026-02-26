@@ -1,0 +1,77 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VII</page-num>
+<columns>2</columns>
+<sig>b 4</sig>
+
+1 **Si quotlibet sibi coaceruentur pares: qui prouenient erit par.**
+¶ Nam ex diffinitioē paris quotquot assignabūtur eoz q̃libet hꝫ medietatē. at oēs eoz medietates p sextā primi adinuicē cōiūcte: coaceruati dimidiū cōnstituūt. coaceruatus igitur cum in duo equa diuidi possit erit par: quod intendebatur.
+
+2 **Si par et impar coniungantur:compositus erit impar.**
+¶ Nam si ab impari auferatur vnitas cū solam vnitatē per diffinitionē super parē addat: relinquātur par. qui si addatur alteri pari: per p̄cedētē cōpositus erit par. cui quidē si ablata restituat vnitas: totus per diffinitionē fiet impar. at uile erit qđ ex pari z ipari cōstat. ratū est ergo qđ pꝛoꝑo intēdebat.
+
+3 **Si impar impari addatur : proueniet numerus par.**
+¶ Nam si ab vtroqȝ eorum dematur vnitas relinquētut duo pares qui ꝑ antepꝛemissam cōnstituent numerū parem: cui quidē cōposito si iungātur due ablate vnitates que parē cōnstituunt per eandē antepꝛemissam totus rursum euadet par. hoc autē intendebat propositio.
+
+4 **Si impares numero pares sibi coaceruentur : totus ex eis cōflatus erit par.**
+¶ Nā cū nūerus quo eos sumim⁹ sit par: in eo binari⁹ aliquotiies sumet qđ toties ꝑ p̄cedēte binario copulati erūt pares. igiť per primā hui⁹ adinuicē simul additi cōnstituunt numerꝫ parē: qđ est pꝛopositū.
+
+5 **Si impares numero impares coaceruentur: cōpositus erit impar.**
+¶ Nam si vnus eoz omittatur per p̄cedentē compositus erit par: ergo per secundā p̄ntis si oꝑosito addatur omissus impar: totus qđ inde nascitur ex oibus compositus erit impar qđ est propositū.
+
+6 **Si a pari detrahatur par: reliquetur par.**
+¶ Nam si relinquētur impar: idem cum detracto additus per secundā pꝛesentis cōnstituisset imparē: quod est contra hypothesim. verum igitur est propositum.
+
+7 **Si impar a pari tollatur : residuus erit impar.**
+¶ Nam si residuus poneretur par: idem detracto oppositus per secundā huius cōnstituisset imparē: quod est contra hypothesim. erit igitur verum pꝛopositū.
+
+8 **Si ab impari impar tollatur: remanebit par.**
+¶ Nam si remaneret impar: idem ablato additus per tertiā huius cōnstituisset parem: at positus est impar. relinquitur igitur par: quod est propositum.
+
+9 **Si par impari substrahatur: reliquus erit impar.**
+¶ Nam si residuus esset par: subtracto additus ꝑ primā huius cōnstituisset parē: quod est contra positum. relinquitur igitur propositum verum.
+
+10 **Omnis numerus per parem multiplicatus: parem producit.**
+¶ Nā si multiplicat parē ꝑ diffinitionē toties multiplicat⁹ erit in pꝛoducto quoties vnitas in mētipli- cāte. z cū multiplicat⁹ sit par tot illi pares siml’ additi ꝑ primā hui⁹ cōnstituūt pꝛoductū parē. si aūt mēti plicet iparē ꝑ idē toties erit mētiplicat⁹ ipar in pꝛoducto quoties vnitas in mētiplicate. at vnitas in eo ponit esse in numero par : ergo ꝑ quartā huius illi impares : nūero pares simul additi cōnstituunt iteꝛ parem: quod est totum propositum.
+
+11 **Si impar in imparem ducatur: qui producetur erit impar.**
+¶ Nam multiplicatus impar per diffinitionē toties erit in pꝛoducto quoties vnitas in multiplicāte impari. at in illo vnitas est in numero impari. igitur per quintā huius illi impares et numero quidē impares simul additi cōnstituunt pꝛoductū imparem: quod est propositum.
+
+12 **Quemcunqȝ par numerat: eum esse parem necesse est.**
+¶ Nam par numeras ꝑ diffinitionē pōt in duo equa diuidi in cuius medietates si numer⁹ secundū quē numerat ducat : ꝑ nonā primi eundē pꝛoductū pꝛoducit. at idē numer⁹ in alterā medietatū duct⁹ pꝛoducti pꝛoducit dimidiū. igiť pꝛoductus vt qđ pōt in duo equa ptiri ꝑ diffinitionē est par: qđ est ꝑpositū.
+
+13 **Quicunqȝ imparem numerat : impar est**
+¶ Nam si ponas qđ qđ eum numerat sit par: per pꝛecedentē numeratus erit par: quod est contra hypothesim. qui igitur eū numerabit si quis numeret: erit impar: quod est propositum.
+
+14 **Si impar imparem numeret: secundum imparem eum numerabit.**
+¶ Nam si impar numeraret imparē secundū parem: ergo alternati per octauā primi par numeraret eundē secundū imparē: quod ꝑ duodecimā huius est ipossibile. verum igitur pꝛopositū.
+
+15 **Si impar parem numeret: secundū parem eum numerare conueniet.**
+¶ Nam si impar secundū imparē eum numeraret: ergo ꝑ vndecimam huius totus esset impar. at positus est par. accideret itaqȝ contra hypothesim. relinquetur igitur pꝛopositum.
+
+16 **Si parem impar numeret: dimidium quoqȝ ipsius numerabit.**
+¶ Nam si impar parem numeret: per pꝛemissam secundū parem eū numerabit. cum itaqȝ omnis par medietatē habeat impar ergo ille per illius medietatē multiplicatus per octauam et nonam primi pꝛoducet totius medietatē. numerabit igitur impar ille: numerati dimidiū : quod est pꝛopositum
+
+17 **Si nūerus ipar ad aliquē numerū fuerit prim⁹ : idē quoqȝ z ad eius duplū erit ꝑm⁹**
+¶ At si ipar a sit primus ad b dico ipm esse primū ad c duplū b. nā si nō fuerit primus ad c ergo a z c cōicabunt. erit igitur ꝑ diffinitionē numerus cōiter numeros a et c numeras: qui sit d. z qa d nūerat a z c: et c est par qȝ duplus b. et ideo d pōt in duo equa partiri: igitur ꝑ pꝛecedentē d etiā numerabit dimidiū c. quare a z b cōicabunt: quod est contra hypothesim. erit igiť a primus ad c: qđ est ꝑpositū.
+
+<column-break/>
+
+<image-desc>A column of fifteen mathematical diagrams illustrating the propositions on the left.
+1. A line of length 12 divided into segments 2, 4, 6, with points a and b.
+2. A line of 11 divided into 7 and 4, points a, b, c.
+3. A line of 12 divided into 7 and 5, points a, b, c.
+4. A line of 32 divided into segments 5, 7, 9, 11, points a, b, c, d, e.
+5. A line of 23 divided into 5, 7, 11, points a, b, c, d.
+6. A line of 12 with two semicircles above it labeled 4 and 8, points a and b.
+7. A line of 12 with semicircles labeled 5 and 7, points a and b.
+8. Two lines of 17: the first with semicircles 5 and 12, the second with semicircles 8 and 9, points a and b.
+9. Parallel lines of lengths e=28, d=24, b=6, c=7, a=4.
+10. Line of 35 with a segment labeled 7, points a and b.
+11. A line of 8 with two semicircles of 4; below it, a line of 25 with a segment of 5, points a and b.
+12. Line of 35 with segment 7, points a, b, c.
+13. Line of 30 with segments 5 and 6, points a, b, c.
+14. A line of 30 with two semicircles of 15; a smaller line of 6 with two semicircles of 3, points a, b, c, d, e.
+15. Three parallel lines of lengths 5, 15, and 30 with various lettered points and segments.</image-desc>
+
+<vocab>par, impar, multiplicatus, numerus, diffinitio, propositio, medietas, primus</vocab>

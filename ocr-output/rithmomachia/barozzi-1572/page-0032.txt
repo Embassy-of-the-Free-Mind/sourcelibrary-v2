@@ -1,0 +1,39 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>15</page-num>
+<sig>Tauo</sig>
+<meta>bleed-through from verso page visible throughout</meta>
+<warning>Extensive bleed-through makes some table values difficult to distinguish from mirrored text on the back of the page.</warning>
+
+Col ſottrar ſi pigliano li pezzi à queſto modo. ſe fi trouaranno dui pezzi de una medefima ſchiera in tali caſelle, che da quelle poſſino andar à trouar un pezzo dell'auuerſaria ſchiera : & che cauato il numero dell'uno di eſſi dui dal numero dell'altro, reſti il numero del pezzo auuerſario : ſubito ſi leua dal giuoco detto pezzo, reſtando li altri due doue ſono, come nel ſottoſcritto eſſempio, ſe ſarà il 15 quadrato bianco nella caſella A, & il 6 tondo bianco nella B, & il 9 tondo nero nella C: dico che ſubito che queſti tre pezzi ſi trouaranno in queſto ſito, ſi leuarà dal giuoco il 9 tondo nero, perche & il 15 quadrato, & il 6 tondo bianchi poſſono andar doue è il 9 tondo nero, & ſottrato il 6 dal 15, riman 9.
+
+<image-desc>A rectangular diagram divided by lines into sections. The top sections are labeled "A" and "C". Below them is a central box labeled "B" which contains a large "X". This illustrates the capture mechanism in the game Rythmomachia.</image-desc>
+
+Quali ſiano in giuoco li numeri che ſi poſſono uincer col ſottrar ci dimoſtra la ſeguente tauola.
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 30 | 15 | 15 | 4 | 2 | 2 |
+| 45 | 30 | 15 | 6 | 3 | 3 |
+| 60 | 30 | 30 | 8 | 4 | 4 |
+| 60 | 45 | 15 | 10 | 5 | 5 |
+| 75 | 30 | 45 | 12 | 6 | 6 |
+| 75 | 45 | 30 | 14 | 7 | 7 |
+| 75 | 60 | 15 | 16 | 8 | 8 |
+| 90 | 30 | 60 | 18 | 9 | 9 |
+| 90 | 45 | 45 | 20 | 10 | 10 |
+| 90 | 60 | 30 | 21 | 15 | 6 |
+| 90 | 75 | 15 | 28 | 21 | 7 |
+| 100 | 91 | 9 | 36 | 28 | 8 |
+| 120 | 105 | 15 | 45 | 36 | 9 |
+| 136 | 120 | 16 | 55 | 45 | 10 |
+| 153 | 136 | 17 | 66 | 55 | 11 |
+| 171 | 153 | 18 | 78 | 66 | 12 |
+| 190 | 171 | 19 | 91 | 78 | 13 |
+| 210 | 190 | 20 | 105 | 91 | 14 |
+| 231 | 210 | 21 | 120 | 105 | 15 |
+| 253 | 231 | 22 | 136 | 120 | 16 |
+| 276 | 253 | 23 | 153 | 136 | 17 |
+| 300 | 276 | 24 | | | |
+
+<vocab>sottrar, pezzi, schiera, caselle, quadrato bianco, tondo bianco, tondo nero, tauola, Rythmomachia</vocab>

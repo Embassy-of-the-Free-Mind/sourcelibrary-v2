@@ -1,0 +1,36 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>398</page-num>
+<header>Das Vierte Buch / 4. cap:</header>
+
+<margin>25.</margin>
+> » Der Weisse / (n. 16.) dieselbe / auf 19: Der Schwartze / des K. Ro-
+> » chen / auf 59: * Der Weisse / die Königin / (umb sie nicht zu ver-
+> » lieren / n. 17.) auf ein anders feld.
+
+Hierinnen begehet nuhn / der Damianus, einen ziemlichen fehler: Dan Er / nicht gewahr wird / daß der <term>S. K. Schütze</term> / zwischen derselben / und des <term>S. K. Rochen</term> / einstehe: und daß ihr <term>Soldat</term> / (umb diesem verdorbenem Spiele / in etwas zu hülfe zu kommen: auch / für die <term>S. Königin</term> / oder dero Schützen / das acht und zwanzigste feld / zu verhüten: und / der <term>K. Schützen</term> / auf daß derselbe / des <term>S. K. Rochen</term> / den <term>Schach</term> / auß sieben und zwanzig / verhindere: den weg zu eröfnen) mit mehrem nutzen / auf ein und zwanzig / gerucket werde. Sol demnach der Weisse / die <term>Königin</term> / diesweyl Er dessen / (wie auß den itztgedachten gründen / zu ersehen) keine ursache hat: unangesehen / es / der Damianus, ihm starck verbeut: nuhr stehen lassen / und im gegenspiel / seinem sehr bösen Spiele / mit einem andern guten Zuge / zu hülffe kommen.
+
+Doch / es sey ihm also / daß wir / dem Weissen / (welcher der beste Spieler seyn / und / wegen des gegebenen Vortheiles / bösere — der Schwartze / aber / bessere Züge / haben muß) solches nachgeben /
+> » und dem Damiano, gestehen: Daß Er / (wie der Schwartze / des
+> » K. Rochen / auf 59. gezogen) mit der Königin / (umb dieselbe /
+> » nicht zu verlieren: alß wan es eben / bey diesem Zuge / hoch nö-
+> » tig gewesen) habe / (n. 17. 25.) außreissen müssen: so setzet Er fer-
+> » ner / daß der Schwartze / wan der Weisse / die Königin / an einen
+> » andern / (doch von ihm nicht entdecketen) ort / wegflöhne / mit
+> » seiner Königin / auß 36. Schach-geben sol: Welches doch / ein
+
+greiflicher fehler: Dan ihm / nach itziger anordnung seines Spieles / nicht möglich ist / auß 36. aber wol / auß acht und zwanzig / <term>Schach</term> zu geben.
+
+<margin>26.</margin>
+> » Ferner / gibt Er / (n. 19.) für / daß der Weisse / die Königin /
+> » an einen solchen ort stellen sol / da Sie / den Schach / von der S.
+> » Königin / auß 28. verthetigen könne: gedencket aber des ortes /
+> » nicht / wohin sie füglich / zu ziehen seyn möchte: In betrachtung /
+
+derselben nicht mehr / dan zwey oder drey felder / (alß nemlich / das funf und funfzigste / wan sie auß demselben / der <term>S. K. Reuters-Soldaten</term> / nimt / und auf dero <term>Rochen</term> / zielet: oder das zehend: oder das erste feld) in welche Sie / denselben <term>Schach</term> zu verhüten / kan gesetzet werden / offen stehen.
+
+Wan nuhn nachgegeben wird / daß der Weisse / die <term>Königin</term> / in ein feld / unter den dreyen gestellet: so schreibet Er (n. 20.) ferner:
+
+<meta>catchword: *daß</meta>
+
+<vocab>Damianus, Schach, Königin, Rochen, Schütze, Reuters-Soldaten, Schachspiel</vocab>

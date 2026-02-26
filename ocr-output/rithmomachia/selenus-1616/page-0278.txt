@@ -1,0 +1,43 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>244</page-num>
+<header>Das Ander Buch / 14. cap:</header>
+
+des K. Reuters-Soldaten / nehmen: Nimt Er ihn / mit dem
+Soldaten: so gibt der Weisse / mit der Königin/ auß acht und funf-
+zig / oder (wan der S. K. Reuter / fürgezogen worden) auß neun und
+funfzig/ Schach-Mat: Nimt Er ihn aber / mit der Königin / und
+beut Schach: so nimt Sie / der Weisse / mit des K. Soldaten: der
+Schwarze / rucket des K. Reuters-Soldaten / auf zwey und vier-
+zig: der Weisse / nimt / denselben / mit des K. Schützen / und ziehet
+ihn/ auf des S. K. Rochen: der Schwarze / nimt ihn / mit des K.
+Schützens-Soldaten: der Weisse / denselben / mit der Königin /
+beut Schach / und ziehet / auf des S. K. Rochen: der Schwarze /
+bedecket / den König / mit seinem Rochen / auf ein und funfzig: der
+Weisse / beut / mit der Königin / auß acht und funfzig / Schach: der
+Schwarze / bedecket / den König / mit seinem Rochen / oder der
+38. K. Reuter / auf neun und funfzig: * Bedecket Er ihn / mit dem
+Reuter: so gibt der Weisse / mit der K. Rochen / auß viere / Schach:
+der Schwarze / muß den König / auf ein und sechßig / rucken:
+der Weisse / nimt / mit der Königin / des S. K. Rochen: der
+Schwarze / rucket / der K. Schützens-Soldaten / (umb seinem
+Könige / platz zu machen) auf sechs und vierzig: der Weisse / (die-
+ses zu verhindern) der K. Schützen / auf fünf und vierzig: und gibt
+folgendes mit der Königin / auß zwey und funfzig: oder mit dero
+Rochen / auß sechßig / ungehindert / Schach-Mat.
+39. Bedecket aber der Schwarze / den König / nicht mit dem
+Reuter / (n. 38.) sondern / mit seinem Rochen / auf 59. und ziehet
+ihn / auf die W. Königin: so gibt / der Weisse / mit seines K. Solda-
+ten / auß ein und funfzig / Schach: der Schwarze / muß den Kö-
+nig auf ein und sechßig / rucken: der Weisse / nimt / des K. Ro-
+chen / mit seiner K. Schützen / und kan / gegen dem Schwarzen /
+den Sieg / ferner gantz leicht erhalten.
+40. Spielet aber der Schwarze / nachdem seine Königin / auf
+61, (n. 37.) gestellet: und die Schützen / verwechslest: andere Züge /
+so hat der Weisse / gleichwol / gute gelegenheit / den
+Sieg davon zu tragen.
+
+<image-desc>A symmetrical printers' ornament or vignette featuring stylized foliage and floral scrollwork.</image-desc>
+
+<meta>Catchword: Das</meta>
+<vocab>Schach-Mat, Reuter, Königin, Rochen, Schütze, Schach, Soldat</vocab>

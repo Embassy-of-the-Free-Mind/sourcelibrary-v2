@@ -1,0 +1,136 @@
+<language>French</language>
+<page-type>text</page-type>
+
+<image-desc>
+A page containing two complex diagrams illustrating numerical proportions, likely for the board game Rythmomachia. Each diagram features vertical headings for ratios, a row for "Reprises", and a grid of eight boxes with calculated values. The top section is associated with even superpartient factors (2, 4, 6, 8) and the bottom with odd factors (3, 5, 7, 9). The bottom grid features white text on a black background.
+</image-desc>
+
+<margin>
+Nom-
+bre.
+</margin>
+
+<margin>
+Pair.
+</margin>
+
+<margin>
+{ Parties à re-
+{ predre ioux-
+{ te le deno-
+{ minateur de
+{ la pportion.
+</margin>
+
+<margin>
+Tierce.
+5
+</margin>
+
+<margin>
+Quinte.
+9
+</margin>
+
+<margin>
+Septief-
+mes.
+13
+</margin>
+
+<margin>
+Neufief-
+me.
+17
+</margin>
+
+---
+
+->Reprises. 10 36 102 135<-
+
+->**Bipartiente Tierces.** **Quadripartiente Quintes.** **Sestupartiente Septiesmes.** **Octupartiente Neufiesmes.**<-
+
+<margin>
+Reg-
+rans
+super
+pties.
+---
+Re-
+quis
+pue-
+ion.
+</margin>
+
+|  |  |  |  |
+|:---:|:---:|:---:|:---:|
+| 15 | 45 | 91 | 153 |
+| 25 | 81 | 169 | 289 |
+
+---
+
+<margin>
+Impair.
+</margin>
+
+<margin>
+{ Parties à re-
+{ predre ioux-
+{ te la deno-
+{ minatiõ de
+{ la pportiõ.
+</margin>
+
+<margin>
+Quartes.
+7
+</margin>
+
+<margin>
+Sixtes.
+11
+</margin>
+
+<margin>
+Huict-
+iesmes.
+15
+</margin>
+
+<margin>
+Dixief-
+mes.
+19
+</margin>
+
+---
+
+->Reprises. 21 55 105 171<-
+
+->**Tripartiente Quartes.** **Quintapartiente Sextes.** **Septupartiente Huictiesmes.** **Nonupartiente Dixiesmes.**<-
+
+<margin>
+Nom
+pair.
+</margin>
+
+<margin>
+{ Reg-
+{ rans
+{ super
+{ pties.
+{ ---
+{ Re-
+{ quis
+{ pue-
+{ ion.
+</margin>
+
+<image-desc>A grid of eight boxes with white numerals on a black background.</image-desc>
+
+|  |  |  |  |
+|:---:|:---:|:---:|:---:|
+| 28 | 66 | 120 | 190 |
+| 49 | 121 | 225 | 361 |
+
+<vocab>Rythmomachia, proportion, denominateur, Reprises, Bipartiente Tierces, Quadripartiente Quintes, Sestupartiente Septiesmes, Octupartiente Neufiesmes, Tripartiente Quartes, Quintapartiente Sextes, Septupartiente Huictiesmes, Nonupartiente Dixiesmes, Nombre pair, Nombre impair</vocab>

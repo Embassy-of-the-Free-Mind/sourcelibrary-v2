@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>diagram</page-type>
+<columns>2</columns>
+<page-num>225</page-num>
+<header>13. cap: Vom Schach-Spiel.</header>
+
+->n. 1. 8. 19. 20. 25.<-
+
+<image-desc>An 8x8 grid representing a chess position. The top two ranks are occupied by black pieces labeled SR (Schwartz Roch/Rook), SS (Schwartz Springer/Knight or Soldat/Pawn), and SK (Schwartz König/King). Subscripts like 'c' appear on some pieces. The middle ranks contain numbers 46, 43, 35, and 25 interspersed with a few white pieces. The bottom two ranks contain white pieces labeled WS (Weiß Springer), WR (Weiß Roch), and WK (Weiß König).</image-desc>
+
+---
+
+->n. 6. 7.<-
+
+<image-desc>An 8x8 chess grid diagram. Black pieces are clustered at the top (including SR, SS, SK), and white pieces are at the bottom. Mid-board squares contain the numbers 33 and 25. The White King (WK) is positioned on the bottom rank, fifth column from the left.</image-desc>
+
+---
+
+->n. 11. 12.<-
+
+<image-desc>An 8x8 chess grid diagram. The arrangement shows black pieces at the top and white pieces at the bottom. Notable markings include the numbers 43 and 26, and a Black King (SK) placed deeper in the middle ranks compared to previous diagrams. The White King (WK) remains on the bottom rank.</image-desc>
+
+---
+
+->n. 26. 31<-
+
+<image-desc>An 8x8 chess grid diagram showing a more open position. Fewer pieces are present on the board. The number 3 is located on the bottom rank near the White King (WK).</image-desc>
+
+<column-break/>
+
+->n. 4. 5.<-
+
+<image-desc>An 8x8 chess grid diagram. Pieces are distributed across the board with several empty squares in the starting ranks. Includes the number 34 in the center-right area. The White King (WK) is on the bottom rank.</image-desc>
+
+---
+
+->n. 9. 10. 15. 16.<-
+
+<image-desc>An 8x8 chess grid diagram featuring multiple numeric annotations: 45, 43, 38, and 34. The piece distribution shows a mix of black (top) and white (bottom) forces, with some pieces advanced toward the center.</image-desc>
+
+---
+
+->n. 23. 24.<-
+
+<image-desc>An 8x8 chess grid diagram representing a late-game or simplified position with very few pieces remaining. Contains the number 36 and textual annotations "jo" and "z" in the lower right quadrant of the board.</image-desc>
+
+---
+
+->n. 29. 30.<-
+
+<image-desc>An 8x8 chess grid diagram. The board shows a specific endgame or problem setup. Includes the number 19 and the annotation "jo" near the White King (WK) on the lower half of the board.</image-desc>
+
+<vocab>Vom Schach-Spiel, SR (Schwartz Roch), SS (Schwartz Springer/Soldat), SK (Schwartz König), WS (Weiß Springer/Soldat), WK (Weiß König), WR (Weiß Roch)</vocab>

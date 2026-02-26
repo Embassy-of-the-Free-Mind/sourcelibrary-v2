@@ -1,0 +1,42 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>IIII</page-num>
+
+# 13
+¶ Numerorũ continue proportionaliū si primus nō numeret secundũ nō numerabit aliquis eorum ultimū. ꝙ si primus numeret ultimū numerabit et secundū.
+
+<image-desc>A marginal diagram showing proportional numbers. The first group is "a 8 b 12 c 18 d 27". Below it is "e 4 f 6 g 9". The third group consists of letters "h i l m" without numbers.</image-desc>
+
+¶ Sint a b c d numeri cōtinué ꝓportionales et a nō numeret b: dico nullū eoꝝ nūerare d. ꝛ certū est qꝛ sicut a ad b: ita c ad d. et a nō numerat b: c etiā non numerare d. at qꝛ nō numeret d ꝓʒ. capiō enim e f g tres mimos ꝓportionis a ad b. per quātā sunt cōtra se primi: ergo e nō numerat g: quare neqʒ b numerabit d. n̄ enī e numerat g īp̄m e esset vnitas. et cū que proportio e ad f: ea sit a ad b ꝛ e vnitas numeret f a etiā nūeraret b: qd est ꝓtrā hypothesim. et cōsilmiliter ꝓbabis a nō numerare d acceptis quattuor mīmīs in illa ꝓportione q̃ sint h l l m. nã cum ꝓmus nō sit vnitas (alioquī oēs numeraret ꝛ ita a oēs) prim' ꝛ ultimus ꝓ quintā hui' erūt contra se primi ꝛ prim' h nō numerabit m: quare neqʒ a numerabit d. vt enī h ad m: ita ꝓ equam ꝓportionalitatẽ a ad d qd est primū. Scđm ꝓʒ ex opposito p̄ntis hui' vltimi mōstrati. Si enī a nō nu merat b: etiām nō numerat d. vt monstratū est ꝓ primā partem: ergo ex opposito ꝓntis si a numerat d numerat ꝛ b: quod est secundum.
+
+# 14
+¶ Si primus in tertio quoties vnitas in secundo: inter primū et tertium et inter vni-
+tatem ꝛ secundū numeri proportionales numero equales inuenientur.
+
+<image-desc>A marginal diagram consisting of horizontal lines of decreasing lengths. On the left, from top to bottom, lines are labeled d 16, c 8, b 4, and a. On the right, lines are labeled e 8, g 4, f 2, and 1 1. A bracket at the top right includes the letter h.</image-desc>
+
+¶ Sint tres numeri a e d: a prim' : e secundus: d tertius. et sit vt quoties a est in d: toties vnitas sit in e dico ergo quot numeri inter a ꝛ d cōtinue ꝓportionales inueniūtur: totidē inter vnitatẽ ꝛ e reperirī. Reperiātur enī int' a ꝛ d duo nūerī b ꝛ c cōtinue ꝓportionales: qm̄ enī a numerat d ergo ꝓ p̄emissam a nūerabit b. vnitas ergo numeret f quoties a in b: itaqʒ f numeret g quoties b nūerat c: nūeret etiā g toties quēcunqʒ numerū. vt verbī cā h quoties c nūerat d: qꝛ ergo vt a ad b: ita vnitas ad f et vt b ad c. ita f ad g. et vt c ad d: ita g ad h. ergo ꝓ equā ꝓproportionalitatẽ vt a ad d: ita vnitas ad h. sed vt a ad d ita ꝛ vnitas ad e. sunt ergo h ꝛ e idem numerus: quare inter vnitatẽ ꝛ e duo pariter numeri f et g re- periuntur medīꝓ proportionales vt inter a et d duo b ꝛ c: quod est propositum.
+
+# 15
+¶ Si fuerint duo numeri contra se primi quotcūqʒ inter alterū eoꝝ et minimū quem numerāt: totidem inter reliquū ꝛ vnitatẽ proportionales reperiri cōtingit.
+
+<image-desc>A marginal diagram similar to the one for section 14. Left side lines: d 24, c 12, b 6, a 3. Right side lines: e 8, g 4, f 2, 1 1.</image-desc>
+
+¶ Sint cōtra se primi a ꝛ e et mimus quē numerāt sit d: dico ꝙ si int' a et d cadūt b c duo medīꝓ ꝓtinūe ꝓportionales totidē cadē inter vnitatẽ ꝛ e: qꝛ a e sunt contra se primi. et ideo in sua ꝓportione mimi et d est mimus quē numerāt: ergo ꝓ vicesimāquartā tertī a nūerat d secundum e. est ergo toties a in d quoties vnitas in e: ergo per precedentē quot numeri inueniunt' inter a ꝛ d primū ꝛ tertium: totidem continue proportionales inueniunt' inter vnitatem ꝛ e secundū: quod est propositum.
+
+# 16
+¶ Si fuerit duo numeri cōicantes: quotcūqʒ inter alterū eoꝝ ꝛ maximū q̄ cos nūerat totidē inter reliquū ꝛ minimū ab eis numeratū ꝓtinue ꝓportionales ꝓsistere nẽce est.
+
+<image-desc>A diagram showing proportional lines. Line 'd' is at the top. Lines 'a' and 'b' are below it on the left and right. Line 'c' is centered below them. Lines 'e' and 'f' are at the bottom on the left and right.</image-desc>
+
+¶ Sint a b nūerī adinuicē cōmēsurabiles et c maxim' eos numerās ꝛ d mimus ab eis numerat': dico quot ꝓproztionales cadūt inter c et b: totidē cadere inter a ꝛ d. itē quot cadūt inter c ꝛ a: totidē cadere int' b ꝛ d. Sint enī e ꝛ f mimi in ꝓportione a ad b: ergo ꝓ vicesimātertīā tertii e in c facit a. et per vice- simāquartā eiusdē e in b facit d: ergo ꝓ septimā scđī a ꝓportio c ad b ea est a ad d. ergo ꝓ duodecimā hui' quotcūqʒ cadūt medīꝓ ꝓportiōales int' c ꝛ b primū et scđm: totidē cadūt int' a ꝛ d tertiū et quartū et iterū qꝛ vt c ad b: ita a ad d. ergo ꝓ mutatiōe a ad c vt b ad d: quare ꝓ eandē duodecimā quot medīꝓ proportionales cadēt int' c et a: totidē cadent ink b ꝛ d. manifestū est ergo quotcūqʒ inter alterū eoꝝ et ma ximū eos numerantē cadant: totidē inter reliquū ꝛ minimū ab eis numeratū cadere: qd est ꝓpositū.
+
+# 17
+¶ Si ab vno principio duo ordines numeroꝝ ꝓproportionaliū numero equaliū sumant' quotcunqʒ inter primum et alterū extremoꝝ: totidem inter extremos medīū secundum ꝓportionem proximorum a primo ꝓproportionales erunt.
+
+<image-desc>A complex diagram illustrating numerical progressions. At the top, numbers 16, 24, 36 are linked to d and g (54). Below this is a nested triangle of numbers: 8, 12, 18 (with letters c, e, f); 4, 6 (with letters b, e); and 2 (with letter a). Below this are several horizontal proportional rows: 2 and 3 (h and k); 6 and 4 (s and l); 18, 12, 8 (t and p); 54, 36, 24, 16 (r, q, n); and 108, 72, 48, 32 (r, v, y, o).</image-desc>
+
+¶ Incipiat ab a ad d vnus ordo numerorū continue proportionaliū et ab eodē a ad g secundus ꝛ nu- mero quidē equaliū: dico quot medīꝓ proportionales continebūtur inter a ꝛ d: totidem cōtineri inter d ꝛ g fm ꝓportionē proximorū a primo. cōtineant' ergo b c medīꝓ ꝓproportionales inter a ꝛ d: ꝛ e f medīꝓ proportionales ink a ꝛ g: totidē cōtineri dictū est inter d ꝛ g fm proportionē b e: qd ostendit'. Capiō enī h l z mimos ꝓproportionis b ad e: ꝛ duco h in oēs illos et fiant l m n o ex vna parte: et ex altera pre fiant l p q r per septimā secundī l m n o sunt cōtinue proportionales: similiter et l p q r. et per eandē que ꝓ- portio b ad e: ea est m ad p. Deinde duco l z in a e r f et proueniant s t v: eruntqʒ per septimā secundī s ad t ꝛ t ad v sicut l ad p: p ad q et q ad r. ꝛ per octauam eiusdem sicut h ad l: ita r l ad s. quare m ad p sicut l ad s. et qꝛ p sit ex h in e ꝛ t ex l in e: ideo per octauam secundī p ad t vt h ad l: quare vt m ad p. sunt igitur continue proportionales m p t. et qꝛ dictū ē s vt s ad t ad v: ita l ad p: p ad q et q ad r. est ergo econuerso r ad v vt v ad t: ergo permutatim r ad v vt q ad t. ꝛ quia iterum q ad p vt t ad s: ergo permutatim q ad v vt p ad s: quare p ad s: q ad t et r ad v erunt in eadem proportione. ꝛ quia que pro- portio m ad l: ea est n ad m ꝛ o ad n: ꝛ m ad l probata est vt p ad s. ergo vt n ad m: ita q ad t. ergo per- mutatim que proportio n ad q: ea est m ad t. ergo per duodecimam huius cum inter m ꝛ t contineatur vnum medium proportionale scʒ p secundū proportionem m ad p: itidem continebit vnum medium propozitionale inter n q secundū proportionem m ad p qd sit x. ꝛ qꝛ sit r x h in r ꝛ v ex l in r per octauā primi erit proportio q ad v vt h ad l: quare vt m ad p. sunt igitur n x q v continue proportionales fm
+<sig>b4</sig>
+
+<vocab>proportionalium, unitas, minimos, commensurabiles, medīꝓ, proportio, permutatim</vocab>

@@ -1,0 +1,15 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>248</page-num>
+<header>Das Ander Buch / 15. Cap.</header>
+<meta>catchword: nig/auf</meta>
+
+nig/(auf daß Er nicht / dessen Reuter und Rochen verliehre) mit der K. Reuter / auf drey und funfzig.
+
+3. Wan aber der **Weisse** / mit der Königin / auß 44. (n. 2.) nicht **Schach=beut** / sondern / dero Reuter / (umb des K. Soldaten / zu beschätzen / und ihn / auf die S. Königin / auf neunzehen / folgendes zu ziehen) auf dreyzehen rucket : so spielet der **Schwartze** / (dem vorzubawen) des K. Reuters = Soldaten / auf sechs und zwanzig : **Der Weisse** / des K. Soldaten / auf des S. K. Reuter / auf sechs und dreyßig : **Der Schwartze** / nimt ihn / mit der K. Soldaten : **Der Weisse** / denselben / mit seiner K. Soldaten / und zielet nochmaln / auf des S. K. Reuter : **Der Schwartze** / (damit Er / mit der Königin / auß eylfe / Schach = Mat gebe) rucket des K. Schützen / auf acht und dreyßig : **Der Weisse** / nimt nicht / (dieser ursachen halber) des S. K. Reuter / mit seines K. Soldaten : sondern
+4. \* spielet / dessen Schützen / auf vier und vierzig / und beut **Schach** : (Dieser Zug / ob er wol gut scheinet / ist doch / wie der n. 7. drunten erweiset / nicht der beste) der **Schwartze** / bedecket den König / mit der K. Reuter / auf drey und funfzig : **Der Weisse** / nimt ihn /
+5. mit gedachtem Schützen / und beut abermal **Schach** : * **Der Schwartze** / nimt denselben / mit dem Könige : **Der Weisse** / gibt ihm / mit der Königin / auß neun und dreyßig / abermal **Schach** : gewinnet also / des S. K. Schützen / welcher ihr an der seiten stehet / und der S. Königin / zum **Schach = Mat** / hülfe leisten wolte / und hat / in dem Er / mit des K. Schützen / vorhero **Schach = geboten** / einen guten Zug / vermeinentlich / getroffen.
+6. Nimt aber der **Schwartze** / den **W.** Schützen / nicht mit dem Könige / (n. 5.) sondern / mit dessen Reuter : so ziehet der **Weisse** / (umb / den **Schach = Mat** / auß eylfe / zu verhindern / und der K. Schützen / auf des S. K. Soldaten / den Paß zu eröffnen) der K. Reuter / auf des S. K. Schützen / auf acht und zwanzig.
+7. Dieweil aber der **Schwartze** / noch bessere Züge / dan sein Gegener / thun kan / wan Er / des **W. K.** Schützen / weder mit dem Könige / (n. 5.) noch mit dessen Reuter / (n. 6.) wegnimt / sondern den König / auf drey und sechszig / ziehet : alß ists daher so viel besser / daß der **Weisse** / mit dem Schützen / auf 44. (n. 4.) nicht **Schach = biete** / sondern / (umb den **Schach = Mat** zu verhüten) den König / auf zwelfe / ziehe : **Der Schwartze** / beut / mit seiner Königin / auß eylfe / **Schach** : **Der Weisse** / ziehet / den König / auf
+
+<vocab>Schach-Mat, Königin, Reuter, Rochen, Schützen, Soldaten, Weisse, Schwartze</vocab>

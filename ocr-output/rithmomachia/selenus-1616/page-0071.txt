@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>41</page-num>
+<header>Vom Schach = Spiel.</header>
+
+<margin>2. cap:</margin>
+dritten aber / ruckete Er die Schach=Steine selber: zwey Spie= cc
+le/ gewan Er: das dritte aber/ vollenfühtete Er so weit / daß cc
+sein Gegener/ keinen seiner Steine/ mehr ziehen könte/ und zu cc
+gleich aufgehoben ward. Hierüber nuhn/ verwunderte man cc
+sich höchlich. cc
+
+Auf gleichen schlag/ erzehlet/ von einem Florentiner/ *Raphaël Volaterranus, lib: 29. Comment: Urban: fol: 313. b.* und auß demselben/ *Joan: Ravisius Textor, in Officin: col: 906.*
+
+> Proximo sæculo, (nimirum A. C. 1400.) schreibet *Zehner* / cc
+> *Mangiolinus Florentinus, adeò in Ludo Latronum, sivè Latrun-* cc
+> *culorum, fuerat exercitatus, ut memoritèr per alium luderet, mi-* cc
+> *nimè respiciens: Adversario & vidente diligentiùs & perdente.* cc
+
+Das ist: cc
+Es lebete/ im 1400 Jahre/ nach Christi geburt/ einer zu cc
+Florenz / mit nahmen *Mangiolinus*, welcher aufm Schach= cc
+Spiel/ überauß geübt und erfahren war; auch also/ daß Er/ cc
+durch einen andern/ welchem Er/ seine Züge/ außwendig zusa= cc
+gete/ und auf die Tabel oder Steine/ das gesicht/ nimmer hat= cc
+te/ mit einem Spielen/ und demselben/ ob Er schon/ die Steine/ cc
+auf dem Schach=Brete/ für sich/ stehen hatte/ und seiner cc
+Schanze/ fleissig hütete/ gleichwol abgewinnen könte. cc
+
+Die Nahmen dieses Spieles betreffende: so habens die Griechen <term>πεττείαν</term>, <term>πεσσοὺς</term>, das Stein=Spiel/ die Kunst aber peteuticen genand: davon dan *Cæl: Rhod: lib: 20. c. 14. 27. Antiq:* aufzuschlagen.
+
+Die Lateiner/ habens *Ludum Latronum*, oder *Latrunculorum*, das ist/ das Soldaten= Spiel: die Kunst aber *Latrunculariam*, (vermöge der wort des *Senecæ, in d. Epist: 117.*) genennet. *Latrones* cc
+*enim, (wie Robertus Stephanus, in Tomo 3. Thesauri ling: Latinæ,* cc
+*und Dionys: Lambinus, in Commentar: in Plautum, setzen) apud* cc
+*Antiquos, dicebantur, conducti Milites, vel, ut Festus ajt, qui con-* cc
+*ducti, militabant, à* <term>λατρεύω</term>, *i.e. inservio. Nam serviebant mer-* cc
+*cede, vel ad latera, ferrum habebant. Moris autem erat, ut hos* cc
+*Imperator, & circà se haberet, & primos mitteret, ad omne discri-* cc
+*men. At Varro, lib: 6. de ling: Latinâ: Latrones dictos putat,* cc
+*quasi Laterones, quia circà latera esse soleant; quos nunc stipa-* cc
+*tores vocant, vel Satellites.* cc
+
+<sig>F 2</sig>
+<meta>catchword: Plautus,</meta>
+
+<vocab>Schach-Spiel, Mangiolinus, Ludus Latronum, Latrunculi, πεττείαν, πεσσοὺς, Robertus Stephanus, Varro</vocab>

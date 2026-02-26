@@ -1,0 +1,83 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>ii</page-num>
+<meta>The text uses many common medieval/early modern abbreviations, including nasal markers (m/n), 'ꝑ' for per/pro, and 'ꝛ' for the rotunda r. The paragraph marks are represented by &para;.</meta>
+
+<margin>30</margin>
+&para; Si quotē partes primus secundi toties tertius quarti primis itidē sēp minoribus:
+quoties erit primus in secundo toties tertius in quarto. et quota pars vel partes pmi
+superunt in secūdo: tota pars aut partes tertij superunt in quarto.
+
+&para; Sit a primus numerus / b secundus / c tertius / d et quartus / e f. et primi a et b c miōres: sitq; a pmus
+tot et tote partes b c secundū quot et quote ptes d tertius est e f quarti. Dico quoties a est in b c: toties
+d esse in e f. et quota pars vel partes a primi sup sunt in b c secūdo totam ptē vl ptes d tertij remanere
+in e f q̃rto. subtraho eni a primū a scdõ b c q̃ties possum: sitq; totus subtractus b r residuus c: sitq; d
+toties i g: q̃ties a i b. quo quē ita posito q̃r a tote ptes e b c q̃te d e f: ergo ꝑ vicessimãoctauã a tota ps
+vel ptes e d: q̃ta ps vel ptes b c e f. Rursus itelligo a pmū numerū. b scdm. d tertiū. g quartū: r̃ ꝑ silit̃
+argumētoꝛ ꝑ vicessimãseptimã. qz a tota ps est b q̃ta d est g ꝑ hypothesim: ergo ꝑ vicessimãseptimã q̃ta
+ps vel ptes b ē g: tota ps vel ptes a ē d. at a ostēsūs est tota ps vel ptes d q̃ta ps vel ptes b c est f: igr̃
+quota ps vel ptes e b c ad e f: tota ps vl ptes e b ad g. at qz q̃t ptes a ē b c: tot ptes d ē e f. et quot ptes
+a ē b: tot ptes d ē g. nã b r e gã multiplices: et a e pauciōres tote ptes b q̃ totius b c: igit̃ r d pauciōres
+tote ptes e g q̃ e f. subtrahať igit̃ g ab e f: sitq; detractus e r residuus f: r̃ ostabiť primū ꝑ pōnis ꝑ ꝑ o
+litū. scz q̃ties a in b c: toties d eẽ in ef cū e sit eq̃lis g. ex hoc etiã manifestū est b totã ptē vel ptes esse e
+Rã e r g equant̃: detracti scz ad detractū q̃ta pars vel ptes ē totus b c ad e f totū. si aut̃ nūerus b i pⁱ⁹
+e tota ps fuerit: g ꝑ vicessimã ꝑmã erit c residuus: residui f tota ps q̃ra tot⁹ totius. si aut̃ tote ptes: erit
+ꝑ vicessimãs c̃dã c residuū ꝑ tote ptes residui f: q̃te b c totius e f toti⁹. sz esto g̃ vt b tota ps sit e q̃ta ps to-
+tus b c: ē toti⁹ e f. Intelligo c pmũ. f scdm. b c tertiū. et e f quartũ: r̃ argumētoꝛ ꝑ vicessimãseptimã. qa
+quota ps c ē f: tota ps b c ē e f vt mõstratũ est: ergo q̃ta ps vel ptes c ē ad b f: tota ps vel ptes f est ad e
+f. et si b eēt ptes e ꝑ silir̃ argumẽtare ꝑ vicessimãoctauã r̃ ꝑclude iteꝛ ꝑ c ã c totã ptem vel ptes eẽ totius
+b c: quota pars vel partes f est totius e f. et hoc est totum propositum.
+
+<image-desc>A geometric diagram at the top right showing two linked semicircular arches. The left arch is labeled '13' on top, containing values '10' and '3'. The right arch is labeled '26' on top, containing '20' and '6'. They sit on a baseline with points b, c, e, and f. Below the baseline are two segments labeled '5' and '10' (with the number 10 near a line marked 'g').</image-desc>
+
+<margin>31</margin>
+&para; Si toties dempto primo de secundo quoties tertio de quarto tota pars vel partes
+primi relinquãtur in secundo quota aut quote tertij in quarto: primū totas cẽ partes
+secundi quotas tertium quarti necesse est.
+
+&para; Hec est ꝑuersa precedẽtis que vt ꝑcedẽtes duobus primis nūeris minoꝛibus intelligat̃. sit igitur a
+vt prius pmus numerus / b c secundus / d tertius / e f quart⁹: et sint duo primi miōres r̃ toties demat̃
+primus a secūdo sitq; dēptus b: quoties terti⁹ a quarto qui dẽptus sit e et sit vt q̃ta pars vel ptes pmi
+relinquūtur in scdõ tota pars vel ptes tertij relinquãtur in quarto: sitq; relicta ps vel ptes in scdõ
+et f in quarto. Dico ergo a primũ totas eẽ partes b c secūdi quote d tertius est e f quarti. Capio g qui
+sit tote ptes e f quote ptes a est b c r̃ ꝑ precedentem quoties a est in b c: toties g erit in e f. et quota ps
+aut ptes a supsunt in b c: tota ps aut ptes g superũt i e f. At toties positus est d eẽ in e f: q̃ties a est in
+b c. et totã prem vel ptes d supesse in e f: quota ps vel ptes a supsunt in b c: igitur g r̃ d aduicẽ sunt
+equales. quote igitur partes a est b c: tote d est e f. quod est propositum.
+
+### &para; Primi elementorum Arithmetices Jordani finis.
+
+<margin>P</margin>
+->Proportio est duarū quãtitatum eiusdem generis vnius ad alteram certa<-
+->in quãtitate relatio. &para; Numeri ad numerū dicitur ꝑportio minoꝛis quō<-
+->ad maiorem in eo qꝛ pars est vel partes: maioꝛis xo ad minorem fm q<-
+->cum cōtinet et eius partem aut partes. &para; Proportionalitas est silitudo<-
+->ꝑportionũ. &para; Continua ꝑportionalitas est qũ ꝑnectũtur nō dissociatis<-
+medijs. hec aut̃ ad minus iter tres coalescit teriõs: cū saltem vnū sumẽdum sit mediũ.
+Incotinua xo est in qua intercedit medioꝛū interruptio. Et hec ad mimum quattuoꝛ
+exigit teriõs ꝑpter alterius medij sumptionem. &para; Quãdo fuerit tres numeri ꝑtinue
+ꝑproportionales: dicetur primi ad tertium proportio primi ad secūdum duplicata et ad
+quartum triplicata. &para; Lum aut̃ cōtinuate fuerint vel cedem vel diuerse ꝑportiones:
+dicetur primi ad vltimum ꝑportio ex oibus composita. Denoiatio dicitur ꝑportiõis
+minoꝛis quidẽ ad maioꝛem pars vel partes quota vel quote illi⁹ fuerint: maioꝛis xo
+ad minorem numerus fm quem eũ cōtinet et pars vel partes minoꝛis que in maioꝛe
+superfluunt. Similes siue vna alij eadem: dicūtur ꝑportiones que eandem recipiunt
+denoiationem. maioꝛ xo que maioꝛem: et minoꝛ que minorem.
+
+<margin>1</margin>
+&para; Si fuerit proportio primi ad scdm que tertij ad quartum: erit ecõuerso que secūdi
+ad primum eadem quarti ad tertium.
+
+&para; Hec demõstrat ꝑuersam ꝑportionalitatem: que ab euclide quito geometrie ponit̃ pⁱa spẽs ꝑpoꝛ
+tionalitatum. et est quoties cōcludimus p̃ns ad añcedens vt p̃ns ad añs: qꝛ añs ad p̃ns sese habuerit
+vt añcedens ad p̃ns. añcedẽs eni est primū ꝑportionis extremum: p̃ns xo scdm. Sint itaq; quattuoꝛ
+numeri: a primus / b secundus / c tertius / d quartus: sitq; vt proportio a ad b: eadem sit c ad d. dico
+ecõuerso que proportio b ad a: eadez esse d ad c. Nam cũ ea sit ꝑportio c ad d que a ad b ꝑ diffinitionẽ
+eandem habebūt denoiationem. si itaq; a sit minoꝛ b ex diffinitiõibus tota pars vel partes erit a ad
+
+<image-desc>A diagram at the bottom right illustrating numerical proportions. It consists of lines with letters and numbers. 
+First pair: b (6) and d (9); a (2) and c (3).
+Second pair: b (8) and d (16); a (3) and c (6).
+This visualizes the relationship (6 is to 9 as 2 is to 3) and (8 is to 16 as 3 is to 6).</image-desc>
+
+<vocab>Arithmetices, Jordani, Proportio, Proportionalitas, Continua, Incotinua, Denoiatio, numerus, pars, partes, secundum, vero</vocab>

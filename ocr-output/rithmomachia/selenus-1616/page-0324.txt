@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>290</page-num>
+<header>Das Dritte Buch / 4. cap:</header>
+
+feld / zu verhüten) des W. K. Schützen: so gibt / der Weisse / mit der Königin / auß neunzehen / Schach / und rucket sie / auf der S. K. Schützen: Der Schwarze / muß / mit dem Könige / der W. K. Soldaten / nehmen:
+
+<margin>34.</margin>
+Der Weisse / beut / mit der K. Schützens-Soldaten / auß zwey und zwanzig / Schach: * Der Schwarze / rucket den König / auf dreyssig: Der Weisse / gibt / mit der K. Reuter / auß vier und zwanzig / Schach / und entblöset dero Rochen / gegen den S. K. Schützen: Der Schwarze / muß / den König / auf acht und dreyssig / rücken: Der Weisse / nimt / mit der Königin / der S. K. Schützen / und gibt Schach: Der Schwarze / muß / demselben / mit dem Könige / entweichen: Der Weisse / nimt / mit der K. Rochen / des S. K. Schützen / und hat einen Rochen / zum vortheil behalten.
+
+<margin>35.</margin>
+Rucket aber der Schwarze / den König / nicht auf 30. (n. 34.) besondern / auf acht oder sechs und dreyssig: so nimt der Weisse / mit der Königin / der S. K. Schützen / und gibt Schach: Der Schwarze / rucket den König / auß dem Schache: Der Weisse / (umb / der K. Rochem / daß ihn / der Schwarze / mit des K. Schützen / wan Er / mit demselben / seiner K. Reuters-Soldaten nehme / auß funfzehen / nicht ertappe: auf sieben / oder sechzehen / luft zu machen) ziehet / entwieder / dero Reuter / auf dreyzehen: oder / dero Rochens-Soldaten / auf zwey und dreyssig: und hat einen Rochen / gegen einen Schützen zu gebrauchen.
+
+<margin>36.</margin>
+Wan aber der Schwarze / nicht den Soldaten / auf 46. (n. 29.) ziehet / besondern / der W. K. Schützen / (welcher unbesetzet stehet) mit seines K. Schützen / nimt: so raubet / der Weisse / mit des K. Schützen / des S. K. Reuter / und ziehet ihn / auf dessen Rochens-Soldaten: Der Schwarze / (umb denselben / weil Er sonsten / wan ihn / der Weisse / mit der Königin nehme / Schach-Mat würde / zu vertheidigen) die Königin / auf zwey und funfzig: Der Weisse / (umb des K. Soldaten / zu beschützen / und der K. Rochem / luft zu machen) der K. Reuter / auf dreyzehen: Der Schwarze / nimt / mit des K. Schützen / der W. K. Reuters-Soldaten / und ziehet ihn / (auß der gefahr) auf dero Rochen: Der Weisse / denselben auf ihn / auf sieben: Der Schwarze / denselben / auf vier und zwanzig: Der Weisse / auf denselben / der K. Rochen / auf drey und zwanzig: und folgendes des K. Rochen / (umb auf drey und viertzig / Schach zu geben) auf drey: oder der K. Rochen / auf neunzehen: und wird dem Schwarzen / weil Er / einen Rochen / und zween Soldatē / gegen einen Schützen / zu gebrauchen hat / weiter wol beykommen können.
+
+<meta>catchword: Wan</meta>
+
+<vocab>Schach, Königin, König, Rochen, Reuter, Schützen, Soldatē, Schach-Mat, Weisse, Schwarze</vocab>

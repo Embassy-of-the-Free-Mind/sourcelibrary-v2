@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>273</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>3. cap:</margin> » Spielet Er dan/ des K. Reuter / auf zwey und funfzig : so nimt
+» der Weisse/ den gedachten / seines K. Rochens / Soldaten / mit
+» der Königin/ und erlanget also gelegenheit / dieselbe / mit seiner
+» Königin/ zu verwechseln : So ferne Damianus.
+
+Ehe wir nuhn/ seine angegebene Züge/ weiter / mit ihm ver=
+<margin>4.</margin> folgen/ so sol man zuvorderst mercken: daß /* wan der **Schwarze**/
+den **W. Soldaten** / nicht nimt / (n. 3.) besondern / (umb zu versu=
+chen / ob Er etwa / die **W. Königin** / einsperren und gefangen nehmen
+möchte) des K. Reuter / auf des **W. K. Soldaten** / auf drey und vier=
+<margin>5.</margin> tzig / ziehet: * **Der Weisse** / alsdan / der K. Soldaten / (umb
+den Paß/ der K. Schützen / zu eröffnen / und des K. Schützen / den
+außfall / welcher ihm / wan dieser Soldat / auf ein und zwan=
+tzig stünde / benommen wehre: nicht zu verhindern) auf neun und
+zwanzig / ziehen müsse: Dan ihm vonnöten seyn wil/ daß seine bee=
+de **Schützen** / umb der Königin beyzuspringen / einen freyen / unges=
+sperreten gang/ haben: und muß Er / in dieser gelegenheit / einen Sol=
+daten / (dieweyl sein Gegener / zween Soldaten / und einen Rochen /
+gegen einen Reuter / albereit verloren) umb / denselben zu beschützen/
+nicht hoch achten. In betrachtung / wan die Königin / wider frey ist/
+sein Spiel/ mit bessern Vortheilen / den **Schwarzen**/ zu überwin=
+den / verwahret seyn wird. Dan sonsten / wan Er dergestalt nicht
+spielete / Er / wol innen werden würde / was Er ihm hette zu schaf=
+fen/ gemachet: Sol demnach / den beeden **Schützen** / (auf daß Er /
+der K. Schützen / auf des S. K. Schützen / welcher von seiner Köni=
+gin / gefangen gehalten wird / auf ein und vierzig / ziehen : und mit
+des K. Schützen / dem **S. Könige** / wan derselbe / umb seinen
+Schützen / frey zu machen / und auf die **W. Königin** / auf funfzig /
+folgendes zu ziehen / auf ein und funfzig / gesetzet würde : auß dreyß=
+sig / **Schach-bietten** könne) die Pässe offen halten. Es sol aber /
+dieses Schach-geben / wan Er der K. Schützen / etwa auf 41 : und
+der **Schwarze** / den König / auf 51, gezogen hette / (weyl des S.
+K. Schütze / nicht alsbald auf 50, kan gerucket werden : dan son=
+sten / die **W. Königin** / der S. K. Schützen nehmen / und sich / wie
+n. 17. drunten zu sehen / dergestalt außwicklen möchte) nicht gleich
+von ihm / ins werck gerichtet werden : dieweil alsdan / der **Schwar=**
+**ze**/ den König / mit der K. Soldaten / auf sieben und dreyßig /
+bedecken würde : nehme ihn dan / der **Weisse** / mit des K. Schützen/
+und böte abermals Schach : so nehme ihn der **Schwarze**/ mit des
+K. Reuter: **Der Weisse** / könte ihn / (weyl sein König / sonsten
+
+<sig>Mm ij</sig>
+<meta>catchword: im Scha-</meta>
+
+<vocab>Schach-Spiel, Königin, Reuter, Rochen, Schützen, Soldaten, Damianus, Schach-bietten</vocab>

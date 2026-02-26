@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>364</page-num>
+<header>Das Dritte Buch / 11. cap:</header>
+
+<margin>II.</margin>
+Soldemnach der Weisse / (wie Damianus zwar / n. 6. es dafür achtet) der S. K. Reuter / mit des K. Schützen / nicht nehmen / besondern / auf des Schwarzen anschläge / fleissige aufacht haben: und seine Königin / von dem orte / darauf sie stehet / hinter des K. Schützen (so fern Er des Sieges nicht wil überhoben seyn) hinweg ziehen. Summa / es spiele / der Schwarze / wie Er wolle / wan / der Weisse / in diesem Spiele / erfahren ist / so gewinnet Er dasselbe / viel leichter / wan Er / seines K. Schützen / umb der S. K. Reuter / nicht verwechszlet / besondern / mit seinen Reutern / herauß ins feld rucket / und seinen König / an einen sichern Ort / stellet: Der Schwarze / aber / wan Er sich folgendes / seiner Rochen / gebrauchen wil / wird gewislich leer stroh dreschen. Es gebe demnach der Weisse / (unangesehen / der Damianus, es für rahtsam / erachtet) nicht ursache / zur verwechszlung der Steine: Dan dem Schwarzen / (auf daß Er sich / umb so viel besser / auß des feindes anschlägen / wicklen möge) darnach zu streben / vielmehr wil obliegen.
+
+<image-desc>
+Four 8x8 grids illustrating chess-like board positions, arranged in a two-by-two layout. Each grid contains abbreviations for pieces: SR (Schwarz Roch/Rook), SS (Schwarz Schütze/Knight), SK (Schwarz König/King), WS (Weiss Schütze/Knight), WR (Weiss Roch/Rook), and WK (Weiss König/King). 
+
+- Top-left grid (labeled "n. 2. 3."): Shows black pieces on the top two rows and white pieces on the bottom rows. The number "46" is written in a central cell.
+- Top-right grid (labeled "n. 4. 5. 7."): Similar to the first but with shifted piece positions. The number "46" is also present.
+- Bottom-left grid (labeled "n. 6. jj."): Shows a different distribution of pieces. The characters "zz" are written in a central cell.
+- Bottom-right grid (labeled "n. 8. 9."): Shows another arrangement of pieces. The numbers "38" and "35" are written in separate cells in the middle rows.
+</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Damianus, Reuter, Schützen, Rochen, verwechszlung, Schachspiel</vocab>

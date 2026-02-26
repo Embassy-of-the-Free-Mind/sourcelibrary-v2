@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>338</page-num>
+<header>Das Dritte Buch | 7.cap:</header>
+
+K. Reuter / und ziehet denſelben / auf die S. Königin / und des S. K.
+Rochen: Der Schwarze / nimt ihn nicht / mit des Rochens-Sol=
+daten / (dan Er ſonſten / den Rochen / verlieren müſte) beſondern /
+des W. K. Soldaten / mit der Königin / und beut Schach: Der Weiſ=
+ſe / ziehet den König / auß dem Schache / oder bedecket ihn / mit ſei=
+nem Schützen / auf zwelfe: Der Schwarze / nimt / des W. K.
+Reuter / mit der Königin / und gewinnet dergeſtalt / ohne ſeinen ſcha=
+den / einen / von des Weiſſen / Haupt-Steinen.
+
+<margin>5.</margin> Wan aber der Weiſſe / nicht Schach-geben wil / (n. 4.) beſon=
+ſondern / des K. Reuter / auf neunzehen / ziehet: ſo nimt / der
+Schwarze / des W. K. Soldaten / mit der Königin / und beut
+<margin>6.</margin> Schach: *Der Weiſſe / bedecket den König / mit der Königin / auf
+zwelfe: Der Schwarze / verwechſlet dieſelbe / mit ſeiner Kö=
+nigin: Ziehet folgendes / (umb / ſeine Steine / zu felde / und das
+Spiel / in eine richtige ordnung / füglich zu bringen) dero Solda=
+ten / auf ſieben und dreyſſig / und verlieret dergeſtalt / (weyl ſein Kö=
+nig / auf ein und funfzig / welches feld ledig / und unangefochten / ein
+gutes Ablager hat) in zeit der noht / und des Königes verſetzung /
+keinen Zug.
+
+<margin>7.</margin> Wan aber der Weiſſe / den König / nicht / mit der Königin / (n. 6.)
+beſondern / mit des K. Schützen / auf zwelfe / bedecket: ſo ſpielet der
+Schwarze / der K. Soldaten / auf ſieben und dreyſſig: Der Weiſſe /
+der K. Reuter / auf die S. Königin / und dero Soldaten / auf zwey und
+zwantzig: Der Schwarze / dieſelbe / auf vier und viertzig: Der
+Weiſſe / (umb / den König / auf zwey / zu verſetzen) deſſen Rochen /
+auf drey: Der Schwarze / der K. Schützen-Soldaten / (umb / der
+K. Soldaten / ferner zu beſchützen / ſein Spiel / zu ſtercken / und dem
+Könige / auf daß er / ſo oft es die noht erfodert / ungehindert / wohin
+er wil / ſpringen könne / raum und platz zu verſchaffen) auf ſechs und
+viertzig: Der Weiſſe / leſſet ſeinen König / über ſeinen Rochen / auf
+zwey / ſpringen: Der Schwarze / ziehet / des K. Schützen / auf
+fünf und viertzig: Der Weiſſe / des K. Rochen / auf viere: Der
+Schwarze / des K. Reuter / (umb ſeine Königin / auß der bevorſte=
+henden gefahr / wan des W. K. Roche / wegen deſſen Schützens / ge=
+gen ihr / entblöſet würde / füglich zu erretten) auf zwey und funfzig:
+und wird alſo / ſein Spiel / dieweyl ihm der Weiſſe / nicht bey=
+kommen / noch ſchaden zufügen kan: ſicher angeordnet haben.
+
+<margin>8.</margin> Nimt aber der Weiſſe / nicht den Soldaten / mit dem Reu=
+ter / (n. 2.) beſondern / ziehet / des K. Schützen / auf dreyſſig: ſo ſpielet /
+der
+
+<meta>catchword: der</meta>
+
+<vocab>Schach, Reuter, Königin, Rochen, König, Soldaten, Schütze, Haupt-Steinen, Ablager, Schach-geben, verwechſlet</vocab>

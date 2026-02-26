@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>232</page-num>
+<header>Das Ander Buch/ 14. cap:</header>
+
+zwey und vierzig / Schach: verwechselt die Rochen / und nimt mit
+der K. Schützen / (so ferne Er denselben / auf den W. Reuter / auf
+vier und vierzig / nicht rucken wil: auf welchen fahl / der W. Reuter /
+und S. Schütze / verwechselt werden: und der Weisse / den König /
+auf sechs und dreyßig / zu ziehen / auch / daß Er / auß den übrigen Sol-
+daten / eine Königin mache / sich befleissigen muß) der W. K. Ro-
+chens = Soldaten: Der Weisse / ziehet / der K. Reuters = Soldaten /
+auf drey und zwanzig: Der Schwarze / den Schützen / auf des
+W. K. Schützens = Soldaten / auf sieben: Der Weisse / beut / mit
+dem Reuter / auß zwey und funfzig / Schach: Der Schwarze /
+nimt / mit dem Könige / des W. K. Rochens = Soldaten: (dan sonsten
+derselbe / wan Er seinen König / auß dem Schache zöge: auß acht und
+funfzig / gleich einer Königin / ungehindert Schach = bieten würde)
+der Weisse / mit dem Reuter / der S. K. Schützen = Soldaten / und
+ziehet ihn / auf der S. K. Rochens = Soldaten: Der Schwarze /
+darf ihn nicht / auf acht und vierzig / rucken / (dan / der Weisse / auf
+ihn / und seiner K. Soldaten / den Reuter / auf drey und sechszig / gleich
+ziehen würde) noch den W. Reuter / mit seiner K. Soldaten / weg-
+nehmen / (dan sonsten der W. K. Soldat / im andern Zuge / auf ein
+und sechszig / ungehindert / eine Königin würde) besondern rucket /
+den König / auf drey und vierzig: Der Weisse / nimt / der S. K.
+Rochens = Soldaten / mit seinem Reuter: Der Schwarze / der
+W. K. Schützens = Soldaten / mit dem Schützen: Der Weisse /
+ziehet / der K. Reuters = Soldaten / (auß der gefahr) auf ein und dreyß-
+sig: Der Schwarze / den König / auf der W. K. Soldaten / auf
+sechs und dreyßig: Der Weisse / (ihn zu beschützen) den Reuter / auf
+<margin>13.</margin> zwey und sechszig: * Der Schwarze / der K. Reuters = Solda-
+ten / (auß der gefahr) auf neun und dreyßig: Der Weisse / den Kö-
+nig / auf vier und dreyßig: Der Schwarze / den Schützen / (umb
+auf fünf und funfzig / denselben zu ziehen) auf acht und zwanzig
+Der Weisse / den Reuter / auf der S. K. Reuters = Soldaten / auf sechs
+und funfzig: Der Schwarze / (ihn zu beschützen) den Schützen /
+auf ein und zwanzig: Der Weisse / (umb / seiner K. Soldatē / zu ver-
+therigen) den Reuter / wider auf zwey und sechszig: Der Schwar-
+ze / den König / auf sieben und dreyßig: Der Weisse / seinen König /
+<margin>14.</margin> auf drey und vierzig: * Der Schwarze / den König / auf sechs und
+vierzig: Der Weisse / den König / (so fern Er / ihn nicht / auf zwey
+und funfzig / rucken wil) auf sechs und dreyßig: Der Schwarze /
+den Schützen / auf drey: Der Weisse / gibt / mit dem Reuter / auß
+zwey und funfzig / Schach: Der Schwarze / ziehet / den König / auf
+funf und funfzig: (Rucket Er / ihn aber / auf siebē und viertzig: so könte
+
+<meta>catchword: Er sich</meta>
+
+<vocab>Schach, Rochen, Reuter, Schützen, König, Königin, Soldaten, Weisse, Schwarze</vocab>

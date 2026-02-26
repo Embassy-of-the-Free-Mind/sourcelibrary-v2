@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>40</page-num>
+<header>DES PHILOSOPHES.</header>
+
+ré, pour vn cheualier: vn triangle seul, pour vn
+fol: & huict rondes, pour les 8 pions. Et ainsi
+pourras iouer aux tables et autres ieux, auec ce-
+stuy cy. Par ce ieu donc se peut recréer vn cha-
+cun, voire des les plus rudes iusques au plus sub-
+tils & ingenieux. Parquoy ayant satisfaict à
+mon entreprinse, mettray fin au present traicté.
+
+### Responce aux obiectz.
+
+Or me dira quelcun pourquoy n'avez vous
+mis les victoires des nombres pair & ceux
+des nombres nompair, vne chacune en particu-
+lier comme Faber Stapulensis ? Ie te respons en
+premier lieu, que le ieu de soymesme seroit pref-
+que infini par sa grand longueur, & engendre-
+roit fascherie aux ioueurs, & pense que c'est la
+cause par laquelle auiourdhuy ledit ieu estoit abo-
+ly. Parquoy faisant les victoires communes, i'ay
+rendu plus libre le ieu affin que plus ayséement
+soit faicte la victoire. Secondement tu sçais bien
+que iaçoit que ledit Faber ait diuisé les victoires;
+constituant particulièremēt ceux du pair et auf-
+ficeux de l'impair: Si est ce qu'il dict que celuy
+qui a le nombre pair, peut faire ou acheuer sa vi-
+ctoire des tables qu'il aura acquises du nombre
+impair. Si donc il me diuise et determine pour ma
+
+<vocab>Faber Stapulensis, Rithmomachie, nombres pair, nombres nompair, ieu des philosophes, victoires, tables</vocab>

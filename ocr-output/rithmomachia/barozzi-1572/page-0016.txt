@@ -1,0 +1,35 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<meta>catchword: sopra</meta>
+
+dietro l’altro, come segueno, metteremo sotto à quelli li
+altri 4 tondi neri, sopra liquali segnaremo quelli numeri,
+che nasceranno dalla moltiplicatione delli primi impari
+già scritti, in se medesimi, cioè sotto al 3 segnaremo il 9:
+& sotto al 5, il 25: & sotto al 7, il 49: & sotto al 9, l’81. per
+che dal 3 moltiplicato in se stesso nasce il 9: & dal 5, il 25:
+& dal 7, il 49: & dal 9, l’81. & cosi haueremo scritti li nu-
+meri sopra li otto tondi neri, come la seguente figura di-
+mostra.
+
+<image-desc>Eight solid black circles arranged in two horizontal rows of four. The top row contains the odd numbers 3, 5, 7, and 9. The bottom row contains their respective squares: 9, 25, 49, and 81. A handwritten "49" appears in the margin below the third circle of the second row.</image-desc>
+<insert>49</insert>
+
+Hauendo già ritrouato li numeri, che uanno descritti
+sopra li 16 pezzi tondi, seguita che ritrouiamo ancor quel
+li, che si dieno scriuer sopra li triangoli. Comminciando
+adunque dalli bianchi, pigliaremo li dui primi tondi bian-
+chi, che stanno vn sopra l’altro, cioè il 2, & il 4, che nasce da
+quello, & li congiongeremo insieme, & produrremo il 6, il
+qual farà il primo numero, che si die scriuer sopra il primo
+triangolo bianco: similmente congiongendo li dui secon-
+di tondi bianchi, cioè il 4, & il 16, nascerà il 20, che farà
+il numero del secondo bianco triangolo. Parimente dalla
+congiuntione del 6, & 36 terzi in ordine tondi bianchi si
+produrrà il 42 numero del terzo triangolo biancho. final-
+mente se si accozzaranno l’8, & 64 dui vltimi bianchi ton-
+di, ne verrà il 72, che si die scriuer sopra il quarto biancho
+triangolo. & cosi haueremo trouato li numeri, che uanno
+sopra
+
+<vocab>moltiplicatione, numeri impari, tondi neri, tondi bianchi, triangoli</vocab>

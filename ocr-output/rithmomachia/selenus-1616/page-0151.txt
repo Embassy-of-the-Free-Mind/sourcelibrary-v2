@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>121</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1.cap:</margin>
+Geſchicht aber nicht offenlich / beſondern nuhr / durch ent-
+deckung eines Steines / wan nemlich derſelbe Stein / welcher zwi-
+ſchen einem Könige / und einem Steine / der ſonſten / wan die linie / zu
+dem Könige frey und offen wehre / Schach geben könte / eingeſtan-
+den / fortgerucket wird / und alſo den andern / auf den König / daß Er
+ihm Schach gibt / entdecket / ſo heiſſet mans einen **Ab-Schach.**
+Wan aber der weggeruckte Stein / zween Steine / auf den König /
+dergeſtalt entblöſſet / (wie ein Exempel / im dritten Buche / cap : 4. n.
+16. zu finden) ſo heiſſet mans / einen doppelten **Ab-Schach.** Nuhn
+kan man zum öftern / durch dieſes **Ab-Schachen** / einen guten Stein /
+wan man auf denſelben / den abgerucketen Stein ziehet / ertappen.
+Dan man / nachdem des Andern König / auß dem Schache zu ziehen /
+getrungen wird / im folgenden zuge / den guten Stein / welcher / im
+vorgehenden zuge / iſt gefangen worden / ohne einigen widerſtand / kan
+erlangen. Wan aber mit dem Steine / welcher gerucket worden /
+und den **Ab-Schach** / vom andern Steine / zu wege gebracht / zu gleich
+auch Schach gegeben wird / ſo neñet mans einen **Doppelten Schach/**
+oder **Schach und Ab-Schach.** Es wird aber / durch alle Steine /
+jah auch durch den König ſelber / (außgenommen die Königin) aber
+nicht von allen / der **Ab-Schach** / gegeben. Von der Königin geſchicht
+Er / durch einen Soldaten / wan derſelbe / auf der nächſten linie / für
+ſich / zur rechten / oder lincken hand / einen andern Soldaten / oder
+Stein erſchläget / und Ihr die linie / gegen des Andern König / frey
+machet : Ebenmeſſig / kan ein Schütze / ein Reuter / ein Roche / jah
+ihr König / derſelben / eine freye Straſſe / zu des Gegentheiles König /
+ge/machen. Gleicher geſtalt / entblöſſet man auch einen Rochen / und
+Schützen / umb dem Könige / des Andern hauffens / von Ihm / Schach
+zu geben. Vom Reuter aber / weyl ſich derſelbe / weder auf- noch be-
+decken läſſet / wird dergleichen **Ab-Schach** / nicht gegeben.
+
+   Das **Schach-Matten** geſchicht / wan der König / vor erwehn-
+ter weiſe / angerennet / aber / weyl Er nicht mehr außweichen kan /
+mit dem worte / **Schach-Mat** / ſich zu ergeben / ermahnet wird.
+Dieſes nuhn geſchicht ebener maſſen / öffentlich / oder durch entde-
+ckung eines Steines : auf dieſen letzten fal / (von welchem man / im
+1. 4. und 9. Cap : des dritten Buches / unterſchiedene Exempel fin-
+det) nennet mans / einen **Ab-Schach-Mat.** Wan aber eines
+**Schach-Mat** wird / und der ihn gibt / (wegen deſſen / daß Er den
+Schach gar zu ernſtlich und eyferig verfolget) ſolchen nicht gewahr-
+wird / minder ihn anmeldet / ſo nennet mans / den **Blinden Schach-**
+**Mat.** Ob nuhn wol etliche vermeynen / daß / ein blinder Schach-
+
+<sig>Q ij</sig>
+<meta>catchword: Mat/</meta>
+
+<vocab>Schach-Spiel, Ab-Schach, Doppelt-Schach, Schach-Matt, König, Königin, Reuter, Roche, Schütze, Soldaten, Blinden Schach-Mat</vocab>

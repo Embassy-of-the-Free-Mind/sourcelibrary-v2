@@ -1,0 +1,37 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>6</page-num>
+<header>Das erste Buch/ 1. cap.</header>
+
+> „ Er/ viele Feinde/ gefangen nehmen: Sonst geschicht das wider
+> „ Spiel: Jedoch/ wird dieser streit/ nicht die Haupt-Sache/
+> „ antreffen.
+> „ Wan einem Könige/ oder einem gewaltigen Manne/ o-
+> „ der einem Krieges-Obersten/ träumet/ wie Er sein Schach-
+> „ Spiel verloren habe/ oder wie es zerbrochen sey/ so wird Er/
+> „ sein Heer verlieren/ und in groß unglück gerahten.
+
+Ob nuhn gleich/ von dieser Auslegung/ Artemidorus Daldianus, Graecus Philosophus, lib: 3. c. 56. de Somnior: Interpret: sehr weit abtrit/ vielleicht/ daß Er zu viele/ auf etlicher unrechtmässiges Spielen/ gesehen/ so wollen wir doch/ seine Träumereien/ (wie sie Janus Cornarius Medicus, ins Latein gebracht) auch anhero setzen:
+
+> „ *Calculis sivè Latrunculis ludere sibi videri eum, qui non scit,*
+> „ *multam utilitatem significat, ex deceptione & mendacio, propter-*
+> „ *eà, quod multos calculos furetur, eosq; aliàs aliter ostendat, non*
+> „ *juxtà aliquem simplicem modum, sed malitiosè. Si verò quis, ali-*
+> „ *um, Calculis ludentem videat, eum deceptum ac defraudatum de-*
+> „ *trimentum, ac damnum passurum esse, significat:* **Das ist:**
+> „ **Wan einem/ der das Schach-Spiel/ nicht verstehet/**
+> „ **träumet/ wie Er die Schach-Steine/ ziehe/ das bedeut ihm/ ei-**
+> „ **nen grossen nutzen/ und vortheil/ auß betrug und lügen: dieweil**
+> „ **Er/ viele Steine raubet/ und dieselben/ auf allerhand Art/ nicht**
+> „ **auf eine einfeltige schlechte weyse/ sondern ganz bößlich zeiget.**
+> „ **Wan aber einer/ einen andern/ mit den Schach-Steinen/ spielen**
+> „ **siehet/ so deut solches/ daß Er werde betrogen/ und hinter-**
+> „ **gangen werden/ auch schaden und nachtheil/ ausstehen müsse.**
+
+Weyl dieses Spiel/ ein wichtiges/ hohes/ Helden und Ritterliches Spiel ist/ auch nichtes gemeines/ in sich helt: alsz gehöre/ (4.) diese Kunst/ eigentlich/ nicht für gemeine leuthe/ sondern für die Jehnigen/ so im Regiement sitzen/ für Krieges-Erfahrne/ für Belahrte/ und für die Studierende Jugend/ insonderheit aber/ für die/ welche/ den disciplinis, nuhnmehr entwachsen/ und sonsten/ mit bürden des gemeinen nutzens/ unbeladen/ darbey mit zeitlichen gütern/ versorget seynd/ zu dero ehrlichen/ nebest der ergätzung/ Zeit-vertreibung. Doch sol hiemit/ niemand/ so lust und liebe/ hiezu tragen möchte/ etwas vergönnet seyn.
+
+Es erheische diese Kunst/ (5.) auch einen rechten gebrauch des Spieles/ welcher/ in dreyen nachfolgenden puncten, begrieffen:
+
+<meta>catchword: daß er</meta>
+
+<vocab>Schach-Spiel, Artemidorus Daldianus, Janus Cornarius, Latrunculis, Regiement, Belahrte, Traumdeutung</vocab>

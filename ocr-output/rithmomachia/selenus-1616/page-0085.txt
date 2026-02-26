@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>35</page-num>
+<header>1. cap: Vom Schach-Spiel.</header>
+<sig>H2</sig>
+<meta>catchword: wir ſe</meta>
+
+<margin>1.cap:</margin>
+dachtem Tractat, oder Außlegung des Schach-Spieles / mit folgen- ..
+den worten / (in welche Er / von unterſchiedlichen Anonymis, ſo vie- ..
+le derſelben geſchriebene / und Altes Druckes Exemplaria, uns zu ..
+handen kommen / verdeutſchet worden) beſchrieben:
+
+Der Künig / nimt geſtalt / nach einem lebendigen Kü- ..
+nig / wan der ſol ſitzen / in ſeinem Pallaſt / in purper gekleidet: ..
+das bedüt / daß er ſol ſein / mit tugenden / und mit genaden ge- ..
+krönt und bekleidet : mit dem ſol des Küniges / mut und wil / ..
+ſeyn gezieret und verbeſſert / an den dingen / ſol Er leuchten / ..
+vor andern leuten / alß Er vor ihn ſcheinet / an dem gewand: ..
+Ein Kron ſolle Er haben / auff ſeinem Haubte : daß bedeutet / ..
+ſeyn hohe wirdigkeit / wan ſein / wirde / iſt ſeinem Volck ein ..
+ere : wan all ſein unterton / plickent ihn an / und ſeynd ihm ge- ..
+horſam. In der lincken Hand / ſol Er haben / ein guldin Apfel: ..
+damit er zeiget / daß Er ſey ein beſeher / oder ein ſchirmer / ..
+und ein teyler / aller ſeiner unterthan / mit ihm ſelber / oder mit ..
+ſein verweſern. In der rechten Hand / ſol Er haben ein ..
+Zepter / daß bedüt ſein kraft / damit Er die böſen / ſol be- ..
+zwingen / die mit leib noch gut / nit mögent / gezempt werden. ..
+Deß Erſten / ſol der Künig / ſeyn ſenftmütig / und ſol von ihm ..
+leuchten / barmhertzigkeit : Zu dem andern mahl / ſol der Kü- ..
+nig / warhaft ſein / an worten und an wercken / daß Er die ..
+lüg / zu allen zeiten haſſe : Zu dem dritten mahl / ſol der Kü- ..
+nig / ſeyn gütig. Wan es iſt unmüglich / daß ein guter Menſch / ..
+jemer verloren werde / oder eines unrechten Todes ſterb : Aber ..
+freyſam leut / lieſet man / daß die oft bößlich tod ſeynd : Zu ..
+dem vierten mahl / ſo ſol der Künig ſein gerecht : wan Künig ..
+reich on gerechtigkeit / ſeynd mordwinckel. Zu dem fünften ..
+mahl / ſol der Künig / keuſch ſeyn / alſo / das er / mit keiner an- ..
+deren frawen / nit ſünden / noch der begehren ſol / ſundern nur / ..
+mit der Künigin / Darumb ſetzt man / die Ihm / an ſein gelinck ..
+ſeiten. Es iſt auch glaublich / daß ein Künig der Keuſch / ge- ..
+recht und warhaft iſt / verdiene umb Gott / das er ein ſun ge- ..
+ber / der ihm / an denſelben tugenden gleich ſei : wan der ſol ..
+nicht abgeben / wan ihn leitet / des Vaters tugend zu tu- ..
+genden / Alſo daß Er dem folget / mit ſitten / von dem Er kum- ..
+men iſt / mit weſen : Wan iſt etwo / vil wider die Natur / das ..
+ein Künig / ein ander Frawen hab / oder mer dan ein hab. Wan ..
+
+<vocab>Schach-Spiel, Künig, Pallast, purper, tugenden, Kron, guldin Apfel, Zepter, senftmütig, barmhertzigkeit, mordwinckel, keusch, Künigin</vocab>

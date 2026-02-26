@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>279</page-num>
+<header>3.cap: Vom Schach-Spiel.</header>
+
+se/ mit der Königin/ auß drey und dreyßig/ ihm/ gleich <term>Schach=Mat</term>
+gibt: Rucket Er aber/ den König / auf ein= oder acht und funffzig: so
+nimt/ der Weisse/ der S. K. Soldaten/ mit der K. Schützen/ und
+beut Schach: Der Schwartze/ bedecket den König/ mit der K.
+Schützen / auf vier und vierzig: Der Weisse/ nimt/ mit sei=
+ner Königin/ die S. Königin/ und beut Schach: Der Schwar=
+tze/ nimt dieselbe/ mit dem Könige: Der Weisse/ mit des K.
+Schützen/ der S. K. Reuters=Soldaten: folgendes ungehindert/
+mit demselben/ dero Rochen/ und bringet denselben/ nebest vier
+Soldaten/ dergestalt in seine gewalt.
+
+<margin>22.</margin> Nimt aber der Weisse / den S. Soldaten / nicht / mit
+des Rochens=Soldaten / (n. 21.) besondern/ mit der K. Schützen /
+und beut/ dem S. Könige/ und der S. Königin / Schach: so ru=
+cket / der Schwartze/ den König/ nicht auf drey und dreyßig/
+(Dan Ihm der Weisse/ mit der Königin/ auß ein und funff=
+zig/ Schach= und/ weyl Er/ mit dem Könige/ auf sechs und
+zwantzig/ weichen müste: mit derselben/ auß neunzehen/ Schach=
+Mat gebe) besondern auf funffzig: Der Weisse/ beut/ mit sei=
+ner Königin/ auß sechs und dreyßig/ Schach: Der Schwartze/
+muß den König/ mit seinem Reuter/ auf drey und viertzig/ be=
+decken: (Dan/ wan Er/ denselben/ auf ein und funffzig/ zöge/
+dessen Roche/ und die Königin/ mit dem gantzen Spiele/ ver=
+<margin>23.</margin> loren wehre) * Der Weisse/ nimt/ der S. K. Soldaten/ mit
+des K. Schützen: Der Schwartze/ rucket / auf die W. Könis=
+gin/ des K. Schützen/ auf fünf und vierzig: Der Weisse/ gibt/
+mit der K. Schützen/ auß ein und viertzig/ Schach: Der Schwar=
+tze/ nimt denselben/ mit dem Könige: oder ziehet ihn / auf zwey
+und viertzig: Der Weisse/ gibt/ mit der Königin/ auß vier und
+dreyßig/ <term>Schach=Mat</term>.
+
+<margin>24.</margin> Thut aber der Schwartze/ nachdem seiner K. Soldat/ von
+dem W. Schützen genommen/ (n. 23.) andere züge: so kan Er/
+doch/ diesem gedachten Schach=Mat/ nicht entfliehen.
+
+<margin>25.</margin> Wan aber der Schwartze/ (damit wir/ mit dem <term>Damiano</term>, <margin>cc</margin>
+vorthspielen) nicht den König/ auf 42. (n. 19.) besondern der <margin>cc</margin>
+K. Soldaten/ auf sieben und dreyßig/ ziehet/ mit demsel= <margin>cc</margin>
+ben/ den König/ bedecket/ und der K. Schützen/ (auf daß <margin>cc</margin>
+
+<sig>N n</sig> <meta>catchword: der Weiß</meta>
+
+<vocab>Schach, Schach=Mat, Königin, König, Soldaten, Schützen, Roche, Reuter, Damiano, Weisse, Schwartze</vocab>

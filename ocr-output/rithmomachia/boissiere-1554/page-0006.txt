@@ -1,0 +1,13 @@
+<language>French</language>
+<page-type>dedication</page-type>
+<page-num>2</page-num>
+<sig>A ij</sig>
+
+<image-desc>Ornamental headpiece featuring symmetrical floral scrolls and the heads of two hounds facing inwards.</image-desc>
+
+# A MAGNANIME ET IL-
+## *luſtre Cheualier, meſsire Antoine Eſcallin des Emars, Cheualier de l'ordre, & Capitaine general des galleres du Roy, es mers de Ponant & Leuant, Claude de Boiſſiere deſire Salut, avec accroiſſement de tout bonheur.*
+
+<image-desc>Historiated woodcut initial letter 'C' depicting a bird perched among dense foliage and vines.</image-desc>CE n'eſt choſe à vous incogneuë, treſilluſtre & magnanime ſeigneur, combien la cognoiſſance des nōbres rapporte aux humains d'vtilité & recreation, & combien l'ignorance d'iceux les detient en grandes tenebres & obſcuritez, & meſme à dreſſer bataillons, diſpoſer les camps, meſurer & traſſer fortereſſes & autres innumerables faicts leſquels ſans l'aide d'Arithmetique ou Geometrie ne peuuent eſtre parfaicts & accomplis. Ie laiſſe les proportions: deſquelles prouient l'admirable effi-
+
+<vocab>Antoine Escallin des Emars, Claude de Boissière, Arithmetique, Geometrie, art militaire, fortification, nombres</vocab>

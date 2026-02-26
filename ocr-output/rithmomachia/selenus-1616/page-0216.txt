@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>186</page-num>
+<header>Das Ander Buch. 9.cap:</header>
+<meta>catchword: Schü,</meta>
+
+und vierzig/und ziehet/auf die W. Königin: **Der Weisse**/(zu errete-
+<margin>9. *</margin>
+ten seines K. Rochen) nimt des S. K. Reuter / mit seiner K. Schü-
+tzen : * **Der Schwarze**/die W. Königin/mit seiner K. Schützen:
+**Der Weisse**/des S. K. Reuters-Soldaten / mit des K. Rochen /
+beut **Schach**/und entblösset/der K. Schützen/gegen die S. Königin:
+**Der Schwarze**/nimt/den W. Rochen/mit dem Könige: **Der
+Weisse**/die S. Königin / mit der K. Schützen: **Der Schwarze**/
+(umb zu verhüten/das sechs und dreyffigste feld / damit auß demsel-
+ben/der W. K. Schütze / keinen **Schach** geben / noch seines K. Ro-
+chen/ertappen möge) ziehet / seiner K. Reuter / auf drey und funf-
+zig: **Der Weisse**/nimt der S. K. Rochen / mit seiner K. Reuter:
+**Der Schwarze**/denselben/mit des K. Rochen: **Der Weisse**/zie-
+het der K. Rochens-Soldaten/auf vier und zwanzig: den Rochen/
+auf fünffte: verschantzet seinen König / in der Königin quartier / und
+muß folgendes/weyl/**der Schwarze**/einen Reuter / (wiewol das
+neben ein zerrissenes Spiel) zum Vortheil hat/seine Züge/bedacht-
+sam spielen.
+
+<margin>10.</margin>
+Beut aber **der Schwarze**/ehe seiner K. Schütze / (n. 9.) die
+W. Königin nimt/mit seiner Königin / auß eins / **Schach**: so bedec-
+cket **der Weisse**/den König / mit der Königin / auf drey: (dan son-
+sten/wan Er denselben/auß dem Schache zöge/seiner K. Roche/ver-
+loren würde) **der Schwarze**/verwechselt die Königinnen / oder
+nimt mit seiner Königin / des W. K. Soldaten / und beut **Schach**:
+**Der Weisse**/bedecket den König / mit seinem Rochen / auf zwan-
+zig: nimt folgendes/der S. K. Rochen/und auch vielleicht / (nach-
+dem **der Schwarze**/ursache gibt) dero Schützen. Kan also **der
+Weisse**/das Spiel / mit dieser sehr guten ordnung seiner Steine /
+leichtlich gewinnen/und zum ende bringen.
+
+<margin>11.</margin>
+Wan aber **der Weisse**/den **Schwarzen**/nachdem derselbe/
+des K. Reuter / (umb seinen Soldaten zu nehmen / n. 4. oder densel-
+ben/auf seinen Rochen / auf 33. n. 6. zu rucken) auf 43. (d. n. 4.) gezog-
+gen/nicht wil versuchen/(n. 5.) besondern / der K. Schützen / auf des
+S. K. Reuter/und auf die S. Königin/auf vier und dreyffig ziehet:
+so spielet **der Schwarze**/(umb die Königinne/zu verwechseln) sei-
+ne Königin/auf drey und dreyffig: **Der Weisse**/(weyl Er darzu /
+nicht verstehen wil) seine Königin / auf zehen / und beschützet zu
+gleich/des Königes : so wol auch dessen Rochens : Soldaten: **Der
+Schwarze**/ziehet des K. Rochens : Soldaten / auf der W. K.
+Schü,
+
+<vocab>Schach, Königin, Rochen, Reuter, Schütze, Soldat, Der Weisse, Der Schwarze</vocab>

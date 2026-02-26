@@ -1,0 +1,25 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>335</page-num>
+<header>6.cap: Vom Schach-Spiel.</header>
+
+aber / sich seiner / mit besserer gelegenheit gebrauchen kan : dannoch ist die vorige anordnung / nütz- und tauglicher.
+
+<margin>13.</margin> Wan aber der **Schwartze** / seine Steine / nicht also / wie itzt gedacht / (unangesehen dieselben / weit besser / dan des **Weissen** / gestellet seynd) anordnen / *noch den Schützen / auf 52. (n. 12.)* besondern die Königin / auf zwey und sechstzig / ziehen wil : so spielet der **Weisse** / des K. Reuter / auf der S.K. Schützen / auf fünf und zwanzig : Der **Schwartze** / denselben / auf die W. Königin / auf sechs und zwantzig : Der **Weisse** / dieselbe / auf des S.K. Rochen / auf drey und zwantzig : Der **Schwartze** / zwischen diese beede / der K. Schützen / auf die W. Königin / (umb / des K. Rochen / zu verthetige) auf vier und vierzig / und ordnet dergestalt / sein Spiel / nicht übel.
+
+<margin>14.</margin> Wan aber der **Schwartze** / nicht den W. Schützen / mit dem Rochen / (n. 11.) besondern / des W. K. Soldaten / mit des K. Schützens-Soldaten / nimt / und ihn auf dessen Reuter / ziehet : (welcher zug / zwar gut scheinet / aber sehr böse ist) so spielet / der **Weisse** / des K. Schützen / auf sieben und dreyffig : Der **Schwartze** / nimt / des W. K. Reuter / mit seines K. Schützens-Soldaten : Der **Weisse** / denselben / mit der Königin : erlanget also / der S. K. Reuters-Soldaten / mit gewalt : und kan / mit derselben / auß ein und funfzig / **Schach-Mat** geben : Der **Schwartze** / (umb denselben zu verhindern) ziehet die Königin / auf zwey- oder drey und funfzig : Der **Weisse** / nimt / der S. K. Reuters-Soldaten / mit des K. Schützen / und erlanget zu demselben / auch dero Rochen / zusampt dem gantzen Spiele.
+
+Ist demnach / dem **Schwartzen** / nicht zu rahten / so fern Er / das Spiel gewinnen wil / (in betrachtung es wol besser anzuordnen stehet) den gedachten W. Soldaten / (n. 14.) zu nehmen / besondern / es ist Ihm / ein schedlicher Zug : Ob ihn gleich die jenigen / welche / von diesen **Schach-zügen** / wenig verstehen / etwa hoch achten / und schetzen möchten.
+
+Schliessen nuhn hiemit diese *Andere manier* / des K. Soldaten zu beschützen / und unterlassen / mit fleiß / andere Exempel / welche diesen etwa noch angefüget werden könten / dieweil 
+
+->die beede obangeregte / für die besten<-
+->gehalten werden.<-
+
+---
+
+<image-desc>A decorative woodcut divider with symmetrical floral patterns and scrollwork.</image-desc>
+
+<sig>Nu Das</sig>
+
+<vocab>Schach-Spiel, Schwartze, Weisse, Königin, Reuter, Rochen, Schützen, Soldaten, Schach-Mat, Schach-zügen, Andere manier</vocab>

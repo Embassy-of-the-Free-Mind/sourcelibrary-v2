@@ -1,0 +1,61 @@
+<language>French</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>34</page-num>
+<header>DES PHILOSOPHES.</header>
+<sig>E ij</sig>
+<warning>The image contains significant speckling and background noise from aging; some ink bleed-through is visible from the reverse page.</warning>
+
+### Exemple des proportions d'Arithmetique
+### qui se peuuent encontrer au ieu.
+
+| | | |
+|---|---|---|
+| 2 | 3 | 4 |
+| 2 | 4 | 6 |
+| 2 | 5 | 8 |
+| 2 | 7 | 12 |
+| 2 | 9 | 16 |
+| 2 | 16 | 30 |
+| 3 | 4 | 5 |
+| 3 | 5 | 7 |
+| 3 | 6 | 9 |
+| 3 | 9 | 15 |
+| 4 | 5 | 6 |
+| 4 | 6 | 8 |
+| 4 | 9 | 12 |
+| 4 | 12 | 20 |
+| 4 | 20 | 36 |
+| 4 | 30 | 56 |
+| 12 | 42 | 72 |
+| 15 | 20 | 25 |
+| 15 | 30 | 45 |
+| 16 | 36 | 56 |
+
+<column-break/>
+
+| | | |
+|---|---|---|
+| 5 | 6 | 7 |
+| 5 | 7 | 9 |
+| 5 | 15 | 25 |
+| 5 | 25 | 45 |
+| 6 | 7 | 8 |
+| 6 | 9 | 12 |
+| 6 | 36 | 66 |
+| 7 | 8 | 9 |
+| 7 | 16 | 25 |
+| 7 | 64 | 121 |
+| 7 | 66 | 125 |
+| 9 | 12 | 15 |
+| 9 | 45 | 81 |
+| 9 | 81 | 153 |
+| 12 | 16 | 20 |
+| 12 | 66 | 120 |
+| 20 | 25 | 30 |
+| 20 | 42 | 64 |
+| 30 | 36 | 42 |
+| 28 | 64 | 100 |
+| 28 | 42 | 56 |
+
+<vocab>proportions, Arithmetique, ieu, progressions arithmétiques</vocab>

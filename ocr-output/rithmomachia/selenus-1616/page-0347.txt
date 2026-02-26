@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>313</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin> Thut Ers aber nicht / für der versetzung / so ists kein guter
+zug / besondern / Er sperret seine Steine / ein / verderbet und
+<margin>66.</margin> verlieret endlich / das gantze Spiel: * Dan / wan Er / nach
+der versetzung des W. Königes / auf 2, (für welcher Er / des
+R. Reuter / auf 43, d. n. 64. gerucket) mit demselben / des W.
+K. Soldaten / nimt / und dessen Schützens-Soldaten / nebest
+seines K. Schützen / nachtrachtet: so ziehet / der Weisse / auf die-
+sen S. Schützen / der K. Soldaten / auf neun und zwantzig: Der
+Schwartze / nimt ihn / mit des K. Soldaten: Der Weisse / den-
+selben / mit der K. Schützens-Soldaten / und ziehet / nochmaln / auf
+des S. K. Schützen: Der Schwartze / denselben / auf sieben und
+viertzig: Der Weisse / seines K. Rochen / auf des S. K. Reu-
+ter / auf viere: Der Schwartze / (denselben / dieweyl Er ihn /
+wegen seiner Königin / nicht darf wegrücken / zu verthetigen / und
+der K. Schützen / wege und stege zu machen) der K. Soldaten / auf
+sieben und dreyssig: Der Weisse / der K. Reuter / auf gedach-
+ten S. Reuter / und Soldaten / auf zwey und zwantzig: Der
+Schwartze / verhütet den Soldaten / und bedecket seine Königin /
+mit derselben Schützen / auf vier und viertzig: Der Weisse / nimt /
+des S. K. Reuter / mit seiner K. Reuter: Der Schwartze / den-
+selben / mit der K. Soldaten / und ziehet ihn / auf des W. K. Reu-
+ter: Der Weisse / nimt denselben / mit des K. Rochen / und helt /
+der S. K. Schützen / gefangen: Der Schwartze / ziehet / der K.
+Rochen / auf der W. K. Soldaten / auf ein und sechssig: Der
+Weisse / der K. Schützen / auf die S. Königin / und ihren Ro-
+chen / auf vier und dreyssig: Der Schwartze / (umb die Köni-
+gin zu bedecken) auf denselben / des K. Schützens-Soldaten / auf
+<margin>67.</margin> drey und viertzig: * Der Weisse / des K. Schützen / auf der S.
+S. Schützen / auf dreyßig: Der Schwartze / darf der W. K.
+Schützen / mit des K. Schützens-Soldaten / nicht nehmen / be-
+sondern / rucket die Königin / (umb dieselbe / nicht zu verlieren /
+auß der gefahr) auf drey und funfzig: Der Weisse / nimt / mit
+<margin>68.</margin> des K. Rochen / der S. K. Schützen / und beut Schach: * Der
+Schwartze / bedecket / den König / mit des K. Reuter / auf zwey
+und funfzig: Der Weisse / rucket des K. Schützen / auß der ge-
+fahr) auf dreyzehen: Der Schwartze / (den W. K. Schützens
+vorhaben / auf ein und dreyßig / zu hindern) der K. Schützen-Sol-
+daten / auf der W. K. Schützens-Soldaten / auf acht und dreyßig:
+
+<sig>Rr ij</sig>
+<meta>Catchword: Der</meta>
+
+<vocab>Schach-Spiel, König, Reuter, Soldaten, Schützen, Rochen, Königin, Schach, Weiß, Schwartz</vocab>

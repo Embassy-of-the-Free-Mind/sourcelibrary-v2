@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>205</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Reu</meta>
+
+<margin>12.cap:</margin>
+zu verthetigen) der K. Reuter / auf zwey und zwanzig / und hat / (es wechsle der Schwarze / die Reuter / oder verrichte andere Züge) ein gutes Spiel.
+
+Wan aber der Weisse / seinen feind / ferner versuchen / und ob derselbe / auch des Spieles kündig / erfahren wil: so sol Er / der K. Reuter / (wie itzt gedacht) auf 22. nicht spielen / besondern / mit seines K. Reuter / des S. K. Reuter / hinwegnehmen: Der Schwarze / denselben / mit des K. Schützen: Der Weisse / ziehet die Königin / auf des S. K. Reuters=Soldaten / auf drey und dreyssig: Der Schwarze / des K. Schützen / (welches dan ein guter Zug scheinet) auf des W. K. Soldaten / auf neun und zwanzig: Der Weisse / nimt des S. K. Reuters=Soldaten / mit seines K. Rochens=Soldaten: Der Schwarze / des W. K. Soldaten / mit seines K. Schützen: Der Weisse / ziehet / des K. Rochens=Soldaten / auf des S. K. Schützens= und Rochens=Soldaten / auf zwey und viertzig / und entblöset die Königin / auf des S. K. Schützen: Der Schwarze / (denselben zu erretten) die Königin / auf zwey und funfzig: Der Weisse / nimt / des S. K. Schützens=Soldaten / mit des K. Rochens=Soldaten / und beut Schach: Der Schwarze / ziehet / den König / auf neun und funfzig: Der Weisse / (umb seinen König / auss der gefahr des Ab=Schaches / dessen wegen / der K. Roche / leichtlich könte verloren werden / zu erledigen: auch das dritte feld / darein zur zeit der noht / des K. Roche / umb den feind zu verletzen / möchte gezogen werden / frey zu machen) des K. Schützen / auf zwelfe. Dieser Zug nuhn / ist der beste / welchen / der Weisse / der ohne das / wegen dieser seiner Steine anordnung / so fern Er / nuhr in etwas auf dieses Spiel abgerichtet / dasselbe / mit gewalt gewinnet / kan zu wercke richten.
+
+<margin>7.</margin>
+Wan aber der Schwarze / nachdem beede Königinne / für ihre Könige / auf dero linie (n. 3.) gezogen: des K. Reuter / nicht auf drey = (d. n. 3.) besondern / (auf dass Er / ihn errette / und des K. Soldaten / verthetige) auf sieben und dreyssig / rucket: so ziehet / der Weisse / auf denselben / der K. Schützens=Soldaten / auf dreyssig:
+
+<margin>8.*</margin>
+* Der Schwarze / denselben / (auf dass Er folgendes / dem W. Könige / Schach=bieten / und auf der W. K. Rochen / lauren könne) auf ein und dreyssig: Der Weisse / damit Er / mit seiner Königin / diesen Schach verhindere und abwehre / auch dero Schützen / auf des S. K. Soldaten / die strasse eröffne) der K. Soldaten / auf neun und zwanzig: Der Schwarze / (ihn zu verthetigen) seines K.
+
+<vocab>Schach, König, Königin, Reuter, Schütze, Roche, Soldat, Ab-Schach</vocab>

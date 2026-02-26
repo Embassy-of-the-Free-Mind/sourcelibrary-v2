@@ -1,0 +1,16 @@
+<language>English</language>
+<page-type>title-page</page-type>
+<warning>High-contrast, dark image, likely from a microfilm scan, which obscures some fine details.</warning>
+
+# THE MOST NOBLE
+## auncient, and learned playe, called the Philosophers game, inuented for the honest recreation of students, and other sober persons, in passing the tediousnes of tyme, to the release of their labours, and the exercise of their wittes.
+
+->Set forth with such playne precepts, rules, and tables, that all men with ease may vnderstande it, and most men with pleasure practise it.<-
+
+->by Rafe Leuer and augmen:ted by W. F.<-
+
+<image-desc>A rectangular woodcut illustration depicting two men seated at a table playing "The Philosophers' Game" (Rythmomachia). The men are dressed in 16th-century academic or scholarly robes and caps. Between them is a rectangular game board with a checkered pattern, populated by various circular, square, and triangular playing pieces. The man on the left gestures toward the board with his right hand, while the man on the right appears to be moving or holding a piece. Above the board, on the back wall, hangs a circular medallion or emblem. The scene is set in a room with a simple architectural opening on the left.</image-desc>
+
+->Printed at London by Iames Rowbothum, and are to be sold at his shop vnder Bowchurch in chepesyde.<-
+
+<vocab>Philosophers game, Rythmomachia, Rafe Leuer, Iames Rowbothum, Bowchurch, chepesyde, board games, recreation</vocab>

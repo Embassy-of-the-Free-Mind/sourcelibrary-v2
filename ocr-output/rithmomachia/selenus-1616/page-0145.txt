@@ -1,0 +1,54 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>115</page-num>
+<header>12.cap: Vom Schach-Spiel. 115</header>
+<warning>foxing and bleed-through throughout the page</warning>
+
+ben wir/den Schach=Ziehern/denen es vielleicht nicht fürkommen/
+hiemit auch mittheilen wollen.
+
+# Cartel "
+## Des Schach=Spieles / "
+### am "
+## Kayserlichen Hofe. "
+
+->1.<-
+Jeder *Pedina* oder *Baur*/kan in seinem ersten außzug/ "
+aufs dritte feld/hinfür springen. "
+
+->2.<-
+Alleine/es stehe eine *Pedina*, vom Gegentheil/nechst ne= "
+ben demselben dritten felde/gegen dem/muß dieser/am ersten/ "
+ein stand thon/und darf nicht fur ihme/dan am ersten/ein feld "
+ziehen. Doch da Er wil fürziehen/stehet dem gegentheil bevor/ "
+ihn hinauß zu werffen/und seine *Pedina*, an die stat zu setzen/ "
+alß wan der erste/allein ein feld/hinfür gerucket/und der ge= "
+gentheil/ihm den genommen hette. "
+
+->3.<-
+Alß lang der König/kein Schach empfangen/mag Er "
+mit dem Rochen/wechßlen/alß weit Er/mit beeden stucken "
+wil/doch muß das feld darzwischen leer seyn. "
+
+->4.<-
+Wan der König/einen Schach empfangen hat/darf "
+Er nimmer wechßlen. "
+
+->5.<-
+Alßbald ein *Pedina*, das letzte feld/seines gegentheiles "
+erreicht/ist Er/ein völlige Königin/und kan im selbigen zuge/ "
+gleich damit Schach bieten. "
+
+->6.<-
+Alßviel einer *Pedinen*, hinauß ans ort bringet/so viel hat "
+Er Königinnen/und ist also erlaubet/drey oder vier Königin= "
+ne/mit ein ander zu machen. "
+
+->7.<-
+Wan der König/aller seiner Steine beraubet wird/so "
+ists kein Schach/besondern eine *Robada*. "
+
+<sig>P iij</sig>
+<meta>catchword: 8. Wan</meta>
+
+<vocab>Schach-Spiel, Kayserlicher Hof, Pedina, Baur, Rochen, König, Königin, Robada</vocab>

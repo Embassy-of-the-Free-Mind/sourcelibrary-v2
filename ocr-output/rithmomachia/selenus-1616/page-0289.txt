@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>255</page-num>
+<header>1. Cap: Vom Schach-Spiel.</header>
+
+<image-desc>A decorative woodcut headpiece consisting of a rectangular border filled with intricate scrolls of foliage and flowers, with two bird-like figures at the center facing outward.</image-desc>
+
+## Das Dritte Buch/
+# Der Beschreibung/ des Schach-Spieles.
+### Das Erste Capittel.
+#### Wie man/ auf die Achte Art/ mit des Königes Reuter einen einfall thun/ und demselben entgegen ziehen könne.
+
+Nachdem/ in den Acht letzten Capiteln/ des vorigen Andern Buches/ die sieben Arten/ wie das Spiel/ wan es/ auf beeden seiten/ mit des K. Soldaten / angefangen wird/ nicht undienlich könne geführet werden/ beschrieben: Alß ist noch übrig/ die im 7. Cap: des gedachten 2. Buches/ angegebene Achte/ und letzte Art/ auch zu verzeichnen: und komt dieselbe/ mit der/ im 12. 13. 14. und 15. Cap: des 2. Buches/ erwehnten siebenden weyse/ in dehme zwar/ überein/ daß der Weisse/ alßbald im Andern Zuge/ den anfall/ auf des S. K. Soldaten thut/ allein hierinnen unterschieden ist/ daß in dieser/ nicht mit dem Soldaten/ auß 27, sondern mit des K. Reuter/ auß neunzehen/ derselbe verrichtet wird.
+
+Diese Art nuhn/ mit dem Reuter/ lest ihm der Damianus/ auß Portugal/ in außführung dieses Spieles/ insonderheit wol gefallen/ auch also/ daß es fast das ansehen hat/ alß wan Er/ der vorigen Arten/ nichtes geachtet/ noch sich derselben/ zu gebrauchen gewust. Hat demnach/ diese manier/ mit allerhand verenderung der Züge/ vermehret/ und dargegeben: Welche wir/ unserm geschehenen Versprechen nach/ auß seinem Hispanischen Tractätlein/ anhero/ doch deutlicher/ dan von Jhm geschehen/ in diesem und folgenden Capiteln/ setzen/ worinne Er geirret/ zugleich anzeigen/
+
+<sig>Kk</sig>
+<meta>catchword: und/</meta>
+
+<vocab>Schach-Spiel, Damianus, Reuter, Soldaten, Zuge, Hispanischen Tractätlein</vocab>

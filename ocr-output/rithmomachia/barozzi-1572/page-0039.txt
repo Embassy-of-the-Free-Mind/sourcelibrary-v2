@@ -1,0 +1,47 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<sig>E 2</sig>
+<meta>catchword: sape-</meta>
+
+delli suoi, come di quelli che hà pigliato all'auuersario, &
+se non hauerà alcuno de detti pezzi, che fia dell'istesso nu-
+mero, sta in arbitrio del vincitore di pigliar qual pezzo gli
+piace, & à questo modo la pyramide può ricuperar li suoi
+gradi, eccetto però il primo grado di sotto, che è la sua ba-
+se, il qual non si può ricuperar, quando fosse preso, depre-
+dando il numero della summa de tutti li gradi, come è il
+91, ouer il 190 : ma bisogna del tutto leuarlo dal giuoco,
+si come si leuaranno anchor altri gradi, quando non si ha-
+uera piu pezzi da dar in ricompenso de quelli.
+
+La quinta regola è, che tutti li pezzi, & gradi di pyrami
+de depredati si deono voltar sotto sopra fuora del tauolie-
+ro dalla banda del vincitore, acciò essendo quelli del co-
+lor della sua fattione à tempo, e loco egli si possa seruir di
+essi, mettendoli ò parte, ò tutti sopra il tauoliero à suo be-
+neplacito, secondo che gli tornerà commodo.
+
+La sesta regola è, che quando fossero leuati dal giuoco li
+dui gradi quadrati della pyramide, non può più essa pyra-
+mide far il camino del quadrato; & il simile si intendera'
+dalli gradi triangolari, & tondi.
+
+La settima regola è, che quando fusse assediata la pyra-
+mide, può liberarsi facendo il salto del cauallo delli scha-
+chi, oueramente aiutandola qualche pezzo della sua fat-
+tione col prender qualche pezzo de quelli che l'assediano.
+Ma se per caso la fosse di tal forte assediata, che non la si po-
+tesse a niun modo aiutare, allora la si leua totalmente dal
+giuoco, e l'auuersario la può usar per sua riuoltando tutti
+li gradi sottosopra, acciò mostrino il color della sua fattio-
+ne. Ma essendo peruenuti hormai al fine della quinta parte
+del presente trattato, passaremo alla sesta, & vltima.
+
+### *Sesta, & vltima parte, nella qual si dichiarano le vittorie con le quali si vince il giuoco.*
+
+Inanti che noi dichiariamo le vittorie, cõ le quali si
+vince il giuoco, fa dimistieri dichiarare tre forte di
+proportioni, lequali chi non hà in cognitione, non
+
+<vocab>pyramide, giuoco, gradi, proportioni, vittorie, cauallo delli schachi, tauoliero</vocab>

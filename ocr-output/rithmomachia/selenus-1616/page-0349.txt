@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>315</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap:</margin>
+des W. K. Reuter : Der Weisse / (umb / diese beede Steine zu
+beschützen) rucket / der K. Rochen / auf fünfe : Der Schwartze /
+die Königin / (auß der einstehenden gefahr) auf vier und funfzig :
+Der Weisse / beut / mit der Königin / auß neun und dreyffig / Schach /
+und rucket sie / auf des S. K. Schützen : Der Schwartze /
+den König / auf ein und sechfzig : Der Weisse / nime / des S. K.
+<margin>70.</margin> Schützen / mit der Königin : * Der Schwartze / rucket / den König /
+(auf daß der Weisse / mit des K. Reuter / seine Königin / im Ab-
+Schache / auf neun und dreyffig / nicht eregle) auf sechszig : Der
+Weisse / des K. Reuter / auf die S. Königin / auf neun und dreyffig :
+Der Schwartze / dieselbe / auß der gefahr : Der Weisse / gibt
+mit seiner Königin / (dieweyl Er / mit derselben / der S. K.
+Reuter / ungehindert kan wegnehmen ) auß zwey und funfzig /
+Schach-Mat.
+
+<margin>71.</margin> Rucket aber der Schwartze / den König / nicht auf 60. (n. 70.)
+besondern auf zwey und sechszig : und der Weisse / des K. Reu-
+<margin>72.</margin> ter / gleichwol / auf die S. Königin / auf neun und dreyffig : * so stel-
+let / der Schwartze / dieselbe / auf drey und sechszig : Der Weisse /
+nimt / mit des K. Rochen / des S. K. Reuter : Der Schwartze /
+(umb / der W. K. Schützen / einzusperren / oder die Königin / auf sie-
+ben und zwantzig / zu rucken) ziehet / des K. Reuters-Soldaten / auf
+vier und dreyffig : Der Weisse / beut / mit der Königin / auß acht
+und dreyffig / Schach : Der Schwartze / muß / den König / mit der
+Königin / auf vier und funfzig / bedecken : Der Weisse / nimt
+sie / mit seiner Königin / (dieweyl dieselbe / von des K. Reuter /
+und Rochen / beschützet wird) und gibt Schach-Mat:
+
+<margin>73.</margin> Rucket aber der Schwartze / die Königin / nicht auf 63.
+(n. 72.) besondern / auf der W. K. Rochen / auf vierzehen : so beut /
+Der Weisse / mit / des K. Reuter / auß fünf und vierzig /
+Schach : Der Schwartze / darf den König / auf drey und sechs-
+zig / nicht rücken / (Dan Ihm der Weisse / wan derselbe / mit
+der Königin / seiner K. Reuters-Soldaten nehme / gleich Schach-
+<margin>74.</margin> Mat gebe) * besondern ziehet ihn / auf vier und funfzig : Der
+Weisse / nimt / mit der Königin / der S. K. Reuters-Soldaten /
+und beut Schach : Der Schwartze / muß / mit dem Könige / auf
+ein und sechfzig / weichen : Der Weisse / nimt / mit der Königin /
+der S. K. Reuter / und gibt Schach-Mat.
+
+<margin>75.</margin> Wan aber der Schwartze / den König / nicht auf 54. (n. 74.)
+
+<sig>Rr iij</sig>
+<meta>catchword: besons</meta>
+
+<vocab>Schach-Spiel, König, Königin, Reuter, Rochen, Schützen, Schach-Mat, Soldaten, Ab-Schache</vocab>

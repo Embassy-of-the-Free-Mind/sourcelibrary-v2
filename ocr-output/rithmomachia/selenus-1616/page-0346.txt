@@ -1,0 +1,15 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>312</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+<warning>The bottom left corner of the page is partially obscured by a finger or thumb.</warning>
+
+fällen des Feindes / sich / zu entsetzen : So bringet Er auch den Weissen / so ferne Er nuhr des Spieles kündig / hiedurch / leichtlich / in eine unordnung. Ist demnach / dieser stand der Soldaten / die-weyl mit demselben / des Feindes vorhaben / gebrochen wird / nicht dafür zu achten / daß die Soldaten / vergebens doppelt stehen : Als wann sie etwa / an andern orten / oder in einer andern gattung von Spielen / dergestalt stünden : Welches man dan / umb die angehende / noch unerfahrne Schach-Zieher / dessen zu erinnern / und den ver-leumbdungen / der Klüglingen / in etwas fürzubawen : alhie geden-cken und anmercken wollen. Dan / was dieses puncten halber / droben / im 2. Cap : dieses Buches / nach dem n. 4. und 5. wider den *Damianum*, geschrieben / ist nicht ohn ursach und grunde / wie daselbe-sten zulesen / gesetzet worden.
+
+<margin>63.</margin> Wan aber der Weisse / seinen Schützen / mit dem S. Reuter / (n. 62.) nicht verwechslen wil / besondern / (umb / seinen König / an einen sichern ort zu versetzen / und dem Schwarzen / dergestalt / einen grössern Abbruch und schaden / zu zufügen) des K. Rochen / <margin>64.</margin> auf drey / ziehet : * so spielet / der Schwarze / auf des W. K. Solda-ten / des K. Reuter / auf drey und viertzig : oder mit mehrem nützen / des K. Schützen / (umb / daß der Weisse / im einfahl / nach des Köni-ges versetzung / nicht einen Zug / welchen derselbe / für der gedachten versetzung / ohne seinen schaden / nicht thun kan / zum Vortheil / ge-winnen möge / zu verhindern) auf sieben und viertzig : Der Weisse / lesset den König / auf zwey / springen : Der Schwarze / ziehet / der K. Soldaten / auf funf und viertzig : Der Weisse / seiner K. Sol-daten / auf des S. K. Soldaten / auf neun und zwantzig : Der Schwarze / der K. Schützen / (umb dero Reuter / zu erledigen) auf drey und funfzig / und wird sein Spiel / ferner wol anordnen können.
+
+<margin>65.</margin> Dieweyl aber droben / (n. 64.) berichtet / daß es besser sey / daß der Schwarze / den Schützen / (ehe Er / den Reuter / auf den W. Soldaten / rucket) auf 47. ziehe : Als ist ferner zu wissen / daß / ob es wol etlichen besser gefället / daß der Zug / des Reuters / dieweyl derselbe / dem Feinde / auf den halß gezo-gen wird / vorhero geschehe : es gleichwol / dem Schwarzen / zu träglicher sey / daß Er / seines K. Soldaten / mit der K. Soldaten / ehe der Weisse / seinen König versetzet / gleich nach des W. K. Rochens Zuge / auf 3. (n. 63. in f.) auf funf und viertzig / beschütze.
+
+<meta>catchword: Thut</meta>
+
+<vocab>Schach, Schach-Zieher, Soldaten, Reuter, Rochen, Schützen, Damianum, König</vocab>

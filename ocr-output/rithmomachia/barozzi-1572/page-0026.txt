@@ -1,0 +1,30 @@
+<language>Italian</language>
+<page-type>diagram</page-type>
+<sig>I</sig>
+
+<margin>
+4
+</margin>
+
+<image-desc>
+A full-page woodcut or engraving illustrating a game board for Rithmomachia (The Philosophers' Game). The diagram consists of an 8-column by 16-row grid with game pieces arranged at the top and bottom.
+
+The pieces are divided into "Dark" (shaded) and "Light" (unshaded) sets, occupying columns 3 through 6:
+
+**Top Section (Dark/Black Pieces):**
+- **Squares (Rows 1-2):** Row 1 contains numbers 361, 225, 121, 49. Row 2 contains a tiered pyramid piece (top-left), followed by squares numbered 120, 99, 48.
+- **Triangles (Rows 3-4):** Triangles pointing downwards. Row 3 contains 191, 85, 37, 21. Row 4 contains 153, 45, 25, 9.
+- **Circles (Rows 5-6):** Row 5 contains 16, 12, 9, 8. Row 6 contains 9, 7, 5, 3.
+
+**Middle Section:**
+- Rows 7 through 10 are empty, representing the "field of battle" between the two sides.
+
+**Bottom Section (Light/White Pieces):**
+- **Circles (Rows 11-12):** Row 11 contains 2, 4, 6, 8. Row 12 contains 4, 16, 36, 64.
+- **Triangles (Rows 13-14):** Triangles pointing upwards. Row 13 contains 6, 20, 42, 72. Row 14 contains 9, 25, 49, 81.
+- **Squares (Rows 15-16):** Row 15 contains 15, 45, a tiered pyramid piece (second from right), and 153. Row 16 contains 25, 81, 169, 289.
+
+Most pieces feature a small dot beneath the numerical value. Faint text from the reverse side and the facing page of the book is visible through the paper, including fragments of Italian text such as "bianchi" and "ordine".
+</image-desc>
+
+<vocab>Rithmomachia, Il Giuoco de' Filosofi, mathematical board game, arithmetic, geometric shapes, numerical progressions, pyramid, circles, triangles, squares</vocab>

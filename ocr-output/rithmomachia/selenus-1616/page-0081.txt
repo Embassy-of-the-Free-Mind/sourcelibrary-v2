@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>51</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Das</meta>
+
+<margin>4. cap:</margin>
+Durch diesen vierecketen Platz / wird eine ebene oder raum / auf welchem / zween Könige / zusamen stossen / und einer dem andern / in einer / sehr artig gemachten Schlacht=Ordnung / eine Schlacht liefert / angedeutet.
+
+Es ist aber derselbe vierecket / vielleicht / ( anderer muthmaß= sungen / davon Th: Actius, quæst: 6. n. 104. ad fin: quæst: handlet: zu geschweigen ) dieweyl die vierckete figur / sonsten für die allerbeste / und alhie für die bequämeste / zu folgendem Handel / geachtet wird.
+
+Die Leisten desselben / zeigen an / die Laufgraben und Schanz= tzen / welche die beeden Krieges=Heere / zu ihrer versicherung haben und gebrauchen. Dan die Steine / wan sie in den ecken / und an dem leisten stehen / sich viel besser / alsß wan Sie / mitten auf den plan ge= rucket / und leichtlich / umbringet werden können / schützen / und den angrif / oder Scharmützel / auffangen und erwarten. Es bedeuten auch diese Leisten / das Ziel des Lebens / und Todes / dieser Kriegs= Mänlein: dan welche / von dem Feinde / über dieselben / von der Ta= fel gehoben / die werden / alsß wan Sie / in der Schlacht umbkom= men / und erschlagen wehren / geachtet.
+
+Sie ist / in vier und sechzig felder / zu dem ende / unterschies= den / auf daß / der Steine gänge / Ordnung und angrieffe / desto ge= wisser / mögen verfasset werden. Es seynd aber / darumb so viele / auf daß die zween und dreyssig Steine / so viel Felder / Je sechsz= zehen / die eussersten zwo Zwerch:linien / gegen ein ander über / zu der Schlacht:Ordnung / einnehmen: und gleichwol der halbe theil derselben / ( welcher auch / von zwey und dreyssig Feldern / ist / und den ort / auf welchem man / ein ander / entweder mit dem gantzen hauffen / oder aber / mit gewöhnlichen Scharmützlen / angreiffet / andeutet ) in der mitte / zwischen den beeden Hauffen / noch ledig / verbleiben möchte.
+
+Fernere nachrichtung / von dieser Tabel / ist drun= ten / im eylften Capittel dieses Buches / zu befinden. *zc.*
+
+---
+
+<image-desc>A decorative woodcut tailpiece featuring symmetrical floral scrollwork and acanthus leaves flanking a central cartouche that contains a stylized mask or lion's head.</image-desc>
+
+<vocab>Schach-Spiel, Schachbrett, Schlacht-Ordnung, Scharmützel, Th. Actius, Krieges-Heere, Laufgraben</vocab>

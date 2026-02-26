@@ -1,0 +1,56 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>423</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: dern sei-</meta>
+
+<margin>1. cap:</margin> denſelben/ mit der K. Soldaten: Der Weiſſe/ ziehet / des K. Reu-
+ters=Soldaten/ auf der S. K. Schützen/ auf ſechs und zwantzig/
+und erlanget ihn/ durch dieſen Zug / ohn einiges verhindern. Dan
+ihn/ der Schwarze/ wegen des Königes/ (diewehl er/ denſelben/
+für des W. K. Rochen/ bedecket) nicht darf wegrücken.
+
+7. Nimt aber der Schwarze/ den W. Soldaten / nicht/ mit
+des K. Schützen/ (n. 6.) beſondern/ mit der K. Soldaten: ſo ziehet/
+der Weiſſe/ des K. Reuter/ auf der S. K. Schützen / auf funf und
+zwantzig/ verhindert damit/ des Schwarzen vorhaben/ und ge-
+winnet endlich/ das Spiel.
+
+8. Wan aber der Schwarze/ den König/ (n. 5.) nicht bedecket/
+beſondern denſelben/ auf ſechſſig/ rucket: ſo ziehet/ der Weiſſe/
+des K. Reuter/ auf der S. K. Schützen/ auf funf und zwantzig.
+
+9. * Der Schwarze/ auf die W. Königin/ des K. Schützen/ auf neun
+und funfzig: Der Weiſſe/ nimt / der S. K. Schützen/ mit des K.
+Rochen/ ziehet ihn/ auf die S. Königin/ und gewinnet alſo denſelben/
+ohne Schaden und verluſt ſeiner Steine: Dan/ wan der Schwarze/
+denſelben/ mit des K. Reuters: Soldaten/ nimt: Er/ mit ſeiner
+Königin/ die S. Königin/ raubet/ und dieſelbe/ von des S. K. Schü-
+tzen/ errettet: Nimt aber/ der Schwarze/ den W. Rochen/ mit
+der Königin: ſo nimt Er ſie/ mit des K. Reuter: Der Schwar-
+ze/ die W. Königin/ mit des K. Schützen: Er/ denſelben/ mit des
+K. Reuter/ und erlanget alſo/ zween Schützen/ nebeſt des K. Reu-
+ter: Kan auch / noch funf Haupt: Steine gebrauchen: da doch
+der Schwarze/ nuhr drey/ noch übrig hat.
+
+10. Wan aber/ der Schwarze/ nicht den Schützen/ (n. 9.) beſon-
+dern (umb die Königin / da es vonnöten/ zu beſchützen) des K. Ro-
+chen/ auf 59. ziehet: ſo rucket/ der Weiſſe/ des K. Reuters = Solda-
+ten/ auf der S. K. Schütze/ auf ſechs und zwantzig.
+
+11. * Der Schwar-
+ze/ des K. Schützen/ auf zwey und funfzig: Der Weiſſe/ nimt/ mit
+des K. Reuter/ (umb denſelben/ nicht vergebens zu verlieren) der S.
+K. Schützen: Der Schwarze/ denſelben/ mit des K. Reuters=
+Soldaten: werden alſo/ beederſeits Königinne/ genommen: und
+der Weiſſe/ erlanget/ auß des Schwarzen hauffen/ zu des K. Reu-
+ter/ auch deſſen Soldaten.
+
+12. Rucket aber der Schwarze/ nicht den Schützen/ auf 52. (n. 11.)
+noch des K. Reuters = Soldaten/ auf des W. K. Reuter / auf vier
+und dreyſſig/ (dan der Weiſſe/ die Königin/ verwechſlen/ und mit
+gedachtem Reuter/ ſeiner K. Schützen/ erlangen würde) beſon-
+
+<sig>Ggg</sig>
+
+<vocab>Schach-Spiel, Weiſſe, Schwarze, König, Königin, Rochen, Reuter, Soldaten, Schützen</vocab>

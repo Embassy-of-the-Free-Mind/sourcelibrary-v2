@@ -1,0 +1,26 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>69</page-num>
+<header>8. cap: Vom Schach-Spiel.</header>
+
+<image-desc>A decorative horizontal woodcut banner featuring foliage and two circular portraits at the ends, framing the start of the chapter.</image-desc>
+
+## Das Achte Capittel.
+
+### Von den Schützen / so wol der Könige / alß der Königinnen : wohin man Sie sol stellen / wie Sie gezogen / und warumb Sie besser / dan die Reuter / in diesem Spiele / geachtet werden.
+
+<image-desc>A framed woodcut illustration of a chess piece. The piece consists of a decorative, chalice-like pedestal topped with a bust of an archer wearing a cap and holding a bow with an arrow. Beneath the frame is the caption "Ein Schütze."</image-desc>
+
+->Ein Schütze.<-
+
+Nach den Rochen / werden für die fürnehmeste Steine gehalten / die man vorzeiten / *Viros Consulares*, Raht-Männer : Sonsten auch *delphinos* (das ist / Printzen oder Fürsten / wie es die Spanier außlegen : oder liebhabere der Menschen : wie *Actius, quæst : 6. n. 5.* wil) und dan Pfaffen : (vielleicht dahero / dieweyl bey den gemeinen Scharhänsen / Rähte / und dergleichen / für Pfaffen / Alten / gleich bey unsern zeiten / Jehner grosse Potentat, alle gestalten / Poeten nennete : außgeruffen werden : oder aber / daß man / auf den gebrauch / da sich die Geistlichen / nicht allein in Politischen händeln / besondern auch / in Krieges-geschefften / weidlich haben gebrauchen lassen / gesehen / und Sie darumb mit / in dieses Streits-Spiel / geführet : auf daß der Spruch / alhie auch wahr bleibe :
+
+> *Quicquid agit Mundus, Monachus vult esse Secundus :*
+> Es magk Niemand / was fahen an
+> Der Pfaff wil seyn / der ander Mann)
+
+oder Fendriche : Dahero sie die Italiener, *Alfieri*, quasi *Alferios, i. e.*
+
+<meta>catchword: feren-</meta>
+
+<vocab>Schach-Spiel, Schützen, Rochen, Viros Consulares, Pfaffen, Scharhänsen, Alfieri</vocab>

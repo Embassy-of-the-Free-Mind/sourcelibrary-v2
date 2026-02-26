@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>381</page-num>
+<header>2. cap: Vom Schach-Spiel.</header>
+
+<image-desc>A horizontal woodcut headpiece featuring symmetrical acanthus leaf scrolls and floral motifs.</image-desc>
+
+# Das Ander Capittel.
+## Von der Andern Art / zu ſpielen : wan zween Züge / gegen des Königes-Schützens-Soldaten / umb denſelben / von der Tafel zu ſetzen / genommen werden.
+
+WAn nuhn / nicht allein der Weiſſe / beſondern auch der Schwartze / einen Vortheil bekommen : ſo werden ſich / die übrigen fünf Vortheil / auch erzeigen. Dan man nimt / entweder einen doppelten / oder einfachen Vorzug : oder einen Schach-Stein : und gibt hin wider etwas zum Vortheil. Nimt dan / der eine Spieler / (alß zum Exempel / Der Weiſſe) zween Züge / und gibt / des K. Schützens-Soldaten / (welcher / dieweyl er / den angrief und einfahl / der ſeinem Könige / des Ortes / widerfahren kan / vermöge des 10. Capitt: im 1. Buche : alleine / in erwegung / an ſeiner ſeiten / nicht ſo viele bollwercke / und gegenwehren / alß / an der Königin ſeite / vorhanden ſind / ſteuren und wehren muß / zu dieſer behuf / von den andern Soldaten / gemeinlich wird geſondert) zum Vortheil : ſo entſpringet / die Andere Art / folgender geſtalt :
+
+<margin>1.</margin> Es ſol der Weiſſe / auf dieſen fahl / nicht des K. und der K. Soldaten / (wie n. 1. des vorigen Cap: erwehnet) ziehen : Dan / ob ſie wol / gute züge ſcheinen / ſie gleichwol wenig / frömmen bringen : In erwegung / der Schwartze / wan derſelbe / auf dieſe beede Züge / des K. Soldaten / auf ſechs und dreyſſig / ſtellet : ihm ſein Spiel / in eine groſſe unordnung / bringet : dan / wan Er / denſelben / mit der K. Soldaten nimt : Der Schwartze / mit ſei-
+<margin>2.</margin> ner Königin / auß funf und zwantzig / Schach-beut : * Er / bedecket den König / mit deſſen Reuters-Soldaten / auf achtzehen / und rucket ihn / auf die S. Königin : Der Schwartze / nimt / mit derſelben / ſeines K. Soldaten / und beut nochmals Schach : gewinnet alſo / ſeines K. Rochen / und einen Soldaten / zum Vortheil.
+<margin>3.</margin> Bedecket aber der Weiſſe / ſeinen König / nicht / (n. 2.) beſondern ziehet denſelben / auf dreyzehen : ſo nimt / der Schwartze / gleich
+
+<meta>catchword: gleiche</meta>
+
+<vocab>Schach-Spiel, König, Königin, Soldaten, Rochen, Schützens-Soldat, Reuters-Soldat, Schach-beut, Vortheil, bollwercke</vocab>

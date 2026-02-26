@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>5</page-num>
+<header>DES PHILOSOPHES.</header>
+
+embuſches, & empriſonnemens des nombres,
+prouienten apres la victoire en harmonie. Et
+à l’explication d’iceluy ſont cinq choſes neceſſai-
+res, (ſcauoir eſt declaration du tablier & des ta-
+bles : l’inſcription des tables par leurs nombres,
+la ſituation d’icelles au tablier, La procedeure
+du ieu, & les victoires : leſquelles choſes ſelon
+leur ordre cy apres te declarerons.
+
+### Du tablier & des tables.
+
+Apreſte vn tablier ayant pour le moins dix
+quarreaux ou eſpaces en longueur, & s’il y
+en à 16 . ſera meilleur d’autant que la multipli-
+cation des nombres ſe pourra mieux faire, &
+aura ledict tablier en largeur ſeulement huict
+quarreaux ou eſpaces : Apres prens 48. tables
+deſquelles la troiſieſme partie qui eſt 16. ſoient
+rondes cõme tables communes, & l’autre troiſ-
+ieſme partie qui eſt auſsi 16 . ſoit en forme de
+triãgle, neantmoins de meſme grandeur que les
+premieres & l’autre troiſieſme partie 16 . ſoit en
+forme quarrée. Apres de toutes ces troys quan-
+titez, fais que la moytié ſoit differente de l’autre:
+la paignant de quelque couleur, & vne couleur
+attribueras pour apres paindre le nombre pair,
+& l’autre pour le nombre impair. Apres feras
+
+<vocab>tablier, tables, nombres, multiplication, rondes, triãgle, quarrée, pair, impair, Rythmomachia</vocab>

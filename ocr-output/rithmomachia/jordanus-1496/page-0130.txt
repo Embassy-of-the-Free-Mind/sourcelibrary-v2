@@ -1,0 +1,12 @@
+<language>Latin</language>
+<page-type>dedication</page-type>
+<sig>E</sig>
+
+# ¶ Jacobus Faber Stapulẽsis Magnifico dño: Joanni Stephano
+# Ferrerio deſignato Epiſcopo Vercellenſi ſtudiorum amantiſſimo.
+
+<margin>b</margin>
+In diebus metallicis formulis Arithmeticẽ pariter atq; Musices cōmiſſis elemẽtis: cogitanti michi digniſſime pzeſul quid illoz facilem pzepararet intelligẽtiam: occurrit ſi introductio quedã ex diuina illa et Pythagorica diui Seuerini Boetij nūerozū inſtitutione in mediū afferrctur: que et vt domeſtica / familiarisq; ante aliozū lectiōem et tāta demonſtrationū pōdera directrix haberet. Ita enī ferme compatum eſt ut niſi mens rite pzeparata fuerit: nullum in diſciplinis capiat emolumentum. Ut eni periti medici potiones / digerentiaq; foztibus p̃mittunt pharmacijs quo firmozē inducant valitudinem: ita quoq; in omni diſciplinarū genere operepzecium eſt introductiones p̃mittere vt faciliorem aſſequamur diſcipline intelligẽtiam velut quādam perfectam nže mētis ſanitatem. Quapropter ilico ex libris diui Seuerini Epitomen ſum aggreſſus: cuius multiplex cōmoditas futura eſt. Ea enim aſſecuta: ad numeroz demonſtratiōes vt quibuſdam Pythagore ritibus iniciati pzeparatiq; accedent atq; illorum librorum priſca ſapientia refertorum inſtitutionis Arithmetices: perfacilem capeſſent intelligentiam. imo ex vltima comparationis diui Seuerini et Jo2dani fo2mula vniuerſam elegātiſſime et nunq̃ ſatis laudate numerozum inſtitutionis cōmentationem conſequētur facillime et ad quecunq; : que numerozum deſiderant operam: viam perfacilem atq; aditum. Hanc ergo introductiunculam digniſſime pzeſul non dubitaui nomini tuo deſignare: tametſi tue dignitatis habita ratione res ſit exigua. Ut qui nouim q̃ feruidus oia ſtudia complecteris / q̃ in illis verſaris aſſiduus ſchole ppe Socratice aſſerto2: nullum pzeter ſapientiam bonum eſſe / nullum pzeter ſtudia litterarum. Non poteſt ergo obſeruantia in te mea in re litteraria grata non foze: qui facis litteras / litteratoſq; omnes obſeruando: vt te debeant omnes obſeruare littere. quod vtinam aliquādo pzo dignitate facere poſſim tue virtutis iam ſatis longa conſuetudine probate: iugis / aſſiduuſq; cultoz.
+->Vale.<-
+
+<vocab>Jacobus Faber Stapulensis, Joannes Stephanus Ferrerius, Boetius, Pythagoras, Jordanus, Arithmetica, Musica, Epitome</vocab>

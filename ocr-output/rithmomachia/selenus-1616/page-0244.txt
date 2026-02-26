@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>214</page-num>
+<header>Das Ander Buch / 13. cap:</header>
+
+Soldaten / auf fünf und zwantzig / und verderbet also / des Schwartzen Spiel / sein aber verbleibet in guter ordnung.
+
+5. Wan aber der Schwartze / den Soldaten / auf 34. (n. 4.) nicht ziehet / sondern / mit seines K. Schützen / des W. K. Reuter / raubet : so nimt / ihn der Weisse / mit des K. Rochen : Der Schwartze / spielet / des K. Reuters = Soldaten / ( zur beschützung / des K. Soldatens ) auf vier und dreyssig : Der Weisse / des K. Soldaten / auf des S. K. Reuter / auf sechs und dreyssig : Der Schwartze / denselben / ( auf daß Er ihn / nicht verliere ) auf acht und funfzig : der Weisse / der K. Soldaten / auf neun und zwantzig : Der Schwartze / die Königin / auf zwey und funfzig : Der Weisse / des K. Reuters = Soldaten / auf des S. K. Soldaten / auf achtzehen : der Schwartze / nimt ihn / mit demselben : der Weisse / denselben / mit des K. Rochen / und ziehet ihn / auf des S. K. Reuters = Soldaten : der Schwartze / ( denselben zu verhüten ) des
+
+6. K. Rochens = Soldaten / auf ein und vierzig : * Der Weisse / die Königin / auf drey und dreyssig : der Schwartze / auf dieselbe / des K. Reuter / auf drey und viertzig : ( Dan Ihm / des W. K. Soldat / weyl derselbe / von seiner Königin / gefangen gehalten wird / nichtes feindliches kan zufügen ) der Weisse / nimt / mit derselben / des S. K. Schützens = Soldaten / und beut Schach : der Schwartze / nimt sie / mit seiner Königin : der Weisse / dieselbe / mit des K. Schützen / und beut abermal Schach : der Schwartze / nimt denselben / mit dem Könige : der Weisse / spielet des K. Rochen / auf neunzehen / helt des S. K. Reuter / gefangen / und kan ihn / ohne verlust seiner Steine / erlangen und erobern.
+
+7. Diese kurtz erwehnete züge / ob sie wol gut seyn / so ordnet doch der Weisse / sein Spiel / noch besser : wan Er / nicht die Königin / auf 33. ( n. 6. ) sondern / seines K. Rochens = Soldaten / auf fünf und zwantzig / ziehet : der Schwartze / ( auf daß / des W. K. Roche / auf funfzig / nicht gezogen werde ) nimt ihn nicht / mit des K. Reuters = Soldaten / sondern ziehet / des K. Schützens = Soldaten / auf drey und viertzig : der Weisse / beut / mit der Königin / auff drey und dreyssig / Schach : der Schwartze / ziehet den König / ( weyl es / der beste zug ist ) auf ein und sechßzig : der Weisse / ( so fern Er zu spielen weiß ) wird das Spiel / wan Er des S. K. Reuter / mit seines K. Schützen / hinweg nimt / gewinnen : Dan / wan gleich der Schwartze / mit seines K. Rochen / denselben / hinwider wegraumet : Er / desselben S. Rochens = Soldaten / mit der Köni-
+
+<meta>catchword: gin / nimt :</meta>
+
+<vocab>Schach, Königin, Reuter, Schütze, Rochen, Soldat, Weisse, Schwartze, Gustavus Selenus</vocab>

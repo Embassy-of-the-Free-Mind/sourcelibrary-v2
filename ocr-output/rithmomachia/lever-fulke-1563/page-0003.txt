@@ -1,0 +1,37 @@
+<language>English</language>
+<page-type>dedication</page-type>
+<sig>a.ij.</sig>
+<meta>catchword: I thought; heavy bleed-through from verso</meta>
+<warning>Significant ink bleed-through from the reverse side of the page creates ghosting behind the primary text, though the main text remains legible.</warning>
+
+# TO THE RYGHT HO-
+norable, the Lord Robert Dudley, Mai-
+ster of the Queenes Maiesties horse,
+Knight of the most honorable order
+of the Garter, and one of the Queenes
+maiesties priuie Counsell, ->IAMES<-
+->ROVBOTHVM heartelye<-
+->wisheth longelife, with<-
+->encrease of godly ho-<-
+->nour and eternall<-
+->felicitie.<-
+
+<image-desc>A decorative woodcut initial 'S' featuring a stylized floral and vine pattern within a square border.</image-desc>
+
+Sith that your honour is
+->(full bent,<-
+->(right honorable lord)<-
+To vvisdō & to godlines
+vvith true faithful accord
+
+Sith that in deed you do delyte,
+in learning and in skyll:
+The shovv vvherof doth vvell expresse
+a perfect godly vvyll.
+
+Sith that also you haue in hand,
+affayres of force and vvaight:
+And study do both day and night,
+to set all thinges full straight.
+
+<vocab>Robert Dudley, James Rowbothum, Queen's Majesty, Order of the Garter, Privy Council, dedication, verse</vocab>

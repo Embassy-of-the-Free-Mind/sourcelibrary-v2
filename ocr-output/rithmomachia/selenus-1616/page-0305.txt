@@ -1,0 +1,41 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>271</page-num>
+<header>2.cap: Vom Schach-Spiel.</header>
+<sig>Mm</sig>
+<meta>catchword: Das</meta>
+
+<margin>5.</margin> tens-Soldaten/zu erlangen/für ein ander/ſetzen muß ; Alß/der K.
+Reuters/für dero Rochens-und des K. Reuters/(wan der Schwar-
+tze/ſeines K. Reuter/mit der K. Schützen/nimt) für deſſen Schüt-
+tzens-Soldaten : Deßwegen dan/der Schwartze/ein gutes Spiel
+hat/inſonderheit/ * wan Er/die Königinne/ (n. 4.) nicht verwechſz-
+let/beſondern/des K. Schützen/auf die W. Königin/auf ſieben und
+vierzig/ziehet : Rucket nuhn der Weiſſe/dieſelbe/ auf zwey und
+dreyſſig : ſo nimt/der Schwartze/des K. Reuter/mit der K. Schüt-
+zen : Der Weiſſe/denſelben/mit des K. Reuters-Soldaten : Wo-
+durch dan ſein Spiel/nicht allein/in eine unordnung kommet/beſon-
+dern auch/auf beeden ſeiten / ſehr zerriſſen wird : dem Gegentheil
+aber/gibt Er/gute gelegenheit/Ihm / mit einem wol geordnetem
+Spiele/abzugewinnen.
+
+Ob nuhn wol/der *Damianus*, dieſe Art/für die beſte / unter den
+andern/achtet/So iſt ſie warlich/den angehenden Spielern/ſehr hart
+und verdrießlich/und werden in derſelben / die Regeln und ordnun-
+gen dieſes Spieles / Alß : Daß man nicht/einen Soldaten/für den
+andern ſtellen ſol : (dan / ob wol / in dieſem Exempel/ein Soldat /
+hiedurch/zum Vortheil/erobert wird/das Spiel gleichwol / in eine
+groſſe unordnung / damit gebracht worden) Imgleichen / daß man
+den König/nicht ſol alleine laſſen/und das Spiel/(umb zu gewinnen/
+einen einzigen Soldaten) zerreiſſen / und in eine unordnung brin-
+gen : und endlich/daß einer/der dieſes Spiel/recht führen wil/fürs-
+nehmlich dahin/daß der König/an einen ſichern ort/geſtellet werde/
+trachten ſol : (Dan der Gegener / in dieſem ſeinem fürnemſten
+Spiele/gute gelegenheit hat / von allen ſeiten / hinein zu brechen)
+gantz nicht inacht genommen/und erwogen.
+
+->n. 2. 3. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n. 4. 5.<-
+
+<image-desc>Two square 8x8 chess board diagrams positioned side-by-side. The pieces are represented by abbreviations: SR (Schwarzer Roche/Rook), SS (Schwarzer Soldat/Pawn), SK (Schwarzer König/King), WS (Weißer Soldat/Pawn), WR (Weißer Roche/Rook), and WK (Weißer König/King). In the left diagram (labeled n. 2. 3.), the number 46 is written in a square. In the right diagram (labeled n. 4. 5.), the number 47 is written in a square.</image-desc>
+
+<vocab>Schach-Spiel, Damianus, Königinne, Soldaten, Schützen, Reuter, Rochens, Gegener</vocab>

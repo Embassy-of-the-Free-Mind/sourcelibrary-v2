@@ -1,0 +1,132 @@
+<language>German</language>
+<page-type>diagram</page-type>
+<columns>2</columns>
+<page-num>282</page-num>
+
+<margin>
+4. Cap.
+</margin>
+
+<margin>
+Das Dritte Buch/
+</margin>
+
+<margin>
+282
+</margin>
+
+->n. 2. 18.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | SS | SR | SR |
+| SS | SS | SS | SS | 5z | | SS | SS |
+| | | | | | 4z | | |
+| | | | SS | | | | WR |
+| | | | WS | | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+---
+
+->n. 7. 15.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | | WR |
+| SS | SS | SS | SS | | 5j | | SS |
+| | | | | SR | SS | | |
+| | | | | | | | |
+| | | | WS | S& | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | WR | | | WK | WS | | WR |
+
+---
+
+->n. 19. 25.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | SS | SR | SR |
+| SS | SS | SS | SS | | SK | SS | SS |
+| | | | | | 4z | | |
+| | | | 37 | WR | | | |
+| | | WS | | WS | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | | | WR |
+
+---
+
+->n. 26. 27.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | SS | SR | SR |
+| SS | WS | SS | | | | SS | |
+| | | | 45 | | | SK | SS |
+| | | | | WR | | | |
+| | | | | WS | | | WS |
+| WS | WS | WS | WS | | WS | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+<column-break/>
+
+->n. 3. 4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | SR | WR |
+| SS | SS | SS | SS | S& | | | SS |
+| | | | | | 43 | SS | |
+| | | | | | | | |
+| | | | | WS | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+---
+
+->n. 8. jj. jz.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | | SS | | WR |
+| SS | SS | SS | SS | | SK | | SS |
+| | | | SR | 45 | 44 | SR | SS |
+| | | | WS | | | | |
+| | | | | WS | | | |
+| | | | WR | | WS | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | | | | WK | | | WR |
+
+---
+
+->n. z0. zj. zz.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | SS | SR | SR |
+| SS | SS | SS | SS | | | | SS |
+| | | | | | | | SK |
+| | | | 37 | | WR | SS | |
+| | | | WS | | WS | | WS |
+| | | | | WS | | | |
+| WS | WS | WS | | | WS | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+---
+
+->n. 30. 3j. 3z.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | | SR | SR |
+| SS | WS | | | | | SS | |
+| | | | SS | SS | | SK | SS |
+| | | | | WR | | | |
+| | | | | | WS | | WS |
+| | | 23 | | | zj | | |
+| WS | WS | WS | WS | | WS | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+<vocab>Seiden-Roth, Seiden-Schwarz, Weiß-Seiden, Weiß-Roth, Webmuster, Posamentrie</vocab>

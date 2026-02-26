@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>95</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>N</sig>
+<meta>catchword: versee</meta>
+
+<margin>10.cap:</margin>
+in freisse / nit hart erkumen noch erschrecken: wan furchtent cc
+in die / dy das schif leiten sollent / so erschreckent auch die / die cc
+do ziehen solten / das Sie die ruder von in legent / und zihen cc
+nichtes mer / unß daß das Schif under get; Also geschicht cc
+auch den Fürsten / die fürchtig seynt / wan Sie die Feint cc
+umbgebent / so machent Sie / gut Ritter Zaghaft / und do- cc
+von verlieren Sie den Sieg. cc
+
+&nbsp;&nbsp;&nbsp;&nbsp;Der drit Bend / auf dem SchachZabel / sol sten vor cc
+dem Alten / der dem Künig ist / zu der rechten hant : Der Alte cc
+ist / alß eyn Richter / und wan zwischen den leuten / die oben cc
+geschrieben sten / oft krieg wechst / so solle der Bend / vor im sten / cc
+mit solcher gestalt / das Er sey eyn Man / und hab in der rechten cc
+hand ein scheer / und in der lincken / ein breits Messer / und an cc
+der gürtel / ein schreibzeug / und bey dem rechten Ohr / ein cc
+schreibfedern stecken / zu schreiben. Bey der Scher seint bedeut / cc
+schneider / wollwürcker / wöber / und alle die / die mit leynim cc
+oder mit wüllim tuch umbgend / es seyen scherer oder we- cc
+ber / wie sie es / mit arbeit / oder mit kauf wandlent oder wür- cc
+ckent : Bey dem Messer / seint beteut / fleischhacker / ledrer / cc
+SchuhMacher / Iricher / Kürsner / und der handwerck ist viel - cc
+und bey dem Schreibzeug seint beteut / schreiber / und bey cc
+der federn / an dem Or / daß sie allzeit bereit seyn / wen sie der cc
+Richter vordert / und was er sie heisset schreiben / urtheil / oder cc
+Handfest / oder was zu den zeiten / dan not ist. Die Werckleut / cc
+die obgenant seint / die würckent all heute oder haar / daß ab den cc
+heuten / gezogen wirt. Zu denselben Handwercksleuten allen / cc
+gehörent drey ding / die sie haben sollent : Das Erst ist warheit cc
+an den wercken / wider alle unwarheit und ungerechtigkeit : cc
+Das ander ist warheit an den worten / das sie mit worten / nie- cc
+mant umbführen / noch geheissen / das sie nit thun wollen : Das cc
+dritte / ist dye warheit / an allen wercken / und gerechtigkeit / die- cc
+selben leut gehörent / an gerecht / erber / Sitten / ohne mißhelung / cc
+trew / ohne affenheit und falschheit / fründtlich / lieb / on haß / fliß / cc
+an wercken / one verziehen. Zu dem Ersten / die Stat schreiber / cc
+ob die gut seint / so seint sie gar nütz der Stat / und auch der ge- cc
+mein : seind sie aber deß nicht / so ist nichtes bösers : sie sollen sich cc
+sunderlich hüten / daß sie dye Handfest / nit verwandlen / noch cc
+
+<vocab>Schach-Spiel, Bend, SchachZabel, Richter, Handfest, Stat schreiber, Iricher, Kürsner</vocab>

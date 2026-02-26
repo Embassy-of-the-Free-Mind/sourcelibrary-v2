@@ -1,0 +1,126 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>391</page-num>
+<header>3. cap: Vom Schach-Spiel.</header>
+<sig>Q q q</sig>
+
+### n. 5. 25.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SR | SK | SS | SR | SR |
+| SS | SS | | | | SS | SS | SS |
+| | | | | | | | |
+| | 39 | SS | SS | | | | |
+| | | | WS | SS | WSc | | |
+| | | WS | | WS | | | |
+| WS | WS | | | | | WS | WS |
+| WR | WR | | WR | WK | WSc | WR | WR |
+
+---
+
+### n. 8. 9. 24.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | SR | | SR | SK | SS | SR | SR |
+| WR | SS | | SS | 52 | SS | SS | SS |
+| | | 46 | | | | | |
+| | | | SS | | | | |
+| | WS | SS | WS | SS | | | |
+| | | WS | | WS | | | |
+| WS | | | | | | WS | WS |
+| WR | WR | | WR | WK | WSc | WR | WR |
+
+---
+
+### n. j2. j9.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SS | | SR |
+| | WR | | SS | SR | SS | SS | SS |
+| | | | | | | | |
+| | WS | | SS | | | | |
+| | | SS | WS | SS | | | |
+| WR | | WS | | WS | | | |
+| WS | | 14 | | | | WS | WS |
+| WR | 7 | | | WK | WSc | WR | WR |
+
+---
+
+### n. j7. j8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | SS | | SR |
+| | | WR | | | SS | SS | SS |
+| | WS | | SR | | | | |
+| SR | SS | 38 | SS | | | | |
+| | | SS | WS | SS | | | |
+| | WS | | WS | | | | |
+| WS | | | | | | WS | WS |
+| | WR | | WK | WS | WR | WR | WR |
+
+<column-break/>
+
+### n. 6. 7.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | SR | | SR | SK | SS | SR | SR |
+| WR | SS | | SS | | SS | SS | SS |
+| | | | | | | | |
+| | | SS | SS | | | | |
+| | | 30 | WS | SS | | | |
+| | | WS | | WS | | | |
+| WS | WS | | | | | WS | WS |
+| WR | WR | | | WK | WS | WR | WR |
+
+---
+
+### n. j0. 23.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SS | | SR |
+| WR | SS | | | SR | SS | SS | SS |
+| | | | | SS | | | |
+| | WS | 38 | SS | | | | |
+| | | SS | WS | SS | | | |
+| WR | | WS | | WS | | | |
+| WS | | | | | | WS | WS |
+| WR | | | | WK | WSc | WR | WR |
+
+---
+
+### n. j4. j5.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | | | SR |
+| | WR | | SS | | SS | SS | SS |
+| | WS | | SS | | | | |
+| | WR | | SS | | | | |
+| | | SS | WS | SS | | | |
+| | | SR | | WS | | | |
+| WS | | | | | 11 | WS | WS |
+| | | | 5 | WK | WSc | WR | WR |
+
+---
+
+### n. 20. zj.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SS | | SR |
+| | WR | | SS | SR | SS | SS | SS |
+| | | 47 | | | | | |
+| SR | WS | | SS | | | | |
+| | | SS | WS | SS | | | |
+| | | WS | | WS | | | |
+| WS | | WR | | | | WS | WS |
+| WR | 7 | | | WK | WSc | WR | WR |
+
+<vocab>Schach, Schachspiel, Schachfiguren, Roch, Soldat, König, Diagramme</vocab>

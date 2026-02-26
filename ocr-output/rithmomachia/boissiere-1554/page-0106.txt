@@ -1,0 +1,25 @@
+<language>French</language>
+<page-type>diagram</page-type>
+<page-num>52</page-num>
+<sig>G iiij</sig>
+
+# Victoires en proportion.
+
+<image-desc>A large rectangular table framed by a decorative border with ornamental corner flourishes. The table contains numerical values organized into mathematical proportions for the game of Rythmomachia. To the left of the table are descriptive labels in French. To the right, outside the border, the text "DES PHILOSOPHES." is printed vertically.</image-desc>
+
+| | D . C B A | Arith. | Geometrie. | Harmoniques |
+|:---|:---|:---|:---|:---|
+| <margin>tres grãs victoires pour les pairs.</margin> | 2 3 4 6 | 2 4 6 | 2 3 4 6 | 2 3 6 |
+| | 4 6 8 12 | 4 8 12 | 4 6 8 12 | 4 6 12 |
+| | 6 8 9 12 | 6 9 12 | 6 8 9 12 | 6 8 12 |
+| <margin>Tres grans pour les impairs.</margin> | 4 6 9 12 | 6 9 12 | 4 6 9 | 4 6 12 |
+| | 2 9 16 72 | 2 9 16 | 2 9 16 72 | 9 16 72 |
+| | 3 5 15 25 | 5 15 25 | 3 5 15 25 | 3 5 15 |
+| <margin>Moindres victoires.</margin> | 5 9 45 81 | 9 45 81 | 5 9 45 81 | 5 9 45 |
+| | 5 25 45 225 | 5 25 45 | 5 25 45 225 | 25 45 225 |
+| | 5 15 25 45 | 5 25 45 | 5 15 45 | |
+| | 12 15 16 20 | 12 16 20 | 12 15 16 20 | |
+
+<margin>DES PHILOSOPHES.</margin>
+
+<vocab>Rythmomachia, proportions, Arithmétique, Géométrie, Harmonique, victoires, pairs, impairs</vocab>

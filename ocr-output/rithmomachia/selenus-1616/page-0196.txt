@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>166</page-num>
+<header>Das Ander Buch / 5. cap:</header>
+
+Schach=Mat gegeben werden kan. Wan nuhr der Zug / an demselben ist / welcher den Soldaten / zur Königin / machen wil / so
+
+<image-desc>A 3x3 chessboard diagram. The top row has a black square on the left, a white square in the center containing the initials "S.K.", and a black square on the right. The middle row has a white square on the left, a black square in the center, and a white square on the right containing the letter "B.". The bottom row has a black square on the left, a white square in the center containing the initials "WK.", and a black square on the right.</image-desc>
+
+sol der Ander / diese Regul / mercken : dass Er / (wan seine widerpart / umb diesen Soldaten / zu beschützen) mit dem Könige herumb ziehen / und sich also / von demselben / in etwas / herfür begeben würde / gerade gegen ihm über / auf derselben linie / in ein drittes feld / sich stelle. Dan der Ander alszdan / weder eine Königin auß ihm machen / noch Schach=Mat geben kan / besondern / da Er seinen König / hinter denselben / nicht stellet / ihn verlieret : dadurch Er aber / des Andern König / nuhr einsperret / und nach der Spanier ordnung / den halben aufsatz / gewinnet.
+->So fern / der Weisse / nuhr den König / (verstehe / dass seine<-
+übrige Steine / nicht mehr können gezogen werden) und dessen Segesner / der Königin=Rochens=Soldaten / und dero Schützen / (welcher in des Schwartzen Rochens feld / in welches / sein gesel / der Soldat / endlich gezogen werden / und dahero / der Königin aigenschafften / an sich nehmen sol / nicht treffen kan) noch übrig hat : so wird ein solches Spiel / für ein geraubtes und geschloßnes / (in welchem man nichtes gewinnet / besondern zugleich wird aufgehoben) geachtet / und muß sich jeder / (umb dem Weissen Soldaten / mit seinem Könige / den vorzug abzulauren / und abzugewinnen) befleissigen / des Ortes / darauß derselbe / sich verthetigen könte / nemlich / des Rochens
+
+<image-desc>A diagram showing a 4x4 section of a chessboard, likely representing the corner of the board. The top row begins with a white square containing the initials "S.K.", followed by a black, a white, and a black square. The second row has a black, a white, a black, and a white square. The third row has a white, a black, a white, and a black square. The fourth row consists of a black square with the initials "W.B.", a white square with the initials "WK.", a black square, and a white square with the initials "WS".</image-desc>
+
+in welchen der gedachte Schütze / nicht kan treffen / noch ihn heraußer jagen / so wol auch des Rochens=oder des Reuters=Soldatens feldes /
+<meta>catchword: zu bes</meta>
+
+<vocab>Schach=Mat, Königin, Soldaten, Reuter, Schütze, Spanier ordnung, Segesner, Rochens</vocab>

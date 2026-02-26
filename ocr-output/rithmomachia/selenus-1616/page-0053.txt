@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>23</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>D</sig>
+<meta>catchword: Das</meta>
+
+<margin>1. cap:</margin>
+Man muß zwar gestehen / daß ein angehender Spieler / die früchte dieser Kunst / gleich anfangs / nicht samlen wird. Wan Er aber / den Regeln / und unterrichtungen / welche wir / ihm zum nutzen / in diesem Buche / ordentlich aufgezeichnet / nachsinnen und nachleben wolte / so zweiflen wir nicht / Er mit geringer mühe / und zeit verlierung / auf daß man auch dießfahls / umb so viel weniger / oder nichtes sich zu beschweren hettte / diese Kunst fassen und ergreiffen würde.
+
+Ob man auch / fürs Vierte / fürgeben möchte / es gehöre gleichwol hiezu / ein scharffes und ernstes nachdencken / welches ohne mühe / und ermattung des Gemühtes / nicht abgehe : so ist hierauf kürtzlich zu antworten : Daß man alhie / nicht solchen verborgenes / oder hohen sachen / welche allein / mit dem Verstande / und nicht mit den Sinnen / können begriffen werden / nachgrüble : besondern nuhr zu zeiten / umb einen fürsichtigen Zug / anzustellen / den Verstand scherffen / und mit fleissigen gedancken / welche doch / durch den Augenschein / gewaltig befodert werden / etwa nachsinnen müsse : So werde auch die mühe und unlust / so ferne diesesahls dem Spieler einige gemachet oder auffsteigen würde / mit der lust / durch anschauung der Tabel : der Ordnungen : der artigen stellung und anfürung der Steine : durch die mannichfaltige abwechslunge der Züge : durch einen wolgerahtenen Zug / und dergleichen : alsbald und leichtlich / vertrieben.
+
+Was die übrigen Einreden / belanget / gehen dieselbe / nuhr / auf den Mißbrauch / welchen man / mit dem rechten gebrauche / nicht vermengen / noch das Kind / mit dem Bade dergestalt ausschütten muß.
+
+<image-desc>An ornamental woodcut vignette featuring a central grotesque mask or human face. The face is surrounded by symmetrical scrollwork, ribbons, and stylized foliage. Two animal-like heads, possibly lions or mythical creatures, emerge from the upper corners of the decorative arrangement.</image-desc>
+
+<vocab>Schach-Spiel, Regeln, Gemühtes, Verstand, Züge, Steine, Mißbrauch</vocab>

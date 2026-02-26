@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>100</page-num>
+<header>Das Erste Buch / 16.cap:</header>
+
+» Der sechste Wend / sol sein ein Man / der die rechten
+» hand / hab gerecket / und wincke den leuten / zu im / in sein haus /
+» in der lincken hand / sol er haben / ein semel brot / und darauf ein
+» gleßlein mit wein / und under der gürtel / ein schlüssel / daß be-
+» deut wiert / leitgeben oder gastgeben. Bey dem / sol man vayl
+» vinden / waß man bedarf / darzu sol auch alles das sicher sein /
+» das man in sein haus bringt / und sol sten zu der lincken hand /
+» und seiten des Küniges / für den Alten. Wan der Alt bedeutet
+» den Richter / und wan / in ihren heusern dick sich Krieg erheben /
+» die der Richter / richten sol / und darumb sol er vor im steen /
+» dyeselben leut / sollent sich hüten / vor übrigem essen und drin-
+» cken / also das sie andern leuten / die zu ihn komment / eyn bild
+» sein / an messigkeit. Ir sint viel / die von unmessigkeit verder-
+» ben / do von hebent sich Krieg / und geschehent todtschleg / und
+» alles übel. Es sol der mensch darum essen / das er lebe / und nit
+» leben / darumb / das er esse: die Natur genüget / an einen klei-
+» nen / und wenig. Aber gewonheit last und leget viel darzu / und
+» gelust. Sie sollent auch / denselben jeren gesten / freuntlich und
+» gütlich / mit hüpscher geberde / und frölichem antlitz zureden /
+» wan die ding vermehrent einen gastgeben / gar weit / verr und
+» preit / und machent in wert / wo man von ihm redt / in dem land.
+» Auch sol ein jeglicher getrewer gastgeb / seine geste warnen / wie
+» und vor wem sie sich hütten sollent / auf dem wege / und sie be-
+» leiten und weisen / von jeren herbrigen / und ir leib ere und gut /
+» treulich bewahren / und beschirmen / und was ihn zu behalten
+» wird gegeben / das sollen sie mit fleiß behalten / alß ir selb eigen
+» gut / und im das ganz und gar unverkert / wider antwurten
+» und geben: wan ein fremder / gant in die Herberge / so machet
+» er da sein behausung / und darumb sol sein habe und ehre / sel-
+» ber bey dir seyn / alß daheim mit sicherheit. Es sol auch ein
+» wiert / sein gest behüten / vor sein gesind / daß sie dem Roß kein
+» schaden thun / an dem futter / wan darauf geschicht / das die
+» gäst / nicht komen mögen / zu rechter tagweid / oder das sye die
+» rauber ankumen / und mögent ihn nit entgen / noch do von kum-
+» men / und werdent also oft beraubt / leibs und gut / und des ist
+» ein ursach / ein ungetrewer böser Diener.
+» Der siebend Wend / sol sten zu der lincken seiten / vor den
+
+<meta>catchword: Ritter/</meta>
+
+<vocab>Wend, leitgeben, gastgeben, Richter, unmessigkeit, Herberge, tagweid, ungetrewer böser Diener</vocab>

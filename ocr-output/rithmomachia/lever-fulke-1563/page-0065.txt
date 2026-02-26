@@ -1,0 +1,21 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Dark shadowing on the right margin and ink bleed from the reverse side making some text slightly faint.</warning>
+
+And thus is the first kynd of playing at an end. And this is sufficiēt to teach you to play, but if you would learne to play conningly, you must vse to playe often, so shall you learne better then by anye preceptes or rules.
+
+## ¶ Of the seconde kynde of playinge at the Philosophers game.
+
+There is in this kynde of playing to be cōfidered, the table, yͤ men, the marking of them, the setting of them in araye, their marching, their lawes of taking, and the maner of triumphynge.
+
+### ¶ Of the Table.
+
+The Table is the same that was first described, namely a double chesboord.
+
+### ¶ Of the men.
+
+<sig>D. i.</sig>
+<meta>catchword: The</meta>
+
+<vocab>Philosophers game, Rythmomachia, chesboord, araye, triumphynge</vocab>

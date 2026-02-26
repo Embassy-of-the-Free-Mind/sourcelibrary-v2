@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>22</page-num>
+<header>Das erste Buch. 1.cap.</header>
+
+Mahometh, der Sarracenen Fürst / in seinem Alcoran, oder Gesetze-
+Buche / in der 3. und 13. Azoarâ, dieses Spiel / für eine Sünde / auß-
+schreyet. Dan auch die Türcken / auf dieses gebot / so wenig geben /
+alsz ihr Keyser Solyman / Jehnes / dadurch die Abbild- oder Abmah-
+lung / verboten war / wie Er sich / von einem Niederländischen Meys-
+ster / Petro von Aelst / (wie Matthis Quad, &c. am ende des 94. Cap:
+von Deutscher Nation Herlicheit / setzet) abzumahlen / lust bekam /
+achtete : oder wie vorzeiten / die Mammelucken / desselben Maho-
+mets / ihres Propheten / verbot / vom wein trincken / (wie Petrus
+Martyr, de Angleriâ, in lib: 3. legat: Babylon: pag: 409. bezeuget)
+hielten.
+
+Andere bringen / des Kaysers Justiniani Gesätze / auß der 123.
+Novel: c. 10. und *Auth: interdicimus, C. de Episc: & Cler:* herfür /
+und ziehen an / das wort ταβλίζειν, *ad tabulas ludere*, das ist / auf einer
+Tafel spielen : dadurch auch ebener massen / das Schach- oder Schach-
+Zabel-Spiel / gemeinet zu seyn / scheinet. Aber / was es eigentlich be-
+deute / davon schreibet Cujac: in *Expos: d. Nov: 123.* So ist auch /
+(anderer Außreden zu geschweigen) dasz / unser Spiel / hiemit gantz
+nicht gemeinet sey / offenbar / auß desselben Kaysers Gesatze / und
+Constitution, welche / in *l. 34. §. 1. C. de Episc: aud:* verfasset : Dar-
+innen zwar / ein ebenmessiges verbot / aber zugleich auch / die urfach-
+en desselben / gesetzet werden : welche sich / auf das Schach- Spiel /
+keines weges reymen / noch dahin / wollen drehen lassen. Und haben
+wir schon / was die <term>Gl:</term> und andere fürnehme Juristen, vom Schach-
+Spiel halten / droben / bey der andern aigenschaft / erwehnet.
+
+Zum dritten / wollen etliche / dem Fas den Boden gar auß-
+schlagen / wan sie fürgeben / dasz bey diesem / die fürgesetzte ergötzli-
+cheit des Gemühtes / nicht zu erholen / besondern im gegentheil / nebest
+verlierung der edlen und teurbaren Zeit / die man / in erlernung des
+Spieles / müsse / aber nützlicher zu andern sachen könte anwenden /
+dessen beschwerung und überlastung zu vermercken. Aber diese / se-
+hen nicht / auf die Kunst / oder angenommene und bestetigte weyse /
+des Künstlers / welcher / ohn einigen verdrus / nach seines hertzens
+wolgefallen / seine freude / und oftgeregte / statliche ergetzung / allezeit
+darinnen / finden thut : und hören billig zur antwort / was Henr: Por-
+tius, <term>J. C.</term> lib: 2. Epigr: saget :
+
+> ” *Inscius Artis erit, qui veram spreverit Artem,*
+> ” *Nam quae nota minus, sunt quoq; grata minus.* Das ist:
+> ” Was man nicht recht / erfahren hat /
+> ” Da gibt man seltn / ein guten Rath.
+
+<meta>catchword: Wan</meta>
+<vocab>Mahometh, Alcoran, Solyman, Petro von Aelst, Matthis Quad, Mammelucken, Justiniani, ταβλίζειν, Schach-Spiel, Henr. Portius</vocab>

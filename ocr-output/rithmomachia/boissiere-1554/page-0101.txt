@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEU</header>
+
+ticuliere, pour superparticuliere & aucuns au-
+tres: qu'il fault qu'estimes que mõ intention n'e-
+stoit pas de monstrer & instruire aucuns en la
+langue Françoise, ains en l'excellence de ce ieu.
+Parquoy ie supplie tous amateurs de vertu que
+ce que i'ay faict pour leur recreation, ils prennent
+en bonne partie. Ie commenceray donc icy à re-
+peter ce qu'en a escrit Faber.
+
+## Rythmomachie de Iacques Feure d'Estaples. Dialogue.
+### Bathille, Alcmeon, Brontin.
+
+Bath. O Alcmeon, que tu viens bien à point.
+Alc. Qu'est-ce qu'il y a mes ieunes enfans?
+Bath. C'est que grandement desirons aprendre
+quelque chose de toy. Alcm. & quoy, Bathille
+mon fils? Bath. C'est qu'auãt que nous nous ren-
+gions au nombre des six cens disciples de Pytha-
+goras, nous desirons un peu sçauoir des choses
+plus rudes, & mesme souuent nous nous adres-
+sons aux disciples de Pythagoras eux reuenans
+de l'assemblée & disputation du soir, pour nous
+enquerir au moins des choses plus legeres non
+prohibées à eux de reueler. & de fait nous a-
+uons aprins une partie d'Arythmeticque, &
+maintenant pourueu qu'il ne te desplaust, tres-
+
+<meta>catchword: volon-</meta>
+
+<vocab>Rythmomachie, Jacques Lefèvre d'Étaples, Pythagoras, Arythmeticque, Bathille, Alcmeon, Brontin</vocab>

@@ -1,0 +1,48 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>I</page-num>
+
+# ¶ Jordani Memorarii Clarissimi viri Elementa Arithmetica: cũ dẽmõstratiõibus Jacobi Fabri Stapulensis: ad Joannẽ de Ganay Senatõrẽ Parisiensem.
+
+<margin>v</margin>
+Unitas est rei per se discretio. Numerus est quãtitas discretorum collectiua. Naturalis series numerorum dicitur: in qua fm vnitatis adiectionem fit ipsorũ computatio. Discrẽtia numerorum appellat̃ ille: quo maior super minorem abũdat. Numeri ab aliis equidistare dicuntur: cum ipsorum ad illos equales sunt differentie. Numerus per alium multiplicatur: qui toties coaceruatur sibi: quoties in multiplicãte est unitas. et qui ex multiplicatione concrescit: productus nominatur. Numerus alium numerare dicitur: qui fm aliquem multiplicatus illum producit. Pars est numerus: numeri minor maioris: cum minor maiorem numerat. et qui numeratur: numẽrãtus multiplex appellatur. Denominans est numerus: fm quem sumitur pars in suo toto Similes dicũtur partes: que ab eodem numero denominantur. Numerus fm quem alius diuiditur: diuisor nominatur. partes vero in quas distribuitur: diuidẽtia appellantur. Summa et simpla nũerĩ pars: est quãdo duo numeri partem habuerint cõem: quoties eadem pars fuerit in minore: tot partes maioris dicetur esse minor et tote partes quoties ea cõmunis pars fuerit in maiore. 
+->**¶ Dignitates.**<-
+
+<image-desc>Along the right margin, there are very faint, ghost-like ink impressions of geometric and circular diagrams. These include vertical scales with horizontal markers and overlapping circular arcs, likely bleed-through from the following page or light printing of intended figures for mathematical proofs.</image-desc>
+
+<margin>1</margin> Omnis numeri pars: est minor suo toto.
+<margin>2 o</margin> Omnis minor est: que maiorem habet denominationem
+<margin>3</margin> Quicunqꝫ equalium siue eiusdem eque multiplices fuerint: ipsi quoqꝫ erunt equales.
+<margin>4</margin> Quibus idem nũerus eque multiplex fuerit: siue quorũ multiplices eq̃les fuerint: ipsi etiam sunt equales
+<margin>5</margin> Omnis numeri pars est vnitatis: ab ipso denominata.
+<margin>6</margin> Quilibet numerus totus est ab vnitate: quota pars ipsius est vnitas.
+<margin>7</margin> Si vnitas in aliquem numerum ducatur: siue idem in vnitatẽ: seipsum producit.
+<margin>8</margin> Extremorum differentia ex differentiis eorũdem ad medium est composita.
+<margin>9</margin> Si numerus numerum superet: differentia minori addita: aut à maiore sublata: numeri relinquuntur equales
+<margin>10</margin> Qui eidem equantur: inter se sunt equales.
+<margin>11</margin> Et si ab equalibus equales aut idem cõmunis dematur: relinquũtur equales.
+<margin>12</margin> Et si ab equalibus dempti sint inequales: relinquentur inequales.
+<margin>13</margin> Si duo maiores simul addãtur pariter et duo minores simul: maiorum compositũ composito minorum maius euadit.
+<margin>14</margin> Si equales equalibus addas: toti quoqꝫ fient equales.
+<margin>15</margin> Et si inequales equalibus: toti erunt inequales.
+<margin>16</margin> Partes simul: suo toti equantur.
+<margin>17</margin> Quorũcunqꝫ ad eundem numerum proportio est una: ipsi inter se sunt equales.
+<margin>18</margin> Quoties numerus a numero substrahi potest: toties in eodem numerabilis est
+<margin>19</margin> Proportiones que ex equalibus constant proportionibus: inter se sunt equales.
+<margin>20</margin> Quorũ dimidia sunt equalia: et toti sunt equales. 
+->**¶ Petitiones.**<-
+
+<margin>1</margin> Quilibet numero: quotlibet posse sumi equales.
+<margin>2 C</margin> Quolibet numero: aliquem quãtũlibet esse maiorem.
+<margin>3</margin> Seriem numerorum in infinitum posse extẽdi.
+<margin>4</margin> Nullum numerum in infinitum decrescere.
+<margin>5</margin> Vnius non numerare minus
+<margin>6</margin> Si numerum datum numerus multiplicet: idẽqꝫ p̃ductum diuidat: numerũ datum redire. et contra si aliqs numerus datum numerum diuidat: et quod prouenit rursum multiplicet: itidem numerum datum redire.
+
+---
+
+¶ Dignitates atqꝫ petitiones paucas: ut disciplina se faciliorẽ vbiqꝫ prestet / adiecimus: quas passim necessarias tanq̃ omnibus notas autor suppressit.
+
+<sig>a 2</sig>
+
+<vocab>Jordanus de Nemore, Jacobus Faber Stapulensis, Joannes de Ganay, Elementa Arithmetica, Unitas, Numerus, Dignitates, Petitiones, Axiomata, Postulata</vocab>

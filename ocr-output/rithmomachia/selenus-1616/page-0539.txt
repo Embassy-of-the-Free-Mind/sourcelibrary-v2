@@ -1,0 +1,7 @@
+<language>Latin</language>
+<page-type>blank</page-type>
+<meta>Shelfmark or inventory number written at the top of an otherwise blank flyleaf or endpaper.</meta>
+
+XXX XXX  X.90
+
+<vocab>shelfmark</vocab>

@@ -1,0 +1,38 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+# In hoc opere contenta.
+
+Arithmetica decem libris demonstrata
+Musica libris demonstrata quattuor
+Epitome ī libros arithmeticos diui Seuerini Boetij
+Rithmimachie ludus q̄ ⁊ pugna nuēroꝝ appellat̃
+
+<insert>
+Bowditch
+Aug. 29. 1936
+T
+</insert>
+
+### G. Gonterius Labilonensis: in laude Arithmetices ⁊ Musices.
+
+> Tempore iam multo docte latuere sorores:
+> Quas retinet comites flaua minerua suas.
+> Nūc placide terras post tempora multa reuisunt.
+> Grata quoque ante alias Gallica terra placet.
+> His olim celebris fuit omnis Acaica tellus.
+> Pythagora patriam diffugiente samon.
+> Hellada nunc linquunt: et doctas palladis vrbes.
+> Sequaniosq̄ petunt / parrhisiosq̄ lares.
+> Hec venit omnimoda numerorum cincta caterua.
+> Atq̄ docet numeris quidquid in orbe situm est.
+> Altera dulcisono cantu / fidibusq̄ canoris
+> Edomuisse viros traditur atq̃ feras:
+> Que sua Pierijs tenet vnica nomina musis.
+> Et nichil hac musis gratius esse solet.
+> Attamen artificem stapule misere marine:
+> Qui leta hoc studijs fronte dicaret opus.
+> Hoc solum studium atq̃ hec illi cura: iuuare /
+> Irritus et ne sit / dispereatq̃ labor.
+
+<vocab>Arithmetica, Musica, Boetius, Rithmimachia, Pythagoras, Minerva, Paris, Jacques Lefèvre d’Étaples, G. Gonterius</vocab>

@@ -1,0 +1,56 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>480</page-num>
+<header>Das Sechste Capittel/</header>
+<sig>E Ooo 3</sig>
+<meta>catchword: 5. 15.</meta>
+
+( Buxer : fol: 34. b.
+> *Rationem Musicam tùm cognoscimus, cùm Differentia, qui-*
+> *bus Extremi Numeri, à Medio distant, eâdem similitudine gau-*
+> *dent, quâ Extremi, inter se collati.*)
+
+Die überwindungen selbesten / ferner anbelangend / seynd de-
+ren drey: nemlich / die Grosse: die noch Grössere: und die aller
+Grösseste.
+
+( Buxer : fol: 48. a.
+> *Has victorias, Ovationem, sive Triumphum nuncupat, in-*
+> *quiens: Posteaquam Pyramidem aut Regem deviceris, antequam*
+> *victoriâ perfruaris, operæ precium est, in ipsius acie, de Hoste*
+> *triumphare: Agetur autem hic Triumphus, Proportione Arith-*
+> *meticâ, aut Geometricâ, aut Musicâ.*)
+
+Die Grosse überwinnung / welche / wegen der gedachten
+dreyen Abtheilungen / dreyfach ist / geschicht folgender gestalt:
+Wan man nemlich / in des Feindes feld / drey Steine / mit sol-
+chen Zahlen / welche eine / von den dreyen Abtheilungen / zu wege
+richten können / verzeichnet / setzet und bringet.
+Die Zahle / welche zu diesen dreyen Abtheilungen / insonderheit
+gehörig sind / hat man / auß folgenden verzeichnußen / zu vernehmen.
+
+->Die Zahle / der Abtheilungen / in der<-
+->Zahl=Kunst:<-
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 2. | 3. | 4. | 6. | 9. | 12. |
+| 2. | 4. | 6. | 6. | 36. | 66. |
+| 2. | 5. | 8. | 7. | 8. | 9. |
+| 2. | 7. | 12. | 7. | 16. | 25. |
+| 2. | 9. | 16. | 7. | 64. | 121. |
+| 2. | 16. | 30. | 9. | 12. | 15. |
+| 3. | 4. | 5. | 9. | 45. | 81. |
+| 3. | 5. | 7. | 9. | 81. | 153. |
+| 3. | 6. | 9. | 12. | 16. | 20. |
+| 3. | 9. | 15. | 12. | 66. | 120. |
+| 4. | 5. | 6. | 12. | 42. | 72. |
+| 4. | 6. | 8. | 15. | 20. | 25. |
+| 4. | 8. | 12. | 15. | 30. | 45. |
+| 4. | 12. | 20. | 15. | 120. | 225. |
+| 4. | 20. | 36. | 16. | 36. | 56. |
+| 4. | 30. | 56. | 20. | 25. | 30. |
+| 5. | 6. | 7. | 20. | 42. | 64. |
+| 5. | 7. | 9. | 28. | 42. | 56. |
+
+<vocab>Rationem Musicam, Arithmeticâ, Geometricâ, Musicâ, überwindung, Zahl=Kunst, Buxer, Rythmomachia, Abtheilungen</vocab>

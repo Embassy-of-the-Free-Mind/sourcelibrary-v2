@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>157</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin>und dreyſſig : und ſieben und zwantzig : und gibt/auß zehen/Schach=Mat.
+
+Wan der Schwartze / mit den Reutern / die Weiſſe Königin / und dero Rochen / im ſiebenden Zuge / erlangen wil : ſo ſpielet Er / der Königin=Reuter / auf acht und viertzig : und ein und dreyſſig : des Königes=Reuter / auf ein viertzig : fünf und dreyſſig : und neun und zwantzig : nimt folgendes / auß dem vierzehenden felde / mit dem einen Reuter / der Weiſſen Königin=Schutzens=Soldaten / und beut Schach : Der Weiſſe / nimt ihn / mit der Königin : Er / dieſelbe / mit dem andern Reuter / gibt abermahls Schach / und erlanget auch / dero Rochen.
+
+Daß man (5.) wan ſich einer verpflichtet / dem andern / in einem beſondern felde / Schach=Mat zu geben / (umb allerhand zweytracht / welche unter den Spielern / deßwegen entſtehen möchten / zu vermeyden) daſſelbe feld / auß welchem / dem Könige / Schach=Mat ſol gegeben werden / nebeſt demſelben / darinnen er / alſdann ſtehen ſol / zeichne. Dan / ſo fern / dieſe beede felder / nicht deutlich genennet und gemercket / gar leichtlich / eine uneinigkeit / und mißverſtand / (Alß wan man andere / und nicht dieſelben felder / verſtanden hette) zwiſchen ihnen / entſtehen / und erwachſen möchte. Und daß demnach / der jenige / welcher ſich verpflichtet hat / Schach=Mat zu geben / denſelben / nach Spieles gebrauch / auß und in dem gezeichnetem felde / zu verrichten / verbunden ſey. Dan ſonſten / derſelbe / wan Er ihm / auß einem andern felde / ob ſchon der König / in dem gezeichneten ſtehet : oder aber / auß dem außgedingetem felde zwar / alleine demſelben / nicht in dem gezeichnetem / den Schach=Mat ankündiget / das Spiel nicht gewinnet.
+
+Daß (6.) der jenige / welcher ſich verpflichtet / mit einem Soldaten / oder anderem Steine / Schach=Mat zu geben / ſchuldig ſey / mit demſelben / ſolchen zuverrichten / und nicht etwa Schach / mit dem Soldaten / und Schach=Mat / mit einem andern Steine / geben dörffe. Habe Er aber / noch zween Soldaten / ſo könne Er / mit dem einen / Schach / und mit dem andern / zum folgenden Zuge / Schach=Mat geben : Dan ſonſten der verpflichtung / nicht nachgelebet würde : Deſſen wollen wir alhie / folgendes Exempel / da des Weiſſen hauffens=Führer / welcher / einen Rochen / Reuter / der Königin=Reuters= und des Königes=Rochens=Soldaten : der mit den Schwartzen Steinen aber / nuhr des Königes=Rochenos Soldaten / (welcher auf drey und dreyſſig / von des Weiſſen Königes
+
+<meta>catchword: Rochenos</meta>
+
+<vocab>Schach, Schach-Mat, Reuter, Rochen, Soldaten, Königin, König, Rochenos, hauffens-Führer</vocab>

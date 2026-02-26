@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>160</page-num>
+<header>Das Ander Buch / 5. cap:</header>
+<meta>catchword: und</meta>
+
+den fahl schüldig sey / mit demselben / so weit er ein Soldat ist / und
+verbleibet / nicht aber / mit einem andern / auß den sieben übrigen /
+Schach-Mat zu geben. Machet Er aber / denselben / zu einer Köni-
+gin / und er also / an seinem stande / macht und natur verwandlet wird /
+so kommet Er / seinem versprechen und verpflichten nicht nach. Wan
+Er aber saget / Ich wil mit diesem Schach-Steine / Schach-Mat ge-
+ben / ihn zeichnet / und seiner natur und aigenschafft / nicht erwehnet:
+so gilt es gleich / ob Er / mit demselben / weyl er noch ein Soldat ist /
+oder / wan er schon / zu einer Königin worden / Schach-Mat gibt. Dan
+Er / auf beede fälle / seinem verheissen / ein genügen thut. Sonsten
+wollen etliche / den unterscheid halten: Es habe derjenige / wel-
+cher / mit einem Soldaten / Schach-Mat zu geben / versprochen / mit
+einem schlechten Soldaten / oder aber nuhr mit einem / der zur Kö-
+nigin erhöhet worden / Schach-Mat bieten können: Im ersten
+fahl / habe Er / seinem versprechen / genug gethan / wan Er etwa /
+auß höflicheit / denselben / zur Königin gemachet / und mit ihm
+Schach-Mat gibt: insonderheit / wan Er solches vorher gesaget /
+und auf einen nothfahl / mit den übrigen Soldaten / gleichwol kan
+Schach-Mat geben: Im letzten fahl / habe Er verloren / und seine
+zusage nicht gehalten / sonderlich / wan Ers vorhin nicht außgedin-
+get / minder / andere Soldaten / damit Ers noch thun könte / in
+vorrath hat. Andere wollen / daß / wan man diesen oder jenen / und
+also einen gewissen Soldaten / nahmkündig machet / man mit
+demselben / ob er schon zur Königin worden / wol könne Schach-Mat
+geben / in erwegung an dessen stelle / ob er gleich / andere quali-
+täten und aigenschafften / an sich nimt / keiner von den andern Stei-
+nen gebrauchet / besondern sein Stand / nuhr verhöhet und verbessert /
+nicht aber geändert wird / l. pen: ff: de Senator:
+
+<image-desc>A woodcut diagram of a chessboard with an 8x8 grid of alternating light and dark squares. The following block of text is printed directly over this diagram.</image-desc>
+
+Antonius de Pra-
+to, von Trident, (welcher sich / inter Cæcos Scacchi Lusores, Mono-
+culum, und inter Ignorantes, Peritum nennet) wil diese disputier-
+liche meinung / distinguendo, folgender gestalt / vereinbahren: daß
+einer / wan Er / mit einem Soldaten / welcher zur Königin worden /
+dergestalt / wie von einem schlechten Soldaten / geschehen kan / nicht
+aber / wie mit einer Königin / (welches sich dan / wol zutragen kan)
+Schach-Mat gibt: Alßdan seiner zusage / nachgekommen sey / und der
+Stein / sein ambt und wirckung / nicht verendert habe: Gibt Er
+aber / mit demselben Steine / wie mit einer Königin / kan verrichtet
+werden / (welches sich dan gemeinlich / und zum meisten / also begibt)
+Schach-Mat: Alßdan habe Er / weyl der Soldat / seinen gang und
+wirckung / gantz verendert / seinem versprechen / kein genügen gethan /
+
+<vocab>Schach-Mat, Soldat, Königin, Antonius de Prato, Cæcos Scacchi Lusores, de Senator</vocab>

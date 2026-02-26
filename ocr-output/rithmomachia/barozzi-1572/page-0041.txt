@@ -1,0 +1,54 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>17</page-num>
+<warning>Significant bleed-through from the reverse side of the page is visible across the entire sheet, showing mirrored text and numbers.</warning>
+
+<insert>
+### Tauola di tutte le proportioni Arithmetiche, che poſſono occorrere
+### in queſto giuoco .
+</insert>
+
+| | | |
+|---|---|---|
+| 2 | 3 | 4 |
+| 2 | 4 | 6 |
+| 2 | 5 | 8 |
+| 2 | 7 | 12 |
+| 2 | 9 | 16 |
+| 2 | 16 | 30 |
+| 3 | 4 | 5 |
+| 3 | 5 | 7 |
+| 3 | 6 | 9 |
+| 3 | 9 | 15 |
+| 4 | 5 | 6 |
+| 4 | 6 | 8 |
+| 4 | 8 | 12 |
+| 4 | 12 | 20 |
+| 4 | 20 | 36 |
+| 4 | 30 | 56 |
+| 5 | 6 | 7 |
+| 5 | 7 | 9 |
+| 5 | 15 | 25 |
+| 5 | 25 | 45 |
+| 6 | 7 | 8 |
+| 6 | 9 | 12 |
+| 6 | 36 | 66 |
+| 7 | 8 | 9 |
+| 7 | 16 | 25 |
+| 7 | 64 | 121 |
+| 9 | 12 | 15 |
+| 9 | 45 | 81 |
+| 9 | 81 | 153 |
+| 12 | 16 | 20 |
+| 12 | 66 | 120 |
+| 12 | 42 | 72 |
+| 15 | 20 | 25 |
+| 15 | 30 | 45 |
+| 16 | 36 | 56 |
+| 20 | 25 | 30 |
+| 20 | 42 | 64 |
+| 30 | 36 | 42 |
+| 28 | 64 | 100 |
+| 28 | 42 | 56 |
+
+<vocab>Tauola, proportioni Arithmetiche, giuoco, Rithmomachia</vocab>

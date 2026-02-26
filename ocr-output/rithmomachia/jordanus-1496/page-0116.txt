@@ -1,0 +1,47 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>ab</header>
+
+postea demōstrāda suscipient: facile cōscēdet. Et cū iam mōstrata partitio per semitoniū ⁊ semitoniū et trihemitoniū processerit: nisi vbi integer adiectus est tonus vt tum diapason | tum cōcētus distiūcti seruet ꝑpꝑetas: Patet ꝑ ex diffinitiōe factū eē qđ in chromatico gñe ꝑponebat faciēdū atq; ꝑpositū.
+
+<margin>3</margin>
+### ¶ Idem: in enarmonico genere regulariter ostendere.
+
+->Monochordum Enarmonicum.<-
+
+<image-desc>A horizontal diagram representing a "Monochordum Enarmonicum". It consists of a line with endpoints 'a' and 'b'. Above the line, lowercase letters 'c' through 'r' are spaced out. Between these letters, symbols 'D' and 'LL' denote intervals. The sequence is | D | D | LL | repeated four times across the segments. Below this diagram, 'D. Diesis tetratemeria.' and 'LL. Ditonus.' provide the legends for the interval symbols.</image-desc>
+
+->D. Diesis tetratemeria.<- ->LL. Ditonus.<-
+
+¶ Sit ut prius choꝛda a b et c r regula eīdem vt in ceteris equa: ab puncto c ad d extēdo tonum: et ab d ad f semitoniū minꝰ: et spaciū d f partioꝛ in equalia per notam e. erūtq; d e f due dieses. et f g facio duos tonos: qui ditonū implent. g h i vt prius duas dieses. i k ditonum. k l tonum. l m n duas dieses. n o ditonum. o p q duas dieses. et q r ditonum. quā regulā hoc pacto partitam equalit' applico linee a b: et siles notas / equaliaq; interualla in linea a b designo per medias inter a ⁊ b litteras d | e | f | g | h | i | k | l | m | n | o | p | q | r. et quia a d tonꝰ: et d e f due dieses semitoniū minus implentes: et f g ditonus: ergo a g tres toni ⁊ semitoniū minus per decimam tertiā sonat diapente. sed r g h i due dieses et i k ditonus duos tonos et semitoniū minus cōtinētes: per sextam tertiā sunt diatessaron. igit' vt prius ꝑ vicesimā tertiā a k cōtinet diapason. et hoc pacto mōstret k r cōtinere diapātē: et k b diapason: quare a ꝑ sonare diapason ac diapente: et a ad b cōsonare bis diapason. et q; hæc modulationis ꝑgressio ꝑ duas dieses et ditonū ꝑcedit: cōstat per diffinitiōem monochordū enarmoniū regularit' esse partitū: in eoq; musicas situatas esse cōsonātias et propositum.
+
+<margin>4</margin>
+### ¶ Tetrachordum hypaton: in diatonico melo diuidere.
+
+| | | |
+| :--- | :---: | :---: |
+| Proslambanomenos | **A** | **A** |
+| Hypate hypaton | **b** | **L B** |
+| Parhypate hypaton | **c** | **S C** |
+| Lichanos hypaton | **d** | **L D** |
+| Hypate Meson | **e** | **L E** |
+
+¶ Superiores: Monochorda docuerunt ordinare. Inferiores autē: Tetrachorda | Pētachorda | Hexachorda et alia quæq; Polychorda ad Penthadecachordū vsq;: quibus cognitis cetera que amplius desiderarētur cognoscet facillime. Cōstituo ergo b c d e tetrachordū hypaton: ita vt b sit hypate hypaton | c parhypate hypaton | d Lichanos hypaton | e hypate meson: cui præiugo ad grauitatē partem a Proslambanomenon chordam quīdē que in tetrachordis non computatur: sed primo adiecta tetrachordo creat pēthachordum. facio ergo interuallum choꝛde a b sesquioctauū ad chordam b | ⁊ sesquiter tium ad chordā d | et sesquialterū ad e. Item facio c ad d sesquioctauū. dico ergo tetrachordū hypaton in genere diatonico (vt dictū est) esse diuissum. Nā per diffinitiōem a ad b proslambanomenos ad hypaten hypaton: erit tonus. et quia a ad d sesquiterū est: itidem per diffinitiōem proslambanomenos ad lichanon hypaton concinit diatessaron. sed et cū a ad e proslambanomenos ad hypaten meson sit sesquialterū: per idem a ad e cōsonat diapente. per decimātertiām igitur tertiū d ab e lichanos hypaton ab hypate meson tono disiungit'. Rursum q; c ad d sesquioctauū est: ergo c ad d sonat tonū. atq; quia a ad d diatessaron est: et a b tonus est | et c d tonus: igitur per sextam tertiū b ad c relinquitur semitonium minus. Est itaq; hypate hypaton ad parhypaten hypaton semitoniū minꝰ. et parhypate hypaton ad lichanon hypaton tono: lichanos hypaton ad hypaten meson tonꝰ. cōstitutū est ꝑ b | c | d | e tetrachordū hypaton: per semitoniū minus ⁊ duos subiectos tonos ꝑcedēs: per diffinitiōem in genere diatonico pariter ⁊ pēthachordū a | b | c | d | e. Sed incidit dubitatio forsan: cur nra tempestate musici duos tonos ad tetrachordoꝛū partem seriam | grauem prelocāt: nos autē solū tonum qui est proslambanomeni atq; hypates hypaton: responsio peruia | in prōptu est musicos nostra tempestate proslambanomeno alteram chordam tono distantem præfixisse et id primum memorāt Gregorium factitasse.
+
+<margin>5</margin>
+### ¶ In eodem diatonico melo: tetrachordum meson subiungere. et in octochordo: a proslambanomeno in mesen: diapason contineri.
+
+| | | |
+| :--- | :---: | :---: |
+| Proslambanomenos | **A** | **A** |
+| Hypate hypaton | **b** | **L B** |
+| Parhypate hypaton | **c** | **S C** |
+| Lichanos hypaton | **d** | **L D** |
+| Hypate Meson | **e** | **L E** |
+| Parhypate Meson | **f** | **S F** |
+| Lichanos Meson | **g** | **L G** |
+| Mese | **h** | **L H** |
+
+¶ Sit e | f | g | h tetrachordū meson. facio sesquiterū ad h | et g sesquioctauum ad h | et f sesquioctauū ad g: erit ergo per diffinitionem e ad h hypate meson ad mesen diatessaron. et q; g ad h tonus ⁊ siliter
+
+<vocab>Monochordum, Enarmonicum, Diesis tetratemeria, Ditonus, Tetrachordum hypaton, Diatonico melo, Proslambanomenos, Hypate hypaton, Parhypate hypaton, Lichanos hypaton, Hypate meson, Pentachordum, Diapason, Diatessaron, Diapente, Mese</vocab>

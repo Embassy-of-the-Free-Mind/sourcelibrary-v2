@@ -1,0 +1,26 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>436</page-num>
+<header>Das Vierte Buch/ 10.cap:</header>
+
+König/ auf drey und vierzig: die Königin/ auf zwey und funfzig: die Rochen/ auf ein- und auf drey und funfzig: des Weissen König/ auf zwanzig: ein Roche/ auf acht und funfzig: die beede Reuter / auf ein und dreyssig: und auf funfzig: ein Schütze/ auf zwey und sechßig: drey Soldaten/ auf zwölfe: auf dreyssig: und auf sechs und zwanzig.
+
+Wan nuhn der Weisse / seiner Zusage/ wircklich wil nachkommen / so sol Er/ zufoderst den einen Reuter / (von 50) auf sechßig/ ziehen/ und Schach- bieten: Der Schwartze / setzet den König / (dieweyl Er/ denselben/ wegen des W. Schützens/ auf vier und viertzig/ in den Schach/ nicht rucken kan) auf sechs und dreyßig:
+
+Der Weisse/ beut/ mit dem Rochen/ auß vier und dreyßig/ Schach: Der Schwartze/ ziehet/ den einen Rochen/ (von 51) auf fünf und dreyßig/ und bedecket den König:
+
+Der Weisse/ nimt denselben/ mit dem Rochen / und gibt Schach- Mat: wil Ers aber/ mit obgedachtem Soldaten/ zu wercke richten/ so ziehet Er/ den andern Reuter/ (von 31) auf ein und zwantzig/ und gibt Schach: Der Schwartze/ nimt ihn/ mit dem andern Rochen/ (der auf 53. stehet) und beut Schach:
+
+Der Weisse/ nimt ihn/ mit dem Soldaten/ welcher auf 12. gesetzet: Der Schwartze/ (dieweyl sein König/ albereit gefangen) nimt entweder den W. Rochen/ mit seinem Rochen: oder rucket/ die Königin/ auf ein anders feld.
+
+Der Weisse/ gibt/ mit dem gedachten Soldaten/ auß neun und zwantzig/ Schach- Mat.
+
+,, 3.) Der Weisse/ stellet/ den König/ auf eyns: einen Schützen/ auf drey: Der Schwartze/ seinen König/ auf achtzehen: Die Rochen auf funf- und auf sechszehen: einen Schützen/ auf vier und zwantzig: So ferne nuhn der Schwartze/ dem W. Könige/ in dem felde/ darauf derselbe zum anfange gestellet/ mit einem Rochen/ im siebenzehenden Zuge/ wil Schach- Mat geben:
+
+So rucket Er zufoderst/ den einen Rochen/ (von 15) auf neune/ und beut Schach: Der Weisse/ ziehet/ den König/ auf zwey:
+
+Der Schwartze/ seinen König/ auf neunzehen: Der Weiße/ (umb seinem Könige/ raum zu machen) springet/ mit dem Schützen/ auf ein und zwantzig:
+
+<meta>catchword: Der</meta>
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Schütze, Soldaten, Schach-Mat, Weisse, Schwartze</vocab>

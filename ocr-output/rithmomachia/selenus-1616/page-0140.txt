@@ -1,0 +1,38 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>110</page-num>
+<header>Das erste Buch / II. cap:</header>
+
+und weiß: dero Schützens dritte / das zwey und zwantzigste / und
+schwarz: dero Reuters dritte / das drey und zwantzigste / und weiß:
+dero Rochens dritte / das vier und zwantzigste / und schwarz: In der
+vierten und letzten Zwerch-linie / des Königes Rochens vierte feld /
+das funfundzwantzigste / und schwarz: dessen Reuters vierte / das
+sechs und zwantzigste / und weiß: dessen Schützens vierte / das sieben
+und zwantzigste / und schwarz: des Königes vierte / das acht und zwan-
+tzigste / und weiß: der Königin vierte / das neun und zwantzigste / und
+schwarz: dero Schützens vierte / das dreyssigste / und weiß: dero
+Reuters vierte / das ein und dreyssigste / und schwarz: dero Rochens
+vierte / das zwey und dreyssigste / und weiß. Diese itzterwehnte
+Zahle / darauf man den Weissen Hauffen / stellet / werden nuhn / (wie
+gedacht) von der rechten / nach der lincken: die andere aber / auf wel-
+che / die schwartze Steine / geordnet / von der lincken / nach der rechten
+hand / und also gegen einander über / gezeichnet und gerechnet. Wey-
+ter / ist das jehnige feld / welches einem weissen felde / (entweder auf
+einer überzwerchen / oder aufsteigenden linie) zum nähesten folget /
+immer schwarz: und die nächsten felder / dem Schwartzen / immer
+weiß: Dahero man / mit gedachtem unterscheide / von einem felde /
+zum andern / gantz leichtlich gedencken / und wan man / des einen
+
+<image-desc>
+A woodcut illustration of a square 8x8 chessboard divided into two mirrored halves of four ranks each. Each square contains a digit (1-32) and some contain piece notations or rank numbers.
+
+- The top half (representing the black pieces' starting positions) is numbered 1 through 32 from right to left, rank by rank starting from the top. The top rank includes piece abbreviations: 1.R., 1.Sp., 1.Sc., 1.R., 1.K., 1.Sc., 1.Sp., 1.R.
+- The bottom half (representing the white pieces' starting positions) is also numbered 1 through 32, but from right to left starting from the bottom rank up to the middle of the board. The bottom rank contains the same piece abbreviations: 1.R., 1.Sp., 1.Sc., 1.R., 1.K., 1.Sc., 1.Sp., 1.R.
+- Ranks are marked with numbers 2., 3., and 4. in the squares below the first rank.
+- The abbreviations likely stand for Roch (Rook), Springer (Knight), Schütze (Bishop), König (King), and Regina (Queen).
+</image-desc>
+
+<sig>Hauffens</sig>
+
+<vocab>Schützens, Reuters, Rochens, Königes, Königin, Zwerch-linie, Hauffen, Springer, Schach</vocab>

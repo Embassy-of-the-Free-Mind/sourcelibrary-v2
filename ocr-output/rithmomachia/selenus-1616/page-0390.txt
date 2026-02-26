@@ -1,0 +1,18 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>356</page-num>
+<header>Das Dritte Buch) 9. cap:</header>
+
+ters=Soldaten / auf sechs und zwantzig: Der Weisse / gibt / mit der Königin / auß neun und funfzig / Schach: Der Schwarze / muß / den König / auf drey und funfzig / setzen: Der Weisse / beut / mit des K. Reuter / dem S. Könige / und der S. Königin / auß drey und viertzig / Schach / und erlanget dieselbe / nebest dem gantzen Spiele.
+
+<margin>50.</margin> Wan aber der Schwarze / nicht die Königin / auf 26. (n. 49.) besondern dero Reuter / (umb / das neun und funfzigste feld / in acht zu haben) auf die W. Königin / auf drey und funfzig / ziehet: so gibt / der Weisse / mit derselben / auß vier und viertzig / Schach: Der Schwarze / rucket den König / auf ein und sechßzig: Der Weisse / gibt / mit der K. Schützen / auß drey und viertzig / Schach: Der Schwarze / muß ihn / mit der K. Reuter / nehmen: Der Weisse / denselben / mit der Königin / und gibt Schach: Der Schwarze / (umb / die Königin / durch des W. K. Schützen / auß vier und viertzig / nicht zu verlieren) muß den König / nicht auf drey und funfzig / besondern / auf sechßzig / setzen: Der Weisse / gibt / mit der Königin / auß neun und funfzig / Schach: Der Schwarze / muß den König / auf drey und funfzig / rucken: Der Weisse / gibt / mit des K. Reuter / auß drey und viertzig / Schach / und setzet ihn / auf der S. K. Schützen: Der Schwarze / muß den König / auf sechs und viertzig / rucken: Der Weisse / nimt / mit seiner Königin / die S. Königin: Der Schwarze / dieselbe / mit der K. Rochen: Der Weisse / der S. K. Schützen / mit des K. Reuter: Der Schwarze / (dieweyl Er / seine beede Reuter / verloren) muß mit gewalt / den kürtzern ziehen.
+
+Stellet aber der Schwarze / seine züge nicht an / wie von n. 47. biß hieher / dieselben / geordnet gewesen / besondern auf eine andere Art: so kan doch dem Weissen / wegen dieser ordnung seiner Steine / die erlangung des Sieges / nicht entstehen: welches dan der jenige / welcher etwa lust hette / nachzusuchen / im wercke / also befinden möchte.
+
+<margin>51.</margin> Wan aber der Schwarze / den W. Soldaten / nicht mit des K. Schützens: (n. 46.) besondern / mit der K. Soldaten / hinwegnimt: so rucket der Weisse / des K. Reuter / (auß der gefahr) auf neunzehen / und wird sein Spiel / ferner / wol anzuordnen / gute gelegenheit haben.
+
+<margin>52.</margin> Wan aber der Weisse / den S. Soldaten / (n. 4.) nicht nimt / besondern des K. Reuter / (auß der gefahr) auf neunzehen / rucket:
+
+<meta>catchword: so nimt /</meta>
+
+<vocab>Schach, König, Königin, Reuter, Schützen, Rochen, Soldaten, Gustavus Selenus, Schachspiel</vocab>

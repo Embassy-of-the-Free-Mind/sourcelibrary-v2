@@ -1,0 +1,54 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>154</page-num>
+<header>Das Ander Buch / 5. cap:</header>
+<meta>catchword: Spiel/</meta>
+
+(wie auß dem vorigen Cap: zu ersehen) wider dieses Spieles ge-
+brauch / lauffet: rucken und vorsetzen. So gewönne es auch / das
+ansehen / alß / wan einer das jennige / welches versäumet oder nicht
+geachtet worden / wider wissen und gewissen / (welches doch / der bil-
+licheit / sich befleissigen sol) hinwider ersetzen / und verbessern wolte.
+Nuhn geschicht es gleichwol zu zeiten / daß einer mit zween Steinen
+zugleich spielet: welches / so es / ohne jenniges nachdencken oder wars
+nehmen / von anfange geschicht / billig also zu lassen / und nicht hinwis-
+der zu verendern: Ists aber eine ergäntzung / des vorigen versehens /
+so kan es füglich verhindert / und nicht verstatet werden. Soleinee
+demnach / wan ein Stein gezogen wird / der dem Könige kan zukom-
+men / (umb demselben / zum andern zuge / dofern Er nicht wegziehet /
+oder sich sonsten beschützet / den garausß zu machen) allezeit Schach sa-
+gen. Dan / es setze der Ander / denselben zug / oder stelle sich an / alß
+wan Er ihn / nicht gewahr worden / der schade / wegen des versäumens
+und versehens / niemand anders / dan demselben / welcher die ansagung
+des Schaches / nicht geachtet / alßdan beyzumessen.
+
+Weyter / wan ein Spieler seinen König / wegen eines Schaches /
+mit einem seiner Steine / bedecket / und den gebotenen Schach / ders-
+gestalt abwehret: folgendes aber / denselben / ehe und zuvor der König /
+auß dem verdecketen Schache / (weil des Andern Stein / deßwegen
+er / im Schache gestanden / auf derselben linie / noch unverrucket ver-
+handen) gezogen / auf ein ander feld / rucket / den König / dahero / offens-
+bar und aufgedecket stehen lasset / und denselben zug / alß Er gewahr
+worden / wie unrechtmessig gezogen / erachtet: so sol es / in des andern
+wilkür beruhen / ob Er denselben / wil gelten lassen / oder nicht. Ist
+derselbe nuhn / mit diesem zuge / nicht friedlich / so muß der König /
+welcher die Strafe sol bezahlen / an stat / des / unrechtmessiger wey-
+se / gezogenen Steines / gerucket und gespielet werden.
+
+Endlich / wan einer / des Andern König / in der flucht hat / so sol Er
+demselben / mit dem Schach-bieten / auf daß Er sich nicht / wan ihm in
+etwas frist gegeben würde / mit seinen Steinen hinwider verschantzet
+und seins Spiels / letzlich schade zufüge / immer zusetzen / und verfolgen.
+
+Beym Schach-Matten / sol nuhn ferner / folgendes wol auf-
+gemercket werden:
+
+Daß / (1.) ein Schach-Zieher / nicht leichtlich / und unbesonnener
+weise / das Wort / Schach-Mat / wan der Sieg / noch nicht gewiß ist /
+herauß stosse. An etlichen orten / ist zwar der gebrauch / daß der jehni-
+ge / welcher Schach-Mat saget / (vermeinend / daß des Andern König /
+nicht weichen / noch ihm geholfen werden könne) so fern derselbe / noch
+schlupfloch / oder hülfe unversehens erlanget / auf den fall / selbiges
+Spiel /
+
+<vocab>Schach, König, Schach-Mat, Spiel, Steine, Schach-Zieher, ergäntzung, garausß</vocab>

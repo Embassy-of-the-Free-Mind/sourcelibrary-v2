@@ -1,0 +1,54 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>35</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>2. cap:</margin>
+Christi geburt/gelebet : Diesem ist gefolget/Cunrad von Ammen-
+husen/ der Stat zum Stein / Mönch und Lüttpriester / umb das
+Jahr Christi/1337. welcher zwar des gedachten de Casolis, Büch-
+lein/auß dem Latein/in Teutsche Reymen gebracht/aber dasselbe/
+hin und wider/dermassen verbessert hat/daß es mehr/für ein newes/
+dan verdolmetschtes Buch/zu halten : Ferner/D. Jacob Mennel/
+im Jahre Christi / 1507 : dan Thomas Actius Forosemproniensis :
+Hieronymus Vida : Damianus Portugalensis : Rui Lopez Hispanus :
+Girolamus Zanucchus : Gregorius Ducchus,Brescianus : Cosmus Gra-
+cinus, Florentinus : Felix Paciottus : Joannes Cochanovius Polonus :
+Arthur Saul, Anglus : Lucas VVielius.
+
+Die Erfindere und Scriptores, haben wir erzehlet: wollen
+nuhn/welche sich/dieser Lust / gebrauchet haben / beschawen. Und
+wan wir uns umbsehen/so werden wir/befindē/daß fast alle fürneh-
+me Völcker/sich damit belüstiget haben/und noch/doch nicht auf ei-
+nerley Art / (wie wir dan solches beyleuffig alhie / so viel uns dessen
+zukommen/unangezeiget nicht lassen wollen) belüstigen : Als erst-
+lich/in Asia, die Türcken/wie von ihnen/Petrus Bellonius Cenoma-
+nus Medicus, Gallus, lib: 3. (lectu dignarum) Observationum, welche
+Er/in seiner MutterSprache/ A. C. 1549 , zusammen geschrieben /
+und Carolus Clusius Atrebas, ins Latein übergesetzet/cap : 49. pag :
+483. folgender gestalt/ berichtet :
+
+<margin>cc</margin>
+> *In Latrunculorum Ludo, Turcae sunt industrij, eoq; maxi-
+> mè delectantur : Interdum enim, totum diem, ludendo traducunt,
+> eapropter Latrunculos semper circumferunt, Alveiq; loco, Telam
+> pictam. Admodùm illis convenit hic Ludus. Nam cùm humi se-
+> deant ociosi, facilè ludendo, totum diem, impendere possunt. Ebur-
+> nei nonnunquàm, personis sculpturâ expressis, reperiuntur, sed
+> eâ, quam Reginam, nos vocamus, carere nobis visi sunt, aliamq;
+> ejus loco substituere :* **Das ist :**
+
+<margin>cc</margin>
+> Es seynd die Türcken/auf dem Schach-Spiel/sehr ver-
+> schlagen/und belüstigen sich/in demselben/nicht wenig : Dan
+> Sie wol/einen gantzen Tag/mit dem Schach-ziehen/bisweilen
+> zu bringen. Führen auch deßwegen/die Schach-Steine/und
+> an stat des Schach-Bretes/ein Tuch/darauf die Felder abge-
+> zeichnet/zu jeder zeit/mit sich. Dieses Spiel/komt ihnen gar
+> eben. Dan/dieweil Sie/ohn das/müſſig auf der Erde sitzen/
+> Sie auf dasselbe/den gantzen tag / leichtlich wenden können.
+
+<sig>E iij</sig>
+<meta>catchword: Man</meta>
+
+<vocab>Schach-Spiel, Cunrad von Ammenhusen, de Casolis, Jacob Mennel, Thomas Actius, Hieronymus Vida, Damianus Portugalensis, Rui Lopez Hispanus, Girolamus Zanucchus, Gregorius Ducchus, Cosmus Gracinus, Felix Paciottus, Joannes Cochanovius, Arthur Saul, Lucas VVielius, Latrunculorum Ludo, Petrus Bellonius, Carolus Clusius, Türcken</vocab>

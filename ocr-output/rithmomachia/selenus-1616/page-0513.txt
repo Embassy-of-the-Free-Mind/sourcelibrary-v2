@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>471</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+(Buxer : fol : 44. b.
+Hunc Subtrahendi Modum, etiam Insidias appellat.)
+
+Mit dem Vermehren/ und Theilen/ werden die Steine/ auf folgende art/ ergriffen oder verloren :
+
+Wan zween Steine/ ein Weisser/ und ein Schwartzer/ dergestalt gerucket seynd/ daß zwischen ihnen/ so viel blosse oder unbesetzete felder seynd/ alsz oft/ des einen Zahle/ in des andern Zahlen/ sich finden : so können die wenigere/ die höhere/ mit dem Vermehren/ nehmen/ und von denselben/ durchs Theilen/ im gegens Spiele/ genommen werden. Welcher nuhn den Vorzug hat/ und der erste/ im angreiffen/ seyn wird/ der verbleibet auch/ der Sieger und überwinner: Alsz/ wan der Schwartze Dreyeckete/ mit 12, auf I, und der Weisse Runde Stein / mit 4, gezeichnet / auf K, stehet/ und also drey ledige felder/ zwischen ihnen seynd: so gewinnet der jenige/ welcher mit seinem Steine / (es geschehe nuhn/ durchs vermehren/ oder durchs theilen ) den ersten angriff thut: Alsz/ wan der Schwartze Dreyeckete/ mit 12, auf I, stehet: und der Weisse/ seinen Runden Stein/ mit 4, auf K, ziehet: so gewinnet Er / den Schwartzen dreyecketen/ dieweyl Er/ seinen Stein / mit den leeren feldern vermehren/ und des Schwartzen Steines Zahle/ dadurch zu wege bringen kan: Stehet aber der Weisse Runde Stein/ mit 4, auf K: und der Schwartze/ setzet den Dreyecketen/ mit 12, auf I: so gewinnet Er / den Weissen Stein: dan Er / seines Steines Zahle/ durch die ledige felder/ in so viel theile/ alsz auf dem Weissen Steine/ Zahle verhanden/ abtheilen kan.
+
+(Buxer : fol : 46. a.
+*Quòd si Numeris meis, sic dispositis, quidam meus Calcu-* "
+*lus, inter meum 4, & 12, esset constitutus, qui coopertis 4, im-* "
+*pedit, ne 12, capiatur, illico, ubi calculum movēro, viamq;* "
+*aperuëro, 4, intercipient 12. Eâdem ratione, adversus Nume-* "
+*rus 12, amoto impedimento, si esset ipsi liberum, ludere, meum 4,* "
+*se minimè loco movens, obtruncaret: Nam si, in alienam fe-* "
+*dem incederet, bis luderet.*) "
+
+Folgende Zahle/ gewinnen/ und werden überwunnen/ in diesem Spiele/ mit dem Vermehren: Und findet man/ auf der lincken seiten/ die Zahle/ der Weissen Steine/ und leeren felder/ welche einen Schwartzen: so wol auch/ der Schwartzen Steine/ und ledigen felder/ welche einen Weissen Stein/ wegrauben/ geschrieben.
+
+<sig>Nnn iij</sig>
+<meta>catchword: Ein</meta>
+
+<vocab>Zahl-Kampf, Rithmomachia, board game, rules, Vermehren, Theilen, Dreyeckete, Buxer</vocab>

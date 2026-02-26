@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>173</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword Das</meta>
+
+<margin>7. cap:</margin>den Anfang/ mit des Königes=Soldaten: aber der Gegener/ ziehet
+auf denselben/ seiner Königin=Soldaten.
+
+Wan nuhn beederseitz/ mit des Königes=Soldaten/ der Anfang
+gemachet wird/ so kan/ solcher außzug/ wegen des folgenden vier=
+ten/ (dan höher wollen wir/ mit der Abtheilung/ auf daß nicht/
+an stat der Ordnung/ vielmehr eine Verwirrung/ erfolge/ nicht stei=
+gen) des dritten und zweiten zuges/ auf achteerley Art/ geschehen:
+deren die ersten sieben/ in folgenden Capitteln dieses Buches/ biß
+zum ende desselben: Die Achte und letzte aber/ (welche dem Da=
+miano, insonderheit gefallen) in dem dritten Buche/ vom
+Ersten/ biß zum Zehenden Capittel/ außge=
+führet/ werden sollen.
+
+<image-desc>A decorative woodcut tailpiece or ornamental flourish featuring a central grotesque mask or stylized face with a serene expression. The face is framed by elaborate symmetrical scrollwork, acanthus-like leaves, and ribbons. Two bell-shaped tassels or floral ornaments hang from the lower outer curves of the design.</image-desc>
+
+<vocab>Schach-Spiel, Damiano, Königin-Soldaten, Königes-Soldaten, Abtheilung, Capittel</vocab>

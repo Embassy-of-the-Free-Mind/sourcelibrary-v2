@@ -1,0 +1,35 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>470</page-num>
+<header>Das Fünfte Capittel/</header>
+
+> *,, Hanc Numerorum Additionem, Fraudem & Insidias, ap-*
+> *,, pellat.)*
+
+Mit dem Abziehen / werden die Steine / alſo gewonnen / oder verſcherzet.
+
+Wan Zween Steine / eines hauffens / in ſolche felder / auß welchen ſie / auf einen Stein / von des Gegeners hauffen / treffen können / gezogen werden: und wan des einen Zahle / von des andern Zahlen / abgezogen werden / dieſelbe Zahle / mit welchen / des gedachten Gegeners Stein / gezeichnet / zu wege bringen / ſo wird derſelbe zwar genommen: ſie verbleiben aber / auf den feldern / dahin ſie / für daſmahl gezogen worden: Alß / wan der Weiſſe Viereckete / mit 15. auf F: und der Weiſſe Runde Stein / mit 6. auf G: und der Schwarze Runde / mit 9. verzeichnet / auf H, gezogen worden: ſo kan deßwegen / (dieweyl 6. von 15. genommen / 9. überlaſſen) und dieſe beede Weiſſe Steine / den Schwartzen / erreichen können) der Schwartze Runde Stein / mit 9. verzeichnet / vom Spiele / füglich wol genommen werden.
+
+Folgende Zahle / gewinnen / und werden gewonnen / auf dieſem Spiele / mit dem Abziehen: und ſeynd auf der lincken ſeiten / die Weiſſe und Schwartze Zahlen / welche man / untereins ander abziehet / und einen Schwartzen / oder Weiſſen Stein / rauben: auf der rechten hand aber / die Zahle / welche auf dem Weiſſen / oder Schwartzen Stein / welcher geraubet wird / gefunden werden / geſetzet.
+
+| Zwey Weiſſe. | Ein | Schwarzer. | Zwey Schwarze. | Ein | Weiſſer. |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 6. | 9. | 3. | 3. | 5. | 2. |
+| 4. | 9. | 5. | 5. | 7. | 2. |
+| 2. | 9. | 7. | 7. | 9. | 2. |
+| 9. | 16. | 7. | 3. | 7. | 4. |
+| 6. | 15. | 9. | 5. | 9. | 4. |
+| 4. | 16. | 12. | 3. | 9. | 6. |
+| 8. | 20. | 12. | 3. | 12. | 9. |
+| 4. | 20. | 16. | 7. | 16. | 9. |
+| 9. | 25. | 16. | 16. | 25. | 9. |
+| 8. | 36. | 28. | 9. | 25. | 16. |
+| 6. | 36. | 30. | 5. | 30. | 25. |
+| 6. | 42. | 36. | 7. | 49. | 42. |
+| 8. | 64. | 56. | 7. | 56. | 49. |
+| 8. | 72. | 64. | 9. | 81. | 72. |
+| 6. | 72. | 66. | 9. | 90. | 81. |
+
+<meta>catchword: Buxer:</meta>
+
+<vocab>Abziehen, Steine, Spielregeln, Subtraktion, Viereckete, Runde Stein, Gegener, rauben</vocab>

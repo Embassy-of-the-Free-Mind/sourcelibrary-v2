@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>187</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Aa iij</sig>
+<meta>catchword: auß ſie=</meta>
+
+<margin>9. cap:</margin>
+Schützen/auf ein und vierzig: Der Weiſſe/ſeines K. Schützen/
+auf die S. Königin / auf zwelfe: Der Schwarze/dieſelbe/auf
+zwey und vierzig: Der Weiſſe/der K. Schützen/(auß der gefahr)
+auf dreyzehen/ und entdecket alſo/des K. Rochen/ gegen die S.
+Königin: Der Schwarze/dieſelbe/auf neun und vierzig: Der
+Weiſſe/ des K. Soldaten / auf des S. K. Reuter / auf ſechs und
+dreyſſig: Der Schwarze/wan Er/des K. Reuter / nicht wegzie=
+het/(in verbleibung deſſen/Er vielleicht das gantze Spiel/ verlieren
+möchte) beſondern der W. K. Schützens Soldaten / mit der Köni=
+gin/wegraumet: ſo nimt der Weiſſe/mit ſeines K. Soldaten / den
+gedachten des S. K. Reuter: Der Schwarze/ der W. K. Reu=
+ters-Soldaten/mit ſeiner Königin/ und ziehet auf dero Rochen:
+Der Weiſſe/nimt/mit des K. Soldaten/des S. K. Reuters-Sol=
+daten/und zielet / auf des S. K. Rochen: Der Schwarze/ziehet
+ihn/auf denſelben / auf acht und funfzig: Der Weiſſe/beut / mit
+der Königin/auß acht und zwanzig / Schach: Der Schwarze /
+muß den König / auf ein und ſechfzig rucken: Der Weiſſe/ ver=
+thetiget ſeiner K. Rochen/und dero Soldaten / für die S. Köni=
+gin / mit ſeiner K. Schützen / oder dero Reuter / auf zwey und
+zwanzig.
+
+12. Geſchicht es mit dieſem Reuter : ſo darf der Schwarze/
+ſeiner K. Rochen/mit der Königin/(auf daß Er ſie/ nicht ſelber eine
+ſperre/ und endlich gantz liederlich/verſchertze) nicht wegnehmen /:
+noch Schach-bietten: Dan wan der Weiſſe/auf den gedachten fahl/
+den König/mit der K. Schützen / auf ſechſze/bedecket: ſo iſt ſeine
+Königin/gleichſam gefangen: Nimt Er nuhn/mit derſelben/den
+gedachten/der W. K. Schützen/ und beut abermal Schach : ſo bede=
+cket der Weiſſe/den König / mit der K. Reuter/auf fünfe: Er / ſet=
+zet die Königin/(ſo fern Er nicht des K. Rochens-Soldaten / umb
+dieſelbe/auf ein und vierzig/zu ſetzen: auf drey und dreyſſig / rucken
+wil: auf welchen fahl / der Weiſſe/die Königin/ auf ſeines K. Ro=
+chen/auf neun und vierzig Zöge) auf der W.K. Rochens-Soldaten/
+auf achte: (dan ſie/das einige feld/nuhr frey hat) der Weiſſe/beut/
+mit der Königin/auß funf und zwanzig / Schach: Er / ſo fern Er/
+des K. Schützens-Soldaten/auf drey und vierzig/nicht wil fürziehen)
+muß ſeinen König/auf vier und funfzig/rucken: (dan /wan Er dens=
+ſelben/auf ſechzig ſetzete/ der Weiſſe/ mit ſeines K. Rochen/auß
+zwanzig/ihm Schach-Mat gebe) der Weiſſe/beut/mit der Königin/
+
+<vocab>Schach, Königin, Reuter, Rochen, Soldat, Schach-Mat, Zöge</vocab>

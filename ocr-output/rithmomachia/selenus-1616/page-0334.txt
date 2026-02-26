@@ -1,0 +1,19 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>300</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+
+<margin>10.</margin>Wan aber der Weisse / den König / nicht auf 13. (n. 9.) ziehet / besondern / mit der K. Schützen / auf zwanzig bedecket / und dero Soldaten / beschützen helfet : so beut / der Schwarze / mit des K. Schützen / auf ein und dreyffig / Schach / und errettet ihn / von der W. K. Soldaten : hat sich auch / daß Er / seine Königin / von acht und zwanzig / hinweg bringe / folgendes zu bemühen : dan / wan Er sie / (nachdem der W. König / etwa auf drey / oder auf zwölfe / vom Schach erlediget ist) daselbsten stehen lasset / und einen andern Stein ziehet : Der Weisse / mit des K. Schützen / seines K. Schützens-Soldaten / (so ferne derselbe / umb seines K. Reuter / den Pass zu verlegen / nicht / auf drey und vierzig / vorhin gezogen) hinwegnimt : Raubet Er / nuhn denselben / mit dem Könige : so beut / der Weisse / mit des K. Reuter / auf vier und dreyffig / Schach / und gewinnet dadurch / ohne alle Mittel / seine Königin.
+
+<margin>11.</margin>Wan aber der Weisse / der K. Soldaten / nicht auf 29. (n. 8.) besondern / (umb des K. Soldaten / ins künftige / zu entsetzen) auf ein und zwanzig / rucket : so spielet der Schwarze / (umb des K. Soldaten ferner zu beschützen / und der K. Schützen / den paß zu eröffnen) derselben Soldaten / auf funf und vterzig : Der Weisse / des K. Reuter / auf des S. K. Schützens-Soldaten / auf vier und dreyffig : Der Schwarze / (ihn zu beschützen) der K. Reuter / auf ein und sechzig / und hat also / ein wol geordnetes Spiel.
+
+<margin>12.</margin>Wan aber der Weisse / den Schützen / (wie Damianus zwar setzet) nicht auf 30. (n. 7.) besondern / auf der S. K. Reuter / auf neun
+<margin>13.</margin>und dreyffig / ziehet : * und der Schwarze / (umb des K. Soldaten / zu beschützen) der K. Soldaten / auf funf und vierzig / rucket : so wird seines K. Schützen / der Paß versperret / und (wan etwa der Weisse / seiner K. Reuter / mit des K. Schützen / nimt / und Schach beut) ein Soldat / für den andern gesetzet / auch sein Spiel / (wan der Weisse / der K. Soldaten / auf neun und zwanzig / ziehet) in eine grosse unordnung / gebracht.
+
+<margin>14.</margin>Wan nuhn gleich der Schwarze / nicht den Soldaten / auf 45. (n. 13.) besondern / des K. Schützen / (umb denselben nicht ein-
+<margin>15.</margin>zuschliessen ) auf acht und dreyffig / zufoderst setzet : * so nimt der Weisse / der S. K. Reuter / mit des K. Schützen : Der Schwarze / denselben / mit der K. Soldaten (welches dan / wie auß dem folgenden bericht / n. 62. drunten zu ersehen / besser ist / dan mit dero Reuters-Soldaten) der Weisse / mit des K. Reuter / des S. K. Soldaten : *
+<margin>16.</margin>Der Schwarze / des W. K. Schützens-Solda-
+
+<meta>catchword: Solda-</meta>
+
+<vocab>Schach, Weisse, Schwarze, König, Königin, Reuter, Soldaten, Schützen, Damianus</vocab>

@@ -1,0 +1,8 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, IEV</header>
+<meta>catchword: de de</meta>
+
+base & premier fondement superficial, il faille au premier reng d'vn des costez, six grains. Si tu veux multiplier comme auons dict en Arithmetique 6, par 6, tu auras 36 grains, lesquels seront la base & fondement quarré: ayant de tous costez 6, & sera ledict quarré de 36 grains, premier quarré appellé base, & fondement de la pyramide: marque donc 36 à la base inferieure de ta pyramide, pour ta premiere base. Apres pour produire ta piramide en eguisant, fault que les grains mis au dessus des premiers pour la seconde base, soient de moindre nombre & quantité. & parce qu'au premier reng de la precedente base y auoit 6 grains, au costé de la seconde base en mettrons seulement 5. & les disposerons en leur quarré, cõme auons monstré en l'Arithmetique ne contenant que 25 grains, Tel sera le second degré ou base. Marque donc au second degré ou base de ta pyramide 25, consequemment produisant plus haute ta pyramide en esguisant fault que les grains mis au dessus de la seconde marche ou base, soient de moindre quantité que ladicte seconde: & parce qu'au premier reng d'icelle y auoit 5, ne mettras au premier rẽg de ceste tierce base que 4: lesquels en quarreure produiront 16, telle sera la tierce marche ou base Parquoy marqueras la tierce base de ta pyrami-
+
+<vocab>Rithmomachie, Arithmetique, pyramide, quarré, base, reng, quarreure</vocab>

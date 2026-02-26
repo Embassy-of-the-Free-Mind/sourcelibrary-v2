@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>58</page-num>
+<header>Das erste Buch / 5. cap:</header>
+
+> "wer Küniglichen Nahmen hat/ und hat nit untertan/ dy ihm
+> "dienen. Auch mag man/ dem Künig/ sagen Schach/ das
+> "beteut ein fordren des Rechten/ geleich alß ob man sprech/ O
+> "Künig/ thu mir das Recht/ das muß dan sein/ es sey dan/
+> "das Er sich sein wehre/ mit weißheit/ oder mit gewalt = Wan
+> "es geschicht dick/ wan ein Ritter oder Knecht/ edel oder un-
+> "edel/ empfindet/ eines grossen unrechtes/ oder einer übrigen
+> "zwangsal/ mögent sie dan/ nicht anders/ so fliehent sie doch/
+> "von Im/ wan Sie/ mit Im ze veld kumment/ und lassent ihn
+> "allein/ unter den Veinden/ wan sie mögent/ andere raach/ gen
+> "im nit gehaben/ und schachent ihn darumb/ das Er/ mit
+> "scharffer hand gericht hat : und darumb/ wan dem Künig
+> "Schach gesaget wirt/ das macht/ das er bloß stet/ von Edeln
+> "und unEdeln/ also/ das Er sich/ hinder niemand ge-
+> ->"decken mag/ und derselb Schach/ thut einen<-
+> ->"Künig Mat/ und komt davon/ in aller<-
+> ->"Veind Hand/ wo Er sich hin-<-
+> ->"keret und wendet. etc.<-
+
+<image-desc>A symmetrical decorative woodcut tailpiece. It features a central grotesque mask or face with a leafy headdress. The face is surrounded by elaborate scrollwork, foliage, and two stylized beast or bird heads at the upper corners. Decorative tassels or fruits hang from the bottom scrolls on either side.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Künig, Schach, Mat, Ritter, Knecht, Recht, zwangsal, raach, Veind</vocab>

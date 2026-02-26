@@ -1,0 +1,54 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>207</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>12. cap:</margin>
+dofern Er etwa/ des K. Reuter/ nicht auf 31. n. 8. besondern/ auf sie-
+ben und viertzig/ gezogen: Dan sonsten der Weisse/ die gedachte
+Königin/ so fern Er dieselbe/ auf 28. nicht wolte stehen lassen/ ent-
+weder auf zwelfe/ oder sieben/ zur errettung ihres Rochens/ welcher
+sonsten/ auss dem vierzehenden felde/ einer todes-gefahr/ sich zu besor-
+gen/ ziehen müste) nimt/ des W. K. Reuter/ mit der K. Schützen:
+Der Weisse/ denselben/ mit des K. Reuters-Soldaten: Der
+Schwarze/ des W. K. Soldaten/ mit seiner K. Soldaten/ und
+ziehet auf die W. Königin/ und dero Soldaten: Der Weisse/
+nimt/ mit derselben/ des S. K. Schützens-Soldatē: Der Schwar-
+ze/ mit seiner K. Soldaten/ der W. K. Soldaten/ ziehet denselben/
+auf dero Reuter/ und beut/ von der Königin/ Ab-Schach: der Weis-
+se/ (denselben Reuter zu erretten) bedecket den König/ mit demsel-
+ben/ auf zwelfe: Der Schwarze/ rucket/ nochmaln auf ihn/ des
+K. Soldaten/ auf ein und zwanzig: Der Weisse/ zeiget/ mit der
+Königin/ (so fern Er/ ihn/ mit derselben nicht nehmen/ oder ihres
+Schützens-Soldaten/ entsetzen wil) auss drey und dreyssig/ einen
+<margin>11.</margin> Schach an:* Wan nun der Schwarze/ den König/ mit der Köni-
+gin/ auf ein und funfzig/ bedecket: so werden die Königinne/ beider-
+seitz verwechslē/ und der W. K. Reuter/ auf neun und zwanzig/
+errettet: Rucket Er aber/ den König/ auf ein und sechszig: so zie-
+het/ der Weisse/ der K. Schützen/ auf vier und dreyssig/ helt also/
+die S. Königin gefangen/ und bringet sie endlich/ in seine gewalt.
+
+<margin>12.</margin> Setzet aber/ der Schwarze/ (obgedachte ungelegenheiten/
+n. 11. zu verhüten) den König/ auf drey und funfzig: so beut/ der
+<margin>13.</margin> Weisse/ mit seines K. Schützen/ auss siebenzehen/ Schach: * Der
+Schwarze/ rucket/ den König/ auf fünf- oder sechs und viertzig:
+dan auf 61. umb zu verlieren seine Königin/ (d. n. 11. in f.) es ihm nicht
+zu rahten.
+
+Ist er nun/ auf 45. gezogen: so beut der Weisse/ mit der K.
+Schützen/ auss sieben und zwanzig/ Schach: der Schwarze/ rucket
+den König/ auf sechs und viertzig: (dan ihm/ seine Königin/ wan sie
+gleich/ auf sechs und dreyssig/ fürgezogen würde/ nichts helffen kan)
+der Weisse/ beut/ mit der Königin/ auss neun und dreyssig/ Schach:
+Hat.
+
+<margin>14.</margin> Wan aber der Schwarze/ den König/ nicht auf 45. (n. 13.)
+besondern auf sechs und viertzig/ ziehet: so beut/ der Weisse/ mit der
+Königin/ auss neun und dreyssig/ Schach: Der Schwarze/ rucket
+den König/ auf funf und viertzig: Der Weisse/ (wie d. n. 13.) beut/
+
+<sig>D d</sig>
+
+<meta>mit der</meta>
+
+<vocab>Schach-Spiel, Reuter, Königin, Schützen, Soldaten, Ab-Schach, Rochen, Schach</vocab>

@@ -1,0 +1,24 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+coupper deux pyramides quarrées, desquelles les
+bases ou les pieds soient egaux aux autres tables
+quarrées de tel artifice qu'elles ayent 6. degrez:
+cest à dire 6. quarrez l'vn sur l'autre tousiours
+rappetissant tendant au sommet & poincte d'i-
+celle pyramide comme degrez: & puis seront
+couppées & racourcies les sommiteez & poin-
+ctes d'icelles tellement que celle des nombres
+pairs ayt de reste 6. degrez, & qu'il demeu-
+re place au dessus de la sommité d'icelle pour
+y pouuoir apres descrire deux caracteres de
+chiffre. Semblablement en l'autre pyramide
+des nõbres nompairs, fault qu'il y demeure cinq
+degrez & au dessus d'iceux au sommet pour
+pouuoir contenir trois chiffres, & apres ainsi
+auoir formé, painct & poly lesdictes tables, a-
+uecques leurs tabliers, y appliqueras leurs nom-
+bres ainsi que s'ensuyt.
+
+<vocab>Rythmomachie, pyramides quarrées, nombres pairs, nombres nompairs, caracteres de chiffre</vocab>

@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>80</page-num>
+<header>Das Erste Buch/ 9.cap:</header>
+
+lincke hand/doch für sich/auf acht und zwantzig: (daselbsten Er/wider aufs Pfad kommet) auß dem/auf drey und vierzig: auß dem / auf neun und vierzig: (daselbsten Er/abermahl aufs Pfad/und gleichsam zum ende des Reppelons kommet) Auß dem/wirft Er das Roß/wider nach der rechten Hand herumb / und rennet zu rücke/ auf vier und dreyssig: auß dem/auf acht und zwantzig: (auf die linie) auß dem auf dreyzehen: auß dem auf sieben: (daselbsten Er wider aufs Pfad/und an den Ort gelanget/da Er angefangen) wil Er nuhn/ auf die lincke Hand/das Roß abermahl herumb schürtzen/so rennet Er zum ersten/auf 13: folgendes wendet Er/auf die rechte hand/für sich/auf 28: auf die lincke hand/auf 34: und auf die rechte hand / auf 49: dan zu rücke/auf 43: 28: 13: und 7: daselbsten Er stutzet/oder parando voltando, weyter auf die rechte seite/für sich/auf 22: 28: &c. galoppieret.
+
+Ferner kan man/mit folgenden Zügen/wie ein Pferd / durch hülffe der schenckel / auf die seiten getrieben wird/andeuten: wan nemlich itzt gemelter Weisse Reuter/von sieben/auf vier und zwantzig: auf vierzehen: auf ein und dreissig: auf ein und zwantzig: auf acht und dreyßig: auf acht und zwantzig: auf funf und vierzig: auf funf und dreyßig: auf zwey und funffzig: auf zwey und viertzig: auf neun und funfzig: auf neun und viertzig: und durch dieselbe felder/ (wan Er das Pferd/nach der lincken seite / wider auf 59. gewendet) zu rücke/biß auf 7. alda Er gehalten/das Pferd schrencket/und auf die seiten nötiger.
+
+Wan Sie Schach-bieten/so kan zwischen dieselbe / und dem angerenneten Könige/kein Stein/(dieweil ihr gang/von der andern Steinen gange/gantz unterschieden ist) gestellet werden: besondern der König/(dofern man Sie / mit einem andern Steine / nicht kan wegnehmen) muß nohtwendig weichen / und auß dem Schache ziehen.
+
+Sie sind ferner/wegen ihrer vielfältigen Sprünge / und daß man sich/für ihnen/ihres sonderbaren ganges halber / sehr genawe/ und mit fleiß zu hüten hat/tüchtiger dan die andere Steine / wider den feind/ins feld zu rücken: Wie Sie dan in etlichen fällen / den Schützen für gezogen werden: dan
+
+Erstlich/wan die Schach-Zieher/beederseits/mit den Soldaten gleich sind / und der eine / bey denselben / einen Reuter/der ander/einen Schützen noch hat: so ist dessen Spiel / der den Reuter hat/viel besser/dan dessen/mit dem Schützen. In erwegung / jehner seine Soldaten / in solche felder ziehen kan/in welche / dieses
+<meta>catchword: sein</meta>
+
+<vocab>Reuter, Pferd, Schützen, Schach-bieten, König, Soldaten, Reppelons, parando voltando</vocab>

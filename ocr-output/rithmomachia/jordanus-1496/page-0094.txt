@@ -1,0 +1,32 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>4b</page-num>
+
+partes/tres octauas/et vna ſerageſimāquartam vnius. ac tres octonarii partes amplius ſunt tertia eoz parte. Superāt eni tres octonarii partes: tertiam eiuſdē partem triente vnius: hoc ē tertia vnius parte. a fortiori igitur tres octonarii partes/et tres octauae vnius ⁊ vna ſerageſimaquarta ita āplius ſunt tertia octonorum parte. cōtinent ergo vndecim/tres octauae vnius/ ⁊ vna ſerageſimaquarta: octo ſemel ⁊ amplius eoz parte tertia. quare ⁊ a cōtinet d ⁊ āplius tertia eius parte. eſt itaqz a ad d āplius ſeſquitertio interuallo. Scðo dico a ad d minorem eẽ ſeſqualtero inuallo. Nam vndecim ⁊ tinēt octo ⁊ tres octauas: deeſt ergo vna octaua ad cōplēdas quattuor octauas q̄ ſunt octonorum dimidium. Atvero q̄ ſuperāt: tres octauae vnius/ et vna ſerageſimaquarta minus efficiūt dimidiō vnius octauae. quare ⁊ multo minus efficiunt vna octaua. vndecim ergo/ ⁊ tres octauae/ ⁊ vna ſerageſimaquarta vni⁹: cōtinent octo ſemel et minus octonoriū dimidio. ergo per decimam huius ⁊ a cōtinet d ſemel ⁊ minus eius dimidio. eſt itaqz interuallum a ad d minus ſeſquialtero interuallo.
+
+<margin>19</margin>
+¶ Quattuor ſeſquioctaui coniūcti: ſeſqualterum ſuperant interuallum.
+
+| 6561 | | | | 4096 | ¶ Quattuor ſeſqui- |
+| :---: | :---: | :---: | :---: | :---: | :--- |
+| **a** | **b** | **c** | **d** | **e** | **octaui coniūcti.** |
+
+¶ Sint a b c d e quattuor iūcti ſeſquioctaui: a ad b primus/ b ad c ſecundus/ c ad d tertius/ ⁊ d ad e quartus: dico qm̄ inuallum a e amplius eſt ſeſquialtero inuallo. Nam vt in p̄cedēti viſum eſt octo a equi ſunt vndecim v/ tribus octauis/ ⁊ vni ſerageſimaquarte vnius. et vndecim d/ tres octauae vnius ⁊ vna ſerageſimaquarta: equātur duodecim e/ ſex octauis/ quattuor ſerageſimisquartis/ ⁊ vni quingenteſime duodecime. ergo octo a equi ſunt duodecim e/ ſex octauis/ quattuor ſerageſimisquartis/ et vni quingēteſime duodecime. Atvero duodecim/ ſex octauae/ quattuor ſerageſimequarte/ et vna quingēteſima duodecima cōtinent octo ſemel et amplius ⁊ octonorum dimidium: qm̄ cōtinēt octo ſemel ⁊ dimidium: et inſup ſex octauas/ quattuor ſerageſimasquartas/ ⁊ vna quingenteſimā duodecimam vnius. igitur per decimam huius a cōtinet e ſemel ⁊ amplius ⁊ eius dimidium. ſupat itaqz a e inuallum quattuor ſeſquioctauis iūctū: ſeſqualterum interuallum. quod erat monſtrandum.
+
+<margin>20</margin>
+¶ Quinqz coniūcti ſeſquioctaui: minus duplici interuallo coniūgunt.
+
+¶ Nam per undecimam huius duplex interuallum ex duobus maximis ſubparticularibus: ſeſqualtero ſcz et ſequitertio iūgiť. at pſtitutis quinqz ſeſquioctauis tres p̄mi ſeſquioctaui: per decimāoctauā huius minus ſunt ſeſqualtero interuallo. ⁊ duo ſequētes ſeſquioctaui qui cū tribus pzoribus quinqz cōplent: per decimāſeptimam huius minus ſunt ſeſquitertio. coniūgunt igitur quinqz ſeſquioctaui minus duplici interuallo.
+
+<margin>21</margin>
+¶ Sex proportiones ſeſquioctauae: maiores ſunt vno duplici interuallo.
+
+| 531441 | | | | | | 262144 | ¶ Sex ſeſqui- |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **a** | **b** | **c** | **d** | **e** | **f** | **g** | **octaui cōiūcti.** |
+
+¶ Sit a g interuallum ſex iūctoz ſeſquioctauoz: itavt a ad b ſit primus ſeſquioctauus/ b ad c ſcðs/ c ad d tertius/ d ad e quartus/ e ad f quintus: f aut ad g ſextus. dico qm̄ a ad g amplius eſt duplici inuallo. Am eni a ad b ſeſquioctauus eſt: ergo per octauā huius octo a equi ſunt nouem b. et nouem b per eādē equi ſunt decem c/ ⁊ octauae vnius. et decem c ⁊ octaua vnius: equa ſunt vndecim d/ tribus octauis/ et vni ſerageſimequarte vnius. et vndecim d/ tres octauae/ et vna ſerageſimaquartavni⁹: equātur duodecim e/ ſex octauis/ q̄ttuor ſerageſimisquartis/ et vni quingenteſime duodecime. duodecim aūt e/ ſex octauae/ quattuor ſerageſimequarte/ et vna quingenteſima duodecime: equantur tridecim f/ decem octauis/ decem ſerageſimisquartis/ quinqz quingēteſimis duodecimīs/ et vni quarte milleſime nonageſimeſexte. Atvero decem octauae vnū cōtinent integrum ⁊ inſup duas octauas. quo ſit itez vt duodeci e/ ſex octauae/ q̄ttuor ſerageſimequarte/ ⁊ vna quingenteſima duodecime: equētur q̄ttuordeci f/ duabus octauis/ decem ſerageſimisquartis/ quinqz quingenteſimis duodecimis/ et vni quarte milleſime nonageſimeſexte. Atvero q̄ttuordecim f/ due octauae/ decem ſerageſimequarte/ quinqz quingēteſime duodecime/ et vna quarta milleſima nonageſimeſexta: equa ſunt quidecim g/ ⁊ octo octauis eius (hoc eſt equa ſunt ſedecim g)/ duodecim ſerageſimisquartis/ quindecim quingenteſimis duodecimīs ſex quartis milleſimis nonageſimiſextis/ ⁊ vni triceſimeſecūde milleſime ſeptigēteſime ſerageſimeoctaue. At ſedecim ⁊ duodecim ſerageſimequarte ⁊ reliq̄ que ſequētes particule: continent octo bis et amplius. igitur per decimā huius a ad g maius ē duplici inuallo. ſex igiť ſeſquioctaui maiores ſunt vno duplici inuallo: vt intēdit ppoſitio. <gloss>¶ Et ſi hęc ppoſitio quo ad ſuā demōſtratiōē nōnullis ſubdifficilior videak: hoc iccirco pueniet q̄ illis p̄ptitudo vtēdiqz habilitas octauc nonae ⁊ decime hui⁹ deerit. iccirco par cōſentaneūqz erit eos qui in muſicis modulatiōibus ⁊ eaz cōtēplatiōibus ſe exercitare volent: multos ſeſquialteros/ deinde ſeſquitertios/ et alios ſequentes ſubparticulares colligere: quouſqz vſus colligendaz pportionū ipſis iam ſit factus puius/ patenſqz ⁊ q̄ſi iam ipſis domeſticus.</gloss>
+
+->¶ Primi Elementorum Muſicallum finis.<-
+
+<vocab>sesquioctauus, sesquialter, sesquitertius, duplicis intervalli, elementorum musicallum, proportiones, sesquioctaui coniuncti</vocab>

@@ -1,0 +1,24 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>C.iiij.</sig>
+<meta>catchword: For</meta>
+
+# The Philosophers game.
+
+## ¶ Of their motions.
+
+The men moue forwarde and backward, to the right hand, and to the left hande, but not cornerwise, except the gamesters so agree, the rounds into the next space, the triangles into the thyrde, and the squares into the fourth, the kyngs moue as squares. And these be their ordinary draughts in marching.
+
+## ¶ Of their taking.
+
+They are taken by encountering, by eruption, by laying wayght, and by Obsidion.
+
+## ¶ Of takyng by encoũtering.
+
+To take by encountering is to take by Equalitie, as hath bene twyse before declared.
+
+## ¶ Of taking by eruption.
+
+To take by eruption is when a lesse number beyng multiplied by the spaces that are betwene him & hys aduersary, the product is asmuch as his aduersary, he may take his enemie alwaye whether he stand directly frõ him or cornerwise.
+
+<vocab>Philosophers game, Rythmomachia, rounds, triangles, squares, kyngs, motions, encountering, eruption, Obsidion, Equalitie</vocab>

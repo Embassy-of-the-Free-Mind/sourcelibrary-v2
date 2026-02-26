@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>163</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>E iij</sig>
+<meta>catchword: verur-</meta>
+
+<margin>5.cap:</margin>daten hat : so sol man dahin / daß der Reuter / oder Schütze / umb die
+beede Soldaten / oder auch nuhr / für den einen / (dadurch dan / das
+Spiel / gleich wird) gegeben werde / trachten und sich bemühen. Man
+könte dan etwa / mit gelegenheit / und vortheil / zu rechter zeit / die
+Steine verwechseln / und dürfte sich / wegen dieses tausches / in keine
+gefahr geben. Dan ob man wol / (vermöge des 7. Cap: im Ersten
+Buche / und des 1. Cap: dieses Buches) mit einem Steine / nebest
+dem Könige / ausser der Königin und Rochen / keinen Schach-Mat / zu
+geben vermag : so kan doch / dieses Spiel / so fern nuhr ein Soldat ge-
+nommen wird / zun zeiten / gleichwol gewonnen werden : Wan
+nemlich / der Eine theil / den Soldaten / welcher ihm / auf der seiten
+stehet / wegnimt / dem andern Soldaten / mit seinem Haupt-Steine /
+den weg verleget / und also / ohne verhinderung / auß seinem Solda-
+ten / eine Königin machet / und mit derselben / Schach-Mat gibt.
+
+So fern dan Einer / auß den Schach-Ziehern / das Spiel / mit
+seinen Steinen / nicht gewinnen kan / so sol Er sich / den andern auf-
+zuhalten / und den Schach-Mat abzuwehren / aufs wenigste bemühen :
+Alß : wan der Eine / nuhr einen Rochen : der Ander aber / einen
+Rochen und Reuter / noch übrig hat : so sol jener / (damit dieser
+nicht gewinnen / oder jeh / seinen König / einsperren möge) dergestalt
+verfahren / daß Er seinen Rochen / so weit Er kan / mitten auf
+das Schach-bret setze / und jenes König / mit dem Schach-bieten /
+ohne aufhören / abhalte : Bedecket nuhn derselbe / den König / mit
+seinem Reuter : so muß dieser / so lang Er kan / den König und Reu-
+ter / eingeschlossen und gefangen behalten : Begibt sich aber der Kö-
+nig / hinter obgedachtem Reuter herfür : mit dem Schach-bieten /
+demselben ferner zusetzen. Es hat sich sonsten / der mit dem Rochen
+und Reuter / so fern Er etwa / noch zu gewinnen / vermeinet / wol für-
+zusehen / daß Er nicht selber eingeschlossen werde / den Rochen ver-
+liere / oder der Ander Roche / dem Andern Könige / fürgezogen wer-
+de. Dan wan die Rochen / verwechselt sind / so kan man / mit dem
+Reuter / keinen Schach-Mat geben / besondern das Spiel bleibe
+gleich / und wird / nach etlicher örter gebrauch / entweder nichtes /
+oder / wie es in Hispanien üblich / nuhr der halbe theil / des auf-
+satzes / gewonnen.
+
+Imgleichen / wan Einer nuhr einen Rochen : der Ander aber / ei-
+nen Rochen und Schützen hat : so kan dieser / jehnem schwerlich / so
+fern Er / mit dem eintzigen Rochen / scharf spielet / abgewinnen. Dan
+Er den Rochen / an einen solchen Ort leichtlich setzen kan / dadurch /
+zur verhütung des Schach-Mattes / die verwechslung der Rochen
+
+<vocab>Schach-Spiel, Reuter, Schütze, Soldat, Schach-Mat, Rochen, Königin, Schach-bret, Hispanien</vocab>

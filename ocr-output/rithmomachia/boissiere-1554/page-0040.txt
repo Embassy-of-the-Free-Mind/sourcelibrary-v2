@@ -1,0 +1,22 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>19</page-num>
+<header>DES PHILOSOPHES. 19</header>
+<sig>C iij</sig>
+
+## Autre disposition des tables auec vne alegorie non à mespriser & premierement des nombres multiplices.
+
+La disposition des tables rondes contenantes la proportion multiplice, n'est autremẽt differente de celle que dessus auons monstrée (sçauoir est) qu'il faut disposer les premieres rengées selon la naturelle progression des nombres, comme, 2.3.4.5.6.7.8. 9. choisissant pour le champ des pair. 2.4.6.8. & pour le champ des nompair 3.5.7.9. semblablement trouueras le nombre requis pour paracheuer icelle proportion, multipliant vn chacun d'iceux par soy mesme, comme, 2 fois 2 font 4, car 4 conferé auec deux faict vne espece de proportion multiplice, sçauoir est double, & ainsi des autres comme mieux peux considerer en ceste table.
+
+<image-desc>
+A hierarchical diagram organizing numbers with braces. On the left side, a large brace labeled "Le chãp" (the field) branches into two categories: "des pair" (of even numbers) and "des nõpair" (of odd numbers). 
+Under "des pair", there are two rows:
+1. 4. 16. 36. 64 (the squares)
+2. 2. 4. 6. 8. (the base even numbers)
+Under "des nõpair", there are two rows:
+1. 3. 5. 7. 9. (the base odd numbers)
+2. 9. 25. 49. 81 (the squares)
+On the right, a brace groups the inner two rows of base numbers (2, 4, 6, 8 and 3, 5, 7, 9) under the label "Regrãts". A final, large outer brace on the far right encompasses all four rows under the label "Requis".
+</image-desc>
+
+<vocab>multiplice, progression des nombres, champ des pair, champ des nompair, Regrãts, Requis</vocab>

@@ -1,0 +1,38 @@
+<language>Latin, German</language>
+<page-type>text</page-type>
+<page-num>495</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+*nem esse, quamq́ Veteres, in ludendo, secuti sunt: qua de re, con- cc*
+*jecturam capio, Progressum Scachorum & Incessum, indidem cc*
+*suam Originem, traxisse. Hinc satis integrum est, intueri, cc*
+*quàm severè & stoicè, à quibusdam Veteribus, hic Ludus, descri- cc*
+*ptus sit: qui, dum contemplatione Ludi, contenti sunt, contempse- cc*
+*runt id, in hujus Ludi exercitatione, quod neq́ ingratum, neq́ cc*
+*injucundum, Ludentibus fuisset. Hi verò sunt, Gilbertus Pa- cc*
+*pa, Hermannus Contractus, Castrensis, Nicolaus Orestinus: cc*
+*Quos hac nostrâ memoriâ, sunt imitati, Orontius Finæus Del- cc*
+*phinas, Jacobus Faber Stapulensis: neq́ Ego hactenus, ab eorum cc*
+*vestigijs discessi. Sed cùm viderem, hanc contemplationem, à cc*
+*recreatione sejunctam, interdum esse molestam, valdè lætor, re- cc*
+*cepisse me id, quod jampridèm abscissum erat, & separatum, cc*
+*quod ad hujus exactam expletionem, maximè facere vide- cc*
+*batur.) cc*
+
+Schließlich / dieweyl dieses Spiel / viel andere Spiele / in
+sich begreiffet / und derselben anmütigkeit / ehe vermehret / und vol-
+lenkommener / dan geringer machet / auch nicht allein / den unges-
+larten und unbehobelten / sondern auch / den gelarten und subti-
+len Köpfen / nutzet / und sie belüstiget: alß wird / ein jeder / sichs
+wol gefallen lassen / und / auf daß er / sein gemühte / und verstand /
+durch diese lustige und anmütige Spiel-Sachen / zu weit ernst-
+haftern und höhern / ermuntere / und wan sie / in der
+Kopf-Arbeit abgemattet / hinwider erquicke
+und erfrische / fleissig lernen und sich
+gemein machen.
+
+->E N D E<-
+
+<image-desc>A decorative woodcut tailpiece featuring a central ornamental mask flanked by symmetrical scrollwork, acanthus leaves, and floral motifs.</image-desc>
+
+<vocab>Zahl-Kampf, Rithmomachia, Scachorum, Gilbertus Papa, Hermannus Contractus, Nicolaus Orestinus, Orontius Finæus, Jacobus Faber Stapulensis, anmütigkeit, gemühte</vocab>

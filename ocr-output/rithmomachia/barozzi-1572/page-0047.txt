@@ -1,0 +1,52 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>20</page-num>
+
+->Tauola di tutte le proportioni Arithmetiche, Geometri
+che, & Muſice inſieme, che poſſono occorrer in queſto giuoco.<-
+
+| tutte 3 le proportioni inſieme | Arithmetica ſola | Muſica ſola | Geometrica ſola |
+| :--- | :--- | :--- | :--- |
+| <margin>†</margin> 2 3 4 6 | 2 4 6 | 2 3 6 | 2 3 4 6 |
+| 2 9 16 72 | 2 9 16 | 9 16 72 | 2 9 16 72 |
+| 3 5 15 25 | 3 5 25 | 3 5 15 | 3 5 15 25 |
+| 4 6 8 12 | 4 8 12 | 4 6 12 | 4 6 8 12 |
+| <margin>†</margin> 4 6 9 12 | 6 9 12 | 4 6 12 | 4 6 9 |
+| <margin>†</margin> 5 9 45 81 | 9 45 81 | 5 9 45 | 5 9 45 81 |
+| 5 25 45 225 | 5 25 45 | 25 45 225 | 5 25 45 225 |
+| 6 8 9 12 | 6 9 12 | 6 8 12 | 6 8 9 12 |
+| 12 15 16 20 | 12 16 20 | 12 15 20 | 12 15 16 20 |
+
+---
+
+<margin>
+Nota che tutti li 4 ſo-
+pradetti numeri hanno
+in ſe le 3 proportioni
+inſieme, ma ne li 3 ſe-
+gnati cō croce nō ſi tro-
+uano le coſonantie Mu-
+ſiche. Et peró non li ha
+meſſo il Buxero, anchor
+che li metta il Fabro:
+</margin>
+
+Queſta è adunque la maſſima, & eccellentiſſima, & vlti-
+ma vittoria, che finiſce il giuoco . perche come ſi ha` con
+gran fatica accommodato nel campo del nemico 4 pezzi,
+li numeri delli quali facciano queſte tre proportioni inſie-
+me : vengono à ſentir quelli,che giuocano vna dilettatio-
+ne mirabile, contemplando in queſti 4 numeri talmente
+ſituati ritrouarſi tutte quelle proportioni , dallequali na-
+ſcono tutte le muſicali conſonantie; le quali proportioni ſe
+vorrano anchor eſperimentar in corde de varie ſorti, ò in
+inſtrumenti di fiato con li peſi,& miſure de queſti numeri;
+ſentiranno la dolcezza di tutte quelle conſonantie, che la
+Muſica può dare. Ilche acciò che ſia piu chiaro, daremo
+vn eſſempio in 4 numeri di quelli della ſopraſcritta tauola
+del vltima vittoria . Pigliando adunque li numeri 2,3,4,
+
+<sig>F 2</sig>
+<meta>catchword: 6,che</meta>
+
+<vocab>proportioni, Arithmetica, Geometrica, Musica, giuoco, consonantie, Buxero, Fabro, vittoria</vocab>

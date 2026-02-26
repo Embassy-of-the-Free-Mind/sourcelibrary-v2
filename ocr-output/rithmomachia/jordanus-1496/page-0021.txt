@@ -1,0 +1,37 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>III</page-num>
+
+### 13 ¶ Si duo numeri ad aliquos duos vterq; ad vtrunq; fuerit primus: & qui ex eis producitur ad productum ex reliquis erit primus
+
+¶ Sint a b primi ad c et primi ad d: & e a in b fiat & f ex c in d fiat f. dico e et f esse inter se primos. nā qz vterq; numerus a & b est primus ad c per decimā huius e est primus ad c. et qz iterū vterqz a & b est primus ad d: ergo per eandē e est primus ad d. est itaq; vterqz duorum c d mōstratus primus ad e: quare per eandem decimā f productus ex illis est primus ad e: quod erat demōstrandum.
+
+<image-desc>A diagram of six horizontal line segments arranged in two columns. The left column segments are labeled f (72), a (8), and c (9). The right column segments are labeled e (35), b (7), and d (5).</image-desc>
+
+### 14 ¶ Si fuerint duo numeri contra se primi minorq; de maiore aliquoties detrahātur: aut relinquetur unitas aut numerus ad detractum primus
+
+¶ Sint a b et c cōtra se primi: a maior / c minor. detrahāf qz de a b aliquoties: sitqz substratus a et residuū b. dico b aut esse vnitātē aut esse numerz primū ad c. Nam si b sit cōmensurabilis c: sit d illorū cōis mensura. qz d numerat c p vicesimātertiam primi etiam numerabit a. et qz etiam numerat b per nonā primi numerabit totum a b. nō erunt igitur a b & c contra se primi: qd est contra hypothesim.
+
+<image-desc>A diagram featuring two overlapping semicircles within an arch. The top arc is labeled with the number 9, and the inner semicircles are labeled 8 and 1. The arch is anchored with the letters 'a' and 'b' at the base. Below the arch is a horizontal line segment labeled with 'a' and 'b' at the ends and the number 40 in the center.</image-desc>
+
+### 15 ¶ Cum fuerint duo numeri contra se primi et minore de maiori quoad pōt detracto: residuū a prius detracto detrahatur cōtinua hoc pacto detractione facta : vnitātē relinqui necce est. qz si vnitas residua fuerit: positos nūeros incōmēsurabiles eē cōueniet.
+
+¶ Sint a b duo numeri: cōtra se pmi: a maior et b miōr: detrahafqz b ab a quoties id fieri pōt et relinquat c qui detrahāf quoties pōt a nūero b. & ita continue hoc pacto detractio quoad pōt. dico primo tandē relictū iri vnitātē. dico scdō qz si hoc pacto cōtinuata detractiōe relicta sit vnitas datos nūeros esse cōtra se primos. Primū pz. nam detrahāf b de a quoties pōt et relictū residuū sit c: ipm c relictū minus ē b. & p precedente aut est vnitas aut nūerus primus ad b. si vnitas cōstat qd pponit. si nūerus pmus ad b detraho ipm quoties possū ab ipso b & relinqtur min⁹ c qd sit d. quoddvēiqz per precedentē fitr est vnitas aut nūerus prim⁹ ad c. si nūerus pmus ad c ipm detrahā ab c: quare aut semp decrescet numer⁹ dando minorē ad primū fm exigentia pcedētis: aut relinqtur vnitas qd est primū. Scōm pz. nā si a et b sunt cōmesurabiles idē numer⁹ nūerabit totū & detractū. quare p duodecimā primi idē numerabit residuū numerus scz vnitātē qd est ipossibile. qd quidē vt clarius pcipias sic cōsidera. si a et b sint cōmēsura biles d: ergo eos cōiter numeret: subtrahafqz b ab a quoties pōt et reliquaf c si c sit vnitas cū numer⁹ d numeret b nūerabit oēm numeratū ab b p 23 pmi: quare totū detractū ab a & nūerat etiā a vt positū est. ergo p duodecimā primī d etiā numerabit residuū scz c: numerus scz vnitātē qd est ipossibile. r si c sit nūer⁹ qz d nūerat totū a et detractū vt pbatū ē: ergo p duodecimā pmi d etiā numerabit c residuū. detrahat ergo quoties pōt c de b & relinquaī d. si e est vnitas argumētare vt prius numerū d numerare e vnitātē. si vero e sit nūerus cōfitr d ipsum numerabit. et sic pcedēdo habebis q qūcūqz dabitur vnitas ipam d numerabit: qd est ipossibile. Et ex hac demōstratione elice si duoz cōmēsura-surabiliū alter ab altero quoties pōt substrahaī sitqz residuus residuū illis esse cōmensurabile.
+
+<image-desc>A series of five horizontal line segments of decreasing length stacked vertically, labeled a, b, c, d, and e.</image-desc>
+
+### 16 ¶ Datis duobus numeris cōicantibus: maximū eos numerantē inuenire. vnde manifestū est qz oīs numerus duos quoscunq; numerās maximū eos numerantē nūerabit
+
+¶ Sint a b duo numeri cōicantes: a maior et b minor ppositū est maximū numerz ipsos numerātem iuenire. si eni b nūerat a: cū b se etiā numeret ipse est maxim⁹ eos numerās. si nautē b nō numerat a detrahaī b ab a quoties pōt et sit relictus c: q si nūeret vtrūqz ipse ē numer⁹ petitus. si nō nūeret detrahaf ergo iterū c ab b quoties pōt et sit relictus d q erit minor c. si numeret vtrūqz b & a ipse ē petitus. at si nō numerat qz nō decrescet numerus in infinitū neqz decumbet ad vnitātē: qz per pcedente a et b essent cōtra se primi tandē deueniet ad aliquē qui añ relictū numeret quē & primū habebim⁹ dico ipz esse maximū numerz eos cōiter numerantē. nā si eo maior ponaf: accidet p duodecimā primī maiorē numerare minorē: qd est ipossibile. Ex hoc correlariū est notum. ponāf eni a b numeri cōicantes et b minor substraat⁹ ab a quoties pōt & relictus c: et c substractus ab b quoties pōt & relictus d q substra ctus ab c nichil relinquat: q ideo erit maximus numerās a & b per pntem: et sit g cōiter numerās a b. dico g nūerare d maximū numerantē. si eni g sit idē numero d: cum ois numerus seipm numeret etiā de eo verum est propositū. si est alius ab d iqo erit maior d. nā d nō esset maximus numerus numerās a b verū potius g. erit ergo minor de necessitate: qui qa numerat b. ergo p vicesimātertiam primi numerabit totum detractū ab a. & cum etiā numeret a: per duodecimā primi numerabit residuū c: & cum numeret c per vicesimātertiam primi numerabit totum detractū a numero b. et cum numeret b: ergo per duodecimā primi numerabit residuū scz d: quod est propositum.
+
+<image-desc>A series of seven horizontal line segments of decreasing length stacked vertically, labeled a, b, c, d, e, f, and g.</image-desc>
+
+### 17 ¶ Propositis quotlibet nūeris adiūctē ppositis maximū cos cōiter nūerātē reperire.
+
+¶ Sint a b c quotlibet nūeri adinuicē ppositi ppositū est maximū numerz eos nūerantē inuentre. Inuenio eni per pcedente maximū numerātē a et b q sit d. q si numerat c: ille ē qui petit aliquo si vabis maiorē accidet p duodecimā primi minorē numerare maiorē. si aut d nō numerat c: qz ergo qcūnqz numerat a b c nūerat a b. & qcunqz nūerat a b p correlariū pcedētis numerat d maximū numerz eos numerantē. ergo d & c sunt cōmēsurabiles. inuenio ergo p pcedente maximū numerz numerantē c & d q sit e quē dico esse maximū numerantē a b c. nā si sit quichiqz alius maior e eos cōiter numerās: is sit f. qa ergo f numerat a b p correlariū pcedētis numerat d maximū eos numerantē. & qa numerat d et etiā c per positū: ergo per idē correlariū numerat e maximū eos nūerantē. at f ponit maior e. nūerat igit maior minorē: qd est ipossibile. relinqtur igitur e esse maximū numerantē a b c et propositū.
+
+<image-desc>A series of seven horizontal line segments of roughly equal length stacked vertically, labeled a, b, c, d, e, f, and g.</image-desc>
+
+<sig>b1</sig>
+
+<vocab>numeri, primus, productum, contra se primi, detractio, unitas, commensurabiles, maximus communis divisor, Euclidean algorithm</vocab>

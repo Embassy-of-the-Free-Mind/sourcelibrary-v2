@@ -1,0 +1,98 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>VII</page-num>
+
+pportiōaliū: p vicesimām huius oēs alij sunt pares. et cũ binarius scđs ab vnitate sit nūerus p̄mus: ergo per vicesimāsextam quarti quicūqz assignabiť eo facto vltimo: nullus ipm numerabit nisi aliqs in ordine illor' parium añcedētiū positus. quare cũ quilibet erit par quē nullus impar pter vnitatem nūerať: p diffinitiōem qlibet eoz erit pariter par. at q nullus p̄ter eos sit pariter par pz. nam si detur alius: dividat per mediū: et ei⁹ medietas p mediū. et ita donec occurrat qđ nō possit āplius diuidi. qui si fuerit impar qm̃ p vicesimātertiam p̄mi nūerabit extremū: non erit nūerus datus pariter par/ q̄lis poncbatur. si aut fuerit vnitas: qz eius duplum fuit binarius: ipse erit de numeris ab vnitate duplis.
+
+30 **¶ Si pariter par in pariter parem ducatur: pducetur pariter par.**
+¶ Sint a et b duo numeri pariter pares: ducaturqʒ alter in alterum et pueniat c. dico c esse numerum pariter parem. Nā si c non sit pariter par: numeret ergo eum quicūqʒ impar si possibile est qui sit d. qz ergo d impar numerat c pductum ex duobus a et b insectis: ergo per quintam tertij d impar cōicat cum altero a aut b. numerabit ergo cōiter quicūqʒ numerus: d et a aut b. qui qa d ponitur impar: per decimātertiam huius erit impar. numerabit igitur impar a aut b numerum scz pariter parem. qđ est impossibile. non igitur c numerabit ab impari: qui cũ per duodecimam huius sit par: p diffinitiōem constat ipm esse pariter parem. quod est propositum.
+
+31 **¶ Quicunqʒ numerat pariter parem: ipse quoqʒ est pariter par.**
+¶ Sit a pariter par: quē numerat b quicūqʒ numerus: dico b esse numerum pariter parem. nam si b esset nūerus impar cũ positus sit numerare a: non eēt a nūerus pariter par. quod ē ɔtra hypothesim. erit igitur b numerus par: qui si non fuerit pariter par numerabit eum aliquis impar. quare t idem impar p vicesimātertiam primi numerabit a numerum pariter parem. qđ est impossibile. manifestum est ergo nullum imparem numerare b. quare per diffinitionem est pariter par.
+
+32 **¶ Si sumātur quotlibet nūeri pariter pares ab vnitate pcedentes: oēs t unitas cum eis coaccervata numerum primo pariter pare: vnitate minorem efficient.**
+¶ Sit vnitas: et a / b / c / d / e ordine pcedētes pariter pares: dico qvunitas a b c d e aggregata ɔstituūt numerum vnitate minorem e. nam p vicesimānonam huius quilibet sequētiū est duplus p̄cedētis: q̄re sequens est tanq̄ precedens duplicatus. At a scđus ab vnitate supat eā vno: quare vnitas t a minus sunt vno q b ipse a duplicatus. ergo min⁹ vno q b. quare vnitas a t b minus vno q b duplicatus: ergo q c. q̄re vnitas a b et c minus vno q d. q̄re itez vnitas a/ b/ c/ et d simul minus vno q e. qđ est ppositū.
+
+33 **¶ Omnis numerus cuius medietas est impar: est pariter impar.**
+¶ Sit numerus par a: cuius medietas sit c numerus impar t b binarius: dico a eē numerum pariter imparem. nam qa c est medietas a: ergo b binarius numerabit a scđm sc. dico rursum q quicūqʒ alius par numerabit a scđm imparem ipm numerare. et esto vt c alius par ipm numeret scđm d: dico d esse imparem. nam qa qđ fit ex d in e est a/ et qđ ex b in c sitiē est a: ergo p vicesimāquintam secūdi q proportion d ad b ea est c ad e. ergo pmutatim que d ad c: ea est b ad e. at cũ ois numerus par alius a binario fiat cōtinue addēdo binarium p̄mo ad binarium t deinde ad suū precedentem: binarius ergo oēm parem numerat. b g numerabit c: quare t d numerabit imparem: est ergo v p decimātertiam hui⁹ impar. quicūqʒ ergo par numerat a scđm imparem eum numerat: quare p diffinitiōem a est pariter impar. quod est propositum.
+
+34 **¶ Si impar in numerum pariter imparem ducatur: qui pueniet erit pariter impar.**
+¶ Sit a numerus impar: b vo pariter impar: et c numerus pductus ex a in b. dico c eē numerum pariter imparem: sit eni d medietas c t cū per duodecimam huius sit par/ t e binarius. qa e in d facit c t sititer a in b facit c: ergo p vicesimāquintam secūdi que pportio e ad a: ea est b ad d. quare permutatim que pportio e ad b ea est a ad d. sed e binarius impariter est in b: cũ b sit pariter impar. ergo et a impar est impariter in d. nūeratqʒ a nūerum d scđm imparē. ergo p vnodecimam hui⁹ d est impar et c per precedentem: cũ eius medietas d sit impar: erit pariter impar. quod est propositum.
+
+35 **¶ Numeris paribus ab vnitate dispositis tertius a p̄mo: atqʒ ab illo tertius: vno qūqʒ intermisso oēs a prius sumptis tertij: sunt pariter impares tm.**
+¶ Continuētur pares ab vnitate: sintqʒ a/b/c/d/e/f/g/h/k/l/m: et sic psequēter. dico tertiū c/ t extiū ab illo: et g rursus ab hoc tertium t ita deinceps vno sp intermisso eē pariter impares. Nā p decimā octauam huius illoz parium medietas sunt numeri ab vnitate naturali ordine dispositi: quoz vnus est par/ t alius impar alternatim positi. primi ergo parium. i. binarij qm̃ medietas eius ē vnitas que potētia ē impar: erit t potētia pariter impar. secūdus x̄o ab eo nō erit pariter ipar: qz eius medietas est par. at c tertius t qui t septimus t nonus erūt pariter impares per penultimam huius cũ eoz medietates sint impares. qđ est ppositū quo ad hoc. Neqʒ alij pares quicūqʒ erūt pariter impares: qz eoz medietates sunt pares sicoʒ par vt binarius eos scđm parem numerabit: quare p diffinitiōem non erunt pariter impares. quod est totum propositum.
+
+36 **¶ Numerorum pariter imparium continue sumptorum: equales sunt differentie.**
+¶ Hoc eni ideo est qz si oēs pares ɔtinue sumant: erit oīm illoz eadem dñia. nā binarius. Sūptis igiť fm exigētiām pcedētis partibus t ɔtinue pariter impares vno intermisso: erunt per pceptiōem eoz differētie ex differētijs ipsoz ad medios compositę: quæ cũ mediæ sint æqualia/ t totę per pceptiōem erunt equales. quod est propositum.
+
+<column-break/>
+
+<image-desc>
+Diagram showing a sequence of lines labeled with letters and powers of two:
+g --- 128
+f --- 64
+e --- 32
+d --- 16
+c --- 8
+b --- 4
+a --- 2
+I
+</image-desc>
+
+<image-desc>
+Diagram showing proportional lines:
+c --- 64
+b --- 16
+a --- 4
+</image-desc>
+
+<image-desc>
+A sequence of three lines:
+128
+b ---
+</image-desc>
+
+<image-desc>
+Diagram showing powers of two again:
+e --- 32
+d --- 16
+c --- 8
+b --- 4
+a --- 2
+I
+</image-desc>
+
+<image-desc>
+Diagram with numbers and letters:
+a --- 18
+b --- 3
+b --- 2
+c --- 9
+e --- 6
+</image-desc>
+
+<image-desc>
+Diagram with lines:
+c --- 54
+d --- 27
+b --- 18
+a --- 3
+e --- 2
+</image-desc>
+
+| | II | 22 | |
+|---|---|---|---|
+| m | I I | 22 | m |
+| | I0 | 20 | |
+| | 9 | 18 | |
+| k | 8 | 16 | k |
+| | 7 | 14 | |
+| g | 6 | 12 | f |
+| | 5 | 10 | |
+| e | 4 | 8 | d |
+| | 3 | 6 | |
+| c | 2 | 4 | b |
+| I | 2 | | a |
+
+<vocab>Arithmetica, pariter par, pariter impar, binarius, medietas, differentia, proportio</vocab>

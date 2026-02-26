@@ -1,0 +1,36 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+cōtinetur sub medio ꝛ paruis̄s̄imo: hoc indubitatū est per septimam secūdi quoties maximi ad mimum̃ est habitudo dupla / alioquin per eandem non teneat sed per eandem semper que ꝓportio maximi ad mimum ea erit eius quod cōtinetur sub maximo ꝛ medio ad id qđ continetur sub medio ꝛ mimo / imo id omni medietati cōmune est.
+
+<image-desc>A series of four diagrams placed in the left margin, consisting of horizontal lines with letter labels and numerical values. 
+Diagram 1 (top): Left side: a=9, d=7, b=6; Right side: a=9, b=6, c=4.
+Diagram 2: Left side: a=9, d=8, b=6; Right side: a=9, b=6, c=4.
+Diagram 3: Left side: a=8, b=4, c=2; Right side: d=6, e=1.
+Diagram 4 (bottom): Left side: a=20, b=8, c=5; Right side: d=40, h=25, g=20, e=16, f=10.</image-desc>
+
+<margin>58</margin>
+¶ Septime terminos inuestigare.
+¶ Hec ex geometrica. Sint a b c tres numeri in geometrica medietate ab a maximo eoꝝ substraho differentiam minorum ꝛ sit residuum d. et patebit vt prius que pportio a ad b maximi ad mimū: eam esse differentie extremoꝝ ad differentiam maioꝝ. quare per diffinitionem constabit propositum.
+
+<margin>59</margin>
+¶ Octauam demum restat explanare.
+¶ Hec etiam ex geometrica. Sint sepius vari numeri a/b/c in geometrica medietate: et minoꝝ differentia addatur medio: fiatqʒ compositus d. dico a/d/b esse in hac vltīa medietate. nam que ꝓportio a ad b maximi ad mimum: ea est adiuuate vicesima huius differentia a ad b extremoꝝ ad differentiam d b minoꝝ. nam equatur differentie b ad c. igitur per diffinitionem a/d/b sunt in hac medietate. sicqʒ constant octo collaterales medietates monstrate.
+
+<margin>60</margin>
+¶ Trium numeroꝝ maximi ad medium: atqʒ differentie maximi ad minimum ad differentiam medij ad ipm: eandem esse proportionem impossibile est.
+¶ Sint a/b/c tres diuersi numeri quicūqʒ: quoꝝ a sit maximus / b medius / et c mimus: et differentia a ad c sit d. et differentia b ad c sit e. dico impossibile esse eandem ꝓportionē a ad b maximi ad mediū que d ad e differentie maximi ꝛ minimi ad differentiam medij ad mimum. nam si ea ꝓportio sit a ad b que d ad e totius scʒ ad totum que detracti ad detractū: erit c residui ad c residuū: que a ad b totius ad totum. est enim c vtriusqʒ residuum. quare a et b idem sunt numerus atqʒ equales. quod est contra hypothesim.
+
+<margin>61</margin>
+¶ Si inter duos numeros sumatur tres medij: vnus fm arithmeticam medietatem: et vnus fm geometricam: et tertius fm harmonicam: arithmeticum maximū: ꝛ harmonicum mimum: atqʒ inter illos geometricum medium esse pportioālit' est necesse.
+¶ Sit a ad c ꝓportio quecūqʒ que potest in duo equa diuidi. vt exempli causa quadrupla inter cuius extrema per tricesimanonam huius sit inuentus b in harmonica medietate duplo a ad c ꝛ pueniant d / e / f qui ꝓsister erūt in eadem medietate. et quia per septimam secūdi d ad f vt a ad c: et a ad c posita est partibilis in duas equas ꝓportiones: partietur etiam d ad f in equas. diuidatur igitur per g. erit igitur d ad g vt g ad f. quare g per diffinitionem medius est geometricus inter d ꝛ f. et quia f ꝛ d sunt pares: ipsoꝝ simul iunctoꝝ capio medietatem que sit h: que per quintam huius est in arithmetica medietate inter d ꝛ f. habemus igit' inter duos numeros d et f tres medios h ꝛ g ꝛ b: h in arithmetica medietate / g in geometrica / ꝛ e in harmonica demōstratos. qđ supponebat ꝓpositio. dico igitur d esse maximum medioꝝ: et e mimum: et g medium ꝓportioāliter atqʒ geometricum inter h ꝛ e. nam quia h est medius inf d ꝛ f fm arithmeticam medietatē ꝛ e fm harmonicam: ergo ꝓ quadragesimāprimā huius h maioꝛ est f ꝛ e. et que ꝓportio d ad h ea est g ad f. igitur per vicesimāquintam secūdi qđ fit ex d in f: equū est ei qui fit ex h in e. sed quia g est medius ꝓportioālis inter d ꝛ f: igitur per vicesimāsextam eiusdem quod fit ex d in f: equū est ei qui fit ex g in se. quare quod fit ex g in se im̄ est q̄tum quod ex h in e. igitur per secundam partem eiusdem vicesimesexte secūdi h g e sunt propoꝛtioāles. quare h erit maximus: g medius proportionalis: ꝛ e minimus. quod intendebat propositio.
+
+<margin>62</margin>
+¶ Duos numeros quoꝝ ꝓportio non sit data proportione maioꝛ / inuestigare: inter quos fm tres dictas medietates medios assignare sit possibile.
+¶ Datam propoꝛtionem quācūqʒ diuidamus per sexagesimānonam noni in quotlibet ꝓportiones: quaꝝ due sint equales: que ꝓposite nō sint data propoꝛtiōe maioꝛ. fm igit' illam ꝓportiōem ꝓpositam quero medium harmonicum fm exigentiam tricesimenone huius et oīno consimiliter operādo vt in principio precedentis factum est inueniam tres medios modo qui in precedenti dictus est inter duos numeros quoꝝ propoꝛtio non erit data propoꝛtione maioꝛ. sicqʒ constat propositum.
+
+---
+
+->¶ Decimi elementoꝝ arithmetices Jordani finis.<-
+
+<vocab>Jordanus de Nemore, arithmetica, medietas geometrica, medietas arithmetica, medietas harmonica, proportio, numerus, elementorum arithmetices</vocab>

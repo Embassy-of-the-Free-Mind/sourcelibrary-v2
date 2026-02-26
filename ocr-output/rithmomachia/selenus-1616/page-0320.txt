@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>286</page-num>
+<header>Das Dritte Buch / 4. cap:</header>
+<meta>catchword: 21. Setzet</meta>
+
+dreyssig / und beut Schach : Der Schwarze / rucket den König /
+auf ein und viertzig : Der Weisse / (umb seine Königin / zu ver-
+hüten) dero Soldaten / auf neun und zwantzig / und beut / von ihrem
+Schützen / Ab-Schach : Der Schwarze / (umb den König / zu
+verdecken) ziehet / dessen Reuters-Soldaten / auf vier und dreyssig :
+Der Weisse / (wan es etwa / dergestalt außgedinget worden / daß
+die Soldaten / nicht sollen / für ein ander über / gezogen werden)
+nimt ihn / auß demselben felde / setzet seines K. Rochens-Solda-
+ten / auf zwey und viertzig / (in welches feld / der gedachte S. Sol-
+dat / nuhr hette / gerucket werden können) und beut / von der K.
+Schützen / und des K. Rochen / einen doppelten Ab-Schach : Der
+Schwarze / muß den W. Soldaten / mit dem Könige / nehmen :
+Der Weisse / beut / mit der Königin / auß achtzehen / Schach : Der
+Schwarze / muß mit dem Könige / auf drey und viertzig / entwei-
+chen : der Weisse / gibt / mit der Königin / auß vier und dreyssig /
+Schach-Mat : Ist also der Schwarze / allenthalben / geschlagen.
+
+<margin>17.</margin> Wan es aber vergönnet ist / mit den Soldaten / des Gegeners
+Soldaten / fürbey zu ziehen / so sol der Weisse / nicht / mit dem
+Soldaten / auß 33. (n. 16.) sondern mit der Königin / auß fünf und
+dreyssig / Schach-bieten : Der Schwarze / ziehet / den König /
+auf ein und viertzig : Der Weisse / der K. Soldaten / auf neun und
+zwantzig / und beut / von der K. Schützen / Ab-Schach : Der
+Schwarze / bedecket / den König / mit seines Reuters-Solda-
+ten / auf vier und dreyssig : Der Weisse / nimt ihn / mit der K.
+Schützen / und beut / dem S. Könige / und dessen Königin / Schach :
+Der Schwarze / (auf daß Er nicht / wan Er / diesen W. Schü-
+tzen / mit der Königin nimt / gleich Schach-Mat werde) ziehet / den
+König / auf funfzig : Der Weisse / nimt / die S. Königin / mit sei-
+ner K. Schützen : <margin>18.</margin> * Der Schwarze / denselben / mit des K. Reu-
+ter / und ziehet ihn / auf die W. Königin : der Weisse / beut / mit der-
+selben / auß ein und funfzig / Schach : Der Schwarze / muß / den
+<margin>19.</margin> König / auf ein und viertzig / rücken : <margin>20.</margin> * Der Weisse / ziehet / des K.
+Reuters-Soldaten / auf sechs und zwantzig : * Der Schwarze /
+des K. Reuter / (umb den Schach / von der W. Königin / auß drey
+und viertzig / dadurch auch / des K. Roche / errettet wird / zu verhin-
+dern) auf zwey und viertzig : Der Weisse / beut / mit seines K. Reu-
+ters-Soldaten / auß vier und dreyssig / Schach : Der Schwarze /
+rucket / den König / auf drey und dreyssig : Der Weisse / gibt / mit
+des K. Schützen / auß zwelfe / Schach-Mat.
+
+<vocab>Schach, König, Königin, Soldat, Schütze, Reuter, Roche, Ab-Schach, Schach-Mat, der Schwarze, der Weisse</vocab>

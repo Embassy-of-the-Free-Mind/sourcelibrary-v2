@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>382</page-num>
+<header>Das Vierte Buch/ 2.cap:</header>
+<warning>There is some staining and smudging on the left side of the page, including a circular stain in the middle and fading at the bottom corner.</warning>
+
+gleichwol dessen Soldaten / mit der Königin / und verursachet ihm /
+dadurch / eine / nicht geringe / unordnung: Dan / wan Er / des K. Reu=
+ter / (zur beschützung / der K. Soldaten) auf neunzehen / ziehet : so se=
+tzet / der Schwarze / des K. Schützen / auf acht und dreyßig : Er /
+der K. Schützens = Soldaten / (umb / keine ursache / zur verwechß=
+lung der Königinne / auß viere / oder zwelfe / zu geben : auch / den
+Schach=Mat / auß zwantzig / zu behüten) auf zwey und zwantzig :
+Der Schwarze / beut / mit der Königin / auß zwantzig / Schach:
+Er / muß den König / auf vierzehen / setzen / und entblöset / seiner K.
+Schützen / gegen die S. Königin: Der Schwarze / beut / mit der=
+selben / auß eylfe / Schach: Er / bedecket den König / mit der K.
+Schützen / auf dreyzehen : Der Schwarze / ziehet / der K. Sol=
+daten / auf seiner K. Soldaten / auf fünf und viertzig: Er / der K.
+Reuters = Soldaten / auf drey und zwantzig: Der Schwarze /
+beut / mit der K. Schützen / auß fünf und dreyßig / Schach: Er / ru=
+cket den König / auf funfzehen: (Dan / wan Er ihn / mit seinem
+Schützen / auf ein und zwantzig / bedeckete: Der Schwarze / des=
+sen Reuters=Soldaten / mit der Königin / hinwegnehme / drey Sol=
+daten / für einen erlangete / und die Königin / dergestalt hinwider / zu
+felde brächte) Der Schwarze / (umb seine Königin / so fern Er des
+K. Schützen / auf sieben und viertzig / nicht rucken wil : zu erledigen)
+nimt / seiner K. Soldaten / mit der K. Soldaten: Er / denselben / mit
+des K. Reuter : Der Schwarze / auf denselben / des K. Schützen /
+auf fünf und viertzig: Er / setzet ihn / (auß der gefahr) auf dreyßig :
+neunzehen : oder sechs und zwantzig: Der Schwarze / ziehet die
+Königin / wider ins freye feld / auf acht und dreyßig / und hat Jhn /
+ziemlich auß den sprüngen gebracht.
+
+<margin>4.</margin>
+Dieser unordnung / welche / auß den vorigen zügen / entstan=
+den / nuhn fürzubawen : so sol * der Weiße / nicht die beede mittel=
+sten Soldaten / (n.1.) sondern des K. Soldaten / auf acht und zwan=
+tzig / und dessen Reuter / (auf daß sein König / von der S. Königin /
+auß fünf und zwantzig / nicht angerennet werde) auf neunzehen /
+ziehen : Der Schwarze / setzet / des K. Soldaten / auf sechs und
+dreyßig: Der Weiße / nimt ihn nicht / (wegen obangedeuteten
+Schaches / von der S. Königin) mit seines K. Reuter / sondern
+ziehet / dessen Schützen / auf dreyßig: Der Schwarze / seines
+K. Schützen / auf acht und dreyßig: Der Weiße / der K. Schü=
+tzens = Soldaten / auf zwey und zwantzig: Der Schwarze / der
+K. Reuter / (zur beschützung des K. Soldaten) auf sechs und
+viertzig :
+
+<vocab>Schach, König, Königin, Reuter, Schütze, Soldat, Schach-Mat, Weisse, Schwarze</vocab>

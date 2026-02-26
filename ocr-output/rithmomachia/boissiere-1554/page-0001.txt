@@ -1,0 +1,4 @@
+<language>None</language>
+<page-type>blank</page-type>
+<warning>The provided image appears to be a blank page with significant foxing, speckling, and scanner noise. No legible text or illustrations are present.</warning>
+<vocab></vocab>

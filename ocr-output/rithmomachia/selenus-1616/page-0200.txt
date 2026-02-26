@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>170</page-num>
+<header>Das Ander Buch / 6. cap:</header>
+
+anstellung / wan die Steine / wol verwaret bey einander stehen / und den feind / umb so viel besser / alß in einem übelgesetzetem Spiele / verletzen können / viele fürnehme / nützliche Züge. So hilffet und nutzet auch / ein wolgeordnetes Spiel / einem guten Schach-Zieher / nicht weniger / dan einem Feld-Herren / wan Er seinen Feind wil angreiffen / eine wolgemachte Schlachts-Ordnung.
+
+Daß man (3.) sich in denselben / den beeden Spielern / zugleich / bequemet / und nicht allein / was man zum angriffe / besondern auch zum versetzen / und zur beschutzung / auf beeden seiten / dienlich befun- den / mit besonderm fleiß / aufgezeichnet.
+
+Daß (4.) der Nutz / welchen auch der unerfahrenste Spieler / sofern Er / der Ordnung / die Er / in diesen Büchern / finden wird / nachlebet / und wie sein Gegener / gegen ihm außziehet / fleissig inacht nimt / hievon tragen mag / nicht geringe seyn werde: in erwegung / Er / dieser gestalt / wie erwehnet / auch den erfahrensten und besten Spieler / überwinden / und erlegen möchte.
+
+Daß / (5.) der jenige / welcher in denselben / der Weisse / (wie schon droben / im 2. Cap: dieses Buches / auch angedeutet) die Weiß- sen: Der aber der Schwartze / genennet wird / die Schwartzen Steine / auf diesem Spiele / gebrauche.
+
+Daß man (6.) damit die Zeit / im lesen derselben / nicht vergeb- lich angewendet werde / die Zahl-Zifren / in die felder der Schachs Tabel / (vermöge des 11. Cap: im ersten Buche) schreiben / und dies- selbe / nebest den Steinen / (umb zu sehen / wie die aufgezeichnete Zü- ge / in folgenden Exempeln gemeynet seynd) für augen setzen müsse.
+
+Daß man (7.) die stellung der Steine / wan dieselben / durch die aufgezeichnete Züge / auß denen feldern / darinnen sie zu anfangs geordnet gewesen / in andere felder / gerucket worden / wol in acht ha- be / und fleissig erwege. Dan man dahero / die wolmeynung / des an- gewandten fleisses / gnugsam werde vermercken / auch was nützli- ches / darauf fassen / und behalten können.
+
+Daß man / (8.) dieweyl man oftermaln / nach gelegenheit der Züge / in denselben stutzen müssen / und ein angefangenes Spiel / we- gen vieler verenderungen derselben / biß zum ende / (wie kurtz erweh- net) nicht beschreiben wollen: auf sothanen fahl / von derselben ord- nung der Steine / in welcher dieselben / im letzten Zuge / fur den Zah- len / auf welche der angehende § deutet / und zurucke weyset / gestan- den / wider anfahe und fortspiele. Es wird aber dieselbe / nicht leich- ter gefunden / dan / daß man / vom anfang des Capittels / wider an- he- be / und / sobald man / auf den gesuchten Zug / welcher fur einem an- gehenden
+
+<meta>catchword: gehenden</meta>
+
+<vocab>Schach, Schach-Zieher, Feld-Herren, Schlachts-Ordnung, Schachs Tabel, Züge, Steine, Capittel</vocab>

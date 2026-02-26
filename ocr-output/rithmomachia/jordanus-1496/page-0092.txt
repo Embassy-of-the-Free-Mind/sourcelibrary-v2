@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>2b</page-num>
+
+### <margin>11</margin> ¶Duplex intervallū ex duobus maximis superparticularibus: scł sesquialtero atqʒ sesquitertio coniungitur.
+
+| 6 | 4 | 3 | A c duplex intervallum. |
+|---|---|---|---|
+| a | b | c | A b sesquialter. b c sesquitertius. |
+
+¶Sint a b c intervallū: a quidem sesquialter ad b: b vero sesquitertius ad c: dico a duplum esse ad c. Quoniā enim a sesquialter est ad b: ergo per octauā huius duo a equi sunt ad tres b. et rursus quia b sesquitertius ad c: igitur per eandem tres b equi sunt quattuor c: et tres b positi sunt equi duobus a. duo igitur a equi sunt ad quattuor c. cum quęcūqʒ equalia sunt inter se sint ⁊ equalia. et quattuor numerus minori collectorum duplex est duorum numeri scz collectorū maior. igitur per pręcedentē unus a duplex erit ad vnū c. quod erat demonstrandū potest ⁊ hoc vltimū etiam demōstrari. Nam enī duo a equi sunt quattuor c: vnus a per octauā proloquiū equus est duobus c. quoniam enī tota equa sunt et eorū quoqʒ dimidia sunt equa. At duo c dupli sunt vnius. igitur et vnus a duobus c equus: duplex erit c unus quod fuisset monstrandum.
+
+### <margin>12</margin> ¶Ex duplici intervallo atqʒ sesquialtero: triplex nascitur intervallum.
+
+| 6 | 3 | 2 | A c triplex intervallum. |
+|---|---|---|---|
+| a | b | c | A b duplex intervallū. b c sesquialterū. |
+
+¶Sint a b c intervallū: et a quidē ad b duplex ⁊ b ad c sesquialter. dico a eius quod est c triplicē esse quoniā enim a ad b duplex est: ergo a per diffinitionē continet bis b. igitur a equatur duobus b. et qꝛ b sesquialter est ad c: igitur b continet c et eius partem dimidiā. ergo per octauam huius duo b equi sunt tribus c: et duo b equi erant uni a. igitur ⁊ tres c equi erunt uni a. tres autem triplex sunt vnius. igitur per decimā vnus a triplex est vnius c: quod erat demonstrādum.
+
+### <margin>13</margin> ¶Duo duplicia intervalla : quadruplex coniungunt intervallum.
+
+| 4 | 2 | 1 | A c duplex intervallum |
+|---|---|---|---|
+| a | b | c | A c geminatū duplex intervallū |
+
+¶Sit a duplex ad b: et b duplex ad c. dico quoniā a quadruplex est ad c. Nam quia a duplex est ad b: igitur duo b equi sunt vni a. et rursus qꝛ b duplex est ad c: igitur duo c equi sunt vni b. et si duo c equi sunt vni b: quattuor c equi erunt duobus b. at duo b positi sunt equi vni a: igitur et quattuor c equabuntur vni a. at quattuor quadruplū sunt vnius. igitur per decimam vnus a quadruplex est vnius c: quod erat ostendendum.
+
+### <margin>14</margin> ¶Terminū reperire: ad quē quotcunqʒ volumus: liceat superparticulares assignare.
+
+| 9 | 8 | 6 | A ad c sesquialter. |
+|---|---|---|---|
+| a | b | c | B ad c sesquitertius |
+
+¶Sit propositū terminum reperire ad quem sesquialterū ⁊ sesquitertiū valeamus assignare. Capio duo ⁊ tria numeros denominātes partes sesquialteri atqʒ sesquitertij: duo siquidē sesquialterū et tria sesquitertiū denomināt. ⁊ duco duo in tria: proueniatqʒ ductu illo c. manifestum est c habere partem dimidiā pariter ⁊ tertiam. iungo ad c partē eius dimidiā: ⁊ compositus sit a. et iterū ad c iungo partē eius tertiā: et sit cōpositus b. quoniā enim a continet c et eius partem dimidiā: ergo per diffinitionē a ad c sesquialter est. et quoniā b continet c et eius partem tertiā: b itidem ad c sesquitertius. c igitur repertus est terminus ad quē petiti superparticulares rite sunt assignati. et hac lege de quibuslibet esset operandū: vt si essent assignādi sesquioctauus et sesquinonus duc octo in nouē ⁊ surget terminus octauam / nonāqʒ partem possidens: ad quē ⁊ sesquioctauū et sesquinonū rite assignaueris. et eodem quoqʒ pacto modo tres: modo quattuor aut quotquot libuerit ad eundem terminum assignabis:
+
+| 640 | 600 | 576 | 540 | 480 |
+|---|---|---|---|---|
+| a | b | c | d | e |
+
+ut si ad eundē terminū peterentur assignari sesquitertius / sesq̄quartus / sesquiquitus ⁊ sesquioctauus ducātur tria / quattuor / quinqʒ et octo in seinvicē ⁊ proueniat e qui idcirco habet in se tertiā quartam quintā et octauam. adiungo e suam tertiā compositus sit a. et suam quartā ⁊ compositus sit b. suam quintā compositus sit c. suā deniqʒ octauā ⁊ ppositus sit d. dico demōstratione superiore: quoniā ad e constituti sunt a b c d sesquitertius / sesquiquartus / sesquiquintus / et sesquioctauus: quemadmodum pręfixa monstrat formula.
+
+<vocab>sesquialtera, sesquitertia, duplex, triplex, quadruplex, superparticularis, intervallum, ratio</vocab>

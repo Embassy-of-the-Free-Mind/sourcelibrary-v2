@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>58</page-num>
+<header>DES PHILOSOPHES.</header>
+<meta>catchword: i</meta>
+
+# Des consonances & armonies de musique,
+## prouenantes de la liesse & triumphe des
+## nombres victorieux, par l’accord bien
+## conuenant & correspondant en toutes
+## leurs proportions.
+
+*Certainement qui bien vouldra considerer*
+*l’heur des victoires , il cognoistra icelles*
+*prouenir plustost de l’accord, vnion & conue-*
+*nance, lequel proportionallement se doit faire*
+*entre les combatans, que de chose qui soit. J’ap-*
+*pelle proportional accord des combatans, quand*
+*le soldat respond & satisfait au capitaine en*
+*sa proportion, laquelle est de luy rendre hon-*
+*neur & obeissance . Semblablement quand le*
+*capitaine respond & satisfait en sa propor-*
+*tion, laquelle consiste à estre fidelle au prince, &*
+*à donner bon exemple & animer ses soldats:*
+*sans toutesfois fauoriser à leurs vices. Brief, ie*
+*metois des autres que mieux tu peux conside-*
+*rer, & reuiendray aux consonances qui prouien*
+*nent de l’alliance & proportion des nombres.*
+*Pour laquelle chose esprouuer, predrons les qua-*
+*tre premiers nombres de la premiere victoire qui*
+*sont 2.3.4.6, desquels si tu prens les deux der-*
+*niers 4.6, ou bien les deux premiers 2. et 3. trou-*
+
+<vocab>consonances, armonies, musique, nombres victorieux, proportion, victoires, combatans, capitaine, soldat, prince</vocab>

@@ -1,0 +1,15 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<warning>Significant bleed-through from the verso page, including a mirrored woodcut initial 'P' and several lines of reversed text, is visible on the lower half of the page.</warning>
+
+->● si adoperano giuocando . Nella seconda trattarò delli numeri,<-
+->che si dieno dipinger sopra li pezzi . Nella terza insegnarò à situar<-
+->li pezzi sopra il Tauoliero . Nella quarta mostrerò il<-
+->modo di mouer li pezzi . Nella quinta espli<-
+->carò il modo di combater . Nella<-
+->sexta & ultima di<-
+->chiara-<-
+->rò<-
+->le uittorie, con le quali si uince il giuoco.<-
+
+<vocab>giuocando, pezzi, Tauoliero, esplicarò, combater, uittorie</vocab>

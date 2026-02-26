@@ -1,0 +1,55 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>X</page-num>
+
+Hec est conversa quadragesimesexte. sint ergo a b c in harmonica medietate dispositi qui numerent a d m e f g . dico e f g esse in arithmetica medietate constitutos. Sumo h k l duplos ad a b c qui siliter erunt in harmonica medietate ⁊ in medium fm arithmeticam medietatem inter h ⁊ l . eritqꝫ ꝑ quadra gesimaprimam huius h ad m sicut h ad l. quare sicut g ad f adiuvāte vicesimaquinta secundi. sed ⁊ per eadem vicesimaquintam scōi cognosces g ad e sicut h ad l. sed h ad m medium: sicut g ad f suū medium et m ad l vt f ad e. igitur per decimānonam huius f medius erit in medietate arithmetica inter g ⁊ e. quod est propositum.
+<image-desc>A diagram with two sets of terms. The first set: a=6, b=4, c=3; the second set: e=2, f=3, g=4. Below these, h=12, k=8, l=6, and m=9 are listed with lines connecting them.</image-desc>
+
+---
+
+<margin>50</margin> ¶ Quotlibet nūeros in geometrica medietate fm datam pportiōem ɔtinuare: inter quoz singulos fm harmonicam medietatem medios assignare sit possibile.
+¶ Per tricesimanonam hui⁹ sumātur fm datam proportiōem a/b/c tres numeri in harmonica me: dietate: et sint d e termini pportiōis a ad c. et ducat d in oēs illos ⁊ pueniant f g h qui ꝑ septimam secūdi erunt in eadē medietate qꝑ correlarium eiusdem septime differentiē f ad g ⁊ g ad h sint eque multiplices ad d e. ducatqꝫ e in c ⁊ pueniat i. eritqꝫ ꝑ octauam secūdi f ad h sicut h ad i. Itē ducatur e in b ⁊ pueniat k. eritqꝫ i ad k sicut b ad c. quare i harmonice medi⁹ inter h ⁊ k. sicqꝫ habes duos fm datam pportiōem geometrice ɔtinuatos: inter quos ⁊ duo medij harmonice medietatis sunt inuēti. Si plures desideras duc d in oēs inuētos ⁊ in duos extremos ⁊ habebis tres i medietate geome: trica ɔtinuatos ⁊ inter binoz singulos ea rōne qua prius medios in harmonica medietate sumptos ⁊ hoc quoqꝫ pacto quotquot voles inuenies.
+<image-desc>A complex diagram for section 50. It shows a sequence of numbers on the right: 24, 16, 12, 8, 6, 4, 3. To the left, labels f, g, h, i, k are assigned to 12, 8, 6, 4, 3 respectively. Below, a=6, b=4, c=3 are linked, and d=2, e=1 are at the bottom.</image-desc>
+
+---
+
+<margin>51</margin> ¶ Tres numeros in harmonica medietate disponere: ita vt iter binos ⁊ binos medii fm medietatem geometricam ɔsistant.
+¶ Scōm exigentiam trecesimanone huius inuentātur a b c tres numeri in arithmetica medietate ɔstituti: inter quos sint d ⁊ e in geometrica medietate. et sit f numerus quē oēs numerant: numerētqꝫ eum fm g h l m. et patet ꝑ quadragesimāsextam huius g/l/m eē in harmonica medietate: sed ⁊ per quadragesimāoctauam hui⁹ h inter g ⁊ l: et i inter l ⁊ m erūt in geometrica medietate. sicqꝫ patet effectum propositum.
+<image-desc>A diagram for section 51 showing numbers a=289, d=221, b=169, e=91, c=49 connected by lines. Letters f, g, h, i, k, l, m are arranged in a column to the right.</image-desc>
+
+---
+
+<margin>52</margin> ¶ Primam residuarum medietatum in numeris constituere.
+¶ Hec a geometrica sumitur. Et sint a b c in geometrica medietate ita tamen vt c minimus sit maior dĩa maiorum. subtrahatur igitur dĩa maiorum ab c minio ⁊ residuū sit d. dico b c d eē in hac prima collaterallum medietatum ɔstitutos. nā quia a b c sunt in geometrica medietate cōstituti: ideo que pportio a ad b: ea est ꝑ vicesimam huius differentie maiorum ad differentiam minorum. sed dif: ferentia a ad b est eadem differentie c ad d. igitur differentia c ad d minorum ad differentiam b ad c maiorum sicut a ad b. quare sicut b ad c maximi ad medium. per diffinitionem itaqꝫ patet ppositum.
+<image-desc>Two small diagrams for section 52. Top diagram: a=9, b=6, c=4. Bottom diagram: b=6, c=4, d=1.</image-desc>
+
+---
+
+<margin>53</margin> ¶ Secunde inuentionem declarare.
+¶ Sint vt prius a b c in geometrica medietate quoz differentiam minorum addō ad a. et ɔpositū sit d. dico d a b esse in secūda reliquaz medietate. nam per vicesimam huius que pportio a ad b ea erit differentie maiorum ad differentiam minorum nūeroz in geometrica medietate ɔstitutoz. et eadem est proportio differētie d ad a ad differētiam a ad b. igitur per diffinitionem cōcluditur propositum.
+<image-desc>Two small diagrams for section 53. Top diagram: a=9, b=6, c=4. Bottom diagram: d=13, a=9, b=6.</image-desc>
+
+---
+
+<margin>54</margin> ¶ Tertiam earūdem in numeris assignare.
+¶ Hec etiam habetur ꝑ geometricam medietatem. sit ergo precedētium hypothesis ⁊ maiorum dif: ferētia dematur ab b medio: sitqꝫ residuum d. dico b/c/d esse in tertia medietate. nam que differētia a ad b: ea est b ad d. igitur que pportio differētie a ad b ad differentiam b ad c: ea est differētie c ad d ad differentiam b ad c. quare que pportio b maximi ad c medium: ea est differētie b ad d extremorum ad dīam b ad c maiorum. constat igit ꝑ diffinitionem b c d eē in pposita medietate. qd̃ est propositum.
+<image-desc>Two diagrams for section 54. Top diagram: a=9, b=6, c=4. Bottom diagram: b=6, c=4, d=1.</image-desc>
+
+---
+
+<margin>55</margin> ¶ Quartam in terminis manifestare.
+¶ Sint a b quilibet duo numeri: et cōpositus ex ipis sit c. dico c/a/b eē tres teriōs in hac quarta me: dietate datos. qz eni dĩa c ⁊ b extremorū est a. et dĩa c a maioru est b. que pportio a ad b medij ad minimū: ea erit dīe extremor ad dīam maiorum. per diffinitionem itaqꝫ ɔstat factum esse ppositum.
+<image-desc>A small diagram for section 55 showing b=3, a=4, and c=7.</image-desc>
+
+---
+
+<margin>56</margin> ¶ Quinte demonstrationem explicare.
+¶ Hec a geometrica medietate elicitur. Sint igitur vt prius a b c tres nūeri i geometrica medietate quoz c mimo addo differentiam maiorum: et cōpositus sit d. dico d b c esse in pposita medietate. nam differentia d c extremorum est differentia a ad b: igitur adiuuante vicesima huius que pportio b ad c medij ad minimum: ea erit differentie d ad c extremorum ad differentiam b ad c minorum. Itaqꝫ per diffinitionem demonstratum est propositum.
+<image-desc>Two diagrams for section 56. Top diagram: a=9, b=6, c=4. Bottom diagram: d=7, b=6, c=4.</image-desc>
+
+---
+
+<margin>57</margin> ¶ Sextam sub exemplo demonstrare.
+¶ Hec ex harmonica cognosci potest. Sint a b c in harmonica medietate: ꝑ diffinitiōem que pportio a ad c ea est dīe maiorum ad dīam minoz. capio nūerum d inter a ⁊ c: cuius dĩa sit ad a que b ad c. erit itaqꝫ trāsmutate differētie. quia que differentia a ad b maiorum: ea est d ad c minorum. ⁊ que b ad c minorum: ea erit a ad d maiorum. dico itaqꝫ a d c esse qui petitur. nam que pportio a ad c extremor ea est differētie d ad c minorum ad differentiam a ad d maiorum. per diffinitiōem igitur patet effectum esse ppositum. Quod si capite secūdi fiue arithmetices diuus Seuerinus testatur huic medietati quam suo ordine quartam ponit proprium esset qd̃ ɔtinetur sub maiore tertio ⁊ medio duplum sit ei quod
+
+<vocab>harmonica medietas, geometrica medietas, arithmetica medietas, proportio, differentia, Seuerinus, Boethius</vocab>

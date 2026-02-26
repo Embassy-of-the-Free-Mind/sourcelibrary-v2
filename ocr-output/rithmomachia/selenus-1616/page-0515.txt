@@ -1,0 +1,56 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>473</page-num>
+<header>Vom Zahl=Kampf.</header>
+
+<image-desc>A numerical table is presented within a bordered box. The background of the box features a faint checkerboard pattern, characteristic of a Rithmomachia board, with visible markers such as the letters 'B', 'K G', and 'C' in certain squares.</image-desc>
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 42. | 14. | 3. | 36. | 4. | 9. |
+| 45. | 5. | 9. | 36. | 9. | 4. |
+| 45. | 9. | 5. | 56. | 7. | 8. |
+| 49. | 7. | 7. | 64. | 8. | 8. |
+| 64. | 4. | 16. | 64. | 4. | 16. |
+| 72. | 2. | 36. | 66. | 11. | 6. |
+| 72. | 6. | 12. | 81. | 9. | 9. |
+| 72. | 8. | 9. | 90. | 2. | 45. |
+| 81. | 9. | 9. | 90. | 6. | 15. |
+| | | | 90. | 10. | 9. |
+| | | | 100. | 5. | 20. |
+| | | | 100. | 4. | 25. |
+| | | | 120. | 6. | 20. |
+| | | | 225. | 9. | 25. |
+
+> ( Buxer : fol : 25. b. 45. & 46.
+> *Hos modos pugnandi, Eruptiones appellat: Et huic prædæ,* cc
+> *omnem Incessum, tam Obliquum, quam Rectum convenire, vel in* cc
+> *hac prædâ, sedes interceptas dici, sive Obliquo, sive Recto calle* cc
+> *dispositæ fuerint, affirmat.* ) cc
+
+Nachdem nuhn / die fünferley weyse / wie man die Steine /
+sol wegnehmen: (nemlich das Zahlen / Zusammenrechnen / Abziehen /
+Vermehren und Theilen / welche in der Zahl-Kunst zwar gezeiget /
+aber durch dieses Spiel / in der gedechtnuß vielfaltig geübet werden)
+erkläret seynd: alß folget ferner / die sechste und letzte Art / nemlich
+das Einsperren / und geschicht folgender gestalt.
+
+Wan ein Stein / von des Gegentheiles Steinen / also umbge-
+ben ist / daß er / durch seinen / ihm gebürenden gang / nicht kan vort-
+gerucket / noch / durch seines Hauffens andere Steine / dieweyl Sie
+keinen / von den vier Steinen / welche demselben zusetzen / und den
+Paß verlegen / wegraumen können / entsetzet werden: so wird er /
+wie belagert / und eingesperret / geachtet / und vom Spiele / auß-
+gemustert: Zum Exempel: Wan ein Weisser <term>Dreyecketer</term> / auf
+L. und vier Schwartze Steine / auf M. N. O. P. stehen: alß ist der
+gedachte Dreyeckete / so fern ihm keiner / auß seinem Hauffen / zu
+hülfe kommet / bestricket und gefangen. Bey dieser sechsten Art /
+ist zu behalten / daß alle Steine / auf diesem Spiele / belagern / und
+belagert oder umbringet werden können: alleine der Weisse <term>Vier-
+eckete</term> Stein / mit 153. und der Schwartze Viereckete Stein / oder
+die unterste Staffel / des Schwartzen <term>Turnes</term> / mit 190 beschrieben /
+werden nuhn durchs einsperren verloren / oder erlanget. cc
+
+<meta>catchword: (Buxer:</meta>
+
+<vocab>Zahl-Kampf, Rithmomachia, Dreyecketer, Viereckete, Einsperren, Zusammenrechnen, Abziehen, Vermehren, Theilen, Turnes</vocab>

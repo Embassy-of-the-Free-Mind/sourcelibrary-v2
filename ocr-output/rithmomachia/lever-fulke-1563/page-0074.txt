@@ -1,0 +1,14 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<meta>catchword: ¶ The</meta>
+
+<image-desc>The entire block of text is printed over a faint background illustration of a rectangular grid, representing the game board for Rithmomachia (The Philosophers' Game).</image-desc>
+
+## ¶ The marching or mouing.
+
+The men maye remoue euery way, into voyde places, forwarde, backwarde, towarde both sydes, direct or cornerwyse. So that the rounde men remoue into the next space, the triangles into the third place, and the squares into the fourth place, accompting that place in which they stande for one.
+Also euery man sauyng the two kynges to besiege his enemie, or to flye from the siege him self, may remoue the knights draught in chesse, but neither take anye man (except it be by siege) nor erect a triumphe by suche motions. ¶ The kynges moue euen as squares, but that they haue not the flyinge draught.
+It is compted lawefull amonge suche as wyll so agree, that the Triangles and Squares, maye remoue into voyde places, thoughe the spaces betwene be occupyed of other men.
+
+<vocab>Philosophers game, marching, mouing, rounde men, triangles, squares, kynges, siege, knights draught, chesse, triumphe, flyinge draught</vocab>

@@ -1,0 +1,14 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>53</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: und ses</meta>
+
+<margin>3.cap:</margin>anzurechnen/und also/weyl Er/über alle zu gebieten/und derselben Haupt ist/gleichsam in der Mitte/(wie dan die Persen und Alten/die mittelste Stelle/denen/welchen man Ehre hat anthun wollen/gelassen) zugeeignet. Stehet demnach / der Weisse / in einem Schwartzen/und der Schwartze/in einem Weissen Felde.
+
+Seinen gang anlangend/ist derselbe langsam/nuhr von einem Felde/ins andere/und nicht weyter/(außgenommen den Sprung/ins dritte Feld/davon bald mit mehrem) ob ihm gleich Schach geboten wird. Er kan aber/auf alle manieren/wie sonsten die Rochen/Schützen und Soldaten/es sey gleich das feld/welcher farbe/es wolle: Er trete/für-oder hinter sich / überzwerch / oder nach den ecken und spitzen/(das ist/auf solchen Linien/da die Felder/welche ein ander folgen/von einerley farbe seyn: Als; da ist/die linie/welche von des Weissen Königes Rochen/biß an der Schwartzen Königin Rochen/reichet/und weisse Felder hat: oder wie die Soldaten/ein ander nehmen) denselben verrichten. Endlich/kan Er/dem andern Könige/nimmer näher/dan nuhr ins dritte Feld/weyl allezeit/ein Feld/zwischen ihnen/ (vermöge der ursachen/welche drunten / im andern Buche/am ende des Ersten Capitels/zu befinden) verbleiben muß/gezogen werden. Wird demnach/auß seinem Felde/ (nach anstellung des Spieles) in fünf andere Felder: als; in (1.) der Königin: in (2.) seines Schützens: in (3.) der Königin/andere: in (4.) seines Schützens andere: und dan in (5.) sein eigenes andere Feld/gerucket.
+
+Der Sprung/ist ihm/nicht allein/wie den Reutern/besondern auch/zur seiten/und für sich/jedoch/mit gewisser maß/und bedinge/(alß nemlich/wan Er noch keinen Schach/welcher ihn / auß seinem felde zu weichen/genötiget / davon auch / das 1. Cap: des 2. Buches/meldung thut: empfangen / Ihm auch/im dritten felde / dahin Er springet/kein Stein/er sey gleich auß des Feindes/oder seinem Hauffen/hinderet) zugelassen. Dan mit diesem Sprunge/kein Stein/so fern einer/auf denselben Feldern stehet/dem Feinde/abgenommen / minder sein eigener Soldat / auß dessen felde / ins nächste/ fürwartz/ hinweg getrieben/und Er an seine stelle gesetzet: (welches sonsten/an etlichen Orten/gebräuchlich/und man dadurch/daß der geringer/dem höhern/auch mit gefahr/leibes und lebens/zu weichen/verpflichtet sey/vielleicht andeuten wil) noch / mit seinem Rochen/(in dehm man denselben/auß seinem felde/ins Königes: den König/in seines Reuters: und des gedachten Königes-Rochens=Soldaten/ein feld/für sich/ehe dan der Ander ziehet/zugleich rucket/
+und ses
+
+<vocab>Schach-Spiel, König, Rochen, Schützen, Soldaten, Reutern, Sprung, Schach</vocab>

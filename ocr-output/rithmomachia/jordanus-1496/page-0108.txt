@@ -1,0 +1,32 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>ad</header>
+
+<margin>19</margin>
+¶ Consonantia diapason: in sex tonis minime consistit. sed quinqꝫ amplior: sex vero tonis: consonant contractior.
+¶ Nam per vicesimā primi quinque cōiuncti sesquioctavi: minus duplici intervallo cōstituunt. et per vicesimaprimam eiusdē sex coniuncti maiores: vno duplici intervallo evadunt. ergo quinqꝫ toni minores sunt diapason cōsonantia: et sex eadē sunt ampliores. consonant ergo diapason quinqꝫ tonis amplior: sed et sex eadem modulabitur inferior.
+
+<margin>20</margin>
+¶ Diapason: ex diatessarōn et diapente consonantiis coniungitur.
+¶ Nam per decimāquartam huius diatessarōn et diapente in maximis superparticularibus sunt collocate. at per undecimā primi duplex intervallū ex duobus maximis superparticularibus cōiungitur. et duplex intervallū: cōsonātie diapason intervallū existit. igitur consonantia diapason: diatessarō et diapente consonantie simul coniungunt. quod est propositum.
+
+<margin>21</margin>
+¶ Consonantia diapason: quinque tonis et duobus semitoniis minoribus que tonū minime cōplent: perficitur. Unde quoqꝫ manifestū esse potest: cōsonantiam diapason solo a sex tonis commate distare.
+¶ Per precedētē enī diatessarōn et diapente consonātiam diapason iungunt. diatessarōn aūt per sextā huius duobus tonis et semitonio minore constare mōstrata est: et diapente ꝑ nōnā tribus tonis semitonioꝫ minore. at duo toni et semitoniū minus ꝛ tres toni et itidē semitoniū minus simul conflati: quinqꝫ efficiūtur toni atqꝫ duo semitonia minora. atqui duo semitonia minora tonum non perficiunt: verū ab eo deficiunt cōmate. igitur cōsonātia diapason quinqꝫ tonis et duobus semitoniis minoribus: que tonū minime iplent quēadmodū iam propositū est perficit. ¶ Correlariū ex demōnstrationis calce notū esse potest. Ex quo liquet pfacile esse in neruo musicū cōma pervestigare Nam in eo a principio constitutis: cōtinuatisꝫ sex tonis et ab eodē nerui initio ad mediā chorde notam intensa diapason cōsonantia quod inter mediā nervi notam et vltimū sex tonorū signum cōtinetur: ex precedētis correlario erit cōmatis interstitiū.
+
+<margin>22</margin>
+¶ Dempta ex diapason cōsonantia diapente: relinqūtur diatessaron. et ex eadē dēpta cōsonantia diatessaron: relinquitur diapente. demptis autem ex ea diapente et tono relinquitur sesquitonus.
+¶ Prima pars et secunda statim per penultimā cognite sunt. Item ꝛ per ꝑcedētē. Nam per precedēntē diapason quinqꝫ tonis ꝛ duobus semitoniis minozibꝰ constat: a quibus si tres tonos et unū semitoniū minus tollas que per decimā huius diapente cōsonantiā efficiunt. dēpta igitur ex diapason cōsonātia diapente: relinquūtur diatessaron: quod est primū. Secundū eadē facilitate declaratur. Nam ex quinqꝫ tonis et duobus semitoniis minoribꝰ si duos tonos ꝛ semitoniū minus tollas: relinquūtur tres toni et semitoniū minus. Tertiū consimiliter. demptis enī a consonantia diapason hoc est a quinqꝫ tonis et duobus semitoniis minoribus demptis inqua quattuor tonis et semitonio minore reliquus est tonus vnus ꝛ semitoniū minus. Et quot dieses quot apotomas quod deniqꝫ cōmata contineat diapason: deprehēsionis sunt facillime: in nulla tamen equaliter: tota ipsa dividua est quādoquidem diapason in multiplici ratione consistit que omnino in quotlibet equas proportiones que multiplices nō sint per sexagesimam nomi arithmetices dividi non potest.
+
+<margin>23</margin>
+¶ Nulla simplex cōsonantia: in duo equalia: certo: cōstitutoqꝫ nūcro divisibilis est.
+¶ Simplices cōsonādias vocamus diatessarōn/ diapente/ diapason. de diatessarōn autē ꝛ diapente constat qꝰ ex superparticularibus intervallis surgūt: que per quintā primi nullo pacto hunc in modum dirimi possunt. de diapason vero cōsonantia idē subit iudiciū. Nam quontā minimi eius numeri sunt duo et vnum: ꝛ duo quadratus nō est: igitur per correlariū triceſimeſecūde secundū huius cōsonantia diapason qꝰ consistit in ꝓportione duorū ad vnum minime in duo equalia partiēf. et eodē quoqꝫ iure neqꝫ eadē cōsonātia in plura equa viducere. est in geometricis diametrū coste quadrati velle cōmensurare. sed id vltimū musicum nō est.
+
+<margin>24</margin>
+### Diapason ac diatessarōn: consonantiam non esse.
+
+<image-desc>A schematic diagram illustrating mathematical ratios for musical intervals. The diagram is divided into sections by vertical bars. The top tier shows calculated products: E 8, f 3, and g 2. The middle tier shows the constituent ratios 2 1 and 4 3. The bottom tier provides variable labels A b and c d. Lines connect these elements to show that a=2, b=1, c=4, and d=3, with E resulting from c times a (8) and f resulting from d times b (3).</image-desc>
+
+¶ Etsi in diapason ac diatessarōn sit duarū vocum dulcis amenasꝫ cōgressio vt quēadmodū cum pulsatur sesquitonus: nō iccirco tamē evenit diapason ac diatessarōn cōsonantiā dici mereri. Tametsi Ptholemeo secus ꝛ Pithagoricis hac in re visum sit: quod monstratu facillimū est. Sint eni a et b binarius ꝛ vnitas: minimi scz numeri cōsonātie diapason et c d quattuor ꝛ tria minimi itidē cōsonātie diatessarōn duco c ina et veniet octonarius qui sit e: ꝛ d in b et veniet ternarius: qui sit f. per tertiam quinti Arithmetices e ad f continet duplā et sesquitertiā: quare diapason ac diatessarō.
+
+<vocab>diapason, diatessarōn, diapente, comma, sesquioctavus, Ptholemeus, Pithagorici, consonantia, semitonium, arithmetice, superparticularis, sesquitonus</vocab>

@@ -1,0 +1,13 @@
+<language>English</language>
+<page-type>text</page-type>
+<meta>catchword: The</meta>
+
+# The Philosophers game.
+
+The men be as before in number 48. 24. on a syde, and two contrarye kynges of euen and of odde. They must be of diuers colours, as hath bene sayde, the bottome of euery one must haue his enemies colour, and his owne mark of number, differing in this point from the former playing, that the enemies men taken, may serue onely to celebrate a triumphe, but not to fight on his syde that taketh them.
+
+## ¶ Of the markyng of the men.
+
+They be marked with the same numbers, that haue bene shewed before and therefore so are to be founde out as is taught before. But they be marked besyde their nūbers, with cossicall signes, which be signes vsed in the rule called <term>regula cossa</term>, or <term>algebra</term>, betokening rootes, quadrats, cubes, foursquared quadrats, sursolides, & quadrats of cubes. All these 6. signes must be conteyned in thys game.
+
+<vocab>Philosophers game, Rythmomachia, algebra, regula cossa, rootes, quadrats, cubes, foursquared quadrats, sursolides, quadrats of cubes</vocab>

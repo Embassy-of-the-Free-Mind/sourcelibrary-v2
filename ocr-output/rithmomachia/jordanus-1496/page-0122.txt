@@ -1,0 +1,68 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>AD</header>
+<page-num>15</page-num>
+
+## ¶ Pentadecachordum enarnonium constituere.
+
+| | | | | |
+|:---|:---:|:---|:---|:---:|
+| Proslambanomenos | a | | a | |
+| Hypate hypaton | b | Tonus | b | |
+| Parhypate hypaton | c | diesis | | c | |
+| Lichanos hypaton | d | diesis | | d | |
+| Hypate meson | e | ditonus | | e | |
+| Parhypate meson | f | diesis | | f | |
+| Lichanos meson | g | diesis | | g | |
+| Mese | h | ditonus | | h | |
+| Paramese diezeugmenon | lz | tonus | Trite syn. diesis | lz |
+| Trite diezeugmenon | l | diesis | Paranete syn. diesis | l |
+| Paranete diezeugmenon | m | diesis | Nete syn. ditonus | m |
+| Nete diezeugmenon | n | ditonus | | n | |
+| Trite hyperboleon | o | diesis | | o | |
+| Paranete hyperboleon | p | diesis | | p | |
+| Nete hyperboleon | q | ditonus | | q | |
+
+---
+
+Huius cōpositio perfacilis est. facio enī vt in ceteris precedētibus a ad b intervallū toni. et a ad e
+diapēte. z b ad d facio semitoniū minus. et diuido chordā c in medio differētie b ad d erit ergo b ad c
+diesis tetrartemeria atq; quadripartialis pariter et c ad d diesis. sed per quartam secūdi huius hec
+latior illa vero contractior neq; per tricessimāsecundam eiusdem semitoniū minus in duo equa certo
+cōstitutoq; numero diuidi potest. et a ad e diapente. subtracto igitur a b tono relinquitur b ad e esse
+diatessaron. et cum diatessaron semitoniū minus z duos tonos cōplectatur: et b ad d sit semitoniū
+minus: relinqui' igitur d ad e esse ditonus. erit igitur b c d e hypates hypaton parhypates hypaton
+lichan̄os hypatō et hypates meson tetrachordū: per b c: d : et d e diesim z diesim et ditonū procedēs
+p̄ diffinitionē in enarmonico gñe diuisum. Similiter cōstituas e f g h tetrachordū meson faciēdo a
+ad h diapason. et e ad g semitoniū minus. z partiēdo mediā vriam per f itravt e f et f g sint due dieses
+Nā ab a h cōsonantia diapason subducta a e cōsonantia diapēte: relinqui' e h esse diatessarō. et cū e
+g sit semitoniū min⁹: igit' g h erit ditonus. z cū e f et f g sint due dieses z g h diton⁹. ḡ hec tetrachordi
+partitio in genere enarmonico facta cōspicitur. Et facta h mese ad netē disiunctarum diapente: z ad
+neten hyperboleon diapason: et chorda mese a paramese tetrachordi disiunctarū tono distata: per-
+inde ac proslabanomeno ab hypate hypaton: partieris tetrachordum disiunctarū lz l m n vt b c d e te-
+trachordū hypaton. et tetrachordū n o p q hyperboleon excellentiūq: vt e f g h tetrachordū meson.
+tetrachordū autem cōiuctarum h lz l m partieris vt tetrachordū meson et id quoq; facile est.
+
+<page-num>16</page-num>
+
+## ¶ Pentadecachordi enarmonici numeros colligere.
+
+| | | | | | |
+|:---|:---:|:---:|:---|:---:|:---|
+| Proslambanomenos | a | 13824 | | 13824 | |
+| Hypate hypaton | b | 12288 | Tonus | 12288 | Tonus |
+| Parhypate hypaton | c | 11664 | Semi mi. | 11976 | Diesis |
+| Lichanos hypaton | d | 10368 | Tonus | 11664 | diesis |
+| Hypate meson | e | 9216 | Tonus | 9216 | ditonus |
+| Parhypate meson | f | 8748 | Semi mi. | 8982 | diesis |
+| Lichanos meson | g | 7776 | Tonus | 8748 | diesis |
+| Mese | h | 6912 | Tonus | 6912 | ditonus |
+| Paramese diezeugmenon | lz | 6144 | Tonus | 6144 | Tonus |
+| Trite diezeugmenon | l | 5832 | Semi mi. | 5988 | diesis |
+| Paranete diezeugmenon | m | 5184 | Tonus | 5832 | diesis |
+| Nete diezeugmenon | n | 4608 | Tonus | 4608 | ditonus |
+| Trite hyperboleon | o | 4374 | Semi mi. | 4491 | diesis |
+| Paranete hyperboleon | p | 3888 | Tonus | 4374 | diesis |
+| Nete hyperboleon | q | 3456 | Tonus | 3456 | ditonus |
+
+<vocab>Pentadecachordum, enarmonium, tetrachordū, diesis, ditonus, diapason, diatessaron, Proslambanomenos, Hypate hypaton, Parhypate hypaton, Lichanos hypaton, Hypate meson, Parhypate meson, Lichanos meson, Mese, Paramese diezeugmenon, Trite diezeugmenon, Paranete diezeugmenon, Nete diezeugmenon, Trite hyperboleon, Paranete hyperboleon, Nete hyperboleon, tonus, semitoniū minus</vocab>

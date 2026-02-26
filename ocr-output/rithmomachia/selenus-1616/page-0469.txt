@@ -1,0 +1,59 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>435</page-num>
+<header>16.cap: Vom Schach-Spiel.</header>
+
+Die Exempel/schließlich anbelangend / seynd dieselben/wie
+folget/geordnet :
+
+<margin>cc cc cc cc cc cc cc cc cc cc</margin>
+1.) Wan der Weisse/seinen König/auf viere : seine Köni-
+gin/auf fünfe : die Rochen auf sechßig : und auf drey und sechß-
+zig : drey Soldaten/auf dreyzehen : auf vierzehen : und auf
+drey und zwanzig/gestellet hat : so kan ihm/der Schwarze/wan
+Er seinen König/auf sieben und dreyßig : die Königin/auf fünf
+und viertzig : die beede Rochen/auf sechszehen : und auf ein und
+funftzig : die beede Reuter/auf fünf und zwanzig : und auf drey
+und dreyßig : und einen Soldaten/auf sechs und funftzig/gezo-
+gen : mit diesem Soldaten/im siebenden Zuge/Schach-Mat
+geben.
+
+Dan/wan der Schwarze/einen Reuter/ (von 25.) auf ze-
+hen/rucket/und Schach-beut : Der Weisse/den König/auf zwöl-
+fe/ziehet :
+
+Der Schwarze/beut/mit dem andern Reuter/auß achtze-
+hen/Schach : Der Weisse/setzet/den König/auf ein und zwanzig :
+
+Der Schwarze/rucket/einen Rochen/ (von 51) auf neunze-
+hen/und beut Schach : Der Weisse/(dieweyl ihn/die Königin/wel-
+che nuhr ein feld/kan gezogen werden/nicht nehmen muß) stellet/
+einen seiner Rochen/(von 60) auf zwanzig/dazwischen :
+
+Der Schwarze/beut/mit dem ersten Reuter/auß viere/
+Schach : Der Weisse/(dieweyl Er/denselben/weder mit der Kö-
+nigin/in betrachtung/dieselbe/neben sich/auf die seiten/nicht schla-
+gen kan : noch mit dem Rochen/welchen der S. Roche/gefangen
+helt : kan wegnehmen) stellet/den König/auf zwey und zwanzig :
+
+Der Schwarze/beut/mit dem andern Reuter/auß acht und
+zwanzig/auch Schach : Der Weisse/setzet/den König/auf ein und
+dreyßig :
+
+Der Schwarze/die Königin/(dieweyl sie/von ferne nicht
+trift) auf acht und dreyßig/und beut Schach : Der Weisse/rucket/
+den König/auf neun und dreyßig :
+
+Der Schwarze/auf ihn/der K. Rochens-Soldaten/auf acht
+und viertzig/und gibt Schach-Mat.
+
+<margin>cc cc cc cc</margin>
+2.) Es kan der Weisse/dem Schwarzen/entweder/mit ei-
+nem Rochen/im dritten: oder/mit dem Soldaten/der auf 12. ste-
+het/im funften Zuge/wan die Steine/beederseits/wie folget ge-
+stellet seynd/Schach-Mat geben : Alß nemlich/des Schwarzen
+
+<sig>Iii iii</sig>
+<meta>catchword: König/</meta>
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Soldaten, Reuter, Schach-beut, Schach-Mat</vocab>

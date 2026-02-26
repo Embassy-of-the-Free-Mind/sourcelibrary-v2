@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>259</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>K k iij</sig>
+<meta>catchword: den/ und</meta>
+
+<margin>1. cap:</margin>thet werde. Dan ein Schach-Zieher/ in dergleichen fällen/ insonderheit / wan Er siehet / daß der Verlust / oder die gefahr / noch nicht so gar offenbahr sey / sich billig wagen muß : Zu dem wird auch der **Schwarze** / seinen Reuter / wol davon bringen / und das Spiel / wan der **Weiße** / ihn eben so wol anzugreiffen / alß Er/ nach des Damiani lehr / sich zu beschützen weiß/ nicht verlieren.
+
+Aber wir lassen dieses fahren / begeben uns wider / zum anfange dieses Spieles / und wollen folgendes / welcher gestalt sich / beede Parteyen / wan Sie / dieser Art nach / spielen wollen /
+<margin>14.</margin>fürzusehen haben / selber anleytung geben : Dan / wan * Der **Schwarze** / nicht seine Königin / auf 45. (n. 6.) besondern / (das mit sie/ ihres Schützens-Soldaten/ vertheidigen könne) dero Reuter/ auf die **W. Königin** und ihren Reuter/ auf drey und vierzig / ziehet :
+<margin>15.</margin>* und/ der **Weiße** / alsdan / (dieweyl Er / zur Verwechslung / der Königinne / nicht lust hat) mit seiner Königin / (welches dan ein guter Zug scheinet / aber dafür nicht bestehen kan) auß zwey und dreyssig / **Schach**-gibt : Der **Schwarze** / den König / mit der K. Schützen / auf drey und funfzig/ bedecket / und ihn / auf die **W. Königin** rucket : Der **Weiße** / nime / der **S. K. Schützens-Soldaten** / mit seiner K. Reuter/ und gibt Schach : Der **Schwarze**/ ziehet auf ihn / den König / auf ein und sechßig : Der **Weiße** / (auf daß Er / die Königin nicht verliere) denselben / auf neun und dreyssig : Der **Schwarze** / nime / mit seines K. Schützens-Soldaten / des **W. K. Schützens-Soldaten** / und beut / von der Königin / **Ab-Schach** : Hat also / es bedecke / der **Weiße**/ den König / oder ziehe ihn / auß dem **Schache** / so fern Ers nuhr verstehet / ein gutes Spiel. Ist demnach / dieses **Schach**-geben (n. 15.) dem **Weißen** / ein schädlicher Zug : Welcher / dieweyl Er / auf diese Art / schwerlich etwas gewinnen wird / aufs wenigste dahin / daß Er sein Spiel / in guter ordnung behalte / des Feindes aber / so viel möglich / in eine unordnung bringe / auch denselben / daß Er seine Soldaten / an ungelegene örter / ziehen müsse / nötige und treibe : trachten und sich bemühen sol.
+
+<margin>16.</margin>Weyl demnach der **Weiße** / mit der Königin / auß 32. mit schaden Schach-beut/ (n. 15.) auch/ wan Er/ mit derselben / des **S. K. Schützens-Soldaten**/ wegnimt/ die Königinne verwechsllet werden/
+
+<vocab>Schach, Weiße, Schwarze, Königin, Reuter, Schützens-Soldaten, Ab-Schach, Damiani, Schach-Zieher</vocab>

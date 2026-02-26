@@ -1,0 +1,14 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV.</header>
+
+*faire des autres.*
+
+## Allusion ou comparaison de la precedente disposition, aux meurs des humains.
+
+EN la precedente disposition, peut estre considerée l'allience & accord qui doit estre entre les humains, pour auoir prosperité, heureuse procreation, & paruenir à l'uniõ du treine & Vn qui est la source & resolution de toutes choses dignes de consideration : Car tout ainsi qu'en la procedure de vraye alliance, nous deuons accommoder les vns aulx aultres, apres auoir secouru à nous mesmes, aussi auons nous veu qu'apres que les premiers nõbres de l'vn des deux chãps, se font exposez & multipliez en eux mesmes pour auoir les nombres requis & paracheuer leur proportion multiplice: incontinent iceux premiers nombres se font tellement accommodez à leurs prochains, que ceulx de l'vn champ font allez augmẽter & multiplier ceux de l'autre chãp pour leur aider à composer vng nombre qui fust propre pour estre requerant & mis au premier reng qui est des superparticuliers. Exẽple . 3 qui est le premier du chãp des impair apres qu'il s'est multiplié en soy pour auoir . 9 paracheuant sa proportion multiplice avec soymesme, incontinẽt est allé aider au premier du champ aduersaire
+
+<sig>i</sig>
+<meta>catchword: qui</meta>
+
+<vocab>Rythmomachie, alliance, nombres, proportion multiplice, superparticuliers, champ, impair</vocab>

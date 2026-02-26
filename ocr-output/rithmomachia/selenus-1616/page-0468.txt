@@ -1,0 +1,48 @@
+<language>German</language>
+<page-num>434</page-num>
+<header>Das Vierte Buch/ 10. cap.</header>
+<page-type>text</page-type>
+<meta>catchword: Die Ex-</meta>
+
+> » Soldaten/auf siebenzehen: und (so ferne / das 35. feld / durch
+> » des gedachten K. Schützens-Soldaten / geraumet und gesi-
+> » chert ist) auf funf und dreyssig: der K. Schützen / auf zwanzig:
+> » des K. Rochens-Soldaten / auf funf und zwanzig: der K.
+> » Schützen/auf vier und dreyssig: den König mit der Königin/
+> » zugleich/diese auf neunzehen: jenen auf achtzehen. Wann nuhn
+> » die Steine/also stehen/so heisset es eine Hütte/und der W. Kö-
+> » nig/ist für Schachen/sicher.
+
+> » Die Andere/wird auf folgende masse auf seiten des Schwar-
+> » zen/gemachet : Es rucket derselbe/des K. Rochens-Solda-
+> » ten/auf drey und dreyssig: des K. Soldaten/auf vier und vier-
+> » zig: des K. Schützen/über dessen Reuters-Soldaten / auf
+> » ein und vierzig: des K. Reuter / auf drey und vierzig: den
+> » König/und die Königin/in einem Zuge/jenen/auf acht und
+> » funfzig: diese auf neun und funfzig: und ist die Königin/derge-
+> » stalt/über die breite der felder / erstes auszganges/ins dritte
+> » feld/gezogen: Wann nuhn die Steine/also stehen/so heist es
+> » die eisern Hütte/und ist eine gute sichere Hütte.
+
+> » Die dritte ist folgender gestalt zu machen: Der Weisse/
+> » ziehet/der K. Soldaten / auf neun und zwanzig: den König/
+> » auf vierzehen: (dieweyl er aber/einen Soldaten/auf demsel-
+> » ben felde/findet / als hat er wol macht / im ersten auszgange/
+> » denselben vortzuschieben) und die Königin/zugleich/ auf ein
+> » und zwanzig: und hat also/in zween zügen/auch eine gute
+> » Hütte.
+
+Ausser diesen dreyen / seynd noch viel guter Hütten: aber
+ausz täglichem gebrauch / wird man dieselben / wol erfahren: So
+lassen sich auch / die Hütten / (gleich dem gantzen Spiele) besser
+durch den Augenschein lernen / dan ausz dem fürschreiben: Auch
+sol mans nicht dahin verstehen / alsz ob die Züge / also eben / auf ein-
+ander gezogen werden mögen / sondern / man kan wol / eine
+andere ordnung / darein fürnehmen / und itzt hie / dan dort / einen
+ziehen / bisz die Steine / endlich / gleichwol also / wie angezeiget /
+und wie sie / in der Hütte stehen sollen / geordnet werden: Es
+wehre dan / dasz der Gegentheil / ihm seine Steine / dergestalt un-
+ter augen / und in den weg zöge / dasz Er die Hütte / seines willens /
+mit fuge / nicht machen könte.
+
+<vocab>Schachen, Hütte, Soldaten, K. Schützen, K. Rochens, K. Reuter, Königin, eisern Hütte, Augenschein, fürschreiben</vocab>

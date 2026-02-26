@@ -1,0 +1,42 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>11</page-num>
+<sig>g 2</sig>
+
+proportiones esse dicimus. Sint ergo p̃mo a b minimi numeri semitonij minoris: p decimãoctauã huius inuẽti: b enĩt illic quoq̃ mõstratũ est nasci ex nouenario in se ⁊ ternario in productũ nouenarij in se at nũerus q̃ ex ductu nouenarij in se exurgebatur: erat quadrat⁹ et ternarius nõ est quadrat⁹: ergo per decimãquartã sexti arithmetices b min⁹ semitoniũ mioris extremũ ex ductu quõ nõ q̃drati in q̃dratũ proueniẽs: nõ est numerus quãdratus. si possibile est ergo vt diaschismatos pportio in numeris sit nota: sint ergo per sextã quarti arithmetices duo diaschismata in minimis c d e cõiuncta. manifestũ eni est cum diaschisma sit semitonij mĩoris dimidiũ c d et d e simul esse semitoniũ minus. ⁊ c ad e esse semitonij minoris interuallũ. sed et cum pportiones c d ⁊ d e sint cõtinuate in minimis ergo per quitã quarti arithmetices c e sunt in sua pportione minimi. sunt ergo minimi in pportione semitonij minoris. sed et tales positi sunt a b: igitur c et e iidem erunt numeri cũ a ⁊ b scz c idem a et e idem b Præterea qz que proportio c ad d ea est d ad e: ergo per primā sexti arithmetices c numerus est quadratus et e numerus quadratus: quare ⁊ b idem numero e etiam quadratus. at b demõstratus est nõ quadratus. erit itãq; idem numerus quadratus et nõ quadratus: quod est impossibile. nõ igitur diaschisma note pportionis habebitur. et idem de proporzione schismatos monstrabitur. sint enim a b subter designati minimi numeri cõmatis: qz per vicesimāoctauam huius b minor proporzionis commatis terminus sit ex ductu octonarij in quadratũ lateris ducẽtorum quinquagintaer. et octonarius nõ est quadratus: ergo per decimãquartam sexti arithmetices b minor terminus cõmatis nõ est quadratus. nõ igitur simul vt prioris partis demõstratione a b certis designatis numeris potest equis proporzionibus diuidi. est igitur schismatos eius scz medietatis ratio ignota/atq; irrationalis. Correlarium ex modo demõstrationis notum est.
+
+<margin>33</margin>
+# Tonus: duobus semitoniis minoribus/et commate constat.
+
+$\P$ Nam ratio sesquioctaua duobus semitonijs minoribus atq; vno cõmate constat. superat eni duas dieses duoq; semitonia minora vno commate: ac tonus in eadem ratione consistit. cõstat igitur tonus ex duobus semitoniis minoribus et commate.
+
+<margin>34</margin>
+# $\P$ Tonus a duobus semitoniis minoribus: vno commate distat.
+
+$\P$ Nam subtracto a sesquioctaua pportione vno cõmate relinquũtur duo semitonia minora: igitur et eodem cõmate a tono diducto due dieses ⁊ duo semitonia minora relinquũtur. distat ergo tonus a duobus semitoniis minoribus vno commate.
+
+<margin>35</margin>
+# $\P$ Semitonium minus tribus commatibus maius est: minus vero quattuor. vnde manifestum est apotomen plura quattuor et pauciora quinq̃ continere cõmata.
+
+| | |
+|---|---|
+| **r** | 277531995223258301621530747994112 |
+| **q** | 328128389443693511257285776231761 |
+| **p** | 263600061952401802360312389697536 |
+| **o** | 2178396179632950626746368 |
+| **n** | 2153693963075557766310747 |
+| **m** | 2067895430987964852731904 |
+| **l** | 17098604835172352 |
+| **l2** | 16677181699666569 |
+| **b** | 16231265527136256 |
+| **g** | 134217728 |
+| **f** | 129140163 |
+| **e** | 127401984 |
+| **d** | 524288 |
+| **c** | 531441 |
+| **b** | 243 |
+| **a** | 256 |
+
+$\P$ Non ẽ greca curiositas calculi labore deterrita quo minus quot cõmata in diesi quot in apotome quot deniq̃ in tono sint: peruestigaret. quod nisi aprioribus tẽtatum cognouissem cū id quoq̃ plus laboris (vt michi visum est) in musicis modulationib⁹ vlus/vtilitatisq̃ afferat: missũ fecissem. qui tamē id cognoscē desiderauerint hoc pacto deprehẽdent. Sint a b minimi numeri semitonij minoris et c d minimi cõmatis: per decimãseptimã ⁊ decimãoctauam huius reperti: duco b in c et d ⁊ puẽtiāt e f et a in c ⁊ veniat g: per septimā secundi arithmetices f ad e est cõmatis habitudo/et per octauam eiusdem g ad e habitudo dieseos/semitonijq̃ minoris. Deinde duco e in e ⁊ f in f et e in g ⁊ nascantur h l l2: per sextam quarti arithmetices perq̃ facile cognosci potest l2 h continere duo commata. et per
+
+<vocab>semitonij minoris, commate, tonus, sesquioctaua, apotomen, diesi, diaschisma, schismatos, arithmetices</vocab>

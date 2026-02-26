@@ -1,0 +1,46 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>56</page-num>
+<header>Das erste Buch / 5. cap.</header>
+
+>> wir sehen das / unter den Thieren / und Vogeln / daß die Vet-
+>> ter / mit den Müttern / die Kind ziehent : dieselben Kind / blei-
+>> bent mit ein ander / daß sie sich / zu keinem andern / gehayment :
+>> als man an den turteltuben sicht : welche aber nit mit einander
+>> zihent ir kind / dye gesellent sich / mit manigem / und das sicht
+>> man / an den haynischen Hanen. Vnd davon / wan under
+>> allen Thieren / den Menschen allermeist / Vater und Mut-
+>> ter / mit einander ziehent / fürent und besorgent / davon ist
+>> eß / wider die bescheidenheit / daß sich der Künig geselle / zu an-
+>> dern Frawen.
+>> **Der Schwartze Künig / auf dem Schach-Zabel /**
+>> stet auf dem vierden Veld / und hat / zu der rechten Hand / auf
+>> einem weissen Veld / einen Ritter / und auf einem schwar-
+>> tzen Veld / einen Alten / und ein Roch : Zu der gelincken sei-
+>> ten / seint dieselben Steine / auf widerwertigen Velden. Vnd
+>> das ist darumb / daß die Ritter seint / eines Küniges ehre / und
+>> sein kron / und siet Er mit ihn / zu der gelincken hand / auf ei-
+>> nem gleichen Veld der Künigin / dasselb thut der Alt / zu der
+>> gelincken seiten / und auch ander Stein / auf widerwerti-
+>> gen Velden / mit der Künigin : darumb das Er / und die Kü-
+>> nigin / zu beden seiten / bewahrt seyn. Wan wen Richter
+>> und Rathgeben / dem Künig / mit trewen bey seind / das mei-
+>> net sein recht hand / und dieselben behütent die Künigin / an
+>> eren und an weißheit / zu der gelincken / so wirt das Reich
+>> alles / dester baß verricht / und wan das ist / daß ein jeder be-
+>> trachtet / seinen besundern nuß und frommen / und nicht ach-
+>> tet / deß gemeinen guttes / und deß Reiches ere / so verleust / daß
+>> Reich / sein Zier. Wan der Künig vor ihn ist / an der Herschaft /
+>> und an fürstenthum / davon sol Er nicht ze viel ververren auß
+>> seinem Reich / daß bedüt / daß der Künig / nicht verrerget / wen
+>> an daß dritte Veld / wen Er von stat get : Wan Er aber / von
+>> stat gegangen ist / so get Er nuhr / auf das nechste Veld / als ein
+>> Bend. Daß Er nuhn / aller Steine gevert hat / das betcutet /
+>> das jederman bekennen solle / was er hat / daß Er das / von dem
+>> Künig hette / recht als alle kraft / der gelieder / an dem Menschen
+>> erwegt werden / von dem Haubt / und anfang deß lebens / ist von
+>> dem Hertzen / und waß Sie habent von dienst / das hat der Kü-
+>> nig / von recht / und von Natur : Wan der Richter / hat weiß-
+>> heit : der
+
+<vocab>Schach-Zabel, Künig, Ritter, Alten, Roch, Reich, Richter, Rathgeben, Veld</vocab>

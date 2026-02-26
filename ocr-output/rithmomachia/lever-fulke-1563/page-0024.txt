@@ -1,0 +1,35 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>.E.iii.</sig>
+<meta>image quality: high contrast, bleed-through from reverse; catchword: vpon</meta>
+
+# The Philosophers game.
+
+The last order of squares be found, by
+dobling of euery one of y^e^ firste order of
+roundes, and after adding one, last of all
+by multipliing that number in it self, as
+twise. 2. is. 4. and. 1. added is. 5. so. 5. times
+5. is. 25. likewise twise 3. is. 6. and added is
+7. then . 7. tymes. 7. is. 49 . These be on
+the euen syde. 25. 81. 169. 289 . And of the
+odde syde. 49. 121. 225. 361.
+
+These numbers must be sette vppon
+the men both on the vpper side, & also on
+the netherside. Except one of y^e^ kinges,
+which must with the whole number of
+their pyramis, be marked, onely on the
+bottome. Because the sydes muste haue
+other nūbers, namely the highest point
+of the euen kyng, must haue. 1. y^e^ rounde
+next vnder him marke with .4. the vper-
+most triangle w. 9. the nethermost w. 16.
+The vpper most square muste haue. 25.
+The nethermost square shall haue. 36
+The king of the odde vpon his head, whi-
+che is a rounde, not pointed hath. 16. vp-
+on his first triangle. 25. on the second tri-
+angle. 36. vppon the firste square. 49.
+
+<vocab>Philosophers game, rithmomachia, squares, roundes, triangles, pyramis, calculations</vocab>

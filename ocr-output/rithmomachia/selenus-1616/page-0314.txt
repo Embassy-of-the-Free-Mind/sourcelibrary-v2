@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>280</page-num>
+<header>Das Dritte Buch / 3. cap:</header>
+<warning>Minor staining on right edge; lower left corner of page is missing/torn, though text is unaffected.</warning>
+
+» der Weiſſe / mit ſeiner Königin / auß fünf und dreyſſig / nicht
+» könne Schach geben) den Paß eröffnet: ſo nimt ihn / der Weiſ-
+» ſe / mit demſelben Schützen / und beut nochmaln Schach:
+» Der Schwartze / ziehet den König / auf zwey und vierzig:
+» Der Weiſſe / des K. Rochens / Soldaten / auf fünf und
+» zwanzig: Der Schwartze / ſeines K. Rochens / Soldaten /
+» auf ein und vierzig: (welches dan / umb die Päſſe / etlicher maſ-
+» ſen / dem Feinde / daß Er füglich / nicht könne Schach / bie-
+» ten / zu verlegen / am beſten iſt) Der Weiſſe / nimt / der S.
+<margin>26.</margin> » K. Reuters / Soldaten / mit des K. Schützen: * Der
+» Schwartze / denſelben / mit der K. Schützen: Der Weiſſe / gibt /
+» mit der Königin / auß funf und dreyſſig / Schach / Mat.
+
+<margin>27.</margin> » Wan aber / dieſer urſachen halber / Der Schwartze / den
+» W. Schützen / (n. 26.) nicht nimt / beſondern / ſeines K.
+» Schützen / auf die W. Königin / auf fünf und vierzig / zie-
+<margin>28.</margin> » het: * ſo ſpielet Sie / Der Weiſſe / auf vierzig: nimt her-
+» nach / mit des K. Schützen / der S. K. Rochen / und gewin-
+» net auf die weyſe / das Spiel.
+
+Hiebey wird erinnert / daß der Schwartze / der K. Ro-
+» chen / ob gleich der Damianus, ſetzet / Er werde / vom W. Schü-
+» tzen / endlich weggenommen / nichtes deſto weniger erretten
+könne: Wan Er nemlich / der K. Reuter / auf die W. Köni-
+gin / (welche auf 40. ſtehet / n. 28.) auf ſechs und vierzig: und die-
+ſen Rochen / (Es habe der Weiſſe / die Königin / an einen an-
+dern Ort gezogen / oder dieſen / ſeinen Reuter / welcher dan / mit
+geringerm ſchaden / als der Roche / zu verlieren / mit des K.
+Schützen / genommen) auf drey und ſechßig / rucket / und derge-
+ſtalt erlediget.
+
+<margin>29.</margin> Ziehet dan der Weiſſe / die Königin / nicht auf 40. (n. 28.)
+beſondern auf ſieben und dreyſſig: ſo kan / der S. K. Roche /
+gleichwol errettet werden: dan der Schwartze / alſdan / ſei-
+ner K. Schützens = Soldaten / auf die W. Königin / auf ſechs
+<margin>30.</margin> und vierzig / rucket: * Der Weiſſe / nimt denſelben / mit ſei-
+nes K. Schützen: Der Schwartze / denſelben / mit der K. Reu-
+ter: und kan / der K. Rochen / (nachdem der Weiſſe / mit der Köni-
+gin / den S. Reuter / genommen) auf drey und ſechßig / eben-
+meſſig rücken und ſtellen.
+
+<margin>31.</margin> Nimt aber der Weiſſe / nicht den S. Soldaten / mit dem
+
+<meta>catchword: Schützen</meta>
+
+<vocab>Schach, Königin, Rochen, Schützen, Reuter, Soldaten, Damianus, Mat</vocab>

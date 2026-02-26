@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>178</page-num>
+<header>Das Ander Buch. 8. cap</header>
+
+maln Schach: Er muß den König / auf acht und funfzig / zie-
+hen: Der Weisse / nimt mit der K. Schützen / seines K. Reu-
+ter / gibt Ab-Schach / von des K. Rochen / und ziehet auf seine
+Königin: Er den König / auf neun und funfzig: Der Weisse /
+nimt seine Königin / mit der K. Schützen: Er ziehet des K.
+Schützens-Soldaten / auf die W. Königin / (auf daß sie / sei-
+nem Könige / auß sieben und funfzig / nicht gleich Schach-Mat
+gebe) auf drey und viertzig: Der Weisse / nimt ihn / mit der-
+selben / und beut Schach: Er muß den König / auf sechzig /
+rucken: Der Weisse / gibt / mit der Königin / auß zwey und
+funfzig Schach-Mat.
+
+<margin>14.</margin>
+Ziehet aber der Schwartze / den König / nicht / auf 59.
+(n. 13.) sondern / auf drey und funfzig: so nimt der Weisse /
+des S. K. Schützens-Soldaten / mit seines K. Schützen / Zie-
+het auf des S. K. Rochen / und kan denselben / gar leicht / in
+seine gewalt bringen: Dan der Schwartze / sich mehr fürzu-
+sehen hat / daß Ihm / die W. Königin / auß vier und vierzig /
+nicht alsbald Schach-Mat gebe / Als daß Er / diesen des K.
+Rochen / und Reuter / errette. So fern nuhn der Weisse / das
+Spiel verstehet / alß wird Er dem Schwartzen / in dieser stel-
+lung der Steine / leichtlich obsiegen.
+
+<margin>15.</margin>
+Wan aber der Schwartze / nicht den Rochen / auf acht
+und funfzig (n. 10.) sondern / seiner K. Reuter (umb des K.
+Reuter / zu beschützen) auf drey und funfzig / zufoderst setzet:
+so spielet / der Weisse / des K. Rochen / auf des S. K. Reuter / auf
+drey: Der Schwartze / seines K. Rochen / auf des W. K. Schüt-
+zen / auf acht und funfzig: Der Weisse / (umb / dem Schwar-
+tzen / den garauss zu machen) nimt des S. K. Rochens-Solda-
+ten / mit seiner Königin: Der Schwartze / dieselbe / mit des
+K. Reuter / und ziehet ihn / auf der W. K. Schützen: Der Weiss-
+se / raubet / mit des K. Schützen / des S. K. Schützens-Solda-
+ten / ziehet ihn zugleich / auf des S. K. Rochen / und beut Schach:
+Der Schwartze / setzet den König / (weyl Er ihn sonsten / nier-
+gendes / hin ziehen kan) auf neun und funfzig: Der Weisse / nimt /
+die S. Königin / mit seiner K. Schützen / erlanget also / noch der
+S. K. Schützens- und dero eigenen-Soldaten / und bringet sein
+Spiel / dieweyl Er / auf diese Art / drey Soldaten / gewinnet /
+in eine gute ordnung / und so fern Ers zu spielen weiß / ohnfehl-
+barlich / zum begerten ende.
+
+<meta>catchword: Wan</meta>
+
+<vocab>Schach, Schach-Mat, Rochen, Reuter, Schützen, Soldaten, König, Königin, Ab-Schach, garauss, obsiegen</vocab>

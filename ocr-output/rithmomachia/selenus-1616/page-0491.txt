@@ -1,0 +1,37 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>357</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+Wan man nuhn die Zahle / der itzt beschriebenen Vier
+schwartzen Dreyecketen Steinen / mit den Zahlen / der ersten
+Weissen / Runden Steinen / (Doch daß die 2. außgelassen /
+und die 10. welche / in der ordnung / der Gleichen Zahle / auf die
+8. folgen / zu ende gesetzet werden) vereiniget : oder einen jegli-
+chen / dieser vier Gleichen Zahlen / in sich selber vermehret :
+(Dahero dan / die drey ersten Schwartze Dreyeckete Steine /
+mit den dreyen letzten Weissen Runden Steinen / gleiche Zahle
+haben) so befinden sich / auß deren Summen / die Zahle / der vier
+übrigen schwartzen Dreyecketen Steinen : alsz 16, welche / 4
+und 12, oder vier mahl 4 : 36, welche 6 und 30, oder sechs mahl
+6 : 64, welche 8 und 56, oder Acht mahl 8 : 100, welche 10 und
+90, oder Zehen mahl 10 : machen.
+
+(Buxer : fol : 9. a.)
+
+> *Proportionem Superparticularem, appellamus eam, in quâ Major Numerus, Minorem cohibet, cum semel alterâ ejus parte, quæ Totum metiatur : ut ternarius, binarium semel habet, & monada. At cum Superparticularis ratio, secundum Multiplicem, primas teneat, convenientior nobis judicata est, in scribendo Triangulo, qui in secundis, ab Orbe consistit.*
+
+<image-desc>A series of twelve geometric shapes arranged in three rows of four. The first and second rows consist of equilateral triangles, while the third row consists of squares. Each shape contains a number and a single dot centered below the number. 
+Row 1: Triangles with the numbers 6, 20, 42, and 72.
+Row 2: Triangles with the numbers 9, 25, 49, and 81.
+Row 3: Squares with decorative borders on the left and top edges, containing the numbers 15, 45, 91, and 153.</image-desc>
+
+Die vier erste / Weisse Viereckete Steine / werden mit den
+Summen / welche / auß den zusamen gerechneten Zahlen / der acht
+Weissen / Dreyecketen Steinen / herkommen : alsz mit 15, welche 6
+und 9 : mit 45, welche 20 und 25 : mit 91, welche 42 und 49 : mit 153,
+welche 72 und 81, machen / beschrieben.
+
+<meta>catchword: Der</meta>
+
+<vocab>Zahl-Kampf, Dreyeckete Steine, Viereckete Steine, Superparticularem, Buxer, Arithmetica</vocab>

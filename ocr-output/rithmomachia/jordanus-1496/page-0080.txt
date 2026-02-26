@@ -1,0 +1,87 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<margin>
+<image-desc>A line diagram with vertical markers labeled a, b, c, d, e. Horizontal line segments connect them. Numerical values: a is 4, b is 2. Below that segment, c is 2 and d is 1. The difference between a and b is 2. The value e is 1.</image-desc>
+</margin>
+$\P$ Tribus numeris in hac medietate sumptis: maximi ad mimū et medii ad alteram <margin>27</margin>
+differentiarum eandem esse proportionem impossibile est.
+$\P$ Sint a b c tres nuēri in hac medietate: ꝛ differentię eoꝛ d et e. dico impossibile eē eādē ꝓportiōem
+a ad c ꝝ b ad d vel b ad e. nam si esset a ad c sicut b ad e: ergo ꝓmutatim esset a ad b sicut c ad e. et qꝛ per
+vicesimam huius b ad c sicut d ad e erit ꝓmutatim b ad d sicut c ad e. quare quę ꝓportio a ad b ea erit
+b ad d: sed a ē maior b. igitur per quartam secūdi b maior d. igitur que proportio a ad b maiorem eius
+portionem erit b maioris portionis ad minorem. qđ per undecimā quinti est impossibile ꝛ ppositū.
+
+<margin>
+<image-desc>A line diagram with numbers 8, 4, 2 at intervals. Numbers 4, 2 are written above gaps. Below, a sequence of numbers 36, 30, 6, 5, 1 are associated with points and segments on lines labeled a, b, c.</image-desc>
+</margin>
+$\P$ Trium numerorum huius medietatis quo maximi ad mimū maior est proportio: <margin>28</margin>
+eo medii ad quālibet differentiarum proportio minor.
+$\P$ Sit hypothesis vt prius. hoc eni ideo est qꝛ quāto a ad c maior: tanto differentia b ad c erit maior
+quare tanto numerus e maior. et ideo ꝓportio b ad e minor fiet: ꝓ quanto a ad c maior tanto etiā a ad
+b maior et quāto a ad b maior tanto d differentiā maior. quāto aut d differentiā maior: rāto b ad ipsam
+proportio minor. quod est propositum.
+
+$\P$ Numeros quotlibet in geometrica medietate ꝓtinuare: quoꝛ extremoꝛ ꝓportio <margin>29</margin>
+non sit data ꝓportiōe maior: minoꝛ vo differentia non sit dato numero minor.
+$\P$ Diuido per sexagesimā nonam nonā ꝓportiōem datam in ꝓportiōes quaꝛ quotlibet sint equales:
+et si differētia minoꝛ sit equalis dato numero aut maior: effectum est propositum. si aut minorum
+differentiā sit dato numero minor. duco datum numerum in quēlibet numerum illaꝛ proportionum
+et factum apparebit propositum.
+
+<margin>
+<image-desc>A line diagram showing numbers 8, 6, 4 and 4, 3, 2. Lines are labeled a, b.</image-desc>
+</margin>
+$\P$ Si inter numeros eiusdem medietatis: fm arithmeticam medietatem mediu statu- <margin>30</margin>
+antur: illi quoꝛ in geometrica medietate disponētur.
+$\P$ Sint a b c cōtinue in hac medietate dispositi: sitqꝛ d medius inter a ꝛ b: et e inter b ꝛ c fm arithme-
+ticam medietatem. dico que ꝓportio a ad b: eam esse d ad e. nam p decimānonam huius vt a ad b: ita
+b ad e. igitur permutatim vt a ad d: ita b ad e. quod est propositum.
+
+<margin>
+<image-desc>A line diagram with labels a, b, c on three horizontal lines. a=8, b=5, c=4. To the right, numbers 25 and 16 are listed with a difference of 9 noted between them.</image-desc>
+</margin>
+$\P$ Si inter duos numeros medij duo proponātur alter in arithmetica ꝛ alter in geo- <margin>31</margin>
+metrica medietate: qui est scđm arithmeticam reliquo tanto amplius potest $\bar{q}$tum est
+quadratum differentie ipsius ad alterutrum extremorum.
+$\P$ Sit inter a ꝛ b sint b c duo medij: scđz b in arithmetica medietate ꝛ c in geometrica. dico b amplius
+tanto posse sup c $\bar{q}$tū est quadratum differētię b ad a aut b ad d: qđ idē est. nam p vicesimāprimam
+huius qđ fit ex a in d in est $\bar{q}$tum quadratum c. et p tertiā huiꝰ quadratum b addit sup id qđ fit ex a
+in d $\bar{q}$tum quadratum differētię a ad b. igitur ꝛ tm b addit sup quadratum c. quod est propositum.
+
+<margin>
+<image-desc>A semi-circular geometric construction diagram with points labeled a, b, c, d, e, f, g, h, k. Within the circle are numbers 6, 4, 2. To the left is a column of calculations or sequence of squares: 49 (n), 169 (m), 289 (l). Corresponding roots 7, 13, 17 are written nearby.</image-desc>
+</margin>
+$\P$ Tres numeros in arithmetica medietate reperire: inter quoꝛ binos ꝛ binos scđm <margin>32</margin>
+geometricam medietatem medios assignare cōtingat.
+$\P$ Sint a ꝛ b duo nūeri pares: et b aut equalis aut numerus a. et ꝓpositus ex a ꝛ b sit c cuius duplus
+sit d. ducaturqꝛ a in c ꝛ pueniat e. quia p primam septimi cōpositus ex a et c est par: et p duodecimam
+eiusdē e est par. ergo p sextam eiusdē si ꝓposit⁹ ille detrahatur ab c: relinquetur par. sit ergo par relictus
+f. et eius medietas g. et compositus ex g et c sit h. itemqꝛ h et a componāt k sintqꝛ l m n quadrati l h g
+quos dico esse numeros quales querimus. nam p decimāquintam primi l quadratum k addit sup m
+quadratum h: $\bar{q}$tum est quadratum a. et qđ fit ex h bis in a. hoc est $\bar{q}$tum quadratum a ꝛ qđ fit ex a in
+d et f. et qđ fit ex a in se et in f minuit ex eo qđ fit ex a in e $\bar{q}$tum est qđ fit ex a in c. et qđ fit ex a in d est
+$\bar{q}$tum qđ fit ex b in c. et qꝛ qđ ex a et qđ b in e equat ei qđ ex c in e: erit qđ addit quadratum k sup quadra
+tum h minus eo qđ ex c in e $\bar{q}$tum est qđ fit ex c in a. et ex eodem patere potest qđ quadratum h addit
+sup quadratum g $\bar{q}$tū qđ fit ex c in se ꝛ in f: qđ min⁹ est eo qđ fit ex c in e $\bar{q}$tum est qđ fit ex c in a. quare
+quanto l abundat sup m tanto m abundat sup n. quare quadrati l m n sunt in arithmetica medietate
+constituti. et p conrelarium quarte sexti inter l et m est vnus medius ꝓportiōalis: ꝛ siliter inter m ꝛ n.
+factum est ergo propositū.
+
+<margin>
+<image-desc>A vertical diagram showing three main points a, b, c with numerical values 289, 169, 49. Intermediate values 221 (d) and 91 (e) are noted between them. Differences of 120 and 120 are indicated between a-b and b-c respectively.</image-desc>
+</margin>
+$\P$ Si sumptis tribus terminis in arithmetica medietate medij inter illos fm geome- <margin>33</margin>
+tricam medietatem statuātur: inter quadratos illoꝛ quadratū medii alioꝛ in arithme
+tica medietate constare necesse est.
+$\P$ Sint a b c numeri in arithmetica medietate cōstituti p precedentem inuēti inter quos sint d e fm
+geometricam medietatem. dico quadratū medij b eē in arithmetica medietate intꝛ quadrata medioꝛ
+d ꝛ e. nam qꝛ quadratum d p vicesimāsextam secūdi est $\bar{q}$tum qđ fit ex b in a. ꝛ per nonam primi qua-
+dratum d addet sup quadratum b $\bar{q}$tum qđ fit ex b in dřiām suam ad a. ꝛ siliter quadratum b addet
+sup quadratum e $\bar{q}$tum qđ fit ex b in dřiām suam ad c. sed b ad a ꝛ b ad c equalis est differētia: igitur
+quadrata numerorum d b e: sunt in arithmetica medietate. quod est propositum.
+
+$\P$ Ordinatis tribus terminis in harmonica medietate: erit maximi ad mediu: ꝛ medij <margin>34</margin>
+ad minimum maior proportio.
+
+<vocab>proportio, medietas, arithmetica, geometrica, harmonica, quadratum, differentia, medius proportionalis</vocab>

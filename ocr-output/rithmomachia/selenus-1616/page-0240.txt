@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>210</page-num>
+<header>Das Ander Buch / 12. Cap:</header>
+
+Rochens-Soldaten: der Weisse / nimt des S. K. Reuter / mit des
+K. Schützen / und gewinnet dergestalt das Spiel / ohn verhindern:
+Dan / ob schon der Schwartze / mit der Königin / dem W. Könige /
+auß zwelfe / Schach-beut: der Weisse / demselben / mit der K.
+Reuter / auf dreyzehen / gleichwol bedecken / und nebest dero Ro-
+chen / des K. Rochen / ferner beschützen kan: der Schwartze /
+nimt / des W. K. Schützen / mit des K. Rochens-Soldaten / und
+ziehet ihn / auf die W. Königin: der Weisse / nimt / der S. K. Reu-
+<margin>23.</margin> ter / mit der K. Schützen / und beut Schach: * Der Schwartze /
+nimt denselben / mit des K. Reuters-Soldaten: der Weisse / den-
+selben / mit der Königin / beut Schach / und erlanget zum nechsten
+zuge / des S. K. Rochen / zusamt dem gantzen Spiele.
+<margin>24.</margin> Nimt aber der Schwartze / den W. Schützen / nicht mit dem
+Soldaten / (n. 23.) besondern / bedecket den König / mit seinem Schü-
+tzen / auf zwey und funfzig: so beut der Weisse / mit der Königin /
+<margin>25.</margin> auß sieben und dreyßig / Schach: * Der Schwartze / rucket den
+König / auf sechzig: der Weisse / nimt / mit der K. Schützen / des
+S. K. Schützen: der Schwartze / darf ihn / weder mit dem Könige /
+noch mit der Königin / wegnehmen / (dan Er sonsten / wan ein
+W. Roche / auf viere gezogen würde: die Königin verlieren müste)
+besondern muß sich / dieweil Er / ein gefährliches Spiel hat / und
+durch den Weissen / leichtlich kan erleget werden / anderer ge-
+stalt vorsehen.
+<margin>26.</margin> Ziehet aber der Schwartze / den König / nicht auff 60. (n. 25.)
+besondern / auf zwey und sechzig: so rucket der Weisse / der K.
+Schützen / auf sechs und dreyßig / und beschützet / des K. Rochens
+Soldaten: der Schwartze / rucket des K. Rochen / auf die W. Kö-
+nigin / und dero Reuter / auf ein und sechzig: der Weisse / beut /
+mit der Königin / auß vier und vierzig Schach / und ziehet sie / auf
+des S. K. Schützen: der Schwartze / bedecket den König / mit
+seinem Rochen / und beschützet zugleich / dessen Schützen / auf drey
+und funfzig: (Dan Er sonsten / wan der König / auf drey und sechsz-
+ig / gezogen wird / die Königin / verlieret: weil alszdan / der Weiss-
+e / mit der K. Schützen / seiner K. Schützens-Soldaten / weg-
+nimt / Schach-beut / und mit der Königin / im folgenden zuge / sei-
+ne Königin / erobert) der Weisse / setzet / der K. Rochen / auf fünfe:
+der Schwartze / seines K. Schützen / auf der W. K. Schützen /
+auf drey und vierzig: der Weisse: des K. Rochen / auf die S. Kö-
+nigin / (und seiner K. Schützen / zu verthetigen) auf viere: der
+
+<meta>catchword: Schwartze /</meta>
+
+<vocab>Schach, Rochen, Reuter, Schützen, König, Königin, Soldaten, Schach-beut</vocab>

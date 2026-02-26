@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>353</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Yy ij</sig>
+<meta>catchword: dem Reu-</meta>
+
+<margin>9. cap:</margin> Schach: Er nehme denselben / mit der K. Soldaten: Der Schwar-
+ze / gebe / mit der Königin / auß dreyzehen / Schach-Mat) besondern /
+stellet der K. Rochen / auf drey / und wird / seine Schantze / auf daß Er /
+seine Königin / hinwider auß des Schwarzen hauffen / zu seinen
+Steinen / sicher bringen möge / ferner wol inacht / nehmen können.
+
+<margin>38.</margin> Wan aber der Schwarze / den König / nicht auf 44. (n. 31.)
+besondern auf sechssig / rucket: so gibt der Weisse / mit der Kö-
+nigin / auß zwey und sechssig / abermal Schach: Der Schwar-
+ze / rucket / den König / auf zwey und funffzig: Der Weisse / nimt /
+mit der Königin / der S. K. Reuters-Soldaten / ziehet sie / auf
+dero Rochen / und gibt Schach: Der Schwarze / bedecket den
+König / (umb der K. Rochen / zu erretten) mit dero Reuter / auf
+drey und funffzig: Der Weisse / nimt / mit des K. Rochens-Sol-
+daten / des S. K. Reuter: Der Schwarze / gibt / mit der Köni-
+gin / auß achtzehen / Schach / und ziehet dieselbe / auf des W. K. Reu-
+ters- und Rochens-Soldaten: Der Weisse / den König / auf fünfe:
+Der Schwarze / nimt / mit der Königin / des W. K. Reuters-Sol-
+daten / und ziehet auf dessen Rochen: Der Weisse / denselben / auf
+viere: Der Schwarze / der K. Rochen / auf die W. Königin / auf drey
+und sechssig: Der Weisse / gibt / mit der K. Reuter / auß sieben und
+
+<margin>39.</margin> dreyfsig / Schach: * Der Schwarze / rucket / den König / auf vier
+und viertzig: Der Weisse / (so fern Er / auß sieben und zwantzig /
+mit dem Reuter / zur verwechslung der Königinne / nicht wil ur-
+sach geben) beut / mit dem Reuter / auß vier und funffzig / Schach:
+Der Schwarze / rucket / den König / auf zwey und funffzig /
+(dan / wan derselbe / auf sechs und dreyfsig / gezogen würde: die
+W. Königin / auß sieben und dreyffig / Schach geben / und ihm /
+ein böses Spiel / verursachen würde) der Weisse / die Königin / (auß
+der gefahr) auf sieben und dreyffig: folgendes auf dreyffig / und wird
+seinen Zügen / ferner wol rahten können.
+
+<margin>40.</margin> Setzet aber der Schwarze / den König / nicht auf 44. (n. 39.)
+besondern auf sechssig: so beut / der Weisse / mit dem Reuter / auß
+drey und viertzig / Schach: und erlanget dadurch / (nachdem der
+Weisse / seine Züge anstellet) entweder beede Rochen / oder den
+Reuter.
+
+<margin>41.</margin> Stellet aber der Schwarze / den König / weder auf 44. noch
+60. (n. 39. 40.) besondern auf ein und sechssig: so gibt / der Weisse /
+mit der Königin / auß vier und funffzig / Schach: Der Schwar-
+ze / muß den König / auf sechssig rücken: Der Weisse / gibt / mit
+
+<vocab>Schach, König, Königin, Reuter, Rochen, Soldaten, Schach-Mat, Weisse, Schwarze</vocab>

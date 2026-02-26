@@ -1,0 +1,28 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>119</page-num>
+<header>1. cap: Vom Schach-Spiel.</header>
+
+<image-desc>An ornate rectangular woodcut headpiece featuring a symmetrical design of scrolling acanthus leaves and foliage, with two birds perched among the branches.</image-desc>
+
+### Das Ander Buch /
+# Der Beschreibung / des
+# Schach-Spieles.
+### Das Erste Capittel.
+
+->Von den Mitteln / den Sieg / in dem Spiele<-
+->zu erlangen / insonderheit vom Schach /<-
+->und Schach-Matten.<-
+
+<image-desc>A large ornamental drop cap 'A' decorated with intricate scrolling floral and vine patterns.</image-desc>
+
+Alß bey diesem folgenden Tractat / die gantze Kunst / des Schach-Ziehens / bestehe / ist auß dem beschluß / des letzten Capittels / des vorhergehenden Buches / anhero zu widerholen. Weyl nuhn derselbe dashero / in etwas weitleuffiger / alß der vorige Theil / anlauffen möchte / alß wird man ihn / in zween Haupt-puncte / wider abtheilen müssen : und sol der Erste / von den Mitteln / und wie dieselben / in gemein / ins werck zu richten seyn / handlen : Vom Andern / nemlich dem Gebrauch / findet man drunten / im anfange des sechsten Capittels / dieses Buches.
+
+Es seynd aber diese Mittel / unter dem treffen / und der Schlacht-liefferung / beeder Hauffen / semptlich begrieffen. Dan das Schach-Spiel / nichtes anders ist / alß ein lustiges Kunstreiches treffen / oder schlacht / der Schach-Männlein.
+
+Nuhn trift man aber / entweder auf die beede Könige / oder die übrige dreyssig Steine : Bey diesem treffen / stehet nicht / der endliche Sieg und verlust / wie wol bey dem andern angrieffe / wan nemlich der König / nicht ausweichen kan. Weyl man aber ohn treffen / oder anführing etlicher auß den 30. Steinen / zu jenem / nicht gelangen kan : Alß sollen erstlich / die Mittele / so bey diesem gebrauch
+
+<sig>Q</sig>
+<meta>catchword: chet /</meta>
+
+<vocab>Schach-Spiel, Schach-Ziehens, Schach-Matten, Schach-Männlein, Haupt-puncte, Schlacht-liefferung, Könige, Steine</vocab>

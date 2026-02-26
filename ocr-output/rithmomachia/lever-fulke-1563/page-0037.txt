@@ -1,0 +1,21 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>B. iij.</sig>
+<meta>catchword: one</meta>
+<warning>Heavy ink show-through from the verso side is visible throughout the page, causing dark marks between lines of text.</warning>
+
+# The Philosophers game.
+
+## ¶ Of the marchinge or remouing of the men.
+
+The battell beyng duely placed, it followeth next, to know the maner of marching & remouing, for euery kynd of men, hath their proper kynde of motion, and fyrste we muste speake of the roundes.
+
+### ¶ The motion of the roundes.
+
+The roundes muste moue into the space that is next vnto them cornerwyse, as in the table, from the space A. to any of these. B. C. D. or. E.
+
+### ¶ Of the triangles.
+
+The triangles passe three spaces counting that in which they stande for one, and that into which they do remoue for another, that is leaping ouer
+
+<vocab>Philosopher's game, Rythmomachia, battell, roundes, motion, triangles, marching</vocab>

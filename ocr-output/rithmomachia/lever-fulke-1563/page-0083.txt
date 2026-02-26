@@ -1,0 +1,17 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+## ¶ Of the triumph.
+
+The triumph is after the Kynge be cleane taken away, to be created in the aduersaries campe, as well of your owne men as of your aduersaries men that be taken, or of both in proportion as hath bene shewed before, and proclaymed that those men ons placed, may not be taken, as it was declared sufficiently, and no difference betwene the triumphs, sauyng that some wyll not alowe a triumphe but of foure numbers, and two proportions at the lest. All three for the greater victorie, makynge but two kynds of triumphs.
+
+-> ¶ There foloweth the thyrd <-
+-> kynde of playing at <-
+-> the Philosophers <-
+-> game. <-
+
+<sig>C.ij.</sig>
+<meta>catchword: There</meta>
+
+<vocab>Philosophers game, triumph, Kynge, aduersaries, proportion, victorie, Rythmomachia</vocab>

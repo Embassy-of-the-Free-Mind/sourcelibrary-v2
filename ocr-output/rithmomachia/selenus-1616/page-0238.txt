@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>208</page-num>
+<header>Das Ander Buch / 12. Cap:</header>
+
+mit der K. Schützen/auß 27. Schach: Der Schwarze/bedecket/
+den König/mit der Königin/auf 36. Der Weisse/nimt sie / mit sei=
+ner Königin/und beut abermal Schach: Der Schwarze/rucket
+den König/auf sechs und viertzig: Der Weisse/gibt/ mit der Köni=
+gin/auß 39. Schach = Mat.
+
+<margin>15.</margin> Wan aber der Weisse/nicht des K. Reuter / auf 19. (n. 2.) be=
+sondern/der K. Soldaten/(auf daß ihr Schütze/des S. K. Solda=
+ten zu erhaschen/gelegenheit erlange) auf neun und zwanzig/ziehet:
+so rucket/der Schwarze/des K. Reuter / auf zwey und funfzig:
+Der Weisse/(auf daß sein Segentheil/keinen Zug/zum Vortheil
+erlange) nimt nicht/des S. K. Soldaten / mit der K. Schützen/be=
+sondern ziehet seines K. Reuter/auf neunzehen: Der Schwarze/
+(zu beschützen/des K. Soldaten) dessen Reuter / auf zwey und vier=
+zig: Der Weisse/des K. Schützen/auf dreyssig: Der Schwar=
+ze/der K. Soldaten/(umb seiner K. Schützen/ einen freyen gang /
+zu verschaffen) auf funf und vierzig: Der Weisse/des K. Rochen /
+(zu ferner beschützung/des K. Reuters) auf drey: Der Schwarze/
+des K. Reuter/ auf des W. K. Reuters = Soldaten / auf funf und
+zwanzig: Der Weisse/nimt nicht/des S. K. Soldaten/mit der K.
+Schützen/(dan sonsten derselbe/wan der Schwarze/seines K.
+Reuters = Soldaten nehmen/und Schach = bieten würde/verloren
+wehre) besondern ziehet/der K. Schützens = Soldaten/(auf daß sein
+König/auf vierzehen/springen könne) auf zwey und zwanzig: Der
+Schwarze/(des Feindes Spiel / zu verhindern) auf des W. K.
+Reuter/der K. Schützen/auf sechs und zwanzig: Der Weisse/(dem
+Schache von des S. K. Reuter/zu entweichen) springet/mit seinem
+Könige/auf vierzehen: Der Schwarze/nimt / mit des K. Reu=
+ter/des W. K. Reuters = Soldaten: Der Weisse/ziehet auf ihn/
+
+<margin>16.</margin> und der S. K. Schützen/des K. Rochen/auf zwey: * Der Schwar=
+ze/(so fern Er/des W. K. Reuter/mit der K. Schützen/nicht/weg=
+nehmen/noch einen/von den beeden kurtz gedachten Steinen/verlie=
+ren wil) der K. Schützen/(umb des K. Reuter / zu vertheitigen) auf
+siebenzehen: Der Weisse/auch auf diesen S. Reuter/die Königin/
+
+<margin>17.</margin> auf zwölfe: * Der Schwarze/gibt / mit demselben / auß zwan=
+zig/Schach: Der Weisse/nimt ihn/mit der K. Schützen: Der
+Schwarze/denselben/mit des K. Soldaten: Der Weisse/den=
+selben mit der Königin.
+
+<margin>18.</margin> Gibt aber der Schwarze/nicht Schach / (n. 17.) besondern
+<meta>catchword: setzet</meta>
+
+<vocab>Schach, Schach-Mat, Reuter, Soldaten, Schützen, Rochen, Königin, Segentheil, König</vocab>

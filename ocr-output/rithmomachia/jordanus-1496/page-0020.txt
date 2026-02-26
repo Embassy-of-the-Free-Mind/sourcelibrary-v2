@@ -1,0 +1,130 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>113</page-num>
+
+<image-desc>Geometric line diagrams and numerical examples for arithmetic propositions in Euclid's Elements. Lines are labeled with letters a, b, c, d, e, f, g. Numerical examples include sequences of numbers used in proofs, such as {386, 85, 35, 11, 7, 6} and sets of squares and cubes like {4, 16, 64} and {5, 25, 125}.</image-desc>
+
+<margin>
+a ——————
+b ———— c ————
+d ————
+e ————
+</margin>
+partes: manifestũ est enĩ cum d sit numerus primus/ unã partiũ b eẽ vnitatẽ. capio ergo unã partiũ b que sit f: et unã partiũ a q̃ sit g: q̃ igit̃ quinta pars f vnitas est d: tota pars g est ipsius c: ergo per septimã primi quota pars f vnitas ad g: tota pars d est ad c: numerabit igit̃ d ipsũ c qd iterũ ẽ oppositũ.
+
+---
+
+<margin>
+5
+</margin>
+¶ Si numerũ ex duobus pductũ tertius numeret: idẽ alteri illoy erit cõmẽsurabilis
+¶ Sit a numerus ex b in c pductus quẽ numeret d: dico d alteri numeroy b aut c esse cõmẽsurabilem. nam aut d est primus: aut cõpositus. si primus: ergo per pcedẽtẽ alterũ eoy numerat/ quare alteri eoy erit cõmẽsurabilis. si cõpositus: ergo per secundã huius ab aliquo primo numerat d: qui sit e. q̃ e numerat d: numerabit etiã per vicessimã tertiã primi a: quare e per pcedẽtẽ numerabit b aut c et cũ etiã cõiter numeret d: sunt per diffinitionẽ d et alter duoy b aut c quos cõiter e idẽ numerus numerat/ cõmensurabiles: quod intenditur.
+
+---
+
+<margin>
+386
+---
+85
+---
+35
+---
+11
+---
+7
+---
+6
+---
+a ——————
+g ——————
+6
+</margin>
+¶ Sũptis quotlibet numeris primis: diuersũ ab illis numerũ primũ esse necesse est.
+¶ Sint a b c quotlibet numeri primi: dico alterũ ab ipsis esse. Duco enĩ numerũ primũ in secundũ et pueniat d: et tertiũ in pductũ et puẽiat e: et si esset quartus: ducerẽ ipsũ in pductũ e: et ita deinceps et quia priores semp erũt partes partũ ultimi pducti: ergo per vicessimã tertiã primi et diffinitionẽ: oẽs illi numeri primi numerabũt ultimũ pductũ: cui addo unitatẽ: et sit totus pductus f: qui aut est primus/ sicq; cõstabit ppositũ. aut cõpositus: qui si fuerit cõpositus: per secundã huius ab aliquo primo numerat qui sit g. et cum g sit primus et nõ sit aliqis pdictoy: nam si aliquis pdictoy: numeraret f cum numeret detractũ e vt ostẽsũ est: per duodecimã primi numeraret residuũ: numerũ scz unitatẽ: quod est impossibile: constat igit̃ aliũ ab ipsis esse numerũ primũ.
+
+---
+
+<margin>
+9
+8
+---
+4
+---
+a —— b ——
+c ——————
+7
+</margin>
+¶ Si fuerint duo numeri cõtra se primi: quicũq; numerat alterũ est ad reliquũ primus.
+¶ Sint a et b cõtra se primi et c numeret a: dico b et c esse cõtra se primos: alioquin si c numerat b aut alius quicũq; b et c: cum idẽ per vicessimã tertiã primi numeraret a: nõ essent a et b contra se primi quod est contra hypothesim.
+
+---
+
+<margin>
+8  9
+---
+4  3
+a —— b ——
+e ——————
+8
+</margin>
+¶ Quicunq; numerãt numeros contra se primos: et ipsi sunt adinuicem primi
+¶ Sint a b numerãtes c d numeros cõtra se primos: a quibus c et d ipsũ d: dico a et b cõtra se primos nam si sint cõmẽsurabiles sit e eos cõiter numeras: q̃ ergo e numerabit a etiã per vicessimã tertiã primi numerabit c. et q̃ e etiam numerat b per eãdẽ numerabit d. nõ sũt igit̃ c d contra se primi: qd est contra hypothesim.
+
+---
+
+<margin>
+7
+---
+4  3
+a —— b ——
+d ——————
+9
+</margin>
+¶ Numerus cõpositus ex duobus numeris cõtra se primis: ad utrũq; illoy est pmus
+¶ Sint a et b numeri cõtra se primi: et cõponat̃ c: dico c ad vtrũq; eoy esse primũ. nam si est cõmensurabilis vni eoy vt nũero a: numeret igit̃ eos aliqs numerus vt d: q̃ ergo d numerat c et a detractũ: ergo per duodecimã primi d etiã numerat b residuũ. nõ sũt igit̃ a b cõtra se primi/ qd est cõtra positũ.
+
+---
+
+<margin>
+72
+---
+8  9
+a —— b ——
+7
+---
+c ——————
+e ——————
+10
+</margin>
+¶ Si duorum numerorum vterq; ad tertium fuerit primus: et qui ex ipsis producit̃ ad eundem erit primus.
+¶ Sint a b duo numeri quoy vterq; ad c sit pmus: et sit d pductus ex a in b: dico d esse pmũ ad c. nã si cet d essẽt cõmẽsurabiles: aliqs eos vt e cõiter numeraret: qui cũ numeraret d pductũ ex duob? scz a et b: p quartã huius cõicabit alteri eoy: qd p septimã huius ẽ ipossibile. nõ itaq; c et d sũt cõmẽsurabiles
+
+---
+
+<margin>
+64
+---
+8  9
+a —— b ——
+c ——————
+11
+</margin>
+¶ Si fuerit duo numeri cõtra se pm̃i: qd ex altero in se ducto pducit̃ ad reliquũ erit pm̃
+¶ Sint a et b cõtra se pm̃i: et a in se ductus pducat c: dico c esse pmũ ad b. capio d equale a: et q̃ inter b a et d est primus ad b: ergo per pcedẽtẽ qui fit ex a in d est pmus ad b. sed qui fit ex a in se: equat̃ ei qui fit ex a in d: igit̃ ur qui fit ex a in se est primus ad b. quod est propositum.
+
+---
+
+<margin>
+64    125
+e ————— f —————
+16    25
+c ————— d —————
+4     5
+a —— b ——
+g —————
+12
+</margin>
+¶ Si fuerint duo numeri contra se primi: qui ex eis in se pducunt̃ erũt adinuicẽ primi. ¶ si iidem in pductos ducant̃: et qui inde pducẽtur erunt cõtra se primi. Sicq; deinceps si principia in pductos ducantur: pducti erunt incommensurabiles.
+¶ Sint a et b cõtra se primi: ducat̃ qz a in se et fiat c: et b in se et fiat d: dico c d esse cõtra se primos. Item dico si a ducat̃ in c et fiat e: et b in d r fiat f: silit̃ e f eẽ incõmẽsurabiles atq; cõtra se primos. et si iterũ duxeris a in e et b in f/ qui pducenf̃ esse cõtra se primos: et hoc quoties feceris ita euenire. Primũ patet: nam per pm̃issã quia a est primus ad b et c fit ex a in se: per pcedentem c est pmus ad b et quia c est primus ad b et d fit ex b in se: per eãdem c est primus ad d quod est primũ. Preterea q̃ vterq; a/ et c est primus ad b: igitur per decimam e qui ex ipsis producitur est primus ad b. quia igit̃ e b sunt contra se primi: et d producitur ex b in se: per precedentem e etiaʒ est primus ad d. cum itaq; vterq; duorum b d sit primus ad e vt iã monstratum est: igitur per decimam f qui fit ex ipsis scilicet ex b in d est primus ad e. et ita qũcunque series pcedat cõclude. et hoc est scdm. ¶ Ex huius prima parte cognoscit̃: tetragonos quoy latera incõmensurabilia sunt esse incõmensurabiles. et ex secũda: tesseras incõmensurabiles esse quarũ latera sunt incõmensurabilia. et cõtra demõstrare promptũ est si latera sunt cõmensurabilia: tetragonos et tesseras esse cõmensurabiles. Ut sint a b latera cõmensurabilia et c tetragonus a: et e eius tessera. d tetragonus b: et f eius tessera: quia a b sũt cõmensurabiles: ergo ẽ numerus cõiter eos numerãs qui sit g: quia g numerat a: ergo per vicessimã tertiã primi numerat c: et quia etiã g numerat b: per eandẽ vicessimã tertiã numerat d et f. sũt igit̃ tetragoni c d: tũ et tessere e f adinuicẽ cõmensurabiles. sed de his hactenus: quoy in fexto huiusvbi de numeris tum quadzatis tum cubis agetur exactissima determinatio futura est.
+
+<vocab>Euclides, Elementa, Liber VII, Arithmetica, numerus primus, commensurabilis, tetragonus, tessera, productus, ratio</vocab>

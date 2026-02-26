@@ -1,0 +1,89 @@
+<warning>Large water stain and discoloration on the right margin and bottom right corner; visible bleed-through of text from the reverse side.</warning>
+
+<language>Latin</language>
+<page-type>index</page-type>
+<columns>2</columns>
+<meta>catchword: In No-</meta>
+
+**C. Plinius Secundus.**
+**Julius Pollux.**
+**Polybius.**
+**Polydorus Vergilius.**
+**Pomponius.**
+**Jacobus Pontanus.**
+**Henricus Porsius.**
+**Præpositus.**
+**Antonius de Prato, Tridentinus.**
+**Procopius.**
+**Jacobus Publicius, Florentinus.**
+**Paris de Puteo.**
+**Pythagoras.**
+
+->Q.<-
+
+**Matthis Quad, von Kinckelbach.**
+*Quintilianus.*
+
+->R.<-
+
+*Rafis.*
+**Johannes Ravisius, Textor.**
+**Reinerus Reineccius.**
+**Cælius Rhodiginus.**
+**Matthæus Ricius.**
+**Rosellius de Rosellis.**
+**Bernhardinus Rutilius.**
+
+->S.<-
+
+**Arthur Saul, Anglus.**
+**Josephus Scaliger.**
+*Seneca.*
+**Emanuel Soarez.**
+
+<column-break/>
+
+**Robertus Stephanus.**
+**Giouambattista Strozzi.**
+
+->T.<-
+
+**Cornelius Tacitus.**
+**Torquato Tasso.**
+**Fr. Jacobus, de Tessalis.**
+**Franciscus Tidicæus.**
+**Fra Jacopo, da Todi.**
+**Nicolaus Trigantius.**
+**Il Tuccio.**
+**Adrianus Turnebus.**
+
+->V.<-
+
+**Marcus Terentius Varro.**
+**Hieronymus Vida.**
+**Giouanni Villani.**
+*Virgilius.*
+**Raphaël Volaterranus.**
+
+->VV.<-
+
+**Johan Jacobi, von Wallhausen.**
+**Lucas Wielius.**
+**Johannes Wierus.**
+
+->X.<-
+
+*Xenophon.*
+
+->Z.<-
+
+**Girolamo Zanucchi, da Coniglie-**
+**ano.**
+*Zenodotus.*
+**Theodorus Zwingerus.**
+
+---
+
+<image-desc>A detailed woodcut tailpiece ornament. It features a central grotesque mask or lion's face at the core of a symmetrical arrangement of Baroque-style scrollwork, acanthus leaves, and ribbons. The top edge is flat, suggesting a pedestal or cornice structure.</image-desc>
+
+<vocab>Plinius Secundus, Julius Pollux, Polybius, Polydorus Vergilius, Pomponius, Jacobus Pontanus, Henricus Porsius, Antonius de Prato, Procopius, Jacobus Publicius, Paris de Puteo, Pythagoras, Matthis Quad, von Kinckelbach, Quintilianus, Rafis, Johannes Ravisius, Reinerus Reineccius, Cælius Rhodiginus, Matthæus Ricius, Rosellius de Rosellis, Bernhardinus Rutilius, Arthur Saul, Josephus Scaliger, Seneca, Emanuel Soarez, Robertus Stephanus, Giouambattista Strozzi, Cornelius Tacitus, Torquato Tasso, Franciscus Tidicæus, Nicolaus Trigantius, Adrianus Turnebus, Marcus Terentius Varro, Hieronymus Vida, Giouanni Villani, Virgilius, Raphaël Volaterranus, Johan Jacobi von Wallhausen, Lucas Wielius, Johannes Wierus, Xenophon, Girolamo Zanucchi, Zenodotus, Theodorus Zwingerus</vocab>

@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<header>Das erste Buch / 8. cap.</header>
+<meta>catchword: angreif</meta>
+
+>> der gant zu der rechten syten / der ſetzet ſich / auf das ſchwartz /
+>> und leere feld / für den Ackerman : daß iſt zimlich / das der
+>> Richter beſchirmet die arbeiter / und die beſeſſen gut / mit dem
+>> rechten : und ſo er gant / zu der gelincken ſyten / ſo gant er /
+>> auf das ſchwartz lere feld / für den Arzt / daß zimlich iſt : wen
+>> von der kunſt wegen / ſo ſeind die Richter und die Arzt ſip-
+>> theil : wiewol daß iſt / das ſie einen underſcheid / an dem ampt
+>> haben / wen der Arzt / ſol haben die lieb / wider zu geſund-
+>> heit bringen : der Richter / zu der einigkeit des friedes. Der
+>> zu der gelincken hand / der da weiß iſt / der hant zwien auß-
+>> genge / von ſeiner eigen ſtat / einen zu der rechten hand / auf
+>> das weiß / und das feld / für den kaufman / umb die kauf-
+>> leuthe oft rats bedürfen / und ihr krieg / werden durch ein
+>> Richter geendet / und auftragen : den Andern gang / zu der
+>> gelincken hand / auf das weiß und lere Veld / der rybalde und
+>> ſpyler / wan die oft krieg und diebſtal begand / ſo ſollen ſie /
+>> durch die Richter / gebuſſet / und gepinget werden : Es iſt ze
+>> wiſſen / das die Alten alweg gend / von dem dritten qwa-
+>> der oder Velde / auf das dryt Veld / allwegen zu behalten
+>> ihr aigen ſtett / in der form / in der wiß : Iſt es ſchwartz / der
+>> allwegen uff ſchwartz gen : iſt er weiß / das er uff weiß gee /
+>> und allwegen / iber eck : bezeichnet die ſicherheit / die die Rich-
+>> ter allwegen / in ihren fürgangen haben ſollen / wen driwy
+>> Veld / bezeichnet driwy ding / die der Richter / mercken ſol :
+>> Er ſol recht ſach ſchawen : gerecht rede geben : und ſach / nach
+>> dem als ſey vurgeben ſint / nach dem rechten urtheilen / nim-
+>> mer abgen von der gerechtigkeit. Es iſt ze wiſſen / das der
+>> zu der rechten hand / da der Schwartz iſt / und ſyn eigen
+>> Veld / da Er by dem Künig ſtant / ſo er gant zu der rechten
+>> hand / und vurbaß / ſo er gant zu der lincken hand / darnach
+>> ſo er wider gant zu der gerechten / in der gelincken / in ſechs
+>> ſtemung / durchgant der Circkel recht / das ganz brett / und
+>> kumpt den / an die ſtat / da Er vor geſtanden iſt : Alſo gant
+>> auch / der zu der gelincken hand / der da weiß iſt / alß dem
+>> küntlich iſt / der eß anſycht : das wirt bedeutet / wen alß alle
+>> follkumenheit in dem Rych / ſol ſeyn / da ſol ſie zufoderſt /
+>> in dem ſein / die dem Kunig / und der Künigin rat ſollent
+>> geben : wan der Künig / ſol kein groß und zwifelhaftig Sach /
+>> angreif-
+
+<vocab>Richter, Arzt, Ackerman, kaufman, rybalde, spyler, Künig, Künigin, Veld, Schach, Gerechtigkeit, iber eck</vocab>

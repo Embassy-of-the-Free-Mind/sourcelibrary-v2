@@ -1,0 +1,79 @@
+<language>Latin</language>
+<page-num>IIII</page-num>
+<page-type>text</page-type>
+
+nantia diateſſaron. quare per precedentem ſingule vorū ſingulis hypodorij diateſſaron conſonātia
+ſonant acutiores. et phrygius addit tonum in acumine dorio: igitur totus phrygius toto hypodorio
+diapente cōſonātia modulatur acutior. et lydius phrygio addit ſemitoniū min⁹ et myxolydius lydio
+tonum. igitur lydius hypodorio diapente & ſemitoniū & myxolydius diapente et ſeſquitono ſonabit
+acutior. quod totum eſt propoſitum.
+
+<margin>26</margin>
+¶ Hypolydius diatonicus hypophrygium diatonicum ſemitonio/ & dorius triſemi-
+tonio/ phrygius diateſſaron/ lydius diateſſaron & ſemitonio/ myxolydius diateſſaron
+conſonātiā/ atq; ſeſquitonō ſupercuadit acutior: & dorius hypolydio tono/ phrygius
+ditono/ lydius diateſſaron & myxolydius diateſſaron/ lydius autem ad dorium ſonat
+tonum lydius triſemitonium & myxolydius diateſſaron/ lydius phrygio ſemitonium
+et myxolydius ſeſquitonum: myxolydius autem lydio tonum.
+
+¶ Hec ut precedens vel ¶ facillime monſtrabitur.
+
+<margin>27</margin>
+### ¶ Septem modos chromatice modulationis conſtituere.
+
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| r | Hypodorius | | | | | | | | | | | | | | | | | | |
+| s | Hypophrygi⁹ | Tonus | | | | | | | | | | | | | | | p | 7 | |
+| t | Hypolydius | Semito. | A | | | | | | | | | | | | | | p | Chro | |
+| v | Dorius | Apotome | | A | | | | | | | | | | | | | p | ma | |
+| x | Phrygius | Triſemitoniū | | | A | | | | | | | | | | | | p | tici | |
+| y | Lydius | Semitonium | | | | A | | | | | | | | | | | | p | mō | |
+| z | Myxolydius | Apotome | | | | | A | | | | | | | | | | | | | di |
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+
+¶ Facio r pentadecachordum chromaticū per decimam/ undecimam/ & duodecimam huius & ſiliter
+ſex alia ſcz ſ/t/v/x/y/z: facioq; pentadecachordum s tono acutius r. & t pētadecachordum ſemitonio
+acutius s. u vero apotomes intervallo acutius t. et x triſemitonio amplius q̃ v. y ſemitonio amplius
+q̃ r. et z apotome trāſcēdere y: dico ergo ſeptem modos chromatice modulatiōis eſſe ordinatos. nam
+r erit hypodorius s p diffinitiōem hypophrygius chromaticus. t hypolydius. v dorius. x phrygius.
+y lydius. z myxolydius.
+
+<margin>28</margin>
+### ¶ Quo pacto ſinguli cuilibet inter ſe chromatici modi reſpōdeant: oſtendere.
+
+¶ Diſtat p precedētē hypophrygius ab hypodorio chromaticō tono. et hypolydius ab hypophrygio
+ſemitonio. diſtat igit hypolydius ab hypodorio acutior triſemitonto. et dorius ab hypolydio diſtat
+apotome. igitur dorius ab hypodorio remotus eſt ditono. phrygius autē ab dorio triſemitonio. igitur
+phrygius ab hypodorio remoueť tribus tonis & ſemitonio: hoc eſt totius conſonātie diapente in ſual
+lo. et lydius a phrygio ſemitonio. igitur lydius ab hypodorio diapēte atq; ſemitonio. myxolydius ab
+lydio diſtat apotome. igitur myxolydius ab hypodorio diapente conſonātia diſtat acutior/ atq; tono.
+Et hoc pacto ex reliquis ex precedēte pfacilis ē oſtēſio. ut hypolydi⁹ ab hypophrygio diſtat ſemitonio.
+dorius tono. phrygius diateſſaron. lydius diateſſaron et ſemitonio myxolydi⁹ diapēte. dorius a phry
+gio diſtat apotome. phrygius ditono. lydius diateſſaron. myxolydius tritono. Phrygius a dorio tri
+ſemitonio. lydius tono et duobus ſemitoniſs minoribus. myxolydius vº diateſſaron. Lydius a phry
+gio ſemitonio et myxolydius tono. diſtat autē myxolydius ut iā quoq; dictū eſt a lydio maiore ſemi
+tonio. ſicq; conſtructum eſt propoſitum.
+
+<margin>29</margin>
+### ¶ Septem itidem enarmonicos modos ordinare.
+
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| r | Hypodorius | | | | | | | | | | | | | | | | | | |
+| s | Hypophrygi⁹ | Tonus | | | | | | | | | | | | | | | p | 7 | |
+| t | Hypolydius | Diesis | A | | | | | | | | | | | | | | p | Enar | |
+| v | Dorius | Diesis | | A | | | | | | | | | | | | | p | mo | |
+| x | Phrygius | Ditonus | | | A | | | | | | | | | | | | p | ni | |
+| y | Lydius | Diesis | | | | A | | | | | | | | | | | | p | ci | |
+| z | Myxolydius | Diesis | | | | | A | | | | | | | | | | | | mō |
+| | | | | | | | | | | | | | | | | | | | di. |
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+
+¶ Sint r/s/t/v/x/y/z ſeptem pētadecachorda: et ſit per decimāquintam huius r pentadecachordū
+enarmonicum: intendo proſlambanomenon pentadecachordi s uno tono amplius pētadecachordo r.
+et t dieſi amplius q̃ s. et v dieſi amplius q̃ t. et x ditono amplius q̃ v. & y amplius dieſi x. et z amplius
+itidem dieſi q̃ y. erūt ergo ſm acumen intenſa ſex poſt primum pentadecachordū: pumo tono. deinde
+duabus dieſibus et ditono. demum duabus dieſibus: qui quidē intendēdi modus enarmonice modu
+
+<vocab>pentadecachordum, chromaticus, enarmonicos, Hypodorius, Hypophrygius, Hypolydius, Dorius, Phrygius, Lydius, Myxolydius, diesis, apotome, trisemito, ditonus</vocab>

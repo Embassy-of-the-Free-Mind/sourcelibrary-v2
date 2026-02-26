@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>title-page</page-type>
+
+<image-desc>An elaborate engraved title border with architectural and allegorical elements. At the top center, a square chessboard is flanked by two seated putti; the one on the left holds a covered vessel, and the one on the right holds a wide bowl or plate. The left side of the frame features a standing bearded man in classical robes, holding a book, positioned on a pedestal labeled "Xerxes Philomater." The right side features a royal figure in a turban, armor, and cloak, standing on a pedestal labeled "Amilinus Evilmerodoch." The bottom of the frame consists of an ornamental cartouche containing the publication imprint.</image-desc>
+
+❧ Das ❧
+
+# AnderBuch/
+## der Beschrei-
+## bung / des Schach-
+## Spieles.
+
+❦
+
+<margin>Xerxes Philomater.</margin>
+<margin>Amilinus Evilmerodoch.</margin>
+
+->Prostat apud Henningum<-
+->Groſſium Juniorem.<-
+
+<vocab>Schach-Spiel, Schach, Xerxes Philomater, Amilinus Evilmerodoch, Henning Gross der Jüngere, Schachbuch</vocab>

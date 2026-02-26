@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>309</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5. cap:</margin>
+auf sieben und dreyßig / und nimt ihn folgendes / ohne einige verhinderung.
+
+<margin>51.</margin>
+Wan aber der **Schwarze** / dieser ursachen halber / den **Schützen** / nicht auf 47. (n. 50.) ziehet / besondern / der **W. K.** Soldaten / mit seines **K.** Soldaten / raubet : so nimt der **Weiße** / denselben / mit der **K.** Schützens-Soldaten / und ziehet / nochmaln / auf des **S. K.** Schützen : Der **Schwarze** / beut / mit demselben / auß ein und dreyßig / **Schach** : Der **Weiße** / stellet dazwischen / der **K.** Reuter / auf zwey und zwanzig : Der **Schwarze** / (umb der **K.** Reuter zu entfreyen) derselben Schützen / auf drey und funfzig : Der **Weiße** / (umb des Feindes Spiel / in eine unordnung zu bringen) der **K.** Schützen / auf die **S.** Königin / auf vier und dreyßig : dan / wan der **Schwarze** / des **K.** Schützens-Soldaten / auf denselben / auf drey und vierzig / ziehet / seine übrige Haupt-Steine / sehr eingesperret werden : Ziehet Er / aber / an dessen stelle / des **K.** Reuter / auf des **W. K.** Soldaten / und bedecket / mit demselben / die Königin / auf drey und vierzig : so setzet / der **Weiße** / (ihn zu beschützen) die Königin / auf ein und zwanzig : Der **Schwarze** / seine Königin / noch auf des **W. K.** Soldaten / auf zwey und funfzig : Der **Weiße** / (umb / denselben ferner zu beschützen / und der **K.** Reuter / hinwider frey zu machen) des **K.** Reuter / auf dreyzehen : Der **Schwarze** / nimt / der **W. K.** Reuter / mit des **K.** Schützen : Der **Weiße** / denselben / mit der **K.** Reuters-Soldaten / und wird ferner / zur guten anordnung / seines Spieles / einen grossen Vortheil haben : dem **Schwarzen** aber / nutzet es wenig / daß Er / des **K.** Soldaten / mit der **K.** Reuter / beschützet hat : unangesehen / <term>Damianus</term>, unbedachtsam solches vermeynet / und den Zug / des **W. K.** Schützens / auf seiner **K.** Reuter / (wie droben / n. 12. berichtet) gantz vorbey gehet / und wenig acht nimt.
+
+<margin>52.</margin>
+Wan aber der **Schwarze** / nicht den Soldaten / auf 45. (n. 49.) besondern des **K.** Reuter / (auf daß Er / umb so viel besser Spiel habe / und seines **K.** Soldat / wan etwa der **Weiße** / der **K.** Reuter / mit seines **K.** Schützen / raubete : und dieser Schütze / von jenem Reuter / alszdan genommen würde : verhütet bleibe) auf zwey und funfzig / ziehet : so spielet / der **Weiße** / der **K.** Soldaten / auf des **S. K.** Schützen / auf neun und zwanzig : Der **Schwarze** / nimt ihn / mit des **K.** Soldatē : Der **Weiße** / denselben / mit der **K.** Schützens
+<meta>catchword: Soldaten</meta>
+
+<vocab>Schach, Damianus, Reuter, Schützen, Soldaten, Königin, Schwarze, Weiße</vocab>

@@ -1,0 +1,12 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philoſophers game.</header>
+<meta>catchword: lyne</meta>
+
+## ¶ Of the triumphe.
+
+When the King is taken, the triumph muſt be prepared to be ſet in the aduerſaries campe. The aduerſaries campe is called al the ſpace, that is betwene the firſt front of his men, as they were firſt placed, vnto the neither ende of the table, conteyning.40.ſpaces or as ſome wil.48. When you entend to make a triumph you muſt proclaime it, admoniſhing your aduerſarie, that he medle not with anye man to take hym, whiche you haue placed for youre triumphe. Furthermore, you muſt bryng all your men that ſerue for the triumph in their direct motions, and not in theyr flying draughtes.
+
+To triumphe therefore, is to place three or foure men within the aduerſaries campe, in proportion Arithmeticall, Geometricall or Muſicall, as wel of your owne men, as of your enemyes men that be taken, ſtanding in a right
+
+<vocab>triumph, aduerſaries campe, Arithmeticall, Geometricall, Muſicall, Rithmomachia</vocab>

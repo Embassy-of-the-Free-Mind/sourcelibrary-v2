@@ -1,0 +1,52 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>62</page-num>
+<header>Das Erste Buch / 6. cap:</header>
+
+> ,, uxore) uxor stat ad dextram, ad demonstrandum, à calidis ac ro-
+> ,, bustis præcipuè uxores esse ducendas. Permanet autem ad dex-
+> ,, tram Nigri, non Albi Regis, eâ ratione, quia plerumq; homines
+> ,, nigri sunt validiores, & ad rem veneream aptiores. Hinc Pro-
+> ,, verb: Alborum hominum nulla utilitas. Homines quippe albi, &
+> ,, formosi, imbecilles vires habent. Undè Homerus, sæpè nobis indi-
+> ,, cavit, Robur ac Formam, vix simul in eodem corpore, coire posse.
+> ,, Si igitur albi ducunt uxores, locant eas ad sinistram, partem mi-
+> ,, nùs calidam, & fundum uxorium parum frequenter colunt.
+
+Ihren gang belangend / lauffen Sie / über die gantze Schach=
+Zabel / wie / und wohin Sie wollen / und können: nehmen auch haupt=
+und gemeine Steine / welche Sie antreffen / dofern dasselbe / ohn ihre
+gefahr geschehen kan: und gehen gerade auß und über zwerch / gleich
+den Rochen / oder nach den Spitzigen ecken / auf lauter weisse / oder
+schwartze felder / nachdem es ihnen gelegen fellet / gleich den Schüt=
+zen: oder wie die Soldaten / des Andern haufens Steine / nehmen.
+Auf daß Sie aber / den Königen / nicht gleich geachtet werden / so kan
+man Sie / wie die Reuter / nicht ziehen.
+
+> ,, Ideò verò, (schreibet Aetius, quæst: 5. n. 96. 97. und 100.)
+> ,, Regina, Equitum, id est, Militum Equo insistentium, gradu, incede-
+> ,, re non potest: quia Equus est animal luxuriosum, adeò ut omni
+> ,, tempore, si adest ei oportunitas, velit luxuriari. Quare mulieres,
+> ,, maximè quæ virum habent, à quo quotidiè pascuntur, equis, simi-
+> ,, les fieri non debent, luxuriando: nec appropinquare debent, equis,
+> ,, i.e. luxuriosis hominibus. vid: Jerem: 5. v. 8.
+
+Die Alten / haben Sie / zum anfang des Spieles / ins dritte /
+folgendes nuhr ein feld / für sich gezogen / (dadurch anzudeuten / daß
+die Weibes=Bilder / im Hause / in besserer huet seynd / und ausser
+demselben / nicht also herumb schweiffen / noch mit einem freyen muh=
+te / dieweil sie sich / dadurch in wildheit verthun möchten / lauffen sol=
+len) und zwar / gleich den Schützen / auf denen Feldern / die derselben
+farbe gewesen / darauf sie zum ersten gestanden: Als / die Weisse / auf
+den Weissen: die Schwartze / auf den Schwartzen Feldern. Hievon
+ist / im 9. und 10. Cap: des Letzten Buches / drunten / weiter Be=
+richt / zufinden.
+
+Ferner / haben Sie für Alters / die Könige / wan es von nöten
+gewesen / und die Gelegenheit erfodert / nebest ihrer seitten / alß weit
+dieselben gangen / zum erstenmahl außgeführet: doch haben Sie / auf
+ihrer Farbe / verbleiben müssen.
+
+<meta>catchword: Endlich</meta>
+
+<vocab>Schach-Zabel, Regina, Equitum, Rochen, Schützen, Reuter, Soldaten, König, Weiss, Schwartz</vocab>

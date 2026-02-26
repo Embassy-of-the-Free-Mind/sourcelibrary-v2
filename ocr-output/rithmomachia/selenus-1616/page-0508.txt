@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>466</page-num>
+<header>Das Vierte Capittel/</header>
+<meta>catchword: Orbes</meta>
+
+<image-desc>A wide horizontal decorative woodcut ornament featuring symmetrical scrollwork, foliage, and stylized faces or masks integrated into the design.</image-desc>
+
+## Das Vierte Capittel.
+
+### Wie die Steine und Türne / diesem Spiele gemäß / sollen gezogen werden.
+
+Es werden die Steine dieses Spieles / für=
+und hintersich / auf die rechte und lincke seite / nach
+der länge / und breite der Tafel / doch eine jegliche
+form / unter diesen dreyen / auf eine besondere art /
+gezogen.
+
+Die Runden / werden gerade für sich / (gleich wie die Sol=
+daten / im Schach=Spiel) auß ihrem felde / auf das nechst=folgen=
+de feld: Die Dreyecketen / (gleich den Schützen / oder Alten)
+nach den ecken der felder / doch allezeit / über eines / in ein drittes
+feld: Die Vierecketen / gerade und in die schräge / hinter= und
+fürsich / und auf beede seiten (gleich der Königin) doch über zwey
+felder / in ein Viertes feld / gerucket.
+
+Die Türne / (dieweyl Sie / von aller dreyer Steinen / der
+Runden so wol / alsz der Drey= und Vierecketen / gattungen / zu=
+sammen gesetzet seynd) können / nach der Spieler gefallen / und ih=
+res Spieles zustande / gleich den Runden / Drey= und Vierecketen
+Steinen / aufs erste / dritte und vierte feld / gezogen werden: und
+vergleichet sich ihr gang / mit der Königin im Schach=Spiele / ih=
+rem gange. Wan sie dan belagere / und von den andern Stei=
+nen / umbgeben seynd / so können sie / (dieweyl sie / des Königes
+stelle / gleichsam vertreten) gleich den Reutern / Springen / und
+dergestalt der gefahr entgehen: ausser diesem fahl aber / ist es ih=
+nen nicht vergönnet: und haben die andern Steine / dieser freyheit /
+sich nicht zu erfrewen.
+
+(Buxer: fol: 24. b)
+
+> Calculi rectâ incedent, nùnc dextrâ, nùnc levâ; nùnc an-
+> tè, nùnc retrò: non autem obliquabunt, per angulos, tanquàm in-
+> sani Scachorum Areiphili: nisi aliud ludentibus videatur, aliudq;
+> ab eis, sanciatur. At in Oppugnationibus, ad eas usq; sedes, per-
+> tingent, quas eorum Multiplicatio, necessarias esse, judicabit.
+
+Idem, fol: 44. a. b. ubi alteram Chaldæorum ludendi ratio-
+nem, tradit.
+
+<vocab>Schach=Spiel, Runden, Dreyecketen, Vierecketen, Türne, Königin, Soldaten, Schützen, Alten, Reutern, Calculi, Scachorum, Areiphili, Chaldæorum</vocab>

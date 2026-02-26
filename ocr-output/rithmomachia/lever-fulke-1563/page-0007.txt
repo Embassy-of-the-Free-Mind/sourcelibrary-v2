@@ -1,0 +1,34 @@
+<language>English</language>
+<page-type>dedication</page-type>
+<sig>a.iiij.</sig>
+<meta>catchword: The</meta>
+<warning>Significant ink bleed-through from the reverse side of the page.</warning>
+
+## DEDICATORY.
+
+VVherby vvithout a further profe,
+all men may be right ſure:
+That this game vnto grauitie,
+and vviſdome doth allure.
+
+Els vvould not that Philoſopher,
+Pithagoras ſo vvyſe:
+Haue laboured vvith diligence,
+this paſtime to deuyſe.
+
+Els vvould not ſo vvell learned men,
+haue amplified the ſame:
+From tyme to tyme vvith trauell great,
+to bring it into fame.
+
+But let vs nerer novv proceed,
+and come vve to theffect:
+And then ſhall vve aſſuredly,
+this paſtime not neglect.
+
+For it vvith pleaſure doth aſſvvage,
+the heauy troubled hart:
+And vvith lyke comforts driues avvay,
+all kynde of ſourging ſmart.
+
+<vocab>Pithagoras, grauitie, vviſdome, paſtime, deuyſe, theffect, aſſvvage, ſourging</vocab>

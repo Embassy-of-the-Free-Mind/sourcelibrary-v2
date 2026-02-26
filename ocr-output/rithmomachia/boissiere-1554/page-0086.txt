@@ -1,0 +1,22 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>42</page-num>
+<header>DES PHILOSOPHES.</header>
+
+celle fin que si elle est apres gaignée , puisse auoir
+la liurée de son victorieux.
+
+## Des Pyramides.
+
+Soient les deux bases inferieures des Pyramides quarrées, les deux suivantes triangulaires, & le demeurant rend le tout tousjours en aguisant tirant en hault: toutesfois la Pyramide tricourte demeurera couppée, & ne sera aigue du tout, comme icy apert.
+
+->La Piramyde des<-
+Pair. -> <- Impair.
+
+<image-desc>A mathematical diagram illustrating two stepped pyramids. Above the pyramids, a horizontal bracket connects the labels "Pair." and "Impair." to the centered title "La Piramyde des". The left pyramid, under "Pair.", consists of six square levels numbered from bottom to top: 36, 25, 16, 9, 4, 1. The right pyramid, under "Impair.", consists of five square levels numbered from bottom to top: 64, 49, 36, 25, 16. A decorative floral vignette is placed between the two structures. The number "190." is printed below the left pyramid and "91." is printed below the right pyramid.</image-desc>
+
+190. -> <- 91.
+
+<sig>F ij</sig>
+
+<vocab>Pyramides, Pair, Impair, quarrées, triangulaires, aguisant, couppée, Piramyde</vocab>

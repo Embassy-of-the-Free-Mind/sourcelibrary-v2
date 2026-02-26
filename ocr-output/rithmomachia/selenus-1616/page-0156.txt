@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>126</page-num>
+<header>Das Ander Buch / 1. Cap:</header>
+<meta>Catchword: den:</meta>
+
+Aber bey den Königen / muß das wort Schach / nicht wie man wol
+vermeinet / umb dieselbe hiedurch / ihre Schantze / in acht zu haben /
+zu verwarnen / besondern vielmehr / umb anzuzeigen / was ihnen
+itzo / wegen gewalt des anlauffenden Feindes zu thun obliege /
+gebrauchet werden : und solches auch der ursachen halber / auf
+daß der König / also bald / auf ein ander feld gerucket werde.
+Dan sonsten das Gegentheil / wan es ihm nicht angesaget / seines
+Wortheiles halber / (in erwegung / der König / gleich andern Steis-
+nen / alhie gleichwol nicht könte geraubet werden) solches nicht
+thun / besondern sich / als wan es solches / nicht gemercket noch
+wahrgenommen / stellen / und derhalben / einen anderen Stein / zu
+seinem nutzen / ziehen würde. Wie es nuhn / einem fleissigen
+Spieler / gebühret / in diesem falle / dem Gegener / daß Er dem
+Spiele gemäß / keinen andern Stein / ehe Er den König zufoderst /
+auß der gefahr / gerucket / ziehe / zu untersagen : Als / haben / die
+Spitzfündige Erfindere dieses Spieles / es also angeordnet / daß der /
+welcher den König / mit einem seiner Steine anfället / bey demsels-
+ben Zuge / das wort Schach / zugleich gebrauchen solle : umb hies-
+mit zu verstehen zu geben / daß Er nicht allein / die andere Steis-
+ne / anzufallen / auf sie zu lauren / und zu rauben / besondern auch /
+wie man dem Könige / weyl derselbe getrieben / und nicht geraus-
+bet / besondern nuhn gefangen genommen / werde / (anzudeuten /
+daß man die hohen Haupter / wegen hofnung eines grossen rantzioms
+geldes / lieber gefangen nimt / dan erleget) beykommen könne /
+gantz wol wisse / und verstehe / auch dahero / dem Gegentheil / of-
+fentlich zuentbiete / daß Es den König / von dem Felde / auf wels-
+chem Er ihn nicht wissen wolte / gestracks auf ein anders stelle / und
+solches alsbald / (es sey dan / daß Es noch einen Stein / fürziehen /
+oder denselben / welcher ihm diesen trotz anbeut / nehmen kan) ins
+werck richte : dan Er ferner / biß Es sich ergebe / mit aller macht /
+auf dasselbe / zutringen wolle.
+
+Andere vermeynen / daß durch dieses Schach-bieten / ange-
+deutet werde / daß man keinen rechtmessigen Krieg / so ferne keine
+Absag- oder ankündigung desselben / vorher gangen / führe : besons-
+dern / auf den fahl / derselbe / für ein mördliches vornehmen / nuhn
+zu halten sey.
+
+Ebener massen / sind diese wort / Schach / Mat / bey endung
+des Spieles / außzureden / darumb ungezweifelt / verordnet :
+Auf daß (1.) der Sieger andeute / daß Er für gewiß halte / Er
+habe den Sieg erlanget / könte sonsten seinen Zug / also thun /
+daß Er zwar gewonnen / aber selber dessen nicht gewahr wor-
+den:
+
+<vocab>Schach, Mat, König, Krieg, rantziomsgeld, Gegentheil, Spiel</vocab>

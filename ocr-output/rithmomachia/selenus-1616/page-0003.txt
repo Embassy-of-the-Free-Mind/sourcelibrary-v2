@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>title-page</page-type>
+<meta>The Roman numeral date CIƆ IƆC XVII corresponds to 1617.</meta>
+
+<image-desc>The title page is encased in a detailed architectural engraved border. At the top is a landscape scene depicting a military encampment with tents; in the foreground, two figures play a board game inside a tent while a city in the distance is engulfed in flames and smoke. The left border contains three vignettes: a figure outside a cave, a farmer plowing a field with two oxen, and two men in conversation on a path. The right border contains three vignettes: more military tents, a group of figures in camp, and a group of men wrestling or engaged in a physical game. The bottom of the border features a wide panel showing an interior room where eight men are seated around a table, possibly dining or gaming, while one man stands to the right pointing towards the group.</image-desc>
+
+->❦ Das ❦<-
+
+# Schach - oder König-Spiel.
+
+->Von<-
+
+## GUSTAVO SELENO,
+
+->In vier unterschiedene Bücher /<-
+->mit besonderm fleiß / gründ- und<-
+->ordentlich abgefasset.<-
+->Auch mit dienlichen Kupfer =<-
+->Stichen / gezieret :<-
+->Desgleichen vorhin nicht außgangen.<-
+->Diesem ist zu ende / angefüget / ein sehr al-<-
+->tes Spiel / genandt /<-
+
+## RYTHMO - MACHIA.
+
+->Cum Privil : Cæsareo, ad Sexennium.<-
+->LIPSIÆ. CIƆ IƆC XVII.<-
+
+<vocab>Schach, König-Spiel, Gustavo Seleno, Rythmo-Machia, Lipsiae, copperplate engraving, 1617</vocab>

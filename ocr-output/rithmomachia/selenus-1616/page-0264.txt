@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>130</page-num>
+<header>Das Ander Buch) 14. cap:</header>
+
+entweder mit dem Schützen / den W. Reuter nehmen / oder den-
+selben / von ein und funfzig / abziehen : Dahero / der Weisse / seiner
+K. Rochen / wan Er mit des K. Rochen / auf sieben und funfzig /
+Schach=gibt : ohne einigen widerstand / gewinnet) besondern nimt /
+des W. K. Reuters=Soldaten / mit seines K. Rochens=Soldaten :
+(Dan / in verbleibung dessen / wan Er etwa / sonsten / einen andern
+Stein / oder Soldaten rücket : der Weisse / mit des gedachten Reu-
+
+10. ters-Soldaten / auf zwey und vierzig / Schach=beut : * Er / rucket
+den König / auf acht und funfzig : der Weisse / des K. Rochen / auf
+ein und funfzig : Er / auf denselben / der K. Schützen / auf dreyßig:
+der Weisse / des K. Reuter / auf drey und vierzig / und beut Schach:
+Er / setzet den König / auf sieben und funfzig : der Weisse / beut /
+mit des K. Rochen / auß neun und vierzig / Schach=Mat.
+
+11. Ziehet Er dan / den König / nicht auf acht : (n. 10.) besondern
+auf sieben und funfzig : so rucket / der Weisse / des K. Rochen / auf
+ein und funfzig : Er / auf ihn / und der W. K. Rochens=Soldaten /
+der K. Schützen / auf dreyßig / der Weisse / den Rochen / auf neun
+und vierzig / und beut Schach : Er / ziehet den König / auf acht und
+funfzig : der Weisse / beut / mit der K. Reuter / auß drey und vier-
+zig / Schach : Er / rucket den König / auf neun und funfzig : der
+Weisse / des K. Rochen / auf zwey und funfzig : und / gibt zum fol-
+genden zuge / mit des K. Reuters-Soldaten / auß funfzig : oder mit
+des K. Rochen / so fern der S. K. Schütze / auf ein und funfzig / ge-
+zogen : wan Er / mit demselben / diesen S. Schützen / wegnimt /
+auß 51. ungehindert Schach-Mat :) der Weisse / des S. K. Rochens-
+Soldaten / mit des K. Rochens Soldaten : der Schwartze / ziehet
+der K. Rochen / (umb der W. K. Reuter / wan folgendes sein König /
+von seinem felde / auf eine andere linie / gezogen wird / zu erhaschen)
+auf sieben und funfzig : der Weisse / denselben / auf achtzehen : der
+Schwartze / der K. Schützen / auf der W. K. Rochens-Soldaten /
+auf dreyßig : der Weisse / der K. Reuter / auf fünf und dreyßig :
+der Schwartze / den König / auf acht und funfzig : der Weisse / des
+K. Rochens=Soldaten / auf zwey und vierzig : der Schwartze /
+beut / mit der K. Rochen / auß neune / Schach : der Weisse / ziehet
+den König / auf der S. K. Schützen / auf zwey und zwantzig : der
+Schwartze / nimt / mit demselben / nicht der W. K. Rochens-Sol-
+daten / (dan ihn / der Weisse / mit seiner K. Reuters-Soldaten / auf
+drey und zwantzig / einsperrete) besondern / rucket ihn / (so fern Er
+ihn / nicht / auf den W. Reuter / auf vier und vierzig / ziehen wil : Auf
+
+<meta>catchword: welchen</meta>
+
+<vocab>Schach, Rochen, Reuter, Schütze, König, Soldaten, Schach=Mat, funfzig, dreyßig</vocab>

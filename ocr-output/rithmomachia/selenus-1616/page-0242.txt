@@ -1,0 +1,133 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>212</page-num>
+
+<margin>
+12. cap:
+Das Ander Buch/
+</margin>
+
+### n. 5. 6.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | SS | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | | | | |
+| | | | | WS | | | SR |
+| | | | 29 | | SS | 26 | |
+| | | | | | WR | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WR | WR | WS | WK | WK | WS | | WR |
+
+---
+
+### n. 9. jo.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SS | | SR |
+| SS | SS | SS | | SR | SS | | SS |
+| | | | SS | | | | |
+| | | | | WS | 35 | | |
+| | SR | WS | WS | WK | SS | SS | |
+| | | WR | | | WR | | |
+| WS | WS | | | | | WS | |
+| WR | | WS | | WK | WS | | WR |
+
+---
+
+### n. j6. j9.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | SK | SK | SS | | SR |
+| SS | SS | SS | | | SS | SS | SS |
+| | | | SS | | | | |
+| | | | | | | | |
+| | | | WS | WS | WS | SS | SS |
+| | | | WS | | | WR | |
+| WS | WS | WK | | | | SR | WS |
+| WR | WR | WS | WK | | | WR | |
+<margin>17</margin>
+
+---
+
+### n. zz. z7.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SK | | SS | | SR |
+| SS | SS | SS | | SR | WS | SS | SS |
+| | | | | SR | SR | | |
+| | | | WS | WK | WS | | |
+| | | | | | | | |
+| | | WS | | | | | |
+| WS | WS | WK | | | | | |
+| WR | WR | | | WR | | | |
+<margin>WS</margin>
+
+<column-break/>
+
+### n. 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | | SR |
+| SS | SS | SS | SS | SR | SS | SS | SS |
+| | 47 | | | | | | |
+| | | | SR | WS | | | |
+| | | 31 | WS | | | SS | |
+| | | | | | | WR | |
+| WS | WS | | WS | WK | | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+---
+
+### n. j3. j4.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SS | | SR |
+| SS | SS | SS | SK | SR | | | SS |
+| | | SR | 46 | 45 | | | |
+| | | | | | | | WR |
+| | | | WS | | | | |
+| | | | | SS | | WS | WS |
+| WS | WS | | | | WR | | |
+| WR | | WS | | WK | | | WR |
+
+---
+
+### n. zo. zj.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | | SS | SR |
+| SS | SS | SS | | | SR | WS | SS |
+| | | | | SS | | SR | SR |
+| | | | | | WS | WK | WS |
+| | | | | | WS | | |
+| | | | | WS | | | |
+| WS | WS | WK | | | | | |
+| WR | WR | | | | | WR | |
+<margin>SS</margin>
+
+---
+
+### n. z5. z6.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | 6z | SK | 6o | | | SR |
+| SS | SS | SS | | SS | | SS | |
+| | | | | | WS | SS | |
+| | | | | WR | | | |
+| | | | | | | | |
+| | | | WS | | | | |
+| WS | WS | WK | WR | SR | | | |
+| WR | | | | WR | | | |
+<margin>WS</margin>
+
+<vocab>fencing notation, Fechtbuch, German, footwork diagrams, SR, SS, SK, WS, WR, WK</vocab>

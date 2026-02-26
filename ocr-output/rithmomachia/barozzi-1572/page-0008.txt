@@ -1,0 +1,21 @@
+<language>Italian</language>
+<page-type>dedication</page-type>
+<sig>A</sig>
+<warning>Significant ink bleed-through from the verso page is visible behind the signature area.</warning>
+
+uendo io di quello farne partecipe il mondo:
+non ho uoluto che uſciſca fuori ſe non ſotto la
+protettione dell'Illuſtre nome di V. S. La qual
+ſi degnarà di accetarlo in loco d'un piciol do-
+no, non hauendo riſguardo alla piciolezza di
+eſſo, ma alla grandezza dell'infinito deſiderio
+ch'io ho hauuto, & hauerò ſempre di ſeruirla.
+Di Venetia alli 20. di Maggio 1572.
+
+->*Di V. S. Illustre*<-
+
+->**Aff.<sup>mo</sup> Ser.<sup>tor</sup>**<-
+
+->***Francesco Barozzi.***<-
+
+<vocab>Francesco Barozzi, Venetia, 1572, dedication</vocab>

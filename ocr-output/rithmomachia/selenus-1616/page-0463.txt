@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>429</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: Doch</meta>
+
+<margin>9. cap:</margin>
+
+<image-desc>A woodcut illustration of a chess piece named "Der Schleich." The piece is depicted as a bust of a jester wearing a hood with bells and holding a fool's scepter (marotte), placed upon a decorative, chalice-like pedestal.</image-desc>
+
+->Der Schleich.<-
+
+Die Kurtzweylige Rähte / oder <term>Moriones</term>, (welche Sie / wegen ihres gleichsam schleichenden ganges / die <term>Schleiche</term> / nennen) werden von ihnen / wie die Rochen / doch nuhr ein feld / für- oder hinter sich / auf die rechte / oder lincke seite / gezogen.
+
+Die Soldaten / <term>Fenden</term> / oder <term>Finen</term> / haben ihren gang / und nehmen andere Steine / gleich / wie / im 10. Cap: des Ersten Buches / droben / gedacht worden. Doch werden von ihnen / der beeden Königinne- und Rochen-Soldaten / auf beeden theilen / zum ersten-mahl / zwey felder / für sich gerucket: Könnē auch / nicht ehe / wie auch die Königinne / andere Steine / nehmen / sie haben dan / die gedachte Sprünge / vorhero vollenbracht: der Könige- aber / und der übrigen Haupt-Steine-Soldaten / ziehet man zu anfanges / nuhr ein feld / für sich.
+
+Welcher den Vorzug hat / muß allezeit / im anfange / mit der Königin- und der beeden Rochen-Soldaten / aufs dritte feld / springen: und der Ander / Zug umb Zug / mit dergleichen Soldaten / ihm entgegen hüpfen. Nach diesen dreyen Zügen / versuchet ein jeder / mit diesen / und den andern Steinen / sein bestes.
+
+Dieweyl auch / der Geheyme Raht / oder Man / zur beschützung des Königes / für dē besten Stein / aufs letzte / erachtet wird: alsß muß derselbe / beederseits wol inacht genommen / und beschützet werden.
+
+Dieses sey nuhn also / kürtzlich / und so viel man / auß deren zu <term>Ströpeke</term> / mündlichem bericht / (dieweyl Sie / keine schriftliche nachrichtung / fürzuzeigen gehabt / besondern / daß Sie es / von ihren Vorfahren / von undencklichen Jahren her / geerbet / und also / geübet / vorgegeben) in *transitu*, erfahren können / von dem <term>Currier-Spiel</term> / erinnert.
+
+<vocab>Schach-Spiel, Moriones, Schleiche, Rochen, Fenden, Finen, Ströpeke, Currier-Spiel</vocab>

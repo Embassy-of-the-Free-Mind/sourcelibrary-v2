@@ -1,0 +1,36 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<meta>The right edge of the page is cut off, resulting in partial text on many lines.</meta>
+<vocab>Ludus Scacchicus, synopsis, analytica, præcognita, media, applicatio, chess</vocab>
+
+# TABULA, Synopsin exhibens, A<unclear>...</unclear>
+
+<image-desc>A typographical branching diagram, known as a Ramist tree, summarizing the structure of a treatise on chess (Ludus Scacchicus). The information is organized hierarchically from left to right using large curly braces. The subject is first divided into general principles (Genere) and specific types (Specie). The "Specie" section further branches into "Recentior & perfectior," "Antiquior," and "Antiquissimus." From the recent version of the game, the chart details "Præcognita propria" (definitions and nature) and "Media" (means to an end), which further divides into the subjects (players) and the application of rules and methods of play. Due to cropping, the text on the right margin is partially lost.</image-desc>
+
+LUDUS  
+SCACCHI-  
+CUS, in  
+sequenti  
+TRACTA-  
+TU, con-  
+sideratur;  
+vel in  
+
+{ **Genere** per præcognita generalia, eaq vel magis  
+- { **Interna,** } quæ agunt, de { Genere; Fine pr<unclear>...</unclear> / Cognit; Ca<unclear>...</unclear> / Origine; Auth<unclear>...</unclear>
+- { **Externa,** }  
+- { **Objectum,** quo AR<unclear>...</unclear>  
+- { **utitur** de qua<unclear>...</unclear>
+
+{ **Specie,** per divisio- nem: Est enim is, qui no- strâ æta- te, usita- tus est, vel  
+- { **Recentior & perfectior,** lib: 1. c. 3. Hujus, tanquam reliquorum mensuræ traduntur,  
+    - { **Præcognita propria,** nimirùm { Finis quæsitu<unclear>...</unclear> lib. <unclear>...</unclear> / Natura, lib: 2. c. 1.  
+    - { **Media,** quæ nos ducunt, ad Finem quæsitū: Horum consideratur, vel  
+        - { **Subjectum** nimirùm <unclear>...</unclear> / Lusores, eorumq<unclear>...</unclear>  
+        - { **Applicatio** ad usum, quæ est, vel  
+            - { **Prima,** per C<unclear>...</unclear>  
+            - { **Orta,** per Pra<unclear>...</unclear> / varios te<unclear>...</unclear> / modos Lu<unclear>...</unclear> / dendi, ple<unclear>...</unclear> / niorem Re. Pa<unclear>...</unclear> / gulariū u. tio<unclear>...</unclear> / sum, de. don<unclear>...</unclear> / monstran. lib<unclear>...</unclear> / tes; ubi c. <unclear>...</unclear> / traditur, S<unclear>...</unclear>
+- { **Antiquior,** } de quibus lib: 4. c. 9. & 10.  
+- { **Antiquissimus,** }
+
+<vocab>Ludus Scacchicus, Tractatu, Genere, Specie, Præcognita, Media, Applicatio, Recentior, Antiquior, Antiquissimus</vocab>

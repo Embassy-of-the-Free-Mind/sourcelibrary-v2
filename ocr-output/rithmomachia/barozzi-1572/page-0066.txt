@@ -1,0 +1,7 @@
+<language>None</language>
+<page-type>blank</page-type>
+<meta>Digitized by Google watermark in bottom right corner.</meta>
+
+<image-desc>A full-page decorative marbled paper pattern, commonly used for book endpapers or covers. The pattern features a "stone" or "agate" marbling style with large, irregular dark brown and black cells outlined by veins of blue, cream, and reddish-brown.</image-desc>
+
+<vocab>marbled paper, endpaper, bookbinding</vocab>

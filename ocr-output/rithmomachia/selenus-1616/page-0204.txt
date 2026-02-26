@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>174</page-num>
+<header>Das Ander Buch / 8. cap:</header>
+
+<image-desc>An ornamental horizontal woodcut headpiece featuring floral scrolls, foliage, and two circular medallions on the left and right containing portraits of figures in profile.</image-desc>
+
+## Das Achte Capittel.
+### Wie die Erste Art angefangen / und / fortgesetzet werden kan.
+
+Was nuhn die Erste Art / anbelanget / so ist dieselbe / folgender gestalt / beschaffen.
+Der Weisse / (so fern jhm der Schwarze / keine sonderliche gelegenheit / zum anfal machet / besondern / seine Steine / umb eine gute ordnung / unter denselben / anzustellen / nuhr herauſſer führet) bringet seine Steine / biß zum funften zuge / (in welchem Er / mit des Königs=Schützens=Soldaten / den Schwarzen / angreiffet) auf folgende weyse / ordentlich ins feld:
+
+<margin>1.</margin> Dan Er ziehet (1.) wegen des habenden vorzuges / des Königs=Soldaten / auf acht und zwantzig: Der Schwarze / seines Königs=Soldaten / auf sechs und dreyssig: Der Weisse / (2.) des K. Schützen / auf dreyssig: Der Schwarze / seines K. Schützen / auf acht und dreyssig: Der Weisse / (3.) die Königin / auf zwelfe: Der Schwarze / der Königin=Soldaten / auf funf und vierzig: Der Weisse / (4.) der K. Schützens=Soldaten / auf zwey und zwantzig:
+<margin>2.</margin> * Der Schwarze / der K. Reuter / auf sechs und vierzig: Der Weisse / (5.) thut den anfal / mit des K. Schützens=Soldate̅ / auf des S. K. Soldate̅ / auß sieben und zwantzig: * Der Schwarze / nimt
+<margin>3.</margin> des W. K. Reuter / mit seines K. Schützen: Der Weisse / denselben / mit des K. Rochen: Der Schwarze / des W. K. Schützens=Soldaten / mit seines K. Soldaten: Der Weisse / (damit auf diesen S. Soldaten / der K. Schütze / zielen könne) ziehet / der K. Soldaten / auf neun und zwantzig: Der Schwarze / beschützet denselben / mit der Königin / auf funf und zwantzig / und beut Schach: Der Weisse / bedecket / den König / mit seines Reuters=Soldaten / auf achtzehen / ziehet denselben / auf die S. Königin / und des S. K. Soldaten / und verursachet dadurch / daß des K. Rochens=Soldat / von der Königin / auch beschützung erlanget: Der Schwarze / nimt ihn / mit des K. Soldaten: Der Weisse / denselben / mit des K. Rochen: Der Schwarze / ziehet seines K. Reuter / auf des W. K. Soldat
+
+<meta>catchword: Solda</meta>
+
+<vocab>Schach, Steine, König, Königin, Reuter, Rochen, Soldat, Schütze, Weiss, Schwarz</vocab>

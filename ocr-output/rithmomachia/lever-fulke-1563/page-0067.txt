@@ -1,0 +1,22 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>D.ij.</sig>
+<meta>Catchword: So</meta>
+
+# The Philosophers game.
+
+<image-desc>A section of text defining mathematical powers. A large curly bracket on the left groups six lines under the label "The signe". Each line identifies a power (rote, quadrate, cube, etc.) followed by its corresponding cossic symbol on the right.</image-desc>
+
+The signe
+{
+of the rote. 𝓏
+of the quadrate. 𝔃
+of the cube, or solide quadrate. 𝓬
+of the foursquared quadrat. 𝔃𝔃
+of the sursolide. ſ𝔃
+of the squared cube. 𝔃𝓬
+}
+
+Euery number maye be taken for a rote, as .2. this number multiplyed in it self is a square as .4. The quadrate or square multiplied by the rote geueth a cube or solide square, as .4. multiplied by .2. geueth .8. that is a cube. Multiplie the cube by the roote, so haue you a squared quadrat, as .8. by .2. geueth 16. which is a quadrate of a quadrate. Multiplie the square or quadrat of quadrat by the rote, and the product is the sursolyde, as .2. tymes .16. is .32. whiche is a sursolide. Multiplie the sursolide by the rote, and the product is the quadrate of a cube, as .2. times .32. is .64. which is a quadrat of a cube. So haue you the rote quadrat, cube, quadrat of quadrat, sursolide, quadrat of cube .2. 4. 8. 16. 32. 64.
+
+<vocab>Philosophers game, rote, quadrate, cube, sursolide, squared cube, cossic symbols, powers of two</vocab>

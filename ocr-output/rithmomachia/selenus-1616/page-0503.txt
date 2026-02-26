@@ -1,0 +1,13 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+<header>Ad pag. 464.</header>
+
+->amen framen<-
+
+---
+
+<image-desc>
+A printed diagram of a game board, likely for Rithmomachia (the Philosopher's Game). The board consists of a grid 8 squares wide by 12 squares high. The left six columns of the grid feature a standard alternating light and dark checkered pattern. In the two rightmost columns, geometric shapes representing game pieces are faintly visible within the squares. These shapes—including circles, triangles, and squares—are concentrated in the top four rows and the bottom four rows of these columns, leaving the central four rows empty.
+</image-desc>
+
+<vocab>Rithmomachia, game board, grid, diagram</vocab>

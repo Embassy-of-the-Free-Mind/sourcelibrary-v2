@@ -1,0 +1,119 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>268</page-num>
+
+<margin>
+1. cap:
+Das Dritte Buch/
+</margin>
+
+n. 2. 31.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S | SK | SS | | SR |
+| SS | SS | SS | SS | 52 | SS | SS | SS |
+| | | | | | SR | | |
+| | | | | WR | | | |
+| | | | | WS | | | |
+| | | | | | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | WS | | WR |
+
+n. 7. 8. 9. 12.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | SS | | SR |
+| SS | SS | SS | SR | | | SS | SS |
+| | | 46 | SR | | | | |
+| | | 38 | WR | WS | | | |
+| | | | WK | | | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | | WS | | WK | WS | | WR |
+
+n. 15. 16.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | SS | | SR |
+| SS | SS | SS | | SR | | SS | SS |
+| | | | | SR | | | |
+| | | | WR | SS | | | |
+| 32 | | 30 | | WK | WS | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | | WS | | WK | WS | | WR |
+
+n. 20. 2j. 24.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | SR | | 60 | | SK | SR |
+| SS | | | | | | | SS |
+| | | | | | | | |
+| | SS | | | 36 | | WS | |
+| | | 30 | | | WR | | |
+| | | | | WR | WK | WS | |
+| WS | WS | WS | | SK | | | |
+| WR | | | | | | | |
+
+<column-break/>
+
+n. 5. 26.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | | SR |
+| SS | SS | SS | 53 | SR | | SS | SS |
+| | | | | | SS | | |
+| | | | | WS | | | |
+| | | | | WK | WS | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+n. 13.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | SS | | SK | SS | | SR |
+| SS | SS | SS | | | | SS | SS |
+| | | 46 | SR | | | | |
+| | | | WR | SR | | | |
+| | | | | WK | WS | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | | | | WK | WS | | WR |
+
+n. 19. 25.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | SR | SK | SS | | SR |
+| SS | SS | SS | | SR | | SS | SS |
+| | | 46 | | | | | |
+| | | | | | | | |
+| | | | WR | 29 | | SS | SS |
+| | | | | | | 19 | |
+| WS | WS | WS | | WS | | WS | WS |
+| WR | | WS | | WK | | | WR |
+
+n. 27. 28.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | | SR |
+| SS | SS | SS | | SR | | SS | SS |
+| | | | | | | | |
+| | | | | | SS | | |
+| | | | | | WR | WS | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+<vocab>
+Pattern, Weaving, SR, SS, SK, WR, WS, WK, Das Dritte Buch, cap.
+</vocab>

@@ -1,0 +1,108 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>194</page-num>
+<vocab>Schachspiel, Selenus, Spielbrett, Roch, Springer, König</vocab>
+
+<margin>Das Ander Buch)</margin>
+<margin>10. cap:</margin>
+
+### n. 2. 17.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | — | SR | SR |
+| SS | SS | SS | SS | 52 | SS | SS | SS |
+| | | | | 43 | | | |
+| | | SS | | SS | | | |
+| | | WS | | WS | | | |
+| | | WS | | | | | |
+| WS | WS | | WS | | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+### n. 4. 7.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | | | SR | | | |
+| | | SS | 36 | | | | |
+| | | WS | SS | WS | | | |
+| | | WS | | | | | |
+| WS | WS | | | WS | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+### n. 8. 9.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | | | SR |
+| SS | SS | SS | SS | 52 | SS | SS | SS |
+| | | | | SR | | | |
+| | | SS | WS | | | | |
+| | | WS | SS | 28 | | | |
+| | | WS | | | | | |
+| WS | WS | | | WS | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+### n. 13. 14.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | 59 | | SR |
+| SS | SS | SS | SS | 52 | WS | SS | SS |
+| | SS | | | | | | |
+| | | | WS | | | | |
+| | | | SR | | | | |
+| | | WS | | | | | |
+| WS | WS | | | WS | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+<column-break/>
+
+### n. 3. 10.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | 47 | | | SR | | |
+| | | SS | | SS | | | |
+| | | WS | WS | WS | | | |
+| | | WS | | | | | |
+| WS | WS | | | | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+### n. 5. 6.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | | 47 | | | SR | | |
+| | | SS | | | | | |
+| | 31 | WS | WS | WS | | | |
+| | | | | | | | |
+| WS | WS | | | | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+### n. 11. 12.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | SK | | | SR |
+| SS | SS | SS | SS | | SS | SS | SS |
+| | SS | | | | | | |
+| | | | | 37 | WS | | |
+| | | | WS | | SR | | |
+| | | | WS | | | | |
+| WS | WS | | | | WS | WS | WS |
+| WR | WR | WS | W&WK | | WR | WR | |
+
+### n. 15. 16.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | SK | | 59 | | SR |
+| SS | SS | SS | SS | SK | WS | SS | SS |
+| | | | | | | | |
+| | | | W&WS | | | | |
+| | | | SR | | | | |
+| | | WS | | | | | |
+| WS | WS | | | WK | SS | WS | WS |
+| WR | WR | WS | | | | WR | WR |
+
+<vocab>SR (Schwarz Roch), SS (Schwarz Springer), SK (Schwarz König), WS (Weiß Springer), WK (Weiß König), WR (Weiß Roch), Gusztáv Selenus</vocab>

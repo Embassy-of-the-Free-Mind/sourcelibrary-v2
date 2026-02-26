@@ -1,0 +1,77 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>VIIII</page-num>
+
+quinaria sęz 7 senaria nascantur numeri circulares dicitur. 7 centum vigintiquinq;: sil'r ducẽta decem
+7 sex sphere sphericique cubi noīantur qui a radicibus quinaria 7 senaria in suos circulares quadratos
+ductis pcreātur. Sed quia hi numeri a paucis 7 pstitutis numeris nascitur quinario scz et senario
+7 demõstrationis difficultatem non requirant: aut saltem cũ ceteris quadratis 7 cubis normam obser
+uent: horum ampliorem determinatiõem autor non ab re omisisse videtur.
+
+->Octavi elementorum Arithmetices Jordani finis.<-
+
+<margin>c</margin> Qualitas est inequalitatis principium. Inequalitatis quinq; sunt species:
+aut eni maior terminorum ɔtinet minorem aliquoties vt nichil superfluat: et
+dicitur multiplex proportio. aut semel tm̃ 7 eius aliquā partem: et supparticu-
+laris appellatur. aut semel 7 eius aliquot partes: et dicitur suppartiens. aut
+pluries 7 eius aliquā partem: et multiplex supparticularis vocatur. aut pluries 7 eius
+aliquot partes: et multiplex suppartiens noīatur. <insert>C</insert> Minoris quoque ad maiorẽ habi-
+tudo totidem species ɔtinet: que inter se sicut priores fm denoiantium diuersitatem
+variātur. <insert>C</insert> Scõm partem aliquid multiplicare: est totam illius sumere partem: quota
+fuerit que multiplicat. <insert>C</insert> Quodcunque aliud multiplicet: illud pduci dicimus qđ ita se
+habet ad multiplicatum: sicut multiplicans ad vnum. diuidi dicitur aliquid per aliud: cum
+illud sumitur diuidens quòd per idem multiplicatum summam diuisi restituat.
+
+<margin>1</margin> ¶ Inequalium numerorum maioris ad minorem ea est: que partis ab ipso minore de-
+nominate: ad partem a maiore dictam proportio.
+¶ Sint a 7 b numeri inequales: a maior: et b minor. sintq; e 7 f partes ab ipsis denoiate d scz denoiata
+ab b et e denoiata ab a. dico eādem pportiõem esse a ad b et d ad e. pono eni vnũ inter a et b qđ sit c: 7
+vnum inter d et e qđ sit f. et quia que pportio a ad vnum ea ē vnius ad partem ab a denoiatam: at ea est
+pportio f ad e. et que pportio vnius ad b: ea est partis denoiate ab b ad vnum. at ea est d ad f. igitur
+per vicesimāseptā secūdi 7 equā proporotiõalitatem indirectam que pportio a ad b ea est d ad e: ptis
+scz a minore denoiate/ ad partem a maiore denoiatam. quod est propositum.
+<image-desc>A geometrical diagram on the right side of the paragraph consists of several horizontal lines. The first line is labeled 'a' with the number '4'. Below it, a line labeled 'b' with the number '2'. Below that, 'c' with the number '2'. To the right, another set of segments: 'd' with '1', 'f' with '2', and 'e' with '4'.</image-desc>
+
+<margin>2</margin> ¶ Partes quotlibet in partes equales redigere.
+¶ Sint partes date a/b c: et numeri eas denoiantes d/e/f: et ppositū sit reducere a b c in ptes eiusdẽ
+denoiatiõis atq; equales. sumo per vicesimāquintam tertij mimum nūerum quẽ numerant d e f: qđ sit g
+numerētq; ipm fm h/k l: et sit m pars denoiata ab g. erit eni per precedentem vt g ad d: ita a ad m. at d
+nūerat g fm h: igitur 7 m numerabit a fm h. et per eandem vt g ad e: ita b ad m. e aut̃ numerat g fm k
+igitur 7 m numerabit b fm k. itidẽm 7 m numerabit c fm l per idem. erūtq; reducte partes ille in ptes
+equales scz a in partes dictas ab g fm h/ et b in easdem fm k/ et c in easdez partes ab g dictas scõm l.
+at si a b c singule non sint pars: sed b sit partes 7 c partes idem eueniet. erūtq; partes dicte ab g fm h
+k l. 7 ducẽdo a in h pueniūt partes a dicte ab g. et ducẽdo b in k pueniūt partes b ab eodẽ nūero dicte
+et ducendo c in l pueniūt reducte partes c dicte ab g. quas si vna colligis collectum ostendit summam
+partium a b c ad eandem denoiationem scz g reductarū.
+<image-desc>A complex geometrical diagram consisting of horizontal and vertical line segments labeled with letters a through m and numbers 12, 4, 3, 6, 4, 3, 2, and 1. It shows proportional relationships between different units.</image-desc>
+
+<margin>3</margin> ¶ Numerum cum parte vel partibus datum: in partes similes reducere.
+¶ Sit a numerus: 7 b/c/d partes date: et iubeat primo a 7 b in partes siīles reducere. duco numerum
+denoiantez partem b in a. et qđ b est pars vnius 7 vnum pars totius a: denoiata ab a: ergo p vicesimā
+tertiam pmī b est pars a denoiata a nūero qui fit ex ductu denoiantiū in se scz denoiantis b: in a deno
+minatẽm vnius: partis scz a. duco ergo b in a 7 pducet numerus denoians illam partem: 7 p diffiniti
+onem multiplicans a fm illam partem. capio ergo siīes illi parti fm pductum numerum qui erit oēs
+siīes partes a cui addo partem b 7 sit aggregatus e factūq; apparebit propositum. ¶ Si si iubeamur a
+numerum et partes b c 7 d in siīles partes reducere: reduco pmo p precedẽtem b c 7 a in siīles ptes.
+deinde vt prius duco numerum denoiantem in a 7 pueniet nūerus denoians illam partem quem vt
+prius compleo 7 cui addo nūerum partium ad eandem denoiationem reductarū: et efficit propositum.
+<image-desc>A diagram on the right side of the text showing four horizontal lines labeled a, b, c, d with numerical values. Line a corresponds to 4, line b to 2, line c to 1 1/3, and line d to 1 1/4. To the right of these are calculations or labels: 9, e, 8, and 1.</image-desc>
+
+<margin>4</margin> ¶ Quod sit ex ductu duarū partium vnius in aliam: ē pars denoiata ab numero qui
+fit ex ductu duoz numeroy vnius in alium illas partes denoiantium.
+¶ Sint a 7 b due partes: 7 nūeri eas denoiantes sint c 7 d: 7 ex c in d fiat e: et pars denoiata ab e sit f.
+dico f esse partem pductam ex a in b. erit eni ex diffinitiõe vt vnum ad c: ita d ad e. sed 7 vt vnum ad c:
+ita a ad vnum. ergo vt a ad vnum: ita d ad e. sed p primam huius vt d ad e: ita f ad b. at p diffinitiõem
+vt a ad vnum: ita pductum ex a in b ad b. at f ita se habet ad b. est igitur p diffinitiõem qđ fit ex a in
+b. quod est propositum.
+<image-desc>A diagram with lines labeled a, b, c, d, e, f. Numerical values 12, 4, 1, and 3 are associated with segments. Line c is labeled 12, line a is labeled 3, line d is labeled 4, and line b is labeled 1.</image-desc>
+
+<margin>5</margin> ¶ Si plura quotlibet in aliquo ducantur: tm̃ pduci q̃tum si q̃libet eorum ducat in illū.
+¶ Hec decime primi siīis est sed cōioz. sit nūerus a: e collectus ex a b c qđ multiplicet d siue d sit nūerus
+siue ps vel ptes 7 pueniat e. et ex ductu a in d fiat f/ et b in d fiat g/ et c in d fiat h. dico f g h simul tm̃ eẽ
+q̃tum e. nam ex diffinitiõe erit vnum ad a/ et ad b et ad c: tanq̃ d ad f/ et ad g 7 ad h. ergo p vicesimā-
+tertiam secūdi vnum ad a b c: sicut d ad f g h. at p diffinitionem sicut vnum ad a b c: ita d ad e.
+sunt igitur f g h simul q̃tum e. quod est propositum.
+<image-desc>The final diagram shows lines a, b, c, d, e, f, g, h. Numbers 15, 6, 7 are above lines b and c. Numbers 28, 55, 42, 105 appear below and to the side of the lower lines.</image-desc>
+
+<vocab>Jordanus de Nemore, Arithmetices, proportio, multiplex, supparticularis, suppartiens, denoiantium, multiplicare, inequalitatis</vocab>

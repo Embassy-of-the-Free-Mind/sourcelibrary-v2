@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>362</page-num>
+<header>Das Dritte Buch / 11. cap:</header>
+
+,, bringen) auf denselben / der K. Rochens Soldaten / auf zwey
+<margin>2.</margin> ,, und dreyßig: * Der Schwartze / nimt ihn / mit demselben: Der
+,, Weiße / der S. K. Soldaten / mit des K. Schützen / und kan ihm
+,, folgendes / (wan der K. Reuter / auf zwey und zwanzig / gezo=
+,, gen wird) der S. K. Reuters Soldaten / nicht entstehen.
+<margin>3.</margin> ,, Nimt aber der Schwartze / nicht den W. Soldaten / (n. 2.)
+,, besondern ziehet / (umb der K. Reuters Soldaten / zu entse=
+,, hen) dero Schützens Soldaten / auf sechs und vierzig: so
+,, nimt der Weiße / mit seiner K. Rochens Soldaten / der S.
+,, K. Reuters Soldaten: Der Schwartze / denselben / mit der
+,, K. Schützens Soldaten: Der Weiße / ziehet der K. Reu=
+,, ters Soldaten / auf der S. K. Soldaten / auf drey und
+,, zwanzig: Der Schwartze / nimt ihn / mit demselben: Der
+,, Weiße / der S. K. Schützens Soldaten / mit des K. Schü=
+,, tzen / und beut Schach: Der Schwartze / ziehet / auf densel=
+,, ben / (umb den König / zu bedecken) der K. Schützen / auf
+,, drey und funfzig: Der Weiße / (umb denselben zu verthei=
+<margin>4.</margin> ,, gen) nimt der S. K. Soldaten / mit seiner Königin: * Der
+,, Schwartze / des W. K. Schützen / mit seiner K. Schützen:
+,, Der Weiße / denselben / mit der Königin / und beut abermal
+,, Schach: Der Schwartze / bedecket den König / mit der Kö=
+,, nigin / auf drey und funfzig: Der Weiße / gibt ursach / zur
+,, verwechslung / der beeden Königinnen: und wird der S.
+,, K. Rochens Soldat / gantz bloß und unbesetzet verlassen:
+,, und der Schwartze / von dem Weißen / (wan derselbe / die
+,, Rochen hintereinander bringet / und nebest dem Schützen /
+,, und den Reutern / seine winckel oder ecken / daselbsten angreif=
+,, fet) mit gewalt erleget und überwunnen.
+<margin>5.</margin> ,, Wan aber der Schwartze / den W. Schützen / (n. 4.) nicht
+,, nimt / besondern / der K. Reuter / auf der W. K. Soldaten / auf
+,, sechs und vierzig / ziehet: so setzet / der Weiße / (ihn zu beschützen)
+,, der K. Schützen / auf zwanzig: Der Schwartze / der K. Rochen /
+,, (umb des W. K. Schützen / gefangen zu halten) auf drey und
+,, sechzig: Der Weiße / die Königin / (umb derselbe auß der gefahr
+,, zu helfen / und seines K. Schützen sicher zu gebrauchen) auf zwey
+,, und dreyßig: Der Schwartze / die Königin / auf des W. K. Schü=
+<margin>6.</margin> ,, tzen / auf sieben und vierzig: * Der Weiße / (ihn zu beschütze) der
+,, K. Reuter / auf zwey und zwanzig: und muß folgendes / (wan
+
+<meta>catchword: Er/</meta>
+
+<vocab>Schach, Königin, Reuter, Schützen, Rochen, Soldaten, Schwartze, Weiße</vocab>

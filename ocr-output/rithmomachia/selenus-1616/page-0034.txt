@@ -1,0 +1,27 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>4</page-num>
+<header>Das Erste Buch / 1. cap.</header>
+<warning>The page exhibits significant foxing and staining throughout, though the text remains legible.</warning>
+
+oder Meß-kunst / die maas und abtheilung: auß der Arithmetic, oder Zahl-kunst / die Zahle: Zum theil / auß der Physic, oder Natur-Kunst: alsz welche / den Zahlen / den Maßen / und Abtheilungen / materien darzu leihet: ob gleich / in diesem Spiele / die Materie, durch den verstand / wan sie demselben / nebest einer guten gedechtnus / fest eingebildet worden / kan abgesondert werden: Aber hievon wird etwa / im eylften Capittel / dieses Buches / weiterer Bericht / (wie man nemlich / ohne eine Tabel / im sinne außwendig spielen könne) zu besserer vernehmlichkeit / zu befinden seyn. Fürnehmlich aber / hat sie / ihr fundament, auß der Ethic, der Sitten-Politic, der Regier- und insonderheit Polemic, der Krieges-Kunst: wie auß dem offenbahre / daß alhie / viel Regeln / und Gesetze / ihre gründe und ursachen / auß denselben haben. Dahero es dan kommen / daß diese unsere Kunst / zu itztgeregten allen / doch fürnehmlich / auf ermelte Krieges-Kunst / (wie bald angezeigt werden sol) hinwider gezogen und gebracht worden.
+
+Die Experientz oder Erfahrenheit / stehet im Gebrauch / und unfehlbaren Augenschein / davon zu seiner Zeit.
+
+Auß diesem nuhn / was itzt erwehnet / thun / die herlichen Eigenschaften / und Nutzbarkeiten / her-quellen und fliessen: welche wir ordentlich / wie folget / erzehlen wollen.
+
+Daß erstlich / diese Kunst / nuhr dem Verstande / und nicht dem glücke unterworffen sey: und stimmet hiemit / gl: in Auth: Interdicimus, C. de Episc: & Cler: überein / welche / also lautet:
+
+> *Ludus Scacchorum, in Ingenio naturali consistit, nec commititur viribus Fortune.*
+
+Diese wort / widerholet / *Cosm: Guimier Parisinus*, in pragm: sanctione, tit: de spectacul: in Eccles: non faciend: fol: 365. a. col: 2. die ursach / wird auß dem vorgehenden / beyzubringen / nicht schwer seyn. Wie weit gleichwol / das glücke / wegen des Spieles außganges und endung / alhie stat finde / dessen hat man sich / auß dem *Franc: Piccolomineo*, grad: 5. Moral: Philos: c. 54. in f. gnüglich zu berichten.
+
+Es werde (2.) diese Kunst / wegen des / bald im anfange / geregten hohen Zweckes / so wol auch / folgenden nutzbarkeiten / unter die freyen Künste / welche die Lateiner / *ingenuas* nennen / gleich der Music, nicht unbillig / gerechnet und gesetzet: wie Sie dan auch billig / von den Alten / in hohen ehren / gehalten und geachtet worden :
+
+> (*à Melioribus*, saget *Alexand: ab Alexandro, lib: 3. c. 21. Genial. Dier: & summis honoribus, vel maximè cultus & celebratus*)
+
+auch in Geist- und Bürgerlichen Rechten / zugelassen ist: wie solches /
+
+<meta>catchword: h;</meta>
+
+<vocab>Meß-kunst, Arithmetic, Zahl-kunst, Physic, gedechtnus, Ethic, Politic, Polemic, Krieges-Kunst, Experientz, Ludus Scacchorum, Cosm: Guimier Parisinus, Franc: Piccolomineo, ingenuas, Alexand: ab Alexandro</vocab>

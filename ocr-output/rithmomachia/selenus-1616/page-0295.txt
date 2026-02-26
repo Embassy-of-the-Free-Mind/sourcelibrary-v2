@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>261</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>1. cap:</margin>Reuters-Soldaten / mit der Königin: Der Schwarze / stellet /
+seine Königin / (umb dieselbe / wan der Weisse / des K. Schützen /
+auf drey und dreyssig / ruckete / nicht zu verlieren) auf vier und
+vierzig : Der Weisse / (umb des K. Schützen / frey zu ziehen) den
+König / auf eilfe: Der Schwarze / des K. Schützen / auf die W. Kö-
+nigin / auf zwey und funfzig : (welcher Zug / dan besser ist / alß
+wan Er / des K. Rochen / auf dieselbe / auf acht und funfzig /
+zöge : Dan Er denselben / wan der Weisse / mit des K. Schüt-
+zen / auß drey und dreyssig / alsdan Schach-böte / auf zwey
+und vierzig / verlieren müste) der Weisse / darf / mit dersel-
+ben / des S. K. Schützens-Soldaten / nicht nehmen / (dan sons-
+sten / der Schwarze / des K. Rochen / auf neun und funfzig /
+ziehen / und dieselbe / in seine gewalt / bringen würde) sondern
+rucket sie / auf drey und dreyssig / und beut Schach : Der Schwar-
+ze / (umb keine ursache / zur verwechslung der Königinne / zu
+geben) ziehet / den König / auf neun und funfzig : Der Weisse /
+nimt / des gedachten S. K. Schützens-Soldaten / mit der
+K. Schützen : Der Schwarze / ziehet auf ihn / die Königin /
+auf drey und vierzig : Der Weisse / des K. Rochen / auf drey :
+Der Schwarze / darf / des W. K. Schützen / mit der Königin /
+nicht nehmen / (dan Er sonsten / wan der W. König / auß dem
+Schache / gezogen würde : seine Königin / durch den W. Rochen /
+mit dem gantzen Spiele / verlieren müste) sondern rucket auf
+ihn / auch des K. Schützen / auf funf und vierzig : Der Weisse /
+(ihn ferner zu beschützen) des K. Reuters-Soldaten / auf achtzes-
+hen : Der Schwarze / der K. Schützen / auf sechs und vierzig :
+Der Weisse / den König / auf zwey : Der Schwarze / (umb seine
+Königin / und des K. Schützen / auß der bevorstehenden gefahr / zu er-
+retten) seinen König / nicht auf zwey und funfzig / (dan es / wan der
+Weisse / der K. Schützen / auf vier und dreyssig / rucket : wegen sei-
+ner Königin / gefährlich seyn würde) noch auf funfzig / (dan der
+Weisse / alsdan / der K. Schützen / auf seine Königin / auf sechs und
+dreyssig / ziehen würde : Er / nehme ihn / mit derselben : Der Weis-
+se / böte / mit seiner Königin / auß ein und funfzig / Schach : Er / müs-
+ste den König / auf ein und vierzig / rücken : Der Weisse / gebe /
+mit des K. Rochen / auß drey und vierzig / Schach : Er / so fern
+Er ihn / mit der Königin / nicht nehmen / noch dieselbe ver-
+schertzen wolte : muste den König / auf vier und dreyssig / rücken :
+
+<meta>catchword: Der Weiss</meta>
+
+<vocab>Schach-Spiel, Königin, König, Rochen, Schützen, Reuters-Soldaten, Schach, Zug, Gustavus Selenus</vocab>

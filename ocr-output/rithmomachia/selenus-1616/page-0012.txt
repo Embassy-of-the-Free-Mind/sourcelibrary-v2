@@ -1,0 +1,40 @@
+<language>German</language>
+<page-type>text</page-type>
+<meta>catchword: zu</meta>
+
+Daß ferner der Author, die Art zu schreiben/ nach
+seinem vorhabenden Wercke/ und materie/ so viel sichs
+wollen thun lassen/ gerichtet: Damit hat Er/ so wol
+einem anfahenden/ alß erfahrnen Schach-Zieher/ nüt-
+tzen wollen: So fern Er aber/ tunckel und unverständ-
+lich/ an etlichen orten/ angesehen werden möchte: sol-
+len die angehende/ und noch unerfahrne/ deßwegen/
+gleichwol nicht verzagen: in erwegung dieselbe/ durch
+fleiß/ seine meynung/ der ordnung nach/ endlich wol be-
+greiffen/ und sich einbilden können: Scheine Er aber/
+gar zu klar und vernehmlich zu seyn/ haben die er-
+fahrne Schach-Zieher/ es gleichwol dafür zu achten/
+daß noch in etwas gedancken/ darzu müssen gebrauchet
+werden/ und Er sich den angehenden/ umb sie bey der
+lust zu behalten/ habe bequämen wollen.
+
+Wan man auch den Authorem, in einer / nicht so
+gar wichtigen sache/ unnötiger gepflogener weitleuffig-
+keit/ etwa beschüldigen wolte: so hat Er sich zufoderst
+hierinnen/ nach des jüngern Plinii Raht/ gehalten/
+welcher lib: 5. Epist: 6. in folgenden worten/ (wie diesel-
+ben/ vom Luisio ab Alcafar, Hispal: è Soc: Jes: Th: in
+Vestigatione, arcani sensus, in Apoc: Tom: 1. pag: 22.
+» angezogen) begriffen: *Primum Ego officium Scriptoris*
+» *existimo, ut Titulum suum legat, atq; identidem interroget*
+» *se, Quid cœperit scribere, sciatq;, si Materia immoratur,*
+» *non esse longum: Longissimum, si aliquid accersit, atq; at-*
+» *trahit. Brevis est, qui facit, Quod instituit. Non enim*
+» *Excursus hic ejus, sed Opus ipsum est. Si nihil Indu-*
+» *ctum, & quasi Devium loquitur, non Epistola, quæ de-*
+» *scribit, sed Res, qua describitur, Magna est.* Dieses hat
+gleicher meynung/ Martialis, in folgenden Verslein/
+verfasset:
+» *Non sunt longa, quibus nihil est, quod demere possis.*
+
+<vocab>Schach-Zieher, Plinius, Luis de Alcázar, Martial, Scriptoris, weitleuffigkeit</vocab>

@@ -1,0 +1,21 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>464</page-num>
+<header>Das Dritte Capittel/</header>
+<meta>catchword: Weissen</meta>
+
+Vier Weisse Runde Steine: (als/ bey den mit 2, den mit 4: bey den/ mit 4, den mit 16: bey den mit 6, den mit 36: bey den mit 8, den mit 64: ) bey diese / die acht drey- und acht Vier-eckete Steine / (der ordnung nach / wie sie / im vorigen andern Capittel / erfunden / und auß dem Abriß zu ersehen ) legen und setzen.
+
+Ebenmessig / sol man / mit stellung der Schwartzen Steine / verfahren / nuhr / daß man / von oben herab / und nach der rechten hand / die felder zehle: Die Steine aber / auf die lincke seite / welche dem Gegener / die rechte ist / stelle.
+
+Die Türne / sol man / zwischen die Viereckete Steine / auf die felder / darinnen / die beede Viereckete Steine / (auf welche / dergleichen Zahle / mit welchen der Türne fundament beschrieben / gezeichnet sind) stehen müsten / ordnen und stellen.
+
+Auf welche Felder nuhn / diese Steine / ehe man / das Spiel anhebet / ferner müssen gesetzet werden / findet man / auß der vorigen ordnung / folgender gestalt:
+
+<margin>(n.16)</margin> Es werden erstlich / die acht Weisse / Viereckete Steine / darunter der Weisse Turn / in zween hauffen / getheilet: folgends ziehet man / die Viere / wie sie ordentlich / bey ein ander stehen / in die oberste: die übrigen Viere / in die unterste ecke des Bretes: (dahero die acht felder / in welche sie / zum anfange / gestellet gewesen / zwischen ihnen / gantz ledig verbleiben ) diesem nach den Dreyecketen / mit 9, an den Vierecketen / mit 15: den Dreyecketen / mit 81, an den Vierecketen / mit 153: den Dreyecketen / mit 6, an den Vierecketen / mit 45: den Dreyecketen / mit 72, an den Turn / mit 91: ferner den Dreyecketen / mit 25, nach der rechten seiten / über den Vierecketen / mit 45: den Dreyecketen / mit 49, auch nach der rechten seiten / unter den gedachten Turn / welcher mit 91: Weiter die beeden übrige Dreyeckete Steine / mit 20 und 42, nach der rechten hand / zwischen die itztgedachte / beede Dreyeckete / mit 25, und 49: Endlich / die Acht Runde Steine / wie sie in ihrer ordnung stehen / nach der rechten hand / an die vier Dreyeckete Steine / 25. 20. 42. 49. gezeichnet: Dahero / die vier letzte Runde Steine / als 4. 16. 36. 64. Zwischen die beeden dreyecketen Steine / mit 6 und 72, beschrieben / ihren stand erlangen.
+
+Gleichmessige Verenderung / stellet / (vermöge des zugeordneten Abrisses) der mit den Schwartzen Steinen / an.
+
+Es verbleiben aber / zwischen diesem Schwartzen / und jenem
+
+<vocab>Weisse Steine, Schwartze Steine, Viereckete Steine, Dreyeckete Steine, Runde Steine, Turn, Rhythmomachia, Spielbrett</vocab>

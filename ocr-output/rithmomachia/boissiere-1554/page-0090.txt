@@ -1,0 +1,15 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>44</page-num>
+<header>DES PHILOSOPHES.</header>
+<sig>F iiij</sig>
+
+### Prinſe par æqualité ou rencontre.
+
+Ceste prinſe ne differe de celle que deſſus auons monſtré en rencontre. Parquoy vſeras des meſmes nombres.
+
+### Prinſe par embuſche ou Addition ou Subſtraction.
+
+Avoir adiouſté la valeur de deux tables enſemble ou ſubſtraict l'vne de l'autre, Si le produict eſt egal à quelque table de l'aduerſaire laquelle ſoit ſituée en quelque loge, ou vne chacune des deux puiſſe aller de ſon mouuement regulier, la table aduerſaire ſera prinſe. Exemple d'addition : ſoit le rond 16 en D & le triangle 9 en F qui font deux tables de nombre pair, et ſoit en la loge A le 25 des impairs, il s'enſuiuira (pour autantque les deux du nombre pair 9, & 16, valent 25) <gloss>b</gloss> iceluy 25 ſera prins alors qu'on ſituera la derniere des deux tables 9 & 16, en D ou F : & à ceſte prinſe ſerõt commodes les nõbres que deſſus auons accõmodez à embuſche. Quãt à ſubſtraction, ſoient propoſez les deux nombres de la partie des pair, ſçauoir eſt le quarré 15 en L, & le rond 6 en la loge B, & ſoit le nombre aduerſaire de 9 logé en A, il s'enſuyura (pour autãt
+
+<vocab>prinse, æqualité, rencontre, embusche, Addition, Substraction, tables, loge, nombre pair, nombre impair, quarré, rond, triangle</vocab>

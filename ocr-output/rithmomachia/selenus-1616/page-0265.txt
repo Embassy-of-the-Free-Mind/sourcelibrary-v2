@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>231</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>14.cap:</margin> welchen fall/ der Weiße/ mit demselben / auß zwey und funfzig /
+Schach=beut/ und den Rochen/ folgendes / auf drey rucket) auf sieben
+und dreyßig: Der Weiße/ den König/ auf neun und zwanzig: Der
+Schwartze/ beut/ mit der K. Rochen/ auß dreyzehen/ Schach: Der
+Weiße/ rucket den König / auf sechs und dreyßig: Der Schwarz-
+ze/ beut/ mit der K. Rochen/ auß zwölfe/ Schach: Der Weiße/ se-
+tzet/ den König/ auf sieben und zwanzig: Der Schwartze/ beut /
+mit der K. Rochen / auß eylfe/ Schach: Der Weiße/ ziehet/ den
+König/ auf vier und dreyßig: Der Schwartze/ beut / mit der K.
+Rochen/ auß zehen/ Schach: Der Weiße / rucket den König / auf
+drey und dreyßig: Der Schwartze/ beut/ mit der K. Rochen/ auß
+neune/ Schach : Der Weiße/ bedecket / den König / mit seiner K.
+Reuter/ auf funf und zwanzig: Der Schwartze/ ziehet/ seinen
+König/ auf des W. K. Rochen/ auf funffzig: Der Weiße/ densel-
+ben/ (umb ihn/ und der K. Reuter zu beschützen) auf sieben und zwan-
+zig: Der Schwartze/ der K. Rochen/ (umb/ mit demselben / auf
+sechs und dreyßig/ Schach zu bieten) auf zwölfe: Der Weiße/ gibt/
+mit der K. Reuter / auß fünf und dreyßig/ Schach: Der Schwar-
+tze/ darf den König/ auf neun und funfzig/ oder drey und vierzig/ nicht
+setzen / (dan Er sonsten / durch der W. K. Reuter / wegen des Ab-
+Schaches / von des W. K. Rochen/ auf achtzehen / oder neun und
+zwanzig: der K. Rochen / verlieren müste) besondern rucket ihn /
+auf acht und funfzig: Der Weiße/ den König/ auf ein und vierzig *
+Der Schwartze/ beut/ mit der K. Rochen/ auß neune / Schach:
+Der Weiße/ bedecket den König/ mit seiner K. Reuter / auß funf
+und zwanzig: Der Schwartze/ ziehet/ der K. Schützen / auf vier
+und vierzig: Der Weiße/ des K. Rochens = Soldaten / auf funf-
+zig: Der Schwartze/ der K. Schützen / (dan sonsten der Weiße/
+mit des K. Rochen/ auß neun und funfzig/ gleich Schach = Mat gebe)
+auf ein und funfzig: Der Weiße / des K. Rochen / auf sechs und
+zwanzig: Der Schwartze/ der K. Rochen/ (in willens / auß vier
+und vierzig/ Schach zu bieten) auf zwölfe: Der Weiße/ seiner K.
+Reuter/ (umb des K. Rochens = Soldaten/ ferner zu beschützen/ und
+mit diesem Reuter/ auß zwey und funfzig / Schach zu geben) auf
+<margin>12.</margin> fünf und dreyßig: * Der Schwartze/ beut / mit der K. Rochen /
+auß vier und vierzig/ Schach: Der Weiße/ rucket/ den König / auf
+vier und dreyßig: Der Schwartze/ beut/ mit der K. Rochen/ auß
+
+<sig>G g</sig>
+<meta>catchword: zwey</meta>
+
+<vocab>Schach, Rochen, Reuter, Schützen, Soldaten, Schach-Mat, Weiße, Schwartze</vocab>

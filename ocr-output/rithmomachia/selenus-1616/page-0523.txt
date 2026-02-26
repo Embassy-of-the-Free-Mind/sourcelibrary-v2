@@ -1,0 +1,56 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>481</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+| 5. | 15. | 25. | 28. | 64. | 100. |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 5. | 25. | 45. | 30. | 36. | 42. |
+| 6. | 7. | 8. | 72. | 81. | 90. |
+
+## Die Zahle / der Abtheilungen / in der
+
+### Meß-Kunst / Singe-Kunst/
+
+| | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 2. | 4. | 8. | 2. | 3. | 6. |
+| 3. | 6. | 12. | 3. | 4. | 6. |
+| 4. | 6. | 9. | 3. | 5. | 15. |
+| 4. | 8. | 16. | 4. | 6. | 12. |
+| 4. | 12. | 36. | 4. | 7. | 8. |
+| 4. | 16. | 64. | 4. | 7. | 28. |
+| 5. | 15. | 45. | 5. | 8. | 20. |
+| 9. | 12. | 16. | 5. | 9. | 45. |
+| 9. | 15. | 25. | 6. | 8. | 12. |
+| 9. | 45. | 225. | 7. | 12. | 42. |
+| 16. | 20. | 25. | 8. | 15. | 120. |
+| 20. | 30. | 45. | 9. | 15. | 45. |
+| 25. | 30. | 36. | 9. | 16. | 72. |
+| 25. | 45. | 81. | 12. | 15. | 20. |
+| 36. | 42. | 49. | 15. | 20. | 30. |
+| 36. | 90. | 225. | 25. | 45. | 225. |
+| 49. | 56. | 64. | 30. | 36. | 45. |
+| 81. | 90. | 100. | 30. | 45. | 90. |
+| 81. | 153. | 289. | 72. | 90. | 120. |
+
+Die noch Größere überwindung / welche auch / auf dreyer-
+ley Art geschicht / wird folgender weyse / zu wege gebracht.
+Wan in des Feindes felder Vier Steine / deren Zahle / zwo
+Abtheilungen / von den Dreyen oberwehnten / alß nemlich / der
+Zahl- und Meß-Kunst: der Zahl- und Singe-Kunst: der Meß-
+und Singe-Kunst / zusammen begreiffen / gesetzet und gerucket werden.
+
+Die Zahle / dieser gedoppelten Abtheilungen / seynd folgende:
+
+| Die Zahle / der Zahl und Meß = Kunst Abtheilungen / auf vier Steinen. | Die Zahle / der Zahl-Kunst / Abtheilungen in gedachten vier Zahlen. | Die Zahle / der Meß = Kunst / Abtheilungen in den vier Zahlen. |
+| :--- | :--- | :--- |
+| 2. 3. 4. 8. | 2. 3. 4. | 2. 4. 8. |
+| 2. 4. 6. 8. | 2. 4. 6. | 2. 4. 8. |
+| 2. 4. 6. 9. | 2. 4. 6. | 4. 6. 9. |
+| 2. 4. 5. 8. | 2. 5. 8. | 2. 4. 8. |
+| 2. 9. 12. 16. | 2. 9. 16. | 9. 12. 16. |
+
+<sig>3. 6. 9.</sig>
+
+<vocab>Zahl-Kampf, Meß-Kunst, Singe-Kunst, Zahl-Kunst, Abtheilungen, Steine, Arithmetic, Geometry, Music, Rithmomachia</vocab>

@@ -1,0 +1,26 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>409</page-num>
+<header>5. cap: Vom Schach-Spiel.</header>
+
+ter / der K. Schützen / auf sechs und zwanzig : **Der Weisse** /
+nimt nicht / des S. K. Soldaten / mit der K. Schützen / (dan sonsten
+der **Schwarze** / mit der K. Schützen / seines K. Reuter / nehmen /
+und auf seine Königin / ziehen würde : nehme Er ihn dan / mit des
+K. Reuter = Soldaten : so gebe / der **Schwarze** / mit der Köni=
+gin / auß viertzig Schach / und gewönne also / seiner K. Schützen)
+besondern ziehet itzo / und nicht ehe / der K. Reuter / (davon n. 21. ge=
+dacht) auf 13. (dan derselbe nuhn / mit nutzen / und zu rechter Zeit /
+dieweyl er / nicht allein / den König / für der S. Königin / Schach ver=
+sichert / besondern auch / des K. Reuter / verthetiget : gebrauchet
+wird) und gewinnet folgendes / des S. K. Soldaten / mit
+dem gantzen Spiele : **Der Schwarze** / aber wird /
+wider des **Damiani** unterricht / des Sie=
+ges / verlustig seyn.
+
+<image-desc>A decorative woodcut tailpiece featuring a central human mask or face set within elaborate Baroque-style scrolling foliage, strapwork, and festoons. At the upper corners are two animal-like heads, possibly lions or griffins, integrated into the symmetrical scrollwork.</image-desc>
+
+<sig>Eff ij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach-Spiel, Damiani, König, Königin, Reuter, Soldaten, Schützen, Schach</vocab>

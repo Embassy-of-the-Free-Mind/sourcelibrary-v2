@@ -1,0 +1,49 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>227</page-num>
+<header>14.cap: Vom Schach-Spiel.</header>
+
+<margin>4.</margin> auf ein und zwantzig: Der Schwartze/ die Königin/ noch/ auf den
+W. K. Soldaten/ auf zwey und funffzig: Der Weisse/ (ihn ferner
+zu beschützen) seine Königin/ auf zwolfe: Der Schwartze/ der K.
+Reuter/ auf der W. K. Soldaten/ auf sechs und vierzig: * Der
+Weisse/ (ihn zu verthetigen) des K. Reuter/ auf neunzehen: Der
+Schwartze/ (zu beschützen/ des K. Soldaten) dessen Reuters-Sol-
+daten/ auf vier und dreyffig: Der Weisse/ der K. Soldaten/ auf der
+S. K. Reuter/ auf sieben und dreyffig: Der Schwartze/ densel-
+ben/ auf des W. K. Schützen und Reuter/ auf sechs und dreyffig:
+Der Weisse/ nimt/ des S. K. Reuters-Soldaten/ mit seines K.
+Reuter: Der Schwartze/ mit des K. Reuter/ der W. K. Solda-
+ten/ und entdecket/ gegen des W. K. Reuter/ seine Königin: Der
+Weisse/ nimt denselben/ mit des K. Soldaten: Der Schwartze/
+des W. K. Reuter/ mit der Königin: Der Weisse/ ziehet/ seines
+K. Reuters-Soldaten/ auf des S. K. Soldaten/ auf achtzehen:
+Der Schwartze/ darf ihn/ mit demselben/ nicht wegnehmen/ (dan
+sonsten/ der W. K. Schütze/ seine Königin/ gleich wegnehme) beson-
+dern ziehet/ (umb der K. Reuter/ zu erledigen) den König auf ein und
+sechfzig: Der Weisse/ nimt des S. K. Soldaten/ mit der K. Schü-
+tzen/ und ziehet/ ihn/ auf die S. Königin/ und dero Reuter: Der
+Schwartze/ (auf daß Er diesen/ nicht umbsonst verliere) nimt mit
+demselben/ des W. K. Schützen/ und beut Schach: Der Weisse/
+raubet denselben/ mit der Königin: Der Schwartze/ beut/ mit des
+K. Rochen/ auß sechfzig/ Schach: Der Weisse/ ziehet dero König/
+auf dreyzehen: Der Schwartze/ (umb die Königinne/ zu verwechse-
+len) seine Königin/ auf zwey und vierzig: Der Weisse/ der K. Ro-
+chen/ auf viere: Der Schwartze/ nimt die W. Königin/ mit seiner
+Königin/ und beut Schach: Der Weisse/ nimt dieselbe/ mit dem
+<margin>5.</margin> Könige: * Der Schwartze/ ziehet der K. Soldaten/ auf funf und
+viertzig: Der Weisse/ nimt/ des S. K. Rochen/ mit der K. Ro-
+chen/ und beut Schach: Der Schwartze/ nimt denselben/ mit dem
+Könige: Der Weisse/ beut ihm/ mit des K. Rochen/ auß viere/
+abermal Schach: Der Schwartze/ spielet/ den König/ auf drey
+und funffzig: Der Weisse/ der K. Schützen/ auf vier und dreyffig/
+und gewinnet hiemit leichtlich das Spiel.
+
+<margin>6.</margin> Es wird aber dem Schwartzen/ so ferne die Königinne/ ver-
+wechselt worden/ folgendes zum hohern nutzen gereichen/ daß Er/
+des K. Schützen/ auf zwey und funffzig/ nicht aber den Soldaten/
+
+<sig>Ff iij</sig>
+<meta>catchword: auf 45.</meta>
+
+<vocab>Schach-Spiel, Königin, Reuter, Schütze, Rochen, Soldaten, Schach, W. K., S. K.</vocab>

@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>96</page-num>
+<header>Das Erste Buch /</header>
+<sig>Se</sig>
+<meta>catchword: was</meta>
+
+> verkeren / und kein sach / dy dem nechsten schad seint / von ja nit
+> gehöret werden: sye sollent alle tage / lesen / und wissen der Stat
+> gesetze und rechte / und in gedechtnus behalten / waß die stat set
+> zet / und recht macht / und als viel alß an in ist / nicht lassen setzen
+> in den Steten / das wider Gott / oder wider die gerechtigkeit
+> sey: Sie sollent auch / die Richter weisen / und die Rath geben /
+> von allem dem / daran sie unrecht habent: wan kein sach / oder
+> gesetz / hat nit recht / das wider Gott / oder gute sitten / wirt ge
+> machet: Aber man vindet der nuhn vil / in den stetten / die nit
+> achtent des gemein guß / nuhr was in gut ist / das treibent
+> sie / mit der menig / do sie sich zu gesellent / und verfestent
+> mit eyden / und also machent sie theil / under in / und davon
+> werdent die stet vernichtet und verdruckt / und zu jüngst ver
+> heeret. Und darumb das ein einigung werd / und sey in den
+> steten / do sollent sie zu raten / und bewegen alle leut. Es sol
+> sein / zwischen den Bürgern / die eine statt / wol wollen im ha
+> ben / ein gantz und stete freundtschaft: welche ist ein gleicher wil /
+> guter dinge / gegen einem freunt / durch der sachen willen / die man
+> allensachen fürsetzen sol. Es ist nichts alß gut / weder frumkeit /
+> und alß zimlich der Natur / in glücke und in widerwertigkeit /
+> alß freundtschaft / der kraft alß groß ist / das Sie die gesel
+> schaft alles Menschlichen geschlechtes zwinget / zwischen zweyen
+> oder zwischen lützel leuten / under den sie sich finden lassen. In der
+> welt / ist nit lustsamers / dan haben ein freund / mit dem ein
+> man gereden mag / alß mit im selber: Er heist halt nit / ein luste
+> licher Man / der nit ein freund / hinter sein heimlichkeit / riest und
+> beliebet. Es ist ze mercken / das etliche früntschaft gebawen ist /
+> auf ein nuß gut / und wen der nuß abget / und das gut / so get
+> auch früntschaft ab. Imgleichen / so man glück hat / so hat man
+> viel freund / wan man aber das nit hat / so beleibet man allein /
+> und davon / ein freund / der eigen nuß suchet / und nit seines frünt
+> des frommen / der ist mehr ein kaufman / dan ein freund: man / die
+> früntschaft zeucht nicht ferrer / dan der nuß ist: Also hat man lie
+> ber / ecker / Roß / Heuser / Kinder / und andere Hab: Aber Men
+> schen lieb / ist gemeine lauterkeit / oder eitelkeit: und die lauterkeit
+> bekennet man / wen es den leuten übel geet / so bleibet dan der
+> freund stet / das ist ein zeiche / ganzer und lauterer freundtschaft
+> was
+
+<vocab>Richter, Rath, Bürgern, freundtschaft, Menschlichen geschlechtes, gemein guß, nuß gut, lauterkeit</vocab>

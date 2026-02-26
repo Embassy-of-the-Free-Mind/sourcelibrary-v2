@@ -1,0 +1,40 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<warning>Significant ink bleed-through from the reverse side of the page; however, the primary text remains legible.</warning>
+<meta>catchword: za</meta>
+
+### Terzo Effempio.
+
+->D. &emsp; C. &emsp; B. &emsp; A.<-
+->4. &emsp; 6. &emsp; 9. &emsp; 12.<-
+
+La <term>Diapente</term>, li bc & dc, & la differenza ca al d, & la differenza cb ouero ba alla differenza cd, & l'a alla differenza ad .
+
+La <term>Diateffaron</term>, li ab, & la differenza ad al c, ouero alla differenza ac.
+
+La <term>Diapaffon</term>, li ac, & la differenza ad al d, & la differenza ac alla differenza cb, ouero alla differenza ab, & il c alle differenze cb & ba, & il d dalla differenza cd, & l'a alla differenza ac.
+
+La <term>Diapaffon</term> infieme con la <term>Diapente</term>, li ad, & il c alla differenza cd, & la differenza ca alla differenza cd, & il b le differenze ba & bc.
+
+La <term>Difdiapaffon</term>, la differenza ad alla differenza dc, & l'a alle differenze ab & bc.
+
+Il <term>Tono</term>, il b alla differenza ad.
+
+---
+
+### Quarto effempio.
+
+->D. &emsp; C. &emsp; B. &emsp; A.<-
+->6. &emsp; 8. &emsp; 9. &emsp; 12.<-
+
+La <term>Diapente</term>, li ac, & li bd, & la differenza ad alla differenza ac, & la differenza bd alla differenza cd, & il b alla differenza ac, & la differenza ab alla differenza cd, & il b alla differenza ad.
+
+La <term>Diateffaron</term> li ab, & li cd, & il c alla differenza ad, & la differenza ac alle differenze ab & bd.
+
+La <term>Diapaffon</term>, li ad, & l'a alla differenza ad, & il c alla differenza ac, & il d alle differenze ab & bd, & la differenza ac alla differenza cd, & la differenza cd alla differẽza cb.
+
+La <term>Diapaffon</term> con la <term>Diapente</term> infieme, l'a alla differenza ac, & il b alle differenze ab & bd, & il d dalla differen-
+za
+
+<vocab>Diapente, Diateffaron, Diapaffon, Difdiapaffon, Tono, differenza, proporzione, intervalli musicali</vocab>

@@ -1,0 +1,15 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>8</page-num>
+<sig>C 2</sig>
+<meta>catchword: che</meta>
+
+detto quadrato,& in loco di quello si seruimo di q̃sta pyramide. Similmente cominciando dal primo grado della pyramide nera, caminando dalla sua base alla summità, il notaremo nel detto primo grado il 64: nel secondo, il 49: nel terzo, il 36: nel quarto il 25: nel quinto, & ultimo, il 16. & sotto la base notaremo il numero che nasce dalla summa de tutti questi 5 numeri accozzati insieme, ilqual sarà il 190. & perche questo istesso numero si troua scritto in uno de li quadrati neri, però gettando uia detto quadrato, si seruiremo di questa pyramide come più di sotto à suo luogo si dirà ; & così hauemo anchor descritto li numeri, che doueano dipingersi sopra li gradi delle pyramidi, & sotto le loro basi, i quali numeri così questi delle pyramidi, come anchor quelli delli pezzi sono ritrouati da gli autori di questo giuoco con grande artificio, il qual depende dalle proportioni inseg nate dalla scientia Arithmetica, loqual artificio io ho uoluto à posta lasciare, & insegnar à trouar li già detti numeri piu tosto per prattica che per scientia, per non offuscar, & intricar con le proportioni la mente di quelli, che desiderano imparar con facilità questo giuoco: & tanto più intendendo io facilitarlo in maniera, che possi esser imparato anchor da quelli, che nō sono versati nelle proportioni. Hora auuertiremo solamente alcune cose necessarie alla descrittione delli già detti numeri, & poi daremo fine à questa seconda parte.
+
+Primamente adunq; si dee auuertire che hauendo tutti li pezzi, & li gradi delle pyramidi due faccie l'una biancha, & l'altra nera, fà di mestieri dipinger da l'una, & da l'altra faccia li medesimi numeri di sopra da noi ritrouati nella faccia biancha con nero, & nella nera con bianco colore: & questo si fà perche torna molto commodo al giuoco, come à suo loco intenderai .
+
+Oltra di questo auuertirai di scriuer li numeri delli gradi delle pyramidi da più bande, acciò siano più commodamente ueduti da quelli che giuocano .
+
+Di più è d'auuertire, che bisogna sotto ciascuno delli numeri sopradetti dipinti così nelli pezzi, cõe nelli gradi delle pyramidi segnar un punto nelle faccie biã-
+
+<vocab>pyramide, giuoco, Arithmetica, proportioni, quadrati neri, summa, artificio</vocab>

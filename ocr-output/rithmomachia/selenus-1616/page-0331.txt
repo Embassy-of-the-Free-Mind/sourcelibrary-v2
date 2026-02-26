@@ -1,0 +1,42 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>397</page-num>
+<header>4. cap: Vom Schach-Spiel.</header>
+<meta>The page contains eight 8x8 grid diagrams representing chess variants or problems. The header and page number are written vertically in the right margin.</meta>
+
+->n. 1. 2. 7.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, S&, [blank], SS, SR, SR. Row 2: SS, SS, SS, SS, [blank], SK, SS, SS. Row 3: [blank], [blank], [blank], [blank], 42, [blank], [blank], [blank]. Row 4: [blank], [blank], [blank], 37, WR, [blank], [blank], [blank]. Row 5: [blank], [blank], WS, [blank], WS, [blank], [blank], [blank]. Row 7: WS, WS, WS, WS, [blank], WS, WS, WS. Row 8: WR, WR, WS, [blank], WK, [blank], [blank], WR.</image-desc>
+
+->n. 8. 11. 12. 13. 14. 15. 25. 46.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, S&, [blank], SS, SR, SR. Row 2: SS, SS, SS, SS, 52, [blank], SS, SS. Row 3: [blank], [blank], 45, [blank], 43, SK, 41, [blank]. Row 4: [blank], [blank], [blank], 37, WR, [blank], [blank], 33. Row 5: [blank], [blank], WS, [blank], WS, [blank], [blank], WS. Row 7: WS, WS, WS, WS, [blank], WS, WS, [blank]. Row 8: WR, WR, WS, [blank], WK, [blank], [blank], WR.</image-desc>
+
+->n. 18. 24.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, [blank], [blank], SS, SR, SR. Row 2: SS, SS, SS, SS, WS, [blank], SK, SS. Row 4: [blank], [blank], [blank], [blank], WR, [blank], [blank], [blank]. Row 5: [blank], [blank], WS, WS, WS, [blank], [blank], WS. Row 7: WS, WS, WS, [blank], [blank], WS, WS, [blank]. Row 8: WR, WR, [blank], [blank], WK, [blank], [blank], WR.</image-desc>
+
+->n. 22. 23.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, [blank], [blank], SS, [blank], [blank]. Row 2: SS, SS, SS, SS, SR, WR, [blank], SS. Row 3: [blank], [blank], [blank], [blank], [blank], [blank], [blank], 41. Row 4: [blank], [blank], [blank], [blank], [blank], [blank], SK, [blank]. Row 5: [blank], [blank], WS, WS, WS, [blank], [blank], 25. Row 7: WS, WS, WS, [blank], [blank], WS, [blank], [blank]. Row 8: WR, WR, [blank], [blank], WK, [blank], [blank], WR.</image-desc>
+
+<column-break/>
+
+->n. 3. 4.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, S&, [blank], SS, SR, SR. Row 2: SS, WS, SS, [blank], [blank], [blank], SS, [blank]. Row 3: [blank], [blank], [blank], [blank], 45, [blank], [blank], [blank]. Row 4: [blank], [blank], [blank], [blank], [blank], WR, [blank], [blank]. Row 5: [blank], [blank], [blank], WS, WS, [blank], [blank], WS. Row 7: WS, WS, WS, WS, [blank], WS, WS, [blank]. Row 8: WR, WR, WS, [blank], WK, [blank], [blank], WR.</image-desc>
+
+->n. 9. 10.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, S&, [blank], SS, SR, SR. Row 2: SS, SS, SS, SS, [blank], [blank], 50, [blank]. Row 3: [blank], [blank], [blank], [blank], [blank], [blank], [blank], SK. Row 4: [blank], [blank], [blank], [blank], [blank], WR, WS, SS. Row 5: [blank], [blank], [blank], WS, WS, WS, [blank], [blank]. Row 7: WS, WS, WS, [blank], [blank], WS, WS, [blank]. Row 8: WR, WR, WS, [blank], WK, [blank], [blank], WR.</image-desc>
+
+->n. 20. 21.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, [blank], [blank], SS, 58, SR. Row 2: SS, SS, SS, SS, SR, WR, [blank], SS. Row 3: [blank], [blank], [blank], [blank], [blank], [blank], 47, SK. Row 5: [blank], [blank], [blank], [blank], WS, WS, WS, [blank], WS, WS. Row 7: WS, WS, WS, [blank], [blank], WS, [blank], [blank]. Row 8: WR, WR, [blank], [blank], WK, [blank], [blank], WR.</image-desc>
+
+->n. 26. 27.<-
+
+<image-desc>An 8x8 chessboard grid diagram. Row 1: SR, SR, SS, S&, [blank], SS, SR, SR. Row 2: SS, SS, SS, [blank], [blank], [blank], 51, SS, SS. Row 3: [blank], [blank], [blank], [blank], [blank], [blank], SK, 41. Row 4: [blank], [blank], [blank], [blank], [blank], SS, WR, [blank], WS. Row 5: [blank], [blank], [blank], WS, [blank], WS, [blank], [blank]. Row 7: WS, WS, WS, WS, [blank], WS, WS, [blank]. Row 8: WR, WR, WS, [blank], WK, [blank], [blank], WR.</image-desc>
+
+<vocab>Vom Schach-Spiel, SR, SS, SK, S&, WR, WS, WK, Gustavus Selenus</vocab>

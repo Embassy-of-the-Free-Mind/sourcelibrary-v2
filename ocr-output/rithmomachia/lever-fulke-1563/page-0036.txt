@@ -1,0 +1,23 @@
+<language>Latin</language>
+<page-type>diagram</page-type>
+<warning>Significant ink bleed-through from the reverse side of the page obscures the paper and creates ghosted text across the diagram, making some numerals and the surrounding faint text difficult to decipher.</warning>
+
+<image-desc>
+A diagram of a Rithmomachia (The Philosopher's Game) board, depicted as a large grid of 8 columns and 16 rows. The grid contains various geometric shapes—circles, triangles, and squares—inscribed with Arabic numerals, representing the two sets of opposing game pieces.
+
+The upper set of pieces is oriented upside-down relative to the viewer:
+- Row 4 contains four squares in the outer columns with the numbers 25, 81, 169, and 289.
+- Row 5 contains two squares (15, 45), four downward-pointing triangles (25, 20, 42, 49), and two squares, the second of which is a pyramid piece marked with a small triangle containing the number 153 (alongside 81).
+- Row 6 contains two downward-pointing triangles (9, 6), four circles (4, 16, 36, 64), and two downward-pointing triangles (12, 8).
+- Row 7 contains four circles containing the numbers 2, 4, 6, and 8.
+
+The lower set of pieces is oriented right-side up:
+- Row 10 contains four circles containing the numbers 9, 7, 5, and 3.
+- Row 11 contains two upward-pointing triangles, the first being a pyramid piece marked with a small triangle containing the number 100 (alongside 90); four circles (81, 49, 25, 9); and two upward-pointing triangles (12, 16).
+- Row 12 contains two squares (190, 120), four upward-pointing triangles (64, 56, 30, 20), and two squares (66, 28).
+- Row 13 contains four squares in the outer columns containing the numbers 361, 225, 121, and 49.
+
+Faint, nearly illegible Latin text is visible above and below the grid, likely titles or instructions that have suffered from the bleed-through of the opposing page.
+</image-desc>
+
+<vocab>Rithmomachia, ludus rithmomachiae, arithmetic game, game board, geometric pieces, numerals, pyramid</vocab>

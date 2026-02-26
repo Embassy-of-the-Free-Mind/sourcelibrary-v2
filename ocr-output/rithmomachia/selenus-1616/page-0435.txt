@@ -1,0 +1,131 @@
+<language>German</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>401</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>Eee ij</sig>
+
+<margin>
+4. cap:
+Vom Schach-Spiel.
+</margin>
+
+->n. 4. 6. 36.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | SS | SL | SK | SS | SRo | SRo |
+| SS | SS | SS | | | | SS | SS |
+| | | | | | | | |
+| | | | SS | SS | WS | | |
+| | | | | | | 26 | |
+| | | | | | WR | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WRo | WRo | WS | WRo | WK | WS | | WRo |
+
+---
+
+->n. 9. zj.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | SS | | SK | SS | | SRo |
+| | SS | | | SL | | SS | SS |
+| SS | | | | | SR | | |
+| | | SS | | | WS | 34 | |
+| | | | SS | SS | | WS | |
+| WRo | | | | | | | |
+| WS | WS | WS | WS | WRo | | WS | WS |
+| WRo | WRo | WS | | WK | | | WRo |
+
+---
+
+->n. 11. z4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | | | SK | SS | | SRo |
+| | SS | | | SL | | SS | SS |
+| SS | | | | | | | |
+| | | SS | | | SS | WS | |
+| | | | SS | WS | SR | | |
+| WRo | | | | | WRo | | |
+| WS | WS | WS | WS | | | | WS |
+| WRo | WRo | WS | | WK | | | WRo |
+
+---
+
+->n. z8. z9. 34. 35.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | | | SK | SRo | | |
+| | WRo | | | | | SS | SS |
+| SS | | | SS | SL | | | |
+| | | SS | | | | WS | |
+| | | | SS | SS | | | WK |
+| WRo | 23 | | | | | | |
+| WS | WS | WS | WS | jz | | WR<gloss>+</gloss> | WS |
+| WRo | WRo | WS | | | WRo | WR<gloss>+</gloss> | |
+
+<column-break/>
+
+->n. 7. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | SS | | SK | SS | SRo | SRo |
+| SS | SS | | | SL | | SS | SS |
+| | | | | | | | |
+| | 39 | SS | SS | | WS | | |
+| | | | WRo | SS | | WS | |
+| | | | | | | | |
+| WS | WS | WS | WS | WRo | | | WS |
+| WRo | WRo | WS | | WK | WS | | WRo |
+
+---
+
+->n. 10. zz. z3.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | SS | | SK | SS | | SRo |
+| | SS | | | SL | | SS | SS |
+| SS | | | | | | | |
+| | | SS | SR | | WS | WS | |
+| | | | SS | SS | | | |
+| WRo | | | | | | | |
+| WS | WS | WS | WS | WRo | | WS | WS |
+| WRo | WRo | WS | | WK | | | WRo |
+
+---
+
+->n. 14. 15.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | | | SK | | | SRo |
+| | SS | | | | | SS | SS |
+| SS | | | SS | SL | | | |
+| | | SS | | | | WS | |
+| | | | SS | | | WRo | 25 |
+| WRo | | | | SS | | WK | 17 |
+| WS | WS | WS | WS | | | | WS |
+| WRo | WRo | WS | | | | WRo | |
+
+---
+
+->n. 30. 33.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SRo | SRo | | | SK | | | |
+| | SS | | | | | SS | SS |
+| SS | | | SS | SL | | | |
+| | | SS | | | | WS | 33 |
+| | | | | SS | SRo | | WK |
+| WRo | | | | | | 18 | |
+| WS | WS | WS | WS | WRo | | | WS |
+| WRo | WRo | WS | | | | WRo | |
+
+<vocab>Schach-Spiel, Roch, Springer, Lauffer, König, Soldat</vocab>

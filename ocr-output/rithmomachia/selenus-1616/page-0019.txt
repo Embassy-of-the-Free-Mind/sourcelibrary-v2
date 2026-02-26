@@ -1,0 +1,48 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<warning>Significant ink bleed-through from the reverse side of the page makes some words slightly blurred.</warning>
+<sig>(?) 2</sig>
+<meta>catchword: Hos</meta>
+
+U fia 'l bisogno, e le nemice schiere
+Scontrar, con cuore intrepido e costante
+Tramando mille frodi, & altre tante
+Oprar, ad onta dell' hostil bandiere.
+Di quanti modi e valoro samente
+Vincer si possa con raggione, & arte
+Cavallieri & Pedoni, in finta guerra.
+Ad ogn'ùn, qui s' insegna, hor poni mente,
+Dirai, ch' opra di quel con queste carte,
+EL cui nome famoso, empie la terra.
+
+---
+
+<image-desc>A decorative woodcut horizontal divider featuring swirling floral scrollwork and two small human figures/heads on the ends.</image-desc>
+
+### OVERO.
+
+Scachi, quasi tu scacci ogni pensiero:
+Giuoco d' ingegno sol, non di ventura,
+Proportionata singolar figura,
+Dell' human stato, e del mondano Impero.
+Huom, che trà gli Animai, nascene altiero,
+Verme talhor lo manda in sepoltura,
+Spesso di tor il scettro, al Re procura
+Pedon ardito, o coraggioso Alfiero.
+Prescritto haveati già termine angusto
+Edace tempo, e novità maligna
+Carte e dadi in tua vece havea portato.
+Oggi pietoso Ciel, Luna benigna,
+In bel Borgo, rimettra al primo stato
+Opra e fatica, d' un Novello Augusto.
+
+---
+
+<image-desc>A decorative woodcut horizontal divider featuring floral scrolls and a central mask-like face.</image-desc>
+
+### CARMEN MACARONICUM.
+
+Dùm Scacchis giocas, Phœbum fermare carozzam
+Cernimus, atq; tuos considerare tiros,
+
+<vocab>Scachi, Pedon, Alfiero, Re, finta guerra, Carmen Macaronicum, Phœbum</vocab>

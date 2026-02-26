@@ -1,0 +1,12 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<meta>catchword: nella</meta>
+
+intenderai, & uincer il giuoco. Però bisogna esplicar in quãti modi si possono far prigioni li pezzi dell’auuersario. In sette modi adunque un pezzo può esser fatto prigion dell’altro : col numerar, col summar, col sottrar, col multiplicar, col partir, & con l’assedio. Col numerar un pezzo piglia l’altro à questo modo. Se giuocato che farà un pezzo ritrouarà un’altro pezzo dell’istesso numero della parte aduersa, che occupi qualche casella, nella qual detto pezzo facciando il suo proprio camino possi andare, farà leuar uia dal giuoco quello dell’auuersario senza che uadi in quel loco, dal qual si hà leuato quello. come nel sottoscritto essempio, se ritrouandosi el 25 tondo nero nella casella A, uenghi giuocato il 25 triangolo bianco nella casella B : subito che farà giuocato il detto triangolo, farà leuar uia il detto tondo, restando il triangolo nella casella B. & à questo modo un pezzo piglia l’altro, numerando il ualor dell’uno, & dell’altro, per veder se sono eguali di numero. Et li numeri, che in questo giuoco si possono uincer à questo modo, sono questi 9, 16, 25, 36, 49, 64, 81. & non altri.
+
+<image-desc>A simple linear diagram consisting of a horizontal rectangle divided by vertical lines into five segments. The second segment from the left contains the capital letter "B" and the fourth segment contains the capital letter "A", representing positions or squares on a game board.</image-desc>
+
+<margin>minori</margin>
+Col summar si pigliano li pezzi à questo modo. possono dui numeri minori uincer un maggiore de ciascuno di essi, quando (essendo tali che accozzati, cioè summati insieme fanno un numero equale al detto maggiore) si trouano in tal caselle, che da quelle possano col proprio loro camino andar doue esso maggiore si troua, & subito che detti dui numeri minori si trouaranno in tal sito col detto maggiore, si leua dal giuoco il maggiore, restando li dui maggiori doue sono, come nel sottoscritto essempio ritrouansi il 16 bianco tondo
+
+<vocab>Rithmomachia, numerar, summar, sottrar, multiplicar, partir, assedio, pezzi, casella</vocab>

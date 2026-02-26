@@ -1,0 +1,15 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>R</sig>
+<meta>catchword: The; significant bleed-through/ghosting from the reverse side of the page</meta>
+<warning>Heavy ghosting from the verso page obscures some areas, though the primary text remains legible.</warning>
+
+# The Philosophers game.
+
+## ¶ Of takyng by diuision.
+
+By diuision a manne maye be taken, when twoo of hys enemyes doe so stand, that one of them beyng deuided by the other, the product is the same that their enemye is, standynge in their draught, immediatly after the latter is placed, the enemye may be remoued. If he were left in their daunger before remouyng, one of them may remoue into his place, an example. The round 4. standyng in. D. and the triangle. 20. standyng in. F. may take yͤ aduersarie. 5. standing in. A. by diuision, bycause. 4. in. 20. is conteyned. 5. tymes. Another example, the round. 5. standyng in B. and the triangle 30. standyng in. F. maye take their enemye. 6. standynge in A. for. 5. in 30. is conteyned. 6. tymes.
+
+## ¶ Of the takynge of the kynges.
+
+<vocab>Philosophers game, Rythmomachia, diuision, draught, triangle, round</vocab>

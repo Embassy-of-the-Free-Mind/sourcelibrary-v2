@@ -1,0 +1,32 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>71</page-num>
+<header>RYTHMOMACHIE, IEV</header>
+<meta>catchword: Autre</meta>
+
+multiplices & le produict multiplié en soy &
+auras les requis des superparticuliers duisant
+au quatriesme reng. Pour exemple ie adiou-
+ste vne vnité au premier requerant multi-
+plice qui est .2. & prouiennent .3. lesquels mul-
+tipliez en soy me donneront .9. le premier requis
+des superparticuliers.
+
+### Pour trouuer les requis des superpartients qui duisent au dernier ordre.
+
+Double vn chacun de ceulx du premier ordre
+qui font les requerants multiplices & au
+produict adiouste vne vnité & puis le tout
+multiplie en soy & auras le nombre requis su-
+perpatient conuenant au dernier ordre. & pour
+exemple ie double le premier requerant multi-
+plice .2. & prouiennent .4. lequel avec vne
+vnité produict .5. parquoy .5. multiplié en soy
+me donne .25. le premier requis superpatient,
+duisant au dernier reng au droict de .2. & ainsi
+des aultres requis. Quant aux requerants, c'est
+chose generale que tousiours iceulx se composent
+par l'addition des deux precedens comme des-
+sus auons dict.
+
+<vocab>Rythmomachie, multiplices, superparticuliers, superpartients, reng, vnité, requerants</vocab>

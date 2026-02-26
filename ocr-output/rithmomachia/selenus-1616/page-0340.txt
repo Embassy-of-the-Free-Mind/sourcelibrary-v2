@@ -1,0 +1,53 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>306</page-num>
+<header>Das Dritte Buch / 5. cap:</header>
+
+Der Schwarße / denselben / auf ihn / und der W. K. Reuters=
+Soldaten / auf zwelfe : Der Weiße / beschützet / des K. Reuter / mit
+dessen Rochen / auf zwey : Der Schwarße / nimt / mit der W. K.
+Reuters=Soldaten / mit des K. Rochen / und ziehet ihn / auf der W. K.
+Rochens=Soldaten : Der Weiße / denselben / auf vier und zwanzig :
+
+<margin>34. *</margin> Der Schwarße / auf ihn nochmaln / des K. Rochen / auf achte : ge=
+ben : Der Weiße / auf denselben / der K. Rochen / auf achte : Der
+Schwarße / denselben / auf der W. K. Soldaten / auf vierzehen :
+Der Weiße / (denselben zu beschützen) den König / auf neun und
+dreyßig : Der Schwarße / beut / mit der K. Schützen / auß drey
+und funfzig : oder / mit dessen Soldaten / auß sechs und vierzig /
+Schach : Der Weiße / muß / mit dem Könige / auf vierzig wei=
+chen : Der Schwarße / nimt / der W. K. Soldaten / mit des K. Ro=
+chen / und gibt / auß acht und dreyßig / Schach-Mat.
+
+<margin>35.</margin> Wan aber der Schwarße / nicht den Rochen / auf 16. (n. 34.) be=
+sondern der K. Schützen / auf dreyßig rucket : so ziehet Er folgendes /
+auf des Weißen zug / (Es gebe dan etwa derselbe / mit des K. Ro=
+chens=Soldaten / auß fünf und zwanzig / Schach : oder ruckete den
+König / auf zwey und dreyßig : Auf welchen fahl / Er des K. Rochen /
+auf neun und dreyßig : oder der K. Schützen / auf drey und zwanzig /
+zöge / und von der K. Rochen / Ab-Schach = von dem Schützen aber /
+Schach gebe / und denselben / auf der W. K. Rochen / setzte : welches
+doch / das Spiel / mit etlichen zügen / nuhr verlengern würde) der K.
+Reuters-Soldaten / auf sieben und vierzig / und gibt Schach : Der
+Weiße / nimt denselben / mit der K. Soldaten (auf welchen fahl / der
+S. K. Rochens= oder Schützens=Soldat / in seine stelle / trit) oder stel=
+let den König / alsbald auf zwey und dreyßig : Der Schwarße / der
+K. Schützen / auf neun und dreyßig / gibt Schach = und von des K. Ro=
+chen / Ab-Schach=Mat.
+
+<margin>36.</margin> Ziehet aber der Weiße / andere züge / ausser denen / welche / vom
+n. 27. biß hieher gesetzet / so helt Er zwar / das Spiel / in etwas auf :
+Es kan aber dem Schwarßen / (dieweyl seine Steine / besser ins
+feld gerucket / des Weißen aber / sehr zertrennet sind) in dieser ord=
+nung / nicht wol entstehen.
+
+<margin>37.</margin> Wan aber der Weiße / nicht den Reuter / auf 22. (n. 27.) beson=
+dern / den König / auf zwelfe / ziehet : so spielet der Schwarße / des
+K. Reuter / auf des W. K. Schützens-Soldaten / auf sechs und zwan=
+zig : Der Weiße / denselben / auf der S. K. Schützen / auf acht und
+zwanzig : Der Schwarße / nimt ihn / mit demselben : Der Weiße /
+
+<sig>P 2</sig>
+<meta>catchword: densels</meta>
+
+<vocab>Schach, Rochen, Reuter, Schütze, Soldat, Schach-Mat, Ab-Schach, Weiße, Schwarße, W. K., S. K.</vocab>

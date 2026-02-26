@@ -1,0 +1,17 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+## Cautelles pour la victoire
+
+Il fault que la disposition du triumphe se face par mouuement regulier & non en saultant comme les cheualiers.
+
+Quand tu viẽdras au champ de l'aduersaire pour triompher en iceluy, dresse grand nombre de tables au tour de celles des quelles veux triompher pour te garder que l'aduersaire estant aduerti de ton triũphe, apres n'empesche ta victoire. Ie t'ay au parauant aduerti & proposé les tables des nōbres propres pour les victoires: quāt aux nōbres quarrez, triãgulaires , & pyramidaulx tu pourras amplement voir d'iceulx en nostre Arithmetique
+
+## Excuse de l'auteur
+
+IAçoit qu'au presens liure ie n'aye obmis quelque chose (selon mon petit iugement) à iceluy necessaire, toutesfois pour contenter les studieux & rẽplir quelques pages qui en iceluy estoyẽt demeurées vuydes, adiousteray à ce mien petit œuure ce que Iacque Feure de Staples en a escript à celle fin que conferant son opinion à la nostre, on puisse auoir meilleure intelligence du tout, & comme iuge & electeur, puisse choisir ce qu'en
+
+<meta>catchword: ceste</meta>
+
+<vocab>Rythmomachie, triumphe, nōbres quarrez, triãgulaires, pyramidaulx, Arithmetique, Iacque Feure de Staples</vocab>

@@ -1,0 +1,25 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>26</page-num>
+<header>DES PHILOSOPHES.</header>
+<warning>Some foxing and ink bleed from reverse side of the page.</warning>
+
+droictement il le pourra emporter par prinse d'as-
+sault, des qu'il aura ioué, sans transporter de re-
+cheff la table en son lieu
+
+### Exemple
+
+Si entre les cinq des nombres impairs & les 45,
+du nombre pair il y a neuf loges, comme tu vois
+en la seconde colomne du precedent tablier, d'au-
+tant que ledit 5. du champ des impairs courant
+& estāt multiplié par les neuf loges interposées
+se faict egal audict 45 duchamp des pairs : Il
+pourra prendre iceluy 45 des lors qu'il iouera ice-
+luy 5 au lieu ou il est. Et icy peux considerer les
+nombres aptes à ce.
+
+<sig>D ij</sig>
+
+<vocab>nombres impairs, nombres pairs, loges, tablier, prinse d'assault, multiplié, Rithmomachie</vocab>

@@ -1,0 +1,73 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+si autē q̄ esset impar duplādū essent l/m/n/et o et dupla ad g p correlariū septime secūdi pueniret differentia. si ergo inter illos mediū sumātūr tam horū q̄ illorū differentia ad medium erit g. sicq̄ totum manifestum erit p̄positum.
+
+---
+
+<margin>
+<image-desc>A numerical diagram for proposition 11. At the top, a sequence of numbers 40, 35, 30, 25, 20 sits above a horizontal line segment labeled 'k' which is divided into four parts. Below this, numbers 8, 7, 6, 5, 4 are positioned above another horizontal line segment labeled 'f' at one end and 'g' at the other, also divided into four parts. To the right, various quantities are listed: 8 coupled with 2, 'b' with 1, 'c' with 1, 'h' with 5, 'd' with 5, and 'e' with 4.</image-desc>
+</margin>
+
+¶ Quotlibet numeros fm Arithmeticam medietatem sumere: quorū differētie dato <margin>11</margin>
+numero non sint minores: extremorū vero pportio sit date pportioni equalis.
+¶ Sunt a 7 b termini date ppoztiōnis: et eor̄ differentiæ: et d sit numerus fm quem sumendi sunt quotlibet numeri: 7 e numerus quo non minores debeāt esse differentiæ. multiplico a 7 b fm nūerum vno minorem d 7 pueniant f et g: quor̄ differētia c toties nūerabit. sumo ergo media fm differentias equales c et fiet vt oēs numeri sint fm nūerum d. multiplicē item c donec pueniat maior e: et fiat hoc fm h. ducocq; h in f 7 g et omnes medios et pueniāt k l 7 mediū inter illos. manifestū est extremorum ppoztiōnem esse ppoztiōni a ad b equalem: et numerum sumptum esse fm d 7 differētias inter se equales et numero e dato maiores. quod est propositum.
+
+<margin>
+<image-desc>A diagram for proposition 12. Two rows of numbers are shown. The top row consists of 4, 5, 6, 7 with lines connecting 'a' to 'b' and 'c' to 'e'. The bottom row has 9, 8, 7, 6 with lines connecting 'f' to 'g' and 'h' to an unmarked point.</image-desc>
+</margin>
+
+¶ Si sumptis quotlibet nūeris in hac medietate: alij totidem eandem habentes dif= <margin>12</margin>
+ferētiam maiores minoribus coniūgant: numeros equales puenire necesse est.
+¶ Sint a b c d q̄libet numeri in hac medietate quor̄ a sit mimus: 7 e f g h totidem in hac medietate et e illor̄ maximus: sintq̄ hor̄ et illor̄ equales differētiæ. dico a et e simul equari b et f et reliquis hoc modo sequētibus. nam quia a 7 e sunt circūpositi b 7 f et equales per hypothesim differētiæ: ergo per tertiam primi a et e simul equātur b et f. et hunc in modum de reliquis argumentare.
+
+<margin>
+<image-desc>A diagram for proposition 13. It shows two rows of numbers, 8, 7, 6, 5 and 1, 2, 3, 4, with bars indicating pairings. Below these is a horizontal sequence of numbers from 7 down to 1, labeled 'a' through 'g'.</image-desc>
+</margin>
+
+¶ Numeros quotcunq; in hac medietate datos coaceruare. <margin>13</margin>
+¶ Hæc demōstrat aggregatoz summam reperire: quā nōnnulli p̄gressiōem vocant. si eni sunt in nūero pari vt a b c d. e f g h q̄ igit̄ p̄ p̄cedentem a h equātur b g et c f et d e fm scriei medietatem. si ergo in coaceruatum ex a 7 h duob⁹ extremis ducat̄ totius seriei medietas pueniet summa totalis ex oibus coaceruata. At si numerus eor̄ sit impar vt a b c d e f g erit vnus eor̄ medius vt d. et eius ad extremos a et g eadem erit differentia. quare per scōam primi est medietas a et g/et similiter medietas b 7 f/et medietas c 7 e. numerus igitur seriei oīm in ip̄m ductus oīm summam cōficit. quod est propositum.
+
+<margin>
+<image-desc>A simple numerical chart for proposition 14 showing addition. Three rows of numbers (3, 2, 1), (3, 2, 1), and (6, 4, 2) are separated by horizontal lines, suggesting the sum of the top two rows equals the bottom row.</image-desc>
+</margin>
+
+¶ Si q̄tlibet nūeri huius medietatis alijs totidē siue ēq̄libus siue in eadē medietate <margin>14</margin>
+sumptis minores mioribus addātur: ppositi quoq; fm eādē medietatē disponētūr.
+¶ Nam siue equales equalibus addātur siue hoc modo nūeri quicūq; totidem alijs in eadem medietate cōstitutis: quia equalib⁹ differētijs equales differētiæ addūtur et tote differētiæ adinuicem erūt equales. quare per diffinitionem compositi erunt in hac medietate cōstituti. quod est propositum.
+
+<margin>
+<image-desc>A diagram for proposition 15 arranged in a grid. The top row has 10, 10, 10 (labeled g, h, k), the middle row 8, 6, 4 (labeled a, b, c), and the bottom row 2, 2, 2 (labeled d, e, f). Vertical and horizontal lines connect the elements to show relationships between the sets of numbers.</image-desc>
+</margin>
+
+¶ Si equales totidem auferant̄ siue ip̄i ab ēq̄libus substrabātūr: residuum in eadem <margin>15</margin>
+medietate inuenietur.
+¶ Nam equalibus de quibuslibet eor̄ demptis erūt eedem residuoz que 7 totoz differētiæ idēticē quibuslibet eor̄ ab equalibus demptis eedem que subtractoz manebunt differētiæ. igitur per diffinitionem residua erunt in arithmetica proportione. quod intēdebatur.
+
+<margin>
+<image-desc>A diagram for proposition 16 similar to the previous one. It shows three rows: (4, 3, 2) labeled g, h, k; (8, 6, 4) labeled a, b, c; and (6, 4, 2) labeled d, e, f, with connecting lines.</image-desc>
+</margin>
+
+¶ Si vero de eisdem alij in eadem medietate dati minores a minoribus tollatur: resi= <margin>16</margin>
+dui vel erunt equales vel eiusdem medietatis rationem suspicient.
+¶ Hæc quodāmodo decimæquarte et decimæquīte p̄uersa est. nam datis a b c in hac medietate maioribus et d e f minoribus: quoz ad primos differentiæ sint equales: subtractis d e f ab a b c. residui erūt equales: differentiæ a ad d. quare aduicē equales. at si numeri sumpti vt g h k non hēant singuli ad singulos a b c equalem differētiam. qz retractozum 7 totozum eq̄les sunt differentiæ: erit 7 residuoz equales differentiæ. et cū residua nō sint equalia: inter eos erit hæc medietas. quod est propositum.
+
+<margin>
+<image-desc>A diagram for proposition 17 showing three sets of numbers: (16, 12, 8) labeled g, h, k; (8, 6, 4) labeled a, b, c; and (4, 3, 2) labeled f, l, m. Differences of 2 are noted between rows, illustrating the effects of multiplication or division on an arithmetic progression.</image-desc>
+</margin>
+
+¶ Si quotlibet numeri huius medietatis fm eundem nūerum vel multiplicentur vel <margin>17</margin>
+diuidātūr: erunt p̄ducta t̄ diuidentia in hac medietate eodem ordine continuata.
+¶ Sint dati quotlibet numeri in hac medietate: vt a b c qui multiplicēt̄ p p et pueniant f g h 7 qui diuidātūr per e: et pueniant k l m. dico p̄ducta f g h et diuidētia k l m eodem ordine in hac medietate p̄tinuata. nam qz multiplicatozū a b c differentiæ sunt equales: ergo per correlariū septime secundi et p̄ductozum. et etiam per idem quoties diuidentia k l m numerabunt a b c: 7 toties differētie numerabunt differentias et eodem ordine. est ergo notum quod proponitur.
+
+<margin>
+<image-desc>A numerical chart for proposition 18. It lists numbers in columns: to the left, labels a through d are next to values 4, 5, 15, 4. In the middle, a descending sequence 5, 4, 3, 2, 1 is associated with labels k, h, g, f, e and result in an arithmetic progression on the right: 20, 16, 12, 8, 4.</image-desc>
+</margin>
+
+¶ Datum nūerū in quotlibet partes que arithmetica medietate se excedāt diuidere. <margin>18</margin>
+¶ Sit numerus diuidēdus a: et b nūerus fm quem pponit̄ diuidi. Inuenio per decimātertiā huius numerum ex oibus ab vnitate ad b coaceruatum qui sit c. et qui sit vt partes ab ip̄o denoiate. et resoluas si vis a in cōsimiles partes: dehinc resolutum diuidas per c et reuertetur numerus fm a qui sit d per quem multiplica oēs numeros ab vnitate ad b qui sunt in hac medietate vt notum est et pueniāt f g h k partes denoiate ab c que per p̄cedentem erūt in hac medietate. et per nonā primi manifestū est eas cōstituere a. et sunt sumpte fm numerum b. effectum est igitur p̄positum.
+
+¶ Si inter numeros pportiōales mediū fm hanc medietatem designētur: erit extre= <margin>19</margin>
+morum ad illos proportio vna.
+
+<vocab>arithmetica medietas, proportio, coaceruatio, progressio, multiplicatio, divisio, differentia, extremorum proportio</vocab>

@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>191</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>10. cap:</margin>
+7. Wan aber der Weisse/ den S. Soldaten/ mit seinem Solda-
+ten/ (n. 4.) nicht nimt/ sondern/ seines K. Soldaten/ zu voderst/ auf
+8. des S. K. Reuter/ auf sechs und dreyssig/ ziehet : * so spielet ihn
+der Schwarze/ auf acht und zwantzig: Der Weisse/ auf densel-
+ben/ des K. Schützen / auf sieben und dreyssig: Der Schwarze/
+nimt/ mit demselben/ (so fern Er ihn wil/ in die schantze schlagen)
+des W. K. Schützen-Soldaten: oder aber/ (weyl der Reuter/ in-
+sonderheit im anfang des Spieles/ höher/ dan dieses Schützen-Sol-
+dat/ zu achten) rucket/ zu dessen beschützung/ seines K. Schützens-
+Soldaten/ auf funf und dreyssig: Der Weisse/ nimt ihn gleich-
+wol/ mit seines K. Schützen: Der Schwarze/ denselben/ mit des
+K. Schützens-Soldaten: Der Weisse/ des S. K. Soldaten / mit
+der K. Schützens-Soldaten/ ziehet denselben/ nochmaln/ auf des
+S. K. Schützen/ und ordnet sein Spiel/ sofern Ers verstehet/
+dergestalt wol an.
+9. Wan aber der Schwarze/ nicht den Reuter/ auf 28. (n. 8.)
+besondern seine Königin/ (umb des W. K. Soldaten/ auf daß er den
+itztgedachten Reuter/ nicht nehme/ gefangen zu halten) auf zwey und
+funfzig/ rucket: so nimt der Weisse/ des S. K. Soldaten/ mit sei-
+ner K. Schützens-Soldaten/ ziehet auf des S. K. Schützen/ und ver-
+theidiget/ für die S. Königin/ seines K. Soldaten: Der Schwarze/
+beut/ mit demselben Schützen/ auß ein und dreyssig/ Schach: Der
+Weisse/ bedecket den König/ mit seiner K. Reuter/ auf dreyzehen:
+Der Schwarze/ (umb des Weissen Spiel/ zu verderben) ziehet
+der K. Schützens-Soldaten/ auf der W. K. Schützens-Soldaten/
+auf acht und dreyssig: Der Weisse/ (auf daß sein König/ wegen der
+S. Königin/ sich nichts zu befahren/ auch sein Soldat/ schutz haben
+möge) des K. Reuter/ auf zwelfe: Der Schwarze/ des K. Reu-
+ter/ (auf daß des W. K. entledigter Soldat/ denselben nicht wegneh-
+me) auf acht und zwantzig/ und wird auf die weyse/ des Feindes
+Spiel/ in eine unordnung bringen. Wan nuhn/ der Weisse/ ehe ihm
+Schach geboten wird/ (wan etwa der Schwarze/ mit des K. Schüt-
+zen/ seiner K. Reuter nehme) mit seinem Könige/ auf zwey/ sprin-
+get/ so wird Er sein Spiel/ umb so viel besser ordnen/ und sich/ wider
+den einfahl des feindes/ rüsten. Es sol ihn auch nicht abschrecken/
+daß es etwa/ sich ansehen lasset/ alß wan des K. Roche/ durch diesen
+Sprung/ daß Er seiner nicht könne gebrauchen/ eingeschlossen wer-
+de: dan Er ihn/ nach wenig Zügen/ wider entfreyen/ und ein grosses
+Vortheil/ für dem Andern/ erlangen kan.
+10. Wan aber der Schwarze/ den W. Soldaten/ (n. 3.) nicht
+
+<sig>B b</sig>
+<meta>catchword: nimt/</meta>
+
+<vocab>Schach-Spiel, Reuter, Schützen, Soldat, Königin, Roche, Schantze, Schach</vocab>

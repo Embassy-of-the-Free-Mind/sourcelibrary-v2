@@ -1,0 +1,65 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>82</page-num>
+
+¶Omnis ppoztiō sup aliā quālibet addere ppoztiōnem dicit: que cū illa ptinuata ipsam componit. differētia ppoztiōis ad aliam: vocatur illa ppoztiō qua eadem supra reliquam abundare dicitur.
+
+¶Quod addit ppoztiō primi ad scōm sup ppoztiōnē tertii ad quartū: est ppoztiō que est inter pductum ex primo in quartum ⁊ pductū ex secūdo in tertium.
+
+<margin>
+<image-desc>A small schematic table of values:
+e 6 | f 4 | g 3
+----------------
+a 2 | b 1 | c 4 | d 3
+Horizontal divider between rows.</image-desc>
+</margin>
+
+¶Hec docet substrahere ppoztiōnem a ppoztiōne: et q/ quātacūqz ppoztiō minōre ppoztiōē a maiore substracta relicta sit: quā hic drīam ppoztiōis a ppoztiōē noiamus. Sint quattuoz numeri: a ⁊ p / b secūdus. c tertius. d quartus: et sit maior ppoztiō a ad b q̃ c ad d/ et ex a in d fiat e: et ex b in c fiat f Dico ppoztiōem quā addit a ad b sup ppoztiōem c ad d: eā esse q̃ est inter e et f. duco eniz itez b in d ⁊ fiat g. qz eniz b in c facit f/ ⁊ in d facit g: ergo p septimā secūdi q̃ ppoztiō c ad d: ea est f ad g. et quia a in d facit e: et b in d facit g: ergo per octauā scōi e ad g vt a ad b. et qz posita est a ad b maior ppoztiō q̃ c ad d: ē ergo e ad g maioz ppoztiō q̃ f ad g. quare p nonā secūdi e maioz est q̃ f. est itaqz ex diffinitione ppoztiōis pposite ex scōo huius habita ppoztiō e ad g pposita ex ppoztiōnibus e ad f et f ad g. addit ergo ppoztiō e ad g ppoztiōem e ad f: sup ppoztiōem f ad g. quare ⁊ ppoztiō a ad b addit ppoztiōnem e ad f addit sup ppoztiōnem c ad d. quod est ppositū. ¶Id tñ aduertū dignū est si semel minore ppoztiōe de maioze distracta relicta sit differentiā ppoztiō maioz: itez ab ea demat mior et id toties fiat quousqz relicta sit aut distracte equalis aut ea mior. sicqz cognoscere prōptū erit q̃ties ppoztiō mior fuerit in maioze et quā insup superaddet minorem: si vltra superaddat.
+
+<margin>2</margin>
+¶Quo abundat ppoztiō primi ad scōm super ppoztiōnem tertii ad quartum: eo abundat ppoztiō primi ad tertium sup ppoztiōnē scōi ad quartum. Itēqz ppoztiō quarti ad tertium super ppoztiōnem secundi ad primum.
+
+<margin>
+<image-desc>Two comparative tables for proposition 2:
+Table 1:
+e 6 | f 4 | g 12
+----------------
+a 2 | c 4 | b 1 | d 3
+Table 2:
+e 6 | f 4 | g 8
+----------------
+d 3 | c 4 | b 1 | a 3
+Tables are separated by horizontal lines.</image-desc>
+</margin>
+
+¶Sit eadem hyppotesis q̃ pzius: dico pmo qua ppoztiōe vt e ad f abūdat ppoztiō a ad b sup ppoztiōnem c ad d: eadē ppoztiōe abūdare a ad c sup ppoztiōnē b ad d. Scōo eadez q̃q ppoztiōe abūdare d ad c sup ppoztiōnem b ad a. Primū patet: nā qz a ad b primi ad scōm maioz ē ppoztiō q̃ c ad d tertii ad quartum. ergo p duodecimam secūdi maioz est ppoztiō a ad c primi ad tertiū: q̃ b ad d secūdi ad quartum. fac ergo a primum/ c scōm/ b tertiū/ d quartum: et argumentare per precedentem ⁊ videbis ppozitū. Scōm similiter patet: nam quia a ad b maioz q̃ c ad d: ergo per vndecimā secūdi erit d ad c maioz q̃ b ad a. fac ergo d primum/ c secūdum/ b tertium/ a quartū: ⁊ argumentare per precedētem: et facile videbis propositum.
+
+<margin>3</margin>
+¶Si addat aliqua ppoztiō super alteram q̃tum tertia sup quartam: erit vt cōposita ex prima ⁊ quarta composite ex reliquis sit equalis.
+
+<margin>
+<image-desc>Mathematical diagram for proposition 3.
+Upper part: Letters e, f, g connected by horizontal lines to numbers 8, 4, 3 respectively.
+Middle part: Letters a, b and c, d connected to numbers 2, 1 and 4, 3.
+Below, a table:
+a 2 | c 4 | e 4 | g 8
+--------------------
+b 1 | d 3 | f 2 | h 6
+Followed by a list of variable assignments: i 16, k 8, l 6, m 12, n 64, q 48, o 32, p 24. These letters are followed by long horizontal dashes before their numbers.</image-desc>
+</margin>
+
+¶Priusqz ad ppositū demōstrandū veniamus: volo demōstrare quo pacto ppoztiō ppoztiōi addēda sit: et dico ppoztiōem pductoz ex pmo tertio vni⁹ ppoztiōis in primū alterius: ⁊ ex secūdo in scōm eē ex duabus illis ppoztiōnibus ppositā. Sint eni a ad b et c ad d due ppoztiōes: quas volo ill’ addere atqz ex ipsis ppoztiōē pflare. duco c in a ⁊ pueniat e: et d in b ⁊ pueniat g. dico ppoztiōnem e ad g: eē ppositā ex ppoztiōibus a ad b ⁊ c ad d. duco eni itez c in b ⁊ pueniat f: et per septimam scōi q̃ ppoztiō a ad b: ea est e ad f. et per octauam eiusdem q̃ ppoztiō c ad d: ea ē f ad g. et ppoztiō e ad g pponitur ex ppoztiōibus e ad f ⁊ f ad g. quare ⁊ ex ppoztiōibus a ad b ⁊ c ad d: quod intēdebatur. Nunc ergo ad demōstrāduz ppositū veniamus. Sit ergo vt q̃rtū ppoztiō a ad b addit sup ppoztiōne c ad d tm addat ppoztiō e ad f sup ppoztiōnē g ad h. dico ergo ppoztiōem ppositā ex ppoztiōibus a ad b ⁊ g ad h: eē equalē ppoztiōni pposite ex ppoztiōibus c ad d ⁊ e ad f. duco eni g in a ⁊ in b et fiant i ⁊ k et b in h et fiat m: per septimā ergo pmi i ad k sicut a ad b. et qz i in g facit l: et in h facit m: per eādem l ad m sicut g ad h. quare erit ppoztiō l ad m pposita ex ppoztiōibus a ad b et g ad h pzia scz tvltia Dein duco c in l/ l in l/ ⁊ in m: et pueniāt n/ o/ p: qui p septimā secūdi erit ppoztiōāles kni ppoztiōes l. l z. m. qz ergo n ad o sicut l ad l z: et o ad p sicut l z ad m: ergo per equā ppoztiōalitatem n ad p sicut l ad m. quare equales sunt ppoztiōes l ad m ⁊ n ad p. dein duco d in l ⁊ pueniat q. qz ergo n fit ex c in l / l z/ c | d. et quia l in d facit q: ⁊ l in d facit o vt mōstratū est: ergo p primā huius q ad o est qd addit a ad b sup ppoztiōnem c ad d. et qz eadem ppoztiōēm addit e ad f sup g ad h: addit g ad f ppoztiōem q ad o sup ppoztiōnem g ad h. at ppoztiō o ad p est vt g ad h et q ad o est qd addit e ad f sup g ad h: ergo q ad p pstās ex q ad o: et o ad p equal ppoztiōni e ad f. et n ad q vt dictū est equal c ad d: n ad p equal l ad m pposite ex pma ⁊ vltia. et n ad p pstituik ex scōa ⁊ tertia. sic itaqz pstructū est propositum
+
+<margin>4</margin>
+¶Si inequales ppoztiōnes vni addātur: erit additaz ⁊ ppositarū eadem drīa.
+
+<margin>
+<image-desc>Mathematical values diagram for proposition 4.
+Top row: p 24, q 6, r 20, s 8.
+Middle section: Letters a, c, e (values 4, 6, 5) and b, d, f (values 2, 3, 4) connected by lines.
+Bottom list of values: g 24, h 12, i 6, l 120, m 60, o 48, n 30.</image-desc>
+</margin>
+
+¶Sit a ad b quecūqz ppoztiō: sintqz c ad d ⁊ e ad f due ppoztiōes inequales vt c ad d maioz/ ⁊ e ad f minoz: addatqz ppoztiō c ad d ppoztiōni a ad b: sitqz ppozita ppoztiō p ad q. addak itez ppoztiō e ad f eidē ppoztiōni a ad b ⁊ proueniat pposita r ad s: dico eādem eē differētiā ppoztiōnis p ad q ad ppoztiōem r ad s q̃ est ppoztiōis c ad d ad ppoztiōem e ad f. duco eni c in a ⁊ in b ⁊ proueniat g h: et b in d ⁊ proueiat l. per septimam secūdi erit ppoztiō g ad h vt a ad b: et h ad l vt c ad d quare ppoztiō g ad l est pposita ex ppoztiōib⁹ a ad b ⁊ c ad d: atqz eadez ppoztiōi p ad q. duco item e in g/ in h/ et in l z: et proueniāt l m n ppoztiōales per septimam secundi g h l z. et duco f in h et
+
+<vocab>proportio, differentia, numerus, secundus, tertius, quartus, maior, minor, productum, substrahere, demonstrandum</vocab>

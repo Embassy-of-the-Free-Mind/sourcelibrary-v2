@@ -1,0 +1,35 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, 15V</header>
+<meta>catchword: 12.15.</meta>
+
+victoire le nombre pair, & consequemment
+veult que i'vse pour mes victoires de l'impair,
+qu'est ce sinon vendre les victoires communes.
+Ceux qui au mesme ieu sont quelque peu exer-
+citez scauent bien qu'il est beaucoup plus facile
+auoir victoire par les tables de l'ennemy, que nō
+par leurs propres: d'autant qu'il fault que la vi-
+ctoire se face au camp de l'ennemy, & qu'il est
+plus facile auoir victoire (si on peut faire quel-
+que accord ou proportion auec les tables de l'en-
+nemy) que par force y pouuoir transporter les
+siennes.
+
+Mais dira quelcun, vous auez autrement mis
+les victoires, que ledit Faber appelle mineurs,
+qu'elles ne sont disposees en son liure. Ie te res-
+pons que si tu auois bien examiné le nombre des
+victoires, ne me reprendrois en cest endroit. Tu
+vois premierement que les victoires qu'il a mises
+au nombre des mineurs, ne sont point mineurs,
+tesmoing luy mesme lequel dit qu'il suffist aux
+victoires mineurs auoir deux proportions. Et tu
+vois qu'aux siennes mineurs il n'en y a trois.
+Prens mesmes en son liure le dernier exemple
+des mineurs qui est 12,15,16,20, lequel exemple
+il ne met que pour deux proportions à scauoir
+d'Arithmetique & Geometrie, & toutesfois
+celle de Musique y est aussi contenue: à scauoir,
+
+<vocab>Rythmomachie, Faber, proportions, Arithmetique, Geometrie, Musique, victoire</vocab>

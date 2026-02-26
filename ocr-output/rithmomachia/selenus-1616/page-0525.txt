@@ -1,0 +1,57 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>483</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+| | | |
+|---|---|---|
+| 15. 20. 30. 45. | 15. 30. 45. | 15. 20. 30. |
+| 15. 30. 36. 45. | 15. 30. 45. | 30. 36. 45. |
+| 15. 30. 45. 90. | 15. 30. 45. | 30. 45. 90. |
+| 30. 36. 42. 45. | 30. 36. 42. | 30. 36. 45. |
+| 72. 81. 90. 120. | 72. 81. 90. | 72. 90. 120. |
+
+---
+
+| Die Zahle/ der Meß und Singe-Kunst/ Abtheilungen/ auf vier Steinen. | Die Zahle/ der Meß Kunst/ Abtheilungen/ in gesetzten vier Zahlen. | Die Zahle/ der Singe-Kunst/ Abtheilungen/ in den vier Zahlen. | |
+|---|---|---|---|
+| 2. 3. 6. 12. | 3. 6. 12. | 2. 3. 6. | |
+| 3. 4. 6. 9. | 4. 6. 9. | 3. 4. 6. | <margin>cc</margin> |
+| 3. 4. 6. 12. | 3. 6. 12. | 4. 6. 12. | <margin>cc</margin> |
+| 3. 6. 8. 12. | 3. 6. 12. | 6. 8. 12. | <margin>cc</margin> |
+| 4. 6. 12. 36. | 4. 12. 36. | 4. 6. 12. | |
+| 5. 9. 45. 225. | 9. 45. 225. | 5. 9. 45. | |
+| 9. 12. 16. 72. | 9. 12. 16. | 9. 16. 72. | <margin>cc</margin> |
+| 9. 15. 25. 45. | 9. 15. 25. | 9. 15. 45. | <margin>cc</margin> |
+| 9. 15. 45. 225. | 9. 45. 225. | 9. 15. 45. | <margin>cc</margin> |
+| 9. 25. 45. 225. | 9. 45. 225. | 25. 45. 225. | <margin>cc</margin> |
+| 15. 20. 30. 45. | 20. 30. 45. | 15. 20. 30. | |
+| 20. 30. 36. 45. | 20. 30. 45. | 30. 36. 45. | |
+| 25. 45. 81. 225. | 25. 45. 81. | 25. 45. 225. | |
+
+---
+
+Durch die aller **Größeste** überwindung/ wird/ nichtes anders verstanden/ alß/ wann man Vier Steine/ welche in ihren Zahlen/ alle drey Abtheilungen/ zusammen begreiffen/ auf des Feindes feld/ bringet:
+
+Die Zahle der dreyen zusammen gesetzeten Abtheilungen/ findet man in der folgenden Tabel/ beyeinander/ und eine jedere insonderheit: alß im andern felde/ der Zahl- im dritten/ der Singe- und im Vierten/ der **Meß-Kunst**.
+
+| | | | |
+|---|---|---|---|
+| 2. 3. 4. 6. | 2. 4. 6. | 2. 3. 6. | 2. 3. 4. 6. |
+| *2. 9. 16. 72. | 2. 9. 16. | 9. 16. 72. | 2. 9. 16. 72. |
+| 3. 5. 15. 25. | 5. 15. 25. | 3. 5. 15. | 3. 5. 15. 25. |
+| 4. 6. 8. 12. | 4. 8. 12. | 4. 6. 12. | 4. 6. 8. 12. |
+| 4. 6. 9. 12. | 6. 9. 12. | 4. 6. 12. | 4. 6. 9. — |
+| *5. 9. 45. 81. | 9. 45. 81. | 5. 9. 45. | 5. 9. 45. 81. |
+| *5. 25. 45. 225. | 5. 25. 45. | 25. 45. 225. | 5. 25. 45. 225. |
+| 6. 8. 9. 12. | 6. 9. 12. | 6. 8. 12. | 6. 8. 9. 12. |
+| 12. 15. 16. 20. | 12. 16. 20. | 12. 15. 20. | 12. 15. 16. 20. |
+
+-> (Jacobus Faber Stapul : fol : 51. b.) <-
+
+> *Cùm Maxima Harmonia paratur, Calculus, ad complendam Harmoniam, acquisitus, à suo loco, non dimovetur.)* <margin>cc cc</margin>
+
+<sig>Ppp</sig>
+<meta>catchword: Diese</meta>
+
+<vocab>Zahl-Kampf, Rithmomachia, Meß-Kunst, Singe-Kunst, Jacobus Faber Stapulensis, Harmonia</vocab>

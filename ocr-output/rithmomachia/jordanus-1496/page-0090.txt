@@ -1,0 +1,30 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+<image-desc>A decorative fleur-de-lis ornament is centered at the top of the page.</image-desc>
+
+Si interuallum non multiplex binario multiplicetur: id quod fit ex hac multiplica= tione neq; multiplex est/neq; superparticulare. <margin>6</margin>
+
+| 9 | 6 | 4 | A c interuallum neq; multiplex neq; superparticulare. |
+|---|---|---|---|
+| a | b | c | A c duplatum interuallum a b qđ quidem est nō multiplex. |
+
+Sit interuallū non multiplex a b: et duplum sit a c. ita vt ea sit proportio a ad b ⁊ b ad c. dico inter= uallum a c neq; multiplex esse neq; superparticulare. quoniā si a c primo ponetur multiplex: ergo per tertiā presentis et a b interuallū erit multiplex at positum est nō multiplex. Et si secundo dixeris a c esse interuallū superparticulare cū sit a ad b vt b ad c erit interuallū superparticularis medius pro= portionalis terminus quod per precedentē est impossibile. est itaq; notum si interuallū nō multiplex binario multiplicetur compositum interuallum minime aut multiplex aut superparticulare esse. et propositum.
+
+Si īteruallum binario multiplicetur: atq; id quod ex ea multiplicatione creabitur multiplex non sit: ipsum quoq; non erit multiplex. <margin>7</margin>
+
+Hec est conuersa precedentis. Sit ergo superioris propositionis figura in qua interuallū a c pro= ueniat ex duplatione habitudinis interualli a b et nō sit a c interuallum multiplex. dico itidem inter uallum a b nō esse multiplex. Nam si a b interuallū multiplex est: cū a c per hypothesim ex interuallo a b binario multiplicato surgat: ergo per primā presentis interuallū a c multiplex erit. at positū est nō multiplex: ergo si interuallū non multiplex ex alicuius interualli binario multiplicatione nascať neq; ipsum quoq; ex cuius multiplicatione ortū est multiplex erit: qđ erat monstrandū.
+
+A numero partiū superparticularis interualli que in vnum adacte totum restituūt et numero vno maiore: quot interualli maiores termini simul: minoribus simul acce= ptis respondeant: cognoscuntur. <margin>8</margin>
+
+| a 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|
+| B 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| c 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| d 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+
+Sit a ad b interuallū superparticulare manifestū est per diffinitionē superparticularis a cōtinere b et vnam partiū b. ea igitur pars secundū numerum c: constituat suum totū b: et sit d numerus vno maior c: dico a sumpta secundū numerum c equa esse b sumptis secundū d. Nam a secundū c sumpta continent b secundū c sumpta et insuper partes b sumptas secundū c. Atqui positū est eas secundū c constituere vnū b. igitur a secundū c sumpta continent b sumpta secundū numerū vno maiorem c. At vero d positus est numerus vno maiore c. ergo a sumpta secundū c: continent b sumpta secundū d. quod erat monstrandū. Et si exemplare requiris declarationē: sit a ad b interuallū est sesqualterū: quoniā a sesqualterū est ad b. ergo a continet b ⁊ eius dimidiū: et duo dimidia per cōmune proloquiū suum totū reddunt. dico ergo duo a tantū esse ɋtum tria b: quoniā enim duo a continent duo b. et in= super duo dimidia b que vnū b restituunt: ergo duo a continent tria b/ tribusq; euadunt equalia. Et si a ad b est sesquitertiū a continet totum b ⁊ tertiam partē b. at tres tertie b eque sunt vni b. ergo supe= riore argumento tria a cōtinent quattuor b/ quattuorq; euadunt equalia. imo data quacuq; superpar ticulari maiores termini secundū proportionis minorē numerū: equantur minoribus terminis scđm proportionis maiorē numerū sumptis. vt si a ad b sit sesquiquinta: quoniā minimi sesquiquinte sunt 6 et 5. idcirco quinq; a equi sunt sex b. et in nō minimis quoniā 12 et 10 sunt termini sesquiquinte 10 a equantur 12 b. Et si a ad b sit sesquioctaua: quoniā minimi sesquioctaue sunt 9 et 8. idcirco 8 a tantū sunt ɋtum nouem b. Et qz rursum 18 ad 16 sesquioctaua: ideo sexdecim a equi sunt 18 b. et ita in ceteris Sed si iō nō modo particulariter sed ⁊ vniuersaliter cōtēplari cupis id vniuersaliter verū erit.
+
+Data quacunq; proportione: maiores termini secundū numerū minorum sumpti: equi sunt minoribus secundum numerum maiorum sumptis. <margin>9</margin>
+
+<vocab>interuallum, multiplex, superparticulare, binario, multiplicetur, sesqualterū, sesquitertiū, sesquioctaua, proportio</vocab>

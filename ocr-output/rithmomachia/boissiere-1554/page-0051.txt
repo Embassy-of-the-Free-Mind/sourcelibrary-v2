@@ -1,0 +1,31 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+toutesfois concederons auoir quelque forme de
+bataillon, parquoy dirons premierement de l’or-
+donnance & desmarche.
+
+### De la desmarche des tables.
+
+Premierement toutes marcheront droictemēt
+ou à dextre ou à senestre, ou auant ou arriere,
+aucuns veulent à tous costez, ce que ie laisse à la
+discretion des ioueurs.
+Secondement marche la bende des quarrez
+de 4, en 4, pas, ou 4, loges: les triangles marchēt
+3, & les ronds en la suiuante prochaine. quand
+ie dis quatriëſme loge, i’entens comptant le lieu
+ou la table est, & celuy ou elle va.
+
+## La procedure de leur baterie.
+
+Les nombres pourront prendre l’vn l’autre
+par rencontre, assault, embusche, & emprison-
+nement: & de ses prinses t’est proposé l’exemple
+en ce tablier auquel les pourras considerer à me-
+sure que cy apres les declarerons avec leur rei-
+gles, exemples, & nombres propres à vne chas-
+cune prinse.
+
+<vocab>Rythmomachie, desmarche, quarrez, triangles, ronds, quatriëſme, baterie, tablier, rencontre, assault, embusche, emprisonnement</vocab>

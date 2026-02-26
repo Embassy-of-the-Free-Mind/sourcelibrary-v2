@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RITHMOMACHIE, 18V</header>
+<meta>catchword: qua-</meta>
+
+Le premier nom de ces proportions eft, fuper-
+bipartientes tierces, qui vault autant à dire
+comme deux troifiefmes plus. Et fe commence
+par bi. Ie reprendray donc deux fois la partie.
+Et fi le nom fe commençoit par tri, trois fois par
+quadri, quatre fois: & ainfi des autres. Difons
+doncques bipartientes tierces. A sçauoir qu'il
+fault que le nõbre requis cotiẽne le nõbre reque-
+rant, qui eft au reng des pairs. A sçauoir 15, &
+2 troifiefmes plus. Or la troifiefme partie du re-
+querant 15, eft 5: comme appert au nombre des
+parties à reprendre. Parquoy fi ie le reprẽs deux
+fois, rapportera 10: cõme appert au nõbre des par-
+ties reprinfes, lefquelles deux troifiefmes qui font
+10, ioinctes au nombre requerant, qui eft 15, rap-
+porteront 25, lequel nombre diras eftre requis &
+conuenir en proportion fuperbipartiente tierces,
+auecques le requerant 15. Apres ie viens au fe-
+cond nom, qui eft tripartientes quartes, qui vault
+autant à dire cõme trois quatriefmes plus, c'eft à
+dire qu'il fault que le nõbre requis cotiẽne le fe-
+cond nombre requerãt qui eft 28, fitué au rẽg des
+nompairs au premier lieu, & contienne en outre
+trois quatriefmes d'iceluy. Or la quatriefme par-
+tie du requerant 28 eft 7, comme appert au nom-
+bre à reprendre: parquoy reprens 3 fois iceluy 7,
+rapportera 21, au nombre reprins, lefquelles 3
+
+<vocab>Rithmomachie, proportions, bipartientes tierces, tripartientes quartes, nombre requis, nombre requerant, pairs, nompairs</vocab>

@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>144</page-num>
+<header>Das Ander Buch / 4. cap:</header>
+<meta>catchword: Befän</meta>
+
+,, weiß= und bedächtlich / (Dan einmahl versehen / Ist geschehen) ver-
+fahren / worzu dan gehören wil: daß Er / (1.) seine gedancken / stets
+beysamen habe / dieselben / nicht hin und wider fliegen / noch wandern
+lasse / mit seinen Zügen / immer gantz bedachtsam verfahre / keine
+vergebliche Züge / welche nuhr dem feinde / zum besten kommen /
+thue / und dahero / ihm selber / einen gefehrlichen schaden / welchen er
+endlich / doch gar zu späte / wan er von seinem feinde / albereit über-
+wunnen wehre / vermercken würde / verursache. Dan das unbe-
+dachtsame rauben / so wol auch / sich auf die anzahl der Steine / zu viel
+verlassen / nicht allzeit gut noch rahtsam. Daß Er / (2.) nicht nuhr /
+auf den gegenwertigen und einzigen Zug / welchen Er ins werck
+setzen wil / gedencke / und also blinde / unbedachtsame Züge thue / be-
+sondern auch / den nachfolgenden / andern / dritten / jah noch wol mehr /
+so fern es ihm müglich / in seinem gemühte / bey sich wol erwrege / be-
+dencke und anordne / Ihm auch wol einbilde / daß nichtes grössers /
+,, in diesem Ritterlichen Spiele sey / dan / daß man die Augen / nicht
+,, in den Seckel lege. Daß Er derowegen (3.) sein sitsam / (dan wie
+,, die Alten gesaget: Zürnen viel / Verleurt das Spiel) ohne ü-
+bereylen / doch mit bescheidenheit / und ohne des andern verdruß / nicht
+gar zu langsam / dan solches unerträglich / und unleidenlich fallen
+würde / noch gar zu geschwinde / mit seinem schaden / und verlust des
+gantzen werckes / dieses Spiel führe und ziehe. Daß Er (4.) wegen
+gleicher ursache / wan ihm ein guter Zug / zun handen stosset / densel-
+ben / nicht gleich / ins werck richte / besondern noch zum überfluß /
+sich / ob Er nicht etwa / noch einen nützlichern Zug / verrichten kön-
+ne / wol bedencke / und wan sein gegener / einen Stein gerucket / ob
+derselbe auch / diesem Spiele gemäß / ins feld gezogen sey / und ohne
+nachtheil könne genommen werden / fleissig betrachte. Wan nuhr
+gleich / dieser Stein / von ihm geraubet werden könne / daß Er
+nichtes desto weniger / bey sich / vorhero wol erwrege / ob derselbe nicht
+etwa / zur erhaltung eines fürgenommenen Anschlages / weyl man
+vielleicht diesen Stein / der ihn nehmen könte / umb dem Könige zu-
+zukommen / gerne auß dem wege hette / dergestalt gerucket wor-
+den: dan es auf den fahl besser wehre / denselben stehen zu lassen /
+und sonsten / einen andern guten Zug zu thun. Könne Er
+aber / denselben nicht nehmen / daß Er alsdan / ehe andere Zü-
+ge fürgenommen werden / wol aufmercke / ob derselbe etwa /
+auf einen Stein / welchen er / im folgenden Zuge / nehmen /
+oder demselben / sonsten schaden zufügen könne / gezogen worden.
+
+<vocab>Ritterliches Spiel, Züge, Stein, König, bedachtsam, erwrege, sitsam</vocab>

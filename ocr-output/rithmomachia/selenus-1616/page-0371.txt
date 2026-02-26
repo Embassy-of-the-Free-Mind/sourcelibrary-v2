@@ -1,0 +1,24 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>337</page-num>
+<header>7.cap: Vom Schach-Spiel.</header>
+
+<image-desc>A decorative horizontal woodcut headpiece featuring a central urn or vessel flanked by intricate scrolling acanthus leaves, floral motifs, and two stylized masks or faces within the foliage.</image-desc>
+
+# Das Siebende Capittel.
+## Welcher gestalt der Schwartze/seines Königes Soldaten/auf die dritte weyse/verthetiget und beschützet.
+
+<margin>1.</margin>Folget die Dritte Art und Weyse/des S. K. Soldaten/mit dessen Schützens-Soldaten/zu entsetzen.
+
+Dan/wan der Weisse/und der Schwartze/ihrer Könige-Soldaten/auf acht und zwantzig: und sechs und dreyffig/ziehen: und der Weisse/des K. Reuter/auf des S. K. Soldaten/auf neunzehen/ziehet: Der Schwartze/alszdann/denselben/auf die dritte Art/ (welche/im 5. Cap: n.3. und in den vorigen 3. und 4. Cap: dieses Buches/beschrieben worden) mit des K. Schützens-Soldaten/auß drey und viertzig/verhütet.
+
+Ob nuhn wol der Damianus, diese Art/für die aller untauglichste/achtet/und/wan man das Spiel/dergestalt/wie Er anzeiget/führen und verthetigen wolte/so weit/nicht unrecht schreibet: so ist doch dieselbe/wan man sie/auf folgende weyse/anstellet/nicht so unnütze/wie Er fürgibt/zu befinden.
+
+<margin>2.</margin>Dan der Schwartze/des W. K. Reuter/ (wan der Weisse/seines K. Soldaten/mit demselben/genommen) mit des K. Schützens-Soldaten/ (wie der Damianus vermeynet) nicht nehmen/besondern/auf denselben/die Königin/auf zwey und funffzig/ferner ziehen sol: <margin>3.</margin> * **Der Weisse/** (umb denselben zu beschützen) rucket der K. Soldaten/auf neun und zwantzig: **Der Schwartze/** seiner K. Soldaten/auch/auf des W. K. Reuter/auf funf und viertzig: oder nimt denselben/mit des K. Schützens-Soldaten: Dahero die Königin/dem künfftigem Schache/auß drey und dreyffig/zu begegnen/gute gelegenheit/erlanget.
+
+<margin>4.</margin>Ziehet aber **der Weisse/** den Soldaten/nicht/auf 29. (n.3.) besondern/beut/mit der Königin/(umb des K. Reuter/zu erretten) auß drey und dreyffig/Schach: so ziehet/ **der Schwartze/** auf dieselbe/des K. Reuters-Soldaten/auf zwey und viertzig/und verdecket mit demselben/den König: **Der Weisse/** nimt ihn/mit des
+
+<sig>Vu ij</sig>
+<meta>catchword: K. Reu-</meta>
+
+<vocab>Schach-Spiel, Damianus, Reuter, Königin, Schach, Soldaten, Siebende Capittel, Weisse, Schwartze</vocab>

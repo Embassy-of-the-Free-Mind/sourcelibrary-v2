@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>120</page-num>
+<header>Das Ander Buch / 1. CAP.</header>
+<meta>catchword: Ges</meta>
+
+het / und darauf die andere folge / angezeiget und fürgebracht werden =
+
+Es seynd aber dieselben / folgende : (1.) die anführung der hauffen / auf beede seiten / zum treffen : (2.) der Anfall : (3.) die in hast nehmung : (4.) die raubung : (5.) die verwechslung : un̄ (6.) die beschützung.
+
+Die Anführung ist : wan die Steine / ohne einigen anfall / von beederseit hauffen / ins feld gerucket werden.
+
+Der Anfall ist : wan man einen Stein / offentlich / oder durch entdeckung eines andern Steines / auf den andern / welcher unbesetzet : oder einen geringern / auf einen bessern : oder die Soldaten an einander / umb sie folgendes zu rauben / ziehet.
+
+Die in Hast Nehmung / geschicht alsdan : wan ein Stein / zwischen dem Könige / und einem andern Steine / welcher dem Könige / auf der linie / kan Schach-geben / einstehet : dan derselbe Stein / von seiner stelle / nicht kan gezogen werden / biß ein ander Stein / für den König gerucket / oder der Stein / welcher Schach-geben kan / weg getrieben wird : gleichmessige meynung hat es / wan ein geringerer Stein / dergestalt / oder in einem Ab-Schache / welcher / durch denselben / von einem andern / gegeben wird / auf die Königin / od sonsten einen Haupt-Stein / (umb dieselben / wan etwa der Stein / so dazwischen einstehet / vortgezogen würde / oder der König / dem Schache entweichen / oder bedecket werden müste / zu ertappen) gerucket wird.
+
+Die Raubung geschicht : wan ein Stein / von dem Andern / auß der Tafel gehoben / oder in der Schlachtung / erschlagen wird.
+
+Die Verwechslung ist : wan der rauber / mit dem beraubten / zugleich aufgehet / und aufgerieben wird.
+
+Die Beschützung geschicht : wan man auf eine vorsorge / die außgeführte Steine / oder gegen einen anfall / die betrangte Steine / beschützet / erlöset / oder sonsten / in sicherheit setzet.
+
+Ferner ist bey den Königen / nebest den Mitteln / welche gegen / oder für sie gebrauchet werden / auch / was denen zum theile halbe zum theile gantz zu wiedern / seyn möchte / zu betrachten.
+
+Gegen den König / ist der Anfal : dan derselbe / weder geraubet noch verwechslat / besondern nuhr angefallen / und ihm gedräwet wird. Man heißt Ihn aber / so fern der König weichen kan / Schach : wan Er aber nicht weichen kan / besondern sich / weyl Ihm alle Pässe / beleget / gefangen geben muß / Schach-Mat.
+
+Ist derwegen das Schach-geben / nichtes anders / alsz den König / mit einem / auß des Gegeners funfzehen Steinen / offentlich ansrennen / und / mit dem worte Schach / deßwegen ansprechen / und zu weichen entbieten. Wie sich nuhn der König / hiegegen verhalten sol / wird bey dessen beschützung erwehnet.
+
+<vocab>Schach, Schach-Mat, Steine, Anführung, Anfall, Raubung, Verwechslung, Beschützung, König, Königin</vocab>

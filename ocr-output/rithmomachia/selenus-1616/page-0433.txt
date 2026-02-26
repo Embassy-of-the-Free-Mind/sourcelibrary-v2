@@ -1,0 +1,29 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>399</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>3. cap:</margin>
+
+27. * Daß der **Schwartze**/des **K. Schützen**/auf 36, ziehen/und fol- «
+gendes/mit des **K. Rochen**/Schach-geben solle : Dahero/der «
+**Weiße**/dem **Schach-Matte**/nicht entweichen könne. «
+
+Dieses ist nuhn ebenmessig / ein nicht geringer fehler : dan / der **Schwarze** / wan Er / seines **K. Schützen** / (welcher ohne das / auf 45, dahin er / n. 13. in f gezogen / eben das vermögen hat / welches er / durch diesen Zug / vermeintlich erlangen sol) auf 36, ziehet : dem **Weißen**/damit/keinen schaden/noch abbruch thun/minder mit des **K. Rochen** / (dieweyl der **Weiße** / seinen **König** / ehe dieser **S. Roche** / sich angebe : hinter seines **Reuters-Soldaten** / auf drey und dreyssig / rucken würde) **Schach-bieten** kan.
+
+Sol demnach / der **Schwarze** / nicht des **Königes** / (nach des ***Damiani***, meynung/n. 20.) besondern / viel ehe / der **K. Schützen** / auf die **W. Königin** / (es stehe nuhn dieselbe / an welchen ort / sie das glücke / gestellet) auf acht und zwantzig / ziehen : alsdan Er / folgendes / mit gewalt / **Schach-Mat** geben kan.
+
+28. Dan der **Schwartze** / wan der **Weiße** / die **Königin** / (so ferne sie / seiner **K. Reuters-Soldaten** / n. 26. in f. genommen : und der **S. Schütze** / auß 28, sie anrennet) auf seine **Königin** / auf drey und zwantzig / rucket : mit des **K. Rochen** / auß sieben und zwantzig / Schach-beut : Der **Weiße** / rucket / den **König** / auf drey und dreyssig / oder achtzehen : Der **Schwartze** / gibt / mit der **Königin** / auß sechs und zwantzig / **Schach-Mat**.
+
+29. Rucket aber der **Weiße** / die **Königin** / nicht auf 23. (n. 28.) besondern / (so ferne sie / auf 10. d. n. 26. in f. gezogen) auf zwelfe : so beut / der **Schwartze** / mit des **K. Rochen** / auß sieben und zwantzig /
+
+30. **Schach** : * Der **Weiße** / rucket / den **König** / auf achtzehen : Der **Schwartze** / gibt / mit des **K. Rochen** / auß neunzehen / **Schach** / und
+
+31. von des **K. Schützen** / **Ab-Schach** : * Der **Weiße** / rucket / seinen **König** / (dieweyl ihn / zween feinde / zugleich ansprengen) auf funf und zwantzig : Der **Schwartze** / gibt / mit der **Königin** / auß siebenzehen / **Schach-Mat**.
+
+32. Wan aber der **Weiße** / den **König** / nicht auf 25. (n. 31.) besondern / auf zehen / rucket : so gibt / der **Schwartze** / mit der **Königin** / auß sechs und zwantzig / oder siebenzehen / **Schach** : Der **Weiße** / setzet den **König** / auf eins : Der **Schwartze** / des **K. Rochen** / auf die **W. Königin** / auf eilfe / und gibt / von der **K. Schützen** / **Ab-Schach** : Der **Weiße** / bedecket / den **König** / mit der **Königin** / auf neunzehen : oder / mit seinem **Rochen** / auf zehen : Der **Schwartze** / nimt / mit
+
+<sig>Eee</sig>
+<meta>catchword: der Kö-</meta>
+
+<vocab>Schach-Spiel, Schwartze, Weiße, K. Schützen, K. Rochen, Schach-Mat, Damiani, Ab-Schach, Königin</vocab>

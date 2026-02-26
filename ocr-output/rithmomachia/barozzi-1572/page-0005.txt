@@ -1,0 +1,26 @@
+<language>Italian</language>
+<page-type>title-page</page-type>
+<meta>Princeton University library stamp at top; Google digital watermark at bottom right.</meta>
+
+# IL NOBILISSIMO ET ANTIQVISSIMO GIVOCO PYTHAGOREO
+## NOMINATO
+# Rythmomachia
+# CIOE' BATTAGLIA
+## DE CONSONANTIE DE NVMERI,
+
+### *Ritrouato per utilità, & solazzo delli Studioſi.*
+
+### Et al preſente per Franceſco Barozzi Gentil'huomo Venetiano in lingua volgare in modo di Paraphraſi compoſto.
+
+---
+
+<image-desc>A printer's mark depicting a caduceus—a winged staff entwined by two serpents—held upright by two hands emerging from clouds on the left and right sides. The Latin words "SALVS" and "VITÆ" appear on either side of the staff.</image-desc>
+
+->SALVS VITÆ.<-
+
+---
+
+# IN VENETIA.
+### *Appreſſo Gratioſo Perchacino. 1572.*
+
+<vocab>Rythmomachia, Francesco Barozzi, Venetia, Gratioso Perchacino, arithmetic, Pythagorean game, music theory, Renaissance mathematics</vocab>

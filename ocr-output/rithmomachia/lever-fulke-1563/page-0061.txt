@@ -1,0 +1,47 @@
+<warning>Significant bleed-through from the reverse side of the leaf obscures much of the tabular data at the bottom of the page.</warning>
+
+<language>English</language>
+<page-type>text</page-type>
+
+# The Philosophers game.
+
+## ¶ Of the greater tri-
+## umphe.
+
+**T**he greater victorie is, when foure
+numbers be broughte together,
+whiche agree in two proportions,
+either Arithmeticall and Geometricall,
+or elles Arithmeticall and Musicall, or
+elles Geometricall and Musicall. Of
+these three coniunctions the greater
+triumph consisteth, of the which
+the table folo-
+sweth.
+
+->A table<-
+
+| | | | | |
+|---|---|---|---|---|
+| <unclear>6</unclear> | <unclear>8</unclear> | <unclear>9</unclear> | <unclear>12</unclear> | * |
+| <unclear>12</unclear> | <unclear>15</unclear> | <unclear>16</unclear> | <unclear>20</unclear> | * |
+| <unclear>12</unclear> | <unclear>16</unclear> | <unclear>18</unclear> | <unclear>24</unclear> | * |
+| <unclear>24</unclear> | <unclear>30</unclear> | <unclear>32</unclear> | <unclear>40</unclear> | * |
+| <unclear>24</unclear> | <unclear>32</unclear> | <unclear>36</unclear> | <unclear>48</unclear> | * |
+| <unclear>48</unclear> | <unclear>60</unclear> | <unclear>64</unclear> | <unclear>80</unclear> | * |
+| <unclear>48</unclear> | <unclear>64</unclear> | <unclear>72</unclear> | <unclear>96</unclear> | * |
+| <unclear>4</unclear> | <unclear>6</unclear> | <unclear>8</unclear> | <unclear>12</unclear> | + |
+| <unclear>6</unclear> | <unclear>9</unclear> | <unclear>12</unclear> | <unclear>18</unclear> | + |
+| <unclear>8</unclear> | <unclear>12</unclear> | <unclear>16</unclear> | <unclear>24</unclear> | + |
+| <unclear>12</unclear> | <unclear>18</unclear> | <unclear>24</unclear> | <unclear>36</unclear> | + |
+| <unclear>16</unclear> | <unclear>24</unclear> | <unclear>32</unclear> | <unclear>48</unclear> | + |
+| <unclear>24</unclear> | <unclear>36</unclear> | <unclear>48</unclear> | <unclear>72</unclear> | + |
+| <unclear>32</unclear> | <unclear>48</unclear> | <unclear>64</unclear> | <unclear>96</unclear> | + |
+| <unclear>4</unclear> | <unclear>6</unclear> | <unclear>9</unclear> | <unclear>13</unclear> <gloss>1/2</gloss> | * |
+| <unclear>8</unclear> | <unclear>12</unclear> | <unclear>18</unclear> | <unclear>27</unclear> | * |
+| <unclear>12</unclear> | <unclear>18</unclear> | <unclear>27</unclear> | <unclear>40</unclear> <gloss>1/2</gloss> | * |
+| <unclear>16</unclear> | <unclear>24</unclear> | <unclear>36</unclear> | <unclear>54</unclear> | * |
+| <unclear>24</unclear> | <unclear>36</unclear> | <unclear>54</unclear> | <unclear>81</unclear> | * |
+| <unclear>32</unclear> | <unclear>48</unclear> | <unclear>72</unclear> | <unclear>108</unclear> | * |
+
+<vocab>Philosophers game, triumphe, victorie, proportions, Arithmeticall, Geometricall, Musicall, Rythmomachia</vocab>

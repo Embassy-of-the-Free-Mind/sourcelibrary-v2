@@ -1,0 +1,32 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>48</page-num>
+<header>DES PHILOSOPHES.</header>
+
+faudra encore triompher au camp de l'aduerſai-
+re, lequel triumphe ſe faict par quelque propor-
+tiõ d'Arithmeticque, Muſique ou Geometrie, ou
+comme deſſus auons monſtré aux victoires pro-
+pres , tellement que ſi tu fais harmonie grande
+& excellente alors pour tant qu'elles conſiſtēt en
+quatre tables, ſeront icelles diſpoſées en la vi-
+ctoire en quatre loges de meſme coleur en quar-
+reure comme B.C.D.E. ou bien.T.S.V.Y. Mais
+ſi ſeulement tu veux auoir victoire en trois tables,
+comme auons dit en victoire mediocre diſpo-
+ſeras icelles trois tables d'vne rengée, comme
+deſſus auons monſtré. Mais obſerueras qu'au
+meſme coup que tu remuëras & diſpoſeras la
+penultime de la victoire, diras triumphe, à fin-
+que que l'aduerſaire ſoit aduerti de quel coſté
+tu veux diſpoſer ton harmonie pour paracheuer
+ta victoire: & ſi cependant l'aduerſaire ne te
+peut empeſcher, logeras la derniere table har-
+monieuſe ſuiuant la diſpoſition du triumphe, di-
+ſant, victoire parfaicte: et à ce faire te pourroiēt
+ſeruir les tables de l'aduerſaire : mais notté que
+depuis qu'auras dict, triumphe, l'aduerſaire ne
+doit & ne peut point prendre des tables qui de-
+ſia ſont diſpoſées pour la victoire.
+
+<vocab>Arithmeticque, Muſique, Geometrie, victoire, triumphe, harmonie, tables, loges</vocab>

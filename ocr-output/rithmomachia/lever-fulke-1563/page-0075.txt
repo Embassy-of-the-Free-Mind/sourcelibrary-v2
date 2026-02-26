@@ -1,0 +1,20 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<warning>Heavy bleed-through/ghosting from reverse side of the page makes some areas difficult to read.</warning>
+
+## ¶ The maner of takyng.
+
+The men may be taken seuen ways by **Obsidion**, by **Equalitie**, by **Addition**, by **Substraction**, by **Multiplication**, by **Diuision**, and by **Cossicall Signes**.
+
+### ¶ Of takynge by Obsidion.
+
+All men maye be taken by **Obsidion** when by foure men they be letted of theyr ordinarie draughte, as hath bene taught before.
+
+### ¶ Of takynge by Equalitie.
+
+By **Equalitie** maye these men take or be taken, as hathe bene sayde before, 9. 16. 25. 36. 49. 64. 81, as if after you haue played your .9. you see youre aduersaryes .9. stande in
+
+<meta>catchword: your</meta>
+
+<vocab>Obsidion, Equalitie, Addition, Substraction, Multiplication, Diuision, Cossicall Signes, Philosopher's Game, Rythmomachia</vocab>

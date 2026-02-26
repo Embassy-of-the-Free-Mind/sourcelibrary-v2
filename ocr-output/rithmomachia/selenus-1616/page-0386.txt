@@ -1,0 +1,52 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>352</page-num>
+<header>Das Dritte Buch / 9. cap:</header>
+
+33. Rochen/des S. K. Rochens: Soldaten / und gibt Schach : * Der
+Schwarze / bedecket den König / mit seinem Rochen / auf ein
+und funfzig : Der Weisse / nimt ihn / mit der Königin / und gibt
+Schach : Der Schwarze / ruckte / den König / auf ein und sechszig:
+Der Weisse / nimt / der S. K. Reuter / mit der Königin / und gibt
+Schach-Mat.
+
+34. Bedecket aber der Schwarze / den König / nicht / mit dem
+Rochen / auf 51. (n. 33.) besondern / ruckat denselben / auf ein und sechsz-
+zig : so nimt / der Weisse / der S. K. Rochen / mit der Königin / und
+
+35. gibt Schach : * Der Schwarze / bedecket / den König / mit der K.
+Reuter / auf drey und sechszig : Der Weisse / nimt ihn / mit der
+Königin / und gibt / Schach-Mat.
+
+36. Setzet aber der Schwarze / den König / (weil Er ihn / mit
+dem Reuter / auf 63. n. 35. nicht bedecken wil) auf vier und funf-
+zig : so nimt / der Weisse / des S. K. Rochen / mit der Königin :
+Der Schwarze / kan sie / mit der K. Reuter / (dieweil des
+W. K. Roche / denselben gefangen hält) nicht nehmen : besondern /
+der Weisse / wird ihm / mit seiner übrigen macht / ferner den Kopf
+bieten / und bald erlegen.
+
+37. Wan aber der Schwarze / nicht den Rochen / auf 59. (n. 32.)
+besondern / die Königin / auf vier und dreyssig / ruckat / und Schach-
+gibt : so stellet der Weisse / den König / auf zwey und zwanzig :
+Der Schwarze / der K. Reuter / auf sechs und vierzig : Der Weis-
+se / nimt nicht / mit der Königin / des gedachten S. Reuters-Sol-
+date / (dan der Schwarze / mit des K. Schützen / auss ein und dreyf-
+sig / Schach geben : und / wan Er den König / auf dreyssig / oder drey
+und zwanzig / gezogen : mit der K. Reuter / auf vierzig / abermahl
+Schach bieten / und dergestalt seine Königin / erlangen würde)
+noch rucket / der K. Reuters-Soldaten / auf drey und zwanzig /
+(dan der Schwarze / alsdan der K. Rochen / auf seine Königin /
+auf zwey und sechszig / ruckete : Er müste dieselbe / auf funfzig /
+ziehen : Der Schwarze / ruckete / des K. Schützen / umb
+das funfzehende feld / zu beschützen : auf vier und zwanzig : Er /
+den Reuters-Soldaten / auf ein und dreyssig : Der Schwar-
+ze / den Reuter / auf vierzig / und gebe / vom Rochen / Ab-Schach :
+Er / setzete den König / auf neun und zwanzig : Der Schwarze /
+gebe / mit dem Schützen / auss funfzehen / Schach / und zöge ihn / auf
+seiner K. Rochen : Er der K. Schützens-Soldaten / für / auf zwey und
+zwanzig : Der Schwarze / gebe / mit dem Rochen / auss dreyffig /
+
+<meta>catchword: Schach:</meta>
+
+<vocab>Schach, Rochen, König, Königin, Reuter, Schütze, Schach-Mat, Ab-Schach, Soldaten</vocab>

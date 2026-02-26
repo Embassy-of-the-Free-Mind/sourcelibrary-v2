@@ -1,0 +1,31 @@
+<language>Latin</language>
+<page-type>preface</page-type>
+
+# Nova cōmentatio in Jordanū per Jacobum fabrū stapulēsem laborata
+# ad clarissimum virum Joannem de Ganay presidentem parisiensem.
+
+Paucis me digne āmonuisti Clarissime vir: quot cognita cōmoditates adducat disciplinarum parens arithmetica / ātcꝫ ignota relinquat tenebras. vt quē nullius discipline fugiat studium. In primis eni legum autoritas (in quibus potissimū tua vsat opera) tibi numeris egere visa est. vt q̄ iusticiā vnicuicꝫ ꝓ dignitate dispēsat: nunc Arithmetica / nūc vō Geometrica rōne cōstante. que agros / agrorū limites / aquarū diuergia / alluionēscꝫ ꝛ pleracꝫ silia sollicite cōsiderat q̄ Amathematico destituta ꝓsidio nuncꝫ plane assequi valeat. hinc imperatores rhomani Vespasianꝰ / Adrianus / Traianꝰ / Theodosius / Archadiꝰ / honorius / Constātinus ꝛ aliorū ꝓ plurimi legūtur peritos agrimēsores instituisse: qui podismorum rōem ad publicam vtilitatē tenerent quā numeroꝛ pficit sagacitas. hic Lucius Aboderatus illarū rerū studiosus insignem libellū reliquit. Et Arithmetica cōtēplatio rite cognita facilem ꝓbet musicarū modulationū intelligentiā / astronomicarcūꝫ subtilitatū ingressus. et prisca Theologia numeris olim vt quibusdā ad diuina gradibus tota innitebat: quis ꝛ nūc in sacris litteris sua retineāt mysteria nūcrī. Tolle igiť numeros / numeroꝛūcꝫ disciplinā: leges impficis. iusticia ceca relinq̄tur. nulla modulationū reperietꝰ regīa. nullus celestiū cōtemplationū aditus. sacrarū lraꝛ delitebūt mysteria: imo ꝛ vniuersa philosophia q̄ pariter humanoꝛ / diuinoꝛūcꝫ cognitio describitꝰ. Quicquid ē cōmoditātes assecute discipline / atcꝫ incōmoda neglecte pscos mime latuere: vt q̄ haud alio tramite crediderint ꝫ p eā incedētes nos posse ācꝫ digna satis cōtēplatiōe cognoscē. Pythagoras eni sine nūeroꝛ ꝓsidio nihil posse sciri cōtedebat. et Plato in sue academieve vestibulo hoc insculpsit epigrāma. Nemo huc mathematice expers introeat. qui i toto ferme Timeo de natūra rerū p numeros disputat: ꝛ in octauo ꝛ nono reipublice ml’ta de hac re disserit. que Theon smirneus mathematicus ob rei arduitatem intacta reliquit. Quapropť non ab re dolebas hāc numero-sam hui' almi parisiēñ studiij philosophātīu turbā et bonaꝛ lraꝛ cupida: tā necessaria semita / tum ad diuina assurgēdi / tum descēdēdi ad huāna esse destitutam. Accipe ergo nūc būfactor vnice decem Arithmetice discipline Jordani clarissimi viri libellos noua cōmentatiōis luce nris laboibus illustratos / tuoqꝫ nomini dicatos qui cōmoditates enumeratas secū afferre valebūt sufficiētissime. Et si iubes opus tuis auspicijs absolutum iam migret ad ceteros. vt vel sic intelligant omnes praesertim tibi se gratias habituros per quem fuerint hanc litterariam facultatem assecuti. Vale felicissime.
+
+## Argumentum decem librorum Jordani.
+
+Primus passiones numeroꝛ cōmunes: suarū partium / et quātū ex diuisi numeri partibus fiat discutit.
+
+Secundus est de proportionum et proportionalitatum cōmunibus passionibus.
+
+Tertius de numero primo / composito / ad alterum primo / et numeris in aliqua proportionem minimis.
+
+Quartus de numeris continue proportionalibus / cōmensurabilibus ꝛ incōmensurabilibus.
+
+Quintus de additione / subtractione / et partitione proportionum.
+
+Sextus de numeris quadratis / cubicis / superficialibus similibus / et solidis.
+
+Septimus de numero pari / impari / pariter pari / pariter impari / impariter pari / perfectis / abūdantibus / et diminutis.
+
+Octauus de formis numeroꝛum: trigonis / tetragonis / pentagonis / hexagonis / heptagonis / octagonis / pyramidibus / serrattlibus / et tesseris.
+
+Nonus de equalitate / inequalitate / multiplicibus / superparticularibus / et superpartientibus.
+
+Decimus de medietate Arithmetica / Geometrica / Musica: et de medietatibus minus principalibus.
+
+<vocab>Jordanus Nemorarius, Jacobus Faber Stapulensis, Joannes de Ganay, Arithmetica, Geometry, Music, Astronomy, Pythagoras, Plato, Theon Smyrnaeus</vocab>

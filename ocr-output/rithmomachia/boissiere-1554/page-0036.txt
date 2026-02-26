@@ -1,0 +1,12 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>17</page-num>
+<header>DES PHILOSOPHES.</header>
+
+*perpartientes, au nombre pair qui ſont ſuper-bipartientes tierces, ſuperquadripartientes quinte, ſuperſextupartientes ſeptieſmes, ſupero-ctupartientes neufieſmes. La premiere donc qui eſt 15, requiert vn autre qui auec elle accompliſſe ſa proportion ſuperbipartiente tierces: A ſçauoir qui la contienne et en outre deux de ſes tierces: Or la partie tierce de 15 eſt 5. le nombre donc que contiendra 15. & deux de ſes parties tierces, ſera 25. Lequel logeras au derriere de 15. & ainſi des autres: mais note que la Pyramide ſera côtée pour vne des tables quarrées. Si cecy t'a ſemblé difficile, voy l'inſcription des tables ſuyuantes.*
+
+### Diſpoſition faincte pour plus ſeurement ſituer & ordonner les tables en leurs vrayes loges.
+
+<sig>C</sig>
+
+<vocab>perpartientes, ſuperbipartientes tierces, ſuperquadripartientes quinte, ſuperſextupartientes ſeptieſmes, ſuperoctupartientes neufieſmes, Pyramide, tables quarrées, loges</vocab>

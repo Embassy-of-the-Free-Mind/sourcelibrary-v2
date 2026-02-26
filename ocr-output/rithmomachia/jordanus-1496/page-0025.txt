@@ -1,0 +1,52 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>IIII</page-num>
+<columns>2</columns>
+<sig>b 3</sig>
+
+numeras qui ꝑ itē ꝑ. 23. primi numerabit a b c d: qđ est primū in propõne intentū. Et per decimā septimā tertii nūerit inuētus maxim⁹ numerus numeras a b c d alioqñ ꝑ correlariū 16 accidet maiorē numerꝝ numerare minorē. r qz h̃ denoiat n in l l in e: ergo ꝑ 23 primi nūerꝝ q̃ fit ex h̃ in se qui fit o denoiat n in e. r qz h̃ etiā denoiat e in a: ergo ꝑ eandē 23 nūerus qui fit ex h̃ in o q̃ fit q denominat n in a. et eadē rōne qz l denoiat n in m et m in g. ergo ꝑ vicesimā tertiā primī numer⁹ qui fit ex l in se qui fit p denoiat n in g: et etiā qz l denominat g in v: igit ꝑ eandē numerus q̃ fit ex l in p qui fit r denoiat n in v. numerat igitur n numerū a scđm q et numerū v scđm r. et qz h̃ l sunt adinuicē primī: ergo per duodecimā tertii q et r sunt cōtra se primī: quare per vicesimā eiusdē in sua pportione mīmī ꝑ corzelariū igitur vicesimeterte eiusdē q et r numerabūt a r d scđm maximū numerꝝ numerantē a et v. est igitur n maximus nūerus numeros a d extremos numeras quod est secundū. ¶ Primū cozrelariū hinc cognoscit. nam qz idē numerus h̃ in n l e: producit l e a. ergo per septimā primi a e l n erunt cōtinue pproztionales. r per idē qz l in n m g producit m g d: ergo d g m n erūt continue ppoztiōales quare sicut inter a r d cadūt b c duo mediī pproztionales sic inter a r n cadūt duo e l. et inter v r n cadūt g m duo mediī pproztionales scz totidē mediī pproztionales inꝑ duos cōicantes et totidem inter vtrūqꝫ eoꝝ et maximū eos cōiter numerantē: qđ est primū cozrelariū. scđm vero hinc fit notū. nam qz per vicesimātertiā tertii r decimānonam h̃ in e in f et in g ꝓducit a b c. ergo per septimam secundi a b c d e f g sunt cōtinue ppoztiōales: qđ est secundū cozrelariū r propositū.
+
+<margin>3</margin>
+### Numeros diuersarum proportionū sumere : quorum maximi cōmuniter binos et binos numerantes sint continue proportionales.
+
+¶ Sint a b nūeri contra se primī: a minor et b maior r a in se ꝓducat c et in b ꝓducat d r b in se ꝓducat e: per septimā secūdi q̃ proportio a ad b ea est c ad d. et octauā eiusdē iterū que proportio a ad b ea est d ad e. sunt ergo c d e cōtinue pproztionales. duco g̃ a in c et fiat f r in d r fiat g: eritqꝫ ꝑ septimā secūdī g ad f sicut b ad a. quare r sicut b ad a et qz d̃ pproztio a ad b ea est c ad d: ergo ꝑ 25 secundi qđ fit ex a in d equū est ei qđ fit ex b in c. at qđ fit ex a in d positū est esse g. quod ergo fit ex b in c est g. et qz qđ fit ex c in a est f. ergo ꝑ cozrelariū vicesimetertie tertii c est maxim⁹ numerus numeras f g. Item duco d in e r ꝓueniat h: qz ergo d in a ꝓducit g: r d in e ꝓducit h. ergo ꝑ septimā scđī q̃ ꝓportio e ad a ea est h ad g: et pproztio e ad a nō est vt b ad a. nā e r b totū scz et pars equarent̃: quod est impossibille. ergo ꝓportio h ad g nō est pproztio g ad f. Itē qz a b sunt cōtra se p̃mi et e producit ex b in se. igit e ꝑ vndecimā tertiī est p̃mus ad a. sunt igit e r a in sua pproztione mīmi. at d nūerat g fm a r idē d nūerat h fm e. igit ꝑ cozrelariū vicesimētertie ētiā d ē maxim⁹ nūerus numeras g et h. sumo ergo k l primū et maiorē d in alia quādē ꝓportione q̃ b ad a et q̃ e ad a: r duco ĩp̃m k in e r ꝓueniat l. qz ergo e in d facit h et e in l facit l per septimā secūdī q̃ ꝓportio l ad d ea est l ad h. at ꝓportio l ad d posita est alia a pproztioē b ad a et e ad a. ergo ē alia q̃ g ad f et h ad g. et qz l r d sunt ꝓtra se p̃mi r iō in sua ꝓportione mīmi r numerāt h l fm e. est igit ꝑ tvẽ cozrelariū 23 tertij e maxim⁹ nūerus numeras h et l. sūpri sunt igt f g h l numeri diuersaꝝ pproztionū quoꝝ maximi e d binos r binos cōiter numerātes sunt ꝓtinue pproztionales: quod est propositū.
+
+<margin>4</margin>
+### Si numeroꝝ continue pportionalium duo extremi sunt contra se primi: erunt oēs illi in sua pproztione minimi.
+
+¶ Sint a b c cōtinue pproztionales quoꝝ a r c sint cōtra se p̃mi: dico tres nūeros a b c esse mīmos in ꝓportione a ad b. nā si sint tres miozes sint d e f: qz ꝑ vicesimāprimā scđi et equā propozztionalitatē q̃ proproztio a ad c ea est d ad f et a r c ꝑ hypothesim sunt contra se primī. ergo ꝑ vicesimā tertiū sunt in sua ꝓproztione minimi. numerāt ergo numeri a c per decimānonam eiusdē numeros d r f: maizores scz minozes quod est impossibile.
+
+<margin>5</margin>
+### Si quolibet nūcri fuerit in sua pproztione mīmi: ipsorum duo extremi erūt ꝓtra se p̃mi.
+
+¶ Hec est cōuersa p̃cedentis. Sint ergo a b c in sua ꝓproztione minimi: dico a et c esse contra se p̃mos. Nā si a et c sint cōicantes erit nūerus aliꝙs idē ꝑ secundā hui⁹ eos cōiter numeras q̃ sit d quos qz a b c sunt tres nūeri inequales: nūerabit fm tres diuersos nūeros. numeret ergo a fm e r b fm f et c fm g: per septimā secundi e f g sunt in eadem proproztione cum a b c et cū sint minozes a b c vtpote q̃ sunt eorum partes nō sunt igitur a b c dati minimi: quod est contra hypothesim.
+
+<margin>6</margin>
+### Numeros quotlibet fm datā pproportionē minimos iuestigare. Unū manifestū erit ex duoꝝ in aliqua ꝓproztione minimoꝝ primo in ambos et scđo in se: tres. et ex eodē p̃mo in illos tres eodēqꝫ scđo in tertiū: quattuor ꝓtinue cnasci illius ꝓproztionis minimos. q̃ si primū hoc pacto in omnes ducerē pergis et secundū in vltimū: quotquot libuerit in aliqua pproztione minimos efficies.
+
+¶ Illius ꝓproportionis mīmi ꝑ vicesimātertiā tertij reperiātur q̃ sint a b: duco a in se f. pueniat c et a in b r pueniat d et b in se et proueniat e ꝑ septimā r octauā scđi tres nūeri c d e erūt continue pproztionales et ꝑ duodecimā tertij extremi c e sunt cōtra se p̃mi quare per quartā hui⁹ illi tres nūeri sunt in sua ꝓproztione mīmi. Itē duco a in oēs illos et proueniāt f g h r b in e r pueniat l r eadē rōne f g h l sunt cōtinue pproztionales et extremi f r l contra se p̃mi et illi q̃ttuoz in sua proproztione mīmi. et hoc pzozessu quinqꝫ sex septē et quotquot voles reperiātur. Cozrelariū ex mō demōstrationis cognitū est.
+
+<margin>7</margin>
+### Si numeri cōtinue ppoztiōales in sua pproportion fuerint mīmi : quotcūqꝫ inter extrems fuerit medij totidē inter vtrūqꝫ extremoꝝ vnitatē ꝓpoztiōales cē ꝓueniet
+
+<column-break/>
+
+<image-desc>
+This column contains several geometric/arithmetic diagrams with lines and labels.
+Top diagram: Multiple horizontal lines of varying lengths labeled with letters. 
+l - 525
+h - 500
+g - 80
+f - 64
+k - 21
+l - 25
+A set of lines a, b, c, d, e with numeric values 16, 20, 25.
+Middle diagram: Three horizontal lines labeled a, b, c with numbers 4, 6, 9. Below them are lines d, e, f.
+Middle-lower diagram: Lines labeled a, b, c, d, e, f, g.
+Bottom diagram: A more complex arrangement of lines and numbers. 
+Numbers 8, 12, 18, 27 are aligned over lines f, g, h, l.
+Below them, numbers 4, 6, 9 are over lines c, d, e.
+At the very bottom, numbers 2, 3 are over lines a, b.
+</image-desc>
+
+<vocab>proportio, minimi, continue proportionales, contra se primi, numerus, extrema, media, correlarium</vocab>

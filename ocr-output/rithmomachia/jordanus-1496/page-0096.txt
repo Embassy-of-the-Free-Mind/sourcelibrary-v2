@@ -1,0 +1,39 @@
+<page-num>213</page-num>
+<language>Latin</language>
+<page-type>text</page-type>
+
+octo & pueniat b:7 octo in se & puentat e. per vicesimātertiā tertij Arithmetices nā a b 7 c sunt duo sesquioctaui in mīmis numeris cōiuncti/7 pinde duo toni in mīmis numeris priuati. Et si nouē duco in a b c et octo in c et surgant d e f g. per eandem inter d e f g tres sunt in mīmis numeris sesquioctaui cōstituti: quare d e f g sunt trium cōtinuatorū tonorum mīmi nūeri. Et si ducis nouem in d e f g et octo in g et surgant h i k l m per idem qđ prius h i k l m quattuor cōtinuorū sesquioctauorū mīmi sunt nūeri: quare 7 quattuor cōtinuoru tonorum. Et si rursum hoc pacto ducis nouem in h i k l m et octo in m et surgant n o p q r s: ipi erūt quinq; cōtinuorū tonorum mīmi numeri. et hoc modo quotquot tonorum voles mīmos numeros reperias. Attamen in modis musicis tot cōtinue subigere opus non est: sed tonis semitonia subiūgunt: de quibus posterius: ptius/ accōmodati9 expectādus est sermo.
+
+<margin>4</margin>
+### ¶ Spacio quolibet per quolibet equa spacia diuiso: totius ad totam prime sectiōis partem minor est pportio: q̃ eiusdē partis ad totam reliquā prime sectiōis partem. Quo fit vt quanto tonus tono subiūgiť acutior: tanto ip̄m ptractiora tētineat spacia.
+
+<image-desc>A linear scale diagram representing a string or musical interval labeled from 'a' at the left to 'b' at the right. The line is divided into nine equal segments by tick marks labeled 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'.</image-desc>
+
+¶ Chordam/neruū/tibiam/eflatū aera/es tīnnulū 7 quidqđ sonū edit in harmonicis modis (vt iam quoq; dictū est) spacium nūcupamus: in quibus analogie ratio vim/naturāq; seruat eādē. Sit ergo a b totum spacium per a c/c d/d e/e f: 7 reliquas nouem equas partes vt fit in interuallo toni habendo diuisum: quotqđ enī alias posueris idem valuerit. dico minorem eē pportiōez a b ad c b q̃ c b ad d b. Nam cū a b positū sit in nouem equas partes per medias notas c d e f 7 reliquas diuisum: c b cōtinet solū eaz partiū octo: quaz a b ptinet nouem. ergo a b ptinet spaciū c b et eius octauam partem. sed t cū c b octo partes partiū c b equas ptineat: ergo d b ptinet partiū totaz solū septē. ergo c b ptinet spacium d b 7 insup eius septimā partem. at octaua ps per diffinitiōem minor ē parte septima: igiť itez per diffinitiōem a b ad c b pportio supparticularis minor est q̃ c b ad d b vtpote q̃ a minore parte denoiētur. est enī hec a septima parte sesquiseptima pportio: illa xo ab octaua sesquioctaua. Et hāc nō modo in supparticlarib9: verū 7 quibuslibet medietatibus demōstrat pma decimi Arithmetices vbi fcz ratio medietatis arithmetice cōperiatur. qđ 7 in iucta spacij diuisiōe ē sumpta (vt ppositū est) pportione: inuentū aspiciebat. ¶ Correlariū xo hinc cognoscať qđ totū per quartam petitionem ad suam partem graui9 sonat: pars aūt ad suū totū acutius. Itaq; si tono a b 7 c b tonū subiūxeris: subiūctus erit acutior. Et qm̄ spaciū c b in nouem equas partes partireť: quaz quelibet mīor erit spacio c d qđ eius octaua est: nam quelibet eaz est nona 7 a maiore nūero denoiata. erit igiť 7 quelibet eaz nouem partiū mīnor spacio a c. equa sunt enī a c et c d. et hoc pacto de quibuslibet subiūctis acutiorib9 tonis eēt dicēdum. manifestū est igiť vt quāto tonus tono subiūgiť acutior: tāto ip̄m ptractiora tētineat spacia.
+
+---
+
+<margin>5</margin>
+### ¶ Medio extremitatū toni spacio in duo equa diuiso: ton⁹ mīme in duo secať eq̃lia.
+
+<image-desc>A diagram showing a musical scale 'a-b' divided into nine primary parts (c through k). Below this, a second row of labels 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't' marks the midpoints of each of those nine segments, effectively dividing the whole into eighteen parts.</image-desc>
+
+¶ Hec 7 sequentia intelligūtur vt tonus mīme in duo equa ratione geometrica dirimat: non autem arithmetica. nam 7 hic tonus tonicis interuallum in duo equa rōne arithmetica direptum est. diuido ergo spacium a b vt prius in nouem equa spacia: per notas a/c/d/e/f/g/h/i/k/b manifestū est a b 7 c b esse toni extremitates/tonicūq; cōtinere. dico ergo qm̄ a c medio harū extremitatū interstitio in duo equa p signum l direpto: tonus mīme in duo equa partiť/ qđq; sonus a b 7 l b equalis non sit l b 7 c b. diuido enī singula reliquoz octo equaliū spaciozū psimili modo p equalia per notas m/n/o/p/q/r/s/t: manifestum est totū spacium a b diuisum eē in 18 equalia spacia que sunt a l/l m/m d/d n/n e/e o/o f/f p/p g/g q/q h/h r/r i/i s/s k/k t/t b. ergo per precedētem mīor est pportio a b ad l b q̃ l b ad c b. est enī hec sesquiseptadecima: illa xo sesquiseptīa decima. non est ergo tonus hoc pacto in duo equa diuisus. et soni a b l b/7 l b c b p diffinitiōem aduinuicem inequales: quiquidē soni ecmeles sunt/musicoq; melo perparū apti.
+
+---
+
+<margin>6</margin>
+### ¶ Toni spacio hoc modo diuiso: totius medie sectionis sonus: maioris extremi toni sonum acumine: minoris vero grauitate superat.
+
+<image-desc>The scale diagram from Proposition 5 is repeated, showing the primary divisions 'a-k-b' and the bisection points starting with 'l'.</image-desc>
+
+¶ Sit a b vt in precedēti iam dictū est diuisum: itavt a b ad c b recrepet tonum. dico qm̄ sonus l b acumine superat sonū a b/qđq; item sonus l b grauitate vincit c b. Nam a b totum est a l b eius pars: ergo per quartam petitionem a b grauiozem sonū edit 7 l b graciliorem. et per eādem qm̄ l b totū est ad c b: sonus l b grauior est sono c b. superat ergo l b maius toni extremum acumine: 7 minus grauitate. quod propositum erat demonstrandum.
+
+---
+
+<margin>7</margin>
+### ¶ Tonum in duo equa: certo/cōstitutoq; numero diuidi impossibile est.
+
+¶ Nam per quintam primi huius nullū supparticulare interuallum in plura equalia dirimitur: 7 que pportio spaciozū inualli inter se ea quoq; est 7 soni ad sonum. Atqui tonus ex supparticulari nasciť interuallo. nasciť enī ex epogdoa/sesquioctaua q; ratiōe. igitur tonus mīme in duo equalia dirimitur/ diuidiť q̃. imo xo neq; in plura duobus equa: vt in tria aut quattuoг. ¶ Ex quo facile cognoscať Aristoxenus musicus auriū iudicio cuncta cōmittēs perparū eē prauus. qui semitonia secus q̃ Pythagorici non arbitrat esse dimidio tono ptractiora: sed quēadmodū semitonia dicitur: ita quoq; et esse integra tonorum dimidia. Hec minus Martianus felix simili lapsu errore deprehēdiť: qui nōmodo
+
+<vocab>tonus, sesquioctaua, supparticularis, epogdoa, medietas arithmetica, ecmeles, Aristoxenus, Pythagorici, Martianus Felix</vocab>

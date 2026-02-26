@@ -1,0 +1,34 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+persupposée ainsi coupée qu'ils s'ẽ faille 3 degrez
+ou bases qu'elle ne paruienne iusques à l'vnité:
+& par ainsi est ditte tricurte. Et marqueras la
+superfice d'icelle au dessus du sommet ou au para
+uant auois laissé place pour y appliquer les 3 cha
+racteres du nombre qui prouiendra par l'additiõ
+de toutes ses bases, lequel sera 190. Et parce que
+desia auois vne table des quarrez au nombres
+de nompairs, marquée du mesme nombre, osteras
+icelle table pour donner lieu à la pyramide: &
+ainsi auras tout ton ieu marqué et parfaict: reste
+qu'il fault marquer à chaque table au dessous de
+son chifre vn petit point. comme appert aux sui-
+uantes, à cause qu'à la disposition de la table ne
+te trouble estant renuersee.
+
+### De la situation des tables, & premieremẽt, du camp des nombres pairs.
+
+ALa situation gist la plus part de l'artifice,
+neatmoins elle sera fort facile par ce moyen.
+Premierement faictz vne faincte situation &
+apres l'ayant parfaicte, bientost auras disposé tõ
+camp en son ordre, mesmemẽt en la sorte que s'en
+suyt. Et premierement parce que ton tablier est
+long et pourroit empescher à veoir les nombres:
+samblablement afin que la diuerse represẽtatiõ
+
+<meta>catchword: des</meta>
+
+<vocab>Rythmomachie, tricurte, pyramide, nombres pairs, tablier, artifice</vocab>

@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>403</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>5.cap:</margin>
+wechslet werden/ und hilf des K. Rochem/ (welchem/ die S. <margin>cc</margin>
+Königin/ auf den dienst wartete) dergestalt auß der gefahr. <margin>cc</margin>
+
+<margin>4.</margin> Wan aber der Schwarze/ den W. Soldaten/ (n. 3.) nicht <margin>cc</margin>
+nimt/ besondern/ des K. Soldaten/ auf acht und zwanzig/ <margin>cc</margin>
+ziehet: so bricht der Weisse/ des Schwartzen/ Spiel/ wan Er/ <margin>cc</margin>
+der K. Schützens-Soldaten/ auf der S. K. Soldaten/ auf <margin>cc</margin>
+dreyssig/ rucket: Der Schwarze/ (umb ihn zu verthetigen) <margin>cc</margin>
+der K. Schützens-Soldaten/ auf sechs und vierzig: Der <margin>cc</margin>
+Weisse/ (dessen ungeachtet) nimt ihn/ mit der K. Schützens- <margin>cc</margin>
+Soldaten: Der Schwarze/ denselben/ mit seiner K. Schützens- <margin>ca</margin>
+Soldaten: Der Weisse/ ziehet/ auf denselben/ der K. Reu- <margin>cc</margin>
+<margin>5.</margin> ter/ auf zwey und zwanzig: * Der Schwartze/ des K. Schü- <margin>ce</margin>
+tzen/ (unangesehen derselbe/ die Königin/ daß sie/ ihres Schü- <margin>ce</margin>
+tzens-Soldaten/ nicht beschützen kan/ verhindert) auf fünf <margin>cc</margin>
+und vierzig: Der Weisse/ nimt/ der S. K. Schützens-Sol- <margin>ce</margin>
+daten/ mit der K. Reuter: Der Schwartze/ beut/ mit der Kö- <margin>ca</margin>
+nigin/ auß fünf und zwanzig/ Schach: Der Weisse/ bedecket <margin>ce</margin>
+den König/ nicht/ mit seines Reuters-Soldaten/ auf acht- <margin>ce</margin>
+zehen/ (Dan Er ihm selber/ ein böses Spiel/ verursachete) be- <margin>cc</margin>
+sondern/ ziehet ihn/ auf dreyzehen: Der Schwartze/ nimt/ des <margin>cc</margin>
+W. K. Rochens-Soldaten/ mit des K. Schützen: Der Weisse/ <margin>cc</margin>
+beut/ mit der K. Reuter/ auß vier und funfzig/ Schach/ <margin>ca</margin>
+und ziehet ihn/ auf der S. K. Rochen: welcher ihm folgendes/ <margin>cc</margin>
+(dieweyl der Schwartze/ denselben/ umb/ seine Königin/ durch <margin>cc</margin>
+des W. K. Rochen/ nicht zu verlieren: mit des K. Schützen/ <margin>ca</margin>
+nicht darf wegnehmen) nicht entstehen kan. <margin>ca</margin>
+
+<margin>6.</margin> Wan aber Der Schwartze/ nicht den Schützen/ auf 45. <margin>cc</margin>
+(n. 5.) besondern des K. Reuter/ (umb der K. Schützens-Sol- <margin>ca</margin>
+daten/ zu verhüten) auf drey und vierzig: oder der K. Schützen/ <margin>ce</margin>
+auf vier und vierzig/ ziehet: so beut/ der Weisse/ mit des K. <margin>cc</margin>
+<margin>7.</margin> Schützen/ auß neun und dreyfzig/ Schach: * Der Schwartze/ <margin>cc</margin>
+bedecket/ den König/ mit der K. Schützen/ auf drey und funfzig: <margin>cc</margin>
+Der Weisse/ (umb die Königinne/ zu verwechseln: oder/ der S. <margin>cc</margin>
+K. Schützens-Soldaten/ welcher/ ob er gleich/ auf der Köni- <margin>cc</margin>
+ginnen-Linie stehet/ doch/ vom Damiano/ für der K. Soldaten/ <margin>cc</margin>
+unrecht angesprochen wird: wan etwa der Schwartze/ mit des K. <margin>cc</margin>
+Reuter/ seines K. Schützen/ auß drey und funfzig/ wegnehme: <margin>cc</margin>
+zu erlangen) rucket/ die Königin/ auf zwey und dreyssig. <margin>cc</margin>
+
+<sig>Eee iij</sig>
+<meta>catchword: 8. Bede-</meta>
+
+<vocab>Schach-Spiel, Königin, Rochen, Reuter, Schütze, Soldat, Schach, Damiano</vocab>

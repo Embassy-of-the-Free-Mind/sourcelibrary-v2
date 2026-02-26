@@ -1,0 +1,20 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>342</page-num>
+<header>Das Dritte Buch / 8. cap:</header>
+
+K. Schützens-Soldaten / und ziehet ihn / auf deſſen Rochen: Der Schwarze / der K. Soldatē / auf des W. K. Schützen / auf ſieben und dreyffig: Der Weiſſe / nimt ihn / mit demſelben / und beſchützet noch- maln / der K. Reuter: Der Schwarze / nimt / des W. K. Schützen / mit der K. Schützens-Soldaten: Der Weiſſe / des S. K. Rochen / mit der K. Reuter: Der Schwarze / denſelben / mit der Königin: Der Weiſſe / der S. K. Schützens-Soldaten / mit des K. Soldaten: rucket folgendes / des K. Rochen / auf viere: und wird ſein Spiel / (dieweyl Er / zween Soldaten / und einen Rochen / für einen Reuter / zum Vortheil / hat) auf daß ihm / der Schwarze / mit dem Könige / nicht entwiſche: zum Siege / ferner wol einrichten können.
+
+<margin>10.</margin>
+Wan aber der Schwarze / nicht / die Königin / auf 50. (n. 9.) noch des K. Reuter / (umb / des K. Schützens-Soldaten / zu entſetzen) auf ein und viertzig / ſondern / des K. Rochens-Soldaten / auf der W. K. Reuter / auf dieſes 41. feld / rucket: ſo nimt / der Weiſſe / mit des K. Schützen / des S. K. Schützens-Soldaten / und beut Schach: Der Schwarze / rucket den König / auf drey und funfzig: Der Weiſſe / nimt / mit des K. Schützen / des S. K. Reuter: Der Schwarze / kan denſelben / oder der W. K. Reuter / nehmen: Der Weiſſe / ziehet folgendes / denſelben Stein / welchen ihm / unter den vorgedachten / der Schwarze / gelaſſen / auß der gefahr: und hat ſein Spiel / dieweyl Er / mit einem Haupt-Steine / dem Gegener / überlegen: ferner füglich anzuordnen.
+
+<margin>11.</margin>
+Auß dieſem / (ſo von n. 3. biß hieher / geſetzet worden) erſcheinet nuhn / daß der Schwarze / der K. Schützen / mit mehrem nutzen / auf 44. den auf 33. (n. 2.) ziehe: weyl aber ſolches / zur genüge / etwa angedeutet / als wollen wir / dieſe Vierte Art / hiemit beſchlieſſen / und zur fünften und letzten / ferner ſchreiten.
+
+->n. 3. 4.<-  ->n. 7. 8.<-
+
+<image-desc>Two side-by-side diagrams of game board positions, specifically for variants of Chess. The left diagram, labeled "n. 3. 4.", shows an 8x8 grid with pieces abbreviated as SR (Schwarzer Rochen), SK (Schwarzer König), SS (Schwarzer Soldat), WS (Weiſſer Soldat), WR (Weiſſer Rochen), and WK (Weiſſer König); the square labeled 42 contains a piece. The right diagram, labeled "n. 7. 8.", shows a wider 12x8 grid (the layout for Courier Chess) with similar piece abbreviations and squares 43 and 41 marked with pieces.</image-desc>
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach, König, Königin, Rochen, Reuter, Schützen, Soldaten, Schwarze, Weiſſe, beut Schach, Courier Schach</vocab>

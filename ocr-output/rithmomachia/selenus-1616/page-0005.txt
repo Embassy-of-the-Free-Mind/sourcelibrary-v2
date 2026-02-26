@@ -1,0 +1,12 @@
+<language>German</language>
+<page-type>text</page-type>
+<sig>() iij</sig>
+<meta>Stamp: Bayerische Staatsbibliothek München. Catchword: zu ende</meta>
+
+<image-desc>A rectangular ornamental woodcut header featuring elaborate scrollwork, foliage, and various figures including cherubs (putti), human figures, and possibly mythological creatures.</image-desc>
+
+# Privilegium Cæsareum.
+
+Wir Matthias / von GOTTES Gnaden / Erwölter Römischer Kay=ser / zu allen zeitten Mehrer des Reichs / in Germanien / zu Hungern / Behaim / Dal=matien / Croatien / vnd Sclavoniē etc. König / Erzhertzog zu Osterreich / Hertzog zu Bur=gundt / Steyr / Kärndten / Crain / vnd Wirt=temberg / etc. Grave zu Tyrol etc. Bekhennen öffentlich mit disem Brieff / vnd thun kundt al-lermeniglich / daß Vns vnser vnd deß Reichs lieber getrewer / Henning Groß / der Jüngere / Buechhändler zu Leipzig / in vnterthenigkeit fürbracht vnd zuerkhennen gegeben / welcher massen Er / auf anhalten fürnemer Leute / das Schach- oder König-Spiel / von Gustavo Seleno in vier vnterschiedliche Bücher / mit be-sonderm vleiß / grundt- vnd ordenlich abgefas-set / auch mit dienlichen Kupfferstichen gezie-ret / dergleichen vorhin nie außgangen / vnd solches Schach- oder KönigSpiel / nebē einem
+
+<vocab>Matthias I, Holy Roman Emperor, Henning Groß, Gustavo Seleno, Schach- oder König-Spiel, privilege, Leipzig, chess</vocab>

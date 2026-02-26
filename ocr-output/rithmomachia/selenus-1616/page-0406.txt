@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>372</page-num>
+<header>Das Dritte Buch/ 13. cap:</header>
+
+<image-desc>Decorative woodcut headpiece with symmetrical scrollwork and floral designs.</image-desc>
+
+# Das Dreyzehende Capittel.
+
+## Welcher gestalt / etliche / mit den Reutern / oder / mit der Rochen-Schützen-und Reuter-Soldaten / den anfang dieses Spieles / doch / mit ihrem schaden / zu machen pflegen.
+
+---
+
+Folget nuhn die dritte Art / (davon im siebenden Capittel / des Andern Buches / gedacht worden) welche etliche unerfahrne Spieler / im gebrauch haben: in dehme sie dieses Spiel / nicht / mit der Könige- noch / mit der Königinne-Soldaten / besondern / mit andern Steinen / anfahen. Dan Sie etwa / ehe und zuvor Sie / einigen Soldaten ziehen / die Reuter / zufoderst herauß-setzen: oder von der Rochen-Schützen- oder Reuter-Soldaten / den anfang machen. Dieweyl nuhn / dergleichen Spiele / zum zeiten fürlauffen und geschehen / alß sol von denselben / auch etwas kürtzlich berichtet werden.
+
+Wan nuhn (1.) der Weisse / den Vorzug hat / und sein Spiel / mit einem Reuter / anhebet: so stehet / dem Schwartzen / zu rahten / daß Er / (wan der Weisse / des K. Reuter / auf neuntzehen ziehet) der K. Soldaten / (auf daß derselbe / mit des K. Soldaten / auf acht und zwantzig / sein Spiel / nicht in eine gute ordnung bringe) auf sieben und dreyffig / rucke.
+
+Ziehet aber / (2.) der Weisse / der K. Reuter / auf zwey und zwantzig: so sol der Schwartze / (auf daß der Weisse / mit des K. Soldaten / sein Spiel / nicht alßbald / in eine bessere ordnung bringe / besondern / noch viele vergebliche züge / thun müsse) der K. Soldaten / auf sieben und dreyffig / ziehen: Wil Ers aber nicht hindern / besondern / setzet / des K. Soldaten / auf sechs und dreyffig: so hat Er / in seinem Spiele / gleichwol eine bessere Ordnung: Dieweyl / der Weisse / der K. Schützen-Soldaten / mit welchem der jehnige / welcher seinen Feind / zum ersten angreiffet / seinem Spiele / muß gemeinlich zu hülffe kommen)
+
+<meta>catchword: men)</meta>
+
+<vocab>Schachspiel, Reuter, Soldaten, Rochen-Schützen, Eröffnung, Weisse, Schwartze, Königes, Königinne</vocab>

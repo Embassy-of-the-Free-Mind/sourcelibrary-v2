@@ -1,0 +1,48 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>400</page-num>
+<header>Das Vierte Buch/ 4. cap:</header>
+
+der Königin/ entweder die W. Königin/ oder des W. K. Rochen/ und
+gibt Schach - Mat.
+33. Rucket aber Der Weisse/ den König/ nicht auf 18. (n. 30.) beson-
+dern/ auf drey und dreyßig: so beut / der Weisse / mit der Königin/
+auß zwey und viertzig/ oder siebenzehen/ Schach-Mat.
+34. Wan aber der Weisse/ die Königin / weder auf 23, noch auf 12,
+(n. 28. 29.) ziehet/ besondern dieselbe/ (wan sie auf 1. n. 26. in f. gezogen)
+mit des K. Rochen/ auf zehen/ bedecket: so beut/ der Schwartze/ mit
+des K. Rochen/ auß sieben und zwantzig/ Schach: Der Weisse/ muß
+den König/ auf achtzehe/ oder drey und dreyßig/ rucke: Der Schwarz-
+be/ gibt/ mit der Königin/ (wan gleich des K. Roche/ fürgezogen wor-
+den) auß sechs und zwantzig/ oder zwey und viertzig/ Schach-Mat.
+35. Bedecket aber der Weisse/ die Königin/ nicht mit dem Rochen/
+auf 10. (n. 34.) besondern/ nimt/ mit derselben/ der S. K. Schützen: so
+nimt sie/ der Schwartze/ mit seiner Königin/ und gibt Schach: Der
+Weisse/ bedecket/ den König/ mit seine Rochen/ auf sechs und zwan-
+tzig/ und ziehet ihn/ auf die W. Königin: Der Schwartze/ gibt/
+mit der Königin/ auß viere / Schach / und ziehet sie/ auf der S. K.
+Schützen: Der Weisse/ den König / (so fern Er denselben / mit
+seinem Rochen/ auf achtzehen/ nicht bedecken/ noch auf siebenzehen/
+rucken wil) auf drey und dreyßig: Der Schwartze / des K. Ro-
+chen/ auf neunzehen/ und kan dem Weissen/ ferner bald abhelfen.
+Auss den itzt erzehleten/ überhaupften fehlern/ des Damiani, kan
+man nuhn abnehmen/ daß Er/ wie Er/ dieses Spiel/ beschreiben
+wollen: die Schach - tafel/ und Schach-Steine/ nicht beyhanden
+gehabt/ minder einige gedancken/ darzu gebrauchet habe: welches
+dan zum überfluß/ auch auß dem erscheinet/ * Da Er/ (n. 4.) setzet:
+<margin>36.</margin>
+<margin>,,</margin> Daß der Schwartze/ (wan der Weisse/ mit des K. Reuter/ des
+<margin>,,</margin> S. K. Soldaten/ genommen: und Er/ mit der Königin/ auß
+<margin>,,</margin> 25. Schach - geboten: und der Weisse/ sich/ mit des K. Reuters
+<margin>,,</margin> Soldaten/ auf 18. bedecket habe) mit der Königin/ auß 28.
+<margin>,,</margin> nicht alleine Schach-gebe/ besondern auch/ des W. K. Solda-
+<margin>,,</margin> ten/ auß demselben felde/ zugleich hinweg nehme: und wird nicht
+gewahr/ daß dasselbe/ gantz ledig sey: In erwägung/ gedachter
+Soldat/ des S. K. Schützens - Soldaten/ (n. 3.) albereit geraubet/
+und derohalben/ nicht mehr/ auf der Königes - besondern dero
+Schützen linie/ darauß er auch/ von der S. Köni-
+gin/ (n. 5. in f.) endlich genommen wird/
+anzutreffen ist.
+<meta>Catchword: Das -</meta>
+
+<vocab>Schach, Damiani, Königin, Rochen, Schütze, Reuter, Soldat, Schach-Mat</vocab>

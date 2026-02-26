@@ -1,0 +1,37 @@
+<warning>Slightly blurry text on the left margin.</warning>
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+spaces about him directly, or cornerwise,
+the man so besieged can not escape, be
+cause he can not remoue cornerwyse,
+therefore maye be taken vp, so soone as
+the last of the foure is set in his place.
+
+In all three kyndes of playing no Ob-
+sidion can be of any man with some of
+his fellowes, but all foure muste be hys
+aduersaries.
+
+In this thyrde kynde, these men can be
+none otherwyse taken but by Obsidion.
+Namely amonge the euen. 2. 4. 4. 153.
+among the odde. 3. 5. 7. 190.
+
+In all maner of taking this is to be no-
+ted, that we muste not place the man
+which taketh in place of him that is ta-
+ken, but when he maye be taken before
+we drawe, then shall we remoue our
+man into his place.
+
+### ¶ The priuilege of the king.
+
+The king standeth for so many men
+as he hath steppes, that is the euen
+for. 6. the odde for. 5. if anye of these
+
+<sig>C.v.</sig>
+<meta>catchword: (except</meta>
+<vocab>Philosophers game, Obsidion, Rythmomachia, euen, odde, king, pyramid</vocab>

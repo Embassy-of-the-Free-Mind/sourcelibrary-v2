@@ -1,0 +1,35 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<meta>catchword: tauo</meta>
+
+## Tauola di tutte le proportioni Musiche che possono occorrere in questo giuoco.
+
+| | | |
+|:---|:---|:---|
+| <p>2<br>3</p> | **3** | **6** |
+| **3** | **4** | **6** |
+| 8 4 **3** | 4 3 **4** | 8 4 3 **6** |
+| 8 4 **4 1/3** | 4 4 **5** | 8 15 4 **6** |
+| 2 4 **4** | 4 4 **6** | 8 16 4 **6** |
+| 8 5 **5** | 8 7 **7** | 8 28 4 **6** |
+| 16 12 **5** | 16 9 **8** | 16 20 8 **6** |
+| 12 9 6 **3/4** | 9 9 **9** | 12 45 9 **3** |
+| 12 8 **7** | 9 9 **8** | 9 12 4 **3** |
+| 9 8 **8** | 12 12 **12** | 25 42 9 **3** |
+| 25 15 **8** | 8 15 **15** | 9 120 2 **4** |
+| 9 6 **9** | 8 15 **15** | 9 8 2 **4** |
+| 9 6 **9** | 15 15 **16** | 15 45 8 **4** |
+| 15 8 **9** | 20 12 **15** | 36 72 12 **4** |
+| 30 12 **12** | 12 12 **15** | 15 20 9 **2** |
+| 15 12 **15** | 42 25 **20** | 42 30 25 **2** |
+| 18 25 **25** | 15 9 **45** | 15 225 9 **6** |
+| 15 45 **30** | 72 16 **36** | 72 45 16 **5** |
+| 25 36 **72** | 25 81 **90** | 16 120 12 **6** |
+| 16 32 **9** | <unclear>21 15 9</unclear> | 25 72 15 **6** |
+| 25 64 **9** | <unclear>18 14 9</unclear> | 225 18 27 **6** |
+| 144 32 **9** | | |
+
+La maggior uittoria non è altro, che situar nel campo dell'auuersario 4 pezzi, li numeri delli quali habbiano tra loro due proportioni delle 3 sopradette ò l'Arithmetica, & la Geometrica insieme: ò l'Arithmetica, & la Musica; ò la Geometrica, & la Musica; & cosi si può far a tre modi anchor quest'altra uittoria. Ma quali siano in questo giuoco li numeri, che possono far questa uittoria in tutti tre questi modi, le tre seguenti tauole dimostrano
+
+<vocab>Tauola, proportioni, Musiche, uittoria, Arithmetica, Geometrica, giuoco</vocab>

@@ -1,0 +1,42 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>3</page-num>
+<sig>(?) 3</sig>
+<meta>catchword: E fosse-</meta>
+<warning>Water damage and staining on the left side of the page; some initial letters are partially obscured but remain legible.</warning>
+
+Ne' tema haurà se fosse Gioue, ò Dite.
+Se la Regina sua possente, e forte
+  Superba n' esce con le armate schiere,
+  A qual nemico, non darà la morte?
+Poco varrà il Caval, manco l' Arciere:
+  Presto vedrai li Capitani miei
+  Con tagli, e punte far li tuoi cadere.
+Tanta stragge non fe de gli Ilionei
+  Di Pelleo il fiero, e valoroso figlio,
+  Mentre d' Hettor s' udir, gl' ultimi omei:
+Quanta faronne, se teco hor m' appiglio,
+  Se à le tue, pongo le mie schiere à fronte:
+  Ahi qual' uccisione, ahi qual scompiglio.
+Dunque se vuoi pugnar, fa che fian pronte
+  Le Nere genti tue, disponi il tutto:
+  Fà, che' l tuo campo hora co' l mio s' affronte:
+Io con otto Pedon, son quì ridutto,
+  Due Tor, doi Sagittarij, e doi Destrieri,
+  E il Bianco Rè, con la sua Donna instrutto.
+Con questi arditi, e Candidi Guerrieri,
+  Verrò ne' tuoi confin, ne' tuoi steccati,
+  E abbatter voglio Fanti, e Cavalieri.
+Vedrai, Bomben, allhor li tuoi Soldati
+  Sconfitti, e morti, e come il Rè si strugga,
+  E perdon chiegga de gl' error passati.
+Te' n ridi? credi, ch' io da l' igne fugga
+  Questi pensier? che fian favole, ò sogni,
+  Che la chiar' alba, ò il Sole annulli, e strugga?
+Più di cento Campioni, hò preso, & ogni
+  Arnese, ogn' arme, mi lasciaron vinti;
+  Non sò, se adhor vaneggi, ò se pur sogni.
+Vengan Spagnuoli, od Ethiopi tinti,
+  Se menassero ben, di Dario il campo,
+
+<vocab>scacchi, chess pieces, Regina, Caval, Arciere, Pedon, Tor, Sagittarij, Destrieri, Rè, Donna, Bomben, Pelleo, Hettor</vocab>

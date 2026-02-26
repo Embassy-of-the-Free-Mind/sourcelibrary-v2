@@ -1,0 +1,30 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>477</page-num>
+<header>Vom Zahl-Kampf.</header>
+
+6.) Wan zwischen einem Steine / und dem felde / in welches derselbe / dem Spiele gemäß / wol könte gezogen werden / ein Stein / auß seinem / oder des Gegentheiles Hauffen / vorhanden / so kan er / dahin / nicht gezogen werden.
+
+7.) Die Türne / werden / auf so vielerley Art / gezogen / nehmen auch andere Steine / und werden von ihnen genommen / als Viereckete / Dreyeckete / und runde Steine / auf denselben verhanden. Ferner / seynd sie / mit dieser freyheit begabet / daß sie ihre Steine / welche ihnen sollen genommen werden / durch andere Steine / ihres Hauffens / oder welche sie vom Feinde / erlanget haben / auf welche / dieselben Zahle / stehen / welche auf dem Steine / den sie verlieren solten / gezeichnet seynd / hinwieder an sich wechseln und bringen können. Wan aber kein Stein / darauf dergleichen Zahle / zu finden / bey ihnen vorhanden / so stehet es / in des überwinders willkür / einen Stein / welchen Er wil / hinwegzunehmen. Wan aber / die unterste Staffel / oder der grund-Stein / und also die Summe aller Summen der Staflen / nemlich 91, und 190, sol genommen werden / so kan man denselben / nicht außwechseln / noch von newen / und zum andernmahl hinwider / auf die Tafel setzen: sondern / muß ihn gantz auß dem Spiele wegschaffen: gleich wie auch die andere Staflen / wan man an ihre stelle / keine andere Steine / weggeben kan / weggethan werden.
+
+( Buxer: fol: 47. 48.
+> *Quadratus quivis Numerus, aut Pyramidis gradus, capit cc*
+> *aut capitur, non secùs ac idem Calculi: verùm is, qui gradum cc*
+> *Pyramidis lucratus fuerit, duos ex eâ, gradus, & ejusdem formae cc*
+> *numeros, capiet & submovebit: ut si Quadratus Pyramidis Perfectae cc*
+> *vel Albae, Numerus 36, intercipiatur, capietur item & Quadratus cc*
+> *25, ità ut submoveantur à Pyramide, 36, & 25: quae quia cc*
+> *91 continebat, deinceps tantùm 30, valebit. Quòd cum Quadratam cc*
+> *figuram amiserit, incessus Quadrati privilegio, uti non poterit, cc*
+> *ut in quartam sedem gradiatur, neq; capti illi duo Numeri, cc*
+> *eam deinceps adjuvabunt, sed sensim capietur, ac de gradibus cc*
+> *dejicietur, donèc nihil ex eâ, sit reliquum: quod ubi fuerit peractum, cc*
+> *omninò, uno tantùm jactu intercipietur, praesertim, si ea cc*
+> *ab hostibus, circumsepta fit.* )
+
+8.) Es sol einer / alle Steine / welche Er / dem Gegentheil nimt / auf daß sie / seines Hauffens farbe / erlangen / umbwenden / und ausserhalb der Taffel / bey sich stellen: damit Er dieselben /
+
+<sig>Ooo ij</sig>
+<meta>catchword: entwe-</meta>
+
+<vocab>Zahl-Kampf, Rithmomachia, Türne, Viereckete, Dreyeckete, Staflen, Pyramidis, Calculi, Quadratus</vocab>

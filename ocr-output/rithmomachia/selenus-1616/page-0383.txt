@@ -1,0 +1,43 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>349</page-num>
+<header>Vom Schach-Spiel.</header>
+<margin>9. cap:</margin>
+
+ſechs und dreyſſig/ Schach: Der Schwarze/ rucket /den König/
+(ſo fern Er / die Königin / auf drey und viertzig / nicht rucken/
+noch das Spiel/ umb einen Zug / aufhalten wil) auf acht und
+funfzig: Der Weiſſe / nimt / die S. Königin/ mit des K. Rochen / und gibt Schach: Der Schwarze / muß ihn / mit dem
+Könige/ nehmen: Der Weiſſe / gibt / mit der K. Schützen / auß
+ein und viertzig/ Schach: Der Schwarze / muß den König / auf
+acht= oder ein und funfzig/ rucken: Der Weiſſe/ gibt/ mit der Königin / auß vier und viertzig/ Schach-Mat.
+
+<margin>23.</margin> Wan aber der Schwarze/ die Königin/ nicht auf 59. (n. 6.)
+beſondern / (umb / ihren Schützen / wan etwa der Weiſſe / mit
+der K. Schützen / ſeines K. Reuter / wegnehme / zu entſetzen)
+auf drey und funfzig/ rucket: ſo ziehet der Weiſſe/ des K. Rochen / auf drey: Der Schwarze / nimt / des W. K. Schützens-
+Soldaten / mit der k. Soldaten: Der Weiſſe/ des S. K. Reu-
+
+<margin>24.</margin> ter / mit der K. Schützen: * Der Schwarze / denſelben / mit
+des K. Reuters-Soldaten: Der Weiſſe / gibt / mit des K. Schützen / auß ein und funfzig/ Schach: Der Schwarze/ nimt ihn/
+mit der Königin (dan Sie derſelbe/ weyl Er den König / auf neun
+und funfzig/ ziehen müſte: im Ab-Schache / auß vier und viertzig/
+gleichwol erlangete) Der Weiſſe/ dieſelbe / mit des K. Rochen:
+Der Schwarze/ denſelben/ mit dem Könige: Der Weiſſe/
+der S. K. Schützen / mit der Königin: und wird dem Schwarzen/ (unangeſehen/ derſelbe einen Rochen und Schützen / gegen ſeine Königin hat) ſo fern Er nuhr der Züge / in etwas kündig/ weyter wol abhelfen können.
+
+<margin>25.</margin> Wan aber der Schwarze / den W. Schützen / nicht nimt/
+(n. 24.) beſondern / des K. Schützen / auf die W. Königin / auf zwey
+und funfzig / ziehet: ſo bedecket ſie / der Weiſſe / mit ihrem Schützen / auf vier und dreyſſig: Der Schwarze/ ziehet/ der K. Schütze/
+(auß der gefahr) auf vier und viertzig: Der Weiſſe / die Königin /
+auf der S. K. Soldaten / auf achtzehen: Der Schwarze / (umb
+ihn zu entſetzen) des K. Schützen / auf drey und viertzig: Der
+Weiſſe/ der K. Reuter / auf zwey und zwanzig: den König/ auf dreyzehen : und der K. Rochen / auf viere : ordnet dergeſtalt / ſein Spiel
+gar wol/ und wird den Schwarzen / ferner/ wol anfaſſen können.
+
+<margin>26.</margin> Wan aber der Schwarze / die Königin / weder / auf 59. noch
+auf 53. (n. 6. 23.) rucket/ beſondern/ mit derſelben/ des W. K. Schützens-
+
+<meta>catchword: Bens-</meta>
+
+<vocab>Schach, König, Königin, Rochen, Schützen, Soldaten, Reuter, Schach-Mat, Ab-Schache</vocab>

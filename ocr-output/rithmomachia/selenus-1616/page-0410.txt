@@ -1,0 +1,8 @@
+<warning>This page is the blank verso of a title page; the text visible is a mirrored impression showing through from the recto side of the paper.</warning>
+
+<language>German</language>
+<page-type>blank</page-type>
+
+<image-desc>The page is functionally blank but shows significant ink bleed-through from the printed title page on the recto side. The mirrored text, in German Fraktur script, identifies the work as "Ein Bet-Buch des heiligen Vatters Ephräm" (A Prayer Book of the Holy Father Ephrem [the Syrian]). The text is framed within a decorative woodcut border featuring architectural columns and ornamental scrollwork.</image-desc>
+
+<vocab>Ephräm, Bet-Buch</vocab>

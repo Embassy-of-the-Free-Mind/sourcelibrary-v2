@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>374</page-num>
+<header>Das Dritte Buch / 15. cap:</header>
+
+tzig: so sol Er / der K. Soldaten / ( auf daß dero Schütze / das
+siebenzehende feld / gleichsam / beschiessen könne ) auf sieben und
+dreyssig / rucken.
+
+Dieses sey nuhn also / denselben / welche / gute <term>Schach-
+zieher</term> / in der that / zu werden / begierig seynd / zur genüge erin-
+nert. Es wird aber / bey dieser materie / wegen es sich nicht ge-
+ziemte / auf diese weisen / zu spielen / so kurtz abgebrochen : und
+zugleich / die Art / wan das Spiel / ohn einen gegebenen / oder
+genommenen Vortheil / angefangen wird : (ne-
+->best diesem dritten Buche) beschlos-<-
+->sen und geendet.<-
+
+<image-desc>A decorative woodcut tailpiece or fleuron. The design is symmetrical and features a central mascaron (a stylized human face) framed by baroque scrollwork, acanthus leaves, and garlands. Two beast-like heads, possibly lions or dragons, emerge from the upper corners of the scrollwork, facing outward. Ornamental tassels hang from the scrolls on both sides.</image-desc>
+
+<meta>catchword: Das Vier-</meta>
+
+<vocab>Schachzieher, Vortheil, Soldaten, Schütze, Dritte Buch</vocab>

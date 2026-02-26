@@ -1,0 +1,67 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>37</page-num>
+<header>37</header>
+
+<margin>
+37
+<image-desc>Line diagram with three segments labeled 12, 6, and b.</image-desc>
+</margin>
+¶ Numerus a duobus non duplus cuius medietas est par: est impariter par.
+¶ Sit a quilibet nūerus par: cui9 medietas b sit par: et non sit a de nūero duplorū ab unitate sumptorū. dico a esse numerum impariter parem. Nam cū eius medietas b sit par: non est pariter impar. et cum nō sit de numero duplorum ab unitate sumptorū: ergo per vicesimānonam huius non est pariter par. a sufficienti igitur divisione est impariter par. quod est propositum. Sed et ostenditur sic. cū medietas a sit par/ et binarius nūerus par scōm eam ipm numeret: per diffinitionem a: non est nūerus pariter impar. sed et cum non sit de numero duplorū ab unitate sumptorū si ipse in duo media dividatur: et media itep in media. in hac cōtinua divisiōe necesse ē aliud ab unitate occurrere: qđ divisionem in duo media sistat. quare numerus ille erit impar. et qꝫ ille est pars partis: ergo per vicesimātertiam primi est et pars totius. quare per decimāquintam huius ille impar totū scōm parem numerabit. at cū per ip̄m scōm parem numeret: ergo per diffinitionem a totus: est impariter par. quod itez est propositum.
+
+<margin>
+38
+<image-desc>Line diagram with three segments labeled c (96), b (12), and a (8).</image-desc>
+</margin>
+¶ Ex ductu pariter paris in impariter parem: pꝓvenit impariter par.
+¶ Sit a numerus pariter par: ducat9q; in b impariter parem et pꝓveniat c. dico c esse nūerū impariter parem. Nam ꝑ hypothesim a numerus ꝑ numerat c scōm b qui est ꝑ. et qꝫ impar numerat b cum sit impariter par: idē impar per vicesimātertiam p̄mi numerabit c. et non nisi scōm parem: alioquin per undecimam huius c ēēt impar. constat ergo ꝑ diffinitionem: c esse impariter parem. et propositum.
+
+<margin>
+39
+<image-desc>Three sets of line diagrams. Top: a (12), b (6). Middle: a (24), b (12), c (6), d (4), e (2). Bottom: a (48), b (12), c (6), d (8), e (4).</image-desc>
+</margin>
+¶ Ōis impariter par fit ex pariter pare in paritē imparem. Quo fit ut oēm impariter parem: numeret pariter par impariter.
+¶ Sit a quilibet nūerus impariter par: dico ip̄m fieri ex pariter pare in pariter imparem. nā medietas a ē par. alioquin a esset pariter impar. esto itaq; b medietas a: si medietas b sit impar: g b p̄ tricesimātertiam huius est pariter impar. et cū binarius numeret a fm b cōstat pariter parem numerare a fm pariter imparem. at si b medietas impariter paris a sit par: sit ea c cuius quoque medietas sit impar. Ideo d per tricesimātertiam huius erit pariter impar. et per vicesimātertiam primi numerabit a. sitq; hoc fm e: et sit c binarius. qꝫ b nūer at a fm c: et d nūerat b: ergo ꝑ vicesimāquintam scōi q̄ pꝓportio b ad d ea est e ad c. sed b est duplum d: igit ē duplū c. quare per decimāoctauam huius e est pariter par: r numerat a fm d pariter imparem. cōstat ergo tōtz ꝓpositū. et si lūterius primum diuisiōe facta occurreret pariter impar: accepto penultimo parium loco b/ r eius dimidio loco d r loco c: per eādē vicesimāquintam secūdi cōclūdes ꝓpositū. et vniuerfaliter quoties hec subdiuisiō fiet: toties fiat ab vnitate pariū pariū duplatio. et sumpto penultimo pariū cū suo dimidio p̄ tricesimātertiam huius r vicesimāquintam scōi sil'it' cōclūdes ꝓpositum. Corol'ariū patet accepta medietate pariter imparis r duplo pariū paris: quiqdē pariter par cū pariter impare nūerabat impariter parem adiuuante sp̄ vicesimaquinta secundi.
+
+<margin>
+40
+</margin>
+¶ Si disponātur in longū pariter pares: r in latū pariter impares: qui scōm angulares cōuentus pꝓducūtur: sunt impariter pares tū. et ip̄oꝝ in longitudīe quidem est similitudo ꝓportionū: in latitudine xō differētiarum equalitas.
+
+<columns>2</columns>
+<margin>
+L
+a
+t
+i
+t
+u
+d
+o
+
+Pariter impares
+</margin>
+-> L o n g i t u d o <-
+-> Continue pꝓportionales. <-
+| | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **m** | 26 | 52 | 104 | 208 | 416 | 832 | 1664 |
+| **l** | 22 | 44 | 88 | 176 | 352 | 704 | 1408 |
+| **k** | 18 | 36 | 72 | 144 | 288 | 576 | 1152 |
+| **i** | 14 | 28 | 56 | 112 | 224 | 448 | 896 |
+| **h** | 10 | 20 | 40 | 80 | 160 | 320 | 640 |
+| **g** | 6 | 12 | 24 | 48 | 96 | 192 | 384 |
+| | 2 | 4 | 8 | 16 | 32 | 64 | |
+| | **b** | **c** | **d** | **e** | **f** | | |
+-> C Pariter pares. <-
+-> L o n g i t u d o <-
+
+<column-break/>
+
+<margin>
+Horū equales sunt differentie
+</margin>
+¶ Disponātur b/c/d/e/f pariū pares fm longum: r g h k l m: pariter impares fm latum Dico p̄mo qui pꝓducūtur ex b in g/h k l m r ex c in eisdem: r sil'iter ex d/e r f in eisdē: esse impariter pares tō solos tales. nam oēs illi fiunt ex ductu pariter paris in pariter imparem. g per tricesimāoctauam huius quilibet eoꝝ est impariter par. et si alius esset impariter par ꝓter eos qđ ex illis partē paribus fm suā seriē ordiant' r pariter impariƀꝫ pꝓducūtur: ille nō fieret ex pariter pare in pariter imparem. qđ per p̄cedentem est impossit'ile. ratum est ergo qđ dicitur. ¶ Secūdo dico oēs in lōgitudine vt oēs in linea g r oēs in linea h: r ita de reliqs: eē cōtinue ꝓpotiōales. nam qa b binarius p̄m9 pariter pariū ducit in g: manifestū est scōm in linea g: qui inde pꝓducitur esse duplum ad g: r in pꝓportiōe c ad b. sed c ad b in g facit scōm ab ip̄o g et c in g facit tertiū: ergo p octauam secūdi a pꝓportio c ad b ea ē tertij ad scōm. et ita sil'iter ostēde de reliquis ꝑ octauam secūdi adiuuāte vicesima nona huius que b/c/d/e/f continue ꝓportionales eē demōstrat. Et ex hoc demōstrare pꝓptum est per vicesimasextam secūdi qđ fit ex ductu vnius medioꝝ in sextū esse q̄tum qđ fit ex ductu circūpositoꝝ vni9 in alterū. et p vicesimāquintam eiusdē quod fit er ductu vnius medioꝝ in alium: tm̄ esse q̄tum quod fit ex ductu circūpositoꝝ r equalit' ab eis distātiū vnius in alterum. ¶ Tertio dico oēs numeros fm latitudinem in vnaquaꝫ lineaꝝ ab g incipiētes et ad m in latum euadentes: equales h̄re differētias. q̄ enī in p̄ima linea que est pariter imparium dr̄e cōtinue sint equales: statim per tricesimāsextam huius est cognitū. Sz qꝫ secūde linee numeroꝝ eq̄les sint differētie/ declarat. nam p nonam p̄mi tm̄ est qđ fit ex b in g r in differentiali ad g q̄trū quod fit ex b in h. addit igit qđ fit ex b in h secundus scz impariter pariū secūde linee sup eo quod fit ex b in g
+
+<vocab>impariter par, pariter paris, longitudo, latitudo, continue proportionales, differentiarum equalitas, binarius, medietas</vocab>

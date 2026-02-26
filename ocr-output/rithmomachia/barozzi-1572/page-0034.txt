@@ -1,0 +1,34 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<warning>Significant ink bleed-through from the reverse side (verso) makes some sections, especially the middle and lower parts of the page, difficult to read and creates "ghost" text in mirror-image.</warning>
+<meta>catchword: Tauo-</meta>
+
+nella B, tra li quali sono tre caselle uote : quello che sarà 
+andato prima à trouar l’altro sarà il uincitore, cioè se ritro
+uandosi il 12 nell’A, sarà stato giuocato il 4 nella B : il 4 sa
+rà il uincitore, & pigliarà il 12 col moltiplicar se stesso nel 
+numero delle caselle uote. Ma se ritrouandosi il 4 nella B, 
+sarà giuocato il 12 nell’A: all’hora il 12 uincerà col partir 
+se stesso per il numero delle caselle uote. perche si cõe mol-
+tiplicando il 4 per il 3 numero delle caselle uote, ne uiene 
+il 12 : cosi partendo il 12 per il 3 numero di esse caselle, ne 
+uiene il 4. & quello delli già detti dui numeri, che nasce 
+da tal moltiplicatione, ouer partitione è sempre il uinto, & 
+l’altro il uincitore. Ma quali siano in questo giuoco li nu-
+meri che si possono uincer l’un l’altro col moltiplicar, & 
+partire, le due seguenti tauole dimostrano.
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| 12 | 24 | 2 | | 24 | 12 | 2 |
+| 4 | 12 | 3 | | 12 | 4 | 3 |
+| 18 | 54 | 3 | | 54 | 18 | 3 |
+| 9 | 36 | 4 | | 36 | 9 | 4 |
+
+---
+
+<image-desc>The bottom half of the page contains several faint, boxed diagrams and significant bleed-through of mirrored text from the reverse side. At the bottom, there are two distinct square boxes labeled with capital letters.</image-desc>
+
+->[ B ]<- ->[ A ]<-
+
+<vocab>giuoco, moltiplicatione, partitione, uincitore, caselle uote, tauole</vocab>

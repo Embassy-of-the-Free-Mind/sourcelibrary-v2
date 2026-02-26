@@ -1,0 +1,15 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>155</page-num>
+<header>Vom Schach-Spiel.</header>
+
+<margin>3 cap:</margin>Spiel/ verloren habe. Ob es nuhn wol unhöflich stehet/ in diesem so kunstreichem und ernsthaftem Spiele/ seine schantze/ nicht besser in acht zu nehmen/ und solcher unbedachtsamen wort zu gebrauchen/ auch gleich/ für erlangetem Siege/ des triumpho sich zu rühmẽ: so ists doch/ wider dieses Spieles eigenschafft/ und für gleich zu achten/ Er sage Schach/ oder Schach-Mat/ nuhr daß Er/ des Spieles gebrauch/ in den zügẽ/ gebührlich inacht habe. Dan man nicht so starck/ an die wort gebunden/ wan man nuhr der sachen/ gewiß ist: welche es dem Könige/ wol sagen wird/ ob er vort könne/ oder nicht. Wie dan diese elende liederliche/ und matte sylbe/ dofern der Stein/ für sich selbsten/ nicht tauglich genug/ darzu befunden wird/ ihn wenig erschrecken/ oder schaden zufügen kan. Stehet also dem Spieler frey/ dieses wörtlein zu gebrauchen/ oder/ ohn jenniges befahren/ des verlustes des Sieges/ zu unterlassen. Man muß das urtheil/ nicht auß schlüpfrigen worten/ besondern viel mehr/ auß der rechtmessigen Sache selber/ schöpfen und verfassen.
+
+Dass (2.) einer/ auf die letzte sich inacht nehme/ dem Könige/ immer die freyheit zu lassen/ daß er möge gezogen/ und nicht eingesperret werden: damit Er ihm/ Spieles gebrauch nach/ Schach-Mat geben/ und dergestalt den Sieg/ erlangen könne: Hievon ist ferner aufzuschlagen/ im ersten Cap: dieses Buches/ der ort/ da/ von der einsperrung des Königes/ gehandlet wird.
+
+Dass (3.) etliche der meynung seyn/ daß man dieses Spiel/ in funffzig züge/ aufs längste/ außspielen/ und Schach-Mat geben/ oder in verbleibung dessen/ die Steine aufnehmẽ/ und das Spiel aufgeben und verlassen sol: Es ist aber denselben zu berichten/ daß es zwar nicht ohn sey/ daß man/ nicht allein mit so viel zügen/ besondern auch/ mit wenigern/ den Schach-Mat verrichten könne: Alleine sie sollen gedencken/ daß es eine gleiche meynung/ (als wan ein König/ der in einer starckẽ Festung/ sich aufhelt/ einem andern Könige/ welcher denselben; 10. 20. 30. 40. oder 50. Tage/ belagert hat/ auß der Festung/ ins Lager/ zu entbieten lasset: Weyl Er ihn nuhn/ so und so lange/ belagert habe/ und nicht überwinnen können/ als solle Er nuhr/ wider zu rücke weichen/ und hinziehen: Der Ander aber draussen/ dieses nicht anzunehmen/ besondern/ wan Er die Festung/ nicht in 50. Tagen/ kan gewinnen/ noch 50. wochen/ oder 50. Monat/ ic. Weyl Er sie einmahl/ in seine gewalt haben wil/ daran zu wenden/ gemeinet sey) mit dem Schach-Spiele habe: Dan/ wan einer/ den andern/ im funffzigsten zuge/ nicht matten kan/ so darf Ers noch wol mit hundert und mehr zügen/ versuchen/ und ist an keine gewisse zahle derselben/ verbunden. Es ziehen zun zeiten/ etliche einen ganzen Tag/ auf einem Spiele: Zun zeiten thun Sie auch/ wol funf
+
+<sig>V iij</sig>
+<meta>catchword: oder</meta>
+
+<vocab>Schach-Spiel, Schach-Mat, König, Festung, Züge, Gustavus Selenus, matten</vocab>

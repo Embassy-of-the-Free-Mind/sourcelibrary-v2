@@ -1,0 +1,16 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>263</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>el</sig>
+<meta>catchword: zig: der</meta>
+
+<margin>1.cap:</margin>
+<margin>20.</margin> zehen : ( Dan wan Er ihn / mit dessen Rochen / auf eylfe bedeckete / die Königinne verwechslzet / und die erlangung des Sieges in et- was / sich verweglen würde ) * Der Schwartze / ( auf daß Er die Königin / wan der Weisse / mit des K. Rochen / auß neun und funfzig / Schach = gebe: nicht verliere : noch die W. Königin / derselben Rochen raube : noch dem Könige / wan der W. K. Schütze / von der Könige = Reuter linie / abgezogen würde : ein Ab = Schach = Mat / gegeben werde ) ist nuhn zimlich in die Raht Stube geja- get : Dan Er mit der Königin / (umb der W. K. Reuters = Solda- ten / zu nehmen / und das funfzigste feld / zu beschätzen) auß sechs und dreyßig / (dieweyl / dieselbe / wan der Weisse / den König / mit der K. Schützen / auf sieben und zwanzig / bedeckete : sonsten verwechsl- let würde : und seines K. Roche / wan der Weisse / mit itztgedach- tem Schützen / auß sechs und dreyßig / folgendes Schach böte : ver- lohren wehre ) nicht darf Schach = bieten : noch der K. Rochen / auf die W. Königin / (dieweil seine Königin / wan des W. K. Roche / auß neun und funfzig / Schach = böte : von derselben gleich genommen würde) auf dreyßig / rucken.
+
+<margin>21.</margin> Nimt nuhn der Schwartze / an stat der züge / welche / (n. 20.) erwehnet / mit der Königin / des W. K. Rochen / und beut Schach : so nimt sie / der Weisse / mit der Königin / und nicht mit dem Könige : ( dan sonsten / der Schwartze / den König / auf ein und funfzig / ziehen : der K. Rochen / mit seines K. Rochen ent- setzen : und das Spiel / nuhr aufhalten würde ) der Schwar- tze / rucket / auf dieselbe / der K. Rochen / auf neun und funfzig . Der Weisse / dieselbe / auf sechs und zwanzig : der Schwar- tze / auf sie / des K. Rochens = Soldaten / auf drey und dreyßig : der
+<margin>22.</margin> Weisse / beut / mit derselben / auß vier und vierzig / Schach : * der Schwartze / rucket / den König / auf funfzig: der Weisse / der K. Rochen / auf fünfe: Der Schwartze / der K. Rochen / auf ein und funfzig : Der Weisse / gibt / mit der Königin / auß sechs und dreyßig / Schach : Der Schwartze / rucket den König / auf neun und vierzig : der Weisse / gibt / mit der Königin / auß acht und zwanzig / Schach : der Schwartze / muß den König / auf funfzig / rucken : Der Weisse / stellet der K. Rochen / auf fünf und viertzig / und er- langet da-durch das Spiel / mit gewalt.
+
+<margin>23.</margin> Rucket aber der Schwartze / den König / nicht auf 50. (n. 22.) besonde.n bedecket ihn / mit der K. Rochen / auf ein und funfzig : so rucket / der Weisse / auf denselben / der K. Rochen / auf drey : der Schwartze / (ihn zu entsetzen) des K. Rochen / auf neun und viert-
+
+<vocab>Schach-Spiel, König, Königin, Rochen, Schütze, Reuter, Soldaten, Schach-Mat, Raht Stube</vocab>

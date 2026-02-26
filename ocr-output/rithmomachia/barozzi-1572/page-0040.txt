@@ -1,0 +1,35 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<meta>catchword: Tauola</meta>
+
+sapera' far esse vittorie. Le tre proportioni adunque ne-
+cessarie à dette vittorie si chiamano Arithmetica, Geome-
+trica, & Musica. L'Arithmetica proportione è quando
+proposti tre numeri si superano l'vno col'altro in vna me-
+desima differentia. come la proportione, che è tra questi
+tre numeri 2, 4, 6. perche la differentia, che è dal 2 al 4,
+quella stessa è dal 4 al 6. Geometrica proportion è quan-
+do proposti tre numeri tante volte è contenuto il minor
+nel mezo, quante il mezo nel maggiore. Come nelli nume-
+ri 2,4,8. il 2 è contenuto due volte nel 4, & similmente il
+4 due volte nel 8. Musica proportion è, quando proposti
+tre numeri, la differentia delli dui minori è contenuta dal-
+la differentia delli dui maggiori tante volte, quante è con-
+tenuto il minor numero dal maggiore, come è nelli nume-
+ri 2, 3, 6. nelli quali la differentia dal 2 al 3 è vno, & la
+differentia del 3 al 6 è 3. & si come l'vno è contenuto tre
+volte dal 3, cosi il 2 è contenuto tre volte dal 6. Queste
+sono le tre proportioni Arithmetica, Geometrica, & Mu-
+sica necessarie alle vittorie del nostro giuoco. Hora dichia-
+raremo le vittorie, lequali sono tre, & si chiama l'vna gran-
+de, l'altra maggiore, e l'altra massima. La grande vittoria
+non è altro, che situar nel campo del'auuersario tre pezzi,
+li numeri delli quali habbiano tra loro vna delle già det-
+te tre proportioni ò l'Arithmetica, ò la Geometrica, ouer
+la Musica. Di modo che questa vittoria si può far à tre
+modi secondo queste tre proportioni. Ma quali siano le
+proportioni Arithmetiche, Geometriche, & Musiche, le
+quali possono esser fatte in questo giuoco, per far la gran
+vittoria, le seguenti tre tauole dimostrano.
+
+<vocab>Arithmetica, Geometrica, Musica, proportione, vittorie, giuoco, grande vittoria, tauole</vocab>

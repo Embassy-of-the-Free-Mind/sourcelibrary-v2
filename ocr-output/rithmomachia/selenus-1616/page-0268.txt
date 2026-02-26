@@ -1,0 +1,50 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>234</page-num>
+<header>Das Ander Buch / 14. cap.</header>
+<meta>Fraktur script. Early modern chess terminology used: Reuter (Knight), Schütze (Bishop), Rochen (Rook), Soldat (Pawn).</meta>
+
+dreyssig: Der Weisse / den Reuter / auf ein und dreyssig / und gibe
+Schach: Der Schwarze / ziehet / den König / auf dreyssig: Der
+Weisse / den Reuter / (ausz der gefahr) auf acht und viertzig: Der
+Schwarze / den König / auf sieben und dreyssig: Der Weisse / sei-
+nen König / auf sieben und viertzig: Der Schwarze / musz den Kö-
+nig / auf dreyssig / rucken: (dan sonsten der Soldat verloren / oder
+der Weisse / mit dem Reuter / auf vier und funfzig / Schach-geben /
+und den Soldaten / ebenmessig erlangen würde) Der Weisse / den
+König / auf viertzig: Dahero der Schwarze / den Soldaten / (Er
+lasse ihn stehen: oder rucke ihn / auf ein und dreyssig) verlieret / und
+dieses Spiel / gleich wird.
+
+16. Wan aber der Schwarze / nicht den Soldaten / auf 39. (n. 13.)
+besondern den Schützen / auf acht und zwantzig / ziehet: so rucket /
+der Weisse / den König / auf vier und dreyssig: Der Schwarze /
+den Schützen / auf den W. Reuter / auf fünf und funfzig: Der
+Weisse / nimt / mit demselben / der S. K. Reuteror Soldaten: Der
+Schwarze / mit dem Könige / der W. K. Soldaten: Der Weis-
+se / ziehet den König / auf sieben und zwantzig: Der Schwarze /
+den Schützen / auf sechs und viertzig: Der Weisse / den König / auf
+zwantzig: Der Schwarze / seinen König / auf den W. Reuter / auf
+vier und funfzig: Der Weisse / (dem Spiele / einen geschwinden
+auszschlag zu geben) nimt / mit dem Reuter / der S. K. Soldaten:
+Der Schwarze / denselben / mit dem Schützen: Der Weisse /
+(umb seinem Soldaten / zu hülffe zu kommen) den König / auf neun
+und zwantzig: Der Schwarze / den König / auf sieben und viertzig:
+Der Weisse / den König / auf zwey und zwantzig: Der Schwar-
+ze / den König / auf neun und dreyssig: Der Weisse / kan dieser ur-
+sachen halber / den Soldaten zur Königin nicht machen / besondern /
+das Spiel / wird zugleich aufgehoben.
+
+17. Beut dan der Schwarze / mit der K. Rochen / ausz neune /
+und nicht ausz 44. (n. 12.) Schach: so rucket der Weisse / den Kö-
+nig auf vier und dreyssig: Der Schwarze / der K. Schützen / auf
+der W. K. Reuter / und des W. K. Rochen / auf vier und viertzig: (dan /
+wan Er / diesen Schützen / nicht ziehet / besondern / mit der K. Ro-
+chen / ausz drey und dreyssig / Schach-beut / Der Weisse / den König /
+auf drey und viertzig / rucket: Er / der K. Schützen / auf vier und
+viertzig: Der Weisse / beut / mit der K. Reuter / ausz zwey und funf-
+zig / Schach: Er / ziehet den König / auf neun und viertzig: Der Weisse /
+
+<meta>catchword: machet/</meta>
+
+<vocab>Schach, Reuter, Soldat, Schütze, Rochen, König, Weisse, Schwarze</vocab>

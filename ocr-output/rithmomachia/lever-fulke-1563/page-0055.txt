@@ -1,0 +1,16 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+<sig>C.iiij.</sig>
+<meta>catchword: As</meta>
+<warning>Significant ghosting and bleed-through from the reverse side of the leaf are visible in the background.</warning>
+
+## Of Geometricall proportion.
+
+Geometicall proportion, is when the seconde hath that proportion to the first, that the thyrde hath to the seconde, as.2.4.8.as.4. excedeth.2.by 2.so.8.excedeth.4.by.4.
+
+### A rule to fynde the mydle number in Geometricall proportion.
+
+Multiplie the firste by the thyrde, and of the product fynde out the roote square, for that is the midle, if the numbers haue anye roote square in whole numbers. The roote square is a number multiplied in it selfe, wherefore you muste seeke such a number, as multiplied in it selfe, maketh the producte of the fyrst and the thyrde number multiplied one by the other.
+
+<vocab>Geometricall proportion, roote square, Philosophers game, arithmetic, middle number</vocab>

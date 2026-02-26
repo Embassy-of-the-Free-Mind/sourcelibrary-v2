@@ -1,0 +1,32 @@
+<language>English</language>
+<page-type>text</page-type>
+<meta>catchword: The</meta>
+<warning>Page shows significant ink bleed-through from the reverse side, making some faint background text visible.</warning>
+
+# ¶ A table of al the Arithmetical proportions that be in this game.
+
+| | | | | | | | | |
+|---|---|---|---|---|---|---|---|---|
+| 2 | 3 | 4 | 6 | 7 | 8 | 28 | 64 | 100 |
+| 2 | 4 | 6 | 6 | 9 | 12 | 30 | 36 | 42 |
+| 2 | 5 | 8 | 6 | 36 | 66 | 42 | 49 | 56 |
+| 2 | 7 | 12 | 7 | 8 | 9 | 42 | 66 | 90 |
+| 2 | 9 | 16 | 7 | 16 | 25 | 49 | 169 | 289 |
+| 2 | 15 | 28 | 7 | 64 | 121 | 56 | 64 | 72 |
+| 2 | 16 | 30 | 9 | 12 | 15 | 72 | 81 | 90 |
+| 3 | 4 | 5 | 9 | 45 | 81 | | **49** | |
+| 3 | 5 | 7 | 9 | 81 | 153 | | | |
+| 3 | 6 | 9 | 12 | 16 | 20 | | | |
+| 3 | 9 | 15 | 12 | 20 | 28 | | | |
+| 4 | 5 | 6 | 12 | 42 | 72 | | | |
+| 4 | 6 | 8 | 12 | 66 | 120 | | | |
+| 4 | 8 | 12 | 15 | 20 | 25 | | | |
+| 4 | 12 | 20 | 15 | 30 | 45 | | | |
+| 4 | 20 | 36 | 15 | 120 | 225 | | | |
+| 4 | 30 | 56 | 16 | 36 | 56 | | | |
+| 5 | 6 | 7 | 20 | 25 | 30 | | | |
+| 5 | 7 | 9 | 20 | 28 | 36 | | | |
+| 5 | 15 | 25 | 20 | 42 | 64 | | | |
+| 5 | 25 | 45 | 28 | 42 | 56 | | | |
+
+<vocab>Arithmetical proportions, game, Rythmomachia, numbers</vocab>

@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+
+# Figura trine equalitatis
+
+<margin>
+¶ Precepta sunt hec.
+1 Primum.
+2 Primum/ secundū.
+3 Primū scd̃z bis: tertiū
+</margin>
+
+| Lina | [A] | b | m | n | qua: | 2 | 2 | 2 | li: | 3 | 3 | 3 | tas. | 4 | 4 | 4 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Dupli. | [B] | 1 | 2 | 4 | | 2 | 4 | 8 | | 3 | 6 | 12 | | 4 | 8 | 16 |
+| Tripli. | [C] | 1 | 3 | 9 | | 2 | 6 | 18 | | 3 | 9 | 27 | | 4 | 12 | 36 |
+| Quadrupli | [D] | 1 | 4 | 16 | | 2 | 8 | 32 | | 3 | 12 | 48 | | 4 | 16 | 64 |
+| Dupli cōversi | [E] | 4 | 2 | 1 | | 8 | 4 | 2 | | 12 | 6 | 3 | | 16 | 8 | 4 |
+| Sesquialteri. | [F] | 4 | 6 | 9 | | 8 | 12 | 18 | | 12 | 18 | 27 | | 16 | 24 | 36 |
+| Tripli cōversi. | [G] | 9 | 3 | 1 | | 18 | 6 | 2 | | 27 | 9 | 3 | | 36 | 12 | 4 |
+| Sesquitertii. | [H] | 9 | 12 | 16 | | 18 | 24 | 32 | | 27 | 36 | 48 | | 36 | 48 | 64 |
+| Quadrupli cōversi. | [K] | 16 | 4 | 1 | | 32 | 8 | 2 | | 48 | 12 | 3 | | 64 | 16 | 4 |
+| Sesquiquarti. | [L] | 16 | 20 | 25 | | 32 | 40 | 50 | | 48 | 60 | 75 | | 64 | 80 | 100 |
+
+<margin>
+<image-desc>A geometric diagram showing pairs of horizontal lines of varying lengths labeled with letters. 
+Top pair: b, m.
+Middle pair: p, n.
+Bottom pair: p, a ending with an o.
+The lines illustrate the numerical proportions discussed in the text.</image-desc>
+</margin>
+
+¶ Pythagorici Magi Prisci sacerdotes atqꝫ qui ꝑcipue de rebus agunt diuinis admirātur equalitatē pariter ꝛ trinitatē in suis archanis in imagine numeroꝝ venerātur taciti: tanq̃ rerum omniū principia: a quibus oīs rerū profluxit ꝓportio: ꝓportiōū nexus: oīs qꝫ admirabilis harmonia et in quatano ē reuocatū eunt oīa. Ꝑpropter ergo mysteria priscorꝫ qđ autoꝛ generalius intēdit: primū in trina demōstrādum ē equalitate. ad qđ quīt ē rite ꝑagendū tria satis sunt ubiqꝫ veteꝛa ꝑcepta a Diuo nob ānotata Seuerino. Primū est: Primū. Scdm̃ est: Primū / scdm̃. Tertiũ est: Primū / scdm̃ bis / tertiũ. Sint ergo a b p tres termini equales quicūqꝫ vt monadū: dyadū / triadū aut cuiuscūqꝫ alterius nūeri voles. Atqꝫ primo ꝑcepto capiēs primā vnitatē quā colloco sub ꝑma sit qꝫ b. deinde scd̄o ꝑcepto capio primā ꝛ scd̄am simul: quas colloco sub scd̄a. sint qꝫ m et vtēdo tertio ꝑcepto: capio primā ꝛ scd̄az bis: et tertiā semel: quas colloco sub tertia sint qꝫ n. dico b m n ꝓtinue ex equalitate natos duplos. Nā cū a prima unitas ꝛ b sint idē: et prima et scd̄a vnitas sunt duplū ad primā vnitatē a et ꝑma ꝛ secunda vnitas sint m: ergo nūerus m duplus ē ad b: et cū scd̄a vnitas bis sūpta equet m et sit ꝑ ꝑma ꝛ tertia simul equentur m ꝛ n sit scd̄a vnitas bis et ꝑma ꝛ tertia semel. ergo n duplus est ad m. sunt igit b m n ꝓtinue dupli ab equalitate scz quēadmodū dictū est ꝑ prime geniti. ¶ Potes idē mōstrare ꝑ vicessimā et sextā secundi. Nā qꝫ a ad o: vt o ad p: ergo ꝑ vicessimā secundi o et p ad a ꝛ o vt o ad a. et qꝫ o ꝛ p ad a et o: sicut o ad a. ergo ꝑ sextā eiusdē secundi o et p et a ad o: ad a ꝛ o sicut o et a ad a. t o ꝑ et a o simul sunt n et a ꝛ o sunt m et a est idē b. igit b m n cōtinue ꝓportionātur: sed m ad b cognirē est duplus igit et n ad m duplus. Et in oībus sequētibus hic argumētādi modus ē efficax. Et qūcūqꝫ trina capiēt termioꝝ equalitas: eadē valeāt argumēta. 
+
+¶ Scdõ dico ex b m n duplis cōtinue ꝓcreari triplos. capio equale b et colloco sub b in tertia linea sit qꝫ c. deide capio b m simul ꝛ colloco sub m sint qꝫ m sint qꝫ n tertie linee rursum capto b m bis et n ꝛ colloco sub n: sit qꝫ f: suo modo n. dico c m n tertie linee eē triplos. Nā ꝑ vicessimā scd̄i adiuuāte sexta eiusdē c m n sunt cōtinue ꝓportionales: sed c ꝛ m et qꝫ quatur b m supra duplus ē ad b: igit b et m supra sunt triplus ad b. sed b ꝛ m superi⁹ sunt m inferius: igit inferius m ad c tripl⁹. quare n ad idem m etiā triplus. sunt igit c m n cōtinue tripli. et eisdē ꝑceptis ꝛ demōstrationib⁹ ex triplis nascētur quadrupli. ex quadruplis quicūqꝫ. lꝫ ex cōsequētibus hoc pacto multiplices cēs qui libet ex ꝑimo minore. 
+
+¶ Tertio dico ex multiplicib⁹ cōtinue nascī superparticulares. vt ex duplicib⁹ sesquialteri: ex triplis sesquitertiū. ex quadruplis sesq̄iquartū. ꝛ ita ꝓsequētes superparticulares ꝑ ordinē ex naturalibꝰ ꝑntibus multiplicibꝰ. Cō uerto duplos q̄ reperī sunt: sint qꝫ conuersi e m n: erit qꝫ e ad m duplus et m ad n duplus: quare m dimidiū e. capio equale e qđ sit f ꝛ colloco sub e. deinde capio e m simul et colloco inferius sub m: sint qꝫ m inferius. rursus capio e m bis ꝛ n simul: et colloco inferi⁹ sub n sint qꝫ itidē inferius n. ꝑ vicessimā scd̄i adiuuāte sexta eiusdē f m n cōtinue ꝓportionātur. sed cū e ꝛ f equētur et m sit dimidium totum e ergo m simul cōtinet totum e ꝛ dimidiū. quare e m ad e ꝑ diffinitionē ē sesquialtꝫ sed e m simul sunt m inferius. ergo m inferi⁹ est sesquialter ad f. quare ꝛ n ad m etiā sesquialtꝫ qđ est ꝓpositū. et ita eisdē ꝑceptis expedi de sesquitertiis/ sesq̄iquartis / sesq̄iquītis ꝛ reliq̄s superparti cularibus cōuertēdo terios suaꝝ multitudinū. 
+
+Nunc idē superest dēmōstrandū qđ autoꝛ intēdit sumptis quotcūqꝫ termis. Quotq̈t fuerit termini equales: dupli cōtinue nascētur si cōtinuatꝫ rite vtamur superioribus ꝑceptis. ꝑmo quīdē capiēdo primū terminū et collocādō sub primo. Et scd̄o capiēdo primū et scdm̃ ꝛ collocādō sub secūdo. Et tertio capiendo primū scdm̃ bis et tertiũ: et collocādō sub tertio. deīde intelligēdo tertiā quartā et quintā equalitatē cōtinue sumi fm̃ numerꝫ tertij extremi subter collocati. et resume ꝑcepta primo capiēdo primū terminū trine equalitatis: ꝛ collocādō sub extremo tam collocatū reperies. Secūdo capiēdo primū et scdm̃ ꝛ collocādō sub quarto. Et tertio capiēdo primū scdm̃ bis et tertiū ꝛ collocādō sub quīto. et secundū nūerꝫ illius quinti termī subter collocati intelligo iterū cōtinue tres terios equalitatis scz quintū sextū et septimū. et resumptis ꝑceptis cum quinto iam habito: ꝑficio septū et septimū inferiozes termios et secundū exigentiã septimi extremi intelligo rursum trine equalitatis termios: scz septimū octauū et nonū et a singulo quoqꝫ tertio loco cōiunctim trinā equalitatē intelligo cuius quilibet terminus intelligit secundū numerū extremi in singulo quoqꝫ loco subter ueniētis. et si id placet in infinitū extendi libet. ꝛ dico cōtinue collocatos eē duplos. id resumptis demōstrationibus quoties erunt resumpte equalitatū trinitates: sicut et superioza facillime demonstrābis. Si cupis triplos eodem modo nascētur de duplis. Jd solum obseruandū est vt in tertiis quibuscūqꝫ loco cōiunctim capiantꝫ termini triploꝝ a tribus duplis qui nascē
+
+<meta>catchword: nasce-</meta>
+
+<vocab>Pythagorici, Seuerinus, Boethius, trine equalitatis, proportio, dupli, tripli, quadrupli, sesquialteri, sesquitertii, sesquiquarti, monadū, dyadū, triadū</vocab>

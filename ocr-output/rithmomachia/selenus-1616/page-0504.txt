@@ -1,0 +1,21 @@
+<language>Latin</language>
+<page-type>illustration</page-type>
+<meta>The image shows a partial game board for Rythmomachia, also known as the Philosophers' Game. The handwriting at the top is faint and appears to be a contemporary or near-contemporary addition.</meta>
+
+<margin>
+Ludus Rithmomachie
+</margin>
+
+<image-desc>
+An engraving of a Rythmomachia board and pieces, showing the starting configuration for one side of the game (the "Even" side). The board is a grid of dark and light squares. The pieces are depicted as three-dimensional geometric solids: circles (flat cylinders), triangles (prisms), and squares (cuboid blocks), plus one multi-layered pyramid. Each piece is inscribed with a number.
+
+The pieces are arranged in the following layout:
+- **First (outer) column:** Four square blocks numbered 25, 81, 169, and 289.
+- **Second column:** Two squares (15, 45), four triangles (25, 20, 42, 49), one tiered pyramid (91), and one square (153).
+- **Third column:** Two triangles (9, 6), four circles (4, 16, 36, 64), and two triangles (72, 81).
+- **Fourth (inner) column:** Four circles positioned in the central rows, numbered 2, 4, 6, and 8.
+
+The engraving uses hatching and cross-hatching to denote shadows and the dark squares of the board.
+</image-desc>
+
+<vocab>Rythmomachia, Rithmomachie, Ludus Philosophorum, board game, arithmetic, geometric pieces, pyramid</vocab>

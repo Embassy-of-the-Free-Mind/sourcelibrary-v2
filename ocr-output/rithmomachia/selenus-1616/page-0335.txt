@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>301</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>catchword: dessen</meta>
+
+<margin>3. cap:</margin>
+Soldaten/ mit seines K. Schützen/ und beut **Schach**: Der **Weisse**/ nimt denselben/ mit dem Könige: Der **Schwartze**/ beut/ mit der Königin/ auß neun und zwantzig/ **Schach**/ und nimt/ mit derselben/ (wan der **Weisse**/ den König/ auß dem Schache/ gezogen) des W. K. Reuter: Wodurch Er/ ein bessers Spiel/ (dieweyl Er/ einen Zug/ deßwegen zum Vortheil hat) erlangen wird: So darf auch der W. König/ weyl ihm **Schach** geboten/ und er/ auß seinem felde/ für sich gerucket worden/ nicht springen/ unangesehen/ nach dieses Spieles zustande/ weyl beyde Königinne noch vorhanden/ und ihn/ der **Schwartze**/ mit besserer gelegenheit/ kan angreiffen/ ihm hieranne sehr viel gelegen wehre.
+
+<margin>17.</margin>
+Wil aber der **Schwartze**/ den W. Soldaten / (n. 16.) nicht nehmen/ besondern setzet/ die Königin/ auf des W. K. Soldaten/ dessen Reuter/ und Schützens-Soldaten / auf neun und zwantzig : * so
+
+<margin>18.</margin>
+ziehet der **Weisse**/ (umb dem **Schach-Mat**/ von der S. Königin/ auß eilfe/ zu steuren) des K. Reuter/ auf sechs und zwantzig: Der **Schwartze**/ nimt ihn nicht/ mit der K. Schützen/ (dan ihn der **Weisse**/ mit der Königin nehmen/ und sein Spiel/ dadurch ziemlich versichern würde) besondern mit mehrem nutzen/ des W. K. Soldaten/ mit seiner Königin/ und beut **Schach**: dahero der **Weisse**/ so fern Er den König / auf drey rucket / oder mit der Königin/ auf zwelfe/ bedecket: dessen Reuter verleuret/ oder ursache/ zur verwechslung der Königinne gibt: Bedecket Er ihn aber/ mit demselben/ auf zwantzig: so nimt ihn/ der **Schwartze**/ mit des K. Schützen: *
+
+<margin>19.</margin>
+Der **Weisse**/ denselben/ mit der K. Soldaten: Der **Schwartze**/ des W. K. Reuters-Soldaten/ mit der Königin/ und ziehet sie/ auf dessen Rochen: Der **Weisse**/ denselben auf drey: Der **Schwartze**/ (umb/ denselben/ mit gewalt zu erlangen) der K. Schützen/ auf siebenzehen: Der **Weisse**/ (umb/ denselben/ nicht umsonst zu verlieren) die Königin/ auf zwelfe: Der **Schwartze**/ nimt/ mit der Königin/ des W. K. Rochen/ und beut **Schach**: Der **Weisse**/ raubet dieselbe/ mit seiner Königin: Der **Schwartze**/ dieselbe/ mit der K. Schützen: Der **Weisse**/ denselben/ mit dem Könige: Der **Schwartze**/ (dieweyl Er/ des W. K. Rochen/ für seiner K. Schützen/ erlanget) wird nuhn dem **Weissen**/ ferner leichtlich abgewinnen.
+
+<margin>20.</margin>
+Nimt aber der **Weisse**/ de S. Schütze/ nicht/ mit d. Königin/ (n. 19.) besondern mit des K. Schützē-Soldatē: so nimt der **Schwartze**/ des W. K. Reuters-Soldatē/ mit der Königin/ und ziehet dieselbe/ auf
+
+<vocab>Schach, König, Königin, Reuter, Schütze, Rochen, Soldat, Schach-Mat, Weisse, Schwartze</vocab>

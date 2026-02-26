@@ -1,0 +1,39 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>211</page-num>
+<header>Vom Schach-Spiel.</header>
+<warning>Bleed-through from the reverse side shows a faint grid pattern (likely a chess board diagram).</warning>
+
+<margin>12.cap:</margin>
+Schwartze/ beut/ mit der Königin/ auß ein und zwantzig/ Schach:
+der Weisse/ weichet / mit dem Könige/ auf sechsz/ und darf Sie
+wegen des S. K. Rochens / unangesehen derselbe / von der W. Kö=
+nigin/ gefangen gehalten wird/ mit demselben/ (auß ursachen/ wel=
+che am ende des 1. Cap: dieses Buches/ erwehnet) nicht wegnehmen:
+der Schwartze/ (des K. Rochen zu entledigen) den König/ auf
+drey und sechssig: der Weisse/ der K. Reuter / auf acht und zwan=
+tzig/ eröffnet dadurch/ der K. Rochen / den Pass/ auf die S. Köni=
+gin/ verhindert des S. K. Schützen / daß er/ auf vier und dreyssig/
+nicht Schach biete / und erobert dergestalt/ des S. K. Rochen / mit
+gewalt: Dan / der Schwartze/ so fern Er ihn / auf die W. Köni=
+gin / auf zwey und funffzig / rucket: seine Königin / noch zu diesem
+Rochen/ ( weyl der Weisse/ alszdann/ mit der Königin / auf acht und
+funffzig/ Schach-beut) verlieret. Ist also derselbe / allenthalben ge=
+schlagen / und / durch welche züge / man ihm ferner abhelfen könne/
+leichtlich zu vernehmen.
+
+<margin>27.</margin>
+Wan aber der Schwartze / den W. Soldaten / nicht mit der
+Königin / (n. 22.) besondern / mit des K. Reuter / nimt: so beut/
+der Weisse / mit des K. Rochen / auß fünfe / Schach: der Schwar=
+tze/ bedecket den König / mit seinem Reuter / auf drey und funffzig:
+der Weisse/ ziehet/ auf denselben/ des K. Schützen / auf vier
+und vierzig: und wird dahero dem Schwar=
+tzen/ dieses Spiel abgewinnen.
+
+<image-desc>A decorative ornamental tailpiece featuring a central lion-like mask with scrolled acanthus leaves and symmetrical floral motifs.</image-desc>
+
+<sig>Dd iij</sig>
+<meta>catchword: Das</meta>
+
+<vocab>Schach, Königin, König, Rochen, Reuter, Schützen, Soldaten, Schach-beut, 12. cap</vocab>

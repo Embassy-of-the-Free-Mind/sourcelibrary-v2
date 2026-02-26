@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>92</page-num>
+<header>Das Erste Buch / 10. capt.</header>
+<meta>catchword: Baw-</meta>
+
+entsatzung: Dan ob gleich / ein fehler von ihm begangen wird / ihr Schütze und Reuter / so wol auch Sie selber / ihn nichtes desto weniger / verthetigen und beschützen können. Diesem nach / sol man sich / so viel müglich / befleissigen / dass diese vier Soldaten / welche vorn anstehen / immer / gleichsam in einem glied / auss dem mittel des Hauffens / neben ein ander daher treten / und dergestalt in acht genommen werden.
+
+Die Soldaten der Reuter und Rochen / haben auch ihre Tugende: dan Sie / umb den König / wan Er / auss seinem Felde / etwa dahin gesprungen / oder sonsten gezogen worden / wie einen wall oder beschützung machen.
+
+Doch werden der Rochen-Soldaten / weyl Sie nuhr / in der Reuter linie / treffen / so lange Sie / auf der gedachten Rochen Linie / (dan die Soldaten / wegen des schlagens / oder raubens der andern Steine / bald auf die rechte / bald auf die lincke / neben linien / kommen können) verharren / halbe Soldaten / genennet: anzudeutend / die Art der Zaghaftigen / die sich gemeinlich / wegen furcht / ihr leben zu lassen / dahin / da es am wenigsten gefehrlich ist / stellen. Lassen Sie aber / einen muth / und schlagen einen / von des gegeners Steinen / auf der Reuter Linie / alszdan können Sie hernacher / gleich den Andern / auch auf beede seiten / treffen.
+
+Von diesen Acht geringern Steinen / haben die Alten / nachfolgende feine gedancken gehabt / und denselben / allerhand Empter zugeschrieben / welche wir / auss obgedachten verdolmetschungen / auch ausszeichnen / und dem vorigen / noch beyfügen wollen:
+
+> Die Wenden / auf dem Schach-Zabel / bedeutent gemein leuthe / und Arbeiter: Wan die Roch / das seint der Fürsten Verweser / dy sollen sie besorgen: darumb stet / der Erst Wend / für dem Rochen / zu der rechten seiten / des Königs / und ist gestalt / als ein Baw-Man / und sol in der rechten haben / ein hawen / und in der lincken / ein gerten / damit man / das Vieh / auss gen Feld treibt / und under der gürtel / ein sichel oder schneid-Messer / damit man / die Weinreben besneit / oder die baum / und die dorn aussreut. Es ist not / dass der Mensch / das Erdreich baw / wan es ist / unser erst Mutter / von der wir / des ersten / zu Menschen gestalt seien / die Erde / gibt uns auch des lebens ende und behausung / wen wir darin begraben werden: Davon ist billig / dass sie in der Mitte des endes und des anfangs / uns geb / von unser arbeit / narung: und davon sol der Baw-
+
+<vocab>Schach-Zabel, Reuter, Rochen, Soldaten, Wenden, Baw-Man, König, Weinreben, Erdreich, Schachspiel</vocab>

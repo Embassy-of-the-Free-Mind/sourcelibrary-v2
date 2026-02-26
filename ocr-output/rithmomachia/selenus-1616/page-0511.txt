@@ -1,0 +1,43 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>469</page-num>
+<header>Vom Zahl-Kampf.</header>
+<sig>Nnn 2</sig>
+<meta>catchword: Hanc</meta>
+
+(Buxer: fol: 25. b. & 44. b.)
+
+<margin>cc</margin>
+*Hunc Modum Pugnandi, Congressum vel Æqualitatis Captionem, appellat.*
+<margin>cc</margin>
+
+Mit dem Zusammen-rechnen / werden die Steine / wie folget / genommen oder verloren:
+
+Zween Steine / mit geringern Zahlen / können einen / mit höhern Zahlen / so ferne ihre zusammen-gerechnete Zahle / mit des andern Zahlen / übereinstimmen / und sie / in solche felder / auß welchen sie / ihrem gange gemäß / in das feld / darinnen der mit den höhern Zahlen / vorhanden / reichen und treffen können / gezogen werden / erlangen und gewinnen : Sie aber / verbleiben auf ihren feldern : Als / wann der Weisse Runde Stein / mit 16, auf C: und der Weisse Dreyeckete / mit 9, auf D: und der Schwartze Runde Stein / mit 25, verzeichnet / auf E, stünde : so wird dieser Schwartze Stein / dieweyl / der beeden Weissen Steinen Zahle / 25, machen / und an den ort / in welchem / der Schwartze / stehet gelangen können / auß E, hinweggenommen : sie aber verbleiben / auf C und D.
+
+Folgende Zahle / gewinnen / und werden erobert / in diesem Spiele / mit dem Zusammen-zehlen : Und stehen / auf der lincken seiten / die zwo Zahlen / des Weissen hauffens / welche einen Schwartzen ; oder des Schwartzen / welche einen Weissen Stein / erlegen können : Auf der rechten hand aber / die Zahle / des Steines / welcher / wegen der beeden itzgedachten Zahlen / kan genommen werden.
+
+->Zwee Weisse. Ein Schwarzer.  Zwee Schwartze. Ein Weisser.<-
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 4. | 8. | 12. | 3. | 5. | 8. |
+| 9. | 16. | 25. | 3. | 12. | 15. |
+| 8. | 20. | 28. | 7. | 9. | 16. |
+| 16. | 20. | 36. | 9. | 16. | 25. |
+| 4. | 45. | 49. | 12. | 30. | 42. |
+| 15. | 49. | 64. | 9. | 36. | 45. |
+| 2. | 64. | 66. | 28. | 36. | 64. |
+| 9. | 72. | 81. | 16. | 56. | 72. |
+| 36. | 45. | 81. | 25. | 56. | 81. |
+| 9. | 81. | 90. | 25. | 66. | 91. |
+| 9. | 91. | 100. | 49. | 120. | 169. |
+| 49. | 72. | 121. | 64. | 225. | 289. |
+| 72. | 153. | 225. | | | |
+| 72. | 289. | 361. | | | |
+
+---
+
+(Buxer: fol: 27. a. & 44. b.)
+
+<vocab>Zahl-Kampf, Rhythmomachia, Steine, Zusammen-rechnen, Weisse Runde Stein, Weisse Dreyeckete, Schwartze Runde Stein, erobert</vocab>

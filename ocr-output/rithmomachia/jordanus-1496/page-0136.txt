@@ -1,0 +1,74 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>E</sig>
+
+### Nu me ri per fe cti pro pri e ta tes.
+
+Omnis numerus pfectus alternatim altero senario/octonarioꝗ terminatus cōperit. <margin>1</margin>
+Omnis numerus pfectus ex pariter paribus ab unitate sua serie collectis nascit̃: qui <margin>2</margin>
+in unum congesti/congregatiꝗ: numeꝝ primum constituūt: in quē ducitur aggre-
+gatorum maximus.
+
+### Nu me ri di mi nu ti et abun dan tis pro prie tates
+
+Omnis numerus diminutus: a sola monade aut a numero diminuto numerat̃. <margin>1</margin>
+Numerus abundans: solum abundantem numerat. <margin>2</margin>
+
+### Nu me ri pri mi et com po si ti pro pri e ta tes.
+
+Omnis numerus primus ad omnē quem nō numerat primus est. <margin>1</margin>
+Omnis numerus compositus: a primo numeratur. <margin>2</margin>
+Omnis numerus ꝓpositus post aliquem impariū naturali serie dispositoꝝ totus esse <margin>3</margin>
+probat̃: quotus numer⁹ ille ipar aut post aliquē supra ip̃m iparē
+totoꝝ:totus. Quotus/et totus: vt tertius/quitus/septimus ꝛ hoc pacto deīceps.
+Omnis numerus primus aliquis impariū est hoc pacto dispositoꝝ qui post nullum <margin>4</margin>
+imparē aut aliquem supra ipsum totoꝝ:totus venerit quotus aliquis imparium
+fuerit ab unitate.
+
+### Nu me ri ad al te rum pri mi pro pri e ta tes.
+
+Omnes numeri adinuicē primi singuli in se ducti: numeros adinuicē primos ꝓcreāt <margin>1</margin>
+Omnis numerus minor qui ad maiorē est primus a maiore detractus quotus potest <margin>2</margin>
+et eo qui relinquet̃ quoties potest a minore detracto: ꝛ hoc pacto cōtinue quoties
+opus est:tandē que detractionis vicem impediat:relinquit̃ unitas.
+
+### E qua li ta tis et ine qua li ta tis pro prie ta tes
+
+Equalitas est inequalitatis principium. <margin>1</margin>
+Omnis inequalitas ex equalitate nascitur. <margin>2</margin>
+Omnis inequalitas in equalitatem resoluitur. <margin>3</margin>
+
+### Mul ti pli cis pro pri e ta tes.
+
+Multiplices ceteris inequalitatibus sunt antiquiores/origineꝗ priores. <margin>1</margin>
+Omnis multiplex ex continua numeroꝝ serie ad unitatem relata consurgit. Multi- <margin>2</margin>
+plex/multiplicis modus atꝗ species.
+Omnis multiplex maiorem habet multiplicem. <margin>3</margin>
+
+### Spe cie rum mul ti pli cis pro prie ta tes.
+
+Omnes dupli ex singulis paribus a binario sumptis ad singulos seriei numeroꝝ <margin>1</margin>
+ab unitate continue comparatis: nascuntur.
+Omnis triplus: a ternario duobus post singulū quēꝗ triplum naturalis seriei nume- <margin>2</margin>
+rorum continue dimissis procreatur.
+Quadruplus itidem continue tribus post singulū quemꝗ quadruplū relictis nume- <margin>3</margin>
+ris nascitur.et hoc pacto de quincuplo/sescuplo ꝛ ceteris.
+
+### Su per par ti cu la ris pro prie ta tes.
+
+Omnis supparticularis: supparticularem supra se relinquit minorem. Minorē enim <margin>1</margin>
+cām esse dicimus:cuius pars a maiori numero denominat̃.
+Omnis supparticularis ex continua serie numerorum: continue proxime sequētis ad <margin>2</margin>
+suum precedentem comparati:sumit inicium.
+
+### Spe cie rum su per par ti cu la ris pro pri e ta tes.
+
+Omnis sesqualter ex naturalibus/cōtinuisꝗ triplis: ad naturales/cōtinuosꝗ duplos <margin>1</margin>
+comparatis enascitur.
+Omnis sesquitertius pari pacto ex continuis quadruplis ad continuos triplos com- <margin>2</margin>
+paratis elicitur.
+Omnes sesquiquarti ex continue quincuplis ad continuos quadruplos comparatis <margin>3</margin>
+simili origine extrahuntur. Et hoc pacto sesquiquinti ex sescuplis et quincuplis.et
+sesquisexti ex septuplis et sescuplis ꝛ ita deinceps.
+
+<vocab>numerus perfectus, numerus diminutus, numerus abundans, numerus primus, numerus compositus, equalitas, inequalitas, multiplex, duplus, triplus, quadruplus, supparticularis, sesquialter, sesquitertius, sesquiquartus</vocab>

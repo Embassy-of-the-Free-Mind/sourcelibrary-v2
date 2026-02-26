@@ -1,0 +1,30 @@
+<language>English</language>
+<page-type>text</page-type>
+<header>The Philosophers game.</header>
+
+lyne, direct or crosse, as in .D.A.B. or els
+5.1.3. if it consist of three numbers, but if
+it stande of foure numbers, they maye
+be set lyke a square two agaynst two, as
+in .E.B.D.C. or 2.3.4.5. and after the
+same maner muste you set them so that
+your aduersaries man make the thyrde
+or fourth, when you take by proportion.
+
+### ¶ Of dyuers kyndes of triumphes.
+
+There be three kyndes of triumphes
+a great triumphe, a greater tri-
+umphe, and the greatest and moste
+noble of all.
+
+### ¶ Of the great triumph.
+
+The great triumph standeth in pro-
+portion, eyther <term>Arithmeticall</term>,
+<term>Geometrical</term>, or <term>Musicall</term> onely.
+
+<sig>C.ij.</sig>
+<meta>catchword: ¶ Of</meta>
+
+<vocab>Philosophers game, Rythmomachia, triumphes, proportion, Arithmeticall, Geometrical, Musicall</vocab>

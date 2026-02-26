@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>98</page-num>
+<header>Das erste Buch. 10. cap:</header>
+
+> ,, man gut gen gut tun soll / und gab wider gab geben sol / nicht
+> ,, mehr sol man zahlen / was man gelten sol. Zu dem drittenmahl /
+> ,, sollent die werckleut getrew und gewar sein.
+> ,, Der fünffte Wend / auf dem SchachZabel / sol sten /
+> ,, vor der Kunigin / in solcher form und gestalt / daß Er sitze / auf
+> ,, eins Meisters stul / und hab in der rechten hand / ein buch / in der
+> ,, lincken hand ein püchsen / mit electuarien / darin sol stecken / under
+> ,, der gürtel ein wundeisen. Bey dem buch / seint bezeichet / alle
+> ,, buch Arzet / und alle lerer der freyen Kunst. Ein rechter Arzet /
+> ,, muß künnen / recht und gut latin reden / daß ist / gramatica : und
+> ,, waß loyca beschlüst : was rethorica, hüpscher / zierlicher / und ern-
+> ,, haftne wort hat : geomantrey punt / und die figur : der arisme-
+> ,, try zal : der musica gehellung : der astronomy, das ist / der
+> ,, Sternen und sieben Planeten lauf : des und anders mer / be-
+> ,, darf er alles wol zeerkennen / wan man trancke geben und ne-
+> ,, men solle / oder lassen zu der Aderen : Bey der buchsen / seint be-
+> ,, deut und bezeichnet / Appotecker / salbenmacher / und was dar-
+> ,, zu gehört : Bey dem wundeisen / seint bezeichnet / wund Arzet /
+> ,, und wundensnider und solcher leut / die all sampt sollent kün-
+> ,, nen / all siechen / gesund machen / nach der ler / der heidnischen
+> ,, Meister / Galieni, Orienis, Ipocras, und Auicene : und wan des
+> ,, siechen leben / stet und ist in der Arzet Hand / kan er der Kunst /
+> ,, nicht gar und gantz / so ist er mehr ein Mörder / dan ein Arzet /
+> ,, und darumb / wan zu einem siechen menschen / viel Arzet kom-
+> ,, men / so sollen sie nit sin dispotierer, und fremder widerspētiger
+> ,, sache vinder : Also das sie suchent / das sie von ausswendigen
+> ,, worten erschinen künstlicher / mere / dan sy achtend / wie sie
+> ,, den siechen gesund machent / daß doch vor allen dingen not
+> ,, ist : wan wollen sie / ob dem siechen / kriegen und arguiren,
+> ,, und ee das ein frog zerlost wirt / so ist der siech tod. Wider daß
+> ,, sollent die Juristen thun / wan die betrachten nicht / waß in dem
+> ,, menschen sey / sunder waß nach ausswendiger sitten fuget /
+> ,, das betrachten sy. Und davon sollen sie nit snell sein / mit
+> ,, ihrem urtheil. Die Arzet sollent mit sicherheit suchen / was
+> ,, gut sey zu den siechen : ist die wond gestochen / und scheub-
+> ,, leit / so sol er sie darnach binden : ist sie dan geschlagen und
+> ,, lang / so sol er sie aber dornoch binden. Er sol auch wissen
+> ,, von wannen / der sychtumb kommen sey. Ist er von Keltin /
+
+<meta>catchword: so fü</meta>
+
+<vocab>SchachZabel, Wend, Arzet, gramatica, loyca, rethorica, geomantrey, arismetrey, musica, astronomy, Appotecker, wundensnider, Galieni, Orienis, Ipocras, Auicene, Juristen, sychtumb</vocab>

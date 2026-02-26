@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>175</page-num>
+<header>Vom Schach-Spiel.</header>
+<meta>image quality: good; catchword: auf des</meta>
+<sig>Z</sig>
+
+<margin>8.cap:</margin>
+<margin>4.</margin> Soldaten / auf drey und vierzig: Der Weisse / auf denselben / und auf die S. Königin / seiner K. Schützen / auf vier und dreyßig: Der Schwarze / (umb zu verwechseln die Königinne) seine Königin / auf drey und dreyßig: Der Weisse / die Königin / (weil Er sie noch behalten wil / und zu beschutzen / des K. und dessen Rochens-Soldaten) auf zehen: Der Schwarze / (umb der W. K. Schützen / mit seiner Königin / zu erlangen) des K. Reuter / auf sechs und zwantzig: Der Weisse / denselben Schützen / auf dreyzehen: * Der Schwarze / nimt des W. K. Rochens-Soldaten / mit der Königin: Der Weisse / des S. K. Reuter / mit seines K. Rochens / und erlanget denselben / hiemit zum Vortheil.
+
+<margin>5.</margin> Wan aber Der Schwarze / nicht mit der Königin / (n. 4.) besondern / mit des K. Reuter / den W. Soldaten / nimt: so spielet der Weisse / des K. Schützen / (umb / den Schach / von des S. K. Reuter / auf neunzehen / zu verhüten) auf die S. Königin / auf zwelfe / und gewinnet dadurch / entweder / des S. K. Reuter / oder die S. Königin: doch muß Er sich wol in acht haben und hüten.
+
+<margin>6.</margin> Wan aber der Schwarze / nicht den W. Reuter / (n. 3.) besondern des W. K. Schützens-Soldaten / mit seines K. Soldaten / nimt: so ziehet / der Weisse / des K. Reuter / (auf daß derselbe / von des S. K. Schützen / nicht genommen werde / besondern den Schach / der S. Königin / auf funf und zwantzig / verhüte / und des S. K. Soldaten / aufhalte) auf neunzehen: Der Schwarze / (umb / des K. Soldaten / für der W. K. Schützen / ins künftige / zu vertheidigen) des K. Reuters-Soldaten / auf vier und dreyßig: Der Weisse / auf denselben / des K. Rochens-Soldaten / auf funf und zwantzig: Der Schwarze / denselben / auf des W. K. Reuter / auf sechs und zwantzig: Der Weisse / denselben / auf des S. K. Schützens-Soldaten / auf vier und dreyßig: 
+
+<margin>7.</margin> * Der Schwarze / (ihn / und des K. Reuters-Soldaten / zu beschützen) der K. Reuter / auf des W. K. Schützen / auf sechs und dreyßig: Der Weisse / der K. Soldaten / auf des S. K. Schützen / und der S. K. Reuter / auf neun und zwantzig: Der Schwarze / (auf daß Er nicht einen Stein / vergebens verliere) nimt des W. K. Schützen / mit seiner K. Reuter: Der Weisse / denselben / mit der Königin: (damit Er / auf ein und funfzig / nicht gleich Schach-Matt werde) ziehet die Königin / auf zwey und funfzig: Der Weisse / nimt des S. K. Schützen / mit der K. Soldaten: Der Schwarze / ziehet des K. Rochens-Soldaten / auf des
+
+<vocab>Schach-Spiel, König, Königin, Schützen, Reuter, Rochens-Soldaten, Schach-Matt, Soldaten</vocab>

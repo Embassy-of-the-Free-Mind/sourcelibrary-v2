@@ -1,0 +1,51 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>3.</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>A iij</sig>
+<meta>catchword: oder</meta>
+<warning>Significant ink stain at bottom left corner.</warning>
+
+<margin>1. cap.</margin>
+heit / wan es ohne einige begierde / und bewegung des gemüh- cc
+tes / zu rechter Zeit / und mit gewiſſer Maſſe / etwa von ſchwer- cc
+mütigen leuthen / umb ſich zu erluſtigen / und zu erquicken / ge- cc
+ſpielet wird : gleich wie man ſich / mit dem Seyten-Spiel / pfle- cc
+get zu ergötzen / oder der Müſſe / des Schlafes / oder anderer cc
+ruhen / wan man hochwichtigern und fürnehmern Sachen ihr cc
+recht gethan / zu gebrauchen. Dan man ſchreibet / daß die er- cc
+ſte Erfindung des Spieles / zu keinem böſen / noch laſterhaften cc
+ende / angeſehen geweſen ſey : in erwegung die Lydier / umb ver- cc
+enderung willen / damit Sie den Hunger / umb ſo viel beſſer / er- cc
+tragen könten / allerhand Spiele / ſollen erfunden haben. So cc
+iſt auch / das Stein-Spiel / (welches man gemeinlich / den cc
+Schach nennet) zu dem ende / auf daß die Soldaten / in einer cc
+langwierigen Belagerung / den müſſiggang / deſto beſſer ver- cc
+treiben / und hinbringen könten / erfunden worden. So ſchrei- cc
+bet auch / der Poët *Horatius* : daß nicht das Spielen / beſondern cc
+dem Spiele / nicht wiſſen / maas zu geben / eine ſchande ſey : Zu- cc
+dehme / haben auch fürnehme leuthe / alß *Cato, Portius, Domitia-* cc
+*nus, Claudianus*, (welcher ein Buch / von der Spiel-Kunſt / ge- cc
+ſchrieben) der Käyſer *Verus*, und *Augustus*, geſpielet : *Meccenas* cc
+aber / und *Q. Galba*, auch den Schach gezogen. Der *Caesar*, cc
+*Scaevola* und *Ticinius*, ſeynd fürtreſliche Ballen-Spieler ge- cc
+weſen.
+
+Sol demnach / dieſes wol und fleiſſig / aufgemercket werden :
+daß erſtlich / mit dieſem gantzen Spiele / nichtes anders / dan
+die Erluſtigung / Ergötzlichkeit / und befreyung des Gemühtes /
+fürnehmlich / alß der euſſerſte / und aigentliche Zweck / angeſehen
+und geſuchet werden müſſe : und daß fürs ander / derſelbe / eben das
+werck ſey / welches dieſe Kunſt / an ihrem orte / gleich der *Muſic*, dar-
+ſetzen und hinterlaſſen ſol : wie ſonſten die Baws- und andere Kün-
+ſte / ein Hauß oder werck / nach verrichteter arbeit / hinter ihnen laſ-
+ſen. Worauß dan / ferner erſcheinet / daß die Schach-Kunſt / unter
+die Jehnigen Künſte / gehöre / welche man / auf Lateiniſch / *diſcipli-*
+*nas activas*, oder eigentlich / mit einem worte / *Artes*, nennet / und
+derer thun / auf eine gewiſſer form und erfahrenheit / beruhet.
+
+Was nuhn alhie / die Form und geſtalt betrift : ſo hat ſie dieſ-
+ſelbe / zum theil / auß der *Mathematic*, auß welcher / (wie *Plato* cc
+bezeuget) alle Künſte herflieſſen : Alß nemlich / auß der *Geometri*, cc
+
+<vocab>Schach-Spiel, Lydier, Horatius, Cato, Verus, Augustus, Mathematic, Plato, Geometri, Stein-Spiel, disciplinas activas, Artes</vocab>

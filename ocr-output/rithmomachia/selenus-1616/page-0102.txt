@@ -1,0 +1,23 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>72</page-num>
+<header>Das erste Buch/ 8. cap:</header>
+<warning>Bleed-through from the reverse side of the page is visible throughout the text area; moisture staining present on the right margin.</warning>
+
+<image-desc>
+Four diagrams of partial chessboards illustrating piece positions and movements.
+1. Top left: A 4x4 grid showing a White King (W.K.) at the top right, a Black King (S.K.) and White Schütze (W.Sc.) in the second row, and another White Schütze (W.Sc.) in the bottom row.
+2. Top right: A 4x4 grid showing a Black King (S.K.) at the top right, a White King (WK.) in the second row, and two White Schützen (WSc.) in the third and fourth rows of the first column.
+3. Center: A 3x3 grid showing a Black King (S.K.) at top center, a White Schütze (WSc.) in the middle, and a White Spieß (WSp) and White King (WK.) in the bottom row.
+4. Bottom: A wide 7x3 grid showing various pieces including White Kings (WK.), Black Kings (S.K.), White Spießen (WSp.), and Black Spießen (SSp.) arranged to demonstrate tactical coverage.
+</image-desc>
+
+Ein Schütze trifft (2.) seinen feind/ von ferne/ viel besser/ und unvermerckter/ dan ein Reuter.
+Er beschützet/ (3.) seinen König/ für allerhand Schachen/ welche ihm können geboten werden/ viel mehr dan ein Reuter.
+Er hat (4.) wan Er seinen König dergestalt bedecket / und sich zwischen denselben/ und des gegeners Stein/ der ihm Schach beut/ stellet/ füglicher gelegenheit/ alsz der Reuter/ ob derselbe gleich den König auch bedecket/ den Stein/ welcher seinem Könige/ den garausz machen wil/ hinweg zunehmen.
+Er kan/ (5.) hinwider bedecken/ und gefangen halten/ alle/ so wol heupt- alsz gemeine Steine/ seines Feindes/ welches dem Reuter unmüglich.
+Er beschützet (6.) seine Soldaten/ viel besser/ und ist von ihnen auch verthetiget: dessen ein Exempel/ im 14. Cap: des 2. Buches/
+
+<meta>Catchword: ches/</meta>
+
+<vocab>Schütze, Reuter, Schach, König, Soldaten, Spieß, bedecket, verthetiget</vocab>

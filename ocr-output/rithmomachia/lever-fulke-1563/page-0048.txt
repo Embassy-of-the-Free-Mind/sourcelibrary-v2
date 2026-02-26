@@ -1,0 +1,37 @@
+<language>English</language>
+<page-type>text</page-type>
+<columns>4</columns>
+<header>The Philosophers game.</header>
+<warning>Significant fading and bleed-through from the reverse side make the rightmost column and the sub-header particularly difficult to read.</warning>
+
+-> <unclear>Addition of diuers numbers, multiplication, & diuision.</unclear> <-
+
+| Addition. | Multiplication & Diuision. | | |
+|:---|:---|:---|:---|
+| 90 | 2 3 6 | 5 9 45 | 8 |
+| 90. 100. 190 | 2 4 8 | 5 20 100 | 9 |
+| 91 | 2 6 12 | 5 25 125 | 12 |
+| 91 nothig | 2 8 16 | --- | 15 |
+| 100 | 2 15 30 | 6 6 36 | 20 |
+| 100. noth. | 2 28 56 | 6 7 42 | 25 |
+| 120 | 2 36 72 | 6 12 72 | 30 |
+| 120. 169. 289 | 2 45 90 | 6 15 90 | 36 |
+| 121 | --- | 6 20 120 | 42 |
+| 121. 169. 290 | 3 4 12 | --- | 45 |
+| 153 | 3 5 15 | 7 8 56 | 49 |
+| 169 | 3 12 36 | --- | 56 |
+| 190 noth. | 3 15 45 | 8 9 72 | 64 |
+| 225 | 3 30 90 | 8 15 120 | 72 |
+| 289 | --- | --- | 81 |
+| 361 | 4 4 16 | 9 9 81 | 90 |
+| | 4 5 20 | 9 25 225 | 100 |
+| | 4 7 28 | | 120 |
+| | 4 9 36 | | 121 |
+| | 4 16 64 | | 153 |
+| | 4 25 100 | | 169 |
+| | 4 30 120 | | 190 |
+| | --- | | 225 |
+| | 5 6 30 | | 289 |
+| | | | 361 |
+
+<vocab>The Philosophers game, Rythmomachia, addition, multiplication, division, arithmetic, capture values</vocab>

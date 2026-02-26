@@ -1,0 +1,25 @@
+<language>English</language>
+<page-type>diagram</page-type>
+
+<image-desc>
+A detailed diagram of a game board for Rithmomachia (also known as the Philosophers' Game), a medieval and Renaissance mathematical board game. The diagram consists of a large vertical rectangular grid, 8 squares wide and 16 squares high, enclosed in a double-ruled border. A thick horizontal line divides the board into two 8x8 halves.
+
+The grid contains various geometric pieces (squares, triangles, and circles) with numbers printed inside them, arranged at opposite ends of the board:
+
+**Lower Section (White Pieces):**
+- **Bottom Row:** Features two squares at the far left (containing 289 and 169) and two squares at the far right (containing 81 and 25).
+- **Second Row from Bottom:** A full row of eight squares. From left to right, they contain the number 153, a visual illustration of a pyramid (representing a "perfect" piece made of stacked layers), and the numbers 49, 42, 20, 25, 45, and 15.
+- **Third Row from Bottom:** Contains two upward-pointing triangles on the left (81 and 72), four circles in the middle (64, 36, 16, and 4), and two upward-pointing triangles on the right (each containing 9).
+- **Fourth Row from Bottom:** Contains four circles positioned in the central four columns, numbered 8, 6, 4, and 2.
+
+**Upper Section (Black Pieces):**
+The pieces in the upper section are arranged mirroring the bottom, though many are inverted or positioned differently according to the game's setup.
+- **Top Row:** Contains squares at the edges, notably 49 and 121 on the left side.
+- **Second Row from Top:** A series of downward-pointing triangles, including numbers such as 28, 66, 36, 30, 56, and 64.
+- **Third Row from Top:** A mix of circles and triangles, including numbers like 16, 12, 9, 25, 49, 81, and 100.
+- **Fourth Row from Top:** Four circles in the center, appearing to contain the numbers 2, 6, 12, and 30.
+
+The central eight rows of the grid are currently empty. There is significant ink bleed-through from the reverse side of the page, showing mirrored fragments of English text across the top half of the diagram.
+</image-desc>
+
+<vocab>Rithmomachia, Arithmomachia, Philosophers' Game, mathematical game, geometric pieces, pyramid, squares, triangles, circles</vocab>

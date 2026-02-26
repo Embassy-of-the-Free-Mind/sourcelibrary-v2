@@ -1,0 +1,50 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>17</page-num>
+<header>Vom Schach-Spiel.</header>
+<sig>C ij</sig>
+<meta>catchword: Nach</meta>
+
+<margin>1.cap.</margin>
+
+*Filocopo tacque, mostrando, che molto gli dolessero i bisanti, & cc*
+*havendo quasi à fine recato il giuoco, & essendo per mattare il cc*
+*Castellano, & mostrando con alcuno atto, di ciò avedersi, tavolò cc*
+*quel giuoco. Conobbe in se medesimo, il Castellano, la cortesia, di cc*
+*Filocopo, il quale più tosto perdere, che vincere desiderava, & cc*
+*fra sè disse, Nobilissimo & cortesissimo giovane è costui, di quan- cc*
+*ti io mai, ne vedessi. Racconciaronsi gli scacchi, al terzo giuoco, cc*
+*& crescendo anchora de bisanti, la quantità, prima ch' al giuocar cc*
+*si desse principio, lo Castellano disse, à Filocopo: Giovane io ti cc*
+*priego & scongiuro, per la potentia di tutti gli Iddÿ, che tu giuoc- cc*
+*chi si, come tu sai lo meglio, ne si come hai infino à qui fatto, ri- cc*
+*spiarmarmi. Filocopo rispose. Signor mio, mal pote il disce- cc*
+*polo col maestro giuocare, senza esser vinto, ma poiche vi pia- cc*
+*ce, io giuocharò si, com' io saprò. Incominciosì il terzo giuo- cc*
+*co, & giuocato per lungo spatio, Filocopo n' hebbe il meglio, & cc*
+*lo Castellano, ciò conoscendo, si cominciò à crucciare, & à ti- cc*
+*gnersi nel viso, & à sottigliarsi, se potesse il giuoco, per mae- cc*
+*stria, recuperare: Ma quanto più giuocava, tanto più ne ha- cc*
+*veva il peggio. Filocopo gli levò, con uno Alfino, il Cavaliero, cc*
+*& diegli scacco. Il Castellano, per questo tratto, cruccialo cc*
+*oltre à misura, più della perdita de bisanti, che del giuoco, die cc*
+*delle mani, ne gli scacchi, & quelli & lo scacchiere, gittò à ter- cc*
+*ra. Questo vedendo Filocopo, disse: Signor mio, per ciò che cc*
+*usanza è, de più savij, de crucciarsi à questo giuoco, io voi cc*
+*men savio, non reputo, perche contra gli scacchi crucciato sia- cc*
+*te: Mà se voi haveste ben riguardato il giuoco, prima, che cc*
+*guastatolo, haveste conosciuto, che io era, in due tratti, mat- cc*
+*to da voi. Credo, ch' il vedeste, ma per essermi cortese, mo- cc*
+*strandovi crucciato, voleste il giuoco haver perduto, ma ciò, cc*
+*non fia così. Questi bisanti siano tutti vostri, & mostrando cc*
+*di volere i suoi adequare alla quantità di quelli, del Castella- cc*
+*no, ben tre cotanti ve ne mise de suoi, liquali il Castellano, cc*
+*mostrandosi d' intendere ad altre parole, gli prese, dicendo: Gio- cc*
+*vane, Io ti giuro, per l' anima del mio Padre, che io ne miei gior- cc*
+*ni, con molti ho giuocato, & mai non trovai, chi à questo giuo- cc*
+*co mi mattasse, se non tu, & similmente, più cortese giovane cc*
+*di te, non trovai ne giorni miei.*
+
+->Das ist:<- cc
+
+<vocab>Filocopo, Castellano, bisanti, scacchi, Alfino, Cavaliero, scacchiere, giuoco, scacco, mattare</vocab>

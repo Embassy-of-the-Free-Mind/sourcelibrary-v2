@@ -1,0 +1,40 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>VIII</header>
+
+q̄ precedēs donec extremū sit vnitas. et qz ideo totidem erunt ordines quot in base sunt vnitates: pʒ retroagendo vnitate esse primū potentia triangulū cui due adiuncte secundū claudunt triangulum: cui secundo tres addite facient tertiū: qz semper est vnitate maior precedētē. et ita cōsequenter scōm naturalem numeroʐ progressum sicqz propositio ꝛ correlariū nota sunt.
+
+**2 Si a quolibet triangulari numero latus suum detrahatur: relinquetur triangulus ipsi descendendo proximus.**
+
+<image-desc>A triangular arrangement of dots (tetractys) consisting of 21 dots arranged in six rows (base of 6, vertex of 1). The base corners are labeled 'a' and 'b'.</image-desc>
+
+¶ Triāgulus triāgulo descendēdo proximus: est cuius latus latere alterius est vnitate minus. a triāgulo ergo a b subtracto latere a b: dico qđ relinquit̄ triāgulus ipsi a b descēdendo proximus nā qz triāgulus a per p̄cedētē habet tria latera equalia: et sequētia sola vnitate vincentia. subtracto ergo latere a b erūt reliqua latera vno cōtractiora. sʒ ꝝz vnitatiū ordines fm vnitatē semp decrescūt pʒ per correlariū precedētis residuū esse triāgulare. ꝛ qm latus eius vnitate vinci a latere triāguli a b cognitu est: patet relictū triāgularem esse proximū descēdendo triāgulo a b: qđ est propositū.
+
+**3 Omnis triangularis duplicatus: parte altera longiorem efficit.**
+
+<image-desc>A rectangular/rhombic arrangement of dots (30 dots total, in a 6 by 5 grid oriented diagonally). The vertices and internal points are labeled with letters: 'b' at the top, 'e' on the left, 'f' on the right, and 'o', 'c' near the center.</image-desc>
+
+¶ Sumātur a et b duo triāgulares equales: aditciaqʒ lateri c trianguli a d extrema vnitas triāguli b. itidē lateri f triāguli b adiūctaē extrema vnitas triāguli a: fientqz duo latera vnitate quolibet latus a triāgulo a et b superātia. et si addis aptasqz hoc pacto medios ordines vnius mediis ordinibꝰ alterius: fient per tertiam primi cōpositi ordines sibi mutuo et extremis ordinibus e et f et c d equales. verbi cā vt si ordinē sequentē latus c addis adaptasqz ordini sequenti vnitatē o. qz enī per correlariū prime huius ordō sequens latus c tantū distat ab c ꝙtū ordo sequens vnitatē d distat ab d. ergo per tertiā primi illi simul iuncti equātur ordini c d. et ita de aliis mediis ordinibꝰ si qui medij relicti sunt tunc ergo cōpletus erit quadrāgulus cuius latera opposita erunt equalia ꝛ ob hoc equidistātia. vt qz latus e f equale esse mōstratū est lateri c d et mediis: ergo vnitates lateris b d equidistābūt vnitantibꝰ lateris a e. ꝛ similiter qz b d equatur lateri e a. nā sunt latera trianguloʐ equalium et mediis oz dinibus: latus e f equidistābit lateri c d. ꝛ qz latera b d et e a opposita ꝛ equidistātia sunt latera trianguloʐ assignatoʐ: ꝛ duo reliqua e f ꝛ c d similiter opposita ꝛ equidistātia quorum quolibet reliquo alioʐ vnitate sunt maioza. patet p diffinitionē totā figurā a b d e ex duobus equalibus triāgularibꝰ cōstitutam (quare ꝛ ex triāgulari vno duplicato) esse altera parte longiozē: quod est propositū.
+
+**4 Cuiuslibet altera parte longioris: medietas est triangularis.**
+
+<image-desc>A diagram showing an overlapping pattern of dots representing two triangles combined into a rectangle. Labels include 'a', 'b', 'o', 'g', 'e', 'f'.</image-desc>
+
+¶ Hec est cōuersa precedētis. Sit altera parte longioz quicunqz a b e ꝛ vnum eius longius latus a b. dico eius medietatē esse triangulare. de latere enim longiozi a b detraho vnitatē a et de secundo ordine duas: de ꝛ tertio tres: de e quarto quattuoz. ꝛ si plures sunt tot cōsequenter auferā quotus ordo ille fuerit ab vnitate: per correlariū prime huius totus detractus vt a e f est triangularis. et per idem qz continue minus vno relinquebat vsqʒ ad vnitatem: relictus est triāgularis. sed et qz detracti latus e f equatur residui lateri g b. nam latus g e superabat latus g b vna vnitate: sed ꝛ g e superat latus f e vna vnitate. equantur igitur g b et f e: quare ꝛ reliqua vnius reliquis alterius cum per primā huius omnis triāgularis sit equilat̄ ꝛ totus trigonus a e f toti trigono a b g equalis. est igitur datus altera parte longioz in duas medietates diuisus quaʐ quelibet est triāgularis: quod est propositū.
+
+**5 Quilibet duo triangulares proximi: tetragonum constituunt**
+
+<image-desc>A rhombic grid of dots representing a square (tetragonum) composed of two triangular numbers. Labels: 'a', 'b', 'o', 'g', 'f', 'e', 'h', 'k'.</image-desc>
+
+¶ Sit vt in precedēti a b g e quicunqz altera parte longioz qui per eandem diuidatur in b g h et e a f duos triāgulos equales. erit vt a e sit latus triāguli a e f et latus b a altera parte longiozis ꝛ suū oppositū e g maius latere a e ꝛ sequētibus ordinibꝰ vnitate. ammoto ergo latere a e remanebit b h equale lateri h k: lz g et g b. ꝛ ideo quatuoz illa latera adinuicē distantia: quod ergo per diffinitionē relictum est: est tetragonus. sed ꝛ ammoto latere a e ab trigono a e f per secundā huius relinquiť triangularis triāgulari a e f proximus: quare ꝛ triangulari h b g sibi equali proximus. constat ergo tetragonus h k g b ex duobus proximis triāgularibus: quod est propositū. ¶ Potest quoqz et id esse notum quod tricesimoquinto capitulo sue Arithmetices diuus affert Seuerinus omnē tetragonū si ei proprium latus adiiciatur aut ab eo detrahatur altera parte longiozem fieri. Nam cum tetragonus omnis vndiquaqʒ latera equalia possideat: si cuipiā vnum latus adiiciatur efficientur latera vnitate distantia pozro si latus vnum a quopiam detrahatur: relinquet̄ latera vnitate distātia: quare vtrobiqʒ facti erunt altera parte longiozes. Quo fit iterū vt proximi quiqʒ altera parte lōgiozes a medio tetragono equali differentia distent. Nam equali latere subtracto ꝛ addito.
+
+**6 Latere pposito numeri triangularis summā inuenire. Unde manifestū est si datus sit numerus impar summā triangularis prouenire si paris proxime maioris subduplum in ipsum imparē ducatur. et si numerus sit par: summa triangularis proueniet si paris medietas in imparem ducatur proxime maiorem.**
+
+<image-desc>Two horizontal rows of dots. The top row has 6 dots, labeled 'b'. The bottom row has 5 dots, labeled 'a'. To the right are the numbers 6, 5, and 15.</image-desc>
+
+¶ Sit a datū latus cuiuslibet numeri triāgularis cuius summa queriť: duco a in b proximū numerū maiozē ꝛ per diffinitionē proueniet altera parte longioz cuius b maius latus erit vnitate maius a mi
+
+<sig>d 1</sig>
+
+<meta>catchword: d 1</meta>
+<vocab>triangularis, tetragonum, Seuerinus, Arithmetices, latus, altera parte longior, trigonus, quadrangulus</vocab>

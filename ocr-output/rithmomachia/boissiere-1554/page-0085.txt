@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<header>RYTHMOMACHIE, IEV</header>
+
+*ciens, comme* **Gilbert Pape**, **Hermane cōtracte**,
+**Castrense**, **Nicolas Orestine**, *qui ont diligēment
+traicté ledit ieu, se contentans de la contempla-
+tion, par trop grande austerité ont mesprisé &
+obmis ce qui estoit delicieux & plaisant en ice-
+luy, & de nostre temps en ont escrit* **Oronce finé**
+**Dauphinois**, **Iaques Febure d'Estaples**, *& nous
+dernieremēt imitant iceux: Toutesfois voyant la
+cōtemplation sans recreatiō quelque fois estre en-
+nuieuse, suis tresioyeux auoir recouuert ce que au-
+parauant pouuoit estre detronqué & à present
+grandement requis pour l'accomplissement &
+perfection de nostre subiect: Toutesfois pour ne
+deroger à l'authorité de tels autheurs, ay mis
+ceste plaisante & accomplie maniere de iouer
+comme appendice ou addition, laissant la prece-
+dente forme poursuiuie par iceux à son entier, &
+selon leur opinion, esperant ce estre agreable aux
+bons esprits, qui souuent par varieté, & choses
+rares sont recreez & allegeez de leurs trauaux.*
+
+---
+
+## Des tables, & tablier.
+
+*Les tables & tablier ne different, à ce que
+dessus en auons dit, sauf qu'il fault que l'vne su-
+perfice de chaque table soit d'vne couleur, &
+l'autre superfice de la couleur de l'aduersaire à*
+
+<meta>catchword: celle</meta>
+
+<vocab>Rythmomachie, Gilbert Pape, Hermane contracte, Oronce finé, Iaques Febure d'Estaples, jeu, tables, tablier</vocab>

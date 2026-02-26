@@ -1,0 +1,47 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>278</page-num>
+<header>Das Dritte Buch / 3. cap:</header>
+
+» dern platz hat/darauf Er ihn/setzen kan)auf zwey und funfzig/
+» ziehet: so nimt / der Weisse / mit der Königin / des S. K. Schü-
+» tzens-Soldaten / und beut Schach: Der Schwartze / ziehet /
+» den König / (dieweyl ihm sonsten / nicht zu helffen) auf ein und
+» funfzig: Der Weisse / beut mit des Königes Schützen / auß
+» dreyssig / abermal Schach: Der Schwartze / bedecket / den Kö-
+» nig / mit der Königin Soldaten / (welches dan / der beste zug ist /
+<margin>19.</margin> » den Er thun kan) auf sieben und dreyssig : * ziehet Er aber / den
+» König / (wiewol der zug / nicht so gut ist) auf zwey und vier-
+» zig: so beut ihm der Weisse / mit der Königin / auß fünf und
+» dreyssig / Schach: Der Schwartze / (weyl Er keinen andern
+» Ort hat) ziehet / den König / auf ein und vierzig: Der Weisse /
+» der K. Soldaten / auf ein und zwanzig / und beut / von der K.
+» Schützen / Ab-Schach: Der Schwartze / hat keine andere
+» entsatzung / dan / daß Er / den König / mit seines Reuters-
+» Soldaten / auf vier und dreyssig / bedecke: Der Weisse: ziehet
+» auf denselben / des K. Rochens-Soldaten / auf fünf und
+<margin>20.</margin> » zwanzig: dahero der Schwartze / die Königin / * so fern Er /
+» der K. Soldaten / auf sieben und dreyssig / nicht ziehet: we-
+» gen der W. K. Schützen / verlieret.
+
+Ob nuhn wol der Damianus, hie abbricht / und nicht mehr / dan
+so viel / Es werde der Schwartze / die Königin verlieren / set-
+<margin>21.</margin> tzet: * so nimt doch (auf daß wir die züge / weiter hinauß führen)
+der Weisse / (wan schon der Schwartze / der K. Soldaten / auf
+des K. Schützen / auf 37. n. 20. ziehet / und der K. Schützen / ge-
+gen seine Königin / zugleich aufdecket) mit des K. Rochens-Solda-
+ten / des S. K. Reuters-Soldaten / und beut / mit demselben /
+Schach / und von des K. Rochen / Ab-Schach: Weyl nuhn der
+Schwartze / von zween / zugleich wird angegriffen / und derwegen /
+nichtes fürziehen / besondern / mit dem Könige / weichen muß: alsz /
+rucket Er / denselben / auf funfzig: Der Weisse / beut / mit der
+Königin / auß sechs und dreyssig / Schach: Der Schwartze / bede-
+cket den König / mit seinem Reuter / auf drey und vierzig: Der
+Weisse / nimt ihn / mit des K. Rochens-Soldaten / und beut Schach:
+Der Schwartze / nimt denselben / mit der Königin: Der Weisse /
+gibt / mit der K. Schützen / auß ein und vierzig / Schach / und ver-
+ursachet / dem Schwartzen / mit diesem zuge / ein böses Spiel:
+dan / wan Er / den König / auf zwey und vierzig / rucket: Der Weisz-
+
+<meta>catchword: se/ mit</meta>
+<vocab>Schach, König, Königin, Reuter, Rochen, Schützen, Damianus, Ab-Schach, funfzig, dreyssig, zwanzig</vocab>

@@ -1,0 +1,73 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<sig>Ab</sig>
+
+¶ Tetrachorda ſunt quīq: Tetrachordū hypaton/Tetrachordū meſon/Synexeu=
+gmenon/Diezeugmenon/hyperboleon.
+
+| | |
+| :--- | :--- |
+| ¶ Tetrachordū hypaton eſt: | Tetrachordum ſynexeugmenon. |
+| --- | --- |
+| Hypate hypaton | Abeſe |
+| Parhypate hypaton | Trite ſynexeugmenon |
+| Lichanos hypaton | Paranete ſynexeugmenon |
+| Hypate meſon | Mete ſynexeugmenon |
+| --- | --- |
+| **Tetrachordū meſon eſt:** | **Tetrachordon diezeugmenon.** |
+| --- | --- |
+| Hypate meſon | Parameſe diezeugmenon |
+| Parhypate meſon | Trite diezeugmenon |
+| Lichanos meſon | Paranete diezeugmenon |
+| Abeſe | Mete diezeugmenon |
+
+---
+->Tetrachordū hyperboleon<-
+---
+->Mete diezeugmenon<-
+---
+->Trite hyperboleon<-
+---
+->Paranete hyperboleon<-
+---
+->Nete hyperboleon<-
+---
+
+¶ Modū hic vocamus remiſſionem aut intenſionem oim tetrachordorū gradatim
+in aliquo genere melorum: ſui generis progreſſionem ſeruans.
+¶ Modi ſunt ſeptem.
+
+| | |
+| :--- | ---: |
+| ¶ Primus hypodorius | I |
+| Secundus hypophrygius | 2 |
+| Tertius hypolydius | 3 |
+| Quartus Dorius | 4 |
+| Quintus Phrygius | 5 |
+| Sextus Lydius | 6 |
+| Septimus Mixolydius | 7 |
+
+¶ Monochordi regularis partitionem: in diatonico genere demonſtrare.
+
+¶ Quāuis inſtrumēta muſices plurīa reperiātur vt Cithare/Tibie/Tuba/Litui/Multiſoratiles
+fiſtule: Dextre/Leue/Simplices/Duplices: in quib' vno ſpiritu animādis vt inquit Apuleius. ferē
+hiagnis Lydos rex Marſieq pater primus in canēdo manus diſcapedinaſſe: pretea vt Pelte/Cho=
+racicite/Sambuci/Hydraule/Nabilie/Pſalteria/Magades/Barbiti/Naula/Petades/Cornua/
+Heptagona/Mele/Teſtudo/Barbati/Plectra/Monochorda/Tetrachorda/Polychorda: et cetera
+id gen' muſica inſtrumēta. placuit tñ Philoſophis in Monochordis/Tetrachordis/atq Polychor=
+dis monſtrādis: ceterorū nos intelligere rōem atq compositionem. quocirca vt de Monochordorum
+et Tetrachordorū compoſitione intelligemus: ita de reliquis eſt intelligendum. nunc ergo ad Mono=
+chordi regularis nos oſtenſionem cōuertamus.
+
+<margin>Monochordū diatonicum.</margin>
+| a | d | e | f | g | h | i | k | l | m | n | o | p | q | b |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| | T | S | T | T | S | T | T | S | T | T | S | T | T | |
+| c | d | e | f | g | h | i | k | l | m | n | o | p | q | r |
+
+->T Tonus S Semitonium minus<-
+
+¶ Monochordū igiẗ reglare idcirco dicitur q inunico neruo muſice conſonātie harmonica regula
+perueſtigētur. Sit ergo a b chorda in qua volumus in diatonico gñe coſonātias regularit collocare.
+
+<vocab>tetrachordum, hypaton, meſon, ſynexeugmenon, diezeugmenon, hyperboleon, hypodorius, hypophrygius, hypolydius, Dorius, Phrygius, Lydius, Mixolydius, monochordum, Apuleius, Hyagnis, Marsyas, tonus, ſemitonium</vocab>

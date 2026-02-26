@@ -1,0 +1,17 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>310</page-num>
+<header>Das Dritte Buch) 5. cap:</header>
+
+Soldaten / und ziehet ihn nochmaln / auf des S. K. Schützen :
+53. * **Der Schwarze** / gibt / mit demselben / auss ein und dreyssig / **Schach : Der Weisse** / bedecket / den König / mit der K. Reuter / auf zwey und zwanzig : **Der Schwarze** / (umb des Weissen Spiel / zu brechen) ziehet / der K. Soldaten / auf sieben und dreyssig :
+54. * **Der Weisse** / nimt ihn / mit des K. Soldaten : **Der Schwarze** / denselben / mit der Königin / (welche / von der W. K. Reuter / dieweil ihres K. Schütze / denselben gefangen helt / sich nichtes zu befahren hat) und rucket sie / auf des W. K. Schützen : Kan also sein Spiel / in eine gute ordnung bringen : der W. K. Schützens-Soldat aber / ist / von seinen gesellen / verlassen.
+55. Wan aber der Weisse / den S. Soldaten / nicht nimt / (n. 54.) sondern des K. Soldaten / auf sechs und dreyssig / spielet / so ziehet / der Schwarze / der K. Schützen / (umb des W. K. Reuter / wegen der W. Königin / gefangen zu halten) auf sechs und zwanzig : und wird also / dofern Er / seinen König / an einen sichern ort / fürsichtig bringet / mit einem guten Spiele / im fahl Er / die züge verstehet / auch versehen seyn : ob gleich / bey dem Weissen / etwa / eine feine angestalte ordnung / dadurch dessen Steine / wan Er / seiner K. Soldaten / mit der K. Reuter / endlich nimt / in etwas freyer und ungeschlossener seynd : vorhanden.
+56. Wan aber der Schwarze / mit dem Schützen / nicht Schach beut / (n. 53.) sondern denselben / auf sieben und viertzig ziehet : so spielet der Weisse / der K. Schützens-Soldaten / auf der S. K. Reuter / auf sieben und dreyssig : **Der Schwarze** / denselben / (umb ihn nicht zu verlieren) auf drey und sechszig :
+57. * **Der Weisse** / der K. Reuter / auf zwey und zwanzig : **Der Schwarze** / (umb den König auf acht und funfzig / zu versetzen) dessen Rochen / auf neun und funfzig : **Der Weisse** / des K. Reuter / auf des S. K. Rochens-Soldaten / auf vier und dreyssig : **Der Schwarze** / denselben auf ihn / auf ein und viertzig : **Der Weisse** / denselben / auf neunzehen : **Der Schwarze** / der K. Schützens-Soldaten / auf des W. K. Schützen / und der W. K. Schützens-Soldaten / auf sechs und viertzig : **Der Weisse** / nimt ihn nicht / mit der K. Schützens-Soldaten /
+58. * sondern / rucket des K. Schützen / auf zwey und dreyssig : **Der Schwarze** / der K. Soldaten / auf fünf und vierzig / und bringet sein Spiel / dofern Er / in demselben geübet / in eine gantz richtige ordnung.
+59. Wan aber der Weisse / nicht den Schützen / auf 32. (n. 58.) besondern
+
+<meta>catchword: sondern</meta>
+
+<vocab>Schach, König, Reuter, Schütze, Soldat, Rochen, Königin, dreyssig, viertzig, sechszig, funfzig</vocab>

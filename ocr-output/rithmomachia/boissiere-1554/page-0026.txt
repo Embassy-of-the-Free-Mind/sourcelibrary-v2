@@ -1,0 +1,37 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>12</page-num>
+<header>DES PHILOSOPHES.</header>
+
+Et selon l'ethymologie & signification du nom
+que leur acquerras un nõbre requis, pour parfai-
+re leur proportion, prenõs pour exẽple le prémier
+nõbre requerant trouué au reng des pairs, qui est
+15, & semblablement le premier nom de la pro-
+portion superpartiente qui est superbipartiente
+tierces ou partissant par 2 les troisiesmes, tel nom
+vaut autãt à dire comme deux troisiesmes plus,
+& par ainsi choisis un nombre qui contienne le
+predict 15 & deux troisiesmes plus, or la troi-
+iesme de 15 est 5, parquoy prenant 2, troisiesmes,
+auras 10. prens donc un nõbre qui contienne les
+2 troisiesmes, lesquelles font, 10. et une fois le pre-
+dit 15: alors s'offrira 25. Iceluy donc diras estre re-
+quis et convenir avec 15 en proportion superpar-
+tiente ou la premiere espece bipartiente tierces.
+Apres venant au second nombre requerant ie
+trouve que cest 28, au reng des nompairs, & pre-
+nons le second de la proportion superpartiente,
+qui est supertripartiente quartes, qui est autant
+à dire comme trois quartes plus: & par ain-
+si choisis un nombre qui contienne le predict
+28, & 3 quartes plus: or sa quarte partie est 7,
+parquoy prenant trois quartes, auras 21: eslis dõc
+un nõbre qui contienne les trois quartes, lesquelles
+font 21, assemble le predit nombre requerant 28,
+& se offrira 49. Iceluy donc diras estre requis
+& convenir avec 28, en proportion superpar-
+
+<sig>B iiij</sig>
+
+<vocab>ethymologie, proportion, superpartiente, superbipartiente, nompairs, supertripartiente, arithmétique</vocab>

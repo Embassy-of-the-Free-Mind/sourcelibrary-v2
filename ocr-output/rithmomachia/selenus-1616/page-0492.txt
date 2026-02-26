@@ -1,0 +1,31 @@
+<language>German, Latin</language>
+<page-type>text</page-type>
+<page-num>458</page-num>
+
+# Das Ander Capittel/
+
+<image-desc>Four numbers (5, 9, 13, 17) positioned above four squares. Each square contains a number (25, 81, 169, 289) with a small dot centered below it.</image-desc>
+
+Der übrigen **Weiſſen Vierecketen Steinen / Zahle /** ſu-
+chet man / auf folgende weyſe: Man machet den anfang / von 5,
+und nimt vier ungleiche Zahle / die einander folgen : doch daſſ
+immer eine ungleiche Zahl / dazwiſchen auſſgelaſſen werde : alſſ
+nemlich / 5. 9. 13. 17. werden alſo 7. 11. 15. nicht geſetzet : Die-
+ſe Zahle / vermehret man / in ſich ſelber / und ſchreibet ſie / auf
+die vier letzte Viereckete Steine / alſſ 25. 81. 169. 289.
+
+->(Buxer : fol: 14. a.)<-
+
+<image-desc>A mathematical table detailing numerical progressions. The numbers in the final two rows (Postulator Superpartiens and Postulatus productus...) are enclosed within square boxes, each with a dot positioned at the bottom center of the frame.</image-desc>
+
+| | Tertia. | Quinta. | Septima. | Nona. |
+| :--- | :---: | :---: | :---: | :---: |
+| *Partes ſecūdum denominatoris rationem augendæ.* | 5 | 9 | 13 | 17 |
+| *Auctus.* | 10. | 36. | 78. | 136. |
+| | *Bipartiens tertias.* | *Quadrupartiens quintas.* | *Sextupartiens ſeptimas.* | *Octupartiens nonas.* |
+| *Postulator Superpartiens* | 15 | 45 | 91 | 153 |
+| *Postulatus productus ex postulatoris et aucti additione.* | 25 | 81 | 169 | 289 |
+
+<meta>catchword: Die</meta>
+
+<vocab>Weiſſen Vierecketen Steinen, Buxer, Postulator Superpartiens, Bipartiens tertias, Auctus, additione</vocab>

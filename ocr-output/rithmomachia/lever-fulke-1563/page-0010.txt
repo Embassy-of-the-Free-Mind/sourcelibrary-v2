@@ -1,0 +1,29 @@
+<language>English</language>
+<page-type>dedication</page-type>
+<header>THE EPISTLE</header>
+<sig>A.v.</sig>
+
+So shall vve liue right christianlyke,
+and do our duties vvell:
+So shall vve please both god & prince,
+none shall vs need compell.
+
+And then the Lord of his mercie,
+vvill prosper vs alvvayes:
+And graunt vs here to haue on earth,
+full many godly dayes.
+
+Yea then the Lord of his goodnes,
+and grace celestiall:
+VVill guyde and gouerne our affaires,
+and blesse our doings all.
+
+VVhich Lord graunt to your honour
+good dayes & long to haue:
+vvith much encrease of helth & vvelth
+and from all hurt you saue.
+
+->Your honours most humble,<-
+->James Roubothum.<-
+
+<vocab>James Roubothum, christianlyke, grace celestiall, god & prince, helth & vvelth</vocab>

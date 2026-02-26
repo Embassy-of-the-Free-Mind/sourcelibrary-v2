@@ -1,0 +1,47 @@
+<language>Italian</language>
+<page-type>text</page-type>
+<page-num>22</page-num>
+<meta>catchword: delli</meta>
+
+toccando al vincitore a giuocare, può come ha pigliato il
+pezzo dell'auuersario giuocar qual vuole delli sui pezzi.
+Il secondo caso è ſe menaſſe l'vno di giuocatori vn ſuo pez-
+zo in luogo, che poſſi eſſer preſo da qualche pezzo dell'au-
+uerſario, allhora ſimilmēte l'auuerſario piglia eſſo pezzo,
+& poi mena vno di ſui pezzi qual gli piace. Il terzo caſo è
+quando l'vno di giuocatori ſi ſcordaſſe, ò non ſi accorgeſ-
+ſe a pigliar la ſua preda, & la laſſaſſe, & tornando a uoler
+giuocar la uedeſſe anchora eſpoſta al pericolo: allhora la
+piglia, & giuoca poi qual delli ſuoi pezzi gli aggrada. Il
+quarto caſo fara` manifeſto piu abaſſo dalla terza regola
+generale.
+
+La ſeconda regola è queſta. che non ſi può mai menar
+alcuno de quelli pezzi, che ſaltano vna, ò piu caſelle nel
+luogo doue ha d'andare, quando tra il detto luogo, & il
+detto pezzo ſi troua qualche altro pezzo, ò dell'iſteſſa, ò
+della contraria fattione.
+
+La terza è, che ſe ſi ritrouano dui pezzi afrontati in mo-
+do che ſi poſſano vincer l'vn l'altro col moltiplicar, & col
+partir, & che l'inimico ſi ſcordi pigliar il tuo pezzo col mol-
+tiplicare: come ha` giuocato qualche altro pezzo, ſe tu tro-
+uerai li gia detti dui pezzi eſſer nel medeſimo ſito, che era-
+no, potrai pigliar il ſuo col partir giuocando poi vno delli
+tuoi pezzi qual ti piace: Et p il cõtrario ſe tu ti ſcordaſſi pi-
+gliar quello dell'auuerſario col partir, come tu harrai giuo-
+cato altro pezzo, ritrouãdo l'auuerſario il tuo pezzo eſpo-
+ſto alla preda, lo può pigliar col moltiplicare, & poi giuo-
+car qual de i ſuoi pezzi gli parera`, & de quì ſi caua il quar-
+to caſo della prima regola generale ſopraſcritta.
+
+La quarta regola è, che la pyramide val per tãti quadra-
+ti, & triangoli, & tondi, quanti porta ſeco, & con ciaſcuno
+di quelli può depredar altri pezzi, ouer gradi de pyrami-
+de della parte auuerſa; & pe'l contrario eſſer depredato
+d'altri pezzi, ouer gradi di pyramide della contraria fat-
+tione. Ma la pyramide ha` queſto priuilegio di poter ric-
+uperar qualunque delli ſuoi gradi fara` preſo dando in ri-
+compenſo vno delli pezzi, che abbia l'iſteſſo numero coſi
+
+<vocab>giuocatori, pezzi, auuersario, moltiplicare, partir, pyramide, quadrati, triangoli, tondi, regola generale, Rithmomachia</vocab>

@@ -1,0 +1,38 @@
+<language>English</language>
+<page-type>text</page-type>
+<sig>C.ij.</sig>
+<warning>Significant bleed-through from the verso page makes the table data difficult to distinguish in some sections.</warning>
+
+## The Philosophers game.
+
+as I woulde knowe what is the midle
+number in proportion betwene .5. and
+25. first I adde .5. to .25. that is .30. the half
+of thirtie is .15. whiche is midle in pro-
+portion betwene .5. and .25. so haue
+I .5. 15. 25. in Arithme-
+ticall propor-
+tion.
+
+---
+
+->*<-
+
+->A table<-
+
+| | | | |
+|---|---|---|---|
+| 4 | 3 | 2 | 1 |
+| 9 | 6 | 3 | 2 |
+| 16 | 10 | 4 | 3 |
+| 25 | 15 | 5 | 4 |
+| 36 | 21 | 6 | 4 |
+| 49 | 28 | 7 | 4 |
+| 64 | 36 | 8 | 4 |
+| 81 | 45 | 9 | 4 |
+| 4 | 3 | 2 | 2 |
+| 9 | 6 | 3 | 2 |
+| 16 | 10 | 4 | 2 |
+| 25 | 15 | 5 | 2 |
+
+<vocab>Rythmomachia, Philosophers game, arithmeticall proportion, midle number</vocab>

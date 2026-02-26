@@ -1,0 +1,22 @@
+<language>German</language>
+<page-type>text</page-type>
+<page-num>132</page-num>
+<header>Das Ander Buch / 1. cap:</header>
+
+Zuges halber / einen Schach anmuhten würde / von einem seiner Steine / gefangen gehalten wird: Dan sonsten beede Könige / zugleich auf dem platze blieben: welches aber / wider dieses Spieles gebrauch / (weyl nuhr die Könige gefangen / nicht aber erleget werden) lauffen thete: zum Exempel : Wan der Schwartze König / in seinem = dessen Schütze / fur ihm / in seinem andern = und ein
+
+<image-desc>A vertical diagram of a rectangular section of a chessboard, four columns wide and eight rows high, framed by a double-line border. Several squares are marked with initials representing chess pieces: 'S. K.' (top left), 'SSc.' (second row from top, far left), 'WK' (fifth row from top, far right), and 'WR' (bottom left).</image-desc>
+
+-> Weisser Roche / (welcher den Schwartzen Schützen / gefangen hielte) <-
+-> in des Weissen Königes felde / stünde: so kan der Weisse / seinen <-
+-> König / in die felder / dahin der Schütze trift / dessen ungeach= <-
+-> tet / gleichwol nicht ziehen: dan der zum ersten komt / hat <-
+-> das beste vortheil: ein ebenmessiges Exempel / <-
+-> suche drunten / im 12. Capit: n. 26. <-
+-> dieses Buches. <-
+
+---
+
+<meta>catchword: Das</meta>
+
+<vocab>Schach, König, Roche, Schütze, Exempel, Spiel, gefangen</vocab>
