@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpen, Book as BookIcon } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
+import CategorySchema from '@/components/seo/CategorySchema';
 
 interface Book {
   id: string;
@@ -100,6 +101,17 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="min-h-screen bg-stone-50">
+      <CategorySchema
+        id={id}
+        name={category.name}
+        description={category.description}
+        bookCount={books.length}
+        books={books.slice(0, 20).map(b => ({
+          id: b.id,
+          title: b.display_title || b.title,
+          author: b.author,
+        }))}
+      />
       {/* Header */}
       <header className="bg-white border-b border-stone-200">
         <div className="max-w-5xl mx-auto px-4 py-4">

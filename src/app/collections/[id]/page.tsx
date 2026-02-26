@@ -7,6 +7,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
+import CollectionSchema from '@/components/seo/CollectionSchema';
 
 const PER_PAGE = 60;
 
@@ -296,6 +297,18 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
 
   return (
     <div className="min-h-screen bg-cream">
+      <CollectionSchema
+        slug={id}
+        name={collection.name}
+        description={collection.expanded_description || collection.description}
+        bookCount={total}
+        books={books.map(b => ({
+          id: b.id,
+          title: bookTitle(b),
+          author: b.author,
+          year: b.year,
+        }))}
+      />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         {heroImages.length > 0 && (
