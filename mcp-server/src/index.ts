@@ -214,7 +214,7 @@ const TOOLS: Tool[] = [
   {
     name: "get_book_text",
     description:
-      "Get the full text of a book (OCR and/or translations) in a single call. Essential for reading and analyzing book content. Supports page ranges for focused reading. Returns structured text with page numbers.",
+      "READ A BOOK — start here. Returns 50+ pages of text (OCR and/or translations) in a single call. Use this FIRST when reading, analyzing, or searching a book's content. Supports page ranges (from/to) for focused reading. Much more efficient than fetching pages one at a time with get_quote.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -251,7 +251,7 @@ const TOOLS: Tool[] = [
   {
     name: "get_quote",
     description:
-      "Get a citable quote from a book with academic citations (APA, Chicago, MLA, BibTeX) and a shortlink. Two modes: (1) provide a page number for direct lookup, or (2) provide a query to search within the book and return the best matching page. Returns translation, original language text, and formatted citations ready for scholarly use.",
+      "Get a CITABLE QUOTE with academic citations (APA, Chicago, MLA, BibTeX) and a shortlink. Best for citing a specific passage — not for reading through a book (use get_book_text for that). Two modes: (1) provide a page number for direct lookup, or (2) provide a query to search within the book and return the best matching page. Returns translation, original language text, and formatted citations ready for scholarly use.",
     inputSchema: {
       type: "object" as const,
       properties: {

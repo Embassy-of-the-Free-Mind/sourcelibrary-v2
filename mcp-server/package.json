@@ -1,6 +1,6 @@
 {
   "name": "@source-library/mcp-server",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "mcpName": "io.github.Embassy-of-the-Free-Mind/source-library",
   "description": "Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 14 research tools, CLI + MCP server, no API key needed.",
   "type": "module",

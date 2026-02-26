@@ -363,9 +363,9 @@ ${bold("COMMANDS")}
   ${bold("Reading & Citation")}
     book <book_id>              Detailed book info (summary, chapters, stats)
     text <book_id> [--from=N] [--to=N] [--content=translation|ocr|both]
-                                Read full book text (default: translation)
+                                Read a book — returns 50+ pages in one call
     quote <book_id> [--page=N | --query=...] [--original]
-                                Get a citable quote with academic citations
+                                Cite a specific passage with APA/Chicago/BibTeX
     quotes <book_id> <topic>    Find best passages on a topic (up to 5)
 
   ${bold("Knowledge Graph")}
