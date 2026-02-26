@@ -26,6 +26,11 @@ export default function SchemaOrgMetadata({
   // Composition date from source work timeline (if available)
   const compositionLayer = book.source_work_dates?.find(l => l.type === 'composition');
 
+  // Link author to their encyclopedia page if they have one
+  const authorEncyclopediaUrl = book.author
+    ? `${baseUrl}/encyclopedia/${encodeURIComponent(book.author)}`
+    : undefined;
+
   // Original work metadata
   const originalWork = {
     '@type': 'Book',
@@ -34,6 +39,10 @@ export default function SchemaOrgMetadata({
     author: {
       '@type': 'Person',
       name: book.author,
+      ...(authorEncyclopediaUrl && {
+        '@id': `${authorEncyclopediaUrl}#entity`,
+        url: authorEncyclopediaUrl,
+      }),
     },
     inLanguage: book.language,
     ...(book.published && { datePublished: book.published }),
@@ -68,6 +77,15 @@ export default function SchemaOrgMetadata({
     }),
   };
 
+  // Extract translator info from edition contributors or default to AI
+  const translators = currentEdition?.contributors
+    ?.filter(c => c.role === 'translator')
+    .map(c => ({
+      '@type': c.type === 'ai' ? 'SoftwareApplication' as const : 'Person' as const,
+      name: c.name,
+      ...(c.orcid && { identifier: `https://orcid.org/${c.orcid}` }),
+    }));
+
   // Translation metadata (if we have translations)
   const translationWork = translatedCount > 0 ? {
     '@type': 'CreativeWork',
@@ -76,6 +94,10 @@ export default function SchemaOrgMetadata({
     translationOfWork: { '@id': `${baseUrl}/book/${book.id}#original` },
     inLanguage: 'en',
     isAccessibleForFree: true,
+    ...(translators?.length
+      ? { translator: translators }
+      : { translator: { '@type': 'SoftwareApplication', name: 'Source Library AI (Gemini)' } }
+    ),
     ...(currentEdition && {
       version: currentEdition.version,
       datePublished: currentEdition.published_at
