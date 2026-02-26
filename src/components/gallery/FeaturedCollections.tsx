@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, Layers, ChevronRight } from 'lucide-react';
+import { Image as ImageIcon, Layers } from 'lucide-react';
 import { gallery } from '@/lib/api-client';
 
 interface CollectionListItem {
@@ -29,7 +29,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
     if (initialCollections) return;
 
     gallery.collections
-      .list(true)
+      .list()
       .then((data) => setCollections(data.collections))
       .catch(() => {})
       .finally(() => setLoaded(true));
@@ -39,26 +39,17 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
 
   return (
     <div className="mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-accent-rust" />
-          <h2 className="text-lg font-serif text-stone-800">Collections</h2>
-        </div>
-        <Link
-          href="/gallery/collections"
-          className="flex items-center gap-1 text-sm text-accent-rust hover:text-accent-rust transition-colors"
-        >
-          View all
-          <ChevronRight className="w-4 h-4" />
-        </Link>
+      <div className="flex items-center gap-2 mb-4">
+        <Layers className="w-5 h-5 text-accent-rust" />
+        <h2 className="text-lg font-serif text-stone-800">Collections</h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {collections.slice(0, 4).map((collection) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {collections.map((collection) => (
           <Link
             key={collection.id}
             href={`/gallery/collections/${collection.slug}`}
-            className="group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5"
+            className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5"
           >
             <div className="relative aspect-[16/10] bg-stone-100">
               {collection.coverImage?.url ? (
@@ -67,7 +58,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
                   alt={collection.coverImage.description || collection.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   unoptimized
                 />
               ) : (
@@ -75,15 +66,20 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
                   <ImageIcon className="w-8 h-8" />
                 </div>
               )}
+              {collection.featured && (
+                <span className="absolute top-3 left-3 px-2 py-0.5 bg-accent-rust text-white text-xs rounded-full">
+                  Featured
+                </span>
+              )}
             </div>
-            <div className="p-3">
-              <h3 className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">
+            <div className="p-4">
+              <h3 className="font-serif text-lg text-stone-800 group-hover:text-accent-rust transition-colors">
                 {collection.title}
               </h3>
-              <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
+              <p className="text-stone-500 text-sm mt-1 line-clamp-2">
                 {collection.description}
               </p>
-              <p className="text-xs text-stone-400 mt-1">
+              <p className="text-stone-400 text-xs mt-3">
                 {collection.imageCount} {collection.imageCount === 1 ? 'image' : 'images'}
               </p>
             </div>

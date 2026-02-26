@@ -128,15 +128,14 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
 }
 
 /**
- * Fetch featured collections for SSR.
+ * Fetch all collections for SSR (shown on gallery landing page).
  */
 async function fetchFeaturedCollections() {
   try {
     const db = await getDb();
     const collections = await db.collection('gallery_collections')
-      .find({ featured: true })
-      .sort({ sort_order: 1 })
-      .limit(4)
+      .find({})
+      .sort({ featured: -1, sort_order: 1 })
       .toArray();
 
     if (collections.length === 0) return undefined;
