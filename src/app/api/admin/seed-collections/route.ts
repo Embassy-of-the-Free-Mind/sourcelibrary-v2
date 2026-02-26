@@ -111,6 +111,30 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
     featured: false,
     sort_order: 8,
   },
+  {
+    title: 'Astrological Charts & Celestial Diagrams',
+    description: 'Horoscopes, zodiacal figures, and planetary charts from the history of Western astrology.',
+    slug: 'astrological-charts',
+    searchTerms: ['astrolog', 'zodiac', 'horoscope', 'celestial', 'planet'],
+    subjects: ['astrology'],
+    minQuality: 0.6,
+    maxPerBook: 5,
+    limit: 40,
+    featured: true,
+    sort_order: 9,
+  },
+  {
+    title: 'Chinese Woodcuts',
+    description: 'Woodblock-printed illustrations from Chinese rare books and manuscripts.',
+    slug: 'chinese-woodcuts',
+    types: ['woodcut', 'illustration'],
+    searchTerms: ['chinese'],
+    minQuality: 0.6,
+    maxPerBook: 5,
+    limit: 80,
+    featured: true,
+    sort_order: 0,
+  },
 ];
 
 /**
