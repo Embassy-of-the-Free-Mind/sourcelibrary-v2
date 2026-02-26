@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
@@ -49,6 +49,56 @@ async function getBookForMetadata(id: string): Promise<Book | null> {
   return book as unknown as Book | null;
 }
 
+// Cross-book citation graph: find books that share the most entities with a given book
+interface RelatedBook {
+  id: string;
+  title: string;
+  author: string;
+  published?: string;
+  year?: number;
+  shared_entities: number;
+}
+
+const getRelatedBooks = cache(async (bookId: string): Promise<RelatedBook[]> => {
+  try {
+    const db = await getDb();
+    const results = await db.collection('entities').aggregate([
+      { $match: { 'books.book_id': bookId } },
+      { $unwind: '$books' },
+      { $match: { 'books.book_id': { $ne: bookId } } },
+      { $group: {
+        _id: '$books.book_id',
+        title: { $first: '$books.book_title' },
+        author: { $first: '$books.book_author' },
+        shared_entities: { $sum: 1 },
+      }},
+      { $match: { shared_entities: { $gte: 3 } } },
+      { $sort: { shared_entities: -1 as const } },
+      { $limit: 10 },
+      { $lookup: {
+        from: 'books',
+        localField: '_id',
+        foreignField: 'id',
+        pipeline: [{ $project: { published: 1, year: 1, display_title: 1, hidden: 1 } }],
+        as: 'book_doc',
+      }},
+      { $unwind: { path: '$book_doc', preserveNullAndEmptyArrays: true } },
+      { $match: { 'book_doc.hidden': { $ne: true } } },
+    ]).toArray();
+
+    return results.map(r => ({
+      id: r._id as string,
+      title: (r.book_doc?.display_title || r.title) as string,
+      author: (r.author || 'Unknown') as string,
+      published: r.book_doc?.published as string | undefined,
+      year: r.book_doc?.year as number | undefined,
+      shared_entities: r.shared_entities as number,
+    }));
+  } catch {
+    return [];
+  }
+});
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
   const book = await getBookForMetadata(id);
@@ -75,7 +125,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Google Scholar meta tags for academic discoverability
   // https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
-  const scholarMeta: Record<string, string> = {
+  const scholarMeta: Record<string, string | string[]> = {
     'citation_title': book.title,
     'citation_author': book.author,
     'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
@@ -84,6 +134,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (book.language) scholarMeta['citation_language'] = book.language;
   if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
   if (book.doi) scholarMeta['citation_doi'] = book.doi;
+
+  // Cross-book citations: books sharing entities are part of the same intellectual tradition
+  const relatedBooks = await getRelatedBooks(book.id);
+  if (relatedBooks.length > 0) {
+    scholarMeta['citation_reference'] = relatedBooks.map(rb => {
+      const parts = [`citation_title=${rb.title}`];
+      if (rb.author && rb.author !== 'Unknown') parts.push(`citation_author=${rb.author}`);
+      if (rb.published) parts.push(`citation_publication_date=${rb.published}`);
+      return parts.join('; ');
+    });
+  }
 
   return {
     title: `${title} - Source Library`,
@@ -235,7 +296,7 @@ async function BookInfo({ id }: { id: string }) {
   // Related books: author count + work siblings (parallel, non-blocking)
   const db = await getDb();
   const workId = (book as unknown as { work_id?: string }).work_id;
-  const [authorCount, workSiblings] = await Promise.all([
+  const [authorCount, workSiblings, entityRelatedBooks] = await Promise.all([
     book.author && book.author !== 'Unknown'
       ? db.collection('books').countDocuments({ author: book.author, id: { $ne: book.id } })
       : Promise.resolve(0),
@@ -245,6 +306,7 @@ async function BookInfo({ id }: { id: string }) {
         { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
       ).sort({ published: 1 }).limit(20).toArray()
       : Promise.resolve([]),
+    getRelatedBooks(book.id),
   ]);
 
   // Note: projection excludes .data fields, so check for object existence instead
@@ -604,7 +666,7 @@ async function BookInfo({ id }: { id: string }) {
               const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
               const topPeople = (index?.people || []).slice(0, 3);
               const topConcepts = (index?.concepts || []).slice(0, 3);
-              const hasLinks = authorCount > 0 || workSiblings.length > 0 || book.language || topPeople.length > 0 || topConcepts.length > 0;
+              const hasLinks = authorCount > 0 || workSiblings.length > 0 || entityRelatedBooks.length > 0 || book.language || topPeople.length > 0 || topConcepts.length > 0;
 
               if (!hasLinks) return null;
 
@@ -637,6 +699,32 @@ async function BookInfo({ id }: { id: string }) {
                             {sibling.published && (
                               <span className="text-xs text-stone-400">{sibling.published}</span>
                             )}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Cross-referenced books — share entities with this book */}
+                  {entityRelatedBooks.length > 0 && (
+                    <div className="mb-4 pb-4 border-b border-stone-100">
+                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                        Referenced together
+                      </p>
+                      <div className="space-y-1.5">
+                        {entityRelatedBooks.map((rb) => (
+                          <Link
+                            key={rb.id}
+                            href={`/book/${rb.id}`}
+                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                          >
+                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
+                              {rb.title}
+                            </span>
+                            {rb.author && rb.author !== 'Unknown' && (
+                              <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
+                            )}
+                            <span className="text-xs text-accent-sage shrink-0">{rb.shared_entities} shared</span>
                           </Link>
                         ))}
                       </div>
