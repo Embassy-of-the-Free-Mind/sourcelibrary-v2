@@ -42,8 +42,9 @@ function parseYear(dateStr: string | null | undefined): number | null {
   return isNaN(y) || y <= 0 ? null : y;
 }
 
-/** Format year for display */
+/** Format year for display — shows BCE for negative years */
 function formatYear(y: number): string {
+  if (y < 0) return `${Math.abs(y)} BCE`;
   return String(y);
 }
 
@@ -135,8 +136,13 @@ function DensityHistogram({
       <rect x={0} y={0} width={width} height={HISTOGRAM_HEIGHT} fill="var(--bg-warm)" opacity={0.5} />
 
       {centuries.map(({ century, count }) => {
-        const centuryStart = (century - 1) * 100 + 1;
-        const centuryEnd = century * 100;
+        // Century ranges differ for positive (CE) vs negative (BCE)
+        const centuryStart = century > 0
+          ? (century - 1) * 100 + 1
+          : century * 100;
+        const centuryEnd = century > 0
+          ? century * 100
+          : (century + 1) * 100 - 1;
         const x = yearToX(centuryStart);
         const x2 = yearToX(centuryEnd);
         const barW = x2 - x;
@@ -145,6 +151,9 @@ function DensityHistogram({
 
         const barH = (count / maxCount) * (HISTOGRAM_HEIGHT - 20);
         const barY = HISTOGRAM_HEIGHT - barH - 4;
+
+        // Format label: "5 BCE" for negative, "15" for positive
+        const label = century < 0 ? `${Math.abs(century)} BCE` : String(century);
 
         return (
           <g
@@ -170,7 +179,7 @@ function DensityHistogram({
                 fill="var(--text-muted)"
                 fontFamily="var(--font-sans)"
               >
-                {century}
+                {label}
               </text>
             )}
           </g>
@@ -400,8 +409,8 @@ export default function Timeline({ entities, stats }: TimelineProps) {
   );
 
   const handleCenturyClick = useCallback((century: number) => {
-    const start = (century - 1) * 100;
-    const end = century * 100;
+    const start = century > 0 ? (century - 1) * 100 : century * 100;
+    const end = century > 0 ? century * 100 : (century + 1) * 100;
     setViewStart(start);
     setViewEnd(end);
   }, []);
@@ -523,6 +532,13 @@ export default function Timeline({ entities, stats }: TimelineProps) {
 
           <span className="w-px h-5 mx-0.5" style={{ background: 'var(--border-light)' }} />
 
+          <button
+            onClick={() => { setViewStart(-500); setViewEnd(200); }}
+            className="px-2 py-0.5 rounded text-xs"
+            style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
+          >
+            Antiquity
+          </button>
           <button
             onClick={() => { setViewStart(1350); setViewEnd(1750); }}
             className="px-2 py-0.5 rounded text-xs"
@@ -654,11 +670,11 @@ export default function Timeline({ entities, stats }: TimelineProps) {
             </div>
             <div className="text-xs opacity-80 mt-0.5">
               {tooltip.entity.birth_year && tooltip.entity.death_year
-                ? `${tooltip.entity.birth_year}–${tooltip.entity.death_year}`
+                ? `${formatYear(tooltip.entity.birth_year)}–${formatYear(tooltip.entity.death_year)}`
                 : tooltip.entity.birth_year
-                  ? `b. ${tooltip.entity.birth_year}`
+                  ? `b. ${formatYear(tooltip.entity.birth_year)}`
                   : tooltip.entity.death_year
-                    ? `d. ${tooltip.entity.death_year}`
+                    ? `d. ${formatYear(tooltip.entity.death_year)}`
                     : ''}
               {' '}&middot; {tooltip.entity.book_count} books &middot; {tooltip.entity.total_mentions} mentions
             </div>
