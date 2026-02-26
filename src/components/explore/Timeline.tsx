@@ -360,8 +360,14 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     [viewStart, viewEnd, svgWidth]
   );
 
-  // Drag pan — track whether mouse moved to distinguish click vs drag
-  const dragRef = useRef<{ startX: number; startY: number; startViewStart: number; startViewEnd: number; moved: boolean } | null>(null);
+  // Drag pan — detect direction: horizontal = pan timeline, vertical = scroll page
+  // 'pending' = haven't committed to a direction yet
+  const dragRef = useRef<{
+    startX: number; startY: number;
+    startViewStart: number; startViewEnd: number;
+    mode: 'pending' | 'pan' | 'scroll';
+    moved: boolean;
+  } | null>(null);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -371,6 +377,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         startY: e.clientY,
         startViewStart: viewStart,
         startViewEnd: viewEnd,
+        mode: 'pending',
         moved: false,
       };
     },
@@ -382,9 +389,18 @@ export default function Timeline({ entities, stats }: TimelineProps) {
       if (!dragRef.current) return;
       const dx = e.clientX - dragRef.current.startX;
       const dy = e.clientY - dragRef.current.startY;
-      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+
+      if (dragRef.current.mode === 'pending') {
+        const dist = Math.abs(dx) + Math.abs(dy);
+        if (dist < 5) return; // wait for meaningful movement
+        // Commit to direction: mostly horizontal = pan, mostly vertical = scroll
+        dragRef.current.mode = Math.abs(dx) > Math.abs(dy) ? 'pan' : 'scroll';
         dragRef.current.moved = true;
       }
+
+      if (dragRef.current.mode === 'scroll') return; // let browser handle vertical scroll
+
+      // Horizontal pan
       const yearDelta = -(dx / svgWidth) * (dragRef.current.startViewEnd - dragRef.current.startViewStart);
       setViewStart(Math.round(dragRef.current.startViewStart + yearDelta));
       setViewEnd(Math.round(dragRef.current.startViewEnd + yearDelta));
@@ -400,8 +416,13 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     };
   }, [svgWidth]);
 
-  // Touch pan
-  const touchRef = useRef<{ startX: number; startY: number; startViewStart: number; startViewEnd: number; moved: boolean } | null>(null);
+  // Touch pan — same direction detection
+  const touchRef = useRef<{
+    startX: number; startY: number;
+    startViewStart: number; startViewEnd: number;
+    mode: 'pending' | 'pan' | 'scroll';
+    moved: boolean;
+  } | null>(null);
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
@@ -411,6 +432,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         startY: e.touches[0].clientY,
         startViewStart: viewStart,
         startViewEnd: viewEnd,
+        mode: 'pending',
         moved: false,
       };
     },
@@ -422,9 +444,16 @@ export default function Timeline({ entities, stats }: TimelineProps) {
       if (!touchRef.current || e.touches.length !== 1) return;
       const dx = e.touches[0].clientX - touchRef.current.startX;
       const dy = e.touches[0].clientY - touchRef.current.startY;
-      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+
+      if (touchRef.current.mode === 'pending') {
+        const dist = Math.abs(dx) + Math.abs(dy);
+        if (dist < 5) return;
+        touchRef.current.mode = Math.abs(dx) > Math.abs(dy) ? 'pan' : 'scroll';
         touchRef.current.moved = true;
       }
+
+      if (touchRef.current.mode === 'scroll') return; // let browser scroll
+
       const yearDelta = -(dx / svgWidth) * (touchRef.current.startViewEnd - touchRef.current.startViewStart);
       setViewStart(Math.round(touchRef.current.startViewStart + yearDelta));
       setViewEnd(Math.round(touchRef.current.startViewEnd + yearDelta));
