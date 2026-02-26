@@ -6,6 +6,7 @@ import { MoonHeatmap } from "@/components/viz/MoonHeatmap";
 import { YearCalendar } from "@/components/viz/YearCalendar";
 import { DriftChart } from "@/components/viz/DriftChart";
 import { ZodiacWheel } from "@/components/viz/ZodiacWheel";
+import { EclipticStrip } from "@/components/viz/EclipticStrip";
 import { EclipseTimeline } from "@/components/viz/EclipseTimeline";
 import { BirthDateInput } from "@/components/ui/BirthDateInput";
 import { useHydrated } from "@/lib/hooks";
@@ -176,6 +177,23 @@ export default function EssayPage() {
             a new zodiac sign. Astrologers have tracked this clock for millennia:
             &ldquo;the Moon is in Scorpio&rdquo; is a statement about the sidereal cycle.
           </p>
+        </div>
+
+        <figure className="essay-figure essay-figure-wide">
+          {hydrated ? <EclipticStrip /> : (
+            <div className="w-full h-24 flex items-center justify-center text-faint text-sm">
+              Computing ecliptic positions&hellip;
+            </div>
+          )}
+          <figcaption>
+            The ecliptic &mdash; the moon&rsquo;s path around the sky &mdash; divided into
+            12 zodiac signs. The moon (top) completes a full circuit every 27.3 days.
+            The sun (bottom) takes a full year. &ldquo;Moon in Gemini&rdquo; means
+            the moon is physically passing in front of those stars right now.
+          </figcaption>
+        </figure>
+
+        <div className="essay-prose">
           <p>
             The synodic cycle governs <em>what the moon looks like</em> &mdash; how much
             is lit, whether it&rsquo;s waxing or waning. This is the clock that drives
