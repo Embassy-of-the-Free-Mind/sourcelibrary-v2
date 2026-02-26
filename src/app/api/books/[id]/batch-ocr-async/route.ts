@@ -59,6 +59,40 @@ function getAiClient(keyIndex?: number): GoogleGenAI {
 
 const ai = new GoogleGenAI({ apiKey: DEFAULT_API_KEY });
 
+/** Submit a batch job with key rotation — tries each key on quota exhaustion */
+async function createBatchWithRotation(
+  preferredClient: GoogleGenAI,
+  params: Parameters<GoogleGenAI['batches']['create']>[0]
+): Promise<Awaited<ReturnType<GoogleGenAI['batches']['create']>>> {
+  // Try preferred client first
+  try {
+    return await preferredClient.batches.create(params);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (!(msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota'))) {
+      throw err; // Non-quota error — don't retry
+    }
+    console.warn('[batch-ocr] Preferred key quota exhausted, rotating...');
+  }
+  // Try all other keys
+  let lastError: Error | null = null;
+  for (let ki = 0; ki < UNIQUE_BATCH_KEYS.length; ki++) {
+    try {
+      const client = getAiClient(ki);
+      return await client.batches.create(params);
+    } catch (err: unknown) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      const msg = lastError.message || '';
+      if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota')) {
+        console.warn(`[batch-ocr] Key ${ki} quota exhausted, trying next...`);
+        continue;
+      }
+      throw lastError;
+    }
+  }
+  throw lastError || new Error('All API keys exhausted');
+}
+
 // Max pages per Gemini batch job (inline payload size limit ~20MB)
 const MAX_PAGES_PER_BATCH = 20;
 // Concurrent image downloads
@@ -308,7 +342,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     // For single batch, submit directly (backwards compatible — no parent needed)
     if (batches.length === 1) {
-      const batchJob = await batchAi.batches.create({
+      const batchJob = await createBatchWithRotation(batchAi, {
         model,
         src: batches[0].map(r => ({
           ...r.request,
@@ -385,7 +419,7 @@ export const POST = withAuth(async (request, session, context) => {
       const batchPageIds = batch.flatMap(r => r.pageIds);
       const childJobId = nanoid();
 
-      const batchJob = await batchAi.batches.create({
+      const batchJob = await createBatchWithRotation(batchAi, {
         model,
         src: batch.map(r => ({
           ...r.request,
