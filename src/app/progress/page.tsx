@@ -39,121 +39,109 @@ const MILESTONES: Milestone[] = [
   {
     date: 'Dec 12',
     title: 'Project started',
-    detail: 'Initial Next.js scaffold with MongoDB integration',
+    detail: 'First commit — a Next.js app connected to a database',
     color: 'var(--accent-rust)',
   },
   {
     date: 'Dec 15',
-    title: 'OCR + translation',
-    detail: 'First AI-powered text extraction and translation using Gemini',
+    title: 'AI-powered OCR and translation',
+    detail: 'Read a scanned page image, extract the text, translate it to English — all with one click',
     color: 'var(--accent-sage)',
-  },
-  {
-    date: 'Dec 17',
-    title: 'Custom prompts',
-    detail: 'Prompt versioning system with MongoDB storage',
-    color: 'var(--accent-violet)',
   },
   {
     date: 'Dec 22',
     title: 'Internet Archive import',
-    detail: 'First external library connector — import books from archive.org',
+    detail: 'Import any book from archive.org by pasting its identifier. First of 13 library connectors.',
     color: 'var(--accent-rust)',
   },
   {
     date: 'Dec 24',
-    title: 'Split detection',
-    detail: 'ML-powered detection of two-page spreads in digitized books',
+    title: 'Two-page spread detection',
+    detail: 'Automatically detect and split digitized two-page spreads into individual pages',
     color: 'var(--accent-gold)',
   },
   {
     date: 'Dec 25',
-    title: 'MCP server + Batch API',
-    detail: 'Claude MCP integration for AI research. Gemini Batch API for 50% cost savings.',
+    title: 'MCP research server',
+    detail: 'AI agents can search and cite Source Library texts directly via the Model Context Protocol',
     color: 'var(--accent-violet)',
   },
   {
     date: 'Dec 27',
     title: 'Image gallery',
-    detail: 'AI-powered extraction and cataloguing of illustrations, emblems, diagrams',
+    detail: 'AI finds and extracts illustrations, emblems, and diagrams — each with museum-style metadata',
     color: 'var(--accent-gold)',
   },
   {
     date: 'Dec 28',
-    title: 'Edition publishing',
-    detail: 'Scholarly editions with front matter, DOI minting via Zenodo',
+    title: 'Scholarly edition publishing',
+    detail: 'Publish citable editions with DOIs, front matter, and citation export (APA, BibTeX)',
     color: 'var(--accent-rust)',
   },
   {
     date: 'Dec 29',
     title: 'Encyclopedia',
-    detail: 'Cross-book entity index linking people, places, concepts across the collection',
+    detail: 'Cross-book index of people, places, and concepts — linking references across the entire collection',
     color: 'var(--accent-violet)',
   },
   {
     date: 'Jan 1',
-    title: 'Analytics + Gallica/MDZ',
-    detail: 'Custom analytics. Import from Gallica (BnF) and MDZ (Bavarian State Library).',
+    title: 'Gallica and Bavarian State Library',
+    detail: 'Import from the Bibliothque nationale de France and the Bayerische Staatsbibliothek',
     color: 'var(--accent-sage)',
   },
   {
     date: 'Jan 4',
-    title: 'Gallery redesign + SEO',
-    detail: 'Image discovery interface. Schema.org structured data. About and developers pages.',
+    title: 'Gallery as discovery interface',
+    detail: 'Browse 71,000+ extracted illustrations. Full-text search. Schema.org structured data for Google.',
     color: 'var(--accent-gold)',
   },
   {
     date: 'Jan 15',
-    title: '6 new library importers',
-    detail: 'Wellcome, e-rara, Bodleian, Cambridge, Vatican, HAB. Total: 13 sources.',
+    title: '6 new library sources in one day',
+    detail: 'Wellcome Collection, e-rara, Bodleian, Cambridge, Vatican, Herzog August. Total: 13 sources.',
     color: 'var(--accent-rust)',
   },
   {
     date: 'Feb 4',
-    title: 'AWS Lambda workers',
-    detail: 'Dedicated OCR, translation, and image extraction workers on SQS queues',
+    title: 'Parallel processing workers',
+    detail: 'Three dedicated workers process OCR, translation, and image extraction simultaneously',
     color: 'var(--accent-sage)',
   },
   {
     date: 'Feb 12',
-    title: 'Gemini Batch API',
-    detail: 'Large-scale batch processing with 50% cost savings. IIIF manifest endpoint.',
+    title: 'IIIF manifests',
+    detail: 'Every book serves a standard IIIF Presentation API 3.0 manifest for interoperability',
     color: 'var(--accent-violet)',
   },
   {
     date: 'Feb 14',
-    title: 'Automated pipeline',
-    detail: 'Full post-import pipeline: archive, OCR, translate, enrich, chapters, images',
+    title: 'Fully automated pipeline',
+    detail: 'Import a book and walk away — the system archives, OCRs, translates, indexes, and extracts images automatically',
     color: 'var(--accent-rust)',
   },
   {
     date: 'Feb 15',
     title: 'English modernization',
-    detail: 'Early Modern English books get modernized instead of translated. Blog launched.',
+    detail: 'Pre-1700 English texts get modernized to contemporary English instead of "translated"',
     color: 'var(--accent-gold)',
   },
   {
     date: 'Feb 16',
-    title: 'Gallery collections + feeds',
-    detail: 'Curated gallery collections. Atom feeds. Similarity search with embeddings.',
+    title: 'Curated collections and feeds',
+    detail: 'Themed gallery collections. Atom feeds for new books and images. Visual similarity search.',
     color: 'var(--accent-violet)',
-  },
-  {
-    date: 'Feb 19',
-    title: 'Batch processing at scale',
-    detail: '700+ batch OCR jobs processed. Multi-key management. Pipeline quality checks.',
-    color: 'var(--accent-sage)',
   },
   {
     date: 'Feb 21',
     title: 'Wikidata alignment',
-    detail: 'Entity enrichment from Wikidata. Attribution and licensing framework.',
+    detail: 'Entities linked to Wikidata for authoritative dates, descriptions, and cross-references',
     color: 'var(--accent-rust)',
   },
   {
     date: 'Feb 25',
-    title: 'Strategic plan',
-    detail: 'Institutional plan and budget for scaling as an EFM program',
+    title: 'Strategic plan published',
+    detail: 'Three-year institutional plan for scaling Source Library as a program of the Embassy of the Free Mind',
     color: 'var(--accent-gold)',
   },
 ];
@@ -211,50 +199,48 @@ export default function ProgressPage() {
 
         <ProgressCharts commitData={WEEKLY_COMMITS} />
 
-        {/* Technical stats */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">By the Numbers</h2>
+        {/* Features */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">What You Can Do</h2>
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           <div className="bg-white rounded-xl p-6 border border-border-light">
-            <h3 className="font-semibold text-primary mb-3">Infrastructure</h3>
+            <h3 className="font-semibold text-primary mb-3">Read and Discover</h3>
             <ul className="space-y-2 text-secondary text-sm">
-              <li>13 digital library import sources</li>
-              <li>3 AWS Lambda workers (OCR, translation, image extraction)</li>
-              <li>9 automated cron jobs</li>
-              <li>Gemini Batch API with 50% cost savings</li>
-              <li>IIIF Presentation API 3.0 manifests</li>
-              <li>Schema.org structured data on all pages</li>
+              <li>Read original texts alongside English translations, page by page</li>
+              <li>Browse 71,000+ extracted illustrations with AI-generated descriptions</li>
+              <li>Search across the full text of every book in the collection</li>
+              <li>Explore an encyclopedia of people, places, and concepts across all books</li>
+              <li>Find visually similar images across centuries of illustration</li>
             </ul>
           </div>
           <div className="bg-white rounded-xl p-6 border border-border-light">
-            <h3 className="font-semibold text-primary mb-3">AI Pipeline</h3>
+            <h3 className="font-semibold text-primary mb-3">AI-Powered Processing</h3>
             <ul className="space-y-2 text-secondary text-sm">
-              <li>Language-specific OCR prompts (Standard, Latin, German)</li>
-              <li>Context-aware translation with cross-page continuity</li>
-              <li>English modernization (Early Modern English)</li>
-              <li>Multi-column layout detection</li>
-              <li>AI image extraction with museum-style metadata</li>
-              <li>Total processing cost: ~$3,400 for 4,400+ books</li>
+              <li>OCR handles Fraktur, Latin abbreviations, multi-column layouts, and drop caps</li>
+              <li>Translation preserves context across pages for coherent output</li>
+              <li>Pre-1700 English texts are modernized rather than translated</li>
+              <li>Every book gets an AI-generated summary, index, and chapter structure</li>
+              <li>Illustrations are extracted with museum-style cataloguing metadata</li>
             </ul>
           </div>
           <div className="bg-white rounded-xl p-6 border border-border-light">
-            <h3 className="font-semibold text-primary mb-3">Scholarly Features</h3>
+            <h3 className="font-semibold text-primary mb-3">Scholarly Publishing</h3>
             <ul className="space-y-2 text-secondary text-sm">
-              <li>DOI-backed scholarly editions via Zenodo</li>
-              <li>AI-generated front matter and introductions</li>
-              <li>Cross-book entity encyclopedia</li>
-              <li>Community annotations and highlights</li>
-              <li>Citation export (APA, BibTeX)</li>
+              <li>Publish citable editions with DOIs minted through Zenodo</li>
+              <li>AI-generated scholarly front matter and introductions</li>
+              <li>Citation export in APA and BibTeX formats</li>
+              <li>Community annotations, highlights, and corrections</li>
+              <li>Google Scholar meta tags for academic discoverability</li>
             </ul>
           </div>
           <div className="bg-white rounded-xl p-6 border border-border-light">
-            <h3 className="font-semibold text-primary mb-3">Developer Tools</h3>
+            <h3 className="font-semibold text-primary mb-3">For Developers and Researchers</h3>
             <ul className="space-y-2 text-secondary text-sm">
-              <li>MCP server with 11 research tools</li>
-              <li>REST API for all data</li>
-              <li>Atom feeds (gallery, new books)</li>
-              <li>Embedding-based similarity search</li>
-              <li>Full-text search with alias expansion</li>
+              <li>MCP server lets AI agents search and cite Source Library directly</li>
+              <li>IIIF Presentation API 3.0 manifests for every book</li>
+              <li>REST API for programmatic access to all data</li>
+              <li>Atom feeds for new books and gallery images</li>
+              <li>Import from 13 digital library sources worldwide</li>
             </ul>
           </div>
         </div>
