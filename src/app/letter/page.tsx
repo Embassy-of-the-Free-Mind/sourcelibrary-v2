@@ -40,37 +40,38 @@ export default function LetterPage() {
         </p>
 
         {/* ── Why It Matters ── */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">Why This Matters Now</h2>
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">Why This Matters</h2>
 
         <p className="text-secondary leading-relaxed mb-4">
-          The first Renaissance was, at its core, a translation project. When Ficino translated the{' '}
-          <em>Corpus Hermeticum</em> for Cosimo de&apos; Medici in 1463, he didn&apos;t just render Greek into
-          Latin &mdash; he made an entire tradition of thought accessible to a civilization that had lost
-          touch with it. That single act of recovery helped ignite a transformation in art, science,
-          philosophy, and the Western understanding of what it means to be human.
+          The scientific revolution didn&apos;t emerge from nothing. Copernicus read Hermes Trismegistus.
+          Kepler described himself as a &ldquo;priest of God in the book of nature&rdquo; and drew on
+          Pythagorean harmonic theory. Newton spent more time on alchemical experiments than on physics.
+          Leibniz studied the Kabbalah. The intellectual context for the greatest acceleration of progress
+          in Western history was a body of literature that is, today, mostly untranslated and unread.
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          Today, we face a different kind of forgetting. The intellectual traditions that shaped
-          the modern world &mdash; Hermetic philosophy, Neoplatonism, alchemical science, Kabbalistic
-          cosmology, the Arabic transmission of Greek thought &mdash; remain locked in languages most
-          people can&apos;t read, in archives most people can&apos;t visit. Scholars spend entire careers
-          translating a single text. The vast majority of the pre-modern intellectual heritage has
-          never been translated at all.
+          This is an institutional failure, not an intellectual one. A professional critical edition of
+          a 300-page Latin text takes 5&ndash;10 years and costs $30,000&ndash;$60,000. The entire
+          field of pre-modern intellectual history is bottlenecked by translation capacity. Across all
+          of academia, maybe a few hundred pre-modern texts get newly translated into English per year.
+          The backlog is tens of thousands of volumes. At the current rate, it would take centuries.
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          This matters because the questions these thinkers wrestled with &mdash; the nature of consciousness,
-          the relationship between mind and cosmos, the possibility of transforming the self through
-          knowledge &mdash; are precisely the questions our civilization is struggling with again. As AI
-          reshapes what it means to think, as the ecological crisis forces us to rethink our relationship
-          with nature, as meaning-making becomes the central challenge of modern life, the insights of
-          five centuries of deep inquiry are not academic curiosities. They are resources we need.
+          AI changes the unit economics. Source Library processed 4,400 books in 77 days for $4,200.
+          The translations are first drafts, not critical editions &mdash; but they make texts
+          <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
+          This is the difference between having to read every book in a library to find what you need
+          and having a searchable catalog in your language.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Source Library exists to make those resources available &mdash; to scholars, to seekers, and
-          to the AI systems that are increasingly shaping how humanity thinks. Not in fifty years. Now.
+          The first Renaissance was, at its core, a translation project. When Ficino translated the{' '}
+          <em>Corpus Hermeticum</em> for Cosimo de&apos; Medici in 1463, he made an entire tradition of thought
+          accessible to a civilization that had lost touch with it. That act of recovery helped ignite a
+          transformation in art, science, and philosophy. The primary sources are still there. Most of
+          them have never been translated. Now we can.
         </p>
 
         {/* ── What you can do ── */}
