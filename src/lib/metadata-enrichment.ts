@@ -48,6 +48,7 @@ interface EnrichmentResult {
   estimated_year?: number | string;
   estimated_century?: string;
   description?: string;
+  display_title?: string | null;
   confidence?: 'high' | 'medium' | 'low';
   author?: string | null;
   first_translation?: {
@@ -96,6 +97,7 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
   "estimated_year": "<best estimate of publication year as a number, e.g. 1617. null if truly impossible to determine>",
   "estimated_century": "<e.g. '17th century' or '15th-16th century' — fallback if exact year unclear>",
   "description": "<1-2 sentence scholarly description of what this book appears to be about>",
+  "display_title": "<English translation of the book title. For non-English books, provide a clear, natural English rendering. For English books, return null. Use the conventional English name if one is well-established (e.g. 'The Chemical Wedding' for 'Chymische Hochzeit'). Otherwise translate literally.>",
   "confidence": "<high, medium, or low — how confident are you in this classification>",
   "subject_keywords": ["<3-5 subject keywords for discovery>"],
   "first_translation": {
@@ -112,7 +114,8 @@ Rules:
 - For categories, pick 1-4 using ONLY the exact slugs from the list above. Prefer specific esoteric tags over generic ones.
 - Most pre-1800 Latin, German, and other non-English texts on alchemy, Hermeticism, Kabbalah, astrology, and natural philosophy were NEVER translated to English.
 - If the book IS already in English, set first_translation status to "not_applicable"
-- For author, look for author attributions on the title page (first 1-3 pages). Common patterns: "by [Name]", authorship in Latin ("auctore [Name]", "[Name] scripsit"). Return null if truly uncertain.`;
+- For author, look for author attributions on the title page (first 1-3 pages). Common patterns: "by [Name]", authorship in Latin ("auctore [Name]", "[Name] scripsit"). Return null if truly uncertain.
+- For display_title, provide a natural English translation of the title. Use well-known English names when they exist (e.g. "Discourse on the Method" not "Discours de la méthode"). For English books, return null. Keep it concise — translate the essential title, not the full baroque subtitle.`;
 }
 
 /**
@@ -324,6 +327,14 @@ export async function enrichBookMetadata(
     changes.push({ field: 'description', previous: null, new_value: parsed.description });
   }
 
+  // Display title: set if missing and book is non-English
+  const currentDisplayTitle = (book.display_title as string) || '';
+  const effectiveLang = (updates.language as string) || currentLang;
+  if (parsed.display_title && !currentDisplayTitle && effectiveLang.toLowerCase() !== 'english') {
+    updates.display_title = parsed.display_title;
+    changes.push({ field: 'display_title', previous: null, new_value: parsed.display_title });
+  }
+
   // Subject keywords: new field
   if (parsed.subject_keywords && parsed.subject_keywords.length > 0) {
     updates.subject_keywords = parsed.subject_keywords;
@@ -374,6 +385,7 @@ export async function enrichBookMetadata(
   if (updates.year) provenance.year = { ...aiSource, previous_value: null };
   if (updates.published) provenance.published = { ...aiSource, previous_value: book.published || null };
   if (updates.categories) provenance.categories = { ...aiSource, previous_value: book.categories || [] };
+  if (updates.display_title) provenance.display_title = aiSource;
   if (updates.description) provenance.description = aiSource;
   if (updates.subject_keywords) provenance.subject_keywords = aiSource;
   updates.field_provenance = provenance;
