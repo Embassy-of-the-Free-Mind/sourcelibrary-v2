@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 // IIIF v2 canvas
 interface IIIFv2Canvas {
@@ -342,9 +343,12 @@ export const POST = withAuth(async (request, session) => {
       sourceUrl = `https://digital.bodleian.ox.ac.uk/objects/${bodleianMatch[1]}`;
     }
 
+    const slug = await generateUniqueBookSlug(db, title, author, display_title);
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
+      slug,
       tenant_id: 'default',
       title,
       display_title: display_title || manifestLabel || null,

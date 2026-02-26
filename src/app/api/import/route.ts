@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 /**
  * Import a book from a local directory
@@ -85,9 +86,12 @@ export const POST = withAuth(async (request, session) => {
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
 
+    const slug = await generateUniqueBookSlug(db, title, author, display_title);
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
+      slug,
       tenant_id: 'default',
       title,
       display_title: display_title || null,

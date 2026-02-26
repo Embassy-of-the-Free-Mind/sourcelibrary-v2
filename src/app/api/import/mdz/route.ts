@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 interface IIIFCanvas {
   '@id'?: string;
@@ -157,9 +158,12 @@ export const POST = withAuth(async (request, session) => {
       attribution = englishAttr?.['@value'] || manifest.attribution[0]?.['@value'] || null;
     }
 
+    const slug = await generateUniqueBookSlug(db, title, author, display_title);
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
+      slug,
       tenant_id: 'default',
       title,
       display_title: display_title || null,

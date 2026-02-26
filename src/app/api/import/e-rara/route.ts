@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 interface IIIFManifest {
   label?: string;
@@ -216,9 +217,12 @@ export const POST = withAuth(async (request, session) => {
       ? `https://www.e-rara.ch/doi/${doi}`
       : `https://www.e-rara.ch/content/titleinfo/${numericId}`;
 
+    const slug = await generateUniqueBookSlug(db, title, author);
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
+      slug,
       tenant_id: 'default',
       title,
       display_title: null,

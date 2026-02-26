@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 /**
  * Import a book from Internet Archive
@@ -148,9 +149,12 @@ export const POST = withAuth(async (request, session) => {
     const contributor = typeof iaMetadata.contributor === 'string' ? stripHtml(iaMetadata.contributor) : null;
     const sponsor = typeof iaMetadata.sponsor === 'string' ? stripHtml(iaMetadata.sponsor) : null;
 
+    const slug = await generateUniqueBookSlug(db, title, author, display_title);
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
+      slug,
       tenant_id: 'default',
       title,
       display_title: display_title || null,

@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 export const maxDuration = 120;
 
@@ -214,9 +215,12 @@ export const POST = withAuth(async (request, session) => {
     const bookIdStr = bookId.toHexString();
     const sourceUrl = `https://www.loc.gov/item/${lccn}/`;
 
+    const slug = await generateUniqueBookSlug(db, bookTitle, bookAuthor, display_title);
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
+      slug,
       tenant_id: 'default',
       title: bookTitle,
       display_title: display_title || null,
