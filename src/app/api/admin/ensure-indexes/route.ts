@@ -559,6 +559,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Pages - stale translation detection (pipeline cron aggregation)
+    // Query: pages.aggregate({ book_id $in, ocr.model, translation.model })
+    try {
+      await db.collection('pages').createIndex(
+        { book_id: 1, 'ocr.model': 1, 'translation.model': 1 },
+        { name: 'pages_stale_translation_idx', background: true }
+      );
+      results['pages.pages_stale_translation_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_stale_translation_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Analytics pageviews - timestamp for date range queries
     // Query: { timestamp: { $gte } } used by all traffic aggregations
     try {
