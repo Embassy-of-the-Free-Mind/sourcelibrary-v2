@@ -19,21 +19,29 @@ export const metadata: Metadata = {
   },
 };
 
-// Map fine-grained categories → broad traditions for color coding
-const CATEGORY_TO_TRADITION: Record<string, string> = {
-  hermeticism: 'hermeticism', alchemy: 'hermeticism', 'spiritual-alchemy': 'hermeticism',
-  paracelsian: 'hermeticism', 'prisca-theologia': 'hermeticism',
-  philosophy: 'philosophy', neoplatonism: 'philosophy', 'florentine-platonism': 'philosophy',
-  pythagoreanism: 'philosophy', Aristotelianism: 'philosophy',
-  'ritual-magic': 'magic', 'natural-magic': 'magic', astrology: 'magic',
-  divination: 'magic', witchcraft: 'magic', 'Angel Magic': 'magic', 'Astrological Magic': 'magic',
-  theology: 'mysticism', mysticism: 'mysticism', 'christian-mysticism': 'mysticism',
-  'biblical-studies': 'mysticism',
-  'jewish-kabbalah': 'kabbalah', 'christian-cabala': 'kabbalah',
-  rosicrucianism: 'rosicrucianism', freemasonry: 'rosicrucianism', theosophy: 'rosicrucianism',
-  'natural-philosophy': 'science', medicine: 'science', astronomy: 'science',
-  mathematics: 'science', chemistry: 'science', botany: 'science', Anatomy: 'science',
-};
+// Map book language → cultural tradition for color coding
+function languageToTradition(lang: string | undefined | null): string | null {
+  if (!lang) return null;
+  const l = lang.toLowerCase();
+  if (l.includes('sanskrit') || l.includes('tamil') || l.includes('hindi') ||
+      l.includes('telugu') || l.includes('punjabi') || l.includes('avestan')) return 'indian';
+  if (l.includes('chinese') || l.includes('japanese') || l.includes('korean') ||
+      l.includes('tibetan') || l.includes('burmese') || l.includes('javanese') ||
+      l.includes('malay')) return 'east_asian';
+  if (l.includes('arabic') || l.includes('persian') || l.includes('turkish')) return 'islamic';
+  if (l.includes('hebrew') || l.includes('talmud')) return 'jewish';
+  if (l.includes('syriac') || l.includes('armenian') || l.includes('aramaic') ||
+      l.includes('ethiopic') || l.includes('coptic') || l.includes('ge\'ez') ||
+      l.includes('demotic') || l.includes('egyptian')) return 'near_eastern';
+  if (/\bgreek\b/.test(l) && !l.includes('latin') && !l.includes('english') &&
+      !l.includes('german') && !l.includes('french')) return 'classical';
+  if (l.includes('navajo') || l.includes('maori') || l.includes('maya') ||
+      l.includes('nahuatl') || l.includes('iroquoi') || l.includes('haida') ||
+      l.includes('algonq') || l.includes('hopi') || l.includes('lenape') ||
+      l.includes('tsimshian') || l.includes('mixtec') || l.includes('nuxalk') ||
+      l.includes('k\'iche')) return 'indigenous';
+  return 'european';
+}
 
 async function fetchTimelineData() {
   const db = await getDb();
@@ -66,7 +74,7 @@ async function fetchTimelineData() {
     ])
     .toArray();
 
-  // Build book_id → categories map from books collection
+  // Build book_id → language map from books collection
   const allBookIds = new Set<string>();
   for (const e of entities) {
     for (const b of (e.books as { book_id: string }[]) || []) {
@@ -81,30 +89,27 @@ async function fetchTimelineData() {
     .map((id) => new ObjectId(id));
   const stringIds = bookIdArr.filter((id) => !/^[a-f0-9]{24}$/.test(id));
 
-  const bookCats = await db.collection('books').find(
+  const bookDocs = await db.collection('books').find(
     { $or: [
       ...(objectIds.length ? [{ _id: { $in: objectIds } }] : []),
       ...(stringIds.length ? [{ _id: { $in: stringIds as unknown as ObjectId[] } }] : []),
     ] },
-    { projection: { _id: 1, categories: 1 } }
+    { projection: { _id: 1, language: 1 } }
   ).toArray();
 
-  const bookCatMap = new Map<string, string[]>();
-  for (const b of bookCats) {
-    const cats = (b.categories as string[]) || [];
-    bookCatMap.set(String(b._id), cats);
+  const bookLangMap = new Map<string, string>();
+  for (const b of bookDocs) {
+    if (b.language) bookLangMap.set(String(b._id), b.language as string);
   }
 
-  // Compute dominant tradition for an entity from its books' categories
+  // Compute dominant cultural tradition for an entity from its books' languages
   function getDominantTradition(books: { book_id: string }[] | undefined): string {
     if (!books || books.length === 0) return 'other';
     const counts: Record<string, number> = {};
     for (const b of books) {
-      const cats = bookCatMap.get(b.book_id) || [];
-      for (const cat of cats) {
-        const tradition = CATEGORY_TO_TRADITION[cat];
-        if (tradition) counts[tradition] = (counts[tradition] || 0) + 1;
-      }
+      const lang = bookLangMap.get(b.book_id);
+      const tradition = languageToTradition(lang);
+      if (tradition) counts[tradition] = (counts[tradition] || 0) + 1;
     }
     let best = 'other';
     let bestCount = 0;

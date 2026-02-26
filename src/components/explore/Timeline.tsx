@@ -30,14 +30,15 @@ const TYPE_COLORS: Record<string, string> = {
 };
 
 const TRADITION_COLORS: Record<string, { color: string; label: string }> = {
-  hermeticism: { color: '#c9a86c', label: 'Alchemy & Hermeticism' },
-  philosophy:  { color: '#7c5db5', label: 'Philosophy' },
-  magic:       { color: '#9e4a3a', label: 'Magic & Astrology' },
-  mysticism:   { color: '#4a7ab5', label: 'Mysticism & Theology' },
-  kabbalah:    { color: '#5b9e8e', label: 'Kabbalah' },
-  rosicrucianism: { color: '#b55d7c', label: 'Rosicrucianism' },
-  science:     { color: '#8b9a7d', label: 'Science & Medicine' },
-  other:       { color: '#999', label: 'Other' },
+  european:     { color: '#7c5db5', label: 'European' },
+  classical:    { color: '#c9a86c', label: 'Classical Greek' },
+  islamic:      { color: '#4a9e7a', label: 'Islamic' },
+  jewish:       { color: '#5b9e8e', label: 'Jewish' },
+  indian:       { color: '#d97706', label: 'Indian' },
+  east_asian:   { color: '#dc4444', label: 'East Asian' },
+  near_eastern: { color: '#9e4a3a', label: 'Near Eastern' },
+  indigenous:   { color: '#8b9a7d', label: 'Indigenous' },
+  other:        { color: '#999', label: 'Other' },
 };
 
 const BAR_HEIGHT = 14;
@@ -353,14 +354,17 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     return `rgb(${r},${g},${b})`;
   }
 
-  // Wheel: Ctrl/Cmd+wheel = zoom, Shift+wheel = horizontal pan, plain = vertical scroll
+  // Wheel: Ctrl/Cmd+wheel = zoom, horizontal gestures = pan, plain vertical = scroll
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
-      if (e.shiftKey) {
-        // Horizontal pan
+      // Horizontal pan: Shift+scroll, or trackpad horizontal swipe (deltaX dominant)
+      const isHorizontalGesture = e.shiftKey ||
+        (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 1);
+      if (isHorizontalGesture) {
         e.preventDefault();
         const span = viewEnd - viewStart;
-        const delta = (e.deltaY || e.deltaX) * (span / svgWidth) * 1.5;
+        const rawDelta = e.shiftKey ? e.deltaY : e.deltaX;
+        const delta = rawDelta * (span / svgWidth) * 1.5;
         setViewStart((s) => Math.round(s + delta));
         setViewEnd((s) => Math.round(s + delta));
         return;
@@ -667,7 +671,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         </div>
 
         <span className="text-[10px] hidden lg:inline" style={{ color: 'var(--text-faint)' }}>
-          Ctrl+scroll to zoom &middot; Shift+scroll or drag to pan
+          Ctrl+scroll to zoom &middot; Scroll sideways or drag to pan
         </span>
       </div>
 
