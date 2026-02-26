@@ -245,7 +245,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
               <div className="text-right hidden sm:block">
                 <h1 className="text-lg font-serif">Image Gallery</h1>
                 <p className="text-stone-400 text-xs">
-                  {data?.total || 0} illustrations
+                  {(data?.total || 0).toLocaleString()} images
                 </p>
               </div>
               <ImageIcon className="w-6 h-6 text-accent-gold" />
