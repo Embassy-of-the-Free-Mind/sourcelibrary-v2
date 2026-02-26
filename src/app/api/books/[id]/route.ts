@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 
 export const preferredRegion = 'fra1';
 
@@ -20,15 +21,16 @@ export async function GET(
 
     // Book projection: nav mode only needs fields the reader uses
     const bookProjection = pagesMode === 'nav' ? {
-      _id: 0, id: 1, title: 1, display_title: 1, author: 1,
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
       published: 1, language: 1, doi: 1,
       chapters: 1,
     } : undefined;
 
-    const book = await db.collection('books').findOne({ id }, bookProjection ? { projection: bookProjection } : undefined);
-    if (!book) {
+    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined);
+    if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+    const book = result.book;
 
     // Page projections:
     // - full: all fields (for admin/processing views)
@@ -59,8 +61,9 @@ export async function GET(
       };
     }
 
+    const bookId = (book.id || book._id?.toString()) as string;
     const pages = await db.collection('pages')
-      .find({ book_id: id })
+      .find({ book_id: bookId })
       .project(projection)
       .sort({ page_number: 1 })
       .toArray();

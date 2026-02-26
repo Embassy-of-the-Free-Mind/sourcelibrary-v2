@@ -98,6 +98,20 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Books - slug lookup (SEO-friendly URLs)
+    try {
+      await db.collection('books').createIndex(
+        { slug: 1 },
+        { name: 'books_slug_idx', background: true, unique: true, sparse: true }
+      );
+      results['books.books_slug_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_slug_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Books - category filtering
     try {
       await db.collection('books').createIndex(

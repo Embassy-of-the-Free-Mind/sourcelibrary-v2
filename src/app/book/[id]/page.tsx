@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Calendar, Globe, FileText, BookText, BookMarked, User, MapPin, Lightbulb, Images, Search } from 'lucide-react';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
@@ -32,21 +33,8 @@ interface PageProps {
 // Lightweight book fetch for metadata (no pages)
 async function getBookForMetadata(id: string): Promise<Book | null> {
   const db = await getDb();
-
-  let book = await db.collection('books').findOne({ id });
-
-  if (!book) {
-    try {
-      const { ObjectId } = await import('mongodb');
-      if (ObjectId.isValid(id)) {
-        book = await db.collection('books').findOne({ _id: new ObjectId(id) });
-      }
-    } catch {
-      // Invalid ObjectId format
-    }
-  }
-
-  return book as unknown as Book | null;
+  const result = await findBookByIdOrSlug(db, id);
+  return result ? (result.book as unknown as Book) : null;
 }
 
 // Cross-book citation graph
@@ -202,7 +190,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = book.display_title || book.title;
   const ogTitle = book.published ? `${title} (${book.published})` : title;
   const description = `Read the English translation of "${title}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized and translated with AI from the original ${book.language || 'manuscript'}.`;
-  const bookUrl = `/book/${book.id}`;
+  const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
@@ -258,10 +246,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number } | null> {
+async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; matchedBySlug: boolean } | null> {
   const db = await getDb();
 
-  // Try to find by custom id field first, then by _id
   // Exclude heavy fields not used on the book detail page
   const bookProjection = {
     chapters: 0,
@@ -272,21 +259,10 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     pages_ocr: 0,
     translation_percent: 0,
   };
-  let book = await db.collection('books').findOne({ id }, { projection: bookProjection });
+  const result = await findBookByIdOrSlug(db, id, bookProjection);
 
-  // If not found, try _id (for books imported without custom id)
-  if (!book) {
-    try {
-      const { ObjectId } = await import('mongodb');
-      if (ObjectId.isValid(id)) {
-        book = await db.collection('books').findOne({ _id: new ObjectId(id) }, { projection: bookProjection });
-      }
-    } catch {
-      // Invalid ObjectId format, book not found
-    }
-  }
-
-  if (!book) return null;
+  if (!result) return null;
+  const { book, matchedBySlug } = result;
 
   // Use the book's id field, or fall back to _id string
   const bookId = book.id || book._id?.toString();
@@ -321,7 +297,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
 
   const totalBooks = await db.collection('books').estimatedDocumentCount();
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, matchedBySlug };
 }
 
 // Skeleton for book info while loading
@@ -924,31 +900,28 @@ export default async function BookDetailPage({ params, searchParams }: PageProps
   const { id } = await params;
   const query = await searchParams;
 
+  // Redirect non-slug URLs (ObjectId or id) to canonical slug URL.
+  // Done before Suspense so Google gets a proper 301.
+  const db = await getDb();
+  const lookupResult = await findBookByIdOrSlug(db, id, { slug: 1, id: 1 });
+  if (lookupResult && !lookupResult.matchedBySlug && lookupResult.book.slug) {
+    const slug = lookupResult.book.slug as string;
+    // Preserve ?page=N if present
+    const pageNum = typeof query.page === 'string' ? parseInt(query.page, 10) : NaN;
+    redirect(!isNaN(pageNum) && pageNum > 0 ? `/book/${slug}?page=${pageNum}` : `/book/${slug}`);
+  }
+
   // Redirect ?page=N to the reader
   const pageNum = typeof query.page === 'string' ? parseInt(query.page, 10) : NaN;
   if (!isNaN(pageNum) && pageNum > 0) {
-    const db0 = await getDb();
-    const targetPage = await db0.collection('pages').findOne(
-      { book_id: id, page_number: pageNum },
+    const bookId = lookupResult?.book.id || id;
+    const targetPage = await db.collection('pages').findOne(
+      { book_id: bookId, page_number: pageNum },
       { projection: { id: 1 } }
     );
     if (targetPage) {
       const pageId = targetPage.id || targetPage._id?.toString();
       redirect(`/book/${id}/page/${pageId}`);
-    }
-  }
-
-  // Redirect ObjectId URLs to canonical custom-id URLs at the server level
-  // so Google gets a proper 301 without waiting for Suspense to resolve
-  const { ObjectId } = await import('mongodb');
-  if (ObjectId.isValid(id) && id.length === 24) {
-    const db = await getDb();
-    const book = await db.collection('books').findOne(
-      { _id: new ObjectId(id) },
-      { projection: { id: 1 } }
-    );
-    if (book?.id && book.id !== id) {
-      redirect(`/book/${book.id}`);
     }
   }
 

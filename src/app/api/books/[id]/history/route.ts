@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 
 interface HistoryEvent {
   type: 'imported' | 'archived' | 'ocr' | 'translation' | 'summary' | 'index' | 'image_extraction' | 'extract_chapters' | 'metadata_enriched' | 'metadata_change' | 'edition_published' | 'admin_action';
@@ -34,37 +35,21 @@ export async function GET(
     const { id: bookId } = await params;
     const db = await getDb();
 
-    // Find the book (try custom id first, then _id)
-    let bookQuery: Record<string, unknown> = { id: bookId };
-    let book = await db.collection('books').findOne(bookQuery, {
-      projection: {
-        id: 1, title: 1, display_title: 1, author: 1,
-        created_at: 1, updated_at: 1,
-        image_source: 1, dublin_core: 1,
-        'index.generatedAt': 1,
-        'reading_summary.generated_at': 1, 'reading_summary.model': 1,
-        editions: 1, split_check: 1, summary: 1,
-        chapters_extracted_at: 1, chapters: 1,
-      }
+    // Find the book (tries slug, then id, then _id)
+    const result = await findBookByIdOrSlug(db, bookId, {
+      id: 1, title: 1, display_title: 1, author: 1,
+      created_at: 1, updated_at: 1,
+      image_source: 1, dublin_core: 1,
+      'index.generatedAt': 1,
+      'reading_summary.generated_at': 1, 'reading_summary.model': 1,
+      editions: 1, split_check: 1, summary: 1,
+      chapters_extracted_at: 1, chapters: 1,
     });
 
-    if (!book) {
-      try {
-        const { ObjectId } = await import('mongodb');
-        if (ObjectId.isValid(bookId)) {
-          book = await db.collection('books').findOne(
-            { _id: new ObjectId(bookId) },
-            { projection: { id: 1, title: 1, display_title: 1, author: 1, created_at: 1, updated_at: 1, image_source: 1, dublin_core: 1, 'index.generatedAt': 1, 'reading_summary.generated_at': 1, 'reading_summary.model': 1, editions: 1, split_check: 1, summary: 1 } }
-          );
-        }
-      } catch {
-        // Invalid ObjectId
-      }
-    }
-
-    if (!book) {
+    if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+    const book = result.book;
 
     const resolvedBookId = book.id || book._id?.toString();
 

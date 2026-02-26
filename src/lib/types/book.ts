@@ -5,6 +5,7 @@ import { PipelineState } from "./pipeline";
 
 export interface Book {
   id: string;
+  slug?: string;              // SEO-friendly URL slug (e.g., "atalanta-fugiens-maier")
   tenant_id: string;
 
   // Title fields

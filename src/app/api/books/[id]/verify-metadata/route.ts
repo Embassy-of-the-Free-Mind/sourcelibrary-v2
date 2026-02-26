@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { logMetadataChange, MetadataFieldChange } from '@/lib/book-changelog';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 
 export const dynamic = 'force-dynamic';
 
@@ -83,11 +84,12 @@ export const GET = withAuth(async (request, session, context) => {
     const { id } = await context.params;
     const db = await getDb();
 
-    // Get the book
-    const book = await db.collection('books').findOne({ id });
-    if (!book) {
+    // Get the book (supports slug, id, or ObjectId)
+    const lookupResult = await findBookByIdOrSlug(db, id);
+    if (!lookupResult) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+    const book = lookupResult.book;
 
     const matches: CatalogMatch[] = [];
 
