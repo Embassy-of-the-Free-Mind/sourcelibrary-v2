@@ -566,88 +566,11 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Priority: Stale translation retranslation — books past translation phase with outdated translations ──
-    if (hasTimeBudget(startTime)) {
-      const STALE_RETRANSLATE_LIMIT = 5; // Conservative — each book is a batch job
-      // Find books in late pipeline stages (or complete) that have pages with stale translations
-      const lateStages: PipelineAutoStatus[] = [
-        'translate_complete', 'enriching', 'enriched', 'chapters', 'chapters_complete',
-        'images_submitted', 'images_complete', 'complete',
-      ];
-      const booksInLateStages = await db.collection('books')
-        .find({ 'pipeline_auto.status': { $in: lateStages } })
-        .project({ id: 1, title: 1, language: 1, 'pipeline_auto.status': 1 })
-        .toArray();
-
-      // For each, check if it has stale translation pages (batch-efficient: single aggregation)
-      if (booksInLateStages.length > 0) {
-        const lateBookIds = booksInLateStages.map(b => b.id);
-        const staleTranslationBooks = await db.collection('pages').aggregate([
-          {
-            $match: {
-              book_id: { $in: lateBookIds },
-              'ocr.data': { $exists: true, $nin: [null, ''] },
-              'ocr.model': 'gemini-3-flash-preview',
-              'translation.data': { $exists: true, $nin: [null, ''] },
-              'translation.model': { $ne: 'gemini-3-flash-preview' },
-              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
-            },
-          },
-          { $group: { _id: '$book_id', stale_count: { $sum: 1 } } },
-          { $sort: { stale_count: -1 } },
-          { $limit: STALE_RETRANSLATE_LIMIT },
-        ]).toArray();
-
-        let staleTranslateQuotaExhausted = false;
-        for (const staleBook of staleTranslationBooks) {
-          if (!hasTimeBudget(startTime) || staleTranslateQuotaExhausted) break;
-
-          // Check there isn't already a pending/processing stale retranslation batch job
-          const existingJob = await db.collection('batch_jobs').countDocuments({
-            book_id: staleBook._id,
-            type: 'translation',
-            stale_only: true,
-            status: { $in: ['JOB_STATE_PENDING', 'JOB_STATE_RUNNING', 'pending', 'processing'] },
-          });
-          if (existingJob > 0) continue;
-
-          try {
-            const res = await fetch(`${baseUrl}/api/books/${staleBook._id}/batch-translate-async`, {
-              method: 'POST',
-              headers: getInternalHeaders(),
-              body: JSON.stringify({ staleOnly: true, limit: 500 }),
-            });
-
-            // Detect quota exhaustion — either direct 429 or quota error in 500 body
-            const staleResText = !res.ok ? await res.clone().text().catch(() => '') : '';
-            const isStaleQuota = res.status === 429 || (res.status === 500 && (
-              staleResText.includes('429') || staleResText.includes('quota') ||
-              staleResText.includes('RESOURCE_EXHAUSTED') || staleResText.includes('exhausted')
-            ));
-            if (isStaleQuota) {
-              staleTranslateQuotaExhausted = true;
-              logger.backpressure('stale_retranslate_quota', { book_id: staleBook._id });
-              break;
-            }
-
-            if (res.ok) {
-              const data = await res.json();
-              if (data.jobName) {
-                log.stale_retranslate++;
-                logger.action('stale_retranslate', 1);
-              }
-            }
-          } catch (err) {
-            const errMsg = err instanceof Error ? err.message : 'unknown';
-            if (errMsg.includes('429') || errMsg.includes('quota')) {
-              staleTranslateQuotaExhausted = true;
-              break;
-            }
-            log.errors.push(`Stale retranslate ${staleBook._id}: ${errMsg}`);
-          }
-        }
-      }
-    }
+    // ── Stale translation retranslation — DISABLED ──
+    // This aggregation scans 1,338+ books' pages (full collection scan, ~186s)
+    // and starves OCR submission for 1,523 books at archive_complete.
+    // TODO: Move to a separate daily cron with a dedicated time budget.
+    // See git history for the original implementation.
 
     // ════════════════════════════════════════════════════════════════════
     // MAIN PASS: Standard pipeline phases (enrollment through chapters)
