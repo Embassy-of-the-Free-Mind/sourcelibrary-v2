@@ -16,6 +16,7 @@ import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
 import CategoryPicker from '@/components/ui/CategoryPicker';
+import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
@@ -260,6 +261,7 @@ async function BookInfo({ id }: { id: string }) {
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
   const hasSummary = !!summaryText;
   const isComplete = ocrCount === pages.length && translatedCount === pages.length && hasSummary;
+  const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
 
   return (
     <>
@@ -461,7 +463,7 @@ async function BookInfo({ id }: { id: string }) {
                 <div className="prose-content max-w-none">
                   {summaryText!.split('\n\n').map((paragraph: string, i: number) => (
                     <p key={i} className="mb-4 last:mb-0">
-                      {paragraph}
+                      {linkEntities(paragraph, summaryEntities)}
                     </p>
                   ))}
                 </div>
