@@ -75,6 +75,12 @@ async function setPipelineStatus(
     }
   );
 
+  // Fix stale thumbnails on any transition (not just archive_complete)
+  // Books that passed archive_complete before the fix was added need this catch-all
+  if (prevStatus !== status) {
+    fixStaleThumbnail(db, bookId).catch(() => {}); // fire-and-forget, non-blocking
+  }
+
   // Log transition to audit trail (fire-and-forget)
   if (prevStatus !== status) {
     logAuditEvent({
@@ -729,7 +735,6 @@ export async function GET(request: NextRequest) {
 
         if (remaining === 0) {
           await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
-          await fixStaleThumbnail(db, book.id);
           log.archived++;
         } else {
           // Timeout: if stuck in archiving for >24h, advance anyway.
@@ -737,7 +742,6 @@ export async function GET(request: NextRequest) {
           const archiveStart = book.pipeline_auto?.started_at || book.pipeline_auto?.last_updated;
           if (archiveStart && (Date.now() - new Date(archiveStart).getTime()) > ARCHIVE_TIMEOUT_MS) {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
-            await fixStaleThumbnail(db, book.id);
             log.archived++;
             logger.decision('skip', `Archive timeout: ${book.id} (${book.title}) — ${remaining} unarchived pages, advancing after 24h`, { book_id: book.id, remaining });
           }
