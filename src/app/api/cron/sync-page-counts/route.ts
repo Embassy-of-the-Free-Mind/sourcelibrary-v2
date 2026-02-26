@@ -108,6 +108,31 @@ export async function GET(request: NextRequest) {
       updated = result.modifiedCount;
     }
 
+    // --- Fix stale thumbnails (unsplit /uploads/ URLs on books with cropped pages) ---
+    let thumbnailsFixed = 0;
+    const staleThumbBooks = await db.collection('books')
+      .find({ thumbnail: /\/uploads\// }, { projection: { id: 1 } })
+      .toArray();
+    for (const staleBook of staleThumbBooks) {
+      const croppedPages = await db.collection('pages')
+        .find({ book_id: staleBook.id, cropped_photo: { $exists: true, $ne: '' } })
+        .sort({ page_number: 1 })
+        .limit(20)
+        .project({ page_number: 1, page_type: 1, cropped_photo: 1, thumbnail_blob: 1 })
+        .toArray();
+      if (croppedPages.length === 0) continue;
+      const best = croppedPages.find(p => p.page_type === 'title-page')
+        || croppedPages.find(p => p.page_type === 'frontispiece')
+        || croppedPages.find(p => p.page_type && p.page_type !== 'blank')
+        || croppedPages[0];
+      if (best) {
+        const thumbUpdate: Record<string, string> = { thumbnail: best.cropped_photo };
+        if (best.thumbnail_blob) thumbUpdate.thumbnail_blob = best.thumbnail_blob;
+        await db.collection('books').updateOne({ id: staleBook.id }, { $set: thumbUpdate });
+        thumbnailsFixed++;
+      }
+    }
+
     // --- Sync collection book_count caches ---
     const collections = await db.collection('collections').find({}, { projection: { _id: 1, slug: 1, book_count: 1 } }).toArray();
     let collectionsUpdated = 0;
@@ -133,9 +158,9 @@ export async function GET(request: NextRequest) {
       collectionsUpdated = colResult.modifiedCount;
     }
 
-    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches), ${collectionsUpdated} collections updated in ${logger.durationMs}ms`);
+    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches), ${collectionsUpdated} collections updated, ${thumbnailsFixed} thumbnails fixed in ${logger.durationMs}ms`);
 
-    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated, collections_checked: collections.length, collections_updated: collectionsUpdated });
+    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated, collections_checked: collections.length, collections_updated: collectionsUpdated, thumbnails_fixed: thumbnailsFixed });
 
     await logger.flush();
 
@@ -146,6 +171,7 @@ export async function GET(request: NextRequest) {
       updated,
       collections_checked: collections.length,
       collections_updated: collectionsUpdated,
+      thumbnails_fixed: thumbnailsFixed,
       duration_ms: logger.durationMs,
     });
   } catch (error) {
