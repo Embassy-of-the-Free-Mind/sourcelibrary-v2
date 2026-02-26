@@ -68,10 +68,20 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
     const db = await getDb();
 
     // Step 1: Find person entities mentioned in THIS book
-    const personEntities = await db.collection('entities').find(
-      { type: 'person', 'books.book_id': bookId },
-      { projection: { name: 1, aliases: 1, books: 1 } },
-    ).toArray();
+    // Use aggregation to project only the book fields we need (book_id, book_author)
+    // — avoids pulling full books arrays (can be 1+ MB for well-connected entities)
+    const personEntities = await db.collection('entities').aggregate([
+      { $match: { type: 'person', 'books.book_id': bookId } },
+      { $project: {
+        name: 1,
+        aliases: 1,
+        books: { $map: {
+          input: '$books',
+          as: 'b',
+          in: { book_id: '$$b.book_id', book_author: '$$b.book_author' },
+        }},
+      }},
+    ]).toArray();
 
     // Step 2: For each person, check if they authored OTHER books in our library
     // Match entity name/aliases against book_author fields in the entity's books array
@@ -170,7 +180,8 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
     }));
 
     return [...directBooks, ...sharedBooks];
-  } catch {
+  } catch (err) {
+    console.error('[getRelatedBooks] Error:', err);
     return [];
   }
 });
