@@ -264,6 +264,10 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     y: number;
   } | null>(null);
 
+  // Track scrolling to prevent click-on-scroll
+  const didScrollRef = useRef(false);
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // Measure container
   useEffect(() => {
     if (!containerRef.current) return;
@@ -273,7 +277,15 @@ export default function Timeline({ entities, stats }: TimelineProps) {
       }
     });
     ro.observe(containerRef.current);
-    return () => ro.disconnect();
+
+    const el = containerRef.current;
+    const onScroll = () => {
+      didScrollRef.current = true;
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+      scrollTimerRef.current = setTimeout(() => { didScrollRef.current = false; }, 150);
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => { ro.disconnect(); el.removeEventListener('scroll', onScroll); };
   }, []);
 
   // Entities already have numeric birth_year/death_year from the server
@@ -348,16 +360,18 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     [viewStart, viewEnd, svgWidth]
   );
 
-  // Drag pan
-  const dragRef = useRef<{ startX: number; startViewStart: number; startViewEnd: number } | null>(null);
+  // Drag pan — track whether mouse moved to distinguish click vs drag
+  const dragRef = useRef<{ startX: number; startY: number; startViewStart: number; startViewEnd: number; moved: boolean } | null>(null);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       if (e.button !== 0) return;
       dragRef.current = {
         startX: e.clientX,
+        startY: e.clientY,
         startViewStart: viewStart,
         startViewEnd: viewEnd,
+        moved: false,
       };
     },
     [viewStart, viewEnd]
@@ -367,6 +381,10 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     const handleMouseMove = (e: MouseEvent) => {
       if (!dragRef.current) return;
       const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        dragRef.current.moved = true;
+      }
       const yearDelta = -(dx / svgWidth) * (dragRef.current.startViewEnd - dragRef.current.startViewStart);
       setViewStart(Math.round(dragRef.current.startViewStart + yearDelta));
       setViewEnd(Math.round(dragRef.current.startViewEnd + yearDelta));
@@ -383,15 +401,17 @@ export default function Timeline({ entities, stats }: TimelineProps) {
   }, [svgWidth]);
 
   // Touch pan
-  const touchRef = useRef<{ startX: number; startViewStart: number; startViewEnd: number } | null>(null);
+  const touchRef = useRef<{ startX: number; startY: number; startViewStart: number; startViewEnd: number; moved: boolean } | null>(null);
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
       if (e.touches.length !== 1) return;
       touchRef.current = {
         startX: e.touches[0].clientX,
+        startY: e.touches[0].clientY,
         startViewStart: viewStart,
         startViewEnd: viewEnd,
+        moved: false,
       };
     },
     [viewStart, viewEnd]
@@ -401,6 +421,10 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     (e: React.TouchEvent) => {
       if (!touchRef.current || e.touches.length !== 1) return;
       const dx = e.touches[0].clientX - touchRef.current.startX;
+      const dy = e.touches[0].clientY - touchRef.current.startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        touchRef.current.moved = true;
+      }
       const yearDelta = -(dx / svgWidth) * (touchRef.current.startViewEnd - touchRef.current.startViewStart);
       setViewStart(Math.round(touchRef.current.startViewStart + yearDelta));
       setViewEnd(Math.round(touchRef.current.startViewEnd + yearDelta));
@@ -628,6 +652,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
                     }}
                     onMouseLeave={() => setTooltip(null)}
                     onClick={() => {
+                      if (dragRef.current?.moved || touchRef.current?.moved || didScrollRef.current) return;
                       window.open(`/encyclopedia/${encodeURIComponent(p.entity.name)}`, '_blank');
                     }}
                   />
