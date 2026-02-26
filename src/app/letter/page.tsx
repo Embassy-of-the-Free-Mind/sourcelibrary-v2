@@ -23,45 +23,87 @@ export default function LetterPage() {
       <div className="prose-content max-w-none">
         <p className="text-muted text-sm mb-8">February 26, 2026 &middot; Derek Lomas, Program Director</p>
 
+        {/* ── Opening: A specific book ── */}
         <p className="text-xl text-secondary leading-relaxed mb-6">
-          In December 2025, Source Library was a Next.js scaffold with a MongoDB connection.
-          Today it holds 4,400+ books in 30+ languages with AI-powered OCR, translation,
-          and scholarly publishing — and it cost about $4,200 in AI processing to get here.
+          In 1400, an unknown Arabic scholar compiled the{' '}
+          <a href="https://sourcelibrary.org/book/6953b56577f38f6761bd979d" className="text-accent-rust hover:underline"><em>Kit&#257;b al-Bulh&#257;n</em></a>{' '}
+          &mdash; a &ldquo;Book of Wonders&rdquo; filled with zodiacal illustrations, demonic portraits,
+          and cosmological diagrams. The manuscript has been digitized by the Bodleian Library, but for
+          six centuries its Arabic text has been inaccessible to most of the world. Today, you can read
+          every page in English on Source Library. It took about fifteen minutes to process and cost $2.87.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This letter is an honest account of what we&apos;ve built, what we&apos;ve learned, and where we&apos;re going.
-          The short version: the technology works better than we hoped. The question now isn&apos;t whether
-          AI can translate historical texts — it&apos;s how to build the institution around it.
+          That book is one of 4,400. In the past 77 days, Source Library has gone from an empty database
+          to the world&apos;s largest collection of translated historical primary sources &mdash; spanning
+          30+ languages, 13 digital library sources, and more than a million and a half page images. This
+          letter explains what we&apos;ve built, what we&apos;ve learned, and what it would take to turn this
+          into a permanent institution.
         </p>
 
-        {/* ── What Exists ── */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">What Exists Today</h2>
+        {/* ── What you can do ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">What You Can Do Right Now</h2>
 
         <p className="text-secondary leading-relaxed mb-4">
-          Source Library is a web application at{' '}
-          <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>.
-          Anyone can browse the collection, read original texts alongside English translations,
-          explore a gallery of 71,000+ extracted illustrations, and search across the entire corpus.
+          Go to{' '}
+          <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>{' '}
+          and try it. Pick a book &mdash; any book. You&apos;ll see the original scanned pages side by side with
+          an English translation. You can search across the full text of the entire collection. You can browse
+          a gallery of 71,000+ extracted illustrations. You can explore an encyclopedia that links people, places,
+          and ideas across books and centuries.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-4">
-          Behind the public site is an automated pipeline that processes books from import to completion:
+        <p className="text-secondary leading-relaxed mb-6">
+          Here are a few places to start:
         </p>
 
-        <ol className="space-y-3 text-secondary mb-8 list-decimal list-inside">
-          <li><strong>Import</strong> from 13 digital library sources (Internet Archive, Gallica, Bavarian State Library, Bodleian, Vatican, Cambridge, and 7 more)</li>
-          <li><strong>Archive</strong> page images to our own storage for reliability and speed</li>
-          <li><strong>OCR</strong> with language-specific AI prompts that handle Fraktur, Latin abbreviations, multi-column layouts, and drop caps</li>
-          <li><strong>Translate</strong> to English with cross-page context continuity (or modernize Early Modern English)</li>
-          <li><strong>Enrich</strong> with AI-generated summaries, indexes of people/places/concepts, and chapter extraction</li>
-          <li><strong>Extract</strong> illustrations, emblems, and diagrams with museum-style metadata</li>
-        </ol>
+        <div className="space-y-4 mb-8">
+          {[
+            {
+              title: 'Atalanta Fugiens',
+              author: 'Michael Maier, 1618',
+              detail: 'Fifty alchemical emblems with Latin verse, musical fugues, and allegorical commentary. 229 pages, fully translated from Latin.',
+              href: 'https://sourcelibrary.org/book/69520c46ab34727b1f044141',
+            },
+            {
+              title: 'Corpus Hermeticum: Pimander',
+              author: 'Marsilio Ficino, 1481',
+              detail: 'Ficino\u2019s Latin translation of the Hermetic texts that launched the Renaissance revival of ancient theology. 96 pages.',
+              href: 'https://sourcelibrary.org/book/694f3d6cbe37f451a5324e10',
+            },
+            {
+              title: 'Three Books of Occult Philosophy',
+              author: 'Heinrich Cornelius Agrippa, 1550',
+              detail: 'The foundational encyclopedia of Renaissance magic and natural philosophy. 626 pages, fully translated from Latin.',
+              href: 'https://sourcelibrary.org/book/694bf8d2343422769f237558',
+            },
+            {
+              title: 'Sepher Maphteah Shelomo (Key of Solomon)',
+              author: 'Anonymous, 17th century',
+              detail: 'A Hebrew manuscript of ceremonial magic with diagrams and incantations. 192 pages, fully translated from Hebrew.',
+              href: 'https://sourcelibrary.org/book/695285cdab34727b1f04c25a',
+            },
+            {
+              title: 'Utriusque Cosmi Historia',
+              author: 'Robert Fludd, 1617',
+              detail: 'Fludd\u2019s illustrated history of the macrocosm and microcosm \u2014 one of the most ambitious cosmological works of the early modern period. 1,036 pages.',
+              href: 'https://sourcelibrary.org/book/6952dac677f38f6761bc683a',
+            },
+          ].map(b => (
+            <a key={b.title} href={b.href} className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors">
+              <div className="text-primary font-medium">{b.title}</div>
+              <div className="text-muted text-sm mb-1">{b.author}</div>
+              <div className="text-secondary text-sm">{b.detail}</div>
+            </a>
+          ))}
+        </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The pipeline is fully automated — a cron runs every 10 minutes, advancing books through each stage.
-          Three AWS Lambda workers handle OCR, translation, and image extraction in parallel.
-          The Gemini Batch API provides 50% cost savings on large-scale processing.
+          None of these texts had a freely available English translation before. Some had never been fully
+          translated at all. A scholar working with the Latin originals might spend years producing a
+          critical edition of one. The AI translations are not critical editions &mdash; they&apos;re first
+          drafts. But they make the texts <em>accessible</em>, and accessibility is what turns a rare book
+          collection into a living research library.
         </p>
 
         {/* ── The Numbers ── */}
@@ -86,116 +128,137 @@ export default function LetterPage() {
           ))}
         </div>
 
+        <p className="text-secondary leading-relaxed mb-4">
+          The cost figure is worth lingering on. <strong>$4,200 in total AI processing costs</strong> to OCR,
+          translate, summarize, index, and extract illustrations from 4,400+ books. The average cost to fully
+          process a single book is about <strong>$2.40</strong>. Using batch processing, it drops
+          to <strong>$1.40</strong>.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-8">
-          The average cost to fully process a book — OCR, translation, summary, index, chapter extraction,
-          image detection — is about <strong>$2.40</strong>. A 300-page Latin alchemical
-          treatise costs roughly $2.40 to go from scanned images to a searchable, translated, indexed,
-          illustrated digital edition. Using batch processing (50% discount), that drops to about $1.40.
+          For context: a professional human translation of a 300-page Latin text costs $30,000&ndash;$60,000
+          and takes months. The AI does a credible first draft in minutes for $2.40. This doesn&apos;t
+          replace scholarly translation &mdash; it <em>enables</em> it, by giving scholars a working draft to
+          refine rather than asking them to start from a blank page.
         </p>
 
-        {/* ── What We Built ── */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">What We Built (Week by Week)</h2>
+        {/* ── How It Works ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">How It Works</h2>
 
         <p className="text-secondary leading-relaxed mb-4">
-          1,024 commits in 77 days. Here are the highlights:
+          Source Library connects to 13 digital library sources worldwide &mdash; Internet Archive, Gallica,
+          the Bavarian State Library, the Bodleian, the Vatican, Cambridge, and seven more. When a book is
+          imported, the system runs it through a fully automated pipeline:
         </p>
 
-        <div className="space-y-4 mb-8">
-          {[
-            { week: 'Week 1 (Dec 12-18)', items: 'Project scaffold, MongoDB, first OCR and translation, custom prompts, split detection for two-page spreads' },
-            { week: 'Week 2 (Dec 19-25)', items: 'Internet Archive import, batch OCR, MCP server for AI research tools, scholarly edition publishing, Gemini Batch API integration, chapter extraction, 97 commits on Christmas Day' },
-            { week: 'Week 3 (Dec 26-Jan 1)', items: 'Image gallery with AI metadata, annotations and highlights, encyclopedia (cross-book entity index), Gallica and MDZ importers, social posting, XML annotation system, analytics' },
-            { week: 'Week 4 (Jan 2-8)', items: 'Gallery redesign as discovery interface, SEO with structured data, about and developers pages, cron automation, gallery magnifier, batch image extraction' },
-            { week: 'Week 5 (Jan 9-15)', items: 'Wellcome Collection, e-rara, Bodleian, Cambridge, Vatican, and HAB importers. Total library sources: 13. Unified search with diacritics support.' },
-            { week: 'Weeks 6-7 (Jan 16-Feb 3)', items: 'Gallery collections and visitor bookshelves, Atom feeds, embedding-based similarity search, materialized views for fast rendering, thumbnail pipeline' },
-            { week: 'Week 8 (Feb 4-10)', items: 'AWS Lambda workers (3 dedicated processors), SQS queue architecture, audit trail (every AI call logged), OG image improvements, homepage optimization (7.3MB to 1.4MB)' },
-            { week: 'Week 9 (Feb 11-17)', items: 'Gemini Batch API for bulk OCR, IIIF manifests, Google Scholar meta tags, search UX overhaul, automated pipeline (import to complete), 6 new importers in one day, English modernization, blog launch' },
-            { week: 'Weeks 10-11 (Feb 18-26)', items: 'Large-scale batch processing (700+ jobs), multi-key API management, pipeline quality validation, Wikidata alignment, attribution framework, strategic plan and budget' },
-          ].map(w => (
-            <div key={w.week} className="bg-white rounded-lg p-4 border border-border-light">
-              <div className="text-primary font-medium text-sm mb-1">{w.week}</div>
-              <div className="text-secondary text-sm">{w.items}</div>
-            </div>
-          ))}
-        </div>
+        <ol className="space-y-3 text-secondary mb-8 list-decimal list-inside">
+          <li><strong>Archive</strong> page images to our own storage for reliability and speed</li>
+          <li><strong>OCR</strong> with language-specific AI prompts that handle Fraktur, Latin abbreviations, multi-column layouts, and drop caps</li>
+          <li><strong>Translate</strong> to English with cross-page context continuity (or modernize Early Modern English)</li>
+          <li><strong>Enrich</strong> with AI-generated summaries, indexes of people, places, and concepts, and chapter extraction</li>
+          <li><strong>Extract</strong> illustrations, emblems, and diagrams with museum-style metadata</li>
+        </ol>
 
-        <p className="text-secondary leading-relaxed mb-4">
-          For the full development timeline with charts, see the{' '}
-          <Link href="/progress" className="text-accent-rust hover:underline">progress page</Link>.
+        <p className="text-secondary leading-relaxed mb-8">
+          The pipeline runs autonomously &mdash; a cron advances books through each stage every ten minutes.
+          Once a book is imported, no human intervention is needed until a scholar wants to review the output.
+          For the technically inclined, the{' '}
+          <Link href="/progress" className="text-accent-rust hover:underline">development timeline</Link>{' '}
+          shows how this was built over 1,024 commits in 77 days.
         </p>
 
         {/* ── What We Learned ── */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">What We Learned</h2>
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">What We&apos;ve Learned</h2>
 
-        <div className="space-y-4 mb-8">
+        <div className="space-y-6 mb-8">
           <div className="border-l-4 border-accent-sage/30 pl-6">
-            <p className="text-primary font-medium mb-1">AI translation quality is surprisingly good.</p>
-            <p className="text-secondary text-sm">
-              Gemini handles Latin, German Fraktur, Arabic, Hebrew, Classical Chinese, and more.
-              The output isn&apos;t perfect — it&apos;s a first draft — but it&apos;s good enough to make texts
-              accessible to non-specialists, which is the whole point.
+            <p className="text-primary font-medium mb-2">AI translation quality is better than expected.</p>
+            <p className="text-secondary text-sm leading-relaxed">
+              We&apos;ve processed texts in Latin, German Fraktur, Arabic, Hebrew, Classical Chinese, Dutch,
+              Italian, French, Spanish, and more. The output isn&apos;t perfect &mdash; specialists will find
+              errors, and the AI sometimes misses period-specific idioms. But for making a 16th-century Latin
+              treatise comprehensible to a graduate student, or giving a researcher their first orientation in
+              an unfamiliar text, the quality is genuinely useful. The translations are first drafts, not final
+              products &mdash; but first drafts are what scholarship needs most.
             </p>
           </div>
 
           <div className="border-l-4 border-accent-rust/30 pl-6">
-            <p className="text-primary font-medium mb-1">The cost is negligible. The people aren&apos;t.</p>
-            <p className="text-secondary text-sm">
-              $4,200 in AI costs for 4,400 books. But someone has to decide what to scan, validate the output,
-              engage scholars, write grants, and build institutional relationships. That&apos;s where the real
-              investment goes.
+            <p className="text-primary font-medium mb-2">The technology is not the hard part.</p>
+            <p className="text-secondary text-sm leading-relaxed">
+              Building the pipeline took two months and $4,200. But technology without scholarship is a
+              curiosity. Someone has to decide which texts matter, validate the AI output, contextualize
+              the translations, and connect the work to living research communities. That requires people &mdash;
+              scholars, librarians, editors &mdash; and people require sustained funding. The technology is
+              ready. The institutional structure is what needs building.
             </p>
           </div>
 
           <div className="border-l-4 border-accent-violet/30 pl-6">
-            <p className="text-primary font-medium mb-1">Scanning is the bottleneck, not translation.</p>
-            <p className="text-secondary text-sm">
-              The EFM holds ~25,000 volumes, most unscanned. AI can translate a scan in minutes. But creating
-              a high-quality scan of a 500-year-old book requires physical access, careful handling, and
-              professional equipment. This is where funding matters most.
+            <p className="text-primary font-medium mb-2">Scanning, not AI, is the bottleneck.</p>
+            <p className="text-secondary text-sm leading-relaxed">
+              The Embassy of the Free Mind holds approximately 25,000 volumes. Most are unscanned. AI can
+              translate a scan in minutes, but creating a high-quality scan of a 500-year-old binding
+              requires physical access, careful handling, and professional equipment. The books that need
+              translating most are the books that haven&apos;t been digitized yet. This is where funding
+              has the highest return.
             </p>
           </div>
 
           <div className="border-l-4 border-accent-gold/30 pl-6">
-            <p className="text-primary font-medium mb-1">Scholar engagement is what turns this into an institution.</p>
-            <p className="text-secondary text-sm">
-              Without scholars validating, correcting, and building on the AI output, Source Library is a
-              tech demo. With them, it&apos;s a research institution producing citable scholarship.
+            <p className="text-primary font-medium mb-2">Open access changes who can participate.</p>
+            <p className="text-secondary text-sm leading-relaxed">
+              When Pico della Mirandola&apos;s{' '}
+              <a href="https://sourcelibrary.org/book/694f8d99efce46492e19fdad" className="text-accent-rust hover:underline"><em>900 Theses</em></a>{' '}
+              is only available in a $200 academic edition or behind a university paywall, the study of
+              Renaissance philosophy is limited to people at well-funded institutions. When it&apos;s freely
+              available with a readable English translation, a student in Lagos or Lima can engage with the
+              same primary sources as a professor at the Warburg Institute. That&apos;s the point.
             </p>
           </div>
         </div>
 
         {/* ── Where We're Going ── */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">Where We&apos;re Going</h2>
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">What Comes Next</h2>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          Source Library is a program of the{' '}
+          <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
+          in Amsterdam, which holds one of the world&apos;s great collections of Hermetic, alchemical, and
+          esoteric manuscripts. The technology works. The collection exists. What&apos;s needed now is the
+          institutional structure to sustain it.
+        </p>
 
         <p className="text-secondary leading-relaxed mb-4">
           We&apos;ve published a{' '}
           <Link href="/plan" className="text-accent-rust hover:underline">full strategic plan and budget</Link>{' '}
-          built from first principles. The summary:
+          built from first principles:
         </p>
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">
           <p className="text-stone-700 leading-relaxed mb-4">
-            <strong>$1.2M/year for 3 years</strong> to build Source Library into a real institution:
+            <strong>$1.2M/year for 3 years</strong> to build Source Library into a permanent institution:
           </p>
-          <ul className="text-stone-600 text-sm space-y-1">
-            <li>3-person core team ($260K)</li>
-            <li>Scan 1,000-1,300 books/year from EFM and partner libraries ($250K)</li>
-            <li>Advisory board, 6 visiting scholars, 25 scholarly editions, 5 research commissions ($220K)</li>
-            <li>Press, documentary series, patron program, touring exhibition ($200K)</li>
-            <li>AI processing and infrastructure ($100K)</li>
+          <ul className="text-stone-600 text-sm space-y-2">
+            <li><strong>Scanning</strong> &mdash; 1,000&ndash;1,300 books/year from EFM and partner libraries ($250K)</li>
+            <li><strong>Core team</strong> &mdash; Program director, digital humanities lead, research coordinator ($260K)</li>
+            <li><strong>Scholarly engagement</strong> &mdash; Advisory board, 6 visiting scholars, 25 scholarly editions, 5 research commissions ($220K)</li>
+            <li><strong>Public engagement</strong> &mdash; Press, documentary series, patron program, touring exhibition ($200K)</li>
+            <li><strong>Infrastructure</strong> &mdash; AI processing, hosting, preservation ($100K)</li>
           </ul>
         </div>
 
         <p className="text-secondary leading-relaxed mb-4">
-          The pitch is simple: <strong>$1.2M/year makes Source Library the world&apos;s leading translated
-          primary source library within 3 years.</strong> No one else is doing this at any budget.
-          The technology works. The collection exists. The institutional home is ready.
+          The proposition is straightforward: <strong>$1.2M/year would make Source Library the world&apos;s
+          leading translated primary source library within three years.</strong> No comparable effort exists
+          at any budget. The technology has been proven. The physical collection &mdash; 25,000 volumes,
+          many unscanned, spanning five centuries of intellectual history &mdash; is waiting.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We&apos;re seeking an anchor funder (Arcadia Fund or Mellon Foundation) supplemented by NEH grants,
-          tech philanthropy, and a patron program. If you&apos;re interested in supporting this work —
-          as a funder, scholar, or partner institution — we&apos;d love to hear from you.
+          We are seeking an anchor funder supplemented by NEH grants, tech philanthropy, and a patron program.
+          If you are interested in this work &mdash; as a funder, scholar, or partner institution &mdash;
+          we would welcome the conversation.
         </p>
 
         {/* Sign-off */}
@@ -223,7 +286,7 @@ export default function LetterPage() {
             href="/progress"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
-            Development Progress
+            Development Timeline
           </Link>
           <Link
             href="/fulldata"
