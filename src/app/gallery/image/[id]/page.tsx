@@ -326,11 +326,11 @@ export default function ImageDetailPage({
       <header className="fixed top-0 left-0 right-0 z-40 bg-stone-900/90 backdrop-blur-sm border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link
-            href="/gallery"
+            href={data?.galleryUrl || '/gallery'}
             className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span className="hidden sm:inline">All images</span>
+            <span className="hidden sm:inline">Back to gallery</span>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -1016,7 +1016,7 @@ export default function ImageDetailPage({
                   className="flex items-center justify-center gap-2 py-2 px-4 bg-accent-gold-dark/30 hover:bg-accent-gold-dark/50 text-accent-gold rounded-lg text-sm transition-colors border border-accent-gold-dark/30"
                 >
                   <Images className="w-4 h-4" />
-                  Browse full gallery
+                  Browse all images
                 </Link>
               </div>
 

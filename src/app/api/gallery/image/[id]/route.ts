@@ -129,6 +129,43 @@ export async function GET(
     const detections = pageData.detected_images || [];
 
     if (detectionIndex < 0 || detectionIndex >= detections.length) {
+      // Stale gallery_images entry — detected_images array shrank after re-extraction.
+      // Fall back to gallery_images materialized data (same pattern as missing pages above).
+      const galleryImageId = `${pageId}-${detectionIndex}`;
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      if (galleryDoc) {
+        return NextResponse.json({
+          id,
+          pageId,
+          detectionIndex,
+          imageUrl: galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
+          fullPageUrl: galleryDoc.image_url,
+          highResUrl: galleryDoc.extracted_url || galleryDoc.image_url,
+          extractedUrl: galleryDoc.extracted_url ?? null,
+          thumbnailUrl: galleryDoc.thumbnail_url ?? null,
+          rotation: galleryDoc.rotation ?? 0,
+          description: galleryDoc.description,
+          type: galleryDoc.type,
+          confidence: galleryDoc.confidence,
+          galleryQuality: galleryDoc.gallery_quality ?? null,
+          museumDescription: galleryDoc.museum_description ?? null,
+          metadata: galleryDoc.metadata ?? null,
+          bbox: galleryDoc.bbox,
+          book: {
+            id: pageData.book_id,
+            title: pageData.book?.display_title || pageData.book?.title || 'Unknown',
+            author: pageData.book?.author,
+            year: pageData.book?.published,
+          },
+          pageNumber: pageData.page_number,
+          readUrl: `/book/${pageData.book_id}/page/${pageId}`,
+          galleryUrl: `/gallery?bookId=${pageData.book_id}`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
+          stale: true, // Signal that detection index is stale
+        }, {
+          headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+        });
+      }
       return NextResponse.json(
         { error: 'Detection index out of range' },
         { status: 404 }

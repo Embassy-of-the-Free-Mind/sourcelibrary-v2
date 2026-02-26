@@ -212,14 +212,14 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
             book_id: { $in: collectionBookIds },
             gallery_quality: { $gte: 0.8 },
             type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            // Filter out tiny detections (bbox area < 10% of page)
+            // Filter out tiny detections (bbox area < 10% of page, 0-1 normalized)
             $expr: {
               $gt: [
                 { $multiply: [
-                  { $subtract: [{ $ifNull: ['$bbox.x2', 1000] }, { $ifNull: ['$bbox.x1', 0] }] },
-                  { $subtract: [{ $ifNull: ['$bbox.y2', 1000] }, { $ifNull: ['$bbox.y1', 0] }] },
+                  { $ifNull: ['$bbox.width', 1] },
+                  { $ifNull: ['$bbox.height', 1] },
                 ] },
-                100000, // 10% of 1000x1000 coordinate space
+                0.1,
               ],
             },
           })
