@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Give Claude access to thousands of rare historical texts via MCP Server. 14 research tools: full-text search, translation search, bulk reading, entity knowledge graph, AI-generated indexes, DOI citations, and 50,000+ historical illustrations. No API key needed.',
+  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 14 research tools, CLI + MCP server, no API key needed.',
   alternates: {
     canonical: '/developers',
   },
@@ -80,7 +80,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Give Claude access to thousands of rare historical texts. 14 research tools, no API key needed."
+          subtitle="Search, read, and cite 1,200+ rare historical texts. CLI + MCP server, 14 research tools, no API key needed."
         />
       }
     >
@@ -93,7 +93,7 @@ export default function DevelopersPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-semibold text-primary">MCP Server</h2>
-          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v2.4</span>
+          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v3.0</span>
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
@@ -183,6 +183,68 @@ export default function DevelopersPage() {
               <p className="text-xs text-muted mt-2">Uses: <code className="text-accent-rust">{ex.tools}</code></p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* CLI Section */}
+      <section className="mb-16">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-accent-sage/15 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-accent-sage-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-semibold text-primary">Command Line</h2>
+          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">NEW</span>
+        </div>
+
+        <p className="text-secondary mb-6 max-w-2xl">
+          Same 14 tools as the MCP server, but as a standalone CLI with human-friendly colored output.
+          Pipe with <code className="text-accent-rust">--json</code> for scripts.
+        </p>
+
+        <div className="space-y-4 mb-8">
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+              <span className="text-sm font-medium text-stone-700">Install globally</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`npm install -g @source-library/mcp-server
+source-library search "philosopher's stone"`}
+            </pre>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+              <span className="text-sm font-medium text-stone-700">Or use directly with npx</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`npx @source-library/mcp-server search "prima materia" --language=Latin`}
+            </pre>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-primary mb-4">Examples</h3>
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
+          <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`# Search the collection
+source-library search "Paracelsus" --language=German
+
+# Search inside translations
+source-library translations "harmony of the spheres"
+
+# Get a citable quote
+source-library quote 694f49d3... --page=57
+
+# Read a book
+source-library text 694f49d3... --from=1 --to=50
+
+# Browse the gallery
+source-library images --subject=alchemy --type=emblem
+
+# JSON output for piping
+source-library search "alchemy" --json | jq .results`}
+          </pre>
         </div>
       </section>
 
