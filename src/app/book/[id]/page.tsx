@@ -144,40 +144,45 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
     }
 
     // Step 4: Fill remaining slots with entity-overlap books (shared context)
-    const directIds = new Set(directBooks.map(b => b.id));
-    const sharedResults = await db.collection('entities').aggregate([
-      { $match: { 'books.book_id': bookId } },
-      { $unwind: '$books' },
-      { $match: { 'books.book_id': { $ne: bookId, $nin: [...directIds] } } },
-      { $group: {
-        _id: '$books.book_id',
-        title: { $first: '$books.book_title' },
-        author: { $first: '$books.book_author' },
-        shared_entities: { $sum: 1 },
-      }},
-      { $match: { shared_entities: { $gte: 3 } } },
-      { $sort: { shared_entities: -1 as const } },
-      { $limit: 10 - directBooks.length },
-      { $lookup: {
-        from: 'books',
-        localField: '_id',
-        foreignField: 'id',
-        pipeline: [{ $project: { published: 1, year: 1, display_title: 1, hidden: 1 } }],
-        as: 'book_doc',
-      }},
-      { $unwind: { path: '$book_doc', preserveNullAndEmptyArrays: true } },
-      { $match: { 'book_doc.hidden': { $ne: true } } },
-    ]).toArray();
+    // Skip if direct citations already fill 10+ slots
+    const sharedSlots = Math.max(0, 10 - directBooks.length);
+    let sharedBooks: CitedBook[] = [];
+    if (sharedSlots > 0) {
+      const directIds = new Set(directBooks.map(b => b.id));
+      const sharedResults = await db.collection('entities').aggregate([
+        { $match: { 'books.book_id': bookId } },
+        { $unwind: '$books' },
+        { $match: { 'books.book_id': { $ne: bookId, $nin: [...directIds] } } },
+        { $group: {
+          _id: '$books.book_id',
+          title: { $first: '$books.book_title' },
+          author: { $first: '$books.book_author' },
+          shared_entities: { $sum: 1 },
+        }},
+        { $match: { shared_entities: { $gte: 3 } } },
+        { $sort: { shared_entities: -1 as const } },
+        { $limit: sharedSlots },
+        { $lookup: {
+          from: 'books',
+          localField: '_id',
+          foreignField: 'id',
+          pipeline: [{ $project: { published: 1, year: 1, display_title: 1, hidden: 1 } }],
+          as: 'book_doc',
+        }},
+        { $unwind: { path: '$book_doc', preserveNullAndEmptyArrays: true } },
+        { $match: { 'book_doc.hidden': { $ne: true } } },
+      ]).toArray();
 
-    const sharedBooks: CitedBook[] = sharedResults.map(r => ({
-      id: r._id as string,
-      title: (r.book_doc?.display_title || r.title) as string,
-      author: (r.author || 'Unknown') as string,
-      published: r.book_doc?.published as string | undefined,
-      year: r.book_doc?.year as number | undefined,
-      type: 'shared' as const,
-      shared_entities: r.shared_entities as number,
-    }));
+      sharedBooks = sharedResults.map(r => ({
+        id: r._id as string,
+        title: (r.book_doc?.display_title || r.title) as string,
+        author: (r.author || 'Unknown') as string,
+        published: r.book_doc?.published as string | undefined,
+        year: r.book_doc?.year as number | undefined,
+        type: 'shared' as const,
+        shared_entities: r.shared_entities as number,
+      }));
+    }
 
     return [...directBooks, ...sharedBooks];
   } catch (err) {
