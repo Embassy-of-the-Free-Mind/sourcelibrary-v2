@@ -72,7 +72,7 @@ export default function HeroSection() {
             Unlock a New Renaissance of Ancient Knowledge
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            The Source Library is scanning and translating thousands of rare, ancient texts to make them accessible to scholars, seekers, and AI.
+            Five centuries of lost knowledge&mdash;in alchemy, Hermetica, Kabbalah, natural philosophy, and the roots of modern science&mdash;translated and freely accessible for the first time.
           </p>
 
           {/* Unified Search */}

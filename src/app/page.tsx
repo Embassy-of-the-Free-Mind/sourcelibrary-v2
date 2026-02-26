@@ -193,11 +193,29 @@ export default async function HomePage() {
       <section id="about" className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
-            The Renaissance was written in Latin. To create a second Renaissance, we want to start by translating the first.
+            The first Renaissance began when Cosimo de&apos; Medici asked a scholar to translate a single manuscript. We&apos;re translating all of them.
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-            Welcome to the world&apos;s largest collection of premodern translations. The Source Library is an initiative of the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica&mdash;one of the world&apos;s most important collections of rare, esoteric Renaissance works. We seek to translate these works and make them accessible to scholars, seekers, and frontier AI systems that will shape how future generations think.
-          </p>
+          <div className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed">
+            <p>
+              Five centuries of humanity&apos;s deepest thinking about consciousness, nature, and the divine
+              sit locked in Latin, Arabic, Hebrew, and early vernacular languages&mdash;unread, untranslated,
+              inaccessible. These aren&apos;t obscure footnotes. They are the roots of modern science,
+              psychology, philosophy of mind, and the perennial questions about what it means to be human.
+            </p>
+            <p>
+              Source Library is recovering this knowledge. Using AI to translate at a scale no human team
+              could match, we are building the world&apos;s largest open-access collection of translated
+              primary sources&mdash;so that scholars, seekers, and the AI systems shaping our future can
+              draw on the full depth of the human intellectual tradition, not just the fraction that made
+              it into English.
+            </p>
+            <p className="text-gray-500 text-base">
+              A program of the{' '}
+              <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
+              in Amsterdam, home to the Bibliotheca Philosophica Hermetica&mdash;one of the world&apos;s most
+              important collections of Hermetic, alchemical, and esoteric manuscripts.
+            </p>
+          </div>
         </div>
       </section>
 

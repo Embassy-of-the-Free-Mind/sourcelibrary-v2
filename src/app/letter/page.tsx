@@ -34,11 +34,43 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          That book is one of 4,400. In the past 77 days, Source Library has gone from an empty database
-          to the world&apos;s largest collection of translated historical primary sources &mdash; spanning
-          30+ languages, 13 digital library sources, and more than a million and a half page images. This
-          letter explains what we&apos;ve built, what we&apos;ve learned, and what it would take to turn this
-          into a permanent institution.
+          That book is one of 4,400. In 77 days, Source Library has become the world&apos;s largest
+          collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
+          library sources, and more than a million and a half page images.
+        </p>
+
+        {/* ── Why It Matters ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">Why This Matters Now</h2>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          The first Renaissance was, at its core, a translation project. When Ficino translated the{' '}
+          <em>Corpus Hermeticum</em> for Cosimo de&apos; Medici in 1463, he didn&apos;t just render Greek into
+          Latin &mdash; he made an entire tradition of thought accessible to a civilization that had lost
+          touch with it. That single act of recovery helped ignite a transformation in art, science,
+          philosophy, and the Western understanding of what it means to be human.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          Today, we face a different kind of forgetting. The intellectual traditions that shaped
+          the modern world &mdash; Hermetic philosophy, Neoplatonism, alchemical science, Kabbalistic
+          cosmology, the Arabic transmission of Greek thought &mdash; remain locked in languages most
+          people can&apos;t read, in archives most people can&apos;t visit. Scholars spend entire careers
+          translating a single text. The vast majority of the pre-modern intellectual heritage has
+          never been translated at all.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          This matters because the questions these thinkers wrestled with &mdash; the nature of consciousness,
+          the relationship between mind and cosmos, the possibility of transforming the self through
+          knowledge &mdash; are precisely the questions our civilization is struggling with again. As AI
+          reshapes what it means to think, as the ecological crisis forces us to rethink our relationship
+          with nature, as meaning-making becomes the central challenge of modern life, the insights of
+          five centuries of deep inquiry are not academic curiosities. They are resources we need.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Source Library exists to make those resources available &mdash; to scholars, to seekers, and
+          to the AI systems that are increasingly shaping how humanity thinks. Not in fifty years. Now.
         </p>
 
         {/* ── What you can do ── */}
@@ -255,8 +287,13 @@ export default function LetterPage() {
           many unscanned, spanning five centuries of intellectual history &mdash; is waiting.
         </p>
 
+        <p className="text-secondary leading-relaxed mb-4">
+          Cosimo de&apos; Medici funded one translator working on one manuscript, and it helped launch
+          the Renaissance. The opportunity before us is to do what Cosimo did &mdash; but for thousands
+          of texts at once, making them freely available to the entire world.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-8">
-          We are seeking an anchor funder supplemented by NEH grants, tech philanthropy, and a patron program.
           If you are interested in this work &mdash; as a funder, scholar, or partner institution &mdash;
           we would welcome the conversation.
         </p>
