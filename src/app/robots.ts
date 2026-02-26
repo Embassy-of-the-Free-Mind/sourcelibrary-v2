@@ -20,10 +20,6 @@ export default function robots(): MetadataRoute.Robots {
       // These companies should use our API or MCP server instead.
       // See https://sourcelibrary.org/terms for licensing details.
       {
-        userAgent: 'Google-Extended',
-        disallow: '/',
-      },
-      {
         userAgent: 'CCBot',
         disallow: '/',
       },
