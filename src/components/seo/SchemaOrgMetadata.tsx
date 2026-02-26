@@ -23,6 +23,9 @@ export default function SchemaOrgMetadata({
   baseUrl = BASE_URL,
   currentPage,
 }: SchemaOrgMetadataProps) {
+  // Canonical book path segment (slug preferred for SEO)
+  const bookPath = book.slug || book.id;
+
   // Composition date from source work timeline (if available)
   const compositionLayer = book.source_work_dates?.find(l => l.type === 'composition');
 
@@ -34,7 +37,7 @@ export default function SchemaOrgMetadata({
   // Original work metadata
   const originalWork = {
     '@type': 'Book',
-    '@id': `${baseUrl}/book/${book.id}#original`,
+    '@id': `${baseUrl}/book/${bookPath}#original`,
     name: book.title,
     author: {
       '@type': 'Person',
@@ -89,9 +92,9 @@ export default function SchemaOrgMetadata({
   // Translation metadata (if we have translations)
   const translationWork = translatedCount > 0 ? {
     '@type': 'CreativeWork',
-    '@id': `${baseUrl}/book/${book.id}#translation`,
+    '@id': `${baseUrl}/book/${bookPath}#translation`,
     name: `English Translation of ${book.display_title || book.title}`,
-    translationOfWork: { '@id': `${baseUrl}/book/${book.id}#original` },
+    translationOfWork: { '@id': `${baseUrl}/book/${bookPath}#original` },
     inLanguage: 'en',
     isAccessibleForFree: true,
     ...(translators?.length
@@ -133,8 +136,8 @@ export default function SchemaOrgMetadata({
 
   // Main page metadata
   const pageUrl = currentPage
-    ? `${baseUrl}/book/${book.id}/page/${currentPage}`
-    : `${baseUrl}/book/${book.id}`;
+    ? `${baseUrl}/book/${bookPath}/page/${currentPage}`
+    : `${baseUrl}/book/${bookPath}`;
 
   const webPage = {
     '@type': 'WebPage',
@@ -144,7 +147,7 @@ export default function SchemaOrgMetadata({
       : book.display_title || book.title,
     description: getDescription(book, translatedCount, pageCount),
     url: pageUrl,
-    mainEntity: translationWork ? { '@id': `${baseUrl}/book/${book.id}#translation` } : { '@id': `${baseUrl}/book/${book.id}#original` },
+    mainEntity: translationWork ? { '@id': `${baseUrl}/book/${bookPath}#translation` } : { '@id': `${baseUrl}/book/${bookPath}#original` },
     ...(book.thumbnail && { thumbnailUrl: book.thumbnail }),
   };
 
@@ -160,7 +163,7 @@ export default function SchemaOrgMetadata({
       '@type': 'ListItem',
       position: 2,
       name: book.display_title || book.title,
-      item: `${baseUrl}/book/${book.id}`,
+      item: `${baseUrl}/book/${bookPath}`,
     },
   ];
 
@@ -170,7 +173,7 @@ export default function SchemaOrgMetadata({
       '@type': 'ListItem',
       position: 3,
       name: `Page ${currentPage}`,
-      item: `${baseUrl}/book/${book.id}/page/${currentPage}`,
+      item: `${baseUrl}/book/${bookPath}/page/${currentPage}`,
     });
   }
 

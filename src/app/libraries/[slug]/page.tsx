@@ -54,6 +54,7 @@ function bookTitle(book: { display_title?: string; title: string }): string {
 
 interface BookItem {
   id: string;
+  slug?: string;
   title: string;
   display_title?: string;
   author?: string;
@@ -97,7 +98,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   const sortObj = sortMap[sort] || sortMap.popular;
 
   const projection = {
-    _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1,
+    _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
     photo: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
   };
@@ -357,6 +358,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
               book={{
                 bookId: book.id,
                 id: book.id,
+                slug: book.slug,
                 title: bookTitle(book),
                 author: book.author || '',
                 year: book.year || 0,

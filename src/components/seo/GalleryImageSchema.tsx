@@ -15,6 +15,7 @@ interface GalleryImageSchemaProps {
   imageUrl?: string;
   book?: {
     id: string;
+    slug?: string;
     title?: string;
     display_title?: string;
     author?: string;
@@ -85,7 +86,7 @@ export default function GalleryImageSchema({
     }),
     isPartOf: {
       '@type': 'Book',
-      '@id': book ? `${BASE_URL}/book/${book.id}` : undefined,
+      '@id': book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
       name: bookTitle,
     },
   };

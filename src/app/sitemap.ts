@@ -158,7 +158,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Books
     const books = await db.collection('books').find(
       { hidden: { $ne: true } },
-      { projection: { id: 1, updated_at: 1, pages_count: 1, pages_translated: 1 } }
+      { projection: { id: 1, slug: 1, updated_at: 1, pages_count: 1, pages_translated: 1 } }
     ).toArray();
 
     const bookPages: MetadataRoute.Sitemap = books.map((book) => {
@@ -171,7 +171,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
 
       return {
-        url: `${baseUrl}/book/${book.id}`,
+        url: `${baseUrl}/book/${book.slug || book.id}`,
         lastModified,
         changeFrequency: 'weekly' as const,
         priority: book.pages_translated > 0 ? 0.9 : 0.6,

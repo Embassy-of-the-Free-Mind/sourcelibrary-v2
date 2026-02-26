@@ -6,9 +6,11 @@ import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
 import CategorySchema from '@/components/seo/CategorySchema';
+import { bookUrl } from '@/lib/slugify';
 
 interface Book {
   id: string;
+  slug?: string;
   title: string;
   display_title?: string;
   author: string;
@@ -108,6 +110,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         bookCount={books.length}
         books={books.slice(0, 20).map(b => ({
           id: b.id,
+          slug: b.slug,
           title: b.display_title || b.title,
           author: b.author,
         }))}
@@ -167,7 +170,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               return (
                 <Link
                   key={book.id}
-                  href={`/book/${book.id}`}
+                  href={bookUrl(book)}
                   className="group bg-white rounded-xl border border-stone-200 overflow-hidden hover:border-accent-gold/20 hover:shadow-lg transition-all"
                 >
                   {/* Thumbnail */}

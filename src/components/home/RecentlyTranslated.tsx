@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Book } from '@/lib/types';
+import { bookUrl } from '@/lib/slugify';
 
 export default function RecentlyTranslated({ books }: { books: Book[] }) {
   if (books.length === 0) return null;
@@ -17,7 +18,7 @@ export default function RecentlyTranslated({ books }: { books: Book[] }) {
           return (
             <Link
               key={book.id}
-              href={`/book/${book.id}`}
+              href={bookUrl(book)}
               className="group flex-none w-44 sm:w-48"
             >
               {/* Thumbnail */}

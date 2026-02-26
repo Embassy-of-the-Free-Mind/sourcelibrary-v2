@@ -721,7 +721,7 @@ function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
               This book needs OCR processing before images can be extracted.
             </p>
             <Link
-              href={`/book/${bookInfo.id}`}
+              href={`/book/${bookInfo.slug || bookInfo.id}`}
               className="inline-block mt-3 text-accent-rust hover:text-accent-rust text-sm"
             >
               Go to book page →

@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import CollectionSchema from '@/components/seo/CollectionSchema';
+import { bookUrl } from '@/lib/slugify';
 
 const PER_PAGE = 60;
 
@@ -52,6 +53,7 @@ function bookTitle(book: { display_title?: string; title: string }): string {
 
 interface BookItem {
   id: string;
+  slug?: string;
   title: string;
   display_title?: string;
   author?: string;
@@ -169,7 +171,7 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
   const sortObj = sortMap[sort] || sortMap.popular;
 
   const projection = {
-    _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1,
+    _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
   };
@@ -304,6 +306,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
         bookCount={total}
         books={books.map(b => ({
           id: b.id,
+          slug: b.slug,
           title: bookTitle(b),
           author: b.author,
           year: b.year,
@@ -439,7 +442,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
               Highlights
             </h2>
             <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {highlights.slice(0, 3).map((book: { id: string; display_title?: string; title: string; author?: string; year?: number; language?: string; pages_count?: number; thumbnail?: string; reading_summary?: { overview?: string } }) => {
+              {highlights.slice(0, 3).map((book: { id: string; slug?: string; display_title?: string; title: string; author?: string; year?: number; language?: string; pages_count?: number; thumbnail?: string; reading_summary?: { overview?: string } }) => {
                 const summary = book.reading_summary?.overview;
                 const snippet = summary
                   ? summary.length > 160 ? summary.slice(0, 160).replace(/\s+\S*$/, '') + '...' : summary
@@ -448,7 +451,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
                 return (
                   <Link
                     key={book.id}
-                    href={`/book/${book.id}`}
+                    href={bookUrl(book)}
                     className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                   >
                     <div className="w-20 sm:w-24 flex-shrink-0">
@@ -495,10 +498,10 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
             </div>
             {highlights.length > 3 && (
               <div className="mt-4 grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
-                {highlights.slice(3).map((book: { id: string; display_title?: string; title: string; author?: string; year?: number; thumbnail?: string }) => (
+                {highlights.slice(3).map((book: { id: string; slug?: string; display_title?: string; title: string; author?: string; year?: number; thumbnail?: string }) => (
                   <Link
                     key={book.id}
-                    href={`/book/${book.id}`}
+                    href={bookUrl(book)}
                     className="group flex items-center gap-3 p-3 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
                   >
                     <div className="w-12 flex-shrink-0">
@@ -557,6 +560,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
               book={{
                 bookId: book.id,
                 id: book.id,
+                slug: book.slug,
                 title: bookTitle(book),
                 author: book.author || '',
                 year: book.year || 0,

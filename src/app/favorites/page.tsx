@@ -22,6 +22,7 @@ interface FeaturedImage {
 
 interface PopularBook {
   id: string;
+  slug?: string;
   title: string;
   author?: string;
   year?: number;
@@ -277,7 +278,7 @@ export default function FavoritesPage() {
               return (
                 <Link
                   key={book.id}
-                  href={`/book/${book.id}`}
+                  href={`/book/${book.slug || book.id}`}
                   className="group relative block overflow-hidden rounded-lg"
                 >
                   {/* Image mosaic: 1 hero + up to 2 side images */}

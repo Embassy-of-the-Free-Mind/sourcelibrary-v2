@@ -16,6 +16,7 @@ export interface TimelineOverview {
 
 export interface TimelineBook {
   id: string;
+  slug?: string;
   title: string;
   display_title?: string;
   author?: string;

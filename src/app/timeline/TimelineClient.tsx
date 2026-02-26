@@ -265,6 +265,7 @@ export default function TimelineClient({ initialData }: Props) {
                     book={{
                       bookId: book.id,
                       id: book.id,
+                      slug: book.slug,
                       title: book.display_title || book.title,
                       author: book.author || '',
                       year: book.year,

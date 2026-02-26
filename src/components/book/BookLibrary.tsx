@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
+import { bookUrl } from '@/lib/slugify';
 
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
@@ -602,7 +603,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
           {displayedBooks.map((book) => (
             <Link
               key={book.id}
-              href={`/book/${book.id}`}
+              href={bookUrl(book)}
               className="flex items-center gap-4 p-4 bg-white rounded-lg border border-stone-200 hover:shadow-md transition-shadow"
             >
               {/* Thumbnail */}

@@ -69,7 +69,7 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
     // Include a sample of featured books
     hasPart: books.slice(0, 10).map((book) => ({
       '@type': 'Book',
-      '@id': `${baseUrl}/book/${book.id}`,
+      '@id': `${baseUrl}/book/${book.slug || book.id}`,
       name: book.display_title || book.title,
       author: {
         '@type': 'Person',

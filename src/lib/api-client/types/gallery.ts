@@ -40,6 +40,7 @@ export interface GalleryItem {
 
 export interface BookInfo {
   id: string;
+  slug?: string;
   title: string;
   author?: string;
   year?: number;
@@ -125,6 +126,7 @@ export interface GalleryImageDetail {
   bbox?: BBox;
   book: {
     id: string;
+    slug?: string;
     title: string;
     author?: string;
     year?: number;

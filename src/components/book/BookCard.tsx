@@ -7,6 +7,7 @@ import { Book as BookIcon } from 'lucide-react';
 import type { Book } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { recordLoadingMetric } from '@/lib/analytics';
+import { bookUrl } from '@/lib/slugify';
 
 interface BookCardProps {
   book: Book;
@@ -88,7 +89,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
   };
 
   return (
-    <Link href={`/book/${book.id}`} className="group relative">
+    <Link href={bookUrl(book)} className="group relative">
       <div
         ref={cardRef}
         className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 h-full flex flex-col"

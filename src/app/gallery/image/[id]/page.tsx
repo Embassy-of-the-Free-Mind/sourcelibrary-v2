@@ -977,7 +977,7 @@ export default function ImageDetailPage({
                 <h2 className="text-sm text-stone-500 uppercase tracking-wide mb-3">Source</h2>
 
                 <Link
-                  href={`/book/${data.book.id}`}
+                  href={`/book/${data.book.slug || data.book.id}`}
                   className="block group"
                 >
                   <p className="text-accent-gold group-hover:text-accent-gold font-medium">

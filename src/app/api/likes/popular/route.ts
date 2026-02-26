@@ -159,7 +159,7 @@ export async function GET(request: NextRequest) {
       const bookIds = popularItems.map(item => item._id as string);
       const booksData = await db.collection('books').find(
         { id: { $in: bookIds } },
-        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, thumbnail_blob: 1, cover_image: 1 } }
+        { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, thumbnail_blob: 1, cover_image: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
 
@@ -190,6 +190,7 @@ export async function GET(request: NextRequest) {
           const gallery = galleryMap.get(book.id) || [];
           return {
             id: book.id,
+            slug: book.slug,
             title: book.display_title || book.title,
             author: book.author,
             year: book.year,

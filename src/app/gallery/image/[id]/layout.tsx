@@ -32,6 +32,7 @@ interface PageWithBook {
   }>;
   book?: {
     id: string;
+    slug?: string;
     title?: string;
     display_title?: string;
     author?: string;

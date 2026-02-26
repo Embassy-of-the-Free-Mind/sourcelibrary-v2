@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight, ImageIcon } from 'lucide-react';
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi } from '@/lib/api-client';
+import { bookUrl } from '@/lib/slugify';
 import type { UnifiedSearchResponse } from '@/lib/api-client';
 import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
@@ -114,7 +115,7 @@ export default function UnifiedSearch() {
     if (!results || !hasResults) return [];
     const items: NavigableItem[] = [];
     for (const book of results.books.results) {
-      items.push({ type: 'book', href: `/book/${book.id}`, id: `book-${book.id}` });
+      items.push({ type: 'book', href: bookUrl(book), id: `book-${book.id}` });
     }
     for (let i = 0; i < results.index.results.length; i++) {
       const item = results.index.results[i];
@@ -263,7 +264,7 @@ export default function UnifiedSearch() {
                         <Link
                           key={book.id}
                           id={`search-item-${itemIndex}`}
-                          href={`/book/${book.id}`}
+                          href={bookUrl(book)}
                           onClick={() => setIsOpen(false)}
                           role="option"
                           aria-selected={activeIndex === itemIndex}

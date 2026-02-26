@@ -277,6 +277,7 @@ async function getBookInfo(db: Awaited<ReturnType<typeof getDb>>, bookId: string
 
   return {
     id: book.id,
+    slug: book.slug,
     title: book.display_title || book.title,
     author: book.author,
     year: book.year,

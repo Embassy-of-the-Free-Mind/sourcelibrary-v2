@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 interface CollectionBook {
   bookId: string;
   id?: string;
+  slug?: string;
   title: string;
   author: string;
   year: number;
@@ -37,7 +38,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
 
   return (
     <Link
-      href={`/book/${book.id || book.bookId}`}
+      href={`/book/${book.slug || book.id || book.bookId}`}
       className="group block"
     >
       <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-all overflow-hidden bg-white">

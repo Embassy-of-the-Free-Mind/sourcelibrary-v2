@@ -5,7 +5,7 @@ interface CollectionSchemaProps {
   name: string;
   description?: string;
   bookCount: number;
-  books?: Array<{ id: string; title: string; author?: string; year?: number }>;
+  books?: Array<{ id: string; slug?: string; title: string; author?: string; year?: number }>;
 }
 
 /**
@@ -45,7 +45,7 @@ export default function CollectionSchema({
         position: i + 1,
         item: {
           '@type': 'Book',
-          '@id': `${BASE_URL}/book/${book.id}`,
+          '@id': `${BASE_URL}/book/${book.slug || book.id}`,
           name: book.title,
           ...(book.author && { author: { '@type': 'Person', name: book.author } }),
           ...(book.year && { datePublished: String(book.year) }),

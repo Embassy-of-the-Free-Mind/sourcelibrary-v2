@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
         db.collection('books')
           .find(decadeMatch)
           .project({
-            id: 1, title: 1, display_title: 1, author: 1, year: 1,
+            id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
             language: 1, thumbnail_blob: 1, thumbnail: 1,
             pages_count: 1, pages_translated: 1, published: 1,
           })
@@ -52,6 +52,7 @@ export async function GET(request: NextRequest) {
 
       const mapped = books.map(b => ({
         id: b.id,
+        slug: b.slug,
         title: b.display_title || b.title,
         display_title: b.display_title,
         author: b.author,

@@ -248,6 +248,7 @@ export async function GET(
       // Source context
       book: {
         id: pageData.book_id,
+        slug: pageData.book?.slug,
         title: pageData.book?.display_title || pageData.book?.title || 'Unknown',
         author: pageData.book?.author,
         year: pageData.book?.published,
@@ -256,7 +257,7 @@ export async function GET(
       pageNumber: pageData.page_number,
 
       // Links
-      readUrl: `/book/${pageData.book_id}/page/${pageId}`,
+      readUrl: `/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`,
       galleryUrl: `/gallery?bookId=${pageData.book_id}`,
 
       // For citation
