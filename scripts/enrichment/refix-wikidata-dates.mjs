@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 /**
- * Backfill birth/death dates from Wikidata for person entities.
+ * Re-fetch birth/death dates from Wikidata for all entities that have dates.
  *
- * Fixes the P569|P570 bug in wikidata-align.mjs where the pipe-separated
- * property query silently failed. Now fetches each property individually.
+ * The original wikidata-align.mjs and backfill-wikidata-dates.mjs had a bug
+ * where BCE dates lost their negative sign (e.g., -0384 became 0384).
+ * This script re-fetches P569/P570 for every entity with dates and writes
+ * the corrected values (with proper - prefix for BCE).
  *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/enrichment/backfill-wikidata-dates.mjs
+ *   set -a; source .env.production.local; set +a; node scripts/enrichment/refix-wikidata-dates.mjs
  *
  * Options:
  *   --dry-run       Show what would be done without writing
@@ -53,33 +55,34 @@ async function main() {
   const db = client.db('bookstore');
   const entities = db.collection('entities');
 
-  // Find person entities with QID but no birth/death dates
+  // Find all entities with a Wikidata ID and at least one date
   const query = {
-    type: 'person',
-    wikidata_id: { $exists: true },
-    $and: [
-      { $or: [{ wikidata_birth_date: { $exists: false } }, { wikidata_birth_date: null }] },
-      { $or: [{ wikidata_death_date: { $exists: false } }, { wikidata_death_date: null }] },
+    wikidata_id: { $exists: true, $ne: null },
+    $or: [
+      { wikidata_birth_date: { $exists: true, $ne: null } },
+      { wikidata_death_date: { $exists: true, $ne: null } },
     ],
   };
 
   const toProcess = await entities.find(query)
     .sort({ book_count: -1 })
     .limit(LIMIT === Infinity ? 0 : LIMIT)
-    .project({ name: 1, wikidata_id: 1, book_count: 1 })
+    .project({ name: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1, book_count: 1 })
     .toArray();
 
-  console.log(`Found ${toProcess.length} person entities with QID but no dates`);
+  console.log(`Found ${toProcess.length} entities with dates to re-check`);
   if (DRY_RUN) console.log('(dry run)');
 
-  let updated = 0, skipped = 0, errors = 0;
+  let updated = 0, unchanged = 0, cleared = 0, errors = 0;
 
   for (let i = 0; i < toProcess.length; i++) {
     const e = toProcess[i];
     const progress = `[${i + 1}/${toProcess.length}]`;
 
     try {
-      const props = {};
+      const updates = {};
+      let newBirth = null;
+      let newDeath = null;
 
       // Birth date (P569)
       const birthData = await apiFetch(
@@ -87,7 +90,7 @@ async function main() {
       );
       const birthClaim = birthData.claims?.P569?.[0];
       if (birthClaim?.mainsnak?.datavalue?.value?.time) {
-        props.wikidata_birth_date = formatWikidataDate(
+        newBirth = formatWikidataDate(
           birthClaim.mainsnak.datavalue.value.time,
           birthClaim.mainsnak.datavalue.value.precision
         );
@@ -101,21 +104,52 @@ async function main() {
       );
       const deathClaim = deathData.claims?.P570?.[0];
       if (deathClaim?.mainsnak?.datavalue?.value?.time) {
-        props.wikidata_death_date = formatWikidataDate(
+        newDeath = formatWikidataDate(
           deathClaim.mainsnak.datavalue.value.time,
           deathClaim.mainsnak.datavalue.value.precision
         );
       }
 
-      if (Object.keys(props).length > 0) {
-        if (!DRY_RUN) {
-          await entities.updateOne({ _id: e._id }, { $set: { ...props, updated_at: new Date() } });
+      // Check what changed
+      const oldBirth = e.wikidata_birth_date || null;
+      const oldDeath = e.wikidata_death_date || null;
+
+      if (newBirth !== oldBirth) updates.wikidata_birth_date = newBirth;
+      if (newDeath !== oldDeath) updates.wikidata_death_date = newDeath;
+
+      if (Object.keys(updates).length > 0) {
+        const setFields = {};
+        const unsetFields = {};
+
+        for (const [k, v] of Object.entries(updates)) {
+          if (v === null) unsetFields[k] = '';
+          else setFields[k] = v;
         }
-        console.log(`  ${progress} ${e.name}: ${JSON.stringify(props)}`);
+        setFields.updated_at = new Date();
+
+        const op = {};
+        if (Object.keys(setFields).length > 0) op.$set = setFields;
+        if (Object.keys(unsetFields).length > 0) op.$unset = unsetFields;
+
+        if (!DRY_RUN) {
+          await entities.updateOne({ _id: e._id }, op);
+        }
+
+        const changes = Object.entries(updates)
+          .map(([k, v]) => {
+            const field = k.replace('wikidata_', '');
+            const old = k === 'wikidata_birth_date' ? oldBirth : oldDeath;
+            return `${field}: ${old} → ${v}`;
+          })
+          .join(', ');
+
+        console.log(`  ${progress} ${e.name}: ${changes}`);
         updated++;
       } else {
-        if (i < 20 || i % 50 === 0) console.log(`  ${progress} ${e.name}: no dates on Wikidata`);
-        skipped++;
+        unchanged++;
+        if (i < 10 || i % 100 === 0) {
+          console.log(`  ${progress} ${e.name}: unchanged (${oldBirth || '-'}/${oldDeath || '-'})`);
+        }
       }
 
       await sleep(200); // Rate limit
@@ -126,7 +160,7 @@ async function main() {
   }
 
   console.log(`\n=== Done ===`);
-  console.log(`Updated: ${updated}, Skipped: ${skipped}, Errors: ${errors}`);
+  console.log(`Updated: ${updated}, Unchanged: ${unchanged}, Cleared: ${cleared}, Errors: ${errors}`);
 
   await client.close();
 }

@@ -428,17 +428,19 @@ async function fetchWikidataProps(qid, entityType) {
 /**
  * Format Wikidata time value to ISO date string.
  * Wikidata uses +YYYY-MM-DDT00:00:00Z format with precision levels.
+ * BCE dates use -YYYY-MM-DDT00:00:00Z — the sign is preserved.
  * Precision: 9=year, 10=month, 11=day
  */
 function formatWikidataDate(time, precision) {
-  // Remove leading + and trailing time component
+  const isBCE = time.startsWith('-');
+  // Strip leading +/- and trailing time, then re-add - for BCE
   const dateStr = time.replace(/^[+-]/, '').replace(/T.*$/, '');
   const parts = dateStr.split('-');
+  const prefix = isBCE ? '-' : '';
 
-  if (precision >= 11) return dateStr; // Full date YYYY-MM-DD
-  if (precision === 10) return `${parts[0]}-${parts[1]}`; // Year-month
-  if (precision === 9) return parts[0]; // Year only
-  return parts[0]; // Fall back to year
+  if (precision >= 11) return prefix + dateStr; // Full date
+  if (precision === 10) return `${prefix}${parts[0]}-${parts[1]}`; // Year-month
+  return prefix + parts[0]; // Year only
 }
 
 // --- Main ---

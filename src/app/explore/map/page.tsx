@@ -65,20 +65,19 @@ async function fetchMapData() {
 
     const birthStr = e.wikidata_birth_date as string | undefined;
     const deathStr = e.wikidata_death_date as string | undefined;
-    const birthYear = birthStr ? parseInt(birthStr.slice(0, 4), 10) : NaN;
-    const deathYear = deathStr ? parseInt(deathStr.slice(0, 4), 10) : NaN;
+    // parseInt handles negative dates: "-0384-01-01" → -384
+    const birthYear = birthStr ? parseInt(birthStr, 10) : NaN;
+    const deathYear = deathStr ? parseInt(deathStr, 10) : NaN;
 
     if (!isNaN(birthYear) || !isNaN(deathYear)) {
-      // Use biographical dates — handles BCE as positive year strings (e.g. "0550" = 550 BCE...
-      // but actually stored as positive CE-style, so 0550 = 550 CE in the string).
-      // These are all positive ints from Wikidata.
-      const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y > 0);
+      const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y !== 0);
       if (bioYears.length > 0) {
         const minY = Math.min(...bioYears);
         const maxY = Math.max(...bioYears);
-        const minC = Math.floor((minY - 1) / 100) + 1;
-        const maxC = Math.floor((maxY - 1) / 100) + 1;
-        century_range = [minC, maxC];
+        const toCentury = (y: number) => y < 0
+          ? -Math.floor((Math.abs(y) - 1) / 100) - 1
+          : Math.floor((y - 1) / 100) + 1;
+        century_range = [toCentury(minY), toCentury(maxY)];
       }
     }
 
@@ -101,13 +100,14 @@ async function fetchMapData() {
     }
 
     // Build lifespan string from biographical dates
+    const fmtYear = (y: number) => y < 0 ? `${Math.abs(y)} BCE` : String(y);
     let lifespan: string | undefined;
-    if (!isNaN(birthYear) && birthYear > 0 && !isNaN(deathYear) && deathYear > 0) {
-      lifespan = `${birthYear}–${deathYear}`;
-    } else if (!isNaN(birthYear) && birthYear > 0) {
-      lifespan = `b. ${birthYear}`;
-    } else if (!isNaN(deathYear) && deathYear > 0) {
-      lifespan = `d. ${deathYear}`;
+    if (!isNaN(birthYear) && birthYear !== 0 && !isNaN(deathYear) && deathYear !== 0) {
+      lifespan = `${fmtYear(birthYear)}\u2013${fmtYear(deathYear)}`;
+    } else if (!isNaN(birthYear) && birthYear !== 0) {
+      lifespan = `b.\u00a0${fmtYear(birthYear)}`;
+    } else if (!isNaN(deathYear) && deathYear !== 0) {
+      lifespan = `d.\u00a0${fmtYear(deathYear)}`;
     }
 
     return {

@@ -58,17 +58,19 @@ export async function GET() {
 
       const birthStr = e.wikidata_birth_date as string | undefined;
       const deathStr = e.wikidata_death_date as string | undefined;
-      const birthYear = birthStr ? parseInt(birthStr.slice(0, 4), 10) : NaN;
-      const deathYear = deathStr ? parseInt(deathStr.slice(0, 4), 10) : NaN;
+      // parseInt handles negative dates: "-0384-01-01" → -384
+      const birthYear = birthStr ? parseInt(birthStr, 10) : NaN;
+      const deathYear = deathStr ? parseInt(deathStr, 10) : NaN;
 
       if (!isNaN(birthYear) || !isNaN(deathYear)) {
-        const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y > 0);
+        const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y !== 0);
         if (bioYears.length > 0) {
           const minY = Math.min(...bioYears);
           const maxY = Math.max(...bioYears);
-          const minC = Math.floor((minY - 1) / 100) + 1;
-          const maxC = Math.floor((maxY - 1) / 100) + 1;
-          century_range = [minC, maxC];
+          const toCentury = (y: number) => y < 0
+            ? -Math.floor((Math.abs(y) - 1) / 100) - 1
+            : Math.floor((y - 1) / 100) + 1;
+          century_range = [toCentury(minY), toCentury(maxY)];
         }
       }
 

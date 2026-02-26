@@ -12,8 +12,12 @@ const TYPE_ICONS = {
 
 function formatLifespan(birth?: string, death?: string): string | null {
   if (!birth && !death) return null;
-  const b = birth?.slice(0, 4);
-  const d = death?.slice(0, 4);
+  const fmtYear = (s: string) => {
+    const y = parseInt(s, 10);
+    return y < 0 ? `${Math.abs(y)} BCE` : String(Math.abs(y));
+  };
+  const b = birth ? fmtYear(birth) : null;
+  const d = death ? fmtYear(death) : null;
   if (b && d) return `${b}\u2013${d}`;
   if (b) return `b.\u00a0${b}`;
   return `d.\u00a0${d}`;

@@ -55,30 +55,17 @@ async function fetchTimelineData() {
     .map((e) => {
       const birthStr = e.wikidata_birth_date as string | undefined;
       const deathStr = e.wikidata_death_date as string | undefined;
-      let birthYear = birthStr ? parseInt(birthStr.slice(0, 4), 10) : NaN;
-      let deathYear = deathStr ? parseInt(deathStr.slice(0, 4), 10) : NaN;
+      // parseInt handles negative dates correctly: "-0384-01-01" → -384
+      const birthYear = birthStr ? parseInt(birthStr, 10) : NaN;
+      const deathYear = deathStr ? parseInt(deathStr, 10) : NaN;
 
-      let bY = !isNaN(birthYear) && birthYear > 0 ? birthYear : null;
-      let dY = !isNaN(deathYear) && deathYear > 0 ? deathYear : null;
+      const bY = !isNaN(birthYear) && birthYear !== 0 ? birthYear : null;
+      const dY = !isNaN(deathYear) && deathYear !== 0 ? deathYear : null;
 
       if (!bY && !dY) return null;
 
       // Filter out Anno Mundi / mythological dates (Eve, Noah, Cain, etc.)
-      if ((bY && bY > 2026) || (dY && dY > 2026)) return null;
-
-      // Detect BCE dates: Wikidata stores them as negative years, but our
-      // alignment stripped the sign. If birth > death, both are likely BCE.
-      // If only birth exists and it's < 800, it's probably BCE too.
-      if (bY && dY && bY > dY) {
-        // Both dates BCE (e.g. Aristotle: 384→-384, 322→-322)
-        bY = -bY;
-        dY = -dY;
-      } else if (bY && !dY && bY < 800) {
-        // Birth-only entity in ancient range — likely BCE
-        bY = -bY;
-      }
-
-      if (!bY && !dY) return null;
+      if ((bY && Math.abs(bY) > 2026) || (dY && Math.abs(dY) > 2026)) return null;
 
       // Track year range
       if (bY && bY < minYear) minYear = bY;
