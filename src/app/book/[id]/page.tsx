@@ -222,18 +222,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
   if (book.doi) scholarMeta['citation_doi'] = book.doi;
 
-  // Cross-book citations: only emit citation_reference for direct author citations
-  // (this book mentions a person who authored another book in our library)
-  const relatedBooks = await getRelatedBooks(book.id);
-  const directCitations = relatedBooks.filter(rb => rb.type === 'direct');
-  if (directCitations.length > 0) {
-    scholarMeta['citation_reference'] = directCitations.map(rb => {
-      const parts = [`citation_title=${rb.title}`];
-      if (rb.author && rb.author !== 'Unknown') parts.push(`citation_author=${rb.author}`);
-      if (rb.published) parts.push(`citation_publication_date=${rb.published}`);
-      return parts.join('; ');
-    });
-  }
+  // Cross-book citation_reference tags are rendered inline by BookInfo (inside Suspense)
+  // to avoid blocking generateMetadata with a 3-4s entity query
 
   return {
     title: `${title} - Source Library`,
@@ -423,6 +413,17 @@ async function BookInfo({ id }: { id: string }) {
         translatedCount={translatedCount}
         currentEdition={currentEdition}
       />
+
+      {/* Cross-book citation_reference meta tags for Google Scholar */}
+      {/* Rendered here (inside Suspense via BookInfo) instead of generateMetadata */}
+      {/* to avoid blocking initial page load with a 3-4s entity query */}
+      {entityRelatedBooks.filter(rb => rb.type === 'direct').map((rb) => (
+        <meta
+          key={`cite-ref-${rb.id}`}
+          name="citation_reference"
+          content={`citation_title=${rb.title}${rb.author && rb.author !== 'Unknown' ? `; citation_author=${rb.author}` : ''}${rb.published ? `; citation_publication_date=${rb.published}` : ''}`}
+        />
+      ))}
 
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
