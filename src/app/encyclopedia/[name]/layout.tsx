@@ -9,22 +9,14 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export interface GraphNode {
-  id: string;
+export interface SharedConnection {
   name: string;
   type: 'person' | 'place' | 'concept';
-  bookCount: number;
-  isCenter: boolean;
+  sharedBooks: Array<{ book_id: string; book_title: string }>;
 }
 
-export interface GraphEdge {
-  source: string;
-  target: string;
-  weight: number;
-}
-
-// Graph data for the entity relationship visualization
-export const getEntityGraph = cache(async (name: string): Promise<{ nodes: GraphNode[]; edges: GraphEdge[] } | null> => {
+// Shared books data — which related entities appear in which of the same books
+export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
   try {
     const db = await getDb();
     const entity = await db.collection('entities').findOne(
@@ -33,55 +25,39 @@ export const getEntityGraph = cache(async (name: string): Promise<{ nodes: Graph
     );
     if (!entity?.books?.length) return null;
 
-    const centerBookIds = entity.books.map((b: { book_id: string }) => b.book_id);
+    const centerBooks = entity.books as Array<{ book_id: string; book_title: string }>;
+    const centerBookIds = centerBooks.map(b => b.book_id);
+    const bookTitleMap = new Map(centerBooks.map(b => [b.book_id, b.book_title]));
+
     const related = await db.collection('entities')
       .find({
         _id: { $ne: entity._id },
         'books.book_id': { $in: centerBookIds },
       })
       .sort({ book_count: -1 })
-      .limit(15)
-      .project({ name: 1, type: 1, book_count: 1, 'books.book_id': 1 })
+      .limit(20)
+      .project({ name: 1, type: 1, 'books.book_id': 1 })
       .toArray();
 
-    if (related.length < 3) return null;
+    if (related.length === 0) return null;
 
-    const nodes: GraphNode[] = [
-      { id: entity.name, name: entity.name, type: entity.type, bookCount: entity.book_count || 0, isCenter: true },
-      ...related.map(r => ({
-        id: r.name as string,
+    const centerSet = new Set(centerBookIds);
+    const connections: SharedConnection[] = related.map(r => {
+      const relBookIds = (r.books as Array<{ book_id: string }>).map(b => b.book_id);
+      const shared = relBookIds
+        .filter(id => centerSet.has(id))
+        .map(id => ({ book_id: id, book_title: bookTitleMap.get(id) || 'Unknown' }));
+      return {
         name: r.name as string,
         type: r.type as 'person' | 'place' | 'concept',
-        bookCount: (r.book_count || 0) as number,
-        isCenter: false,
-      })),
-    ];
+        sharedBooks: shared,
+      };
+    });
 
-    // Build book sets for edge computation
-    const bookSets = new Map<string, Set<string>>();
-    bookSets.set(entity.name as string, new Set(centerBookIds));
-    for (const r of related) {
-      bookSets.set(r.name as string, new Set((r.books as Array<{ book_id: string }>).map(b => b.book_id)));
-    }
+    // Sort by number of shared books desc, then alphabetically
+    connections.sort((a, b) => b.sharedBooks.length - a.sharedBooks.length || a.name.localeCompare(b.name));
 
-    // Compute edges (shared books between all pairs)
-    const edges: GraphEdge[] = [];
-    const names = [entity.name as string, ...related.map(r => r.name as string)];
-    for (let i = 0; i < names.length; i++) {
-      for (let j = i + 1; j < names.length; j++) {
-        const setA = bookSets.get(names[i])!;
-        const setB = bookSets.get(names[j])!;
-        let shared = 0;
-        for (const id of setA) {
-          if (setB.has(id)) shared++;
-        }
-        if (shared > 0) {
-          edges.push({ source: names[i], target: names[j], weight: shared });
-        }
-      }
-    }
-
-    return { nodes, edges };
+    return connections.filter(c => c.sharedBooks.length > 0).slice(0, 15);
   } catch {
     return null;
   }
