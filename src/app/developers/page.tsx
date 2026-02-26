@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Give Claude access to thousands of rare historical texts via MCP Server. 11 research tools: full-text search, bulk reading, entity knowledge graph, AI-generated indexes, DOI citations, and 50,000+ historical illustrations. No API key needed.',
+  description: 'Give Claude access to thousands of rare historical texts via MCP Server. 14 research tools: full-text search, translation search, bulk reading, entity knowledge graph, AI-generated indexes, DOI citations, and 50,000+ historical illustrations. No API key needed.',
   alternates: {
     canonical: '/developers',
   },
@@ -12,18 +12,21 @@ export const metadata: Metadata = {
 
 const tools = [
   {
-    category: 'Discovery & Browse',
+    category: 'Discovery & Search',
     items: [
       { name: 'search_library', desc: 'Full-text search across books and page content. Filter by language, date range, DOI, translation status.' },
-      { name: 'list_books', desc: 'Browse the collection with filters. Sort by recent translation, title, or date.' },
+      { name: 'search_translations', desc: 'Search inside translated text across the whole library. Find what historical authors wrote about any topic.' },
+      { name: 'search_within_book', desc: 'Search inside a specific book\'s pages. Returns matching pages with snippets.' },
+      { name: 'list_books', desc: 'Browse the collection with filters. Returns title, author, language, year, and translation progress.' },
     ],
   },
   {
-    category: 'Reading & Text',
+    category: 'Reading & Citation',
     items: [
-      { name: 'get_book', desc: 'Detailed book metadata: summary, index stats, edition info, DOI, page list.' },
+      { name: 'get_book', desc: 'Detailed book metadata: summary, index stats, chapters, edition info, DOI.' },
       { name: 'get_book_text', desc: 'Full text of a book in one call. OCR, translation, or both. Page ranges supported.' },
-      { name: 'get_quote', desc: 'Specific page with formatted academic citations (inline, footnote, DOI).' },
+      { name: 'get_quote', desc: 'Citable quote with academic citations (APA, Chicago, MLA, BibTeX). Lookup by page or search query.' },
+      { name: 'find_quotes', desc: 'Find the best passages in a book on a topic. Returns up to 5 citable quotes with citations.' },
     ],
   },
   {
@@ -47,7 +50,7 @@ const tools = [
 const examplePrompts = [
   {
     prompt: 'Search for references to "prima materia" across the collection. Which authors discuss it, and how do their treatments differ?',
-    tools: 'search_library + get_book_text',
+    tools: 'search_translations + get_quote',
   },
   {
     prompt: 'Find all entities connected to Hermes Trismegistus. What books discuss this figure, and what other entities appear alongside?',
@@ -63,11 +66,11 @@ const examplePrompts = [
   },
   {
     prompt: 'I need a quote from Copernicus\'s De Revolutionibus about the Sun\'s centrality, with a proper DOI citation.',
-    tools: 'search_library + get_quote',
+    tools: 'find_quotes + get_quote',
   },
   {
     prompt: 'Compare how Ficino, Bruno, and Pico della Mirandola discuss the relationship between the soul and the cosmos.',
-    tools: 'search_entities + get_book_text',
+    tools: 'search_translations + get_book_text',
   },
 ];
 
@@ -77,7 +80,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Give Claude access to thousands of rare historical texts. 11 research tools, no API key needed."
+          subtitle="Give Claude access to thousands of rare historical texts. 14 research tools, no API key needed."
         />
       }
     >
@@ -90,7 +93,7 @@ export default function DevelopersPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-semibold text-primary">MCP Server</h2>
-          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v2.0</span>
+          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v2.4</span>
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
@@ -154,7 +157,7 @@ export default function DevelopersPage() {
         </div>
 
         {/* Tools grid */}
-        <h3 className="text-lg font-semibold text-primary mb-4">11 Tools</h3>
+        <h3 className="text-lg font-semibold text-primary mb-4">14 Tools</h3>
         <div className="space-y-6 mb-10">
           {tools.map((group) => (
             <div key={group.category}>
