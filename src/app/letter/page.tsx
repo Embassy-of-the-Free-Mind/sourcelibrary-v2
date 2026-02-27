@@ -28,9 +28,9 @@ export default function LetterPage() {
           Cornelius Drebbel built the first navigable submarine. He demonstrated a perpetual-motion
           clock to King James I. He invented an early thermostat. His theoretical writings &mdash;
           where he explains the natural philosophy behind his inventions &mdash; have been sitting
-          in Latin on a shelf at the{' '}
+          in Latin, largely unread, since they were published in 1628. A copy is held at the{' '}
           <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
-          in Amsterdam since 1628.
+          in Amsterdam.
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
@@ -51,7 +51,8 @@ export default function LetterPage() {
         <p className="text-secondary leading-relaxed mb-4">
           The scientific revolution didn&apos;t emerge from nothing. Copernicus read Hermes Trismegistus.
           Kepler described himself as a &ldquo;priest of God in the book of nature&rdquo; and drew on
-          Pythagorean harmonic theory. Newton spent more time on alchemical experiments than on physics.
+          Pythagorean harmonic theory. Newton devoted decades to alchemical research, filling over
+          a million words of laboratory notebooks on the subject.
           Leibniz studied the Kabbalah. The intellectual context for the greatest acceleration of progress
           in Western history was a body of literature that is, today, mostly untranslated and unread.
         </p>
@@ -106,7 +107,7 @@ export default function LetterPage() {
             },
             {
               title: 'Corpus Hermeticum: Pimander',
-              author: 'Marsilio Ficino, 1481',
+              author: 'Hermes Trismegistus (trans. Marsilio Ficino), 1481',
               detail: 'Ficino\u2019s Latin translation of the Hermetic texts that launched the Renaissance revival of ancient theology. 96 pages.',
               href: 'https://sourcelibrary.org/book/694f3d6cbe37f451a5324e10',
             },
@@ -247,9 +248,9 @@ export default function LetterPage() {
           <div className="border-l-4 border-accent-gold/30 pl-6">
             <p className="text-primary font-medium mb-2">Open access changes who can participate.</p>
             <p className="text-secondary text-sm leading-relaxed">
-              When Pico della Mirandola&apos;s{' '}
+              When a text like Pico della Mirandola&apos;s{' '}
               <a href="https://sourcelibrary.org/book/694f8d99efce46492e19fdad" className="text-accent-rust hover:underline"><em>900 Theses</em></a>{' '}
-              is only available in a $200 academic edition or behind a university paywall, the study of
+              exists only in specialist academic editions or behind university paywalls, the study of
               Renaissance philosophy is limited to people at well-funded institutions. When it&apos;s freely
               available with a readable English translation, a student in Lagos or Lima can engage with the
               same primary sources as a professor at the Warburg Institute. That&apos;s the point.
