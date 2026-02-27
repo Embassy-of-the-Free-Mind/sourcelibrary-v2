@@ -1,22 +1,27 @@
 import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
+import type { ImageExtractionWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import type { Page } from '@/lib/types/page';
 import { extractWithGemini } from '@/lib/image-extraction';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
-import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
+import { sendWriteResult } from '@/lib/sqs-client';
 
 /**
  * Image Extraction Processor - processes one page at a time
+ *
+ * WRITE QUEUE: This worker does NOT write results to MongoDB directly.
+ * Instead, it sends results (including pre-built gallery docs) to the
+ * write-results SQS queue. The Writer Lambda handles all DB writes
+ * with capped concurrency to prevent MongoDB connection storms.
  *
  * Flow:
  * 1. Check if job is cancelled
  * 2. Get page image URL (with priority fallbacks)
  * 3. Extract images with AI vision
- * 4. Save results to page
- * 5. Update progress counter
- * 6. Check if job is complete
+ * 4. Build gallery docs (using book metadata read at this point)
+ * 5. Send everything to write queue
  */
 
 /** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
@@ -50,21 +55,29 @@ function getPageImageUrl(page: Page): string | null {
 }
 
 /**
- * Retry a MongoDB operation with exponential backoff.
- * Designed for saving AI results that are expensive to regenerate.
+ * Build a GeminiUsagePayload for the write queue.
  */
-async function retryDbWrite<T>(fn: () => Promise<T>, label: string, maxRetries = 3): Promise<T> {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      return await fn();
-    } catch (err) {
-      if (attempt === maxRetries) throw err;
-      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
-      console.warn(`[IMG-EXTRACT] ${label} failed (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms:`, (err as Error).message);
-      await new Promise(r => setTimeout(r, delay));
-    }
-  }
-  throw new Error('unreachable');
+function buildUsagePayload(
+  opts: { model: string; bookId: string; pageId: string; jobId: string; durationMs: number;
+    inputTokens: number; outputTokens: number; status: 'success' | 'failed';
+    errorMessage?: string; errorCategory?: string }
+): GeminiUsagePayload {
+  return {
+    type: 'extract_images',
+    mode: 'realtime',
+    model: opts.model,
+    book_id: opts.bookId,
+    page_ids: [opts.pageId],
+    input_tokens: opts.inputTokens,
+    output_tokens: opts.outputTokens,
+    status: opts.status,
+    ...(opts.errorMessage && { error_message: opts.errorMessage }),
+    ...(opts.errorCategory && { error_category: opts.errorCategory }),
+    job_id: opts.jobId,
+    duration_ms: opts.durationMs,
+    prompt_version: PROMPT_VERSION,
+    endpoint: 'worker/image-extraction',
+  };
 }
 
 export async function processImageExtractionPage(message: PageProcessingMessage) {
@@ -107,11 +120,13 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   const page = await pages.findOne({ id: pageId }) as Page | null;
   if (!page) {
     console.error(`[IMG-EXTRACT] Page ${pageId} not found`);
-    await jobs.updateOne(
-      { id: jobId },
-      { $addToSet: { failed_page_ids: pageId }, $inc: { 'progress.failed': 1 }, $set: { updated_at: new Date() } }
-    );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+    await sendWriteResult({
+      type: 'image_extraction',
+      bookId, pageId, jobId, targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: 'Page not found', category: 'no_data' },
+    });
     return;
   }
 
@@ -123,37 +138,20 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
       : 'no image URL on page';
     console.error(`[IMG-EXTRACT] Page ${pageId}: ${reason}`);
 
-    // Log pre-Gemini failure for dashboard visibility
-    try {
-      await logGeminiCall({
-        type: 'extract_images',
-        mode: 'realtime',
-        model: job.config?.model || DEFAULT_MODEL,
-        book_id: bookId,
-        page_ids: [pageId],
-        input_tokens: 0,
-        output_tokens: 0,
-        status: 'failed',
-        error_message: reason,
-        error_category: 'no_image',
-        job_id: jobId,
-        duration_ms: 0,
-        prompt_version: PROMPT_VERSION,
-        endpoint: 'worker/image_extraction',
-      });
-    } catch (logErr) {
-      console.error(`[IMG-EXTRACT] Failed to log no-image error for page ${pageId}:`, logErr);
-    }
+    // Send failure to write queue
+    await sendWriteResult({
+      type: 'image_extraction',
+      bookId, pageId, jobId, targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: reason, category: 'no_image' },
+      geminiUsage: buildUsagePayload({
+        model: job.config?.model || DEFAULT_MODEL, bookId, pageId, jobId, durationMs: 0,
+        inputTokens: 0, outputTokens: 0, status: 'failed',
+        errorMessage: reason, errorCategory: 'no_image',
+      }),
+    });
 
-    await jobs.updateOne(
-      { id: jobId },
-      {
-        $addToSet: { failed_page_ids: pageId },
-        $inc: { 'progress.failed': 1 },
-        $set: { updated_at: new Date() }
-      }
-    );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -166,11 +164,12 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     const jobTime = new Date(job.created_at).getTime();
     if (extractTime >= jobTime) {
       console.log(`[IMG-EXTRACT] Skipping page ${pageId} (image extraction already current)`);
-      await jobs.updateOne(
-        { id: jobId },
-        { $inc: { 'progress.completed': 1 }, $set: { updated_at: new Date() } }
-      );
-      await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+      await sendWriteResult({
+        type: 'image_extraction',
+        bookId, pageId, jobId, targetPageIds,
+        timestamp: new Date().toISOString(),
+        failed: false,
+      });
       return;
     }
   }
@@ -190,36 +189,26 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
       job_id: jobId,
     }));
 
-    // Save results to page (with retry — Gemini tokens are already spent)
-    await retryDbWrite(() => pages.updateOne(
-      { id: pageId },
-      {
-        $set: {
-          detected_images: imagesWithJob,
-          image_extraction_updated_at: new Date(),
-          image_extraction_prompt_version: PROMPT_VERSION,
-          updated_at: new Date()
-        }
-      }
-    ), `save image extraction for page ${pageId}`);
+    // Build gallery docs now (we have book metadata in memory) — writer just inserts them
+    const galleryDocs = await buildGalleryDocs(db, pageId, bookId, page, imagesWithJob as any);
 
-    // Upsert into gallery_images materialized collection
-    await upsertGalleryImages(db, pageId, bookId, page, imagesWithJob as any);
-
-    // Log successful AI call
-    await logGeminiCall({
-      type: 'extract_images',
-      mode: 'realtime',
-      model: modelId,
-      book_id: bookId,
-      page_ids: [pageId],
-      input_tokens: result.usage.inputTokens,
-      output_tokens: result.usage.outputTokens,
-      status: 'success',
-      job_id: jobId,
-      duration_ms: durationMs,
-      prompt_version: PROMPT_VERSION,
-      endpoint: 'worker/image-extraction',
+    // Send result to write queue
+    await sendWriteResult({
+      type: 'image_extraction',
+      bookId, pageId, jobId, targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: false,
+      data: {
+        detectedImages: imagesWithJob,
+        promptVersion: PROMPT_VERSION,
+        galleryDocs,
+      },
+      geminiUsage: buildUsagePayload({
+        model: modelId, bookId, pageId, jobId, durationMs,
+        inputTokens: result.usage.inputTokens,
+        outputTokens: result.usage.outputTokens,
+        status: 'success',
+      }),
     });
 
     console.log(`[IMG-EXTRACT] Completed page ${pageId}: ${result.images.length} images detected, ${durationMs}ms`);
@@ -228,102 +217,37 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     const classified = classifyError(error);
     console.error(`[IMG-EXTRACT] Failed to process page ${pageId} [${classified.category}]:`, error);
 
-    // Log failed AI call
-    await logGeminiCall({
-      type: 'extract_images',
-      mode: 'realtime',
-      model: modelId,
-      book_id: bookId,
-      page_ids: [pageId],
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'failed',
-      error_message: classified.message,
-      error_category: classified.category,
-      job_id: jobId,
-      duration_ms: durationMs,
-      prompt_version: PROMPT_VERSION,
-      endpoint: 'worker/image-extraction',
+    // Send failure to write queue
+    await sendWriteResult({
+      type: 'image_extraction',
+      bookId, pageId, jobId, targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: classified.message, category: classified.category },
+      geminiUsage: buildUsagePayload({
+        model: modelId, bookId, pageId, jobId, durationMs,
+        inputTokens: 0, outputTokens: 0, status: 'failed',
+        errorMessage: classified.message, errorCategory: classified.category,
+      }),
     });
-
-    await jobs.updateOne(
-      { id: jobId },
-      {
-        $addToSet: { failed_page_ids: pageId },
-        $inc: { 'progress.failed': 1 },
-        $set: { updated_at: new Date() }
-      }
-    );
-  }
-
-  // Always check completion — runs after both success and failure
-  await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
-}
-
-async function checkJobCompletion(
-  db: Awaited<ReturnType<typeof getDb>>,
-  jobs: ReturnType<Awaited<ReturnType<typeof getDb>>['collection']>,
-  pages: ReturnType<Awaited<ReturnType<typeof getDb>>['collection']>,
-  jobId: string,
-  bookId: string,
-  targetPageIds: string[]
-) {
-  const completedCount = await pages.countDocuments({
-    book_id: bookId,
-    id: { $in: targetPageIds },
-    detected_images: { $exists: true }
-  });
-
-  await jobs.updateOne(
-    { id: jobId },
-    {
-      $set: {
-        'progress.completed': completedCount,
-        updated_at: new Date()
-      }
-    }
-  );
-
-  console.log(`[IMG-EXTRACT] Progress: ${completedCount}/${targetPageIds.length}`);
-
-  const updatedJob = await jobs.findOne({ id: jobId });
-  const failedCount = updatedJob?.progress?.failed || 0;
-  const totalAttempted = completedCount + failedCount;
-
-  if (totalAttempted >= targetPageIds.length) {
-    const finalStatus = failedCount > 0 ? 'completed_with_errors' : 'completed';
-    console.log(`[IMG-EXTRACT] Job ${jobId} ${finalStatus} (${completedCount} succeeded, ${failedCount} failed)`);
-    await jobs.updateOne(
-      { id: jobId },
-      {
-        $set: {
-          status: finalStatus,
-          completed_at: new Date(),
-          updated_at: new Date()
-        }
-      }
-    );
-
-    // Clear job from book
-    await db.collection('books').updateOne(
-      { id: bookId },
-      { $unset: { job: '' } }
-    );
   }
 }
+
+// checkJobCompletion is now handled by the Writer Lambda via shared job-completion.ts
 
 /**
- * Upsert detected images into the gallery_images materialized collection.
- * Runs after each page's image extraction succeeds.
+ * Build gallery_images documents for the write queue.
+ * Reads book metadata for denormalization, but does NOT write to MongoDB.
+ * The Writer Lambda performs the actual deleteMany + insertMany.
  */
-async function upsertGalleryImages(
+async function buildGalleryDocs(
   db: Awaited<ReturnType<typeof getDb>>,
   pageId: string,
   bookId: string,
   page: Page,
   images: Page['detected_images']
-) {
-  if (!images || images.length === 0) return;
+): Promise<Array<Record<string, unknown>>> {
+  if (!images || images.length === 0) return [];
 
   try {
     // Fetch book metadata for denormalization
@@ -333,15 +257,9 @@ async function upsertGalleryImages(
     );
 
     const imageUrl = page.cropped_photo || page.archived_photo || page.photo_original || page.photo || '';
-    const galleryImages = db.collection('gallery_images');
 
-    // Remove old gallery_images for this page (in case image count changed)
-    await galleryImages.deleteMany({ page_id: pageId });
-
-    // Build docs for qualifying images
     const docs = images
       .map((img, idx) => {
-        // Only materialize images with bbox, valid source, and quality >= 0.5
         if (!img.bbox) return null;
         if (!['vision_model', 'manual', 'ocr_tag'].includes(img.detection_source || '')) return null;
         if ((img.gallery_quality || 0) < 0.5) return null;
@@ -368,19 +286,15 @@ async function upsertGalleryImages(
           book_author: book?.author || null,
           book_year: book?.year || null,
           book_language: book?.language || null,
-          book_rank: 0, // Will be recomputed by periodic sync
+          book_rank: 0,
           updated_at: new Date(),
         };
       })
       .filter((d): d is NonNullable<typeof d> => d !== null);
 
-    if (docs.length > 0) {
-      await galleryImages.insertMany(docs);
-    }
-
-    console.log(`[IMG-EXTRACT] Upserted ${docs.length} gallery images for page ${pageId}`);
+    return docs;
   } catch (error) {
-    // Non-fatal — gallery_images is a cache that will be refreshed by cron
-    console.error(`[IMG-EXTRACT] Failed to upsert gallery images for page ${pageId}:`, error);
+    console.error(`[IMG-EXTRACT] Failed to build gallery docs for page ${pageId}:`, error);
+    return [];
   }
 }

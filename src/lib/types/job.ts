@@ -5,6 +5,9 @@ export type JobType =
     'summary' |              // Summary generation for selected pages
     'image_extraction';      // Image extraction for selected pages
 
+/** Job types that have per-page processing with Lambda workers and completion tracking */
+export type PageJobType = Exclude<JobType, 'summary'>;
+
 export type JobStatus =
     'pending' |                // Job created, not started (workers haven't picked it up yet)
     'processing' |             // Workers are actively processing pages

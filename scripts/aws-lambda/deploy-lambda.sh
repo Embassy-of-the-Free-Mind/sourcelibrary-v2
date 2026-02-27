@@ -76,6 +76,9 @@ get_lambda_name() {
     "image-extraction-processor")
       echo "sourcelibrary-image-extraction-processor"
       ;;
+    "write-processor")
+      echo "sourcelibrary-write-processor"
+      ;;
     *)
       echo ""
       ;;
@@ -83,7 +86,7 @@ get_lambda_name() {
 }
 
 # Available functions
-AVAILABLE_FUNCTIONS=("ocr-processor" "translation-processor" "image-extraction-processor")
+AVAILABLE_FUNCTIONS=("ocr-processor" "translation-processor" "image-extraction-processor" "write-processor")
 
 # Default AWS region
 AWS_REGION="${AWS_REGION:-eu-central-1}"

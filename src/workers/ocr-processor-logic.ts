@@ -3,19 +3,33 @@
  *
  * Processes one page at a time for OCR.
  * Used by AWS Lambda in production.
+ *
+ * WRITE QUEUE: This worker does NOT write AI results to MongoDB directly.
+ * Instead, it sends results to the write-results SQS queue, which the
+ * Writer Lambda consumes with capped concurrency (50) to prevent
+ * MongoDB connection storms during large batch jobs.
+ *
+ * Remaining direct DB operations (reads + lightweight status writes):
+ * - jobs.findOne (check if cancelled)
+ * - jobs.updateOne (set status to 'processing' — once per job)
+ * - pages.findOne (get page data)
+ * - prompts.findOne (get OCR prompt)
+ * - createRevision (snapshot before overwrite)
+ * - jobs.updateOne (skip/already-current progress increment)
  */
 
 import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
+import type { OcrWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
-import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
 import { createRevision } from '@/lib/page-revisions';
 import { getOcrPrompt } from '@/lib/prompts';
+import { sendWriteResult } from '@/lib/sqs-client';
 
 /** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
 function isUsableImageUrl(url: string | undefined | null): url is string {
@@ -48,32 +62,29 @@ function getPageImageUrl(page: Page): string | null {
 }
 
 /**
- * Random jitter delay to spread DB writes across time.
- * With 600+ concurrent Lambdas, simultaneous writes overwhelm MongoDB.
- * A 0-3s random delay reduces peak connection pressure by ~60-70%.
+ * Build a GeminiUsagePayload for the write queue.
  */
-const DB_WRITE_JITTER_MS = 3000;
-async function jitterDelay() {
-  const delay = Math.floor(Math.random() * DB_WRITE_JITTER_MS);
-  if (delay > 0) await new Promise(r => setTimeout(r, delay));
-}
-
-/**
- * Retry a MongoDB operation with exponential backoff.
- * Designed for saving AI results that are expensive to regenerate.
- */
-async function retryDbWrite<T>(fn: () => Promise<T>, label: string, maxRetries = 3): Promise<T> {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      return await fn();
-    } catch (err) {
-      if (attempt === maxRetries) throw err;
-      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
-      console.warn(`[OCR] ${label} failed (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms:`, (err as Error).message);
-      await new Promise(r => setTimeout(r, delay));
-    }
-  }
-  throw new Error('unreachable');
+function buildUsagePayload(
+  opts: { model: string; bookId: string; pageId: string; jobId: string; durationMs: number;
+    inputTokens: number; outputTokens: number; status: 'success' | 'failed';
+    errorMessage?: string; errorCategory?: string }
+): GeminiUsagePayload {
+  return {
+    type: 'ocr',
+    mode: 'realtime',
+    model: opts.model,
+    book_id: opts.bookId,
+    page_ids: [opts.pageId],
+    input_tokens: opts.inputTokens,
+    output_tokens: opts.outputTokens,
+    status: opts.status,
+    ...(opts.errorMessage && { error_message: opts.errorMessage }),
+    ...(opts.errorCategory && { error_category: opts.errorCategory }),
+    job_id: opts.jobId,
+    duration_ms: opts.durationMs,
+    prompt_version: PROMPT_VERSION,
+    endpoint: 'worker/ocr',
+  };
 }
 
 export async function processOcrPage(message: PageProcessingMessage): Promise<void> {
@@ -116,11 +127,16 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
   const page = await pages.findOne({ id: pageId }) as Page | null;
   if (!page) {
     console.error(`[OCR] Page ${pageId} not found`);
-    await jobs.updateOne(
-      { id: jobId },
-      { $addToSet: { failed_page_ids: pageId }, $inc: { 'progress.failed': 1 }, $set: { updated_at: new Date() } }
-    );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+    await sendWriteResult({
+      type: 'ocr',
+      bookId,
+      pageId,
+      jobId,
+      targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: 'Page not found', category: 'no_data' },
+    });
     return;
   }
 
@@ -134,37 +150,23 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
       : !imageUrl ? 'no image URL on page' : `non-HTTP image URL: ${imageUrl.substring(0, 100)}`;
     console.error(`[OCR] Page ${pageId}: ${reason}`);
 
-    // Log pre-Gemini failure so it's visible in dashboards (not just job progress)
-    try {
-      await logGeminiCall({
-        type: 'ocr',
-        mode: 'realtime',
-        model: modelId,
-        book_id: bookId,
-        page_ids: [pageId],
-        input_tokens: 0,
-        output_tokens: 0,
-        status: 'failed',
-        error_message: reason,
-        error_category: 'no_image',
-        job_id: jobId,
-        duration_ms: 0,
-        prompt_version: PROMPT_VERSION,
-        endpoint: 'worker/ocr',
-      });
-    } catch (logErr) {
-      console.error(`[OCR] Failed to log no-image error for page ${pageId}:`, logErr);
-    }
+    // Send failure to write queue — writer will log to gemini_usage and update job progress
+    await sendWriteResult({
+      type: 'ocr',
+      bookId,
+      pageId,
+      jobId,
+      targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: reason, category: 'no_image' },
+      geminiUsage: buildUsagePayload({
+        model: modelId, bookId, pageId, jobId, durationMs: 0,
+        inputTokens: 0, outputTokens: 0, status: 'failed',
+        errorMessage: reason, errorCategory: 'no_image',
+      }),
+    });
 
-    await jobs.updateOne(
-      { id: jobId },
-      {
-        $addToSet: { failed_page_ids: pageId },
-        $inc: { 'progress.failed': 1 },
-        $set: { updated_at: new Date() }
-      }
-    );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -176,11 +178,14 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     const jobTime = new Date(job.created_at).getTime();
     if (ocrTime >= jobTime) {
       console.log(`[OCR] Skipping page ${pageId} (OCR already current, ${page.ocr.model || 'unknown'})`);
-      await jobs.updateOne(
-        { id: jobId },
-        { $inc: { 'progress.completed': 1 }, $set: { updated_at: new Date() } }
-      );
-      await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+      // Send a success (no data) to the write queue so completion tracking happens
+      await sendWriteResult({
+        type: 'ocr',
+        bookId, pageId, jobId, targetPageIds,
+        timestamp: new Date().toISOString(),
+        failed: false,
+        // No data — page already has current OCR, just need completion tracking
+      });
       return;
     }
   }
@@ -226,53 +231,36 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     const durationMs = Date.now() - startTime;
     console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}, ${durationMs}ms`);
 
-    // Save OCR result (with retry — Gemini tokens are already spent)
-    // Jitter to spread DB writes across time when many Lambdas finish simultaneously
-    await jitterDelay();
+    // Send result to write queue — Writer Lambda handles all DB writes
     const pageType = extractPageType(ocrResult.text);
     const columns = extractColumns(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
-    await retryDbWrite(() => pages.updateOne(
-      { id: pageId },
-      {
-        $set: {
-          ocr: {
-            data: ocrResult.text,
-            language: job.config.language || 'auto-detect',
-            model: modelId,
-            updated_at: new Date(),
-            source: 'ai',
-            prompt_version: PROMPT_VERSION
-          },
-          ...(pageType && { page_type: pageType }),
-          ...(columns && { columns }),
-          ...(detectedImages.length > 0 && { detected_images: detectedImages }),
-          updated_at: new Date()
-        }
-      }
-    ), `save OCR for page ${pageId}`);
-
-    // Log successful AI call (non-blocking - don't let logging failures crash the worker)
-    try {
-      await logGeminiCall({
-        type: 'ocr',
-        mode: 'realtime',
+    await sendWriteResult({
+      type: 'ocr',
+      bookId,
+      pageId,
+      jobId,
+      targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: false,
+      data: {
+        text: ocrResult.text,
+        language: job.config.language || 'auto-detect',
         model: modelId,
-        book_id: bookId,
-        page_ids: [pageId],
-        input_tokens: ocrResult.usage.inputTokens,
-        output_tokens: ocrResult.usage.outputTokens,
+        promptVersion: PROMPT_VERSION,
+        ...(pageType && { pageType }),
+        ...(columns && { columns }),
+        ...(detectedImages.length > 0 && { detectedImages }),
+      },
+      geminiUsage: buildUsagePayload({
+        model: modelId, bookId, pageId, jobId, durationMs,
+        inputTokens: ocrResult.usage.inputTokens,
+        outputTokens: ocrResult.usage.outputTokens,
         status: 'success',
-        job_id: jobId,
-        duration_ms: durationMs,
-        prompt_version: PROMPT_VERSION,
-        endpoint: 'worker/ocr',
-      });
-    } catch (logError) {
-      console.error(`[OCR] Failed to log success for page ${pageId}:`, logError);
-    }
+      }),
+    });
 
-    console.log(`[OCR] Saved OCR result for page ${pageId}`);
+    console.log(`[OCR] Sent OCR result to write queue for page ${pageId}`);
   } catch (error) {
     const durationMs = Date.now() - startTime;
     const classified = classifyError(error);
@@ -299,52 +287,36 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           const retryDuration = Date.now() - startTime;
           console.log(`[OCR] Retry succeeded with ${nextModel} for page ${pageId}`);
 
-          // Save retry result (with retry — Gemini tokens are already spent)
+          // Send retry result to write queue
           const retryPageType = extractPageType(retryResult.text);
           const retryColumns = extractColumns(retryResult.text);
           const retryImages = parseDetectedImages(retryResult.text);
-          await retryDbWrite(() => pages.updateOne(
-            { id: pageId },
-            {
-              $set: {
-                ocr: {
-                  data: retryResult.text,
-                  language: job.config.language || 'auto-detect',
-                  model: nextModel,
-                  updated_at: new Date(),
-                  source: 'ai',
-                  prompt_version: PROMPT_VERSION
-                },
-                ...(retryPageType && { page_type: retryPageType }),
-                ...(retryColumns && { columns: retryColumns }),
-                ...(retryImages.length > 0 && { detected_images: retryImages }),
-                updated_at: new Date()
-              }
-            }
-          ), `save OCR retry for page ${pageId}`);
-
-          // Log successful retry
-          try {
-            await logGeminiCall({
-              type: 'ocr',
-              mode: 'realtime',
+          await sendWriteResult({
+            type: 'ocr',
+            bookId,
+            pageId,
+            jobId,
+            targetPageIds,
+            timestamp: new Date().toISOString(),
+            failed: false,
+            data: {
+              text: retryResult.text,
+              language: job.config.language || 'auto-detect',
               model: nextModel,
-              book_id: bookId,
-              page_ids: [pageId],
-              input_tokens: retryResult.usage.inputTokens,
-              output_tokens: retryResult.usage.outputTokens,
+              promptVersion: PROMPT_VERSION,
+              ...(retryPageType && { pageType: retryPageType }),
+              ...(retryColumns && { columns: retryColumns }),
+              ...(retryImages.length > 0 && { detectedImages: retryImages }),
+            },
+            geminiUsage: buildUsagePayload({
+              model: nextModel, bookId, pageId, jobId, durationMs: retryDuration,
+              inputTokens: retryResult.usage.inputTokens,
+              outputTokens: retryResult.usage.outputTokens,
               status: 'success',
-              job_id: jobId,
-              duration_ms: retryDuration,
-              prompt_version: PROMPT_VERSION,
-              endpoint: 'worker/ocr',
-            });
-          } catch (logError) {
-            console.error(`[OCR] Failed to log retry success for page ${pageId}:`, logError);
-          }
+            }),
+          });
 
           // Exit early - retry succeeded, don't mark as failed
-          await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
           return;
         } catch (retryError) {
           console.error(`[OCR] Retry with ${nextModel} also failed for page ${pageId}:`, retryError);
@@ -355,141 +327,23 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
       }
     }
 
-    // Log failed AI call (non-blocking - don't let logging failures prevent status updates)
-    try {
-      await logGeminiCall({
-        type: 'ocr',
-        mode: 'realtime',
-        model: modelId,
-        book_id: bookId,
-        page_ids: [pageId],
-        input_tokens: 0,
-        output_tokens: 0,
-        status: 'failed',
-        error_message: classified.message,
-        error_category: classified.category,
-        job_id: jobId,
-        duration_ms: durationMs,
-        prompt_version: PROMPT_VERSION,
-        endpoint: 'worker/ocr',
-      });
-    } catch (logError) {
-      console.error(`[OCR] Failed to log error for page ${pageId}:`, logError);
-    }
-
-    // CRITICAL: Update job status even if logging failed
-    try {
-      await jobs.updateOne(
-        { id: jobId },
-        {
-          $addToSet: { failed_page_ids: pageId },
-          $inc: { 'progress.failed': 1 },
-          $set: { updated_at: new Date() }
-        }
-      );
-    } catch (updateError) {
-      console.error(`[OCR] CRITICAL: Failed to update job status for ${jobId}:`, updateError);
-      // Re-throw so Lambda can retry
-      throw updateError;
-    }
-  }
-
-  // Always check completion — runs after both success and failure
-  // Jitter to avoid 600+ simultaneous countDocuments queries
-  await jitterDelay();
-  try {
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
-  } catch (completionError) {
-    console.error(`[OCR] Failed to check job completion for ${jobId}:`, completionError);
-    // Don't re-throw - page processing is done, this is just status tracking
-  }
-}
-
-async function checkJobCompletion(
-  db: Awaited<ReturnType<typeof getDb>>,
-  jobs: ReturnType<Awaited<ReturnType<typeof getDb>>['collection']>,
-  pages: ReturnType<Awaited<ReturnType<typeof getDb>>['collection']>,
-  jobId: string,
-  bookId: string,
-  targetPageIds: string[]
-) {
-  // Count pages where OCR has been performed (including empty results from blank pages)
-  const completedCount = await pages.countDocuments({
-    book_id: bookId,
-    id: { $in: targetPageIds },
-    'ocr.data': { $exists: true, $nin: [null, ''] }
-  });
-
-  await jobs.updateOne(
-    { id: jobId },
-    {
-      $set: {
-        'progress.completed': completedCount,
-        updated_at: new Date()
-      }
-    }
-  );
-
-  console.log(`[OCR] Progress: ${completedCount}/${targetPageIds.length}`);
-
-  const updatedJob = await jobs.findOne({ id: jobId });
-  const failedCount = updatedJob?.progress?.failed || 0;
-  const totalAttempted = completedCount + failedCount;
-
-  if (totalAttempted >= targetPageIds.length) {
-    const finalStatus = failedCount > 0 ? 'completed_with_errors' : 'completed';
-    console.log(`[OCR] Job ${jobId} ${finalStatus} (${completedCount} succeeded, ${failedCount} failed)`);
-    await jobs.updateOne(
-      { id: jobId },
-      {
-        $set: {
-          status: finalStatus,
-          completed_at: new Date(),
-          updated_at: new Date()
-        }
-      }
-    );
-
-    // Circuit breaker: if >90% of pages failed, block the book with exponential backoff
-    // This prevents the submit-ocr cron from retrying books with dead image URLs
-    if (targetPageIds.length > 0 && failedCount / targetPageIds.length >= 0.9) {
-      const book = await db.collection('books').findOne({ id: bookId }, { projection: { ocr_failure_count: 1 } });
-      const failureCount = (book?.ocr_failure_count || 0) + 1;
-      // Exponential backoff: 1h, 4h, 24h, 7d, 30d
-      const backoffHours = [1, 4, 24, 168, 720][Math.min(failureCount - 1, 4)];
-      const blockedUntil = new Date(Date.now() + backoffHours * 60 * 60 * 1000);
-      await db.collection('books').updateOne(
-        { id: bookId },
-        { $set: { ocr_failure_count: failureCount, ocr_blocked_until: blockedUntil } }
-      );
-      console.log(`[OCR] Circuit breaker: book ${bookId} blocked for ${backoffHours}h (failure #${failureCount})`);
-    }
-
-    // Update book's pages_ocr count with actual count from pages collection
-    const totalPagesWithOcr = await pages.countDocuments({
-      book_id: bookId,
-      'ocr.data': { $exists: true, $ne: '' }
+    // Send failure to write queue — writer handles logging + job progress
+    await sendWriteResult({
+      type: 'ocr',
+      bookId,
+      pageId,
+      jobId,
+      targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: classified.message, category: classified.category },
+      geminiUsage: buildUsagePayload({
+        model: modelId, bookId, pageId, jobId, durationMs,
+        inputTokens: 0, outputTokens: 0, status: 'failed',
+        errorMessage: classified.message, errorCategory: classified.category,
+      }),
     });
-
-    // Mark enrichment stale if this book already has an index
-    const bookDoc = await db.collection('books').findOne(
-      { id: bookId },
-      { projection: { 'index.generatedAt': 1 } }
-    );
-    const enrichmentStale = bookDoc?.index?.generatedAt ? { enrichment_stale: true } : {};
-
-    await db.collection('books').updateOne(
-      { id: bookId },
-      {
-        $set: {
-          pages_ocr: totalPagesWithOcr,
-          ...enrichmentStale,
-          updated_at: new Date()
-        },
-        $unset: { job: '' }
-      }
-    );
-
-    console.log(`[OCR] Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
   }
 }
+
+// checkJobCompletion is now handled by the Writer Lambda via shared job-completion.ts

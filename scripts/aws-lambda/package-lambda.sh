@@ -56,6 +56,14 @@ cd dist/lambda-temp
 zip -q -r ../packages/image-extraction-processor.zip index.js node_modules
 cd ../..
 
+# Package Write processor
+echo "📦 Packaging write-processor..."
+rm dist/lambda-temp/index.js
+cp dist/lambda/write-processor.js dist/lambda-temp/index.js
+cd dist/lambda-temp
+zip -q -r ../packages/write-processor.zip index.js node_modules
+cd ../..  
+
 # Cleanup
 rm -rf dist/lambda-temp
 
@@ -63,8 +71,10 @@ echo "✅ Lambda packages created with dependencies:"
 echo "  - dist/packages/ocr-processor.zip"
 echo "  - dist/packages/translation-processor.zip"
 echo "  - dist/packages/image-extraction-processor.zip"
+echo "  - dist/packages/write-processor.zip"
 echo ""
 echo "Upload these to AWS Lambda console or use AWS CLI:"
 echo "  aws lambda update-function-code --function-name sourcelibrary-ocr-processor --zip-file fileb://dist/packages/ocr-processor.zip"
 echo "  aws lambda update-function-code --function-name sourcelibrary-translation-processor --zip-file fileb://dist/packages/translation-processor.zip"
 echo "  aws lambda update-function-code --function-name sourcelibrary-image-extraction-processor --zip-file fileb://dist/packages/image-extraction-processor.zip"
+echo "  aws lambda update-function-code --function-name sourcelibrary-write-processor --zip-file fileb://dist/packages/write-processor.zip"

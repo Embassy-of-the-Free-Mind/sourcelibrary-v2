@@ -1,5 +1,5 @@
 import { SQSClient, SendMessageCommand, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
-import type { PageProcessingMessage, PageOcrMessage } from './types/sqs';
+import type { PageProcessingMessage, PageOcrMessage, WriteResultMessage } from './types/sqs';
 
 // Initialize SQS client
 // Use AWS SDK's default credential provider chain:
@@ -14,6 +14,7 @@ export const QUEUE_URLS = {
   pageOcr: process.env.SQS_PAGE_OCR_QUEUE_URL || '',
   pageTranslation: process.env.SQS_PAGE_TRANSLATION_QUEUE_URL || '',
   pageImageExtraction: process.env.SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL || '',
+  writeResults: process.env.SQS_WRITE_RESULTS_QUEUE_URL || '',
 };
 
 interface SendMessageOptions {
@@ -123,3 +124,27 @@ export async function sendPageOcrMessageBatch(messages: PageOcrMessage[]) {
 }
 
 export { sqsClient };
+
+/**
+ * Send a write result message to the write-results queue.
+ * Called by AI workers after Gemini call completes (success or failure).
+ * The Writer Lambda consumes these and performs all MongoDB writes.
+ *
+ * SQS max message size is 256KB. OCR/translation text is typically 1-5KB,
+ * so we're well within limits. Log a warning if payload exceeds 200KB.
+ */
+export async function sendWriteResult(message: WriteResultMessage) {
+  const body = JSON.stringify(message);
+
+  if (body.length > 200_000) {
+    console.warn(`[SQS] Write result message is ${(body.length / 1024).toFixed(1)}KB (page ${message.pageId}). SQS limit is 256KB.`);
+  }
+
+  const command = new SendMessageCommand({
+    QueueUrl: QUEUE_URLS.writeResults,
+    MessageBody: body,
+  });
+
+  const result = await sqsClient.send(command);
+  return { messageId: result.MessageId };
+}

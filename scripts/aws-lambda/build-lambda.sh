@@ -35,6 +35,15 @@ npx esbuild src/workers/image-extraction-processor.ts \
   --external:@aws-sdk/* \
   --outfile=dist/lambda/image-extraction-processor.js
 
+# Build Write processor (results queue consumer)
+echo "📦 Building write-processor..."
+npx esbuild src/workers/write-processor.ts \
+  --bundle \
+  --platform=node \
+  --target=node24 \
+  --external:@aws-sdk/* \
+  --outfile=dist/lambda/write-processor.js
+
 echo "✅ Lambda functions built successfully!"
 echo ""
 echo "Next steps:"
