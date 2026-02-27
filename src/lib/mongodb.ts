@@ -61,9 +61,10 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
 
   connectingPromise = (async () => {
     try {
-      // Vercel functions run on AWS Lambda but aren't our Lambda workers.
-      // Our workers set SQS_PAGE_OCR_QUEUE_URL — use that to distinguish.
-      const isOurLambda = !!process.env.SQS_PAGE_OCR_QUEUE_URL;
+      // Detect actual AWS Lambda workers (NOT Vercel functions).
+      // AWS_LAMBDA_FUNCTION_NAME is set by AWS on real Lambda invocations.
+      // SQS_PAGE_OCR_QUEUE_URL is also set on Vercel (for queueing), so can't use that.
+      const isOurLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 
       console.log('[MongoDB] Initializing connection...');
       const client = new MongoClient(uri!, {
