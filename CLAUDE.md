@@ -22,7 +22,7 @@
 
 ## Audit Trail
 All AI calls logged to `gemini_usage` collection via `logGeminiCall()` in `src/lib/gemini-logger.ts`.
-- Book history timeline: `GET /api/books/[id]/history` (assembles from 5 collections)
+- Book history timeline: `GET /api/books/[id]/history` (assembles from 6 collections)
 - Dashboard: `GET /api/admin/processing-dashboard?provider=ia`
 - Error classification: `src/lib/errors.ts` → `classifyError(error)`
 - `cost_tracking` collection is DEPRECATED — use `gemini_usage` for all cost queries

@@ -8,13 +8,13 @@ Every book page shows a "Book History" section (`BookHistory` component) that di
 **Component:** `src/components/book/BookHistory.tsx`
 **Client:** `books.history(bookId)` in `src/lib/api-client/books.ts`
 
-### Data Sources (6 parallel queries)
+### Data Sources (1 book lookup + 5 parallel queries)
 
 | Source | Collection | Events generated |
 |--------|-----------|-----------------|
-| Book document | `books` | imported, summary, index, edition_published |
-| AI usage | `gemini_usage` | ocr, translation, summary, index, image_extraction |
-| Processing jobs | `jobs` | ocr, translation (with progress: completed/total/failed) |
+| Book document | `books` | imported, summary, index, extract_chapters, edition_published |
+| AI usage | `gemini_usage` | ocr, translation, summary, index, image_extraction, extract_chapters |
+| Processing jobs | `jobs` | ocr, translation, summary, image_extraction (with progress: completed/total/failed) |
 | Page stats | `pages` | archived (aggregate count + dates) |
 | Admin log | `audit_log` | admin_action (OCR resets, etc.) |
 | Metadata changelog | `book_metadata_changelog` | metadata_change (field-level before/after diffs) |
@@ -157,7 +157,7 @@ await logger.flush(); // writes one document to cron_runs
 
 `src/lib/audit-logger.ts` — `logAuditEvent()`. Non-blocking, typed actions. Writes to `audit_log` collection.
 
-**Logged actions:** `book_imported`, `book_deleted`, `book_deleted_permanent`, `book_restored`, `book_reimported`, `book_metadata_updated`, `edition_published`, `doi_minted`, `page_edited`, `reset_book_ocr`
+**Logged actions:** `book_imported`, `book_deleted`, `book_deleted_permanent`, `book_restored`, `book_reimported`, `book_metadata_updated`, `book_metadata_verified`, `pipeline_status_changed`, `edition_published`, `doi_minted`, `page_edited`, `reset_book_ocr`, `images_brightness_adjusted`
 
 All audit events automatically appear in the Book History timeline.
 

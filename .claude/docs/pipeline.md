@@ -393,12 +393,13 @@ Lambda workers create snapshots before overwriting manually-edited content:
 
 ### Book History Timeline
 
-`GET /api/books/{id}/history` assembles a chronological timeline from 5 data sources:
-1. Book document (import, summary, index, editions)
+`GET /api/books/{id}/history` assembles a chronological timeline from 6 data sources:
+1. Book document (import, summary, index, chapters, editions)
 2. `gemini_usage` (all AI calls, grouped by type+hour)
 3. `jobs` (processing jobs with progress)
 4. `pages` aggregate (archive counts, detected images)
 5. `audit_log` (admin actions)
+6. `book_metadata_changelog` (field-level metadata diffs)
 
 Deduplication: when a `gemini_usage` record has a `job_id` matching the `jobs` collection, it folds into the job event with cost data rather than appearing separately.
 
@@ -406,5 +407,4 @@ Deduplication: when a `gemini_usage` record has a `job_id` matching the `jobs` c
 
 1. **No `prompt_version` on pre-Feb-2026 pages** — all 132k OCR pages used the same prompt, but the field wasn't set. Fills in on re-OCR.
 2. **Batch API pages have `batch_job_id`** — set by `process-batches` cron on OCR and translation saves. Realtime Lambda pages link via `gemini_usage.job_id` instead.
-3. **Chapter extraction** — logged as `type: 'extract_chapters'` in `gemini_usage`. Shows in history timeline.
-4. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection.
+3. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection.

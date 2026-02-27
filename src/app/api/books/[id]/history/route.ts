@@ -21,11 +21,12 @@ interface HistoryEvent {
 /**
  * GET /api/books/[id]/history
  * Returns a complete provenance timeline for a book, assembled from:
- * - Book document (import, archival, summary, index, editions, split_check)
+ * - Book document (import, summary, index, chapters, editions)
  * - gemini_usage collection (AI processing grouped by type+hour+job)
  * - jobs collection (processing jobs with progress)
  * - pages collection (archive/edit/image stats)
  * - audit_log collection (admin actions)
+ * - book_metadata_changelog collection (field-level metadata diffs)
  */
 export async function GET(
   _request: NextRequest,
@@ -53,7 +54,7 @@ export async function GET(
 
     const resolvedBookId = book.id || book._id?.toString();
 
-    // Run 6 queries in parallel
+    // Run 5 queries in parallel (book already fetched above)
     const [usageRecords, jobRecords, pageStats, auditRecords, changelogRecords] = await Promise.all([
       // 1. gemini_usage — all AI calls for this book
       db.collection('gemini_usage').find(
