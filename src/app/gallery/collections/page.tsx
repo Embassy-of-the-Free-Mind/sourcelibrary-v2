@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 
+export const revalidate = 600;
+
 export const metadata: Metadata = {
   title: 'Curated Collections — Gallery — Source Library',
   description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts — woodcuts, engravings, emblems, and diagrams spanning five centuries.',
@@ -24,30 +26,35 @@ interface CollectionListItem {
 }
 
 async function getCollections(): Promise<CollectionListItem[]> {
-  const db = await getDb();
+  try {
+    const db = await getDb();
 
-  const collections = await db
-    .collection('gallery_collections')
-    .find({})
-    .sort({ sort_order: 1, created_at: -1 })
-    .toArray();
+    const collections = await db
+      .collection('gallery_collections')
+      .find({})
+      .sort({ sort_order: 1, created_at: -1 })
+      .toArray();
 
-  // Resolve cover images
-  const coverIds = collections
-    .map((c) => c.cover_image_id as string)
-    .filter(Boolean);
+    // Resolve cover images
+    const coverIds = collections
+      .map((c) => c.cover_image_id as string)
+      .filter(Boolean);
 
   const coverImages = await resolveCoverImages(db, coverIds);
 
-  return collections.map((c) => ({
-    id: c.id as string,
-    slug: c.slug as string,
-    title: c.title as string,
-    description: c.description as string,
-    imageCount: (c.image_ids as string[])?.length || 0,
-    featured: c.featured as boolean,
-    coverImage: coverImages.get(c.cover_image_id as string) || null,
-  }));
+    return collections.map((c) => ({
+      id: c.id as string,
+      slug: c.slug as string,
+      title: c.title as string,
+      description: c.description as string,
+      imageCount: (c.image_ids as string[])?.length || 0,
+      featured: c.featured as boolean,
+      coverImage: coverImages.get(c.cover_image_id as string) || null,
+    }));
+  } catch {
+    // DB unavailable (e.g. build time) — return empty list
+    return [];
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
