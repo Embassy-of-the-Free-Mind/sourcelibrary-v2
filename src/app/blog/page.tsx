@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'philosophers-stone',
+    title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
+    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
+    date: '27 February 2026',
+    readTime: '20 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
+    imageAlt: 'Frontispiece engraving from Lambspringk\'s De Lapide Philosophico, Frankfurt 1625',
+  },
+  {
     slug: 'first-translation-methodology',
     title: 'How We Identify First Translations',
     subtitle: 'The methodology behind Source Library\'s first-translation classification: AI enrichment, six-level status system, bibliographic heuristics, deep verification, and known limitations.',
