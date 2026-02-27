@@ -20,8 +20,6 @@ import {
   RotateCcw,
   Sparkles,
   Search,
-  Highlighter,
-  StickyNote,
   Info
 } from 'lucide-react';
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
@@ -29,8 +27,6 @@ import NotesRenderer from '@/components/reader/NotesRenderer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import PageAssistant from '@/components/reader/PageAssistant';
-import HighlightsPanel from '@/components/annotations/HighlightsPanel';
-import AnnotationPanel from '@/components/annotations/AnnotationPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
@@ -520,8 +516,6 @@ export default function TranslationEditor({
   const fontControlsRef = useRef<HTMLDivElement>(null);
 
   // Highlights and Annotations panels
-  const [showHighlights, setShowHighlights] = useState(false);
-  const [showAnnotations, setShowAnnotations] = useState(false);
 
   // Swipe navigation state
   const touchStartX = useRef<number>(0);
@@ -889,32 +883,8 @@ export default function TranslationEditor({
                 </button>
               )}
 
-              {/* Desktop extras: Share, Highlights, Annotations, Google Translate */}
+              {/* Desktop extras: Font size, Google Translate */}
               <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
-                <BookShare
-                  title={book.display_title || book.title}
-                  author={book.author}
-                  year={book.published}
-                  bookId={book.id}
-                  doi={book.doi}
-                  className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100"
-                />
-                <button
-                  onClick={() => setShowHighlights(true)}
-                  className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
-                  style={{ color: 'var(--text-muted)' }}
-                  aria-label="View highlights"
-                >
-                  <Highlighter className="w-4 h-4" aria-hidden="true" />
-                </button>
-                <button
-                  onClick={() => setShowAnnotations(true)}
-                  className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
-                  style={{ color: 'var(--text-muted)' }}
-                  aria-label="View annotations"
-                >
-                  <StickyNote className="w-4 h-4" aria-hidden="true" />
-                </button>
                 <div className="relative" ref={fontControlsRef}>
                   <button
                     onClick={() => setShowFontControls(prev => !prev)}
@@ -992,14 +962,24 @@ export default function TranslationEditor({
                 </div>
               </AuthCheck>
 
-              {/* Like Button */}
-              <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
-                <LikeButton
-                  targetType="page"
-                  targetId={page.id}
+              {/* Like + Share */}
+              <div className="flex items-center gap-1">
+                <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
+                  <LikeButton
+                    targetType="page"
+                    targetId={page.id}
+                    bookId={book.id}
+                    size="sm"
+                    showCount={true}
+                  />
+                </div>
+                <BookShare
+                  title={book.display_title || book.title}
+                  author={book.author}
+                  year={book.published}
                   bookId={book.id}
-                  size="sm"
-                  showCount={true}
+                  doi={book.doi}
+                  className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100"
                 />
               </div>
             </div>
@@ -1332,7 +1312,7 @@ export default function TranslationEditor({
           initialMode={assistantMode}
           page={page}
           book={book}
-          onOpenAnnotations={() => setShowAnnotations(true)}
+          onOpenAnnotations={() => {}}
         />
 
         {/* Page Metadata Panel */}
@@ -1343,23 +1323,6 @@ export default function TranslationEditor({
           />
         )}
 
-        {/* Highlights Panel */}
-        <HighlightsPanel
-          bookId={book.id}
-          isOpen={showHighlights}
-          onClose={() => setShowHighlights(false)}
-        />
-
-        {/* Annotations Panel */}
-        <AnnotationPanel
-          bookId={book.id}
-          pageId={page.id}
-          pageNumber={page.page_number}
-          bookTitle={book.display_title || book.title}
-          bookAuthor={book.author}
-          isOpen={showAnnotations}
-          onClose={() => setShowAnnotations(false)}
-        />
 
         {/* Reset Split Confirmation Modal (read mode) */}
         {showResetSplitConfirm && (

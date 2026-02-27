@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, ReactNode } from 'react';
-import { Highlighter, X, Check, Loader2, Share2, Twitter, Link2, MessageCircle, MessageSquarePlus, Sparkles } from 'lucide-react';
+import { X, Check, Share2, Twitter, Link2, MessageCircle, MessageSquarePlus } from 'lucide-react';
 import AnnotationEditor from './AnnotationEditor';
 import { getShortUrl } from '@/lib/shortlinks';
-import { highlights, utils } from '@/lib/api-client';
 
 interface HighlightSelectionProps {
   bookId: string;
@@ -15,7 +14,6 @@ interface HighlightSelectionProps {
   bookYear?: string;
   doi?: string;
   children: ReactNode;
-  onHighlightSaved?: () => void;
   onAnnotationSaved?: () => void;
 }
 
@@ -33,20 +31,14 @@ export default function HighlightSelection({
   bookYear,
   doi,
   children,
-  onHighlightSaved,
   onAnnotationSaved,
 }: HighlightSelectionProps) {
   const [selectedText, setSelectedText] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState<PopupPosition>({ x: 0, y: 0 });
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showAnnotationEditor, setShowAnnotationEditor] = useState(false);
-  const [showExplainPanel, setShowExplainPanel] = useState(false);
-  const [explaining, setExplaining] = useState(false);
-  const [explanation, setExplanation] = useState<string | null>(null);
 
   const handleSelection = useCallback(() => {
     const selection = window.getSelection();
@@ -64,48 +56,12 @@ export default function HighlightSelection({
           y: rect.top - 10,
         });
         setShowPopup(true);
-        setSaved(false);
       }
     } else {
       setShowPopup(false);
       setSelectedText('');
     }
   }, []);
-
-  const handleSaveHighlight = async () => {
-    if (!selectedText || saving) return;
-
-    setSaving(true);
-
-    try {
-      // Get user name from localStorage (shared with annotations)
-      const userName = localStorage.getItem('annotation_username') || undefined;
-
-      await highlights.create({
-        book_id: bookId,
-        page_id: pageId,
-        page_number: pageNumber,
-        book_title: bookTitle,
-        book_author: bookAuthor,
-        text: selectedText,
-        user_name: userName,
-      });
-
-      setSaved(true);
-      onHighlightSaved?.();
-
-      // Clear selection after a moment
-      setTimeout(() => {
-        window.getSelection()?.removeAllRanges();
-        setShowPopup(false);
-        setSaved(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Failed to save highlight:', error);
-    } finally {
-      setSaving(false);
-    }
-  };
 
   const handleDismiss = () => {
     setShowPopup(false);
@@ -157,47 +113,16 @@ export default function HighlightSelection({
     }, 1500);
   };
 
-  // Explain selected text using AI
-  const handleExplain = async () => {
-    setShowPopup(false);
-    setShowExplainPanel(true);
-    setExplaining(true);
-    setExplanation(null);
-
-    try {
-      const data = await utils.explain({
-        text: selectedText,
-        book_title: bookTitle,
-        book_author: bookAuthor,
-        page_number: pageNumber,
-      });
-
-      setExplanation(data.explanation || 'Sorry, I couldn\'t explain this text. Please try again.');
-    } catch (err) {
-      console.error('Explain error:', err);
-      setExplanation('Sorry, something went wrong. Please try again.');
-    } finally {
-      setExplaining(false);
-    }
-  };
-
-  const closeExplainPanel = () => {
-    setShowExplainPanel(false);
-    setExplanation(null);
-    window.getSelection()?.removeAllRanges();
-  };
-
   // Handle Escape key to close panels
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (showExplainPanel) closeExplainPanel();
         if (showPopup) handleDismiss();
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [showExplainPanel, showPopup]);
+  }, [showPopup]);
 
   useEffect(() => {
     document.addEventListener('mouseup', handleSelection);
@@ -235,12 +160,7 @@ export default function HighlightSelection({
           }}
         >
           <div className="bg-stone-900 text-white rounded-lg shadow-xl flex items-center overflow-hidden">
-            {saved ? (
-              <div className="flex items-center gap-2 px-4 py-2 text-green-400">
-                <Check className="w-4 h-4" />
-                <span className="text-sm">Saved!</span>
-              </div>
-            ) : copied ? (
+            {copied ? (
               <div className="flex items-center gap-2 px-4 py-2 text-green-400">
                 <Check className="w-4 h-4" />
                 <span className="text-sm">Copied!</span>
@@ -278,33 +198,15 @@ export default function HighlightSelection({
             ) : (
               <>
                 <button
-                  onClick={handleExplain}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors"
-                  title="Explain this"
-                >
-                  <Sparkles className="w-4 h-4 text-purple-400" />
-                </button>
-                <button
-                  onClick={handleSaveHighlight}
-                  disabled={saving}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors border-l border-stone-700 disabled:opacity-50"
-                  title="Save highlight"
-                >
-                  {saving ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Highlighter className="w-4 h-4 text-yellow-400" />
-                  )}
-                </button>
-                <button
                   onClick={() => {
                     setShowAnnotationEditor(true);
                     setShowPopup(false);
                   }}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors border-l border-stone-700"
-                  title="Add comment"
+                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors"
+                  title="Comment on this page"
                 >
                   <MessageSquarePlus className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm">Comment</span>
                 </button>
                 <button
                   onClick={() => setShowShareMenu(true)}
@@ -312,12 +214,7 @@ export default function HighlightSelection({
                   title="Share quote"
                 >
                   <Share2 className="w-4 h-4 text-accent-gold" />
-                </button>
-                <button
-                  onClick={handleDismiss}
-                  className="px-3 py-2 hover:bg-stone-800 transition-colors border-l border-stone-700"
-                >
-                  <X className="w-4 h-4" />
+                  <span className="text-sm">Share</span>
                 </button>
               </>
             )}
@@ -346,67 +243,6 @@ export default function HighlightSelection({
         selectedText={selectedText}
       />
 
-      {/* Explain Panel */}
-      {showExplainPanel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={closeExplainPanel} aria-hidden="true" />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="explain-panel-title"
-            className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden"
-          >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-purple-50 to-pink-50">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-600" aria-hidden="true" />
-                <h2 id="explain-panel-title" className="font-medium text-stone-900">Explain</h2>
-              </div>
-              <button
-                onClick={closeExplainPanel}
-                aria-label="Close dialog"
-                className="p-1 hover:bg-stone-200 rounded transition-colors"
-              >
-                <X className="w-4 h-4 text-stone-600" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="p-4">
-              <div className="bg-yellow-50 border-l-2 border-yellow-400 px-3 py-2 text-sm text-stone-600 italic mb-4">
-                &ldquo;{selectedText.length > 150 ? selectedText.slice(0, 150) + '...' : selectedText}&rdquo;
-              </div>
-              {explaining ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
-                  <span className="ml-2 text-stone-600">Thinking...</span>
-                </div>
-              ) : explanation ? (
-                <div className="prose prose-sm prose-stone max-w-none">
-                  {explanation.split('\n\n').map((p, i) => (
-                    <p key={i} className="text-stone-700 leading-relaxed">{p}</p>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            <div className="flex items-center justify-between px-4 py-3 border-t border-stone-100 bg-stone-50">
-              <button
-                onClick={() => {
-                  setShowAnnotationEditor(true);
-                  setShowExplainPanel(false);
-                }}
-                className="text-xs text-stone-600 hover:text-stone-900 flex items-center gap-1"
-              >
-                <MessageSquarePlus className="w-3 h-3" />
-                Add your own note
-              </button>
-              <button
-                onClick={closeExplainPanel}
-                className="px-3 py-1.5 text-xs text-stone-600 hover:text-stone-900"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
