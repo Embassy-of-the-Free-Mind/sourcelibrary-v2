@@ -71,12 +71,20 @@ interface BookItem {
 }
 
 /** Auto-link book titles found in description text to their book pages.
- *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection. */
+ *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection.
+ *  Uses slug-based URLs so Next.js client-side navigation works
+ *  (raw hex IDs go through a proxy rewrite→redirect chain that breaks soft nav). */
 function linkBookTitles(
   text: string,
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
 ): React.ReactNode {
+  // Build a lookup from book ID to slug for URL generation
+  const bookById = new Map<string, BookItem>();
+  for (const book of allBooks) {
+    bookById.set(book.id, book);
+  }
+
   const matches: { start: number; end: number; title: string; id: string }[] = [];
   const usedRanges: [number, number][] = [];
 
@@ -133,8 +141,10 @@ function linkBookTitles(
   let lastIdx = 0;
   for (const m of matches) {
     if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
+    const book = bookById.get(m.id);
+    const href = book ? bookUrl(book) : `/book/${m.id}`;
     parts.push(
-      <Link key={m.id + '-' + m.start} href={`/book/${m.id}`} className="text-accent-rust hover:underline italic">
+      <Link key={m.id + '-' + m.start} href={href} className="text-accent-rust hover:underline italic">
         {m.title}
       </Link>
     );
