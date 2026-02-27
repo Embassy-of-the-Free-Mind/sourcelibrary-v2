@@ -29,6 +29,7 @@ import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import PageAssistant from '@/components/reader/PageAssistant';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
+import InlineAnnotations from '@/components/annotations/InlineAnnotations';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
@@ -883,8 +884,8 @@ export default function TranslationEditor({
                 </button>
               )}
 
-              {/* Desktop extras: Font size, Google Translate */}
-              <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              {/* Desktop extras: Font size */}
+              <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
                 <div className="relative" ref={fontControlsRef}>
                   <button
                     onClick={() => setShowFontControls(prev => !prev)}
@@ -930,6 +931,10 @@ export default function TranslationEditor({
                     </div>
                   )}
                 </div>
+              </div>
+
+              {/* Google Translate */}
+              <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
                 <GoogleTranslate />
               </div>
 
@@ -963,23 +968,21 @@ export default function TranslationEditor({
               </AuthCheck>
 
               {/* Like + Share */}
-              <div className="flex items-center gap-1">
-                <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
-                  <LikeButton
-                    targetType="page"
-                    targetId={page.id}
-                    bookId={book.id}
-                    size="sm"
-                    showCount={true}
-                  />
-                </div>
+              <div className="flex items-center">
+                <LikeButton
+                  targetType="page"
+                  targetId={page.id}
+                  bookId={book.id}
+                  size="sm"
+                  showCount={true}
+                />
                 <BookShare
                   title={book.display_title || book.title}
                   author={book.author}
                   year={book.published}
                   bookId={book.id}
                   doi={book.doi}
-                  className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100"
+                  className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full"
                 />
               </div>
             </div>
@@ -1155,29 +1158,35 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText ? (
-                      <HighlightSelection
-                        bookId={book.id}
-                        pageId={page.id}
-                        pageNumber={page.page_number}
-                        bookTitle={book.display_title || book.title}
-                        bookAuthor={book.author}
-                        bookYear={book.published}
-                        doi={book.doi}
-                      >
-                        <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
-                      </HighlightSelection>
+                      <>
+                        <HighlightSelection
+                          bookId={book.id}
+                          pageId={page.id}
+                          pageNumber={page.page_number}
+                          bookTitle={book.display_title || book.title}
+                          bookAuthor={book.author}
+                          bookYear={book.published}
+                          doi={book.doi}
+                        >
+                          <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
+                        </HighlightSelection>
+                        <InlineAnnotations bookId={book.id} pageId={page.id} pageNumber={page.page_number} />
+                      </>
                     ) : (book.language === 'English' && ocrText) ? (
-                      <HighlightSelection
-                        bookId={book.id}
-                        pageId={page.id}
-                        pageNumber={page.page_number}
-                        bookTitle={book.display_title || book.title}
-                        bookAuthor={book.author}
-                        bookYear={book.published}
-                        doi={book.doi}
-                      >
-                        <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
-                      </HighlightSelection>
+                      <>
+                        <HighlightSelection
+                          bookId={book.id}
+                          pageId={page.id}
+                          pageNumber={page.page_number}
+                          bookTitle={book.display_title || book.title}
+                          bookAuthor={book.author}
+                          bookYear={book.published}
+                          doi={book.doi}
+                        >
+                          <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
+                        </HighlightSelection>
+                        <InlineAnnotations bookId={book.id} pageId={page.id} pageNumber={page.page_number} />
+                      </>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
