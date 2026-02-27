@@ -60,7 +60,7 @@ export async function searchLibrary(args: {
     has_doi: r.has_doi,
     ...(r.page_number ? { page_number: r.page_number } : {}),
     ...(r.snippet ? { snippet: r.snippet } : {}),
-    url: `https://sourcelibrary.org/book/${r.book_id || r.id}`,
+    url: `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
   }));
 
   return {
@@ -103,8 +103,8 @@ export async function searchPassages(args: {
     snippet: r.snippet,
     snippet_source: r.snippet_type,
     read_url: r.page_id
-      ? `https://sourcelibrary.org/book/${r.book_id}/page/${r.page_id}`
-      : `https://sourcelibrary.org/book/${r.book_id}`,
+      ? `https://sourcelibrary.org/book/${r.slug || r.book_id}/page/${r.page_id}`
+      : `https://sourcelibrary.org/book/${r.slug || r.book_id}`,
   }));
 
   return {
@@ -248,7 +248,7 @@ export async function listBooks(args: {
     pages_translated: b.pages_translated,
     translation_percent: b.translation_percent,
     categories: b.categories,
-    url: `https://sourcelibrary.org/book/${b.id}`,
+    url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
   }));
 
   return { total: result.total, showing: books?.length || 0, books };
@@ -280,7 +280,7 @@ export async function getBook(args: { book_id: string }) {
     } : { has_index: false },
     chapters: result.chapters,
     image_source: result.image_source,
-    url: `https://sourcelibrary.org/book/${result.id}`,
+    url: `https://sourcelibrary.org/book/${result.slug || result.id}`,
   };
 }
 
@@ -387,7 +387,7 @@ export async function searchIndex(args: {
     book_author: r.book_author,
     pages: r.pages,
     ...(r.quote_text ? { quote_text: r.quote_text, quote_page: r.quote_page, quote_significance: r.quote_significance } : {}),
-    url: `https://sourcelibrary.org/book/${r.book_id}`,
+    url: `https://sourcelibrary.org/book/${r.book_slug || r.book_id}`,
   }));
 
   return {
@@ -454,7 +454,7 @@ export async function getEntity(args: { entity_id: string }) {
       book_title: b.book_title,
       book_author: b.book_author,
       pages: b.pages,
-      url: `https://sourcelibrary.org/book/${b.book_id}`,
+      url: `https://sourcelibrary.org/book/${b.book_slug || b.book_id}`,
     })),
     related: result.related,
   };

@@ -182,6 +182,7 @@ export async function GET(request: NextRequest) {
               $project: {
                 _id: 0,
                 id: 1,
+                slug: 1,
                 title: 1,
                 display_title: 1,
                 author: 1,

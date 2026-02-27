@@ -61,39 +61,43 @@ export async function notifyIndexNow(urls: string[]): Promise<{ success: boolean
 /**
  * Notify about a single page translation
  */
-export async function notifyPageTranslation(bookId: string, pageNumber: number): Promise<void> {
-  const url = `https://${INDEXNOW_HOST}/book/${bookId}/page/${pageNumber}`;
+export async function notifyPageTranslation(bookId: string, pageNumber: number, slug?: string): Promise<void> {
+  const bookPath = slug || bookId;
+  const url = `https://${INDEXNOW_HOST}/book/${bookPath}/page/${pageNumber}`;
   await notifyIndexNow([url]);
 }
 
 /**
  * Notify about multiple page translations (batch)
  */
-export async function notifyBatchTranslation(bookId: string, pageNumbers: number[]): Promise<void> {
-  const urls = pageNumbers.map(p => `https://${INDEXNOW_HOST}/book/${bookId}/page/${p}`);
+export async function notifyBatchTranslation(bookId: string, pageNumbers: number[], slug?: string): Promise<void> {
+  const bookPath = slug || bookId;
+  const urls = pageNumbers.map(p => `https://${INDEXNOW_HOST}/book/${bookPath}/page/${p}`);
   // Also include the book page and read page
-  urls.push(`https://${INDEXNOW_HOST}/book/${bookId}`);
-  urls.push(`https://${INDEXNOW_HOST}/book/${bookId}/read`);
-  urls.push(`https://${INDEXNOW_HOST}/book/${bookId}/guide`);
+  urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}`);
+  urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/read`);
+  urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/guide`);
   await notifyIndexNow(urls);
 }
 
 /**
  * Notify about a new book import
  */
-export async function notifyBookImport(bookId: string): Promise<void> {
+export async function notifyBookImport(bookId: string, slug?: string): Promise<void> {
+  const bookPath = slug || bookId;
   await notifyIndexNow([
-    `https://${INDEXNOW_HOST}/book/${bookId}`,
+    `https://${INDEXNOW_HOST}/book/${bookPath}`,
   ]);
 }
 
 /**
  * Notify about edition publication (DOI minted)
  */
-export async function notifyEditionPublished(bookId: string): Promise<void> {
+export async function notifyEditionPublished(bookId: string, slug?: string): Promise<void> {
+  const bookPath = slug || bookId;
   await notifyIndexNow([
-    `https://${INDEXNOW_HOST}/book/${bookId}`,
-    `https://${INDEXNOW_HOST}/book/${bookId}/read`,
-    `https://${INDEXNOW_HOST}/book/${bookId}/guide`,
+    `https://${INDEXNOW_HOST}/book/${bookPath}`,
+    `https://${INDEXNOW_HOST}/book/${bookPath}/read`,
+    `https://${INDEXNOW_HOST}/book/${bookPath}/guide`,
   ]);
 }

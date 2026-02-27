@@ -226,7 +226,7 @@ export const POST = withAuth(async (request, session) => {
       console.log(`[Import] Split check queued for ${bookIdStr}`);
     });
 
-    notifyBookImport(bookIdStr).catch(console.error);
+    notifyBookImport(bookIdStr, slug).catch(console.error);
 
     return NextResponse.json({
       success: true,

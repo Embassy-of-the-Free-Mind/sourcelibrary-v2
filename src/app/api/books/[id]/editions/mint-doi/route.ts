@@ -119,7 +119,7 @@ export const POST = withAuth(async (request, session, context) => {
     });
 
     // Notify search engines about the published edition (non-blocking)
-    notifyEditionPublished(bookId).catch(console.error);
+    notifyEditionPublished(bookId, (book as any).slug).catch(console.error);
 
     return NextResponse.json({
       success: true,

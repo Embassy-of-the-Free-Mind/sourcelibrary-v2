@@ -253,7 +253,7 @@ export const POST = withAuth(async (request, session) => {
     });
 
     // Notify search engines of new book via IndexNow (non-blocking)
-    notifyBookImport(bookIdStr).catch(console.error);
+    notifyBookImport(bookIdStr, slug).catch(console.error);
 
     return NextResponse.json({
       success: true,

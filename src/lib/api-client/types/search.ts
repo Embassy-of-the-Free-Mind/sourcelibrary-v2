@@ -8,6 +8,7 @@ export interface SearchResult {
   page_id?: string;
   type: 'book' | 'page';
   book_id: string;
+  slug?: string;
   title: string;
   display_title?: string;
   author: string;

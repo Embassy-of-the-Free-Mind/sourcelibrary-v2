@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { generateUniqueBookSlug } from '@/lib/slugify';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -259,9 +260,12 @@ export async function importBookFromIIIF(
   const bookId = new ObjectId();
   const bookIdStr = bookId.toHexString();
 
+  const slug = await generateUniqueBookSlug(db, config.title, config.author, config.display_title);
+
   const bookDoc = {
     _id: bookId,
     id: bookIdStr,
+    slug,
     tenant_id: 'default',
     title: config.title,
     display_title: config.display_title || manifestLabel || null,
@@ -367,15 +371,16 @@ export async function importBookFromIIIF(
   });
 
   // Notify search engines (non-blocking)
-  notifyBookImport(bookIdStr).catch(console.error);
+  notifyBookImport(bookIdStr, slug).catch(console.error);
 
   return NextResponse.json({
     success: true,
     bookId: bookIdStr,
+    slug,
     title: config.title,
     provider: config.provider_name,
     pagesCreated: pageDocs.length,
-    bookUrl: `/book/${bookIdStr}`,
+    bookUrl: `/book/${slug}`,
     sourceUrl: config.source_url,
     splitCheckQueued: true,
     message: `Created book with ${pageDocs.length} pages from ${config.provider_name}. Split detection queued.`,
