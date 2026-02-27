@@ -4,6 +4,9 @@ import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
+// ISR: rebuild at most every 10 minutes
+export const revalidate = 600;
+
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',
   description: 'Explore rare esoteric, alchemical, and philosophical texts organized by tradition: alchemy, Hermeticism, Kabbalah, Neoplatonism, Rosicrucianism, astrology, and more.',
@@ -15,17 +18,21 @@ export const metadata: Metadata = {
 };
 
 async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
-  const db = await getDb();
+  let countMap = new Map<string, number>();
 
-  const categoryCounts = await db.collection('books').aggregate([
-    { $match: { hidden: { $ne: true } } },
-    { $unwind: '$categories' },
-    { $group: { _id: '$categories', count: { $sum: 1 } } },
-  ]).toArray();
+  try {
+    const db = await getDb();
+    const categoryCounts = await db.collection('books').aggregate([
+      { $match: { hidden: { $ne: true } } },
+      { $unwind: '$categories' },
+      { $group: { _id: '$categories', count: { $sum: 1 } } },
+    ]).toArray();
 
-  const countMap = new Map<string, number>();
-  for (const item of categoryCounts) {
-    countMap.set(item._id as string, item.count as number);
+    for (const item of categoryCounts) {
+      countMap.set(item._id as string, item.count as number);
+    }
+  } catch {
+    // DB unavailable (e.g. build time) — render with zero counts
   }
 
   const categories: CategoryWithCount[] = LIBRARY_CATEGORIES.map(cat => ({
