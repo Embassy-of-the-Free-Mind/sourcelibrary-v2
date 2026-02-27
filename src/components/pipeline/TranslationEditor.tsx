@@ -32,7 +32,6 @@ import HighlightSelection from '@/components/annotations/HighlightSelection';
 import InlineAnnotations from '@/components/annotations/InlineAnnotations';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { BookShare } from '@/components/ui/ShareButton';
-import { GoogleTranslate } from '@/components/search/GoogleTranslate';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
 import { sendGAEvent } from '@/lib/ga';
 import LikeButton from '@/components/ui/LikeButton';
@@ -933,10 +932,6 @@ export default function TranslationEditor({
                 </div>
               </div>
 
-              {/* Google Translate */}
-              <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
-                <GoogleTranslate />
-              </div>
 
               {/* Mode Toggle - always visible */}
               <AuthCheck>
