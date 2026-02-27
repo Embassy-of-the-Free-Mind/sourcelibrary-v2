@@ -12,6 +12,7 @@ if (!dbName) {
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
+let connectingPromise: Promise<{ client: MongoClient; db: Db }> | null = null;
 let lastValidated = 0;
 const VALIDATION_INTERVAL_MS = 30_000;
 
@@ -26,6 +27,7 @@ export function isConnectionError(err: unknown): boolean {
 function clearCache() {
   cachedClient = null;
   cachedDb = null;
+  connectingPromise = null;
   lastValidated = 0;
 }
 
@@ -52,42 +54,55 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
     }
   }
 
-  try {
-    const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
-
-    console.log('[MongoDB] Initializing connection...');
-    const client = new MongoClient(uri, {
-      // Atlas cluster is in ap-south-1 (Mumbai), Vercel in iad1 (Virginia).
-      // Cross-region latency (~200ms RTT) needs generous timeouts.
-      serverSelectionTimeoutMS: isLambda ? 5000 : 10000,
-      connectTimeoutMS: isLambda ? 10000 : 10000,
-      socketTimeoutMS: isLambda ? 45000 : 90000,
-
-      // Close idle connections after 1 minute to prevent pool exhaustion
-      maxIdleTimeMS: 60000,
-
-      // Lambda: 1 connection per instance (255 Lambdas × 1 = 255 total)
-      // Vercel: reduced pool for cron jobs (3 instead of 5 to prevent exhaustion)
-      maxPoolSize: isLambda ? 1 : 3,
-      minPoolSize: 0,
-    });
-
-    console.log('[MongoDB] Attempting connection...');
-    await client.connect();
-    console.log('[MongoDB] Getting database...');
-    const db = client.db(dbName);
-
-    cachedClient = client;
-    cachedDb = db;
-    lastValidated = Date.now();
-
-    console.log('[MongoDB] ✓ Connected to:', dbName);
-    return { client, db };
-  } catch (error) {
-    console.error('[MongoDB] ✗ Connection failed:', error);
-    clearCache();
-    throw error;
+  // Prevent concurrent connection attempts — reuse in-flight promise
+  if (connectingPromise) {
+    return connectingPromise;
   }
+
+  connectingPromise = (async () => {
+    try {
+      // Vercel functions run on AWS Lambda but aren't our Lambda workers.
+      // Our workers set SQS_PAGE_OCR_QUEUE_URL — use that to distinguish.
+      const isOurLambda = !!process.env.SQS_PAGE_OCR_QUEUE_URL;
+
+      console.log('[MongoDB] Initializing connection...');
+      const client = new MongoClient(uri!, {
+        // Atlas cluster is in ap-south-1 (Mumbai), Vercel in iad1 (Virginia).
+        // Cross-region latency (~200ms RTT) needs generous timeouts.
+        serverSelectionTimeoutMS: isOurLambda ? 5000 : 20000,
+        connectTimeoutMS: isOurLambda ? 10000 : 20000,
+        socketTimeoutMS: isOurLambda ? 45000 : 90000,
+
+        // Close idle connections after 1 minute to prevent pool exhaustion
+        maxIdleTimeMS: 60000,
+
+        // Lambda: 1 connection per instance (255 Lambdas × 1 = 255 total)
+        // Vercel: reduced pool for cron jobs (3 instead of 5 to prevent exhaustion)
+        maxPoolSize: isOurLambda ? 1 : 3,
+        minPoolSize: 0,
+      });
+
+      console.log('[MongoDB] Attempting connection...');
+      await client.connect();
+      console.log('[MongoDB] Getting database...');
+      const db = client.db(dbName!);
+
+      cachedClient = client;
+      cachedDb = db;
+      lastValidated = Date.now();
+
+      console.log('[MongoDB] ✓ Connected to:', dbName);
+      return { client, db };
+    } catch (error) {
+      console.error('[MongoDB] ✗ Connection failed:', error);
+      clearCache();
+      throw error;
+    } finally {
+      connectingPromise = null;
+    }
+  })();
+
+  return connectingPromise;
 }
 
 export async function getDb(): Promise<Db> {
