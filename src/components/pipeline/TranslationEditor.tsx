@@ -18,7 +18,6 @@ import {
   Languages,
   MessageSquare,
   RotateCcw,
-  Sparkles,
   Search,
   Info
 } from 'lucide-react';
@@ -26,10 +25,8 @@ import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
-import PageAssistant from '@/components/reader/PageAssistant';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
-import InlineAnnotations from '@/components/annotations/InlineAnnotations';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { BookShare } from '@/components/ui/ShareButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
@@ -503,8 +500,6 @@ export default function TranslationEditor({
   const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   // Page Assistant state
-  const [showAssistant, setShowAssistant] = useState(false);
-  const [assistantMode, setAssistantMode] = useState<'explain' | 'ask'>('explain');
 
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
@@ -1153,35 +1148,29 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText ? (
-                      <>
-                        <HighlightSelection
-                          bookId={book.id}
-                          pageId={page.id}
-                          pageNumber={page.page_number}
-                          bookTitle={book.display_title || book.title}
-                          bookAuthor={book.author}
-                          bookYear={book.published}
-                          doi={book.doi}
-                        >
-                          <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
-                        </HighlightSelection>
-                        <InlineAnnotations bookId={book.id} pageId={page.id} pageNumber={page.page_number} />
-                      </>
+                      <HighlightSelection
+                        bookId={book.id}
+                        pageId={page.id}
+                        pageNumber={page.page_number}
+                        bookTitle={book.display_title || book.title}
+                        bookAuthor={book.author}
+                        bookYear={book.published}
+                        doi={book.doi}
+                      >
+                        <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
+                      </HighlightSelection>
                     ) : (book.language === 'English' && ocrText) ? (
-                      <>
-                        <HighlightSelection
-                          bookId={book.id}
-                          pageId={page.id}
-                          pageNumber={page.page_number}
-                          bookTitle={book.display_title || book.title}
-                          bookAuthor={book.author}
-                          bookYear={book.published}
-                          doi={book.doi}
-                        >
-                          <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
-                        </HighlightSelection>
-                        <InlineAnnotations bookId={book.id} pageId={page.id} pageNumber={page.page_number} />
-                      </>
+                      <HighlightSelection
+                        bookId={book.id}
+                        pageId={page.id}
+                        pageNumber={page.page_number}
+                        bookTitle={book.display_title || book.title}
+                        bookAuthor={book.author}
+                        bookYear={book.published}
+                        doi={book.doi}
+                      >
+                        <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
+                      </HighlightSelection>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
@@ -1264,25 +1253,6 @@ export default function TranslationEditor({
                     )}
                   </div>
 
-                  {/* AI Assistant action bar - show when translation or English OCR text exists */}
-                  {(translationText || (book.language === 'English' && ocrText)) && (
-                    <div
-                      className="px-4 py-2 flex items-center justify-center gap-2 flex-shrink-0"
-                      style={{ borderTop: '1px solid var(--border-light)', background: 'var(--bg-cream)' }}
-                    >
-                      <button
-                        onClick={() => {
-                          setAssistantMode('explain');
-                          setShowAssistant(true);
-                        }}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-violet-50"
-                        style={{ color: 'var(--accent-violet)' }}
-                      >
-                        <Sparkles className="w-4 h-4" />
-                        Explain
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -1309,15 +1279,6 @@ export default function TranslationEditor({
           </div>
         </div>
 
-        {/* Page Assistant Modal */}
-        <PageAssistant
-          isOpen={showAssistant}
-          onClose={() => setShowAssistant(false)}
-          initialMode={assistantMode}
-          page={page}
-          book={book}
-          onOpenAnnotations={() => {}}
-        />
 
         {/* Page Metadata Panel */}
         {showPageMetadata && (

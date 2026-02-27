@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, ReactNode } from 'react';
-import { X, Check, Share2, Twitter, Link2, MessageCircle, MessageSquarePlus } from 'lucide-react';
-import AnnotationEditor from './AnnotationEditor';
+import { X, Check, Share2, Twitter, Link2, MessageCircle } from 'lucide-react';
 import { getShortUrl } from '@/lib/shortlinks';
 
 interface HighlightSelectionProps {
@@ -14,7 +13,6 @@ interface HighlightSelectionProps {
   bookYear?: string;
   doi?: string;
   children: ReactNode;
-  onAnnotationSaved?: () => void;
 }
 
 interface PopupPosition {
@@ -31,14 +29,12 @@ export default function HighlightSelection({
   bookYear,
   doi,
   children,
-  onAnnotationSaved,
 }: HighlightSelectionProps) {
   const [selectedText, setSelectedText] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState<PopupPosition>({ x: 0, y: 0 });
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [showAnnotationEditor, setShowAnnotationEditor] = useState(false);
 
   const handleSelection = useCallback(() => {
     const selection = window.getSelection();
@@ -196,27 +192,14 @@ export default function HighlightSelection({
                 </button>
               </>
             ) : (
-              <>
-                <button
-                  onClick={() => {
-                    setShowAnnotationEditor(true);
-                    setShowPopup(false);
-                  }}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors"
-                  title="Comment on this page"
-                >
-                  <MessageSquarePlus className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm">Comment</span>
-                </button>
-                <button
-                  onClick={() => setShowShareMenu(true)}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors border-l border-stone-700"
-                  title="Share quote"
-                >
-                  <Share2 className="w-4 h-4 text-accent-gold" />
-                  <span className="text-sm">Share</span>
-                </button>
-              </>
+              <button
+                onClick={() => setShowShareMenu(true)}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors"
+                title="Share quote"
+              >
+                <Share2 className="w-4 h-4 text-accent-gold" />
+                <span className="text-sm">Share</span>
+              </button>
             )}
           </div>
           {/* Arrow */}
@@ -225,23 +208,6 @@ export default function HighlightSelection({
           </div>
         </div>
       )}
-
-      {/* Annotation Editor Modal */}
-      <AnnotationEditor
-        isOpen={showAnnotationEditor}
-        onClose={() => {
-          setShowAnnotationEditor(false);
-          window.getSelection()?.removeAllRanges();
-        }}
-        onSave={() => {
-          onAnnotationSaved?.();
-          window.getSelection()?.removeAllRanges();
-        }}
-        bookId={bookId}
-        pageId={pageId}
-        pageNumber={pageNumber}
-        selectedText={selectedText}
-      />
 
     </div>
   );
