@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'hidden-engineers',
+    title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
+    subtitle: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy. A 16th-century manuscript binds Hero\'s steam engines with the Corpus Hermeticum.',
+    date: '27 February 2026',
+    readTime: '22 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg',
+    imageAlt: 'Page from a 16th-century Greek manuscript showing Hero of Alexandria\'s Aeolipile diagram',
+  },
+  {
     slug: 'philosophers-stone',
     title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
     subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
