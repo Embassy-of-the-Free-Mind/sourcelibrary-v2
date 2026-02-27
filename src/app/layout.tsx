@@ -4,7 +4,6 @@ import GlobalFooter from "@/components/layout/GlobalFooter";
 import Providers from "@/components/providers/Providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import PageTracker from "@/components/reader/PageTracker";
-import { getSiteMode } from "@/lib/site-mode.server";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
 import InputWidget from "@/components/InputWidget";
@@ -76,7 +75,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const siteMode = await getSiteMode();
+  // Site mode detection moved to client-side (SiteModeProvider) to avoid
+  // calling headers() which opts the entire app out of ISR caching.
+  // SiteModeProvider defaults to library mode and self-corrects on the client.
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -95,7 +96,7 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <Providers siteMode={siteMode}>
+        <Providers>
           <div id="main-content" className="flex-1">
             {children}
           </div>

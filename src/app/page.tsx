@@ -4,9 +4,8 @@ import HeroSection from '@/components/layout/HeroSection';
 import BookLibrary, { type CollectionForGrid } from '@/components/book/BookLibrary';
 import BookLibrarySkeleton from '@/components/book/BookLibrarySkeleton';
 import HomePageSchema from '@/components/seo/HomePageSchema';
-import SocietyLandingPage from '@/components/layout/SocietyLandingPage';
+import SocietyGate from '@/components/layout/SocietyGate';
 import { Book } from '@/lib/types';
-import { getSiteMode } from '@/lib/site-mode.server';
 
 // ISR: rebuild at most every 2 minutes
 export const revalidate = 120;
@@ -119,13 +118,8 @@ async function LibrarySection() {
 }
 
 export default async function HomePage() {
-  const siteMode = await getSiteMode();
-
-  if (siteMode.isSociety) {
-    return <SocietyLandingPage />;
-  }
-
   return (
+    <SocietyGate>
     <div className="min-h-screen">
       {/* Hero Section with Video Background */}
       <HeroSection />
@@ -234,5 +228,6 @@ export default async function HomePage() {
 
       </footer>
     </div>
+    </SocietyGate>
   );
 }
