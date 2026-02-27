@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { utils } from '@/lib/api-client';
 
 export default function PageTracker() {
   const pathname = usePathname();
@@ -13,20 +12,22 @@ export default function PageTracker() {
       return;
     }
 
-    const trackPageview = async () => {
+    const timer = setTimeout(() => {
       try {
-        await utils.track('pageview', {
-          path: pathname,
-          referrer: document.referrer,
-          userAgent: navigator.userAgent,
-        });
-      } catch (error) {
-        console.error('Tracking failed:', error);
+        const blob = new Blob([JSON.stringify({
+          event: 'pageview',
+          properties: {
+            path: pathname,
+            referrer: document.referrer,
+            userAgent: navigator.userAgent,
+          },
+        })], { type: 'application/json' });
+        navigator.sendBeacon('/api/track', blob);
+      } catch {
+        // Fire-and-forget — don't log tracking failures
       }
-    };
-
-    const timeout = setTimeout(trackPageview, 300);
-    return () => clearTimeout(timeout);
+    }, 300);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;

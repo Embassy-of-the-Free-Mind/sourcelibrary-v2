@@ -19,8 +19,11 @@ export default function BookAnalytics({ bookId, className }: BookAnalyticsProps)
   const [stats, setStats] = useState<BookStats | null>(null);
 
   useEffect(() => {
-    // Track the read
-    analytics.track({ event: 'book_read', book_id: bookId }).catch(console.error);
+    // Track the read (fire-and-forget via sendBeacon to avoid blocking hydration)
+    try {
+      const blob = new Blob([JSON.stringify({ event: 'book_read', book_id: bookId })], { type: 'application/json' });
+      navigator.sendBeacon('/api/analytics/track', blob);
+    } catch { /* ignore */ }
     sendGAEvent({ action: 'book_view', category: 'engagement', label: bookId });
 
     // Fetch stats

@@ -22,9 +22,15 @@ export function SiteModeProvider({ children, initialMode }: SiteModeProviderProp
   );
 
   useEffect(() => {
-    // Update on client to catch ?society=true override
-    setConfig(getClientSiteMode());
-  }, []);
+    // Only re-check on client if we might be on a society domain.
+    // For sourcelibrary.org (99.9% of traffic), the default library config
+    // is already correct — skip the setState to avoid a full-tree re-render
+    // during hydration that can cause React error #418.
+    const clientMode = getClientSiteMode();
+    if (clientMode.mode !== config.mode) {
+      setConfig(clientMode);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <SiteModeContext.Provider value={config}>
