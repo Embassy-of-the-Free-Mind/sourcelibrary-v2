@@ -25,16 +25,25 @@ export default function LetterPage() {
 
         {/* ── Opening: A specific book ── */}
         <p className="text-xl text-secondary leading-relaxed mb-6">
-          In 1400, an unknown Arabic scholar compiled the{' '}
-          <a href="https://sourcelibrary.org/book/6953b56577f38f6761bd979d" className="text-accent-rust hover:underline"><em>Kit&#257;b al-Bulh&#257;n</em></a>{' '}
-          &mdash; a &ldquo;Book of Wonders&rdquo; filled with zodiacal illustrations, demonic portraits,
-          and cosmological diagrams. The manuscript has been digitized by the Bodleian Library, but for
-          six centuries its Arabic text has been inaccessible to most of the world. Today, you can read
-          every page in English on Source Library. It took about fifteen minutes to process and cost $2.87.
+          In 1649, the German polymath Hermann Conring published{' '}
+          <a href="https://sourcelibrary.org/book/6909a2e7cf28baa1b4caec93" className="text-accent-rust hover:underline"><em>De hermetica Aegyptiorum vetere et Paracelsicorum nova medicina</em></a>{' '}
+          &mdash; a 433-page dismantling of the Hermetic medical tradition that had dominated European
+          intellectual life for centuries. Conring applied rigorous philological criticism to show that
+          the legendary &ldquo;Hermes Trismegistus&rdquo; was a composite fiction, and that the Paracelsian
+          &ldquo;new medicine&rdquo; was built on spurious texts. It&apos;s one of the earliest works of
+          the historical-critical method &mdash; a foundational move in the shift from received authority
+          to empirical science.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          The book has been sitting on a shelf at the{' '}
+          <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
+          in Amsterdam. It has never been translated into English. Today, you can read every page on
+          Source Library. Processing cost: $5.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          That book is one of 4,400. In 77 days, Source Library has become the world&apos;s largest
+          Conring&apos;s book is one of 4,400. In 77 days, Source Library has become the world&apos;s largest
           collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
           library sources, and more than a million and a half page images.
         </p>
