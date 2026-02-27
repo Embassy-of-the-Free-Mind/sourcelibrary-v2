@@ -190,22 +190,24 @@ async function fetchCollectionData(id: string) {
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // Critical queries (books + total) run alongside non-critical ones (gallery, highlights).
-  // Non-critical queries get a 8s timeout so they can't crash the page.
-  const [books, total, highlights, galleryImages, mentionedBooks] = await Promise.all([
+  // Use collection doc's book_count instead of expensive countDocuments.
+  // The client component re-fetches the accurate filtered total when expanded.
+  const total = collection.book_count || 0;
+
+  // All queries run in parallel. Non-critical ones (gallery, highlights) get timeouts.
+  const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
     db.collection('books')
       .find(filter, { projection })
       .sort({ read_count: -1, title: 1 })
       .limit(COMPACT_LIMIT)
       .toArray(),
-    db.collection('books').countDocuments(filter),
     withTimeout(
       db.collection('books')
         .find(
           { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
           { projection: highlightProjection },
         )
-        .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
+        .sort({ read_count: -1 })
         .limit(5)
         .toArray(),
       8000, [],
