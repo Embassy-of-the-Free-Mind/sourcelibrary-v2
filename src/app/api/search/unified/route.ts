@@ -55,10 +55,13 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
     const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
 
-    // Run book, index, and gallery search in parallel
+    // Run book, index, and gallery search in parallel (each handles its own errors)
     const [booksResult, indexResult, galleryResult] = await Promise.all([
       searchBooks(db, query, queryRegex, limit),
-      searchIndex(db, query, limit),
+      searchIndex(db, query, limit).catch((err) => {
+        console.error('Index search error:', err);
+        return { results: [] as IndexResult[], total: 0 };
+      }),
       searchGallery(db, queryRegex, 3)
     ]);
 

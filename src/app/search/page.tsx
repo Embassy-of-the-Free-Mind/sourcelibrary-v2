@@ -274,23 +274,6 @@ export default function SearchPage() {
       {/* Search Bar */}
       <div className="bg-white border-b border-border-light sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 py-4">
-          {/* Back to unified + mode label */}
-          {viewMode !== 'unified' && (
-            <div className="flex items-center gap-2 mb-3">
-              <button
-                onClick={backToUnified}
-                className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                All results
-              </button>
-              <span className="text-sm text-muted">/</span>
-              <span className="text-sm font-medium text-secondary">
-                {viewMode === 'books' ? 'Books & Pages' : viewMode === 'index' ? 'Index' : 'Images'}
-              </span>
-            </div>
-          )}
-
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
@@ -321,6 +304,38 @@ export default function SearchPage() {
                 </select>
               </div>
             )}
+          </div>
+
+          {/* Mode tabs */}
+          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
+            {([
+              { mode: 'unified' as ViewMode, label: 'All', icon: Search },
+              { mode: 'books' as ViewMode, label: 'Books', icon: Book },
+              { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
+              { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
+            ] as const).map(({ mode, label, icon: Icon }) => (
+              <button
+                key={mode}
+                onClick={() => { setViewMode(mode); setOffset(0); }}
+                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                  viewMode === mode
+                    ? 'border-accent-rust text-accent-rust'
+                    : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+                {mode === 'books' && bookTotal > 0 && viewMode !== 'unified' && (
+                  <span className="text-xs text-muted">({bookTotal})</span>
+                )}
+                {mode === 'index' && indexTotal > 0 && viewMode !== 'unified' && (
+                  <span className="text-xs text-muted">({indexTotal})</span>
+                )}
+                {mode === 'images' && imageTotal > 0 && viewMode !== 'unified' && (
+                  <span className="text-xs text-muted">({imageTotal})</span>
+                )}
+              </button>
+            ))}
           </div>
 
           {/* Index type filter pills (index drill-down mode) */}
