@@ -2,19 +2,22 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Images, ArrowLeft, ArrowRight } from 'lucide-react';
+import { BookOpen, Images, ArrowLeft } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
-import CollectionBookCard from '@/components/CollectionBookCard';
-import CollectionFilters from '@/components/collections/CollectionFilters';
 import CollectionSchema from '@/components/seo/CollectionSchema';
+import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import { bookUrl } from '@/lib/slugify';
 
-const PER_PAGE = 60;
+// ISR: rebuild at most every 10 minutes
+export const revalidate = 600;
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  return []; // All paths generated on demand via ISR
+}
 
 interface Props {
   params: Promise<{ id: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 // ---------- Metadata ----------
@@ -71,20 +74,12 @@ interface BookItem {
 }
 
 /** Auto-link book titles found in description text to their book pages.
- *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection.
- *  Uses slug-based URLs so Next.js client-side navigation works
- *  (raw hex IDs go through a proxy rewrite→redirect chain that breaks soft nav). */
+ *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection. */
 function linkBookTitles(
   text: string,
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
 ): React.ReactNode {
-  // Build a lookup from book ID to slug for URL generation
-  const bookById = new Map<string, BookItem>();
-  for (const book of allBooks) {
-    bookById.set(book.id, book);
-  }
-
   const matches: { start: number; end: number; title: string; id: string }[] = [];
   const usedRanges: [number, number][] = [];
 
@@ -141,10 +136,8 @@ function linkBookTitles(
   let lastIdx = 0;
   for (const m of matches) {
     if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
-    const book = bookById.get(m.id);
-    const href = book ? bookUrl(book) : `/book/${m.id}`;
     parts.push(
-      <Link key={m.id + '-' + m.start} href={href} className="text-accent-rust hover:underline italic">
+      <Link key={m.id + '-' + m.start} href={`/book/${m.id}`} className="text-accent-rust hover:underline italic">
         {m.title}
       </Link>
     );
@@ -157,7 +150,9 @@ function linkBookTitles(
 
 // ---------- Data fetching ----------
 
-async function fetchCollectionData(id: string, sort: string, language: string, offset: number) {
+const COMPACT_LIMIT = 14;
+
+async function fetchCollectionData(id: string) {
   const db = await getDb();
 
   const collection = await db.collection('collections').findOne({ slug: id });
@@ -169,16 +164,6 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
     hidden: { $ne: true },
     pages_count: { $gt: 0 },
   };
-  if (language) filter.language = language;
-
-  const sortMap: Record<string, Record<string, 1 | -1>> = {
-    year_asc: { year: 1, title: 1 },
-    year_desc: { year: -1, title: 1 },
-    title: { title: 1 },
-    recent: { created_at: -1 },
-    popular: { read_count: -1, title: 1 },
-  };
-  const sortObj = sortMap[sort] || sortMap.popular;
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
@@ -204,11 +189,11 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
     .filter(Boolean);
 
   const [books, total, highlights, galleryImages, mentionedBooks] = await Promise.all([
+    // Only fetch enough for compact view — the client component handles "show all"
     db.collection('books')
       .find(filter, { projection })
-      .sort(sortObj)
-      .skip(offset)
-      .limit(PER_PAGE)
+      .sort({ read_count: -1, title: 1 })
+      .limit(COMPACT_LIMIT)
       .toArray(),
     db.collection('books').countDocuments(filter),
     db.collection('books')
@@ -225,7 +210,6 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
             book_id: { $in: collectionBookIds },
             gallery_quality: { $gte: 0.8 },
             type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            // Filter out tiny detections (bbox area < 10% of page, 0-1 normalized)
             $expr: {
               $gt: [
                 { $multiply: [
@@ -265,20 +249,13 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
 
 // ---------- Page ----------
 
-export default async function CollectionDetailPage({ params, searchParams }: Props) {
+export default async function CollectionDetailPage({ params }: Props) {
   const { id } = await params;
-  const sp = await searchParams;
-  const sort = (typeof sp.sort === 'string' ? sp.sort : '') || 'popular';
-  const language = typeof sp.language === 'string' ? sp.language : '';
-  const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
-  const showAll = sp.show_all === '1';
 
-  const data = await fetchCollectionData(id, sort, language, offset);
+  const data = await fetchCollectionData(id);
   if (!data) notFound();
 
   const { collection, books, highlights, galleryImages, total, mentionedBooks } = data;
-  const totalPages = Math.ceil(total / PER_PAGE);
-  const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
 
   // Diversify gallery images: max 2 per book, skip images without thumbnails, take first 11
@@ -298,14 +275,6 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
   const heroImages = diverseGalleryImages.slice(0, 6);
   const allBooksForLinking = [...highlights, ...books, ...mentionedBooks];
   const explicitMentions: { text: string; book_id: string }[] = collection.mentioned_books || [];
-
-  // Compact view: 3 rows of books with last slot as "See all" card
-  // Row counts: 5 cols (xl) = 15 slots, 4 cols (lg) = 12, 3 cols (sm) = 9, 2 cols (default) = 6
-  // We cap at 14 books (15 slots - 1 for "See all" at 5-col) and CSS handles smaller breakpoints
-  const COMPACT_LIMIT = 14;
-  const compactBooks = books.slice(0, COMPACT_LIMIT);
-  const displayBooks = showAll ? books : compactBooks;
-  const showSeeAllCard = !showAll && total > COMPACT_LIMIT;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -546,111 +515,13 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
           </div>
         )}
 
-        {/* All Books Header */}
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-          <div>
-            <h2
-              className="text-2xl sm:text-3xl text-primary font-display"
-            >
-              All Books
-            </h2>
-            <p className="text-sm text-muted mt-1">
-              {total.toLocaleString()} books in this collection
-            </p>
-          </div>
-
-          {showAll && <CollectionFilters collectionId={id} languages={languages} />}
-        </div>
-
-        {/* Books Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {displayBooks.map((book, i) => (
-            <CollectionBookCard
-              key={book.id}
-              book={{
-                bookId: book.id,
-                id: book.id,
-                slug: book.slug,
-                title: bookTitle(book),
-                author: book.author || '',
-                year: book.year || 0,
-                pages_count: book.pages_count,
-                pages_ocr: book.pages_ocr,
-                pages_translated: book.pages_translated,
-                thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
-                language: book.language,
-                published: book.published,
-                translation_percent: book.pages_count && book.pages_translated
-                  ? Math.round((book.pages_translated / book.pages_count) * 100)
-                  : 0,
-              }}
-              priority={i < 10}
-            />
-          ))}
-
-          {/* "See all" card in compact view */}
-          {showSeeAllCard && (
-            <Link
-              href={`/collections/${id}?show_all=1&sort=${sort}${language ? `&language=${language}` : ''}`}
-              className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-md transition-all aspect-[3/4]"
-            >
-              <div className="w-12 h-12 rounded-full bg-accent-rust/8 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
-                <ArrowRight className="w-5 h-5 text-accent-rust" />
-              </div>
-              <div className="text-center px-3">
-                <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
-                  See all {total.toLocaleString()}
-                </span>
-                <span className="text-xs text-muted">books</span>
-              </div>
-            </Link>
-          )}
-        </div>
-
-        {/* Pagination (only in full view) */}
-        {showAll && totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-10 text-sm">
-            {offset > 0 ? (
-              <Link
-                href={`/collections/${id}?show_all=1&sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
-                className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
-              >
-                Previous
-              </Link>
-            ) : (
-              <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
-                Previous
-              </span>
-            )}
-            <span className="text-muted">
-              Page {currentPage} of {totalPages}
-            </span>
-            {currentPage < totalPages ? (
-              <Link
-                href={`/collections/${id}?show_all=1&sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
-                className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
-              >
-                Next
-              </Link>
-            ) : (
-              <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
-                Next
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Show filters link in compact view */}
-        {showAll && (
-          <div className="mt-6 text-center">
-            <Link
-              href={`/collections/${id}?sort=${sort}${language ? `&language=${language}` : ''}`}
-              className="text-sm text-muted hover:text-accent-rust transition-colors"
-            >
-              Show less
-            </Link>
-          </div>
-        )}
+        {/* All Books — client component handles compact → expanded transition */}
+        <CollectionAllBooks
+          collectionId={id}
+          compactBooks={books}
+          total={total}
+          languages={languages}
+        />
       </div>
     </div>
   );
