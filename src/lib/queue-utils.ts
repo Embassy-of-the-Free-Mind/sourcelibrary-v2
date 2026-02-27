@@ -2,8 +2,14 @@
  * Shared queueing utilities for job processing
  */
 
+import { createHash } from 'crypto';
 import { sendMessageBatch, QUEUE_URLS } from './sqs-client';
 import type { JobType } from './types/job';
+
+/** Generate a deduplication ID for SQS FIFO queues (max 128 chars) */
+function deduplicationId(bookId: string, pageId: string, jobId: string): string {
+  return createHash('sha256').update(`${bookId}:${pageId}:${jobId}`).digest('hex').slice(0, 128);
+}
 
 /**
  * Enqueue pages for processing
@@ -48,7 +54,8 @@ export async function enqueuePagesForJob(
       if (action === 'translation') {
         const fifoEntries = batch.map(msg => ({
           message: msg,
-          messageGroupId: jobId  // Ensures pages for same job process sequentially
+          messageGroupId: jobId,  // Ensures pages for same job process sequentially
+          deduplicationId: deduplicationId(msg.bookId, msg.pageId, msg.jobId),
         }));
         result = await sendMessageBatch(queueUrl, fifoEntries);
       } else {
