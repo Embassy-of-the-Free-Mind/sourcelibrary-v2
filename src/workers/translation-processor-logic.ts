@@ -68,6 +68,11 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     return;
   }
 
+  if (job.status === 'completed' || job.status === 'completed_with_errors' || job.status === 'failed') {
+    console.log(`[TRANS] Job ${jobId} already ${job.status}, skipping stale message for page ${pageId}`);
+    return;
+  }
+
   const targetPageIds = job.config?.page_ids || [];
 
   // Update job status to processing (if still pending)
@@ -114,6 +119,23 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     );
     await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
+  }
+
+  // Skip if page already has a translation that's current with the OCR
+  // Prevents waste from stale queue messages re-translating already-done pages
+  // Pass force: true in job config to override (e.g., retranslation with new prompt)
+  if (!job.config?.force && page.translation?.data && page.translation?.updated_at && page.ocr?.updated_at) {
+    const ocrTime = new Date(page.ocr.updated_at).getTime();
+    const transTime = new Date(page.translation.updated_at).getTime();
+    if (transTime >= ocrTime) {
+      console.log(`[TRANS] Skipping page ${pageId} (translation already current, ${page.translation.model || 'unknown'})`);
+      await jobs.updateOne(
+        { id: jobId },
+        { $inc: { 'progress.completed': 1 }, $set: { updated_at: new Date() } }
+      );
+      await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+      return;
+    }
   }
 
   const modelId = job.config.model || DEFAULT_MODEL;
