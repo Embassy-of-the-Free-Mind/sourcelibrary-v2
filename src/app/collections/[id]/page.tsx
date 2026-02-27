@@ -211,20 +211,10 @@ async function fetchCollectionData(id: string) {
             book_id: { $in: collectionBookIds },
             gallery_quality: { $gte: 0.8 },
             type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            $expr: {
-              $gt: [
-                { $multiply: [
-                  { $ifNull: ['$bbox.width', 1] },
-                  { $ifNull: ['$bbox.height', 1] },
-                ] },
-                0.1,
-              ],
-            },
           })
           .sort({ gallery_quality: -1 })
           .limit(60)
           .toArray()
-          .catch(() => [])
       : Promise.resolve([]),
     mentionedBookIds.length > 0
       ? db.collection('books')
