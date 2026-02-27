@@ -60,7 +60,9 @@ export async function searchLibrary(args: {
     has_doi: r.has_doi,
     ...(r.page_number ? { page_number: r.page_number } : {}),
     ...(r.snippet ? { snippet: r.snippet } : {}),
-    url: `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
+    url: r.page_number
+      ? `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}?page=${r.page_number}`
+      : `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
   }));
 
   return {
@@ -102,16 +104,14 @@ export async function searchPassages(args: {
     page: r.page_number,
     snippet: r.snippet,
     snippet_source: r.snippet_type,
-    read_url: r.page_id
-      ? `https://sourcelibrary.org/book/${r.slug || r.book_id}/page/${r.page_id}`
-      : `https://sourcelibrary.org/book/${r.slug || r.book_id}`,
+    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
   }));
 
   return {
     query: result.query,
     total: result.total,
     passages,
-    tip: "Use get_quote with book_id and page number to get the full text with academic citations.",
+    tip: "Use get_book_text with book_id to read the full text around these passages.",
   };
 }
 
@@ -133,11 +133,10 @@ export async function searchWithinBook(args: {
       matches?.find((m) => m.field === "translation") || matches?.[0];
     return {
       page: r.pageNumber,
-      page_id: r.pageId,
       snippet: bestMatch?.snippet,
       source: bestMatch?.field,
       match_count: matches?.length || 0,
-      read_url: `https://sourcelibrary.org/book/${args.book_id}/page/${r.pageId}`,
+      url: `https://sourcelibrary.org/book/${args.book_id}?page=${r.pageNumber}`,
     };
   });
 
@@ -146,77 +145,7 @@ export async function searchWithinBook(args: {
     query: result.query,
     total: result.total,
     results,
-    tip: "Use get_quote with book_id and page number to get the full text with academic citations.",
-  };
-}
-
-export async function findQuotes(args: {
-  book_id: string;
-  topic: string;
-  limit?: number;
-}) {
-  const maxQuotes = Math.min(args.limit || 5, 10);
-
-  const searchParams = new URLSearchParams({ q: args.topic });
-  const searchResult = (await apiGet(
-    `/books/${args.book_id}/search`,
-    searchParams
-  )) as Record<string, unknown>;
-
-  const searchResults = searchResult.results as Array<Record<string, unknown>>;
-  if (!searchResults?.length) {
-    return {
-      book_id: args.book_id,
-      topic: args.topic,
-      total: 0,
-      quotes: [],
-      tip: "Try broader search terms, or use get_book_text to read the full text.",
-    };
-  }
-
-  const topPages = searchResults.slice(0, maxQuotes);
-  const quotes = await Promise.all(
-    topPages.map(async (page) => {
-      try {
-        const quoteParams = new URLSearchParams({
-          page: String(page.pageNumber),
-          include_original: "true",
-        });
-        const quoteResult = (await apiGet(
-          `/books/${args.book_id}/quote`,
-          quoteParams
-        )) as Record<string, unknown>;
-
-        const quote = quoteResult.quote as Record<string, unknown>;
-        const citation = quoteResult.citation as Record<string, unknown>;
-
-        return {
-          page: page.pageNumber,
-          text: quote?.translation,
-          original_text: quote?.original,
-          language: quote?.language,
-          citation: citation?.inline,
-          url: citation?.short_url || citation?.url || `https://sourcelibrary.org/book/${args.book_id}/page/${page.pageId}`,
-        };
-      } catch {
-        const matches = page.matches as Array<Record<string, unknown>>;
-        const best =
-          matches?.find((m) => m.field === "translation") || matches?.[0];
-        return {
-          page: page.pageNumber,
-          text: best?.snippet,
-          read_url: `https://sourcelibrary.org/book/${args.book_id}/page/${page.pageId}`,
-        };
-      }
-    })
-  );
-
-  return {
-    book_id: args.book_id,
-    topic: args.topic,
-    total: searchResult.total,
-    showing: quotes.length,
-    quotes,
+    tip: "Use get_book_text with from/to page numbers to read the full text around these matches.",
   };
 }
 
@@ -304,160 +233,20 @@ export async function getBookText(args: {
   if (format === "plain") {
     return apiGetText(`/books/${args.book_id}/text`, params);
   }
-  return apiGet(`/books/${args.book_id}/text`, params);
-}
 
-export async function getQuote(args: {
-  book_id: string;
-  page?: number;
-  query?: string;
-  include_original?: boolean;
-  include_context?: boolean;
-}) {
-  let pageNumber = args.page;
-  let searchTotal: number | undefined;
+  // JSON format — add per-page citation URLs
+  const result = await apiGet(`/books/${args.book_id}/text`, params) as Record<string, unknown>;
+  const book = result.book as Record<string, unknown> | undefined;
+  const bookSlug = book?.slug || book?.id || args.book_id;
 
-  if (pageNumber === undefined) {
-    if (!args.query) {
-      throw new Error("Either page or query is required");
+  const pages = result.pages as Array<Record<string, unknown>> | undefined;
+  if (pages) {
+    for (const page of pages) {
+      page.url = `https://sourcelibrary.org/book/${bookSlug}?page=${page.page_number}`;
     }
-    const searchParams = new URLSearchParams({ q: args.query });
-    const searchResult = (await apiGet(
-      `/books/${args.book_id}/search`,
-      searchParams
-    )) as Record<string, unknown>;
-
-    const results = searchResult.results as Array<Record<string, unknown>>;
-    if (!results?.length) {
-      return {
-        error: `No matches for "${args.query}" in this book`,
-        tip: "Try broader search terms, or use search_within_book to see all matches.",
-      };
-    }
-    pageNumber = results[0].pageNumber as number;
-    searchTotal = searchResult.total as number;
   }
 
-  const params = new URLSearchParams({ page: String(pageNumber) });
-  if (args.include_original !== undefined) {
-    params.set("include_original", String(args.include_original));
-  }
-  if (args.include_context) {
-    params.set("include_context", "true");
-  }
-
-  const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
-  const quote = result.quote as Record<string, unknown>;
-  const citation = result.citation as Record<string, unknown>;
-
-  return {
-    ...(args.query ? { matched_query: args.query, total_matches: searchTotal } : {}),
-    quote: quote.translation,
-    original: quote.original,
-    page: quote.page,
-    book: {
-      title: quote.display_title || quote.book_title,
-      author: quote.author,
-      published: quote.published,
-      language: quote.language,
-    },
-    citation: {
-      inline: citation.inline,
-      footnote: citation.footnote,
-      url: citation.short_url || citation.url,
-    },
-  };
-}
-
-export async function searchIndex(args: {
-  query: string;
-  type?: string;
-  limit?: number;
-}) {
-  const params = new URLSearchParams({ q: args.query });
-  if (args.type) params.set("type", args.type);
-  if (args.limit) params.set("limit", String(Math.min(args.limit, 200)));
-
-  const result = await apiGet("/search/index", params) as Record<string, unknown>;
-  const results = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
-    type: r.type,
-    term: r.term,
-    book_id: r.book_id,
-    book_title: r.book_title,
-    book_author: r.book_author,
-    pages: r.pages,
-    ...(r.quote_text ? { quote_text: r.quote_text, quote_page: r.quote_page, quote_significance: r.quote_significance } : {}),
-    url: `https://sourcelibrary.org/book/${r.book_slug || r.book_id}`,
-  }));
-
-  return {
-    query: result.query,
-    total: result.total,
-    by_type: result.byType,
-    results,
-  };
-}
-
-export async function searchEntities(args: {
-  query?: string;
-  type?: string;
-  book_id?: string;
-  min_books?: number;
-  limit?: number;
-  offset?: number;
-}) {
-  const params = new URLSearchParams();
-  if (args.query) params.set("q", args.query);
-  if (args.type) params.set("type", args.type);
-  if (args.book_id) params.set("book_id", args.book_id);
-  if (args.min_books) params.set("min_books", String(args.min_books));
-  if (args.limit) params.set("limit", String(Math.min(args.limit || 50, 200)));
-  if (args.offset) params.set("offset", String(args.offset));
-
-  const result = await apiGet("/entities", params) as Record<string, unknown>;
-  const entities = (result.entities as Array<Record<string, unknown>>)?.map((e) => ({
-    id: (e._id as string)?.toString(),
-    name: e.name,
-    type: e.type,
-    description: e.description,
-    aliases: e.aliases,
-    book_count: e.book_count,
-    total_mentions: e.total_mentions,
-    books: (e.books as Array<Record<string, unknown>>)?.map((b) => ({
-      book_id: b.book_id,
-      book_title: b.book_title,
-      pages: b.pages,
-    })),
-  }));
-
-  return {
-    total: result.total,
-    showing: entities?.length || 0,
-    has_more: result.hasMore,
-    entities,
-  };
-}
-
-export async function getEntity(args: { entity_id: string }) {
-  const result = await apiGet(`/entities/${encodeURIComponent(args.entity_id)}`) as Record<string, unknown>;
-
-  return {
-    name: result.name,
-    type: result.type,
-    description: result.description,
-    aliases: result.aliases,
-    wikipedia_url: result.wikipedia_url,
-    book_count: result.book_count,
-    total_mentions: result.total_mentions,
-    books: (result.books as Array<Record<string, unknown>>)?.map((b) => ({
-      book_id: b.book_id,
-      book_title: b.book_title,
-      book_author: b.book_author,
-      pages: b.pages,
-      url: `https://sourcelibrary.org/book/${b.book_slug || b.book_id}`,
-    })),
-    related: result.related,
-  };
+  return result;
 }
 
 export async function searchImages(args: {
@@ -497,6 +286,7 @@ export async function searchImages(args: {
         type?: string;
         galleryQuality?: number;
         bookTitle: string;
+        bookId?: string;
         author?: string;
         year?: number;
         pageNumber: number;
@@ -504,7 +294,6 @@ export async function searchImages(args: {
         imageUrl: string;
       }>
     )?.map((item) => ({
-      id: `${item.pageId}:${item.detectionIndex}`,
       description: item.description,
       type: item.type,
       quality: item.galleryQuality,
@@ -513,72 +302,10 @@ export async function searchImages(args: {
       subjects: item.metadata?.subjects,
       figures: item.metadata?.figures,
       symbols: item.metadata?.symbols,
-      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
       image_url: item.imageUrl,
+      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+      book_url: item.bookId ? `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}` : undefined,
     })),
     available_filters: result.filters,
-  };
-}
-
-export async function getImage(args: { image_id: string }) {
-  const result = await apiGet(`/gallery/image/${args.image_id}`) as Record<string, unknown>;
-  return {
-    id: result.id,
-    description: result.description,
-    museum_description: result.museumDescription,
-    type: result.type,
-    quality: result.galleryQuality,
-    quality_rationale: result.galleryRationale,
-    metadata: result.metadata,
-    book: result.book,
-    page: result.pageNumber,
-    citation: result.citation,
-    urls: {
-      page: `https://sourcelibrary.org/gallery/image/${(result.id as string)?.replace(":", "-")}`,
-      read_in_context: `https://sourcelibrary.org${result.readUrl}`,
-      image: result.imageUrl,
-    },
-  };
-}
-
-export async function getBookImages(args: {
-  book_id: string;
-  min_quality?: number;
-  limit?: number;
-}) {
-  const params = new URLSearchParams({
-    bookId: args.book_id,
-    limit: String(args.limit || 50),
-  });
-  if (args.min_quality !== undefined) {
-    params.set("minQuality", String(args.min_quality));
-  }
-
-  const result = await apiGet("/gallery", params) as Record<string, unknown>;
-  return {
-    book: result.bookInfo,
-    total_images: result.total,
-    showing: (result.items as unknown[])?.length || 0,
-    images: (
-      result.items as Array<{
-        pageId: string;
-        detectionIndex: number;
-        description: string;
-        type?: string;
-        galleryQuality?: number;
-        pageNumber: number;
-        metadata?: { subjects?: string[]; figures?: string[]; symbols?: string[] };
-      }>
-    )?.map((item) => ({
-      id: `${item.pageId}:${item.detectionIndex}`,
-      description: item.description,
-      type: item.type,
-      quality: item.galleryQuality,
-      page: item.pageNumber,
-      subjects: item.metadata?.subjects,
-      figures: item.metadata?.figures,
-      symbols: item.metadata?.symbols,
-      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
-    })),
   };
 }

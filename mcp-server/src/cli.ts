@@ -7,17 +7,10 @@ import {
   searchLibrary,
   searchPassages,
   searchWithinBook,
-  findQuotes,
   listBooks,
   getBook,
   getBookText,
-  getQuote,
-  searchIndex,
-  searchEntities,
-  getEntity,
   searchImages,
-  getImage,
-  getBookImages,
 } from "./api.js";
 
 // ── Formatting helpers ────────────────────────────────────────────────
@@ -26,16 +19,12 @@ const DIM = "\x1b[2m";
 const BOLD = "\x1b[1m";
 const RESET = "\x1b[0m";
 const CYAN = "\x1b[36m";
-const YELLOW = "\x1b[33m";
 const GREEN = "\x1b[32m";
-const MAGENTA = "\x1b[35m";
 
 function dim(s: string) { return `${DIM}${s}${RESET}`; }
 function bold(s: string) { return `${BOLD}${s}${RESET}`; }
 function cyan(s: string) { return `${CYAN}${s}${RESET}`; }
-function yellow(s: string) { return `${YELLOW}${s}${RESET}`; }
 function green(s: string) { return `${GREEN}${s}${RESET}`; }
-function magenta(s: string) { return `${MAGENTA}${s}${RESET}`; }
 
 function truncate(s: string | undefined | null, max: number): string {
   if (!s) return "";
@@ -87,7 +76,7 @@ function formatPassages(data: AnyRecord) {
     console.log(`  ${bold(p.title as string)} ${dim("p." + String(p.page || "?"))}`);
     console.log(`  ${dim((p.author as string) || "Unknown")} · ${dim(String(p.published || ""))}`);
     if (p.snippet) console.log(`  ${dim(">")} ${truncate(p.snippet as string, 120)}`);
-    console.log(`  ${cyan(p.read_url as string)}`);
+    console.log(`  ${cyan(p.url as string)}`);
     console.log();
   }
 }
@@ -99,19 +88,7 @@ function formatWithinBook(data: AnyRecord) {
   for (const r of results) {
     console.log(`  ${bold("p." + String(r.page))} ${dim(`(${r.source || "text"})`)}`);
     if (r.snippet) console.log(`  ${dim(">")} ${truncate(r.snippet as string, 120)}`);
-    console.log(`  ${cyan(r.read_url as string)}`);
-    console.log();
-  }
-}
-
-function formatQuotes(data: AnyRecord) {
-  const quotes = data.quotes as AnyRecord[] | undefined;
-  console.log(dim(`${data.total} matches for "${data.topic}" — showing ${data.showing}\n`));
-  if (!quotes?.length) return;
-  for (const q of quotes) {
-    console.log(`${bold("── p." + String(q.page))} ${q.citation ? dim(q.citation as string) : ""}`);
-    if (q.text) console.log(wrap(q.text as string, 80, 2));
-    if (q.url) console.log(`  ${cyan(q.url as string)}`);
+    console.log(`  ${cyan(r.url as string)}`);
     console.log();
   }
 }
@@ -158,39 +135,6 @@ function formatBook(data: AnyRecord) {
   console.log(`\n${cyan(data.url as string)}`);
 }
 
-function formatQuote(data: AnyRecord) {
-  if (data.error) {
-    console.error(data.error as string);
-    return;
-  }
-  const book = data.book as AnyRecord | undefined;
-  const citation = data.citation as AnyRecord | undefined;
-
-  console.log(bold((book?.title as string) || "Unknown") + dim(` p.${data.page}`));
-  console.log(dim(`${(book?.author as string) || "Unknown"} · ${String(book?.published || "")}`));
-
-  if (data.matched_query) {
-    console.log(dim(`Matched "${data.matched_query}" (${data.total_matches} total matches)`));
-  }
-
-  console.log();
-  if (data.quote) {
-    console.log(wrap(data.quote as string, 80));
-  }
-
-  if (data.original) {
-    console.log(`\n${dim("── Original ──")}`);
-    console.log(wrap(data.original as string, 80));
-  }
-
-  if (citation) {
-    console.log(`\n${dim("── Citation ──")}`);
-    if (citation.inline) console.log(`  ${yellow("Inline:")} ${citation.inline}`);
-    if (citation.footnote) console.log(`  ${yellow("Footnote:")} ${citation.footnote}`);
-    if (citation.url) console.log(`  ${yellow("URL:")} ${cyan(citation.url as string)}`);
-  }
-}
-
 function formatText(data: unknown) {
   if (typeof data === "string") {
     process.stdout.write(data);
@@ -204,68 +148,9 @@ function formatText(data: unknown) {
     return;
   }
   for (const p of pages) {
-    console.log(dim(`\n── p.${p.page_number} ──`));
+    console.log(dim(`\n── p.${p.page_number} ──`) + `  ${dim(p.url as string || "")}`);
     if (p.translation) console.log(p.translation);
     else if (p.ocr) console.log(p.ocr);
-  }
-}
-
-function formatIndexResults(data: AnyRecord) {
-  const results = data.results as AnyRecord[] | undefined;
-  console.log(dim(`${data.total} index entries for "${data.query}"`));
-  if (data.by_type) {
-    const bt = data.by_type as Record<string, number>;
-    const parts = Object.entries(bt).filter(([, v]) => v > 0).map(([k, v]) => `${k}: ${v}`);
-    if (parts.length) console.log(dim(`  ${parts.join(", ")}`));
-  }
-  console.log();
-  if (!results?.length) return;
-  for (const r of results) {
-    const badge = magenta(`[${r.type}]`);
-    console.log(`  ${badge} ${bold(r.term as string)}`);
-    console.log(`  ${dim("in")} ${r.book_title} ${dim("by")} ${r.book_author || "Unknown"}`);
-    if (r.pages) console.log(`  ${dim("Pages:")} ${(r.pages as number[]).join(", ")}`);
-    if (r.quote_text) console.log(`  ${dim(">")} ${truncate(r.quote_text as string, 100)}`);
-    console.log(`  ${cyan(r.url as string)}`);
-    console.log();
-  }
-}
-
-function formatEntities(data: AnyRecord) {
-  const entities = data.entities as AnyRecord[] | undefined;
-  console.log(dim(`${data.total} entities (showing ${data.showing})\n`));
-  if (!entities?.length) return;
-  for (const e of entities) {
-    const badge = magenta(`[${e.type}]`);
-    console.log(`  ${badge} ${bold(e.name as string)} ${dim(`(${e.book_count} books, ${e.total_mentions} mentions)`)}`);
-    if (e.description) console.log(`  ${truncate(e.description as string, 100)}`);
-    if (e.aliases && (e.aliases as string[]).length) {
-      console.log(`  ${dim("Aliases:")} ${(e.aliases as string[]).join(", ")}`);
-    }
-    console.log(`  ${dim("id:")} ${e.id}`);
-    console.log();
-  }
-}
-
-function formatEntity(data: AnyRecord) {
-  const badge = magenta(`[${data.type}]`);
-  console.log(`${badge} ${bold(data.name as string)}`);
-  if (data.description) console.log(wrap(data.description as string, 80, 2));
-  if (data.aliases && (data.aliases as string[]).length) {
-    console.log(`${dim("Aliases:")} ${(data.aliases as string[]).join(", ")}`);
-  }
-  if (data.wikipedia_url) console.log(`${dim("Wikipedia:")} ${cyan(data.wikipedia_url as string)}`);
-  console.log(`${dim("Appears in")} ${data.book_count} books, ${data.total_mentions} mentions`);
-
-  const books = data.books as AnyRecord[] | undefined;
-  if (books?.length) {
-    console.log(`\n${bold("Books")}`);
-    for (const b of books) {
-      const pages = b.pages as number[] | undefined;
-      console.log(`  ${b.book_title} ${dim("by")} ${b.book_author || "Unknown"}`);
-      if (pages?.length) console.log(`    ${dim("Pages:")} ${pages.join(", ")}`);
-      if (b.url) console.log(`    ${cyan(b.url as string)}`);
-    }
   }
 }
 
@@ -279,24 +164,8 @@ function formatImages(data: AnyRecord) {
     console.log(`  ${dim(img.type as string || "image")} · ${dim(book?.title as string || "")} (${dim(String(book?.year || ""))})`);
     if (img.subjects) console.log(`  ${dim("Subjects:")} ${(img.subjects as string[]).join(", ")}`);
     console.log(`  ${cyan(img.url as string)}`);
+    if (img.book_url) console.log(`  ${dim("In book:")} ${cyan(img.book_url as string)}`);
     console.log();
-  }
-}
-
-function formatImageDetail(data: AnyRecord) {
-  console.log(bold(data.description as string || "Image"));
-  if (data.museum_description) console.log(wrap(data.museum_description as string, 80, 2));
-  console.log(`${dim("Type:")} ${data.type || "unknown"}  ${dim("Quality:")} ${data.quality}`);
-  const meta = data.metadata as AnyRecord | undefined;
-  if (meta) {
-    if (meta.subjects) console.log(`${dim("Subjects:")} ${(meta.subjects as string[]).join(", ")}`);
-    if (meta.figures) console.log(`${dim("Figures:")} ${(meta.figures as string[]).join(", ")}`);
-    if (meta.symbols) console.log(`${dim("Symbols:")} ${(meta.symbols as string[]).join(", ")}`);
-  }
-  const urls = data.urls as AnyRecord | undefined;
-  if (urls) {
-    if (urls.page) console.log(`${cyan(urls.page as string)}`);
-    if (urls.image) console.log(`${dim("Image:")} ${urls.image}`);
   }
 }
 
@@ -347,7 +216,7 @@ function flagBool(flags: Record<string, string | boolean>, key: string): boolean
 
 // ── Commands ──────────────────────────────────────────────────────────
 
-const HELP = `${bold("source-library")} — search, read, and cite historical texts
+const HELP = `${bold("source-library")} — search, read, and cite 1,200+ rare historical texts
 
 ${bold("USAGE")}
   source-library <command> [args] [--flags]
@@ -360,24 +229,14 @@ ${bold("COMMANDS")}
     books [--search=...] [--language=...] [--sort=...]
                                 Browse/filter the book collection
 
-  ${bold("Reading & Citation")}
+  ${bold("Reading")}
     book <book_id>              Detailed book info (summary, chapters, stats)
     text <book_id> [--from=N] [--to=N] [--content=translation|ocr|both]
                                 Read a book — returns 50+ pages in one call
-    quote <book_id> [--page=N | --query=...] [--original]
-                                Cite a specific passage with APA/Chicago/BibTeX
-    quotes <book_id> <topic>    Find best passages on a topic (up to 5)
-
-  ${bold("Knowledge Graph")}
-    index <query>               Search AI-generated book indexes
-    entities <query>            Search cross-book entity network
-    entity <entity_id>          Full entity detail
 
   ${bold("Gallery")}
-    images [--query=...] [--type=...] [--subject=...] [--figure=...]
+    images [--query=...] [--type=...] [--subject=...] [--book=...]
                                 Search 50,000+ historical illustrations
-    image <image_id>            Full image detail
-    book-images <book_id>       All images from a book
 
   ${bold("Other")}
     help                        Show this help
@@ -394,7 +253,6 @@ ${bold("FLAGS")}
 ${bold("EXAMPLES")}
   source-library search "philosopher's stone" --language=Latin
   source-library translations "prima materia" --limit=5
-  source-library quote 694f49d3... --query="nature of the soul"
   source-library text 694f49d3... --from=1 --to=50
   source-library books --language=German --sort=title-asc
   source-library images --subject=alchemy --type=emblem
@@ -438,7 +296,7 @@ async function run() {
       case "version":
       case "--version":
       case "-v":
-        console.log("source-library 3.0.0");
+        console.log("source-library 4.0.0");
         return;
 
       case "search": {
@@ -484,19 +342,6 @@ async function run() {
         break;
       }
 
-      case "quotes": {
-        const bookId = pos[0];
-        const topic = pos.slice(1).join(" ");
-        if (!bookId || !topic) { console.error("Usage: source-library quotes <book_id> <topic>"); process.exit(1); }
-        result = await findQuotes({
-          book_id: bookId,
-          topic,
-          limit: flagNum(flags, "limit"),
-        });
-        if (!jsonMode) { formatQuotes(result as AnyRecord); return; }
-        break;
-      }
-
       case "books": {
         result = await listBooks({
           search: pos.join(" ") || flag(flags, "search"),
@@ -534,54 +379,6 @@ async function run() {
         break;
       }
 
-      case "quote": {
-        const bookId = pos[0];
-        if (!bookId) { console.error("Usage: source-library quote <book_id> [--page=N | --query=...]"); process.exit(1); }
-        result = await getQuote({
-          book_id: bookId,
-          page: flagNum(flags, "page"),
-          query: flag(flags, "query") || (pos.length > 1 ? pos.slice(1).join(" ") : undefined),
-          include_original: flagBool(flags, "original") ?? true,
-          include_context: flagBool(flags, "context"),
-        });
-        if (!jsonMode) { formatQuote(result as AnyRecord); return; }
-        break;
-      }
-
-      case "index": {
-        const query = pos.join(" ");
-        if (!query) { console.error("Usage: source-library index <query>"); process.exit(1); }
-        result = await searchIndex({
-          query,
-          type: flag(flags, "type"),
-          limit: flagNum(flags, "limit"),
-        });
-        if (!jsonMode) { formatIndexResults(result as AnyRecord); return; }
-        break;
-      }
-
-      case "entities": {
-        const query = pos.join(" ");
-        result = await searchEntities({
-          query: query || undefined,
-          type: flag(flags, "type"),
-          book_id: flag(flags, "book"),
-          min_books: flagNum(flags, "min-books"),
-          limit: flagNum(flags, "limit"),
-          offset: flagNum(flags, "offset"),
-        });
-        if (!jsonMode) { formatEntities(result as AnyRecord); return; }
-        break;
-      }
-
-      case "entity": {
-        const entityId = pos[0];
-        if (!entityId) { console.error("Usage: source-library entity <entity_id>"); process.exit(1); }
-        result = await getEntity({ entity_id: entityId });
-        if (!jsonMode) { formatEntity(result as AnyRecord); return; }
-        break;
-      }
-
       case "images": {
         result = await searchImages({
           query: pos.join(" ") || flag(flags, "query"),
@@ -592,26 +389,6 @@ async function run() {
           year_from: flagNum(flags, "year-from"),
           year_to: flagNum(flags, "year-to"),
           book_id: flag(flags, "book"),
-          min_quality: flagNum(flags, "min-quality"),
-          limit: flagNum(flags, "limit"),
-        });
-        if (!jsonMode) { formatImages(result as AnyRecord); return; }
-        break;
-      }
-
-      case "image": {
-        const imageId = pos[0];
-        if (!imageId) { console.error("Usage: source-library image <image_id>"); process.exit(1); }
-        result = await getImage({ image_id: imageId });
-        if (!jsonMode) { formatImageDetail(result as AnyRecord); return; }
-        break;
-      }
-
-      case "book-images": {
-        const bookId = pos[0];
-        if (!bookId) { console.error("Usage: source-library book-images <book_id>"); process.exit(1); }
-        result = await getBookImages({
-          book_id: bookId,
           min_quality: flagNum(flags, "min-quality"),
           limit: flagNum(flags, "limit"),
         });

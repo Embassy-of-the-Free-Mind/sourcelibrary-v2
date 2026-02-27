@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 14 research tools, CLI + MCP server, no API key needed.',
+  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 7 research tools, CLI + MCP server, no API key needed.',
   alternates: {
     canonical: '/developers',
   },
@@ -12,37 +12,25 @@ export const metadata: Metadata = {
 
 const tools = [
   {
-    category: 'Discovery & Search',
+    category: 'Search & Discovery',
     items: [
-      { name: 'search_library', desc: 'Full-text search across books and page content. Filter by language, date range, DOI, translation status.' },
+      { name: 'search_library', desc: 'Full-text search across books and page content. Returns matching books and pages with citation URLs.' },
       { name: 'search_translations', desc: 'Search inside translated text across the whole library. Find what historical authors wrote about any topic.' },
-      { name: 'search_within_book', desc: 'Search inside a specific book\'s pages. Returns matching pages with snippets.' },
+      { name: 'search_within_book', desc: 'Search inside a specific book\'s pages. Returns matching pages with snippets and citation URLs.' },
       { name: 'list_books', desc: 'Browse the collection with filters. Returns title, author, language, year, and translation progress.' },
     ],
   },
   {
-    category: 'Reading & Citation',
+    category: 'Reading',
     items: [
       { name: 'get_book', desc: 'Detailed book metadata: summary, index stats, chapters, edition info, DOI.' },
-      { name: 'get_book_text', desc: 'Full text of a book in one call. OCR, translation, or both. Page ranges supported.' },
-      { name: 'get_quote', desc: 'Citable quote with academic citations (APA, Chicago, MLA, BibTeX). Lookup by page or search query.' },
-      { name: 'find_quotes', desc: 'Find the best passages in a book on a topic. Returns up to 5 citable quotes with citations.' },
+      { name: 'get_book_text', desc: 'Read a book. Returns 50+ pages of text in one call, each with a citation URL. OCR, translation, or both.' },
     ],
   },
   {
-    category: 'Knowledge Graph & Entities',
-    items: [
-      { name: 'search_index', desc: 'Search AI-generated indexes for concepts, people, places, keywords, and quotes.' },
-      { name: 'search_entities', desc: 'Cross-book entity network. Find people, places, and concepts connecting multiple books.' },
-      { name: 'get_entity', desc: 'Full entity detail: all book appearances, page references, aliases, related entities.' },
-    ],
-  },
-  {
-    category: 'Gallery & Images',
+    category: 'Gallery',
     items: [
       { name: 'search_images', desc: 'Search 50,000+ historical illustrations by subject, figure, symbol, type, or date.' },
-      { name: 'get_image', desc: 'Full image metadata with museum description and source book context.' },
-      { name: 'get_book_images', desc: 'All extracted images from a specific book.' },
     ],
   },
 ];
@@ -50,11 +38,7 @@ const tools = [
 const examplePrompts = [
   {
     prompt: 'Search for references to "prima materia" across the collection. Which authors discuss it, and how do their treatments differ?',
-    tools: 'search_translations + get_quote',
-  },
-  {
-    prompt: 'Find all entities connected to Hermes Trismegistus. What books discuss this figure, and what other entities appear alongside?',
-    tools: 'search_entities + get_entity',
+    tools: 'search_translations + get_book_text',
   },
   {
     prompt: 'Read the full translation of Fludd\'s History of Both Worlds, pages 1-50. Summarize the cosmological framework.',
@@ -65,8 +49,8 @@ const examplePrompts = [
     tools: 'search_images',
   },
   {
-    prompt: 'I need a quote from Copernicus\'s De Revolutionibus about the Sun\'s centrality, with a proper DOI citation.',
-    tools: 'find_quotes + get_quote',
+    prompt: 'What does Copernicus say about the Sun\'s centrality in De Revolutionibus? Find the key passages with citation URLs.',
+    tools: 'search_within_book + get_book_text',
   },
   {
     prompt: 'Compare how Ficino, Bruno, and Pico della Mirandola discuss the relationship between the soul and the cosmos.',
@@ -80,7 +64,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Search, read, and cite 1,200+ rare historical texts. CLI + MCP server, 14 research tools, no API key needed."
+          subtitle="Search, read, and cite 1,200+ rare historical texts. CLI + MCP server, 7 research tools, no API key needed."
         />
       }
     >
@@ -93,11 +77,11 @@ export default function DevelopersPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-semibold text-primary">MCP Server</h2>
-          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v3.0</span>
+          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v4.0</span>
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
-          The Model Context Protocol server gives Claude and other MCP-compatible AI clients direct access to Source Library&apos;s full collection &mdash; search, full-text reading, entity knowledge graph, and 50,000+ historical illustrations. No API keys, no authentication.
+          The Model Context Protocol server gives Claude and other MCP-compatible AI clients direct access to Source Library&apos;s full collection &mdash; search, full-text reading with citation URLs, and 50,000+ historical illustrations. No API keys, no authentication.
         </p>
 
         {/* Install commands */}
@@ -157,7 +141,7 @@ export default function DevelopersPage() {
         </div>
 
         {/* Tools grid */}
-        <h3 className="text-lg font-semibold text-primary mb-4">14 Tools</h3>
+        <h3 className="text-lg font-semibold text-primary mb-4">7 Tools</h3>
         <div className="space-y-6 mb-10">
           {tools.map((group) => (
             <div key={group.category}>
@@ -195,11 +179,10 @@ export default function DevelopersPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-semibold text-primary">Command Line</h2>
-          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">NEW</span>
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
-          Same 14 tools as the MCP server, but as a standalone CLI with human-friendly colored output.
+          Same 7 tools as the MCP server, but as a standalone CLI with human-friendly colored output.
           Pipe with <code className="text-accent-rust">--json</code> for scripts.
         </p>
 
@@ -232,9 +215,6 @@ source-library search "Paracelsus" --language=German
 
 # Search inside translations
 source-library translations "harmony of the spheres"
-
-# Get a citable quote
-source-library quote 694f49d3... --page=57
 
 # Read a book
 source-library text 694f49d3... --from=1 --to=50
@@ -347,21 +327,6 @@ source-library search "alchemy" --json | jq .results`}
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
-                <code className="text-primary">/books/:id/quote</code>
-              </div>
-              <p className="text-secondary text-sm mt-1">Get a passage with formatted academic citations and DOI</p>
-            </div>
-            <div className="p-4">
-              <div className="bg-stone-900 rounded-lg p-3">
-                <code className="text-stone-300 text-sm">GET /books/6836f8ee.../quote?page=57&amp;include_context=true</code>
-              </div>
-            </div>
-          </div>
-
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white rounded-xl border border-border-light overflow-hidden">
               <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
@@ -385,42 +350,42 @@ source-library search "alchemy" --json | jq .results`}
               <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
-                  <code className="text-primary">/entities</code>
+                  <code className="text-primary">/books/:id/search</code>
                 </div>
-                <p className="text-secondary text-sm mt-1">Search entity knowledge graph</p>
+                <p className="text-secondary text-sm mt-1">Search within a specific book&apos;s pages</p>
               </div>
             </div>
             <div className="bg-white rounded-xl border border-border-light overflow-hidden">
               <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
-                  <code className="text-primary">/search/index</code>
+                  <code className="text-primary">/gallery</code>
                 </div>
-                <p className="text-secondary text-sm mt-1">Search AI-generated book indexes</p>
+                <p className="text-secondary text-sm mt-1">Search 50,000+ historical illustrations</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Citation Format */}
+      {/* Citation URLs */}
       <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-6">Citation Format</h2>
+        <h2 className="text-2xl font-semibold text-primary mb-6">Citation URLs</h2>
         <p className="text-secondary mb-6">
-          All published editions have DOIs via Zenodo. The <code className="text-accent-rust">get_quote</code> tool returns pre-formatted citations:
+          Every page returned by the MCP tools and CLI includes a citation URL that links directly to the source. Published editions include DOIs via Zenodo.
         </p>
         <div className="bg-white rounded-xl border border-border-light p-6 space-y-4">
           <div>
-            <span className="text-sm font-medium text-muted">Inline</span>
-            <p className="font-mono text-stone-700">(Author Year, p. N)</p>
+            <span className="text-sm font-medium text-muted">Page citation</span>
+            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque?page=57</p>
           </div>
           <div>
-            <span className="text-sm font-medium text-muted">Footnote</span>
-            <p className="font-mono text-stone-700 text-sm">Author, Title, trans. Source Library (Year), Page. DOI: ...</p>
+            <span className="text-sm font-medium text-muted">Book citation</span>
+            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque</p>
           </div>
           <div>
-            <span className="text-sm font-medium text-muted">Bibliography</span>
-            <p className="font-mono text-stone-700 text-sm">Author. Title. Translated by Source Library. Year. DOI: ...</p>
+            <span className="text-sm font-medium text-muted">With DOI</span>
+            <p className="font-mono text-stone-700 text-sm">Author, Title, trans. Source Library (Year), p. N. DOI: 10.5281/zenodo.xxxxx</p>
           </div>
         </div>
       </section>

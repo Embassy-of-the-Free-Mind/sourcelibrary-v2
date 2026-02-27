@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@source-library%2Fmcp-server.svg)](https://www.npmjs.com/package/@source-library/mcp-server)
 
-An MCP (Model Context Protocol) server for researching rare historical texts from [Source Library](https://sourcelibrary.org). 5,000+ books spanning alchemy, Hermeticism, Renaissance philosophy, and early modern science — with OCR'd originals, English translations, AI-generated indexes, and 34,000+ extracted illustrations.
+Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 7 research tools, CLI + MCP server, no API key needed.
 
 ## Quick Start
 
@@ -30,6 +30,16 @@ Add to your Claude Desktop config:
 }
 ```
 
+### CLI
+
+```bash
+# Install globally
+npm install -g @source-library/mcp-server
+
+# Or run directly
+npx @source-library/mcp-server search "philosopher's stone"
+```
+
 ### From Source
 
 ```bash
@@ -39,13 +49,13 @@ npm install && npm run build
 npm start
 ```
 
-## Available Tools (14)
+## 7 Tools
 
-### Discovery & Search
+### Search & Discovery
 
 #### search_library
 
-Full-text search across books and page content. Searches titles, authors, translations, and OCR text.
+Full-text search across books and page content. Returns matching books and pages with citation URLs.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -58,13 +68,13 @@ Full-text search across books and page content. Searches titles, authors, transl
 | `sort` | string | No | relevance, date_asc, date_desc, title |
 | `limit` | number | No | Max results (default 10, max 100) |
 
-#### search_passages
+#### search_translations
 
-Search across all translated page content in the library. Returns passage snippets with page numbers and book context. Unlike `search_library` (which matches book titles/authors), this searches inside the actual text of translations and OCR.
+Search inside translated text across the entire library. Find what historical authors wrote about any topic. Returns passage snippets with page numbers, book info, and citation URLs.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `query` | string | Yes | Search inside page text (e.g., "divine providence", "philosopher stone") |
+| `query` | string | Yes | Search inside page text |
 | `language` | string | No | Filter by book's original language |
 | `year_from` | number | No | Publication year start |
 | `year_to` | number | No | Publication year end |
@@ -73,16 +83,16 @@ Search across all translated page content in the library. Returns passage snippe
 
 #### search_within_book
 
-Search inside a specific book's page content (OCR and translations). Returns matching pages with snippets showing where the query appears.
+Search inside a specific book's pages. Returns matching pages with snippets and citation URLs.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `book_id` | string | Yes | The book ID to search within |
-| `query` | string | Yes | Search query (matches both original text and translations) |
+| `query` | string | Yes | Search query |
 
 #### list_books
 
-Browse the collection with filters. Returns all matching books with translation progress.
+Browse the collection with filters. Returns title, author, language, year, and translation progress.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -92,15 +102,19 @@ Browse the collection with filters. Returns all matching books with translation 
 | `sort` | string | No | recent-translation, recent, title-asc, title-desc |
 | `limit` | number | No | Max results (default 100, max 200) |
 
-### Reading & Text
+### Reading
 
 #### get_book
 
-Get detailed book metadata including summary, index stats, edition info, and DOI.
+Detailed book metadata: summary, index stats, chapters, edition info, DOI.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | Book ID |
 
 #### get_book_text
 
-Get the full text of a book in a single call. Essential for reading and analyzing content.
+Read a book. Returns 50+ pages of text in one call, each with a citation URL. OCR, translation, or both.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -110,118 +124,68 @@ Get the full text of a book in a single call. Essential for reading and analyzin
 | `to` | number | No | End page (inclusive) |
 | `format` | string | No | json (structured) or plain (concatenated text) |
 
-#### get_quote
-
-Get a page with formatted academic citations (inline, footnote, DOI). Provide a page number for direct lookup, or a query to search within the book and return the best matching page as a citable quote.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `book_id` | string | Yes | Book ID |
-| `page` | number | No | Page number (optional if query is provided) |
-| `query` | string | No | Search query — finds the best matching page (optional if page is provided) |
-| `include_original` | boolean | No | Include original language text (default true) |
-| `include_context` | boolean | No | Include adjacent pages |
-
-#### find_quotes
-
-Find the most quotable passages in a book on a given topic. Searches the book, then retrieves full page text with original language and academic citations for the best matches. Returns up to 5 citable passages ready for scholarly use.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `book_id` | string | Yes | The book ID to find quotes in |
-| `topic` | string | Yes | Research topic or concept (e.g., "nature of the soul") |
-| `limit` | number | No | Max quotes to return (default 5, max 10) |
-
-### Knowledge Graph & Entities
-
-#### search_index
-
-Search AI-generated book indexes for concepts, people, places, keywords, and quotes.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | Yes | Search query |
-| `type` | string | No | concept, person, place, keyword, vocabulary, quote |
-| `limit` | number | No | Max results (default 50) |
-
-#### search_entities
-
-Search the cross-book entity network. Find people, places, and concepts that connect multiple books.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | No | Search by name or alias |
-| `type` | string | No | person, place, concept |
-| `book_id` | string | No | Entities in a specific book |
-| `min_books` | number | No | Min book appearances (default 1) |
-| `limit` | number | No | Max results (default 50) |
-
-#### get_entity
-
-Get full entity detail with all book appearances, page references, aliases, and related entities.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `entity_id` | string | Yes | Entity ID or name (e.g., "Hermes Trismegistus") |
-
-### Gallery & Images
+### Gallery
 
 #### search_images
 
-Search 34,000+ historical illustrations, emblems, and engravings.
+Search 50,000+ historical illustrations, emblems, engravings, and diagrams.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `query` | string | No | Text search across descriptions and metadata |
-| `type` | string | No | emblem, woodcut, engraving, portrait, etc. |
-| `subject` | string | No | Subject tag (alchemy, astronomy, medicine) |
-| `figure` | string | No | Depicted figure (Mercury, serpent, angel) |
-| `symbol` | string | No | Symbol (ouroboros, athanor) |
+| `query` | string | No | Text search across descriptions |
+| `type` | string | No | woodcut, engraving, emblem, diagram, etc. |
+| `subject` | string | No | Subject (alchemy, astronomy, anatomy) |
+| `figure` | string | No | Depicted figure (Mercury, philosopher, king) |
+| `symbol` | string | No | Symbol (ouroboros, caduceus, sun) |
 | `year_from` | number | No | Publication year start |
 | `year_to` | number | No | Publication year end |
+| `book_id` | string | No | Only images from a specific book |
+| `min_quality` | number | No | Min quality score 0-1 (default 0.5) |
+| `limit` | number | No | Max results (default 20, max 50) |
 
-#### get_image
+## CLI
 
-Get full image metadata including museum description and source book context.
+The same 7 tools are available as a standalone CLI with colored terminal output.
 
-#### get_book_images
+```bash
+# Search the collection
+source-library search "Paracelsus" --language=German
 
-Get all extracted images from a specific book.
+# Search inside translations
+source-library translations "harmony of the spheres"
 
-## Example Research Workflows
+# Read a book
+source-library text 694f49d3... --from=1 --to=50
 
-**Discover what historical authors wrote about a topic:**
-> "Search for passages about 'prima materia' across the collection. Which authors discuss it, and how do their treatments differ?"
+# Book details
+source-library book 694f49d3...
 
-**Find citable quotes from a specific book:**
-> "Find quotes about the divine mind in Ficino's Pimander. I need them with DOI citations."
+# Browse the gallery
+source-library images --subject=alchemy --type=emblem
 
-**Entity network exploration:**
-> "Find all entities connected to Hermes Trismegistus. What books discuss this figure, and what other entities appear alongside?"
+# JSON output for piping
+source-library search "alchemy" --json | jq .results
+```
 
-**Reading a primary source:**
-> "Get the full translation of Fludd's History of Both Worlds, pages 1-50. Summarize the cosmological framework."
+## Example Research Prompts
 
-**Search within a book, then cite:**
-> "Search for references to the soul in Agrippa's De Occulta Philosophia, then get a citable quote from the best match."
+> "Search for references to 'prima materia' across the collection. Which authors discuss it, and how do their treatments differ?"
 
-**Historical illustration research:**
+> "Read the full translation of Fludd's History of Both Worlds, pages 1-50. Summarize the cosmological framework."
+
 > "Find all alchemical emblems depicting the ouroboros. What texts are they from?"
 
-**Academic citation:**
-> "I need a quote from Copernicus's De Revolutionibus about the Sun's centrality, with a proper DOI citation."
+> "What does Copernicus say about the Sun's centrality in De Revolutionibus? Find the key passages with citation URLs."
 
-## Collection
+## Citation URLs
 
-5,000+ books including:
-- Latin alchemical and Hermetic manuscripts (1450-1700)
-- German mystical and Paracelsian works
-- Renaissance philosophical treatises (Ficino, Bruno, Pico)
-- Rosicrucian manifestos and related texts
-- Early modern scientific works (Copernicus, Galileo, Kepler)
-- Sanskrit, Chinese, Greek, and Arabic philosophical texts
+Every page returned by the tools includes a citation URL:
 
-All translations are AI-assisted with original language preserved for scholarly verification.
+```
+https://sourcelibrary.org/book/fludd-utriusque?page=57
+```
+
+Published editions include DOIs minted via Zenodo.
 
 ## Development
 
@@ -229,6 +193,7 @@ All translations are AI-assisted with original language preserved for scholarly 
 npm run dev    # Run with hot reload (tsx)
 npm run build  # Compile TypeScript
 npm start      # Run compiled version
+npm run cli    # Run CLI in dev mode
 ```
 
 ## License
@@ -238,4 +203,5 @@ MIT
 ## Links
 
 - **Website:** [sourcelibrary.org](https://sourcelibrary.org)
+- **Developers:** [sourcelibrary.org/developers](https://sourcelibrary.org/developers)
 - **GitHub:** [Embassy-of-the-Free-Mind/sourcelibrary-v2](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2)

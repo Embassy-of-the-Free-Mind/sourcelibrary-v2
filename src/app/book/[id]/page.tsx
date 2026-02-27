@@ -476,9 +476,12 @@ async function BookInfo({ id }: { id: string }) {
 
               {book.is_first_translation && (
                 <div className="mt-3">
-                  <span className="px-2.5 py-1 bg-accent-gold/20 text-accent-gold text-xs font-medium rounded-full border border-accent-gold/30">
+                  <Link
+                    href="/blog/first-translation-methodology"
+                    className="px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors"
+                  >
                     First English Translation
-                  </span>
+                  </Link>
                 </div>
               )}
 

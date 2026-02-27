@@ -235,10 +235,10 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                   })()}
                   {book.translation_verification.disposition === 'confirmed_first' && (
                     <p className="text-stone-500 text-xs">
-                      No prior English translation found in library catalogs
-                      {book.translation_verification.search_evidence?.apis_queried?.length
-                        ? ` (${book.translation_verification.search_evidence.apis_queried.map(a => getCatalogLabel(a)).join(', ')})`
-                        : ''}
+                      No prior complete English translation found.{' '}
+                      <a href="/blog/first-translation-methodology" className="text-accent-gold hover:text-accent-gold/80 underline">
+                        How we verify this
+                      </a>
                     </p>
                   )}
                 </div>
