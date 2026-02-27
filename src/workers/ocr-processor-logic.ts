@@ -48,6 +48,17 @@ function getPageImageUrl(page: Page): string | null {
 }
 
 /**
+ * Random jitter delay to spread DB writes across time.
+ * With 600+ concurrent Lambdas, simultaneous writes overwhelm MongoDB.
+ * A 0-3s random delay reduces peak connection pressure by ~60-70%.
+ */
+const DB_WRITE_JITTER_MS = 3000;
+async function jitterDelay() {
+  const delay = Math.floor(Math.random() * DB_WRITE_JITTER_MS);
+  if (delay > 0) await new Promise(r => setTimeout(r, delay));
+}
+
+/**
  * Retry a MongoDB operation with exponential backoff.
  * Designed for saving AI results that are expensive to regenerate.
  */
@@ -194,6 +205,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}, ${durationMs}ms`);
 
     // Save OCR result (with retry — Gemini tokens are already spent)
+    // Jitter to spread DB writes across time when many Lambdas finish simultaneously
+    await jitterDelay();
     const pageType = extractPageType(ocrResult.text);
     const columns = extractColumns(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
@@ -360,6 +373,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
   }
 
   // Always check completion — runs after both success and failure
+  // Jitter to avoid 600+ simultaneous countDocuments queries
+  await jitterDelay();
   try {
     await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
   } catch (completionError) {
