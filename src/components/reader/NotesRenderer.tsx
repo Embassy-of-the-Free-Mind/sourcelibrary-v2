@@ -343,7 +343,7 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
       case 'note':
       case 'notes':
         parts.push(
-          <span key={key++} className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+          <span key={key++} className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded mx-0.5" title="Editorial note">
             {content}
           </span>
         );
@@ -351,35 +351,35 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
       case 'term':
         const termParts = content.split(/→|->/).map((s: string) => s.trim());
         parts.push(
-          <span key={key++} className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Technical term">
+          <span key={key++} className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded mx-0.5`} title="Technical term">
             <em>{termParts[0]}</em>{termParts.length > 1 ? ` (${termParts[1]})` : ''}
           </span>
         );
         break;
       case 'margin':
         parts.push(
-          <span key={key++} className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Marginal note in original">
+          <span key={key++} className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded mx-0.5`} title="Marginal note in original">
             {content}
           </span>
         );
         break;
       case 'gloss':
         parts.push(
-          <span key={key++} className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Gloss/annotation in original">
+          <span key={key++} className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded mx-0.5`} title="Gloss/annotation in original">
             {content}
           </span>
         );
         break;
       case 'insert':
         parts.push(
-          <span key={key++} className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Later insertion">
+          <span key={key++} className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded mx-0.5`} title="Later insertion">
             {content}
           </span>
         );
         break;
       case 'unclear':
         parts.push(
-          <span key={key++} className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
+          <span key={key++} className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded mx-0.5 italic" title="Unclear in original">
             {content}?
           </span>
         );
@@ -618,32 +618,32 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         ),
         // XML annotation elements (TEI-aligned, new syntax)
         note: ({ children }: any) => showNotes ? (
-          <span className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+          <span className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded mx-0.5" title="Editorial note">
             {children}
           </span>
         ) : null,
         margin: ({ children }: any) => showNotes ? (
-          <span className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Marginal note in original">
+          <span className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded mx-0.5`} title="Marginal note in original">
             {children}
           </span>
         ) : null,
         gloss: ({ children }: any) => showNotes ? (
-          <span className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Gloss/annotation in original">
+          <span className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded mx-0.5`} title="Gloss/annotation in original">
             {children}
           </span>
         ) : null,
         insert: ({ children }: any) => showNotes ? (
-          <span className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Later insertion">
+          <span className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded mx-0.5`} title="Later insertion">
             {children}
           </span>
         ) : null,
         unclear: ({ children }: any) => showNotes ? (
-          <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
+          <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded mx-0.5 italic" title="Unclear in original">
             {children}?
           </span>
         ) : null,
         term: ({ children }: any) => (
-          <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Technical term">
+          <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded mx-0.5`} title="Technical term">
             <em>{children}</em>
           </span>
         ),
