@@ -153,6 +153,14 @@ function linkBookTitles(
 
 const COMPACT_LIMIT = 14;
 
+/** Race a promise against a timeout — returns fallback on timeout or error */
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+  return Promise.race([
+    promise.catch(() => fallback),
+    new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
+  ]);
+}
+
 async function fetchCollectionData(id: string) {
   const db = await getDb();
 
@@ -178,48 +186,57 @@ async function fetchCollectionData(id: string) {
     quality_score: 1,
   };
 
-  // First get book IDs for gallery image lookup
-  const collectionBookIds = await db.collection('books')
-    .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
-    .toArray()
-    .then(docs => docs.map(d => d.id));
-
-  // Fetch mentioned book IDs for explicit linking in descriptions
   const mentionedBookIds = (collection.mentioned_books || [])
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
+  // Critical queries (books + total) run alongside non-critical ones (gallery, highlights).
+  // Non-critical queries get a 8s timeout so they can't crash the page.
   const [books, total, highlights, galleryImages, mentionedBooks] = await Promise.all([
-    // Only fetch enough for compact view — the client component handles "show all"
     db.collection('books')
       .find(filter, { projection })
       .sort({ read_count: -1, title: 1 })
       .limit(COMPACT_LIMIT)
       .toArray(),
     db.collection('books').countDocuments(filter),
-    db.collection('books')
-      .find(
-        { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
-        { projection: highlightProjection },
-      )
-      .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
-      .limit(5)
-      .toArray(),
-    collectionBookIds.length > 0
-      ? db.collection('gallery_images')
-          .find({
-            book_id: { $in: collectionBookIds },
-            gallery_quality: { $gte: 0.8 },
-            type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-          })
-          .sort({ gallery_quality: -1 })
-          .limit(60)
-          .toArray()
-      : Promise.resolve([]),
+    withTimeout(
+      db.collection('books')
+        .find(
+          { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
+          { projection: highlightProjection },
+        )
+        .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
+        .limit(5)
+        .toArray(),
+      8000, [],
+    ),
+    // Gallery: fetch book IDs then query gallery_images, with 8s timeout for the whole chain
+    withTimeout(
+      db.collection('books')
+        .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
+        .toArray()
+        .then(docs => docs.map(d => d.id))
+        .then(bookIds => bookIds.length > 0
+          ? db.collection('gallery_images')
+              .find({
+                book_id: { $in: bookIds },
+                gallery_quality: { $gte: 0.8 },
+                type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+              })
+              .sort({ gallery_quality: -1 })
+              .limit(60)
+              .toArray()
+          : [],
+        ),
+      8000, [],
+    ),
     mentionedBookIds.length > 0
-      ? db.collection('books')
-          .find({ id: { $in: mentionedBookIds } }, { projection })
-          .toArray()
+      ? withTimeout(
+          db.collection('books')
+            .find({ id: { $in: mentionedBookIds } }, { projection })
+            .toArray(),
+          8000, [],
+        )
       : Promise.resolve([]),
   ]);
 
