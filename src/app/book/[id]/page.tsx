@@ -1,7 +1,7 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -25,15 +25,30 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 // RegistrationWall removed — gating handled client-side by BetaGateModal in BookPagesSection
 // auth import removed — gating handled client-side by useBetaGate
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+// ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
+export const revalidate = 120;
+
+// Allow any [id] — paths not pre-generated will use ISR on first request
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  return []; // All paths generated on demand via ISR
 }
 
-// Lightweight book fetch for metadata (no pages)
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+// Lightweight book fetch for metadata (no pages, no heavy index)
 async function getBookForMetadata(id: string): Promise<Book | null> {
   const db = await getDb();
-  const result = await findBookByIdOrSlug(db, id);
+  const result = await findBookByIdOrSlug(db, id, {
+    index: 0,
+    reading_summary: 0,
+    chapters: 0,
+    reading_sections: 0,
+    pipeline: 0,
+    pipeline_auto: 0,
+  });
   return result ? (result.book as unknown as Book) : null;
 }
 
@@ -55,58 +70,56 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
   try {
     const db = await getDb();
 
-    // Step 1: Find person entities mentioned in THIS book
-    // Use aggregation to project only the book fields we need (book_id, book_author)
-    // — avoids pulling full books arrays (can be 1+ MB for well-connected entities)
-    const personEntities = await db.collection('entities').aggregate([
-      { $match: { type: 'person', 'books.book_id': bookId } },
-      { $project: {
-        name: 1,
-        aliases: 1,
-        books: { $map: {
-          input: '$books',
-          as: 'b',
-          in: { book_id: '$$b.book_id', book_author: '$$b.book_author' },
-        }},
-      }},
-    ]).toArray();
+    // Step 1: Find person entities mentioned in THIS book.
+    // Only fetch name/aliases — we'll match against author fields in a separate query.
+    // Avoids the slow $map over large books arrays (was 3s for well-connected books).
+    const personEntities = await db.collection('entities').find(
+      { type: 'person', 'books.book_id': bookId },
+      { projection: { name: 1, aliases: 1 } },
+    ).toArray();
 
-    // Step 2: For each person, check if they authored OTHER books in our library
-    // Match entity name/aliases against book_author fields in the entity's books array
-    // Use word-boundary matching to avoid "Jacob" matching "Böhme, Jacob"
+    // Step 2: For each person entity, check if they authored OTHER books in our library.
+    // Query the books collection directly instead of pulling entity.books arrays
+    // (which can be megabytes for well-connected entities like Plato/Hermes — was 3s).
     const directCitationBookIds = new Map<string, string>(); // bookId -> cited_as
+    const entityNames: Array<{ names: string[]; entityName: string }> = [];
     for (const entity of personEntities) {
       const names = [entity.name, ...(entity.aliases || [])].filter(
         (n: string) => n && n.length >= 4,
       );
-      for (const bookEntry of entity.books || []) {
-        if (bookEntry.book_id === bookId) continue;
-        const authorStr = (bookEntry.book_author || '');
-        if (!authorStr || authorStr.toLowerCase() === 'unknown') continue;
-        for (const name of names) {
-          // Require word-boundary match: the name must appear as a leading/standalone
-          // part of the author string, not as a middle name or substring.
-          // "Plato" matches "Plato; Ficino (trans.)" but "Jacob" won't match "Böhme, Jacob"
-          const nameLower = name.toLowerCase();
-          const authorLower = authorStr.toLowerCase();
-          const idx = authorLower.indexOf(nameLower);
-          if (idx === -1) continue;
-          // Must start at word boundary (start of string or after non-letter)
-          const charBefore = idx > 0 ? authorLower[idx - 1] : ' ';
-          const isWordStart = !/[a-z]/.test(charBefore);
-          // Must end at word boundary
-          const afterIdx = idx + nameLower.length;
-          const charAfter = afterIdx < authorLower.length ? authorLower[afterIdx] : ' ';
-          const isWordEnd = !/[a-z]/.test(charAfter);
-          // For short names (single word, <8 chars), require it appears BEFORE any comma
-          // to match surname position: "Plato" ok, but "Jacob" in "Böhme, Jacob" is after comma
-          const isSingleWord = !name.includes(' ');
-          const commaIdx = authorLower.indexOf(',');
-          const isBeforeComma = commaIdx === -1 || idx < commaIdx;
-          if (isWordStart && isWordEnd && (!isSingleWord || name.length >= 8 || isBeforeComma)) {
-            directCitationBookIds.set(bookEntry.book_id, entity.name);
-            break;
+      if (names.length > 0) {
+        entityNames.push({ names, entityName: entity.name });
+      }
+    }
+    if (entityNames.length > 0) {
+      const candidateBooks = await db.collection('books').find(
+        { id: { $ne: bookId }, hidden: { $ne: true }, author: { $nin: ['', 'Unknown'] } },
+        { projection: { id: 1, author: 1 } },
+      ).toArray();
+      for (const doc of candidateBooks) {
+        const authorStr = doc.author as string;
+        const authorLower = authorStr.toLowerCase();
+        for (const { names, entityName } of entityNames) {
+          let matched = false;
+          for (const name of names) {
+            const nameLower = name.toLowerCase();
+            const idx = authorLower.indexOf(nameLower);
+            if (idx === -1) continue;
+            const charBefore = idx > 0 ? authorLower[idx - 1] : ' ';
+            const isWordStart = !/[a-z]/.test(charBefore);
+            const afterIdx = idx + nameLower.length;
+            const charAfter = afterIdx < authorLower.length ? authorLower[afterIdx] : ' ';
+            const isWordEnd = !/[a-z]/.test(charAfter);
+            const isSingleWord = !name.includes(' ');
+            const commaIdx = authorLower.indexOf(',');
+            const isBeforeComma = commaIdx === -1 || idx < commaIdx;
+            if (isWordStart && isWordEnd && (!isSingleWord || name.length >= 8 || isBeforeComma)) {
+              directCitationBookIds.set(doc.id as string, entityName);
+              matched = true;
+              break;
+            }
           }
+          if (matched) break;
         }
       }
     }
@@ -366,7 +379,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const book = await getBookForMetadata(id);
 
   if (!book) {
-    notFound();
+    return { title: 'Book Not Found - Source Library' };
   }
 
   const title = book.display_title || book.title;
@@ -431,13 +444,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; matchedBySlug: boolean } | null> {
   const db = await getDb();
 
-  // Exclude heavy fields not used on the book detail page
+  // Exclude heavy fields not used on the book detail page.
+  // index.*.pages arrays are ~100KB for well-indexed books but only .term is displayed.
   const bookProjection = {
     chapters: 0,
     reading_sections: 0,
     pipeline: 0,
+    pipeline_auto: 0,
     split_check: 0,
     'index.sectionSummaries': 0,
+    'index.people.pages': 0,
+    'index.places.pages': 0,
+    'index.concepts.pages': 0,
+    'index.keyTerms.pages': 0,
     pages_ocr: 0,
     translation_percent: 0,
   };
@@ -533,8 +552,7 @@ async function BookInfo({ id }: { id: string }) {
   // Content gating handled client-side by useBetaGate hook in BookPagesSection
   // Featured books bypass the gate; others show email modal on page click
 
-  // Note: ObjectId→custom-id redirect is handled in BookDetailPage above,
-  // before the Suspense boundary, so Google gets a proper 301.
+  // Note: ObjectId→slug redirect is handled by proxy.ts → /api/redirect/book-slug
 
   const workId = (book as unknown as { work_id?: string }).work_id;
 
@@ -920,34 +938,8 @@ async function BookInfo({ id }: { id: string }) {
   );
 }
 
-export default async function BookDetailPage({ params, searchParams }: PageProps) {
+export default async function BookDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const query = await searchParams;
-
-  // Redirect non-slug URLs (ObjectId or id) to canonical slug URL.
-  // Done before Suspense so Google gets a proper 301.
-  const db = await getDb();
-  const lookupResult = await findBookByIdOrSlug(db, id, { slug: 1, id: 1 });
-  if (lookupResult && !lookupResult.matchedBySlug && lookupResult.book.slug) {
-    const slug = lookupResult.book.slug as string;
-    // Preserve ?page=N if present
-    const pageNum = typeof query.page === 'string' ? parseInt(query.page, 10) : NaN;
-    redirect(!isNaN(pageNum) && pageNum > 0 ? `/book/${slug}?page=${pageNum}` : `/book/${slug}`);
-  }
-
-  // Redirect ?page=N to the reader
-  const pageNum = typeof query.page === 'string' ? parseInt(query.page, 10) : NaN;
-  if (!isNaN(pageNum) && pageNum > 0) {
-    const bookId = lookupResult?.book.id || id;
-    const targetPage = await db.collection('pages').findOne(
-      { book_id: bookId, page_number: pageNum },
-      { projection: { id: 1 } }
-    );
-    if (targetPage) {
-      const pageId = targetPage.id || targetPage._id?.toString();
-      redirect(`/book/${id}/page/${pageId}`);
-    }
-  }
 
   return (
     <div className="min-h-screen bg-cream">

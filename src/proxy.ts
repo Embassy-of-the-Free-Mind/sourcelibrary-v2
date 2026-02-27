@@ -52,6 +52,37 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  // Book page redirects — handled here (not in page component) so the book
+  // page stays ISR-cacheable (redirect() and searchParams force dynamic rendering).
+  const bookMatch = pathname.match(/^\/book\/([^/]+)$/);
+  if (bookMatch) {
+    const segment = bookMatch[1];
+
+    // ?page=N → resolve to /book/{slug}/page/{pageId}
+    if (request.nextUrl.searchParams.has('page')) {
+      const pageNum = parseInt(request.nextUrl.searchParams.get('page')!, 10);
+      if (!isNaN(pageNum) && pageNum > 0) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/api/redirect/book-page';
+        url.searchParams.set('book', segment);
+        url.searchParams.set('n', String(pageNum));
+        url.searchParams.delete('page');
+        return NextResponse.rewrite(url);
+      }
+    }
+
+    // Non-slug IDs → redirect to canonical slug URL.
+    // Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
+    // Custom IDs are shorter hex strings. Both lack hyphens.
+    const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment));
+    if (looksLikeId) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/api/redirect/book-slug';
+      url.searchParams.set('id', segment);
+      return NextResponse.rewrite(url);
+    }
+  }
+
   // Rate-limit API routes (except cron and internal pipeline calls)
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get('authorization');
