@@ -1,0 +1,48 @@
+[[meta: Continuity from page 5: The text transitions from dream interpretations of chess to its mathematical properties and its allegorical relationship to human society and friendship. It mentions the "Wheat and Chessboard" problem, a famous mathematical legend.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 1]]
+(Around 1150 A.D. [[notes: The author is likely referring to a medieval source of the legend of Sissa, the mythical inventor of chess.]]) of a man / who, taking occasion from the numbers of the squares / of the Chess-Board / to mightily **outwit** / a King and soon enrich himself: we wish to mention in passing: His words / found in a place / where He treats / *de multiplicatâ analogiâ, quæ citò crescit* [[notes: Latin: "of multiplied proportion, which grows quickly"]]: are to be found / thus:
+
+> "Just as it is said, of a certain man, who asked, from a certain "
+> "King, that he should provide for him, as his reward, grains of wheat, in "
+> "a number multiplied by the number of the squares of the Chess Game. "
+> "And the King refused this, after it became clear that from this "
+> "there resulted a reward too great."
+
+->That is:<-
+
+> "For example / as is said of one / who / entreated / a "
+> "King / that He should / in place of his wages / "
+> "give and grant him / as many grains of wheat / as one could / "
+> "multiply through the number of squares / of the Chess Game: "
+> "Wherefore / (if one / in place of the first square / laid one grain: in place "
+> "of the second / two: the third / four: the fourth / eight: the "
+> "fifth / sixteen: the sixth / thirty-two: the seventh / sixty- "
+> "four: the eighth / one hundred and twenty-eight: and so "
+> "forth / ) the following sum / of so many thousand-times thousand "
+> "grains / namely: "
+
+->18 446 744 073 709 551 615.<-
+
+> "must result: which the King / because He would thereby / "
+> "obtain an exceedingly great reward / struck down "
+> "and refused."
+
+That (4.) by this game / the state of common Civic / and Courtly Life / is quite cleverly / depicted. For / if one wished to consider the friendship / which is commonly / practiced in the same / only for the sake of profit / then one has / in the Chess-pieces / a fine example: as <term>Petronius Arbiter</term> [[notes: A Roman courtier during the time of Nero, traditionally identified as the author of the *Satyricon*]], page 70, gives to be understood / in the following verses:
+
+> "The name of friendship remains as long as it is expedient, "
+> "The counter, on the board, leads the noble (alt: mobile) work."
+
+That is / as <term>Turnebus</term> [[notes: Adrien Turnèbe (1512–1565), a renowned French classical scholar and humanist]], *Adversaria lib: 1. cap: 15.* explains it:
+
+> "So far as we wish to highly esteem / and hold friendship / "
+> "only for the sake of utility / and not rather for the sake of "
+> "Virtue and Honor / then / Human Life / is not unevenly "
+> "compared / to the Chess Game. For / in the same / "
+> "the pieces are divided into two heaps / in such a way / "
+> "that some among them are held / as friends / some as enemies / "
+
+[[summary: This page recounts the famous legend of the wheat grains on a chessboard to illustrate geometric progression and begins an allegorical comparison between chess and the transactional nature of courtly friendship.]]
+[[keywords: Wheat and Chessboard problem, Sissa, geometric progression, Petronius Arbiter, Turnebus, allegory of life, social hierarchy]]

@@ -1,0 +1,50 @@
+[[meta: This page continues the technical analysis of Damiano's defense, specifically focusing on a sequence of moves following the initial setup described on page 269. The text uses a numeric coordinate system where squares are numbered 1 through 64, starting from square 1 (a1) and ending at 64 (h8).]]
+
+# The Third Book / 2. Chapt:
+
+,, King’s Knight / to 46: [[notes: Knight to f6. The Knight is referred to here as *Reuter*, literally "rider" or "cavalryman."]] The White / [moves] the King’s Bishop / to thir-
+,, ty: [[notes: Bishop to f4. The Bishop is called *Schütze*, meaning "archer" or "shooter."]] The Black / his King’s Bishop / to thirty-eight:
+,, [[notes: Bishop to f5.]] The White / the King’s Pawn / to twenty-one / or
+,, however / (so that / Damiano’s style / remains unchanged) his
+,, Bishop’s Pawn / to twenty-two: [[notes: f3.]] The Black
+,, / the King’s Knight / to the White King’s Pawn / on forty-
+,, three: [[notes: c6.]] The White / (to protect it) the King’s Pawn / to
+,, twenty-one: [[notes: e3.]] The Black / his King’s Pawn / (to
+,, make room / for his Bishop) to forty-five: [[notes: e6.]] The
+,, White / the King’s Rook / to three: [[notes: c1. The Rook is called *Rochen* in the original German.]] The Black / the King’s
+,, Bishop / to the White King’s Knight / on twenty-six: [[notes: b4.]]
+,, The White / the Queen / (to obtain the Black King’s Bishop’s / or the
+,, Black King’s Knight’s / Pawn) to twenty-three: [[notes: g3.]]
+,, The Black / (to prevent this / and to protect the King’s Knight’s /
+,, Pawn) the King’s Knight / to the White Queen /
+,, and the White King’s Bishop / on forty: [[notes: h5.]] The White / takes /
+,, the Black King’s Bishop’s / Pawn / with his King’s Bishop /
+,, and gives Check: The Black / moves / the King / to
+,, nine / or fifty-two: [[notes: a2 or d7.]] The White / the Queen / to
+[[margin: 2.]] ,, the Black King’s Knight / on thirty-two: * [[notes: h4.]] The Black /
+,, takes / with the King / the White King’s Bishop: The White / with
+,, the Queen / the Black King’s Knight.
+
+[[margin: 3.]] ,, But if the Black / does not take / the White Bishop / (n. 2.)
+,, but / (so that his Queen / can protect / her Knight) moves
+,, his Bishop’s Pawn / to forty-six /: [[notes: f6.]] then the White plays /
+,, against the Black King’s Knight / and the Black
+,, King’s Bishop / the King’s Knight’s Pawn / to thirty-one: [[notes: g4.]]
+,, The Black / takes / the White King’s Bishop / with his King:
+[[margin: 4.]] ,, The White / the Black King’s Knight / with his Queen: * The
+,, Black / the same / with the Queen: The White / the same / with
+,, the King’s Knight’s Pawn: and thus does / not poorly / because
+,, a Pawn / is available as an advantage / so that He / sets the
+,, Pawns / against one another.
+
+->This aforementioned now / is Damiano's opinion / although<-
+->it / with clearer words / has been set down here. One can, however,<-
+->not remark from this / how often the victory / on the side of the White /<-
+->when he played after this manner / was obtained: In consideration that He /<-
+->on two lines / his Pawns / the aforementioned / the Black King’s Bish-<-
+
+[[meta: The catchword "zens= Sol-" indicates the next page begins with "Schützens-Soldaten" (Bishop's Pawns).]]
+
+[[summary: This page details a complex chess variation attributed to Pedro Damiano, involving a tactical sequence of Bishop and Queen maneuvers intended to secure a pawn advantage for the White player. The author notes that while he is clarifying Damiano's original instructions, the frequency of White's victory using this specific method remains unclear.]]
+
+[[keywords: Pedro Damiano, chess strategy, King's Knight, King's Bishop, chess notation, 17th-century chess, piece terminology, pawn advantage]]

@@ -1,0 +1,127 @@
+[[meta: This page begins the actual instructional text following the introductory letter found on the previous page. Having established the importance of "preparatory potions" for the mind, Lefèvre d'Étaples now provides the "Formula"—a systematic map or classification of all the number types and ratios discussed in Boethius’s classic textbook.]]
+
+# Jacques Lefèvre d’Étaples’ Summary of the Two Books on Arithmetic by Saint Severinus Boethius, Dedicated to the Magnificent Lord: Gian Stefano Ferrero, Bishop of Vercelli.
+
+Among the mathematical disciplines—without which all other learning is obscured—Arithmetic claims the first place for itself, as if it were the parent, leader, and mistress of the others. To be properly understood, just like the other disciplines, it requires certain aids. Among these, one must first fix in the mind a general **formula** [[notes: A "formula" here refers to a visual map or systematic classification table]] of the subjects it deals with; next, the definitions of individual terms; then the qualities and properties of numbers; and after the properties, the source from which all things are demonstrated.
+
+## A Formula of All Things with which Arithmetic Deals.
+
+Number
+&nbsp;&nbsp;&nbsp;&nbsp;In itself: 2. [[notes: Absolute numbers, not compared to others.]]
+&nbsp;&nbsp;&nbsp;&nbsp;In relation to something: 4 to 2. [[notes: Ratios or proportions.]]
+&nbsp;&nbsp;&nbsp;&nbsp;According to figure: 3. [[notes: "Figurate" numbers like triangles or squares, represented by dots.]]
+Number in itself
+&nbsp;&nbsp;&nbsp;&nbsp;Even: 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Odd: 3.
+Even
+&nbsp;&nbsp;&nbsp;&nbsp;Evenly even: 4. [[notes: *Pariter par*; numbers that can be divided by two down to the number 1 (powers of 2).]]
+&nbsp;&nbsp;&nbsp;&nbsp;Evenly odd: 6. [[notes: *Pariter impar*; an even number which, when halved, results in an odd number.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Oddly even: 12. [[notes: *Impariter par*; even numbers that can be divided by 2 more than once, but eventually yield an odd number other than 1.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Perfect: 6. [[notes: A number equal to the sum of its divisors (1+2+3=6).]]
+&nbsp;&nbsp;&nbsp;&nbsp;Deficient: 4. [[notes: A number larger than the sum of its divisors.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Abundant: 12. [[notes: A number smaller than the sum of its divisors.]]
+Odd
+&nbsp;&nbsp;&nbsp;&nbsp;Prime: 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Composite: 9.
+&nbsp;&nbsp;&nbsp;&nbsp;Relative to another: 9 and 25. [[notes: Numbers that are "prime to each other," sharing no common factors.]]
+Number in relation to something
+&nbsp;&nbsp;&nbsp;&nbsp;Equality: 10 to 10.
+&nbsp;&nbsp;&nbsp;&nbsp;Inequality: 10 to 5.
+Inequality
+&nbsp;&nbsp;&nbsp;&nbsp;Inequality of the greater: 10 to 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Inequality of the lesser: 5 to 10.
+Inequality of the greater
+&nbsp;&nbsp;&nbsp;&nbsp;Multiple: 2 to 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Superparticular: 3 to 2. [[notes: A ratio where the larger number contains the smaller plus one part of it (e.g., 3 contains 2 once, plus 1).]]
+&nbsp;&nbsp;&nbsp;&nbsp;Superpartient: 5 to 3. [[notes: A ratio where the larger number contains the smaller plus more than one part of it.]]
+Multiple
+&nbsp;&nbsp;&nbsp;&nbsp;Double: 2 to 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple: 3 to 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Quadruple: 4 to 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Quintuple: 5 to 1.
+Superparticular
+&nbsp;&nbsp;&nbsp;&nbsp;Sesquialter: 3 to 2. [[notes: Meaning "one and a half."]]
+&nbsp;&nbsp;&nbsp;&nbsp;Sesquitertial: 4 to 3. [[notes: Meaning "one and a third."]]
+&nbsp;&nbsp;&nbsp;&nbsp;Sesquiquartal: 5 to 4. [[notes: Meaning "one and a fourth."]]
+
+<column-break/>
+
+Sesquiquintal: 6 to 5.
+Superpartient
+&nbsp;&nbsp;&nbsp;&nbsp;Superbipartient: 5 to 3. [[notes: Contains the whole plus two parts.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Supertripartient: 7 to 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Superquadripartient: 9 to 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Superquintupartient: 11 to 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Supersextupartient: 13 to 7.
+Multiple superparticular [[notes: Ratios that are both a multiple and a fraction, e.g., 2 and 1/2.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Double sesquialter: 5 to 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Double sesquitertial: 7 to 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Double sesquiquartal: 9 to 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple sesquialter: 7 to 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple sesquitertial: 10 to 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple sesquiquartal: 13 to 4.
+Multiple superpartient
+&nbsp;&nbsp;&nbsp;&nbsp;Double superbipartient: 8 to 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Double supertripartient: 11 to 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Double superquadripartient: 14 to 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple superbipartient: 11 to 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple supertripartient: 15 to 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Triple superquadripartient: 19 to 5.
+Number according to figure [[notes: Geometry applied to numbers, often called "figurate numbers."]]
+&nbsp;&nbsp;&nbsp;&nbsp;Linear: 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Plane: 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Solid: 8.
+Plane
+&nbsp;&nbsp;&nbsp;&nbsp;Triangular: 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Square: 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Pentagonal: 5.
+&nbsp;&nbsp;&nbsp;&nbsp;Hexagonal: 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Heptagonal: 7.
+&nbsp;&nbsp;&nbsp;&nbsp;Octagonal: 8.
+&nbsp;&nbsp;&nbsp;&nbsp;Enneagonal: 9. [[notes: 9-sided.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Decagonal: 10.
+&nbsp;&nbsp;&nbsp;&nbsp;Hendecagonal: 11. [[notes: 11-sided.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Dodecagonal: 12.
+&nbsp;&nbsp;&nbsp;&nbsp;Oblong: 6. [[notes: *Altera parte longior*; a rectangle where one side is exactly 1 unit longer than the other (n × n+1).]]
+
+<column-break/>
+
+Promiscuous: 15. [[notes: *Ante longior*; a plane number where the sides differ by more than one unit.]]
+Solid
+&nbsp;&nbsp;&nbsp;&nbsp;Pyramid: 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Cube: 8 (side: 2).
+Pyramid
+&nbsp;&nbsp;&nbsp;&nbsp;Triangular: 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Square-based: 5. [[notes: *Tetragona*.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Pentagonal: 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Hexagonal: 7.
+&nbsp;&nbsp;&nbsp;&nbsp;Truncated pyramid: 29. <margin>Its square bases are 16, 9, 4.</margin> [[notes: *Curta pyramis*; a pyramid missing its top.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Twice-truncated: 25. <margin>Its squares are 16, 9.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Thrice-truncated: 41. <margin>Its squares are 25, 16.</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Brick-shaped: 18. <margin>Sides are 3, 3, 2.</margin> [[notes: *Laterculus*; a solid with unequal width, length, and height.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Beam-shaped: 12. <margin>Sides are 2, 2, 3.</margin> [[notes: *Asser*; a solid where two sides are equal and the third is longer.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Wedge-shaped: 24. <margin>Sides are 2, 3, 4.</margin> [[notes: *Cuneus*; all three sides are unequal.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Circular tip: 25. [[notes: *Mucrus circularis*.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Spherical: 125. [[notes: A cube of a circular number (ending in the same digit, like 5).]]
+&nbsp;&nbsp;&nbsp;&nbsp;Parallelepiped: 12. <margin>Sides are 2, 3, 2.</margin>
+Mean: 6, 4, 2. [[notes: *Medietas*; the various types of mathematical averages or proportions.]]
+&nbsp;&nbsp;&nbsp;&nbsp;Arithmetic: 6, 4, 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Geometric: 9, 6, 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Musical: 6, 4, 3. [[notes: Now known as the harmonic mean.]]
+Arithmetic
+&nbsp;&nbsp;&nbsp;&nbsp;Continuous: 6, 4, 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Disjunct: 7, 5, 6, 4.
+Geometric
+&nbsp;&nbsp;&nbsp;&nbsp;Continuous: 9, 6, 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Disjunct: 9, 6, 3, 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Fourth mean: 6, 5, 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Fifth mean: 5, 4, 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Sixth: 6, 4, 1.
+&nbsp;&nbsp;&nbsp;&nbsp;Seventh: 9, 8, 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Eighth: 9, 7, 6.
+&nbsp;&nbsp;&nbsp;&nbsp;Ninth: 7, 6, 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Tenth: 8, 5, 3.
+
+[[summary: This page provides a comprehensive classification of numbers and proportions based on Boethius's Arithmetic, acting as a table of contents for the entire discipline. It covers absolute numbers, complex ratios, figurate numbers (plane and solid), and the various mathematical means or averages.]]
+
+[[keywords: Arithmetic, Boethius, Jacques Lefèvre d'Étaples, classification of numbers, ratios, proportions, figurate numbers, perfect numbers, mathematical means]]

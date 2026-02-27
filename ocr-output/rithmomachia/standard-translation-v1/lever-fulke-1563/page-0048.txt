@@ -1,0 +1,39 @@
+# The Philosopher's Game
+
+-> Addition of various <note>original: "diuers"</note> numbers, multiplication, and division. <-
+
+| Addition | Multiplication and Division | | Piece Values |
+| :--- | :--- | :--- | :--- |
+| 90 | 2, 3, 6 | 5, 9, 45 | 8 |
+| 90 + 100 = 190 | 2, 4, 8 | 5, 20, 100 | 9 |
+| 91 | 2, 6, 12 | 5, 25, 125 | 12 |
+| 91: nothing <note>original: "nothig"</note> | 2, 8, 16 | --- | 15 |
+| 100 | 2, 15, 30 | 6, 6, 36 | 20 |
+| 100: nothing <note>original: "noth."</note> | 2, 28, 56 | 6, 7, 42 | 25 |
+| 120 | 2, 36, 72 | 6, 12, 72 | 30 |
+| 120 + 169 = 289 | 2, 45, 90 | 6, 15, 90 | 36 |
+| 121 | --- | 6, 20, 120 | 42 |
+| 121 + 169 = 290 | 3, 4, 12 | --- | 45 |
+| 153 | 3, 5, 15 | 7, 8, 56 | 49 |
+| 169 | 3, 12, 36 | --- | 56 |
+| 190: nothing <note>original: "noth."</note> | 3, 15, 45 | 8, 9, 72 | 64 |
+| 225 | 3, 30, 90 | 8, 15, 120 | 72 |
+| 289 | --- | --- | 81 |
+| 361 | 4, 4, 16 | 9, 9, 81 | 90 |
+| | 4, 5, 20 | 9, 25, 225 | 100 |
+| | 4, 7, 28 | | 120 |
+| | 4, 9, 36 | | 121 |
+| | 4, 16, 64 | | 153 |
+| | 4, 25, 100 | | 169 |
+| | 4, 30, 120 | | 190 |
+| | --- | | 225 |
+| | 5, 6, 30 | | 289 |
+| | | | 361 |
+
+<summary>
+This page provides a lookup table for "The Philosopher's Game" (Rythmomachia), a mathematical board game popular in the medieval and Renaissance periods. The table details how pieces of specific numerical values can be captured using addition, multiplication, or division. The first column lists addition combinations (e.g., 90 and 100 to capture 190), the middle columns list factors and products for multiplication/division captures (e.g., 2 and 3 to capture 6), and the final column provides a reference list of the various piece values present in the game.
+</summary>
+
+<keywords>
+The Philosopher's Game, Rythmomachia, arithmetic, addition, multiplication, division, capture rules, historical board games, mathematical tables.
+</keywords>

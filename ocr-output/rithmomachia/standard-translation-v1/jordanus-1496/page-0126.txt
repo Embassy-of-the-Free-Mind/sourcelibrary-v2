@@ -1,0 +1,54 @@
+[[meta: This page continues the systematic exploration of the Greek musical system, shifting from the internal structure of the tetrachords to the arrangement of the full fifteen-string scale (pentadecachordum) across the seven modes: Hypodorian, Hypophrygian, Hypolydian, Dorian, Phrygian, Lydian, and Mixolydian.]]
+
+->**TO**<-
+
+->**A** b c d e f g h i k l m n o p<-
+
+| | | | | | | | | | | | | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **B** Hypodorian | | | | | | | | | | | | | | | | | [[notes: through 7 diatonic [steps]?]] |
+| **C** Hypophrygian | Tone | | | | | | | | | | | | | | | | [[notes: through the tone]] |
+| **D** Hypolydian | Semito. | **A** | | | | | | | | | | | | | | [[notes: through the [semi]tone]] |
+| **E** Dorian | Tone | | **A** | | | | | | | | | | | | | [[notes: through the [tone]?]] |
+| **F** Phrygian | Tone | | | **A** | | | | | | | | | | | | [[notes: through the [tone]?]] |
+| **G** Lydian | Semitone | | | | **A** | | | | | | | | | | | [[notes: through the [semi]tone]] |
+| **H** Mixolydian | Tone | | | | | **A** | | | | | | | | | | |
+
+->**A** b c d e f g h i k l m n o p<-
+
+¶ Let **a b c d** up to **p** be a diatonic *pentadecachordum* [[notes: a fifteen-string scale spanning two octaves]]. Let **r p** be the lowest diatonic fifteen-string scale in the Hypodorian [mode]: **a b c d e f g h i k l m n o p**. To establish this as the basis and foundation for the others, I extend the *proslambanomenos* [[notes: the "acquired" or lowest note of the scale]] of the fifteen-string scale **s** by one tone into the higher register; let this further note be the *proslambanomenos* **r**, to which I join the other voices in their proper order through the fourth, fifth, and sixth [rules] of this book in the diatonic genus of modulation. This will result in a fifteen-string scale **s** which, by definition, is in the Hypophrygian mode. Similarly, I extend the *proslambanomenos* of the fifteen-string scale **t** by a further semitone, so that the *proslambanomenos* of scale **t** is pitched [higher than] scale **s**; I fit the tetrachords to this via the fourth, fifth, and sixth rules as before. By definition, **t** will be a fifteen-string scale of the Hypolydian mode. I then extend the *proslambanomenos* **v** by one tone further than the Hypolydian; I fit the other voices following their order in the diatonic genus. The harmony of the fifteen-string scale **v** will be, by definition, Dorian. And if I extend it further by one tone to **x**, the scale **x** will be the Phrygian song. If extended by a minor semitone to **y**, its harmony will be Lydian. But if extended further by one tone to **z**, the harmony becomes Mixolydian [[notes: the text spells this "Myrolydius"]]. Thus, through these definitions, the proposition will be made clear.
+
+[[margin: 24]] ¶ **Whatever the relationship of the first voice to the first voice may be between different modes in any genus, the same will be the relationship of the second to the second, the third to the third, and of any part to the whole.**
+
+->**B** b c d e f g h i k l m n o p<-
+
+| | | | | | | | | | | | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **B** Hypodorian | | | | | | | | | | | | | | | |
+| **C** Hypophrygian | | | | | | | | | | | | | | | |
+
+->q r s t v x **A** b c d e f g h i<-
+
+¶ Let **a/b/c/d** up to **p** be the Hypodorian fifteen-string scale in some genus, such as the diatonic; and let **q/r/s/t** following it be the Hypophrygian fifteen-string scale. Therefore, the *proslambanomenos* **q** of the Hypophrygian will be one tone higher than the *proslambanomenos* **a** of the Hypodorian mode. I say, therefore, that the individual notes of the Hypophrygian—such as the *hypatae* to the *hypatae*, the *parhypatae* to the *parhypatae*, the *lichanas* to the *lichanis* [[notes: these are the names of specific strings in the Greek tetrachord]], and so on—similarly differ by a tone or the proportion of a tone. For since the fifteen-string scale **a-p** and the fifteen-string scale **q-g** are both diatonically extended from the *proslambanomenos* to the *nete hyperboleon* [[notes: the highest note of the entire system]]: therefore, whatever proportion **a** has to **b**, **q** has to **r** (by the fourth rule of this book). Thus, by the third rule of the second book of Arithmetic [[notes: likely referring to Boethius's *De Arithmetica*]], they are interchangeable: as **a** is to **q**, so **b** is to **r**. But **a** to **q** has been shown to be a tone; therefore **b** to **r** is also a tone. The same can be shown for the following notes.
+
+[[margin: 25]] ¶ **The entire diatonic order of the Hypophrygian mode exceeds the entire Hypodorian by the height of one tone; and the entire Hypolydian exceeds the same by three semitones [[notes: a minor third]]. Likewise, each note of the Dorian exceeds each of the Hypodorian by the consonance of a fourth (*diatessaron*); the Phrygian by the consonance of a fifth (*diapente*); the Lydian by a fifth and a semitone; and the Mixolydian by a fifth and a tone.**
+
+->**A** b c d e f g h i k l m n o p<-
+
+| | | | | | | | | | | | | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **B** Hypodorian | | | | | | | | | | | | | | | | | [[notes: through 7 diatonic [steps]?]] |
+| **C** Hypophrygian | Tone | | | | | | | | | | | | | | | | [[notes: through the tone]] |
+| **D** Hypolydian | Semito. | **A** | | | | | | | | | | | | | | [[notes: through the [semi]tone]] |
+| **E** Dorian | Tone | | **A** | | | | | | | | | | | | | [[notes: through the [tone]?]] |
+| **F** Phrygian | Tone | | | **A** | | | | | | | | | | | | [[notes: through the [tone]?]] |
+| **G** Lydian | Semitone | | | | **A** | | | | | | | | | | | [[notes: through the [semi]tone]] |
+| **H** Myrolydius | Tone | | | | | **A** | | | | | | | | | | |
+
+->**A** b c d e f g h i k l m n o p<-
+
+¶ Since the *proslambanomenos* of the Hypophrygian exceeds the *proslambanomenos* of the Hypodorian by one tone in height, therefore, by the preceding rule, the entire Hypophrygian order exceeds the entire Hypodorian order by the height of a tone. And because the *proslambanomenos* of the Hypolydian exceeds the Hypophrygian by a minor semitone, it therefore exceeds the Hypodorian *proslambanomenos* by three semitones. Thus, by the preceding rule, the entire Hypolydian order is sharper than the Hypodorian by three semitones. But since the Dorian **v** surpasses the Hypolydian by one tone, the Dorian is sharper than the Hypodorian by two tones and a semitone. Therefore, by the sixth rule of the third book, it is sharper by the consonance...
+
+[[summary: This page explains the proportional relationship between the seven Greek musical modes, demonstrating how shifting the starting pitch (proslambanomenos) creates the different scales. It establishes that if the starting notes of two modes differ by a specific interval, every corresponding note in those scales will differ by that same interval.]]
+
+[[keywords: Hypodorian, Hypophrygian, Hypolydian, Dorian, Phrygian, Lydian, Mixolydian, pentadecachordum, proslambanomenos, diatessaron, diapente, Greek music theory, Boethius]]

@@ -1,0 +1,107 @@
+[[meta: This page marks a transition from the study of arithmetic progressions (arithmetic medieties) to geometric progressions (geometric medieties). While the previous page concluded proofs on terms with equal differences, this section introduces the properties of "continual proportionals"—sequences where the ratio between successive terms remains constant.]]
+
+# X
+
+¶ Let **a**, **b**, and **c** be numbers established in this [geometric] mediety, and similarly as many, **d**, **e**, and **f**. Let the ratio of **a** to **b** be as **d** to **e**. I say that as **a** is to **b**, so is **d** to **e**, and as **b** is to **c**, so is **e** to **f**. For if **a**, **c** and **d**, **f** were equal, the proposition would be clear. If not, let **d** and **f** be greater and **a** and **c** be smaller. Because the ratio of **d** to **f** (the whole to the whole) is the same as the ratio of **a** to **c** (the part removed to the part removed), then by the fifth [proposition] of the second [book], the ratio of the difference of **d** and **f** to the difference of **a** and **c** (the remainder to the remainder) is as the ratio of **d** to **f** (the whole to the whole). Wherefore, the half of the difference of **d** and **f**, which we call **h**, is to the half of the difference of **a** and **c**, which we call **g**, as **d** is to **f** (by the corollary of the fourteenth [proposition] of the second [book]). Since the ratio of **d** to **f** is the same as **a** to **c**, then by permutation, **d** is to **a** as **f** is to **c**. Since **f** is to **c** as **h** is to **g**, then by the same corollary, **a** is to **b** as **d** is to **a**. Wherefore, by permutation, **d** is to **a** as **a** is to **b**. And it stands as a probable favor that this is as **c** to **b** or vice-versa. This is what was proposed.
+
+[[notes: The author is using Euclidean-style geometric proofs to handle algebraic ratios. A "geometric mediety" is what we today call a geometric progression (e.g., 2, 4, 8). The references to "the second book" likely refer to Jordanus's own *Arithmetica* or a similar standard textbook of the period.]]
+
+[[margin:
+**Diagram:**
+Line 1: g (1) / a (8), b (4), c (2)
+Line 2: h (2) / d (4), e (2), f (1)
+]]
+
+---
+
+[[margin: 20]]
+### ¶ If three numbers are set in a geometric mediety, the ratio of the greatest to the middle will be the same as the ratio of their difference to the difference between the middle and the smallest.
+
+¶ Let **a**, **b**, and **c** be three numbers arranged in a geometric mediety. By definition, the ratio of **a** to **b** is the same as **b** to **c**. Let the difference between **a** and **b** be the number **d**, and the difference between the middle **b** and the smallest **c** be the number **e**. I say that the ratio of **a** to **b** is the same as the ratio of **d** to **e**. For I take **b** and **c** as the whole and the part removed. Since the ratio of the whole **a** to the whole **b** is the same as the ratio of the part removed **b** to the part removed **c**, therefore the ratio of the greatest **a** to the middle **b** is the same as the ratio of the difference **d** (of **a** to **b**) to the difference **e** (of **b** to **c**) by the fifth [proposition] of the second [book] regarding the remainder to the remainder. This is what was proposed.
+
+[[notes: In modern terms: if a/b = b/c, then a/b = (a-b)/(b-c). For example, in the sequence 8, 4, 2, the ratio is 2. The difference between 8 and 4 is 4; the difference between 4 and 2 is 2. The ratio of the differences (4/2) is also 2.]]
+
+[[margin:
+**Diagram:**
+a (8), b (4), c (2)
+Differences: d (4), e (2)
+]]
+
+---
+
+[[margin: 21]]
+### ¶ In this mediety, that which is contained under the extremes is equal to the square of the middle term.
+
+¶ This is immediately recognized from the definition and the twenty-sixth [proposition] of the second [book].
+
+[[notes: "Contained under the extremes" refers to the product of the first and last terms. In a geometric sequence $a, b, c$, $ac = b^2$.]]
+
+---
+
+[[margin: 22]]
+### ¶ In the same mediety, the two extremes joined together are greater than the middle term doubled.
+
+¶ This likewise is immediately known through the twenty-fourth [proposition] of the second [book], taking the middle term as both the second and third.
+
+[[notes: This is an early statement of the Arithmetic-Geometric Mean inequality. For any geometric sequence like 2, 4, 8, the sum of the extremes (2+8=10) is always greater than double the mean (4+4=8).]]
+
+[[margin:
+**Diagram:**
+a (8), b (4), b (4), c (2)
+Shows 8 + 2 > 4 + 4
+]]
+
+---
+
+[[margin: 23]]
+### ¶ In the same mediety, by as much as the ratio of the greatest to the middle is larger, by so much also will the ratio of the [sum of the] greatest and smallest to the double of the middle be larger.
+
+¶ Let **a**, **b**, **c** be continually proportional, and let **d**, **e**, **f** likewise be continually proportional, but in a larger ratio. I say that by as much as the ratio of **a** to **b** is greater than **d** to **e**, so much greater is the ratio of **a** and **c** [added] to the double of **b** than the ratio of **e** and **f** [added] to the double of **e**. [[notes: There is a likely scribal error here; the text compares a/b to d/e, then switches to e/f; the logic requires comparing the results of the two different progressions.]] Let **g** be the difference of **a** to **b**, and **h** the difference of **b** to **c**. Similarly, let **k** be the difference of **d** to **e**, and **l** the difference of **e** to **f**. Let the amount by which **g** exceeds **h** be **m**, and the amount by which **k** exceeds **l** be **n**. Because the ratio of **a** to **b** is greater than **d** to **e**, therefore by the twelfth [proposition] of the second [book], the ratio of **a** to **b** (whole to whole) is greater than **b** to **c** (part removed to part removed). Therefore by the thirteenth of the same, the ratio of **g** to **k** (remainder to remainder) is greater than **a** to **b**... [The proof continues using ratios of differences].
+
+[[margin:
+**Diagram:**
+A complex set of line segments labeled a through p, showing a steep progression (12, 6, 3) compared to a shallower one (4, 2, 1).
+]]
+
+---
+
+[[margin: 24]]
+### ¶ If any number of terms are taken in this mediety, and as many others of the same ratio are added (the larger to the larger), the resulting sums will also be found arranged in this mediety.
+
+¶ For if the ratio of **a** to **b** and **b** to **c** is the same as **d** to **e** and **e** to **f**, then by permutation, the ratio of **a** to **d** is as **b** to **e** and **c** to **f**. Therefore, by the twenty-second [proposition] of this [book], the ratio of **a** to **b** will be as the sum of **a** and **d** to the sum of **b** and **e**, and the sum of **b** and **e** to the sum of **c** and **f**. This is what was proposed.
+
+[[notes: If you add two geometric progressions that have the same ratio, the result is a new geometric progression with that same ratio. For example: (2, 4, 8) + (10, 20, 40) = (12, 24, 48).]]
+
+[[margin:
+**Diagram:**
+a(4)-b(2)-c(1)
+d(12)-e(6)-f(3)
+]]
+
+---
+
+[[margin: 25]]
+### ¶ If a set of numbers is arranged in this mediety and equal numbers are added to each, the ratio between the larger resulting terms will be smaller.
+
+¶ Let **a**, **b**, **c** be arranged in a geometric mediety, and **d** [and **e**] be their differences, and **f** be the number to be added to each. Because the amount by which **f+a** exceeds **f+b** is **d**, and the amount by which **f+b** exceeds **f+c** is **e**, and by the ninth [proposition] of the second [book] the ratio of **f** to **d** is less than **f** to **e**... [The proof concludes that adding a constant to a geometric progression "flattens" the ratio.]
+
+[[margin:
+**Diagram:**
+Arcs connecting 10, 6, 4 and 40, 36, 4, labeled with a, b, f, d, e.
+]]
+
+---
+
+[[margin: 26]]
+### ¶ If any number of terms are given in this mediety, and as many others are taken in the same mediety but not according to the same ratio, and the larger are added to the smaller, the ratio between the larger sums will be the greater.
+
+¶ Let **a**, **b**, **c** be continually proportional, and similarly **d**, **e**, **f**, but in a smaller ratio. I say that the ratio of **a+d** to **b+e** is a larger ratio than **b+e** to **c+f**. [[notes: This proof uses the product of terms (e.g., "ex a in f pducit g" meaning a times f equals g) to demonstrate how mixing two different growth rates affects the middle term of the resulting sequence.]]
+
+[[margin:
+**Diagram:**
+Points g, a, d, h, b, e, k, c, f with numbers 16, 12, 9.
+]]
+
+[[summary: This page explores the fundamental properties of geometric progressions (geometric medieties), proving relationships between their terms, their differences, and their behavior when added together or modified by constants. Key proofs include the product of extremes equaling the square of the mean and the effects of combining two different sequences.]]
+
+[[keywords: geometric mediety, continual proportionals, ratio, extremes, mean, square of the mean, mathematical proof, Jordanus de Nemore, arithmetic]]

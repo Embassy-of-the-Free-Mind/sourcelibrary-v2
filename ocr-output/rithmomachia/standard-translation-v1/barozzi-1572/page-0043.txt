@@ -1,0 +1,37 @@
+[[meta: This page continues the instructional tables for Rithmomachia. Following the Arithmetic and Geometric proportions on the previous pages, it now details the "Musical" (Harmonic) proportions. It also introduces the rules for the "Great Victory," the most complex way to win the game.]]
+
+## Table of all the Musical proportions that may occur in this game.
+
+| | | |
+|:---|:---|:---|
+| <p>2<br>3</p> | **3** | **6** |
+| **3** | **4** | **6** |
+| 8 4 **3** | 4 3 **4** | 8 4 3 **6** |
+| 8 4 **4 1/3** | 4 4 **5** | 8 15 4 **6** |
+| 2 4 **4** | 4 4 **6** | 8 16 4 **6** |
+| 8 5 **5** | 8 7 **7** | 8 28 4 **6** |
+| 16 12 **5** | 16 9 **8** | 16 20 8 **6** |
+| 12 9 6 **3/4** | 9 9 **9** | 12 45 9 **3** |
+| 12 8 **7** | 9 9 **8** | 9 12 4 **3** |
+| 9 8 **8** | 12 12 **12** | 25 42 9 **3** |
+| 25 15 **8** | 8 15 **15** | 9 120 2 **4** |
+| 9 6 **9** | 8 15 **15** | 9 8 2 **4** |
+| 9 6 **9** | 15 15 **16** | 15 45 8 **4** |
+| 15 8 **9** | 20 12 **15** | 36 72 12 **4** |
+| 30 12 **12** | 12 12 **15** | 15 20 9 **2** |
+| 15 12 **15** | 42 25 **20** | 42 30 25 **2** |
+| 18 25 **25** | 15 9 **45** | 15 225 9 **6** |
+| 15 45 **30** | 72 16 **36** | 72 45 16 **5** |
+| 25 36 **72** | 25 81 **90** | 16 120 12 **6** |
+| 16 32 **9** | [[unclear: 21 15 9]] | 25 72 15 **6** |
+| 25 64 **9** | [[unclear: 18 14 9]] | 225 18 27 **6** |
+| 144 32 **9** | | |
+
+[[notes: A "Musical" or Harmonic proportion is the most sophisticated of the three types used in the game. It is a set of three numbers where the ratio between the highest and lowest numbers is the same as the ratio between their differences from the middle number. For example, in the set 3, 4, 6: the difference between 6 and 4 is 2, and the difference between 4 and 3 is 1. The ratio 2:1 is the same as the ratio of the outer numbers, 6:3. These proportions were thought to govern the laws of musical harmony and the cosmos.]]
+
+The Greater Victory [[notes: Often referred to by its Latin name, *Victoria Magna*]] is nothing other than placing 4 pieces in the opponent’s territory, the numbers of which have among them two of the three aforementioned proportions: either the Arithmetic and the Geometric together; or the Arithmetic and the Musical; or the Geometric and the Musical; and thus this other victory can also be achieved in three ways. But which numbers in this game can achieve this victory in all three ways, the three following tables demonstrate.
+
+[[vocab: Table, Musical proportions, victory, Arithmetic, Geometric, game]]
+
+[[summary: This page lists the Musical (Harmonic) proportions used in Rithmomachia and introduces the "Greater Victory," which requires a player to arrange four pieces to form two different types of mathematical progressions simultaneously.]]
+[[keywords: Musical proportion, Harmonic proportion, Victoria Magna, Greater Victory, mathematical games, Renaissance education, Rithmomachia]]

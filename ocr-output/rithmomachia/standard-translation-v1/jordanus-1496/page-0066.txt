@@ -1,0 +1,95 @@
+[[meta: This page continues the mathematical exploration of how different types of ratios combine. Having previously looked at multiples and superparticulars, the author now focuses on "superpartient" ratios—those where the larger number contains the smaller plus several parts of it (e.g., 5:3, which is 1 and 2/3). The text concludes with a beautiful description of the properties of the natural number series and the multiplication table.]]
+
+<margin>
+10 —————— 3
+25 —————— 3
+40 —————— 3
+Composite.
+</margin>
+...of the fifth, the ratio composed of **a** to **b** and **b** to **e** is that which is between the product of **d** into **a** to the product of **e** into **b**. But **e** into **b** makes **b**, and **d** into **a** makes **c**, containing **b** several times and one part of it. For **c** was posited as a multiple greater than unity to **b**. Therefore, the ratio composed of the given superpartient and the multiple **d** to **e** is a multiple-superparticular [[notes: A "multiple-superparticular" ratio is a whole number plus a unit fraction, like 2 1/2 or 3 1/4]]; which is what was intended. And in this way, you may find any other.
+
+---
+
+<margin>33</margin>
+### ¶ To find any number of superpartients which, with a given multiple, produce multiple-superpartients.
+
+<margin>
+b ———— 5   c ———— 4
+      a ———— 2
+e ———— 10 d ———— 14
+f ———— 7
+g 1 7 ———— 10
+3 4 ———— 10
+Composite.
+</margin>
+¶ Let **a** denote the multiple. I take two numbers **c** and **d**, one of which does not divide the other [[notes: i.e., they are not multiples of each other]]. Let **b** be the larger and prime to **a** [[notes: "Prime to a" means they share no common factors other than 1]]. By the last [proposition] of the third [book], I seek a multiple to **a** which adds the number **c** over a multiple of **b**. Let this multiple to **a** be the number **d**, which **a** measures according to **f**, and let the multiple to **b** be **e**. I say that the superpartient whose naming number of parts is **e** (the multiple of **b**) and whose number of parts is **f**, is one of the superpartients being sought. For **a** multiplied into those **f** parts produces those parts, the number of which is **d**; therefore they produce a [whole] number, but there remain parts according to the number **c** which do not measure **b**. Therefore **a** and the superpartient previously named by **e**, which is **g**, constitute a multiple-superpartient ratio. And in this manner, seek as many as you wish.
+
+---
+
+<margin>34</margin>
+### ¶ Having proposed a superpartient, to examine the multiples which, with the same, constitute multiple-superpartients.
+
+<margin>
+f ———— 10  50 ———— 3
+e ———— 7   35 ———— 3
+d ———— 4   20 ———— 3
+      Composite.
+a 5 ———— 3
+b ———— 3
+c ———— 2
+</margin>
+¶ Let **a** be the given superpartient, and **b** the naming number of the parts, and **c** the number of the parts [[notes: For example, if the ratio is 5:3, then b=3 and c=2, because 5 contains 3 once, with 2 parts (thirds) left over]]. Let **d** be one greater than **b**. Let **c** be multiplied into **d**, and there will result a multiple of **b** and, in addition, that many parts. Wherefore the multiple named by **d**, with the assigned superpartient **a**, will constitute a multiple-superpartient. And so it will happen if any multiple to **b** greater than one is taken, such as **e** and **f**. Nor have I cared to pursue these propositions which propose discovery more accurately; for where a more exacting pursuit had been made, it would have brought weariness even to the readers.
+
+---
+
+<margin>35</margin>
+### ¶ A superparticular and a multiple-superparticular, with the same multiple, produce similar ratios.
+
+<margin>
+c 6 ———— 4   12 ———— 4
+b 3 ———— 2    6 ———— 2
+a 2 ———— 1   Composite.
+</margin>
+¶ Let **a** be a multiple ratio, **b** a superparticular ratio, and **c** a multiple-superparticular ratio. I say thus: the ratios composed of **b** and **a**, and of **c** and **a**, are similar. For since a superparticular is named from one and a part, and a multiple-superparticular is named from a number and that same part: therefore the number of the multiple multiplied into one and into a number always makes a [whole] number. Therefore, by adding on both sides what results from the same number of the multiple into the part which remains: if it makes a number with one, it also makes the same with the other; and if with one a part or parts remain, it is likewise with the other. Wherefore similar ratios will result. Note this, however: if the quantity of the denomination grows in the other ratio—which happens most often in superpartients—the genus of the ratio will not be changed thereby.
+
+---
+
+<margin>36</margin>
+### ¶ Whatever ratio a superpartient constitutes with a multiple, a multiple-superpartient also effects the same with that same multiple.
+
+<margin>
+16 ———— 3  c 8 ———— 3
+10 ———— 3  b 5 ———— 3
+Composite. a 2 ———— 1
+</margin>
+¶ Let **a** be a multiple; **b** any superpartient; and **c** a multiple-superpartient. I say that **b** and **a** together, and likewise **c** and **a** together, constitute a similar ratio. The demonstration of this is as the preceding.
+
+---
+
+<margin>37</margin>
+### ¶ If numbers are arranged continuously from unity: and each is compared to the first ones descending: all will be superparticular ratios—the further away, the smaller they are. To unity, however, all are multiples—the closer, the smaller they are.
+
+<margin>
+k ———— 10
+h ———— 9
+g ———— 8
+f ———— 7
+e ———— 6
+d ———— 5
+c ———— 4
+b ———— 3
+a ———— 2
+I
+</margin>
+¶ Let **a, b, c, d, e, f, g, h, k** be numbers taken continuously from unity [[notes: The sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]. I say first that **k** to **h** is a superparticular ratio [[notes: 10:9]]. And **h** to **g** [[notes: 9:8]]. And **g** to **f** [[notes: 8:7]]. And so on in succession down to unity. And the ratio of **k** to **h** is smaller than **h** to **g**, and the others lower down. And **h** to **g** is smaller than the others lower down [[notes: 10:9 is a smaller ratio than 9:8, which is smaller than 3:2]]. For since unity is a part of any number, and each of the higher numbers adds that same unity (while excluding it) over the first of the lower numbers: therefore, by definition, **k** to **h** and **h** to **g** and so on is a superparticular ratio. And because by conception that part is smaller which has a larger denomination, and unity similarly by conception is a part of any number named by it: therefore those ratios further from unity—which are named by a smaller part—are smaller. And as they are closer to unity, they are named by a larger part; wherefore they will then be larger. And if the whole series of numbers were ordered, all the species of superparticulars would be held, though not taken according to number. For that ratio which is of 3 to 2 is [the same as] 6 to 4 and 12 to 8; however, the last two would not be found in the order of proximate numbers. Secondly, I say all those taken continuously to unity are multiples, the closer to unity, the smaller they are. For **a**, the first number after it, contains it twice [[notes: 2:1]], and **b** thrice [[notes: 3:1]], and **c** four times [[notes: 4:1]]. And so following through all species of multiples. But the multiple is also named continuously from a larger number [as it gets further away], and from a smaller number as it is closer to unity; for none is smaller than two. Therefore, that which was to be demonstrated is known.
+
+---
+
+<margin>38</margin>
+### ¶ If from a common angle the natural series of numbers is extended in length and breadth: and they being multiplied by each other: and those which result are placed at their angular meeting: if a comparison of each row to the first is made, a continuous order of multiples will proceed; if to the first [neighbors] except for the first [of all], an order of superparticulars. And those which are placed around the diameter will all be squares. Those which are truly proximate to these on either side are "longer in the other part" [[notes: Oblong numbers]].
+
+[[gloss: proportio: ratio; multiplex: multiple; suppartiens: superpartient; supparticularis: superparticular; numerus: number; unitas: unity/one; series naturalis: the natural number series (1, 2, 3...); quadrati: squares; altera parte longiores: oblong numbers (n × n+1)]]
+
+[[summary: This page details how complex ratios like superpartients and multiple-superpartients are formed through multiplication. It concludes by describing the mathematical properties of a standard multiplication table, noting that diagonals form squares and adjacent cells form oblong numbers.]]
+
+[[keywords: Jordanus de Nemore, ratios, superpartient, superparticular, natural number series, multiplication table, square numbers, oblong numbers]]

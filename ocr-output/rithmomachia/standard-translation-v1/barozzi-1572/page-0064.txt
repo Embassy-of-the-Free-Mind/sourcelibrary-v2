@@ -1,0 +1,13 @@
+[[meta: This leaf continues the sequence of blank protective flyleaves, matching the physical condition and purpose of the preceding page.]]
+
+->[This page is blank.]<-
+
+[[notes: The "ghosting" or bleed-through visible on this surface is a common occurrence in aged manuscripts. It happens when the ink from the reverse side of the page (the verso) or the adjacent leaf becomes faintly visible due to the paper's porosity or the acidic nature of the ink used by the scribe.]]
+
+[[notes: The visible brown spots are known as "foxing." This term refers to the mottled discoloration that develops on old paper, typically caused by a combination of fungal growth and the oxidation of iron or other minerals present in the paper pulp during its original manufacture.]]
+
+[[notes: A modern "Digitized by Google" watermark is present in the lower corner, marking the manuscript's journey from a physical library shelf to a global digital collection.]]
+
+[[summary: This page is a blank flyleaf that contains no written text but serves as a physical record of the manuscript’s history, showing natural aging through foxing and ink bleed-through.]]
+
+[[keywords: blank page, flyleaf, foxing, ghosting, paper degradation, digital preservation]]

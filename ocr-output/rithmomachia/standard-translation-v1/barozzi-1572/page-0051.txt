@@ -1,0 +1,31 @@
+[[meta: This page completes the mathematical ratios for the fourth example (begun on the previous page) and introduces the fifth example. It then transitions from pure mathematical theory to the practical rules of the game—likely Rithmomachia, also known as the Philosophers' Game—explaining how to achieve different types of "victories" using the pieces on the board.]]
+
+...difference dc [6], and the difference ad [8] to the difference dc [6], and the difference ab [3] to the difference bc [3], and the difference bd [5] to the difference cb [3].
+The **Disdiapasson** [[notes: A Double Octave, a 4:1 ratio.]], the [number] A [12] to the differences ab [3] and bd [5] combined [8? No, likely referring to the individual differences that create the ratio], and the C [6] to the difference cd [2], and the difference ac [6] to the difference bc [3].
+The **Tone** [[notes: A whole step in music, a 9:8 ratio.]] the [numbers] B and C. [[notes: This refers to the specific values of 9 and 8 mentioned in the preceding example.]]
+
+### Fifth Example.
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 12. | 15. | 16. | 20. |
+
+The **Diapente** [[notes: A Perfect Fifth, 3:2 ratio.]], the [number] d [12] compared to the difference ad [20-12=8]. [[notes: 12 to 8 simplifies to 3:2.]]
+The **Diatessaron** [[notes: A Perfect Fourth, 4:3 ratio.]], the [numbers] ac [20:15] and bd [16:12], and the difference ab [4] to the difference cd [3], and the difference bd [4] to the difference cd [3].
+The **Diapasson** [[notes: An Octave, 2:1 ratio.]], the [number] b [16] to the difference ad [8], and the difference da [8] to the differences ab [4] and bd [4].
+The **Diapasson** together with the **Diapente** [[notes: A Perfect Twelfth, 3:1 ratio.]], the [number] d [12] to the differences db [4] and ba [4], and the c [15] to the difference ca [5].
+The **Disdiapasson**, the [number] A [20] to the difference ac [5], and the d [12] to the difference dc [3], and the b [16] to the differences db [4] and ba [4], and the difference db [4] to the difference cb [1], and the difference ba [4] to the difference cb [1].
+
+Now nothing remains but to write down some advice, or rather general rules, regarding the three aforementioned "victories," and then bring this present treatise to a close.
+
+The first rule is this: one must first achieve the **Great Victory**, then the **Greater**, and finally the **Greatest**; for one cannot achieve the Greatest unless the Greater has first been made, and similarly, one cannot achieve the Greater if the Great has not first been made. [[notes: These "victories" refer to specific mathematical arrangements of pieces on the game board—Arithmetic, Geometric, and Harmonic progressions.]]
+
+The second rule is that one must achieve these victories while playing and moving the pieces according to their own proper paths. [[notes: Each shape in Rithmomachia—circles, squares, and triangles—moves a specific number of spaces.]]
+
+The third rule is that one should try as much as possible to achieve these victories using the opponent’s pieces that are currently in play; that is, arrange your own pieces near those of your opponent so that together they form the victories. You should also compel your opponent through play to move his pieces into places where they form victories, either on their own or together with yours. Where the opponent's pieces and your own pieces in play are not sufficient, you may also make use of those pieces you have taken prisoner.
+
+The fourth rule is that one must achieve these victories in the squares...
+
+[[summary: This page concludes the mathematical examples of musical ratios and transitions into the rules for "Victories" in a mathematical board game. It outlines a hierarchy of winning conditions and strategic advice on using an opponent's pieces or captured "prisoners" to complete mathematical progressions.]]
+
+[[keywords: Diapente, Diatessaron, Diapasson, Rithmomachia, Victories, Mathematical Progressions, Game Strategy, Musical Ratios]]

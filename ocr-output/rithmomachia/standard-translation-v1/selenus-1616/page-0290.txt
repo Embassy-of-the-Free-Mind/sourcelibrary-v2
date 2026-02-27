@@ -1,0 +1,23 @@
+[[meta: This page continues the introduction to the Third Book, specifically focusing on the Knight’s play. The text follows from the previous page's discussion on the "eighth manner" of opening, which involves an early Knight sortie.]].
+
+->The Third Book / 1st Chap:<-
+
+and / in those places / where it shall be necessary / to bring him [[notes: The "him" refers to the King’s Knight, which the author treats as a character or piece of specific utility.]] / back onto the right path / in some measure / we shall apply diligence.
+
+But so that we / also / in this treatise / do not proceed / without Order: we have observed / and set down / how the Black [player] / when he / against the White Rider’s [[notes: "Reuter" or Rider is the early modern term for the Knight.]] attack / is to set himself / at 19. [[notes: Early chess notation often numbered the 64 squares from 1 to 64. In this system, 19 corresponds to the f3 square.]] for defense.
+
+Accordingly / (according to Damiani’s opinion) [[notes: Pedro Damiano (1480–1544) was a Portuguese chess master whose 1512 book was the primary authority for players of this era.]] / the Black [player] does / in the second move / either a counter-attack / upon the White King’s Soldier [[notes: "Soldaten" or Soldiers refers to Pawns.]] / with his King’s Rider / at forty-three: [[notes: Square 43 corresponds to f6. This describes the opening now known as the Petrov Defense or the Russian Game (1. e4 e5 2. Nf3 Nf6).]] of which / then this Chapter treats: or else / he protects his / attacked Soldier: of which the following Chapters / until the end / of this Book / give report.
+
+The First Manner / is now performed / in the following way:
+
+[[margin: 1. ,,]] After the White / and the Black / have set their King’s Soldiers / into their fourth fields: [[notes: This refers to the moves 1. e4 e5.]] the White / has moved / to the Black King’s Soldier / the King’s Rider / to nineteen: so the Black / sets upon the White King’s Soldier / his King’s Rider / at forty-three: the White / takes / the 
+[[margin: 2. ,,]] Black King’s Soldier / with his King’s Rider: * the Black / [takes] the White King’s Soldier / with the King’s Rider: the White / moves / 
+[[margin: 3. ,,]] upon the same / the Queen / to twelve: [[notes: Square 12 is e2. The move is 3. Qe2.]] * the Black / (so that He / does not lose him) [moves] the same [Rider] / to forty-three: the White / offers / with the King’s Rider / from the Queen / **Discovered-Check** [[notes: "Ab-Schach" or Discovered Check occurs when moving one piece reveals an attack from another piece—here, the Queen.]] / sets him / upon the Black Queen / at forty-six and brings the same / (whether she remains / in her field / or places herself / before the King) in this manner into his power. [[notes: If Black retreats the Knight to f6, White moves the Knight to c6, revealing a check from the Queen on e2 and simultaneously attacking the Black Queen on d8.]]
+
+[[margin: 4. ,,]] But if the Black / does not move the Rider / to 43. (n. 3.) but rather the Queen / (in order not to lose her) / to the White King’s Rider / at fifty-two [[notes: Square 52 is d7.]]: so the White takes / (in order to protect the same) with the Queen / the Black King’s Rider: the Black / moves once more upon the same / the King’s Soldier / at forty-five [[notes: f7 to f5.]]: the White / may not / because of his Queen / move him away / but rather moves / the Soldier / to twenty-nine: the Black / [moves] the King’s Shooter’s [[notes: "Schützen Soldaten" refers to the Bishop’s Pawn.]] Soldier / to the White King’s Rider / at forty-three: the White / [moves] his King’s Shooter’s / Soldier / to twenty-seven: the Black / takes the White King’s Rider / with the King’s Soldier: the White / [takes] the same / with his King’s Solda-
+
+[[meta: catchword: ten: * der]]
+
+[[summary: This page details a tactical sequence in the Petrov Defense (Russian Game), illustrating how White can trap the Black Queen using a discovered check if Black plays too passively. It utilizes the 1-64 square numbering system typical of the 17th century.]]
+
+[[keywords: Damiano, Knight, Queen, Discovered Check, Pawn, Chess History, Tactics, Petrov Defense]]

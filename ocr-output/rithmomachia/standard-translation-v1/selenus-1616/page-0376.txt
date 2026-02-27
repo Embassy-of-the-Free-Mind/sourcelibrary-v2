@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical analysis from the previous section, focusing on a specific sequence of captures and exchanges in Courier Chess or a variant thereof. The notation continues to use numerical identifiers for squares, and the text evaluates the resulting material advantage for the White player.]]
+
+### The Third Book / 8. cap: [[note: Chapter 8]]
+
+**K. Bishop’s Soldier** [[note: The Pawn in front of the King’s Bishop]] / and moves him / toward his **Rook**: The Black player / [moves] the **K. Soldier** [[note: King’s Pawn]] / against the **W. K. Bishop** [[note: White King’s Bishop]] / upon **thirty-seven** [[note: Square e5]]: The White player / takes him / with the same [[note: the Bishop]] / and protects once / again / the **K. Knight**: The Black player / takes / the **W. K. Bishop** / with the **K. Bishop’s Soldier**: The White player / [takes] the **B. K. Rook** [[note: Black King’s Rook]] / with the **K. Knight**: The Black player / [takes] the same / with the **Queen**: The White player / [takes] the **B. K. Bishop’s Soldier** / with the **K. Soldier**: moves following / the **K. Rook** / to **four** [[note: Square d1]]: and will be able / (since He / has two Soldiers / and a Rook / in place of a Knight / as an advantage) / so that / the Black player / does not escape him / with the **King**: to further arrange [his game] well / for victory.
+
+[[margin: 10.]] But if the Black player / does not / [move] the **Queen** / to **50.** [[note: Square f7]] (no. 9.) / nor the **K. Knight** / (in order / to relieve / the **K. Bishop’s Soldier**) / to **forty-one** [[note: Square a6]] / but rather / moves the **K. Rook’s Soldier** / against the **W. K. Knight** / onto this **41st field**: then the White player / takes / with the **K. Bishop** / the **B. K. Bishop’s Soldier** / and gives check: The Black player / moves the **King** / to **fifty-three** [[note: Square e7]]: The White player / takes / with the **K. Bishop** / the **B. K. Knight**: The Black player / can take the same / or the **W. K. Knight**: The White player / moves following / the same piece / which / among the aforementioned / the Black player / left him / out of danger: and has his game / since He / is superior to the opponent / by a **major piece** [[note: *Haupt-Stein*; literally "Head-piece," referring here to a significant piece like a Bishop or Knight]]: to be further arranged appropriately.
+
+[[margin: 11.]] From this / (which has been set / from no. 3. to here) / it now appears / that the Black player / [should] move the **K. Bishop** / with more profit / to **44.** [[note: Square d6]] than to **33.** [[note: Square a5]] (no. 2.): but since such / has been sufficiently / indicated / we wish / to conclude this **Fourth Variation** / herewith / and proceed further / to the **fifth and last**.
+
+->n. 3. 4.<-  ->n. 7. 8.<-
+
+[[note: The diagrams here illustrate the board states for Courier Chess, a medieval and early modern variant played on a 12x8 board. The pieces include the *Schütze* (Archer/Bishop), *Reuter* (Knight/Rider), and *Rochen* (Rook).]]
+
+[[meta: catchword: Das]]
+
+[[summary: This page details specific move sequences and exchanges where the White player secures a material advantage, either by winning a Rook or a major piece, leading toward a won game. It concludes the "Fourth Variation" of the tactical study and prepares the reader for the final variation.]]
+
+[[keywords: Chess tactics, Courier Chess, material advantage, piece exchanges, 17th-century chess, Rochen, Reuter, Schütze]]

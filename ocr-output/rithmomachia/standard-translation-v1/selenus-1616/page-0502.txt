@@ -1,0 +1,23 @@
+[[meta: This page continues the detailed setup instructions for Rythmomachia, moving from the general orientation of the board to the specific placement of the various pieces (rounds, triangles, squares, and pyramids/towers) for both the White and Black sides.]]
+
+# The Third Chapter
+
+->**White**<-
+
+Four White Round Stones: (namely: those with 2, with 4; those with 4, with 16; those with 6, with 36; those with 8, with 64) [[notes: These pairs represent the base number and its square (e.g., 2 and 4, 8 and 64), which is central to the game's mathematical logic.]] place and set these eight triangular and eight square stones in order, as they were determined in the previous second chapter and can be seen from the diagram.
+
+In the same way, one should proceed with the placement of the Black Stones, only that one counts the squares from the top down and toward the right hand. The stones, however, should be placed on the left side, which is the right side for the opponent. [[notes: This describes the mirrored setup common in strategy games, ensuring both players see their pieces oriented correctly from their own perspective.]]
+
+The Towers [[notes: Often called "Pyramids" in other texts, these are the most complex pieces in Rythmomachia, composed of several smaller numbers stacked together.]] should be ordered and placed between the square stones on the squares where the two square stones (on which the same numbers that describe the Tower's foundation are marked) would have to stand.
+
+Upon which squares these stones must be further placed before one begins the game is found from the previous order in the following manner:
+
+[[margin: (n.16)]] First, the eight White square stones, including the White Tower, are divided into two heaps. Then, one pulls the four, as they stand in order next to each other, into the uppermost corner; the remaining four into the lowermost corner of the board. (Thereby, the eight squares in which they were initially placed remain entirely empty between them.) After this, place the Triangle with 9 next to the Square with 15; the Triangle with 81 next to the Square with 153; the Triangle with 6 next to the Square with 45; and the Triangle with 72 next to the Tower with 91. Furthermore, place the Triangle with 25 toward the right side above the Square with 45; the Triangle with 49 also toward the right side below the aforementioned Tower marked 91. Further, place the two remaining Triangular stones, with 20 and 42, toward the right hand between the two just-mentioned Triangles with 25 and 49. Finally, place the eight Round stones, as they stand in their order, toward the right hand against the four Triangular stones marked 25, 20, 42, and 49. Because of this, the last four Round stones—namely 4, 16, 36, and 64—obtain their position between the two triangular stones described with 6 and 72.
+
+The same arrangement is set up (by virtue of the assigned diagram) by the player with the Black Stones.
+
+However, there remain between these Black and those...
+
+[[summary: This page provides meticulous instructions for the initial "battle array" or setup of the Rythmomachia pieces. It explains how to distribute the rounds, triangles, and squares across the board, specifically detailing the coordinate-like relationships between their numerical values.]]
+
+[[keywords: Rythmomachia, Game Setup, Board Games, White Stones, Black Stones, Triangles, Squares, Pyramids, Mathematical Proportions, Arithmetic Game]]

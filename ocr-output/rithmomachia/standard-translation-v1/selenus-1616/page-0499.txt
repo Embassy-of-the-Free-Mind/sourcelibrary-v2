@@ -1,0 +1,30 @@
+[[meta: This page provides the visual and numerical counterpart to the previous diagram. While the previous page focused on one side of the board (the "Odd" side), this page illustrates the starting formation and values for the "Even" side of the Rithmomachia board.]]
+
+### ->Illustration of the Game Pieces and their Values<-
+
+[[image-desc: A perspective engraving of a Rithmomachia (The Philosophers' Game) board and its pieces. The board consists of an 8x12 checkered grid. Centrally located on the board is a rectangular formation of twenty-four geometric pieces arranged in four rows and six columns. The pieces are three-dimensional: the first two columns consist of circular discs, the middle two columns are triangular prisms, and the last two columns are square cubes. A special multi-layered pyramid piece, marked with the number 91, sits in the third row of the square section.]]
+
+[[notes: In the medieval and Renaissance mind, numbers were not just symbols for counting, but the building blocks of the universe. This "Even" side begins with the simplest even numbers (2, 4, 6, 8). All other pieces in this "army" are mathematically derived from these four basic circles through ratios described by the Roman philosopher Boethius.]]
+
+->2. 4. 6. 9. 15. 25.<-
+
+->4. 16. 20. 25. 45. 81.<-
+
+->6. 36. 42. 49. 91. 169.<-
+
+->8. 64. 72. 81. 153. 289.<-
+
+[[notes: The numbers above represent the rows of the board as seen in the engraving. The progression moves from simple circles on the left to complex squares on the right. For example, in the first row, the circle is **2**. Its square is **4**. The triangles **6** and **9** are "Superparticular" ratios derived from 4. The squares **15** and **25** are the sums of those triangles (6+9=15) or other complex proportions.]]
+
+| | **Circular Pieces** | **Circular Pieces** | **Triangular Pieces** | **Triangular Pieces** | **Square Pieces** | **Square Pieces** |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Row 1** | 2. | 4. | 6. | 9. | 15. | 25. |
+| **Row 2** | 4. | 16. | 20. | 25. | 45. | 81. |
+| **Row 3** | 6. | 36. | 42. | 49. | **Pyramid 91.** | 169. |
+| **Row 4** | 8. | 64. | 72. | 81. | 153. | 289. |
+
+[[notes: The **Pyramid 91** is the "King" of this side. It is called a "perfect" pyramid because it is made of layers of smaller squares: $1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2 = 91$. To capture a pyramid, an opponent didn't just need to land on it; they often had to "solve" it by using pieces that summed to its total value or by targeting its base value.]]
+
+[[summary: This page displays the mathematical "army" of the Even player in Rithmomachia, showing how circles, triangles, and squares are arranged on the 8x12 grid. It highlights the Pyramid 91, a complex piece representing the sum of the first six square numbers.]]
+
+[[keywords: Rythmomachia, Philosophers' Game, Pyramid 91, arithmetic progression, Boethian ratios, board game history, geometric pieces]]

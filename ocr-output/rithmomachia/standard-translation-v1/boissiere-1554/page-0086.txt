@@ -1,0 +1,33 @@
+[[meta: This page continues the explanation of the rules for Rythmomachia, also known as the Philosophers' Game. The opening fragment completes a sentence from the previous page regarding how pieces are handled when captured.]]
+
+OF THE PHILOSOPHERS.
+
+...that end so that if it is later captured, it may wear the livery of its victor. [[notes: In this game, "livery" refers to the allegiance of a piece; when the most powerful piece—the Pyramid—is captured, it is often "converted" to the opponent's side rather than being removed from the board.]]
+
+## Of the Pyramides.
+
+Let the two lowest bases of the Pyramids be square, the next two triangular, and the remainder always tapering as it draws upward: however, the very short pyramid will remain truncated, and will not be pointed at all, as is shown here. [[notes: The Pyramid is a composite piece made of several smaller pieces stacked together. The "Even" side's pyramid is called "imperfect" or "truncated" because it lacks the final pieces to reach a single-digit point at the top.]]
+
+->The Pyramid of the<-
+Even. -> <- Odd.
+
+[[notes: The numbers below represent the values of the individual layers of the pieces. In Rythmomachia, these values are based on the squares of integers.]]
+
+| **Even Pyramid** (Total: 190) | **Odd Pyramid** (Total: 91) |
+| :--- | :--- |
+| (Top layer missing) | 1 |
+| (Top layer missing) | 4 |
+| 16 | 9 |
+| 25 | 16 |
+| 36 | 25 |
+| 49 | 36 |
+| 64 | |
+
+190. -> <- 91.
+
+[[notes: The number 190 is the sum of 16, 25, 36, 49, and 64. The number 91 is the sum of 1, 4, 9, 16, 25, and 36. These mathematical relationships were central to the "philosophy" of the game.]]
+
+<sig>F ij</sig>
+
+[[summary: This page describes the construction of the "Pyramid" pieces in Rythmomachia, explaining how they are built from square and triangular bases and why one remains "truncated."]]
+[[keywords: Rythmomachia, Pyramids, mathematical games, Even and Odd, truncated pyramid, Renaissance mathematics, game pieces]]

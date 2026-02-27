@@ -1,0 +1,23 @@
+## The Philosopher's Game.
+
+## The manner of capturing <note>original: "takyng"</note>.
+
+The pieces <note>original: "men"</note> may be taken seven ways: by **Siege** <note>original: "Obsidion"</note>, by **Equality**, by **Addition**, by **Subtraction**, by **Multiplication**, by **Division**, and by **Algebraic Signs** <note>original: "Cossicall Signes"</note>.
+
+### Of capturing <note>original: "takynge"</note> by Siege <note>original: "Obsidion"</note>.
+
+All pieces <note>original: "men"</note> may be taken by **Siege** <note>original: "Obsidion"</note> when, by four pieces, they are blocked <note>original: "letted"</note> from their ordinary move <note>original: "draughte"</note>, as has been taught before.
+
+### Of capturing <note>original: "takynge"</note> by Equality.
+
+By **Equality**, these pieces may capture <note>original: "take"</note> or be captured, as has been said before: 9, 16, 25, 36, 49, 64, 81. For example, if after you have played your 9, you see your adversary's 9 stands in
+
+<meta>catchword: your</meta>
+
+<summary>
+This page introduces the various methods of capturing pieces in the mathematical board game Rithmomachia (The Philosopher's Game). It identifies seven distinct capture mechanics: Siege (Obsidion), Equality, Addition, Subtraction, Multiplication, Division, and Algebraic Signs (Cossicall). The text elaborates on the first two: "Siege" occurs when a piece is surrounded on four sides and cannot move, while "Equality" occurs when a piece moves to a position where it matches the numerical value of an opponent's piece.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, game rules, capture mechanics, Obsidion, Siege, Equality, mathematical game, 16th-century games, board game history, Cossic signs, algebraic signs.
+</keywords>

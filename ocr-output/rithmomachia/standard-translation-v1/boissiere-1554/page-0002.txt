@@ -1,0 +1,21 @@
+[[meta: The previous page was a blank flyleaf with signs of aging. This page begins a scholarly or bibliographical list of works, specifically focusing on mathematical games and technical instruments from the 16th and 17th centuries.]]
+
+[[notes: This page serves as a bibliography, likely compiled by a scholar or collector. It lists several works on "Rythmomachia," a complex medieval board game based on Pythagorean number theory, often called "The Philosophers' Game."]]
+
+Georgius Draudius [[notes: Georg Draud (1573–1635) was a renowned German bibliographer known for his massive catalogs of books.]] calls this author Claudius Buxerius [[notes: The Latinized name for Claude de Boissière, a 16th-century French mathematician and maker of instruments.]] in the *Bibliotheca classica* on page 1028; it was published in Latin in Paris in octavo [[notes: "In 8" refers to *octavo*, a book size where the printed sheet is folded three times to create eight leaves.]].
+
+There exist two anonymous descriptions of *rythmomachia* or *arithmomachia* [[notes: Alternative names for the "Battle of Numbers" game]]. Erfurt, 1577, in quarto [[notes: "In 4" refers to *quarto*, a book size slightly larger than octavo, where the sheet is folded twice into four leaves.]].
+
+William Fulke's [[notes: "Gui. Falconis" refers to William Fulke (1538–1589), an English theologian and academic.]] *Metromachia*, or the geometric game. London, in quarto.
+
+Hermannus Contractus’s [[notes: Hermann of Reichenau (1013–1054), a Benedictine monk and polymath known as "Hermann the Lame."]] *On the Conflict of Rithmomachia*, one book.
+
+Claude de Boissière also wrote on the property and use of quadrants [[notes: An instrument used to measure angles up to 90°, vital for astronomy and navigation.]], in octavo.
+
+Also, *The Art of Arithmetic*, in octavo.
+
+Also, *The Explanation of the World Map of Gemma Frisius* [[notes: Gemma Frisius (1508–1555) was a Dutch cartographer and mathematician famous for his work on triangulation and globes.]], in octavo.
+
+[[summary: This page provides a bibliographical list of technical and mathematical treatises, specifically focusing on the game of Rythmomachia and the works of Claude de Boissière. It reflects the Renaissance interest in combining mathematical theory with recreational play and practical instrumentation.]]
+
+[[keywords: bibliography, Rythmomachia, Claude de Boissière, Georgius Draudius, mathematical games, quadrants, Gemma Frisius, history of mathematics]]

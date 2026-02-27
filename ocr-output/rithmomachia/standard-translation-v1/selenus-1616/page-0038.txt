@@ -1,0 +1,20 @@
+[[meta: Continuity from page 7: The previous page discussed the Roman jurist Scaevola and his habit of using chess as a restorative leisure activity. This page continues that thought before moving into the ethical rules of the game and its intellectual benefits.]]
+
+-> ### The First Book. Chapter 1. <-
+
+> ...showed [his skill]: and took in this [game] / when he / was quite exhausted from legal and court matters / as it were / a retreat for repose.
+
+That one (3.) should stake no money / nor other things / for the sake of profit / so that / this laudable game / might not be equated / or brought to ruin / by others. Yet the Jurists [[notes: Legal scholars and experts in Roman and Canon law.]] grant / that one may well stake / one gold guilder [[notes: The *Goldgulden* was a standard gold coin used throughout the Holy Roman Empire; here it represents a modest, acceptable sum for a gentleman's wager.]] / but nothing beyond that / (as may be seen from *Guimier*, in that place, and *Claro*, §. Ludus, n. 3.): *arg : l. alearum C. de Aleator:* [[notes: A reference to the Title *De Aleatoribus* (On Gamblers) in the Codex Justinianus, the basis of civil law.]] yet *Thom: Actius*, question 11. n. 45. 47. 54. 55. after he / has sufficiently / disputed this point / opines: that regarding the stake / both in this / and in other permitted games / one may well look to / the local customs / and habits of the land / (by which / the Imperial Law / in the said *l. Alearum*, is set aside) / and according to the same / yet with good modesty / behave oneself.
+
+Let this now / be enough reported of the qualities [of the game].
+The manifold benefits / which likewise / spring from this / may be noted as follows: namely:
+
+That in this game / (1.) the intellect is exercised / and to other higher / and weightier business / to proceed wisely therein / is immediately directed: Not / that this exercise of the mind / is the Chess-player's / chief purpose or goal / (as *Steph: Costa*, in the said treatise: *de Ludo*, indeed opines) but / that this / as well as the following / (which indeed / must be taken into account) / are merely the uses and fruits / which the Game of Chess / alongside the delight of the mind / as the chief purpose / brings with it / and which an experienced Chess-player / with special pleasure / can harvest and enjoy.
+
+That also (2) the memory / be served: insofar as it / strengthens the same / and *Jacob: Publicius Florentinus*, in his treatise: *de Arte Memoriæ & Imaginibus*, book 2. at the end / testifies / that the Chess-board / with its squares and images / provides and presents / very excellent signs and figures / for the Art of Memory. [[notes: Jacobus Publicius was an influential 15th-century author on mnemonics; he suggested using the grid of the chessboard as a mental "storage system" for memorizing information.]]
+
+That (3.) for this game / arithmetic, the comparison of boundaries / Geometric triangles / quadrangles / and Dialectic orders / can be used / and put into practice: as indeed / *Jacobus Horstius*, in the 44th Chapter: of the *Levinus Lemnius* [[notes: Levinus Lemnius (1505–1568) was a Dutch physician; Horstius translated his work on the "secrets of nature" into German.]] translated by him / indicates. Whereby we likewise / from *Averroës Cordubense* [[notes: Averroës (1126–1198) was a medieval Andalusian polymath and philosopher famous for his commentaries on Aristotle.]], the most celebrated commentator / on Aristotle / (who lived about...
+
+[[summary: This page discusses the ethics of wagering in chess, citing legal authorities to argue for modest stakes according to local custom. It also outlines the intellectual benefits of the game, including its utility for memory training and its connection to mathematics and logic.]]
+
+[[keywords: Legal ethics, Wagers, Goldgulden, Intellect, Mnemonics, Geometry, Averroës, Jacobus Horstius, Chess benefits]]

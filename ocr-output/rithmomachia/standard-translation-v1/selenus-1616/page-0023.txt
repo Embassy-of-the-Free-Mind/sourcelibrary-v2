@@ -1,0 +1,38 @@
+[[meta: This page shifts from the Italian poetry of the previous section to Latin verse. It serves as a prefatory poem for the book, transitioning from a general moralizing tone about the vices of soldiers to the specific history of chess as a virtuous alternative. It introduces the figure of Palamedes as the mythical inventor and "Selenus" (the author’s pseudonym) as the one who brought the game’s practice to his homeland.]]
+
+Few are those who wish to lead a life of virtue;
+Most prefer to give themselves to delights and forbidden things.
+Youth, above all, knows not by what reason it should be ruled.
+Luxury, Wine, and Venus [[notes: The Roman goddess of love, here representing sexual vice or lust]] rule widely everywhere:
+And few deny their baser instincts [[notes: The Latin "Genium" refers to one's natural inclinations or spirit; to "defraud the genius" meant to practice self-denial.]]; thus the Die [[notes: Gambling/gaming]]
+Strips many bare, for the camps have long been surrendered to vice.
+We play at deeds, and joke with foolish words.
+These things, among others, the wise Palamedes [[notes: A Greek hero of the Trojan War traditionally credited with the invention of counting, currency, and games like dice and board games to keep the army occupied.]] saw,
+And he was struck with wonder while following the Trojan camp,
+As he labored to restrain the unbridled impulses of the soldiers
+By inventing various secrets never seen before.
+These he taught them, so they might pass the time
+In the Market of Mars [[notes: A metaphorical term for the theater of war]], worshipping the images of Mars,
+By showing them the monuments of clever Chess [[notes: "Scacchis" is a Latinized term for the game of chess.]], through which
+They could call forth a likeness of war, so that they might mix
+Serious matters with play, upon a two-colored battle-line,
+Whether they attempt to enter the struggle with foot-soldiers or with horses.
+Nor could he have ended a "joking strife" better:
+Primary glory is owed to **PALAMEDES**, who brought forth learned Chess;
+The next glory is for **SELENO** [[notes: "Selenus" is the pen name of the author, Augustus the Younger, Duke of Brunswick-Lüneburg. The name is a play on the Greek goddess of the moon, Selene, mirroring "Lüneburg" (Luna-burg).]], as he first
+Sharply drew out the practice of this contest for his Country,
+And gave everything its form through various examples.
+Balance this egg, if you can, without the teacher **COLONUS** [[notes: A reference to "Columbus's Egg." The story goes that Christopher Columbus, told his discovery was inevitable, challenged his critics to make an egg stand on its tip. When they failed, he crushed the tip slightly to make it stand, proving that once a feat is shown, it seems easy.]];
+If you cannot, leave it be, you most trifling Envy.
+
+<image-desc>A rectangular decorative woodcut headpiece or divider featuring ornate scrolling acanthus leaves and floral motifs.</image-desc>
+
+## TO THE AUTHOR,
+### D. S. C. [[notes: These are likely the initials of a contributor or friend of the author providing a "laudatory poem."]]
+
+Most pleasant of the grandsons of Tuisto [[notes: Tuisto (or Thuiton) and his son Mannus were the mythical ancestors of the Germanic peoples, according to the Roman historian Tacitus.]],
+Joined to the ancient stock of Mannus;
+Whether you now show the images of battle under arms...
+
+[[summary: This page contains a Latin poem praising the invention of chess by the Greek hero Palamedes as a virtuous alternative to the vices of war and gambling. It further credits "Selenus" (the author) for standardizing the game's practice for his people.]]
+[[keywords: Palamedes, Selenus, Chess history, Virtuous play, Augustus the Younger, Trojan War, Columbus's Egg, Germanic ancestry]]

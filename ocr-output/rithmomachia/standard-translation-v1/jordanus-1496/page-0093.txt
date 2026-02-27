@@ -1,0 +1,52 @@
+[[meta: This page continues the mathematical demonstration of how musical ratios—referred to here as intervals—are divided and compared. Having previously shown how to add intervals (like a Fifth and a Fourth to make an Octave), the author now demonstrates subtraction and the accumulation of "tones" (sesquioctauus ratios).]]
+
+[[margin: 15]] **If** a sesquitertius interval is taken away from a sesquialter interval, that which remains will be a sesquioctauus.
+
+---
+
+| 9 | 8 | 6 | A to C is sesquialter. B to C is sesquitertius. |
+|---|---|---|---|
+| a | b | c | A to B is sesquioctauus. |
+
+---
+
+Let **c** be the boundary term to which, as assigned by the preceding rules, **a** is sesquialter [[notes: A 3:2 ratio, the musical Fifth]] and **b** is sesquitertius [[notes: A 4:3 ratio, the musical Fourth]]. From the sesquialter **a** to **c**, I subtract the sesquitertius interval **b** to **c**; this leaves the interval **a** to **b**, which I claim is a sesquioctauus [[notes: A 9:8 ratio, the "whole tone" in Pythagorean tuning]]. For since **a** is the sesquialter of **c**, **a** contains **c** once plus its half part. Therefore, by the eighth proposition of this book, two of **a** are equal to three of **c**, and four of **a** to six of **c**, and eight of **a** to twelve of **c**. Again, because **b** is the sesquitertius of **c**, **b** contains **c** plus its third part. Thus, by the same eighth proposition, three of **b** are equal to four of **c**, and six of **b** to eight of **c**, and nine of **b** to twelve of **c**. But since eight of **a** were equal to twelve of **c**, it follows that eight of **a** are equal to nine of **b**. Therefore, by the tenth proposition, one **a** contains **b** plus its eighth part [[notes: 9/8 is exactly 1 and 1/8]]. Thus **a** is sesquioctauus to **b**, as was proposed.
+
+[[margin: 16]] **A fourth** and a twelfth of an interval restore one third of it.
+**For** four fourth-parts of an interval complete the whole interval, and twelve twelfth-parts of the same interval likewise complete the whole. Therefore, four fourths and twelve twelfths are equal to one another. Thus, two fourths are equal to six twelfths, and one fourth is equal to three twelfths; for where the wholes are equal, the halves are also equal. Now, four twelfths are one third of twelve twelfths; therefore they are also one third of the whole, since those twelve twelfths are known to be the same as and equal to the whole. Therefore, one fourth of the whole (which was shown to be equal to three twelfths) with one twelfth added to it, restores a third part of the whole. For one third and one twelfth are equal to four twelfths [[notes: In modern fractions: 1/4 + 1/12 = 3/12 + 1/12 = 4/12, which simplifies to 1/3]]. This was what was to be demonstrated. And although this proof was made specifically for the sake of what follows, you can nevertheless demonstrate in a similar way that any smaller part of any whole interval can be made into the next larger part by adding one part from the number that arises from multiplying the denominations of both parts. For example, a third part of a whole is smaller than a second part (a half); and if you multiply two by three, they make six; therefore one third and one sixth restore one second part [[notes: 1/3 + 1/6 = 1/2]]. Similarly, the fourth and fifth parts are the next largest and smallest; and if you multiply five by four, twenty arises; hence one fifth and one twentieth restore one fourth part [[notes: 1/5 + 1/20 = 1/4]]. This pattern continues in the following instances, as the table below shows.
+
+| | |
+|---|---|
+| A third and a sixth | make one second. |
+| A fifth and a twentieth | make one fourth. |
+| A sixth and a thirtieth | make one fifth. |
+| A seventh and a forty-second | make one sixth. |
+| An eighth and a fifty-sixth | make one seventh. |
+| A ninth and a seventy-second | make one eighth. |
+
+[[margin: 17]] **Two** sesquioctauus proportions are smaller than a sesquitertius interval.
+
+---
+
+| 81 | 72 | 64 | A to C is two sesquioctaui joined. |
+|---|---|---|---|
+| a | b | c | A to D is a sesquitertius interval. |
+
+---
+
+**Continue**, by the sixth proposition of the fourth book of Arithmetics, two sesquioctaui [[notes: 9:8 ratios]] between **a** and **c**, such that **a** is sesquioctauus to **b**, and **b** is sesquioctauus to **c**. And let **a** to **d** be a sesquitertius interval [[notes: 4:3]]. I say that the interval from **a** to **c** is smaller than the interval from **a** to **d**. For since **a** is sesquioctauus to **b**, by the eighth proposition eight of **a** are equal to nine of **b**. But because **b** is also sesquioctauus to **c**, by the same rule eight of **b** are equal to nine of **c**. And since one **b** is equal to one **c** and its eighth part, then nine of **b** are equal to ten of **c** and one-eighth of one **c**. But nine of **b** were shown to be equal to eight of **a**; therefore eight of **a** are equal to ten **c** and one-eighth of a **c**. Now, ten **c** and one-eighth of one contain eight once, plus its fourth part, and its one-sixty-fourth part [[notes: 10.125 divided by 8 equals 1.265625, which is 1 + 1/4 + 1/64]]. Therefore, by the tenth proposition, one **a** contains one **c**, one fourth, and one sixty-fourth. But a fourth and a sixty-fourth, by the preceding rule, are less than one third [[notes: because 1/4 + 1/12 = 1/3, and 1/64 is much smaller than 1/12]]. Therefore, two sesquioctaui are less than one sesquitertius interval. This was what was to be demonstrated.
+
+[[margin: 18]] **Three** sesquioctaui are more than a sesquitertius, but less than a sesquialter interval.
+
+---
+
+| 729 | | | 512 | A to D is three sesquioctaui joined. |
+|---|---|---|---|---|
+| a | b | c | d | |
+
+---
+
+**Let** **a**, **b**, **c**, and **d** be three joined sesquioctaui, so that **a** to **b** is the first sesquioctauus, **b** to **c** the second, and **c** to **d** the third. I say first that **a** to **d** is more than a sesquitertius. For since **a** to **b** and **b** to **c** are two sesquioctaui, then by the eighth proposition eight of **a** are equal to ten **c** and one-eighth of one. But since **c** is again placed as sesquioctauus to **d**, then by the same rule eight of **c** are equal to nine of **d**, and nine of **c** equal ten **d** and one-eighth of one. And ten of **c** equal eleven **d** and two-eighths. And since eight eighths of **c** contain nine **d**, then by the tenth proposition, one-eighth of **c** contains one-eighth of **d** and its eighth part—that is, one sixty-fourth. Therefore, ten **c** and one-eighth of one are equal to eleven **d**, three-eighths, and one sixty-fourth. And by the tenth proposition, as eleven and three-eighths and one sixty-fourth are to eight, so is **a** to **d**. But eleven contains eight once with three left over...
+
+[[summary: This page uses Euclidean-style geometric and arithmetic logic to prove musical relationships, specifically demonstrating that subtracting a Fourth from a Fifth leaves a Tone, and that two Tones are slightly less than a Fourth.]]
+[[keywords: sesquialter, sesquitertius, sesquioctauus, Pythagorean tuning, mathematical ratios, musical intervals, whole tone, proportions]]

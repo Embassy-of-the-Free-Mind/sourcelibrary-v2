@@ -1,0 +1,46 @@
+[[meta: This page continues the mathematical proof from the previous leaf regarding the relationship between triangular numbers and "oblong" numbers (rectangles where one side is one unit longer than the other). It transitions from basic definitions to the mystical and perfect properties of the number three.]]
+
+...the side and the side of the triangle whose sum it seeks. Therefore, by the fourth [proposition] of this book, the sum of the triangle sought is half of the oblong number [[notes: *Altera parte longior*, literally "longer by the other part," refers to a rectangular number of the form n(n+1)]] that was found: and thus the proposition is established. ¶ The corollary is known from the demonstration of the conclusion with the help of the tenth [proposition] of the first [book]. And this, along with its corollary, demonstrates the practice of numerical progression.
+
+# Every perfect thing is threefold.
+
+<margin>
+[[image-desc: A triangular arrangement of 36 dots, representing the eighth triangular number, which has a base of 8 units.]]
+| 1 | 3 | 6 | 10 | 15 | 21 | 28 | 36 |
+|---|---|---|----|----|----|----|----|
+| 1 | 2 | 3 | 4  | 5  | 6  | 7  | 8  |
+[[notes: This table maps the "side" or base of a triangle (bottom row) to the resulting triangular "sum" (top row).]]
+</margin>
+
+¶ The number three [[notes: *Ternarius*]] is entirely sacred in religion and was once venerated in a wondrous manner by the Pythagorean Magi and Priests in their secret mysteries. Aristotle too, following the symbols of the Pythagoreans, maintains that bodily magnitude and the universe itself is perfect because it is triple—or rather, it is triple because it is perfect. Pythagoras first discovered this in numbers and their mysteries. Here, therefore, it is undertaken to demonstrate that every **perfect number** is triangular. For by the thirty-second [proposition] of the seventh [book], however many "even-times-even" numbers [[notes: *Pariter pares* refer to the powers of two: 2, 4, 8, 16...]] are collected together with unity, they produce the next "even-times-even" number minus one. This following number, by the twenty-ninth [proposition] of the seventh [book], is double the greatest of those collected; thus the whole sum is odd. Now, by the sixtieth [proposition] of the seventh [book], every perfect number is generated from the collection of unity and "even-times-even" numbers whenever that sum is prime. As stated, it differs from the next power of two by only a single unit, and that power of two is double the greatest of the added parts. Therefore, the half of that power of two, multiplied by that prime sum, constitutes a triangular number by the first part of the preceding corollary. Thus, every perfect number is triangular and a "trigon"; and this is what was proposed. And its side, by the preceding [proposition] and the corollary of the first of this book, will be that odd number collected from all the parts.
+
+## Every even number multiplied by its own half produces a sum smaller than the collection of all [even] sums within it by as much as its own half.
+
+¶ This is drawn from the "analytics of numbers" [[notes: Likely referring to the resolution of numbers into their component parts]]. From the second part of the corollary of the higher conclusion, with the help of the ninth [proposition] of the first [book] and the common axiom—that unity drawn into any number produces that same number—it can be immediately understood.
+
+<margin>7</margin>
+## If triangular numbers are taken starting from unity: it is necessary to find that the first two are odd, the following two even, and so on, alternating two-by-two between odd and even.
+
+¶ Since, by the corollary of the first [proposition] of this book, triangles are created from numbers arranged in a continuous order from unity, and unity is the first "potential" triangle and "potential" odd number: therefore, when added to the following number (which is even), it will constitute—by the same corollary—the second triangle, which by the second [proposition] of the seventh [book] is odd. Thus, the first two triangles in this sequence are odd [[notes: 1 and 3]]. But because the third number [in the natural sequence] is odd, and joined with the preceding triangle it constitutes the third triangle—and the preceding one was shown to be odd—therefore, by the third [proposition] of the seventh [book], the third triangular number will be even [[notes: 1+2+3=6]]. And because the fourth number from unity is even, which when joined with the preceding even triangle constitutes the fourth triangle: therefore the fourth triangular number, by the first [proposition] of the seventh [book], is even [[notes: 1+2+3+4=10]]. Thus, the next two are even. By these same reasons, it may be shown that the following two are odd, and the next two even, and so the proposition will appear certain without difficulty.
+
+<margin>
+8
+[[image-desc: A diagram with horizontal lines of varying lengths labeled with letters and numbers to represent mathematical magnitudes: m (8), l (7), n (6), k (5), h (4), g (3), f (2), and a (3). These represent the relationships between sides and sums.]]
+</margin>
+
+## If triangular numbers are taken after unity: between every two taken separately, there will be the same proportions as those found between numbers taken in the natural series from unity.
+
+¶ Let the first triangular number after unity be **a**, and **b, c, d** the following ones in order; and let there be unity and **g, h, l** the numbers in the natural series starting from unity. I say that the proportion of **g** to unity is the same as **b** to **a**; and the proportion of **h** to **g** is the same as **d** to **c**; and **l** to **h** is the same as **f** to **e**. This proceeds by taking the triangles separately and the natural numbers continuously. For by the preceding, **a** is odd, **b** and **c** are even, **d** and **e** are odd, and **f** is even. I take four evens from unity, which are **g, l, z, m**, and the odds between them, **h, n, o**. And because **g** is the number two, it is the side of **a** (which is three). By the corollary of the first of this book, **h** is the side of **b**, **l** is the side of **c**, **n** is the side of **d**, and so on. Therefore, by the fourth [proposition] of this book, **g** times **h** makes an oblong number double to **a**; and **h** times **l** is double to **b**, and so forth. Since **g** times **h** and **l** times **h** constitute doubles to **a** and **b**, it will be by the eighth [proposition] of the second [book] that the proportion of **l** to **g** is as the double of **b** to the double of **a**. Consequently, as **l** is to **g**, so **b** is to **a**. And since **g, l, z, m** are taken as continuous evens from unity, the proportion of **b** to **a** is as **g** to unity, and **d** to **c** as **h** to **g**, which is what was proposed.
+
+<margin>
+9
+[[image-desc: A marginal diagram showing proportional lines labeled: g (5), f (4), e (3), d (2), a (3), b (6), c (10).]]
+</margin>
+
+## If three continuous triangular numbers are established: the product of the two extremes will be an oblong number, the greater side of which will be the middle triangle of those three.
+
+¶ Let **a, b, c** be three continuous triangular numbers, and their sides be **d, e, f**; and let **g** be one greater than **f**. I say that the product of **a** and **c** is an oblong number whose greater side is **b**. Since **a, b, c** are continuous triangles, their sides **d, e, f** are taken from a continuous series of numbers. By the fourth [proposition] of this book, **d** times **e** constitutes double of **a**; therefore, if **d** is even, half of **d** times **e** makes **a**. By the same logic, half of **f** times **e** makes **b**, and half of **f** times **g** makes **c**. If **d** were odd, it would measure **a** according to half of **e**. Therefore, the proportion of **f** to **d** is as **b** to **a**, and **g** to **e** is as **c** to **b**. Since **a, b, c** are continuous triangles, **b** exceeds **a** by the amount of **e**. I take **h**, which is one less than **b**; it is clear that **h** exceeds **a** by the amount of **d**. And the amount by which **c** exceeds **b** is **f**. Thus, as **b** is to **a**, so is **c** to **h**. That which is produced from **a** times **c** is the same as that produced from **h** times **b**. It is manifest that the product of **h** times **b** is an oblong number [[notes: Because h is b minus 1, the product is (b-1) times b]]. Therefore, the product of **a** times **c** is also an oblong number whose greater side is **b**, the middle of those three triangles. This is the proposition.
+
+[[summary: This page explores the mystical and mathematical properties of triangular numbers, demonstrating that all perfect numbers are triangular and detailing the alternating parity (odd/even) and proportional relationships within the triangular sequence.]]
+
+[[keywords: triangular numbers, perfect numbers, Pythagoras, Aristotle, oblong numbers, parity, mathematical proportions, Jordanus de Nemore]]

@@ -1,0 +1,34 @@
+[[meta: This page continues the discussion of the historical anecdote where the son of King Pepin kills a companion over a chess match. It provides poetic and chronical evidence for the event and transitions into a philosophical discussion on the temperament of players, citing Boccaccio.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 1]]
+*Whom that people, singing of the ancient past, now call Osigerium,* [[notes: Likely referring to Ogier the Dane, a legendary paladin of Charlemagne.]]
+*The leading nobles, with the secret keys of counsel,*
+*Hold the court in their hearts, but direct battles with their hands,*
+*In the presence of the King. Indeed, the Duke had a young son,*
+*The boy then drank in sophisticated wit within his noble kin;*
+*The King’s son met him at this Game of the Table,* [[notes: "Game of the Table" or "Tabulae" often referred to backgammon-style games, but here is synonymous with the board game context.]]
+*Until the latter, being more skilled, more readily won the lot,*
+*The defeated one acts out a quarrel, perhaps with a heart more powerful than his father's,*
+*And throwing a Rook mortally — — — he had struck.* [[notes: "Rocho" refers to the Rook or Castle piece in chess.]]
+*A swifter death follows the taken boy,*
+*The funeral is secretly covered, — — —*
+
+This history just recounted has also been described—among others of nearly the same kind—in the *Chronicon Bavariæ* [[notes: The Bavarian Chronicle]] by *Andreas Presbyter* of Regensburg, edited by *Marquard Freher*, page 17. [[notes: Andreas of Regensburg (c. 1380–1438) was a prominent historian; Marquard Freher (1565–1614) was a German jurist who published many historical documents.]]
+An old written Bavarian Chronicle reports of Lord Albrecht and Lord Okarus as follows:
+> These two princes had no more than one son,
+> who was slain in his young days with a
+> chessboard at King Pepin’s court of France,
+> by another young prince.
+
+That (8) a chess-player, even if he loses, feels no harm, because the game—according to its nature—should be conducted without any personal expense or loss of money (as reminded above in the 3rd property). And, although he must accept the shorter move [[notes: i.e., accept defeat]] and leave the praise of victory to the other, he has only himself to blame that he did not better arrange or mind his pieces; and he can therefore not rightly begin a quarrel with the other, his opponent.
+
+*M. Giovanni Boccaccio* (who was born in the year 1313 after the birth of Christ and died a bachelor in 1375) depicted these "affects," desires, or movements of the mind in two persons very neatly about two hundred and fifty years ago [[notes: The author is writing in the early 17th century]], in the sixth book of his *Filocolo*, page 262. Of these two persons, one was very modest in playing and knew how to keep his desires in check, while the other let the reins go completely on both sides. We wish to set down his words here for the reader’s pleasure, as a conclusion to the two benefits previously recounted:
+
+C
+[[meta: catchword: Et do-]]
+
+[[summary: This page provides historical and poetic citations, including the Bavarian Chronicle and Andreas Presbyter, regarding the lethal quarrel at King Pepin's court. It transitions into a moral defense of chess as a game of skill and self-control, introducing Giovanni Boccaccio's writings on the subject.]]
+
+[[keywords: Chess history, King Pepin, Ogier the Dane, Andreas Presbyter, Bavarian Chronicle, Giovanni Boccaccio, Filocolo, sportsmanship, Rook, medieval violence]]

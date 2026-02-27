@@ -1,0 +1,18 @@
+[[meta: This page continues the introduction to Chapter 6, transitioning from the theoretical rules of the first five chapters to the practical application of strategy and specific game examples.]]
+
+# 6. cap: Of the Game of Chess. 169
+
+Because one makes the beginning sometimes with this, sometimes with another piece [[notes: *Steine*; literally "stones," the common term for chess pieces in this period]]: likewise, shortly thereafter, one moves this one or another, into that square or this, and so forth—for good guidance, for planning, for attacking, and such things. One can also move the King into all squares of the Chessboard before he is checkmated, and offer him check and checkmate from every single one of them. Therefore, so many various types and ways of playing arise—which a player must know how to use with special discernment and reflection (in order to put the aforementioned means and statutes into effect at the right time) according to the opponent's intentions. In the opposite case, if one only wished to conduct all his games with certain fixed moves and in the same manner, and would not pay attention to how his opponent moved against him: he would very easily "draw the shorter straw" [[notes: *den kürtzern ziehen*; an idiom meaning to come out at a disadvantage or lose]] and suffer checkmate in a short time.
+
+Before we now proceed specifically to the examples through which the execution of the game is depicted in many ways: one should, for good instruction, take in the following report regarding their description, as well as how one should generally conduct and adapt oneself to them.
+
+Firstly, that one does not wish to set down and describe all the ways which have perhaps been used in this game, or are still common now, but only the most prominent, best, and most necessary ones, which those held to be the best players commonly observe. Therefore, many which have long since passed away and been abandoned, or which only cause strife and quarreling, have been passed over in silence.
+
+Secondly, that one will not always carry out the examples of the games from the first to the last move (for such a thing, even if it were possible, would last much too long in this Treatise and produce a prolixity [[notes: *weitleufficheit*; wordiness or excessive detail]]; for that reason, they could also not be so easily grasped and learned), but rather treat them with diligence and in as useful a brevity as possible. We also wish to run through only those games which are most practiced and common among noble players, and to break off and end them where an advantage might be snatched, by way of a major or common piece [[notes: *Haupt- oder gemeinen Steines*; likely referring to the distinction between pieces like the Queen/Rook versus Pawns]], or where the pieces might altogether be well and better ordered. For when the game is well-ordered, it proceeds better, and from a good...
+
+<sig>Q ij</sig>
+[[meta: catchword: anstels (the beginning of "Anstellung" or arrangement)]]
+
+[[summary: This page explains the necessity of strategic flexibility in chess, warning that repetitive play leads to defeat. It introduces a series of practical examples, noting that the author will focus on the most effective modern strategies rather than exhaustive or obsolete variations.]]
+
+[[keywords: strategy, flexibility, checkmate, major pieces, minor pieces, chess examples, game theory, 17th-century chess]]

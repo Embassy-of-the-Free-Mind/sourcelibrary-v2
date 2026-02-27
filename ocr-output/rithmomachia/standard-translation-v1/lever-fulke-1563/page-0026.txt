@@ -1,0 +1,17 @@
+# ¶ Of Multiple Proportion <note>original: "multiplex"</note>.
+
+Multiple proportion is when a larger <note>original: "great"</note> number contains a smaller <note>original: "lesse"</note> number several <note>original: "manye"</note> times and leaves no remainder <note>original: "nothinge"</note>. For example, 8 contains 2 four times, and nothing remains. Likewise, 16 contains 4, and so forth. 
+
+This proportion seems to best agree with the circles <note>original: "roundes"</note> because one number contains the other and nothing remains, just as the first set <note>original: "order"</note> of circles are numbered.
+
+| (Even circles) | 2 | 4 | 6 | 8 |
+| :--- | :---: | :---: | :---: | :---: |
+| **(Odd circles)** | **3** | **5** | **7** | **9** |
+
+<summary>
+This section defines the concept of "Multiple proportion" (multiplex) as it applies to the game of Rithmomachia. It explains that this mathematical relationship exists when a larger number can be divided by a smaller number without a remainder. The author notes that this specific proportion is represented by the circular game pieces, which constitute the first set of numbers used in the game's mathematical framework.
+</summary>
+
+<keywords>
+Multiple proportion, multiplex, Rithmomachia, Philosophers Game, arithmetic, circles, roundes, mathematical theory, remainder, game pieces
+</keywords>

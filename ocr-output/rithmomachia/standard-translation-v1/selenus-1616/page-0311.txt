@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical demonstration of how White can liberate a trapped Queen. The numbering system for the board follows the 1–64 convention (likely starting at h1 and ending at a8). The text references "Damiano," referring to the influential 16th-century Portuguese chess author Pedro Damiano.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 1]] [[notes: Though the previous page was marked as Chapter 3, the margin here denotes "1.cap" (Chapter 1), suggesting a new sub-section or a variation in the manuscript's organization.]]
+
+[[margin: 16.]] (to protect the same, along with his soldiers) the King’s Rider [[notes: "Reuter" or Rider is the Knight]] to **twenty-three**: **Black** offers **Check** with the Queen from **twenty-two**: **White** moves the King to **five**: * **Black** (in order to defend the King’s Rider) moves the Queen to **forty-six**: **White** moves the King’s Archer [[notes: "Schütze" or Archer is the Bishop]] to the Black King’s Archer's square at **forty-one**: **Black** (to protect him and prevent Checkmate) moves the Queen to **forty-five**: **White** (since he has no desire for an exchange of Archers and Queens) moves the King’s Archer to **thirty**: **Black** moves the King’s Rider’s Soldier [[notes: "Soldat" is the Pawn; here, the g-pawn]] (to make room for his Archer) to **forty-seven**: **White** offers **Check** with the King’s Rook [[notes: "Rochen" is the Rook]] from **four**: **Black** must retreat with the King to **sixty-one**: he has lost his Archer, and the **White Queen** is thereby freed.
+
+[[margin: 17.]] If, however, **Black** does not protect the Rider with the Queen on 46 (as in n. 16), but rather with the King on **fifty-one**: then **White** advances the King’s Archer upon the same at **thirty-four**: If **Black** moves him [the King] to another square, then the **White Queen** is set upon free feet [[notes: An idiom meaning "liberated" or "returned to play"]]: but if he protects him with the King’s Archer at **fifty**: then **White** takes the Black King’s Archer with the Queen and breaks through there: But if he moves the King’s Archer to **fifty-two**: then **White** takes the Black King’s Rider with the King’s Archer, followed by taking the Black King’s Rook-Soldier [[notes: The h-pawn or a-pawn depending on orientation]] with the Queen and offers **Check**: or (to put it briefly) takes the Black King’s Archer and brings her [the Queen] back to the field again.
+
+From this, which has been set down from number 6 until here, it now appears that **White**, provided he does not rush himself but rather proceeds with some foresight, can indeed bring his Queen back from the corner into the open field; even if he did not cover the King with the Queen on 20 (as in n. 16) but rather with his own Archer on **twelve** (in which case the King’s Archer is moved with advantage to either **forty-one** or **thirty-four**).
+
+[[margin: 18. >>]]
+But if **Black** (so that we may further follow the game of **Damiano** [[notes: Pedro Damiano (1480–1544), a famous early chess theorist]]) does not cover the King with the Soldier at **forty-two** (n. 2) but rather (because he has no other...
+
+[[meta: catchword: ...other]]
+
+[[summary: This page provides a detailed tactical walkthrough of a chess sequence where White successfully maneuvers to free a trapped Queen. It examines several defensive responses by Black, showing how White can use checks and piece exchanges to regain the advantage.]]
+
+[[keywords: chess tactics, Damiano, Rider, Archer, Rook, Pawn, Queen liberation, 17th-century chess, board notation]]

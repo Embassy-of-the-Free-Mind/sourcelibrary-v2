@@ -1,0 +1,23 @@
+[[meta: This page completes the philosophical framework introduced by Averroës on the previous page. It transitions from general principles of "practical arts" to the specific components of chess—the board, pieces, and objectives—before categorizing the historical variants of the game. Note: While the previous page was marked Chapter 3, the header here indicates Chapter 5; this likely reflects a numbering discrepancy in the original manuscript or a specific sub-sectioning of the First Book.]]
+
+<header>The First Book / Chapter 5.</header>
+
+subject to this Art and Game: namely, the Chess-pieces and the Board. Second, the Purpose which is sought herein, namely, the victory and triumph devised for pleasure and delight. Finally, both the Means which are conducive to maintaining victory and preventing loss, and the Use of these means in many ways and manners, which we shall undertake and handle in an orderly fashion.
+
+Now, since Practice is the true master, yet is almost blind without artistic science [[notes: "Science" here refers to *Wissenschaft*, or theoretical knowledge]], we have indeed not passed over the *Theoria* [[notes: Theory]] in this treatise. Nevertheless, we have intended to direct our thoughts primarily toward providing the enthusiasts of this game with the proper *Praxis* [[notes: Practice or application]], and the use of the same, as much as possible. All this is for a better and clearer execution (so far as it is understood) of this noble Art of Chess than may have happened before.
+
+For although many have hitherto undertaken to describe this very ancient, widely famed, and artful game, they have almost all contented themselves merely with the explanation of the bare science; or else, that which a few of them intended to indicate regarding its practical maneuvers [[notes: *Hand-grieffen*, literally "hand-grips," referring to the physical handling or tactical moves of the pieces]], they brought forth so briefly and unintelligibly that even those to whom this game is not unknown could hardly grasp their intended purpose or what they meant by it.
+
+Before we now come to the specific division, it is to be known: that the Game of Chess, nowadays—either because one board is divided into more squares and therefore requires more pieces than the other, or because the boards and pieces are the same, but one is more perfect than the other due to the moves of these pieces—may be played in three ways.
+
+The First, for which a larger board and more pieces are used, is almost no longer in use, and is called the Old Current- or Courier-Game [[notes: *Courier Chess* was a popular 12x8 variant played in Germany for centuries, notably in the village of Ströbeck]]; we wish to call it the Oldest Game of Chess.
+
+The Second, which has a smaller board and fewer pieces, yet keeps the same moves as the first unchanged, was practiced and in use some hundreds of years ago, but is now almost entirely extinct; this smaller one is called by us the Older Game of Chess.
+
+The third, which [uses] the same board as the previous...
+
+[[meta: catchword: the]]
+[[meta: vocab: Schach-Spiel (Game of Chess), Current-Spiel / Currier-Spiel (Courier Chess), Schach-Kunſt (Art of Chess), Tafel (Board), Steine (Pieces)]]
+
+[[summary: The author outlines the three essential elements of chess—the equipment, the goal of victory, and the tactical means—while critiquing previous authors for being too theoretical. He begins to categorize chess into three historical versions: the "Oldest" (Courier Chess), the "Older" (now extinct), and a third modern version.]]
+[[keywords: chess theory, chess practice, Courier Chess, game variants, chess history, chess strategy]]

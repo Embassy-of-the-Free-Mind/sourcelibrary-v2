@@ -1,0 +1,67 @@
+[[meta: This page continues the exploration of numerical ratios within the "Table of Pythagoras," moving from simple multiples to more complex "superparticular" and "superpartient" ratios. It focuses on how sequences of squares and odd numbers generate specific proportional relationships.]]
+
+<margin>40</margin>
+
+## ¶ If squares are set out starting from unity, and numbers one less than them are taken: the superparticular ratios named from them will be the differences of the ratios taken from unity.
+
+[[notes: A "superparticular" (supparticularis) ratio is one where the larger number contains the smaller plus one unit of the smaller, such as 3:2 or 4:3. "Unity" refers to the number 1.]]
+
+¶ Let there be unity, and the numbers after it be **a**, **b**, and **c** [[notes: representing 2, 3, and 4]]; let their squares be **d**, **e**, and **f** [[notes: 4, 9, and 16]]; and the numbers one less than them be **g**, **h**, and **k** [[notes: 3, 8, and 15]]. I say that the superparticulars designated by **g**, **h**, and **k**—which are the ratios **d** to **g**, **e** to **h**, and **f** to **k**—are the differences of the ratios taken from unity. The ratio **d** to **g** [[notes: 4:3]] is the proportion by which a double ratio [[notes: 2:1]] exceeds a sesquialter ratio [[notes: 3:2]]. Likewise, **e** to **h** [[notes: 9:8]] is the amount by which a sesquialter exceeds a sesquitertial [[notes: 4:3]], and so on in this manner. For by the first [proposition], the difference by which **a** exceeds unity and **b** exceeds **a** is the ratio produced by **a** multiplied by itself and unity multiplied by **b**. But **a** times itself makes **d** (its square), and unity times **b** makes **g** (one less than the square). Therefore, the ratio **d** to **g** is the difference of the ratio **a** to unity and **b** to **a**. By this reasoning, it is shown that the ratio **e** to **h** is the difference between the ratios **b** to **a** and **c** to **b**, and so on for any others. This is what was proposed.
+
+| | c (4) | f (16) | k (15) |
+|---|---|---|---|
+| | b (3) | e (9) | h (8) |
+| | a (2) | d (4) | g (3) |
+| | | I (1) | |
+
+<margin>41</margin>
+
+## ¶ If multiples and superparticulars are ordered continuously: any two extremes of the multiples joined together will be less than the mean doubled (or two means joined); but for superparticulars, they will be greater.
+
+¶ First, let **a**, **b**, and **c** be continuous multiples. I say that the ratio composed of **a** and **c** is less than the ratio **b** doubled. Since the denominators increase equally, the denominator of **b** is half of the denominators of **a** and **c** combined. By the nineteenth [proposition], the denominator of **b** squared produces a larger number than **a** times **c**. Since the ratio of **b** doubled is a multiple, the composite multiple of **a** and **c**—having a smaller denominator—is the smaller ratio. This is the first part. Second, let **d**, **e**, and **f** be continuously taken superparticulars, of which **d** is the largest, and let their differences be **g** and **h**. I say that the ratios **d** and **f** together constitute a larger ratio than **e** doubled. For as shown by the preceding, the parts of **g** are denominated by a smaller number and the parts of **h** by a larger one, taken from the numbers one less than continuous squares. Therefore, the ratio **g** is greater than ratio **h**. Since **d** and **f** are as **e**, **g**, and **f**, and **e** twice is as **e**, **f**, and **h**, and it has been shown that **g** is greater than **h**, then by the fifth [proposition] of the fifth [book], **d** and **f** will be greater than **e** doubled. You may easily show the same for both sides if two mean proportions are placed. Thus the proposition is concluded.
+
+| 16 | 15 | 9 | 8 |
+|---|---|---|---|
+| 5 | 4 | 4 | 3 | 3 | 2 |
+| 4 | 1 | 3 | 1 | 2 | 1 | 1 |
+
+->20 12 12 1<-
+->18 10 10 1<-
+
+<margin>42</margin>
+
+## ¶ If odd numbers after three are taken continuously and compared to the numbers after two in the natural series: the resulting ratios will be superpartients increasing in continuous denomination.
+
+[[notes: A "superpartient" (suppartiens) ratio is one where the larger number contains the smaller plus more than one "part" or unit, such as 5:3, which is 1 and 2/3.]]
+
+¶ Let **a**, **b**, and **c** be numbers taken continuously after two [[notes: 3, 4, 5]], and **d**, **e**, and **f** be odd numbers taken continuously after three [[notes: 5, 7, 9]]. I say that **d** to **a**, **e** to **b**, and **f** to **c** are superpartient ratios increasing by continuous denomination. Since the difference of odd numbers is two, **d** adds to **a** a two, which is one less than **a**. Therefore, **d** to **a** is a superpartient [[notes: 5:3]]. Since the difference of odd numbers is two and the difference of numbers in the natural series is one, **e** will add to **b** one more than **d** added to **a**. As **e** and **f** are continuous odds, **f** will add to **c** one more still. Thus, the differences of the odds over the natural numbers grow just as the numbers themselves do. Since numbers differing by one are prime to each other, the difference (the preceding number) is not a single part of the following number, but rather "parts" (per the first proposition of the first book). Thus the ratio **e** to **b** is superpartient, as is **f** to **c**. Because these parts increase according to the quantity of the natural series, their denominations will also grow continuously. Indeed, because they are denominated by numbers prime to each other, various species of superpartients will proceed continuously. This is what was proposed.
+
+| 6 (f) | 5 (e) | 4 (d) | 3 (o) |
+|---|---|---|---|
+| | 9 | 7 | 5 |
+| | 5 (c) | 4 (b) | 3 (a) |
+
+<margin>43</margin>
+
+## ¶ If the composite of the first even and odd numbers, and those aggregated from the remaining odds joined to it, are compared to the numbers arranged from two: different multiple-superparticulars will result, having similar counts of multiples and denominations of parts.
+
+[[notes: A "multiple-superparticular" is a ratio like 5:2, which is 2 and 1/2. The "multiple" is 2 and the "part" is 1/2.]]
+
+¶ Let **a**, **b**, and **c** be numbers succeeding from two [[notes: 2, 3, 4]], and let **e**, **f**, **g**, and **h** be odd numbers starting from three [[notes: 3, 5, 7, 9]]. Let **k** be the composite of **a** and **e** (the first even and odd) [[notes: 2 + 3 = 5]]. Let **l** be the composite of **f** and **k** [[notes: 5 + 5 = 10]], **m** the composite of **g** and **l** [[notes: 7 + 10 = 17]], and **n** the composite of **h** and **m** [[notes: 9 + 17 = 26]]. I say that **k**, **l**, **m**, and **n** compared to **a**, **b**, **c**, and **d** create multiple-superparticulars where the number of the multiple matches the denomination of the part. For **k** is composed of **a** and **e** (two and three). **e** adds to **a** one part denominated by itself—namely one half. Therefore, **k** compared to **a** contains it twice and its half [[notes: 5:2 = 2 1/2]]. By the nineteenth [proposition] of the seventh [book], **f** is composed of **a** and **b**, **g** of **b** and **c**, and **h** of **c** and **d**. By the seventh [proposition] of the sixth [book], the square of any number exceeds the square of the first by the composite of the two, as the square of **b** exceeds the square of **a** by the amount composed of **a** and **b**. Because **k** adds unity to the square of **a**, **l** will similarly add to the square of **b**, **m** to the square of **c**, and **n** to the square of **d**. Thus, each contains its counterpart according to itself plus a part. They will therefore be continuous multiple-superparticulars. This is what was proposed.
+
+| 5 (d) | 4 (c) | 3 (b) | 2 (a) |
+|---|---|---|---|
+| 9 (h) | 7 (g) | 5 (f) | 3 (e) |
+| 26 (n) | 17 (m) | 10 (l) | 5 (k) |
+
+<margin>44</margin>
+
+## ¶ If the first two odd numbers are joined, and the remaining odds are applied to that composite: the ratios of the composites to the numbers taken after two will be different multiple-superpartients, having the multiple, the number of parts, and the denomination of the multiples all from the same number.
+
+[[notes: A "multiple-superpartient" is a complex ratio, like 8:3, which is 2 and 2/3.]]
+
+¶ Let the first two odds be **a** and **b** [[notes: 3 and 5]], and their composite be **c** [[notes: 8]]. Let the remaining odds be **d**, **e**, and **f** which are added to the composite **c**, and let the aggregates be **g**, **h**, and **k**. Let **l**, **m**, **n**, and **o** be numbers taken continuously after two [[notes: 3, 4, 5, 6]]. I say that **c** to **l**, **g** to **m**, **h** to **n**, and **k** to **o** are different multiple-superpartients, each having its multiple and its parts...
+
+[[summary: This page demonstrates how adding sequences of odd numbers and comparing them to the natural number series creates increasingly complex ratios, such as superparticulars and multiple-superpartients. It utilizes the properties of squares and their differences to prove these mathematical progressions.]]
+
+[[keywords: superparticular, superpartient, squares, odd numbers, multiple-superparticular, mathematical ratios, arithmetic progression]]

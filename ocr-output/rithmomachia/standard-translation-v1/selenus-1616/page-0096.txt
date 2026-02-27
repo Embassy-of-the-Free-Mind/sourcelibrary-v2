@@ -1,0 +1,23 @@
+[[meta: This page continues the description of the board setup, transitioning from the placement of the Queens to the final pieces on the back rank: the Rooks. It explores the historical and symbolic origins of the Rook as both a fortress and a war elephant.]]
+
+### The First Book / Chapter 7:
+
+of the White Queen / in the black [field] : of the Black / in the white field: Accordingly, the battle-order is concluded with them / upon the same line. The reason / was indicated shortly before / by the word **Stat-halter** [[notes: *Stat-halter* (Governor or Steward) was a common name for the Rook in 17th-century German chess, representing a high-ranking official who maintains order in the King's absence]]. Others look to the custom / of the Barbarian peoples / who placed **Elephants** / at the sides of their men-of-war. Some believe / it is hereby given to understand / that it is a useful thing / to have **Fortresses** upon the borders / so that in times of misfortune / and unforeseen attack by the Enemy / the subjects / when they have tried everything / and can no longer hold out / may fly thither for refuge.
+
+> >> *Certain barbarians,* (writes Actius in *Indic: lit: A.*) *place Citadels,*
+> >> *where we place Standard-bearers,* (the archers) *and in their place Birds,*
+> >> *that walk with the gait of citadels, which among them are called Racchi: and*
+> >> *from there perhaps, according to some, they are commonly called Rocchi among us, namely*
+> >> *the Italians.* [[notes: This passage reflects the linguistic confusion of the era. The Persian word for a chariot, *Rukh*, sounded like the Italian word *Rocca* (fortress) and the German word for a large bird or crow, *Rache*.]]
+
+Their move / is across the width / and not across the corners [[notes: meaning they move in straight lines along ranks and files, not diagonally]] of the fields / forward / to both sides / and backward. They are now moved / into one / or into more fields / of white or black color / as it may fall most advantageously / for the Chess-player / in his game / and as the way / is opened to them by their companions [[notes: "companions" refers to their own pawns or pieces blocking the way]]. When they also encounter their enemies / upon those lines / upon which they are permitted to go / they may then abolish / and clear them away [[notes: i.e., capture them]]. For they / from their field / in which they were first placed / can be moved along the entire lines / which they have before them / and to the side / as far as the edge / of the **Schach-Tabel** [[notes: the chessboard]]. But if they stand / in the middle of the board / then they have, as it were, four streets / upon which they may step / two on the sides / one before and one behind them. But that they go / the straight and wide way / thereby indicates / that the Captains / and Commanders / of the fortresses / should be upright and faithful.
+
+They are further / because of this free movement / held to be the best pieces next to the Queen / indeed, like a **half-Queen** / because they have half of her moves [[notes: In the chess rules of this period, the Queen's move was often seen as a combination of the Rook's straight move and the Bishop's diagonal move]]. For one of their kind / alone and single-handedly / (as the following sketch / gives to understand) with his King / (which otherwise, besides the Queen / no piece / without other helpers / alongside the King / is able to do /) can give **Schach-Mat** [[notes: Checkmate]].
+
+Because they are now the last pieces / upon the first line / and therefore / not before / the crowd is parted / and stands open /
+
+[[meta: catchword: stands /]]
+
+[[summary: This page describes the Rook, its historical origins as either a war elephant or a border fortress, and its linear movement. It highlights the Rook's strength, noting that it is the only piece besides the Queen capable of delivering checkmate with only the help of the King.]]
+
+[[keywords: Rook, Stat-halter, Elephant, Fortress, Movement, Checkmate, Actius, Strategy, Chessboard]]

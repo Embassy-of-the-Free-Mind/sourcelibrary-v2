@@ -1,0 +1,19 @@
+# The Philosophers' Game.
+
+## Of capture <note>original: "takyng"</note> by division.
+
+By division, a piece <note>original: "manne"</note> may be captured when two of its enemies are positioned so that, when one of them is divided by the other, the result <note>original: "product"</note> is the same as the enemy piece standing within their range <note>original: "draught"</note>. Immediately after the second piece is placed, the enemy may be removed. If the enemy was left in danger before being removed, one of the attacking pieces may move into its place. 
+
+For example: Circle 4 <note>original: "round 4"</note> standing in **D** and Triangle 20 standing in **F** may capture the adversary 5 standing in **A** by division, because 4 is contained in 20 five times. Another example: Circle 5 standing in **B** and Triangle 30 standing in **F** may capture their enemy 6 standing in **A**, for 5 is contained in 30 six times.
+
+## Of the capturing of the kings.
+
+***
+
+<summary>
+This page describes the rule for "Capture by Division" in the mathematical board game Rythmomachia (The Philosophers' Game). It explains that an enemy piece is captured if it stands within the movement range of two opposing pieces whose values, when divided, result in the value of the enemy piece. The text provides two arithmetic examples (20 divided by 4 equals 5, and 30 divided by 5 equals 6) to illustrate the mechanic. It also notes that a player may move an attacking piece into the square of a captured piece if the capture was already possible at the start of the turn. The page concludes by introducing the section on capturing the King pieces.
+</summary>
+
+<keywords>
+Philosophers' game, Rythmomachia, capture by division, mathematical games, board games, 16th century, William Fulke, arithmetic, circles, triangles, kings
+</keywords>

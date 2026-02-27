@@ -1,0 +1,22 @@
+[[meta: This page transitions from the symbolism of the King to Chapter 6, which introduces the Queen. The previous page concluded the allegorical legal meaning of "Checkmate" as a loss of subjects and justice.]]
+
+6. cap: Of the Game of Chess.
+H 3
+catchword: Ducit
+
+---
+
+## The Sixth Chapter.
+
+# Of the Queens of both sides / their po-
+# sitions / and moves.
+
+<image-desc>A woodcut illustration of a chess queen piece. The queen is depicted as a female bust with a crown and jewelry, resting on a pedestal that resembles a chalice or an ornate lathe-turned wooden base. At the bottom of the illustration frame, the text "Die Königin" is inscribed.</image-desc>
+
+To the Queens / because they serve in this military host / the highest office / of a Field Marshal [[notes: *Feld-Marschalck*. In the 17th century, this was the highest military rank, emphasizing the Queen's power as the King's primary protector and strategist.]] / the inventor has given these qualities: that they / can leap to their Lords' aid / with great haste / and strenuously set upon the enemy. For this reason / because the advantage and ruin of the game rests with them / they must rightly be guarded with all diligence: considering that / once they are gone / one can only with difficulty / and quite rarely / set the game to rights again / or win.
+
+However / it may cause many to wonder / why such a high office was commanded specifically to women? The inventor / perhaps [looked] to the Amazons [[notes: Mythological tribe of warrior women.]] / (who did their best during the Trojan War / at which time this game was originally invented [[notes: This reflects a common Early Modern belief that chess was invented during the Siege of Troy, whereas it actually originated in 6th-century India.]]: and of whom / Virgil / in the following verses / of the first book / of the Aeneid:
+
+[[summary: This page introduces the Queen as the "Field Marshal" of the chess army, emphasizing her strategic importance and the difficulty of winning once she is lost. It also begins a historical justification for her power by citing the Amazons and the Trojan War.]]
+
+[[keywords: Queen, Field Marshal, strategy, Amazons, Trojan War, Virgil, Aeneid, Chess history]]

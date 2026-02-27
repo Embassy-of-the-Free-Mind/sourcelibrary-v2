@@ -1,0 +1,21 @@
+[[meta: This page continues the mathematical and tactical breakdown of the game Rythmomachia, transitioning from the complex victory conditions based on the Liberal Arts to a practical explanation of how the game's pieces can be adapted to play traditional Chess.]]
+
+### ->The Sixth Chapter<-
+
+It should be noted here: that these seven final victories are taken from the **three primary Victories** of this game. Just as in the "Great Victory," there are three simple ones—namely those of **Arithmetic**, **Geometry**, and **Music** [[notes: These three "Arts" represent the *Quadrivium*—the mathematical sciences of the Middle Ages. In this game, a victory is achieved when pieces are captured or arranged according to the ratios found in these disciplines.]]—out of which three others emerge in the "Greater Victory," which are: **Arithmetic and Geometry**; **Arithmetic and Music**; and **Geometry and Music**. Finally, the **Greatest Victory** is composed of all three: Arithmetic, Geometry, and Music together.
+
+Likewise, in these seven victories, there are three simple ones: the victory of the **Pieces**, the **Numbers**, and the **Digits**. From these, three combined victories arise: the Pieces and the Numbers; the Pieces and the Digits of the Numbers; and the Numbers and their Digits. These finally bring about the seventh and last victory, which is composed of the Pieces, Numbers, and Digits together.
+
+Furthermore, one can use the pieces of this game to play **Chess** in the following manner:
+
+If one takes half of this table [[notes: Meaning half of the Rythmomachia board, which was typically 8x16 squares, to create the standard 8x8 Chess board.]] and uses the **Towers** in place of the **Kings**; three **Squares** stacked one upon another for the **Queen**; one **Square** for a **Rook**; a **Triangle** placed upon a **Square** for a **Knight** [[notes: Literally a "Rider" (*Reuter*)]]; two **Triangles** placed one upon another for a **Bishop** or **Fool** (as Buxer [[notes: Referring to Augustus the Younger, Duke of Brunswick-Lüneburg, who wrote under the pseudonym Gustavus Selenus; "Buxer" is a Latinized reference to his family's Buchhorst estate.]] names them on folio 24b and 40a); and then uses eight **Round Pieces** for the eight **Soldiers** [[notes: Pawns.]]; and moves and plays them all in the manner customary to the game of Chess. 
+
+Otherwise, one may further add anything that pleases each person’s own judgment to expand this game, considering that the various numbers marked on the pieces can also fight amongst themselves alongside the pieces. For I truly believe that the game of Chess was taken from this, our now-described game, considering that the former is much newer than this one [[notes: This was a common Renaissance belief; however, modern scholarship shows Chess originated in India/Persia, while Rythmomachia was a medieval European invention used to teach Boethian mathematics.]].
+
+(Buxer: fol: 42. a.
+
+> [[gloss: Thomas Topcliffe, an Englishman, provided me with a copy of a certain pamphlet which (as he reported) was extracted from a certain Old Chaldean book and translated into the English tongue. it contains a certain method of playing Rythmomachia which I did not wish to omit from this my little book: especially since I am of the opinion that this form of progression (which corresponds to Chess) is the perfection of our game.]]
+
+[[summary: This page explains how the complex victory conditions of Rythmomachia are derived from the mathematical arts and provides instructions for repurposing the game's geometric pieces to play standard Chess. The author asserts that Chess is actually a simplified derivative of the older, more complex "Philosopher's Game."]]
+
+[[keywords: Rythmomachia, Chess, Arithmetic, Geometry, Music, Augustus the Younger, Thomas Topcliffe, game pieces, historical board games, Quadrivium]]

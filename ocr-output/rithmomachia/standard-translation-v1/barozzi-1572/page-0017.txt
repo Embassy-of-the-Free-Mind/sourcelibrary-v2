@@ -1,0 +1,21 @@
+[[meta: This page continues the mathematical instructions for determining the values of the game pieces in Rythmomachia, specifically focusing on the first eight white triangles. It picks up from the previous page's explanation of how even numbers and their squares are summed to create the first set of triangles.]]
+
+above the first four white triangles, as is seen in the following figure:
+
+| ( 2 ) | ( 4 ) | ( 6 ) | ( 8 ) |
+| :---: | :---: | :---: | :---: |
+| ( 4 ) | ( 16 ) | ( 36 ) | ( 64 ) |
+| **6** | **20** | **42** | **72** |
+[[notes: This table illustrates the "Sesquialter" ratio and others used in the game of Rythmomachia. The triangles (bottom row) are the sum of the two circles above them. For example, 2 + 4 = 6, and 4 + 16 = 20.]]
+
+Having found, then, the four numbers for the first four white triangles, we shall also find those that must be written upon the other four, if we join the four already found white triangles with the first four black rounds in order: the first white triangle with the first black round, the second with the second, the third with the third, and the fourth with the fourth. That is, the 6 with the 3, the 20 with the 5, the 42 with the 7, and the 72 with the 9. For in this way, we shall produce the four numbers that must be written upon the other four white triangles, which will be these: 9, 25, 49, 81, as the following figure shows us.
+
+| ( 3 ) | ( 5 ) | ( 7 ) | ( 9 ) |
+| :---: | :---: | :---: | :---: |
+| **/ 9 \\** | **/ 25 \\** | **/ 49 \\** | **/ 81 \\** |
+[[notes: Here, the author explains the next step in the progression. By adding the previously calculated triangles to the "base" odd numbers (the black rounds), the player identifies the values for the remaining white triangles. Note that 9, 25, 49, and 81 are the squares of the odd numbers 3, 5, 7, and 9.]]
+
+[[gloss: white triangles, black rounds, arithmetic, progression, square numbers]]
+
+[[summary: This page provides the specific mathematical steps to calculate the values for eight white triangular game pieces by summing previously established circular values. It uses a series of additions—first of even numbers and their squares, then of those results with odd numbers—to create a balanced numerical progression for the game.]]
+[[keywords: Rythmomachia, arithmetic, triangles, square numbers, mathematical progression, game pieces]]

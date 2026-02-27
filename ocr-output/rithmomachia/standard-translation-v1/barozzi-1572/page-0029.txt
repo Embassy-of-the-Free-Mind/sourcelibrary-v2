@@ -1,0 +1,19 @@
+[[meta: This page continues from the visual diagram on page 10, transitioning from the board's setup to the active rules of gameplay. It defines the specific movement patterns for each piece type and begins the section on capturing mechanics.]]
+
+### *Part four, in which the method of moving the pieces is shown.*
+
+<image-desc>Woodcut decorative initial 'D' depicting a seated figure, possibly a scholar or a man of authority, gesturing with one hand.</image-desc>After having taught how to situate the pieces upon the board, it follows that we show the method of moving them. All the pieces, therefore, walk forward, backward, to the right, and to the left, both along the length and across the width of the board; however, each has its own specific path. That is, the **circles** [[notes: Referred to in the text as *tondi*, these are the most basic pieces.]] always walk directly from one square to the next immediately following, in the manner of the **Pawns** in the game of chess. The **triangles** always walk diagonally [[notes: The original Italian *obliquamente* refers to diagonal movement on a checkered board.]] in the likeness of the **Bishops** [[notes: *Alfieri* in Italian, which historically refers to the Bishop in chess.]] of the said game, but always jumping to the third square from the one where they are located, always skipping one square. The **squares** move straight and diagonally, just as the **Queen** does in chess, but always jumping to the fourth square from the one where they find themselves, always placing two squares in between. The **pyramids**, carrying within themselves the form of all three pieces—the circle, the triangle, and the square—have the liberty of using now the path of the circle, now that of the triangle, and now that of the square, as it proves convenient for them. Furthermore, in all three types of these movements, they can place as many squares in between as they wish, or place none at all, as is most convenient for them; this movement resembles in every way and in all respects that of the **Queen** in chess. Beyond this, the pyramids can make the jump that the **Knight** [[notes: *Il cauallo* (the horse).]] of chess makes, but not always; only in one single case: when they are besieged [[notes: This "besieged" rule is a unique defensive mechanic where the Pyramid, acting as the "King," can escape capture using a Knight's move.]], as we shall say in its proper place. No other piece has this privilege except for the pyramid, which represents the **King** of this game.
+
+---
+
+### *Part five, in which the method of combat is explained.*
+
+<image-desc>Woodcut decorative initial 'S' with foliate and floral ornamentation.</image-desc>It follows that we explain the method of combat, which consists of nothing other than stripping the opponent of their pieces; because the fewer pieces the opponent has, the more easily victories can be achieved, as [will be told] further below [[notes: The text cuts off here as part of a catchword system used in old printing to ensure the pages were bound in the correct order.]]
+
+<sig>D</sig> [[meta: inten-]]
+
+[[gloss: Rythmomachia, chess, pyramids, circles, triangles, squares, Bishops, Pawns, Queen, Knight]]
+
+[[summary: This page outlines the movement rules for the four types of pieces in Rithmomachia, using chess pieces as a familiar reference for the reader. It also identifies the Pyramid as the most powerful piece, acting as the game's "King" with unique escape abilities.]]
+
+[[keywords: movement rules, chess analogies, piece types, Pyramids, Bishop, Queen, Knight, Rithmomachia strategy]]

@@ -1,0 +1,92 @@
+[[meta: This page concludes the dialogue on the mathematical game Rithmomachia. The speaker moves from the technical rules of the game to its philosophical purpose—shaping the character of the players according to Pythagorean ideals. The page also includes the printer's colophon, providing vital historical data about the book's production in Paris in 1496.]]
+
+...and they pass a blameless, innocent life, free from stain. This is their study, this is their solace, and this is their most vigilant care:
+
+> That they might examine themselves entirely, down to the very nail [[notes: *Ad unguem* is a Latin idiom for "to perfection," referring to a sculptor passing a fingernail over a finished surface to check for seams.]],
+> Lest any gap appear, or any corner disturb the harmony,
+> So that it fits together in equal parts, and nothing deviates from the rule [[notes: *Amussis* was a carpenter’s rule or level used to ensure perfect flatness.]].
+> Nor do they lower their eyes into sweet sleep,
+> Until they have reckoned all the deeds of the long day:
+> Where they overstepped, what was done in due time, and what was not.
+> Offended by what is depraved, they give the palm and rewards to the righteous.
+
+¶ Such pure ones it befits to be the disciples of Pythagoras. Therefore, my advice, O Bathillus and Brontinus, noble youths, is that you indulge in this game only so long as your tender age does not permit you to ascend to higher things, or while the path to them is slow. Soon, however, when you have become a little stronger in spirit, seek our "silence" [[notes: Pythagorean initiates were famously required to observe a period of silence as part of their training]] and join yourselves as companions to our group, seeking a life that is always useful and innocent. Learn doctrine, morals, and jests from me as your teacher (or, if you prefer, as your fellow student). As for the rest, while your youthful age allows, you will very easily learn the remaining parts of the sought-after games from younger men. Now, may you both be well. **Bat.** We who are well, Alcmeon—as much as we are able, I and Brontinus—give great thanks for the service of your kindness now, and shall always do so. We recognize that you have inquired into these trifles [[notes: *Minutula* refers to the game pieces/rules, which Alcmeon humbly calls "little things" compared to higher philosophy]] beyond your usual dignity. As for what remains, we shall easily master it for ourselves. Meanwhile, until we employ your labor as a teacher for more serious matters, remember us always, and may you be most happy. Farewell.
+
+---
+
+## The End of Rithmomachia.
+
+---
+
+¶ These two parts of the Quadrivium [[notes: The *Quadrivium* consisted of the four mathematical arts: Arithmetic, Music, Geometry, and Astronomy. This book specifically covers Arithmetic and Music/Proportions.]], the most excellent leaders of the liberal arts, along with certain added aids, Joannes Hygmanus [[notes: Jean Higman]] and Volgangus Hopilius [[notes: Wolfgang Hopyl]] have seen fit to commit to print together with the greatest care for the use of students, at their own heavy labor and expense. This was done in Paris, in the year of the Lord’s salvation—Who formed all things in number and harmony—1496. They completed it in the same year, on the twenty-second day of July, always dedicating their labors to students wherever they may be. And David Lauxius, a Briton from Edinburgh [[notes: This is David Lauxius, an early Scottish scholar and one of the first known Scots involved in the printing industry, acting here as a "recognitor" or proofreader/editor]], does the same, acting everywhere as the diligent corrector of the work from the original manuscript.
+
+### Register of the present work.
+
+->**a b c d e f g h i**<-
+->All are quaternions [[notes: This indicates that each "gathering" or signature of the book consists of four folded sheets of paper]].<-
+
+<columns>2</columns>
+
+**a**
+First leaf: In hoc opere.
+Second: Jordani Nemorarij.
+Third: ¶ Sint a b c d e f.
+Fourth: cum se.
+
+**b**
+First leaf: ¶ Si duo numeri.
+Second: limā quintam.
+Third: nūerans qui et idem.
+Fourth: ¶ Numerorum cōtinue.
+
+**c**
+First leaf: ¶ Nam si.
+Second: ¶ Quadratus cubicus.
+Third: ¶ Si fuerint duo numeri.
+Fourth: ¶ Si quotlibet.
+
+**d**
+First leaf: q̄ precedens.
+Second: ¶ Si sumātur.
+Third: parte longior.
+Fourth: sequens tetragonum.
+
+<column-break/>
+
+**e**
+First leaf: numeratas.
+Second: ¶ Datam proportionem.
+Third: ¶ Multiplicem.
+Quartum: cunt ex trina.
+
+**f**
+First leaf. ¶ Jacobi.
+Second: ¶ Jacobi.
+Third: ¶ Si terminox.
+Fourth: ¶ supparti.
+
+**g**
+First leaf: interuallo e d
+Second: pportiones esse.
+Third: ¶ Itidem ditonus.
+Fourth: ¶ Differentia.
+
+**h**
+First leaf: f ad g.
+Second: ad q fiat p.
+Third: ¶ Sint p reliquis.
+Fourth: ¶ Sint numeri.
+
+**i**
+First leaf: Numerus multiplex.
+Second: Numeri paris.
+Third: Suppartietis.
+Fourth: Altera parte.
+
+<insert>
+[[notes: This is a later handwritten ownership note in a mix of Early Modern English/Scots.]]
+This book is mine, Edward Pistoris [[notes: "Pistor" is Latin for baker, so the name may be Edward Baker]].
+</insert>
+
+[[summary: This concluding page links the mathematical strategies of Rithmomachia to Pythagorean moral philosophy and provides the 1496 Paris colophon naming printers Jean Higman and Wolfgang Hopyl, as well as Scottish editor David Lauxius.]]
+[[keywords: Rithmimachia, Pythagoras, Golden Verses, Quadrivium, Jean Higman, Wolfgang Hopyl, David Lauxius, Paris printing 1496, colophon, book history]]

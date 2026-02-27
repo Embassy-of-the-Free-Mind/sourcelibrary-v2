@@ -1,0 +1,58 @@
+[[meta: This page continues the mathematical tables for the game of Rithmomachia (The Number-Battle). While previous pages detailed the "Greater Victory"—requiring two mathematical proportions—this page introduces the "Greatest Victory," which requires four pieces to satisfy all three classical proportions (Arithmetic, Geometric, and Harmonic) simultaneously.]]
+
+# Of the Number-Battle.
+
+| | | |
+|---|---|---|
+| 15. 20. 30. 45. | 15. 30. 45. | 15. 20. 30. |
+| 15. 30. 36. 45. | 15. 30. 45. | 30. 36. 45. |
+| 15. 30. 45. 90. | 15. 30. 45. | 30. 45. 90. |
+| 30. 36. 42. 45. | 30. 36. 42. | 30. 36. 45. |
+| 72. 81. 90. 120. | 72. 81. 90. | 72. 90. 120. |
+
+---
+
+| The Numbers / of the Geometry and Music / Divisions / on four stones. [[notes: "Geometry" (*Meß-Kunst*) and "Music" (*Singe-Kunst*) refer to Geometric and Harmonic mathematical proportions.]] | The Numbers / of the Geometry / Divisions / in the set four numbers. | The Numbers / of the Music / Divisions / in the four numbers. | |
+|---|---|---|---|
+| 2. 3. 6. 12. | 3. 6. 12. | 2. 3. 6. | |
+| 3. 4. 6. 9. | 4. 6. 9. | 3. 4. 6. | <margin>cc</margin> |
+| 3. 4. 6. 12. | 3. 6. 12. | 4. 6. 12. | <margin>cc</margin> |
+| 3. 6. 8. 12. | 3. 6. 12. | 6. 8. 12. | <margin>cc</margin> |
+| 4. 6. 12. 36. | 4. 12. 36. | 4. 6. 12. | |
+| 5. 9. 45. 225. | 9. 45. 225. | 5. 9. 45. | |
+| 9. 12. 16. 72. | 9. 12. 16. | 9. 16. 72. | <margin>cc</margin> |
+| 9. 15. 25. 45. | 9. 15. 25. | 9. 15. 45. | <margin>cc</margin> |
+| 9. 15. 45. 225. | 9. 45. 225. | 9. 15. 45. | <margin>cc</margin> |
+| 9. 25. 45. 225. | 9. 45. 225. | 25. 45. 225. | <margin>cc</margin> |
+| 15. 20. 30. 45. | 20. 30. 45. | 15. 20. 30. | |
+| 20. 30. 36. 45. | 20. 30. 45. | 30. 36. 45. | |
+| 25. 45. 81. 225. | 25. 45. 81. | 25. 45. 225. | |
+
+---
+
+By the **Greatest** victory, nothing else is understood than when one brings four stones—which in their numbers encompass all three divisions [[notes: proportions]] together—onto the enemy's field:
+
+The numbers of the three combined divisions can be found together in the following table, and each one individually: as in the second field, the Arithmetic; in the third, the Music [[notes: Harmonic]]; and in the fourth, the **Geometry**. [[notes: Arithmetic, Harmonic, and Geometric progressions were considered the "Three Harmonies" of Pythagorean mathematics.]]
+
+| | | | |
+|---|---|---|---|
+| 2. 3. 4. 6. | 2. 4. 6. | 2. 3. 6. | 2. 3. 4. 6. |
+| *2. 9. 16. 72. | 2. 9. 16. | 9. 16. 72. | 2. 9. 16. 72. |
+| 3. 5. 15. 25. | 5. 15. 25. | 3. 5. 15. | 3. 5. 15. 25. |
+| 4. 6. 8. 12. | 4. 8. 12. | 4. 6. 12. | 4. 6. 8. 12. |
+| 4. 6. 9. 12. | 6. 9. 12. | 4. 6. 12. | 4. 6. 9. — |
+| *5. 9. 45. 81. | 9. 45. 81. | 5. 9. 45. | 5. 9. 45. 81. |
+| *5. 25. 45. 225. | 5. 25. 45. | 25. 45. 225. | 5. 25. 45. 225. |
+| 6. 8. 9. 12. | 6. 9. 12. | 6. 8. 12. | 6. 8. 9. 12. |
+| 12. 15. 16. 20. | 12. 16. 20. | 12. 15. 20. | 12. 15. 16. 20. |
+
+-> (Jacobus Faber Stapulensis: fol: 51. b.) <-
+[[notes: Jacques Lefèvre d'Étaples, also known as Jacobus Faber Stapulensis (c. 1455–1536), was a French humanist whose mathematical and musical treatises were standard texts for students of the liberal arts.]]
+
+> *When the Greatest Harmony is prepared, the piece acquired to complete the harmony is not moved from its place.* <margin>cc cc</margin> [[notes: This quote emphasizes that once a player achieves this supreme mathematical alignment, the winning configuration is finalized.]]
+
+<sig>Ppp</sig>
+[[meta: catchword: These]]
+
+[[summary: This page provides reference tables for the "Greatest Victory" in Rithmomachia, where a player wins by arranging four pieces on the opponent's side to form Arithmetic, Geometric, and Harmonic proportions simultaneously. It cites the influential humanist Jacobus Faber Stapulensis to emphasize the perfection of this mathematical alignment.]]
+[[keywords: Rithmomachia, Number-Battle, Greatest Victory, Victoria Maxima, Arithmetic proportion, Geometric proportion, Harmonic proportion, Jacobus Faber Stapulensis]]

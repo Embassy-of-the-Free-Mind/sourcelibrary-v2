@@ -1,0 +1,21 @@
+[[meta: This page continues from the description of the game pieces' physical construction, specifically their two-toned (black and white) nature, and transitions into the rules for how numerical values are assigned to them.]]
+
+# The Second Chapter.
+
+### Concerning the numbers with which the round, triangular, and square pieces, as well as both towers, are marked and described.
+
+When one wishes to record the numbers upon these forty-eight pieces, they should be laid out [[notes: The author uses the term *Steine* (stones), which was common for game pieces in the 16th and 17th centuries, much like we say "chessmen" today]], and (since they have a white side and a black side) one half should be turned with the white side up and the other half with the black side up. From these, two piles should be made, and for each side, eight round, eight triangular, and eight square pieces (two of which are used as foundation stones for the towers) should be assigned. One maintains the same order with these as with the two piles, turning the white side of the six stones of one tower and the black side of the five pieces of the other tower upward.
+
+[[margin: (Buxer: fol: 5. a. b.)]] [[notes: This refers to Claude de Boissière, also known as Buxerius, a French mathematician who published a famous treatise on Rithmomachia in 1554.]]
+
+> *Of these three quantities, you shall separate and distinguish the middle part from the other, painting them in various colors: so that one color is assigned to the Even Numbers, and the other, conversely, to the Odd Numbers.*
+> *>> The Pyramid, which must stand upon an Even Number, shall hold six steps:*
+> *>> The Pyramid of the Odd Number, however, shall be smaller by one step.*
+
+When these two piles have now been separated from one another, one should further record the numbers upon the white and black pieces. Firstly, upon the round pieces (since the round figure is the first, simplest, and most excellent in the art of geometry [[notes: *Meßkunst*, literally "the art of measuring," was the standard early modern German term for geometry]]); thereafter, upon the triangular pieces (for the triangle is, by order, the second figure in that same art); and finally, upon the square pieces (since the square is the third figure of the same). One should, however, maintain this order alternating between the white and black stones, writing the numbers upon the former with black ink, and upon the latter with white color.
+
+[[meta: catchword: And]]
+
+[[summary: This page explains the methodical process of sorting the 48 game pieces into two colored sets (white for even numbers, black for odd) and the hierarchy of shapes based on classical geometry. It introduces the "Pyramids" (Towers) as the most complex pieces, which differ in height based on whether they represent even or odd numerical progressions.]]
+
+[[keywords: Rithmomachia, number-battle, game pieces, geometry, Buxerius, even and odd numbers, pyramids, towers, mathematical games]]

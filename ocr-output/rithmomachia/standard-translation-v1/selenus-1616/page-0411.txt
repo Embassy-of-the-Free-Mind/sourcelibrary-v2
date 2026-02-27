@@ -1,0 +1,28 @@
+[[meta: This page marks a return to the primary subject of the book: the technical study of chess. After the preceding blank/bleed-through page from a different printing project, the author now begins "The Fourth Book," focusing on games where one player starts with a specific advantage (handicap).]]
+
+On the Game of Chess.
+
+[[image-desc: A decorative horizontal woodcut headpiece depicting two long-necked birds, possibly cranes or phoenixes, facing an ornate central vase filled with flowers and scrolling foliage.]]
+
+[[margin: Chapter 1:]]
+
+# The Fourth Book /
+# Of the Description / of the Game of Chess.
+### The First Chapter.
+### Regarding the First Way to play / when one / has only taken an Advantage / and has not given one.
+
+[[image-desc: A large decorative historiated initial 'E' featuring scrolling vines and floral motifs.]]
+
+Let it now be sufficient regarding the ordinary ways and manners of playing, which are equal for both players: there follow now the special ones: namely, when one player gives an advantage to the other, or takes one from the same. There are, however, six of these presented before others, following the guidance of both the Author [[notes: "The Author" refers to Augustus the Younger, Duke of Brunswick-Lüneburg, who wrote under the pseudonym Gustavus Selenus]] and of Damiano [[notes: Pedro Damiano (1480–1544) was a Portuguese chess player whose 1512 manual was a foundational text for European chess]], (though the latter with thorough and complete improvement) in the following eight chapters; and with these, the report on the Little Courier-Game [[notes: The "Courier Game" was a popular medieval and Renaissance chess variant played on a larger 12x8 board]] shall be concluded.
+
+Regarding the First Way: it arises when one among the players (for example, the White player) has taken and received only one advantage, such as two moves to be used at the start of the game.
+
+[[margin: 1.]]
+If White now moves, for the beginning, and at the same time, the King’s and the Queen’s Soldiers [[notes: Selenus refers to pawns as "Soldaten" (soldiers). In his 1-64 numbering system, these specific moves correspond to pawns moving to the center of the board]]: these to nineteen and twenty; and to eight-and-twenty: then the Black player should let the King’s and the Queen’s Soldiers remain on their squares (for otherwise he would block in his own pieces, and thereby give the White player even more moves as an advantage) and move his King’s Archer-Soldier [[notes: Likely the pawn in front of the Bishop, which was often called the "Archer" in German chess terminology of the era]] to six-and-forty: White moves,
+
+[[sig: Bbb ii]]
+[[meta: catchword: the K.]]
+
+[[summary: This page introduces the fourth section of the treatise, focusing on "odds" matches where one player receives a starting advantage. It begins with a scenario where the White player is granted two opening moves and describes the optimal defensive response for the Black player using the author's specific 64-square numbering system.]]
+
+[[keywords: Chess Theory, Handicaps, Gustavus Selenus, Damiano, Courier Chess, Chess Notation, 17th Century Gaming, Openings]]

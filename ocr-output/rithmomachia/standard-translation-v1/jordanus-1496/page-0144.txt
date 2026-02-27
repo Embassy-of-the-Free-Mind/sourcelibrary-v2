@@ -1,0 +1,41 @@
+[[meta: This page concludes the concordance table comparing the mathematical works of Boethius and Jordanus Nemorarius and begins a dedicatory letter from the humanist scholar Jacques Lefèvre d’Étaples regarding a mathematical board game called Rithmomachia.]]
+
+E
+Divine Severinus Boethius ¶ Jordanus.
+
+| Properties of numbers. | Chapter. | Book. | Proposition. | Book. |
+| :--- | :---: | :---: | :---: | :---: |
+| **Geometric mean.** [[notes: Latin: *Medietas geometrica*. A proportion where the ratio between the first and second terms equals the ratio between the second and third (e.g., 2, 4, 8).]] | | | | |
+| 1 | 43 | 2 | | |
+| 2 | 44 | 2 | 1 | 2 |
+| 3 | 44 | 2 | 3 | 2 |
+| 4 | 44 | 2 | 20 | 10 |
+| 5 | 44 | 2 | 5 | 2 |
+| 6 | 44 | 2 | 25. 26 | 2 |
+| 7 | 44 | 2 | 0 | 0 |
+| 8 | 50 | 2 | 38 | 9 |
+| **Musical mean.** [[notes: Latin: *Medietas musica*. Now commonly known as the "harmonic mean." It is one of the three classic means, often used in ancient music theory to determine string lengths.]] | | | | |
+| 1 | 45 | 2 | 34 | 10 |
+| 2 | 47 | 2 | 37 | 10 |
+| 3 | 50 | 2 | 40 | 10 |
+| 4 from music | 48 | 2 | 32 | 3 |
+| **Fourth mean.** [[notes: Boethius identifies ten types of "means" or proportions; the "fourth" is a specific variation beyond the standard arithmetic, geometric, and harmonic means.]] | | | | |
+| 1 | 51 | 2 | 7 | 2 |
+| **Fifth mean.** | | | | |
+| 1 | 51 | 2 | 7 | 2 |
+
+---
+
+->¶ End of the Summary of the Books of Arithmetic of Boethius.<-
+
+### ¶ Jacques Lefèvre d’Étaples to Bernard Ulencario, doctor of medicine and lover of numbers.
+[[notes: Jacques Lefèvre d’Étaples (Jacobus Stapulensis, c. 1455–1536) was a leading French humanist. Bernard Ulencario (Bernhard Olze) was a physician and associate of Lefèvre.]]
+
+[[margin: C]]
+You have observed, my dear Bernard, that all disciplines toward which a noble spirit must strive are difficult, since all virtue is concerned with what is difficult. Truly, this difficulty should never deter anyone, except for those alone who—being ill-deserving of the literary arts—dissuade others from what they themselves despair of grasping. They do this either because they envy others as being more fortunate than themselves, or rather because it would be a source of shame for them to admit their own ignorance. But you know how far all envy is removed from this most famous University of Paris, how it drives out ignorance, and how they approve of Clitomachus of Carthage [[notes: A philosopher of the New Academy who famously began his studies late in life]]. He sought the study of letters only after reaching his fortieth year, yet he profited so much that he became the successor to Carneades. Therefore, one should not doubt that this place is a safe station for the disciplines and a secure harbor; from wherever they arrive, they are received with kind favor and the most friendly hospitality.
+
+For this reason, when in recent days the study of Arithmetic and Music was committed to this place as a refuge for the benefit of students, you wished for **Rithmomachia** [[notes: Also known as "The Philosopher's Game," it was a complex medieval board game based on Pythagorean number theory]] to be prepared at the same time. This is indeed a noble game of numbers, and one which it is fitting for studious youths to know, lest the disciplines seem too austere. By this game, those young beginners who are occasionally exhausted by study are accustomed to keep their minds and their strength healthy through both useful leisure and honorable activity. Such a plan was indeed fitting for a physician. And if any shall love the integrity of this game, they will rejoice through your efforts that it has been inserted here after the serious disciplines. We introduce the mathematician Alcmaeon, a disciple of Pythagoras, along with Brontinus and Bathyllus [[notes: Figures associated with the early Pythagorean school of philosophy]], who were youths of that time. Farewell.
+
+[[summary: This page completes the cross-reference table between Boethius and Jordanus regarding mathematical means and introduces a dedicatory letter for a book on Rithmomachia. The letter, written by Jacques Lefèvre d'Étaples, defends the study of difficult mathematics and frames the "Game of Numbers" as a healthy intellectual exercise for students.]]
+
+[[keywords: Boethius, Jordanus Nemorarius, Geometric Mean, Harmonic Mean, Jacques Lefèvre d'Étaples, Bernard Ulencario, Rithmomachia, University of Paris, Pythagoreanism, Philosophy of Education]]

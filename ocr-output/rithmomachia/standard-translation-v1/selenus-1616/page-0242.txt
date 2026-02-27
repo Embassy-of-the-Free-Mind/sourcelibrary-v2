@@ -1,0 +1,133 @@
+[[meta: This page provides the visual diagrams for the tactical scenarios described in Chapter 12 of the Second Book. It illustrates the positions and movements through a series of chessboards, using the Selenus coordinate system and piece abbreviations.]]
+
+[[margin: 12. cap: The Second Book]]
+
+### n. 5. 6.
+[[notes: These diagrams represent the state of the chessboard at specific points in the game's progression. The letters denote the pieces: BR (Black Rook), BP (Black Pawn/Soldier), BK (Black King), WP (White Pawn/Soldier), WK (White King), and WR (White Rook). The numbers refer to specific squares or move sequences in the Selenus notation system.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | BP | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | | | | |
+| | | | | WP | | | BR |
+| | | | 29 | | BP | 26 | |
+| | | | | | WR | | |
+| WP | WP | WP | WP | | | WP | WP |
+| WR | WR | WP | WK | WK | WP | | WR |
+
+---
+
+### n. 9. 10.
+[[notes: In early modern German printing, "j" was often used for the number "1". Thus, "jo." represents "10".]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | | | BK | BP | | BR |
+| BP | BP | BP | | BR | BP | | BP |
+| | | | BP | | | | |
+| | | | | WP | 35 | | |
+| | BR | WP | WP | WK | BP | BP | |
+| | | WR | | | WR | | |
+| WP | WP | | | | | WP | |
+| WR | | WP | | WK | WP | | WR |
+
+---
+
+### n. 16. 19.
+[[notes: "j6" and "j9" are 16 and 19.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | | BK | BK | BP | | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | | BP | | | | |
+| | | | | | | | |
+| | | | WP | WP | WP | BP | BP |
+| | | | WP | | | WR | |
+| WP | WP | WK | | | | BR | WP |
+| WR | WR | WP | WK | | | WR | |
+[[margin: 17]]
+
+---
+
+### n. 22. 27.
+[[notes: "zz" and "z7" represent 22 and 27, as "z" was frequently used for the number "2" in this script style.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BK | | BP | | BR |
+| BP | BP | BP | | BR | WP | BP | BP |
+| | | | | BR | BR | | |
+| | | | WP | WK | WP | | |
+| | | | | | | | |
+| | | WP | | | | | |
+| WP | WP | WK | | | | | |
+| WR | WR | | | WR | | | |
+[[margin: WP]]
+
+<column-break/>
+
+### n. 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | | BK | BP | | BR |
+| BP | BP | BP | BP | BR | BP | BP | BP |
+| | 47 | | | | | | |
+| | | | BR | WP | | | |
+| | | 31 | WP | | | BP | |
+| | | | | | | WR | |
+| WP | WP | | WP | WK | | WP | WP |
+| WR | WR | WP | | WK | WP | | WR |
+
+---
+
+### n. 13. 14.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | | | | BP | | BR |
+| BP | BP | BP | BK | BR | | | BP |
+| | | BR | 46 | 45 | | | |
+| | | | | | | | WR |
+| | | | WP | | | | |
+| | | | | BP | | WP | WP |
+| WP | WP | | | | WR | | |
+| WR | | WP | | WK | | | WR |
+
+---
+
+### n. 20. 21.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | | BK | | BP | BR |
+| BP | BP | BP | | | BR | WP | BP |
+| | | | | BP | | BR | BR |
+| | | | | | WP | WK | WP |
+| | | | | | WP | | |
+| | | | | WP | | | |
+| WP | WP | WK | | | | | |
+| WR | WR | | | | | WR | |
+[[margin: BP]]
+
+---
+
+### n. 25. 26.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | 62 | BK | 60 | | | BR |
+| BP | BP | BP | | BP | | BP | |
+| | | | | | WP | BP | |
+| | | | | WR | | | |
+| | | | | | | | |
+| | | | WP | | | | |
+| WP | WP | WK | WR | BR | | | |
+| WR | | | | WR | | | |
+[[margin: WP]]
+
+[[summary: This page presents eight chessboard diagrams illustrating the tactical variations and move sequences discussed in the text of Chapter 12. These visual aids help the reader follow the complex material gains and positioning described in Gustavus Selenus's chess treatise.]]
+
+[[keywords: chess diagrams, Selenus notation, 17th-century chess, tactics, board layout, chess pieces]]

@@ -1,0 +1,21 @@
+So, 2 compared <note>original: "referred"</note> to 4 is the root <note>original: "rote"</note> of a square; compared to 8, it is the root of a cube. 2 compared to 16 is the root of a fourth power <note>original: "foure squared quadrate"</note>. 2 compared to 32 is the root of a fifth power <note>original: "surfolide"</note>. 2 compared to 64 is the root of a sixth power <note>original: "quadrate of a cube"</note>. These numbers must have the proper algebraic <note>original: "cossicall"</note> signs. Also, one number having various <note>original: "diuers"</note> relationships may have various algebraic signs; for example, 9 compared to 81—being the root—has the sign of a root (℞), but when compared to 3, it has the sign of a square <note>original: "quadrate"</note>, for it is the square of 3 and is signed thus (ℨ). The same applies to the rest that have similar relationships.
+
+### ¶ The marking of the pieces <note>original: "men"</note>.
+
+The first row <note>original: "order"</note> of circles <note>original: "roundes"</note> in both sets of numbers must have the sign of the root upon them all, in this manner:
+
+| 8 | 6 | 4 | 2 |
+| :---: | :---: | :---: | :---: |
+| 𝓏 | 𝓏 | 𝓏 | 𝓏 |
+
+| 9 | 7 | 5 | 3 |
+| :---: | :---: | :---: | :---: |
+| 𝓏 | 𝓏 | 𝓏 | 𝓏 |
+
+<summary>
+This text explains how numbers in the Philosophers' Game change their mathematical designation and algebraic (cossic) signs based on their relationship to other numbers. A single number can be a root in one context (like 9 relative to 81) or a square in another (9 relative to 3). It concludes with instructions on how to physically mark the circular game pieces (the "rounds") with the root symbol.
+</summary>
+
+<keywords>
+Rithmomachia, Philosophers' game, algebraic signs, cossic signs, root, square, cube, mathematical relations, game pieces, sursolid, quadrate
+</keywords>

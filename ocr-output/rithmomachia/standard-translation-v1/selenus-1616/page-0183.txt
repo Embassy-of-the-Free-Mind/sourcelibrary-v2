@@ -1,0 +1,24 @@
+[[meta: This page continues the tactical instructions from Chapter 4, which focused on the coordination of pawns and major pieces through military metaphors of garrisons and relief forces. It now transitions into the specific rules regarding the King and the mechanics of "Check."]]
+
+# On the Game of Chess.
+
+[[margin: 5.cap: [[notes: Chapter 5]]]]
+
+*A decorative woodcut headpiece featuring symmetrical scrollwork and floral designs flanking a central circular medallion containing a cross.*
+
+### The Fifth Chapter.
+
+#### How one must use and defend the King, regarding Checks and Checkmates; also, how players should behave when their game, at the conclusion, becomes equal on both sides with few pieces remaining.
+
+Furthermore, following the order indicated at the beginning of the previous fourth chapter, the player who says **Check** [[notes: *Schach*; the warning given when the King is under direct attack]] must point out and indicate by which **piece** [[notes: *Stein*; literally "stone," the standard term for any chess piece in this period]] the check occurs. This is because, if he does not show it, but instead makes another **move** [[notes: *Zug*]] in between, he cannot compel the other player to move out of the check. 
+
+However, if he should move the same piece with which he previously gave check—moving it forward or backward into another square—and then offers check a second time and points it out, and the other's **King** still stands in a square where this piece could give check according to the rules of the game, then in that case, the other player is obliged to move his King out of check, provided he cannot cover it [[notes: *bedecken*; to block the line of attack with another piece]] or capture the piece that is offering the check. Regarding this, it should be noted that the King may be moved along the same line—regardless of the other's piece and as if nothing were hindering him—so long as the opponent does not give and indicate another check.
+
+Furthermore, if someone has moved a piece which offers a check to the opponent's King, but does not realize it immediately—noticing it only after several moves have passed—then the moves that have already occurred should not be retracted, nor should everything be restored to its previous state. Rather, the one who overlooked it must blame himself for neglecting the good opportunity. For the sake of one person’s negligence, the whole **heap** [[notes: *hauffe*; here referring to the "set" or the current arrangement of pieces on the board]] should not be thrown into disorder. Otherwise, a player might effectively use two pieces at once: checking the King with one, while lurking with the other to snatch up a valuable piece. Which however...
+
+V ij [[notes: *Signature mark for the printer*]]
+[[meta: catchword: (wie]]
+
+[[summary: This page outlines the formal etiquette for announcing "Check," establishing that a player must explicitly point out the threat to the King. It also clarifies that missed checks do not allow for the game to be rewound, placing the burden of vigilance on the attacking player.]]
+
+[[keywords: Check, King, Chess rules, 17th-century chess, etiquette, pieces, game state, checkmate]]

@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical breakdown of the "First Manner" of chess openings, specifically critiquing the moves proposed by the Portuguese author Pedro Damiano. The text transitions from the specific move sequences into a broader critique of Damiano's pedagogical style.]]
+
+### The Third Book / Chapter 1
+
+» and forty: The White [player] / [moves] against the same / the King’s Bishop / to
+» nine and thirty: The Black [player] / [moves] the same / (to exchange her / with the
+» White Queen) to two and forty: [[notes: In the 1–64 numbering system used here, 42 corresponds to square c3 in modern notation.]] The White [player] /
+» takes her / with his Queen / and gives check: The Black [player] / [takes]
+» the same / with the King’s Rook’s Soldier [[notes: "Soldaten" or Soldiers refer to Pawns.]]: The White [player] / [takes] the
+» Black King’s Bishop’s Soldier / with the King’s Rider [[notes: "Reuter" or Rider is the Knight.]], gives check / and
+» thus wins / their Rook / together with the whole game.
+
+This is now Damiano's [[notes: Pedro Damiano (1480–1544) was a Portuguese apothecary and chess theorist. His book *Questo libro e da imparare giocare a scacchi* was a major influence on early modern chess.]] report of this First Manner of arranging chess moves, although he has composed and presented it with slightly different words, plainly and without indicating any reasons. However, anyone who wishes to employ these moves will easily be able to judge whether such a beginning to the game is fine and elegant. Even though it is equally the duty and responsibility of one who wishes to provide order, instruction, and teaching of this game to describe not only the way one should attack the enemy, but also how one can protect and defend oneself: yet such a thing was not taken into account at all by the aforementioned Portuguese author. In consideration that he only puts forth such matters that no player uses, nor will ever use with any benefit. Just as anyone who is only slightly knowledgeable in this game must recognize the recently mentioned manner and beginning as a harmful way to play.
+
+[[margin: 13.]] Which then appears primarily from the fact that he (n. 7 above) [[notes: Refers to point number 7 on the previous page.]] states: That * the Black King’s Rider / when the White King’s Bishop is moved against him / to 27. / must be lost by force: Considering that the same (as consistently appears from the following report) can indeed be saved: Namely, if the Black [player] moves the King’s Bishop’s Soldier against the White King’s Rider to forty-six: For he [the Black player] is able to jump with the King (to further protect this Rider: even though the White [player] moves the King’s Rider to twenty-two: preventing the check from his Queen from thirty-one in such a way: giving no cause for the exchange of Queens: and making no room for his King’s Rider) subsequently to forty-three / and / to defend the same [the Knight] well in such a way, provided he understands the game. Even though the game is not quite so good because of this, that the King is moved into the open field: yet this move is intended so that one of his pieces might thereby be preserved and protect-
+
+<meta>catchword: ed.</meta>
+
+[[summary: This page concludes a specific move sequence and offers a harsh critique of Pedro Damiano's chess theories, arguing that Damiano fails to teach defensive play. The author demonstrates a specific counter-move involving the King and a Pawn to save a Knight that Damiano claimed was lost.]]
+
+[[keywords: Pedro Damiano, Chess Openings, Knight Defense, Chess Tactics, Early Modern Chess, King's Bishop, King's Rider]]

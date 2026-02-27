@@ -1,0 +1,19 @@
+[[meta: This page is physically blank but displays "ghosting" or "offsetting"—a phenomenon where ink from a facing page transfers a faint, mirrored image onto the adjacent leaf over centuries of being pressed together in a binding. The ghosted text and architectural border seen here do not belong to the 1616 treatise on Rythmomachia, but rather to a different work, likely published in 1630 by the Cologne printer Johann Kinckius, which was once pressed against this side.]]
+
+[[unclear: Of His Roman]]
+[[unclear: Imperial]]
+[[unclear: Majesty]]
+[[unclear: ...]]
+[[notes: This phrase is part of a standard "Privilege" or copyright statement, indicating the book was published with the official protection of the Holy Roman Emperor.]]
+
+---
+
+->At the house of<-
+->**JOHANN KINCKIUS**<-
+[[notes: Johann Kinckius (1579–1656) was a highly successful and prolific printer, publisher, and book merchant based in Cologne. His presence here indicates that this volume might be a "Sammelband"—a collection of different works by various printers bound together by a single owner.]]
+->**1630**<-
+[[notes: The Roman numerals in the original transcription (MDCXXX) identify the year as 1630, fourteen years after the publication of the "Rythmomachia" treatise found earlier in the volume.]]
+
+[[summary: This page is a blank leaf containing a faint, mirrored ink transfer (ghosting) from a facing 1630 title page printed by Johann Kinckius in Cologne. It provides evidence of how the book was bound and stored alongside other 17th-century works.]]
+
+[[keywords: ghosting, ink transfer, Johann Kinckius, Cologne, 17th-century printing, Imperial Privilege]]

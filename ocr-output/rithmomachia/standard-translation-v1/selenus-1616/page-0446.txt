@@ -1,0 +1,50 @@
+[[meta: This page continues the tactical analysis of Pedro Damiano’s chess openings, specifically focusing on the consequences of certain defensive moves and the author’s critique of Damiano’s oversight regarding the value of pawns.]]
+
+<header>The Fourth Book / 6th Chapter:</header>
+
+» to defend it) to twenty-six: White moves, upon
+» the same, the King’s Rook’s Soldier [[notes: Rook's Pawn]] to seventeen:
+» Black moves the same to thirty-three: White,
+» furthermore, moves the King’s Rider’s Soldier [[notes: Knight's Pawn]] to
+» twenty-six / and thus obtains / besides the Black King’s Rider / the Black
+» King’s Soldier [[notes: King's Pawn]]. But if Black takes the aforementioned White
+» Soldier with the King’s Rider: and White takes the same with
+» the King’s Rook’s Soldier: and Black takes the same with
+» the King’s Archer [[notes: Bishop]] / and places the White King’s Rider
+» elsewhere into custody [[notes: meaning the piece is trapped or pinned]]: then White moves
+» the King’s Rook to two: Black (to protect the same)
+» moves the King’s Rook’s Soldier to thirty-three: White
+» takes / with the King’s Soldier / the Black King’s Soldier:
+» Black takes the same with the King’s Archer’s Soldier:
+» White takes the same with the King’s Archer / and may well
+» win against Black.
+
+This is now Damiano’s report [[notes: Pedro Damiano, whose 1512 work *Questo libro e da imparare giocare a scacchi* revolutionized chess theory]] of this variation: It has,
+however, for the greater benefit and advantage of chess-players /
+been brought out of great disorder into a clearer understanding.
+For he also, in this description, shows himself rather imprudent
+<margin>5.</margin> » in his consideration: (No. 2) he claims: * that
+» White (when Black moves the King’s Soldier to 37 to
+» break his game) should push his King’s Soldier to 21:
+Whereby he, however, loses the King’s Archer’s or the King’s Soldier
+(which are counted among the best Soldiers [[notes: Pawns]]) through this move.
+» For / when Black robs [[notes: "raubet," meaning captures]] the White King’s Soldier
+» with the King’s Soldier (No. 3): White (as Damianus
+» deems advisable) takes the Black King’s Soldier with
+» the King’s Soldier: Black takes the White Queen with his Queen /
+<margin>6.</margin> and offers check: * White takes her with the King:
+Black takes the White King’s Archer’s Soldier with his King’s
+Archer.
+<margin>7.</margin> But if White does not rob the Black Queen with the King
+(No. 6) but rather with the King’s Rider: then Black takes
+the White King’s Soldier with the King’s Rider.
+In this example / there are now two errors to be noted which were
+committed by Damiano: Namely (1.) that White (who should defend
+himself) loses one of his best Soldiers immediately because of the
+first move: and (2.) Black (who
+
+[[meta: catchword: den an-]]
+
+[[summary: This page concludes a sequence of moves from Damiano’s chess theory and begins a critical analysis of his errors, specifically regarding the loss of valuable pawns and the consequences of a Queen exchange. The author argues that Damiano’s suggested defensive moves for White are imprudent.]]
+
+[[keywords: Pedro Damiano, chess strategy, King's Soldier, King's Rider, pawn value, tactical analysis, chess history]]

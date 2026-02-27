@@ -1,0 +1,23 @@
+[[meta: This page begins Chapter 13, continuing the technical analysis of chess openings. It transitions from the variations discussed in Chapter 12 to a scenario where White develops the King's Bishop early.]]
+
+->**Of Chess.**<-
+
+[[meta: Catchword: Solda (referring to "Soldaten" on the next page)]]
+
+<image-desc>A decorative horizontal woodcut headpiece featuring symmetrical acanthus leaf scrolls and floral motifs. In the center, there is a small architectural or vase-like element, flanked by reclining human figures or cherubs woven into the foliage.</image-desc>
+
+### Chapter Thirteen.
+## How a game is to be conducted when White moves the King’s Bishop [[notes: *Königes-Schütze*, literally "King's Marksman"]] out, rather than the Knight or the Soldier [[notes: *Soldat*, the common term for a Pawn in this era]], as mentioned in the previous chapter.
+
+NOW, if White (after Black has taken the White King’s Bishop’s Soldier with the King’s Soldier) does not move the Knight to 19, nor the Soldier to 29 (as per numbers 2 and 15 of the previous chapter), but instead moves the King’s Bishop to thirty: then Black can meet him in three ways: namely, with the Knight from forty-three; with the Queen from twenty-five; or with the Soldiers from forty-six and thirty-five.
+
+[[margin: 1.]] Regarding the First Way: When the King’s Soldier has moved into the field [[notes: advanced]]; White has moved the King’s Bishop’s Soldier to 27; Black has captured the same with the King’s Soldier; and White has moved the King’s Bishop to thirty: then Black moves the King’s Knight [[notes: *Reuter*, literally "Rider"]] to the White King’s Soldier at forty-three. White (to protect the same) moves
+[[margin: 2.]] the Queen to the Black King’s Soldier at nineteen. * Black also moves his Queen to the White King’s Soldier at fifty-two. White (to further preserve the same) moves the King’s Knight to twenty-two. Black (to defend his King’s Soldier) moves that Knight’s Soldier to thirty-four. White (to break the enemy’s play and intention) moves the King’s Rook’s Soldier [[notes: *Rochens-Soldat*, the Rook's Pawn]] to twenty-five; he can thus, if he only takes a little care, easily win the game.
+[[margin: 3.]] But if Black does not move the Queen to 52 (as in no. 2), but instead moves the King’s Bishop to thirty-eight: then White moves the King’s Bishop’s Soldier to twenty-two.
+[[margin: 4.]] * Black (to protect his King’s Soldier) moves his Knight’s Soldier to thirty-four. White moves the King’s Soldier to the Black King’s Bishop at twenty-nine. Black moves the same to forty-seven. White moves the King’s Rook's—
+
+[[vocab: Schach-Spiel (Chess), Weisse (White), Schwartze (Black), Reuter (Knight), Soldat (Pawn), Königes-Schütze (King's Bishop), Königin (Queen), Rochens-Soldaten (Rook's Pawns)]]
+
+[[summary: This page initiates Chapter 13 of the treatise, detailing a specific variation of a chess opening where White develops the King's Bishop to square 30. It outlines the tactical responses for Black, specifically focusing on the first of three defensive methods involving the Knight and Queen.]]
+
+[[keywords: Chess tactics, King's Bishop opening, Selenus notation, early modern chess, maneuver, gambit variations]]

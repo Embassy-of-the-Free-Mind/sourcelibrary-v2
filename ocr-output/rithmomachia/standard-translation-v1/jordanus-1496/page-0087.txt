@@ -1,0 +1,43 @@
+[[meta: This page begins the formal treatise of Jacques Lefèvre d’Étaples's *Elements of Music*. It follows the preface dedicated to his teachers and transitions into the primary dedication to Nicolas de Haqueville. The text moves from introductory praise to the foundational definitions, axioms, and postulates of musical science, heavily influenced by the mathematical traditions of Boethius and Euclid.]]
+
+# ¶ The first book of the Musical Elements of Jacques Lefèvre d’Étaples, to the most distinguished man Nicolaus de Haqueville, President of Paris.
+
+**An interval** is the relationship [[notes: The Latin *habitudo* implies a formal relationship or ratio.]] between the spaces of a low and a high sound.
+We call **space** a nerve [[notes: Meaning a gut string.]], a chord, exhaled air, or anything similar from which we draw out a sound.
+**A multiple interval** occurs whenever the larger space contains the smaller space several times. If twice, it is called a **double** interval; if three times, it is called **triple**; if four times, it is called **quadruple**; and so on in this manner.
+**A superparticular interval** is when the larger contains the smaller plus some part of it.
+**A part** is that which measures the whole, restoring the whole when taken a certain number of times.
+If the larger contains the smaller and half of it, the interval is named **sesquialter** [[notes: A 3:2 ratio, known in music as a perfect fifth.]].
+If the larger contains the smaller and a third part of the smaller, it is called **sesquitertium** [[notes: A 4:3 ratio, known as a perfect fourth.]].
+If indeed it contains the smaller and an eighth part of that same smaller, it is named **epogdoum** or **sesquioctave** [[notes: A 9:8 ratio, which defines the mathematical "tone" or whole step in Pythagorean tuning.]]. And thus it is very easy to define the remaining superparticular intervals, but they contribute little to the musical purpose.
+Furthermore, an interval would be called **superpartient** if the larger contained the smaller and several parts of the smaller which do not make up a single unit [[notes: For example, a 5:3 ratio, where 5 contains 3 plus two-thirds of 3.]].
+**Numbers are prime to one another** which are measured by unity [[notes: The number one]] alone.
+
+## ¶ Axioms [[notes: Lefèvre uses *Dignitates*, the traditional term for "Common Notions" or self-evident truths in geometry and logic.]].
+<margin>1</margin> Whatever measures another also measures everything measured by that thing.
+<margin>2</margin> A composite is resolved into the simple elements from which it is composed.
+<margin>3</margin> Unity is a part of any number, named from that number [[notes: For example, 1 is the "third part" of the number 3.]].
+<margin>4</margin> Unity, when drawn into [[notes: Multiplied by]] any number, produces that same number.
+<margin>5</margin> Whatever measures the part taken away and the remainder also measures the whole.
+<margin>6</margin> Whatever things are equal to one and the same thing are also equal to each other.
+<margin>7</margin> And those which are equal to each other are equally multiples or submultiples of the same thing.
+<margin>8</margin> Of those things whose wholes are equal, their halves are also equal.
+<margin>9</margin> Whatever, when increased twice, transcends something, must necessarily be more than half of that thing.
+<margin>10</margin> And that which, when doubled, does not fill the whole, certainly does not contain the half.
+<margin>11</margin> Every whole is greater than its part.
+
+## ¶ Postulates [[notes: *Petitiones* are the starting assumptions or "demands" the author asks the reader to grant for the sake of the demonstration.]].
+<margin>1</margin> Given an equal string: that the proportion of space to space is the same as the proportion of sound to sound.
+<margin>2</margin> Between numbers differing only by unity, no mean [[notes: A middle term that maintains the same ratio]] can be intercepted.
+<margin>3</margin> To divide any space into any number of equal parts.
+<margin>4</margin> That the whole compared to its part, and the looser compared to the tighter tension, produces a lower sound.
+<margin>5</measure> That every proportion is as a number to a number.
+<margin>6</margin> If a number multiplies a given number and then divides the product, the given number returns.
+<margin>7</margin> If a number divides a given number and then multiplies the result, the given number returns.
+<margin>8</margin> That the proportion of the extremes is composed of the proportions of the means as if from its own parts.
+The **extremes** of ordered proportions are understood to be the greatest and the smallest terms.
+
+¶ Music is a **subalternate science** to Arithmetic; it uses the principles and demonstrated facts of the prior science to which it is subalternate [[notes: In the Aristotelian tradition, a "subalternate" science (like music or optics) depends on a "pure" science (like arithmetic or geometry) for its proofs.]]. But we have striven so that this happens as rarely as possible in this discipline. Indeed, for the most part, where it seems opportune and has been done otherwise in arithmetic, we will use a mode of demonstrating whereby individual points seem to be made more from their own properties. Although the same things could be done more promptly and easily with the support of arithmetic and those things shown in arithmetic, nevertheless, when that will be done and when it will not will be able to emerge clearly to anyone through the following demonstrations.
+
+[[summary: This page establishes the mathematical foundations of music theory, defining intervals as ratios of physical "spaces" (strings) and listing the logical axioms and postulates required for musical proof. Lefèvre d’Étaples positions music as a science dependent on arithmetic but aims to provide it with its own internal logic.]]
+[[keywords: musical intervals, superparticular, sesquialter, sesquitertium, epogdoum, axioms, postulates, subalternate science, arithmetic, Jacques Lefèvre d’Étaples]]

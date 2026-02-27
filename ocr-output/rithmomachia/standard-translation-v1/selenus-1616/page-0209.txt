@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical analysis from Chapter 8. The coordinate system used by the author treats the board as a single sequence of squares from 1 to 64, starting from White's side (where 1 is a1 and 64 is h8).]]
+
+-># On the Game of Chess.<-
+
+[[margin: I. cap:]]
+[[margin: 16.]] But when **the Black player** does not wish to play both **Knights** [[notes: *Reuter*; literally "Riders"]], (no. 2. 9.) but instead sets the **King's Bishop’s Soldier** [[notes: *K. Schützens-Soldaten*; the Pawn located in front of the Bishop]] on forty-six [[notes: Square f6]]: then **the White player** likewise makes an attack with the **King’s Bishop’s Soldier** on twenty-seven [[notes: Square c4]]: **The Black player** takes him with his **King’s Soldier** [[notes: *K. Soldaten*; the King's Pawn]]: **The White player** plays the **King’s Soldier** onto [the square of] the **Opponent's King’s Bishop** [[notes: *G. K. Schützen*; likely meaning the square e4, attacking the diagonal]] on twenty-nine [[notes: Square e4]]: **The Black player** offers check with the **Queen** on twenty-five [[notes: Square a4]]: **The White player** moves the **King** to five [[notes: Square e1]]:
+
+[[margin: 17.]] * **The Black player** [moves] the **King’s Bishop** against the **White Queen** on twenty-six [[notes: Square b4]]: **The White player** [moves] the **King’s Knight** to nineteen [[notes: Square c3]], covers his **Queen** with the same, and pursues the **Black Queen**: **The Black player** (so that he does not lose the **King’s Bishop**) takes the **White King’s Knight** with his **King’s Bishop**: **the White player** [takes] the same with the **Queen**, and thus wins, with the help of her **Bishop**, the **Opponent's King’s Soldier** [[notes: The Black King's Pawn]].
+
+[[margin: 18.]] But when **the Black player** does not move the **Queen** to 26. (no. 17.) but instead [moves] the **King’s Bishop** to forty-seven [[notes: Square g6]]: then **the White player** plays against the **Black Queen** (and to protect the **King’s Rook’s Soldier** [[notes: *K. Rochens-Soldaten*; the King's Rook's Pawn]]) his **Knight** to nineteen [[notes: Square c3]]: **the Black player** [moves] the same [the Queen] (in order to further protect her **King’s Soldier**) to twenty-six [[notes: Square b4]]: **the White player** [moves] the **King’s Rook’s Soldier** against the same to seventeen [[notes: Square a3]]: **the Black player** [moves] the same (to protect the **King’s Soldier** once more) to eighteen [[notes: Square b3]]: **the White player** [moves] the **King’s Knight** to thirteen [[notes: Square e2]]: **the Black player** /
+
+[[margin: 19.]] [moves] the **King’s Knight** to forty-three [[notes: Square c6]]: * **the White player** [moves] the **King’s Knight** against the **Black Queen** on three [[notes: Square c1]]: **the Black player** [moves] the same [the Queen] (because otherwise she can flee nowhere else) to forty-two [[notes: Square b6]]: **the White player** takes the **Black King’s Soldier** with his **King’s Bishop**, or advances the **King’s Bishop** to twenty-one [[notes: Square e3]].
+
+[[margin: 20.]] But when **the White player** does not move the **Knight** to 3. (no. 19.) but instead moves the **King’s Rook** [[notes: *K. Rochen*; an archaic term for the Rook or Castle]] to four [[notes: Square d1]]: then **the Black player** advances (for the future protection of his **King’s Soldier**) his **Knight** to thirty-three [[notes: Square a5]]: **the White player** [moves] the **King’s Soldier** against the **Black King’s Soldier** to thirty-six [[notes: Square d5]] and will, with this well-ordered game, so long as he is careful, easily win.
+
+->[[image-desc: A decorative woodcut ornament featuring a symmetrical arrangement of floral scrolls and foliage.]]<-
+
+Z iij
+[[meta: catchword: An den]]
+
+[[summary: This page details specific opening variations and counter-moves, focusing on how White can exploit Black's defensive setups involving the King's Bishop and Queen. It uses a 1-64 coordinate system to describe tactical maneuvers involving Knights, Bishops, and Pawns.]]
+[[keywords: Chess tactics, Opening theory, King's Bishop, Knight maneuvers, King's Pawn, 17th-century chess, Chess notation]]

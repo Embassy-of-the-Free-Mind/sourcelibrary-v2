@@ -1,0 +1,45 @@
+[[meta: This page continues the fifth chapter regarding the six methods of capture in Rythmomachia. While the previous page likely concluded with "Capture by Equality" (matching identical numbers), this page introduces the second method: Capture by Addition (Zusammen-rechnen), where the sum of two pieces equals the value of the piece to be captured.]]
+
+### On the Battle of Numbers.
+
+<sig>Nnn 2</sig>
+<meta>catchword: Hanc</meta>
+
+(Buxer: fol: 25. b. & 44. b.) [[notes: Reference to the works of Gustavi Seleni (Augustus the Younger) or his sources like Buxerius.]]
+
+[[margin: He calls this mode of fighting a Meeting, or a Capture by Equality.]] [[notes: Although the margin mentions "Equality," the text clearly describes "Addition." In early mathematical games, the "meeting" of multiple numbers to equal another was often grouped under similar terminologies.]]
+
+Through **Addition** / the stones / are taken or lost / as follows:
+
+Two stones / with lower numbers / can capture one / with higher numbers / provided that their **combined sum** / matches the other’s number / and they / are moved into such spaces / from which they / according to their proper movement / can reach and hit / the space in which / the one with the higher numbers / is present : These two stones, however / remain on their own spaces : For example / if the **White Round Stone** / with 16, were on C: and the **White Triangular Stone** / with 9, were on D: and the **Black Round Stone** / marked with 25 / stood on E : then this Black stone / because / the two White stones' numbers / make 25 / and can reach the place / in which / the Black one / stands / is taken away from E : but they [the white stones] remain / on C and D. [[notes: Unlike Chess, where a piece replaces the one it captures, in Rythmomachia, pieces often capture "from a distance" if their mathematical value and their move-distance (range) align with the target.]]
+
+The following numbers / win / and are conquered / in this game / by counting together : And there stand / on the left side / the two numbers / of the White company / which can slay a Black stone; or of the Black company / which can slay a White stone : On the right hand, however / the number / of the stone / which / because of the two aforementioned numbers / can be taken.
+
+->Two Whites. One Black.  |  Two Blacks. One White.<-
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 4. | 8. | 12. | 3. | 5. | 8. |
+| 9. | 16. | 25. | 3. | 12. | 15. |
+| 8. | 20. | 28. | 7. | 9. | 16. |
+| 16. | 20. | 36. | 9. | 16. | 25. |
+| 4. | 45. | 49. | 12. | 30. | 42. |
+| 15. | 49. | 64. | 9. | 36. | 45. |
+| 2. | 64. | 66. | 28. | 36. | 64. |
+| 9. | 72. | 81. | 16. | 56. | 72. |
+| 36. | 45. | 81. | 25. | 56. | 81. |
+| 9. | 81. | 90. | 25. | 66. | 91. |
+| 9. | 91. | 100. | 49. | 120. | 169. |
+| 49. | 72. | 121. | 64. | 225. | 289. |
+| 72. | 153. | 225. | | | |
+| 72. | 289. | 361. | | | |
+
+---
+
+(Buxer: fol: 27. a. & 44. b.)
+
+[[gloss: Zahl-Kampf: Number-Battle (Rythmomachia); Rhythmomachia: The Philosopher's Game; Steine: Playing pieces; Zusammen-rechnen: Addition/Summing; Weisse Runde Stein: White Round Stone; Weisse Dreyeckete: White Triangular Stone; Schwartze Runde Stein: Black Round Stone; erobert: Conquered/Captured]]
+
+[[summary: This page explains the "Capture by Addition" rule in Rythmomachia, where two pieces coordinate to remove an opponent's piece if their values sum to the target's value. It includes a comprehensive table of valid mathematical combinations for these captures.]]
+
+[[keywords: Rythmomachia, capture rules, addition, mathematical games, 17th-century gaming, number battle, table of values]]

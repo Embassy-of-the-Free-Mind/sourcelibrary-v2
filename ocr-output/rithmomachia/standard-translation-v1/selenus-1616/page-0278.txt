@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical sequence from page 243. The previous page ended with White considering the capture of Black's King’s Knight’s Pawn. The notation continues using the 1–64 coordinate system, where each square on the board is assigned a specific number.]]
+
+### The Second Book / Chapter 14:
+
+take the **King’s Knight’s Pawn** [[notes: *Reuters-Soldaten*; *Reuter* is the Knight and *Soldat* is the Pawn]]: If he takes it with the **Pawn**: then **White** gives **Checkmate** with the **Queen** from square **fifty-eight**, or (if the **Black King’s Knight** had been moved forward) from **fifty-nine**: But if he takes it with the **Queen** and offers **Check**: then **White** takes her with the **King’s Pawn**: **Black** moves the **King’s Knight’s Pawn** to **forty-two**: **White** takes the same with the **King’s Bishop** [[notes: *Schützen*, literally "Archer," refers to the Bishop]] and moves it to the [square of the] **Black King’s Rook**: **Black** takes it with the **King’s Bishop’s Pawn**: **White** [takes] the same with the **Queen**, offers **Check**, and moves to the [square of the] **Black King’s Rook**: **Black** covers the **King** with his **Rook** [[notes: *Rochen* is an archaic term for the Rook or Castle]] at **fifty-one**: **White** offers **Check** with the **Queen** from **fifty-eight**: **Black** covers the **King** with his **Rook** or (in variation 38) the **King’s Knight** at **fifty-nine**:
+
+[[margin: 38.]]
+* If he covers him with the **Knight**: then **White** gives **Check** with the **King’s Rook** from square **four**: **Black** must move the **King** to **sixty-one**: **White** takes the **Black King’s Rook** with the **Queen**: **Black** moves the **King’s Bishop’s Pawn** (to make room for his **King**) to **forty-six**: **White** (to prevent this) [moves] the **King’s Bishop** to **forty-five**: and subsequently gives **Checkmate** with the **Queen** from **fifty-two**: or with his **Rook** from **sixty**, unhindered.
+
+[[margin: 39.]]
+But if **Black** does not cover the **King** with the **Knight** (as in no. 38) but rather with his **Rook** at **59** and moves it against the **White Queen**: then **White** gives **Check** with his **King’s Pawn** from **fifty-one**: **Black** must move the **King** to **sixty-one**: **White** takes the **King’s Rook** with his **King’s Bishop** and can thereafter very easily maintain the victory against **Black**.
+
+[[margin: 40.]]
+However, if **Black** plays other moves after his **Queen** has been placed on **61** (no. 37) and the **Bishops** were exchanged: **White** still has a good opportunity to carry away the victory.
+
+->[image: A decorative woodcut ornament featuring symmetrical floral scrolls and leaves.]<-
+
+[[meta: Catchword: Das]]
+
+[[summary: This page details specific tactical variations (numbered 38-40) involving a series of exchanges where White utilizes a Queen and Bishop battery to force a checkmate or a winning material advantage. The text demonstrates how White can counter Black's attempts to block checks or create escape paths for the King.]]
+
+[[keywords: Checkmate, King's Knight, King's Bishop, Rook, Queen, endgame tactics, 17th-century chess, square numbering]]

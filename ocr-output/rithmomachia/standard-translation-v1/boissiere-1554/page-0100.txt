@@ -1,0 +1,19 @@
+[[meta: This page continues the author’s introductory remarks, shifting from the specific mathematical rules of Rythmomachia to a moral and practical defense of the game as a "virtuous recreation" for the reader.]]
+
+->DES PHILOSOPHES.<-
+[[notes: "Of Philosophers" — this header likely refers to the "Philosophers' Game," a common alternative name for Rythmomachia during the Renaissance.]]
+
+->G<-
+[[notes: This letter "G" is a signature mark, used by early modern printers to keep the folded sheets of the book in the correct order.]]
+
+this virtuous recreation will be more agreeable to him. And in the meantime, I would ask the kind reader that, before judging me for amusing myself with games rather than grave and useful things, he first gain an understanding of the said game and the profit to be gained from it. I am certain he will not consider such recreation useless; seeing even that many who enjoy this game may not only avoid other vain and vicious pastimes (where one can only lose), but can also acquire something of virtue. 
+
+If you compare this recreation with common games [[notes: The author is likely contrasting this intellectual pursuit with gambling games involving dice or cards, which were frequently criticized by 16th-century moralists for ruining a person's character and wealth.]], you will find that it will bring you great profit, whereas from the others you will gain nothing but loss—not only of your goods, but what is worse, of irrecoverable time and, quite often, your friends. I hope, therefore, that the virtuous for whom I have prepared this work will not choose this recreation out of greedy covetousness, but rather to communicate and discuss the use and properties of such noble numbers [[notes: The "noble numbers" are the Pythagorean proportions that form the basis of the game, which were believed to reflect the harmonic order of the universe.]], seizing the fruit and utility that come from them. 
+
+Therefore, I do not believe I have worked in vain if some utility can come to anyone from my labor. It remains to be said that if I have used certain terms that are not elegant enough in the French language, or if I have sometimes shortened terms to fit the labels of the diagrams when expressing proportions—such as **multipl.** for *multiplice* [[notes: *Multiplice* (multiple) is a technical arithmetic term in the game's logic, referring to a number that contains another number several times exactly (e.g., 4 is a multiple of 2).]], or perhaps **par-**
+
+[[vocab: recreation, games, profit, numbers, utility, proportions, multiple, French]]
+
+[[summary: The author defends Rythmomachia as a virtuous alternative to common gambling, arguing that it preserves time and friendships while teaching the "noble" properties of numbers. He also apologizes for using technical abbreviations or "inelegant" French in his mathematical descriptions.]]
+
+[[keywords: virtuous recreation, gambling vs. games, Pythagorean numbers, mathematical proportions, moral philosophy, French language, Rythmomachia]]

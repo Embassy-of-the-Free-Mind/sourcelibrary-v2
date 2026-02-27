@@ -1,0 +1,14 @@
+[[meta: This page concludes Chapter 15 and the entirety of the Third Book. It continues the tactical advice from the previous page regarding specific pawn movements and coordinate-based strategy.]]
+
+### The Third Book / 15. Chapter:
+
+...forty: then he should move the **King’s Soldier** [[notes: "Soldat" refers to the Pawn.]] to **thirty-seven** [[notes: In the 1–64 numbering system used by Selenus, square 37 corresponds to e5 in modern notation.]] (so that the **Bishop** [[notes: Selenus uses the term "Schütze" (Archer or Shooter) for the Bishop.]], might, as it were, fire upon the **seventeenth square** [[notes: Square 17 is a3.]]).
+
+Let this now be a sufficient reminder for those who truly desire to become good **chess-movers** [[notes: *Schachzieher*, an archaic term for chess players.]]. However, regarding this matter—as it is not fitting to play in such a manner—we shall break off briefly: and herewith, the manner of how the game is begun without a given or taken **advantage** [[notes: *Vortheil* refers to "odds," a common practice in 17th-century chess where a stronger player would start without a specific piece (like a Pawn or Knight) to balance the game against a weaker opponent.]] is concluded and ended (along with this third Book).
+
+->*A decorative woodcut tailpiece follows, featuring a symmetrical design with a central masked face (mascaron) surrounded by elaborate baroque scrollwork and leafy garlands. Two stylized beast heads emerge from the top corners, and ornamental tassels hang from the sides.*<-
+
+[[meta: catchword: The Four-]]
+
+[[summary: This page concludes the third book of the treatise, finishing a technical tactical sequence and transitioning away from games played without "odds" or handicaps. It serves as a formal closing to the instructional section on standard openings.]]
+[[keywords: King’s Soldier, Bishop, Schütze, Chess-movers, Advantage, Odds, Tactics, Gustavus Selenus]]

@@ -1,0 +1,23 @@
+[[meta: This page continues the discussion of Rithmomachia's rules, specifically transitioning from the complex "Great Victory" to simpler "Common Victories" for players who prefer a less demanding game. It references the works of Faber (Jacques Lefèvre d'Étaples) and Buxerius (Claude de Boissière).]]
+
+# The Sixth Chapter
+
+> ...would generate annoyance and weariness; and I believe this was the reason why this wondrous and admirable **Game**, until our own times, has lain so shamefully in the **Shadows**. Therefore, having established the common Victories, I have proposed a freer field of **Play**, for a prompter achievement of **Triumph** and **Victory**. Furthermore, you are aware that **Faber** [[notes: Jacques Lefèvre d'Étaples, a French humanist and mathematician whose 1496 work on Rithmomachia became a standard text.]] —where he assigned individual victories to the divided Evens and Odds—says: He who stands on the side of the **Even Number** can complete the **Victory** with Counters taken through his own industry from the Leader of the **Odd** side. If this is so, it will be placed in my power to mix and mingle **Evens** with **Odds** for the attainment of Victory. But what else, I ask, is this than to put Victories up for sale? Nor does it escape those (who have been somewhat versed in this same **Game**) that it is much easier to report a Victory from the **Counters** of the Enemy than from one's own: For since **Victory** must be prepared in the opposing Enemy's camp, we shall more expeditiously effect harmony and calculation in the **Opposing Counters** than if we were to transfer and place our **own** into **Foreign** seats.
+
+After these seven rules, it should further be remembered for our purpose: That if perhaps some should be found who did not highly value the **Final and Greatest Victory** [[notes: In Rithmomachia, the "Greatest Victory" required creating complex mathematical progressions (arithmetic, geometric, and harmonic) in the opponent's territory.]], but merely wished to play this game simply, without special reflection: they could use another way of winning, and also in **seven different ways**.
+
+1) When they only applied themselves to the **robbing and taking of the stones** of the opponent.
+
+-> ( Buxer : fol : 30. a. ) <- [[notes: This refers to Claude de Boissière, also known as Buxerius, a 16th-century scholar who wrote a popular manual on the game in 1554.]]
+
+> (As: The **Warriors** have agreed that he who, relying on the established rules, has obtained **four of the Enemy's Counters**, without any regard for the Characters or their values, shall also obtain the **Game**: He, therefore, who has first despoiled the Enemy of **Four Counters**, attaining his wish, will achieve **Victory**.)
+
+2) When they were superior to the opponent merely with the **summed numbers** which stand marked on the obtained stones (even if the opponent still had more stones on the board).
+
+-> ( Buxer : fol : 30. a. b.) <-
+
+> (As: A treaty is struck between the **Combatants**, that he who has claimed **100** for himself shall also claim the **Game**: Therefore, if anyone [takes] two Counters, 64. & [[notes: This is a catchword indicating the text continues on the next page with the number 64.]])
+
+[[summary: This page introduces "Common Victories," which are simplified winning conditions for Rithmomachia. It explains that while the "Greatest Victory" is complex, players can also win by simply capturing a set number of pieces or reaching a specific point total.]]
+
+[[keywords: Rithmomachia, common victories, Jacques Lefèvre d'Étaples, Claude de Boissière, mathematical games, game rules, Renaissance education]]

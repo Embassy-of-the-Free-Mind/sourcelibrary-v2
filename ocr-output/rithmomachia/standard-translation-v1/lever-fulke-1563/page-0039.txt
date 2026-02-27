@@ -1,0 +1,21 @@
+->The Philosophers' game.<-
+
+of all their moves <note>original: "draughts"</note> whenever they please <note>original: "list"</note>: into the next space like the circles <note>original: "rounde"</note>, into the third space like the triangles, and into the fourth space like the squares. Finally, in all respects <note>original: "poyntes"</note> he is like the Queen in Chess, except <note>original: "sauing"</note> that he cannot move more than four spaces at the most.
+
+## Of the manner of capturing <note>original: "taking"</note>.
+
+The pieces <note>original: "men"</note> may be captured six ways: namely by Equality, Oblivion, Addition, Subtraction, Multiplication, and Division; and also, if you wish and so agree, by:
+
+| | **Arithmetical** |
+| **Proportions** | **Geometrical** |
+| | **Musical** |
+
+## Of Equality.
+
+***
+
+<summary>
+This page concludes the description of the King's (Pyramid's) movement in Rythmomachia, noting that it combines the moves of the circle, triangle, and square, acting much like the Queen in chess but limited to a range of four spaces. It then introduces the six primary mathematical methods for capturing opposing pieces: Equality, Oblivion, Addition, Subtraction, Multiplication, and Division, along with the optional use of Arithmetical, Geometrical, and Musical proportions.
+</summary>
+
+<keywords>Rythmomachia, Philosophers' Game, King's movement, Pyramid, capturing rules, Equality, Oblivion, mathematical operations, proportions, Arithmetical, Geometrical, Musical</keywords>

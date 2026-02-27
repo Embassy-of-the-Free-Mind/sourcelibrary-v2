@@ -1,0 +1,34 @@
+# The Philosophers' Game.
+
+## Of the Greater Triumph.
+
+**T**he greater victory is when four numbers are brought together which agree in two proportions: either Arithmetical and Geometrical, or else Arithmetical and Musical, or else Geometrical and Musical. The greater triumph consists of these three combinations <note>original: "coniunctions"</note>, of which the table follows.
+
+->A Table<-
+
+| | | | | |
+|---|---|---|---|---|
+| 6 | 8 | 9 | 12 | * |
+| 12 | 15 | 16 | 20 | * |
+| 12 | 16 | 18 | 24 | * |
+| 24 | 30 | 32 | 40 | * |
+| 24 | 32 | 36 | 48 | * |
+| 48 | 60 | 64 | 80 | * |
+| 48 | 64 | 72 | 96 | * |
+| 4 | 6 | 8 | 12 | + |
+| 6 | 9 | 12 | 18 | + |
+| 8 | 12 | 16 | 24 | + |
+| 12 | 18 | 24 | 36 | + |
+| 16 | 24 | 32 | 48 | + |
+| 24 | 36 | 48 | 72 | + |
+| 32 | 48 | 64 | 96 | + |
+| 4 | 6 | 9 | 13 1/2 | * |
+| 8 | 12 | 18 | 27 | * |
+| 12 | 18 | 27 | 40 1/2 | * |
+| 16 | 24 | 36 | 54 | * |
+| 24 | 36 | 54 | 81 | * |
+| 32 | 48 | 72 | 108 | * |
+
+<summary>This text describes the "Greater Triumph," the highest level of victory in the Philosophers' Game (Rythmomachia). This victory occurs when a player arranges four pieces/numbers that satisfy two different types of mathematical proportions (Arithmetical, Geometrical, or Musical/Harmonic) simultaneously. The provided table lists specific sets of four numbers that meet these criteria, serving as a reference for players to identify these winning combinations.</summary>
+
+<keywords>The Philosophers' Game, Rythmomachia, Greater Triumph, Arithmetical proportion, Geometrical proportion, Musical proportion, mathematical victory, number theory, 16th-century games</keywords>

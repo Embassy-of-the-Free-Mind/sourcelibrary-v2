@@ -1,0 +1,23 @@
+[[meta: This page continues the physical description of the game pieces for Rithmomachia, specifically describing the assembly of the "Pyramids" or "Towers," which are the most complex pieces in the game. It follows the previous page's introduction of the basic round, triangular, and square pieces.]]
+
+# Of the Number-Battle.
+
+and finally tapering to a point), one of six, the other of five **levels** or **steps** [[notes: The author uses two words, *Stafflen* and *Stuffen*, which both mean steps or levels, to describe the tiered structure of these pieces]]. The **foundation stone** of both is square and equal in size to the sixteen squares mentioned before; indeed (as will follow later in the report), it is one taken from among them. Upon this is placed another **square stone** of the same height as the lowest one, yet somewhat narrower. Over these two squares, a **triangular** one is placed, yet narrower than the square immediately below it. Upon this, an even narrower triangular stone; finally, upon these four stones, an even narrower **round stone** is laid, and the **Tower** [[notes: *Turn*, modern German *Turm*. In Rithmomachia, these complex pieces are usually called "Pyramids"]] is thus tapered to a point.
+
+In this way, one assembles (two Towers of five levels—namely, of two squares, two triangles, and one round stone). However, so that they may be better distinguished from one another, one lays two round stones upon one of them, ensuring the uppermost is slightly smaller, thus making it of **six steps**. 
+
+These aforementioned stones, laid one above the other, are joined together—perhaps with a **screw** through their center—so that the players may, at their pleasure, remove one of them if necessary and then reattach the others and make them firm. They are also, like the other
+
+->**pieces, colored white on one side—and**<-
+->**black on the other.**<-
+
+[[notes: The "Tower" or Pyramid is unique because it is worth the sum of all the pieces that compose it. When a part of the Pyramid is "captured," the rules of Rithmomachia sometimes allow for the piece to be dismantled, which is why the author suggests using a screw to hold the layers together.]]
+
+<image-desc>A large decorative woodcut tailpiece featuring a central stylized mask-like face with a leafy headdress, integrated into elaborate scrollwork and volutes. The ornament is further decorated with draped garlands of fruit and leaves, and several beaded tassels hanging from the lower scrolls.</image-desc>
+
+Ell
+[[meta: catchword: Das]]
+
+[[summary: This page describes the construction of the "Towers" (Pyramids), the most complex pieces in the game, explaining how they are built from stacking square, triangular, and round tiers and suggesting they be held together by a screw for easy disassembly during play.]]
+
+[[keywords: Rithmomachia, Number-Battle, Game Pieces, Pyramids, Towers, Game Construction, 17th Century Games]]

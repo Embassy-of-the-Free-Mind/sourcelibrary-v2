@@ -1,0 +1,20 @@
+[[meta: This page continues the detailed rules of capture in Rithmomachia, specifically concerning the "Pyramid" piece and how to handle captured pieces. The text begins mid-sentence, concluding a rule about how a player who captures a portion of a Pyramid can replace their own lost pieces with those of the same value.]]
+
+of their own, as well as those taken from the opponent; and if they do not have any of said pieces of the same value, it is at the winner's discretion to take whichever piece pleases them. In this way, the pyramid can recover its levels [[notes: The Pyramid is a unique piece in Rithmomachia made of a stack of smaller pieces (circles, triangles, and squares). Each "level" has its own value and movement.]], except however for the first level at the bottom, which is its base. This base cannot be recovered once it is taken by capturing the sum total of all the levels—such as the numbers 91 or 190 [[notes: 91 and 190 are the total values of the two pyramids used in the game: the "perfect" pyramid (1+4+9+16+25+36=91) and the "great" pyramid (16+25+36+49+64=190).]]. Instead, it must be removed from the game entirely, just as other levels will also be removed when there are no more pieces to give in compensation for them.
+
+The **fifth rule** is that all captured pieces and pyramid levels must be turned upside down outside the board on the winner's side. This is so that, as they are now of the color of the winner's faction, the winner may make use of them at the appropriate time and place, putting some or all of them back onto the board at their pleasure, according to what is most convenient for them. [[notes: Unlike modern Chess, Rithmomachia allows players to "recruit" captured pieces and return them to the board under their own control, similar to the modern game of Shogi.]]
+
+The **sixth rule** is that when the two "square" levels of the pyramid are removed from the game, that pyramid can no longer move using the path of the Square [[notes: Each component of the Pyramid grants it the movement abilities of that shape: Circles move 1 space, Triangles 2, and Squares 3. If you lose the squares, you lose the long-range move.]]; the same shall be understood for the triangular and circular levels.
+
+The **seventh rule** is that when the pyramid is "besieged," it can free itself by making the "knight's leap" from the game of chess [[notes: The Knight's move is an L-shape. This is the only circumstance in Rithmomachia where a piece is permitted to move in this specific way.]], or otherwise by being helped by another piece of its own faction taking one of the pieces that are besieging it. But if by chance it were so strongly besieged that it could not be helped in any way, then it is totally removed from the game, and the opponent can use it as their own by turning all its levels upside down so they show the color of their faction. [[notes: "Besieged" refers to a capture method where a piece is surrounded on all four sides so it has no legal moves.]]
+
+But having now reached the end of the fifth part of the present treatise, we shall pass to the sixth and last.
+
+### *Sixth and last part, in which the victories with which the game is won are declared.*
+
+Before we declare the victories with which the game is won, it is necessary to explain three types of proportions, which anyone who does not have knowledge of, will not [know...]
+
+<vocab>pyramide, giuoco, gradi, proportioni, vittorie, cauallo delli schachi, tauoliero</vocab>
+
+[[summary: This page details the specific mechanics for capturing and "recruiting" the Pyramid piece, the loss of movement abilities when levels are removed, and the "knight's leap" escape move. It concludes by transitioning to the final section of the manual regarding victory conditions and mathematical proportions.]]
+[[keywords: Pyramid, capture rules, recruitment, Knight's move, siege, mathematical proportions, Rithmomachia]]

@@ -1,0 +1,32 @@
+[[meta: This page continues the tactical analysis from page 417, which detailed a specific opening gambit. The previous text ended mid-sentence with the White player's Knight (Rider) and Pawn (Soldier) maneuvers. This page explores Black's counter-responses and how White can force an advantageous exchange of Queens.]]
+
+### Das Vierte Buch / 7. cap:
+[[notes: The Fourth Book / Chapter 7.]]
+
+15. Wan aber der **Schwarze** / des **K. Soldaten** / auf **28, (n. 14.)** nicht rucket / besondern mit demselben / der **W. K.** Soldaten / (vermeynend / dadurch / einen Zug / zum Vortheil / erlanget zu haben)
+[[notes: "If, however, the **Black player** does not move the **King’s Soldier** (the King’s Pawn) to square **28** (referenced in note 14), but instead captures the **White King’s Soldier** with it (believing that he has thereby gained an advantageous move)..."]]
+
+16. wegnimt: so raubet ihn / der **Weisse** / mit der **Königin**: * Der **Schwarze** / ziehet auf sie / der **K.** Schützen-Soldaten / auf acht und dreyssig: Der **Weisse** / dieselbe / auf sechs und dreyssig / und
+[[notes: "...then the **White player** captures it with the **Queen**. * The **Black player** moves the **King’s Archer’s Soldier** (the King’s Bishop’s Pawn) against her to square thirty-eight. The **White player** moves her (the Queen) to thirty-six and..."]]
+
+17. beut Schach: * Der **Schwarze** / bedecket den König / mit der **Königin** / auf zwey und funfzig: Der **Weisse** / nimt sie / mit seiner **Königin** / und beut Schach: Der **Schwarze** / dieselbe / entweder mit dem Könige / oder mit dessen Schützen / oder Reuter: Der **Weisse** / (dieweyl die beede **Königinne** abgeschaffet / und Er einen Stein / zum Vortheil hat) kan nuhn / umb den Feind zu verletzen / sein Spiel / ferner wol anordnen.
+[[notes: "...offers **Check**. * The **Black player** covers the King with the **Queen** at square fifty-two. The **White player** takes her with his **Queen** and offers **Check**. The **Black player** [takes] the same with either the King, his Archer (Bishop), or his Rider (Knight). The **White player** (since both **Queens** have been removed and he has a piece to his advantage) can now further arrange his game to harm the enemy."]]
+
+18.   Bedecket aber der **Schwarze** / den König / auf **52**, nicht mit der **Königin / (n. 17.)** besondern / mit seinem Reuter / oder Schützen: so verlieret Er gleichwol / entweder der **K.** Schützens: (wan Er ihn / mit seinem Reuter / bedecket) oder aber / (wan Er ihn mit seinem Schützen / entsetzet) des **K.** Reuters-Soldaten: und muß auf diesen fahl / des **K.** Schützen / (umb dessen Rochen / nicht zu verlieren) auf die **W. Königin** / auf drey und viertzig / rucken.
+[[notes: "But if the **Black player** does not cover the King at **52** with the **Queen** (as in note 17), but rather with his Rider (Knight) or Archer (Bishop), he loses regardless: either the **King’s Archer** (if he covers with the Rider) or the **King’s Rider’s Soldier** (the Knight's Pawn) (if he relieves with the Archer). In this case, he must move the **King’s Archer** to forty-three against the **White Queen** to avoid losing his **Rochen** (Rook)."]]
+
+19.   Wan aber der **Schwarze** / nicht des Schützens = auf **38, (n. 16.)** besondern / der **K.** Soldaten / auf sieben und dreyssig / ru-
+[[notes: "If, however, the **Black player** does not move the Archer's [Soldier] to **38** (from note 16), but instead moves the **King’s Soldier** (Pawn) to thirty-seven..."]]
+
+20. cket: * so ziehet der **Weisse** / (umb / dem **Schwarzen** / seine gedancken zu verwirren) des **K.** Soldaten / auf acht und zwantzig: Der **Schwarze** / nimt ihn / mit der **K.** Soldaten: Der **Weisse** / denselben / mit der **Königin** / und beut Schach: oder verwechselt dieselbe mit der **S. Königin**.
+[[notes: "...moves: * then the **White player** (to confuse the **Black player’s** thoughts) moves the **King’s Soldier** to twenty-eight. The **Black player** takes it with his **King’s Soldier**. The **White player** takes the same with the **Queen** and offers **Check**, or exchanges her for the **Black Queen**."]]
+
+21.   Ziehet aber der **Weisse** / (umb / dem **Schwarzen** / sein Spiel zu verderben) nicht des Königes = auf **28. (n. 20.)** besondern / der **K.** Schützens-Soldaten / auf dreyssig: so nimt ihn / der **Schwarze** / mit der **K.** Soldaten: Der **Weisse** / denselben / oder die **S. Königin** / mit seiner **Königin** / und beut Schach: Der **Schwarze** / nimt sie / mit dem Könige: Der **Weisse** / ziehet / des **K.** Soldaten / auf acht und zwantzig: und gibt / des **K.** Schützen / gelegenheit / der **S. K.** Soldaten / zu nehmen: Der **Schwarze** / (umb denselben zu bewahren) der **K.** Reuters-Soldaten / auf neun und dreyssig: Der **Weisse** / auf denselben / der **K.** Rochens-Soldaten / auf zwey und dreyssig: Der
+[[notes: "But if the **White player** (to ruin the **Black player’s** game) does not move the King’s [Soldier] to **28** (from note 20), but rather the **King’s Archer’s Soldier** to thirty: the **Black player** takes it with the **King’s Soldier**. The **White player** [takes] the same, or the **Black Queen**, with his **Queen** and offers **Check**. The **Black player** takes her with the King. The **White player** moves the **King’s Soldier** to twenty-eight, and gives the **King’s Archer** the opportunity to take the **Black King’s Soldier**. The **Black player** (to protect it) [moves] the **King’s Rider’s Soldier** to thirty-nine. The **White player** [moves] the **King’s Rook’s Soldier** against the same to thirty-two. The..."]]
+
+<meta>catchword: Schwar-</meta>
+[[notes: "Schwar-" is the beginning of the first word on the following page ("Schwarze").]]
+
+[[summary: This page continues the analysis of chess openings and mid-game tactics, focusing on how the White player can manipulate the Black player into losing material or forced Queen exchanges. It illustrates the consequences of specific pawn moves and defensive positioning for the King.]]
+
+[[keywords: chess strategy, King's Soldier, Queen exchange, Archer, Rider, Rochen, Check, 17th-century chess]]

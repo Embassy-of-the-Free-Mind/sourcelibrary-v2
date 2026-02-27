@@ -1,0 +1,19 @@
+[[meta: This is the first page of the manuscript, representing the exterior front cover. No previous page exists for continuity.]]
+
+# Front Cover
+
+->[Exterior Binding]<-
+
+This page represents the front cover of the manuscript. The binding is crafted from aged leather [[notes: or perhaps vellum, a high-quality writing surface made from calfskin, though the dark staining suggests treated leather]], showing the natural wear of several centuries. You can see dark patinas and several small wormholes where insects have burrowed into the organic material over time.
+
+The cover features elaborate **blind-tooled** decoration [[notes: a technique where metal stamps are pressed into the leather to create an indented design without the use of gold leaf or ink]]. The layout consists of:
+
+*   Several concentric rectangular borders.
+*   Wide frames filled with intricate, repeating patterns of scrolling vines and flowers.
+*   A large, central **lozenge** [[notes: a diamond-shaped decorative frame]] featuring dense, leaf-like (**foliate**) ornamentation and arabesque motifs.
+
+On the right-hand edge, two small metal plates remain. These are the attachment points for the book's original clasps [[notes: metal hinges used to keep a book tightly closed to protect the pages from dust and to prevent parchment from curling]].
+
+[[summary: This page shows the exterior leather binding of the manuscript, decorated with intricate blind-tooled floral and geometric patterns typical of historical bookbinding.]]
+
+[[keywords: binding, blind-tooling, leather, lozenge, foliate patterns, clasps, scrollwork, book decoration]]

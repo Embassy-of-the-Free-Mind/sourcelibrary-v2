@@ -1,0 +1,27 @@
+[[meta: This page continues the detailed setup instructions for Rythmomachia, moving from the general orientation of the board to the specific placement of the various pieces (rounds, triangles, squares, and pyramids/towers) for both the White and Black sides.]]
+
+Ad pag. 464. [[notes: Latin for "To page 464," a reference to the corresponding page in the printed volume or a cross-reference for the reader.]]
+
+->amen framen<- [[notes: Likely a printer’s mark or a cryptic marginalium; "framen" in older Germanic dialects can refer to "use" or "benefit," but here it remains an enigmatic label.]]
+
+---
+
+[[notes: The following section describes a diagram of a Rithmomachia board—a complex mathematical game popular in the Middle Ages and Renaissance. Unlike chess, it was played on an 8x12 grid and based on Boethian number theory.]]
+
+# The Third Chapter
+
+->**White**<-
+
+Four White Round Stones: (namely: those with 2, with 4; those with 4, with 16; those with 6, with 36; those with 8, with 64) [[notes: These pairs represent the base number and its square. In Rithmomachia, pieces are categorized by their mathematical relationships: *multiplex* (multiples), *superparticular* (n+1/n), and *superpartient*.]] place and set these eight triangular and eight square stones in order, as they were determined in the previous second chapter and can be seen from the diagram.
+
+In the same way, one should proceed with the placement of the Black Stones, only that one counts the squares from the top down and toward the right hand. The stones, however, should be placed on the left side, which is the right side for the opponent. [[notes: This describes a mirrored setup, similar to how modern chess pieces are mirrored so that both players face their opponent's army across the board.]]
+
+The Towers [[notes: Also known as "Pyramids," these are the most powerful pieces. They are not single blocks but are "built" from several smaller shapes and numbers stacked together. Capturing a pyramid was a major feat in the game.]] should be ordered and placed between the square stones on the squares where the two square stones (on which the same numbers that describe the Tower's foundation are marked) would have to stand.
+
+Upon which squares these stones must be further placed before one begins the game is found from the previous order in the following manner:
+
+[[margin: (n.16)]] First, the eight White square stones, including the White Tower, are divided into two heaps. Then, one pulls the four, as they stand in order next to each other, into the uppermost corner; the remaining four into the lowermost corner of the board. (Thereby, the eight squares in which they were initially placed remain entirely empty betwe... [[notes: This describes the initial "deployment" of the pieces from their starting ranks to their active positions on the board.]]
+
+[[summary: This page provides technical instructions for setting up the pieces in Rithmomachia (The Philosopher's Game), detailing the mathematical pairings of the stones and the mirrored placement for the opposing players.]]
+
+[[keywords: Rithmomachia, game setup, board games, mathematical theory, medieval history, Pyramids, White and Black pieces]]

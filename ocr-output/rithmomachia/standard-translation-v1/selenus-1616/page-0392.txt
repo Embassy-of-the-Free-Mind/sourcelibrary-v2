@@ -1,0 +1,113 @@
+[[meta: This page provides technical diagrams (tables) illustrating the tactical variations discussed on the previous page. These grids serve as visual aids for the "Third Book" of the treatise, showing the positions of the Kings, Rooks, and Pawns, as well as the squares targeted by the "Main Stones" (the Queen, Bishops, and Knights).]]
+
+[[margin: Ch. 9: The Third Book /]]
+
+### No. 1. 2. 3. 4. 5.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | | SR | SS | SS | SS |
+| | | | SS | | | | SR |
+| | | SS | | SS | | WR | WR |
+| | | WS | | WS | WS | SS | 25 |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | | | | WR |
+
+[[notes: These tables represent the chessboard at various stages of the game. The abbreviations stand for the pieces: **S** for Schwarz (Black), **W** for Weiß (White), **K** for König (King), **R** for Rochen (Rook), and **S** for Soldat (Soldier/Pawn). The numbers within the cells, such as **25**, refer to specific squares in the 1–64 coordinate system where a move or capture takes place.]]
+
+### No. 7. 8. 36.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SR | | SR |
+| SS | SS | SS | | 51 | SS | SS | |
+| | | | SS | | | | SR |
+| | | SS | | WS | 35 | WS | |
+| | | WS | | WS | | SS | WR |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### No. 11. 12.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SK | | SR |
+| SS | SS | SS | SR | | WS | | SS |
+| | | | SS | 44 | | WS | 41 |
+| | | | SS | | WS | | WS |
+| | | | | | | WR | |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### No. 17. 18.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | 60 | SK | | SR |
+| SS | SS | SS | SK | | | | SS |
+| | | | | WS | WS | | SS |
+| | | | SS | | SR | WS | |
+| | | | | WR | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### No. 5. 46. 51.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | | SS | SS | SS | SR |
+| | | | | SS | SS | | SR |
+| | | | SS | | WS | | WR |
+| | | | WS | | WS | SS | WR |
+| | | | | | WS | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | | WK | | WR |
+
+### No. 9. 10. 35.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | 53 | | | SR | SS |
+| | | | 46 | SS | | WS | |
+| | | SS | | WS | | WS | |
+| | | WS | | WS | | WR | |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### No. 13. 14.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | 60 | SK | | WS |
+| SS | SS | SS | SR | 52 | | | SS |
+| | | | | SS | WS | | WS |
+| | | | SS | | WS | | |
+| | | | | | | WR | |
+| | | | | WS | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+### No. 19. 22.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SR | 58 | SR |
+| SS | SS | SS | WS | | SK | 50 | SS |
+| | | | | WS | | SS | |
+| | | | SS | | | WS | |
+| | | | | | WR | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | WR | | |
+
+[[summary: This page consists of eight chess board diagrams illustrating the various "Numbers" or variations of gameplay described in Chapter 9. They use a proprietary coordinate and piece notation system common in 17th-century European chess manuals.]]
+
+[[keywords: chess notation, game variations, Selenus, 1–64 coordinates, King, Rook, Soldier, Pawn]]

@@ -1,0 +1,56 @@
+[[meta: This page continues the mathematical demonstration of string division on the monochord. Having previously covered the Diatonic and Chromatic systems, the author now addresses the Enharmonic genus and begins defining the specific groupings of four notes known as Tetrachords, which form the building blocks of the Greek musical system.]]
+
+...they will undertake to demonstrate later: he will easily concede. And since the division already shown has proceeded by semitone, semitone, and trihemitone [[notes: A trihemitone is an interval of three semitones, equivalent to a minor third, which defines the Chromatic scale structure.]]—unless where a whole tone is added so that the octave (*diapason*) or the harmony (*concentus*) preserves its distinct property—it is clear from the definition that what was proposed to be done in the chromatic genus has indeed been accomplished.
+
+[[margin: 3]]
+### ¶ III. To demonstrate the same regularly in the enharmonic genus.
+
+->Enharmonic Monochord.<-
+
+[[notes: The Enharmonic genus was the most complex of the three Greek scales, utilizing "quarter-tones" which are difficult for the modern ear to distinguish but were prized in antiquity for their subtle shading.]]
+
+<image-desc>A horizontal diagram representing an "Enharmonic Monochord." It consists of a line with endpoints 'a' and 'b'. Above the line, lowercase letters 'c' through 'r' are spaced out. Between these letters, symbols 'D' and 'LL' denote intervals. The sequence is | D | D | LL | repeated four times across the segments. Below this diagram, 'D. Diesis tetratemeria' and 'LL. Ditonus' provide the legends for the interval symbols.</image-desc>
+
+->D. Quarter-tone (*Diesis tetratemeria*).<- ->LL. Major Third (*Ditonus*).<-
+
+¶ Let there be, as before, a string $a$ $b$ and a ruler $c$ $r$ equal to it as in the other cases. From point $c$ to $d$, I extend a tone; from $d$ to $f$, a minor semitone; and I divide the space $d$ $f$ into equal parts at mark $e$. These will be two quarter-tones (*dieses*). From $f$ to $g$, I make two tones, which complete a major third (*ditonus*). From $g$, $h$, $i$, I make two quarter-tones as before; from $i$ to $k$, a major third; from $k$ to $l$, a tone; from $l$, $m$, $n$, two quarter-tones; from $n$ to $o$, a major third; from $o$, $p$, $q$, two quarter-tones; and from $q$ to $r$, a major third. I apply this ruler, divided in this manner, equally to the line $a$ $b$, and I mark the same signs and equal intervals on line $a$ $b$ through the intermediate letters between $a$ and $b$: $d, e, f, g, h, i, k, l, m, n, o, p, q, r$. 
+
+And because $a$ to $d$ is a tone, and $d, e, f$ are two quarter-tones completing a minor semitone, and $f$ to $g$ is a major third—therefore $a$ to $g$ contains three tones and a minor semitone, sounding a perfect fifth (*diapente*) according to the thirteenth [proposition]. But since $g, h, i$ are two quarter-tones and $i$ to $k$ is a major third, containing two tones and a minor semitone, they form a perfect fourth (*diatessaron*) according to the sixth [proposition] of the third [book]. Therefore, as before, by the twenty-third [proposition], $a$ to $k$ contains an octave (*diapason*). In this same way, it is shown that $k$ to $r$ contains a fifth, and $k$ to $b$ an octave; thus $a$ to $r$ sounds an octave plus a fifth, and $a$ to $b$ sounds a double octave. Since this melodic progression proceeds by two quarter-tones and a major third, it is established by definition that the enharmonic monochord is regularly divided, and that the musical consonances are situated within it as proposed.
+
+[[margin: 4]]
+### ¶ IV. To divide the Hypaton tetrachord in the diatonic melody.
+
+| | | |
+| :--- | :---: | :---: |
+| Proslambanomenos [[notes: The "added note" at the bottom of the scale.]] | **A** | **A** |
+| Hypate hypaton [[notes: "Lowest of the low" notes.]] | **b** | **L B** |
+| Parhypate hypaton | **c** | **S C** |
+| Lichanos hypaton | **d** | **L D** |
+| Hypate Meson [[notes: "Lowest of the middle" notes.]] | **e** | **L E** |
+
+¶ The previous sections taught how to arrange Monochords. These following sections, however, teach the Tetrachords [[notes: Four-note scales]], Pentachords [[notes: Five-note scales]], Hexachords, and all other Poly-chords up to the fifteen-note scale (*Penthadecachordum*); once these are understood, the reader will very easily recognize whatever else might be desired. I therefore establish $b, c, d, e$ as the *hypaton* tetrachord [[notes: The lowest group of four notes in the Greek system]], so that $b$ is the *hypate hypaton*, $c$ the *parhypate hypaton*, $d$ the *lichanos hypaton*, and $e$ the *hypate meson*. To these I join at the lower end the string $a$, the *proslambanomenos*, which is not counted within the tetrachords themselves, but when added to the first tetrachord, it creates a pentachord. 
+
+I make the interval of string $a$ to $b$ a 9:8 ratio (*sesquioctave*); from $a$ to $d$ a 4:3 ratio (*sesquitertial*); and from $a$ to $e$ a 3:2 ratio (*sesquialter*). Likewise, I make $c$ to $d$ a 9:8 ratio. I say, therefore, that the *hypaton* tetrachord is divided in the diatonic genus (as was said). For by definition, from $a$ to $b$ (*proslambanomenos* to *hypate hypaton*) will be a tone. And because $a$ to $d$ is a 4:3 ratio, likewise by definition, the *proslambanomenos* to the *lichanos hypaton* sounds a fourth (*diatessaron*). But since $a$ to $e$ (*proslambanomenos* to *hypate meson*) is a 3:2 ratio, by the same rule $a$ to $e$ sounds a fifth (*diapente*). By the thirteenth [proposition] of the third [book], therefore, $d$ is separated from $e$ (*lichanos hypaton* from *hypate meson*) by a tone. Again, since $c$ to $d$ is a 9:8 ratio, $c$ to $d$ sounds a tone. And because $a$ to $d$ is a fourth, and $a$ to $b$ is a tone and $c$ to $d$ is a tone, therefore by the sixth [proposition] of the third [book], the interval $b$ to $c$ is left as a minor semitone. 
+
+Thus, from *hypate hypaton* to *parhypate hypaton* is a minor semitone; from *parhypate hypaton* to *lichanos hypaton* is a tone; and from *lichanos hypaton* to *hypate meson* is a tone. The *hypaton* tetrachord is established through $b, c, d, e$, proceeding by a minor semitone and two subsequent tones. By definition, this is in the diatonic genus, as is the pentachord $a, b, c, d, e$. 
+
+But perhaps a doubt arises: why do musicians of our time place two tones at the lower part of the tetrachord, while we place only the single tone that exists between the *proslambanomenos* and the *hypate hypaton*? The answer is straightforward and ready: musicians in our time have prefixed another string a tone away from the *proslambanomenos*, and they record that Gregory was the first to do this. [[notes: A reference to the "Gamma Ut" added to the bottom of the medieval hexachord system, attributed here to Pope Gregory the Great.]]
+
+[[margin: 5]]
+### ¶ V. In the same diatonic melody: to join the Meson tetrachord; and in the octochord: from the proslambanomenos to the mese, an octave is contained.
+
+| | | |
+| :--- | :---: | :---: |
+| Proslambanomenos | **A** | **A** |
+| Hypate hypaton | **b** | **L B** |
+| Parhypate hypaton | **c** | **S C** |
+| Lichanos hypaton | **d** | **L D** |
+| Hypate Meson | **e** | **L E** |
+| Parhypate Meson | **f** | **S F** |
+| Lichanos Meson | **g** | **L G** |
+| Mese [[notes: The "Middle" note, the central pitch of the Greek system.]] | **h** | **L H** |
+
+¶ Let $e, f, g, h$ be the *meson* tetrachord. I make a 4:3 ratio at $h$ from $e$, and $g$ a 9:8 ratio to $h$, and $f$ a 9:8 ratio to $g$. Therefore, by definition, $e$ to $h$ (*hypate meson* to *mese*) is a fourth. And since $g$ to $h$ is a tone, and similarly...
+
+[[summary: This page explains the mathematical division of the monochord for the Enharmonic genus using quarter-tones and major thirds. It then transitions into defining the Diatonic system's specific note-groups (tetrachords), specifically the Hypaton and Meson groups, while noting historical changes to the scale attributed to Pope Gregory.]]
+[[keywords: Enharmonic genus, Monochord, Tetrachord, Hypaton, Meson, Proslambanomenos, Diesis, Ditonus, Diatonic, Pope Gregory, Musical Ratios]]

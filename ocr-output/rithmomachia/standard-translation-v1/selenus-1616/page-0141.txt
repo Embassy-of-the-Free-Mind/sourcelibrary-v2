@@ -1,0 +1,18 @@
+[[meta: This page continues from page 110, completing a discussion on how to visualize the board's colors before introducing a second, numerical method for tracking the game without a board.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 11:]] ...the host's [[notes: *Hauffen*, literally a "heap" or "host," refers here to the collective set of pieces]] order (as mentioned) having been well-formed in one’s mind, the position of the other host can also be known without effort. For if one understands the first line [[notes: *Linie*, here referring to a "rank" or row of squares]] and the square of the piece—whether it be black or white—he can also know that the third square has the same color as the first: and the fourth like the second. For instance, if the first square of the **Rook** [[notes: *Rochen*, from the Persian *Rukh*]] is white, then the third must also be white; if the second is black, then the fourth is also black. Thus, he has a reliable guide and calculation: that those squares which are white for the White player are black for the Black; while those that are black for the White are white for the Black.
+
+A chess player [[notes: *Schach-Zieher*, literally "chess-mover"]] must now know these aforementioned paths and moves very well—especially one who wishes to play from memory while traveling, riding, or walking—and must take care to keep in his memory [[notes: *gedechtnus*]] which side or which square he hits, and which piece he can take or has taken (which is, however, rather difficult to put into practice).
+
+The second way to imagine the chessboard is this: that one marks each square with a number, counting forward until all squares from the first to the last on the table are recorded, concluding with the sixty-fourth number; and (so that one may grasp it more easily) one does not distinguish the squares by the white and black colors. Therefore, the **White King’s Rook’s** square is marked one; his **Knight’s** [[notes: *Reuter*, literally "Rider"]] square, two; his **Bishop’s** [[notes: *Schütze*, literally "Archer" or "Shooter"]], three; his own [the **King’s**], four; the **Queen’s**, five; her **Bishop’s**, six; her **Knight’s**, seven; her **Rook’s**, eight. Returning upon the following horizontal line [[notes: *Zwerch-linie*, what we now call a "rank"]] upwards, the first square [above the last] is marked nine; the second, ten; and in this manner, the remaining squares and lines are recorded until the end of the last line. 
+
+If a table has been described in this way with its lines and numbers, then one does not need to keep in memory the names of the pieces or soldiers [[notes: *Soldaten*, referring to the Pawns]] after which the squares must be named, nor the number of those squares and their color, but only pay attention to the number marked in each square. For example: White moves his **King’s Soldier** [[notes: Pawn]] to the fourth horizontal line where twenty-eight is marked. Then Black plays his **King’s Soldier** to the fifth horizontal line into the square where thirty-six is found, and so forth.
+
+P
+[[meta: catchword: Zum]]
+
+[[summary: This page describes two methods for visualizing a chessboard for blindfold play: one based on the alternating colors of squares and another using a continuous numbering system from 1 to 64. The author explains how numbering simplifies the game by removing the need to remember piece names or square colors during a match played while traveling.]]
+
+[[keywords: blindfold chess, visualization, chess notation, Rochen, Reuter, Schütze, Soldaten, 17th-century chess]]

@@ -1,0 +1,61 @@
+<meta>This page continues the discussion of musical theory, moving from the mathematical division of intervals to the specific structure of the Greek musical system (the Greater Perfect System). It defines the tetrachords, the modes, and the practical application of these theories onto the monochord.</meta>
+
+¶ There are five **tetrachords** <note>original: "Tetrachorda"; a tetrachord is a scale of four notes spanning a perfect fourth</note>: the **Tetrachord of the Lows**, the **Tetrachord of the Middles**, the **Conjunct Tetrachord**, the **Disjunct Tetrachord**, and the **Highest Tetrachord**.
+
+| | |
+| :--- | :--- |
+| ¶ **The Tetrachord of the Lows is:** | **The Conjunct Tetrachord:** |
+| --- | --- |
+| Lowest of the lows | A-Mese <note>The central "middle" note</note> |
+| Next-to-lowest of the lows | Third of the conjuncts |
+| Index-finger note of the lows | Next-to-highest of the conjuncts |
+| Lowest of the middles | Highest of the conjuncts |
+| --- | --- |
+| **The Tetrachord of the Middles is:** | **The Disjunct Tetrachord:** |
+| --- | --- |
+| Lowest of the middles | Side-middle of the disjuncts |
+| Next-to-lowest of the middles | Third of the disjuncts |
+| Index-finger note of the middles | Next-to-highest of the disjuncts |
+| A-Mese <note>original: "Abeſe"; likely a variation of "Mese," the central pitch</note> | Highest of the disjuncts |
+
+---
+->**The Highest Tetrachord**<-
+---
+->Highest of the disjuncts<-
+---
+->Third of the highests<-
+---
+->Next-to-highest of the highests<-
+---
+->Highest of the highests<-
+---
+
+¶ We define a **Mode** here as the lowering or raising of all the tetrachords step by step within any genus of melody, while maintaining the progression of its own kind.
+¶ There are seven Modes.
+
+| | |
+| :--- | ---: |
+| ¶ First: Hypodorian | 1 |
+| Second: Hypophrygian | 2 |
+| Third: Hypolydian | 3 |
+| Fourth: Dorian | 4 |
+| Fifth: Phrygian | 5 |
+| Sixth: Lydian | 6 |
+| Seventh: Mixolydian | 7 |
+
+¶ To demonstrate the division of the **regular monochord** <note>A one-stringed teaching tool used to measure intervals</note> in the **diatonic genus**.
+
+¶ Although many musical instruments may be found—such as **Citharas** <note>Ancient lyres</note>, **Pipes**, **Trumpets**, **Curved horns**, and various multi-holed **Flutes** (right-handed, left-handed, single, and double, which are animated by a single breath)—as **Apuleius** <note>A 2nd-century Roman philosopher and author</note> says: it is said that **Hyagnis** <note>A mythical musician from Phrygia</note>, the king of the Lydians and father of **Marsyas**, was the first to separate the hands while playing. Furthermore, there are instruments like the **Pelta**, the **Choracicite**, the **Sambuca** <note>A triangular harp</note>, **Water organs**, **Nablia** <note>A type of Hebrew harp</note>, **Psalteries**, **Magades**, **Barbitos**, **Naula**, **Petades**, **Horns**, **Heptagons**, **Melodic pipes**, the **Tortoise-shell lyre**, **Barbati**, **Plectrums**, **Monochords**, **Tetrachords**, **Polychords**, and other musical instruments of that kind. Nevertheless, it pleased the Philosophers to demonstrate their principles through Monochords, Tetrachords, and Polychords so that we might understand the logic and composition of all others. Therefore, just as we understand the composition of Monochords and Tetrachords, so must we understand the rest. Now, let us turn our attention to the demonstration of the **regular monochord**.
+
+<margin>The Diatonic Monochord.</margin>
+| a | d | e | f | g | h | i | k | l | m | n | o | p | q | b |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| | T | S | T | T | S | T | T | S | T | T | S | T | T | |
+| c | d | e | f | g | h | i | k | l | m | n | o | p | q | r |
+
+->**T** = Tone | **S** = Minor Semitone<-
+
+¶ The monochord is called **regular** because the harmonic rule of musical consonances is investigated upon a single string. Therefore, let **a-b** be the string upon which we wish to regularly place the consonances in the **diatonic genus**.
+
+<summary>This page defines the Greek system of five tetrachords and seven modes, while listing various ancient musical instruments and introducing the mathematical layout of the diatonic monochord.</summary>
+<keywords>tetrachords, musical modes, Dorian, Phrygian, Lydian, monochord, ancient instruments, Apuleius, Marsyas, diatonic genus, musical intervals</keywords>

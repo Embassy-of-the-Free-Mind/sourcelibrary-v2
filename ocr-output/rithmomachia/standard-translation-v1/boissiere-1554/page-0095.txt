@@ -1,0 +1,16 @@
+[[meta: This page continues the rules of Rythmomachia, moving from the mathematical capture by "division" shown on the previous page to physical capture by surrounding a piece and the specific rules for the most complex piece in the game, the Pyramid.]]
+
+RYTHMOMACHIA; GAME
+
+## Capture by Siege or Imprisonment [[notes: This rule is similar to the capture mechanic in games like Go or Ludus Latrunculorum, where a piece is removed not by mathematical calculation, but by being physically blocked from moving.]]
+
+If four pieces [[notes: The original French uses "tables," which was a common term for game pieces or counters in the 16th century.]] are arranged around one of the opponent’s by regular or irregular movement, such that the regular movement of the opponent’s piece is blocked, it shall be captured as soon as you play the last of the four imprisoning pieces. For example, let there be some round piece of the opponent at A; it shall be captured if four of yours are at B, C, D, and E. And if the opponent’s piece is triangular, it shall be captured if four of yours are at V, Y, T, and S. [[notes: These letters refer to positions on the grid-based game board.]]
+
+## Capture of the Pyramids [[notes: The Pyramid is the most powerful piece in Rythmomachia, representing a stack of different shapes and numbers. Capturing it is a major objective.]]
+
+Every square or lateral number of the pyramid can capture or be captured like the other pieces; and furthermore, whoever has won one level of the pyramid shall degrade it, and deprive it all at once of two numbers contained within it of the same form and figure. For example, if the square number 36 of the perfect pyramid [[notes: The "Perfect Pyramid" of the "Even" side is composed of the numbers 1, 4, 9, 16, 25, and 36, which sum to 91.]] were captured, the pyramid would be degraded and deprived of the other number, 25, which is of the same square figure as 36. Thus, out of the whole pyramid which contains 91, no more than 30 shall remain [[notes: 91 minus 36 and 25 equals 30. The remaining values—1, 4, 9, and 16—total 30.]], and they shall serve the player no longer.
+
+[[gloss: Rythmomachia, siege, imprisonment, pyramid, square, lateral, level, perfect, degraded]]
+
+[[summary: This page explains two methods of capturing pieces in Rythmomachia: "siege," where a piece is surrounded on four sides, and the rules for dismantling an opponent's Pyramid piece by capturing its component values.]]
+[[keywords: Rythmomachia, board games, mathematical games, siege capture, Pyramids, Renaissance gaming, arithmetic]]

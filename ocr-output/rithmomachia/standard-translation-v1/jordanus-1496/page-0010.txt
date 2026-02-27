@@ -1,0 +1,49 @@
+[[meta: This page continues a series of mathematical proofs regarding the properties of numbers and their products, essentially providing geometric-style proofs for algebraic identities. The previous page established basic rules for multiples and common factors.]]
+
+[[margin: 14]]
+¶ When a number is divided into two parts, the product of the whole number and one of those parts is equal to the sum of the square of that same part and its product with the other part.
+
+¶ Let **a b** be a number divided into two parts, **a** and **b**: I say that the product of **a b** times **a** is equal to the square of **a** plus the product of **a** times **b**. And likewise, the product of **a b** times **b** is equal to the square of **b** plus the product of **b** times **a**. Therefore, let **a b** be multiplied by **a**: then the result of **a b** times **a** will be equal (by the eighth proposition [[notes: Likely referring to the distributive property of multiplication discussed earlier in the treatise]]) to the product of **a** times **b**. Since multiplying something by itself and then by **b** is equal (by the ninth proposition) to the product of multiplying it by the combined sum **a b**. Therefore, when **a** is multiplied by itself and by **b**, it produces as much as **a b** times **a**. You may argue the same if **a b** is multiplied by **b**, and conclude the proposition in a similar way. You can see this more clearly if you set down **a** twice and **b** twice [[notes: A suggestion to visualize the calculation by writing out the variables twice to see the pairings]].
+
+---
+
+[[margin: 15]]
+¶ If a number is divided into two: the square of the whole is equal to the sum of the squares of each of the two parts and twice the product of one by the other.
+
+¶ Let **a b** be a number divided into two parts, **a** and **b**: I say that the square of **a b** is equal to the square of **a** plus the square of **b**, and twice the product of **a** times **b**. For the square of **a b** is equal to the product of the whole times **a** and times **b** by the thirteenth proposition. But the product of the whole **a b** times **a** and times **b** (by the preceding proposition applied twice) is equal to the square of **a** plus the product of **a** and **b**, and the square of **b** plus the product of **b** and **a**. Or, the product of **a** times **b** and **b** times **a** alternately (by the eighth) is equal to twice the product of **a** times **b**. Therefore, the square of **a b** equals the square of **a**, the square of **b**, and twice **a** times **b**, which was to be proposed. And from this is known the method for finding the square root [[notes: Literally "eliciendi latus tetragonum," or drawing out the side of the square; this algebraic identity $(a+b)^2 = a^2 + 2ab + b^2$ is the basis for the traditional long-division method of calculating square roots]].
+
+---
+
+[[margin: 16]]
+¶ If a number is divided into two: the square of the whole together with the square of one of the parts is equal to twice the product of the whole and that same part, plus the square of the remaining part.
+
+¶ Let **a b** be a number divided into two parts **a** and **b**, as before: I say that the square of **a b** plus the square of **a** is equal to twice the product of **a b** times **a**, plus the square of **b**. For the square of **a b** (by the preceding proposition) is as much as the square of **a**, the square of **b**, and twice **a** times **b**. Therefore, the square of **a b** plus the square of **a** will be twice the square of **a**, twice **a** times **b**, and the square of **b**. But twice the square of **a** and twice **a** times **b** (by the 14th) equals twice the product of **a b** times **a**. To this, add the square of **b**. Then the square of **a b** plus the square of **a** will equal twice the product of **a b** times **a** plus the square of **b**, which is the proposition.
+
+---
+
+[[margin: 17]]
+¶ If a number is divided into two, the square of the whole is equal to four times the product of one part by the other, plus the square of the difference between them.
+
+¶ Let **a b** be a number divided into two parts **a** and **b**, and let **b** be the larger; and let **b** be divided into two, namely into **d** (which is equal to **a**) and **c** (the difference of **b** to **a**). I say that the square of **a b** is equal to four times the product of **a** times **b**, plus the square of **c**. For by the fifteenth, the square of **a b** is equal to twice **a** times **b** and the square of **a** and the square of **b**. But by the preceding, the square of **b** plus the square of **a** (which is equal to **d**, one of the parts of **b**) equals twice the product of **b** times **a** plus the square of **c**. Therefore, alternately (by the eighth), this is also equal to twice **a** times **b** plus the square of **c**. Thus, the square of **a b** is as much as four times **a** times **b** plus the square of the difference **c**, which is what was intended.
+
+---
+
+[[margin: 18]]
+¶ The square of the smaller part plus the product of the whole and the difference between the parts is equal to the square of the larger part.
+
+¶ Let **a** be a number divided into a larger part **b** and a smaller part **c**, and let **d** be the difference of **b** to **c**. I say that the square of **c** plus the product of **a** times **d** is as much as the square of **b**. For by the tenth, the product of **a** times **d** equals the product of **b** times **d** and **c** times **d**. Let that be **e**. And because **b** is divided into **c** and the difference **d**: by the 14th, the product of **b** and the part **d** is equal to the square of **d** and the product of **d** times **c**. And since (by the eighth) **c** times **d** also equals **d** times **c**, the product of **a** times **d** will be equal to the square of **d** and twice **d** times **c** together. To these, if you add the square of **c** (let it be **f**), the whole resulting from **a** times **d** and the square of **c** (namely **e** and **f**) will equal the square of **d**, the square of **c**, and twice **d** times **c**. But the square of **b** (since it is divided into **d** and **c**, or their equivalent) is also as much as the square of **d**, the square of **c**, and twice **d** times **c**, by the fifteenth; namely, the sum of the squares of both parts and twice one times the other. Therefore, the product of the whole **a** and the difference **d**, plus the square of the smaller part **c**, is as much as the square of the larger part **b** multiplied by itself. This is what the proposition intends.
+
+---
+
+[[margin: 19]]
+¶ If a number is cut into two equal and two unequal parts: the square of one of the equal parts is as much as the product of the two unequal parts plus the square of the difference [[notes: specifically, the square of the difference between the midpoint and the point of unequal division]].
+
+¶ Before we come to the demonstration, I think it is worth noting that when any number like **a b** is divided into two equal parts and also into two unequal parts (like a smaller **a** and a larger **b**), those two unequal parts have a common difference to the equal part which is half of the whole. For since that equal part is the midpoint of the two unequal parts joined together, the parts must be equidistant from it (by the second part of the second proposition of this book); therefore they will have a common difference to it. From this it follows that the difference between the unequal parts themselves is double the common difference between the equal part and the unequal parts. For since the unequal parts **a** and **b** are the extremes and the equal part is the mean: by the eighth concept, their difference is composed of their differences to that mean [[notes: For example, if the number 10 is divided equally (5 and 5) and unequally (7 and 3), the common difference to the mean is 2 (5-3 and 7-5). The difference between the unequal parts (7-3=4) is double that common difference]]. But these things are immediately known. Let us therefore turn to the demonstration of the proposition.
+
+Let **a b** be a number divided into a larger portion **a** and a smaller portion **b**; and let **c** be one half of it; and let **d** be the common difference of **c** to **a** and to **b**. For as was shown, **c** will have the same common difference to both. I say that the square of **c** is as much as the product of **a** times **b** plus the square of **d**. For since **c** is divided into **d** and **b**, therefore by the fifteenth, the square of **c** is equal to the square of **d**, the square of **b**, and twice **b** times **d**. And because the larger portion **a** is the whole and its parts are **b** and a difference double to **d** [[notes: Latin "differentia dupla ad d"]], therefore by the fourteenth, **a** times **b** is as much as the square of **b** and twice **b** times **d**. Therefore, add to the product of **a** times **b** the number which is the square of **d**: then the whole resulting from **a** times **b** and the square of **d** will equal the square of **d**, the square of **b**, and twice **b** times **d**; to which it has been demonstrated that the square of **c** is equal...
+
+[[meta: catchword at bottom of page: "qđ fit" (which results...)]]
+
+[[summary: This page presents a series of arithmetical proofs for algebraic identities, corresponding to Euclid's Elements Book II, showing how the products of numbers relate to their squares and differences. It covers the distribution of products and the expansion of squares for both summed and divided numbers.]]
+
+[[keywords: arithmetic proofs, geometric identities, binomial expansion, square roots, distribution, mathematical logic, Euclidean geometry]]

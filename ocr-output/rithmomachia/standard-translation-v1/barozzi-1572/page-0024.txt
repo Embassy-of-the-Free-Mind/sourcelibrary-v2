@@ -1,0 +1,18 @@
+[[meta: This page transitions from the specific numbering of the pieces—concluding with a practical tip on how to read them—to the setup of the game board. It establishes the "Third Part" of the treatise, focusing on the physical orientation of the board and the initial steps of the "preliminary arrangement" used to organize the pieces before play begins.]]
+
+than black; and on the black ones, white; so that by these dots one can immediately distinguish the bottom parts of the numbers from the top. Otherwise, if the pieces were turned upside down, this inconvenience would follow: that one would not know how to distinguish the 6 from the 9, the 16 from the 91, the 81 from the 18, the 15 from the 51, or the 66 from the 99, as the following figure demonstrates to you.
+
+---
+
+[[image-desc: A horizontal row of six geometric gaming pieces used to illustrate how to orient the numbers. From left to right: a white circle with the number 6, a black circle with the number 9, a white triangle with the number 81, a black triangle with the number 16, a black square with the number 66, and a white square with the number 99. Each piece has a small dot of contrasting color at the bottom center to designate the "bottom" of the piece and prevent misreading numbers when they are inverted.]]
+
+->**Third part, in which the placement of the pieces**<-
+->**upon the Board is taught.**<-
+
+Having finished the second part of the treatise, it follows that we should teach how to place the pieces upon the board [[notes: The *Tauoliero* or board for Rithmomachia is typically a rectangular grid of 8 by 16 squares, double the size of a standard chessboard.]]. Let us, therefore, set the board before us in such a way that its length extends from our left side to our right side for two reasons. First, because by standing in the middle, we will be masters with our eyes over the entire board, and we will have both sides of the field closer to our eyes than we would if the board were placed in any other way. Second, so that we may play with more agility, always moving our pieces with the right hand toward the left [[notes: The author suggests a "landscape" orientation for the board to provide a better ergonomic reach and visual command of the game state.]]. 
+
+The board being arranged in this manner, so that one can easily place the pieces upon it, it is first necessary to make a **preliminary arrangement** [[notes: *disposition finta*, literally a "feigned" or "mock" layout.]], from which the **perfect arrangement** [[notes: *perfetta dispositione*, the final starting position for the game.]] may then immediately and easily arise, which would be a difficult thing to achieve in a single step. The first preliminary arrangement shall be made in this way. Begin with the white pieces, and first with the **rounds** [[notes: *tondi*, the circular pieces, which are the simplest units in the game.]]; and counting the squares from that corner of the board which is nearest to our right hand across the width of the said board, as one reaches the third square, let one count along the length of the board until the sixth square: and in the said square, place...
+
+[[summary: This page explains how to distinguish ambiguous numbers on gaming pieces using orientation dots and begins the instructions for the "Third Part" of the book: setting up the Rithmomachia board. The author recommends a horizontal board orientation for better visibility and ease of movement before starting a two-step setup process.]]
+
+[[keywords: Rithmomachia, game board setup, orientation dots, game pieces, board orientation, preliminary arrangement, rounds, circles]]

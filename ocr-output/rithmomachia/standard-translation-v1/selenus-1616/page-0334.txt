@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical analysis of Chapter 5, Book 3. The author is evaluating specific opening variations and defensive maneuvers, continuing his critique of the Portuguese master Pedro Damiano's chess theories.]]
+
+### The Third Book / 5. cap:
+
+<margin>10.</margin>But if the White [player] does not move the King to 13 [[note: square e2]], but rather covers with the King's Archer [[note: The "Archer" (Schütze) is the Bishop]] on twenty [[note: square d3]], and helps to protect those Soldiers [[note: "Soldiers" (Soldaten) are Pawns]]: then the Black [player], with the King's Archer's Soldier, offers check on thirty-one [[note: square g4]], and rescues him [[note: his piece]] from the White King’s Soldiers. He must also endeavor to move his Queen away from twenty-eight [[note: square d4]] as follows: for, if he leaves her standing there (after the White King has been freed from check, perhaps on three [[note: square c1]] or twelve [[note: square d2]]) and moves another piece: White takes his [[note: Black's]] King’s Archer’s Soldier with the King’s Archer’s Soldier (provided the same has not previously moved to forty-three [[note: square c6]] to block the path of his King’s Rider [[note: The "Rider" (Reuter) is the Knight]]). If he [Black] now captures the same with the King: then White offers check with the King’s Rider on thirty-four [[note: square b5]], and thereby wins his Queen without any remedy.
+
+<margin>11.</margin>But if White does not move the King’s Soldier to 29 [[note: square e4, see note 8]], but rather moves to twenty-one [[note: square e3]] (in order to relieve the King’s Soldier in the future): then the Black [player] plays that same Soldier to forty-five [[note: square e6]] (to further protect the King’s Soldier and to open the path for the King’s Archer). White [moves] the King’s Rider onto the Black King’s Archer’s Soldier at thirty-four [[note: square b5]]. Black (to protect him) [moves] the King’s Rider to sixty-one [[note: square e8]], and thus has a well-ordered game.
+
+<margin>12.</margin>But if White does not move the Archer to 30 [[note: square f4, see note 7]] (as Damianus [[note: Pedro Damiano (c. 1480–1544), a Portuguese chess player whose 1512 manual was a standard text of the era]] indeed suggests), but rather moves against the Black King’s Rider on nine-
+<margin>13.</margin>and-thirty [[note: square g5]]: * and the Black [player] moves the King’s Soldier to forty-five [[note: square e6]] (to protect the King’s Soldier): then the path of his King’s Archer is blocked, and (if White perhaps takes his King’s Rider with the King’s Archer and offers check) one Soldier is placed before the other, and his game is also brought into great disorder (if White moves the King’s Soldier to twenty-nine [[note: square e4]]).
+
+<margin>14.</margin>If now the Black [player] does not immediately place the Soldier on 45 [[note: square e6, see note 13]], but rather moves the King’s Archer to thirty-eight [[note: square f5]] (so as not to shut
+<margin>15.</margin>the same in): * then White takes the Black King’s Rider with the King’s Archer. Black [takes] the same with the King’s Soldier (which then—as can be seen from the following report, n. 62 below—is better than with the Rider’s Soldier). White [takes] the Black King’s Soldier with the King’s Rider: *
+<margin>16.</margin>Black [takes] the White King’s Archer’s Solda-
+
+[[meta: catchword: Solda- (Soldaten / Soldier)]]
+
+[[summary: This page details complex chess maneuvers and counter-moves, specifically focusing on how White can exploit a Black Queen left in a vulnerable position. The author continues to refine the "1-64" coordinate system while critiquing the moves suggested by the earlier master, Damiano.]]
+
+[[keywords: Chess tactics, Pedro Damiano, King's Archer, King's Rider, Soldiers, Chess openings, Gustavus Selenus]]

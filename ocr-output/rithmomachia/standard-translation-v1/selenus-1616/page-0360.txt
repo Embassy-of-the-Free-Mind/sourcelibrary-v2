@@ -1,0 +1,15 @@
+[[meta: This page concludes the tactical analysis of Chapter 5. It continues the numerical notation system where squares are numbered 1 through 64, beginning at a1 (1) and ending at h8 (64). The text refers to specific pieces using period-appropriate military terms: *Reuter* (Knight/Rider), *Schütze* (Bishop/Shooter), and *Soldat* (Pawn/Soldier).]]
+
+### The Third Book / Chapter 5.
+
+...having been placed / so he can / against **the White** [player] / for this time / nevertheless obtain nothing [[note: gain no advantage]].
+
+[[margin: 114.]] But if **the White** [player] / moves the King / not to 2 [[note: Square b1]] (no. 66) / but rather to fourteen [[note: Square f2]]: and **the Black** [player] / with the King’s Knight [[note: *Reuter*, literally "Rider"]] / nonetheless takes **the White King’s** Soldier [[note: Pawn]] / and moves the same / toward **the White King’s** Bishop’s-Soldier [[note: the f-pawn]]: then **the White** [player] moves / (so that he / does not lose / the same) the King’s Soldier / toward the Opposing King’s Bishop / and Soldier / to twenty-nine [[note: Square e4]]: **The Black** [player] / takes him / with this Soldier: **The White** [player] / moves / the King’s Rook [[note: *Rochen*]] / (to keep / the Opposing King’s Knight / trapped) to four [[note: Square d1]] / and thus arranges / his game / not badly.
+
+[We] have thus sufficiently / revealed and made understood / to the chess-players / which move / in this place / is to be considered / good or bad: **The Black** [player] will also / because of these / indicated very harmful moves / move the King’s Bishop [[note: *Schütze*, literally "Shooter" or "Archer"]] / (before he / takes **the White King’s** Soldier / with his King’s Knight) with more benefit / to forty-seven [[note: Square g6]] (no. 64. 65.).
+
+<image-desc>An ornamental woodcut tailpiece featuring a symmetrical design with a central grotesque mask or head, surrounded by elaborate scrolling foliage, floral motifs, and bunches of fruit suspended from the sides.</image-desc>
+
+[[summary: This page concludes a specific tactical variation, advising White on how to trap Black's Knight using the Rook and recommending that Black reposition their Bishop to g6 to avoid a disadvantageous trade. It marks the end of a section in Chapter 5.]]
+
+[[keywords: chess tactics, Knight trap, King's Rook, Bishop move, square notation, Early Modern chess]]

@@ -1,0 +1,37 @@
+[[meta: This page provides a comprehensive reference table for players of Rithmomachia. While the previous page discussed the complex "Musical" proportions and began explaining the "Great Victory," this page serves as a lookup guide for identifying overlapping Arithmetic and Geometric progressions within a set of four numbers.]]
+
+## Table of all the Arithmetic & Geometric proportions together, which may occur in this game.
+
+| Arithmetic & Geometric | Arithmetic alone | Geometric alone |
+|:---|:---|:---|
+| 2 &nbsp;&nbsp; 3 &nbsp;&nbsp; 4 &nbsp;&nbsp; 8 | 2 &nbsp;&nbsp; 3 &nbsp;&nbsp; 4 | 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 8 |
+| 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 8 | 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 6 | 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 8 |
+| 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 | 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 6 | 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 |
+| 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 5 &nbsp;&nbsp; 8 | 2 &nbsp;&nbsp; 5 &nbsp;&nbsp; 8 | 2 &nbsp;&nbsp; 4 &nbsp;&nbsp; 8 |
+| 2 &nbsp;&nbsp; 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 | 2 &nbsp;&nbsp; 9 &nbsp;&nbsp; 16 | 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 |
+| 3 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 &nbsp;&nbsp; 12 | 3 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 | 3 &nbsp;&nbsp; 6 &nbsp;&nbsp; 12 |
+| 3 &nbsp;&nbsp; 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 | 3 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 | 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 |
+| 3 &nbsp;&nbsp; 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 | 3 &nbsp;&nbsp; 9 &nbsp;&nbsp; 15 | 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 |
+| 4 &nbsp;&nbsp; 5 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 | 4 &nbsp;&nbsp; 5 &nbsp;&nbsp; 6 | 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 |
+| 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 8 &nbsp;&nbsp; 9 | 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 8 | 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 9 |
+| 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 8 &nbsp;&nbsp; 16 | 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 8 | 4 &nbsp;&nbsp; 8 &nbsp;&nbsp; 16 |
+| 4 &nbsp;&nbsp; 12 &nbsp;&nbsp; 20 &nbsp;&nbsp; 36 | 4 &nbsp;&nbsp; 12 &nbsp;&nbsp; 20 | 4 &nbsp;&nbsp; 12 &nbsp;&nbsp; 36 |
+| 5 &nbsp;&nbsp; 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 | 5 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 | 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 |
+| 5 &nbsp;&nbsp; 25 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 | 5 &nbsp;&nbsp; 25 &nbsp;&nbsp; 45 | 25 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 |
+| 6 &nbsp;&nbsp; 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 | 6 &nbsp;&nbsp; 9 &nbsp;&nbsp; 12 | 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 |
+| 7 &nbsp;&nbsp; 16 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 | 7 &nbsp;&nbsp; 16 &nbsp;&nbsp; 25 | 16 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 |
+| 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 15 &nbsp;&nbsp; 16 | 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 15 | 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 |
+| 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 | 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 15 | 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 |
+| 9 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 &nbsp;&nbsp; 225 | 9 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 | 9 &nbsp;&nbsp; 45 &nbsp;&nbsp; 225 |
+| 9 &nbsp;&nbsp; 25 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 | 9 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 | 25 &nbsp;&nbsp; 45 &nbsp;&nbsp; 81 |
+| 9 &nbsp;&nbsp; 81 &nbsp;&nbsp; 153 &nbsp;&nbsp; 289 | 9 &nbsp;&nbsp; 81 &nbsp;&nbsp; 153 | 81 &nbsp;&nbsp; 153 &nbsp;&nbsp; 289 |
+| 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 &nbsp;&nbsp; 20 | 12 &nbsp;&nbsp; 16 &nbsp;&nbsp; 20 | 9 &nbsp;&nbsp; 12 &nbsp;&nbsp; 16 |
+| 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 | 15 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 | 9 &nbsp;&nbsp; 15 &nbsp;&nbsp; 25 |
+| 12 &nbsp;&nbsp; 16 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 | 12 &nbsp;&nbsp; 16 &nbsp;&nbsp; 20 | 16 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 |
+| 15 &nbsp;&nbsp; 16 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 | 15 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 | 16 &nbsp;&nbsp; 20 &nbsp;&nbsp; 25 |
+| 15 &nbsp;&nbsp; 20 &nbsp;&nbsp; 30 &nbsp;&nbsp; 45 | 15 &nbsp;&nbsp; 30 &nbsp;&nbsp; 45 | 20 &nbsp;&nbsp; 30 &nbsp;&nbsp; 45 |
+
+[[notes: This table shows how a single set of four numbers (first column) can be broken down into two distinct types of mathematical progressions. In an *Arithmetic* proportion (middle column), the numbers have a constant difference (e.g., 2, 3, 4 each differ by 1). In a *Geometric* proportion (last column), the numbers have a constant ratio (e.g., 2, 4, 8 each double the previous number). Identifying these "combined" sets was crucial for achieving the highest levels of victory in Rithmomachia, where a player had to arrange captured pieces into specific mathematical sequences.]]
+
+[[summary: This page contains a reference table mapping out sets of four numbers that simultaneously contain both Arithmetic and Geometric progressions. It serves as a tactical guide for players aiming to complete specific mathematical arrangements required for winning the game.]]
+[[keywords: Arithmetic proportion, Geometric proportion, Rithmomachia, number sequences, board game tactics, mathematical harmony]]

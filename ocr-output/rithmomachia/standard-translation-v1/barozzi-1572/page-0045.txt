@@ -1,0 +1,36 @@
+[[meta: This page continues from the previous discussion of the "Great Victory" in Rithmomachia. While the previous page focused on Arithmetic and Geometric progressions, this page introduces the "Musical" (Harmonic) proportion. The catchword from the previous page was "Tauo-", which correctly leads into the "Tauola" (Table) heading here.]]
+
+### Table of all the Arithmetic & Musical proportions together, which may occur in this game.
+
+| Arithmetic & Mus. together | Arithmetic alone | Musical alone |
+|:---|:---|:---|
+| 3 4 5 15 | 3 4 5 | 3 5 15 |
+| 3 4 5 6 | 4 5 6 | 3 4 6 |
+| 3 5 7 15 | 3 5 7 | 3 5 15 |
+| 3 4 6 9 | 3 6 9 | 3 4 6 |
+| 3 5 9 15 | 3 5 9 15 | 3 5 15 |
+| 3 9 15 45 | 3 9 15 | 9 15 45 |
+| 3 4 6 8 | 4 6 8 | 3 4 6 |
+| 4 6 8 12 | 4 8 12 | 4 6 12 |
+| 4 6 12 20 | 4 12 20 | 4 6 12 |
+| 5 7 9 45 | 5 7 9 | 5 9 45 |
+| 8 15 120 225 | 15 120 225 | 8 15 120 |
+| 9 12 15 20 | 9 12 20 | 12 15 20 |
+| 9 12 15 45 | 9 12 15 | 9 15 45 |
+| 9 15 30 45 | 15 30 45 | 6 15 45 |
+| 9 15 45 81 | 9 45 81 | 9 15 45 |
+| 12 15 20 25 | 15 20 25 | 12 15 20 |
+| 15 20 25 30 | 20 25 30 | 15 20 30 |
+| 15 20 30 45 | 15 30 45 | 15 20 30 |
+| 15 30 36 45 | 15 30 45 | 30 36 45 |
+| 15 30 45 90 | 15 30 45 | 30 45 90 |
+| 30 36 42 45 | 30 36 42 | 30 36 45 |
+| 72 81 90 120 | 72 81 90 | 72 90 120 |
+
+[[notes: In the context of Rithmomachia, "Musical" refers to the **Harmonic Proportion**. A set of numbers is in harmonic proportion if the ratio of the differences between the numbers is the same as the ratio of the outer numbers themselves (for example, 3, 4, 6 is harmonic because 4-3=1 and 6-4=2, and the ratio 1:2 is the same as the ratio 3:6).]]
+
+...therein [[notes: This sentence fragment follows from the previous page's discussion of the "Great Victory"]] those who play come to feel a wonderful delight, contemplating how in those 4 numbers, so situated, one finds all those [[markup: proportioni]] (proportions) from which are born all [[markup: musicali consonanze]] (musical consonances). These proportions, should one also wish to test them on strings of various kinds, or on [[markup: instromenti di fiato]] (wind instruments) using the weights and measures of these numbers, will allow them to hear the sweetness of all those harmonies that Music can provide. So that this may be clearer, I will give an example using 4 numbers from those in the aforementioned Table. Taking, then—
+
+[[summary: This page provides a reference table for "Musical" (Harmonic) proportions used to achieve the highest victory in the game. It explains that these numerical ratios are the same ones that create harmony in music and can be physically demonstrated with strings or wind instruments.]]
+
+[[keywords: Harmonic proportion, musical consonances, Rithmomachia, Pythagorean ratios, musical intervals, arithmetic proportion]]

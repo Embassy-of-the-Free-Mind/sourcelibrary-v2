@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical walkthrough of Chapter 9. The text follows a sequence of moves where White attempts to trap the Black Queen while managing a series of exchanges involving the Knights and Bishops.]]
+
+->->Concerning the Game of Chess.<-<-
+
+Aa ij
+[[meta: catchword: and]]
+
+[[margin: Chapter 9:]] ...[so that he] may protect [himself] with the Queen) covers the King with his **Knight's Pawn** [[notes: "Reuters-Soldat" refers to the pawn standing in front of the Knight]] at eighteen: **The Black player** takes it with the King's Pawn: **The White player** [takes] the same with the King's **Rook**:
+
+[[margin: 4.]] * **The Black player** plays the King's Knight to the White King's Pawn at forty-three:
+
+[[margin: 5.]] * **The White player** (to protect it: also to test whether the Black player understands this game) [moves] the King's **Knight** to twenty-two:
+
+[[margin: 6.]] * **The Black player** [moves] the King's Knight to the White King's Rook (which covers the White King from his Queen) at thirty-three: **The White player** takes the Black King's **Archer's Pawn** [[notes: "Schützen-Soldat" refers to the Bishop's Pawn]] with his King's Archer [[notes: "Schütze" or Archer is the 17th-century term for the Bishop]] and **gives check**: If **the Black player** does not take him with the King, then he [White] has his Knight: But if he takes him with the same, the Queen and the entire game are lost: For the White player then moves the King's Archer to thirty-four against his Queen:
+
+[[margin: 7.]] * He [Black] takes the White King's Rook with the King's Knight and moves against the White Queen: **The White player** moves the same to nineteen and **gives check**: He [Black] moves the King out of check or covers him: **The White player** takes his Queen with the King's Archer.
+
+[[margin: 8.]] But if **the Black player** does not take the White Rook with the Knight (no. 7), but instead moves the same against the White Queen to twenty-seven: then **the White player** (as long as he does not wish to seize the Black Knight with their Archer—which the Black Queen otherwise could not take back, because he would move the King's Rook against her at nineteen and thus obtain her) gives **check** with the Queen from thirty: **The Black player** covers the King with the King's Pawn and moves it against the White Queen to thirty-seven: **The White player** takes it with the King's Knight: **The Black player** does not move the Queen to thirty-three (for otherwise the White player, with the King's Knight, would take his King's Knight, move the same against this Queen, give **discovered check** [[notes: "Ab-Schach" or "Off-Check" occurs when moving one piece reveals a check from another piece]] from the Queen, and would immediately obtain her in the following move) but instead takes the White King's Rook's Pawn with her and moves her to the White King's Rook: **The White player** (because he does not wish to take the Black King's Knight with his King's Knight, nor give **discovered check** from the Queen, nor subsequently move the said Knight to twelve to protect the King's Rook) plays the King's Knight to the Black King's Rook at fifty-four and gives the Black King **discovered check** from his Queen: **The Black player** covers the King with the King's Archer at four...
+
+[[summary: This page details a complex series of exchanges where White uses their Bishop (Archer) and Knight to threaten the Black Queen and deliver discovered checks. The text illustrates a trap where Black risks losing their Queen if they capture certain pieces without foresight.]]
+
+[[keywords: Bishop, Knight, Rook, Pawn, Queen, Check, Discovered Check, Chess Strategy, Opening Moves]]

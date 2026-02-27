@@ -1,0 +1,24 @@
+[[meta: This page continues the tactical breakdown of a chess opening, following a scenario where White attempts to develop pieces while Black creates threats against the White King’s Knight and center Pawns. The numerical system for squares follows the 1–64 convention common in 17th-century treatises.]]
+
+### Das Vierte Buch / 4. cap:
+### The Fourth Book / Chapter 4:
+
+>> ...cannot bring forth: He, however, can conveniently and well draw his pieces into the field.
+
+[[margin: 6.]] If, however, the White does not take the Black Pawn (*no. 4*), but instead moves his **King’s Knight’s Pawn** [[notes: *K. Reuters-Soldat* literally means the King's Rider's Soldier. *Reuter* (Rider) was the period term for the Knight.]] to **twenty-six** (in order to preserve the King’s Pawn): then the Black plays the King’s Pawn to **twenty-eight**, attacking the White King’s Knight: The White (to protect the same) takes the Black Pawn with the **Queen** from **twelve**: The Black (to set the same on free feet again) [[notes: *auf freye füsse hinwider zu stellen* is an idiom meaning to liberate or simplify the position, here likely by moving the Queen into an active role]] moves the **Queen** to **fifty-two**: The White (since he has no better move) moves the King’s Knight to **twenty-nine**: The Black moves against him the **King’s Bishop’s Pawn** [[notes: *K. Schützens-Soldat* means the King's Archer's Soldier. *Schütze* (Archer) was the standard name for the Bishop in German chess texts of this era.]] to **thirty-eight**:
+
+[[margin: 7.]] * The White offers **check** with the Queen from **thirty-nine**: The Black moves the **King** to **fifty-one**: The White must necessarily rescue his King’s Knight: The Black offers **check** with the Queen from **twenty-five**: and attains with his Bishop the White King’s and his Knight’s Pawns.
+
+[[margin: 8.]] If, however, the White does not offer check with the Queen (*no. 7*), but moves the King’s Knight (out of danger) to **thirty-nine**: then the Black plays (to prevent the White King’s Knight from sallying out) the King’s Pawn to **twenty-nine**: The White moves the **King’s Bishop** (which move is not at all bad) to the Black King’s Pawn at **ten**: The Black moves the **King’s Rook’s Pawn** [[notes: *Rochen* is an old term for the Rook or Castle.]] against the White King’s Knight at **forty-eight**: The White moves the same to **twenty-four**: The Black (to protect the King’s Pawn) moves the King’s Knight to **forty-three**:
+
+[[margin: 9.]] * The White moves his King’s Knight’s Pawn against the same at **thirty-four**: The Black moves the same to **thirty-seven** and **discovers** [[notes: *entdecket* refers to a discovered attack; by moving the pawn, the Black Queen's line of sight is opened.]] the Queen upon this White Pawn:
+
+[[margin: 10.]] * The White takes the Black King’s Pawn with his King’s Bishop and moves him upon the Black King’s Knight: The Black moves the same against the White Queen at **twenty-seven**: The White moves the Queen against him at **nineteen**: The Black takes with the King’s Bishop the White King’s Pawn:
+
+[[margin: 11.]] * The White takes the Black King’s Knight with the Queen: The Black takes the White King’s Bishop with
+
+[[meta: catchword: seiner (his)]]
+
+[[summary: This page details a specific chess variation involving a sequence of pawn advances and queen maneuvers, resulting in Black gaining a positional advantage and attacking White's King's Knight. It illustrates 17th-century technical analysis using a coordinate system of 1-64.]]
+
+[[keywords: chess tactics, Knight, Bishop, Queen maneuvers, discovered attack, 17th-century chess, Damiano, Gustavus Selenus]]

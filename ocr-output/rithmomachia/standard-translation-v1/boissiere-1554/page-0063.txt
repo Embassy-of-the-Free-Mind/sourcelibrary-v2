@@ -1,0 +1,23 @@
+[[meta: This page continues the explanation of the "common victories" in Rythmomachia, picking up from the description of the "Victory of Wealth" on the previous page and introducing the "Victory of Lawsuits."]]
+
+->RYTHMOMACHIA, THE GAME<-
+
+### Example.
+
+Certain players have determined that whoever should first reach 100 would have won the game. If, therefore, one can obtain the two pieces [[notes: *Tables* refers to the physical gaming counters, similar to those used in backgammon or chess]] 64 and 36, which equal 100, or indeed a single piece of 100, without regard for the number of pieces provided the total value is present, he shall have the **victory of wealth**.
+
+## Victory of Lawsuits.
+
+Just as lawsuits [[notes: *Proces* (processes/lawsuits) is used here as a metaphor; the game was often called the "Philosophers' Game" and used social and legal analogies to explain its mathematical rules]] in themselves are nothing but papers and paintings containing wealth, similarly the characters on the pieces represent nothing but writing containing the numbers. Whoever shall first reach a prefixed value in a certain quantity of the said characters [[notes: *Caracteres* refers to the individual digits or numerals inscribed on the pieces]] at the players' pleasure, without having regard for the quantity of pieces, shall have the victory.
+
+### Example.
+
+The players have preordained that whoever shall first reach 100, or some other such value, in eight characters shall have won the game. Whoever then shall first have his 6 pieces 2, 4, 6, 8, 20, and 64—within which 6 pieces are contained the value of 100 across eight characters [[notes: The author is counting the individual digits: 2, 4, 6, 8, 2, 0, 6, and 4 make eight total numerals]]—or other such pieces containing the said sum of 100 in eight marks, without having regard for the
+
+[[meta: catchword: quan- (quantity)]]
+
+[[gloss: Rythmomachia, victory of wealth, victory of lawsuits, characters, pieces, players, won, eight]]
+
+[[summary: This page defines the "Victory of Wealth" (winning based on the sum of the pieces' values) and the "Victory of Lawsuits" (winning based on both a specific sum and a specific number of individual digits). It uses a mathematical example where the sum of 100 is achieved using eight specific digits across six counters.]]
+
+[[keywords: Rythmomachia, Victory of Wealth, Victory of Lawsuits, mathematical games, Renaissance education, numeracy, game rules]]

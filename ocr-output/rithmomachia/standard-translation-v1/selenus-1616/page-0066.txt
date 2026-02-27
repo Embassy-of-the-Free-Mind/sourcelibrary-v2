@@ -1,0 +1,23 @@
+[[meta: This page continues the geographic survey of chess-playing nations, moving from the customs of the Turks to those of the Persians, North Africans, and the newly documented peoples of the Americas, concluding with the beginning of a section on the Chinese.]]
+
+### ->The First Book / Chapter 2:<-
+
+,, One finds among them, at times, ivory chess-pieces which are formed and carved like whole persons. But they use, in my opinion, another piece in place of the stone which we call the **Queen**.
+
+If we look further, we find the **Persians**; next in **Africa**, the **Mauritanians** [[notes: A historical term for the Berber inhabitants of the Maghreb in North Africa]] and **Moors**, who likewise seek their pleasure and pastime in this: Of whom **Garcia de Orta** [[notes: A Portuguese Renaissance physician and pioneer of tropical medicine who lived in India]], as summarized by **Carolus Clusius** [[notes: Charles de l'Écluse, one of the most influential botanists of the 16th century, who translated and abridged Garcia de Orta's work from Portuguese into Latin]], writes in the following manner in *Book 2, Chapter 28*:
+
+,, The word **Xa** [[notes: Shah, the Persian word for King]] invites me to add something here about the **Game of Soldiers** [[notes: *Ludus Latrunculorum*, a Roman strategy game often compared to chess by Renaissance scholars]], which is very familiar to the Persians and Mauritanians, although they have a different way of playing. They call the King **Xa**: but whenever they attack him, they by no means say *Xaque* [[notes: Check]], but simply **xa**, as if to say, 'I warn you, King, to move from your place.' They call the Queen **Goazir** [[notes: Vizier or Wazir, the King’s advisor or minister]], that is, the Prefect of the Kingdom, or what they call the Constable. The Bishop [[notes: Literally "Dolphin or Archer" in the Latin text]] they call **Fil**, that is, an Elephant. The Knight they call **Guora**, that is, a Horse. The Tower—or what we call the Elephant [[notes: The Rook, which in many medieval sets was depicted as an elephant carrying a tower]]—they call **Rochba**, that is, a Tiger. The Pawn they call **Piada**, that is, a man who fights on foot. **That is, in brief:**
+,, Among the Persians and Mauritanians, the game of Chess is quite common and customary. It is played by them, however, in a different way than by us.
+
+Likewise, **Peter Martyr d'Anghiera** [[notes: An Italian-born historian of Spain and its discoveries in the Americas]], the Milanese, writes in his booklet *On the Recently Discovered Islands and the Customs of Their Inhabitants*, page 360, also concerning the Americans [[notes: Referring to the indigenous peoples of the Americas during the early Spanish exploration]].
+
+,, Various cotton blankets, woven with white, black, and yellow colors, two rich with gold and gems, and three others woven with feathers and cotton in the manner of a chessboard: which is evidence that they also have the use of chessboards. **That is:**
+,, These peoples brought and showed us various blankets made from a special kind of cotton, woven with white, black, and yellow colors: two adorned with gold and precious stones: but three others on which the chess-fields [[notes: The squares of a chessboard]] were distinguished with feathers and similar cotton. Which then gives an indication that they also make use of the chess-table.
+
+From the Americans, we come to the **Chinese**, who live in the furthest reaches of **Asia**. Among these, the game of...
+
+[[meta: catchword: ...Chess/]]
+
+[[summary: This page explores the global reach of chess, detailing Persian and North African terminology for the pieces (such as the Shah and Vizier) and citing early colonial reports that suggest the existence of chessboard-like patterns among indigenous peoples in the Americas.]]
+
+[[keywords: Persia, Africa, Mauritanians, Garcia de Orta, Peter Martyr d’Anghiera, Chess pieces, Etymology, Vizier, Americas, Textiles, Chess history]]

@@ -1,0 +1,40 @@
+[[meta: This page continues the first book of the Musical Elements, specifically focusing on the mathematical properties of multiple intervals—ratios where the larger number is a clean multiple of the smaller, such as 2:1 or 3:1. It relies heavily on Jacques Lefèvre d’Étaples's own work on Arithmetica to prove these musical-mathematical theorems.]]
+
+To
+
+[[margin: 1]]
+¶ If a multiple interval is multiplied by two: that which results from this multiplication is also a multiple interval.
+
+| a | b | c | |
+| :--- | :--- | :--- | :--- |
+| 16 | 8 | 4 | A multiple resulting from doubling. |
+| 4 | 2 | 1 | A multiple interval. |
+
+¶ To multiply an interval by two [[notes: In early music theory, "multiplying an interval" means adding the interval to itself. Mathematically, this is done by squaring the terms of the ratio. For example, doubling an octave (2:1) involves (2x2):(1x1), resulting in a 4:1 ratio.]] is to double the relationship of the interval, the method of which can be known from the third proposition of the fifth book of the *Arithmetica* [[notes: Lefèvre refers to his own textbook, *Arithmetica decem libris demonstrata*, which provided the mathematical foundation for his music theory.]]. For instance, if **a** to **b** is any interval which we are commanded to multiply by two: we shall multiply it by the third proposition of the fifth book if we multiply **a** by itself and **b** by itself, and let the products be **d** and **c**. The resulting interval **d** to **c** will be the double of the producing interval **a** to **b**. But if we again multiply **a** by **b** and the product is **e**, then by the sixth proposition of the fourth book, the proportion of **d** to **e** will be the same as **e** to **c**, and the interval **d** to **c** is divided into two equal parts. 
+
+But let it now be that the interval **a** to **b** is a multiple, as the proposition suggests, and let it be multiplied by two in the manner just described: let the doubled interval be **d** to **c**, with the same proportion from **d** to **e** as from **e** to **c**. I say that the interval **d** to **c** is a multiple. For since the interval **a** to **b** is a multiple, when it is doubled, it is manifest that a multiple is added to a multiple; therefore, by the twenty-second proposition of the ninth book of the *Arithmetica*, it is immediately known that the composite interval is a multiple. And that is what was proposed. 
+
+But the same is demonstrated here in another way. For since the proportion of **a** to **b** is the same as **d** to **e** and **e** to **c** (for each is half of the doubled proportion of **a** to **b**), and the proportion of **a** to **b** is set as a multiple, therefore the proportion of **d** to **e** is also a multiple. Thus, by the definition of a multiple, **e** measures [[notes: "Measures" means to divide evenly into a larger number without a remainder.]] **d** itself either twice, or thrice, or so on. And by the same logic, **c** measures **e** just as many times. Wherefore, by the first common concept [[notes: An axiom or "common notion" in the Euclidean tradition.]], **c** also measures **d**. For whatever measures another thing also measures everything that is measured by it. Therefore, by definition, the interval **d** to **c** is a multiple. Which was to be shown.
+
+[[margin: 2]]
+¶ If terms are arranged proportionally: when the first is compared to the last, if the first measures the last, it will also measure the second.
+
+| 2 | 4 | 8 | | 1 | 2 | 4 | **a, b, c** are three proportional terms |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **a** | **b** | **c** | | **d** | **e** | **f** | of which **a** divides **b**. |
+
+¶ Although the thirteenth proposition of the fourth book demonstrates this sufficiently, we wish to make it more manifest in this place. For let **a, b, c** be terms arranged proportionally, and let **a** measure **c**: I say that **a** also measures **b**. For I take **d, e, f** as the smallest terms in that same proportion [[notes: This refers to "lowest terms" or a simplified ratio, like 1:2:4 instead of 2:4:8.]]. Since **d** is to **e** as **a** is to **b**, and **e** is to **f** as **b** is to **c**, then by the equal proportionality shown in the twenty-first proposition of the second book of the *Arithmetica*, **d** is to **f** as **a** is to **c**. But by the hypothesis, **a** measures **c**; therefore **d** will measure **f**. And because **d, e, f** are set as the smallest in their proportion, then by the fifth proposition of the fourth book, **d** and **f** are prime to each other [[notes: "Prime to each other" or coprime means they share no common factor other than 1.]]. And since **d** measures itself and also **f**, it is by definition unity [[notes: The number 1.]]. But in truth, since unity is a part of every number, **d** will therefore measure **e**. And since **a** is to **b** as **d** is to **e**, then **a** will measure **b**, which is the second term; which was to be recognized and proposed.
+
+[[margin: 3]]
+¶ If an interval multiplied by two results in a multiple interval: the interval itself will also be a multiple.
+
+| 2 | 4 | 8 | The interval **a, b** multiplied by two |
+| :--- | :--- | :--- | :--- |
+| **a** | **b** | **c** | resulting in a multiple. |
+
+¶ This is the converse of the first rule, and this is its reasoning. For since the composite interval is a multiple, and by the second common science [[notes: Another reference to a mathematical axiom.]] it is resolved into that interval from whose multiplication it grew—since every composite thing is dissolved into the simple elements from which it is known to be joined (concrete) and composed—by the sixtieth proposition of the ninth book, the simple interval will be a multiple. 
+
+But the same is shown otherwise. For if **a, b, c** is a doubled interval that is a multiple, so that **c** is a multiple of **a**, and the proportion is **a** to **b** and **b** to **c**: since **c** to **a** will be a multiple, **a** will measure **c** by definition. Therefore, by the preceding rule, **a** will also measure **b**. Thus, the simple interval **b** to **a** is a multiple by definition. And that is what was proposed.
+
+[[summary: This page establishes the mathematical rules for "multiple intervals" (such as the octave), proving that doubling such an interval maintains its multiple status and vice versa, using proofs from Lefèvre’s Arithmetica.]]
+[[keywords: multiple interval, mathematical proof, Arithmetica, ratio, proportional terms, Jacques Lefèvre d’Étaples]]

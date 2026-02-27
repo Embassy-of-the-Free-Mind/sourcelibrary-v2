@@ -1,0 +1,74 @@
+[[meta: This page continues the exploration of "medieties" (means) at the start of Book X. Having defined the arithmetic mediety on the previous page, Jordanus now demonstrates how the ratios between the terms (the numbers in the sequence) and their differences (the amount between the numbers) behave according to specific rules.]]
+
+<margin>6</margin>
+### ¶ If three numbers are taken in the same mediety according to the proportion of the mean of two given numbers to their difference: the ratio of their mean to the difference will be the same as the proportion assigned between the extremes.
+
+<margin>
+m ————— 12
+f — 8 g — 6 h — 4
+k — 4
+l — 2
+a — 6 b — 4 c — 2
+d — 4
+e — 2
+</margin>
+[[notes: This diagram illustrates an arithmetic progression where the difference between terms is constant. In the first set (a, b, c), the numbers are 6, 4, 2. The difference (e) is 2. The ratio of the mean (b=4) to the difference (e=2) is 2:1. The ratio of the extremes (a=6 to c=2) is 3:1.]]
+
+¶ Let **a**, **b**, and **c** be three numbers in an arithmetic mediety [[notes: An arithmetic mediety is a sequence where the difference between consecutive numbers is equal, such as 2, 4, 6.]], of which the greatest is **a**. Let **v** be the difference between **a** and **c**, and let **e** be the mean difference [[notes: The common difference]], which is the difference between **a** and **b**, as well as between **b** and **c**. I likewise take numbers **f**, **g**, and **h** in the same mediety, such that the proportion of the extremes (**f** to **h**) is as **b** is to **e**; and let **f** be the greatest. I say that the proportion of **g** to the difference between **f** and **g** (which let be **l**) is the same proportion as **a** to **c**. For I take the difference of **f** to **h**, which is **k**, of which the half is **l**. And let the sum of **f** and **h** be **m**. Since, by the hypothesis, **b** is to **e** as **f** is to **h**, and **b** and **h** [[notes: This likely refers to specific segment lengths in the geometric proof style]] are **a**. Therefore, by the sixth [proposition] of the second [book], **a** is to **e** as **m** is to **h**. And because, as was said, **b** is to **e** as **f** is to **h**, then by permutation, the whole **b** is to the whole **f** as the subtracted **e** is to the subtracted **h**. Therefore, by the fifth [proposition] of the second [book], the remainder **c** is to the remainder **k** as the whole is to the whole. Wherefore, as **e** is to **h**, so is **c** to **k**. By permutation, therefore, **e** is to **c** as **h** is to **k**. Therefore, by the twenty-first [proposition] of the second [book] and by equal proportionality, **m** is to **k** as **a** is to **c**. Therefore, since by the second [proposition] of this [book] **g** is half of **m**, then **a** will be to **c** as **g** is to **l**—that is, the mean to the half-difference, just as the whole **m** is to the whole difference **k**. This is what was proposed.
+
+<margin>7</margin>
+### ¶ If three numbers are arranged in this mediety: it is impossible for the proportion of the extremes and the proportion of the mean to the difference to be the same; however, it is possible for one to be greater or lesser.
+
+<margin>
+f — 5 h — 4
+e — 1 g — 2
+a — 4 b — 3 c — 2
+</margin>
+[[notes: This diagram tests the rule using the sequence 4, 3, 2. The extremes (4 and 2) have a ratio of 2:1. The mean (3) to the difference (1) has a ratio of 3:1. As Jordanus notes, these ratios are not equal.]]
+
+¶ Let three numbers **a**, **b**, and **c** be established in this mediety, with **a** being the greatest; and let the difference between **a** and **b**, and **b** and **c**, be **d**. I say it is impossible for the proportion of **a** to **c** to be the same as **b** to **d**. For if it were possible, let it be set that **a** is to **c** as **b** is to **d**. Therefore, by the twenty-fifth [proposition] of the second [book], the product of **a** times **d** is equal to the product of **b** times **c**. But by the fourteenth [proposition] of the first [book], the product of **a** times **d** is as much as the product of **d** times itself and **d** times **b**, which let be **e** and **f**. But by the same [proposition], **b** times **c** is as much as the product of **c** times itself [and its difference], which let be **g** and **h**. Therefore, **e** and **f** together would equal **g** and **h** together. Which is impossible. I show it thus: for by the seventh [proposition] of the second [book], **f** is to **e** as **b** is to **d**. And by the same, **h** is to **g** as **c** is to **d**. But by the ninth [proposition] of the second [book], the proportion of **b** to **d** is greater than the proportion of **c** to **d**. Therefore, the proportion of **f** to **e** will be greater than the proportion of **h** to **g**. Wherefore, if **f** were to equal **h**, then **e** would be less than **g**. Thus **e** and **f** together would not equal **g** and **h**. And if **f** is less than **h**, then by the seventeenth [proposition] of the second [book], **e** will also be less than **g**. Wherefore, the sum of two smaller parts (**e** and **f**) will not equal the sum of the larger (**g** and **h**). But if **f** is set as greater than **h**, and the sum **e** and **f** equals the sum **g** and **h**, then by the nineteenth [proposition] of the second [book], the proportion of **f** to **e** would be less than the proportion of **h** to **g**, the opposite of which has been shown. Therefore, what was said stands. ¶ But it is possible for the proportion of the extremes to be greater than the mean to the difference if three terms are placed continuously from unity [[notes: Starting from the number 1, e.g., 1, 2, 3]] which will be in this mediety. And that the proportion of the extremes (namely 3 to 1) is a triple proportion; but the proportion of the mean (2 to 1, which is the difference) is a double proportion. It is clear that the proportion of the extreme to extreme is greater than the mean to the difference. And so it is if numbers are appropriately taken discontinuously in this mediety after unity. It is also possible for the proportion of extreme to extreme to be less than the mean to the difference. For having accepted any three terms continuously after unity [[notes: Such as 10, 11, 12]], the proportion of the mean to unity (which will be the difference) will be greater than the extremes to each other, where the difference is always two.
+
+<margin>8</margin>
+### ¶ To find three numbers in this mediety such that the proportion of the mean to the difference is greater than the proportion of the difference of the extremes by any given proportion.
+
+<margin>
+b ————— 3
+c ——— 2
+b ——— 2
+a — 1
+</margin>
+[[notes: This demonstrates how to construct an arithmetic sequence where the gap between the middle term and the difference is as large as one desires.]]
+
+¶ Let **a** and **b** be numbers of a given proportion, and let **b** be the greater. I add **b** to **a** to make **c**, and to this I also add **b** to make **d**. It is manifest that **d**, **c**, and **a** are three numbers established in this mediety, since **b** is the common difference of **d** to **c** and **c** to **a**. I say that the difference of the proportion of the mean **c** to the difference **b**, compared to the proportion of **d** to **a**, is greater than the given proportion of **b** to **a**. For the proportion of **c** to **a** adds the proportion of **b** to **a** over the proportion of **c** to **b**. And the proportion of **d** to **a** is greater than the proportion of **c** to **a**. Therefore, the proportion of **d** to **a** will add more than the given proportion of **b** to **a** over the proportion of **c** to **b**. Thus, the difference is greater than the given proportion.
+
+<margin>9</margin>
+### ¶ If the greater extreme is double the lesser: the mean will be triple the difference, and vice versa. If one is more than double the other: the mean will be less than triple the difference, and vice versa.
+
+<margin>
+a — 4c — 3b — 1
+a — 9c — 6b — 3
+8 — 5 — 2 / 3
+</margin>
+[[notes: Jordanus is establishing fixed ratios. If the sequence is 2, 3, 4, the max (4) is double the min (2). The difference is 1. The mean (3) is triple the difference (1).]]
+
+¶ For if the greatest **a** is double the minimum **b**, then **b** will be double the difference. Wherefore **c**, being composed of **b** and that difference, will be triple to the same difference. And if **c** is triple the difference, since it is composed of that difference and **b**, then **b** will be double the difference. Wherefore **a**, being composed of **b** and the double difference (which is equal to **b**), will be found to be double **b**. This is the first part. And if **a** is triple to **b**, that same **b** will equal one difference. But **b** and one of the equal differences constitutes **c**. Therefore **c** is double the difference. And if **c** is double the difference, then **a** will again be triple to **b**. For if **c** is double the difference, since it is composed of the difference and **b**, that difference will equal **b**. But **b** with the equal difference taken twice constitutes **a**. Therefore **a** is triple to **b**. And universally, if the proportion of the greatest to the minimum is found to be greater than double: then [the minimum] to the difference will always be less than double. Therefore the mean, composed of the minimum and the difference, will be less than triple the difference. And it is converted as has been shown in the others.
+
+<margin>10</margin>
+### ¶ Given any two proportions: to arrange three terms in an arithmetic mediety according to each, such that their differences are equal to each other.
+
+<margin>
+l ————— 8 n ————— 6
+g ————— 6 i ———— 4
+m ————— 40
+2 / 1 ——— a ——— b c ——— 3 / 1
+e ——— f
+g ————— 4
+h ————— 4 k
+</margin>
+[[notes: This is a method for finding two different arithmetic sequences that share the same "step" or common difference.]]
+
+¶ Let the minimum terms of the two given proportions be **a**, **b** and **c**, **d**. And let their differences be **e** and **f**. I then take some number **m** that the differences **e** and **f** both measure [[notes: A common multiple]]. And let the numbers by which they measure them be **h** and **k**. Then I multiply **a** and **b** by **h**, resulting in **l** and **m**. And I multiply **c** and **d** by **k**, resulting in **n** and **o**. By the seventh [proposition] of the second [book], **l** is to **m** as **a** is to **b**, and **n** is to **o** as **c** is to **d**. And the difference of **l** to **m** is **g**, and similarly the difference of **n** to **o** is **g**. If, therefore, **g** is even: I take the mean between **l** and **m**, which will consist of **m** and half of **g**; and the mean between **n** and **o**, which will consist of **o** and half of **g**. And there will be three terms **l** and **m** with their mean according to the proportion **a** to **b**; and three others **n** and **o** with their mean according to the proportion **c** to **d** in an arithmetic mediety, whose differences to each other are equal.
+
+[[summary: This page explores the internal ratios of arithmetic sequences (medieties). It proves that the ratio between extremes and the ratio between the mean and the difference are mathematically distinct, and provides a method to construct sequences with equal differences from different starting ratios.]]
+
+[[keywords: arithmetic mediety, mean, extreme, difference, proportion, triple ratio, double ratio, common multiple]]

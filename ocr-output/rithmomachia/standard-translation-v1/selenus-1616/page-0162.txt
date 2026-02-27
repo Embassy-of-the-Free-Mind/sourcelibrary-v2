@@ -1,0 +1,33 @@
+[[meta: This page continues the discussion of the King’s movement restrictions, specifically explaining that a King cannot move into a square controlled by an enemy piece, even if that enemy piece is currently "pinned" (immobilized) and unable to move without exposing its own King to check.]]
+
+# The Second Book / 1st Chapter:
+
+...on account of the move, would presume to offer a **Check**, is held captive by one of his pieces. For otherwise, both **Kings** would remain upon the field at the same time; which, however, would run contrary to the custom of this game (since the **Kings** are only captured, but not slain [[notes: "erleget" — In historical chess, as in modern chess, the King is never actually removed from the board; the game ends the moment he is trapped or "captured."]]). For example: If the **Black King** is in his [square] — whose **Bishop** [[notes: "Schütze," literally "Archer" or "Marksman," the historical German term for the Bishop]] is before him in his second [square] — and a
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| **S.K.** [[notes: Schwarz König / Black King]] | | | |
+| **SSc.** [[notes: Schwarz Schütze / Black Bishop]] | | | |
+| | | | |
+| | | | |
+| | | | | **WK** [[notes: Weisser König / White King]] |
+| | | | |
+| | | | |
+| **WR** [[notes: Weisser Roche / White Rook]] | | | |
+
+-> **White Rook** / (which held the **Black Bishop** / captive) [[notes: A "pin." The Bishop cannot move because it would leave the Black King in check from the Rook.]] <-
+-> stood in the **White King's** field [[notes: "field" here refers to the line of squares or the rank/file]]: thus the White player <-
+-> nevertheless cannot move his **King** / into the fields <-
+-> where the **Bishop** strikes / notwithstanding this; <-
+-> for he who comes first / has <-
+-> the best advantage. A similar example [[notes: "ebenmessiges Exempel"]] <-
+-> may be sought below / in the 12th Chapter, no. 26, <-
+-> of this book. <-
+
+---
+
+[[meta: catchword: Das]]
+
+[[summary: This page explains a specific rule of chess: a King cannot move into a square controlled by an enemy piece, even if that piece is pinned and legally unable to move. The author uses a diagram to illustrate how a White Rook pinning a Black Bishop still does not allow the White King to step into the Bishop's line of fire.]]
+
+[[keywords: Checkmate, Bishop, Rook, Pinning, Chess Rules, Augustus-zu-Braunschweig-Lüneburg, Gustavus Selenus]]

@@ -1,0 +1,19 @@
+[[meta: This page transitions from the technical rules of the King's movement discussed on the previous page to the moral and allegorical interpretation of the King as a chess piece. It draws upon the medieval tradition of "Chess Moralities," where the game was used as a metaphor for a well-ordered society.]]
+
+->### 1. cap: Of the Game of Chess.<-
+
+[[margin: 1.cap:]]
+...described in the aforementioned treatise, or explanation of the Game of Chess / with the following words / (in which he / has been translated into German from various anonymous authors, as many written / and old printed copies of the same / have come into our hands):
+
+The **King** / takes his form / after a living **King** / when he shall sit / in his palace / dressed in purple: .. this signifies / that he shall be / crowned and clothed with virtues / and with grace: with these / the King’s / courage and will / shall be adorned and improved / in these things he shall shine / before other people / just as he appears before them / in his garments: .. He shall have a **Crown** / upon his head: that signifies / his high dignity / for his / dignity / is an honor to his people: for all his subjects / look upon him / and are obedient to him. In his **left hand** / he shall have a **golden Apple**: [[notes: The "golden apple" refers to the *Reichsapfel* or Sovereign's Orb, a symbol of the monarch's worldy power and his duty to protect the realm.]] .. with which he shows / that he is an overseer / or a protector / and a provider / for all his subjects / either by himself / or through his administrators. [[notes: *Verwesern* refers to regents, stewards, or high-ranking officials who govern in the King's name.]] In his **right hand** / he shall have a **Scepter** / that signifies his power / with which he shall subdue the wicked / who cannot / be tamed / by body or goods. ..
+
+First / the King / shall be meek / and from him / mercy shall shine: Second / the King / shall be truthful / in words and in works / so that he / hates lies / at all times: Third / the King / shall be good. For it is impossible / that a good man / should ever be lost / or die an unjust death: But fierce people [[notes: *Freysam leut* refers to those who are bold, cruel, or given to violence.]] / one reads / that they often die an evil death: Fourth / the King shall be just: for kingdoms without justice / are dens of murderers. [[notes: *Mordwinckel*, literally "murder-corners." This is a likely reference to St. Augustine’s famous dictum in *The City of God*: "Justice being taken away, then, what are kingdoms but great robberies?"]] Fifth / the King / shall be chaste / so / that he / shall not sin / or desire / any other women / but only / the **Queen** / Therefore she is placed / at his left side. It is also believable / that a King who is chaste / just and truthful / deserves from God / that he should bear a son / who is equal to him / in the same virtues: for he shall / not decline / when his father's virtue leads him / to virtues / so that he follows him / in character / from whom he has come / in being: For it is / somewhat / very much against Nature / that a King / should have another woman / or have more than one. When ..
+
+[[margin: H2]]
+[[meta: Catchword: wir ſe]]
+
+<vocab> **Game of Chess**, **King**, **Palace**, **purple**, **virtues**, **Crown**, **golden Apple** (Orb), **Scepter**, **meek**, **mercy**, **den of murderers**, **chaste**, **Queen** </vocab>
+
+[[summary: This page describes the symbolic regalia and moral requirements of the King piece, framing him as a virtuous protector of his subjects who must possess mercy, truth, goodness, justice, and chastity. It draws on the "Chess Morality" tradition to explain why the King is the central figure of the game.]]
+
+[[keywords: Chess allegory, King (chess piece), Royal virtues, Sovereign's Orb, Scepter, Medieval moralities, Justice, Chastity, Queen (chess piece)]]

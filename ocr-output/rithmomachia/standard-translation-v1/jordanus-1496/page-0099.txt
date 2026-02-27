@@ -1,0 +1,43 @@
+[[meta: This page continues the mathematical demonstration of musical intervals on a monochord. Having established the nature of the whole tone (9:8 ratio) on the previous page, the author now defines the "minor semitone"—the mathematical remainder when two whole tones are subtracted from a perfect fourth.]]
+
+II
+
+->[A diagram of a monochord string divided into segments marked a, c, d, e, and b]<-
+
+¶ A semitone is understood to be *subjoined* when, from the higher part [[notes: "Higher" refers to the shorter end of the string which produces a higher pitch]], two tones are left toward the lower part and the semitone itself is placed there. It is *prejoined*, however, when the semitone is applied from the lower part [[notes: "Lower" or *remissiori* refers to the longer, "relaxed" end of the string]] before the two tones. Therefore, following the second [proposition] of this [book], let there be two tones on string **a b** through the points **a c d b**. Let **a b** to **c b** be the first tone, and **c b** to **d b** be the second. Because these consist in a *sesquioctave* ratio [[notes: The 9:8 ratio, the standard Pythagorean whole tone]] by definition, and because—by the seventeenth [proposition] of the first book—two sesquioctaves are less than a *sesquitertia* ratio [[notes: The 4:3 ratio, the interval of a perfect fourth]], it follows that **a b** to **d b** is less than a sesquitertia. I therefore divide **a b** into four equal parts, and I mark the beginning of the third section as point **e**, so that **e b** contains three of those four parts. By definition, the ratio of **a b** to **e b** is therefore a sesquitertia. But since the sesquitertia ratio of **a b** to **e b** exceeds the two tones of **a b** and **d b** by the ratio of **d b** to **e b**, it follows by the description that **d b** to **e b** is a semitone subjoined to two tones, as was proposed.
+
+16 ¶ **To place a minor semitone before two tones.**
+
+->[A diagram of a monochord string divided into segments marked a, e, d, c, and b]<-
+
+¶ I make **a b** to **c b** a sesquitertia interval [4:3], and I divide **c b** into eight equal parts. Above **c** toward **a**, I make **d c** equal to one of those eight parts, so that **d b** contains nine of those parts; by definition, **d b** and **c b** constitute one tone. Similarly, I divide **d b** into eight equal parts and add one of those parts above **d** at point **e**; thus **e b** to **d b** will again be a tone. There are now two tones: **e b** to **d b** and **d b** to **c b**. But the sesquitertia ratio **a b** to **c b** is greater than those two tones by the ratio **a b** to **e b**. Therefore, by definition, **a b** to **e b** is a minor semitone. Since it is added from the lower part of the string, it is placed before the two tones, which was the goal.
+
+17 ¶ **To interpose a diesis or minor semitone between two tones.**
+
+->[A diagram of a monochord string divided into segments marked a, d, e, c, and b]<-
+
+¶ Here we understand "diesis" and "minor semitone" to be the same thing (as has already been said). Let **a b** to **c b** be a sesquitertia ratio [4:3] in the whole string **a b**. From **a** toward **c**, I extend a tone to point **d**. From **c** toward **a**, I lower a tone as was done before to point **e**, so that **a b** to **d b** is a tone, and similarly **e b** to **c b** is a tone. It is manifest that the sesquitertia ratio **a b** to **c b** exceeds those two tones by the middle ratio **d b** to **e b**. Therefore, by definition, **d b** to **e b** is a minor semitone intercepted between two tones, as proposed.
+
+18 ¶ **To find the smallest numbers of the minor semitone, and to place a minor semitone anywhere on one or more strings.**
+
+| 324 | 288 | 256 | 243 |
+| :--- | :--- | :--- | :--- |
+| **f** | **g** | **h** | **k** |
+| 81 | 72 | 64 | |
+| **c** | **d** | **e** | |
+| 9 | 8 | | |
+| **a** | **b** | | |
+| 4 | 3 | | |
+| **l** | **m** | | |
+
+¶ Let **a** (9) and **b** (8) be the smallest numbers of a tone. I multiply **a** by itself [9x9=81], **a** by **b** [9x8=72], and **b** by itself [8x8=64]; let the resulting numbers be **c**, **d**, and **e**. Between these, by the seventh [proposition] of the fourth book of *Arithmetic* [[notes: Likely referring to Boethius's *De Arithmetica*]], there will be two sesquioctaves, which are two tones continued in their smallest numbers. Furthermore, let **l** be 4 and **m** be 3. I multiply **l** by **c**, **d**, and **e**, and let **f**, **g**, and **h** be produced [324, 288, 256]. By the seventh [proposition] of the second book of *Arithmetic*, these are similarly joined as two sesquioctaves and thus two tones. Furthermore, I multiply **m** by **c**, and let **k** be produced [3x81=243]. By the eighth [proposition] of the second book of *Arithmetic*, the ratio of **f** [324] to **k** [243] is a sesquitertia [4:3], which by the 17th [proposition] of the first book of this work is greater than the two tones **f** to **h** [324:256], and the difference is **h** to **k** [256:243]. I say, therefore, that **h** and **k** are the smallest numbers of the minor semitone. That they are numbers of the minor semitone is known by definition, but that they are the *smallest* must now be declared. 
+
+Since **c** and **e** [81 and 64] are the smallest in their ratio, they are prime to each other by the 18th [proposition] of the third book of *Arithmetic*. And since **l** and **a** (4 and 9) are also prime to each other, therefore by the 11th [proposition] of the third book, **l** is prime to **c**. And by the 10th of the same, **h** (which is born from **l** and **e**, which are prime to number **c**) will be prime. **m** and **b** (3 and 8) are prime to one another, so by the 11th of the third book, **m** is prime to **e**. But since **l** and **m** (4 and 3) are also prime, therefore by the 10th of the same, **m** is also prime to **h**. Since **c** and **m** have been shown to be prime to **h**, then by the same 13th [proposition], the number **k** produced from **c** and **m** is prime to **h**. Thus, **h** and **k** are prime to each other as numbers of the minor semitone; wherefore, by the 20th [proposition] of the third book of *Arithmetic*, they are the smallest in their ratio, which was proposed. 
+
+Given any string, if you divide it according to number **h** [256] and take a portion of those parts according to number **k** [243], the interval of a minor semitone will be established anywhere on that string. In different strings, you may do the same very easily: if you set those strings as equal, equally tensioned, and in unison, and divide any of them as you wish according to **h**, and take the parts of the other according to **k**, then the interval of a minor semitone will be established across multiple strings. This is the whole of the proposal.
+
+19 ¶ **The minor semitone consists in a ratio smaller than the *sesquiseptimadecima* [18:17].**
+Whereby it follows that the rule for determining a semitone is not to simply divide the difference between the endpoints of a tone into two equal parts [[notes: The author is warning that a semitone is not a simple arithmetic half of a 9:8 tone, but a specific geometric/harmonic ratio]].
+
+[[summary: This page provides a geometric and arithmetical proof for the minor semitone (limma), defining it as the ratio 256:243. It demonstrates how to locate this interval on a monochord and proves that a semitone is not merely half of a whole tone.]]
+[[keywords: minor semitone, limma, diesis, monochord, sesquitertia, sesquioctave, 256:243, Pythagorean tuning, music theory, Boethius]]

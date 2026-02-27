@@ -1,0 +1,146 @@
+[[meta: This page continues the exploration of Book VII of Euclid’s *Elements*, focusing on the fundamental properties of prime numbers and divisibility. The previous page established basic proportional relationships; here, the text moves into the logic of "coprime" numbers (numbers that share no common divisor other than 1) and the famous proof that prime numbers are infinite.]]
+
+<page-num>113</page-num>
+
+[[margin:
+a ——————
+b ———— c ————
+d ————
+e ————
+]]
+...parts: it is clear indeed since **d** is a prime number, one of the parts of **b** is unity [[notes: "Unity" refers to the number 1, which the Greeks and medieval scholars often considered the source of numbers rather than a number itself]]. I therefore take one of the parts of **b**, which is **f**; and one of the parts of **a**, which is **g**: since therefore the fifth part [[notes: The text uses "quinta pars" likely as a placeholder for "some part"]] **f**, which is unity, is to **d**: the whole part **g** is to **c** itself. Therefore, through the seventh [proposition] of the first [book], whatever part the unit **f** is to **g**, the whole **d** is to **c**. Therefore, **d** will measure [[notes: In geometry and early arithmetic, "to measure" (*numerare*) means to divide evenly without a remainder]] **c** itself, which is again the opposite [of what was assumed].
+
+---
+
+[[margin:
+5
+]]
+
+### ¶ If a third number measures a product of two numbers, it will be commensurable to one of them.
+
+¶ Let **a** be a number produced from **b** multiplied by **c**, which **d** measures: I say that **d** is commensurable [[notes: Commensurable means having a common divisor]] to one of the numbers **b** or **c**. For **d** is either prime or composite. If it is prime: then through the preceding [proposition] it measures one of them; for which reason it will be commensurable to one of them. If it is composite: then through the second [proposition] of this [book] **d** is measured by some prime number, which let be **e**. Since **e** measures **d**, it will also measure **a** through the twenty-third [proposition] of the first; for which reason **e**, by the preceding [proposition], will measure **b** or **c**. And since it also commonly measures **d**, then by definition, **d** and either of the two **b** or **c** (which the same number **e** commonly measures) are commensurable: which is what was intended.
+
+---
+
+[[margin:
+386
+\---
+85
+\---
+35
+\---
+11
+\---
+7
+\---
+6
+\---
+a ——————
+g ——————
+6
+]]
+
+### ¶ Given any number of prime numbers, it is necessary that there exists a prime number different from them.
+
+¶ Let **a**, **b**, and **c** be any number of prime numbers: I say there is another besides them. For I multiply the first prime by the second and let **d** be produced; and the third into that product and let **e** be produced; and if there were a fourth, I would multiply it into product **e**, and so on. And because the earlier ones will always be parts of the parts of the last product: therefore, by the twenty-third [proposition] of the first and the definition, all those prime numbers will measure the last product, to which I add unity: and let the whole product be **f**. This is either prime, and thus the proposition is established; or it is composite. If it should be composite: then by the second [proposition] of this [book] it is measured by some prime which let be **g**. And since **g** is prime and is not any of the aforementioned: for if it were any of those, it would measure **f** while it also measures the subtracted part **e** as was shown: and by the twelfth [proposition] of the first it would measure the remainder, namely the number unity: which is impossible [[notes: This is Euclid's classic proof of the infinitude of primes. He shows that if you multiply all known primes and add 1, the new number must either be prime itself or have a prime factor that wasn't in your original list]]. It is therefore established that there is another prime number besides them.
+
+---
+
+[[margin:
+9
+8
+\---
+4
+\---
+a —— b ——
+c ——————
+7
+]]
+
+### ¶ If there be two numbers prime to each other, whatever measures one of them is prime to the other.
+
+¶ Let **a** and **b** be prime to each other [[notes: "Prime to each other" means they are coprime, sharing no common factor other than 1]] and let **c** measure **a**: I say that **b** and **c** are prime to each other: otherwise, if **c** measures **b** (or any other number measures both **b** and **c**), since that same number would measure **a** by the twenty-third [proposition] of the first, then **a** and **b** would not be prime to each other, which is against the hypothesis.
+
+---
+
+[[margin:
+8 9
+\---
+4 3
+a —— b ——
+e ——————
+8
+]]
+
+### ¶ Whatever numbers measure numbers that are prime to each other are also prime to one another.
+
+¶ Let **a** and **b** be measuring the numbers **c** and **d** which are prime to each other: from which **c** [is measured by **a**] and **d** [is measured by **b**]: I say **a** and **b** are prime to each other. For if they are commensurable, let **e** be measuring them commonly: since therefore **e** will measure **a**, it will also measure **c** by the twenty-third [proposition] of the first. And since **e** also measures **b**, by the same it will measure **d**. Thus **c** and **d** are not prime to each other: which is against the hypothesis.
+
+---
+
+[[margin:
+7
+\---
+4 3
+a —— b ——
+d ——————
+9
+]]
+
+### ¶ A number composed of two numbers prime to each other is prime to each of them.
+
+¶ Let **a** and **b** be numbers prime to each other, and let **c** be composed [[notes: "Composed" (*componatur*) here refers to the sum of the two numbers]]: I say **c** is prime to each of them. For if it is commensurable to one of them, such as to number **a**, then let some number such as **d** measure them: since therefore **d** measures **c** and the subtracted part **a**, then by the twelfth [proposition] of the first, **d** also measures the remainder **b**. Thus **a** and **b** are not prime to each other, which is against what was posited.
+
+---
+
+[[margin:
+72
+\---
+8 9
+a —— b ——
+7
+\---
+c ——————
+e ——————
+10
+]]
+
+### ¶ If each of two numbers be prime to a third, the product produced from them will also be prime to the same third.
+
+¶ Let **a** and **b** be two numbers, each of which is prime to **c**: and let **d** be the product of **a** times **b**: I say **d** is prime to **c**. For if **c** and **d** were commensurable, some number such as **e** would measure them commonly: since it would measure **d** (the product of two, namely **a** and **b**), through the fourth [proposition] of this [book] it will communicate with one of them [[notes: "Communicate" means to share a common factor]], which by the seventh [proposition] of this [book] is impossible. Therefore **c** and **d** are not commensurable.
+
+---
+
+[[margin:
+64
+\---
+8 9
+a —— b ——
+c ——————
+11
+]]
+
+### ¶ If two numbers be prime to each other, the product of one multiplied by itself will be prime to the other.
+
+¶ Let **a** and **b** be prime to each other: and let **a** multiplied by itself produce **c**: I say **c** is prime to **b**. I take **d** equal to **a**: and since among **b**, **a**, and **d**, [each of the latter two] is prime to **b**: therefore by the preceding [proposition], the product of **a** times **d** is prime to **b**. But the product of **a** by itself is equal to the product of **a** times **d**: therefore the product of **a** by itself is prime to **b**. Which is the proposition.
+
+---
+
+[[margin:
+64 125
+e ————— f —————
+16 25
+c ————— d —————
+4 5
+a —— b ——
+g —————
+12
+]]
+
+### ¶ If two numbers be prime to each other, their squares will be prime to each other; and if those are multiplied by the products, those resulting will be prime to each other. And so on, if the principles be multiplied into the products, the products will be incommensurable.
+
+¶ Let **a** and **b** be prime to each other: let **a** be multiplied by itself and become **c**, and **b** by itself and become **d**: I say **c** and **d** are prime to each other. Likewise I say if **a** is multiplied into **c** and becomes **e**, and **b** into **d** and becomes **f**, then similarly **e** and **f** are incommensurable and prime to each other. And if you again multiply **a** into **e** and **b** into **f**, those produced will be prime to each other; and this will happen however many times you do it. The first part is clear: for by the premise, because **a** is prime to **b** and **c** is made from **a** by itself: by the preceding [proposition] **c** is prime to **b**. And because **c** is prime to **b** and **d** is made from **b** by itself: by the same [proposition] **c** is prime to **d**, which is the first point. Furthermore, since each of **a** and **c** is prime to **b**, therefore by the tenth [proposition], **e** (which is produced from them) is prime to **b**. Because therefore **e** and **b** are prime to each other, and **d** is produced from **b** by itself: by the preceding, **e** is also prime to **d**. Since therefore each of the two **b** and **d** is prime to **e** as has now been shown, therefore by the tenth [proposition], **f** (which is made from them, namely from **b** times **d**) is prime to **e**. And so you may conclude however far the series proceeds. And this is the second point. ¶ From the first part of this, it is known that squares [[notes: *tetragonos*, lit. "four-angled"]] whose sides are incommensurable are themselves incommensurable. And from the second: that cubes [[notes: *tesseras*, lit. "tiles" or "dice"]] are incommensurable whose sides are incommensurable. And it is ready to be demonstrated to the contrary that if the sides are commensurable, the squares and cubes are commensurable. Let **a** and **b** be commensurable sides, and **c** be the square of **a**, and **e** its cube. Let **d** be the square of **b**, and **f** its cube. Because **a** and **b** are commensurable, therefore there is a number commonly measuring them, which let be **g**. Because **g** measures **a**, therefore by the twenty-third [proposition] of the first, it measures **c**. And because **g** also measures **b**, by the same twenty-third it measures **d** and **f**. Therefore the squares **c** and **d**, as well as the cubes **e** and **f**, are mutually commensurable. But enough on these for now: of which a most exact determination is to come in the sixth [book] [[notes: Likely referring to a division of the present work or the later books of Euclid]] where it will treat both square and cubic numbers.
+
+[[summary: This page covers several fundamental theorems of arithmetic from Euclid's Elements Book VII, most notably the proof of the infinitude of prime numbers and the properties of coprime numbers. It concludes by demonstrating that if two numbers are coprime, their squares and cubes will also be coprime.]]
+
+[[keywords: prime numbers, Euclid's Elements, infinitude of primes, coprimality, commensurability, squares, cubes, Book VII, arithmetic]]

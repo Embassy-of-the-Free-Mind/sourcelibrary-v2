@@ -1,0 +1,21 @@
+The Philosopher's Game.
+
+## Of the Pieces <note>original: "men"</note>
+
+The pieces are 48 in number. 24 are on one side and must be known by one color, and 24 are on the other side, which also must be marked with a contrary color, such as white and black, blue and red, or whatever other colors you like best. But in the coloring, these three things must be observed: the bottom or lower part of every piece (except the two kings) must be marked with its adversary's color, so that when it is captured, it may change its coat <note>original: "coate"</note> and serve the one to whom it is a prisoner.
+
+The second thing considered in the pieces is their shape <note>original: "fashion"</note>. On either side, eight are circles <note>original: "roundes"</note>, another eight are triangles, and seven (the king making eight) are squares. Their shapes are such: circles, triangles, squares.
+
+<image-desc>A horizontal row of geometric shapes representing the game pieces: three circles (the first containing a concentric circle), three triangles, and three squares.</image-desc>
+
+The kings, because they consist of all three types, as is known by the learned study <note>original: "speculation"</note> of the numbers, bear...
+
+***
+
+<summary>
+This page describes the physical components of the Philosopher's Game (Rhythmomachia). It specifies that there are 48 pieces in total, divided into two teams of 24, distinguished by opposing colors. A unique rule is mentioned where the bottom of each piece is colored with the opponent's color to signify its change of allegiance upon capture. The pieces are further categorized by their geometric shapes: circles, triangles, and squares. The king pieces are noted as being special compositions of all three shapes, based on mathematical principles.
+</summary>
+
+<keywords>
+Philosopher's Game, Rhythmomachia, game pieces, game rules, geometric shapes, circles, triangles, squares, mathematical games, William Fulke, historical board games.
+</keywords>

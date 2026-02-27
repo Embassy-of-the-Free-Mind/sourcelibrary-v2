@@ -1,0 +1,27 @@
+[[meta: This page continues the tactical demonstration of an opening variation, focusing on Black's counterplay after White’s Knight creates a fork. The coordinate system used herein numbers the squares of the board from 1 to 64, typically starting from the White side.]]
+
+### Chapter 7: On the Game of Chess.
+
+the Black player (to put the White player to the test) moves the King’s Bishop’s Soldier [[note: *Schützens-Soldat*, literally "Shooter’s Soldier," the Pawn in front of the Bishop.]] to forty-six: The White player takes the Black King’s Soldier with his King’s Knight [[note: *Reuter*, literally "Rider."]]: The Black player moves the Queen against him to fifty-two: The White player moves the same [[the Knight]] toward the Black King’s Rook at fifty-one: The Black player takes the White King’s Soldier with the Queen, offers check, and moves her onto the [square of] the White King’s Bishop [[note: Likely square f2, if following the standard numbering of the era.]]: The White player (so that he does not lose the same [[pawn or position]]) covers the King with the Queen on twelve: The Black player takes her with his Queen: The White player takes the same with the King: The Black player moves the King’s Soldier to the White King’s Bishop’s [square] at thirty-seven: The White player takes it with the same [[his own pawn]] and protects his King’s Knight once again: The Black player takes the same [[the protecting pawn]] with the King’s Bishop’s Soldier: The White player [takes] the Black King’s Rook with the King’s Knight: The Black player (since this White Knight cannot be released from captivity [[note: *auß der haft*, a colorful way to describe a piece that is trapped and cannot escape the corner.]] again) wins a piece to his advantage, and victory will surely fall to him, provided he is well-instructed in the moves.
+
+But if the White player plays in another manner: then the Black player must always take good heed of his game and proceed in good order (though it [[the position]] cannot be made so free and unhindered by this path as in the other manner: therefore they are not to be compared with one another) and show himself [ready].
+
+-> n. 3. 4. 5. &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; n. 6. 7. <-
+
+| | | | | | | | | | | | | | | | |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | | | | | | | | |
+| | | **SR** | | **SK** | | | | | | | | **SK** | | | |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+
+[[note: The diagrams above represent the board states for the numbered variations discussed in the text. Archaic abbreviations include SR for Black Rook/Knight, SS for Black Pawn, and WK/WK for the respective Kings.]]
+
+[[meta: catchword: Das]]
+
+[[summary: This page concludes a specific tactical sequence where Black successfully traps a White Knight in the corner after an exchange of Queens. It emphasizes that while Black gains a material advantage, the player must remain cautious and well-instructed to secure the win.]]
+
+[[keywords: Chess tactics, Knight fork, trapped piece, Queen exchange, 17th-century chess, endgame advantage]]

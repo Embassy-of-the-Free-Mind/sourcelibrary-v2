@@ -1,0 +1,16 @@
+[[meta: This page is the blank verso (back) or facing page of the illustration "The Chess Players" (ad pag. 216). It contains no original printed text, only an "offset"—a faint mirror-image transfer of the ink from the engraving on the preceding page.]]
+
+# [Reverse of Illustration]
+
+***
+
+->[Faint Mirror Image of the Chess Scene]<-
+
+[[notes: This page serves as a physical record of the book's long history. The image seen here is not a deliberate print, but an **offset**. This phenomenon occurs when the ink from a freshly printed engraving is pressed against another sheet of paper—either during the binding process or through centuries of pressure while the book remains closed—leaving a ghostly "carbon copy" behind. Because it is a transfer from the facing page, the scene appears in reverse, creating a mirror image of the original composition.]]
+
+***
+
+[[notes: In these faint, monochromatic markings, the eye can still discern the silhouette of the nobleman seated in his high-backed armchair and the grid of the chessboard. While this page contains no new technical instructions for the player, such "ghosting" is of great interest to bibliophiles and conservators, as it speaks to the material quality of the paper and the oil-based inks used by 17th-century printers like Jacob van der Heyden.]]
+
+[[summary: This page features a faint mirror-image offset of the previous chess engraving, a result of ink transfer between pages over centuries. It serves as a visual testament to the physical history and aging process of the printed manual.]]
+[[keywords: offset, ghost image, bleed-through, 17th-century printing, book history, mirror image, conservation]]

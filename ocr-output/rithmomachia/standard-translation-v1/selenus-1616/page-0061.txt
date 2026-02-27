@@ -1,0 +1,67 @@
+[[meta: This page continues the discussion of ancient board games, specifically focusing on the Roman strategy games described by Ovid and Martial, which the author identifies as precursors to or variants of Chess.]]
+
+# On the Game of Chess.
+
+[[margin: Book 2, chapter:]]
+...to know how to play the ,,
+**Stone-game** [[notes: Referring generally to strategy board games played with counters or "stones," such as *Ludus Latrunculorum*]]: so that ,,
+their opponent does not ,,
+gain the opportunity to move ,,
+two against one of their pieces, ,,
+nor should their piece dare to fight ,,
+and play without its companion; ,,
+and thus, because the opponent ,,
+often overlooks his own begun under- ,,
+taking and keeps watch upon this, they might be ,,
+prevented from bringing the game ,,
+to the desired end. ,,
+
+Thirdly, Book 2 of the *Tristia* [[notes: A collection of letters in sorrowful verse by the Roman poet Ovid]], page 461:
+> *Discolor ut recto, grassetur limite Miles, ,,*
+> *Cum medius gemino, calculus Hoste perit. ,,*
+> *Ut magè velle sequi, sciat & revocare priorem, ,,*
+> *Nec tutò fugiens, incomitatus eat. ,,*
+
+->**That is:**<-
+Some have also written how one should ,,
+move their piece (which is of a different color ,,
+than the opponent’s pieces) with advantage ,,
+and—so that if that same piece is taken, ,,
+the other side cannot gain much by it, ,,
+but rather their own piece must also ,,
+remain on the field—as much as possible, ,,
+unobtrusively: also to rescue one of his pieces ,,
+which is surrounded by the opposing side ,,
+and stands in great danger of being ,,
+taken: likewise, to be more diligent ,,
+in helping one’s own piece to retreat ,,
+than in pursuing the enemy too heatedly; ,,
+and finally, one should always move and lead ,,
+the pieces well-supported on the Chess-board, ,,
+so that they can safely give way ,,
+to the encroaching enemy. ,,
+
+[[margin: Book 14, Epigram 20.]]
+Martial [[notes: Marcus Valerius Martialis (c. 38–104 AD), a Roman poet famous for his *Epigrams*]] mentions this game in the same light, Book 14,
+Epigram 20:
+> *Insidiosorum si ludis bella Latronum, ,,*
+> *Gemmeus iste tibi, Miles & Hostis erit. ,,*
+
+->**That is:**<-
+He who wishes to move at Chess aright, ,,
+Has friends and foes in equal sight. [[notes: This is a rhyming summary of Martial's verse about *Ludus Latrunculorum*, the "Game of Little Soldiers," which was the most popular strategy game in Ancient Rome.]]
+
+[[margin: In the same book, Epigram 17.]]
+Furthermore, the aforementioned Martial writes in the same book, Epigram 17,
+of yet another kind, in the following manner:
+> *Hic mihi Bisseno, numeratur tessera puncto, ,,*
+> *Calculus hic, gemino, discolor, Hoste perit. ,,*
+
+In a similar fashion, Bernardino Rutilio, J.C. [[notes: *Jurisconsultus*, a legal expert or jurist]] mentions in *The Lives of Ancient Jurists*, in the life of P. Mucius Scævola [[notes: Publius Mucius Scaevola, a Roman politician and jurist of the 2nd century BC, famously skilled at board games]], pages 197, 198, a game ,,
+of twelve stones [[notes: Likely *Ludus Duodecim Scriptorum*, or the "Game of Twelve Markings," a Roman game thought to be an ancestor of Backgammon]], which this excellent jurist is said to have played very skillfully; and it might perhaps (provided that the...
+
+[[meta: Catchword at bottom: "jehni" (likely part of "jenige" or similar)]]
+
+[[summary: This page examines Roman board games through the lens of classical poetry and legal history, interpreting Ovid and Martial's descriptions of strategy as early forms of Chess. It emphasizes tactical advice such as piece coordination, careful retreats, and the historical mastery of the game by the jurist Scaevola.]]
+
+[[keywords: Chess, Stone-game, Ludus Latrunculorum, Ovid, Martial, Scaevola, Strategy, Roman Games, Board Games]]

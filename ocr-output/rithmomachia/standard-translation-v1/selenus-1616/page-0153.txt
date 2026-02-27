@@ -1,0 +1,27 @@
+[[meta: This page follows the discussion of why the King is not captured like other pieces, citing classical examples of military command. It transitions into a formal classification of the different types of checkmate and their social connotations in the 17th century.]]
+
+# Chapter 1: Of the Game of Chess.
+
+...that the chess-men [[notes: *Schach-Männlein*, a charming period term for chess pieces]] should face one another and, for the sake of their King, struggle and fight with wisdom and caution. But to the King, they have attributed this quality: that if he were attacked, he should always withdraw and never engage in any combat with his enemy. (The exception would be if the enemy were to attack him carelessly in the adjacent square; or, if necessity required it, he approached the enemy's pieces in the adjacent square—at the sides or corners where they could not strike him. For instance: if he were to reach a **Rook** [[notes: *Rochen*, from the Persian *rukh*, the traditional name for the Rook]] on the line of a **Bishop** [[notes: *Schütze*, literally "archer" or "shooter," the early German name for the Bishop]], or a **Bishop** on a square of a different color than the one it currently occupied). From this fact—that the King must always withdraw—comes the rule which is set down here as a principle: that the King cannot be stolen [[notes: *Geraubet*, meaning captured and removed from the board]] like other pieces, but can only be hunted or, as one says according to the Art, checked and check-mated.
+
+Furthermore, the check-mate and the resulting victory are either praised or blamed respectively, on the part of both the victor and the defeated, in the following manner.
+
+->The Check-Mate<-
+
+| By | In the | Which | Result | Status |
+|---|---|---|---|---|
+| the Queen, a { **Bishop**, **Knight**, **Rook**, **Soldier** [[notes: *Soldat*, the common term for a Pawn]] } or a Discovery | { Height, Middle, or Side } of the board | { traps the King without giving check, or is "Blind" [[notes: A "blind" mate is one that is achieved without the player realizing or announcing it]] } | is called | a { Praiseworthy, Noble, Honest, Pleasant, Respectful, or Most Worthy } Mate. |
+| | | | is called | one of Alexander’s { Unfortunate, Foolish, Stable-like [[notes: *Stal-und unehrlicher*, likely implying a crude or unrefined victory]], Dishonest, or Shameful } Mates. |
+
+---
+
+Now, since these names and manners of speaking ("Checking," "Mating," "it doesn't count," "moving into check," etc.) necessarily arise from the use of the words *Schach* and *Mat* which must be spoken in this game, it will therefore be necessary that we consider (1.) these little words, *Schach* and *Mat*; (2.) to what purpose...
+
+[[notes: The "Alexander" mentioned in the table likely refers to a specific historical chess variant or a set of famous blunders attributed to a player of that name, contrasting "Noble" mates with "Shameful" ones.]]
+
+<sig>Q iij</sig>
+[[meta: catchword: and]]
+
+[[summary: This page explains the unique status of the King in chess—that he is "hunted" rather than captured—and provides a taxonomical table of checkmates ranging from "noble" to "shameful." it emphasizes the etiquette and terminology surrounding the end of the game.]]
+
+[[keywords: Checkmate, King, Rochen, Schützen, Chess etiquette, 17th-century chess, Alexander's Mate, Game terminology]]

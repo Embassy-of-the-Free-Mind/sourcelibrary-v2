@@ -1,0 +1,25 @@
+[[meta: This page continues the mathematical and structural analysis of the enharmonic scales from page 7. It concludes the proof of the seven-mode system and begins a detailed catalog of the pitch intervals—measured in tones and quarter-tones—that separate each mode within the ancient Greek fifteen-string system.]]
+
+->*[[image-desc: A small decorative woodcut ornament, possibly a stylized leaf or fleur-de-lis, centered at the top of the page.]]*<-
+
+...is held to be peculiar and proper to the modulation. There are, therefore, seven fifteen-string scales [[notes: *pentadecachorda*; this refers to the "Greater Perfect System" of ancient Greek music theory, which spanned two octaves and utilized fifteen notes]]—r, s, t, v, x, y, z—containing the seven modes of enharmonic modulation, which was the point proposed to be demonstrated.
+
+## To demonstrate the relationships of each of the enharmonic modes to one another.
+
+¶ The demonstration of this can be made clear from the preceding section. First, the **Hypophrygian** is a tone’s distance from the **Hypodorian**; the **Hypolydian** is a tone and a diesis [[notes: In the enharmonic genus, a *diesis* is a quarter-tone, the smallest interval used in ancient Greek melody]]; the **Dorian** is a minor third [[notes: *sesquitonum*, literally "one and a half tones"]]; the **Phrygian** is a fifth [[notes: *diapente*]]; the **Lydian** is a fifth and a diesis; the **Mixolydian** is a fifth and a semitone. 
+
+¶ Second, the **Hypolydian** is distant from the **Hypophrygian** by a diesis; the **Dorian** by a semitone; the **Phrygian** by a fourth [[notes: *diatessaron*]]; the **Lydian** by a fourth and a diesis; the **Mixolydian** by a fourth and a semitone. 
+
+¶ Third, the **Dorian** is a diesis from the **Hypolydian**; the **Phrygian** is two tones and a diesis; the **Lydian** is a fourth; the **Mixolydian** is a fourth and a diesis. 
+
+¶ Fourth, the **Phrygian** is two tones [[notes: *ditono*, a major third]] from the **Dorian**; the **Lydian** is two tones and a diesis; the **Mixolydian** is a fourth. 
+
+¶ Fifth, the **Lydian** is a diesis from the **Phrygian**, and the **Mixolydian** is a semitone. 
+
+¶ Sixth, the **Mixolydian** is distant from the **Lydian** by a diesis.
+
+¶ For the authority of the ancient Pythagoreans [[notes: Followers of Pythagoras who believed that the universe and music were governed by precise mathematical ratios]] added seven modes an...
+
+[[summary: This page provides a technical breakdown of the mathematical intervals between the seven enharmonic modes, using the Greek two-octave system as a framework. It establishes the precise distance between modes like the Dorian, Phrygian, and Lydian in terms of tones and quarter-tones.]]
+
+[[keywords: enharmonic genus, Greek music theory, musical modes, intervals, Pythagorean tuning, diesis, pentadecachorda, Dorian, Phrygian, Lydian]]

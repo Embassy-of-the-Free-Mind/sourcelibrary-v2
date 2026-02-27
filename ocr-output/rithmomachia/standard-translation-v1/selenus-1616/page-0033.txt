@@ -1,0 +1,50 @@
+[[meta: This page continues the quote from the 16th-century physician Pascalius Justus, moving from the moral justification of games to their historical origins and their classification as an 'active art' similar to music.]]
+
+### 3.
+-> ### Of the Game of Chess. <-
+-> A iij <-
+
+[[margin: Chapter 1]]
+[...moderation], when it is played without any greed or agitation of the
+spirit, at the right time and with a certain measure—perhaps by melan-
+choly people to delight and refresh themselves: just as one is ac-
+customed to delighting oneself with string-music, or to use 
+leisure, sleep, or other rest, when one has done justice to 
+more important and distinguished matters. For it is written that the 
+first invention of play was not intended for any evil or vice-ridden 
+end: considering that the Lydians, for the sake of 
+variety, so that they could better endure hunger, are said to 
+have invented all sorts of games [[notes: This refers to a famous story by the Greek historian Herodotus, who claimed the Lydians invented games like dice to distract themselves during an 18-year famine, eating only every other day]]. Thus also, the Stone-Game (which is 
+commonly called Chess [[notes: "Stone-game" or *Steinspiel* was a general term for board games played with pieces or "stones"]]) was invented to the end that soldiers, 
+in a long-lasting siege, could better dispel and pass their 
+idleness. Thus also writes the poet *Horace*: that not the playing, 
+but rather not knowing how to give measure to the game, is a shame. 
+Moreover, distinguished people have also played, such as *Cato*, 
+*Portius*, *Domitian*, *Claudian* (who wrote a book on the Art of Play), 
+the Emperors *Verus* and *Augustus*; *Maecenas* 
+however, and *Q. Galba*, also moved the Chess pieces. *Caesar*, 
+*Scaevola*, and *Ticinius* were excellent ball-players.
+
+Therefore, this should be well and diligently noted: 
+that firstly, with this entire game, nothing else than 
+the amusement, delight, and liberation of the spirit 
+must be viewed and sought as the primary, ultimate, and true purpose. 
+And secondly, that the game is the very work which this art, 
+in its place, just like **Music**, should present and leave behind: 
+just as otherwise the building and other arts leave a house or 
+work behind them after the labor is finished [[notes: The author is distinguishing between "mechanical" arts like architecture, which result in a physical object, and "active" arts like music or chess, where the "work" is the performance or the play itself]]. From which it further 
+appears that the Art of Chess belongs among those arts 
+which are called in Latin *disciplinas activas* [active disciplines], 
+or properly, in a single word, *Artes* [Arts], and whose 
+practice rests upon a certain form and experience.
+
+Now, as concerns the form and shape here: it has the 
+same, in part, from **Mathematics**, from which (as *Plato* 
+testifies) all arts flow: namely from **Geometry**...
+
+[[meta: The catchword "oder" (or) indicates the next page will continue the sentence regarding the mathematical foundations of the game.]]
+
+[[notes: A significant ink stain is present at the bottom left corner of the original page, though it does not appear to obscure the primary text.]]
+
+[[summary: This page justifies chess as a healthy mental distraction, citing classical figures and the Lydian origin myth, while categorizing chess as an "active art" rooted in mathematics.]]
+[[keywords: Lydians, Horace, Cato, Augustus, Maecenas, Music, active disciplines, Mathematics, Geometry, purpose of play]]

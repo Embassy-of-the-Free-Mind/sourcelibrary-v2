@@ -1,0 +1,15 @@
+# Of Capture by Besieging <note>original: "obliuion"</note>.
+
+Through besieging <note>original: "obliuion"</note>, any piece <note>original: "man"</note> may be captured, even the king himself, if he is so surrounded <note>original: "compassed"</note> by four pieces that his lawful move <note>original: "draught"</note> is blocked <note>original: "hindered"</note>. For example, if a circle <note>original: "round"</note> stands in space 1, and four pieces of any type—it does not matter <note>original: "skylleth not"</note> which—occupy spaces 2, 3, 4, and 5, it may be captured after you have placed your last piece in its position. 
+
+Likewise, if a triangle located in space **a** is enclosed by any four pieces standing in **b**, **c**, **d**, and **e**, it may be captured; in the same way, a square may also be captured. 
+
+Additionally, triangles and squares may be besieged if all four pieces (or some of them, with the rest standing closer) stand in the third or fourth space away from them, so that they have no way to move <note>original: "remoue"</note>. For instance, a triangle or square standing in **A** may be besieged by four pieces—or any combination of them, provided the others are closer—occupying spaces **F**, **G**, **H**, and **I**. Similarly, a square standing in **A** may be captured by siege <note>original: "obsidion"</note> by those same pieces.
+
+<summary>
+This section describes the "Capture by Besieging" (originally called capture by "oblivion" or "obsidion") in the game of Rythmomachia. It explains that any piece, including the King, is captured if it is surrounded by four opposing pieces such that all its possible legal moves are blocked. The rule applies regardless of the type of pieces doing the surrounding. Furthermore, the text clarifies that a "siege" can be established even if the attacking pieces are several spaces away, as long as they effectively block all paths of retreat for the targeted triangle or square.
+</summary>
+
+<keywords>
+Rythmomachia, Philosophers' Game, capture by oblivion, capture by siege, obsidion, game pieces, king, triangle, square, circle, movement rules, encirclement
+</keywords>

@@ -1,0 +1,15 @@
+[[meta: This page continues the instructions for the game of Rythmomachia, specifically focusing on the mathematical calculations required to label the circular playing pieces. It follows the logic established on the previous page regarding the hierarchy of geometric shapes.]]
+
+one must write on the white pieces with black color, and upon the black pieces with white. Wishing then to determine the numbers that should be written upon the 8 white rounds, we shall first take the first four even numbers, one after the other, beginning from 2—which shall be 2, 4, 6, and 8—and we shall write them upon the [first] 4 white rounds, that is, one per piece. Then, placing them in a rank [[notes: The author continues to use the term *schiera*, or military rank, emphasizing the game's nature as a "battle of numbers"]] one after the other, just as they follow, we shall place below them the other four white rounds, upon which we shall mark those numbers that result from multiplying the first numbers by themselves [[notes: This is the mathematical process of squaring: 2x2, 4x4, etc.]]. That is, in the one that stands below the 2, we shall write 4, because 2 multiplied by itself produces 4. Similarly, in the one placed below the 4, we shall mark 16, because from 4 multiplied by itself is born 16. Likewise, in the one lying below the 6, we shall note 36, because multiplying 6 by itself yields 36. Finally, in that round situated below the 8, we shall paint 64, because from the multiplication of 8 by itself comes 64. And thus we shall have described the numbers upon the 8 white rounds, as is seen in the following figure.
+
+| ( 2 ) | ( 4 ) | ( 6 ) | ( 8 ) |
+| :---: | :---: | :---: | :---: |
+| ( 4 ) | ( 16 ) | ( 36 ) | ( 64 ) |
+
+[[notes: This diagram represents the eight white "rounds" or circular pieces. The top row contains the base even numbers, and the bottom row contains their squares.]]
+
+Similarly, wishing to paint the numbers upon the 8 black rounds, we shall take the first 4 odd numbers one after the other, beginning from 3, which will be 3, 5, 7, and 9. And we shall mark them upon the [first] 4 black rounds. Then, placing them in a rank one...
+
+[[summary: This page explains how to assign numerical values to the circular playing pieces (rounds) for both the white and black sides using a system of even and odd numbers and their squares. This mathematical foundation is essential for the gameplay of Rythmomachia.]]
+
+[[keywords: Rythmomachia, even numbers, odd numbers, multiplication, squaring, white pieces, black pieces, circular pieces, mathematical games]]

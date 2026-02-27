@@ -1,0 +1,29 @@
+[[meta: This page continues the spatial logic of the chessboard, moving from the specific placement of pieces to the conceptual division of the board into "quarters" and "territories" for each player.]]
+
+# Of the Game of Chess.
+
+[[margin: II. cap:]]
+...of the **Archer-** and **Rider-Soldiers** [[notes: These refer to the pawns standing in front of the Bishops (Archers) and Knights (Riders)]]: the **Rook-Soldiers**, however, protect only one square, namely the third of the **Riders**. Because of this "quartering" of the **Chess-Pieces**, the **Chess-Table** [[notes: *Schach-Tabel*, the board]] is first divided into two **Main Quarters**: one called the **White King’s** quarter, and the other the **Black King’s**. According to the following diagram, each quarter contains four **transverse lines** [[notes: *zwerch-linien*, modernly called ranks or rows]]: the outermost and first is called the **Head-line**; the second, that of the **Soldiers**; the third, the **White** or **Black King’s** third; the fourth, their fourth line, with which the border of each King ends.
+
+->**General Quarter of the Black King.**<-
+
+| R. | Sp. | Sc. | [Queen] | K. | Sc. | Sp. | R. |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 2. | 2. | 2. | 2. | 2. | 2. | 2. | 2. |
+| 3. | 3. | 3. | 3. | 3. | 3. | 3. | 3. |
+| 4. | 4. | 4. | 4. | 4. | 4. | 4. | 4. |
+| 4. | 4. | 4. | 4. | 4. | 4. | 4. | 4. |
+| 3. | 3. | 3. | 3. | 3. | 3. | 3. | 3. |
+| 2. | 2. | 2. | 2. | 2. | 2. | 2. | 2. |
+| R. | Sp. | Sc. | [Queen] | K. | Sc. | Sp. | R. |
+
+->**General Quarter of the White King.**<-
+
+[[notes: In this diagram, "R." stands for *Roche* (Rook), "Sp." for *Springer* (Knight/Rider), and "Sc." for *Schütze* (Bishop/Archer). The numbers 2, 3, and 4 represent the depth of the ranks within each player's half of the board.]]
+
+Secondly, one can divide the **Chess-Table** into four distinct **Quarters**: namely, (1.) into the **White King’s**, (2.) the **White Queen’s**, (3.) the **Black King’s**, and (4.) the **Black Queen’s** quarter (of which the following figure gives an eyewitness report). Each of these quarters has sixteen squares: four squares extending upwards for each **Main Piece** [[notes: *Haupt-Steine*, the noble pieces on the back rank]]; therefore they also receive their na-
+
+[[meta: catchword: men: (This is the start of the word *bekommen*, or "receive," which continues on the next page.)]]
+
+[[summary: This page explains how the chessboard is geographically organized into territories (quarters) belonging to the Kings and Queens, and labels the four ranks within each player's half.]]
+[[keywords: board geography, quarters, ranks, transverse lines, King's side, Queen's side, piece protection]]

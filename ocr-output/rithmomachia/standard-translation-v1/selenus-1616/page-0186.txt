@@ -1,0 +1,18 @@
+[[meta: This page continues the discussion of the rules and philosophy of chess, transitioning from the etiquette of calling "Check" to practical examples of quick opening victories—what we might today call "opening traps" or "miniatures."]]
+
+### The Second Book, Chapter 5:
+
+...or six games in one hour: For, whether it occurs in few or in many moves, as long as one delivers **Mate**, he has won.
+
+(4.) Regarding the methods and manners attached to **Lucas Wielius’s** [[notes: Lucas Wielius was the author of an early 17th-century chess handbook; his work was often cited by Selenus]] little German treatise (namely, how one might deliver **Checkmate** right at the beginning in certain few moves), we wish to share them here for further reflection. We have adapted these examples into our own style for those who do not possess the aforementioned booklet, especially for *tyronibus* [[notes: *tyronibus*; a Latin term for recruits or beginners]] and novice chess players. Although these plotted attacks and **Mates** cannot be carried out as described if the opponent prevents them with cautious moves, they nevertheless show a beginner a good *process* [[notes: *Process*; here meaning a strategic method or tactical sequence]] for how to practice this game well. Furthermore, he who launches the first attack with such certain and orderly moves can have all the more opportunity to disadvantage the enemy and finally attain victory.
+
+The First Method is: If **White** wishes to give **Checkmate** in the fourth move (assuming both armies are already arranged and waiting in full battle order): he places his **King’s Soldier** [[notes: *Soldat*; the term used for a Pawn]] on twenty-eight; the **Queen** on nineteen; the **King’s Archer** [[notes: *Schütze*; the term used for a Bishop, reflecting its role as a long-range "shooter" on the board]] on thirty; and delivers **Checkmate** from fifty-one with either the **Queen** or the **Archer**. [[notes: This describes the classic "Scholar's Mate." The author uses a square numbering system from 1 to 64. In modern notation, this sequence is 1. e4 2. Qh5 3. Bc4 4. Qxf7# or similar.]]
+
+However, if **White** wishes to deliver **Mate** in the fifth stroke: he moves the **King’s Soldier** to twenty; the **Queen’s Archer’s Soldier** to twenty-two; the **Queen** to twenty-three; the **King’s Archer** on thirty; and offers **Checkmate** with the same from fifty-one.
+
+If **Black** then wishes to give **Checkmate** in the fifth move: he moves the **King’s Soldier** to thirty-six; the **Queen** to forty-three; the **King’s Rider** [[notes: *Reuter* (Reiter); the term for a Knight]] to forty-one and to twenty-six; and slays the **White** [King] from eleven with the **Queen**.
+
+If **Black** wishes to bring the game to an end in eight moves with both **Riders**: he moves the **King’s Rider** to forty-one, thirty-five, and twenty-five; the **Queen’s Rider** to forty-six, thirty-seven and...
+
+[[summary: This page describes various methods for achieving a quick checkmate, specifically referencing the work of Lucas Wielius. It introduces early 17th-century chess terminology and a square-numbering system to explain tactical sequences for beginners.]]
+[[keywords: Scholar's Mate, Lucas Wielius, chess tactics, King's Archer, King's Rider, chess openings, 17th-century chess]]

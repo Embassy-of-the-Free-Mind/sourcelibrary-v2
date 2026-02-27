@@ -1,0 +1,30 @@
+[[meta: This page transitions from general advice on how to study chess diagrams and variations to a systematic classification of chess openings. It establishes the structure for the chapters to follow, categorizing games based on whether they are played with "odds" (advantages) or from an equal start.]]
+
+The Second Book. Chapter 7:
+
+<image-desc>A decorative woodcut headpiece featuring symmetrical ornamental scrollwork, foliage, and two reclining figures flanking a central floral motif.</image-desc>
+
+# The Seventh Chapter.
+## On the examples in particular / how the same / 
+## into the common / and special / and then the 
+## common / in turn / into three groups / and 
+## their manifold types / are 
+## divided.
+
+The division of the following examples (so that we may, at last, proceed to their description) will be understood primarily from the following: for,
+
+First, we wish to record and describe the ways and manners in which one can play and conclude the game in the common manner: Thereafter, when an **advantage** [[notes: *Vortheil*; refers to "odds" or "handicaps" given to a weaker player, such as starting with an extra piece]]—(of which a report shall follow below, in the final Book, from the first to the ninth Chapter)—has been given, how it can be well-played and brought to an end.
+
+Now, as concerns the common way of playing without a given advantage: this will again be found to be threefold: For the First comprises the games which are begun and carried out with the King’s [pawn]; the Second, those with the Queen’s [pawn]; the Third, those with a **Rook’s** [[notes: *Rochen*; the early term for the Rook, derived from the Persian 'rukh']], **Archer’s** [[notes: *Schützen*; the 17th-century German term for the Bishop]], or **Rider’s** [[notes: *Reuter*; the Knight]] **Soldier** [[notes: *Soldaten*; the standard term for Pawns in this era]], or even with a Rider.
+
+Among these, there shall also be sufficient reminder regarding how others, and specifically *Damianus* [[notes: Pedro Damiano (1480–1544), a Portuguese apothecary and author of one of the earliest printed chess manuals]], have erred in them: so that their errors may be avoided and the same be brought onto a proper path.
+
+Among these three, the first, with the King’s [pawn], is the best; the second, with the Queen’s [pawn], is to be tolerated; but the third, with a Rook’s, Archer’s, or Rider’s pawn, or even with a Rider, is to be rejected.
+
+However, the first common type is again distinguished by the first move: for, one can either start with the King’s Soldier on both sides: or (as has been briefly set down in the tenth chapter of the third book) the one who has the first move indeed gives
+
+->the<- [[meta: catchword from the original German "den"]]
+
+[[summary: This page introduces the classification of chess openings, dividing them into games played with or without "odds" and ranking the quality of starting moves. The author prioritizes the King's pawn opening as the best and critiques the work of earlier masters like Pedro Damiano.]]
+
+[[keywords: chess openings, Pedro Damiano, King's Pawn, Queen's Pawn, chess pieces, nomenclature, 17th-century chess, tactics]]

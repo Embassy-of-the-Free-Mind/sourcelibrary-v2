@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical analysis from Chapter 12 of Gustavus Selenus’s 1616 treatise. It utilizes the "Selenus Numbering System," where the squares are numbered 1 through 64, starting from the White side. The text continues Variation 15 and introduces Variations 19 through 22, focusing on the interactions between the Knights (Riders), Bishops (Archers), and Pawns (Soldiers).]]
+
+->### Chapter 12: Of the Game of Chess.<-
+
+->Dd ij<-
+[[meta: catchword: Rochenes]]
+
+...sets the **Rider** [[notes: Knight]] / on twenty-five: then the **White** / moves / his **K. Rider** / onto the **B. K. Archer’s Soldier** [[notes: Black King’s Bishop’s Pawn]] / and the **B. K. Archer** [[notes: Black King’s Bishop]] / (because he / is protected / by his **K. Rook**) / [moves] to thirty-four / and can thus / provided he / understands the game / quite easily win.
+
+[[margin: 19.]] But if the **Black** / does not move / the **Archer** / to 17. (no. 16.) / but instead clears away the **W. K. Rider** / with the same [Archer] / and moves him / to the **W. Queen**: then the **White** / takes him / with the same [Queen]: the **Black** / moves / toward her / the **K. Rider** / to twenty-five: the **White** / takes with her / the **B. K. Soldier** / and moves her / onto his **Archer’s Soldier**: the **Black** / (to protect him) / [moves] the **Queen** / to fifty-two: the **White** / [moves] the **K. Rook** / (in order / to obtain the **B. K. Archer’s Soldier** / by force) / to three: then / if the **Black** / moves / the **K. Rider** / against the **W. Queen** / to forty-two: The **White** / then / takes the **B. K. Archer’s Soldier** / with the **K. Archer** / and offers check: the **Black** / sets the **King** / on sixty-one: the **White** / (provided He / does not wish to give cause / for the exchange of Queens) / [moves] the **Queen** / not to four—but to thirty: the **Black** / [moves] the **K. Rider** / (in order to make use of it following this) / to fifty-three: the **White** / [moves] the **K. Archer** / against the **S. Queen** / to thirty-four: the **Black** / covers her / with her **Rider** / to forty-three: the **White** / advances / upon the same / the **K. Soldier**,
+
+[[margin: 20.]] to thirty-six: * the **Black** / takes / with the **Queen** / the **W. K. Archer**: the **White** / [takes] the **B. K. Rider** / with the **K. Soldier**: The **Black** / moves / the **King** / (out of the danger / of the **Ab-Schach** [[notes: "Ab-Schach" refers to a discovered check, where moving one piece reveals a check from another piece behind it.] / from the **W. K. Archer**) / to sixty: the **White** / gives check / with the **K. Rook** / from [square] four: the **Black** / covers the **King** / with his **Archer** or **Rider** / on fifty-two: the **White** / gives / with the **Queen** / on thirty-nine / check / moves the same against the **B. K. Rider’s Soldier** [[notes: Black King’s Knight’s Pawn]] / and will further / be able to direct his game / toward victory.
+
+[[margin: 21.]] But if the **Black** / does not take the **W. Archer** / (no. 20.) / but rather the **W. K. Soldier** / with the **K. Soldier**: then the **White** / robs him [[notes: captures it]] / with his **K. Soldier** / and moves the same / once—
+
+[[margin: 22.]] again / onto the **B. K. Rider**: * the **Black** / takes the aforementioned **W. Soldier** / with the **Queen** / and moves her / to the **W. K.** [square]...
+
+[[vocab: Schach-Spiel (Chess), Reuter (Knight), Rochen (Rook), Königin (Queen), König (King), Schütze (Bishop), Soldat (Pawn), Schach-beut (Offers check), Ab-Schach (Discovered check)]]
+
+[[summary: This page details complex middle-game maneuvers involving tactical exchanges, specifically focusing on how White can force a win by pressuring the Black King's Bishop's Pawn and managing a discovered check. The instructions provide branching paths (Variations 19-22) based on whether Black chooses to exchange pieces or defend specific squares.]]
+[[keywords: chess tactics, 17th century chess, Selenus, discovered check, piece exchange, endgame strategy, King's Rider, King's Archer, Knight, Bishop]]

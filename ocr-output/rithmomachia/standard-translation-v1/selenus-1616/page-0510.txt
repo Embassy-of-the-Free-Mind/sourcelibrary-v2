@@ -1,0 +1,41 @@
+[[meta: This page begins the fifth chapter of the treatise, transitioning from the movement of individual pieces to the mechanics of capture and combat within Rythmomachia. It establishes the "Number-Battle" metaphor and details the first of six methods of capture: Equality.]]
+
+<page-num>468</page-num>
+<header>The Fifth Chapter /</header>
+
+<image-desc>Decorative woodcut banner across the top of the page featuring a central coat of arms or crown ornament, flanked by scrolling foliage and two cherubic or human faces looking inward.</image-desc>
+
+## The Fifth Chapter.
+
+### How to properly set up the game and conduct this Battle of Numbers.
+
+The manner and way of leading these battling numbers against one another, and obtaining victory with them, rests solely upon robbing or taking the stones from the opponent's army. For the fewer stones the opponent retains, the sooner and more easily the various triumphs [[notes: *Überwindungen* refers to the specific victory conditions in Rythmomachia, such as the "Great Victory" or "Victoria Magna," which require creating specific mathematical progressions in the opponent's half of the board]]—of which a report follows in the final chapter—along with the game itself, are preserved and attained.
+
+This robbing, however, occurs in six ways, namely:
+
+->Through Counting, Adding, Subtracting, Multiplying, Dividing, and Besieging.<-
+
+By **Counting**, one takes the opponent's stones in this fashion:
+
+When a stone is moved into a space from which it could be moved, according to the rules of the game or its specific movement, into a space occupied by one of the opponent’s stones marked with the same number. In that case, the opponent's stone is captured, but the moved stone is not shifted into its place; rather, it remains in its own spot. [[notes: This is the "Capture by Equality." Unlike Chess, where you land on a piece to take it, here you move to a position where your next move *could* land on an equal number, and the capture happens while your piece stays put.]] For example: (which, along with the following examples, is found marked on the left side of the table for this chapter) If the **Black Round Stone** [[notes: A Circle piece]] marked with **25** stands on **A**, and the **White Triangular Stone**, which is also inscribed with **25**, is moved to **B**: then one can indeed take away the **Black stone**, but the **White stone** remains on **B**.
+
+The numbers which can be won or captured in the aforementioned manner are the following:
+
+[[insert: | 9. 16. 25. 36. 49. 64. 81. |]]
+[[notes: These are perfect squares ($3^2, 4^2$, etc.). In the game's setup, these specific values often appear on different shapes (Circles, Triangles, or Squares) for the two opposing sides, allowing for these "Equal" captures.]]
+
+[[gloss: **Vocabulary used in this section:**
+**Zahl-Streit:** Number-Battle (the game's name)
+**Rauben:** Robbing/Capturing
+**Zehlen:** Counting (Equality)
+**Zusammen-rechnen:** Adding (Addition)
+**Abziehen:** Subtracting (Subtraction)
+**Vermehren:** Multiplying (Multiplication)
+**Theilen:** Dividing (Division)
+**Einsperren:** Besieging/Surrounding
+**Schwartze Runde Stein:** Black Round Stone (Circle)
+**Weisse Dreyeckete:** White Triangular Stone (Triangle)]]
+
+[[summary: This page introduces the six methods of capturing pieces in Rythmomachia and explains the first method, "Equality" (Counting). It describes how a piece captures an opponent's piece of the same value by moving within striking distance without occupying the target square.]]
+
+[[keywords: Rythmomachia, capture rules, Equality, Number-Battle, Counting, mathematical games, early modern gaming]]

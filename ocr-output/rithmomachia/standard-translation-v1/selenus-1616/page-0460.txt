@@ -1,0 +1,30 @@
+[[meta: This page continues the description of the "Great Game" or Courier Chess as played in the village of Ströbeck, following the general introduction to the village's unique customs on the previous page.]]
+
+### The Fourth Book / Chapter 9:
+
+[[notes: The image described here is a layout for Courier Chess, a popular German chess variant from the 12th through the 18th centuries. It used a larger 12x8 board and several unique pieces that moved differently from the standard game.]]
+
+| | | | | | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| R. | Sp. | Sc. | C. | M. | K. | [[notes: Crown]] | S. | C. | Sc. | Sp. | R. |
+| d | i | e | x | i | i | b | a | u | r | e | n |
+| | | | | | | | | | | | |
+| | | | | | | | | | | | |
+| | | | | | | | | | | | |
+| | | | | | | | | | | | |
+| d | i | e | x | i | i | f | e | n | d | e | n |
+| R. | Sp. | Sc. | C. | S. | [[notes: Crown]] | K. | M. | C. | Sc. | Sp. | R. |
+
+[[notes: The letters in the second and seventh rows—"die xii bauren" and "die xii fenden"—simply mean "the 12 peasants" and "the 12 footmen," identifying the pawn rows. The abbreviations in the home rows stand for: R (Rochen/Rook), Sp (Springer/Knight), Sc (Schütze/Bishop), C (Currierer/Courier), M (Mann/Sage or Secret Counselor), K (König/King), and S (Schleich/Jester or Joyful Counselor).]]
+
+The board, or the table, which they use in Ströpeke [[notes: Ströbeck]] for this game, is divided (as can be seen from the sketch) into **ninety-six squares**, of which it comprises **twelve in width** and **eight in length**. It is positioned in such a way that the outermost square to the right hand in the bottom horizontal row (which contains twelve squares) is **black**, while the one to the left is **white**.
+
+Regarding the **pieces**: In this game, each player has **eight more** than the usual sixteen (making **twenty-four** pieces in total): namely, two **Couriers**; one **Secret Counselor**; one **Joyful Counselor**; and (to complete the eight extra) **four more soldiers** to be used.
+
+Regarding **their positions**: The **Rooks**, **Knights**, and **Bishops** are placed by them in their usual squares, counting from the edges (just as they are found in Chapters 7, 9, and 8 of the First Book); however, their squares are those...
+
+[[meta: catchword: rauf die (onto the)]]
+
+[[summary: This page provides the technical setup for Courier Chess in Ströbeck, describing the 12x8 board and the addition of extra pieces like the Couriers and Counselors. It establishes the starting positions for the primary pieces along the back rank.]]
+
+[[keywords: Courier Chess, Ströbeck, Chessboard layout, Game pieces, Rooks, Knights, Bishops, Couriers, Secret Counselor, Joyful Counselor, Chess history]]

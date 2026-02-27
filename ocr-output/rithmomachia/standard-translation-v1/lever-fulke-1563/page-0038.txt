@@ -1,0 +1,19 @@
+->The Philosophers' game.<-
+
+...one space. For example, from space A, he may move <note>original: "remoue"</note> into any of these spaces: F, G, D, or J. This is the movement <note>original: "motion"</note> of the triangle when marching or capturing <note>original: "takyng"</note>. But when "flying," he may move like the Knight's move <note>original: "Knightes draught"</note> in chess, such as from A into Y, Z, M, etc.
+
+### Of the Squares.
+
+The Squares move into the fourth place from their starting position; that is, leaping over two spaces, either straight forward or sideways, such as from the position of A to any of these spaces: L, M, P, or R. When "flying," they may move according to the Knight's move, except they must pass over four spaces, such as from D to Y or Z, etc. This concludes the instructions for the marching and moving of the pieces <note>original: "men"</note>. Note that with their "flying" move they cannot capture <note>original: "take"</note> any piece, but if necessary, they may help to besiege a piece.
+
+### Of the kings' marching.
+
+The kings, because they bear the form of all three kinds of pieces, may move in any direction <note>original: "way"</note>.
+
+***
+
+<summary>
+This page details the movement rules for Triangles and Squares in Rythmomachia. Triangles move three spaces (leaping one) and have a special "flying" move based on the Knight in chess. Squares move four spaces (leaping two) and have a longer "flying" move. The text specifies that "flying" moves are for positioning and besieging, not for capturing. It concludes by starting the rule for Kings (pyramids), which combine the movements of the other pieces.
+</summary>
+
+<keywords>Rythmomachia, Philosophers' Game, movement rules, Triangles, Squares, Kings, Knight's move, capturing, game strategy, mathematical game</keywords>

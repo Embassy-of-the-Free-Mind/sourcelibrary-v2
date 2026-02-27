@@ -1,0 +1,117 @@
+[[meta: This page continues from page 243. While the previous page provided a narrative description of moves, this page provides the visual diagrams—referred to as "scenographies"—that correspond to the tactical variations discussed in Chapter 14. These diagrams use a specific 17th-century notation where pieces are labeled by their color and rank, and squares are often numbered 1 through 64.]]
+
+# Chapter 14: On the Game of Chess.
+
+#### No. 4. 32.
+[[notes: These numbers refer to the specific variation or "game" number being illustrated. In this era, "j" was often used for the numeral "1" and "z" for the numeral "2" in printed sequences.]]
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **BR** | | **BN** | **BK** | | **BR** | | |
+| **BP** | **BP** | **BP** | **BP** | **BQ** | **BP** | **BP** | **BP** |
+| | | **BR** | | | **BR** | | |
+| | | | 36 | | | | |
+| | **BN** | | **WP** | **WP** | **BP** | | |
+| | | **WR** | **WN** | | 19 | | |
+| **WP** | **WP** | **WP** | | **WQ** | | **WP** | **WP** |
+| **WR** | | **WP** | | **WK** | | **WR** | **WR** |
+
+[[notes: **Piece Abbreviations:** **B**=Black, **W**=White. **R**=Rook (*Roch*), **P**=Pawn (*Soldat*), **N**=Knight (*Caballus/Hengst*), **K**=King (*König*), **Q**=Queen (*Dama/Königin*). The subscript 'c' in the original German often stands for *Caballus*, the Latin term for Knight.]]
+
+#### No. 7. 20.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **BR** | | **BP** | **WR** | | | | |
+| **BP** | **BP** | | **BP** | | **BP** | | **BP** |
+| | | **BP** | **WP** | | | | **BK** |
+| | | | 36 | | | | **WR** |
+| | | | | | 26 | | |
+| | | | **WK** | | | **WP** | |
+| **WP** | **WP** | **WP** | | | | | **WP** |
+| | | | | | | | |
+
+#### No. 10. 11.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **BR** | | | | | | 58 | 57 |
+| **BP** | | | **BP** | | | | **BK** |
+| **BP** | **BP** | | **WP** | | **WR** | **WP** | **BP** |
+| | | **BP** | | | | | **WR** |
+| | | | | | | | **WP** |
+| | | | | | | | |
+| **WP** | **WP** | **WP** | **WK** | | | | |
+| | | | | | | | |
+
+#### No. 13. 16.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | **WR** | | | | | |
+| | | | **BP** | | | | |
+| | **BP** | | **WP** | | | | |
+| | 39 | | | **BK** | | | |
+| | **WP** | | | 28 | | **WK** | |
+| | | | | | | | |
+| | | **BN** | | | | | |
+| | | | | | | | |
+
+-> <-
+[[notes: The page is divided into two columns of diagrams, typical of the instructional layout in Augustus the Younger’s (Selenus) chess manual.]]
+
+#### No. 5. 6.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **BR** | | **BN** | **BK** | **BR** | | | |
+| **BP** | **BP** | **BP** | **BP** | 52 | **BP** | | **BP** |
+| | | | 45 | | | | |
+| | | | **WP** | | | | |
+| | **BN** | | | | **WN** | | |
+| | | **WR** | **WK** | | | **WP** | |
+| **WP** | **WP** | **WP** | | | | | **WP** |
+| | | | | **WR** | | | **WR** |
+
+#### No. 8. 9.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **BR** | | | | | | | |
+| **BP** | | | | **BP** | | | **BK** |
+| | | **BP** | **BP** | **WP** | | **WR** | 42 | **BP** |
+| | | | | | | **WP** | **WR** |
+| | | | **BN** | | | | **WP** |
+| | | | | | | | |
+| **WP** | **WP** | **WP** | **WK** | | | | |
+| | | | | | | | |
+
+#### No. 12. 17.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | **BK** | |
+| **BP** | | | | **BP** | | **BN** | **WP** | |
+| | | **BP** | **BP** | **WP** | 44 | | | **WK** |
+| | | | | | | **WR** | | |
+| | | | | | | | **WN** | |
+| | | | | | | | | |
+| **WP** | **WP** | **WP** | | | **BR** | | | 9 |
+| | | | | | | | | |
+
+#### No. 18. 19.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | 57 |
+| **BP** | | | | **BP** | | | **BK** |
+| | | **BP** | **BP** | **WP** | | **WK** | 41 |
+| | | | | | | **WN** | |
+| | | | | | | | |
+| | | | | | | | |
+| **WP** | **WP** | **WP** | | | | | |
+| | | | | | | | |
+
+[[summary: This page displays eight chess diagrams providing visual references for the tactical variations and move sequences discussed in Chapter 14. These positions illustrate specific mid-game and endgame scenarios using the unique numbering system characteristic of Selenus's 17th-century treatise.]]
+
+[[keywords: chessboard diagrams, Gustavus Selenus, 17th-century chess, chess notation, chess tactics, King, Queen, Rook, Knight, Pawn]]

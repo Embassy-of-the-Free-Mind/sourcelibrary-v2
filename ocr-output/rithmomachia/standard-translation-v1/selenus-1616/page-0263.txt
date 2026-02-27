@@ -1,0 +1,18 @@
+[[meta: This page continues the tactical play-by-play from Chapter 14. The game uses a numerical coordinate system (1–64). Note that "Soldiers" are Pawns, "Archers" (Schützen) are Bishops, "Riders" (Reuter) are Knights, and "Rochen" are Rooks.]]
+
+-> # Of the Game of Chess. <-
+
+[[margin: 14. cap:]]
+...the King’s Knight’s Soldier [[notes: *Soldat* (Soldier) is the period term for a Pawn]] (to clear the way [[notes: *umb lust zu machen*—literally "to make room" or "to give pleasure," here meaning to open a diagonal]] for the Bishops, and to use the same subsequently) to forty-seven: the White player takes the Black King’s Bishop’s Soldier with the King’s Knight [[notes: *Reuter* (Rider) refers to the Knight]] and gives check: the Black player moves the King to forty-nine: the White player [moves] the King’s Knight’s Soldier to the Black King’s Rook’s Soldier at thirty-four: the Black player gives check with the King’s Bishop [[notes: *Schütze* (Archer) is the historical German term for the Bishop]] from forty-eight: the White player moves the King to thirteen, onto a black square, and therefore has nothing further to fear from this black Bishop: the Black player must not move the King’s Rook [[notes: *Rochen* is an archaic term for the Rook, derived from the Persian *rukh*]] to the White King’s Knight’s Soldier at fifty-eight (for his King would immediately be mated by the White King's Rook if the latter were to take that Rook's Soldier at forty-one) [but instead] places the King’s Bishop at thirty:
+
+[[margin: 8.]]
+(For * the White player then takes his King’s Rook’s Soldier with the King’s Rook and gives check: He [Black] must move the King to fifty-eight: the White player gives check with the King’s Knight from forty-three and moves it to his King’s Soldier: He [Black] must not leave his King standing on his King’s main-piece line [[notes: *Haupts-Steinen linie* likely refers to the starting rank or a critical file where the major pieces reside]]: for otherwise, if the White player moved the King’s Rook to fifty-seven, he would lose his King’s Rook: instead, [he] moves the King to fifty-one: the White player takes his King’s Soldier with the King’s Knight: He [Black] must move the King to fifty: for otherwise, if the White player gave check with the King’s Knight from thirty-six, he would lose the King’s Bishop: the White player places the King’s Knight upon the mentioned Bishop at thirty-six: He [Black moves] the same to thirty-seven: the White player [moves] the King’s Soldier to fifty-three: He [Black moves] the King’s Rook against the same at sixty-one: the White player [moves] the King’s Rook to forty-three and will, with this good order, soon finish him off:
+
+[[margin: 9.]]
+But if the White player does not take his Soldier (no. 8) but instead gives check with the King’s Knight’s Soldier from forty-two: then he [Black] moves the King to fifty-eight: the White player [moves] the King’s Knight’s Soldier to fifty: He [Black moves] the King’s Bishop against the White King’s Knight at fifty-one: the White player takes his King’s Rook’s Soldier with the King’s Rook and protects the King’s Knight: He [Black], unless he wishes to be checkmated immediately, must
+
+[[meta: catchword: either]]
+
+[[summary: This page continues a detailed chess strategy guide, illustrating specific move sequences and counter-moves using historical piece names and a 1-64 coordinate system. It highlights the dangers of leaving the King exposed and demonstrates how to coordinate Knights and Rooks to secure a win.]]
+
+[[keywords: Chess strategy, King's Knight, Rook's Pawn, Bishop tactics, Checkmate, 17th-century chess, historical gaming]]

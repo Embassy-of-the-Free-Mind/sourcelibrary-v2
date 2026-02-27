@@ -1,0 +1,24 @@
+[[meta: This page continues the detailed chess analysis from page 286, specifically investigating branching variations (Nos. 21-24) within Chapter 4. The previous page concluded with a discussion of pawn moves and discovered checks.]]
+
+# On the Game of Chess.
+### G o
+
+[[margin: Chapter 4:]]
+[[margin: 21.]]
+If, however, the Black player does not place the **King's Knight** [[notes: *K. Reuter*, literally "King's Rider"]] on 42 (as in No. 20) but instead places the **King's Rook** [[notes: *K. Rochen*]] on the **White King's Knight's Pawn** [[notes: *Reuters-Soldat*, the "Cavalier's Soldier"]] at fifty-eight: then White delivers **Check** with this **Pawn** from thirty-four: Black must take it with the **King's Rook**: White captures the same with the **King's Rook's Pawn**, delivers **Check** with it, and a **Discovered Check** [[notes: *Ab-Schach*, a tactic where moving one piece reveals an attack from another]] from the **King's Rook**: Black takes this White **Pawn** with the **King**: White delivers **Check** with the **King's**
+[[margin: 22.]]
+**Rook** from two: * Black moves the **King** to twenty-five: White takes the **Black King's Rook's Pawn** with the **Queen** and delivers **Check**: Black covers the **King** with his **Bishop** [[notes: *Schütze*, literally "Archer"]] on forty-one: White takes it with the **Queen** and gives **Checkmate**.
+
+[[margin: 23.]]
+However, if Black does not move the **King** to 25 (as in No. 22) but rather to forty-one: White takes the **Black King's Bishop** with the **Queen** and delivers **Check**: Black must retreat with the **King** to thirty-three: White delivers **Check** with the **King's Bishop** from twelve: Black shifts the **King** to twenty-five: White delivers **Checkmate** with the **Queen** from forty-one.
+
+[[margin: 24.]]
+But if Black does not capture the **White Bishop** with the **Knight** (No. 18) but instead with the **King's Bishop**: and White moves the **King's Knight's Pawn** (after the few moves recorded in No. 18) to 26: (No. 19) then Black moves the **King's Pawn** to the **White King's Bishop** at thirty-seven: White delivers **Check** with the **King's Knight's Pawn** from thirty-four: Black must take it with the **King's Bishop**: White delivers **Check** with the **Queen** from fifty-nine: Black moves the **King** to thirty-three: (for on forty-two, he would be immediately **Checkmated** by the **White King's Rook's Pawn**) White delivers **Check** with the **King's Bishop** from twelve: Black moves the **King** (provided he does not wish to cover it with the **King's Bishop's Pawn** at twenty-six: in which case White delivers **Check** with the **Queen** from fifty-one: he must move the **King** to forty-one: White takes his **King's Bishop** with the **King's Rook's Pawn**, delivers **Check**, and a **Discovered Check** from the **Rook**: he must [take] the **Pawn** with the **King**
+
+->take:<-
+
+[[meta: catchword: take :]]
+
+[[summary: This page details four tactical variations in a chess game, focusing on endgame maneuvers where White uses discovered checks and sacrifices to force a checkmate against the Black King. It utilizes the unique 1-64 square numbering system common in 17th-century treatises.]]
+
+[[keywords: chess tactics, discovered check, checkmate, Gustavus Selenus, 17th-century chess, piece movement, pawn sacrifice]]

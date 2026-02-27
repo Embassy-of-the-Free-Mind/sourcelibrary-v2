@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical walkthrough of the 12th Chapter from Gustavus Selenus’s 1616 chess treatise. The analysis continues to use the Selenus 1-64 coordinate system and demonstrates how to force a material win through pins and discovered attacks.]]
+
+-># On the Game of Chess. #<-
+
+[[margin: 12.cap:]]
+**Black** / offers / check with the **Queen** / from twenty-one [[notes: square e3]]:
+the **White** / retreats / with the **King** / to six [[notes: square f1]] / and may not take it [[notes: the Queen]] with the same [[notes: the White Rook]] because of the **B. K. Rook** [[notes: Black King’s Rook]], regardless of whether the same [Rook] is held captive by the **W. Queen** (for reasons / which were mentioned / at the end of the 1st Chap: of this book) [[notes: Selenus refers here to a specific rule variant regarding whether a pinned piece can deliver check or assist in a capture]]:
+the **Black** / (to liberate the **K. Rook**) [moves] the **King** / to sixty-three [[notes: square g8]]: the **White** / [moves] the **K. Rider** [[notes: King’s Knight]] / to twenty-eight [[notes: square d4]] / thereby opening / for the **K. Rook** / the path / to the **B. Queen** / prevents the **B. K. Archer** [[notes: Black King’s Bishop]] / from offering check / at thirty-four [[notes: square b5]] / and in this way captures / the **B. K. Rook** / by force: For / if the **Black** / moves her [[notes: the Queen]] / against the **W. Queen** / to fifty-two [[notes: square d7]]: [the Black] loses / his **Queen** / in addition to this **Rook** / (because the **White** / then / offers check with the **Queen** / at fifty-eight [[notes: square b8]]). He is thus beaten / on all sides / and / through which moves / one might further help him [[notes: meaning how Black might try to recover or how White finishes the game]] / is easily understood.
+
+[[margin: 27.]]
+But if the **Black** / does not take / the **W. Soldier** [[notes: Pawn]] / with the **Queen** / (no. 22.) [[notes: referring to a move variant numbered on the previous page]] / but instead / with the **K. Rider** [[notes: Knight]]: then the **White** / offers check / with the **K. Rook** / from five [[notes: square e1]]: the **Black** / covers the **King** / with his **Rider** / at fifty-three [[notes: square e7]]: the **White** / moves / onto the same [Rider] / the **K. Archer** [[notes: King’s Bishop]] / to forty-four [[notes: square d6]]: and will therefore / win this game from the **Black**.
+
+<image-desc>A decorative ornamental tailpiece featuring a central lion-like mask with scrolled acanthus leaves and symmetrical floral motifs.</image-desc>
+
+[[margin: sig: Dd iij]]
+[[meta: catchword: Das]]
+
+[[summary: This page details a winning endgame strategy for White, demonstrating how to use a Rook to pin Black's pieces and explaining a specific historical rule regarding pinned pieces from Chapter 1. It concludes the 12th chapter's tactical analysis with a decorative tailpiece.]]
+
+[[keywords: Chess tactics, Gustavus Selenus, Rook, Queen, Rider, Archer, King's Bishop, Knight, Pin, Checkmate sequence]]

@@ -1,0 +1,19 @@
+[[meta: This page transitions from the general rules of "Honor and Lawsuits" to a specific, themed victory condition invented by a contemporary scholar, Jean Pierre de Mesmes. It introduces a military allegory for the game pieces.]]
+
+# OF THE PHILOSOPHERS. [[notes: The game of Rythmomachia was commonly known as "The Philosophers' Game" because it was based on Boethian number theory and required significant mathematical skill.]]
+
+This next and final type of simple victory was quite happily invented by our good friend Lord **Jean Pierre de Mesmes** of Marsan [[notes: Jean-Pierre de Mesmes (1516–1578) was a notable French mathematician, astronomer, and polyglot who studied in Paris]], a student in Paris of Mathematics and Astronomical Observations.
+
+->Or listen to how it is done.<-
+
+**ONE** of the players shall take (for example) the role of the Emperor, ready to fight against the infidels [[notes: *Mescreans* (miscreants)—a common 16th-century term for non-Christians, specifically referring here to the Ottoman forces]]. I mean the one who wishes to play with the **white pieces**; for the color white is naturally appropriate to Christians.
+
+The other player shall call himself the Great **Suleiman**, Emperor of the Turks [[notes: Suleiman the Magnificent (reigned 1520–1566) was the contemporary Sultan of the Ottoman Empire and a major rival to the Holy Roman Empire]], having the **red pieces** in hand; for the Turk likewise loves the color red. Furthermore, the number of white pieces is smaller than that of the red ones, just as the victories of the Turks are achieved through sheer force of people [[notes: This reflects the common European view of the time that Ottoman military success relied on superior numbers versus European tactical "purity" or quality]].
+
+The white pieces and their **pyramid** [[notes: In this game, the Pyramid is a composite piece made of several smaller values stacked together]] contain 1,312 points (from which one must subtract the **Roots** [[notes: *Racines*—the base numbers used to generate the progressions of squares and ratios in the game]] which are specified on the pyramid). We shall give this many men-at-arms to our Emperor.
+
+The last two of this number 1,312 shall be the two **Captains** of the Christian army; they shall have 10 **ensign-bearers** [[notes: *Port’enseignes*—the standard-bearers or officers who carried the company flags]]. Subtract then the 10 and the 2, which [[notes: The text cuts off here, continuing the calculation on the next page.]]
+
+[[summary: This page introduces a new victory condition for Rythmomachia invented by Jean Pierre de Mesmes, which frames the game as a military conflict between the Christian Emperor and the Ottoman Sultan Suleiman. It assigns specific point values and military ranks (Captains and Ensign-bearers) to the white game pieces.]]
+
+[[keywords: Jean Pierre de Mesmes, Rythmomachia, Suleiman the Magnificent, mathematical games, Christian-Ottoman conflict, game pieces, Pyramid, number theory]]

@@ -1,0 +1,23 @@
+[[meta: This page continues the transition from the general qualifications of players into the specific rules and tactical preparations required before the first move is made. It marks the beginning of the Third Chapter.]]
+
+->On the Game of Chess.<-
+
+# The Third Chapter.
+
+## What the Chess-players—before the game is begun—should further consider.
+
+[[margin: 3. cap:]]
+Whoever wishes to learn this game properly must well conceive and consider its orders and laws, which good players and long usage have granted it (as they follow hereafter, one after another, until the sixth chapter); and primarily the various rules which particularly concern what is required of the Chess-players [[notes: *Schach-Zieher*, literally "chess-movers" or "chess-pullers"]] to observe before the game is even begun.
+
+That (1.) the Chess-players shall place the Chess-board before them in such a way that each has a white field and small square at the outermost corner to his right hand. (Upon which, he who leads the White pieces may place his King’s Rook; while he who leads the Black may place his Queen’s Rook). [[notes: The rule "white on the right" remains a standard in modern chess. Here, the author notes the specific pieces that would occupy those corner squares based on the board's orientation.]]
+
+That (2.) a clever player can create an advantage for himself with the placement of the table in the following manner: Namely, if one plays by day, he should strive to arrange it so that the daylight shines directly into his opponent's eyes; or at evening-time, he should place the light to the opponent's right hand, so as to confuse his vision and cause a shadow. Considering that this game signifies a military combat [[notes: *Krieges-Kampf*]], one should be diligent in seeking every possible advantage. [[notes: This advice reflects a much more competitive and perhaps "unsportsmanlike" era of play where psychological and environmental tactics were considered part of the strategy of war.]]
+
+That (3.) this also is no small advantage and surprise: if a player is indifferent to whether he moves the White or Black pieces, but notices that his opponent prefers to play with the White rather than the Black pieces—having become more accustomed to them—he should in that case pull the White pieces toward himself. Thus, because the opponent must conduct her game with pieces she is not used to, he makes her quite confused and misled in her thoughts and intentions.
+
+S
+[[meta: catchword: That]]
+
+[[summary: This chapter begins the specific technical rules of the game, focusing on the physical setup of the board and how a player might use lighting and piece color to gain a psychological or environmental advantage over an opponent.]]
+
+[[keywords: Chessboard setup, Rook, Rochen, lighting tactics, psychological advantage, rules of chess, 17th-century gaming]]

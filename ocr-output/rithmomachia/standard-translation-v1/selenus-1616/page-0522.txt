@@ -1,0 +1,42 @@
+[[meta: This page continues the discussion on the mathematical victory conditions of Rhythmomachia. Having defined Arithmetic and Geometric proportions on the previous page, it now introduces Musical (Harmonic) proportions and details how to achieve a "Great Victory" by arranging pieces on the enemy's side of the board.]]
+
+# The Sixth Chapter /
+
+( Buxer : fol: 34. b.
+> *We recognize a Musical Proportion [[notes: In modern mathematics, this is known as a Harmonic Proportion. In this series, the middle term is related to the extremes such that the ratio of the differences is equal to the ratio of the extremes themselves (e.g., 6, 8, 12).]], when the differences / by which the extreme numbers / are distant from the middle / enjoy the same ratio / as the extremes / compared between themselves.*)
+
+Regarding the victories themselves / further / there are three of them: namely / the Great: the even Greater: and the Greatest of all.
+
+( Buxer : fol: 48. a.
+> *He calls these victories an Ovation, or a Triumph [[notes: Claude de Boissière (Buxerius), the author being cited, uses Roman military terminology to rank the level of success in the game.]], saying: After you have defeated the Pyramid or the King, before you enjoy the victory, it is worthwhile / in the very line of battle / to triumph over the enemy: This Triumph shall be carried out / by Arithmetic / Geometric / or Musical proportion.*)
+
+The Great victory / which / because of the three aforementioned divisions / is three-fold / occurs in the following manner: Namely / when one marks / places / and brings three stones [[notes: "Stones" refers to the game pieces.]] into the enemy’s field / with such numbers / that can create one / of the three divisions.
+The numbers / which specifically belong to these three divisions / are to be understood / from the following lists.
+
+->The Numbers / of the Divisions / in<-
+->Arithmetic:<-
+[[notes: This table lists sets of three numbers that form arithmetic progressions, where the difference between each number is constant. For example, in the first set (2, 3, 4), the difference is 1.]]
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 2. | 3. | 4. | 6. | 9. | 12. |
+| 2. | 4. | 6. | 6. | 36. | 66. |
+| 2. | 5. | 8. | 7. | 8. | 9. |
+| 2. | 7. | 12. | 7. | 16. | 25. |
+| 2. | 9. | 16. | 7. | 64. | 121. |
+| 2. | 16. | 30. | 9. | 12. | 15. |
+| 3. | 4. | 5. | 9. | 45. | 81. |
+| 3. | 5. | 7. | 9. | 81. | 153. |
+| 3. | 6. | 9. | 12. | 16. | 20. |
+| 3. | 9. | 15. | 12. | 66. | 120. |
+| 4. | 5. | 6. | 12. | 42. | 72. |
+| 4. | 6. | 8. | 15. | 20. | 25. |
+| 4. | 8. | 12. | 15. | 30. | 45. |
+| 4. | 12. | 20. | 15. | 120. | 225. |
+| 4. | 20. | 36. | 16. | 36. | 56. |
+| 4. | 30. | 56. | 20. | 25. | 30. |
+| 5. | 6. | 7. | 20. | 42. | 64. |
+| 5. | 7. | 9. | 28. | 42. | 56. |
+
+[[summary: This page defines the "Great Victory" in Rhythmomachia, which requires placing three pieces in the opponent's territory to form a mathematical progression. It provides a comprehensive table of arithmetic progressions used to achieve this win.]]
+[[keywords: Rhythmomachia, Arithmetic Proportion, Claude de Boissière, Musical Proportion, Victory conditions, Mathematics in games]]

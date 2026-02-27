@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical demonstration from the previous page, detailing a sequence where White uses a series of checks to force the Black King into a losing position, eventually leading to a promotion and checkmate.]]
+
+### The Second Book / 9. cap: [[notes: Chapter 9]]
+
+...from twenty-seven, again **Check**: He [[notes: The Black player]] (lest he forfeit the game) must not bring the **King** out into the open field, but must let him remain in his quarters and move back to sixty-one [[notes: The author uses a 1-64 coordinate system common in 17th-century chess manuals, where 61 would correspond to the starting square of the Black King in modern algebraic notation (e8)]]: **The White player** takes his King’s **Bishop’s Pawn** [[notes: "Schützen-Soldaten" literally means the Bishop's Soldiers]] with the **Queen**, thereby protecting the King’s **Rook’s Pawn**, and moves her onto that **Rook**, which [[margin: 13.]] cannot escape him: For * if he moves the same [[notes: the Black Rook]] to sixty: **the White player** takes it with the **Queen** and offers **Check**: He [[notes: Black]] takes her with the **King**: **The White player** moves his King’s **Pawn** [[notes: "Soldat" or Soldier is the period term for a Pawn]] to fifty-eight, makes it a **Queen**, and offers **Check**: He moves the **King** to fifty-two: **The White player** offers **Check** from twenty with the King’s **Rook**: [[margin: 14.]] * He moves the **King** to forty-five: **The White player** offers **Check** again from eighteen with the new **Queen**: He moves the **King** to thirty-seven: **The White player** [delivers] **Checkmate** with the **Queen** from thirty-six.
+
+[[margin: 15.]] But if **the Black player** does not move the **King** to 45 (as in no. 14) but rather to forty-three: then **the White player** offers **Check** from fifty-nine with the new **Queen**: **The Black player** moves the **King** to forty-two: **The White player** [moves] the King’s **Rook** to eighteen and offers **Check**: **The Black player** places the **King** at forty-nine: **The White player** offers **Checkmate** with the **Queen** or the King’s **Rook** at fifty: or with the King’s **Bishop** [[notes: "Schütze" or Archer]] from twenty-one. Thus, through the taking of the **White Rook** (mentioned in no. 12), the **Black Queen** has been
+
+-> little use to her side (even if she had, <-
+-> instead of the move with the Rook to 60 in no. 13, <-
+-> taken the White King’s Pawn). &c. <-
+
+<image-desc>A decorative woodcut tailpiece featuring a central stylized mask or face flanked by symmetrical, ornate scrollwork, foliage, and floral patterns.</image-desc>
+
+[[meta: catchword: Das]]
+
+[[summary: This page concludes a complex chess variation where White sacrifices a Queen to promote a Pawn, ultimately leading to a forced checkmate regardless of Black's defensive choices. It illustrates the high value of Pawn promotion in late Renaissance chess strategy.]]
+
+[[keywords: chess tactics, checkmate, pawn promotion, Queen sacrifice, Rook, Bishop, 17th-century chess, gaming manuals]]

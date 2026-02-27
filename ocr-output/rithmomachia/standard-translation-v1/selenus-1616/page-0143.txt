@@ -1,0 +1,26 @@
+[[meta: This page marks the transition from the technical description of the board and piece notation in Chapter 11 to the philosophical and strategic purpose of the game in Chapter 12.]]
+
+12. cap: On the Chess-Game.
+
+[[notes: The image at the top of the page is a decorative woodcut headpiece, common in 17th-century printing to signify the start of a major new section.]]
+
+# The Twelfth Chapter.
+
+## Concerning the immediate goal of this artful game, namely, victory and triumph within it.
+
+Now that we have sufficiently explained, in the previous eight chapters, the **matter** [[notes: *Materie*, referring here to the physical pieces and their specific movements/nature]]—what it is and how it must behave in this game—we wish now to further consider the actual and immediate **purpose** of the game (why it exists and what it is).
+
+Just as the actual work of **Music** is to prepare a lovely **harmony** and consonance, whereby the **spirit** [[notes: *Gemühte*, referring to the mind, soul, or emotional state]] may be refreshed: So too does the **Art of Chess** concern itself with presenting, through a fictional, merry battle of the **little chess-men**, a praiseworthy victory and triumph, by which the spirit may be moved to joy and delight. Regarding the aforementioned ultimate goal—namely, the delight of the spirit—this was treated in the first chapter of this book. However, the immediate and actual purpose—namely, victory or triumph—belongs in this chapter.
+
+But this victory is, first of all, a means to that delight. For through victory, we arrive at and achieve the refreshment of the spirit. This occurs not only when victory is achieved through play (which is beyond doubt), or when it is brought forth during play through all sorts of merry arrangements, schemes, and attacks (as demonstrated above in the first chapter), but also when it is, so to speak, already conceived and received by the **chess-movers** [[notes: *Schach-Zieher*, meaning the players]] before the play even begins. As a witness to this, we wish to cite **Averroes** [[notes: Ibn Rushd, a 12th-century Andalusian philosopher whose commentaries on Aristotle were foundational to European thought]], who writes of it in his paraphrase of the first book of Aristotle's *Rhetoric*, chapter 14, page 39:
+
+> And there are certain things that delight in that place, such as **Hunting** and the **Game of Chess**. For the beginner shares those things with the expert in them, in the **End** which they intend, which is **Victory**, and he is delighted by the mere sight of it. And from the beginning of the matter, just as the one who is perfect in them is delighted, so a rightful Victory is pleasant. That is:
+
+[[notes: The Latin quote emphasizes that the joy of chess is found in the pursuit of victory, a feeling shared by novices and masters alike from the very start of the game.]]
+
+P ij
+[[meta: catchword: Es]]
+
+[[summary: This chapter introduces the primary objective of chess—victory—comparing its pursuit to the harmony of music and the thrill of the hunt. It argues that the joy of the game comes not just from winning, but from the intellectual pursuit and anticipation of triumph.]]
+
+[[keywords: victory, purpose of chess, Averroes, Aristotle, philosophy of play, delight, mental refreshment]]

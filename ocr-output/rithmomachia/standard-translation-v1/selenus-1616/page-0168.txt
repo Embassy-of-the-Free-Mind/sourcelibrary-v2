@@ -1,0 +1,19 @@
+[[meta: This page continues the discussion of handicaps and "counter-advantages" in chess. The previous page established that while players often trade pieces for positional advantages or extra moves, these trades are rarely truly equal. This page specifically evaluates the trade of a "Main Stone" (the Queen) against pawns and positioning.]]
+
+<page-num>138</page-num>
+
+### The Second Book / 3rd Chapter:
+
+...imagining that they have obtained an equal **advantage** [[notes: *Vortheil*, referring here to "odds" given to a weaker player]] through this. However, the **Main Stone** [[notes: *Haupt-Stein*, the most important piece after the King, here referring to the Queen]] is taken with a better advantage. For that same piece (because one not only gains it for oneself, but the opponent must also lack it) helps a player toward victory and conquest much sooner, provided that one knows how to play and how to protect oneself against the two aforementioned advantages.
+
+It is also considered (3.) equal when one gives the opponent the advantage of a free **Main Stone** which cannot be captured, and in return takes for his own advantage the opponent's **King’s-Archer’s-Soldier** [[notes: *Königes-Schützens-Soldaten*, the King's Bishop's Pawn]] and two moves, along with the freedom to place the **King** in a corner [[notes: This refers to an early form of castling or "King's leap" where the King is moved to a secure square in one move]]. However, it will be better for one who understands little of this game, and is not much practiced in it, to take the **Main Stone** instead of the other advantages: for otherwise, he would be led to play further incorrectly and to commit many errors. Furthermore, he can practice better against his **enemy** [[notes: *Feinde*, the standard term for an opponent]] with this piece. If, however, he takes the other advantages instead of the piece and does not understand how he should conduct the battle—much less having the heart to begin it—he must lose, however diligent he wishes to be. 
+
+But if he understands it and is well-instructed in such games, then it is indeed better that he take the other advantage in place of the piece; yet, he should not hold his enemy in low regard, but rather firmly imagine in every way that his opponent is inclined and willing to attempt all manner of ideas and attacks, and that one can never lead him onto a false path. Even if the opponent has already ventured something, he is nonetheless able to entrench himself well and take precautions, and finally bring to light what he has hidden under a **cloak** [[notes: *Deck-Mantel*, a metaphor for a hidden strategy or ruse]]. However, one might still be found who, when playing with someone of equal knowledge in this game, would give the **Main Stone** for the aforementioned advantages in every game, regardless of whether the game were equally strong on both sides, or if one part were found to be weaker or stronger. It is, however, difficult to always keep the enemy under one's eye.
+
+Sometimes (4.) one removes a **Rook** [[notes: *Rochen*, the standard early modern term for the Rook]] and allows the other the first move, yet also removes a **Knight** [[notes: *Reuter*, literally "Rider"]] and the **King’s-Archer’s-Soldier**, imagining in this way to have an equal advantage. However, the Rook, for the...
+
+[[meta: The catchword "für die" at the bottom of the page indicates the next page begins with the completion of the thought: "for the other advantages..."]]
+
+[[summary: This page analyzes the strategic value of trading a Queen for a combination of a pawn, extra moves, and the right to reposition the King. The author argues that less experienced players should always prefer having the extra piece, while masters might prefer the positional advantages.]]
+
+[[keywords: handicaps, odds, Queen, Rook, Knight, King's Bishop's Pawn, chess strategy, King's leap, seventeenth-century chess]]

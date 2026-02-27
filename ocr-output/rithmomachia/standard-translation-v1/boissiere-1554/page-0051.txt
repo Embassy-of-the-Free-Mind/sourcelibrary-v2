@@ -1,0 +1,18 @@
+[[meta: This page transitions from the general military theory of piece arrangement mentioned on the previous page to the specific rules of movement and the categorization of capture methods. It bridges the gap between the symbolic "battalion" and the practical mechanics of the game.]]
+
+RYTHMOMACHIA, GAME
+
+nevertheless, we shall grant that they possess some form of a **battalion** [[notes: The author is continuing the military metaphor from the previous page, treating the mathematical game as a tactical simulation.]], wherefore we shall speak first of the arrangement and the movement.
+
+### Concerning the movement of the pieces.
+
+First, all shall move straight forward, or to the right, or to the left, or backward; some wish to allow movement in all directions, which I leave to the discretion of the players.
+Secondly, the group of **squares** moves by 4 steps, or 4 **spaces** [[notes: The original term *loges* (lodgings) refers to the individual squares on the grid.]]: the **triangles** move by 3, and the **rounds** move into the next adjacent space. When I say the fourth space, I mean counting both the place where the piece is and the place where it goes [[notes: This is "inclusive counting," a common method in the Renaissance where the starting square is counted as "one." Therefore, a square moves three empty squares and lands on the fourth.]]
+
+## The procedure of their combat.
+
+The numbers may take one another by **encounter**, **assault**, **ambush**, and **imprisonment** [[notes: These are the four primary ways to capture an opponent's piece. Unlike Chess, where capture is purely positional, Rythmomachia requires specific mathematical conditions—such as a piece's value equaling its target's, or two pieces' values adding up to the target's—to effect a capture.]]: and for these captures, an example is proposed to you on this **board** [[notes: *Tablier* refers to the physical game board.]] in which you may consider them according to how we shall declare them hereafter, with their rules, examples, and numbers proper to each capture.
+
+[[summary: This page defines the movement rules for the three types of pieces—squares, triangles, and rounds—using a system of inclusive counting. it also introduces the four distinct mathematical methods of capturing pieces: encounter, assault, ambush, and imprisonment.]]
+
+[[keywords: movement, squares, triangles, rounds, capture, encounter, assault, ambush, imprisonment, board game rules]]

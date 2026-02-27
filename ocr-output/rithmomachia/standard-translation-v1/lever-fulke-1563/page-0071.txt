@@ -1,0 +1,19 @@
+# The Philosophers' Game.
+
+<image-desc>Two woodcut illustrations of stepped pyramids constructed from numbered square blocks. Between the pyramids are three geometric shapes: a triangle, a circle, and a square, the latter two containing stylized floral or branching emblems. The left pyramid has five tiers (values: 1, 4, 2; 9, 3; 16, 4; 25, 5; 36, 6). The right pyramid has six tiers (values: 1, 4, 9; 16, 4; 25, 5; 36, 6; 49, 7; 64, 8).</image-desc>
+
+| 153 | 91 (Pyramid) | 45 | 15 <br> ℨ |
+| :---: | :---: | :---: | :---: |
+
+| 190 (Pyramid) | 120 | 66 | 28 |
+| :---: | :---: | :---: | :---: |
+
+The second row <note>original: "order"</note> of squares has three numbers marked with algebraic <note>original: "cossicall"</note> signs. These are 25 and 225, which are marked with the sign of the square <note>original: "quadrate"</note>. The number 81 is marked with the signs of the square and the fourth power <note>original: "foure squared quadrate"</note>.
+
+<summary>
+This section of the text continues the description of the game pieces in Rythmomachia (The Philosophers' Game), specifically focusing on the second row of square-shaped pieces. It identifies three specific numbers—25, 225, and 81—that bear algebraic (cossic) markings. While 25 and 225 are marked as squares, 81 is distinguished by having markings for both the square and the fourth power. The accompanying diagrams illustrate the construction of the "pyramid" pieces, which are composite pieces made of multiple values.
+</summary>
+
+<keywords>
+Rythmomachia, Philosophers' Game, algebraic signs, cossic signs, squares, square root, fourth power, biquadrate, pyramid pieces, mathematical gaming, 16th-century mathematics
+</keywords>

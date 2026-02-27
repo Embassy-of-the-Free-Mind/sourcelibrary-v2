@@ -1,0 +1,10 @@
+[[meta: This page begins the actual text of the treatise after the formal dedication. It introduces the philosophical and moral justification for playing games, specifically the "Game of Pythagoras," as a way to refresh the mind after intense study.]]
+
+# THE EXCELLENT GAME OF
+## Pythagoras called Rythmomachia.
+
+Many men of great learning and scholarship, seeking solace and relief [[notes: From the Old French *soulas* (solace) and *allegement* (lightening/relief).]] for spirits burdened and weighed down by excessive labors and studies, in times past sought and invented many fine recreations and games: which today, through the negligence of some and the injury of time, have perished. Wherefore, seeing virtuous people—through a heap of vain and useless games that remain—let the time of their lives slip away and perish; it was so far from the case that such games could relieve them of their weariness that, rather, through regret for the time which was consumed in such vanities, they brought and increased in them much greater mourning and sadness. To provide, therefore, for human infirmity and to satisfy the Virtuous: we have wished to strive to choose a game, which [[notes: The author is arguing that "vain" games like simple dice or games of pure chance cause more stress because they waste time, whereas a mathematical "game of virtue" like Rythmomachia is a productive use of leisure.]]
+
+[[summary: This page introduces the "Game of Pythagoras" (Rythmomachia) as a remedy for mental fatigue. The author argues that while most modern games are a vain waste of time, this specific mathematical game offers a virtuous and intellectual form of recreation.]]
+
+[[keywords: Rythmomachia, Pythagoras, recreation, education, humanism, mathematical games, virtue]]

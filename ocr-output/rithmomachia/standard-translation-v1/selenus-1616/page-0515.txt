@@ -1,0 +1,36 @@
+[[meta: This page continues the numerical lookup tables for captures by Division from the previous page. It then transitions into the final rule of capture in Rithmomachia: Besieging.]]
+
+# On the Battle of Numbers. [[notes: "Zahl-Kampf" is the German name for Rithmomachia, a mathematical board game also known as the "Philosopher's Game."]]
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 42. | 14. | 3. | 36. | 4. | 9. |
+| 45. | 5. | 9. | 36. | 9. | 4. |
+| 45. | 9. | 5. | 56. | 7. | 8. |
+| 49. | 7. | 7. | 64. | 8. | 8. |
+| 64. | 4. | 16. | 64. | 4. | 16. |
+| 72. | 2. | 36. | 66. | 11. | 6. |
+| 72. | 6. | 12. | 81. | 9. | 9. |
+| 72. | 8. | 9. | 90. | 2. | 45. |
+| 81. | 9. | 9. | 90. | 6. | 15. |
+| | | | 90. | 10. | 9. |
+| | | | 100. | 5. | 20. |
+| | | | 100. | 4. | 25. |
+| | | | 120. | 6. | 20. |
+| | | | 225. | 9. | 25. |
+
+[[notes: This table concludes the capture-by-division logic. For example, in the first row, a stone with the value 42 can be captured by a stone with the value 3 if there are 14 empty fields between them, because 42 divided by 14 equals 3.]]
+
+-> ( Buxer : fol : 25. b. 45. & 46. [[notes: "Buxer" refers to Augustus Selenus, the pseudonym of Augustus the Younger, Duke of Brunswick-Lüneburg, who wrote a definitive book on the game in 1616.]]
+*These modes of fighting, he calls "Eruptions": And for this prize,*
+*he affirms that every movement, whether Oblique or Straight, is suitable;*
+*or in this prize, the spaces are said to be intercepted, whether*
+*they have been arranged in an Oblique or Straight path.* ) <-
+
+Now that the five ways in which the pieces should be taken away—namely **Counting**, **Addition**, **Subtraction**, **Multiplication**, and **Division** (which are shown in the art of arithmetic, but through this game are practiced manifold in the memory)—have been explained: there follows further the sixth and final type, namely **Besieging** [[notes: "Einsperren," literally "locking in" or "besieging."]], which occurs in the following manner.
+
+When a piece of the opponent’s side is so surrounded that it cannot be moved through its own proper movement, nor be rescued by other pieces of its own company (since they cannot remove any of the four pieces which are attacking it and blocking its path): then it is considered as if besieged and locked in, and is removed from the game. For example: If a White [[term: Dreyecketer]] [[notes: "Dreyecketer" refers to a triangular piece.]] stands on L., and four Black pieces stand on M. N. O. P.: then the aforementioned Triangle, provided that no one from its own company comes to its aid, is ensnared and captured. Regarding this sixth type, it is to be remembered that all pieces in this game can besiege and be besieged or surrounded: only the White [[term: Viereckete]] [[notes: "Viereckete" refers to a square piece.]] piece marked with 153, and the Black square piece—or the bottom level of the Black [[term: Turnes]] [[notes: "Turnes" or "Tower" refers to the Pyramid, the most complex piece in the game, made of stacked shapes.]] marked with 190—are lost or won through this besieging.
+
+[[summary: This page concludes the mathematical lookup tables for piece capture and introduces the sixth and final capture rule, "Besieging," where a piece is taken by being physically surrounded. It highlights that even the most powerful pieces, the Pyramids (valued at 153 and 190), can be captured this way.]]
+
+[[keywords: Rithmomachia, Arithmetic, Division, Besieging, Capture Rules, Pyramid, Triangle, Square, Augustus Selenus]]

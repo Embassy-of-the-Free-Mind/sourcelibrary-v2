@@ -1,0 +1,16 @@
+[[meta: This page continues the instructions for setting up the Rithmomachia board, specifically moving from the calculation of the square pieces' values (the superpartients) to their physical placement on the grid relative to the triangles, circles, and the Pyramid.]]
+
+# OF THE PHILOSOPHERS.
+
+Having thus perfected your hidden and sacred layout, take the two **superpartient** [[notes: As noted previously, these are ratios where a number contains another plus a specific fraction, represented by square pieces]] proportions, which make up the four **square tables** [[notes: "Tables" (from the Latin *tabulae*) refers to the game pieces themselves. In this game, the shape of the piece indicates its mathematical complexity: circles are simple, triangles are middle-grade, and squares are the most advanced]] on each side, and transfer them inseparably to the four squares at each of the two corners of the **tablier** [[notes: The game board, which in Rithmomachia is typically an 8x16 rectangular grid]]. 
+
+Afterward, in front of the said squares on each side, you will arrange the two triangular pieces of the proportion nearest to each side, placing the largest number toward the edge of the board. The other two triangular proportions that remain in the middle should be extended to the row of the **Pyramid** [[notes: The Pyramid is the most complex piece on the board, often composed of a stack of values that represent different mathematical ratios simultaneously]]. Place the largest number of each of these two proportions near the squares or the Pyramid; thus, the four triangles will occupy the four squares of the second rows. Next to these, you will join the **multiple circles** [[notes: Circular pieces represent "multiple" ratios (like 2:1 or 3:1), the foundation of the game's mathematical hierarchy]] exactly as they were arranged previously. 
+
+And so the arrangement of the **even numbers** [[notes: One side of the board consists of pieces derived from even numbers, while the opposing side is derived from odd numbers]] will be perfected. As for the **odd numbers**, you shall do the same, and the arrangement of your pieces and board will be complete.
+
+->Exemple.<-
+
+## The true arrangement of the whole game.
+
+[[summary: This page provides the final instructions for the physical setup of a Rithmomachia match, detailing how to place square, triangular, and circular pieces on the board in relation to the Pyramid.]]
+[[keywords: Rithmomachia, board setup, proportions, square pieces, triangles, circles, Pyramid, even numbers, odd numbers]]

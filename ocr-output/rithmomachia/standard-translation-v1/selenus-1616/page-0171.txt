@@ -1,0 +1,19 @@
+[[meta: This page continues from the previous discussion of "odds" or advantages given to a weaker player, specifically concluding a point about the King's mobility and moving into the "house rules" that must be settled before a match begins.]]
+
+# On the Game of Chess.
+
+[[margin: 3. cap: [[notes: Chapter 3]]]]
+
+...given as an advantage) so that he may place the King in a corner: and that it shall be permitted for him to leap unhindered with his King, even if **Check** has been given, provided that one has not otherwise agreed upon something else beforehand.
+
+Besides the fact that one sometimes concerns oneself with such advantages (as mentioned above) before beginning to play: it is almost more necessary, for the sake of better order, that one first agrees with the opponent upon a certain manner and way according to which the game shall be conducted. For one must have a thorough and clear explanation for all matters: such as: Whether the Soldiers [[notes: *Soldaten*, the common historical term for pawns]] may refrain from capturing and move past one another [[notes: This likely refers to the "en passant" rule, which was not yet universal]]: Item, whether the Kings, when **Check** is given to them—provided they have never yet moved from their place—may escape the same with a Leap [[notes: The "King's Leap" (*Königssprung*) was a historical move where a King could move two or three squares on its first turn, a precursor to modern castling]]: Item, whether all Soldiers, without distinction, have the power to leap into the third field [[notes: The initial double-step move of the pawn]]? etc.
+
+Finally, one must also agree regarding the preference [[notes: *Vorzug*, or the right to the first move]]: unless the same has already been given to someone as an advantage, or belongs to one by right: namely, if he has given the other an advantage and the latter has not expressly reserved or stipulated the first move for himself in the agreement. Otherwise, he who has won always begins the following game again. One might also look to the custom of certain places, where the defeated party—provided the game was not played for any staked money—is obliged to yield his place to another who wishes to play against the victor. Outside of these cases, one of the eight lowest stones [[notes: a pawn]] is commonly thrown upon the Table or **Chessboard**. If it then touches a **White** field with its base, then he who leads the **White** host begins: but if it remains, in the manner described, in a **black** 
+->field, then he with the **Black**<-
+->**stones** makes a beginning, etc.<-
+
+[[image-desc: A decorative woodcut tailpiece with symmetrical scrollwork and foliage surrounding a central lion-like mask or grotesque face.]]
+
+[[summary: This page emphasizes the importance of agreeing on specific rules (such as the King's Leap and pawn moves) before starting a match. It also describes historical methods for determining who takes the first move, including a random toss of a pawn onto the board.]]
+
+[[keywords: Chess rules, King's Leap, Pawns, First move, Chessboard, Etiquette, 17th-century chess]]

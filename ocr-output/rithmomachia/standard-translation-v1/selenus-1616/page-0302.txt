@@ -1,0 +1,115 @@
+[[meta: This page continues the visual representation of chess variations discussed in the previous chapters. The diagrams illustrate specific board states resulting from Damiano's Defense and its counters. The coordinate system uses numbers 1 through 64, where 1 is square a1 and 64 is square h8.]]
+
+[[margin: Chapter 1: The Third Book]]
+
+No. 2. 31. [[notes: These numbers refer to the specific variations or move sequences described in the preceding text.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BS | B | BK | BS | | BR |
+| BS | BS | BS | BS | 52 | BS | BS | BS |
+| | | | | | BR | | |
+| | | | | WR | | | |
+| | | | | WS | | | |
+| | | | | | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | WR | WK | WS | | WR |
+
+[[notes: In these diagrams: **BR/WR** stands for Black/White Rook (*Roch*), **BS/WS** for Black/White Soldier (*Soldat*, or Pawn), and **BK/WK** for the Kings. Single letters like **B** represent other officers (Queen, Bishop, or Knight). The numbers within the grid (e.g., 52) indicate that a piece has moved to that specific square number.]]
+
+No. 7. 8. 9. 12.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BS | | BK | BS | | BR |
+| BS | BS | BS | BR | | | BS | BS |
+| | | 46 | BR | | | | |
+| | | 38 | WR | WS | | | |
+| | | | WK | | | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | | WS | | WK | WS | | WR |
+
+No. 15. 16.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BS | | BK | BS | | BR |
+| BS | BS | BS | | BR | | BS | BS |
+| | | | | BR | | | |
+| | | | WR | BS | | | |
+| 32 | | 30 | | WK | WS | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | | WS | | WK | WS | | WR |
+
+No. 20. 21. 24. [[notes: The transcription '2j' is an archaic form of '21'.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | BR | | 60 | | BK | BR |
+| BS | | | | | | | BS |
+| | | | | | | | |
+| | BS | | | 36 | | WS | |
+| | | 30 | | | WR | | |
+| | | | | WR | WK | WS | |
+| WS | WS | WS | | BK | | | |
+| WR | | | | | | | |
+
+<column-break/>
+
+No. 5. 26.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BS | | BK | BS | | BR |
+| BS | BS | BS | 53 | BR | | BS | BS |
+| | | | | | BS | | |
+| | | | | WS | | | |
+| | | | | WK | WS | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+No. 13.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BS | | BK | BS | | BR |
+| BS | BS | BS | | | | BS | BS |
+| | | 46 | BR | | | | |
+| | | | WR | BR | | | |
+| | | | | WK | WS | | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | | | | WK | WS | | WR |
+
+No. 19. 25.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | BR | BK | BS | | BR |
+| BS | BS | BS | | BR | | BS | BS |
+| | | 46 | | | | | |
+| | | | | | | | |
+| | | | WR | 29 | | BS | BS |
+| | | | | | | 19 | |
+| WS | WS | WS | | WS | | WS | WS |
+| WR | | WS | | WK | | | WR |
+
+No. 27. 28.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BS | | BK | BS | | BR |
+| BS | BS | BS | | BR | | BS | BS |
+| | | | | | | | |
+| | | | | | BS | | |
+| | | | | | WR | WS | |
+| | | | | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+[[summary: This page contains eight chess diagrams corresponding to specific variations of the openings discussed in Book 3. These grids visualize the positions of the King, Rooks, and Soldiers (Pawns) alongside numerical indicators for other pieces based on the author's unique 1-64 coordinate system.]]
+
+[[keywords: chess diagrams, Selenus notation, Damiano's Defense, opening variations, chess history, 17th century chess]]

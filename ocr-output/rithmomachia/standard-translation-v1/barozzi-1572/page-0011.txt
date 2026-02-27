@@ -1,0 +1,22 @@
+[[meta: This page marks the beginning of the formal treatise after the introductory outline. It moves from the general structure of the book to the physical requirements of the game, starting with the dimensions of the playing surface.]]
+
+# PART ONE
+## IN WHICH IS DESCRIBED
+### THE BOARD,
+### AND THE PIECES.
+
+The Board [[notes: The Italian text uses *Tauoliero* (or *Tavoliere*), a general term for a game board, here specifically referring to the unique Rythmomachia grid.]] must be made similar to the chess-
+board as far as the white and black squares, into
+which it is entirely divided; but as for the shape,
+it is different from it, as this must be con-
+structed twice as long as it is wide, that is,
+8 squares wide, and 16 long, as if two chessboards were joined
+together [[notes: While a standard chessboard is an 8x8 square, the "Philosopher's Game" requires more space for the complex numerical maneuvers and the "Great Victory" progressions.]] which is clearly seen in the fol-
+lowing figure.
+
+<image-desc>A vertical rectangular grid representing a game board (tavoliero). The grid consists of alternating light and dark squares in a checkered pattern, measuring 8 squares in width and 16 squares in height, which the text describes as the equivalent of two chessboards joined together.</image-desc>
+
+<vocab>Board, chessboards, white squares, black squares</vocab>
+
+[[summary: This page describes the physical construction of the Rythmomachia board, explaining that while it uses the same checkered pattern as a chessboard, its dimensions are doubled to form an 8x16 grid.]]
+[[keywords: Game Board, Tavoliero, Chessboard, Grid Dimensions, Pythagorean Games, Rythmomachia, Game Equipment]]

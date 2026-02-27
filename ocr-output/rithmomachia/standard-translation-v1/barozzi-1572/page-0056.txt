@@ -1,0 +1,39 @@
+[[meta: This page continues the list of errata (corrections) following the conclusion of the main text. The corrections here focus on the final chapters of the book, which likely dealt with advanced numerical captures and mathematical proportions used in the game.]]
+
+[[image-desc: A simple rectangular diagram divided into sections. The top half is divided into two sections labeled A and C. Below section C is a third section labeled B.]]
+
+On page 13a in the fifth line, where one reads *the movement* [[notes: *il menar*]], read *the lesser* [[notes: *il minor*]]. On page 14b, in the first and third lines, where one reads *set*, read *cinq;* [[notes: *Set* and *cinq* appear to be abbreviated or French-influenced spellings for seven (*sette*) and five (*cinque*).]]. And in the sixth line where one reads *seventh*, read *sixth*.
+
+On page 15a in the fifteenth line, where one reads *the 7*, read *the 6*. On page 15b in line 32, where one reads *depredato*, read *depredata* [[notes: A grammatical correction to the feminine form, likely referring to a piece (*pedona*) being captured or "plundered" in the game]]. On page 16a in the ninth line, where one reads *still others*, read *still the others*. On page 16b in the second to last line, where one reads *gran*, read *grande*. 
+
+On page 18a, the figure must stand in this way:
+
+| 2 | 3 | 6 |
+|---|---|---|
+| 3 | 4 | 6 |
+| 3 | 5 | 15 |
+| 4 | 6 | 12 |
+| 4 | 7 | 28 |
+| 5 | 8 | 20 |
+| 5 | 9 | 45 |
+| 9 | 8 | 12 |
+| 7 | 12 | 42 |
+| 8 | 15 | 120 |
+| 9 | 15 | 45 |
+| 9 | 16 | 72 |
+| 12 | 15 | 20 |
+| 15 | 20 | 30 |
+| 25 | 45 | 225 |
+| 30 | 36 | 45 |
+| 72 | 90 | 120 |
+
+On page 18b in the middle column of the figure, where 9 8 153 is written, let there be written:
+9 81 153
+
+[[image-desc: A diagram consisting of three interlocking diamond shapes oriented horizontally. The diamonds contain letters and numbers, though they are obscured by heavy bleed-through from the other side of the leaf.]]
+
+[[notes: This page concludes the technical corrections for the book. The table and the final correction regarding the number "81" are vital for the mathematical logic of the game, as Rythmomachia relies on precise geometric and arithmetic ratios (such as squares and their products) to determine how pieces interact on the board.]]
+
+[[summary: This page contains a list of typographical and numerical corrections for pages 13 through 18 of the original manuscript. It includes a corrected mathematical table and specific adjustments to numbers and gendered language.]]
+
+[[keywords: errata, mathematical ratios, game pieces, typography, corrections, Rythmomachia]]

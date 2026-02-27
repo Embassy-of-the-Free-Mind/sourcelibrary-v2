@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical advice from page 146, which discussed the coordination of pieces and the danger of overextending. It concludes a thought on the risks of isolated pieces before providing specific instructions for the Knight and general offensive movement.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 4]]
+...must expect many setbacks and being driven back at the borders and in the enemy territory: especially if he is not safe and cannot move in and out without danger, or be easily relieved by other **pieces** [[notes: *Steinen*; literally "stones," the standard term for chess pieces in this period]]. Many pieces, which are in agreement with one another and can conveniently come to each other’s aid, can offer the enemy stronger resistance and protect themselves better than one alone, or many of them waiting scattered here and there. Thus, one cannot count it as a victory if one prevents the enemy from achieving theirs, but loses one’s own pieces without advantage and with harm: just as if one slew his enemy but remained [dead] on the field himself. A rational person should rightly direct his affairs so that he may triumph over the enemy without danger to himself and bring him under his power.
+
+If one (3.) moves the **Knight** [[notes: *Reuter*; literally "Rider" or "Cavalier," the 17th-century term for the Knight]] into the field, one should place him—after he has broken through the enemy’s first line of defense—in such a way that when he **gives check** [[notes: *Schach:beut*; an old term for "offering check"]] to the King of the other side, he simultaneously threatens the destruction of the Queen, a **Rook** [[notes: *Rochen*; the traditional name for the piece we now call the Rook, derived from the Persian *rukh*]], or another **Major Piece**. And because the other King must yield (as he cannot be captured), the player may, in the following move, take one of those pieces safely and unhindered [[notes: This describes the "fork," a tactic where one piece attacks two or more enemy pieces at once]].
+
+Furthermore, when (4.) a Chess-Player who has the first move intends to attack the enemy in his own quarters, he must know how to pursue such an undertaking and always keep his path free and open to turn back if necessity demands it; for if this were lacking, being forced to retreat would become a cause of his ruin.
+
+A player should also (5.) remember during the attack that some are easier and some harder to catch and surprise: For instance, the **Soldiers** [[notes: *Soldaten*; the common name for Pawns]] (because they may not move backward to save themselves) are [caught] easily and quickly. The **Archers** [[notes: *Schützen*; an older term for the Bishop]] and **Rooks**, however, (because they can run from one side of the board to the other if misfortune strikes them) are much more difficult. Finally, the **Knights** and the **Queen** (for the reason that they have many places and squares to retreat and save themselves, especially the Queen) are the most difficult of all to trap and seize.
+
+Regarding the **robbing** [[notes: *Rauben*; the act of capturing the opponent's pieces]], just as a Chess-Player must not touch his own pieces carelessly, so should he also refrain from [touching] the opponent's pieces; unless it were...
+
+T iij
+[[meta: catchword: daß]]
+
+[[summary: This page emphasizes the importance of piece coordination and introduces specific tactical maneuvers, such as using the Knight to create forks and the necessity of maintaining a path for retreat. It also categorizes chess pieces by their mobility and the subsequent difficulty of capturing them.]]
+
+[[keywords: piece coordination, Knight's move, Rook, Bishop, Queen, Pawn, tactics, fork, retreat, mobility, capture rules]]

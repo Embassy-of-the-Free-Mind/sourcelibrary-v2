@@ -1,0 +1,32 @@
+[[meta: This page continues the "General Rules of Combat" in Rhythmomachia, moving from the specific capture mechanics of multiplication and division to the rules governing movement obstacles and the complex behavior of the "Towers" or Pyramids.]]
+
+# Of the Number-Battle.
+
+6.) When a stone—whether from one’s own or the opponent’s side—is present between a piece and the space into which it could otherwise be moved according to the rules, then it [[notes: This refers to the "blocking" rule. Unlike Chess knights, stones in Rhythmomachia generally cannot jump over occupied spaces.]] cannot be moved there.
+
+7.) The **Towers** [[notes: These are the "Pyramids," the most powerful pieces in the game. They are composite stacks of several stones of different shapes.]] are moved in as many ways, and likewise capture other stones or are captured by them, as there are **Square**, **Triangular**, and **Round** stones present within them. Furthermore, they are endowed with this freedom: that they may exchange and recover stones which are meant to be taken from them, using other stones from their own side or those they have won from the enemy, provided those stones bear the same numbers as are marked on the stone they were about to lose. [[notes: This "exchange" rule allows a player to sacrifice a captured stone from their reserve to keep their Pyramid whole.]] If, however, no stone with such a number is to be found among them, it remains at the victor's discretion to take away whichever stone he wishes. But when the bottom-most layer, or the **base-stone**—and thus the sum of all sums of the layers, namely **91** and **190**—is to be taken, one cannot exchange it, nor can it be placed back upon the board a second time; rather, it must be removed from the game entirely. [[notes: In the game, the White Pyramid totals 91 (the sum of squares from 1 to 6) and the Black Pyramid totals 190 (the sum of squares 4 through 8, plus some additional values). Losing the base means the Pyramid is "slain."]] This is also how other layers are removed when one cannot provide another stone in their place.
+
+( Buxer: fol: 47. 48. [[notes: Referring again to the Latin commentary by Buxerius regarding the dismantling of Pyramids.]]
+> *Any Square Number, or step of a Pyramid, captures*
+> *or is captured, no differently than the stones of the same kind; however, he who*
+> *has won a step of a Pyramid shall take and remove*
+> *two steps from it, and of numbers of the same form:*
+> *so that if the Square Number 36 of the Perfect or White Pyramid*
+> *is intercepted, the Square 25 shall likewise be taken,*
+> *so that 36 and 25 are removed from the Pyramid: which, because*
+> *it contained 91, shall thereafter only be worth 30. Because it*
+> *has lost its Square shape, it will not be able to use the privilege*
+> *of the Square’s movement to travel to the fourth space, nor*
+> *will those two captured Numbers assist it thereafter, but it will*
+> *be captured gradually and cast down from its steps until nothing*
+> *remains of it; once this has been thoroughly accomplished,*
+> *it shall be intercepted in a single throw, especially if it*
+> *is surrounded by the enemy.* )
+
+8.) One should turn over all stones which he takes from the opponent, so that they acquire the color of his own side, and place them near him outside of the board; so that he [may...] [[notes: The stones often had different colors on each side so they could be "converted" and used by the captor for the exchanges mentioned in Rule 7.]]
+
+Ooo ij
+[[meta: catchword: entwe- (either "entweder" (either) or "entwechseln" (to exchange))]]
+
+[[summary: This page explains the movement restrictions of stones and the unique rules governing the "Towers" (Pyramids), including how they are dismantled through capture and how they can be repaired by exchanging captured stones.]]
+[[keywords: Rhythmomachia, Pyramid, Tower, capture rules, 91, 190, movement, Buxerius]]

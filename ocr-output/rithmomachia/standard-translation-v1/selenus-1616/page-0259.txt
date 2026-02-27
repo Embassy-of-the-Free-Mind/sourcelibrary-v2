@@ -1,0 +1,129 @@
+[[meta: This page provides visual diagrams illustrating the chess tactics and moves described on the previous page. It continues the technical analysis of Chapter 13, using an 8x8 grid and a specific square-numbering system common in the 1600s.]]
+
+### 13. Chapter: On the Game of Chess.
+
+[[notes: The diagrams below represent various "situations" or tactical positions on the board. In this era, German chess players used a coordinate system from 1 to 64. Piece abbreviations include: **SR** (Black Rook/Schwartz Roch), **SS** (Black Knight or Pawn/Schwartz Springer or Soldat), **SK** (Black King/Schwartz König), **WR** (White Rook/Weiß Roch), **WS** (White Knight or Pawn/White Springer or Soldat), and **WK** (White King/Weiß König).]]
+
+->No. 1, 8, 19, 20, 25.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **SR** | **SS** | **SK** | | | | | |
+| | | | | | | | |
+| | | 46 | | | | | |
+| | | | 43 | | | | |
+| | | | | 35 | | | |
+| | | | | | 25 | | |
+| | | | | | | | |
+| **WS** | **WR** | **WK** | | | | | |
+
+---
+
+->No. 6, 7.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **SR** | **SS** | **SK** | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | 33 | | | |
+| | | | | | 25 | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | **WK** | | | |
+
+---
+
+->No. 11, 12.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | 43 | | | | |
+| | | | | | 26 | | |
+| | | | **SK** | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | **WK** | | | |
+
+---
+
+->No. 26, 31<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | 3 | | **WK** | | | |
+
+---
+
+->No. 4, 5.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | : :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | 34 | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | **WK** | | | |
+
+---
+
+->No. 9, 10, 15, 16.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | 45 | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | 43 | | | | |
+| | | | | 38 | | | |
+| | | | | | 34 | | |
+| | | | | | | | |
+| | | | | | | | |
+
+---
+
+->No. 23, 24.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | 36 | | |
+| | | | | | | jo | |
+| | | | | | | | z |
+| | | | | | | | |
+
+[[notes: The annotations "jo" and "z" likely refer to specific notations for the game's outcome or move sequence, possibly indicating a "check" or a specific square reference.]]
+
+---
+
+->No. 29, 30.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | 19 | | | | |
+| | | | | | jo | | |
+| | | | | **WK** | | | |
+| | | | | | | | |
+
+[[summary: This page presents eight chess board diagrams that visualize the tactical positions discussed in the manual. They use a numbered coordinate system and standard 17th-century abbreviations for pieces like the Rook (Roch) and Pawn/Knight (Soldat/Springer).]]
+
+[[keywords: chess diagrams, chess strategy, square numbering, White King, Black King, Rook, Knight, 17th-century chess]]

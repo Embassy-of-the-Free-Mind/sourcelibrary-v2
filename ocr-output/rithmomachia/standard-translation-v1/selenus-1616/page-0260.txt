@@ -1,0 +1,93 @@
+[[meta: This page continues the detailed technical instruction of a chess manual, specifically addressing variations following the openings discussed in Chapter 12. It maintains the 1-64 coordinate system and traditional piece names used in the 1600s.]]
+
+The Second Book / 14th Chapter:
+
+## The Fourteenth Chapter.
+
+### How the game must be pursued when the Black side does not take the White Soldier—which was mentioned above in the twelfth chapter—but instead moves the King’s Knight.
+
+Regarding the second variation, which shall be handled in this chapter (in accordance with the promise made in the 12th chapter of this book): here one observes those three pieces which Black moves instead of capturing. Namely: (1) the King’s Knight; (2) the King’s Soldier; and (3) the King’s Archer [[notes: "Soldaten" (Soldiers) refers to pawns, "Reuter" (Riders) to Knights, and "Schützen" (Archers/Shooters) to Bishops.]]. These are moved to [squares] forty-three, or forty-five, or thirty-eight [[notes: This manual uses a numbering system from 1 to 64 to identify the squares of the board]]. The Knight is dealt with in this chapter—but the Soldier and the Archer in the following final chapter.
+
+[[margin: 1.]]
+[[margin: 2.]]
+Now, if the Black side (after both Kings' Soldiers have moved up, and the White side has led his King's Archer's Soldier against the Black King's Soldier) moves his King’s Knight against the White King’s Soldier at forty-three: * then the White side (if he so wishes) takes the Black King’s Soldier with his King’s Archer’s Soldier, and moves it to the Black King’s Knight. The Black side, with that same piece, takes the White King’s Soldier. The White side (to relieve the King’s Archer’s Soldier) moves his King’s Knight to nineteen, and thus arranges his game in a way that is not unhelpful.
+
+[[margin: 3.]]
+But if the White side does not take the Black Soldier (no. 2) but instead (to defend the King’s Soldier) moves the King’s Knight to twenty-two: then the Black side takes the White King’s Archer’s Soldier with his King’s Soldier. The White side plays the King’s Soldier to twenty-nine and reveals his Archer against the Black King’s Soldier [[notes: "Revealing" a piece refers to a discovered attack or opening a line for a long-range piece like a Bishop]]. The Black side moves the King’s Archer (to keep the White King’s Knight pinned) to thirty-one. The White side (to protect the King’s Soldier, should the King’s Knight be taken) moves the King’s Archer to one—
+
+---
+
+[[meta: The following diagram illustrates the positions described in the text, using abbreviations like SR (Black Knight/Schwartz Reuter) and WS (White Soldier/Weiß Soldat).]]
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **SR** | **SS** | **SK** | | | | | |
+| | | | | | | | |
+| | | 46 | | | | | |
+| | | | 43 | | | | |
+| | | | | 35 | | | |
+| | | | | | 25 | | |
+| | | | | | | | |
+| **WS** | **WR** | **WK** | | | | | |
+
+---
+
+->No. 6, 7.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **SR** | **SS** | **SK** | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | 33 | | | |
+| | | | | | 25 | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | **WK** | | | |
+
+---
+
+->No. 11, 12.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | 43 | | | | |
+| | | | | | 26 | | |
+| | | | **SK** | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | **WK** | | | |
+
+---
+
+->No. 26, 31<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | 3 | | **WK** | | | |
+
+---
+
+->No. 4, 5.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | : :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | 34 |
+
+[[meta: catchword: to one]]
+
+[[summary: This page explains a variation in chess where Black declines a pawn capture in favor of moving the King's Knight. It provides detailed move-by-move instructions and includes board diagrams for various numbered scenarios to help the reader visualize the resulting positions.]]
+
+[[keywords: chess strategy, 17th-century chess, opening variations, Knight moves, Bishop tactics, Gustavus Selenus]]

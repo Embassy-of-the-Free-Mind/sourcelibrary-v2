@@ -1,0 +1,80 @@
+[[meta: This page transitions from the geometric construction of numbers into the theory of "means" (medieties). In Renaissance mathematics, a "mean" was a way of finding a middle value between two extremes, forming the basis for both arithmetic progressions and musical tuning. The text concludes by cataloging the sets of means defined by the late-antique philosopher Boethius and the medieval mathematician Jordanus Nemorarius.]]
+
+[[margin: 3]]
+This same **mean** [[notes: Here meaning the geometric mean]], when distributed across four terms, always retains its proportionality even when permuted. For example, if the first is to the second as the third is to the fourth, then the first is to the third as the second is to the fourth.
+
+[[margin: 4]]
+In a **geometric mean**, the ratio of the terms and the ratio of their differences are similar.
+
+[[margin: 5]]
+In a **geometric mean** consisting of multiples: when the larger number is compared to the smaller, it contains the smaller plus its own difference; or the relationship of the larger to the smaller is a multiple of the smaller, minus one.
+
+[[margin: 6]]
+In a **continuous geometric mean** [[notes: A sequence like $a:b = b:c$]]: the product of the extremes is equal to the square of the middle term. In a **discontinuous mean** [[notes: A sequence like $a:b = c:d$]], the product of the extremes is equal to the product of the two middle terms.
+
+[[margin: 7]]
+The species of **continuous proportions** run through all the relationships and ratios of **superparticulars** [[notes: A "superparticular" ratio is one where the larger number contains the smaller number plus one part of it, such as 3:2 or 4:3. These are the building blocks of musical intervals]], originating from the first mean of multiples and arranged in a single series of **squares** and **oblong numbers** placed alternately from unity.
+
+[[margin: 8]]
+When the extremes of a **geometric mean** are determined, the middle proportional is found by taking the **square root** [*tetragonicum latus*] of the product of the two extremes.
+
+->Properties of the Harmonic Mean<-
+
+[[margin: 1]]
+The **harmonic mean** preserves a larger ratio among its larger terms [[notes: Unlike the arithmetic mean, where differences are equal, or the geometric mean, where ratios are equal, the harmonic mean ($1/a, 1/b, 1/c$) relates to the ratios of string lengths in music]].
+
+[[margin: 2]]
+In a **musical mean**, the middle term multiplied by the sum of the extremes produces double the number that results from multiplying extreme by extreme. [[notes: Expressed algebraically: $b(a+c) = 2ac$]].
+
+[[margin: 3]]
+When the extremes of a **musical mean** are determined, the middle term is found if the product of the difference of the extremes and the smallest term is divided by the sum of the extremes; the resulting quotient, called the **breadth** [*latitudo*], is then added to the smallest extreme.
+
+[[margin: 4]]
+It is through the **harmonic mean** that one is able to derive the origin of all **consonances** and musical harmonies.
+
+->Properties of the Remaining Means<-
+
+[[margin: 1]]
+If the extremes of the **fourth mean** are in a double relationship [[notes: a 2:1 ratio]]: the product of the largest and the middle is double the product of the middle and the smallest. Generally, the ratio of the largest to the smallest will be the same as the ratio of (largest × middle) to (middle × smallest); this is common to every mean.
+
+[[margin: 2]]
+If the middle of the **fifth mean** is double the smallest: the product of the largest and middle terms will be double the product of the extremes. Generally, the ratio of the middle to the smallest will be the same as the ratio of (largest × middle) to (largest × smallest); this is also public and common to all.
+
+The divine **Severinus** [[notes: Anicius Manlius Severinus Boethius, c. 480–524 AD, whose works on music and arithmetic were standard textbooks for over a millennium]] completed the set of ten means in the Pythagorean tradition; **Jordanus** [[notes: Jordanus de Nemore, a 13th-century mathematician]], however, added one more to the ten.
+
+<columns>2</columns>
+### The Ten Means of Boethius
+
+| | |
+|----------|----------|
+| First | 1. 2. 3. |
+| Second | 1. 2. 4. |
+| Third | 3. 4. 6. |
+| Fourth | 3. 5. 6. |
+| Fifth | 2. 4. 5. |
+| Sixth | 1. 4. 6. |
+| Seventh | 6. 8. 9. |
+| Eighth | 6. 7. 9. |
+| Ninth | 4. 6. 7. |
+| Tenth | 3. 5. 8. |
+
+<column-break/>
+
+### The Eleven Means of Jordanus
+
+| | |
+|----------|----------|
+| First | 1. 2. 3. |
+| Second | 1. 2. 4. |
+| Third | 3. 4. 6. |
+| Fourth | 1. 4. 6. |
+| Fifth | 6. 9. 11. |
+| Sixth | 3. 4. 6. |
+| Seventh | 3. 4. 7. |
+| Eighth | 4. 6. 7. |
+| Ninth | 3. 5. 6. |
+| Tenth | 6. 7. 9. |
+| Eleventh | 6. 8. 9. |
+
+[[summary: This page details the mathematical properties of geometric and harmonic means, emphasizing their role in determining musical consonances. It concludes with two reference tables listing the specific numerical examples for the means defined by Boethius and Jordanus Nemorarius.]]
+[[keywords: geometric mean, harmonic mean, Boethius, Jordanus Nemorarius, musical consonances, proportionality, square root, superparticular ratios]]

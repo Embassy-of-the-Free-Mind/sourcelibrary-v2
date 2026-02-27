@@ -1,0 +1,19 @@
+**The Philosophers' Game**
+
+...pieces <note>original: "men"</note>—or some of them, with the rest standing closer—stand in **L**, **M**, **P**, and **R**. This is sufficient for Capture by Siege <note>original: "Obliuion"</note>, by which every piece may be captured in the manner and form as has been taught.
+
+### Of Capture by Addition
+
+When two pieces <note>original: "numbers"</note> are positioned so that they encounter one of their enemies whose value is equal <note>original: "as muche as"</note> to both of them added together, and they are standing in such positions that both could move into its space, they shall capture <note>original: "take hym up"</note> it without moving into its space as soon as the second of those two pieces is set down. 
+
+However, if the opponent's pieces are already under threat <note>original: "in their daunger"</note> before they move, one of them—whichever the player chooses <note>original: "lyst"</note>—shall be moved into the space of the piece that is captured by Addition. 
+
+For example: if the triangle 12 is in **A**, and you can bring the circle <note>original: "rounde"</note> 6 to stand in **B** and the triangle 6 to stand in **G**, because 6 and 6 added together make 12 and both may move to **A**, you may capture the tri-
+
+<summary>
+This section concludes the explanation of "Capture by Siege" (oblivion) and introduces the "Capture by Addition" rule in Rythmomachia. Capture by Addition occurs when two pieces are positioned such that their combined numerical values equal the value of an opposing piece, and both pieces are within legal moving distance of that opponent's space. The capture is completed as soon as the second attacking piece is placed. The text also notes a variation where an attacking piece might actually move into the captured piece's square if the threat was already established.
+</summary>
+
+<keywords>
+Rythmomachia, The Philosophers' Game, Capture by Addition, Capture by Siege, Obliuion, 16th-century games, William Fulke, mathematical games, board game rules.
+</keywords>

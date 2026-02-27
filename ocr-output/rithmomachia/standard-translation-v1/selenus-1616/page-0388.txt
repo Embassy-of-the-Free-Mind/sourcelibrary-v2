@@ -1,0 +1,18 @@
+[[meta: This page continues the tactical analysis from the previous page, detailing specific variations of a game state. The notation uses a 1–64 numerical grid common in 17th-century German chess literature, where 1 is the square a1 and 64 is h8. The terminology reflects the military metaphors of the time: "Soldier" for Pawn and "Rider" for Knight.]]
+
+### The Third Book / Chapter 9:
+
+the Rider / from forty-three / Check / and pursues the moves / as briefly mentioned.
+
+[[margin: 42.]] If, however, **the Black** [player] / moves / the King / not to 60. (no. 38.) / but to fifty-nine: then **the White** [player] / gives / with 
+[[margin: 43.]] the **K. Rook** [[note: King's Rook]] / from three / Check: * **The Black** [player] / moves the King / to sixty: **the White** [player] / gives / with the Queen / from sixty-two / Check: **The Black** [player] / must / move the King / to fifty-two: **The White** [player] / gives / with the **K. Rider** [[note: King's Knight]] / from thirty-seven / Check: **The Black** [player] / must take him / with the Queen: **The White** [player] / moves / the Queen / (out of danger / from the **B. K. Rook**) / to fifty-four / and gives Check: **The Black** [player] / withdraws / the King / from the same: **The White** [player] / takes / the **B. Queen** / with the **K. Soldier** [[note: King's Pawn]] / and his [[note: Black's]] **B. K. Rider** / along with the game / cannot escape him.
+
+[[margin: 44.]] But if **the Black** [player] / moves / the King / not to 60. (no. 43.) / but to fifty-eight: then **the White** [player] / takes / with the **K. Rook's-Soldier** [[note: King's Rook's Pawn]] / the **B. K. Rider**: **The Black** [player] / (in order to protect the fifty-first square) / must move the Queen / to forty-four: **The White** [player] / the **K. Rider** / to thirty-seven: **The Black** [player] / his **K. Rider** / to fifty-three: **The White** [player] / takes / with the Queen / the **B. K. Rider's-Soldier** / and moves her / to his Rook: **The Black** [player] / [moves] the same / against her / to sixty-three: **The White** [player] / places her / at fifty-four / and will be able / to well-arrange his game further / when He / places the two Rooks / one behind the other [[note: This refers to "doubling" the Rooks on a file for maximum power]].
+
+[[margin: 45.]] If, however, **the Black** [player] / moves / the King / neither to 60, nor to 59, (no. 38. 42.) / but to forty-three: then **the White** [player] / gives / with the **K. Rook** / from three / Check: **The Black** [player] / must move the King / to forty-four: **The White** [player] / takes / with the **K. Rook's-Soldier** / the **B. K. Rider**: **The Black** [player] / (so that **the White** [player] / with the Queen / from fifty-one / does not give Check-Mate / but rather / his King / may escape the same) / [takes] the mentioned **W. Soldier** / with the Queen: or moves their Soldier / to thirty-seven: or their Rider / (in order to block the path / of the **W. Queen**) / to fifty-three: But because through this the moves / (which one [leaves] to the chess-players / following the guidance of the previous and following moves /
+
+[[meta: catchword: Züge/ (moves)]]
+
+[[summary: This page continues the technical breakdown of various chess maneuvers and "if-then" scenarios, focusing on how White can force an advantage or checkmate depending on Black's King movements. It highlights the use of doubled Rooks and the sacrifice of pieces to gain a superior positional advantage.]]
+
+[[keywords: chess tactics, 17th century chess, Gustavus Selenus, Rider, Soldier, Rook, checkmate, doubling rooks]]

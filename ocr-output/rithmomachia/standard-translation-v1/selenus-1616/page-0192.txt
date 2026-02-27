@@ -1,0 +1,21 @@
+[[meta: This page continues the strategic advice for King safety and transitions into specific rules for the endgame, specifically addressing piece exchanges and draws.]]
+
+### The Second Book, Chapter 5:
+
+...lawfully present, one should let them stand unmoved. Otherwise, on the other side, one should not let the pieces and **soldiers** [[notes: *Soldaten*; pawns]] rest, especially if the enemy’s **King** stands in that area. Rather, one must strive with the utmost diligence to hinder his intentions—so that he does not break through in the place where your **King** has not been stationed—or to defeat him entirely.
+
+(3.) That when his opponent has entrenched [[notes: *verschantzet*; referring to fortifying the King's position, a precursor to modern castling]] his **King** on one side, he should not place his own **King** opposite him, but rather on the other side. There, he should likewise entrench himself (in order to more conveniently attack his enemy, provided he trusts himself to overcome him). For the ancients used 
+[[margin: »]] 
+to say: "Hat against hat [[notes: *Hut gegen hut*; an idiom likely meaning 'Guard against guard,' or castling on the same side]] rarely did much good." However, if he considers the opponent to be stronger and finds himself to be weaker, it is advised that he—so that he is not attacked and defeated by the opponent all the sooner and more easily—should raise his fortification [[notes: *Schantze*; entrenchment]] opposite the enemy’s fortification. In this way, he can attend to his affairs in one place, attacking and defending simultaneously, and maintain his position as best as possible.
+
+When the game reaches its end, however, and both sides still have equal pieces with which to contend, a **chess-player** [[notes: *Schach-Zieher*; literally "chess-puller," a common term for a player]] must conduct himself according to the following rules:
+
+Firstly, the game might be in such a state that it could still be won. For example: if on both sides a **Rook** [[notes: *Roche*; from the Persian *rukh*]], a **Knight** [[notes: *Reuter*; literally "Rider"]], and two **soldiers** remain. In that case (if the game cannot be won otherwise, and one can perhaps still deliver **Check-mate** through this path), one should strive to exchange the **Knight** for the two **soldiers** of the other side. For otherwise, if that cannot be done, the game is merely equal and no one wins. Considering that a **Knight** together with a **Rook** cannot win the game against a single **Rook**, especially if the one with the single **Rook** is knowledgeable of the game. Otherwise, the latter might mismanage his fortification out of ignorance and lose the game. This exchange, however, must be carried out at the right time and only if the **King** stands in no dangerous place. For he might perhaps be trapped in such a place that one—in order to preserve the game and not gamble it away—dare not undertake this exchange.
+
+Similarly, if one side as well as the other has a **Knight** and two **soldiers**, or a **Bishop** [[notes: *Schütze*; literally "Archer" or "Shooter," the common German name for the piece we call a Bishop]] and two **sol-**
+
+[[meta: catchword: -diers / daten]]
+
+[[summary: This page provides strategic advice on King placement and fortifications (castling), specifically recommending "opposite-side" castling for an aggressive game. It also introduces endgame theory, noting that certain combinations like Rook and Knight versus a lone Rook result in a draw between experienced players.]]
+
+[[keywords: King safety, fortification, entrenchment, castling, endgame strategy, piece exchange, draws, Rook, Knight, Bishop]]

@@ -1,0 +1,38 @@
+[[meta: This page concludes Book Two of the *Musical Elements*, continuing the mathematical demonstration that a minor semitone is larger than three Pythagorean commas but smaller than four. It establishes the size of the whole tone and defines the basic intervals used in classical music theory.]]
+
+# 36
+AD [[notes: An abbreviation, likely for "Adhuc" (Still/Further) or part of a running header.]]
+
+[The text continues from the previous page's proof] ...the seventh [proposition] of the same second [book], **h** is a minor semitone. Then, I multiply **d** by **h**, and **c** by **k**, and **d** by **l**; let **m, n, o** result in that order. By the same sixth [proposition] of the fourth [book], it is very easy to know that **n** to **m** contains three commas. And by the seventh [proposition] of the second [book], **o** to **m** contains a minor semitone [[notes: In Pythagorean tuning, the minor semitone or "limma" is slightly smaller than a modern equal-tempered semitone]]. But the number **n** is known to be smaller than **o**. Therefore, the minor semitone from **o** to **m** wins out and exceeds three commas. Then, I multiply **h** by **h**, **k** by **k**, and **h** by **l**, and let **p, q, r** arise in their order. It is manifest by the same reasoning as before that **q** to **p** contains four commas, and **r** to **p** contains a minor semitone. But the number **r** is smaller than the number **q**. Therefore, four commas are greater than a minor semitone. From this, a corollary is known: that the major semitone [[notes: Referred to here by its Greek name, the *apotome*]] exceeds the minor semitone by only a comma. Since the minor semitone contains more than three and fewer than four commas, as was just seen, then by adding a single comma, the major semitone—which they call the *apotome*—must necessarily contain more than four and fewer than five commas.
+
+## ¶ A Tone must necessarily contain more than seven commas.
+
+¶ For a tone is composed and constituted of a minor semitone and an *apotome*. Since, by the penultimate [proposition], a minor semitone contains three commas and more, and by the preceding [proposition], an *apotome* contains four and more—and since three and four and more make seven and more—therefore, a tone contains more than seven commas.
+
+### ¶ End of the Second Book of Musical Elements.
+
+> ¶ A minor third [*sesquitonus*]: is that which contains a tone and a minor semitone. We shall call this below a *trihemitone* or *trisemitone*. [[notes: Literally "three-half-tones," though it functions as a minor third.]]
+> A major third [*ditonus*] is that which embraces two tones.
+> A tritone [*tritonus*] is that which contains three.
+> The simple consonances are: the fourth [*diatessaron*], the fifth [*diapente*], and the octave [*diapason*].
+> The compound consonances are: the octave-plus-fifth [*diapason diapente*] and the double octave [*bis diapason*].
+> A fourth [*diatessaron*] is a consonance which arises from the ratio of 4:3 [*sesquitertia*].
+> A fifth [*diapente*]: which arises from 3:2 [*sesquialtera*].
+> An octave [*diapason*]: which arises from 2:1 [*dupla*].
+> An octave-plus-fifth [*diapason diapente*]: is that which the fourth and fifth consonances joined together constitute. [[notes: Technically, an octave and a fifth combined.]]
+> A double octave [*bis diapason*]: is that which two octave consonances join together.
+
+¶ The Pythagoreans did not ascend higher than this because, to those ascending higher, the voices seemed shrill; nature has set the limits of almost every voice and its modes at the consonance of the double octave. Having considered musical consonance up to the double octave, they thought it easiest to leave the rest alone, as if one wished to fit musical modules to a triple or quadruple octave. For this reason, almost all musicians in defining, determining, and handing down the discipline of music do not transcend the limits of Pythagoras, believing themselves content with his limits and following the ancient and venerable authority that determined them sufficiently. We shall also attempt to imitate this in this work.
+
+¶ The minor third [*sesquitonus*] is situated between the ratios of 6:5 [*sesquiquinta*] and 7:6 [*sesquisexta*]. Whence it happens that although the minor third strikes the ear pleasantly and sweetly, it is not yet to be placed among the consonances. [[notes: In the Pythagorean system, only ratios using the numbers 1, 2, 3, and 4 were considered "perfect" consonances. The thirds (6:5 and 5:4) were considered "imperfect" or even dissonant by strict theorists until the late Middle Ages and Renaissance.]]
+
+<i>i</i> [[notes: A signature mark used by printers to keep pages in order.]]
+
+| 291 3/5 (d) | 288 (A) | 283 1/2 (e) | 256 (b) | 243 (c) | 48 3/5 (f) | 40 1/2 (g) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+
+¶ Let **a** be 288, **b** be 256, and **c** be 243. Through the eighteenth [proposition] of this second book, it is manifest that **a** to **b** is a tone and **b** to **c** is a minor semitone. Therefore, **a** to **c** by definition will be a minor third [*sesquitonus*]. I say this exists in a proportion smaller than 6:5 [*sesquiquinta*] and larger than 7:6 [*sesquisexta*]. For I take, by the tenth [proposition] of this second book, a fifth part of **c**, and the number 48 and three-fifths comes out, which is **f**. I add **f** to **c**, and the sum is **d** (291 3/5), which is found to be greater than **a** (288). Therefore, by the eleventh [proposition] of this second book, the proportion of **d** to **c** is greater than **a** to **c**. But **d** to **c** is a 6:5 ratio. Thus, the minor third is constituted in a smaller proportion than the 6:5 ratio. Finally, I take by the same tenth [proposition] of the second book a sixth part of **c**, and there comes to me the number 40 and a half, which is **g**. Therefore, adding **g** to the number **c** restores the number **e** (283 1/2). It is certain that the number **e** is smaller than **a**. Wherefore, as before, the minor third **a** to **c** is greater than **e** to **c**, which is constituted in a 7:6 ratio. This is what was proposed. The corollary is thus recognized: first, that the minor third strikes the ear sweetly, which the sense of anyone intent on musical melodies confirms. But that it is not yet a consonance happens because the minor third does not consist of a *superparticular* ratio [[notes: A ratio where the numerator is the denominator plus one, like 3/2 or 4/3]]; since between 6:5 and 7:6 (the nearest superparticulars), no intermediate superparticular ratio falls. Nor indeed is it in the *multiple* genus [[notes: Ratios like 2:1, 3:1]], since by the eleventh [proposition] of this first book, the 2:1 ratio (the smallest of the multiples) arises and is born from the 3:2 and 4:3 ratios (the largest of the superparticulars). Every consonance, however, by definition consists of a superparticular or multiple ratio. Therefore, the whole proposition is known.
+
+[[summary: This page marks the conclusion of Book Two, providing mathematical proofs for the size of musical intervals like the tone and semitone in terms of commas. It also defines major and minor thirds and explains why, despite their pleasant sound, the Pythagorean tradition excludes them from the ranks of true consonances.]]
+
+[[keywords: Pythagorean tuning, comma, minor semitone, apotome, whole tone, minor third, sesquitonus, ditonus, consonance, superparticular ratio, musical mathematics]]

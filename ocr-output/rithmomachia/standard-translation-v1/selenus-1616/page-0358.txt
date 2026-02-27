@@ -1,0 +1,21 @@
+[[meta: This page continues the detailed chess tactics of Chapter 5. The previous page ended with a partial sentence describing a maneuver involving the King's Knight. The board notation continues using the 1–64 grid (where 1 is a1 and 64 is h8).]]
+
+### The Third Book / Chapter 5:
+
+...with the King’s Knight / and gives / from the King’s Rook / a discovered check [[gloss: Ab-Schach]]:
+
+<margin>108.</margin> * **The Black** [player] / moves / the King / to fifty-nine [[note: Square c8]]: / **The White** [player] / moves / the King’s Rook / to fifty-two [[note: Square d7]] / and gives / with the Queen / (provided that the Black / King’s Bishop’s / Soldier [[note: Pawn]] / has not / moved / to forty-six [[note: Square f6]]: in which / case He / moves the Queen / to fifty-three [[note: Square e7]] / and / with the / same / still achieves his objective / on sixty [[note: Square d8]]) / from sixty-one [[note: Square e8]] / Checkmate.
+
+<margin>109.</margin> **But if the Black [player] moves** / the King / not to fifty-nine / (no. 108) but to fifty-one [[note: Square c7]]: then **the White** [player] offers / with / the King’s Rook / from fifty-two [[note: Square d7]] / check / and from his [[note: White's]] / Bishop / a discovered check [[gloss: Ab-Schach]]: **The Black** [player] / moves / the King / to forty-two [[note: Square b6]]: **The White** [player] / gives / with the King’s Rook / from fifty [[note: Square b7]] / check: **The Black** [player] / moves / the King / to / thirty-three [[note: Square a5]]: **The White** [player] / gives / with the Queen / from / nine [[note: Square a1]] or seventeen [[note: Square a3]]: or with the King’s Bishop / from fifty-one [[note: Square c7]] / Checkmate.
+
+<margin>110.</margin> **But if the Black [player] moves** / the King / not to fifty-one / (no. 107) but to sixty-three [[note: Square g8]]: then **the White** [player] takes / with the King’s Rook / the Black Queen: **The Black** [player] [takes] / the White / Queen / with the King’s Knight’s Soldier [[note: Pawn]]: **The White** [player] [takes] / the Black King’s Rook / with the King’s Knight: and will (because He / has a Rook and Knight / as an advantage) / easily win against the Black [player].
+
+<margin>111.</margin> **If, however, the Black [player]** / does not take / the White Soldier [[note: Pawn]] / (no. 99) / but instead the King’s Knight / moves to the White King’s Bishop's [starting square] / at forty [[note: Square h5]]: then **the White** [player] moves / the King’s Rook / to the
+
+<margin>112.</margin> **Black Queen** / at fifty-two [[note: Square d7]]: * **The Black** [player] / takes / with the King’s Knight / the White King’s Bishop / and moves it / to / the White Queen / and their Knight’s Soldier [[note: Pawn]]: **The White** [player] / takes / the Black Queen / with the King’s Rook / and offers check: **The Black** [player] / takes / the same / with the King: **The White** [player] / offers / with the Queen / from forty-four [[note: Square d6]] / check / and moves / the same / toward the Black King’s Rook / and Knight: **The Black** [player] / must / move / the King / to sixty-one [[note: Square e8]]: **The White** [player] / takes / with the Queen / the Black King’s Rook: **The Black** [player] / moves / the King’s Knight / to the White Queen [starting square] / at forty-five [[note: Square e6]]: **The White** [player] / moves the same / to forty-four [[note: Square d6]]: **The Black** [player] /
+
+[[meta: catchword: auf dies]]
+
+[[summary: This page continues a technical analysis of chess endgames, specifically focusing on discovered checks and checkmate patterns involving the Queen, Rook, and Bishop. It details several variations of play depending on how the Black King responds to White's offensive.]]
+
+[[keywords: Chess tactics, Checkmate, Discovered check, Rochen, Knight, Bishop, Queen, 17th-century chess, Endgames]]

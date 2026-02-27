@@ -1,0 +1,27 @@
+[[meta: This page continues the rules of Rythmomachia, specifically focusing on the "Pyramid"—a unique piece made of several stacked numbers—and the concept of "Imprisonment," which allows smaller numbers to be captured if they are completely surrounded.]]
+
+RYTHMOMACHIA, 15V
+
+...the capture, and when the pyramid is ransomed [[notes: "Ransom" or "redemption" (*racheter*) is a mechanic in Rythmomachia where a piece that would otherwise be captured is saved by sacrificing another piece of equal value]] it shall be placed in the stead of the one which ransomed it; otherwise, you shall not place a counter [[notes: The French text uses *table*, which refers to the physical gaming pieces or counters used on the board]] in the place of capture.
+
+## The numbers which can only be taken by imprisonment.
+
+<image-desc>A horizontal curly brace spans over the column headers "Even" and "Odd".</image-desc>
+
+| Even | Odd |
+|:---:|:---:|
+| 2 | 3 |
+| 4 | 5 |
+| 6 | 7 |
+| 153 | 190 |
+
+## Of the Privilege of the Pyramid.
+
+As for the Pyramid [[notes: The Pyramid is the most complex piece in the game, representing a stack of different numerical values (bases) that make up a total sum]], it represents in itself as many counters as it has bases and levels; therefore, it may take or be taken by as many counters as it represents in its bases, by the square number contained within them. And by the same rules we have spoken of above regarding other counters, it remains that if it falls into ambush or assault [[notes: *Ambusche* and *assault* refer to specific mathematical capture methods involving distance or equal numerical value]], or indeed meets some equal number in respect of any of its bases: it shall be ransomed (excepting its largest base) by giving another counter equal to the base in respect of which it has been cap...
+
+[[meta: catchword: se]]
+
+[[vocab: Rythmomachia, pyramid, imprisonment, Even, Odd, base, levels, square number, capture]]
+
+[[summary: This page explains the "ransom" mechanic for the Pyramid piece and lists the specific numbers that can only be captured via imprisonment. It highlights the Pyramid's status as a composite piece that functions as multiple counters at once.]]
+[[keywords: Rythmomachia, Pyramid piece, Capture by Imprisonment, Even and Odd, Ransom, Square Numbers, Renaissance board games]]

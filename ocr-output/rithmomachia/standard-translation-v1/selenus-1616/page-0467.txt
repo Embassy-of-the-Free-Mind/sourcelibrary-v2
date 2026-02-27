@@ -1,0 +1,26 @@
+[[meta: This page transitions from the general history of chess into specific tactical examples of "Old Chess," citing the works of Jakob Mennel. It continues the discussion of regional variations and historical rules mentioned on the previous page.]]
+
+### Chapter 10: On the Game of Chess.
+
+<image-desc>An ornamental woodcut divider featuring three grotesque masks or human faces intertwined with ornate leafy scrolls and vine-like patterns.</image-desc>
+
+### The Tenth and final Chapter.
+
+## Several Examples of the Old Chess, as mentioned in the previous chapter.
+
+IN the booklet of **Dr. Jacobi Mennel** [[notes: Jakob Mennel (c. 1460–1526) was an Austrian jurist and historian to Emperor Maximilian I; his book *Schachzabel Spiel* was published in 1507]], (which he published in German rhymes at the **Imperial Diet of Constance** in the year 1507 regarding the Chess-Board), three types of **Huts** [[notes: *Hütten* (huts or cottages) refers to specific defensive formations or "fortresses" built around the King, similar in purpose to modern castling]] and seven examples of the **Old Game** (mentioned in the preceding chapter) have been added by some.
+
+[[margin: cc]] Now, although these descriptions are somewhat dark and difficult to understand—partly because of the strange, old-fashioned style in which they were written, and partly because they omit the moves that the defending player must make in these examples—the Author [[notes: Referring to August the Younger, who wrote under the pseudonym Gustavus Selenus]] has nevertheless chosen to include them. He has adapted them into his own style and improved them by adding the missing moves for better and clearer instruction, as they may serve to further explain the previous chapter.
+
+[[margin: cc]] There follow, first of all, the **three Huts**, and how they are to be constructed according to the manner of the Old Game.
+
+[[margin: cc]] It should be noted (incidentally, as was also done above in the first chapter of the Second Book) that a **Hut** is nothing other than this: that the King is so provided for and secured by several common pieces that he may stand peacefully and be safe from checks behind such a screen of his own stones. The best Hut is one in which all the pieces are well-closed together, each protecting the other twice over. Furthermore, a Hut is better and more stable in the corners than in the middle of the field, and it is more useful when made of few pieces rather than many.
+
+[[margin: cc]] **The First** is this: When one plays with the **White pieces**, he should move the **King’s Archer’s Soldiers** [[notes: In this period, the Bishop was often called the *Schütze* (Archer). These are the pawns standing in front of the King's Bishop]] onto **twenty-seven** and onto **thirty-five** [[notes: Early chess notation often numbered the 64 squares of the board from 1 to 64]]. The **King’s Soldier** (to assist him) onto **twenty-eight**; the [other] **King’s Soldier** onto **twenty-one**; the **King’s Archer** over his **Knight’s**—
+
+[[sig: Iii ij]]
+[[meta: catchword: Solda- (Soldaten / Soldiers)]]
+
+[[summary: This page introduces historical chess tactics from Jakob Mennel's 1507 treatise, specifically defining "Huts" (Hütten) as defensive formations for the King. The author explains he has updated these "Old Chess" examples with clearer instructions and missing defensive moves for the reader.]]
+
+[[keywords: Jakob Mennel, Old Chess, Huts, Hütten, King's defense, Chess history, Constance, tactics, notation]]

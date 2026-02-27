@@ -1,0 +1,65 @@
+[[meta: This page continues the instructional manual for Rythmomachia (The Philosophers' Game). Following the definition of an Arithmetic proportion on the previous page—where the difference between the first and second number is the same as the difference between the second and third—this page provides a comprehensive reference table of all such possible combinations using the specific numbers found on the game pieces.]]
+
+->OF THE PHILOSOPHERS.<-
+[[notes: "Of the Philosophers" refers to the game's traditional name, *Rythmomachia* (The Battle of Numbers), often called the "Philosophers' Game" due to its complexity and its roots in Pythagorean and Boethian mathematics.]]
+
+->E ij<-
+[[notes: This is a printer's signature mark, used by early modern binders to ensure the pages were gathered in the correct order.]]
+
+### Example of the Arithmetic proportions
+### which can be encountered in the game.
+
+| | | |
+|---|---|---|
+| 2 | 3 | 4 |
+| 2 | 4 | 6 |
+| 2 | 5 | 8 |
+| 2 | 7 | 12 |
+| 2 | 9 | 16 |
+| 2 | 16 | 30 |
+| 3 | 4 | 5 |
+| 3 | 5 | 7 |
+| 3 | 6 | 9 |
+| 3 | 9 | 15 |
+| 4 | 5 | 6 |
+| 4 | 6 | 8 |
+| 4 | 9 | 12 |
+| 4 | 12 | 20 |
+| 4 | 20 | 36 |
+| 4 | 30 | 56 |
+| 12 | 42 | 72 |
+| 15 | 20 | 25 |
+| 15 | 30 | 45 |
+| 16 | 36 | 56 |
+
+[[notes: To achieve a "mediocre victory," a player must capture or position three pieces in the opponent's territory that match one of these sets. For example, the first row (2, 3, 4) has a common difference of 1, while the row (2, 16, 30) has a common difference of 14.]]
+
+| | | |
+|---|---|---|
+| 5 | 6 | 7 |
+| 5 | 7 | 9 |
+| 5 | 15 | 25 |
+| 5 | 25 | 45 |
+| 6 | 7 | 8 |
+| 6 | 9 | 12 |
+| 6 | 36 | 66 |
+| 7 | 8 | 9 |
+| 7 | 16 | 25 |
+| 7 | 64 | 121 |
+| 7 | 66 | 125 |
+| 9 | 12 | 15 |
+| 9 | 45 | 81 |
+| 9 | 81 | 153 |
+| 12 | 16 | 20 |
+| 12 | 66 | 120 |
+| 20 | 25 | 30 |
+| 20 | 42 | 64 |
+| 30 | 36 | 42 |
+| 28 | 64 | 100 |
+| 28 | 42 | 56 |
+
+[[notes: Many of the higher numbers in this second table, such as 121, 125, and 153, represent the "Pyramids"—the most valuable and complex pieces in the game. These pieces are composed of multiple stacked values, making them formidable targets and powerful tools for creating proportions.]]
+
+[[summary: This page provides a mathematical lookup table for players of Rythmomachia, listing every possible three-term Arithmetic progression available on the board. These sequences are essential for achieving a "mediocre victory" by aligning specific numerical pieces in the opponent's camp.]]
+
+[[keywords: Arithmetic proportion, Rythmomachia, Philosophers' Game, number theory, medieval games, mathematical sequences, mediocre victory]]

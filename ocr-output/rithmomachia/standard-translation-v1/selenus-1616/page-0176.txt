@@ -1,0 +1,19 @@
+[[meta: This page continues the discussion from page 145 regarding tactical deceptions and psychological maneuvers. It concludes a thought on "blinding" the opponent's eyes with a sacrifice before transitioning into fundamental principles of piece coordination and opening theory.]]
+
+# The Second Book, Chapter 4
+
+-> 146 <-
+
+...turns [away], or moves a **minor piece** [[notes: *Schlechten Stein*, literally a "bad" or "plain" stone; refers to a low-value piece like a pawn used as bait]] into the field, sacrificing it [[notes: *In die Schantze schlägt*; literally "knocking it into the trench," a military metaphor for risking or sacrificing something]], and thus **blinds the eyes** of the other. He does this so that, if the other takes the piece in haste without further reflection, the player might—with the following move—gain a better piece and an advantage.
+
+Finally, a Chess-Player should move his pieces in such a way that they stand in **good order** and not far from one another. This is so that if the line is opened or broken, the opponent does not gain the opportunity to attack his pieces on all sides. And even if the game is mostly won, he should not, for that reason, play thoughtlessly as if he could not be defeated. Rather, so long as he wishes to win, he should nevertheless keep his **Soldiers** [[notes: *Soldaten*; the common 17th-century term for Pawns]] and other **Major Pieces** [[notes: *Haupt-Steine*; literally "Head-Stones," referring to the royalty and officers]] together as much as possible. For if he sets them too far apart and scatters them—so that no one can easily defend or rescue the other—the enemy might yet defeat him with little effort.
+
+So much for moves in general. Now, as for what concerns the **deployment of the pieces** into the field in particular: a Chess-Player should (1.) move the Soldiers of the King, the Queen, and the two **Archers** [[notes: *Schützen*; an older term for the Bishop, which was often depicted as an archer or huntsman in early modern Germany]] out into the field, to the very front, as far as is possible and useful. He must, however, take diligent care of them so they are not lost in vain. For this, special foresight will be necessary, and the entire work must be observed with high attention. This should be done in the manner that will be reported and reminded hereafter (when we shall deal with the way the game is arranged, and when it is useful to move or leave a major or minor piece). Consider that if these moves are not made with special diligence, it often happens that—however useful it is otherwise to play the Soldiers at the right time—one moves them forward at the wrong time to great harm. For the King, as the most noble, is not only placed in danger thereby, but the other Major Pieces are also carelessly lost because of the resulting disorder.
+
+In addition, (2.) a player should strive to bring the six Major Pieces—namely the two **Riders** [[notes: *Reuter*; Knights]], **Archers** [[notes: Bishops]], and **Rooks** [[notes: *Rochen*; an archaic term for Rooks, derived from the Persian *rukh*]]—into the field as soon as possible in all games, so that they may be used for any eventuality. For in the absence of this, if a single piece is moved all alone, many
+
+[[meta: catchword: many]]
+
+[[summary: This page outlines fundamental chess strategies, emphasizing the importance of piece coordination, the danger of overextending ones' lines, and the necessity of developing major pieces like Knights, Bishops, and Rooks early in the game. It uses military terminology, such as "soldiers" for pawns and "archers" for bishops, to frame the game as a battlefield.]]
+
+[[keywords: chess strategy, piece development, pawns, bishops, knights, rooks, military metaphors, 17th-century gaming, opening theory]]

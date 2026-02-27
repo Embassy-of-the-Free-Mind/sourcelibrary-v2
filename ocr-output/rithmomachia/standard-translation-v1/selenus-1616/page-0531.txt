@@ -1,0 +1,26 @@
+[[meta: This page continues the rules of Rithmomachia, specifically detailing the final stages of the game where pieces are coordinated to achieve "Victories"—mathematical harmonies formed within the opponent's territory. It emphasizes the announcement of the winning move and the strategic positioning of pieces.]]
+
+# On the Battle of Numbers.
+
+...through them [the counters], victories must be achieved, either alone or together with those from the other pile. If the stones remaining from both sides on the game board at the end are insufficient to bring the victories to a conclusion, one may likewise use and call to aid the stones captured from the opponent.
+
+4.) The victories are to be carried out and brought about in those spaces which are of the color used by the opponent, in whatever manner the player finds pleasing. The stones, however, which are used to achieve the victory must be placed in spaces that follow one another directly and are close together: such as ABCD, AEFG, AHEI, BIEK, IHKL. These letters are found on the right side of the board illustrated in the previous fifth chapter. [[notes: In Rithmomachia, "Victories" are not just captures, but specific sequences of numbers—like an arithmetic or harmonic progression—set up in the enemy's "camp." The letters refer to a coordinate system on the board.]]
+
+5.) When a stone is moved upon which the final turn—which can give the ultimate decision of the game—is to follow, one must announce the move. This is so that the opponent, if he is able, may look out for himself and guard his chances; it also ensures that if the move cannot be prevented, the last stone, which is to obtain the highest victory, may be moved with special renown. [[notes: This is similar to the rule of "Check" or "Checkmate" in chess, requiring the player to give fair warning before the final blow.]]
+
+6.) Once the final victory has been announced, no stones can thereafter be taken from those which have already been arranged to bring that victory about.
+
+7.) When the last and greatest victory is to be put into effect, one must—before it is announced—assign many other stones to aid those already placed in the enemy’s field to obtain the final victory. One should, as it were, surround the primary stones with these others, so that when the final victory is announced, the opponent cannot delay or prevent and disrupt it. [[notes: The "Great Victory" usually required the player to form a complex "Harmony" of four numbers in the opponent's camp. These numbers had to satisfy multiple mathematical ratios simultaneously.]]
+
+->(Buxer : fol: 40. a. b.<-
+
+[[margin: cc]]
+*But perhaps someone will object: For what reason were you moved not to dispute separately and apart regarding the Victories of Even and Odd Numbers, in the manner of Jacobus Faber Stapulensis?* [[notes: Jacobus Faber Stapulensis (Jacques Le Fèvre d'Étaples) was a 16th-century French humanist who wrote a definitive treatise on Rithmomachia. The author here is justifying his own organizational structure compared to the classic text.]]
+[[margin: cc]]
+*To this man I respond thus: First, since the Game, by its own immensity and infinity, was more infinite than infinity itself, among the players...*
+[[margin: cc]]
+[[meta: catchword: molestiam (trouble/annoyance)]]
+
+[[summary: This page outlines the final tactical requirements for achieving a "Victory" in Rithmomachia, including the necessity of announcing the winning move and the strategy of shielding scoring pieces from capture. It also begins a defense of the author's method against the traditional teachings of the scholar Faber Stapulensis.]]
+
+[[keywords: Rithmomachia, Number-Battle, Victories, harmonic progression, game rules, Jacobus Faber Stapulensis, Buxer, mathematical games]]

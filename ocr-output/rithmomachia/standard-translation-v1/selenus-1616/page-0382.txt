@@ -1,0 +1,23 @@
+[[meta: Continuity with page 346: This page continues the detailed breakdown of various tactical outcomes in a chess match, picking up mid-sequence from the previous page's discussion of piece captures and positional advantages for the White and Black players.]]
+
+### The Third Book / Chapter 9:
+
+...the **White** [player] / takes it / with / the **K. Pawn** [[note: *Soldat* or "Soldier"; the early modern term for a Pawn]] : **The Black** [player] / [takes] the same / with the **K. Knight** [[note: *Reuter* or "Rider"; the early modern term for a Knight]] / and moves it / against the **W. Queen** : **The White** [player] / [moves] the same / against him / and the **B. K. Knight's Pawn** / to **twenty-eight** : **The Black** [player] / (in order / to protect / the Knight) [moves] his **Pawn** / to **forty-two** : **The White** [player] / takes / with the **K. Bishop's Pawn** [[note: *Schützens-Soldat*; the Pawn belonging to the Archer/Bishop]] / the **B. K. Pawn** / and offers / from the Queen / a **discovered check** [[note: *Ab-Schach*; a move that opens a line for a check from a different piece]] : **The Black** [player] / moves the King / to **fifty-three** : **The White** [player] / gives / with the **K. Bishop** [[note: *Schütze* or "Archer"; the early modern term for a Bishop]] / from **forty-four** / check / and moves it / to the **B.**
+
+[[margin: 17.]] **K. Knight** : * **The Black** [player] / takes / the **W. K. Bishop's Pawn** / with the King : **The White** [player] / gives / with the Queen / from **thirty-seven** / **Checkmate**.
+
+[[margin: 18.]] **But if the Black [player] takes** / with the King / not the **W. Pawn** / (no. 17.) / but / places the same / on **sixty** : then the **White** [player] / takes / with the **K. Bishop** / the **B. K. Knight** / and gives / from the Queen / a **discovered check** : **The Black** [player] / must [move] the King / to **fifty-one** / move : **The White** [player] / pulls / the **K. Bishop** / to **fifty-three** / and gives / the **B. King** / and the
+
+[[margin: 19.]] **B. Queen** / from the **K. Rook** [[note: *Rochen*; the early modern term for the Rook or Castle]] / a **discovered check** : * **The Black** [player] / sets the King / on **fifty-eight** : **The White** [player] / gives / with the
+
+[[margin: 20.]] **K. Bishop** / from **forty-four** / check : * **The Black** [player] / sets the King / on **fifty** : **The White** [player] / gives / with the Queen / from **thirty-six** / check : and subsequently from **forty-three** / (from which square **He** / with her / takes the **B. Queen**) / **Checkmate**.
+
+[[margin: 21.]] **But if the Black [player] places** / the King / not on 50. (no. 20.) but / covers him / with the Queen / on **fifty-one** / then the **White** [player] / takes her / with the **K. Bishop** / and offers check : **The Black** [player] / moves the King / to **fifty** : (For / if He / moved him / to **fifty-nine** : **The White** [player] / with the **K. Bishop** / from **forty-one** / would give immediate **Checkmate**) **The White** [player] / offers / with the Queen / from **thirty-six** / check : **The Black** [player] / must place the King / on **fifty-nine** : **The White** [player] / gives / with the Queen / from **fifty-seven** : or with her Bishop / from **forty-one** / or **fifty-two** / check or through the **K. Bishop** / (if He / pulls the same / to **thirty-seven**) a **discovered checkmate** from his Rook.
+
+[[margin: 22.]] **But if the Black [player] sets** / the King / not on 58. (no. 19.) but on **fifty** : then / the **White** [player] / gives / with the Queen / from
+
+[[meta: catchword: sechs und (six and)]]
+
+[[summary: This page lists several branching tactical scenarios in a chess game, specifically focusing on discovered checks and forced movements that lead to checkmate for the White player. It highlights the vulnerability of the Black King when trapped in the center-back of the board.]]
+
+[[keywords: Chess tactics, Discovered Check, Bishop, Knight, Checkmate, Selenus notation, 17th-century chess]]

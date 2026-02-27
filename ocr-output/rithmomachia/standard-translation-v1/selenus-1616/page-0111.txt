@@ -1,0 +1,30 @@
+[[meta: This page continues the tactical and allegorical discussion of the Knight (Rider). The previous page used dressage terms like *repolon* to describe the piece's L-shaped movement; this page compares the Knight’s versatility to the limitations of the Bishop (Archer) and introduces the moral philosophy of the Knight based on medieval tradition.]]
+
+### Chapter 9: On the Game of Chess. 81
+
+...his treasures / are not struck: of which / an example / is to be found / in Chapter 14, no. 12 / of the Second Book.
+
+2. When one player / has only his **Archers** [[notes: *Schützen* (Archers) is the term used here for Bishops.]] / and the other / has only his **Riders** [[notes: *Reuter* (Riders) is the term used here for Knights.]] remaining: then the latter / with the Riders / can easily take away the Archers / in check / because the same / cannot relieve or watch over [[notes: *entsetzen und verwachen* refers to the way chess pieces protect one another.]] one another / as the Riders can.
+
+3. The Archers / are often enclosed and hemmed in / by their own stones—or those of the enemy / if they would have to remove them / to their own detriment: which / cannot happen to the Riders / because they have the power / to slip in / as well as to slip out / to leap over the others / and to save themselves / by breaking away in such a fashion.
+
+4. The Archers can only / be moved and strike on one color: the Riders / can hit and be moved / on both colors.
+
+In conclusion, it is to be remembered / that through their leaping over / one perhaps wished to suggest / that the Riders / should always be placed and ordered / in such places / where the **Infantry** [[notes: *Fuß-Volck* refers to the Pawns.]] / cannot be a hindrance to them: or else / that the mighty / are accustomed to suppress the weak: which is, however, unjust / and can be perceived / from their uneven [[notes: *ungerad*—referring to the L-shaped, non-linear move of the Knight as a symbol of devious or "crooked" behavior.]] path. That they / from their field / can only reach a few squares / gives it to be understood: that / while they stay near their own troop and acquaintances / they should always be humble and friendly—but when they / come to the enemy / on the field / they should be on their guard at all times / and behave bravely against them.
+
+Finally, they / were placed at the wings of the Infantry / next to the **Rooks** [[notes: *Rochen* is the old term for the Rooks/Castles.]] / (in order to protect the same).
+
+That which has now been recorded / concerning these principal pieces / from the translated book of **Fr. Jacobi de Casallis** [[notes: Jacobus de Cessolis (c. 1250 – c. 1322) was a Dominican friar who wrote the famous *Libellus de moribus hominum et officiis nobilium ac popularium super ludo scachorum*, a treatise on chess as a metaphor for society.]], is herewith / according to the promise / also added to the preceding:
+
+> [[margin: ,, ]] The Knight on the **Chess-Table** [[notes: *Schach-Zabel*, from the Latin *tabula*, an old term for the chessboard.]] / shall sit / upon
+> [[margin: ,, ]] a horse / in full heraldry / and the horse / shall be
+> [[margin: ,, ]] covered. The Knight / when he is blessed / shall first / be
+> [[margin: ,, ]] dedicated or bathed / so that he may carry and lead / a new life /
+> [[margin: ,, ]] henceforth: He shall also appeal to God with devotion /
+> [[margin: ,, ]] that God may give him by grace / that / which he may not have /
+> [[margin: ,, ]] by nature. The Prince shall also strike him / upon
+> [[margin: ,, ]] the neck / and dub him knight / so that he receives knightly dignity from him...
+
+[[summary: This page compares the tactical advantages of the Knight over the Bishop, emphasizing the Knight's ability to jump and change square colors. It concludes with an allegorical section citing Jacobus de Cessolis on the chivalric duties and ritual initiation of a knight.]]
+
+[[keywords: Knight, Bishop, Rook, Chess Tactics, Jacobus de Cessolis, Chivalry, Knighting Ritual, Allegory]]

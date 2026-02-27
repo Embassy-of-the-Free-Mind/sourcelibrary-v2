@@ -1,0 +1,65 @@
+[[meta: This page continues the exploration of Book IV of Jordanus de Nemore's Arithmetica. Having established the properties of "least terms" and the unit in the previous pages, the text now moves into more complex relationships between sequences of proportional numbers (geometric progressions) and how they relate to their divisors and multiples.]]
+
+# 13
+¶ In a series of numbers in continuous proportion, if the first does not measure the second, none of them will measure the last. But if the first measures the last, it will also measure the second. [[notes: To "measure" (*numerare*) in this context means to divide evenly without a remainder. A "continuous proportion" is what we call a geometric progression, like 8, 12, 18, 27.]]
+
+[[margin:
+a 8 b 12 c 18 d 27
+e 4 f 6 g 9
+h i l m
+]]
+
+¶ Let **a**, **b**, **c**, and **d** be numbers in continuous proportion, and let **a** not measure **b**: I say that none of them measures **d**. It is certain that just as **a** is to **b**, so **c** is to **d**. Since **a** does not measure **b**, **c** also does not measure **d**. Moreover, it is proven that **b** does not measure **d**. For I take **e**, **f**, and **g**, three least terms [[notes: "Least terms" (*minimos*) refers to the ratio reduced to its simplest form, e.g., for 8:12, the least terms are 2:3]] of the proportion of **a** to **b**. By the fourth [proposition of this book], these are prime to each other; therefore **e** does not measure **g**, and thus neither will **b** measure **d**. For if **e** measured **g**, then **e** would be the unit. And since the proportion of **e** to **f** is the same as **a** to **b**, and the unit **e** would measure **f**, then **a** would also measure **b**, which is against the hypothesis. And in a similar way, you will prove that **a** does not measure **d** by taking four least terms in that proportion, which shall be **h**, **i**, **l**, and **m**. For since the first is not the unit (otherwise it would measure all, and thus **a** would measure all), the first and the last, by the fifth [proposition] of this book, will be prime to each other, and the first **h** will not measure **m**; therefore **a** will not measure **d**. For as **h** is to **m**, so by equal proportionality is **a** to **d**, which is the first part. The second part is proven from the opposite of what was just shown. For if **a** does not measure **b**, it also does not measure **d**, as was shown in the first part; therefore, by the opposite of the premise, if **a** measures **d**, it also measures **b**, which is the second part.
+
+# 14
+¶ If the first is in the third as many times as the unit is in the second, then between the first and the third, and between the unit and the second, there will be found proportional numbers equal in count. [[notes: This proposition states that if $d/a = e/1$, then the number of geometric means between $a$ and $d$ is the same as the number of means between $1$ and $e$.]]
+
+[[margin:
+d 16  e 8
+c 8   g 4
+b 4   f 2
+a     1 1
+{h}
+]]
+
+¶ Let there be three numbers **a**, **e**, and **d**: **a** the first, **e** the second, **d** the third. And let it be that as many times as **a** is in **d**, so many times the unit is in **e**. I say, therefore, that however many numbers are found in continuous proportion between **a** and **d**, just as many are found between the unit and **e**. For let there be found between **a** and **d** two numbers **b** and **c** in continuous proportion; since **a** measures **d**, therefore by the preceding [proposition] **a** will measure **b**. Let the unit, therefore, measure **f** as many times as **a** is in **b**; likewise let **f** measure **g** as many times as **b** measures **c**; and let **g** measure whatever number—for example **h**—as many times as **c** measures **d**. Because, therefore, as **a** is to **b**, so is the unit to **f**; and as **b** is to **c**, so is **f** to **g**; and as **c** is to **d**, so is **g** to **h**. Therefore, by equal proportionality, as **a** is to **d**, so is the unit to **h**. But as **a** is to **d**, so also is the unit to **e**. Therefore, **h** and **e** are the same number; wherefore between the unit and **e**, two numbers **f** and **g** are found as mean proportionals, just as between **a** and **d** there are two, **b** and **c**; which is what was proposed.
+
+# 15
+¶ If there are two numbers prime to each other, however many [proportional numbers] fall between either of them and the least number they both measure, just as many proportional numbers will be found between the other and the unit. [[notes: The "least number they both measure" is the Least Common Multiple (LCM). If $a$ and $e$ are coprime and $d = \text{LCM}(a,e)$, the number of means between $a$ and $d$ equals the number of means between $1$ and $e$.]]
+
+[[margin:
+d 24  e 8
+c 12  g 4
+b 6   f 2
+a 3   1 1
+]]
+
+¶ Let **a** and **e** be prime to each other, and let the least number they measure be **d**: I say that if between **a** and **d** there fall two mean proportionals **b** and **c**, just as many fall between the unit and **e**. Because **a** and **e** are prime to each other, and therefore they are the least in their proportion, and **d** is the least number they measure; therefore, by the 24th [proposition] of the third [book], **a** measures **d** according to **e**. Thus, **a** is in **d** as many times as the unit is in **e**. Therefore, by the preceding [proposition], however many numbers are found between **a** and **d** (the first and the third), just as many in continuous proportion are found between the unit and **e** (the second); which is what was proposed.
+
+# 16
+¶ If there are two commensurable numbers, however many [proportional numbers] fall between either of them and the greatest number that measures them, it is necessary that just as many fall in continuous proportion between the other and the least number measured by them. [[notes: "Commensurable" numbers share a common factor. This relates the Greatest Common Divisor (GCD) and the Least Common Multiple (LCM).]]
+
+[[margin:
+      d
+    /   \
+   a     b
+    \   /
+      c
+    /   \
+   e     f
+]]
+
+¶ Let **a** and **b** be numbers commensurable to each other, and let **c** be the greatest measuring them [[notes: the GCD]], and **d** the least measured by them [[notes: the LCM]]: I say that however many proportionals fall between **c** and **b**, just as many fall between **a** and **d**. Likewise, however many fall between **c** and **a**, just as many fall between **b** and **d**. For let **e** and **f** be the least terms in the proportion of **a** to **b**: therefore, by the 23rd [proposition] of the third [book], **e** times **c** makes **a**. And by the 24th [proposition] of the same, **e** times **b** makes **d**. Therefore, by the 7th [proposition] of the second [book], the proportion of **c** to **b** is the same as **a** to **d**. Therefore, by the 12th [proposition] of this book, however many mean proportionals fall between **c** and **b** (the first and second), just as many fall between **a** and **d** (the third and fourth). And again, because as **c** is to **b**, so is **a** to **d**, therefore by permutation, as **a** is to **c**, so is **b** to **d**. Wherefore, by the same 12th [proposition], however many mean proportionals fall between **c** and **a**, just as many will fall between **b** and **d**. It is manifest, therefore, that however many fall between either of them and the greatest number measuring them, just as many fall between the other and the least number measured by them; which is what was proposed.
+
+# 17
+¶ If from one beginning two sequences of equal numbers of proportionals are taken, however many fall between the first and either of the extremes, just as many will be proportional between the extremes themselves according to the proportion of the terms closest to the first.
+
+[[margin:
+[Detailed diagram of nested numbers: 16, 24, 36 linked to 54; 8, 12, 18; 4, 6; 2. Plus secondary rows of 2, 3; 6, 4; 18, 12, 8; 54, 36, 24, 16; 108, 72, 48, 32.]
+]]
+
+¶ Let one order of numbers in continuous proportion start from **a** to **d**, and a second of an equal count from the same **a** to **g**: I say that however many mean proportionals are contained between **a** and **d**, just as many are contained between **d** and **g** according to the proportion of the terms closest to the first. Let **b** and **c** be mean proportionals between **a** and **d**, and **e** and **f** mean proportionals between **a** and **g**. It is said that just as many are contained between **d** and **g** according to the proportion of **b** to **e**, which is shown thus: I take **h**, **l**, and **z** as the least terms of the proportion of **b** to **e**. I multiply **h** into all of those, and let **l**, **m**, **n**, **o** be produced on one side, and on the other side let **l**, **p**, **q**, **r** be produced. By the 7th [proposition] of the second [book], **l**, **m**, **n**, **o** are in continuous proportion; likewise **l**, **p**, **q**, **r**. And by the same, whatever the proportion of **b** to **e**, such is **m** to **p**. Then I multiply **l** and **z** into **a**, **e**, **r**, and **f**, and let **s**, **t**, **v** be produced... [[notes: This proof continues into the mechanics of compounded ratios, showing that the relationship between two different geometric progressions starting from the same value is itself a geometric progression.]]
+
+[[summary: This page discusses the divisibility rules within geometric progressions and the relationship between sequences of mean proportionals. It establishes that the number of intermediate terms between two values is preserved when those values are related to the unit (1), their GCD, or their LCM.]]
+
+[[keywords: continuous proportion, mean proportionals, commensurable, coprime, unit, GCD, LCM, Jordanus de Nemore]]

@@ -1,0 +1,24 @@
+[[meta: This page continues the technical instruction from the previous diagrams, specifically transitioning from the visual variations to the textual explanation of the "Seventh Method." The author continues to use his unique 1–64 coordinate system.]]
+
+->On Chess-Play.<-
+
+[[margin: 12.cap: [[notes: Abbreviation for "Capitulum," meaning Chapter 12.]]]]
+
+[[image-desc: A horizontal woodcut headpiece featuring symmetrical floral scrollwork, leaves, and a central decorative element.]]
+
+## The Twelfth Chapter.
+
+### Concerning the Seventh Method; how the same, in turn, can be played in five ways: and then how the first of these is to be arranged.
+
+The seventh method is: **When the White**, after the Soldiers [[notes: "Soldaten" or Soldiers refers to the Pawns.]] of both Kings have been led into the field in the first moves, immediately advances with the King’s Archer-Soldier [[notes: The "King's Archer-Soldier" refers to the King’s Bishop’s Pawn. In this period, the Bishop was often called the Archer (Schütze).]] to twenty-seven, right to the **Black’s** border, and offers his head to their troop.
+
+This method is primarily directed toward the destruction of the opponent's order: and, due to the **Black's** counter-defense in the second move, is again divided into two distinct ways of playing: For the same either takes the aforementioned **W.** Soldier, or moves another piece [[notes: "Stein," literally "stone," was the common term for a chess piece.]]. Of the former way, it is treated in this and the following thirteenth chapter; of the latter, in the fourteenth and fifteenth chapters. In the first way, when one looks at the **White’s** intention in the third move, three further ways arise: For the same moves either (1.) the King’s Rider [[notes: "Reuter" or Rider refers to the Knight.]] to nineteen: or (2.) the King’s Soldier to twenty-nine: (of which we treat in this chapter) or (3.) the King’s Archer: (of which we treat in the following chapter) to thirty.
+
+[[margin: 1.]] **Now when**, after the deployment of both Kings’ Soldiers: **The White** has made the attack with the King’s Archer-Soldier from twenty-seven: and the **Black** has cleared the same away with his [[margin: 2.]] **King’s Soldier:** * then the **White** plays the King’s Rider to nineteen: the **Black** his King’s Rider to the **W.** King’s Soldier at forty-three: the **White** moves the same [[notes: likely referring to the Knight just moved]] against him, [[margin: 3.]] to thirty-six: * **The Black** (to prevent his opponent’s design) moves the Queen to fifty-two: **The White** (for the continuation of his plan) moves his Queen to twelve: **The Black** moves the King’s Rider (out of danger) to thirty-three: the **White** the King’s Rider to twenty-two: the **Black** (so that the same [[notes: referring to the White Knight]], against his Queen,
+
+Cc iij
+[[meta: catchword: auf sie-]]
+
+[[summary: This page introduces the Seventh Method of play, focusing on an aggressive opening gambit involving the King’s Bishop’s Pawn (square 27). It begins a detailed move-by-move tactical analysis of how White can disrupt Black's formation.]]
+
+[[keywords: Seventh Method, King's Archer-Soldier, King's Rider, coordinate system, opening gambit, chess tactics, 17th-century chess]]

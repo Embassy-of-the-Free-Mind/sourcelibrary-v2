@@ -1,0 +1,15 @@
+[[meta: This page continues the rules for the "Triumph" in the Game of Philosophers from page 47. It details the final stage of the game where a player must arrange numerical progressions in the opponent's territory to claim victory.]]
+
+# OF THE PHILOSOPHES.
+
+...it will still be necessary to triumph in the adversary’s camp, which triumph is achieved through some proportion of **Arithmetic**, **Music**, or **Geometry**, or as we have shown above regarding the proper victories [[notes: In Rythmomachia, a "victory" is achieved by placing a sequence of numbers (a "harmony") in the opponent's side of the board. These sequences follow mathematical progressions known as Arithmetic (e.g., 2, 4, 6), Geometric (e.g., 2, 4, 8), or Harmonic (Music).]]. It follows that if you create a great and excellent harmony, forasmuch as they consist of four pieces [[notes: "Tables" in the original; the circular, square, or triangular counters used as game pieces.]], these shall be arranged for victory in four spaces [[notes: "Loges"; the individual squares on the board.]] of the same color in a square formation, such as **B.C.D.E.** or else **T.S.V.Y.** 
+
+But if you wish only to have victory with three pieces, as we have said regarding the mediocre victory [[notes: A "mediocre" or "lesser" victory requires a sequence of only three numbers, whereas a "great" victory requires four.]], you shall arrange those three pieces in a single row, as we have shown above. 
+
+However, you must observe that at the very move when you shift and arrange the penultimate [[notes: The second-to-last piece in the sequence.]] piece of the victory, you shall say, "**triumph**," so that the adversary is warned of which side you intend to arrange your harmony to complete your victory. 
+
+And if, in the meantime, the adversary cannot prevent you, you shall lodge the final harmonious piece according to the arrangement of the triumph, saying, "**perfect victory**." To accomplish this, you may even make use of the adversary's own pieces [[notes: A player could use pieces they had captured from their opponent to complete their winning numerical sequence.]]. But note that once you have said, "**triumph**," the adversary must not and cannot take any pieces that are already arranged for the victory.
+
+[[summary: This page explains the final "Triumph" phase of Rythmomachia, where a player must arrange captured pieces into mathematical progressions (Arithmetic, Music, or Geometry) in the opponent's camp. It describes the requirement to announce one's intent by calling out "triumph" before the final move is made to claim "perfect victory."]]
+
+[[keywords: Rythmomachia, Triumph, Arithmetic progression, Geometric progression, Harmonic progression, Perfect Victory, game rules, mathematical games]]

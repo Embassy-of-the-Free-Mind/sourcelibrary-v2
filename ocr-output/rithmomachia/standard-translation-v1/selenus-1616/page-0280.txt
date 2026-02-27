@@ -1,0 +1,117 @@
+[[meta: This page continues the visual diagrams for Chapter 14 of the second book, presenting "scenographies" or board layouts for specific chess endgame scenarios and variations. As with previous pages, it uses a 17th-century notation style.]]
+
+# The Second Book / 14. Chapter:
+
+->n. 23. 24.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **BR** | | **BP** | | | | **WR** | |
+| **BP** | | | **BP** | | **BP** | | **BP** |
+| | **BP** | **BP** | **WP+** | | | | 41 |
+| | | | | | **BK** | **WR** | |
+| | | | | | **WP** | 25 | |
+| | | | | | | | |
+| **WP** | **WP** | **WP** | | | | | **WP** |
+| | | | | | | | |
+
+[[notes: **Piece Abbreviations:** **B**=Black (*Schwarz*), **W**=White (*Weiß*). **R**=Rook (*Roch*), **P**=Pawn (*Soldat/Soldat*), **K**=King (*König*). The numeral **4j** is interpreted as 41, and **WS+** likely indicates a White Pawn giving check or a piece in a critical position.]]
+
+->n. 26. 27. 28.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | | | | | |
+| **BP** | **BP** | | **BP** | | **BP** | **WR** | |
+| | **BP** | | **WP** | | | | |
+| | | **BP** | | | | | |
+| | | | | **BR** | | **WP** | 25 |
+| | | | | **WR** | | | **BK** |
+| **WP** | **WP** | **WP** | | | **WK** | | **WP** |
+| | | | | | | | |
+
+->n. 33. 34.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **BR** | | **BP** | | **BK** | | | **BR** |
+| **BP** | **BP** | **BP** | **BP** | **BP** | **BP** | **BP** | **BP** |
+| | | **BR+** | | | **BR** | | |
+| | | | 37 | **WP** | | | |
+| | **BP** | | **WP** | | **BP** | | |
+| | | **WR** | **WP** | | | | |
+| **WP** | **WP** | **WP** | | **WR** | | **WP** | **WP** |
+| **WR** | | **WP** | | **WK** | | **WR** | **WR** |
+
+->n. 37. 40.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **BR** | | **BP** | 61 | **BK** | | | **BR** |
+| **BP** | **BP** | **BP** | **BP** | | **BP** | **BP** | **BP** |
+| | | | | | | | |
+| | | | **WR** | **WP** | | | |
+| | **BP** | | **BR** | | | | **BR** |
+| | | | **WP** | | | | |
+| **WP** | **WP** | **WP** | **WP** | | | | |
+| **WR** | | | | **WK** | **WR** | **WR** | |
+
+<column-break/>
+
+->n. 25. 29.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **BR** | | **BP** | | | | **WR** | |
+| **BP** | 55 | | **BP** | | **BP** | | |
+| | **BP** | **BP** | **WP** | | | | |
+| | | | | | | | 33 |
+| | | | | | **WR** | **WP** | **BK** |
+| | | | | **WK** | | | |
+| **WP** | **WP** | **WP** | | | | | **WP** |
+| | | | | | | | |
+
+->n. 30. 31.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | | **BR** | 59 | | |
+| **BP** | **BP** | | **BP** | **WR** | | | |
+| | **BP** | | **WP** | | | | |
+| | | **BP** | | | | | |
+| | | | | | | **WR** | **BK** |
+| | | | | **WK** | | | |
+| **WP** | **WP** | **WP** | | | | | **WP** |
+| | | | | | | | |
+
+->n. 35. 36.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **BR** | | **BP** | | **BK** | | | **BR** |
+| **BP** | **BP** | **BP** | **BP** | | **BP** | **BP** | **BP** |
+| | | | | | | | |
+| | | | **WR** | **WP** | | | |
+| | **BP** | | **BR** | | | | **BR** |
+| | | | **WP** | | | | |
+| **WP** | **WP** | **WP** | **WP** | | | **WR** | **BP** |
+| **WR** | | | | **WK** | **WR** | **WR** | |
+
+->n. 38. 39.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **BR** | | **BP** | | **BK** | 59 | **WR** | |
+| **BP** | **BP** | **BP** | **BP** | | **BR** | | |
+| | | | | **BR** | **WP** | | |
+| | | | | | | | |
+| | | **WP** | | | | | |
+| | | | | | | | |
+| **WP** | **WP** | **WP** | | | | | |
+| **WR** | | | | | **WK** | | |
+
+[[notes: The numbers scattered within the tables (25, 33, 37, 55, 59, 61) likely correspond to the square numbering system or specific move orders described in the accompanying text of Chapter 14.]]
+
+[[summary: This page contains eight chess board diagrams illustrating specific tactical variations (numbers 23 through 40) for Chapter 14. These "scenographies" focus on pawn structures and rook placements in late-game or mid-game transitions.]]
+
+[[keywords: chess diagrams, Gustavus Selenus, 17th-century chess, endgame variations, rook tactics, pawn structures]]

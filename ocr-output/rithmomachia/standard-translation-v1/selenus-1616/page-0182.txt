@@ -1,0 +1,15 @@
+[[meta: This page continues the tactical advice from Chapter 4, transitioning from specific piece exchanges to broader principles of defensive structure and pawn coordination, often using military metaphors.]]
+
+# The Second Book / 4. Chapter:
+
+1.) When one has no desire / to attack his enemy / with the first moves / but merely wishes to protect himself / then he should / let the other / come forward well / to attack his pieces [[notes: *Steine*; the generic term for chess pieces, literally "stones"]] / but provide sufficient resistance / against the enemy's first charge / and devise and invent / all means / to prevent the other / from retreating.
+
+A **player** (2.) should / not leave a **Soldier** [[notes: *Soldaten*; the common 17th-century term for Pawns]] / without support [[notes: *besatzung*; literally a "garrison," meaning the pawn should be guarded by another piece]] / but rather keep them all / close to one another / so that the hindmost / can protect the foremost / as much as possible / at all times. For the **Soldiers** / who stand alone / can hardly be protected / unless / one must move them so / to gain something special / or to bring the game / into a better state / or for some other significant reason / that might occur in the game. Therefore, unless / extreme necessity / requires otherwise / it is always better / that they are always well-relieved [[notes: *entsetzet*; a military term for reinforcing a besieged position]] / and not placed far / from one another. Considering that / the other **Major Pieces** [[notes: *Haupt-Steine*; refers to the more powerful pieces such as the Rook, Knight, or Bishop]] / because they / have enough to do / with their own protection / cannot always offer them / a helping hand / in times of need / as necessity requires. Likewise, the enemy gains / as soon as the order is broken / and the pieces / are placed here and there / in a disorderly fashion / many better opportunities / to attack them / than when they / stand together / in good order / and hold their ground.
+
+A **player** (3.) / who wishes to defend himself / should diligently strive / so that he may meet / the many encroaching enemies / with only a few [pieces] / and drive back their assault : of which / further instructions / will be shown / and presented / in the following examples.
+
+->[Decorative woodcut ornament: A central grotesque mask or face surrounded by symmetrical, elaborate scrollwork and foliage.]<-
+
+[[summary: This page outlines defensive chess strategies, emphasizing the importance of maintaining a "pawn chain" where pieces support one another and advising players on how to trap an overextended opponent. It uses heavy military terminology, such as "soldiers" and "garrisons," to describe the positioning of pieces.]]
+
+[[keywords: defensive strategy, pawn structure, Soldaten, Haupt-Steine, piece coordination, 17th-century chess, military metaphors]]

@@ -1,0 +1,24 @@
+[[meta: This page continues from page 73, which was comparing the tactical advantages of the Archer (modern Bishop) over the Rider (modern Knight). It concludes the numbered list of the Archer's strengths before transitioning into historical allegories regarding the piece's identity as a Judge.]]
+
+# The First Book / Chapter 8
+
+11. Along with a **Soldier** [[notes: *Soldat*, the modern Pawn]], he can effectively block the path and movement of a **Rook** [[notes: *Roche*]]. For instance, when the **White Queen’s Archer** stands in the second square of the **Black King’s Rider** [[notes: The author uses a descriptive notation system based on the starting positions of the pieces]], and the **White King’s Rook’s Soldier** is moved to the third square of the **Black King’s Rook** to defend said **Archer**, and the **Black King’s Rook** is in its second square: the passage (as seen in the sketch) is closed to it, so that it cannot be moved without loss. A **Rider**, however, is unable to achieve this.
+
+| | |
+| :--- | :--- |
+| **W. Ar.** [[notes: White Archer/Bishop]] | **B. Ro.** [[notes: Black Rook]] |
+| [[notes: Black Square]] | **W. So.** [[notes: White Soldier/Pawn]] |
+
+12. With the help of a **Soldier**, he can block the passage of both the **Queen** and a **Rook**, so that they cannot reach his **King**.
+
+Although the **Archers** possess many other uses beyond these twelve mentioned—which are well known to experienced players and will be shown in the following examples—it is nonetheless true that the **Riders** are also provided with several advantages not to be found among the **Archers**.
+
+What has finally been found regarding these **Major Pieces** [[notes: *Haupt-Steine*, literally "Principal Stones"]] in the aforementioned manuscripts or translations, we have chosen to include here in the established manner:
+
+> "The **Elders** [[notes: *Die Alten*. In early chess literature, the piece we call the Bishop was often depicted as an Elder, Sage, or Judge rather than a Clergyman or Archer]] on the **Chessboard** [[notes: *SchachZabel*]] shall be formed thus: two sit upon two chairs and have a book upon their laps; and they signify **Judges** and **Advisors**. And when there are two matters for which one judges—concerning unchastity and concerning property, then concerning debt—therefore there shall be two **Elders**: one on the **Black Field** and one on the **White Field**. The one on the **Black Field** shall judge concerning **unchastity** [[notes: *Unzucht*]]; the one on the **White Field** shall judge concerning **property** [[notes: *Habe*]]. The office of the **Elders** is to be near the **King**, and that they [the King’s...]
+
+[[meta: catchword: bot uns (offered us)]]
+
+[[summary: This page concludes a list of tactical maneuvers for the Archer (Bishop), specifically how it can trap or block a Rook with the help of a Pawn. It then begins a historical and allegorical explanation of the piece's origins, describing it as a seated Judge or Elder.]]
+
+[[keywords: Archer, Bishop, Rook, Rider, Knight, Chess Allegory, Judge, Chessboard, Tactics]]

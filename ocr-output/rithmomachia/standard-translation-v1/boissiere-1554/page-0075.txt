@@ -1,0 +1,38 @@
+[[meta: This page continues the reference tables for the "Great Victory" in Rythmomachia. While the previous page focused on combining Arithmetic and Geometric progressions, this page provides the sequences required to combine Arithmetic and "Musical" (Harmonic) progressions.]]
+
+# RYTHMOMACHIA, THE GAME
+
+[[notes: This table is a continuation of the player's reference guide. In the Renaissance, "Music" was studied as a branch of mathematics (part of the Quadrivium). A "Musical" progression is what we today call a **Harmonic progression**. A simple example used in the game is 3, 4, 6: the difference between 3 and 4 (which is 1) and the difference between 4 and 6 (which is 2) have the same ratio as the first and last numbers (3:6 is a 1:2 ratio).]]
+
+| Arithmetic & Music together. | Arithmetic alone. | Music alone. |
+| :--- | :--- | :--- |
+| 3 4 5 15 | 3 4 5 | 3 5 15 [[notes: A harmonic progression because the differences 5-3=2 and 15-5=10 are in the same ratio (1:5) as the outer numbers 3 and 15.]] |
+| 3 4 5 6 | 4 5 6 | 3 4 6 |
+| 3 5 7 15 | 3 5 7 | 3 5 15 |
+| 3 4 6 9 | 3 6 9 | 3 4 6 |
+| 3 5 9 15 | 3 9 15 | 3 5 15 |
+| 3 9 15 45 | 3 9 15 | 9 15 45 |
+| 3 4 6 8 | 4 6 8 | 3 4 6 |
+| 4 6 12 15 | 6 12 15 | 4 6 12 |
+| 4 6 12 20 | 4 12 20 | 4 6 12 |
+| 5 7 9 45 | 5 7 9 | 5 9 45 |
+| 9 12 15 20 | 9 12 15 | 12 15 20 |
+| 9 12 15 45 | 9 12 15 | 9 15 45 |
+| 9 15 30 45 | 15 30 45 | 9 15 45 |
+| 9 15 45 81 | 9 45 81 | 9 15 45 |
+| 8 15 120 225 | 15 120 225 | 8 15 120 |
+| 15 20 25 30 | 20 25 30 | 15 20 30 |
+| 12 15 20 25 | 15 20 25 | 12 15 20 |
+| 15 20 30 45 | 15 30 45 | 15 20 30 |
+| 15 30 36 45 | 15 36 45 | 30 36 45 |
+| 15 30 45 90 | 15 30 45 | 30 45 90 |
+| 30 36 42 45 | 30 36 42 | 30 36 45 |
+| 72 81 90 120 | 72 81 90 | 72 90 120 |
+
+->Example<-
+
+[[notes: The term **ensẽble** in the original French header is a shorthand for *ensemble*, meaning "together." To achieve the *Victoria Magna* (Great Victory), the player must place four pieces so that one set of three forms an arithmetic sequence, and another set of three (using the remaining piece and two from the first set) forms a musical/harmonic sequence.]]
+
+[[summary: This page contains a technical look-up table for players of Rythmomachia, listing specific four-number combinations that satisfy both Arithmetic and Musical (Harmonic) progressions simultaneously. It is a guide for achieving one of the game's difficult "Great Victory" conditions.]]
+
+[[keywords: Rythmomachia, Arithmetic progression, Harmonic progression, Musical proportion, Victoria Magna, mathematical games, Renaissance education, number theory]]

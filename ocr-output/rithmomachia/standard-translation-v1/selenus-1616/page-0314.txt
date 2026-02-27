@@ -1,0 +1,33 @@
+[[meta: This page continues the tactical analysis of an opening sequence, specifically focusing on the pressure White exerts on the Black kingside. It continues to use the 1–64 square numbering system and archaic names for the pieces: Archer for Bishop, Rider for Knight, and Soldier for Pawn. The text references "Damianus," referring to Pedro Damiano, whose 1512 treatise was a primary source for early modern chess theory.]]
+
+### The Third Book / Chapter 3
+
+» ...the **White** [player] / with his **Queen** / from **thirty-five** / cannot give **Check**) opens the path: so the **White** / takes him / with the same **Archer** [[notes: The Bishop]] / and offers **Check** once more:
+» The **Black** [player] / moves the **King** / to **forty-two**:
+» The **White** / [moves] the **King’s Rook’s** / **Soldiers** [[notes: The pawns]] / to **twenty-five**:
+» The **Black** / [moves] his **King’s Rook’s** / **Soldiers** / to **forty-one**: (which then / in order to block the paths / to some extent / from the Enemy / so that He cannot / easily offer **Check** / is best)
+» The **White** / takes / the **Black**
+[[margin: 26.]] » **King’s Rider’s** / **Soldiers** / with the **King’s Archer**: * The
+» **Black** / [takes] the same / with the **King’s Archer**:
+» The **White** / gives / with the **Queen** / from **thirty-five** / **Checkmate**.
+
+[[margin: 27.]] » But if / for these reasons / the **Black** / does not take the **White Archer** / (no. 26.) / but rather / moves his **King’s**
+» **Archer** / against the **White Queen** / to **forty-five**:
+[[margin: 28.]] » * so the **White** / plays Her / to **forty**: afterward / takes / with the **King’s Archer** / the **Black King’s Rook** / and wins
+» the game in this manner.
+
+In this regard, it is reminded / that the **Black King’s Rook** / although **Damianus** [[notes: Pedro Damiano, a famous Portuguese chess theorist]] / posits / that He will / eventually be taken / by the **White Archer** / can nonetheless be rescued:
+If He, namely / moves the **King’s Rider** [[notes: The Knight]] / against the **White Queen** / (which stands at 40. no. 28.) / to **forty-six**: and [moves] this **Rook** / (whether the **White** / has moved the **Queen** / to another place / or has taken / this / his **Rider** / which then / is lost with
+lesser damage / than the **Rook** / with the **King’s Archer**) / to **sixty-three** / and is thus delivered.
+
+[[margin: 29.]] If the **White** then / does not move the **Queen** / to 40. (no. 28.) / but rather to **thirty-seven**: then / the **Black King’s Rook** / can likewise be rescued: for the **Black** / then / moves his **King’s Archer’s Soldier** / against the **White Queen** / to **forty-six**:
+[[margin: 30.]] » * The **White** / takes the same / with his **King’s Archer**:
+» The **Black** / [takes] the same / with the **King’s Rider**: and / the **King’s Rook** / (after the **White** / with the **Queen** / has taken / the **Black Rider**) / can likewise move and be placed / to **sixty-three**.
+
+[[margin: 31.]] But if the **White** / does not take the **Black Soldier** / with the
+
+[[meta: catchword: Archer]]
+
+[[summary: This page details specific tactical maneuvers in a chess variation where White attempts to trap the Black King's Rook. It provides counter-moves to show how Black can sacrifice a Knight or Pawn to save the more valuable Rook, while critiquing the theories of the chess master Damiano.]]
+
+[[keywords: Chess tactics, Damiano Defense, chess history, 17th-century chess, piece names, endgame strategy, Pedro Damiano]]

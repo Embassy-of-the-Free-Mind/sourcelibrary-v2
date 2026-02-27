@@ -1,0 +1,20 @@
+[[meta: This page continues the instructions for Rythmomachia, shifting from the physical construction of the pieces (the Pyramids) to the rules governing how each type of piece maneuvers across the board. The previous page established the mathematical values of the pieces; this page defines their mobility based on their geometric shapes.]]
+
+RYTHMOMACHIA, 184
+
+# Of the movement of the pieces.
+
+[[margin: Thus may the pieces move.]]
+
+*The Rounds move to the next space diagonally through the corners, like the bishops in chess, from space A to spaces B, C, D, and E.* [[notes: In Rythmomachia, the Round is the most basic piece. Its movement is restricted to a single space diagonally. The author compares this to the "Fol," the archaic French name for the Chess Bishop (derived from the Persian "Al-fil," meaning elephant, but often localized as a "Jester" or "Fool" in France).]]
+
+*The Triangles move to the third space, counting the one where they are currently located, traveling in a straight line like the rooks in chess, from space A to F, G, H, and I.* [[notes: Counting the starting square, this results in a move of exactly two spaces in a straight line (vertical or horizontal). The "Roch" is the traditional name for the Chess Rook.]]
+
+*The Squares move to the fourth space, counting the one they occupy, and can move in all directions like the Queen in chess, from space A to K, L, M, N, O, P, Q, and R.* [[notes: Including the starting square, this is a move of three spaces. The author notes they can move in "all directions," meaning both straight and diagonally, reflecting the expanded power of the Queen in the "modern" chess of the Renaissance.]]
+
+*The Pyramids, as masters or kings, containing within themselves the form and shape of all the others, also enjoy all their privileges; they may choose from all these various movements and use whichever one seems best to them.* [[notes: Because a Pyramid is a stack of different shapes (Rounds, Triangles, and Squares), it is the most versatile piece on the board, able to mimic the movement of any component piece.]]
+
+[[vocab: Rithmomachie: Rythmomachia / The Philosophers' Game; desmarche: movement/march; tables: pieces/counters; rondes: Rounds; triangles: Triangles; quarrees: Squares; Pyramides: Pyramids; eschets: Chess; fols: Bishops; rochs: Rooks; Royne: Queen]]
+
+[[summary: This page explains the movement rules for the different shapes in Rythmomachia, using Chess pieces as a familiar point of comparison for the reader. It highlights the Pyramid's role as a "master" piece that can use any of the other pieces' moves.]]
+[[keywords: Rythmomachia, game rules, movement, Rounds, Triangles, Squares, Pyramids, Chess analogy, Renaissance gaming, Bishop, Rook, Queen]]

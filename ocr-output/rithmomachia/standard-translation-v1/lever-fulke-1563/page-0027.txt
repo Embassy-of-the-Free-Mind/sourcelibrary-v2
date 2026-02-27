@@ -1,0 +1,29 @@
+The Philosophers Game.
+
+### The second set <note>original: "order"</note> consists of these.
+
+->Double, quadruple, sextuple, octuple <note>original: "occuple"</note>.<-
+
+<margin>
+pro-
+por-
+tion.
+</margin>
+
+| (Light circles - Top row) | 2 | 4 | 6 | 8 |
+| :--- | :---: | :---: | :---: | :---: |
+| **(Light circles - Bottom row)** | **4** | **16** | **36** | **64** |
+
+->Triple, quintuple, septuple <note>original: "septupl"</note>, nonuple <note>original: "noncuple"</note><-
+
+| (Dark circles - Top row) | 3 | 5 | 7 | 9 |
+| :--- | :---: | :---: | :---: | :---: |
+| **(Dark circles - Bottom row)** | **9** | **25** | **49** | **81** |
+
+<summary>
+This page illustrates the "second set" (or second order) of numbers used in the Philosophers Game (Rithmomachia). It categorizes these numbers by their mathematical proportions—specifically focusing on squares of the initial even and odd numbers. The diagrams show the relationship between the base numbers (2, 4, 6, 8 and 3, 5, 7, 9) and their corresponding squares (4, 16, 36, 64 and 9, 25, 49, 81), which are represented as circular game pieces.
+</summary>
+
+<keywords>
+Philosophers Game, Rithmomachia, second order, proportion, mathematical squares, double, quadruple, sextuple, octuple, triple, quintuple, septuple, nonuple, arithmetic, game pieces
+</keywords>

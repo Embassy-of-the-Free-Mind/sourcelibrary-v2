@@ -1,0 +1,11 @@
+# The Definition
+
+That most ancient and learned game, called the Philosopher’s game, being termed in Greek *Rythmomachia* <note>original: "ρυθμομαχια"</note>, is as much to say in English as "the battle of numbers." Numbers are either even or odd; therefore, the even side is against the odd, each side having a king. When the king is taken by the adversary’s side and a triumph is celebrated within his camp, the game is ended.
+
+## Of diverse kinds of playing.
+
+Among the diverse kinds of playing this game, we shall set forth three sorts, from which the reader may choose whichever of them he likes best. And of all those three, we shall
+
+<summary>This page introduces "The Philosopher's Game," providing its Greek name, Rythmomachia, and translating it as "the battle of numbers." It explains the basic premise of the game: a contest between even and odd numbers where the objective is to capture the opponent's king and celebrate a triumph in their camp. The author notes that there are three different ways to play the game, which will be detailed in the following sections.</summary>
+
+<keywords>The Philosopher's Game, Rythmomachia, battle of numbers, even numbers, odd numbers, game rules, mathematical games, 16th-century games.</keywords>

@@ -1,0 +1,20 @@
+[[meta: This page continues the explanation of the notation system and illustrations used throughout the manual. While the previous page focused on the "Schemata" (diagrams), this page clarifies the specific letters used to represent chess pieces in the engravings and text-based examples.]]
+
+# Concerning the Game of Chess.
+
+[[margin: 1. cap.]] [[notes: This refers back to the first chapter or a specific section governing the rules and symbols.]]
+The other copperplates [[notes: Intaglio prints or engravings used for illustrations throughout the book]] found here and there throughout this treatise are to be understood in the same manner as these: with the only exception being that, in those plates: **(R)** signifies a Rook [[notes: Derived from the Persian *rukh*, known today as the castle]]; **(Sp)** a Knight or Rider [[notes: The German uses *Sprenger* (leaper) or *Reuter* (rider) for the knight]]; and **(B)** a Pawn, or (as it is called in this description) a **Soldier**.
+
+The abbreviations in the examples are intended as follows: **(des K.)** of the King: **(der K.)** of the Queen: **(des W. K.)** of the White King: **(des S. K.)** of the Black King:
+->**(der W. K.)** of the White Queen: **(der S. K.)** of the<-
+->Black Queen: **(seines K.)** of his<-
+->King: **(seiner K.)** of<-
+->his Queen.<-
+
+<image-desc>A decorative woodcut vignette or tailpiece featuring a central grotesque mask or face flanked by symmetrical, elaborate foliate scrollwork and floral flourishes.</image-desc>
+
+[[meta: catchword: Das]]
+
+[[summary: This page provides a key for the abbreviations and symbols used in the book's chess diagrams and move descriptions, specifically identifying the Rook, Knight (Rider), and Pawn (Soldier). It also explains the shorthand for identifying the color and gendered possessive forms of the King and Queen in the text.]]
+
+[[keywords: chess notation, abbreviations, Rook, Knight, Soldier, Pawn, White King, Black King, White Queen, Black Queen]]

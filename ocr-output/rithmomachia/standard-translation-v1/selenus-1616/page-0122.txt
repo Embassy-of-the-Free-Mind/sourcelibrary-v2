@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical discussion from Chapter 10 regarding the specific roles and strategic importance of the Pawns (Soldiers) based on their starting positions, specifically focusing on the central pawns and the King's Bishop's pawn. The text begins mid-sentence, continuing the thought that these pawns provide relief/assistance.]]
+
+# The First Book / Chapter 10
+
+...relief: For even if a mistake is made by him, your **Archer** [[notes: The Bishop]] and **Knight** [[notes: *Reuter*, literally "Rider"]], as well as you yourself, can nonetheless defend and protect him. Accordingly, one should strive as much as possible that these four **Soldiers** [[notes: The four central pawns]] who stand in front always step forth together, as if in one rank, from the middle of the troop, and be looked after in such a manner.
+
+The **Soldiers** of the **Knights** and **Rooks** also have their virtues: for they form a wall or protection around the **King** when he has perhaps jumped or otherwise moved from his square.
+
+Yet the **Rook-Soldiers**—because they only strike in the **Knight’s** line—are called "half-soldiers" as long as they remain on the said **Rook’s** line (since **Soldiers**, on account of striking or capturing other pieces, can soon come to the right or left neighboring lines). This indicates the nature of the timid, who commonly place themselves where it is least dangerous for fear of losing their lives. However, if they take heart and strike one of the opponent’s pieces on the **Knight’s** line, then they can afterwards, like the others, strike on both sides.
+
+Regarding these eight lesser pieces, the ancients held the following fine thoughts and attributed all manner of offices to them, which we wish to highlight from the aforementioned translations and add to the previous descriptions:
+
+> The **Pawns** [[notes: *Wenden*, an archaic term for pawns]] on the **Chessboard** [[notes: *Schach-Zabel*]] signify common people and workers: When the **Rooks**—who are the Prince’s governors—act, they should provide for them. Therefore, the first **Pawn** stands before the **Rook** on the right side of the **King** and is shaped like a **Husbandman** [[notes: *Baw-Man*, a farmer or laborer]]. He should hold a hoe in his right hand and a rod in his left, with which one drives the cattle out to the field; and under his belt a sickle or pruning knife, with which one prunes the grapevines or trees and roots out the thorns. It is necessary that man till the soil, for it is our first mother, from whom we first take human form. The earth also gives us our life’s end and housing when we are buried therein. Therefore, it is fitting that she, in the middle of the end and the beginning, should give us nourishment from our labor; and for this reason, the Husbandm—
+
+[[meta: The text ends with the catchword "Baw-" (from *Baw-Man*), indicating the description of the farmer-pawn continues on the next page.]]
+
+[[summary: This page discusses the strategic movement of central pawns as a unified rank and explains why edge pawns are considered "half-soldiers" until they capture toward the center. It then begins an allegorical section where each pawn represents a social class, starting with the Rook's pawn as a Husbandman (farmer).]]
+
+[[keywords: Pawns, Soldiers, Rook, Husbandman, Social Allegory, Chess Strategy, Half-Soldiers, Agriculture]]

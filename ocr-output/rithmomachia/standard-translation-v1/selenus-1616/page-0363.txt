@@ -1,0 +1,123 @@
+[[meta: This page continues the sequence of endgame studies and tactical problems. While the previous page utilized 10x10 grids, the layout here returns to an 8x8 chessboard format, though it continues to use the numbering system for specific squares to indicate move sequences or key positions.]]
+
+# Chapter 5: On the Game of Chess.
+Tt ij [[note: This is a printer's signature, used to ensure the pages were bound in the correct order.]]
+
+### No. 66. 114.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | | BK | | | BR |
+| BP | BP | BP | BP | BR | BP | BP | BP |
+| | | BR | | | BR | | |
+| WP | BP | | BP | | | WP | |
+| | | | WP | | | | |
+| | | WP | | | WR | | |
+| WP | WP | 14 | WP | | WP | WP | WP |
+| WR | WR | WP | WR | WK | WR | 2 | |
+
+[[note: In these diagrams, the pieces are: **BK/WK** (Black/White King), **BR/WR** (Black/White Rook, from the old term *Roche*), and **BP/WP** (Black/White Pawn, from the term *Soldat* or Soldier). The numbers, such as 14 and 2, refer to the specific square number in the author's 1-64 coordinate system.]]
+
+### No. 69. 90.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | | BR | BK | | BR |
+| BP | BP | | BR | BR | | BP | BP |
+| | 47 | | 45 | WR | BP | | |
+| | | BP | | | | | |
+| | WP | WP | | | | | |
+| | | | | | WR | | |
+| WP | | | WP | WR | WP | WP | WP |
+| | | | | WR | | WK | |
+
+### No. 74. 75. 87.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | BK | 61 | | | | BR |
+| BP | BP | 54 | 53 | BR | | | BP |
+| | | | WR | WR | BP | BP | WP |
+| | | | | | | | |
+| | WR | | | | | | |
+| | | | | | | | |
+| WP | | BR | | | WP | WP | WP |
+| | | | WR | | | WK | |
+
+[[note: The number "6j" in the original text is a common early modern typographic variation for "61".]]
+
+### No. 80. 81.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | WR | | | | | |
+| BP | | BR | WR | 52 | BK | | BP |
+| | | | | 44 | BP | BP | |
+| | WR | BR | | | | | |
+| | | | | WP | | | |
+| | | | | | | | |
+| WP | | | | WP | WP | WP | |
+| | | | | | WK | | |
+
+[[note: "8j" in the heading is interpreted as "81".]]
+
+---
+
+### No. 67. 98.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | BR | BK | | | BR |
+| BP | BP | BP | | BR | | BP | BP |
+| | BP | BR | | BP | BP | | |
+| | WP | | | | | WP | |
+| | | 30 | WP | WR | | | |
+| | | | | | WR | | |
+| WP | WP | | | | 12 | WP | WP | [[margin: WP]] |
+| WR | | | WR | | | WK | |
+
+### No. 70. 71.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | 62 | BK | 60 | | BR |
+| BP | BP | BR | | | BR | | BP |
+| | | | | WR | BP | BP | WP |
+| | | | | | | | |
+| | WR | | WR | | | | |
+| | | | | | | | |
+| WP | | | | | WP | WP | WP |
+| | | | WR | | | WK | |
+
+### No. 76. 77. 78. 86.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | 63 | 62 | | | BR |
+| BP | BP | | BK | BR | | | BP |
+| | | | 46 | WR | WR | BP | BP |
+[[margin: WP]]
+| | | | | 37 | | | |
+| | WR | | | | | | |
+| | | | | | | | |
+| WP | | BR | | | WP | WP | WP |
+| | | | WR | | | WK | |
+
+### No. 83. 84.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | | | | | | | BR |
+| BP | | WR | BK | | | | BP |
+| | | | WR | WR | BP | BP | WP |
+| | | | BR | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| WP | | | | | WP | WP | WP |
+| | | | | WR | | WK | |
+
+[[gloss: Chess Game, BR (Black Rook), BP (Black Pawn), BK (Black King), WP (White Pawn), WR (White Rook), WK (White King), King, Rook/Castle, Knight]]
+
+[[summary: This page presents eight detailed chessboard diagrams representing specific endgame scenarios or problems. These diagrams emphasize the positioning of Rooks and Kings, using an 8x8 grid and a numeric system to denote key squares for the solutions.]]
+
+[[keywords: chess diagrams, endgame studies, King and Rook tactics, square numbering system, chess history, baroque chess]]

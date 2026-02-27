@@ -1,0 +1,14 @@
+[[meta: This page follows the flyleaf (folio 231) and represents the formal beginning of the book's dedication. The signature "A ij" indicates this is the second leaf of the first gathering of the printed book. The transition moves from institutional library marks to the original 16th-century authorial content.]]
+
+[[markup: Ornamental headpiece featuring symmetrical floral scrolls and the heads of two hounds facing inwards.]]
+
+# TO THE MAGNANIMOUS AND IL-
+## *lustrious Knight, Lord Antoine Escallin des Emars, Knight of the Order, & Captain General of the King’s galleys in the Western & Eastern seas, Claude de Boissière wishes Health, with the increase of all happiness.* [[notes: Antoine Escallin des Emars (c. 1498–1578), also known as Captain Polin or the Baron de La Garde, was a famous French naval commander and diplomat. The "Order" refers to the Order of Saint Michael, the highest chivalric order in France at the time. "Western and Eastern seas" (Ponant and Levant) are the traditional French terms for the Atlantic and Mediterranean coasts.]]
+
+[[markup: Historiated woodcut initial letter 'C' depicting a bird perched among dense foliage and vines.]] IT is no thing unknown to you, most illustrious and magnanimous lord, how much the knowledge of numbers brings both utility and recreation to humanity, and how much ignorance of them holds people in great darkness and obscurity—especially in drawing up battalions, arranging camps, measuring and tracing out fortresses, and other innumerable deeds which, without the aid of Arithmetic or Geometry, cannot be perfected or accomplished. I leave aside the proportions from which comes the admirable effi- [[notes: In the Renaissance, "Proportions" referred to the mathematical ratios used in everything from music and architecture to the trajectory of cannonballs. The text cuts off mid-word ("efficace" or "efficiency"), as is common at the end of a page in early modern printing.]]
+
+[[markup: A ij]] [[notes: This is a "signature mark," used by early printers to ensure the pages were folded and bound in the correct order.]]
+
+[[summary: This page contains the formal dedication of Claude de Boissière's work to the naval commander Antoine Escallin des Emars, arguing that mathematics (Arithmetic and Geometry) is essential for military leadership and engineering.]]
+
+[[keywords: Antoine Escallin des Emars, Claude de Boissière, military mathematics, Renaissance science, fortification, naval history, geometry, arithmetic]]

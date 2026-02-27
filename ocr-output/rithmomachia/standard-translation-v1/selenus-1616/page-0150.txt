@@ -1,0 +1,30 @@
+[[meta: This page continues from the previous discussion on the "means" of the game. The text begins mid-sentence, completing the transition from the general tactical overview to the specific definitions of chess maneuvers.]]
+
+### The Second Book / 1. CAP.
+
+...ed, and thereafter the other sequence shall be indicated and presented—
+
+These are, however, the following: (1.) the **deployment** of the ranks on both sides for the encounter; (2.) the **attack**; (3.) the **pinning** [[notes: "In hast nehmung" (taking in haste) is used here to describe what modern players call a "pin," where a piece is restricted from moving because it must shield a more valuable piece.]]; (4.) the **capture**; (5.) the **exchange**; and (6.) the **protection**.
+
+**Deployment** is when the stones, without any immediate attack, are moved into the field by the forces of both sides.
+
+The **Attack** is when one moves a stone—either openly or by the discovery of another stone—against another that is undefended; or moves a lesser stone against a better one; or moves soldiers [[notes: "Soldaten" refers to the pawns]] toward each other in order to capture them subsequently.
+
+The **Pinning** occurs then: when a stone stands between the King and another stone which can give Check to the King on that line. For that same stone cannot be moved from its place until another stone is moved in front of the King, or the stone which can give Check is driven away. A similar meaning applies when a lesser stone is moved in such a manner—or in a **discovered check** [[notes: "Ab-Schache" refers to a tactic where moving one piece reveals an attack from a piece standing behind it]] which is given by another piece—against the Queen or another **Principal Stone** [[notes: "Haupt-Stein" refers to a major piece like the Rook or Bishop]]; this is done to trap them, should the stone standing in between be moved away, or should the King be forced to evade the Check or be covered.
+
+**Capture** [[notes: "Raubung" literally means "robbery," reflecting the martial metaphors of the time]] occurs when one stone is lifted from the board by another, or is "slain" in the slaughter.
+
+The **Exchange** is when the captor is taken at the same time as the one he captured, and is thus consumed.
+
+**Protection** occurs when one, as a precaution, protects, rescues, or otherwise places into safety the stones that have been deployed or those that are under pressure from an attack.
+
+Furthermore, regarding the Kings, besides the means which are used against or for them, one must also consider what might be partly or entirely opposed to them.
+
+Against the King, there is the **Attack**: for he is neither captured nor exchanged, but is only attacked and threatened. He is called **Check**, however, as long as the King can evade it; but when he cannot evade it because all his paths are blocked and he must surrender, it is called **Check-mate**.
+
+Therefore, giving Check is nothing other than openly charging at the King with one of the opponent’s fifteen stones, addressing him with the word "Check," and summoning him to retreat. How the King should behave in response to this will be mentioned under his protection.
+
+[[gloss: Schach (Check), Schach-Mat (Checkmate), Steine (Stones/Pieces), Anführung (Deployment), Anfall (Attack), Raubung (Capture), Verwechslung (Exchange), Beschützung (Protection/Defense), König (King), Königin (Queen)]]
+
+[[summary: This page provides formal definitions for the primary tactical elements of chess, including development, attacks, pins, captures, exchanges, and defense. It specifically defines Check and Checkmate as unique conditions that apply only to the King.]]
+[[keywords: chess tactics, definitions, Check, Checkmate, Pinning, Discovered Check, Chess history, 17th century chess]]

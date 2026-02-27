@@ -1,0 +1,34 @@
+line <note>original: "lyne"</note>, direct or cross <note>original: "crosse"</note>, as in D.A.B. or else
+5.1.3. if it consists <note>original: "consist"</note> of three numbers; but if
+it consists <note>original: "stande"</note> of four numbers, they may
+be set like a square, two against <note>original: "agaynst"</note> two, as
+in E.B.D.C. or 2.3.4.5. And after
+the same manner <note>original: "maner"</note> you must set them so that
+your adversary's <note>original: "aduersaries"</note> piece <note>original: "man"</note> makes <note>original: "make"</note> the third
+or fourth, when you capture <note>original: "take"</note> by proportion.
+
+### Regarding the Various Kinds of Triumphs <note>original: "Of dyuers kyndes of triumphes"</note>.
+
+There are <note>original: "be"</note> three kinds <note>original: "kyndes"</note> of triumphs:
+a Great Triumph, a Greater Tri-
+umph, and the Greatest and most
+noble of all.
+
+### Regarding the Great Triumph <note>original: "Of the great triumph"</note>.
+
+The Great Triumph consists <note>original: "standeth"</note> in pro-
+portion, either <term>arithmetical</term>,
+<term>geometrical</term>, or <term>musical</term> only.
+
+<sig>C.ii.</sig>
+<meta>catchword: Regarding <note>original: "Of"</note></meta>
+
+<vocab>Philosopher's game, Rythmomachia, triumphs, proportion, arithmetical, geometrical, musical</vocab>
+
+<summary>
+This page continues the technical instructions for positioning pieces to achieve a "triumph" in the game of Rythmomachia. It explains that pieces forming a mathematical proportion can be arranged in a straight or cross line if there are three numbers, or in a square formation if there are four. It also establishes a hierarchy of victory conditions, categorizing triumphs into three levels of prestige: the Great, the Greater, and the Greatest. The "Great Triumph" is defined as one consisting of a single arithmetical, geometrical, or musical proportion.
+</summary>
+
+<keywords>
+The Philosopher's Game, Rythmomachia, Great Triumph, mathematical proportion, arithmetical proportion, geometrical proportion, musical proportion, game rules, piece positioning.
+</keywords>

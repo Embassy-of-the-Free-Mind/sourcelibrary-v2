@@ -1,0 +1,37 @@
+[[meta: This page continues the instructional text on chess openings and gambits, transitioning from the author's own analysis to a critical examination of the "third style of play" attributed to Pedro Damiano.]]
+
+# The Fourth Book / Chapter 4:
+
+<image-desc>A decorative rectangular woodcut ornament featuring symmetrical scrolling acanthus leaves and floral motifs.</image-desc>
+
+## The Fourth Chapter.
+
+->How, according to the instruction of Damiano, the third<-
+->style of play is to be conducted: also thoroughly altered and<-
+->better executed.<-
+
+---
+
+Now that—in the previous chapters—how a game is to be conducted and arranged when one gives the King’s Bishop’s Pawn [[notes: The 'K. Schützens-Soldat' is the King’s Bishop’s Pawn; the Bishop was historically called the 'Schütze' or Marksman]] to another as an advantage [[notes: 'Vortheil' refers to 'odds,' a common historical practice where a stronger player starts with fewer pieces]] has been sufficiently revealed: and at the same time, with more detail, not only that the one who gives this chess-piece has taken a double or single lead in exchange, but also how one should assess both sides and attack the enemy: Likewise, how the giver of this Pawn, because of the lead, can well mind his game: while the receiver of the same, for the same reason, does not have such a great opportunity to damage the other, even though he has one more chess-piece: so shall further the opinion and arrangement of (the above-mentioned) Damiani [[notes: Pedro Damiano (1480–1544) was a Portuguese chess theorist whose 1512 book was one of the first modern guides to the game]] concerning this be heard, and the errors found therein indicated alongside their proper corrections, as was done in the previous chapters.
+
+The aforementioned Portuguese begins the same in the following
+<margin>1. »
+»
+»
+»
+»
+»
+»</margin>manner: * The Black—when the White has given him the King’s Bishop’s Pawn as an advantage, and because of the taken lead, has moved the King’s Pawn to twenty-eight [[notes: This refers to the square e4 in modern notation]]: moves his King’s Pawn to thirty-six [[notes: Square e5]]: The White, against the same, moves the King’s Knight to nineteen [[notes: Square f3]]: The Black moves the King’s Bishop’s Pawn to the White King’s Pawn at thirty-five [[notes: Square f6; this is the infamous 'Damiano Defense']]:
+<margin>2. »
+»
+»
+»
+»
+»
+»
+»
+»</margin>* The White takes the Black King’s Pawn with the King’s Knight: The Black offers check with the Queen from twenty-five [[notes: Square h4]]: The White covers the King with his Knight’s Pawn and moves it against the Black Queen at eighteen [[notes: Square g3]]: The Black takes with the same [the Queen] the White King’s Pawn, offers check, and has at the same time an eye on the White King’s Rook and Knight: The White covers the King with the Queen at twelve [[notes: Square e2]]: The Black
+<meta>catchword: takes</meta>
+
+[[summary: This page introduces a critique of Pedro Damiano's chess strategies, specifically focusing on a variation of the King's Bishop's Pawn advantage. It details the opening moves of what is now known as the Damiano Defense, noting that the author intends to correct Damiano's historical errors.]]
+[[keywords: Pedro Damiano, Chess Openings, King's Bishop's Pawn, Chess Notation, Damiano Defense, 17th Century Chess]]

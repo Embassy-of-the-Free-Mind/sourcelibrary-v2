@@ -1,0 +1,22 @@
+<header>The Philosophers' game.</header>
+<meta>catchword: Of</meta>
+
+The circle <note>original: "rounde"</note> 2 standing in **A** may be captured <note>original: "taken"</note> by the triangle 30 standing in **B** and the square 28 standing in **B**; for if you take 28 out of 30, there remains 2.
+
+### Of Capture <note>original: "takynge"</note> by Multiplication
+
+When two numbers are positioned so that, when multiplied by one another, the product is equal <note>original: "all one"</note> to their opponent's piece <note>original: "man"</note> standing within the range <note>original: "draughts"</note> of both pieces, they may capture <note>original: "take"</note> that piece as soon as the second attacking piece is placed. 
+
+And if they are already positioned that way before a move—having been left so by the opponent—one of the capturing pieces shall move into the square <note>original: "succede in his place"</note> of the piece that is captured, as in this example: 
+
+The circle <note>original: "rounde"</note> 3 stands in **D** and the 5 stands in **C**; these two shall capture the square 15 standing in **A**, because three times five is 15. In another example: the circle <note>original: "rounde"</note> 2 standing in **B** and the triangle 6 standing in **I** shall capture their enemy’s triangle 12 standing in **A** by multiplication, for 2 times 6 is 12.
+
+<vocab>Philosophers' game, Rythmomachia, multiplication, circle (round), triangle, square, product, range (draughts)</vocab>
+
+<summary>
+This page concludes the section on "Capture by Subtraction" with a final numerical example (30 - 28 = 2). It then introduces the rules for "Capture by Multiplication." This rule states that if two of a player's pieces are positioned such that their product equals the value of an opponent's piece, and that opponent's piece is within the legal moving range of both attackers, the piece is captured. The text provides specific examples, such as 3 and 5 capturing a 15, or 2 and 6 capturing a 12.
+</summary>
+
+<keywords>
+Rythmomachia, The Philosophers' Game, Capture by Multiplication, Capture by Subtraction, board games, 16th-century games, mathematical strategy, arithmetic, multiplication rules
+</keywords>

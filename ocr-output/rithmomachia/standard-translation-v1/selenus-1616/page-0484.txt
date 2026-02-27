@@ -1,0 +1,29 @@
+[[meta: This page begins the technical description of the game components, following the previous page's outline of the upcoming chapters. It focuses on the dimensions of the board and the physical attributes of the pieces.]]
+
+# The First Chapter / 1.cap:
+
+The **Board** [[notes: *Tafel*, literally "table" or "tablet," here referring to the game board]], which is used for this game, matches a **Chess-Board** in its white and black squares, into which it is equally divided.
+
+Regarding its form or shape: it is twice as long as it is wide. Its length is divided into sixteen squares—and its width into eight squares (just as if two Chess-Boards were joined together).
+
+<image-desc>A background of a checkered board (8 by 16 grid). Three geometric playing pieces are shown resting on the board: a low cylinder (marked with 'a'), a low triangular prism (marked 'e'), and a low rectangular prism (marked 'i').</image-desc>
+
+Regarding the **Pieces** [[notes: *Steine*, literally "stones"]]: there are forty-eight of them: namely sixteen **Round**, as many **Triangular**, and then **Square** ones. They are made one finger high and painted with white color on one side—and black on the other.
+
+[[margin:
+»
+»
+»
+]]
+
+>(*Claudius Buxerius Delphinas, in Rythmomachia, fol: 42. b. The other extremity of the pieces, namely the underside, should be colored with the different color used by the opposing side: so that, if a piece comes into the power of the enemy, it may be decorated with the color of the victor.*)
+[[notes: Claude de Boissière (Latinized as Claudius Buxerius) was a 16th-century French mathematician. His 1554 work *Nobilissimus et antiquissimus ludus Pythagoreus qui Rythmomachia nominatur* is a primary source for this game's rules. The practice of flipping a captured piece to show the captor's color is similar to how pieces are promoted in Shogi or captured in Reversi.]]
+
+<image-desc>The checkered board continues as a background. Two complex "towers" (Türne) are illustrated, consisting of stacked geometric shapes (squares and triangles) topped with a small cylinder. The board around them features the letters 'K' on the left and 'M' on the right.</image-desc>
+
+There are also two **Towers** (which are broad at the bottom and...
+
+[[meta: The text ends mid-sentence with the catchword "und" (and), which will lead into the description of the towers' construction on the following page.]]
+
+[[summary: This page describes the physical apparatus of Rhythmomachia, noting that the board is a double-sized chessboard (8x16) and the 48 pieces consist of three different geometric shapes, color-coded for capture.]]
+[[keywords: Rhythmomachia, game board, game pieces, Claude de Boissière, geometry, mathematical games, Towers]]

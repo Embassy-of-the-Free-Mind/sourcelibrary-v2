@@ -1,0 +1,36 @@
+[[meta: This page concludes the section on "subtraction" captures with a complete reference table and introduces the more advanced "multiplication" and "division" capture rules. It follows the previous page's explanation of how two friendly pieces can capture an enemy piece if their numerical difference equals the enemy's value.]]
+
+# Table of all the numbers that are won by subtraction in this game.
+
+| Whites against Blacks. | | | Blacks against Whites. | | |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 4 | 16 | 12 | 3 | 5 | 2 |
+| 4 | 20 | 16 | 3 | 7 | 4 |
+| 6 | 36 | 30 | 3 | 12 | 9 |
+| 6 | 42 | 36 | 5 | 7 | 2 |
+| 6 | 72 | 66 | 5 | 9 | 4 |
+| 6 | 9 | 3 | 5 | 30 | 25 |
+| 6 | 15 | 9 | 7 | 9 | 2 |
+| 8 | 36 | 28 | 7 | 56 | 49 |
+| 8 | 64 | 56 | 7 | 16 | 9 |
+| 8 | 20 | 12 | 7 | 49 | 42 |
+| 8 | 72 | 64 | 9 | 25 | 16 |
+| 9 | 16 | 7 | 9 | 81 | 72 |
+| 9 | 25 | 16 | 9 | 90 | 81 |
+| | | | 16 | 25 | 9 |
+| **Whites subtracted.** | **Whites from which one subtracts.** | **Black remainders.** | **Blacks subtracted.** | **Blacks from which one subtracts.** | **White remainders.** |
+
+[[notes: This table serves as a "cheat sheet" for players. For example, the first row (4, 16, 12) means that if a White 4 and a White 16 both have the Black 12 in their sights, the 12 is captured because 16 minus 4 equals 12.]]
+
+---
+
+By multiplication and by division, pieces are captured in this manner. If two pieces are found—one white and the other black—in such a position that between them there are as many squares [[notes: *Caſelle* refers to the squares on the board.]] as the number of times the value of one is found within the value of the other [[notes: This refers to the mathematical ratio between the two pieces.]]: then the movement of these two can take the larger piece prisoner by multiplication, or be captured by the smaller one by division. Whichever piece moves first to reach the other shall be the winner, as in the example described below. If the **black triangle 12** is found in square A, and the **white circle 4**...
+
+<image-desc>A rectangular diagram divided into four sections by vertical lines. The second section from the left is labeled with the letter "A" and the fourth section (the rightmost) is labeled with the letter "B".</image-desc>
+
+[[notes: In this example, 12 divided by 4 equals 3. Therefore, if there are exactly three spaces between these opposing pieces, they are eligible to capture one another using these rules.]]
+
+<vocab>Table, Whites, Blacks, subtracted, remainders, multiply, divide, squares, winner</vocab>
+
+[[summary: This page provides a comprehensive lookup table for captures made by subtraction and introduces the capture rules for multiplication and division, which are based on the ratio between two opposing pieces and their distance on the board.]]
+[[keywords: subtraction table, capture rules, multiplication capture, division capture, mathematical ratios, Rithmomachia strategy]]

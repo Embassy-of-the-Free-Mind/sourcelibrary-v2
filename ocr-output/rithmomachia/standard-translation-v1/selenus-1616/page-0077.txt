@@ -1,0 +1,23 @@
+[[meta: This page continues from page 46, completing the sentence regarding previous authors. It transitions from the history of chess variants to an outline of the book’s upcoming structure. Although the previous page’s header was labeled Chapter 5, the margin here denotes Chapter 3, suggesting this section focuses on the third historical variant or a specific sub-classification of the game’s evolution.]]
+
+->**On the Game of Chess.**<-
+
+[[margin: 3. cap:]] ...known, have retained it from the **oldest**; however, its moves are handled in such a way and manner that this very oldest game appears to have been drawn closer together [[notes: "Drawn closer together" (*enger zusamen gezogen*) refers to the evolution from slower medieval chess to the modern "queen's chess" where pieces gained greater range]], improved, and is now almost universally practiced. It is also held to be the best and most perfect, and may be called the **new Current-Game**.
+
+We shall, therefore, take up this latter version immediately and treat it in the following chapters—from the First, Second, and Third, through to the Ninth Chapter of the Fourth and Final Book. Hence, once we have diligently grasped this, it will not be difficult to also understand the other two games in the Ninth and Tenth Chapters of the Fourth Book with little effort.
+
+At what time, however, and by whom this **New Game** was so condensed from the **Oldest Current-Game**, we have no precise information. We only suspect that the **Spaniards** gave the beginning to it; from whom it came to the **Italians**, and subsequently, within a hundred years, reached us.
+
+The following authors describe this game: **Damianus** [[notes: Pedro Damiano (1480–1544), a Portuguese apothecary who wrote one of the first printed chess manuals]]; **Rui Lopez** [[notes: Ruy López de Segura, the Spanish priest and master after whom the "Ruy Lopez" opening is named]]; **Th. Actius** [[notes: Tomaso Actio]]; **Lucas VVielius**; and **Arthur Saul** [[notes: Author of "The Famous Game of Chesse-play" (1614)]].
+
+Regarding the order and division: the foundation of the same has already been indicated previously, and it consists of the following parts and sections.
+
+**The First Part** is contained in the remaining nine chapters of this **First Book**, and treats: First, in the **Fourth**—of the **Chess-pieces**, and the **Board** belonging to them, in general. In the **Fifth, Sixth, Seventh, Eighth, Ninth, and Tenth**—of the **pieces** individually. In the **Eleventh**—of the **Chess-Table**. Secondly, in the **Twelfth** and final chapter, of the **Goal** and **Purpose** of this game.
+
+**The Second Part** comprises the **Means** by which the aforementioned goal in this game is to be achieved. Of this, we treat in the **Second Book**: first in general, in the **First, Second, and Third** chapters; then specifically, how one may learn the same through certain orders, rules, and ordinances, in the **Fourth and Fifth**; finally, how the game can be put into practice through manifold types and examples, in general in the **Sixth**, and in particular in the **Seventh Chapter** (in which special divisions of the following books and chapters, up to the **Ninth** of the **Fourth Book**, are to be found), and so forth.
+
+G
+[[meta: catchword: The]]
+
+[[summary: This page defines the "New Current-Game" (modern chess) as the most perfected version of the game, likely originating in Spain before moving through Italy to Germany. It provides a detailed table of contents for the remainder of the first two books, focusing on the pieces, the board, and the strategic means to achieve victory.]]
+[[keywords: Current-Game, Spanish Chess, Ruy López, Damiano, Chess-pieces, Chess-Table, Game Strategy, Book Structure]]

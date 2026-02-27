@@ -1,0 +1,14 @@
+[[meta: This page continues the author’s preface, moving from his use of sources to a defense of his writing style and the length of the book.]]
+
+Furthermore, the **Author** has directed his manner of writing—according to his intended **Work** and **Subject matter**—as much as was possible: In doing so, He has wished to be of use to both the **Beginning** and the **Experienced Chess-Player** [[notes: Translated from *Schach-Zieher*, literally "chess-mover"]]. However, insofar as He might be seen as **Obscure** and **Incomprehensible** in certain places: those who are beginning and still inexperienced should not, for that reason, lose heart; considering that through diligence they may finally grasp his meaning in due order and form an understanding of it. Yet, should He appear **too clear and plain**, the experienced **Chess-Players** should nevertheless consider that some thought must still be applied to it, and that He wished to accommodate the beginners in order to keep them encouraged.
+
+If one should also wish to accuse the **Author** of unnecessary, practiced **Wordiness** [[notes: Translated from *weitleuffigkeit*, meaning prolixity or lengthy digression]] in a matter that is not quite so important: He has primarily followed the advice of **Pliny the Younger** [[notes: Gaius Plinius Caecilius Secundus (61–c. 113 AD), a Roman lawyer and author known for his many letters]], who in Book 5, Epistle 6, expressed the following words (as they were cited by **Luis de Alcázar** [[notes: A Spanish Jesuit theologian (1554–1613). The author is using a heavy theological commentary to justify the length of his chess book—a common scholarly flourish of the 1600s]], from Seville, of the Society of Jesus, Doctor of Theology, in his *Investigation into the Secret Sense of the Apocalypse*, Volume 1, page 22):
+
+» *First, I consider it the duty of a **Writer** to read his **Title** and repeatedly ask himself what he began to write, and to know that if he dwells on the **Subject Matter**, it is not long; but it is very long if he fetches and drags in something else. He is brief who does what he set out to do. For this is not a **Digression**, but the **Work** itself. If nothing is introduced that is, so to speak, **Off the Path**, then it is not the **Letter** that describes it, but the **Subject** being described that is **Great**.*
+
+**Martial** [[notes: A Roman poet famous for his short, witty epigrams]] has composed this same opinion in the following short verse:
+
+» *Those things are not long from which there is nothing you could take away.*
+
+[[summary: The author defends his writing style, explaining that he balances complexity for experts with clarity for beginners, and justifies the book's length by arguing that staying on-topic is never "too long."]]
+[[keywords: writing style, pedagogy, chess players, Pliny the Younger, Luis de Alcázar, Martial, wordiness, brevity]]

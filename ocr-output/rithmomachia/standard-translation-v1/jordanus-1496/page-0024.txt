@@ -1,0 +1,88 @@
+[[meta: This page continues a proof regarding the properties of numbers that are prime to each other (coprime). It concludes Book 3 of Jordanus de Nemore's Arithmetica and begins Book 4, which focuses on continued proportions—what we now call geometric progressions.]]
+
+<margin>
+[[margin: [[image-desc: A geometric diagram consisting of a larger semicircle containing two smaller tangent semicircles. The large arc is labeled 28. The left interior semicircle is labeled 24, and the right interior semicircle is labeled 4. Below them are the letters g, h, s, and s.]]
+[[image-desc: A second geometric diagram below the first, showing two tangent semicircles under a larger arc labeled 27. The left semicircle contains 9 and 8, the right contains 4 and 1. Letters a, c, and b are marked along the baseline.]]
+
+f ——— 676
+g ——— 672
+e ——— 169
+d ——— 168
+
+c ——— 4
+b ——— 13
+a ——— 8
+
+t ——— 676
+s ——— 672
+13 5
+a ——— 8 3
+b ——— 5 2
+e ——— 5 2
+f ——— 2
+——— 1
+
+r ——— 169
+q ——— 168
+——— 65
+p ——— 65
+n ——— 64
+9 15
+m ——— 12
+l ——— 8
+25
+10 15
+h ——— 12
+s ——— 5]]
+</margin>
+
+...a partial [part] of the same, namely either a multiple of **b** into **bd**, and let **l** result: which is manifest by the 13th [proposition] of the first [book] to be a multiple of the partial **b**. Then I multiply the unit **c** into **bd** and let **l** result: because indeed a unit multiplied into any number produces that same number, it is equal to **bd**. But **bd** exceeds **b** by only a unit; therefore, **lg** exceeds **b** by only a unit. I demonstrate this therefore so that it may be **hg**; then the sum **fh** is a multiple of **b**. But the sum **fh** exceeds the whole **fg** by only the unit **hg**. But since **fg** is made from the multiplication of the partial **a** and **c** into **bd**, it equals **e**, which is made from the multiplication of the total **a** into **bd** by the tenth [proposition] of the first [book]. But it was said that **e** is a multiple of **a**, and **fh** is a multiple of **b**. Therefore, the multiple **e** of **a**, being equal to **fg**, exceeds the multiple **fh** of **b** by only a unit [[notes: This is a proof of Bézout's Identity for the case where the difference is 1, showing that for coprime numbers, one can always find multiples that differ by 1]], which was to be demonstrated and proposed as to one part. 
+
+But again, it must be demonstrated that a multiple of **b** can be given which has only a unit surplus over a multiple of **a**: I subtract a unit from the total **b**, let it be **d**, and I multiply the partial **b** into the total **a**, and let **e** result; it is manifest that **e** is a multiple of **a**. And again, I multiply the partial **b** into a partial **a** equal to or a multiple of the whole **b**, and let **fg** result; it is manifest that **fg** is a multiple of the whole **b**. Then I multiply **bd** into the unit **c**, and let **gh** be made, which indeed—since any number multiplied by a unit produces itself—**gh** is equal to the whole **b**, whereby the whole **fh** is a multiple of **b**. But since, by the ninth [proposition] of the first [book], that which is made from the partial **b** into **a** equals that which is made from the same partial **b** into **a** and into **c**: and that which is made from the partial **b** into **a**, and the total **b** into **c**, adds only a unit to that which is made from the partial **b** into **a** and into **c**. It follows, therefore, that the multiple of **b**, namely **fh**, which is made from the partial **b** into **a** and the partial **b** into **c**, will add only a unit over **e**, the multiple of **a**, which is made from the partial **b** into **a**: which is the second [part] and the whole of the proposition.
+
+<margin>31</margin>
+### ¶ Given two numbers prime to each other: to investigate a multiple of either of them whose difference from the multiple of the other is equal to a given number.
+[[notes: This proposition generalizes the previous proof. Instead of finding multiples that differ by 1, Jordanus shows how to find multiples that differ by any specific number "c".]]
+
+¶ Let **a** and **b** be two numbers prime to each other [[notes: "Prime to each other" means they share no common factors other than 1]], for which we are commanded to assign a multiple of either whose difference (**diff**) from the multiple of the other is equal to a given number, which is **c**. I take, according to the requirement of the preceding [proposition], a multiple of **a** which is **d** and a multiple of **b** which is **e**, adding only a unit over the multiple of **a**, and I multiply **d** by the given number **c** and let **f** result, and **e** by the same **c** and let **g** result. And because then **f** is **c** times **d**, and **g** is **c** times **e**, and as **d** [exceeds its counterpart] by a unit by the ninth [proposition] of the first [book], and every number multiplied by a unit produces itself; therefore, the difference of **g** to **f** is the given number **c**. And since **a** is a part of **d**, and **d** is a part of **f**; and **b** is a part of **e**, and **e** is a part of **g**, therefore by the twenty-third [proposition] of the first [book], **a** is a part of **f** and **b** is a part of **g**. Wherefore **f** and **g** are multiples of **a** and **b** between which the assigned number is the difference. And you could similarly, by the preceding [proposition], take a multiple of **a** which would add a unit over the multiple of that **b**, then proceed as has been said. 
+
+Otherwise, if the smaller [number], as many times as it can be taken from the larger, not only leaves a unit but a further subtraction is made [[notes: This refers to the Euclidean Algorithm process of repeated subtraction]], so that you could work by the preceding [proposition], you will be able to work in this manner. For given numbers **a** and **b** prime to each other, and **c** the number for which the difference of multiples is to be taken as equal, and having subtracted **b** from **a** as many times as possible, let **d** remain; and **d** subtracted from **b** as many times as possible, let the remainder be **e**; and **e** subtracted from **d** as many times as possible, let **f** remain; and since at last by the fifteenth [proposition] of this [book] a unit will be left, let it be so that by subtracting **f** from **e** as many times as possible, a unit remains. If, therefore, the multiple of **a** must add over the multiple of **b**, I take the other of the extremes which is in an odd position from **a**, such as **f**, and let **h**, a multiple of it, be taken which adds one over a multiple of **e** and **r**, whereby it may be **f**, **r**, **f**, **m**, **g**, by whatever **g** is in **d**, and let **hl** be made: which will add a unit over a multiple of **e**; because **g** in **d** then **m** in **e** makes **r**: which similarly adds a unit over the multiple of **b** which becomes **q**. I multiply therefore **r** and **q** by the given number **c**, and let **s** and **t** be produced, which will be multiples of **b** and **a**, maintaining the assigned number **c** as the difference in **r**.
+
+->The end of the third [book] of the elements of arithmetic of Jordanus.<-
+
+<margin>
+[[margin: [[image-desc: A diagram showing three horizontal line segments representing numbers in geometric progression. 
+The first line starts at 'a' and has markings for 1, 2, 4, 8.
+The second line starts at 'a' and has markings for 8, 12, 18, 27.
+The third line starts at 'a' and has markings for 16, 24, 36, 54. 
+Below are various letter labels (e, f, g, h, l, m, n, p, q, r) associated with these numerical values.]]
+
+16 24 36 54
+a ——— b ——— c ——— d
+8 12 18
+——— f ——— g
++ ——— 6
+——— m ———
+2 3
+h ——— l ———
+n ———
+4 9
+——— p ———
+8 27
+q ——— r]]
+</margin>
+
+<margin>1</margin>
+### ¶ If there are any number of numbers in continued proportion: any two adjacent ones will be commensurable.
+[[notes: "Continued proportion" refers to a geometric sequence where each term relates to the next by the same ratio (e.g., 2, 4, 8, 16). "Commensurable" means they share a common divisor other than 1.]]
+
+¶ Let **a**, **b**, **c**, and **d** be any number of numbers in continued proportion: I say that **a** and **b** are commensurable; likewise **b** and **c**, and **c** and **d**. If indeed **a** measures **b**, it is manifest that **a** and **b** are commensurable. And because whatever the proportion of **a** to **b**, that is the proportion of **b** to **c** and **c** to **d**, therefore **b** will measure **c** and **c** will measure **d**. Wherefore the proposition will be established: that **ab**, **bc**, and **cd** are commensurable. But if **a** does not measure **b**: because it is then impossible for **a** and **b** to be the least in their proportion. For if **a** and **b** were the least in their proportion, they would be, by the eighteenth [proposition] of the third [book], prime to each other; and by the nineteenth [proposition], they would measure any [other numbers] in their proportion; and because whatever proportion **a** has to **b**, that **b** has to **c**: **a** would therefore measure **b**, being prime to it, which is impossible and also the opposite of what was proposed. Therefore **a** and **b** will not be the least in their proportion. Having taken, therefore, by the twenty-third [proposition] of the third [book], **ef** as the least in that proportion, which by the nineteenth [proposition] of the same will measure **a** and **b** according to the same equal number, such as according to **g**; and the same consists for **bc** and **cd**. Therefore **ab**, **bc**, and **cd** are mutually commensurable: which is the proposition.
+
+<margin>2</margin>
+### ¶ If the two extremes of numbers in continued proportion are commensurable, there will be a number measuring all of them; and the greatest number that measures all of them will be the greatest common measure of the extremes. From this, it is established that if some proportionals fall between two commensurable numbers: it is necessary that just as many fall between each of them and the greatest number commonly measuring them. It is also clear that the greatest [numbers] which commonly measure the pairs of proportional numbers are themselves in continued proportion.
+
+¶ Let **a**, **b**, **c**, and **d** be numbers in continued proportion, of which the extremes **a** and **d** are commensurable: I say first that there is some number measuring all of them. Secondly, that the greatest number measuring all of them is the greatest number measuring the extremes. For since by the preceding [proposition] **a** and **b** are commensurable, and so are **bc** and **cd**: I take by the 16th [proposition] of the third [book] the greatest number measuring **a** and **b**, which is **e**, and the greatest measuring **b** and **c**, which is **f**, and the greatest measuring **c** and **d**, which is **g**. And I set **h** and **l** as the least [terms] in the proportion of **a** to **b**, and by the 23rd of the third and the 19th of the same, **e**, **f**, and **g** will measure **a**, **b**, and **c** according to **h**: and **g** will measure **d** according to **l**. I likewise take the greatest common measure of **e** and **f**, which is **r**, and the greatest common measure of **f** and **g**, which is **m**; by the twenty-third of the third, **l** will measure **e**, and **m** will measure **f** according to **h**. And again, **l** will measure **f** according to **k**, and the number **m** will measure **g** according to **k**. By the 19th of the third, **l** and **m** are different numbers from **h** and **k**. For if they were the same, **h** would produce **e** [from itself] and **l** would produce **g** [from itself], and **h** into **e** produces **a**, and **l** into **g** produces **d**, and **hl**, by the 18th of the third, are prime to each other. Therefore, **a** and **d** would be prime to each other by the twelfth of the third, which is against the hypothesis [[notes: The hypothesis was that the extremes are commensurable, i.e., not prime to each other]]. Therefore **l** and **m** are other than **h** and **l**. Wherefore **h** and **l** measure **l** and **m** equally: let them measure them therefore according to **n**, which by the 23rd of the third is the greatest...
+
+[[summary: This page concludes Book 3 with a proof that any two coprime numbers have multiples with a difference equal to any given value, then begins Book 4 on geometric progressions, proving that adjacent terms in such a sequence must share common factors.]]
+
+[[keywords: Jordanus de Nemore, arithmetic, continued proportion, commensurable, coprime, multiples, geometric sequence, Bézout's Identity]]

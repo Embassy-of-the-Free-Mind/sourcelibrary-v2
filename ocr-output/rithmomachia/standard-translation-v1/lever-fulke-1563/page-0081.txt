@@ -1,0 +1,32 @@
+# The Philosopher's <note>original: "Philosophers"</note> Game.
+
+## A table for capturing <note>original: "take"</note> the pieces <note>original: "men"</note> by multiplication and division.
+
+| Even against Odd | | | Even | Spaces | Odd | Even | Spaces | Odd |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | Spaces | | 2 | 8 | 16 | 3 | 5 | 15 |
+| 6 | 2 | 12 | 8 | 8 | 64 | 5 | 5 | 25 |
+| 8 | 2 | 16 | 4 | 9 | 36 | 9 | 5 | 45 |
+| 15 | 2 | 30 | 9 | 9 | 81 | 12 | 6 | 72 |
+| 45 | 2 | 90 | 25 | 9 | 225 | 7 | 7 | 49 |
+| 4 | 3 | 12 | 9 | 10 | 90 | 5 | 9 | 45 |
+| 4 | 4 | 16 | | 21. | | 9 | 9 | 81 |
+| 9 | 4 | 36 | --- | --- | --- | 3 | 12 | 36 |
+| 16 | 4 | 64 | **Odd against Even** | | | 3 | 14 | 42 |
+| 6 | 5 | 30 | | **Spaces.** | | --- | --- | --- |
+| 20 | 5 | 100 | 3 | 2 | 6 | | 17. | |
+| 2 | 6 | 12 | 36 | 2 | 72 | | | |
+| 15 | 6 | 90 | 3 | 3 | 9 | | | |
+| 20 | 6 | 120 | 5 | 3 | 15 | | | |
+| 4 | 7 | 28 | 12 | 3 | 36 | | | |
+| 8 | 7 | 56 | 5 | 4 | 20 | | | |
+| | **Spaces.** | | 9 | 4 | 36 | | | |
+| | | | 16 | 4 | 64 | | | |
+
+<summary>
+This page provides a reference table for the mathematical game Rithmomachia (The Philosopher's Game). It details the specific numerical combinations required to capture an opponent's piece using the rules of multiplication and division. A capture occurs when the value of a player's piece, multiplied by the number of empty spaces between it and an opponent's piece, equals the value of that opponent's piece. The table is organized into sections for "Even against Odd" and "Odd against Even" interactions.
+</summary>
+
+<keywords>
+Philosopher's Game, Rithmomachia, Capture Rules, Multiplication, Division, Mathematical Game, Even Numbers, Odd Numbers, Table of Values
+</keywords>

@@ -1,0 +1,24 @@
+The Philosophers' Game.
+
+# Superpartient <note>original: "Superpartiens"</note> Proportion.
+
+<image-desc>In the left margin, a square geometric diagram with internal diagonal lines and horizontal/vertical bisectors, illustrating the "corners and sides" mentioned in the text.</image-desc>
+
+The superpartient proportion occurs when the greater number contains the lesser number plus more than one part of it. For example, 15 contains 9 and 6, where 6 is two-thirds of 9. Likewise, 28 contains 16 and 12, which is 3/4 of 16. This proportion contains various <note>original: "diverse"</note> parts besides the whole number; therefore, it is well represented by the square, which also contains more corners and sides. To understand the nature <note>original: "manner"</note> of their proportion, consider this table.
+
+<margin>10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</margin>
+
+**Square Pieces (Values derived from Superpartient Ratios)**
+| 25 | 49 | 81 | 121 |
+| :---: | :---: | :---: | :---: |
+| 15 | 28 | 45 | 66 |
+
+<vocab>Superpartient, proportion, Rythmomachia, Philosophers' game, square, triangle</vocab>
+
+<summary>
+This page defines and illustrates "superpartient" proportions as they apply to the square pieces in the Philosophers' Game (Rythmomachia). A superpartient proportion is a ratio where a larger number contains a smaller number plus multiple fractional parts of that smaller number (for example, 1 and 2/3, or 1 and 3/4). The author explains that while triangular pieces represent simpler ratios, the square pieces represent these more complex proportions because squares possess more sides and corners. The provided table lists the numerical values for these square pieces—such as 25, 49, 81, and 121—and the base numbers from which they are derived.
+</summary>
+
+<keywords>
+Philosophers' Game, Rythmomachia, superpartient proportion, arithmetic ratios, square pieces, mathematical history, 16th-century mathematics, ratios, proportional logic
+</keywords>

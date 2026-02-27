@@ -1,0 +1,48 @@
+[[meta: This page continues the mathematical demonstration of how different classes of numbers are related, moving from the specific properties of "square-triangular" numbers to the general generation of polygonal numbers—pentagons and hexagons—through the summation of simpler forms like squares, triangles, and oblongs.]]
+
+[[margin: 11]]
+**If oblong numbers and squares are designated continuously from unity: joined two by two: they produce all triangular numbers.**
+
+¶ I designate from unity **a**, **b**, and **c** as squares, and from unity the oblong numbers [[notes: "Altera parte longiores," literally "longer by the other part," refers to numbers of the form n(n+1), such as 2, 6, 12, which can be arranged as rectangles where one side is 1 unit longer than the other]] which are **d**, **e**, and **f**. I say that any two—the first square and the first oblong—together constitute a triangular number. For if it is the first square, which is unity [1], and the first oblong, which is two [2], it is manifest that when added together they constitute a triangular number [3] by the corollary of the first [proposition] of this book. 
+
+And if **a** is the second square [4] and **d** is the first oblong after unity [2], it happens by the twenty-sixth [proposition] of the seventh [book] [[notes: Likely referring to Euclid's Elements, which was the standard geometry/arithmetic textbook]] that the square **a** consists of odd numbers from unity—namely, from unity and the first odd number 3—and **d** is the first even number [2]. Therefore, if **a** is resolved into its parts, they will be numbers taken continuously from unity [1, 2, and 3]. Thus, by the corollary of the first [proposition] of this book, they constitute a triangular number [6]. In this same way, show that **a** and **e** [[notes: There may be a slight labeling slip in the OCR here; based on the math, it refers to the next pair in the series]] constitute a triangular number by resolving the square into its odd components and the oblong into its even components. This holds for any two taken in this manner.
+
+---
+
+[[margin: 12]]
+**If triangular and square numbers are taken: and if the triangular numbers are as many from unity as the squares are after unity: joined together they will make pentagonal numbers.**
+
+¶ For if you join to unity [1], which is the first triangle, the first square after unity, which is four [4], it becomes a pentagonal number after unity [5], having five equal sides [[notes: A pentagonal number is the sum of an arithmetic progression starting at 1 with a common difference of 3: 1, 5, 12, 22...]]. And if you take the second triangle from unity [3], it has two on its side, and the second square after unity [9] has three on its side. Therefore, by adding the side of the square, there will be made, by the corollary of the first [proposition] of this book, a following triangle having a side of three units, and a pentagonal figure receiving as many units in any of its sides. 
+
+And because the square after unity will always have one more on its side than the triangle from unity, by this reason the proposition is achieved. And because the sides of those pentagons are equal to the sides of the given squares, it follows that there are as many pentagons after unity as there are squares. 
+
+¶ And from this and the twenty-sixth [proposition] of the seventh [book], one recognizes what the divine **Severinus Boethius** [[notes: Anicius Manlius Severinus Boethius (c. 477–524 AD), whose "De Arithmetica" was the standard medieval textbook on number theory]] asserts in the 14th chapter of the second book of his *Arithmetic*: that the generation of pentagons is born from numbers ordered in a natural series when two are joined continuously from the monad [1], with two always skipped in the middle. For by the premise, taking unity (the first triangle) and four (the square), with two skipped in the middle—namely 2 and 3—the second pentagonal number [5] is formed, carrying two on its side. 
+
+Again, with two skipped, the number seven [7] is taken, which includes five and two. Now the odd number five, added to the square four, constitutes the next square [9], and the two added to unity constitutes the next triangle [3]. Therefore, by the present rule, unity, 4, and 7 constitute a pentagon [12]. Again, with two dismissed after seven, taking ten [10], which includes the next odd number [7] and three: that seven added to the square of the prior pentagon constitutes the succeeding square [16], and the three added to the triangle of the pentagon constitutes the nearby triangle [6]. Therefore, by the present rule, the number constituted from unity, 4, 7, and 10 will be a pentagon [22], and you shall argue thus for any others.
+
+---
+
+[[margin: 13]]
+**If an oblong number is joined with the full triangular number after unity: the composite will be the pentagonal number following it.**
+
+¶ Let **a** be any oblong number from unity, such as the second [6], whose smaller side will therefore be two units. And let **b** be the full triangular number after unity [6], whose side will therefore be three, and equal to the greater side of the oblong. I join, therefore, the greater side of the triangle **b** to the greater side of the oblong **a**: and a square will be made. But that which remains when the greater side of **b** is removed is a smaller triangle by the second [proposition] of this book. Therefore, that triangle with the square from the oblong and the side of the triangle will constitute a pentagon. This is what was proposed.
+
+---
+
+[[margin: 14]]
+**Any of the pentagonal numbers after unity, with the full triangular number from unity: constitutes the hexagonal number placed in a similar position: and this may be called "tetragonal."**
+
+¶ Unity is said to possess the power of all numbers, as its equal sides are designated; hence it is the first triangle, the first square, pentagon, hexagon, and so on. The first number after unity is that whose side is two; the second after unity is that whose side is three. A hexagon is called **tetragonal** [[notes: This refers to hexagonal numbers that are formed by every other triangular number, i.e., $H_n = T_{2n-1}$]] if its side is equal to the side of the corresponding square. 
+
+I say, therefore, that if any pentagon after unity is taken, such as **a** (which for example might be the third after unity [22]), and **b** is the full triangle from unity [6]: I say **a** with **b** constitutes the hexagonal number after unity [28], which is both full and tetragonal. For by the twelfth [proposition] of this book, a pentagon after unity consists of a square after unity and a triangle from unity. Therefore, an equal triangle placed on the opposite side of the square will constitute a hexagon whose side will be equal to the side of the square. And since its side is equal to the side of the square, it is also equal to the side of the pentagon; thus the whole hexagon will be in the same position after unity as the pentagon. And since its side is equal to the side of the square, it is the same as the "tetragonal" one; which is what was proposed. From this and the twelfth [proposition] and the corollary of the first, it is easy to recognize the generation of hexagons in the manner taught by **Boethius** in the 15th chapter of the second book of his *Arithmetic*.
+
+---
+
+[[margin: 15]]
+**That square with the preceding oblong number: constitutes a tetragonal hexagon.**
+
+¶ The first oblong after unity is that which has unity as its smaller side [2], and the second is that which has two [6], and so on. The oblong preceding a square is that whose smaller side is one less than the side of the square. I say, therefore, that any square such as **a**, with the preceding oblong such as **b**, constitutes a hexagonal square. For by the fourth [proposition] of this...
+
+[[summary: This page explains the geometric construction of pentagonal and hexagonal numbers by summing squares, triangles, and oblong numbers, citing Boethius's Arithmetica as a primary authority. It demonstrates that these complex "figurate" numbers are built from simpler arithmetic progressions and geometric arrangements.]]
+
+[[keywords: Polygonal numbers, Pentagonal numbers, Hexagonal numbers, Oblong numbers, Boethius, Figurate numbers, Tetragonal hexagon, Medieval mathematics]]

@@ -1,0 +1,128 @@
+[[meta: This page provides the visual diagrams corresponding to the tactical chess maneuvers described on the previous page. The diagrams illustrate a specific endgame or mid-game problem where White navigates a series of checks and a pawn promotion to secure a win against Black.]]
+
+[[margin: 
+Chapter 9:
+On the Game of Chess. [[notes: "Vom Schach-Spiel" refers to the classic game. In this period, chess rules were stabilizing into the modern form, but terminology like "Soldier" for Pawn and "Roch" for Rook was still common.]]
+]]
+
+### n. 2. 3.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | [B. Queen] | [B. King] | | [B. Rook] | [B. Rook] |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | | [B. Soldier] | [B. Soldier] | [B. Soldier] |
+| | | [B. Soldier] | | | | | |
+| | | [B. Soldier] | | [B. Soldier] | | | |
+| | | [W. Soldier] | | [W. Soldier] | [W. Soldier] | | |
+| | | | | | | | |
+| [W. Soldier] | [W. Soldier] | [W. Soldier] | [W. Soldier] | [W. Queen] | | [W. Soldier] | [W. Soldier] |
+| [W. Rook] | [W. Rook] | [W. Soldier] | | [W. King] | | [W. Rook] | [W. Rook] |
+
+---
+
+### n. 6.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | | [B. King] | | | [B. Rook] |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | | [B. Soldier] | [B. Soldier] | [B. Soldier] |
+| | | [B. Soldier] | | [B. Rook] | | | |
+| | | | | | | **33** | |
+| | | [W. Soldier] | [W. Soldier] | [W. Soldier] | | | [B. Queen] |
+| | | [W. Rook] | | | | [W. Rook] | |
+| [W. Soldier] | [W. Soldier] | [W. Soldier] | | [W. Queen] | | | [W. Soldier] |
+| [W. Rook] | | | [W. Soldier] | [W. King] | | | |
+
+---
+
+### n. 9. 10.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | | | | | | [B. Rook] |
+| [B. Soldier] | [B. Soldier] | [W. Rook] | | | [B. King] | [B. Soldier] | [B. Soldier] |
+| | | [B. Soldier] | | [B. Soldier] | | | |
+| | | | | | | | |
+| | | [W. Queen] | [W. Soldier] | [W. Soldier] | [W. Soldier] | | |
+| | | | | | [W. Rook] | | |
+| [W. Soldier] | [W. Soldier] | [W. Soldier] | | | | | [B. Queen] |
+| [W. Rook] | | | | [W. King] | | | **j** |
+
+---
+
+### n. 13.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | [B. King] | **60** | | [B. Rook] | |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | | [W. Queen] | [W. Soldier] | |
+| | | [B. Soldier] | | | | | [B. Soldier] |
+| | | | | | | | |
+| | | | [W. Soldier] | | | | |
+| | | | | | [W. Rook] | | |
+| [W. Soldier] | | | | [W. Soldier] | | | [W. Soldier] |
+| [B. Queen] | | | [W. Rook] | [W. King] | | | |
+
+---
+
+### n. 5. 11.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | | [B. King] | | | [B. Rook] |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | | [B. Soldier] | [B. Soldier] | [B. Soldier] |
+| | | [B. Soldier] | | | [B. Rook] | | |
+| | | | | | | **34** | |
+| | | [W. Soldier] | [W. Soldier] | [W. Soldier] | | | [B. Queen] |
+| | | | **22** | | | [W. Rook] | |
+| [W. Soldier] | [W. Soldier] | [W. Soldier] | | [W. Queen] | | | [W. Soldier] |
+| [W. Rook] | [W. Rook] | [W. Soldier] | | [W. King] | | | |
+
+---
+
+### n. 7. 8.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | | | | | [B. Rook] |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | | [B. King] | [B. Soldier] | [B. Soldier] |
+| | | [B. Soldier] | | | | | |
+| | | | | | | [W. Soldier] | [B. Rook] |
+| | | | [W. Soldier] | [W. Soldier] | **27** | | [B. Queen] |
+| | | | [W. Rook] | | | [W. Rook] | |
+| [W. Soldier] | [W. Soldier] | [W. Soldier] | | [W. Queen] | | | [W. Soldier] |
+| [W. Rook] | | | | [W. King] | | | |
+
+---
+
+### n. 12.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | [B. King] | | | [B. Rook] | |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | | [B. Soldier] | [W. Soldier] | |
+| | | | [B. Soldier] | | | | [B. Soldier] |
+| | | | | | | | |
+| | | | | [W. Soldier] | [W. Queen] | | |
+| | | | **22** | | | [W. Rook] | |
+| [W. Soldier] | [B. Queen] | | [W. Soldier] | [W. Soldier] | | | [W. Soldier] |
+| [W. Rook] | [W. Rook] | | | [W. King] | | | |
+
+---
+
+### n. 14. 15.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [B. Rook] | [B. Rook] | [B. Soldier] | | | | [W. Queen] | |
+| [B. Soldier] | [B. Soldier] | | [B. Soldier] | [B. King] | | | |
+| | | | [B. Soldier] | **45** | | **43** | [B. Soldier] |
+| | | | | | | | |
+| | | | | [W. Soldier] | | | |
+| | | | | | [W. Rook] | | |
+| [W. Soldier] | | | | | [W. Soldier] | | [W. Soldier] |
+| [B. Queen] | | | [W. Rook] | [W. King] | | | |
+
+[[summary: This page contains eight chess diagrams (numbered 2 through 15) illustrating specific board states and move sequences. These visual aids correspond to the tactical analysis of checks, rook movements, and pawn promotion described in the accompanying text.]]
+
+[[keywords: chess, chess diagrams, chess strategy, Rook, King, Soldier, Queen, 17th-century chess, tactics]]

@@ -1,0 +1,25 @@
+[[meta: This page continues the "Cartel of the Imperial Court," a set of standardized chess rules. The previous page detailed the movement of pawns and the conditions for castling (referred to as "exchanging"). This page concludes these specific regulations with the rules for stalemate and draws, followed by a scholarly commentary on terminology.]]
+
+# The First Book / Chapter 12
+
+->8.<-
+> “ If the King can no longer utilize any piece, and cannot "
+> “ move himself anywhere without being placed in Check [[notes: Literally "outside of the offering of a check." This describes a stalemate: the player is not currently in check, but any move they make would put their King in danger, which is illegal.]] , it is "
+> “ also not a Checkmate, but is called **Tavola** [[notes: *Tavola* is the Italian word for table or board. In this period, it was the technical term for a stalemate.]] * .
+
+->9.<-
+> “ And in these two ways [[notes: Referring to the stalemate described above and likely the insufficient material or perpetual check discussed on the preceding page.]], nothing may be won; "
+> “ instead, the game ends as a draw. "
+
+->*See Pythagoras.*<-
+->**Decree of the Court Chess-Players,**<-
+->**June 21, [15]77, etc.**<-
+
+---
+
+* **Tavola** [[notes: Table/Draw]]) Regarding this word, **Th. Actius** [[notes: Thomas Azzio, an Italian legal scholar who wrote *De Ludo Scacchorum* in the late 16th century, applying legal logic to chess.]] has set down the following thoughts in his index under the letter T:
+“ *When neither side wins, the game is called **Tabula**: 1. because in ancient times, small wooden tablets on which public acts were written were called **Tabulæ**; and since peace pertains to public utility (as is consistent with the law regarding the office of the governor), it follows that the conditions of peace should be written upon tablets. Hence, when a peace is considered made because neither side wins, we say the game is a **Tabula** to show this. 2. Or it happens because, just as in war, the field itself is in a way considered the victor if few survivors remain and no man emerges as winner; so likewise in the game, the board (**Tabula**) is to be considered the victor when neither of the players achieves victory. Thus we say "the board is the game," which is to say, the game belongs to the board—just as if one were to affirm that Peter is wealthy, one means nothing else than that the wealth belongs to Peter. 3. Or it may be said, according to the opinion of a most learned man, that this is done because the board itself represents and imitates the field in which military conflicts occur; and since, when neither side gains victory, an opportunity is provided to look at the field itself rather than the valor of the combatants, we therefore say the game is a **Tabula**; that is, the field itself has become the object of sight. Regarding this, it should not be overlooked that **Pactam** signifies among the Ethiopians what **Tabula** signifies among us.* [[notes: This refers to the draw in **Senterej**, the traditional form of chess played in Ethiopia.]]
+“ *For they use this word (as an Ethiopian, not a commoner but a very noble one, related to me) when neither of the players wins.*
+
+[[summary: This page defines the rule for stalemate (Tavola) as a draw and provides a scholarly, legalistic explanation of the term's origins. It concludes with an interesting historical anecdote regarding chess terminology in Ethiopia.]]
+[[keywords: Tavola, Stalemate, Draw, Th. Actius, Ethiopian Chess, Senterej, Courtly Rules, Tabula]]

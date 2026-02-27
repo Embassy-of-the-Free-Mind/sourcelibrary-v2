@@ -1,0 +1,38 @@
+[[meta: This page continues the mathematical analysis of musical intervals, moving from the relationship between the fourth and fifth to the internal structure of the octave (diapason). It specifically addresses the Pythagorean observation that an octave is not exactly six whole tones.]]
+
+[[margin: 19]]
+¶ The **consonance of the diapason** [[notes: The octave, from the Greek 'dia pasōn chordōn' meaning 'through all strings']] does not consist of exactly six whole tones. Rather, it is larger than five tones, but more contracted (smaller) than six.
+¶ For, according to the twenty-first [proposition] of the first book, five **sesquioctave** [[notes: A ratio of 9:8, representing a whole tone]] intervals joined together constitute less than a "double interval" [[notes: A 2:1 ratio, which defines the octave]]. Furthermore, by the same twenty-first proposition, six joined together exceed a double interval. Therefore, five tones are smaller than the **diapason** consonance, and six are larger. Thus, the **diapason** is greater than five tones but will be measured as smaller than six.
+
+[[margin: 20]]
+¶ The **diapason** is composed of the **diatessaron** [[notes: The perfect fourth, 4:3 ratio]] and **diapente** [[notes: The perfect fifth, 3:2 ratio]] consonances.
+¶ For, by the fourteenth [proposition] of this book, the **diatessaron** and **diapente** are located in the greatest **superparticular** ratios [[notes: A ratio where the numerator is exactly one greater than the denominator, such as 3:2 or 4:3]]. According to the eleventh [proposition] of the first book, a "double interval" (2:1) is formed by joining the two greatest superparticular ratios (3:2 × 4:3 = 12:6, or 2:1). Since the double interval is the interval of the **diapason** consonance, it follows that the **diatessaron** and **diapente** consonances joined together create the **diapason**, as was proposed.
+
+[[margin: 21]]
+¶ The **consonance of the diapason** is completed by five whole tones and two minor semitones, which do not quite fill a whole tone. From this, it is manifest that the **diapason** differs from six whole tones by exactly a **comma** [[notes: The 'Pythagorean comma,' a tiny interval resulting from the mathematical difference between twelve fifths and seven octaves]].
+¶ For, as shown previously, the **diatessaron** and **diapente** form the **diapason**. The **diatessaron**, by the sixth [proposition], consists of two tones and a minor semitone; the **diapente**, by the ninth, consists of three tones and a minor semitone. When two tones and a minor semitone are combined with three tones and a minor semitone, they produce five tones and two minor semitones. However, two minor semitones do not complete a full tone, but fall short of it by a **comma**. Therefore, the **diapason** is completed by five tones and two minor semitones, as proposed. 
+¶ A corollary can be noted from the conclusion of this proof: it is very easy to find the musical **comma** on a string [[notes: Referring to the 'monochord,' a single-stringed instrument used for mathematical demonstrations]]. If six whole tones are marked out from the start of the string, and then the **diapason** is measured to the middle of the string (the 2:1 point), the space between the middle of the string and the end-mark of the six tones is the interval of the **comma**.
+
+[[margin: 22]]
+¶ If the **diapente** is taken away from the **diapason**, the **diatessaron** remains. If the **diatessaron** is taken away, the **diapente** remains. If both the **diapente** and a whole tone are taken away, a **sesquitone** [[notes: A minor third]] remains.
+¶ The first and second parts are known from the penultimate [proposition] and the preceding one. Since the **diapason** consists of five tones and two minor semitones, and you subtract three tones and one minor semitone (which forms the **diapente**), the **diatessaron** remains. The second part is clear by the same logic. If you take two tones and a minor semitone from the five tones and two semitones, three tones and a minor semitone remain. The third part follows similarly: subtracting four tones and a minor semitone from the **diapason** leaves one tone and a minor semitone. It is very easy to calculate how many **dieses**, **apotomes**, and **commas** [[notes: These are various micro-intervals used in ancient and medieval tuning theory]] the **diapason** contains. However, the octave cannot be divided into any number of equal parts because it exists in a **multiple ratio** [[notes: A ratio like 2:1]]. According to the sixtieth [proposition] of the ninth book of Arithmetic, a multiple ratio cannot be divided into equal proportions that are not themselves multiple.
+
+[[margin: 23]]
+¶ No simple consonance is divisible into two equal parts by a certain, established number.
+¶ We call the **diatessaron**, **diapente**, and **diapason** "simple consonances." Regarding the **diatessaron** and **diapente**, it is established that they arise from **superparticular** intervals, which cannot be split into equal halves [of rational integers]. The same judgment applies to the **diapason**. Since its smallest numbers are 2 and 1, and 2 is not a square number, it follows that the **diapason** (the ratio of 2 to 1) cannot be divided into two equal parts. To try to divide it into equal parts would be like trying to measure the diagonal of a square by its side in geometry [[notes: A reference to the irrationality of the square root of two; just as you cannot find a rational number for the diagonal of a 1x1 square, you cannot find a rational "half-octave"]]. But that is not a matter for the musician.
+
+[[margin: 24]]
+### That the Diapason and Diatessaron is not a consonance.
+
+[[notes: The following diagram provides a mathematical proof that the interval of an eleventh (octave + fourth) does not fit the strict Pythagorean definition of a consonance because its ratio, 8:3, is neither a multiple nor a superparticular ratio.]]
+
+| | | |
+| :--- | :--- | :--- |
+| **E 8** | **f 3** | **g 2** |
+| **2 1** | | **4 3** |
+| **A b** | | **c d** |
+
+¶ Even if there is a sweet and pleasant meeting of two voices in the **diapason-plus-diatessaron**—just as when a **sesquitone** [[notes: minor third]] is struck—it does not follow that it deserves to be called a "consonance" [[notes: The author follows the strict Pythagorean school, which rejected the eleventh as a consonance, unlike Ptolemy]]. Although **Ptolemy** and the **Pythagoreans** have seen this differently, the truth is very easy to show. Let **a** and **b** be 2 and 1 (the smallest numbers of the **diapason**), and **c** and **d** be 4 and 3 (the smallest numbers of the **diatessaron**). If I multiply **c** by **a**, it results in 8 (which is **e**); and **d** by **b**, it results in 3 (which is **f**). By the third [proposition] of the fifth book of Arithmetic, the ratio of **e** to **f** (8:3) contains a double plus a **sesquitertia** [[notes: 2 + 1/3, or 8/3]], which constitutes the **diapason-plus-diatessaron**.
+
+[[summary: This page uses Pythagorean mathematics to define the octave as the sum of a fourth and a fifth, while proving it is slightly smaller than six whole tones. It concludes by arguing that the interval of an eleventh is technically not a consonance, despite its pleasant sound, due to its complex ratio.]]
+[[keywords: diapason, diatessaron, diapente, Pythagorean comma, sesquioctave, superparticular ratio, musical mathematics, monochord tuning, Ptolemy, Boethius]]

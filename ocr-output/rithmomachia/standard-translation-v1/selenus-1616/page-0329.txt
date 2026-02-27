@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical breakdown of the previous game state, specifically move number 54. It concludes the current analysis of this variation and offers a critique of the famous Portuguese chess theorist Pedro Damiano.]]
+
+### 4. cap: On the Game of Chess.
+
+...can resolve [the situation] in few moves and can well get at the **Black** player. Since these moves can be undertaken in all sorts of ways, for the sake of beloved brevity (as has often been necessary in the preceding and following examples in similar cases), we have chosen to let the matter rest here.
+
+[[margin: 55.]] If, however, the **Black** does not move the **Rider** [[notes: *Reuter*, the Knight]] (from no. 54) away, but instead takes the **White King’s Soldier** [[notes: *K. Soldaten*, the King's Pawn]] with his **King’s Soldier**: then the **White** must not take the same with his **King’s Soldier** (for the **Black** would give **Check** from thirty-one with the **King’s Archer** [[notes: *K. Schützen*, the King’s Bishop]] and would win his **Queen**), but instead moves the **King’s Archer’s Soldier** [[notes: the Bishop's Pawn]] to twenty-two: The **Black** then takes the **White King’s Soldier** with his **King’s Soldier**: The **White** moves the **King’s Archer’s Soldier** onto the **Black King’s Rider’s Soldier** [[notes: the Knight's Pawn]] at twenty-seven: The **Black** must not take him with the same (because the **White**, if he were to take this **Soldier** back with the **King’s Archer**, would immediately give **Check-Mate**), but instead (for its protection) moves the **King’s Rider** to twenty-eight: The **White** [moves] the **King’s Archer** to twenty-one [targeting] the same: The **Black** (to protect it) moves the **Queen** to sixty: The **White** moves his **Queen** to thirty-six, [targeting] both her and the **Black King’s Rider**: thus he has obtained a well-ordered game and a **Rook** [[notes: *Rochen*, the Rook or Castle]] for a **Rider**.
+
+From this, every good player can now judge whether *Damianus* [[notes: Pedro Damiano (c. 1480–1544), a famous Portuguese chess theorist whose book *Questo libro e da imparare giocare a scachi* was a standard text]] described this way of playing correctly: (Since he knew nothing more to report of it, other than that the **White** had captured three **Soldiers** as an advantage). We wish now to break off from this game and remind the reader of this: that the **Black**, if played against in another way, will be overcome and finished that much sooner: especially if the **White** does not allow himself to be led astray, but pays attention to the game and the moves, visualizes them well, and uses them at the right time as was
+
+->shown to him.<-
+-><-
+
+[[margin: 18 10 11 12]]
+
+<image-desc>A rectangular decorative typographical ornament (fleuron) composed of repeated floral and scrolling motifs.</image-desc>
+
+Pp
+[[meta: catchword: The]]
+
+[[summary: This page concludes a specific chess variation by demonstrating how White can win a Rook for a Knight through careful pawn play and positioning. The author also critiques the master Damiano for failing to provide such a deep analysis of the sequence.]]
+[[keywords: Damiano, Knight, Rook, Bishop, Pawn, Chess Tactics, Game Analysis, 17th Century Chess]]

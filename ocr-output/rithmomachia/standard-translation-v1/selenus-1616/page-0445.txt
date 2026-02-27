@@ -1,0 +1,35 @@
+[[meta: This page continues the systematic analysis of chess openings and handicaps, specifically focusing on games where one player (White) plays without the Queen's Knight. The author continues his critique of the 16th-century master Pedro Damiano.]]
+
+<header>6. cap: On the Game of Chess. 411</header>
+
+<image-desc>A decorative woodcut header banner featuring symmetrical floral scrollwork and acanthus leaves, with a small central cartouche.</image-desc>
+
+## The Sixth Chapter.
+
+### How Black—when he has the advantage and plays against White without his Queen’s Rider [[notes: the Knight]]—should behave, and what White should also look out for.
+
+**I**f White takes the King's Rider [[notes: the Knight]] as the advantage [[notes: meaning White gives the odds of a piece by starting without it]], and not the Archer’s Soldier [[notes: likely referring to the Bishop's pawn; the OCR "Schätzens" is likely a misspelling of "Schützen"]] with the move (as described in the previous 5th Chapter), but rather grants Black only the simple advantage of the first move: then from this arises the fifth type [of game], which Damianus [[notes: Pedro Damiano, a Portuguese apothecary and chess author whose 1512 book was the first to analyze the modern game]] recorded in the 8th and final chapter of his much-discussed booklet, and which we, based on him, shall recount in this and the following 7th Chapter, having thoroughly improved upon it.
+
+[[margin: 1.]] Therefore, first (according to Damiano’s indication), Black moves his King’s Soldier [[notes: Pawn]] to thirty-six:
+White moves his King’s Soldier to twenty-eight:
+Black moves his King’s Rider [[notes: Knight]] to forty-three:
+White (to defend it) moves his King’s Rider to twenty-two:
+Black moves his King’s Archer [[notes: Bishop]] to thirty-eight:
+White moves his King’s Archer to thirty:
+Black moves his King’s Archer’s Soldier to forty-six:
+[[margin: 2.]] White moves his King’s Archer to twenty-three:
+Black (in order to break White’s game) moves the King’s Soldier to White’s King’s Soldier at thirty-seven:
+White (to protect it further) moves the King’s Soldier to twenty-one:
+[[margin: 3.]] Black takes White’s King’s Soldier with the King’s Soldier:
+White takes the same with his King’s Soldier.
+[[margin: 4.]] But if Black does not take White's Soldier (No. 3), but instead moves the King’s Rook’s Soldier [[notes: "Rochens-Soldaten" refers to the Rook's pawn; "Roch" being the old name for the Rook]] to forty-one (so that White cannot capture his King’s Rider with the King’s Archer from thirty-four):
+then White advances the King’s Rider to Black’s King’s Soldier at nineteen:
+Black moves the King’s Archer (in order to capture him and thus his Soldier...)
+
+[[meta: signature mark at bottom]]
+<sig>Fff iij</sig>
+[[meta: catchword: him / to]]
+
+[[summary: This page explains a specific chess opening variation where White plays at a handicap, missing the Queen's Knight. The author provides a step-by-step move list using a 1-64 coordinate system, critiquing and refining the earlier theories of Pedro Damiano.]]
+
+[[keywords: Pedro Damiano, Chess handicap, Rider, Archer, Soldier, Queen's Knight, Chess tactics, August of Brunswick-Lüneburg]]

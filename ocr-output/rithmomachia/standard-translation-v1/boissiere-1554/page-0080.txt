@@ -1,0 +1,47 @@
+[[meta: This page continues the systematic breakdown of the "Great Victory" in Rythmomachia. While the previous page introduced the basic sequence of 2, 3, 4, and 6, this page expands the concept to larger numerical sets and demonstrates how their ratios consistently produce the primary musical consonances used in the Renaissance.]]
+
+# ->OF THE PHILOSOPHERS.<-
+
+| | |
+|---|---|
+| **D C B A** | **A B** *diapente* [[notes: A Perfect Fifth (ratio 3:2).]] |
+| **2 3 4 6** | **B C** *diatessaron* [[notes: A Perfect Fourth (ratio 4:3).]] |
+| **4 6 8 12** | **A C** *diapason* [[notes: An Octave (ratio 2:1 or 4:2).]] |
+
+**A D** *diapason* & *diapente* [[notes: An Octave plus a Fifth, forming a Twelfth (ratio 3:1).]].
+The differences **C D** & **D A** *disdiapason* [[notes: A Double Octave (ratio 4:1). The "difference" refers to the value obtained by subtracting one number from another to find a new proportional relationship.]].
+
+---
+
+<image-desc>A horizontal curly bracket spans the top of the following section.</image-desc>
+
+| | |
+|---|---|
+| **D C B A** | **A B** *diatessaron* |
+| **6 8 9 12** | **B C** the tone, which is the beginning of Consonance [[notes: The "tone" refers to a Major Second (ratio 9:8). In early music theory, it was considered the building block from which larger consonances were constructed.]]. |
+
+**A C** *diapente*. **A D** *diapason*. **A**, in respect to the difference **A C**, *diapente* [[notes: Here the author compares the value of A (12) to the difference between A and C (12 minus 8 equals 4). The resulting ratio 12:4 reduces to 3:1, representing the diapason and diapente together.]]. **C**, at the difference **C D**, *disdiapason* [[notes: Comparing C (8) to the difference of C and D (8 minus 6 equals 2). The ratio 8:2 reduces to 4:1.]].
+
+---
+
+| | |
+|---|---|
+| **D C B A** | **A B** *diatessaron*. |
+| **4 6 9 12** | **D C** *diapente* |
+
+**A C** *diapason*. **A D** *diapason* & *diapente*
+**A**, in respect to the difference **C B**, *disdiapason* [[notes: A (12) compared to the difference between B and C (9 minus 6 equals 3). The ratio 12:3 is 4:1.]].
+
+---
+
+<image-desc>A horizontal curly bracket spans the top of the following section.</image-desc>
+
+| | |
+|---|---|
+| **12 15 16 20** | **A C** *diatessaron*. |
+| **D C B A** | **D** in respect to the difference **A D**, *diapente* [[notes: D (12) compared to the difference of A and D (20 minus 12 equals 8). The ratio 12:8 reduces to 3:2.]]. **B** at the difference **A D**, *diapason* [[notes: B (16) compared to the difference of A and D (8). The ratio 16:8 is 2:1.]]. **A** at the difference **A C** *disdiapason* [[notes: A (20) compared to the difference of A and C (20 minus 15 equals 5). The ratio 20:5 is 4:1.]]. |
+
+There are yet others, such as 5, 9, 45, 81: or indeed, 9, 25, 45, 225, and other similar ones, which we shall leave for the recreation of the most subtle: who (as Faber [[notes: Jacques Lefèvre d'Étaples (c. 1455–1536), a French humanist and theologian whose work on Rythmomachia was the standard text for the game during the Renaissance.]] says), in imitation of hunters, take more delight in pursuing and seeking...
+
+[[summary: This page uses tables to map specific four-number sequences (victories) in the game of Rythmomachia to musical intervals. It demonstrates that the mathematical ratios of these sequences—whether simple like 2, 3, 4, 6 or complex like 12, 15, 16, 20—perfectly mirror the harmonies of the octave, fifth, and fourth.]]
+[[keywords: Rythmomachia, music theory, diapason, diapente, diatessaron, disdiapason, Jacques Lefèvre d'Étaples, Faber, proportions, ratios, mathematical games]]

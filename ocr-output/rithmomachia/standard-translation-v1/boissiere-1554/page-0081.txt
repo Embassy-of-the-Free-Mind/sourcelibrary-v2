@@ -1,0 +1,29 @@
+[[meta: This page transitions from the mathematical ratios of the 'Great Victory' to the practical application of these numbers in gameplay. It concludes the discussion on capturing pieces and begins explaining how Rythmomachia’s specialized pieces can even be used to play a standard game of Chess.]]
+
+# RYTHMOMACHIA, THE GAME
+
+...their prey, rather than receiving it once captured. [[notes: This fragment completes a thought from the previous page regarding the strategy of pursuing pieces.]]
+
+### ->Example in music.<-
+
+| | | |
+| :--- | :---: | :--- |
+| **Diatessaron** [[notes: A musical fourth (ratio 4:3).]] | ◊ | |
+| **Diapente** [[notes: A musical fifth (ratio 3:2).]] | ◊ | **Diapason** [[notes: An octave (ratio 2:1).]] |
+| **Diatessaron** | ◊ | |
+| **Diapente** | ◊ | **Diapason** |
+| | | **Disdiapason** [[notes: A double octave (ratio 4:1).]] |
+
+[[notes: The musical diagram illustrates how these specific ratios—the foundation of Rythmomachia—stack to create the "perfect" consonances of Renaissance music theory.]]
+
+We have shown previously how victories must be achieved in the camp of the adversary; however, if it should happen that not all the pieces [[notes: The original French uses *tables*, a common term for game pieces or counters in the 16th century.]] required for victory are found arranged in the enemy's camp, but a portion of them remain in your own: I advise you that it will suffice if half or the greater part are located there. Note also that the captured pieces will serve to complete your victory alongside the others located in the adversary's camp.
+
+Furthermore, we do not wish to detract from the liberty of the players: if they wish to limit or determine their games differently than we have, let them do so. For if games were not at the pleasure of the players, they would not be games, but rather a constraint. 
+
+And they may, using these same pieces, play at Chess: taking a Pyramid [[notes: The most complex piece in Rythmomachia, made of several stacked shapes.]] for a king; two squares, one atop the other, for the queen; a square for a rook; a triangle atop a square,
+
+[[meta: catchword: ré,]] [[notes: This catchword at the bottom of the page suggests the next page begins with a word like *répondra* (will represent) or *résignera*, likely continuing the description of the Chess Knight.]]
+
+[[summary: This page explains how captured pieces contribute to a 'Victory' and highlights the flexibility of the rules, even suggesting that Rythmomachia pieces can be repurposed to play Chess.]]
+
+[[keywords: Rythmomachia, music theory, Diatessaron, Diapente, Diapason, Chess, Renaissance games, mathematical victory, game pieces]]

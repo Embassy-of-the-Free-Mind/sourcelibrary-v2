@@ -1,0 +1,27 @@
+[[meta: This page completes the sentence from the previous page, where the author explains that he is not translating his sources "word-for-word" but rather adapting them for a German-speaking audience. It outlines the structural plan for the upcoming manual on Rythmomachia.]]
+
+-># Preface.<-
+
+-for-word [[notes: Completing the thought from the preceding page: "not indeed to the end that I should bring it word-for-word..."]] into our tongue, but rather I have sought to arrange it so that it may be more easily understood and practiced by our nation.
+
+In order that I may proceed with this work in an orderly fashion, I will divide it into **Six Chapters**, and in them, I shall treat and describe the following:
+
+In the **First**: the form of the **Board** or the Table; and then the **Stones** [[notes: *Steine*, the common term for gaming pieces like those in Chess or Backgammon.]] or pieces which are used upon it for this game.
+
+In the **Second**: the **Numbers** which are marked upon the stones.
+
+In the **Third**: the **Spaces** [[notes: *Felder*, the squares of the board.]] upon which the stones are placed.
+
+In the **Fourth**: the **Movement** of the stones—how they are to be moved [[notes: *Ziehen*, the act of making a move in a board game.]].
+
+In the **Fifth**: the manner and way of **Combat** [[notes: *Kempfens* (modern *Kämpfens*); in Rythmomachia, "combat" involves capturing pieces through mathematical calculations like addition, subtraction, or geometric progression.]]—namely, how these stones should be brought against one another.
+
+In the **Sixth** and **Last**: the various **Conquests** [[notes: *Überwindungen*; the game has several types of victory conditions, including the "Common Victory" and the "Great Victory."]] through which victory is obtained and the game is brought to an end.
+
+<image-desc>A decorative woodcut tailpiece featuring a central human mask (mascaron) with a stylized headband, surrounded by ornate, symmetrical scrollwork and foliage. At the top corners are the heads of lions or similar heraldic creatures facing outwards.</image-desc>
+
+<sig>Kkk iij</sig>
+[[meta: catchword: Das]]
+
+[[summary: This page serves as a table of contents or outline for the following manual, dividing the explanation of the "Philosopher's Game" into six logical steps from equipment to victory conditions.]]
+[[keywords: Preface, Chapters, Game Board, Game Pieces, Arithmetic, Combat, Victory Conditions, Rythmomachia]]

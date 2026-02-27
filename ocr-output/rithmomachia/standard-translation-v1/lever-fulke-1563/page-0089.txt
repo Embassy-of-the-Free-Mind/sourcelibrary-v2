@@ -1,0 +1,23 @@
+->The Philosopher's Game<-
+
+...spaces around him directly or diagonally <note>original: "cornerwise"</note>, the piece <note>original: "man"</note> so besieged cannot escape because he cannot move diagonally <note>original: "cornerwyse"</note>. Therefore, he may be captured <note>original: "taken up"</note> as soon as the last of the four is set in his place.
+
+In all three kinds of playing, no siege <note>original: "Obsidion"</note> can be performed on any piece <note>original: "man"</note> with the help of his own teammates <note>original: "fellowes"</note>; instead, all four must be his adversaries.
+
+In this third kind of play, these pieces <note>original: "men"</note> can be captured <note>original: "taken"</note> in no other way except by siege <note>original: "Obsidion"</note>. Specifically, among the even pieces: 2, 4, 4, 153; and among the odd pieces: 3, 5, 7, 190.
+
+In every manner of capturing <note>original: "taking"</note>, this is to be noted: we must not place the piece <note>original: "man"</note> which captures in the space of the one that is captured. However, when a piece may be captured before we move <note>original: "drawe"</note>, then we shall move our piece into its space.
+
+### The Privilege of the King <note>original: "king"</note>
+
+The king <note>original: "king"</note> stands for as many pieces <note>original: "men"</note> as he has steps. That is, the even king stands for 6, and the odd king stands for 5. If any of these...
+
+***
+
+<summary>
+This page details the specific mechanics of "Obsidion" (siege) in Rithmomachia. It explains that a piece is captured when surrounded on all four sides by enemy pieces, as the besieged piece lacks the ability to move diagonally to escape. It notes that a capture must be performed entirely by opposing pieces without help from the piece's own side. The text also lists specific numerical pieces that can only be captured via siege. Finally, it provides a general rule for movement during capture—clarifying that the capturing piece does not usually land on the captured piece's square unless the capture happens before the move—and begins to define the special movement "privileges" of the king (the pyramid), based on the number of "steps" or values it represents.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, Obsidion, siege, capture rules, board game mechanics, even and odd pieces, movement rules, king's privilege, pyramid piece, 16th century gaming
+</keywords>

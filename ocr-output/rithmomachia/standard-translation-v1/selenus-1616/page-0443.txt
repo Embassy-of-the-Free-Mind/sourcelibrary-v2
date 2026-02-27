@@ -1,0 +1,14 @@
+[[meta: This page continues the move-by-move tactical breakdown of a chess opening from page 408. The syllable "ter" at the beginning of the text completes the word "Soldaten" (Soldiers/Pawns) from the previous page's final sentence. The author continues to use a numerical coordinate system where the 64 squares of the board are numbered 1–64.]]
+
+### Chapter 5: On the Game of Chess.
+
+[Soldier] [[notes: Completing "Soldaten" from the previous page]] of the King’s Archer [[notes: King’s Bishop’s Pawn]] onto twenty-six: **The White player** does not take the Black King’s Soldier [[notes: Black King’s Pawn]] with the King’s Archer [[notes: King’s Bishop]] (for otherwise **the Black player** would take his King’s Rider [[notes: White's King’s Knight]] with the King’s Archer and move against his Queen: if he then takes him with the King’s Rider’s Soldier [[notes: King’s Knight’s Pawn]], then **the Black player** gives check with the Queen from forty and would thus win his King’s Archer). Instead, now and not before, the King’s Rider (mentioned in no. 21) moves to thirteen (for the same is now used with profit and at the proper time, because he not only secures the King against check from the Black Queen, but also defends the King’s Rider) and subsequently wins the Black King’s Soldier, along with the entire game: **The Black player**, however, contrary to **Damiano’s** [[notes: Pedro Damiano (c. 1480–1544) was an early Portuguese chess theorist whose 1512 book was a standard text; the author here is proving Damiano’s analysis wrong]] instruction, shall be deprived of the victory.
+
+->[A decorative woodcut tailpiece featuring a central human mask or face set within elaborate Baroque-style scrolling foliage, strapwork, and festoons. At the upper corners are two animal-like heads, possibly lions or griffins, integrated into the symmetrical scrollwork.]<-
+
+Eff ij
+[[meta: catchword: Das]]
+
+[[summary: This page concludes a tactical refutation of the "Damiano Defense," demonstrating that by moving the Knight (Rider) to square 13, White can secure the King and ultimately win. The author specifically highlights a flaw in the historical instructions provided by the famous chess master Damiano.]]
+
+[[keywords: Chess tactics, Damiano Defense, Knight move, Bishop, Pawn, 17th-century chess, Pedro Damiano, King's Rider]]

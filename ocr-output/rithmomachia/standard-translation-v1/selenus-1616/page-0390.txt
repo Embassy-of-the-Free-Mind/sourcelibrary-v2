@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical variations and "number-play" established in Chapter 9. The coordinate system uses a 1–64 scale starting from the White side (1=a1, 8=h1, 64=h8). The terminology remains consistent with the previous pages: "Rider" (Reuter) for Knight, "Shooter" (Schütze) for Bishop, "Rook" (Rochen) for Castle, and "Soldier" (Soldat) for Pawn.]]
+
+### The Third Book) 9. Chapter:
+
+[Rider's] **Soldiers** / to **twenty-six**: **The White** [player] / gives / with the **Queen** / from **fifty-nine** / **Check**: **The Black** [player] / must / place the **King** / on **fifty-three**: **The White** [player] / offers / with the **K. Rider** [[notes: King's Knight]] / to the **B. King** / and the **B. Queen** / from **forty-three** / **Check** / and wins the same [[notes: i.e., captures the Black Queen]], along with the entire game.
+
+[[margin: 50.]] But if **the Black** [player] / does not move the **Queen** / to 26 (no. 49) / but rather moves his **Rider** / (in order / to keep an eye on the **fifty-ninth** square) / to the **W. Queen** / at **fifty-three**: then **the White** [player] / gives / with the same / from **forty-four** / **Check**: **The Black** [player] / moves the **King** / to **sixty-one**: **The White** [player] / gives / with the **K. Bishop** [[notes: *Schütze*, literally "shooter"]] / from **forty-three** / **Check**: **The Black** [player] / must take him / with the **K. Rider**: **The White** [player] / [takes] the same / with the **Queen** / and gives **Check**: **The Black** [player] / (in order / not to lose the **Queen** / to the **W. K. Bishop** / at **forty-four**) / must not place the **King** / on **fifty-three** / but rather / on **sixty**: **The White** [player] / gives / with the **Queen** / from **fifty-nine** / **Check**: **The Black** [player] / must move the **King** / to **fifty-three**: **The White** [player] / gives / with the **K. Rider** / from **forty-three** / **Check** / and places him / on the **B. K. Bishop**: **The Black** [player] / must move the **King** / to **forty-six**: **The White** [player] / takes / with his **Queen** / the **B. Queen**: **The Black** [player] / [takes] the same / with the **K. Rook** [[notes: *Rochen*, the archaic term for the Rook]]: **The White** [player] / [takes] the **B. K. Bishop** / with the **K. Rider**: **The Black** [player] / (since he / has lost both his **Riders**) / must of necessity / draw the shorter straw [[notes: *den kürtzern ziehen* is an idiom meaning to come out the loser or be at a disadvantage]].
+
+But if **the Black** [player] / does not arrange / his moves / as they have been ordered / from no. 47 until here / but in another way: yet for **the White** [player] / because of this arrangement of his pieces / the achievement of victory / cannot fail to occur: which then / he who / perhaps had the desire / to seek out / in practice / might find it to be so.
+
+[[margin: 51.]] But if **the Black** [player] / does not take the **W. Soldier** / with the **K. Bishop** (no. 46) / but rather / with the **K. Soldier**: then **the White** [player] / moves / the **K. Rider** / (out of danger) / to **nineteen** / and will have / further / good opportunity / to well-arrange his game.
+
+[[margin: 52.]] But if **the White** [player] / does not take the **B. Soldier** (no. 4) / but moves / the **K. Rider** / (out of danger) / to **nineteen**:
+
+[[meta: catchword: so nimt / (so [he] takes)]]
+
+[[summary: This page continues a detailed technical analysis of specific chess variations, focusing on a sequence where White forces a win of the Black Queen or a decisive material advantage. The author concludes the section by noting that even if Black deviates from these specific moves, White's superior positioning ensures victory.]]
+
+[[keywords: chess tactics, 17th-century chess, notation, Knight fork, material advantage, Gustavus Selenus]]

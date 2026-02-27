@@ -1,0 +1,46 @@
+[[meta: This page continues the catalog of harmonic arrangements in the game of Rithmomachia. Having previously established "The Third" set of numbers, it concludes the calculations for that sequence and presents "The Eighth" and "The Ninth" (the final set), demonstrating how players calculate musical intervals—and thus achieve victory—using the differences between the numbers on the board.]]
+
+# About the Number-Battle.
+
+The **Twelfth**, A, D, likewise C, or the **difference** of A, C (which is 6) compared against the difference of C, D (which is 2). Likewise B, compared against the differences of A, B and B, C (which is 3). [[notes: A ratio of 3:1, such as 6:2 or 9:3, creates the musical Twelfth.]]
+
+The **Fifteenth**, the difference A, D (8) held against the difference C, D (2). Likewise A, held against the differences A, B and B, C (which is 3). [[notes: A ratio of 4:1, such as 8:2, creates the Double Octave or Fifteenth.]]
+
+The **Tone**, the number B compared with the difference A, D (8). [[notes: In the context of Rithmomachia, the Tone is a 9:8 ratio.]]
+
+->The Eighth.<-
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 6. | 8. | 9. | 12. |
+
+The **Fifth**, A, C, likewise B, or the difference A, C (4) compared against D, or against the difference A, D (6). Likewise the differences B, D and A, B (3) compared against the difference C, D (2). [[notes: All these comparisons result in the 3:2 ratio of a Perfect Fifth: 12:8, 9:6, or 3:2.]]
+
+The **Fourth**, A, B, likewise C, compared against D, or against the difference A, D (6). Likewise the difference A, C (4) compared against the differences A, B and B, D (3). [[notes: These result in the 4:3 ratio of a Perfect Fourth: 12:9, 8:6, or 4:3.]]
+
+The **Octave**, the A against D, or against the difference A, D (6). Likewise C, against the difference A, C (4). Likewise D, or the difference A, D (6), compared against the differences A, B and B, D (3). Likewise the difference A, C (4), or the difference B, C (1), compared with the difference C, D (2). [[notes: All these result in the 2:1 ratio of an Octave: 12:6, 8:4, 6:3, or 2:1.]]
+
+The **Twelfth**, the A against the difference A, C (4). Likewise B, or the difference B, C (1), compared against the differences A, B and B, D (3). Likewise D, and the difference A, D (6), compared against the difference D, C (2). [[notes: These result in the 3:1 ratio of a Twelfth: 12:4, 3:1, or 6:2.]]
+
+The **Fifteenth**, the A compared against the differences A, B and B, D (3). Likewise C, against the difference C, D (2). Likewise the difference A, C compared against the difference B, C (1). [[notes: These result in the 4:1 ratio of a Fifteenth: 12:3, 8:2, or 4:1.]]
+
+->The ninth / and last.<-
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 12. | 15. | 16. | 20. |
+
+The **Fifth**, the D compared against the difference A, D (8). [[notes: 12:8 simplifies to the 3:2 ratio of a Fifth.]]
+
+The **Fourth**, A, C, and B, D, likewise the differences A, B and B, D (4) compared against the difference C, D (3). [[notes: 20:15, 16:12, and 4:3 all represent the ratio of a Fourth.]]
+
+The **Octave**, the B, or the differences A, B and B, D (4) compared against the difference A, D (8). [[notes: 16:8 and 8:4 both represent the 2:1 ratio of an Octave.]]
+
+The **Twelfth**, the D compared against the differences B, D and B, A (4). Likewise C, compared against the difference A, C (5). [[notes: 12:4 and 15:5 both represent the 3:1 ratio of a Twelfth.]]
+
+<sig>Ppp iij</sig>
+<meta>catchword: The</meta>
+
+[[summary: This page provides the mathematical ratios for the eighth and ninth "Harmonic Victories" in the game of Rithmomachia. It uses four-number sets to derive the Pythagorean musical intervals (Fifth, Fourth, Octave, etc.) based on the proportions of the numbers and their differences.]]
+
+[[keywords: Rithmomachia, number game, musical proportions, Pythagorean tuning, Fifth, Fourth, Octave, Twelfth, mathematical victory]]

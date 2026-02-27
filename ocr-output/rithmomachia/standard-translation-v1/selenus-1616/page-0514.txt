@@ -1,0 +1,53 @@
+[[meta: This page provides the mathematical lookup tables for the capture methods of Multiplication and Division described on the previous page. The tables show which specific numbers can capture one another based on the number of empty spaces ("Fields") between them.]]
+
+# The Fifth Chapter
+
+| A White Stone. | The Fields. | A Black Stone. | A Black Stone. | The Fields. | A White Stone. |
+|:---|:---|:---|:---|:---|:---|
+| 4. | 3. | 12. | 3. | 2. | 6. |
+| 6. | 2. | 12. | 3. | 3. | 9. |
+| 2. | 6. | 12. | 3. | 5. | 15. |
+| 4. | 4. | 16. | 5. | 3. | 15. |
+| 8. | 2. | 16. | 5. | 4. | 20. |
+| 2. | 8. | 16. | 5. | 5. | 25. |
+| 4. | 7. | 28. | 9. | 4. | 36. |
+| 6. | 5. | 30. | 12. | 3. | 36. |
+| 15. | 2. | 30. | 3. | 12. | 36. |
+| 9. | 4. | 36. | 3. | 14. | 42. |
+| 4. | 9. | 36. | 9. | 5. | 45. |
+| 8. | 7. | 56. | 5. | 9. | 45. |
+| 8. | 8. | 64. | 7. | 7. | 49. |
+| 16. | 4. | 64. | 16. | 4. | 64. |
+| 6. | 11. | 66. | 36. | 2. | 72. |
+| 9. | 9. | 81. | 12. | 6. | 72. |
+| 45. | 2. | 90. | 9. | 8. | 72. |
+| 15. | 6. | 90. | 9. | 9. | 81. |
+| 9. | 10. | 90. | | | |
+| 20. | 5. | 100. | | | |
+| 25. | 4. | 100. | | | |
+| 20. | 6. | 120. | | | |
+| 25. | 9. | 225. | | | |
+
+[[notes: The table above illustrates captures by **Multiplication**. For example, in the first row, a White stone with the value 4 can capture a Black stone with the value 12 if there are exactly 3 empty fields between them, because 4 multiplied by 3 equals 12. The columns on the right show the reverse scenario where Black stones capture White ones.]]
+
+The following are the numbers which can be obtained and removed [[notes: "Abgeſchaffet," meaning captured or taken off the board]] in this game through **Division**: and arranged and marked on the left side are the numbers of the White and Black stones and the empty spaces which can drive away a Black or White stone.
+
+| A White Stone. | The Fields. | A Black Stone. | A Black Stone. | The Fields. | A White Stone. |
+|:---|:---|:---|:---|:---|:---|
+| 6. | 2. | 3. | 12. | 3. | 4. |
+| 9. | 3. | 3. | 12. | 2. | 6. |
+| 15. | 5. | 3. | 12. | 6. | 2. |
+| 15. | 3. | 5. | 16. | 4. | 4. |
+| 20. | 4. | 5. | 16. | 2. | 8. |
+| 25. | 5. | 5. | 16. | 8. | 2. |
+| 36. | 4. | 9. | 28. | 7. | 4. |
+| 36. | 3. | 12. | 30. | 5. | 6. |
+| 36. | 12. | 3. | 30. | 2. | 15. |
+
+[[notes: This second table illustrates captures by **Division**. Here, the larger number is divided by the number of empty spaces to see if it matches the value of the target stone. For example, a White stone of 6 can capture a Black stone of 3 if there are 2 spaces between them, because 6 divided by 2 equals 3.]]
+
+[[meta: catchword: 42. 4.]]
+
+[[summary: This page contains reference tables for the "Multiplication" and "Division" capture rules in Rythmomachia, listing specific piece values and the required distances (empty fields) to complete a capture. These tables served as a quick-reference guide for players to calculate complex proportional captures during a match.]]
+
+[[keywords: Rythmomachia, Multiplication capture, Division capture, mathematical game, game tables, numerical proportions]]

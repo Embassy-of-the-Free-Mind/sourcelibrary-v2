@@ -157,6 +157,21 @@ function linkBookTitles(
 
 const COMPACT_LIMIT = 14;
 
+/** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
+ *  The /api/image wrapper crashes Next.js Image during SSR. */
+function sanitizeThumbnail(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  // Unwrap /api/image?url=ENCODED proxy wrapper
+  if (url.startsWith('/api/image')) {
+    const match = url.match(/[?&]url=([^&]+)/);
+    if (match) return decodeURIComponent(match[1]);
+    return undefined;
+  }
+  // Only allow absolute http(s) URLs for Next.js Image
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return undefined;
+}
+
 /** Race a promise against a timeout — returns fallback on timeout or error */
 function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
   return Promise.race([
@@ -252,16 +267,20 @@ async function fetchCollectionData(id: string) {
 
   const { _id, ...collectionClean } = collection;
 
+  // Sanitize thumbnails to prevent /api/image wrapper URLs from crashing Next.js Image
+  const sanitizeBookThumbs = (items: Record<string, unknown>[]) =>
+    items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail as string) }));
+
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collection: collectionClean as any,
-    books: books as unknown as BookItem[],
+    books: sanitizeBookThumbs(books) as unknown as BookItem[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    highlights: highlights as any[],
+    highlights: sanitizeBookThumbs(highlights) as any[],
     total,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
-    mentionedBooks: mentionedBooks as unknown as BookItem[],
+    mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
   };
 }
 
@@ -270,7 +289,13 @@ async function fetchCollectionData(id: string) {
 export default async function CollectionDetailPage({ params }: Props) {
   const { id } = await params;
 
-  const data = await fetchCollectionData(id);
+  let data;
+  try {
+    data = await fetchCollectionData(id);
+  } catch (err) {
+    console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
+    throw err; // Re-throw so ISR sees 500 (not cached)
+  }
   if (!data) notFound();
 
   const { collection, books, highlights, galleryImages, total, mentionedBooks } = data;

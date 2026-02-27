@@ -1,0 +1,19 @@
+[[meta: This page continues the mathematical instructions for calculating the values of triangular pieces in the game of Rythmomachia. The previous page ended mid-sentence, explaining the etymology of "sesquialter."]]
+
+# OF PHILOSOPHERS.
+
+...and its other part: namely its half. Then you will find that the number which contains 6 and its half is 9: for 9 contains 6 and the half of 6, which is 3. You will say, therefore, that 6 is the **required number** matching with the **seeking number** 9, in the particular **sesquialter** proportion [[notes: A "sesquialter" proportion refers to a ratio of 3:2. In this game, the players calculate the value of pieces by adding a fraction of a number to itself. Here, 6 + (6/2) = 9]]. 
+
+Afterward, we come to the second number, which is 12, an odd number [[notes: Though 12 is mathematically even, the author classifies it here as "odd" (non-pair) because it belongs to the sequence of pieces derived from the odd-numbered row (3 + 9 = 12) mentioned on the previous page]], and we will consider the name of the second particular species, which is **sesquitertian** [[notes: A ratio of 4:3]]. And thus, saying "tertian" [tierce], you will look for what the third part is, and you will find that it is 4. Thus, find a number that contains 12 and its third part 4, and you will see that it will be 16, which you will say is the particular **required number** paired with 12. 
+
+Consequently, for the third particular number, which is 20 (an even number), consider the name of the 3rd species which is **sesquiquartan** [[notes: A ratio of 5:4]]. Having seen and placed above that it is its fourth part, find a number that contains it and its fourth part, which is five, and you will have the **required number** 25. And so it goes for the others.
+
+But I will repeat here the aforementioned numbers found: and so that you may work to find their companions in particular proportion, above each of them you shall place the number that makes up their part [[notes: That is, the increment or the fraction being added]]. This part must be contained along with them in the **required number**, matching each of the aforementioned **seeking numbers** in particular proportion, following the number designating the preceding parts according to the natural order of numbers starting at 3.
+
+-> B ii <-
+
+[[gloss: number, proportion, sesquialter, sesquitertian, sesquiquartan, part, half]]
+
+[[summary: This page provides step-by-step mathematical instructions for determining the values of triangular game pieces using "superparticular" ratios. It demonstrates how to derive the numbers 9, 16, and 25 by adding a half, a third, and a fourth to the base numbers 6, 12, and 20.]]
+
+[[keywords: Rythmomachia, mathematics, proportions, sesquialter, sesquitertian, sesquiquartan, game pieces, Renaissance education]]

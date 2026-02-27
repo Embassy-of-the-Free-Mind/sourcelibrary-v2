@@ -1,0 +1,18 @@
+[[meta: This page continues the discussion from page 142 regarding the "touch-move" rule. The previous page ended mid-sentence, explaining that if a player hesitates after touching a piece, it is assumed they intended to move it but then realized it might be disadvantageous.]]
+
+[[header: 4. Chapter: On the Game of Chess. 143]]
+
+**opponent** [[notes: *gegentheil*, literally "opposite part" or adversary]], [he] will find little hearing for his excuses. But if he refuses to play the touched piece—even though he is able to do so—or to heed the touched color or square, then the other player may rightfully and lawfully pick up his own pieces, and is not forced to play the game further.
+
+Because also, (2.) in this game everything must proceed uprightly, every player who makes an illegal move shall be subject to the penalty which the other playing against him shall set and name, on account of the disorder he has caused thereby. Now, if the latter is satisfied and allows the move, it may stand; but if not, he [the offender] must move the piece he touched and place it in a spot where it can legally be moved. This is understood to apply only so long as the one who has the choice has not yet made a move himself. But if he has excused the other and moved a piece thereafter, the aforementioned freedom and advantage are taken from him: seeing as it appears he was at peace with the move that occurred, and it helps him not at all to later claim—and thereby try to gloss over his error—that he had not noticed the illegal move. For if such were permitted, the one who played against the rules of this game might also claim that he did not move correctly and therefore wish to make a new move, on the grounds that he committed the error against his will. Accordingly, this law is ordained to the end that all bickering and discord in this game remain prevented as much as possible.
+
+Also, (3.) the bad and unlawful custom which is still in vogue in some places—specifically in **Italy** [[notes: *Welschland* was a common term for Italy or French-speaking regions]] and England—shall not be valid: namely, that one performs two moves at once, letting the **Rook** [[notes: *Rochen*, the historical term for the Castle]] jump near to the King or into his square, and the King at the same time jump into the **Knight's** [[notes: *Reuter*, literally "Rider"]] or the Rook's square; or plays a **Pawn** [[notes: *Soldat*, literally "Soldier"]] forward and moves the King into its square. Because these are moves which a good Chess-player has never yielded to or agreed upon, they shall not be preferred over the ancient institution and order of this game (which requires that one move happen after the other).
+
+A Chess-player must also (4.) in the moving of the pieces, 
+
+<sig>T</sig>
+[[meta: catchword: weiß (white)]]
+
+[[summary: This page details the penalties for illegal moves and the "touch-move" rule, emphasizing that if an opponent accepts an illegal move by playing their next turn, they cannot later complain. It also explicitly forbids the "double-move" style of castling practiced in Italy and England, upholding a more traditional one-move-at-a-time rule.]]
+
+[[keywords: etiquette, illegal moves, castling, Rochen, Reuter, touch-move rule, Chess history, 17th-century rules]]

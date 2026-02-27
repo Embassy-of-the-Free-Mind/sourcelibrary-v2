@@ -1,0 +1,63 @@
+[[meta: This page continues the mathematical exploration of ratios, specifically focusing on "multiple-superparticular" and "multiple-superpartient" ratios. In the previous section, the author demonstrated that the sesquialtera (3:2) is unique among simple superparticulars. Here, the focus shifts to how these complex ratios behave when "doubled"—which in the language of the time means squared or compounded with themselves.]]
+
+<page-num>VIII</page-num>
+<sig>e3</sig>
+
+[[margin: 65]]
+### ¶ To investigate the multiple superparticular which, when doubled, produces a multiple superparticular.
+
+¶ Take any number **a**, which I multiply by itself to produce **b**. To this I add one, and let the whole be **c**. It is manifest that the ratio of **c** to **a** is a *multiple superparticular* [[notes: A ratio where the larger number contains the smaller multiple times, plus one extra part, such as 5:2 (two and a half)]]. If this ratio is multiplied by itself, the result is as much as **a** squared, plus the part twice, and the part multiplied by itself. But **a** squared and the part taken twice produces a whole number, and the part by itself produces a fraction. Therefore, that which is produced is a number and a part. Thus, the compounded ratio will be a multiple superparticular. You could also prove this as in the fifty-ninth [proposition] of this book.
+
+[[image-desc: A diagram with three horizontal lines. The top line is labeled 'c' with the number 5, the middle line 'b' with 4, and the bottom line 'a' with 2. This illustrates the example where a=2, b=4, and c=5, creating the ratio 5:2.]]
+
+[[margin: 66]]
+### ¶ To inquire into the multiple superparticular which, when taken twice, composes a multiple superpartient.
+
+¶ Let **a** be any odd number and **b** be its nearest even number; let its half be **c**. I take a multiple superparticular whose multiple number is **c** and whose part is named from **a**. Let this ratio be **d** to **e**. I say that the multiple superparticular ratio **d** to **e**, when taken twice [[notes: Meaning squared or compounded]], constitutes a *multiple superpartient* [[notes: A ratio where the larger number contains the smaller multiple times, plus several fractional parts]]. For if this is multiplied by itself, there will result the square of **c** and similar parts taken according to **b**, and a part of the square of **a**. Those parts, however, constitute one [whole] and one remains over with it. And because those two parts, by the twelfth [proposition] of this book, do not constitute a single whole, the product will be a number and parts. Therefore, the compounded ratio will be a multiple superpartient. In the proposed case, it would be a "quintuple superquadrupartient ninths" [[notes: This refers to the ratio 49:9, or 5 and 4/9]].
+
+[[image-desc: A line diagram showing numerical relationships. It includes the numbers 49 and 9 at the top. Below, lines are labeled b (4), a (3), c (2). Calculations lead to 7 and 9, with 4 at the base.]]
+
+[[margin: 67]]
+### ¶ To examine the multiple superpartient which, when doubled, composes a multiple superparticular.
+
+¶ I take, through the sixty-third [proposition] of this book, a *superpartient* which, when doubled, composes a multiple superparticular. Let the number naming the parts be **a**, the numerator be **b**, and let **c** be one greater than **a**. Let **c** be multiplied by **a**, and let **b** be added to the product. Let the whole be **d**. It is manifest that the ratio of **d** to **a** is a multiple superpartient, where the number naming the multiple is **c**, the denominator of the parts is **a**, and their number is **b**. I say that this ratio, when doubled, is a multiple superparticular. For its denomination multiplied by itself would produce a number and a part, which is easy to see as in the preceding sections.
+
+[[image-desc: A diagram with four lines: line d is 161, line c is 13, line a is 12, and line b is 5.]]
+
+[[margin: 68]]
+### ¶ Finally, it remains to look at the multiple superpartient from which, when doubled, a multiple superpartient results.
+
+¶ Let the superpartient be sought through the sixty-second [proposition] of this book, which when doubled constitutes a multiple superpartient. Once found, one must proceed as in the preceding [proposition].
+
+[[margin: 69]]
+### ¶ To reduce a given ratio into ratios of which any number are equal superparticulars.
+
+¶ Let the smallest terms of the given ratio be **a** and **b**, and let **c** be the number according to which equal superparticulars are to be taken. Then let the larger **c** be multiplied by **a** and by **b**, and let them become **d** and **e**, but in such a way that between **d** and **e** there are more numbers than there are units in **c**. Let the first after **d**, which will be the greatest of them, be **f**. It is manifest that the ratio of **f** to **d** is a superparticular ratio, and the smallest of all those that are continuous between the numbers from **d** up to **e**, because it is denominated by the smaller part. Continue the ratio of **f** to **d** taken according to the number **c**. And because **l** [is to] **m**, the ratio of **h** to **m** will be composed of the ratios of **f** to **d** taken according to the number **c**. And because **b**, by the nineteenth [proposition] of the third book, is in **h** a certain number of times, let **e** be in **n** just as many times. It is manifest that **h** is to **n** as **d** is to **e**, and therefore as **a** is to **b**. It is therefore established that the ratio **a** to **b** is divided into ratios of which several taken will be equal superparticulars according to the assigned number, which is what was proposed.
+
+[[image-desc: A diagram showing lines labeled f (13), d (12), e (6), c (3), b (1). Below are the letters g, h, k, l, m.]]
+
+[[margin: 70]]
+### ¶ Given any number of equal terms, to procreate from them just as many "duples" in order, and from those "triples"; and from those previously found, to produce just as many in the next multiplicity of continuous proportions. Likewise, to elicit similar superparticulars from them.
+
+---
+
+### ¶ Figure of equality for any number of equal terms.
+
+| | | | | | | | | | | | | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | **S I X F O L D** | | | **16** | **16** | **S E V E N F O L D** | | **16** | **16** | **16** | | | |
+| | **E Q U A L I T Y** | | **4** | **4** | **4** | **E Q U A L I T Y** | | **4** | **4** | **4** | | | |
+| Equalities: | **A** | 1 | 1 | 1 | 1 | ties. | 1 | 1 | 1 | 1 | 1 | 1 | |
+| Duples | **B** | 1 | 2 | 4 | 8 | 16 | 32 | | 1 | 2 | 4 | 8 | 16 | 32 | 64 |
+| Triples | **L** | 1 | 3 | 9 | 27 | 81 | 243 | | 1 | 3 | 9 | 27 | 81 | 243 | 729 |
+| Quadruples | **D** | 1 | 4 | 16 | 64 | 256 | 1024 | | 1 | 4 | 16 | 64 | 256 | 1024 | 4096 |
+| Sesquialteras | **E** | 32 | 48 | 72 | 108 | 162 | 243 | | 64 | 96 | 144 | 216 | 324 | 486 | 729 |
+| Sesquitertias | **F** | 243 | 324 | 432 | 576 | 768 | 1024 | | 729 | 972 | 1296 | 1728 | 2304 | 3072 | 4096 |
+| Sesquiquartas | **G** | 1024 | 1280 | 1600 | 2000 | 2500 | 3125 | | 4096 | 5120 | 6400 | 8000 | 10000 | 12500 | 15625 |
+| | | **D** | **K** | **L** | **M** | **N** | | | **D** | **K** | **L** | **M** | **N** | **P** |
+
+[[notes: This table, common in Renaissance arithmetic, demonstrates how various ratios (duple, triple, and superparticulars like sesquialtera 3:2) can be derived from a string of equal numbers (1, 1, 1...) through a specific process of addition and doubling. The "Sixfold" and "Sevenfold" refer to the number of terms in the sequence.]]
+
+[[summary: This page details the rules for compounding "multiple" ratios (where one number contains another plus a fraction) and provides a complex table showing how different ratio sequences—multiples and superparticulars—are generated from a state of equality.]]
+
+[[keywords: multiple superparticular, multiple superpartient, sesquialtera, sesquitertia, sesquiquarta, geometric progression, mathematical table, ratios]]

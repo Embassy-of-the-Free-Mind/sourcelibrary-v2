@@ -1,0 +1,19 @@
+[[meta: This page concludes the introductory defense of chess, shifting from legal arguments to the practical benefits of study and addressing the concern that the game is mentally exhausting.]]
+
+# Of the Game of Chess.
+D
+Das
+
+[[margin: Chapter 1:]]
+One must indeed admit that a beginner will not gather the fruits of this art right at the beginning. If, however, he is willing to reflect upon and live by the rules and instructions which we have orderly recorded in this book for his benefit, we do not doubt that he would grasp and master this art with little effort and loss of time—so that, in this regard, there would be all the less, or even nothing, to complain about.
+
+If one should also, fourthly, argue that this game requires such sharp and earnest reflection that it cannot be done without effort and **exhaustion of the spirit**, the answer is briefly this: one is not brooding here over such hidden or lofty matters which can only be grasped by the intellect and not by the senses. Rather, one must only occasionally sharpen the intellect to make a **prudent move** and reflect with diligent thoughts—which are, nevertheless, greatly aided by **visual inspection** [[notes: *Augenschein* — the physical evidence of the board before the player’s eyes]]. Furthermore, any effort or displeasure, should any arise or occur to the player in this regard, is immediately and easily driven away by the pleasure of viewing the **Table** [[notes: *Tabel* — the chessboard]], the order, the elegant positioning and leading of the **Stones** [[notes: *Steine* — the chess pieces]], the manifold variety of the moves, a well-executed turn, and the like.
+
+As for the remaining objections, they concern only the **misuse**, which must not be confused with **right use**; nor should one **throw the baby out with the bathwater** [[notes: *das Kind mit dem Bade ausschütten* — a classic German idiom warning against discarding something valuable while trying to get rid of its negative aspects]].
+
+[[notes: The image below is a decorative woodcut typical of 17th-century printing, used here to mark a transition in the text.]]
+
+*An ornamental woodcut vignette featuring a central grotesque mask or human face. The face is surrounded by symmetrical scrollwork, ribbons, and stylized foliage. Two animal-like heads, possibly lions or mythical creatures, emerge from the upper corners of the decorative arrangement.*
+
+[[summary: This page argues that while chess requires study, the effort is rewarded by the pleasure of the game's visual and tactical variety, and concludes that objections to chess are usually criticisms of its misuse rather than the game itself.]]
+[[keywords: learning chess, mental effort, visual aids, chess pieces, misuse vs. right use, 17th-century idioms]]

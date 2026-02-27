@@ -1,0 +1,38 @@
+[[meta: This page continues the calculation for the "Square" pieces of the Black and White sides in Rythmomachia. The previous page ended while explaining the second ratio (supertripartient fourths, or 1 + 3/4). This page begins mid-word with the conclusion of the general term "superpartient."]]
+
+### RYTHMOMACHIA, THE GAME
+[[notes: Rythmomachia, also known as "The Philosophers' Game," was a complex mathematical board game popular from the 11th to the 17th centuries. It was used to teach Boethian number theory.]]
+
+*tient: Consequently, coming to the third*
+*requiring number, which is 45, in the rank of the evens,*
+[[notes: In this game, pieces are categorized by whether they were derived from even or odd "Triangular" numbers. 45 is the third number in this specific sequence.]]
+*let us take the name of the third species of superpartient [proportion],*
+*which is superquadrupartient fifths, which is as*
+*much as to say "four-fifths more," and*
+*thus choose a number that contains the afore-*
+*said 45, and 4 fifths more. Now the fifth part*
+*of 45 is 9; therefore taking four-fifths*
+*you will have 36. Select then a number that contains*
+*the four-fifths, which are 36, to-*
+*gether with the aforesaid found requiring number 45,*
+*and 81 will present itself. You will say this required [number] matches*
+*with 45, in superpartient proportion. I will repeat*
+[[notes: The author is calculating a ratio of 81:45. In Renaissance math, "superquadrupartient fifths" means the larger number is equal to the smaller number plus four-fifths of it: $45 + (4/5 \times 45) = 45 + 36 = 81$. This simplifies to a 9:5 ratio.]]
+*here the aforesaid requiring numbers, and so*
+*that you do not struggle to find the required numbers, to*
+*complete with them the superpartient proportion,*
+*above each of these requiring numbers, I will place*
+*the number of their parts which must*
+*be taken and added to them to find*
+*their required number for each of the aforesaid*
+*requiring numbers. And the said number*
+*of parts always proceeds according to the natural order of*
+*odd numbers, and begins its progression*
+*at 5, and their denominators written above, pro-*
+*ceeding by the even number such as biquadri,*
+[[notes: "Biquadri" likely refers to the "Square" pieces of the game (which are doubled in value or hierarchy here). The author is explaining how to build a reference table for the player.]]
+*and according to the order of the odds, on the contrary.*
+
+[[summary: This page explains the mathematical calculation for the third "Square" piece in Rythmomachia, deriving the number 81 from 45 using a 9:5 ratio. The author also begins describing a shortcut table to help players find these complex proportions more easily.]]
+
+[[keywords: Rythmomachia, superpartient, proportions, Renaissance mathematics, game pieces, number theory, superquadrupartient fifths]]

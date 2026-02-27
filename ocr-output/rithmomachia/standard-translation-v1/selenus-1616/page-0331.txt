@@ -1,0 +1,117 @@
+[[meta: This page continues the technical illustrations from the previous section. While the previous translator noted potential textile patterns, the header "Vom Schach-Spiel" (On the Game of Chess) and the presence of "Gustavus Selenus" (the pseudonym of Augustus the Younger, Duke of Brunswick-Lüneburg, who wrote a seminal chess manual in 1616) confirms these are chess diagrams. The abbreviations S and W stand for Schwarz (Black) and Weiß (White), while R, S, and K denote the pieces.]]
+
+# 4. cap: On the Game of Chess.
+
+[[margin: 4. cap: On the Game of Chess.]]
+
+->no. 1. 2. 7.<-
+
+[[notes: These 8x8 grids represent specific board states or chess problems. The abbreviations used are: **B.R.** for Black Rook (*Schwarz Roch*), **B.S.** for Black Soldier/Pawn (*Schwarz Soldat*), **B.K.** for Black King (*Schwarz König*), **W.R.** for White Rook, **W.S.** for White Soldier, and **W.K.** for White King. The symbol **B.Q.** is used for the piece marked "S&," likely the Black Queen. The numbers (e.g., 42, 37) refer to specific squares on the board according to the 1-64 numbering system used in early modern chess treatises.]]
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | B.Q. | | B.S. | B.R. | B.R. |
+| B.S. | B.S. | B.S. | B.S. | | B.K. | B.S. | B.S. |
+| | | | | 42 | | | |
+| | | | 37 | W.R. | | | |
+| | | W.S. | | W.S. | | | |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | W.S. | | W.S. | W.S. | W.S. |
+| W.R. | W.R. | W.S. | | W.K. | | | W.R. |
+
+->no. 8. 11. 12. 13. 14. 15. 25. 46.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | B.Q. | | B.S. | B.R. | B.R. |
+| B.S. | B.S. | B.S. | B.S. | 52 | | B.S. | B.S. |
+| | | 45 | | 43 | B.K. | 41 | |
+| | | | 37 | W.R. | | | 33 |
+| | | W.S. | | W.S. | | | W.S. |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | W.S. | | W.S. | W.S. | |
+| W.R. | W.R. | W.S. | | W.K. | | | W.R. |
+
+->no. 18. 24.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | | | B.S. | B.R. | B.R. |
+| B.S. | B.S. | B.S. | B.S. | W.S. | | B.K. | B.S. |
+| | | | | | | | |
+| | | | | W.R. | | | |
+| | | W.S. | W.S. | W.S. | | | W.S. |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | | | W.S. | W.S. | |
+| W.R. | W.R. | | | W.K. | | | W.R. |
+
+->no. 22. 23.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | | | B.S. | | |
+| B.S. | B.S. | B.S. | B.S. | B.R. | W.R. | | B.S. |
+| | | | | | | | 41 |
+| | | | | | | B.K. | |
+| | | W.S. | W.S. | W.S. | | | 25 |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | | | W.S. | | |
+| W.R. | W.R. | | | W.K. | | | W.R. |
+
+<column-break/>
+
+->no. 3. 4.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | B.Q. | | B.S. | B.R. | B.R. |
+| B.S. | W.S. | B.S. | | | | B.S. | |
+| | | | | 45 | | | |
+| | | | | | W.R. | | |
+| | | | W.S. | W.S. | | | W.S. |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | W.S. | | W.S. | W.S. | |
+| W.R. | W.R. | W.S. | | W.K. | | | W.R. |
+
+->no. 9. 10.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | B.Q. | | B.S. | B.R. | B.R. |
+| B.S. | B.S. | B.S. | B.S. | | | 50 | |
+| | | | | | | | B.K. |
+| | | | | | W.R. | W.S. | B.S. |
+| | | | W.S. | W.S. | W.S. | | |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | | | W.S. | W.S. | |
+| W.R. | W.R. | W.S. | | W.K. | | | W.R. |
+
+->no. 20. 21.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | | | B.S. | 58 | B.R. |
+| B.S. | B.S. | B.S. | B.S. | B.R. | W.R. | | B.S. |
+| | | | | | | 47 | B.K. |
+| | | | | | | | |
+| | | | | W.S. | W.S. | W.S. | |
+| W.S. | W.S. | | | | | | |
+| W.S. | W.S. | W.S. | | | W.S. | | |
+| W.R. | W.R. | | | W.K. | | | W.R. |
+
+->no. 26. 27.<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B.R. | B.R. | B.S. | B.Q. | | B.S. | B.R. | B.R. |
+| B.S. | B.S. | B.S. | | | | 51 | B.S. |
+| | | | | | | B.K. | 41 |
+| | | | | | B.S. | W.R. | |
+| | | | W.S. | | W.S. | | |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | W.S. | | W.S. | W.S. | |
+| W.R. | W.R. | W.S. | | W.K. | | | W.R. |
+
+[[summary: This page displays eight 8x8 chess diagrams illustrating specific game positions or tactical problems. The notation follows the style of Gustavus Selenus, a key figure in 17th-century chess literature, showing the placement of Rooks, Kings, and "Soldiers" (Pawns) across various scenarios.]]
+
+[[keywords: chess problems, Gustavus Selenus, 17th-century chess, board diagrams, Schwarz Roch, Weiß Soldat, chess notation]]

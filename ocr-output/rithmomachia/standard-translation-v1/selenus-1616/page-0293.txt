@@ -1,0 +1,23 @@
+[[meta: This page continues the critique of Pedro Damiano’s opening strategies. While the previous page focused on Damiano's failure to provide defensive instructions, this page offers a specific tactical alternative for the Black player and warns the White player against making an impulsive "check" that looks strong but leads to a positional disadvantage.]]
+
+->Vom Schach-Spiel.<-
+[[notes: "On the Game of Chess."]]
+
+K k iij
+[[notes: This is the signature mark for the printer, used to keep the pages in the correct order during binding.]]
+
+[[margin: 1. cap:]]...be accomplished. For a chess player, in such cases—especially when he sees that the loss or the danger is not yet so obvious—must reasonably venture a risk. Furthermore, the **Black** player will likely bring his Rider [[notes: The *Reuter* or Rider is the Knight.]] safely away; thus the **White** player will not lose the game, provided he knows how to attack just as well as he knows how to defend himself according to Damiano’s [[notes: Pedro Damiano (1480–1544), the Portuguese master whose theories this text is scrutinizing.]] teaching.
+
+But we let this go, returning again to the beginning of this game, and wish to provide guidance ourselves on how both parties must take care if they wish to play in this manner: For if the **Black** player does not move his Queen to 45 (note 6), but instead moves his Rider to forty-three [[notes: This text uses a 1–64 coordinate system common in early modern German chess manuals. Forty-three corresponds to square c3 in modern notation.]] against the **White Queen** and her Rider (so that he may defend his Bishop's Soldiers) [[notes: *Schützens-Soldaten* refers to the Bishop's Pawns; "Schütze" (Archer) was a common term for the Bishop.]]: 
+
+[[margin: 14.]]
+
+[[margin: 15.]]* and the **White** player then (because he has no desire for an exchange of Queens) gives **Check** with his Queen from thirty-two (which seems like a good move, but cannot stand): The **Black** player covers the King with the King's Bishop's Pawn on fifty-three and moves it against the **White Queen**: The **White** player takes the **Black King's Bishop's Pawn** with his King's Rider and gives check: The **Black** player moves the King against him to sixty-one: The **White** player (so that he does not lose the Queen) moves the same to thirty-nine: The **Black** player, with his King's Bishop's Pawn, takes the **White King's Bishop's Pawn** and offers a **Discovered Check** [[notes: *Ab-Schach* occurs when moving a piece reveals an attack from another piece behind it, in this case, the Queen.]] from the Queen: Thus, whether the **White** player covers the King or moves him out of the **Check**, [the Black player] has a good game, provided he understands it. Consequently, this giving of **Check** (note 15) is a harmful move for the **White** player. Since he will hardly win anything in this manner, he should at least strive and labor to keep his game in good order, and as much as possible bring the enemy’s into disorder, and force and drive him to move his soldiers to unfavorable places.
+
+[[margin: 16.]]Therefore, since the **White** player gives Check from 32 with the Queen to his own detriment (note 15), and also, if he takes the **Black King's Bishop's Pawn** with her, the Queens will be exchanged, 
+
+[[meta: catchword: den/ und (the/ and)]]
+
+[[summary: This page provides a tactical critique of a specific chess opening, arguing that a tempting "Check" by White is actually a blunder that leads to a disadvantageous position. The author emphasizes the importance of maintaining board order and forcing the opponent into awkward positions rather than seeking immediate, superficial gains.]]
+
+[[keywords: Chess tactics, Opening theory, Pedro Damiano, Rider, Bishop's Pawn, Discovered Check, Piece Exchange, Positional Play]]

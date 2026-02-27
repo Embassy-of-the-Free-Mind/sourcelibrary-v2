@@ -1,0 +1,17 @@
+## The Philosophers' game.
+
+The game is never won until the king is captured <note>original: "taken"</note>. The kings (as has <note>original: "hath"</note> been said) may move <note>original: "remoue"</note> in any direction, provided they do not pass the fourth space. They cannot be captured by equality. However, the whole king may be captured by siege <note>original: "obsidion"</note>. 
+
+Also, his whole value <note>original: "number"</note> at once—that is, 91 or 190—may be captured by addition, by subtraction, by multiplication, or by division. He may also be captured in parts; when any of his component numbers <note>original: "syde numbers"</note> are taken, he loses that specific move <note>original: "leseth he that draughte"</note>. For example, when any of his square numbers are gone, he can no longer make a square move <note>original: "remoue the square draught"</note>. This continues for the rest of his parts until nothing of him is left; then he must be removed, and the triumph prepared.
+
+### ¶ The law of prisoners.
+
+When anyone is taken captive, he must be turned with his conqueror's color upward and placed in the hindermost space of his victor's camp. From there, once moved, he must fight against his conqueror's enemies and also serve the victor in achieving his triumph.
+
+<summary>
+This text outlines the rules for winning "The Philosophers' Game" (Rythmomachia) by capturing the king (the pyramid piece). The king can be captured through a siege (blockade), by arithmetic calculations matching his total value (91 or 190), or piece-by-piece. As the king loses component pieces, he loses the ability to move like those pieces. Captured pieces are treated as prisoners: they are flipped to the victor's color, placed in the back of the victor's camp, and must then fight for their new owner.
+</summary>
+
+<keywords>
+Rythmomachia, Philosophers' game, king, pyramid, capture rules, siege, arithmetic, addition, subtraction, multiplication, division, prisoners of war, board games, 16th-century games
+</keywords>

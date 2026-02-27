@@ -1,0 +1,57 @@
+[[meta: This page continues from the proofs regarding the relationship between arithmetic and harmonic medieties. Having established how to find means between two numbers, the author now transitions into "continuing" these sequences—creating longer chains of numbers—and introduces the "remaining medieties." In classical mathematics, beyond the primary three (arithmetic, geometric, and harmonic), there were seven additional "medieties" (means) described by authors like Nicomachus and Boethius, bringing the total to ten.]]
+
+This is the converse of the forty-sixth. Let **a**, **b**, and **c** be arranged in a harmonic mediety, which number **a**, **d**, **m**, **e**, **f**, **g**. I say that **e**, **f**, and **g** are established in an arithmetic mediety. I take **h**, **k**, and **l** as doubles to **a**, **b**, and **c**, which similarly will be in a harmonic mediety, and in the middle, **m**, the arithmetic mediety between **h** and **l**. And it will be, through the forty-first [proposition] of this [book], **h** to **m** as **h** is to **l**. Wherefore as **g** is to **f**, with the help of the twenty-fifth of the second [book]. But also through the same twenty-fifth of the second, you will know **g** to **e** as **h** is to **l**. But **h** to **m** (the mean) is as **g** to **f** (its mean), and **m** to **l** as **f** to **e**. Therefore, through the nineteenth of this [book], **f** will be the mean in arithmetic mediety between **g** and **e**. Which is what was proposed.
+
+[[notes: A "mediety" (medietas) refers to what we now call a mathematical progression or a way of finding a middle value (a mean). An arithmetic mediety is a sequence like 2, 4, 6 (constant difference); harmonic is like 6, 4, 3 (where the differences relate to the terms themselves).]]
+
+---
+
+[[margin: 50]] ¶ **To continue any number of terms in geometric mediety according to a given ratio, between each of which it is possible to assign harmonic means.**
+
+¶ Through the thirty-ninth [proposition] of this [book], let three numbers **a**, **b**, and **c** be taken according to a given ratio in harmonic mediety; and let **d** and **e** be the terms of the ratio of **a** to **c**. And let **d** be multiplied into all of those, and let **f**, **g**, and **h** result, which through the seventh of the second [book] will be in the same mediety; and by the corollary of the same seventh, the differences of **f** to **g** and **g** to **h** are equal multiples of **d** and **e**. And let **e** be multiplied by **c**, and let **i** result. It will be, through the eighth of the second, **f** to **h** as **h** is to **i**. Likewise, let **e** be multiplied by **b**, and let **k** result. It will be **i** to **k** as **b** is to **c**. Wherefore **i** is the harmonic mean between **h** and **k**. And thus you have two [terms] continued geometrically according to a given ratio, between which also two means of harmonic mediety are found. If you desire more, multiply **d** by all those found and by the two extremes, and you will have three continued in geometric mediety, and between each pair the means taken in harmonic mediety by the same reasoning as before; and in this way you will find as many as you wish.
+
+---
+
+[[margin: 51]] ¶ **To arrange three numbers in harmonic mediety so that geometric means consist between each pair.**
+
+¶ According to the requirement of the thirty-ninth [proposition] of this [book], let three numbers **a**, **b**, and **c** be found established in arithmetic mediety; between which let **d** and **e** be in geometric mediety. And let **f** be the number which all of them number [[notes: Meaning the least common multiple]]; and let them number it according to **g**, **h**, **l**, and **m**. And it is clear through the forty-sixth of this [book] that **g**, **l**, and **m** are in harmonic mediety; but also through the forty-eighth of this [book], **h** between **g** and **l**, and **i** between **l** and **m**, will be in geometric mediety. And thus the proposed effect is clear.
+
+---
+
+[[margin: 52]] ¶ **To establish the first of the remaining medieties in numbers.**
+
+¶ This is taken from the geometric [mediety]. And let **a**, **b**, and **c** be in geometric mediety, yet so that **c** (the smallest) is greater than the difference of the larger ones. Let the difference of the larger ones be subtracted from **c** (the smallest), and let the remainder be **d**. I say that **b**, **c**, and **d** are established in this first of the collateral medieties [[notes: This is the 4th mediety in the classical list of ten]]. For because **a**, **b**, and **c** are established in geometric mediety, therefore the ratio of **a** to **b** is, through the twentieth of this [book], as the difference of the larger to the difference of the smaller. But the difference of **a** to **b** is the same as the difference of **c** to **d**. Therefore the difference of **c** to **d** (the smaller) to the difference of **b** to **c** (the larger) is as **a** is to **b**. Wherefore it is as **b** to **c**, the greatest to the mean. Thus, through the definition, the proposal is clear.
+
+---
+
+[[margin: 53]] ¶ **To declare the finding of the second [remaining mediety].**
+
+¶ Let **a**, **b**, and **c** be in geometric mediety as before, the difference of the smaller of which I add to **a**. And let the sum be **d**. I say that **d**, **a**, and **b** are in the second of the remaining medieties [[notes: This is the 5th mediety]]. For through the twentieth of this [book], the ratio that is **a** to **b** will be the ratio of the difference of the larger to the difference of the smaller numbers established in geometric mediety. And the same is the ratio of the difference of **d** to **a** to the difference of **a** to **b**. Therefore by definition the proposal is concluded.
+
+---
+
+[[margin: 54]] ¶ **To assign the third of the same in numbers.**
+
+¶ This also is obtained through geometric mediety. Let there be, therefore, the hypothesis of the preceding [sections], and let the difference of the larger be taken away from **b** (the mean); and let the remainder be **d**. I say that **b**, **c**, and **d** are in the third mediety [[notes: This is the 6th mediety]]. For the difference of **a** to **b** is the same as **b** to **d**. Therefore, the ratio of the difference of **a** to **b** to the difference of **b** to **c** is the same as the ratio of the difference of **c** to **d** to the difference of **b** to **c**. Wherefore the ratio of **b** (the greatest) to **c** (the mean) is the same as the ratio of the difference of **b** to **d** (the extremes) to the difference of **b** to **c** (the larger). It is established, therefore, by definition that **b**, **c**, and **d** are in the proposed mediety. Which is what was proposed.
+
+---
+
+[[margin: 55]] ¶ **To manifest the fourth in terms.**
+
+¶ Let **a** and **b** be any two numbers; and let the sum of them be **c**. I say that **c**, **a**, and **b** are the three terms given in this fourth mediety [[notes: This is the 7th mediety]]. For since the difference of **c** and **b** (the extremes) is **a**, and the difference of **c** and **a** (the larger) is **b**, the ratio of **a** to **b** (the mean to the smallest) will be the same as the ratio of the difference of the extremes to the difference of the larger. Thus by definition it is established that the proposal is done.
+
+---
+
+[[margin: 56]] ¶ **To explain the demonstration of the fifth.**
+
+¶ This is elicited from geometric mediety. Let there be, therefore, as before, **a**, **b**, and **c**, three numbers in geometric mediety, to the smallest of which, **c**, I add the difference of the larger ones; and let the sum be **d**. I say that **d**, **b**, and **c** are in the proposed mediety [[notes: This is the 8th mediety]]. For the difference of **d** and **c** (the extremes) is the difference of **a** to **b**. Therefore, with the help of the twentieth of this [book], the ratio of **b** to **c** (the mean to the smallest) will be the same as the ratio of the difference of **d** to **c** (the extremes) to the difference of **b** to **c** (the smaller). And so by definition the proposal is demonstrated.
+
+---
+
+[[margin: 57]] ¶ **To demonstrate the sixth by example.**
+
+¶ This can be known from harmonic mediety. Let **a**, **b**, and **c** be in harmonic mediety; by definition, the ratio of **a** to **c** is as the difference of the larger to the difference of the smaller. I take a number **d** between **a** and **c**, whose difference to **a** is as **b** to **c**. The differences will therefore be transposed. For the difference of **a** to **b** (the larger) is as **d** to **c** (the smaller); and that of **b** to **c** (the smaller) will be **a** to **d** (the larger). Therefore I say that **a**, **d**, and **c** are what is sought. For the ratio of **a** to **c** (the extremes) is as the difference of **d** to **c** (the smaller) to the difference of **a** to **d** (the larger). By definition, therefore, the proposed effect is clear. Which, if you look at the second book of arithmetic [[notes: *De institutione arithmetica*]], the divine Severinus [[notes: Anicius Manlius **Severinus** Boethius (c. 480–524 AD), the Roman senator and philosopher whose works on the quadrivium were standard medieval textbooks.]] testifies that for this mediety, which he places fourth in his order, it is characteristic that what is contained under the larger extreme and the mean is double that which...
+
+[[summary: This page details the construction of several types of mathematical means (medieties) beyond the standard arithmetic, geometric, and harmonic types. It provides geometric proofs and algebraic-like derivations for what were historically categorized as the 4th through 9th medieties, referencing the authority of Boethius.]]
+
+[[keywords: medieties, harmonic mean, geometric mean, arithmetic mean, Boethius, Severinus, mathematical proportions, ratios, differences]]

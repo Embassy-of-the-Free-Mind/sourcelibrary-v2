@@ -1,0 +1,39 @@
+[[meta: This page provides a reference table to accompany the previous page's explanation of the "Great Victory" in Rythmomachia. To achieve this victory, a player must arrange four of their captured or held pieces in the opponent's territory so that they form two distinct mathematical progressions simultaneously.]]
+
+->### Example.<-
+
+[[notes: This table serves as a "cheat sheet" for players. To win, one must recognize how a set of four numbers can be broken down into smaller groups that follow different mathematical rules.]]
+
+| Arithmetic and Geometry together. | Arithmetic alone. | Geometry alone. |
+|:---|:---|:---|
+| 2 3 4 8 | 2 3 4 [[notes: An arithmetic progression where the difference between each number is 1.]] | 2 4 8 [[notes: A geometric progression where each number is multiplied by 2.]] |
+| 2 4 6 8 | 2 4 6 | 4 6 8 [[notes: In the context of this game's specific logic, certain sequences were grouped by their internal ratios.]] |
+| 2 4 6 9 | 2 4 6 | 4 6 9 [[notes: A geometric progression with a ratio of 1.5 (4 × 1.5 = 6; 6 × 1.5 = 9).]] |
+| 2 4 5 8 | 2 5 8 | 2 4 8 |
+| 2 9 12 16 | 2 9 16 | 9 12 16 |
+| 3 6 9 12 | 3 6 9 | 6 9 12 |
+| 3 4 6 9 | 3 6 9 | 4 6 9 |
+| 3 9 15 25 | 3 9 15 | 9 15 25 |
+| 4 5 6 9 | 4 5 6 | 4 6 9 |
+| 4 6 8 9 | 4 6 8 | 4 6 9 |
+| 4 6 8 16 | 4 6 8 | 4 8 16 |
+| 4 12 20 36 | 4 12 20 | 4 12 36 |
+| 5 9 15 25 | 5 15 25 | 9 15 25 |
+| 5 25 45 81 | 5 25 45 | 25 45 81 |
+| 6 9 12 16 | 6 9 12 | 9 12 16 |
+| 7 16 20 25 | 7 19 25 | 16 20 25 |
+| 9 12 15 16 | 9 12 15 | 9 12 16 |
+| 9 12 15 25 | 9 12 15 | 9 15 25 |
+| 9 45 81 225 | 9 45 81 | 9 45 225 |
+| 9 25 45 81 | 9 25 45 | 25 45 81 |
+| 9 12 16 20 | 12 16 20 | 9 12 16 |
+| 9 15 20 25 | 15 20 25 | 9 15 25 |
+| 9 81 153 289 | 9 81 153 | 81 153 289 |
+| 12 16 20 25 | 12 16 20 | 16 20 25 |
+| 15 16 20 25 | 15 20 25 | 16 20 25 |
+| 15 20 30 45 | 15 30 45 | 20 30 45 |
+
+[[notes: The vocabulary of this page—*Arithmeticque* (Arithmetic), *Geometrie* (Geometry), *ensemble* (together), *seule* (alone), and *progression*—highlights the Renaissance obsession with finding mathematical order in all things, even in recreation.]]
+
+[[summary: This page contains a reference table listing the numerical combinations required to achieve a "Great Victory" in Rythmomachia. It demonstrates how four numbers can simultaneously satisfy the requirements for both arithmetic and geometric progressions.]]
+[[keywords: Rythmomachia, Arithmetic Progression, Geometric Progression, Great Victory, Number Theory, Renaissance Games, Mathematical Proportions]]

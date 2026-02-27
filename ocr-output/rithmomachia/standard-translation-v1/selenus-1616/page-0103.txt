@@ -1,0 +1,36 @@
+[[meta: This page continues a numbered list (likely starting on page 72) comparing the tactical strengths of the Archer (modern Bishop) against the Rider (modern Knight). It focuses on the Archer's superior ability to support pawns and its safety from being cornered by the enemy King.]]
+
+# -> Of the Game of Chess. <-
+
+[[margin: Chapter 8]]
+
+...[as] can be found in No. 21, figure f.: where / the **Black King’s Archer’s Soldier** [[notes: This refers to a Pawn on the f-file]] / in the **White King’s Archer’s** / third square [[notes: Square f3 from White's perspective or f6 for Black]] / is protected by the **Black Queen’s Archer** / in the **White King’s** / second square.
+
+He [the Archer] helps / (7.) better / than the **Rider** / his **Soldier** [[notes: *Soldat*, the common term for a Pawn]] / forward / to harm the enemy / or to / make him into a **Queen** [[notes: Referring to the Archer's long-range ability to "babysit" a pawn during its promotion march]].
+
+He is able / (8.) with a **Rook** [[notes: *Rochen*, the traditional name for the Rook]] / to win / the game / against the enemy’s single **Rook** / which / is left alone with his **King** / (as can be seen from the sketch) / which the **Rider** surely fails to do. [[notes: Historically, an endgame of King + Rook + Bishop versus King + Rook was considered a technical win, whereas King + Rook + Knight versus King + Rook was usually a draw.]]
+
+| | [[notes: Black Rook]] | |
+| :---: | :---: | :---: |
+| **White King** | | **Black King** |
+| **White Archer** | | **White Rook** |
+
+[[notes: The diagram above illustrates a technical endgame position. In this era, diagrams were often simplified "sketches" of piece relationships rather than full 64-square boards.]]
+
+The enemy **King** / (9.) cannot / capture him [the Archer] alone / as he can the / **Rider** : For / when the **Black King** / encounters the **White Rider** / in his **Rook’s** square / and the same **King** / is moved into his **Archer’s** / third square / then it is impossible for the **Rider** / (as the sketch shows) / to escape. For when the **King** / is moved into his **Rider’s** / second square / he slays [[notes: *erleget*, meaning to capture or take]] him / or in the **Rook’s** / (provided he has not moved out of it) / or in the **Archer’s** / second / or the **Rider’s** / third square.
+
+| | | **White Rider** |
+| :---: | :---: | :---: |
+| | **Black King** | |
+| **Black King** | | |
+
+[[notes: This diagram demonstrates how a lone King can "trap" a Knight in the corner of the board. Because the Knight’s moves are short and specific, a King can occupy adjacent squares that prevent the Knight from leaping to safety. An Archer (Bishop), by contrast, can always slide away to the other side of the board.]]
+
+He can / (10.) prevent / a **Soldier** / on the **Rook’s** line [[notes: The "a" or "h" files at the very edge of the board]] / from / being made into a **Queen**; which however the **Rider** / is not able to do.
+
+K ij
+[[meta: catchword: He]]
+
+[[summary: This page concludes a comparison between the Bishop (Archer) and Knight (Rider), arguing that the Bishop is superior for promoting pawns, winning specific endgames, and avoiding capture by the enemy King.]]
+
+[[keywords: Archer, Bishop, Rider, Knight, Rook, Pawn promotion, Chess tactics, Endgame theory, King movement]]

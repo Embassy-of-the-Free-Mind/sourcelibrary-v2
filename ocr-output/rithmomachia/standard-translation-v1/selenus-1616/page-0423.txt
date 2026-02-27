@@ -1,0 +1,26 @@
+[[meta: This page continues the detailed tactical analysis of chess variations. The coordinate system remains the same: a numerical grid from 1 to 64, where 1 is a1 and 64 is h8. The terminology is characteristic of the 17th century: "Rochen" (Rook/Castle), "Reuter" (Knight/Rider), "Schütze" (Bishop/Marksman), and "Soldat" (Pawn/Soldier).]]
+
+### Chapter 3: Of the Game of Chess.
+
+[[notes: This sentence fragment completes the word "Schützen" (Bishop) from the previous page]] ...[Bi]shop: **White** moves the **King’s Rook** out of danger: **Black** takes **White’s King’s Soldier** [[notes: pawn]] with the **Queen** and gives **Check**: **White** moves the **King** to three [[notes: c1]]: **Black** takes **White’s King’s Soldier** with the **King’s Knight**, moves the same toward the **White King’s Bishop**, and can defeat **White** by force in a few moves.
+
+[[margin: 19.]]
+If, however, **White**, instead of moving the **Rook** to 7 [[notes: g1]] (as in no. 12), moves the **King’s Knight** (out of danger) to fourteen [[notes: f2]]: then **Black** places the **Queen** on the **White King’s Bishop’s Soldier** [[notes: the pawn at f3]],
+
+[[margin: 20.]]
+on forty [[notes: h5]] and defends the thirty-first square [[notes: g4]]: * **White** (in order to escape to fifty-four [[notes: f7]] with the **Queen**) moves their **Knight’s Soldier** [[notes: the g-pawn]] to forty-seven [[notes: g6]]: **Black** (to prevent **White’s** intention) moves the **King’s Knight** to thirty-five [[notes: c5]]: **White** moves the **Queen** to fifty-four [[notes: f7]]: **Black** moves the **King’s Bishop** against the same to forty-five [[notes: e6]]: **White** must move her back again to fifty-five [[notes: g7]]: **Black** moves the **King’s Bishop** against her to forty-six [[notes: f6]] and captures her by force.
+
+[[margin: 21.]]
+If, however, **White** does not move the **Soldier** to 47 [[notes: g6]] (no. 20) but instead moves the **Rook** to seven [[notes: g1]]: then **Black** moves the **King’s Bishop** to sixty-two [[notes: f8]] and captures the [White] **Queen** by force.
+
+[[margin: 22.]]
+If, however, **Black**, instead of moving the **Bishop** to 53 [[notes: e7]] (no. 11), takes the **White King’s Knight** with the **King’s Rook**: then **White** moves the **King’s Knight’s Soldier** [[notes: g-pawn]] to forty-seven [[notes: g6]]: **Black** moves the **King’s Bishop** to fifty-three [[notes: e7]]: **White** moves the **Queen** to fifty-four [[notes: f7]] and provides cause for the exchange of **Queens** (since He would otherwise have to lose her for only another piece): **Black** (who has taken a **Bishop** from **White**) will further arrange his game toward victory.
+
+[[margin: 23.]]
+If, however, **White** does not take the **[Black] Soldier** with the **Queen** (no. 10), but rather moves her to thirty-eight [[notes: f5]]: then **Black** plays (so that **White** does not save the **Queen** on thirty-one [[notes: g4]], but rather that the **King’s Bishop** can aim at her) his **Knight** to **White’s King’s Soldier** at thirty-five [[notes: c5]]: **White** takes this **[Black] Bishop** with the same [[notes: with the Queen]] and gives **Check**: **Black** takes
+
+[[meta: catchword: takes]]
+
+[[summary: This page continues a technical walkthrough of various chess maneuvers, specifically focusing on how Black can trap the White Queen or force an advantageous exchange. It demonstrates advanced 17th-century endgame and middle-game theory using a numbered-square coordinate system.]]
+
+[[keywords: chess tactics, Rook, Knight, Bishop, Queen capture, exchange of queens, seventeenth-century chess, notation system]]

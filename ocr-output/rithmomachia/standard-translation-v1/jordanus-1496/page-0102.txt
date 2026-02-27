@@ -1,0 +1,71 @@
+[[meta: This page concludes the discussion of the minor semitone and begins a rigorous mathematical proof regarding the "comma." The author is using the Euclidean algorithm to determine the smallest integer values for these ratios, continuing the theme of defining the mathematical boundaries of musical intervals.]]
+
+...held to be less. But since it has been proven by **a, b** and **f, b** to be even less than a minor semitone, therefore the interval between **f, b** and **g, b** is that by which the *sesquioctava* proportion [[notes: The ratio 9:8, representing a whole tone]] of **a, b** and **c, b** is greater than two minor semitones. Therefore, by definition, the musical comma has been found in **f, b** and **g, b**: which was to be demonstrated.
+
+<margin>28</margin>
+### ¶ The Comma: To establish it in the smallest numbers.
+
+| 531441 | 524288 | 497664 | 472392 |
+| :--- | :--- | :--- | :--- |
+| lz | g | h | i |
+| | 65536 | 62208 | 59049 |
+| | c | d | e |
+| | 256 | 243 | |
+| | A | b | |
+| | | 8 | |
+| | | f | |
+
+[[notes: The table above demonstrates the multiplication of ratios to reach the large numbers required for the comma. Note that the OCR "39049" for 'e' is likely a transcription error for 59049, which is $243 \times 243$.]]
+
+<margin>
+531441
+524288
+7153
+2119
+796
+527
+269
+258
+11
+5
+1
+</margin>
+
+¶ Let **a, b** be the smallest numbers of the minor semitone [[notes: 256 and 243]]. I multiply **a** by itself and by **b**, and **b** by itself, and there arise **c, d, e**: and **c, d** and **d, e** will be two joined minor semitones. Furthermore, let **f** be the number eight, which from the eighteenth [proposition] of this book is the first [ratio] to **b**. Wherefore, by the eleventh [proposition] of the third [book] of *Arithmetics*, it is also prime to **e**. Therefore, **e** does not have an eighth part. I therefore multiply **f** (the eight) by **c, d, e**: and there result **g, h, i**: so that **i**, namely, arises from **f** times **e**. It is also certain that between **g, h** and **h, i** there are two minor semitones. And because **e** is the eighth part of **i**, I add **e** and **i** together, and let their sum be **lz** [[notes: 531441]]. There is no doubt that the ratio of **lz** to **i** is a *sesquioctava* [[notes: 9:8]]: and **lz** to **g** is the proportion by which the *sesquioctava* is greater than the two minor semitones **g, h** and **h, i**. Therefore, **lz** and **g** are the numbers of the comma. But that they are the smallest is known from the fifteenth [proposition] of the third [book] of *Arithmetics*. For by subtracting—as that very rule teaches—**g** from **lz**, and subtracting that which is left from **g** as much as possible, and so on in turn, finally, as appears in the addition at the side, a remainder of one is left [[notes: This refers to the Euclidean algorithm shown in the margin; a remainder of 1 proves the numbers are "prime to each other" and the ratio cannot be simplified]]. And just as the comma is placed before two *dieses* [[notes: Here meaning small intervals or semitones]], so also it is very easy to place a comma after two *dieses*, or to insert it between two.
+
+<margin>29</margin>
+### ¶ The *Sesquiseptuagesimaquarta*: is exceeded by the proportion of the comma.
+
+| 531441 | 531372 72/74 | 524288 | 7084 72/74 |
+| :--- | :--- | :--- | :--- |
+| A | d 74 | b | c 74 |
+
+¶ For let **a, b** be the smallest numbers of the comma found through the preceding [demonstration]. I extract the seventy-fourth part of **b** through the tenth [proposition] of this book, which shall be **c**. I then add **b** and **c** together, and let them combine into the sum **d**. If this **d** is compared to **b**, it is found to be a *sesquiseptuagesimaquarta* [[notes: The ratio 75:74]]. Yet this same **d** is found to be less than **a**. Therefore, by the eleventh [proposition] of this book, the ratio of the comma exceeds the seventy-fourth proportion.
+
+<margin>30</margin>
+### ¶ The ratio of the Comma: is less than the *sesquiseptuagesimatertia* proportion. Whence it happens that the ratio of the comma is found to be situated between the seventy-fourth and seventy-third proportions.
+
+| 531470 2/73 | 531441 | 524288 | 7182 2/73 |
+| :---: | :---: | :---: | :---: |
+| d 73 | A | b | c 73 |
+
+¶ Let **a, b** be the smallest numbers of the comma as before. I take the seventy-third part of **b**, which shall be **c**. I join **b** and **c** together, and let them be summed as **d**. Thus **d** to **b** will be a *sesquiseptuagesimatertia* [[notes: The ratio 74:73]]. And **d** is seen to be greater than **a**. Therefore, the ratio of the comma is less than the seventy-third proportion: which was to be demonstrated. The corollary is known as elsewhere.
+
+<margin>31</margin>
+### ¶ The ratio of the Comma: consists in a *superpartient* ratio.
+
+¶ For it does not consist in a *superparticular* [[notes: A ratio of the form (n+1)/n, like 3:2 or 16:15]] ratio, since two nearest superparticulars—the seventy-fourth and the seventy-third—exclude every other superparticular in between them. So much the less can it consist in the *multiple* genus [[notes: Ratios like 2:1 or 3:1]], as it has seventy-two superparticulars larger than itself. It remains, therefore, that it can consist in the *superpartient* genus [[notes: A ratio where the numerator is larger than the denominator by more than 1, e.g., 5:3]]. For that is the relationship of the greater to the lesser.
+
+<margin>32</margin>
+### ¶ The ratios of the *schisma* and *diaschisma* are unknown and irrational. Whence it follows that for all those whose smallest numbers do not have a square side, the ratios of their halves are all unknown and irrational.
+
+| 256 | 243 | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| A | b | c | d | e |
+| 531441 | 524288 | | | |
+
+¶ We call those ratios "unknown and irrational" which can never be designated by any certain, established number: just as in geometry the proportion of the diameter to the side of a square [[notes: The square root of 2]]; such are the proportions of *schismas* and *diaschismas*...
+
+[[summary: This page mathematically defines the Pythagorean comma (531441:524288) and proves it is the smallest whole-number ratio for that interval. It situates the comma's magnitude between the ratios of 75:74 and 74:73, categorizing it as a superpartient ratio.]]
+
+[[keywords: comma, Pythagorean tuning, sesquioctava, superpartient, superparticular, Euclidean algorithm, schisma, diaschisma, irrational ratios]]

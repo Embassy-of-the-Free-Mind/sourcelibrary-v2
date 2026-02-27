@@ -1,0 +1,30 @@
+[[meta: This page continues the mathematical instructions for the game of Rythmomachia. In the previous section, the author explained how to calculate the values for the first set of black triangles. Here, he provides the method for the "second" set of black triangles and begins the transition to the square pieces.]]
+
+Just as by joining the numbers of the first four white triangles with the numbers of the first four black rounds, the numbers of the four second white triangles were generated: so, by joining the numbers of the four first black triangles already found with the numbers of the first white rounds, the numbers of the four second black triangles will be produced. 
+
+Noting, however, that you must leave aside the number of the first white round, which is 2, and begin from 4—joining the 4 with the 12, the 6 with the 30, and the 8 with the 56. And because one is missing, since we left out the 2, it is necessary to add 10 (which follows in the order of even numbers after 8), joining this 10 with the 90. 
+
+In this way, from the 12 joined with the 4, 16 will be created; and from 30 with 6, 36; and from 56 with 8, 64; and from 90 with 10, 100. And thus we will have found the numbers that are painted upon the other four black triangles, as seen in the following figure.
+
+[[notes: The author is describing a specific arithmetic progression used to determine piece values. By adding a base even number (4, 6, 8, 10) to the "first" triangle values (12, 30, 56, 90), the player identifies the "second" triangle values (16, 36, 64, 100), which modern readers will recognize as the squares of 4, 6, 8, and 10.]]
+
+---
+
+| ( 4 ) | ( 6 ) | ( 8 ) | ( 10 ) |
+| :---: | :---: | :---: | :---: |
+| **▲ 12** | **▲ 30** | **▲ 56** | **▲ 90** |
+| **▲ 16** | **▲ 36** | **▲ 64** | **▲ 100** |
+
+[[notes: This diagram illustrates the summation: the top row (white rounds) added to the middle row (first black triangles) equals the bottom row (second black triangles).]]
+
+---
+
+Having thus far found the numbers that should be written upon the rounds and upon the triangles, both white and black, it follows that we should find those that must be written upon the **squares**. Beginning then with the white ones, I say that just as by joining the four first white rounds with the four second white roun-
+
+[[notes: The text cuts off mid-word "bianchi" (rounds) as indicated by the catchword "bian-". The author is starting to explain the logic for the "Square" pieces, which are the most powerful in the game.]]
+
+[[gloss: triangoli bianchi: white triangles; tondi neri: black rounds; triangoli neri: black triangles; tondi bianchi: white rounds; numeri pari: even numbers; quadrati: squares]]
+
+[[summary: This page explains how to calculate the values for the second set of black triangles by adding even numbers to the first set of triangles. It also marks the transition in the manual from calculating triangles to calculating the values for the square pieces.]]
+
+[[keywords: Rythmomachia, arithmetic progression, even numbers, black triangles, white rounds, squares, mathematical proportions]]

@@ -1,0 +1,29 @@
+[[meta: This page continues the instructional manual for Rythmomachia, moving from Arithmetic proportions to Geometric proportions. The previous page listed triples where the difference between terms was constant (e.g., 2, 4, 6); this page defines the more complex Geometric requirements needed to achieve a "Great Victory" in the game.]]
+
+# RYTHMOMACHIA, THE GAME
+## On Geometric Proportion.
+
+Geometric proportion occurs when the differences that the two outer numbers have from the middle number are in the same ratio as one of the outer numbers is to the middle. For example: 2, 4, 8. Here, you see that the difference between the first number (2) and the middle (4) is 2; similarly, the difference between the last number (8) and the middle (4) is 4. Therefore, it is clear that the two differences, 2 and 4, exist in a double ratio, just as the middle number 4 relates to whichever of the two outer numbers you choose (2 or 8); for 2 and 4 are in a duple ratio, and 4 and 8 are likewise.
+
+[[notes: In the context of this game and Renaissance mathematics, a "Geometric Proportion" (what we would call a geometric progression) is defined by the relationship between the numbers. In the author's example of 2, 4, 8: the difference between 2 and 4 is 2, and the difference between 4 and 8 is 4. The ratio of those differences (2:4) is 1:2, which is the same as the ratio of the numbers themselves (2:4 or 4:8).]]
+
+<insert>
+->Geometric Proportions contained within the game.<-
+
+| | | |
+| :--- | :--- | :--- |
+| 2 4 8 | 5 25 125 | 25 30 36 |
+| 3 6 12 | 9 12 16 | 25 45 81 |
+| 4 6 9 | 9 15 25 | 36 42 49 |
+| 4 8 16 | 9 45 225 | 36 90 225 |
+| 4 12 36 | 16 20 25 | 49 56 64 |
+| 4 16 64 | 20 30 45 | 81 90 100 |
+</insert>
+
+[[notes: This table serves as a cheat sheet for players. To win a "Great Victory," a player must arrange three pieces in the opponent's camp that form one of these geometric proportions. Some of these are simple progressions (like 2, 4, 8, where each number is multiplied by 2), while others are more complex ratios common in Pythagorean music theory and architecture, such as the *sesquialter* ratio (e.g., 4, 6, 9, where each number is 1.5 times the previous).]]
+
+<vocab>Rythmomachia, geometric proportion, extreme numbers, middle number, double proportion, duple ratio</vocab>
+
+[[summary: This page defines geometric proportion as used in Rythmomachia and provides a reference table of all possible geometric triples that can be formed using the game's numbered pieces. These proportions are essential for players seeking to achieve the most prestigious forms of victory.]]
+
+[[keywords: Rythmomachia, Geometric Proportion, Renaissance mathematics, Medieval games, Pythagorean ratios, Number theory, Boethius]]

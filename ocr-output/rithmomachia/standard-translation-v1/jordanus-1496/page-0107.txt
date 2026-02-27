@@ -1,0 +1,46 @@
+[[meta: This page continues the mathematical demonstration of musical intervals using Pythagorean ratios. It follows the previous page’s refutation of Aristoxenus by proving the exact relationships between the fourth (diatessaron), the fifth (diapente), and the whole tone.]]
+
+<page-num>III</page-num>
+
+¶ The **difference** here is defined as the proportion by which the greater exceeds the lesser. For, by the corollary of the tenth [proposition] of this book, when a whole tone is subtracted from the **diapente** consonance [[notes: The interval of a perfect fifth, with a ratio of 3:2]], the **diatessaron** consonance [[notes: The interval of a perfect fourth, with a ratio of 4:3]] remains. Therefore, the **diapente** consonance is larger than the **diatessaron** by exactly one whole tone. It follows then, by definition, that the whole tone is the "difference" between these two consonances. The corollary is immediately evident from this proposition.
+
+[[margin: 14]]
+# ¶ Two fourths exceed a fifth by a minor third.
+¶ For a **diatessaron**, according to the sixth [proposition] of this book, contains two whole tones and a minor semitone. Therefore, two **diatessarons** [[notes: Literally "bis diatessaron," an interval of a minor seventh in modern terms]] will contain four tones and two minor semitones. However, if a **sesquitone** [[notes: A "sesquitone" is a minor third, consisting of one whole tone and one minor semitone]] is taken away from four tones and two minor semitones, there remain three tones and a minor semitone. Indeed, according to the tenth [proposition] of this book, the **diapente** consonance comprises exactly that many tones and a minor semitone. Therefore, two **diatessarons** transcend and exceed the **diapente** consonance by one minor third, just as was proposed.
+
+[[margin: 15]]
+# ¶ The fourth and fifth consonances are placed in the largest superparticular ratios.
+¶ For, by definition, the **diatessaron** consonance is placed in the **epitrita** or **sesquitertia** proportion [[notes: The 4:3 ratio]]. The **diapente** is placed in the **hemiolia** or **sesquialtera** proportion [[notes: The 3:2 ratio]]. Now, no **superparticular** ratios [[notes: A superparticular ratio is one where the numerator is the denominator plus one, such as 2:1, 3:2, 4:3, etc. These were considered the most "pure" ratios in Pythagorean science]] are larger than the **sesquialtera** and **sesquitertia**, for they are named from the second and third parts, which are the largest consecutive parts. Therefore, these consonances, being derived from the origins of the largest superparticulars, are placed within the largest superparticular ratios, which is what was proposed.
+
+[[margin: 16]]
+# ¶ Neither two fourths nor two fifths can form a consonance.
+¶ This proposition states that two **diatessaron** consonances or two **diapente** consonances joined together cannot produce a [single] consonance. For both the **diatessaron** and **diapente** are established not in **multiple** ratios [[notes: Such as 2:1 (double), 3:1 (triple)]] but in **superparticular** ratios. According to the first petition—that the proportion of interval to interval is the same as the proportion of sound to sound—and according to the sixth [proposition] of the first book, two similar non-multiple intervals create an interval that is neither a multiple nor a superparticular. Because of this, their sounds exist in neither the multiple nor the superparticular genus. However, every consonance must be placed in either a superparticular or a multiple ratio. For in this context, we have undertaken to use the name "consonance" following the Pythagorean authority. Therefore, two **diatessaron** consonances or two **diapente** consonances will effect no consonance. And not only is this true for two, but however many **diatessarons** or **diapentes** are coupled together unto infinity, they will never be able to produce a consonance according to the fifth [proposition] of the first book.
+
+[[margin: 17]]
+# ¶ By adding a tone to a fifth, no consonance is prepared. Likewise, no consonance is made by adding a minor third to a fourth.
+
+| | | | | Difference of Numbers | | | | | Numbers and Difference |
+|---|---|---|---|---|---|---|---|---|---|
+| E | 27 | F | 16 | Major Sixth | R | 9216 | S | 5832 | Minor Sixth |
+| L | 9 | D | 8 | Tone | N | 2304 | M | 1944 | Minor Third |
+| A | 3 | B | 2 | Fifth | K | 4 | I | 3 | Fourth |
+| | | | | | I | 256 | M | 243 | Minor Semitone |
+| | | | | | D | 9 | K | 8 | Tone |
+
+¶ Even if this meeting of sounds is not yet considered a "consonance" [mathematically], musicians nevertheless regard it as **euphonious** [[notes: "Euphonum" - sounding pleasant to the ear, even if the math doesn't fit the strict Pythagorean definition of a consonance]] and suitable for melodies. Our contemporaries now call this the "Sixth" when it is filled with voices. It consists of four whole tones and one **diesis** (that is, a minor semitone). That it is not yet a [mathematical] consonance is clear. For I take **a** and **b**, 3 and 2, the smallest numbers of the **diapente** consonance. I take **c** and **d**, 9 and 8, the smallest numbers of the whole tone. I multiply **c** by **a** to get 27, and **d** by **b** to get 16. By the third [proposition] of the fifth book of Arithmetics, the ratio of 27 to 16 contains both a **sesquialtera** (3:2) and a **sesquioctava** (9:8). Therefore, 27 to 16 contains a fifth plus an added whole tone. But it is manifest that 27 to 16 is not a **multiple** ratio, for 27 does not contain 16 twice or three times. Nor is it **superparticular**, for the difference between 27 and 16 is 11, and the number 11 is not a factor of 16. Indeed, 11 exceeds half of 16. Therefore, a tone added to a **diapente** consonance produces no [mathematical] consonance.
+
+By a similar argument, if a **sesquitone** [[notes: Minor third]] is added to a **diatessaron** consonance, no consonance is made, as can easily be seen from the second figure. Nevertheless, a euphonious meeting of voices occurs, which they likewise call a "Sixth," but which differs from the first one by an **apotome** [[notes: The "apotome" is the major semitone in Pythagorean tuning]]. Therefore, this one is the **Minor Sixth** and the other is the **Major Sixth**. For the first, as was said, consists of four tones and one diesis; the second consists of three tones and two dieses. The **parhypate hypaton** to the **mese** sounds the first [[notes: These are Greek names for specific strings/notes on the Great Perfect System scale]]; whereas the **hypate hypaton** to the **lichanos meson** sounds the second, which is smaller. What are called **hypate**, **parhypate**, **lichanos**, and **mese** will be declared in the following book.
+
+[[margin: 18]]
+# ¶ How the octave consonance is to be joined on a string.
+
+->**Consonantia diapason**<-
+[[notes: The octave consonance]]
+
+¶ This consonance, as Aristotle testified in his *Book of Problems*, is the most elegant and beautiful of all. I therefore divide the string **a b** in the middle at point **c**. Because the relationship of the interval **a b** to **c b** is double (2:1), then by definition, **a b** to **c b** sounds the **diapason** [[notes: Octave]].
+
+<sig>g 4</sig>
+
+[[summary: This page uses Pythagorean mathematical proofs to define the relationships between the fourth, fifth, and whole tone. It explains why certain pleasant intervals, like the major and minor sixths, are not technically "consonances" in the strict mathematical sense, and concludes with the division of a string to produce an octave.]]
+
+[[keywords: Diapente, Diatessaron, Diapason, Sesquialtera, Sesquitertia, Superparticular ratio, Pythagorean tuning, Major Sixth, Minor Sixth, Boethius, Aristotle]]

@@ -1,0 +1,31 @@
+<sig>A.ij.</sig>
+
+# The Philosopher's Game
+
+The board <note>original: "table"</note> must be a plain board containing 128 squares—that is, 8 in breadth and 16 in length—set forth in two diverse <note>original: "dyuerſe"</note> colors. Or for a plainer understanding, the board is a double chessboard, as if it were two chessboards joined together: the length of two and the breadth of one, of which this is an example:
+
+->example<-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+
+<note>Note: The diagram above represents the 8x16 grid of the "Philosopher's Game" (Rythmomachia) as described in the text. In the original document, this board is populated with numbered geometric pieces (circles, triangles, and squares) representing a mathematical and military competition between two players.</note>
+
+<summary>This segment describes the physical dimensions and appearance of the board used for "The Philosopher's Game," also known as Rythmomachia. The author explains that the board consists of 128 squares, arranged in an 8x16 grid, which can be easily visualized as two standard chessboards joined together at their ends.</summary>
+
+<keywords>The Philosopher's Game, Rythmomachia, game board, double chessboard, 128 squares, early modern games, mathematical gaming, board dimensions.</keywords>

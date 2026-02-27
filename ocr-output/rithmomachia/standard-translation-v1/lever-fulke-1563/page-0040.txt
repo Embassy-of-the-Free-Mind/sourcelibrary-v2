@@ -1,0 +1,15 @@
+->The Philosophers' Game.<-
+.viii.
+C.i.
+
+Pieces <note>original: "men"</note> may be captured <note>original: "taken"</note> by equality when a piece, after its move <note>original: "motion"</note>, sees an enemy of the same value <note>original: "number"</note> as itself standing in a space it could move into. In this case, the player may remove the enemy piece without moving into its space. For example: if the number 9 triangle of the even army, after it has moved, sees the number 9 circle <note>original: "rounde"</note> of the odd army, it may take that piece up without moving into its space. However, if the 9 triangle sees the 9 circle before it moves, while the circle is in its path <note>original: "draught"</note>, it may take it up and move into its space.
+
+These pieces may be captured by equality: 9, 16, 25, 36, 49, 64, and 81, because they are found in both armies. Furthermore, since any captured piece—when turned bottom-up—displays the adversary's color and may serve the enemy on whose side it was captured, the numbers 4 and 6 may also be captured by equality.
+
+<vocab>Philosophers' game, Rythmomachia, equality, triangle, circle <note>original: "rounde"</note>, path/move <note>original: "draught"</note>, equality</vocab>
+
+<summary>
+This page details the rule of "Equality" for capturing pieces in Rythmomachia. A piece can capture an opponent of the same numerical value if it is within its movement range. The text explains two methods of capture: moving onto the opponent's space or capturing from a distance after a move. It also lists the specific numbers common to both sides and notes that captured pieces change allegiance when flipped over.
+</summary>
+
+<keywords>Rythmomachia, Philosophers' Game, equality capture, game pieces, even army, odd army, triangle, circle, movement rules, piece conversion</keywords>

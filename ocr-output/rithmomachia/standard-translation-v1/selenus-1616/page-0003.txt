@@ -1,0 +1,32 @@
+[[meta: This page is the main title page of the 1617 edition, following the library's administrative markings. It introduces the author and the primary subjects of the book.]]
+
+->❦ The ❦<-
+
+# Chess - or King-Game.
+
+->From<-
+
+## GUSTAVUS SELENUS,
+[[notes: "Gustavus Selenus" was the pseudonym of Augustus the Younger, Duke of Brunswick-Lüneburg (1579–1666). The name is an anagram: "Gustavus" for "Augustus," and "Selenus" from the Greek goddess of the moon, Selene, referring to his seat in Lüneburg (Luna-burg).]]
+
+->Composed in four distinct books /<-
+->with special diligence / thorough<-
+->and orderly arrangement.<-
+->Also adorned with useful copperplate<-
+->engravings :<-
+[[notes: Copperplate engraving was a high-quality printing technique of the era that allowed for much finer detail than woodcuts, essential for illustrating complex chess positions.]]
+->The like of which has not appeared before.<-
+->To this is added / at the end / a very an-<-
+->cient game / called /<-
+
+## RYTHMO-MACHIA.
+[[notes: Also known as "The Philosopher's Game," Rithmomachia was a highly complex medieval board game involving arithmetic and geometry. It was often used as a tool for teaching mathematical proportions.]]
+
+->With Imperial Privilege, for six years.<-
+[[notes: This was a legal protection granted by the Holy Roman Emperor, similar to a modern copyright, preventing others from reprinting the work for a period of six years.]]
+->LEIPZIG. 1617.<-
+[[notes: The original text uses "LIPSIÆ," the Latin name for Leipzig, and the Roman numeral date "CIƆ IƆC XVII," which was a common 17th-century typographic style for 1617.]]
+
+[[summary: This is the title page of a foundational 17th-century manual on chess by Augustus the Younger, Duke of Brunswick-Lüneburg, writing under a pseudonym. It promises a thorough four-part guide illustrated with fine engravings and includes a secondary treatise on the mathematical game Rithmomachia.]]
+
+[[keywords: Chess, King-Game, Gustavus Selenus, Augustus the Younger, Rithmomachia, Leipzig, 17th-century printing, board games, Imperial Privilege]]

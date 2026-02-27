@@ -1,0 +1,37 @@
+[[meta: This page continues the tactical play-by-play of the chess puzzle introduced on page 436. It utilizes a 1-64 numbering system for the board squares. The sequence describes a complex series of moves where Black repeatedly avoids immediate checkmate to demonstrate specific maneuvering or to fulfill a stipulated endgame condition.]]
+
+### 10. Chapter: On the Game of Chess.
+
+**Black** offers **check** with the other **Rook** [[notes: *Rochen*, the traditional term for the Rook or Castle]] from square ten: **White** moves the **King** to square three:
+
+**Black** moves the just-mentioned **Rook** (although he could have given **Checkmate** [[notes: *Schach-Mat*]] with the first **Rook** from square one) to forty-two: **White** jumps with the **Bishop** [[notes: *Schütze*, literally "Archer" or "Shooter"—the early modern German term for the Bishop piece]] to thirty-nine.
+
+**Black** offers **check** with the first **Rook** (disregarding the **Checkmate** possible from square 1) from eleven: **White** moves the **King** to four:
+
+**Black** offers **check** with the other **Rook** (even though he could give **Checkmate** with the same piece from square two) from forty-four: **White** moves the **King** to five:
+
+**Black** [moves] the first **Rook** to twelve: **White** (since he cannot move the **King** to six because of the **Black Bishop**) jumps with his **Bishop** to twenty-one:
+
+**Black** moves the **King** to twenty: **White** jumps with the **Bishop** to thirty-nine—or thirty-five: or seven: or three:
+
+**Black** offers **check** with the other **Rook** from forty-five: **White** covers the **King** with the **Bishop** on twenty-one:
+
+**Black** (since he must leave **White** a piece besides the **King**, and therefore cannot take the **White Bishop**) moves the first **Rook** (in order to create space [[notes: *Luft*, literally "air"—a term still used in modern chess to describe an escape square for a King to prevent back-rank mates]]) for the **White King**, who would otherwise remain trapped: **White** [moves] the **King** to four:
+
+**Black** offers **check** with the first **Rook** from eight: **White** covers the **King** with the **Bishop** on seven:
+
+**Black** moves the other **Rook** to thirteen: **White** [moves] the **King** to three:
+
+**Black** [moves] the other **Rook** to twelve: **White** [moves] the **King** to two:
+
+**Black** [moves] the other **Rook** to eleven: **White** [moves] the **King** to one:
+
+**Black** [moves] the **King** to nineteen: **White** moves his **King** to two (since the same can be moved nowhere else, and his **Bishop** is trapped).
+
+Zii iiii
+[[meta: catchword: Der]]
+[[gloss: chess, game of chess, Rook, Bishop, King, Checkmate]]
+
+[[summary: This page details a specific chess sequence where Black purposefully avoids early checkmate opportunities to maneuver the White King across the board. The text illustrates early modern chess terminology and the use of a numbered grid system for notation.]]
+
+[[keywords: chess tactics, chess history, Rook, Bishop, King’s escape, checkmate, chess notation, 17th-century gaming]]

@@ -1,0 +1,39 @@
+[[meta: Continuity from page 6: The previous page concluded a discussion on the dream-interpretations of Artemidorus Daldianus regarding chess, specifically how dreaming of the game can signify deception or benefit depending on the dreamer's skill. This page transitions into the ethical and proper use of the game in daily life.]]
+
+-> ### Of the Game of Chess. <-
+
+[[margin: 1. cap.]]
+That it (1) be moderate / and then / when necessity requires it / be put into practice.
+
+That it (2) be not improper. It is improper / when the last things are put first / and the game is esteemed higher / than other important / and official duties: how absurd this is / *Seneca* [[notes: Lucius Annaeus Seneca (c. 4 BC – 65 AD), a Roman Stoic philosopher and advisor to Nero.]] *Epist: 117. near the end* gives us to understand with a fine example / in a clever way:
+
+> *Nemo, (he writes) qui ad incendium domus suae currit, cc*
+> *Laterunculariam perspicit, ut sciat, quomodo alligatus exeat cc*
+> *Calculus.* [[notes: The Latin *Laterunculariam* refers to *Ludus latrunculorum*, an ancient Roman strategy game often translated as "chess" by early modern scholars.]] That is: cc
+> No one / who must run to his house / cc
+> to rescue the same / from the danger of fire / will cc
+> hold the Game of Chess / more dear / and consider first cc
+> how he might / rescue his piece / which has fallen into danger / cc
+> and dwell long upon it.
+
+So now shall every man also / attend to what is necessary / and pertains to serious matters / (since Nature has indeed directed us / toward those / and not primarily to games and pastimes) / and make use of gaming / only in its proper time.
+
+Of this / we wish to present / *Scævola* [[notes: Refers to Publius Mucius Scaevola or his son Quintus Mucius Scaevola, both renowned Roman jurists and "Pontifex Maximus" (high priests).]], an excellent Roman lawmaker / and jurist / who is said not to have been named *Quintus* / (as *Pomponius* [[notes: Sextus Pomponius, a 2nd-century Roman jurist.]] *l. 2. §. 41. ff. de Orig: jur:* calls him) / but rather *Publius Mutius* / (according to the opinion of *Bernhard: Rutilij*: in the description of his life / pag: 197. 198. and 134.): as an example / (as *Valer: Maximus, lib: 8. c. 8.* [[notes: Valerius Maximus was a 1st-century Roman author of a collection of historical anecdotes.]] writes of him):
+
+> *Scævola, Alea & Calculis vacasse, interdum dicitur, cum cc*
+> *benè ac diù, jura Civium & caeremonias Deorum, ordinasset. Ut cc*
+> *enim, in rebus serijs Scævolam, ita & in scurrilibus lusibus, Homi- cc*
+> *nem agebat, quem rerum natura, continui laboris, patientem esse, cc*
+> *non finit, & ad hoc diverticulum, animum suum, forensibus mini- cc*
+> *sterijs fatigatum, transferebat:* That is: cc
+
+> The histories report / that *Scævola*, when He / had for a considerable time / well attended to and arranged / secular and spiritual matters / occasionally amused and delighted himself / in games of dice and chess. For cc
+> just as he acted in important matters / according to his station / and office / so in the merry, entertaining games / he acted like any cc
+> other man / who cannot endure constant labor / cc
+
+B
+[[meta: catchword: erzei]]
+
+[[summary: This page discusses the ethics of leisure, arguing that chess should only be played in moderation and never take precedence over serious civic or religious duties. It cites the philosopher Seneca and the Roman jurist Scævola as examples of how to balance professional responsibilities with recreational play.]]
+
+[[keywords: ethics of gaming, Seneca, Scævola, Roman Law, Latrunculi, recreation, duty, Valerius Maximus]]

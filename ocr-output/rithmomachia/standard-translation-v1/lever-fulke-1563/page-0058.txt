@@ -1,0 +1,13 @@
+<header>The Philosophers' game.</header>
+
+# Of Musical Proportion
+
+Musical proportion <note>original: "Musicall proportion"; this is now commonly known as harmonic proportion or the harmonic mean</note> occurs when the sum of the differences between the first and middle numbers and the middle and last numbers is the same as the difference between the first and the last. For example: in the sequence 3, 4, 6, the difference between 3 and 4 is 1, and the difference between 4 and 6 is 2. The total difference is 3, which is the same as the difference between the first number (3) and the last (6).
+
+## A rule to find the first number when you have the last two.
+
+Multiply the second number by the third and divide the product by the sum of the difference <note>original: "distans"</note> and the third number; the quotient is the first number. For example, having 6 and 12, I would find the first. 6 times 12 is 72. The difference between 6 and 12 is 6, which, when added to 12, is 18. Divide 72 by 18, and the quotient is 4. Thus, you have 4, 6, and 12 in musical proportion.
+
+<summary>This text defines "musical proportion" (harmonic proportion) within the context of Rythmomachia. It explains that in such a proportion, the sum of the internal differences equals the difference between the extremes. It also provides a mathematical formula for calculating the first term of a harmonic progression when the subsequent two terms are known, using the numbers 4, 6, and 12 as a primary example.</summary>
+
+<keywords>Musical proportion, Harmonic mean, Rythmomachia, Philosophers' Game, arithmetic, number theory, ratio, mathematical rules</keywords>

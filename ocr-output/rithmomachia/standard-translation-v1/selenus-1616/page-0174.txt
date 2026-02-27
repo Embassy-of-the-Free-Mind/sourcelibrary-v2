@@ -1,0 +1,18 @@
+[[meta: This page continues the guidelines for a player's conduct and tactical mindset during a match. While the previous page discussed legal moves and regional customs, this page focuses on the psychological and strategic discipline required to master the "Knightly Game" of chess.]]
+
+# The Second Book / 4. Chapter:
+-> 144 <-
+
+,, proceed **wisely and deliberately** (for once a mistake is made, it is done); to which belongs: that he (1.) always keep his thoughts together, and not let them fly or wander here and there, but always proceed quite carefully with his moves. He should make no vain moves which only serve the enemy’s advantage and thereby cause himself a dangerous harm which he would ultimately realize—though far too late—once he had already been overcome by his enemy. For **careless capturing**, as well as relying too much on the **number of pieces** [[notes: *Steine*, literally "stones"; the common historical term for chess pieces]], is not always good nor advisable. 
+
+That he (2.) should not only think of the current and single move which he wishes to execute, and thus make blind, unthinking moves, but also—as far as is possible for him—well weigh, consider, and arrange in his mind the second, third, and even more following moves. He should also well imagine that there is nothing greater in this **Knightly Game** [[notes: *Ritterlichen Spiele*; chess was considered one of the essential "seven knightly virtues" in noble education]] than that **"one does not put one's eyes in one's pocket."** [[notes: *daß man die Augen nicht in den Seckel lege*; a colorful Early Modern idiom meaning one must stay alert and keep a sharp eye on the board.]] 
+
+That he (3.) should conduct and play this game with **composure** [[notes: *sitsam*, implying a steady, calm, and sedate demeanor]]—for as the Ancients said: **"Much anger loses the game"**—without rushing, yet with modesty and without annoyance to the other; not too slowly, for that would be intolerable and unbearable, nor too quickly, to the detriment and loss of the entire endeavor. 
+
+That he (4.) for the same reason, when a good move presents itself, should not execute it immediately, but rather consider further whether he might not be able to perform an even more useful move; and when his opponent has moved a piece, he should diligently observe whether it was moved into the field according to the rules of this game and can be taken without disadvantage. Even if this piece could be captured by him immediately, he should nevertheless first well weigh within himself whether it was perhaps moved for the sake of maintaining a planned **scheme** [[notes: *Anschlag*; a tactical plan or trap]], because the opponent perhaps wants the piece that could take it out of the way in order to reach the **King**. In such a case, it would be better to leave it standing and otherwise make another good move. However, if he cannot take it, he should then—before other moves are undertaken—carefully notice whether it was moved toward a piece which it might capture in the following move, or otherwise do some damage.
+
+[[meta: catchword: Befän]]
+
+[[summary: This page offers strategic and behavioral advice for chess players, emphasizing the need for foresight, emotional control, and careful analysis of an opponent's intent. It warns against impulsive captures and stresses thinking several moves ahead to avoid tactical traps.]]
+
+[[keywords: Chess tactics, Knightly Game, player conduct, foresight, capturing pieces, Early Modern chess, King, emotional discipline]]

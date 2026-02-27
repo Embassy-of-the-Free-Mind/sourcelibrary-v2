@@ -1,0 +1,45 @@
+### The Layout of the Board
+
+The following diagram illustrates the initial arrangement of the pieces on the board <note>original: "Table"</note> for Rithmomachia, also known as the Philosophers' Game. The board consists of an 8x16 grid, with the pieces of the two opposing camps set at either end.
+
+#### **The Upper Camp**
+*(Oriented toward the opponent)*
+
+| Piece Type | Row 1 | Row 2 | Row 3 | Row 4 |
+| :--- | :---: | :---: | :---: | :---: |
+| **Squares** | 361 | 225 | 121 | 49 |
+| **Pyramid & Squares** | [Pyramid] | 120 | 66 | 28 |
+| **Triangles** | 91 | 72 | 64 | 56 |
+| **Triangles** | 30 | 30 | 16 | 12 |
+| **Circles** | 81 | 49 | 25 | 9 |
+| **Circles** | 9 | 7 | 5 | 3 |
+
+<br>
+
+(The middle eight ranks of the board remain empty at the start of the game)
+
+<br>
+
+#### **The Lower Camp**
+*(Oriented toward the player)*
+
+| Piece Type | Row 1 | Row 2 | Row 3 | Row 4 |
+| :--- | :---: | :---: | :---: | :---: |
+| **Circles** | 2 | 4 | 6 | 8 |
+| **Circles** | 4 | 16 | 36 | 64 |
+| **Triangles** | 6 | 20 | 42 | 72 |
+| **Triangles** | 9 | 25 | 49 | 81 |
+| **Squares & Pyramid** | 15 | 45 | [Pyramid] | 153 |
+| **Squares** | 25 | 81 | 169 | 289 |
+
+***
+
+And <note>original: "Vnd" (German)</note>
+
+<summary>
+This page provides a visual diagram of the starting positions for Rithmomachia (The Philosophers' Game). It depicts an 8x16 grid where two sides, an "Upper Camp" and a "Lower Camp," face each other. Each side has 24 pieces (circles, triangles, squares, and one pyramid) arranged in six ranks. The pieces are inscribed with specific numbers that correspond to mathematical progressions (arithmetic, geometric, and harmonic), which form the basis of the game's capture mechanics and strategy.
+</summary>
+
+<keywords>
+Rithmomachia, Philosophers' Game, mathematical gaming, board game diagram, game setup, arithmetic progression, geometric progression, pyramid piece, early modern games, mathematical education.
+</keywords>

@@ -1,0 +1,139 @@
+[[meta: This page continues the technical analysis of chess variations, specifically providing visual diagrams to support the move sequences described in the previous text. The diagrams use the specific terminology of the era, where the Bishop is called an "Archer" (Lauffer), the Knight is a "Rider" (Springer), and the Pawn is a "Soldier" (Soldat). The numbers "zj," "zz," etc., use an archaic typesetting where "z" represents "2," so "zj" is 21 and "zz" is 22.]]
+
+# On the Game of Chess.
+Eee ij
+
+[[margin:
+4. cap:
+On the Game of Chess.
+]]
+
+->no. 4. 6. 36.<-
+[[notes: These numbers refer to the specific game variations or move sequences discussed in the text.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | B.So | B.Ar | B.Ki | B.So | B.Rk | B.Rk |
+| B.So | B.So | B.So | | | | B.So | B.So |
+| | | | | | | | |
+| | | | B.So | B.So | W.So | | |
+| | | | | | | 26 | |
+| | | | | | W.Ri | | |
+| W.So | W.So | W.So | W.So | | | W.So | W.So |
+| W.Rk | W.Rk | W.So | W.Rk | W.Ki | W.So | | W.Rk |
+
+---
+
+->no. 9. 21.<-
+[[notes: The OCR "zj" represents 21.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | B.So | | B.Ki | B.So | | B.Rk |
+| | B.So | | | B.Ar | | B.So | B.So |
+| B.So | | | | | B.Ri | | |
+| | | B.So | | | W.So | 34 | |
+| | | | B.So | B.So | | W.So | |
+| W.Rk | | | | | | | |
+| W.So | W.So | W.So | W.So | W.Rk | | W.So | W.So |
+| W.Rk | W.Rk | W.So | | W.Ki | | | W.Rk |
+
+---
+
+->no. 11. 24.<-
+[[notes: The OCR "z4" represents 24.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | | | B.Ki | B.So | | B.Rk |
+| | B.So | | | B.Ar | | B.So | B.So |
+| B.So | | | | | | | |
+| | | B.So | | | B.So | W.So | |
+| | | | B.So | W.So | B.Ri | | |
+| W.Rk | | | | | W.Rk | | |
+| W.So | W.So | W.So | W.So | | | | W.So |
+| W.Rk | W.Rk | W.So | | W.Ki | | | W.Rk |
+
+---
+
+->no. 28. 29. 34. 35.<-
+[[notes: "z8" and "z9" represent 28 and 29.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | | | B.Ki | B.Rk | | |
+| | W.Rk | | | | | B.So | B.So |
+| B.So | | | B.So | B.Ar | | | |
+| | | B.So | | | | W.So | |
+| | | | B.So | B.So | | | W.Ki |
+| W.Rk | 23 | | | | | | |
+| W.So | W.So | W.So | W.So | 12 | | W.Ri<gloss>+</gloss> | W.So |
+| W.Rk | W.Rk | W.So | | | W.Rk | W.Ri<gloss>+</gloss> | |
+[[notes: The "+" symbol in these historical diagrams denotes a "Check" against the King. "12" is transcribed from the OCR "jz".]]
+
+<column-break/>
+
+->no. 7. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | B.So | | B.Ki | B.So | B.Rk | B.Rk |
+| B.So | B.So | | | B.Ar | | B.So | B.So |
+| | | | | | | | |
+| | 39 | B.So | B.So | | W.So | | |
+| | | | W.Rk | B.So | | W.So | |
+| | | | | | | | |
+| W.So | W.So | W.So | W.So | W.Rk | | | W.So |
+| W.Rk | W.Rk | W.So | | W.Ki | W.So | | W.Rk |
+
+---
+
+->no. 10. 22. 23.<-
+[[notes: "zz" and "z3" represent 22 and 23.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | B.So | | B.Ki | B.So | | B.Rk |
+| | B.So | | | B.Ar | | B.So | B.So |
+| B.So | | | | | | | |
+| | | B.So | B.Ri | | W.So | W.So | |
+| | | | B.So | B.So | | | |
+| W.Rk | | | | | | | |
+| W.So | W.So | W.So | W.So | W.Rk | | W.So | W.So |
+| W.Rk | W.Rk | W.So | | W.Ki | | | W.Rk |
+
+---
+
+->no. 14. 15.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | | | B.Ki | | | B.Rk |
+| | B.So | | | | | B.So | B.So |
+| B.So | | | B.So | B.Ar | | | |
+| | | B.So | | | | W.So | |
+| | | | B.So | | | W.Rk | 25 |
+| W.Rk | | | | B.So | | W.Ki | 17 |
+| W.So | W.So | W.So | W.So | | | | W.So |
+| W.Rk | W.Rk | W.So | | | | W.Rk | |
+
+---
+
+->no. 30. 33.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.Rk | B.Rk | | | B.Ki | | | |
+| | B.So | | | | | B.So | B.So |
+| B.So | | | B.So | B.Ar | | | |
+| | | B.So | | | | W.So | 33 |
+| | | | | B.So | B.Rk | | W.Ki |
+| W.Rk | | | | | | 18 | |
+| W.So | W.So | W.So | W.So | W.Rk | | | W.So |
+| W.Rk | W.Rk | W.So | | | | W.Rk | |
+
+[[gloss: Chess-Game, Rook, Rider, Archer, King, Soldier]]
+
+[[summary: This page provides a series of eight chess board diagrams illustrating specific variations of play. These visual guides map out piece positions and maneuvers mentioned in the text of Chapter 4, using traditional terminology like Archer for Bishop and Rider for Knight.]]
+
+[[keywords: chess diagrams, chess strategy, Damiano, move variations, Rook, Rider, Archer, Soldier, chess history]]

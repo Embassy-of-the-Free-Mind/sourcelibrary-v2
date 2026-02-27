@@ -1,0 +1,34 @@
+[[meta: This page provides a visual summary of the arithmetic rules for generating "Triangle" pieces in Rythmomachia, continuing the calculations described on the previous page. It illustrates how to derive a piece's value by adding a specific fraction—determined by its position in the sequence—to its base number.]]
+
+[[margin: Superparticular proportion. [[notes: A "superparticular" ratio is one where the larger number contains the smaller number plus one part of it (e.g., 3:2, 4:3). In this game, it is used to determine the values of the second tier of pieces—the Triangles—based on the first tier—the Rounds.]]]]
+
+[[margin: Even positions. [[notes: These columns correspond to the even-numbered steps in the mathematical sequence (2nd, 4th, 6th, and 8th).]]]]
+
+-> Second <- -> Fourth <- -> Sixth <- -> Eighth <-
+-> 3 <- -> 5 <- -> 7 <- -> 9 <-
+
+-> **Sesquialter, sesquiquartal, sesquisextal, sesquioctal** [[notes: These Latin-derived terms describe the ratios. For example, "Sesquialter" is 1 ½ (or 3:2), while "Sesquiquartal" is 1 ¼ (or 5:4).]] <-
+
+[[margin: Governing factors. [[notes: "Regirans plic." refers to the base numbers (multipliers) used to generate the pieces. In Rythmomachia, these are often the values of the opponent's "Round" pieces or the base value from which the triangle is derived.]]]]
+-> 6 <- -> 20 <- -> 42 <- -> 72 <-
+
+[[margin: Required numbers. [[notes: "Requis pro unus" indicates the resulting value of the Triangle piece. For example, in the first column: 6 + (6 ÷ 2) = 9.]]]]
+-> 9 <- -> 25 <- -> 49 <- -> 81 <-
+
+---
+
+[[margin: Odd positions. [[notes: These columns correspond to the odd-numbered steps in the sequence (3rd, 5th, 7th, and 9th).]]]]
+
+-> Third <- -> Fifth <- -> Seventh <- -> Ninth <-
+-> 4 <- -> 6 <- -> 8 <- -> 10 <-
+
+-> **Sesquitertian, sesquiquintal, sesquiseptimal, sesquinonal.** [[notes: Continuing the ratios: Sesquitertian is 1 ⅓ (4:3), Sesquiquintal is 1 ⅕ (6:5), etc.]] <-
+
+[[margin: Governing factors.]]
+-> 12 <- -> 30 <- -> 56 <- -> 90 <-
+
+[[margin: Required numbers.]]
+-> 16 <- -> 36 <- -> 64 <- -> 100 <-
+
+[[summary: This page uses a diagram to illustrate the "superparticular" proportions used to calculate piece values in Rythmomachia. It organizes the calculations into even and odd sequences, showing how base numbers (6, 12, 20, etc.) are transformed into triangular piece values (9, 16, 25, etc.) through specific ratios.]]
+[[keywords: Rythmomachia, superparticular proportion, sesquialter, sesquitertian, arithmetic progression, medieval mathematics, game pieces]]

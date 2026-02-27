@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical walkthrough from page 198, following the opening sequence of a chess match. It continues to use the numbered coordinate system (1-64) and archaic names for the pieces: "Soldaten" (Pawns), "Schützen" (Bishops), "Reuter" (Knights), and "Rochen" (Rooks).]]
+
+### 11. Chapter: Of the Game of Chess.
+
+16. also to the **Black King’s Pawn** [[notes: *S. K. Soldaten*]] at eleven: * **The Black** player protects it with his **Queen** at forty-three: **The White** player moves the **King’s Bishop** [[notes: *Schützen*]] to the **Black King’s Knight** [[notes: *Reuter*]] at twelve: he can in this way obtain the **Black King’s Pawn** by force and cause **the Black** player a bad game: for the same (if he, to protect his **Knight**, moves his **Pawn** to forty-two: and **the White** player takes his **Knight** with the **King’s Bishop**) must move two **Pawns** one in front of the other on the **King’s Rook’s** file. 
+
+[[margin: 17.]] When, however, **the Black** player does not protect the **King’s Pawn** with the **Queen** at 43 (no. 16) but instead with his **King’s Knight’s Pawn** at thirty-four: then **the White** player plays his **King’s Bishop** to the **Black King’s Knight** at twelve: *
+
+[[margin: 18.]] **The Black** player [moves] the same to fifty: **the White** player [moves] to the **Black King’s Pawn**—the **King’s Knight’s Pawn**—at eighteen: **the Black** player takes it with the same and moves against the **White Queen**: (he may also, with this and similar moves, as far as he trusts himself to maintain his game otherwise, as a sign of his skill and experience in this game, or else for the sake of courtesy, warn his opponent that his **Queen** is in **check** [[notes: *Schache*]] or in danger—to which he is otherwise not bound if he does not wish—well warn him) [[notes: This refers to the historical "Garde" rule, where players would politely announce when the opponent's Queen was under attack, similar to saying "check" for the King.]] **the White** player takes it with the same [the Queen] and moves to the **Black King’s Knight’s Pawn**: **the Black** player protects it with the **King’s Rook’s Pawn** at forty-one: **the White** player (to bring the enemy’s game into disorder) moves his **King’s Rook’s**
+
+[[margin: 19.]] **Pawn** [[notes: *Soldaten*]] to twenty-five: * **The Black** player does not take it with the **King’s Knight’s Pawn** (for otherwise this **Knight** would be taken from him by the **White Queen**) but rather moves (to further protect his **King’s Knight’s Pawn**) his **King’s Bishop’s Pawn** to forty-three: **the White** player (to break the enemy’s game) [moves] against the same [with] the **King’s Pawn** at thirty-six: *
+
+[[margin: 20.]] **the Black** player [moves] the **King’s Knight** (to further protect his **Pawn**) to forty-four: **the White** player gives **check** with his **King’s Bishop** from thirty-three, drives the **Black King** to fifty-nine, and will thus, provided he understands the game somewhat, likely win.
+
+21. But if **the Black** player does not move the **Knight** to 44 (no. 20), but rather against the **White Queen** and the **White King’s Rook’s Pawn** at thirty-five: then **the White** player plays his **Queen** against the same at twenty-six: **The Black** player takes
+
+[[meta: catchword: mie. (truncated form of "nimmt" or similar continuation)]]
+
+[[summary: This page details specific tactical variations in a chess opening, focusing on the interactions between Pawns, Knights, and Bishops. It also highlights the historical etiquette of warning an opponent when their Queen is threatened.]]
+
+[[keywords: chess tactics, opening theory, Queen's danger, Garde rule, 17th-century chess terminology, piece maneuvers]]

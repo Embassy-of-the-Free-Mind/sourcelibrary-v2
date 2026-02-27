@@ -1,0 +1,103 @@
+[[meta: This page continues the mathematical demonstration for constructing the game pieces of Rythmomachia. The previous page ended while explaining how to calculate the "required" number for a piece based on the "superpartient" ratio. This page provides the visual tables and specific values for both the Even and Odd sequences of the Square pieces.]]
+
+[[margin: Num-]]
+[[margin: ber.]]
+
+[[margin: Even.]]
+
+[[margin: { Parts to be]]
+[[margin: { taken accord-]]
+[[margin: { ing to the deno-]]
+[[margin: { minator of]]
+[[margin: { the proportion.]]
+
+[[margin: Thirds.]]
+[[margin: 5]]
+
+[[margin: Fifths.]]
+[[margin: 9]]
+
+[[margin: Seven-]]
+[[margin: ths.]]
+[[margin: 13]]
+
+[[margin: Nin-]]
+[[margin: ths.]]
+[[margin: 17]]
+
+---
+
+->Additions. 10 36 102 135<-
+[[notes: "Additions" (Reprises) refers to the fractional value that must be added to the base number to reach the higher proportion. Note: While the OCR reads 102 and 135, the mathematical logic for these proportions (6/7 and 8/9) suggests these values should be 78 and 136 respectively.]]
+
+->**Superbipartient Thirds.** **Superquadripartient Fifths.** **Supersestupartient Sevenths.** **Superoctupartient Ninths.**<-
+[[notes: These terms describe ratios where the larger number contains the smaller number plus several parts of it. For example, "Superbipartient Thirds" is a ratio of 5:3 (1 + 2/3). In the game of Rythmomachia, these ratios determine the values of the "Square" pieces.]]
+
+[[margin: Gene-]]
+[[margin: rating]]
+[[margin: super-]]
+[[margin: partients.]]
+[[margin: ---]]
+[[margin: Re-]]
+[[margin: quired]]
+[[margin: propor-]]
+[[margin: tion.]]
+
+|  |  |  |  |
+|:---:|:---:|:---:|:---:|
+| 15 | 45 | 91 | 153 |
+| 25 | 81 | 169 | 289 |
+
+---
+
+[[margin: Odd.]]
+
+[[margin: { Parts to be]]
+[[margin: { taken accord-]]
+[[margin: { ing to the deno-]]
+[[margin: { mination of]]
+[[margin: { the proportion.]]
+
+[[margin: Fourths.]]
+[[margin: 7]]
+
+[[margin: Sixths.]]
+[[margin: 11]]
+
+[[margin: Eigh-]]
+[[margin: ths.]]
+[[margin: 15]]
+
+[[margin: Ten-]]
+[[margin: ths.]]
+[[margin: 19]]
+
+---
+
+->Additions. 21 55 105 171<-
+
+->**Supertripartient Fourths.** **Superquintapartient Sixths.** **Superseptupartient Eighths.** **Supernonupartient Tenths.**<-
+
+[[margin: Odd]]
+[[margin: number.]]
+
+[[margin: { Gene-]]
+[[margin: { rating]]
+[[margin: { super-]]
+[[margin: { partients.]]
+[[margin: { ---]]
+[[margin: { Re-]]
+[[margin: { quired]]
+[[margin: { propor-]]
+[[margin: { tion.]]
+
+[[notes: In the original manuscript, the following grid is illustrated with white numerals on a black background to visually distinguish the pieces belonging to the "Odd" numerical sequence.]]
+
+|  |  |  |  |
+|:---:|:---:|:---:|:---:|
+| 28 | 66 | 120 | 190 |
+| 49 | 121 | 225 | 361 |
+
+[[summary: This page provides reference tables for calculating the values of Square pieces in Rythmomachia using complex superpartient proportions. It illustrates how to derive the "Required" piece values from "Generating" base numbers for both even and odd numerical sequences.]]
+
+[[keywords: Rythmomachia, superpartient proportion, number theory, mathematical games, Boethius, Renaissance arithmetic, even and odd numbers]]

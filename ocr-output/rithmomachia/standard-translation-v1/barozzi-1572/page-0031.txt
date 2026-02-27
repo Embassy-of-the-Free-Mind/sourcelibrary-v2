@@ -1,0 +1,30 @@
+[[meta: This page continues the explanation of the rules of capture in Rithmomachia, transitioning from "counting" (equality) to the "summing" rule. The diagram at the top, though faint, illustrates the spatial relationship required for a capture by addition.]]
+
+[[margin: circle]] [[margin: triangle]] in square A, and the **white triangle 9** in square B, and the **black circle 25** in square C. I say that as soon as these pieces are found in such a position, the **black circle 25** shall be removed by **summing** [[notes: "Summare" (summing) is a capture rule where the values of two of your pieces add up to the value of an opponent's piece. Both attacking pieces must be able to "reach" the target square according to their movement rules.]], because the **white triangle 16** [[notes: This piece was likely mentioned at the very end of the previous page or is represented by "A" in the diagram description.]] coupled with the **white circle 9** makes the sum of the **black circle 25**, and both could reach where the said black circle is located by their own proper path. But which numbers in this game can be won by summing is shown to us by the following table.
+
+### Table of all the numbers that in this game are won by summing
+
+| numbers | | | numbers | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Whites against Blacks** | | | **Blacks against Whites** | | |
+| 4 | 8 | 12 | 3 | 5 | 8 |
+| 8 | 20 | 28 | 3 | 12 | 15 |
+| 16 | 20 | 36 | 7 | 9 | 16 |
+| 9 | 16 | 25 | 9 | 16 | 25 |
+| 4 | 45 | 49 | 12 | 30 | 42 |
+| 15 | 49 | 64 | 9 | 36 | 45 |
+| 2 | 64 | 66 | 28 | 36 | 64 |
+| 9 | 72 | 81 | 16 | 56 | 72 |
+| 36 | 45 | 81 | 25 | 56 | 81 |
+| 9 | 81 | 90 | 25 | 66 | 91 |
+| 9 | 91 | 100 | 49 | 120 | 169 |
+| 49 | 72 | 121 | 64 | 225 | 289 |
+| 72 | 153 | 225 | | | |
+| 72 | 289 | 361 | | | |
+| **Whites** | **combined.** | **Black** | **Blacks** | **combined.** | **White** |
+| | | **results.** | | | **results.** |
+
+[[notes: The "results" columns list the value of the piece being captured, while the "combined" columns list the two pieces used to perform the capture. For example, a white 4 and a white 8 can capture a black 12.]]
+
+[[summary: This page explains the "Summing" rule of capture in Rithmomachia, where two pieces combine their values to remove an opponent's piece of the same total. It provides a comprehensive table of all possible mathematical combinations for both the White and Black sides.]]
+[[keywords: Rithmomachia, capture rules, summing, addition, mathematical game, table of values, circle, triangle]]

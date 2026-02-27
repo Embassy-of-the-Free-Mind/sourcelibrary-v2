@@ -1,0 +1,20 @@
+[[meta: This page continues the third chapter's instructions on the preparations and strategic considerations required before the first move. While the previous page focused on physical board setup and lighting, this section addresses the practice of handicapping and the vital importance of the first move.]]
+
+<page-num>136</page-num>
+# The Second Book, 3rd Chapter:
+
+That (4.) the **stones** [[notes: *Steine*, the standard term for chess pieces in this period]], once they have been chosen by both parties, shall be set and ordered quite properly and according to the rules of the game upon the **table** [[notes: *Tabel*, referring to the chess board]] in their designated fields.
+
+But before the game is further commenced, it is often customary to give and take an **advantage** [[notes: *vortheil*, referring to a handicap]], either by moving ahead, or by setting aside certain Chess-stones from the others, or otherwise; regarding which, the following rules are to be observed.
+
+(1.) No one should easily give or grant any advantage (which usually results in the profit of the receiver and the harm of the giver), because one can easily err and fail, and one is not always equally eager for play, but often finds oneself quite unfit for it.
+
+(2.) If one wishes to give the **Enemy** [[notes: *Feind*, the common term for an opponent in early chess literature, reflecting the game's nature as a simulated battle]] an advantage, he should never grant it in the same manner, so that the opponent does not eventually learn the trick of how he might conveniently protect and defend himself; rather, in all games, one should either decrease or improve the advantage. However, if one wished to grant the opponent that same advantage again, one should pay close attention and notice whether and how he defends and relieves himself at the place where he was attacked, so that one may always set upon him in another, new, and unexpected way.
+
+(3.) No one should lightly give the **lead and opening move** [[notes: *vor- und außzug*]] as an advantage, not only because it is to be held in high regard—since it is an indication of a high spirit and an undaunted mind to begin the battle, especially in a lawful cause; considering that those who await the challenge yield, as it were, to the Enemy, whereas they should rather march far out to meet him with greater benefit than wait for him at home—but also for the sake of the harm or profit that can follow from it. For although between players who do not rightly understand these Chess-moves, nor can distinguish who among them has an advantage, nor create any benefit for their game with the lead, no difference at all is to be found, but rather it is all the same whoever moves the first stone: yet especially he who is not as experienced in this game as his opponent should not think lightly of the **lead or first move** [[notes: *Anzug*]], nor cast it to the wind, thinking to win the game without it anyway and that the number of moves matters little; for in that way, he will find himself overcome.
+
+[[meta: catchword: Verste- (likely *Verstehen* or *Understanding*)]]
+
+[[summary: This page discusses the etiquette and strategy of giving "advantages" or handicaps to an opponent and emphasizes the psychological and tactical importance of having the first move. The author frames the first move not just as a mechanical advantage, but as a reflection of a player's bold and courageous spirit.]]
+
+[[keywords: pieces, advantage, handicap, opening move, strategy, military metaphor, initiative, rules of play]]

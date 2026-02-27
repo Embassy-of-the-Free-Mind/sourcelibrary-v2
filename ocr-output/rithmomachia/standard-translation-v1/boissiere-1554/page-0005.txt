@@ -1,0 +1,15 @@
+[[meta: This page appears to be a flyleaf or a verso page following the title page of Claude de Boissière’s treatise. There is a discrepancy in the archival page numbering—jumping from the title page to folio 231—which often occurs when individual works are rebound into larger collective volumes or "Sammelbands" within a library collection.]]
+
+# Folio 231
+
+[[unclear: Several lines of extremely faint, illegible text at the top of the page. The markings appear to be "bleed-through," where ink from the reverse side of the paper has seeped through the fibers over centuries, making it difficult to distinguish from the writing on this side.]]
+
+[[markup: (A faint circular impression or embossed stamp in the center-left area of the page.)]]
+
+[[markup: (A dark, circular ink stamp, likely an institutional or library seal, is located at the lower right. The stamp features a circular border with text and a central emblem, though both are too obscured by ink to read.)]] [[notes: This type of seal is a "provenance mark." In the 16th and 17th centuries, royal and private libraries used these stamps to claim ownership of a volume. The circular shape and placement suggest it may belong to the French Royal Library, used to protect the manuscript from theft or unauthorized sale.]]
+
+[[unclear: Approximately five lines of faint text located at the bottom of the page, largely illegible due to fading.]] [[notes: Although the text is faded beyond recognition, the script style suggests it may be a Latin inscription, perhaps a shelf mark or a brief note of acquisition by a previous owner.]]
+
+[[summary: This page contains institutional markings and library stamps that document the physical history and ownership of the manuscript. Due to significant fading and ink bleed-through, the primary text remains illegible, serving now as a record of the document's age and provenance.]]
+
+[[keywords: manuscript, library stamp, provenance, folio 231, Latin, ink bleed-through]]

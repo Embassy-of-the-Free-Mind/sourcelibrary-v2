@@ -1,0 +1,16 @@
+[[meta: This page continues from the previous page’s discussion of chess openings. The author, Gustavus Selenus, is finishing a list of opening types based on which "Soldier" (pawn) is moved first. It specifically transitions into the categorization of King's Pawn openings.]]
+
+->Vom Schach-Spiel.<-
+[[notes: *On the Game of Chess.* This serves as a running header for the book.]]
+
+[[margin: 7. cap:]] ...makes the beginning with the King's Soldier; but the opponent moves his Queen's Soldier [[notes: *Königin-Soldaten*; refers to the Queen’s Pawn]] against it.
+
+If now, on both sides, the start is made with the King's Soldier [[notes: *Königes-Soldaten*; the King's Pawn, i.e., 1. e4 e5]], then such an opening—on account of the following fourth (for we do not wish to go higher with the division [[notes: *Abtheilung*; refers to the classification or branching of variations]], lest confusion arise instead of order), third, and second move—can occur in eight different ways: the first seven of which shall be detailed in the following chapters of this book until its end; the eighth and last, however (which particularly pleased **Damiano** [[notes: Pedro Damiano (1480–1544), a Portuguese author whose 1512 book was one of the first modern chess manuals]]), shall be detailed in the Third Book, from the first to the tenth Chapter.
+
+-><image-desc>A decorative woodcut tailpiece or ornamental flourish featuring a central grotesque mask or stylized face with a serene expression. The face is framed by elaborate symmetrical scrollwork, acanthus-like leaves, and ribbons. Two bell-shaped tassels or floral ornaments hang from the lower outer curves of the design.</image-desc><-
+
+[[meta: catchword "Das" indicates the first word of the next page.]]
+
+[[summary: This page concludes the classification of chess openings, specifically focusing on variations arising when both players start with the King's Pawn. It outlines the organizational structure of the subsequent chapters and books, citing the influence of the master Damiano.]]
+
+[[keywords: chess openings, King's Pawn, Queen's Pawn, Pedro Damiano, 17th-century chess, game theory, Soldiers, classification]]

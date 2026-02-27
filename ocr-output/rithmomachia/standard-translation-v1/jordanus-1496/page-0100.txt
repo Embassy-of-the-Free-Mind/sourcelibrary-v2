@@ -1,0 +1,49 @@
+[[meta: This page continues the mathematical analysis of musical intervals, specifically focusing on the "minor semitone" (the Pythagorean limma, 256:243). The previous page established the placement of this interval on the monochord string. Now, the author compares this semitone to specific mathematical ratios and defines the "major semitone" (the apotome).]]
+
+| 324 | 288 | 257 | 5 | 256 | 243 |
+|-----|-----|-----|----|-----|-----|
+| f | g | l | 17 | h | k |
+
+¶ As in the preceding [demonstration], let **h** and **k** be the smallest numbers of the minor semitone [[notes: In Pythagorean tuning, the minor semitone is represented by the ratio 256:243]], namely 256 and 243. By the tenth [proposition] of this book, I take the seventeenth part of the number **k** (243), which is 14 and 5/17. I then add these 14 and 5/17 to **k**, and let the resulting number be **l**, which is 257 and 5/17. Therefore, the ratio of **l** to **k** is a *sesquiseptimusdecimus* [[notes: A ratio of 18:17, or "one and one-seventeenth"]]. But **l** (257 and 5/17) exceeds **h**, which is only 256. Thus, by the eleventh [proposition] of this book, the minor semitone consists of a smaller proportion than the 18:17 ratio. Consequently, it follows even more strongly that it consists of a smaller proportion than the *sesquiseptadecima* [[notes: The author is distinguishing between slightly different ways of calculating these "one-and-a-fraction" ratios]]. The corollary of this is well known: by dividing the space of the outer limits of the tone in this manner, it is known from the fifth [proposition] of this book that the 18:17 and 17:16 ratios are established on either side, both of which this present demonstration has shown to be larger than the minor semitone.
+
+<margin>20</margin>
+## ¶ The sesquioctauadecima proportion: it turns out to be larger than the minor semitone.
+
+| 256 | 1 | 256 | 243 |
+|-----|---|-----|-----|
+| c | 2 | a | b |
+
+¶ Let **a** and **b** be the smallest numbers of the minor semitone found through the eighteenth [proposition] of this book, namely 256 and 243. By the tenth [proposition] of this book, I take the eighteenth part of the number **b**, which I find to be 13 and a half. When I add this to the number **b**, let the sum be **c**. The ratio of **c** to **b** is then a *sesquioctauadecima* [[notes: A ratio of 19:18]]. However, the number **c** is larger than **a**; for while **a** contains only 256, **c** contains an equal number of parts plus an additional half of one. Therefore, the 19:18 proportion is larger than the minor semitone.
+
+<margin>21</margin>
+## ¶ The sesquinonadecima: it is smaller than the minor semitone. From this, it follows that the minor semitone is situated between the 19:18 and 20:19 proportions.
+
+| 256 | 255 | 15 | 243 |
+|-----|-----|----|-----|
+| a | c | 19 | b |
+
+¶ As before, let the smallest terms of the minor semitone be **a** and **b**. I assert that the *sesquinonadecima* proportion [[notes: A ratio of 20:19]] is smaller than the proportion of **a** to **b**. For, by the tenth [proposition] of this book, I take the nineteenth part of number **b**, which I find to be 12 and 15/19. I add this part to number **b** and let it become **c**. The ratio of **c** to **b** is 20:19. But **a** (256) is greater than **c** (255 and 15/19). Therefore, by the eleventh [proposition] of this book, the minor semitone is larger than the 20:19 proportion, and the 20:19 proportion is smaller than the minor semitone. The corollary of this can be known from the fourteenth [proposition] of this book.
+
+<margin>22</margin>
+## ¶ To establish a major semitone: on a given string.
+
+->[A diagram of a monochord string divided into segments. Points 'a' and 'c' are near the left end; 'd' is to their right; 'b' is at the far right.]<-
+
+¶ Let **a b** and **c b** be the interval of a minor semitone [[notes: This represents the length of the string remaining for the notes]]. I divide **c b** into eight equal parts, and I create a part **c d** equal to one of those. Thus, **d b** contains nine such parts. Therefore, the ratio of **d b** to **c b** will be a tone [[notes: The 9:8 ratio]]. If I then subtract the minor semitone (the distance between **a b** and **c b**) from the whole tone (the distance between **d b** and **c b**), there remains the distance between **d b** and **a b**. This is the remaining part of the tone, which is the amount by which the tone exceeds the minor semitone. Therefore, by definition, the **d b** to **a b** interval is a major semitone [[notes: In this system, a Minor Semitone + a Major Semitone = one Whole Tone]] established on the given string, as was proposed. And just as you have placed the major semitone at the lower part [[notes: The "heavy" or longer end of the string]], it would be very easy to place it at the higher-pitched part as well.
+
+<margin>23</margin>
+## ¶ To find the smallest numbers: for the major semitone.
+
+| 2187 | 2048 | 1944 |
+|------|------|------|
+| e | d | c |
+| | 256 | 243 |
+| | a | b |
+| | | 8 |
+| | | f |
+
+¶ Let **a** and **b** be the smallest numbers of the minor semitone found from the eighteenth [proposition] of this book, and let **f** be the number eight. Since, from the demonstration of the eighteenth [proposition], eight (**f**) is prime to **b** (243) [[notes: Meaning they share no common factors]], eight does not divide **b** evenly. Therefore, **b** does not have an eighth part. I therefore multiply **f** by both **b** and **a**, resulting in **c** and **d**. By the seventh [proposition] of the second book of the *Elements of Arithmetic*, the ratio of **d** to **c** is the same as **a** to **b**. Thus, between **d** and **c**, there is a minor semitone. And because **c** (1944) now has an eighth part (which is **b**, 243), I add that eighth part to number **c**, and let the sum be **e**. Thus, **e** contains the number **c** plus its eighth part. Therefore, the ratio of **e** to **c** is a tone [[notes: 9:8 ratio]]. And because the tone **e** to **c** exceeds the minor semitone **d** to **c**... [[notes: The text cuts off here, but it is moving toward defining the major semitone as the ratio 2187:2048]].
+
+[[summary: This page uses Euclidean-style geometric and arithmetic proofs to bound the minor semitone between the ratios 19:18 and 20:19. It also demonstrates how to construct and calculate the "major semitone" (2187:2048) by subtracting a minor semitone from a whole tone.]]
+
+[[keywords: minor semitone, major semitone, limma, apotome, sesquioctave, Pythagorean tuning, monochord, musical ratios, Arithmetices]]

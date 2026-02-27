@@ -1,0 +1,71 @@
+[[meta: This page continues the systematic classification of numbers according to their arithmetic properties, moving from simple parity (even and odd) to more complex categories like perfect, deficient, and abundant numbers, as well as the ratios of inequality that define classical music theory and proportion.]]
+
+### Properties of Perfect Numbers
+
+Every perfect number is found to end alternately in either a six or an eight. <margin>1</margin> [[notes: A "perfect number" is a positive integer that is equal to the sum of its proper divisors. Examples include 6 (1+2+3) and 28 (1+2+4+7+14). As the author notes, all known even perfect numbers end in 6 or 8.]]
+
+Every perfect number is born from even-times-even numbers [[notes: Powers of two (2, 4, 8, etc.)]] collected in their own series starting from unity. <margin>2</margin> When these are gathered or congregated together, they constitute a prime number, into which the greatest of those gathered is multiplied. [[notes: This describes the Euclidean method for finding perfect numbers: if the sum of a series of powers of two is prime, then that sum multiplied by the last power of two in the series results in a perfect number. For example: (1+2+4)=7 (prime). 7 x 4 = 28 (perfect).]]
+
+### Properties of Deficient and Abundant Numbers
+
+Every deficient number is measured only by the monad [[notes: The "monad" refers to the number one or unity.]] or by a deficient number. <margin>1</margin> [[notes: A "deficient" (diminutus) number is one where the sum of its divisors is less than the number itself, like 8 (1+2+4=7).]]
+
+An abundant number measures only an abundant number. <margin>2</margin> [[notes: An "abundant" (abundans) number's divisors sum to more than the number itself, like 12 (1+2+3+4+6=16).]]
+
+### Properties of Prime and Composite Numbers
+
+Every prime number is prime to every number that it does not "measure." <margin>1</margin> [[notes: To "measure" (numerat) a number means to divide it evenly. If a prime number does not divide another number, they are "relatively prime" to each other.]]
+
+Every composite number is measured by a prime number. <margin>2</margin>
+
+Every proposed composite number is proved to be a multiple according to its position in a natural series of odd numbers. <margin>3</margin> It is a multiple just as that odd number is positioned, or after another odd number above it. It is a multiple and a whole: such as the third, fifth, seventh, and so on in this manner.
+
+Every prime number is one of the odd numbers arranged in this way, which follows no other odd number or any multiple above it; it comes exactly as it is numbered among the odd numbers starting from unity. <margin>4</margin>
+
+### Properties of Numbers Prime to One Another
+
+All numbers that are prime to each other, when each is multiplied by itself, procreate numbers that are also prime to each other. <margin>1</margin>
+
+Every smaller number that is prime to a larger one, when subtracted from the larger as many times as possible, and then the remainder is subtracted as many times as possible from the smaller—and so on continuously as often as needed—the process is finally blocked, and unity (1) is left behind. <margin>2</margin> [[notes: This describes the "Euclidean Algorithm" for finding the greatest common divisor. If the numbers are prime to each other (coprime), the final remainder is always 1.]]
+
+### Properties of Equality and Inequality
+
+Equality is the principle of inequality. <margin>1</margin>
+
+All inequality is born from equality. <margin>2</margin>
+
+All inequality is resolved back into equality. <margin>3</margin> [[notes: In Pythagorean thought, all complex ratios and "unequal" proportions were believed to derive from a state of perfect balance or equality (1:1).]]
+
+### Properties of the Multiple
+
+Multiples are more ancient and prior in origin to other types of inequality. <margin>1</margin>
+
+Every multiple arises from a continuous series of numbers related to unity. <margin>2</margin> The multiple is both a "mode" and a "species" of number.
+
+Every multiple has a greater multiple. <margin>3</margin>
+
+### Properties of the Species of the Multiple
+
+All **doubles** (1:2) are born from individual even numbers starting from two, compared to the individual numbers in the series starting from unity. <margin>1</margin> [[notes: i.e., 2:1, 4:2, 6:3, etc.]]
+
+Every **triple** (1:3) is procreated from the number three, by skipping two numbers in the natural series after each triple. <margin>2</margin> [[notes: To find triples, one starts at 3, skips 4 and 5, lands on 6 (triple of 2), skips 7 and 8, lands on 9 (triple of 3).]]
+
+Likewise, the **quadruple** (1:4) is born by leaving behind three numbers after each quadruple. <margin>3</margin> The same pattern follows for the quintuple, sextuple, and the rest.
+
+### Properties of the Superparticular
+
+Every superparticular leaves a smaller superparticular above it. <margin>1</margin> For we say the "smaller case" is that whose part is named by the larger number. [[notes: A "superparticular" ratio is one where the larger number contains the smaller number plus one part of it (e.g., 3:2 or 4:3). In modern terms, these are ratios of $(n+1)/n$.]]
+
+Every superparticular takes its beginning from the continuous series of numbers, comparing a number immediately following to its predecessor. <margin>2</margin>
+
+### Properties of the Species of the Superparticular
+
+Every **sesquialter** (3:2) arises from natural, continuous triples compared to natural, continuous doubles. <margin>1</margin> [[notes: The "sesquialter" is the ratio of 3 to 2, which in music defines the interval of a perfect fifth.]]
+
+Every **sesquitertius** (4:3) is elicited in the same way from continuous quadruples compared to continuous triples. <margin>2</margin> [[notes: The "sesquitertius" is the ratio of 4 to 3, which defines the musical interval of a perfect fourth.]]
+
+All **sesquiquartals** (5:4) are extracted by a similar origin from continuous quintuples compared to continuous quadruples. <margin>3</margin> And in this way **sesquiquintals** (6:5) from sextuples and quintuples, and **sesquisextals** (7:6) from septuples and sextuples, and so on thereafter.
+
+[[summary: This page details the definitions and generative properties of various classes of numbers, including perfect, prime, and composite numbers, as well as the proportional ratios (multiples and superparticulars) that formed the basis of classical arithmetic and music theory.]]
+
+[[keywords: perfect numbers, deficient numbers, abundant numbers, prime numbers, Euclidean algorithm, equality, superparticular ratios, sesquialter, sesquitertius]]

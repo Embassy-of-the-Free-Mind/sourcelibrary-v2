@@ -1,0 +1,28 @@
+[[meta: This page continues the tactical examples from the previous page, detailing the specific moves of a chess puzzle using a 64-square grid system. It demonstrates "Old Chess" rules where pieces had different names and movement ranges compared to modern chess.]]
+
+# The Fourth Book / Chapter 10:
+
+[[notes: This section continues the setup of a chess problem from the preceding page. In this notation, each square of the board is numbered 1 through 64.]]
+
+**[Black] King** on forty-three; the **Queen** on fifty-two; the **Rooks** [[notes: *Rochen*]] on fifty-one and fifty-three; the **White King** on twenty; a **Rook** on fifty-eight; both **Knights** [[notes: *Reuter*, literally "Riders"]] on thirty-one and on fifty; a **Bishop** [[notes: *Schütze*, literally "Shooter" or "Archer"]] on sixty-two; three **Pawns** [[notes: *Soldaten*, literally "Soldiers"]] on twelve, on thirty, and on twenty-six.
+
+Now, if the **White** wishes to truly fulfill his promise [[notes: Likely a "stipulated mate" where the player promises to mate in a certain number of moves]], he must first move one **Knight** (from 50) to sixty and offer **check**: The **Black** moves the **King** to thirty-six (since he cannot move the same to forty-four into check because of the **White Bishop**):
+
+The **White** offers **check** with the **Rook** from thirty-four: The **Black** moves the one **Rook** (from 51) to thirty-five and covers the **King**:
+
+The **White** takes the same with the **Rook** and gives **Checkmate**: but if he wishes to accomplish it with the aforementioned **Pawn**, he moves the other **Knight** (from 31) to twenty-one and gives **check**: The **Black** takes him with the other **Rook** (which stands on 53) and offers **check**:
+
+The **White** takes him with the **Pawn** which is placed on 12: The **Black** (since his **King** is already trapped) either takes the **White Rook** with his **Rook**, or moves the **Queen** to another field.
+
+The **White** gives **Checkmate** with the aforementioned **Pawn** from twenty-nine.
+
+,, 3.) The **White** places the **King** on one; a **Bishop** on three: The **Black** places his **King** on eighteen; the **Rooks** on fifteen and sixteen; a **Bishop** on twenty-four: Now, provided the **Black** wishes to give **Checkmate** to the **White King** with a **Rook** in the seventeenth move, in the field where the same was placed at the start:
+
+He first moves one **Rook** (from 15) to nine and offers **check**: The **White** moves the **King** to two:
+
+The **Black** moves his **King** to nineteen: The **White** (in order to make room for his **King**) jumps with the **Bishop** to twenty-one:
+
+[[meta: catchword: Der (The)]]
+
+[[summary: This page provides step-by-step solutions to complex chess puzzles involving various pieces like the "Rider" (Knight) and "Shooter" (Bishop). It highlights the tactical depth and specific movement constraints of early modern chess variations.]]
+[[keywords: chess strategy, endgame puzzles, Rooks, Knights, Bishop, Checkmate, historical gaming, board numbering]]

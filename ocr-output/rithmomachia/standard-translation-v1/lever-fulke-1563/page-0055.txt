@@ -1,0 +1,13 @@
+->The Philosophers' game.<-
+
+## Of Geometrical Proportion.
+
+Geometrical <note>original: "Geometricall"</note> proportion occurs when the second number has the same relationship to the first that the third number has to the second. For example: 2, 4, 8. Just as 4 exceeds 2 by 2, so 8 exceeds 4 by 4.
+
+### A rule to find the middle number in Geometrical proportion.
+
+Multiply <note>original: "Multiplie"</note> the first number by the third, and find the square root <note>original: "roote square"</note> of the product. That result is the middle number, provided the numbers have a square root in whole numbers. The square root is a number multiplied by itself; therefore, you must seek a number that, when multiplied by itself, equals the product of the first and third numbers multiplied together.
+
+<summary>This text defines geometrical proportion and provides the mathematical rule for calculating a geometric mean. To find the middle term of a sequence, the author instructs the reader to multiply the first and third numbers and find the square root of the resulting product.</summary>
+
+<keywords>Geometrical proportion, square root, geometric mean, Rythmomachia, mathematics, Philosophers' Game, arithmetic rules</keywords>

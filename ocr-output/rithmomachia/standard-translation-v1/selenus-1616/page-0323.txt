@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical variations from Chapter 4. The previous page ended with White moving the "King's", and this page completes the word with "Rook's Pawn" (Rochens-Soldaten). The notation uses a 1–64 numbering system for the board squares common in 17th-century manuals.]]
+
+### Chapter 4: Of the Game of Chess.
+
+[[margin: 30.]]
+**Rook's Pawn**: * The Black player takes the same [pawn] with the **Queen**: The White player gives **Check** with his **Queen** from forty-three, and she cannot be taken by the Black **King's Bishop** [[notes: *K. Schütze*, literally "King's Archer"]] (because that Bishop is held pinned [[notes: *gefangen gehalten*, literally "held prisoner"]] by her Pawn): Black covers the **King** with the **Queen** on forty-two: White takes her with the **King's Rook's Pawn** [[notes: *K. Rochens-Soldaten*]] and offers **Discovered Checkmate** [[notes: *Ab-Schach-Mat*]] from the **King's Rook**.
+
+[[margin: 31.]]
+But if Black does not take the White Pawn with the **Queen** (as in No. 30), but instead robs the **White King's Pawn** with his **King's Bishop**: then White moves the **King's Bishop** onto the **Black King's Bishop's** square at thirty-five and gives a **Discovered Check** from the **Queen**: Black may not cover the **King** on forty-nine with the **Queen** (otherwise she would be lost to her Pawn), but must move him to thirty-four: White offers **Check** with the **Queen** (because he wishes to take the **Black King's Bishop** with neither the Queen nor the King's Bishop) from fifty-eight: Black must not move the **King** to forty-one or forty-three (otherwise he would be immediately slain by the **White Queen** from forty-two), but rather must move to twenty-seven: White offers **Check** with the **Queen** from twenty-six: Black moves the **King** to twenty: White moves the **Queen** to the **Black King's Bishop's** square at five (in order to guard the Queen's line so that it does not
+
+[[margin: 32.]]
+open up [[notes: *aufreisse*]], and so that if her Pawn were taken by the same, the **Black King** could not escape): * Black moves the **King** to twenty-seven (so that White does not give **Check** with the **King's Rook** from seventeen, nor give immediate **Checkmate** with the **Queen** from twenty-six if he were forced to yield with the **King** to twenty-seven): White takes the **Black King's Bishop** with the **Queen** and gives **Check**: Black moves the **King** to eighteen: White offers **Check** with the **King's Rook** from seventeen: Black must take the **White King's Knight's Pawn** [[notes: *K. Reuters-Soldaten*, the "Rider's Soldier"]] with the **King**: White offers **Check** with the **Queen** from thirteen: Black must move the **King** to two: White offers **Checkmate** with the **Queen** from eleven or nine.
+
+[[margin: 33.]]
+If, however, Black does not move the **King** to 27 (as in No. 32) but instead takes with the **King's Bishop** (in order to [control] the seventeenth
+
+Go ij [[notes: *This is a signature mark for the book binder*]]
+[[meta: catchword: feld/ (field/square)]]
+
+[[summary: This page continues a series of tactical chess problems focusing on a White Queen and Rook offensive. It describes specific sequences of discovered checks and forced King moves leading to a definitive checkmate for White.]]
+
+[[keywords: Chess tactics, Discovered Check, Queen's maneuvers, King's Bishop, King's Rook, 17th-century chess notation, Checkmate]]

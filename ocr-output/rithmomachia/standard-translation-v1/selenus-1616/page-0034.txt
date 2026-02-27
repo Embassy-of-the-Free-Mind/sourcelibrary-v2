@@ -1,0 +1,27 @@
+[[meta: This page continues from page 3, which discussed the historical origins of chess among soldiers and its practice by emperors and scholars. Here, the author examines the scientific and philosophical disciplines that form the foundation of the game.]]
+
+...or Geometry [[notes: Literally *Meß-kunst*, the "art of measuring"]], for measurement and division; from Arithmetic [[notes: *Zahl-kunst*, the "art of numbering"]], for the numbers; and in part from Physics, or Natural Philosophy: which provides the subject matter for the numbers, measurements, and divisions. Although in this game, the matter can be separated by the intellect once it has been firmly imagined therein, alongside a good memory. However, further report of this—namely, how one can play by heart from memory without a board—shall be found for better clarity in the eleventh chapter of this book. Primarily, however, it has its foundation in Ethics, in Political Morality, in Governance, and especially in Polemics, or the **Art of War**: as is evident from the fact that many rules and laws here have their grounds and causes in the same. From this, it has followed that this our Art—while related to all the aforementioned—has been drawn and applied most primarily to the said Art of War (as shall soon be shown).
+
+Experience, or expertise, consists in practice and unerring observation; of which more will be said in its time.
+
+Now, from what has just been mentioned, the magnificent qualities and utilities spring and flow forth, which we shall recount in order, as follows.
+
+Firstly (1.), that this Art is subject only to the Intellect and not to luck: and herewith agrees the gloss in *Auth: Interdicimus, C. de Episc: & Cler:* [[notes: This is a legal citation referring to the *Authenticum*, a collection of Roman law under Justinian, specifically the section regarding Bishops and Clerics]], which reads as follows:
+
+> *Ludus Scacchorum, in Ingenio naturali consistit, nec commititur viribus Fortune.*
+[[notes: "The game of chess consists in natural talent and is not committed to the powers of Fortune (luck)."]]
+
+These words are repeated by *Cosm: Guimier Parisinus*, in *pragm: sanctione, tit: de spectacul: in Eccles: non faciend: fol: 365. a. col: 2.* The reason for this, based on the preceding, will not be difficult to provide. To what extent, however, luck may still find a place regarding the outcome and ending of the game, one may be sufficiently informed by *Franc: Piccolomineo, grad: 5. Moral: Philos: c. 54. in f.* [[notes: Francesco Piccolomini (1523–1607) was an influential Italian philosopher who wrote on the intersection of morality and human action.]]
+
+Secondly (2.), this Art—because of the high purpose mentioned at the very beginning, as well as the following utilities—is not unjustly counted and placed among the Liberal Arts (which the Latins call *ingenuas*), much like Music. Just as it was also rightly held and regarded in high honor by the Ancients:
+
+> (*à Melioribus*, says *Alexand: ab Alexandro, lib: 3. c. 21. Genial. Dier: & summis honoribus, vel maximè cultus & celebratus*)
+[[notes: Alessandro Alessandri (Alexand: ab Alexandro) was a 15th-century Neapolitan lawyer. The Latin phrase translates to "By the better [men]... it was most greatly cultivated and celebrated with the highest honors."]]
+
+It is also permitted in Canon and Civil Law: as such...
+
+<meta>catchword: h;</meta>
+
+[[summary: This page argues that chess is a rigorous intellectual discipline rooted in geometry, arithmetic, and the art of war rather than a game of chance. It justifies the classification of chess as a "liberal art" alongside music, citing various legal and philosophical authorities to support its moral and academic standing.]]
+
+[[keywords: Geometry, Arithmetic, Art of War, Polemics, Liberal Arts, Ethics, Roman Law, Intellect vs. Luck, Francesco Piccolomini, Alessandro Alessandri]]

@@ -1,0 +1,22 @@
+[[meta: This page continues a technical analysis of chess openings, specifically critiquing and refining a sequence originally proposed by Pedro Damiano. The author uses a numbered coordinate system (1–64) to describe the movement of "Soldiers" (pawns), "Archers" (bishops), and "Riders" (knights).]]
+
+### 11. cap: Vom Schach-Spiel.
+[[notes: Chapter 11: On the Game of Chess.]]
+
+->Z iij<-
+[[notes: This is a signature mark used by early printers to keep the pages in the correct order for binding.]]
+
+...He [takes] with his King’s **Schützen** [[notes: "Schütze" or Archer is the period term for the Bishop]] the Black King’s **Reuter** [[notes: "Reuter" or Rider is the period term for the Knight]] taken and the Black King’s **Rochen’s** [[notes: "Rochen" refers to the Rook or Castle]] **Soldaten** [[notes: "Soldat" or Soldier is the period term for the Pawn]] captured; [and] to bring out the King’s Knight: he should use the Rook and (so that he might be assured of victory) apply diligence to provide cause and occasion for the exchange of pieces.
+
+<margin>7. *</margin> This has indeed been set down here from **Damiani’s** [[notes: Pedro Damiano (1480–1544) was a Portuguese chess player who wrote one of the earliest manuals on the game]] little book—though more clearly—and although it appears to be quite good according to his instruction, nevertheless, he who would use this game fundamentally must still be reminded of what follows: Namely, that the White, when the Black moves the King's Knight upon the King's Soldier at 46 (as in n. 5), should not protect that Soldier with the King's Bishop at 20 (as in n. 5), but rather should move that same Soldier onto the Black Knight at thirty-seven (so that the Black's pieces may not easily do him harm). The Black moves the same [Knight] onto the White Queen and the White King’s Bishop at twenty-nine. The White (since he must make a virtue out of necessity) takes the Black King’s Bishop with his King’s Bishop and offers **Schach** [[notes: Check]]. The Black takes him with the Queen. The White places his Queen (out of danger) upon the Black King’s Knight at twenty-one. The Black (to defend it) moves the King’s Soldier to thirty-six (whereby the White King’s Soldier, being free and unhindered, can all the sooner be made into a Queen in the future). The White [moves] the King’s Bishop again upon the Black King’s Knight
+
+<margin>8. *</margin> at twenty: * The Black (to further defend it) [moves] the King’s Bishop to thirty-eight. The White [moves] the King’s Knight further upon the Black King’s Knight to twelve, and will in this way improve his game by a fair amount.
+
+<margin>9.</margin> But if the Black does not move the Bishop to 38 (as in n. 8) but rather the King’s Bishop’s Soldier upon the White King’s Soldier to thirty-five: then the White moves the King’s Knight to twenty-two: following (according to the Black's occasion) the King’s Knight (to ward off the check from twenty-two) to twelve: and awaits further what the Black will undertake against him.
+
+<margin>10.</margin> If the Black then plays in another manner than mentioned from n. 7 until here: the White will nonetheless win (provided that he knows how to move in check).
+
+[[meta: catchword: Sol]]
+
+[[summary: The author offers a detailed correction of a chess strategy by Damiano, explaining how White can gain an advantage by advancing a pawn (Soldier) to threaten Black's Knight rather than simply defending. This sequence aims to promote a pawn to a Queen and secure a winning position.]]
+[[keywords: Damiano, chess strategy, Bishop, Knight, Pawn promotion, check, piece exchange, 17th-century chess]]

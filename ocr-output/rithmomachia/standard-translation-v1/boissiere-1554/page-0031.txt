@@ -1,0 +1,17 @@
+[[meta: This page continues the physical and mathematical construction of the "Pyramid" pieces, specifically describing how to build the first pyramid by stacking squares of decreasing size, beginning with a base of 36 (a 6x6 square).]]
+
+# RITHMOMACHIE, THE GAME
+[[notes: "IEV" is an archaic spelling of *jeu*, meaning "game." Rithmomachia, or "The Battle of Numbers," was a complex medieval board game that taught arithmetic and proportion.]]
+
+->de de<-
+[[notes: This is a catchword, a printing convention where the first word of the next page is printed at the bottom of the current one to ensure the binder follows the correct order.]]
+
+...surface base and first foundation, one must place six grains [[notes: "Grains" refer to individual units or counters used to visualize the numbers]] in the first row of one of the sides. If you wish to multiply 6 by 6, as we have said in Arithmetic, you will have 36 grains, which will be the square base and foundation: having 6 on all sides. This square of 36 grains will be the first square, called the **base** and foundation of the pyramid: therefore, mark 36 at the bottom base of your pyramid as your first base. 
+
+Afterward, to produce your pyramid by **tapering** it [[notes: *en eguisant* literally means "sharpening," referring to the narrowing of the piece as it rises toward a point]], the grains placed above the first ones for the second base must be fewer in number and quantity. And because there were 6 grains in the first row of the previous base, we will put only 5 on the side of the second base. We will arrange them in their square, as we showed in Arithmetic, containing only 25 grains. Such will be the second level or base. 
+
+Mark then 25 at the second level or base of your pyramid; consequently, as you build your pyramid higher by tapering it, the grains placed above the second step or base must be of a lesser quantity than the said second: and because there were 5 in its first row, you will only put 4 in the first row of this third base: which, in their **squaring** [[notes: *quarreure* refers to the area or the formation of a square]], will produce 16. Such will be the third step or base. Therefore you will mark the third base of your pyrami-
+
+[[summary: This page describes the construction of a Pyramid piece in Rythmomachia by stacking decreasing squares, starting from a 6x6 base (36) and moving to 5x5 (25) and 4x4 (16).]]
+
+[[keywords: Rythmomachia, Pyramid piece, Arithmetic, Squaring, Grains, Mathematical games, Renaissance education]]

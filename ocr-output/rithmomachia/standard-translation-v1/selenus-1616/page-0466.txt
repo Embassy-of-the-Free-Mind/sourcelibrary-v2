@@ -1,0 +1,53 @@
+[[meta: This page continues the poetic excerpt from Cunrat von Ammenhusen regarding the rules and variations of chess. While the previous page introduced the "Great Game" or Courier Chess, this page transitions into a defense of the standard 8x8 board, citing the authority of Jacobus de Cessolis and the author's own travels across Europe.]]
+
+# The Fourth Book / Chapter 9.
+
+->” Each of the eight should have<-
+->” A little banner [[notes: *Vendelin* (Fähnlein), here referring to the pawns or soldiers who lead the way for the larger pieces]] before him.<-
+->” If you count them, there may be sixteen;<-
+->” That would make it so that each behind<-
+->” Serves those I named before [[notes: referring to the back rank of "officer" pieces]].<-
+->” Thus, there would be too many on the board<-
+->” As I shall explain to you.<-
+->” And I saw written in the Book, [[gloss: meaning the book of Friar Jacobus [[notes: Jacobus de Cessolis (c. 1250 – c. 1322), a Dominican friar whose sermon on chess became the most popular medieval manual on the game]]]]<-
+->” That the board should have no more fields<-
+->” Than sixty-four, just as it stands<-
+->” When it was first established.<-
+->” So should the teaching be for as many<-
+->” As there are pieces; so have I read<-
+->” Where I found it written in the book<-
+->” From which I have taken this.<-
+->” And therefore, it seems to me<-
+->” That this version is certainly more just,<-
+->” Which has fewer stones [[notes: *Steine* or "stones" was the common term for chess pieces at the time]];<-
+->” For it is also the common way<-
+->” Wherever I have traveled in any land.<-
+->” Indeed, it is known to me in good measure<-
+->” In **Provence** and in **France**<-
+->” And in **Kurwalchen** [[notes: Historically referring to Chur-Raetia or the Romansh-speaking parts of present-day Switzerland and Northern Italy]]. Yet I did see<-
+->” How a board there had more stones;<-
+->” Only in the city of **Constance**<-
+->” Did I see one, and never any other<-
+->” But that. Whether I rode or walked,<-
+->” If anyone else has seen more,<-
+->” I grant it to them, if they wish to attest to it.<-
+->” Also, I believe if there had been more,<-
+->” The Master who composed this little book<-
+->” In Latin<-
+->” Would have reported more on it,<-
+->” Than this smaller version, I believe.<-
+->” However, I certainly would not wish<-
+->” That there were any more of it,<-
+->” For this is already heavy enough for me,<-
+->” This task I have taken upon myself.<-
+->” I could never bring it to an end<-
+->” If there were certainly any more to it;<-
+->” Even this smaller version troubles me greatly,<-
+->” For my skill is too small;<-
+->” Even with the smallest stone<-
+->” I would have too much work to do<-
+->” To report upon it well.<-
+
+[[summary: The poet Cunrat von Ammenhusen argues in favor of the standard 64-square chessboard, citing the authority of Jacobus de Cessolis and his own travels through France and Italy. He mentions seeing a larger variant only once in Constance and admits that explaining even the standard game is a daunting task for his limited skills.]]
+
+[[keywords: Jacobus de Cessolis, 64 squares, Provence, France, Kurwalchen, Constance, chess pieces, chess history, medieval poetry]]

@@ -1,0 +1,27 @@
+[[meta: This page concludes the critical analysis of Pedro Damiano’s chess openings, which began on the previous page. The author expresses skepticism regarding the practical utility of Damiano's theories, suggesting they are a waste of a player's time.]]
+
+### Chapter 6: On the Game of Chess.
+
+» ...must make the attack) the **White King’s Soldiers** [[notes: Pawns]] / may not be taken away / before and until / he permits it.
+
+With this, the eleven examples / of the Game of Chess / which / **Damiano** [[notes: Pedro Damiano (c. 1480–1544), a Portuguese apothecary whose 1512 treatise was one of the first to analyze chess moves systematically]] divided into the eight chapters / of his little book / are now brought to an end. It is, however / because of the meager advantage / which one can draw / from them / much better / to omit them entirely / than to waste / time / with them / to no benefit.
+
+->n. 1. 2. 5. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n. 6. 7.<-
+
+| [[gloss: Diagram 1]] | | | | | | | | | | [[gloss: Diagram 2]] | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **SR** | | | | | | | | | | **SR** | | | | | | | |
+| | | | | | | | | | | | | | | | | | |
+| | | **37** | | | | | | | | | | | | | | | |
+| | | | **SS** | | | | | | | | | **SS** | | | | | |
+| | | | | **SK** | | | | | | | | | | **SK** | | | |
+| | | | | | | | | | | | | | | | | | |
+| | | **WR** | | | | | | | | | | **WR** | | | | | |
+| | **WS** | | | | | | | | | | **WS** | | | | | | |
+| **WK** | | | | | | | | | | **WK** | | | | | | | |
+
+[[notes: These grids represent the final board states for the tactical variations numbered 1, 2, 5, 6, and 7. The abbreviations used are: **SR** (Black Rook), **SS** (Black Pawn/Soldier), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn/Soldier), and **WK** (White King). The number 37 refers to a specific square on the numbered board system used by Damiano.]]
+
+[[summary: This page marks the conclusion of the author's examination of Pedro Damiano's chess strategies. The author ultimately dismisses Damiano's examples as being of little practical value for serious players.]]
+
+[[keywords: Pedro Damiano, chess theory, chess tactics, pawns, endgame diagrams, 16th-century chess]]

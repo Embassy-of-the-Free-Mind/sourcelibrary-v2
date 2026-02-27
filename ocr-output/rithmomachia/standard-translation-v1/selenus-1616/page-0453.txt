@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical analysis from page 418, detailing a specific variation where the Black player attempts to avoid disorder in his ranks. The text explores the consequences of pawn exchanges and offers strategic advice for the White player, who is playing with the advantage of a Knight (a "handicap" match).]]
+
+### 7. cap: Vom Schach-Spiel.
+[[notes: Chapter 7: Of the Game of Chess.]]
+
+The **Black player** / (in order / not to bring his game / into any disorder) / does not take him / but instead moves / the **King’s Archer’s Soldier** [[notes: The King’s Bishop’s Pawn]] / (in order to protect him) to square forty-six: The **White player** / takes / the **Black King’s Knight’s Soldier** / with the **King’s Rook’s Soldier**: The **Black player** / [takes] the same / with the **King’s Archer’s Soldier**: The **White player** / moves / the **King’s Knight** / against the same / to square twenty-two / and in this way / provided he only takes care / shall surely win.
+
+It will nevertheless / be of greater use / to the **White player** / that he / so that the **Black player** / (who without doubt / since he has given him / a Knight / as an advantage / must understand the game / better / than he) does not gain too much will / to press into his ranks / and thereby / win the game: [that White] does not arrange his moves / in this / (mentioned from note 13 until now) manner / but rather / first advances the **King’s Soldier** / (in order / to bring the **Black player** / into a disorder thereby) / with more profit / to square 20. (note 2):
+
+<image-desc>An ornamental woodcut tailpiece featuring a central grotesque face or mask flanked by symmetrical foliage and architectural scrollwork.</image-desc>
+
+[[notes: This decorative woodcut, known as a tailpiece, signifies the end of a section. Such ornaments were common in 17th-century printing to fill blank space and demonstrate the printer's skill.]]
+
+Ggg iij
+[[notes: This is a signature mark, used by early modern bookbinders to ensure the pages were folded and gathered in the correct order.]]
+
+[[meta: catchword: Das]]
+
+[[summary: This page concludes a specific chess variation by advising the White player on how to maintain their material advantage against a more skilled opponent. It suggests an alternative pawn move to disrupt Black's formation.]]
+
+[[keywords: Chess tactics, Gambit, King's Soldier, Archer, Knight, Early Modern Chess, Woodcut, Game Strategy]]

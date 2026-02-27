@@ -1,0 +1,37 @@
+[[meta: This page provides the structural continuation of the systematic "tree" diagram introduced on the previous page. While the previous page focused on the general definition of the game, this page provides a detailed table of contents for the four books of the treatise, categorizing everything from the history of chess to specific "modes" of play.]]
+
+# ON THE ART OF CHESS.
+
+[[notes: The original text is laid out as a dichotomous branching diagram, a popular 17th-century method for organizing knowledge. The following structure mirrors those logical connections.]]
+
+**The Chess Art** is defined by its:
+- The Goal being presupposed; its Principles; Properties; Uses; Related things; and Contraries; Book 1, ch. 1. [[notes: "Contraries" likely refers to games that are the opposite of chess, perhaps games of pure chance like dice.]]
+- [[unclear: Origin]] and Authors; Book 1, ch. 2.
+- [[unclear: Name]], by which the ART is known:
+    - by its genus [[notes: its general category as a game]]; Book 1, ch. 4.
+    - by its species [[notes: its specific type]], concerning:
+        - **The Pieces** [[gloss: *Latrunculis*]]; Book 1, ch. 5 to 11. [[notes: *Latrunculi* was an ancient Roman board game, but Renaissance scholars used the term to refer to chess pieces, literally "little soldiers."]]
+        - **The Board** [[gloss: *Tabulâ*]]; Book 1, ch. 11.
+
+**The Plan** [[gloss: *Idea*]] of the game, through:
+- The fitness and requirements [[unclear: of the players]] for beginning the Game; Book 2, ch. 2.
+- [[unclear: Their]] Duty regarding the preparations for the Game; Book 2, ch. 3.
+- The **Form**, through **Canons** or **Rules**, for using the means correctly; Book 2, ch. 4 & 5.
+- The [[unclear: Plan]], through:
+    - Preparation regarding the following modes of play; Book 2, ch. 6.
+    - The division of the modes; Book 2, ch. 7. Where they are either:
+        - **Common & usual**, which are contained in 3 classes, of which:
+            - **The First** includes:
+                - 8 principal modes, of which:
+                    - Seven are shown in Book 2, ch. 8 to the end of the book.
+                    - The eighth is shown in Book 3, ch. 1 to 10.
+                - A less principal mode, which is contained in Book 3, ch. 10.
+            - **The Second** is described in Book 3, ch. 11 & 12.
+            - **The Third**, which is **less legitimate** [[notes: *minùs legitima* likely refers to irregular openings or "street" play rather than "illegal" moves]], is contained in Book 3, ch. 13.
+        - **Singular & Agreed-upon** [[gloss: *Pactitij*]], of which several examples are handed down in Book 4, ch. 1 to 9. [[notes: *Pactitij* refers to "odds" games or variants where players agree to special conditions (like playing without a Queen) before starting.]]
+
+[[vocab: Artis Scachicæ (Of the Chess Art), Latrunculis (Pieces/Little Soldiers), Tabulâ (Board), Canones (Canons/Laws), Regulas (Rules), Modos (Modes/Methods), Pactitij (Agreed-upon/Variant games)]]
+
+[[summary: This page provides a systematic overview of a four-book chess treatise, using a branching logic to categorize chess history, rules, and various styles of play. It distinguishes between standard "legitimate" chess and "agreed-upon" variants or handicaps.]]
+
+[[keywords: Chess history, Renaissance chess, Latrunculi, game theory, rules of chess, chess variants, early modern treatises]]

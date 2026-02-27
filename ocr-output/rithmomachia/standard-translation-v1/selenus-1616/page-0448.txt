@@ -1,0 +1,23 @@
+[[meta: This page continues the exploration of chess openings, specifically providing a corrective to the tactics of Pedro Damiano discussed in the previous chapter. The author, Gustavus Selenus, aims to demonstrate a more robust defense and counter-attack.]]
+
+The Fourth Book / 7. cap:
+
+[[image-desc: A rectangular decorative woodcut headpiece featuring intricate floral scrolls, vines, and two cherub-like figures or masks on either side of a central floral motif.]]
+
+## The Seventh Chapter.
+
+### How one may set up and bring to a conclusion—with better moves—the game described by **Damiano** in the previous chapter.
+
+[[image-desc: An ornate woodcut initial letter 'D' decorated with scrolled acanthus leaves and floral patterns.]]
+
+Since someone might perhaps desire to see described the manner in which the game—which was discussed in the previous chapter according to the instruction of **Damiano**—can be correctly conducted by both sides: therefore, in this chapter, some reminder shall be given and shown as to how one must take care on both sides when setting up the game, so that the enemy cannot easily break into the **Battle Order** [[notes: This refers to the pawn structure or "array" of the pieces]] to cause damage.
+
+<margin>1.</margin> Accordingly, the **Black** player (who has the lead, and has left the **King's Rider** [[notes: The Knight]], by contrast, to the **White** player) moves his **King’s** <margin>2.</margin> **Soldier** [[notes: The Pawn]] to thirty-six: * The **White** player moves his **King’s Soldier** to twenty: The **Black** player moves the **King’s Soldier** to thirty-seven: The **White** player moves his **King’s Soldier** to the **Opponent’s King’s Soldier** <margin>3.</margin> at twenty-nine: * The **Black** player takes it with the same: The **White** player takes that one with the **King’s Soldier**, thus blocking the path of the **Opponent’s King’s Archer** [[notes: The Bishop]], so that he cannot cause him any harm from thirty-eight out of eleven; and by preventing this attack, he will be able to arrange his game quite suitably and well. For the **Black** player can do him no particular burden with his moves: Thus also, the weakest point, at which the most dangerous incursion and attack is to be expected, is well-guarded and provided for.
+
+Now, if the **Black** player further moves (because he lacks the **Rider** on his **Queen’s** side) their **Archer-Soldier** against the **White King’s Soldier** at thirty-eight: then the **White** player offers **Check** [[notes: *Schach*]] with the **King’s Archer** from thirty-nine: The **Black** player covers the **King** with the **King’s Archer** at fifty-three: The **White** player offers **Check** with the **Queen** from twelve: The **Black** player covers the **King** with his **Archer** at fifty-two: The **White** player
+
+[[meta: catchword: Weiſſe/ (White)]]
+
+[[summary: This page offers a strategic correction to Damiano's chess openings, detailing specific moves to fortify the "Battle Order" and neutralize early attacks. It uses a numerical coordinate system and traditional piece names like Soldiers and Archers to guide the reader through a more balanced opening.]]
+
+[[keywords: Chess tactics, Opening theory, Damiano, Gustavus Selenus, King's Soldier, Archer, Rider, Battle Order, Check]]

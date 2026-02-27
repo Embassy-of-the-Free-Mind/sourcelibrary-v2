@@ -1,0 +1,86 @@
+[[meta: This page provides visual diagrams for the tactical variations described in the previous sections of Chapter 6. These diagrams illustrate the "Second Way" of defense and provide specific piece configurations for maneuvers numbered 1 through 14.]]
+
+# The Third Book / Chapter 6
+
+->no. 1. 2. 9. 10.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B-Rook | B-Rook | B-Pawn | B-Queen [[note: The original uses an ampersand (&) to denote the Queen.]] | B-King | B-Pawn | B-Rook | B-Rook |
+| B-Pawn | B-Pawn | B-Pawn | | | B-Pawn | B-Pawn | B-Pawn |
+| | 46 | B-Pawn | 44 | | | | |
+| | | B-Pawn | | 35 | | | |
+| | | W-Pawn | | W-Pawn | | | |
+| | | | | W-Rook | | | |
+| W-Pawn | W-Pawn | W-Pawn | W-Pawn | | W-Pawn | W-Pawn | W-Pawn |
+| W-Rook | W-Rook | W-Pawn | W-Rook | W-King | | | W-Rook |
+
+[[note: The numbers 46, 44, and 35 refer to specific squares in the 1-64 coordinate system used by Gustavus Selenus. In modern notation, these correspond to squares f6, d6, and c5 respectively.]]
+
+->no. 5. 6.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B-Rook | B-Rook | | | B-King | B-Pawn | B-Rook | B-Rook |
+| B-Pawn | B-Pawn | | B-Queen | | B-Pawn | B-Pawn | B-Pawn |
+| | | | | | | | |
+| | W-Rook | | B-Pawn | B-Pawn | | | |
+| | | | | | | | |
+| | | W-Pawn | | | W-Rook | | |
+| W-Pawn | W-Pawn | | W-Pawn | 12 | W-Pawn | W-Pawn | W-Pawn |
+| W-Rook | W-Rook | W-Pawn | | W-King | | | W-Rook |
+
+->no. 11. 14.<- [[note: The OCR 'jj' is a common archaic representation of the number 11.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B-Rook | B-Rook | B-Pawn | B-Queen | B-King | B-Pawn | W-Pawn | B-Rook |
+| B-Pawn | B-Pawn | B-Pawn | | | | B-Pawn | B-Pawn |
+| | | | B-Pawn | | | | |
+| | | | | B-Pawn | B-Pawn | | |
+| | | | | W-Pawn | | | |
+| | | | | | W-Rook | | |
+| W-Pawn | W-Pawn | W-Pawn | W-Pawn | | W-Pawn | W-Pawn | W-Pawn |
+| W-Rook | W-Rook | W-Pawn | W-Rook | W-King | | | W-Rook |
+
+->no. 3. 4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B-Rook | B-Rook | | B-Queen | B-King | B-Pawn | B-Rook | B-Rook |
+| B-Pawn | B-Pawn | | B-Pawn | | B-Pawn | B-Pawn | B-Pawn |
+| | | | | | | | |
+| | | W-Pawn | | B-Pawn | B-Pawn | | |
+| | | | | | | | |
+| | 23 | W-Pawn | | | W-Rook | | |
+| W-Pawn | W-Pawn | | W-Pawn | | W-Pawn | W-Pawn | W-Pawn |
+| W-Rook | W-Rook | W-Pawn | W-Rook | W-King | | | W-Rook |
+
+->no. 7. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B-Rook | B-Rook | | | B-King | B-Pawn | B-Rook | B-Rook |
+| B-Pawn | B-Pawn | 54 | B-Queen | | B-Pawn | B-Pawn | B-Pawn |
+| | | | | | | B-Pawn | W-Rook |
+| | | | | 32 | | | B-Pawn |
+| | | | W-Pawn | | | | |
+| | | | | | | | |
+| W-Pawn | W-Pawn | | W-Pawn | | W-Pawn | W-Pawn | W-Pawn |
+| W-Rook | W-Rook | W-Pawn | | W-King | | | W-Rook |
+
+->no. 12. 13.<- [[note: In early modern scripts, 'jz' frequently represents 12, where 'z' serves as a form of the digit 2.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B-Rook | B-Rook | 62 | B-Queen | B-King | B-Pawn | B-Rook | |
+| B-Pawn | B-Pawn | B-Pawn | | | 52 | B-Pawn | B-Pawn |
+| | | | B-Pawn | | | | |
+| | | | | B-Pawn | B-Pawn | | |
+| | | | | | | | |
+| | | | W-Pawn | | | W-Rook | |
+| W-Pawn | W-Pawn | | W-Pawn | | W-Pawn | W-Pawn | W-Pawn |
+| W-Rook | W-Rook | W-Pawn | W-Rook | W-King | | | W-Rook |
+
+[[summary: This page contains six chess diagrams that visually represent the tactical maneuvers and variations (numbered 1 through 14) discussed in the text of Chapter 6. These illustrations show specific piece placements for the King, Queen, Rooks, and Pawns using Selenus's unique 1-64 square coordinate system.]]
+[[keywords: chess tactics, board diagrams, Gustavus Selenus, 17th-century chess, King's Pawn defense, chess variants, game notation]]

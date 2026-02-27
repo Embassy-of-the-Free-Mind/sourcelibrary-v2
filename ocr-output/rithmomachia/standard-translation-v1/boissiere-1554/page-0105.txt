@@ -1,0 +1,16 @@
+[[meta: This page continues the rules for Rythmomachia, specifically addressing how to capture the various levels of the "Pyramid" piece and the conditions for winning the game through mathematical "Harmonies."]]
+
+# ->RYTHMOMACHIA, THE GAME<-
+
+9 [[notes: This is a floral ornament]] And by the same reasoning, if a smaller piece [[notes: The original uses the term "table," which refers to the playing pieces or counters.]] is made equal to any of the said bases [[notes: This refers to the individual values that make up the "Pyramid" piece described on the previous page.]] by multiplication.
+
+10 Victory is won if one can arrange the "Greatest Harmony" [[notes: In Rythmomachia, a "Harmony" is a set of pieces whose numerical values form a mathematical progression—Arithmetic, Geometric, or Harmonic. The "Greatest Harmony" (Victoria Magna) typically required forming a sequence using four pieces in the opponent's territory.]] in the adversary's camp, or indeed the "Lesser Harmony," although such a victory is not so great nor so noble.
+
+11 Captured pieces shall serve to complete the harmony.
+
+12 When the pieces are brought together to complete a harmony within the adversary's camp, the said adversary must not move them nor hinder the victory, even if some of the pieces involved are their own. [[notes: This rule prevents a player from breaking up a winning sequence once their opponent has successfully positioned the required numbers in their "camp" or starting territory.]]
+
+[[gloss: Rythmomachia, victory, harmony, pieces, multiplication, camp, adversary, although]]
+
+[[summary: This page details the final conditions for capturing the Pyramid and explains the "Victory of Harmony," where a player wins by arranging specific mathematical progressions in their opponent's territory.]]
+[[keywords: Rythmomachia, Victory, Harmony, Mathematical Progressions, Pyramid, Rules of Capture, Board Games]]

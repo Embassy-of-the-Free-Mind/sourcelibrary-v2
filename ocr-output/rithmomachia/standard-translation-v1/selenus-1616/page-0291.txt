@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical analysis of the "First Manner" of the Knight’s opening, picking up from the fifth move sequence. It details various branching possibilities and counter-moves, continuing the defense against the White Rider’s attack.]]
+
+# ->On the Game of Chess.<-
+
+[[margin: 1. cap:]]
+
+5. Then: * The Black [player] / moves against him / the King’s Rider [[notes: "Reuter" or Rider is the early modern term for the Knight.]], to fifty-three: [[notes: The author uses a numbering system from 1 to 64 to identify the squares of the board.]] The White [player] / (in order to defend the Queen) / moves his Rider / to twenty-two: The Black [player] / takes / the White King’s Soldier [[notes: "Soldaten" or Soldiers refers to Pawns.]] / with the King’s Bishop's Soldier [[notes: "Schützens-Soldat" refers to the Bishop's Pawn; "Schütze" (Shooter/Archer) was a common name for the Bishop.]]: The White [player] / moves / the King’s Rider / against the Black Queen / to thirty-seven:
+6. * The Black [player] / moves the same [the Queen] / (so that he does not lose the Bishop's Soldier / and the Rook [[notes: "Rochen" is the traditional term for the Rook or Castle.]]) / to forty-five: The White [player] / takes / the Black King’s Bishop's Soldier / with his King’s Bishop's Soldier / and moves it against the Black Queen:
+7. * The Black [player] / takes the same / with the King’s Rider: The White [player] / moves the King’s Bishop / against the same / to twenty-seven / and thus wins it by force.
+8. If, however, the Black [player] / with the Rider / does not take the White Soldier / (n. 7): then he loses / one more Soldier / than the White [player]: But if he takes it / with the Queen: then they both / exchange / the Queens: and the White [player] / takes with the King’s Rider / the Black King’s Bishop's Soldier / gives check [[notes: "Beut Schach" literally "offers check."]] / and thereby wins / the Rook / without any resistance.
+9. If, however, the Black [player] / takes the White Soldier / neither with the Rider / nor with the Queen / (n. 7. 8.) / but instead pushes / the same [the Queen] / to forty-six: then the White [player] / moves against her / the King’s Bishop / to thirty-nine:
+10. * The Black [player] / takes / him [[notes: the Bishop]] / with the same [the Queen]: The White [player] / takes the Black King’s Bishop's Soldier / with the King’s Rider / gives / the King / and the Queen / check / and wins the same [[notes: the Queen]] / through this move.
+11. If, however, the Black [player] / for that reason / does not take the White Bishop / with the Queen / (n. 10) / but instead moves the same / against him / to thirty-eight: then the White [player] / pushes against her / the King’s Bishop / to twenty / and nevertheless / captures her / (because she / can flee nowhere) / just as surely.
+12. If, however, the Black [player] / plays the Queen / not to 46. (n. 9.) / but to thirty-eight: then the White [player] / moves against her / the King’s Bishop / to twenty: The Black [player] / gives / with the same [the Queen] / from forty / check: The White [player] / covers the King / with the aforementioned Bishop / and moves it against her [[notes: the Queen]] / to thirteen: The Black [player] / sets the Queen again / to thirty-eight: The White [player] / moves against her / the King’s Rider’s Soldier [[notes: "Reuters-Soldaten" refers to the Knight's Pawn.]] / to thirty-one: The Black [player] / moves her / to forty-six...
+
+[[meta: catchword: and four-]]
+
+[[summary: This page provides a dense tactical walkthrough of a chess opening, focusing on a sequence of moves where White traps or wins the Black Queen or Rook through a series of Bishop and Knight maneuvers. It demonstrates the high-stakes consequences of specific exchanges and the use of "forks" to win material.]]
+
+[[keywords: Chess tactics, Damiano Defense, Knight's opening, Queen capture, chess notation, 17th-century chess, King’s Rider, King’s Bishop]]

@@ -1,0 +1,59 @@
+[[meta: This page continues the classification of numerical ratios and introduces "figurate numbers"—numbers represented as geometric shapes. This follows the Boethian tradition of arithmetic which was fundamental to Renaissance education.]]
+
+f i
+
+A **multiple superparticular** number is one where a larger number, when compared to a smaller one, contains it more than once plus one part of it. [[notes: These are ratios like 2.5 ($5:2$) or 2.33 ($7:3$). "Superparticular" means the ratio involves one unit extra over the divisor, like $3:2$ or $4:3$.]]
+
+And if it contains it twice plus its half, it is called **double sesquialter**. [[notes: This is the ratio $5:2$. "Sesquialter" refers to the ratio $1 \frac{1}{2}$ or $3:2$.]]
+
+And if twice plus a third, it is **double sesquitertial**. [[notes: The ratio $7:3$.]]
+
+And if thrice plus a half, it is **triple sesquialter**, and so on: names are gathered by combining the terms for both the multiple and the superparticular, according to what the comparison produces.
+
+A **multiple superpartient** number is one where a larger number, compared to a smaller one, contains the smaller more than once and, in addition, several parts of it. [[notes: "Superpartient" refers to ratios where the numerator is more than one unit larger than the denominator, such as $5:3$ (one and two-thirds).]] It takes its names from both parts of the comparison: such as **double superbipartient**, **double supertripartient**, **triple**, **quadruple**, or **quintuple superbipartient**, and the like.
+
+And just as five types are found by comparing a larger number to a smaller, so five corresponding types are found by comparing the smaller number to the larger. We create these names by simply adding the prefix "sub-": these are **submultiple**, **sub-superparticular**, **sub-superpartient**, **submultiple sub-superparticular**, and **submultiple sub-superpartient**.
+
+The types of **submultiple** are **subdouble** [[notes: $1:2$ or one-half]], **subtriple** [[notes: $1:3$ or one-third]], **subquadruple**, **subquintuple**, and so on.
+
+The types of **sub-superparticular** are: **subsesquialter** [[notes: $2:3$]], **subsesquitertial** [[notes: $3:4$]], **subsesquiquartal**, **subsesquiquintal**, and so on.
+
+The types of **sub-superpartient** are **sub-superbipartient**, **sub-supertripartient**, **sub-superquadripartient**, and so on in this manner.
+
+The types of **submultiple sub-superparticular** are **subdouble subsesquialter**, **subtriple subsesquialter**, and the like.
+
+The types of **submultiple sub-superpartient** are **subdouble sub-superbipartient**, **subdouble sub-supertripartient**, and others similar to these, according to the nature of the logic and the comparison. But these things are immediately evident.
+
+A **linear number** is one which is described by many units added together in one and the same direction. [[notes: Think of dots in a single straight line.]]
+
+A **plane number** is one which, described by its units, extends in both length and width. [[notes: A 2D arrangement of dots, like a square or triangle of pebbles.]]
+
+A **solid number** is one which, described by its units, adds thickness to length and width, and is stretched across a triple interval. [[notes: A 3D arrangement, like a stack of cannonballs.]]
+
+A **trigon** [[notes: triangle]] is a plane number which, when unfolded into its units, possesses three equal sides.
+
+A **tetragon** [[notes: square]]: is completed by four equal angles.
+
+A **pentagon**: by five.
+
+A **hexagon**: six.
+
+A **heptagon**: seven.
+
+An **octagon**: eight.
+
+An **enneagon**: nine.
+
+A **decagon**: ten.
+
+An **hendecagon**: eleven, and so on in this manner. We can call these by their Latin names: **triangles**, **quadrangles**, **quinquangles**, **sexangles**, **septangles**, **octangles**, **nonangles**, **decangles**, **undecangles**, and so on.
+
+A **number longer in one part** is a plane number which, described by units, has a width that differs from its length by exactly one unit. [[notes: These are "heteromecic" numbers, such as $2 \times 3 = 6$ or $3 \times 4 = 12$.]] It is also called **long-sided**.
+
+A **number longer-before** is one which, described by units, has sides separated by more than one unit; that is, a length that differs from the width by more than one unit. [[notes: For example, a $2 \times 5$ rectangle.]]
+
+A **pyramid** is a solid number whose individual sides are raised from a plane base to a single peak at the top. The plane number from which the sides are raised is called the **base** of the pyramid. The point or unit where they meet is called the **cone**, **point**, or **vertex** of the pyramid. If it grows from a triangular base, it is called a **triangular pyramid**. If from a quadrangular base: a **tetragonal pyramid**, and so on.
+
+[[summary: This page defines complex numerical ratios (multiples and parts) and introduces "figurate numbers," which bridge arithmetic and geometry by representing numbers as lines, shapes, and solids.]]
+
+[[keywords: ratios, superparticular, superpartient, linear numbers, plane numbers, solid numbers, polygons, pyramid, Boethius, arithmetic foundations]]

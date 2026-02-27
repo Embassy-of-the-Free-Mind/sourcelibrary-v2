@@ -1,0 +1,19 @@
+[[meta: This page continues the discussion from page 127 regarding the "locking-in" or stalemate of the King, providing specific board examples and explaining the legal/competitive consequences of such a move in different regions.]]
+
+->## The Second Book / Chapter 1:<-
+
+[[margin: (continuation)]] ...gins: the White King’s Bishop [[notes: "Schütze" (Archer) was the common German term for the Bishop at this time]], in the second: and the White King, in the third square of the aforementioned Black Bishop, were standing: then the Black King would be closely imprisoned. 
+
+Likewise, if the Black King had moved into his Queen-Rook’s square: and the White Queen’s Bishop were in the Black Queen’s Bishop’s second [square]: but the White King were present in the Knight's [[notes: "Reuter" (Rider) refers to the Knight]] third square: then the Black King would be enclosed without any Check. Through this imprisonment, nothing is won. For one does not thereby direct anything hostile toward the King; rather, he can remain safely in his square as if in a fortress, and he has no need—since it is his turn—to move himself into Check. 
+
+The other player may therefore blame himself for letting things come to this pass; and he should take better care another time, always leaving the opponent’s King enough room and freedom to move until he can finally, in a proper manner, give him **Checkmate**. 
+
+Furthermore, in Spain [[notes: "Hispanien"]], where the best Chess-players are found, one does not lose the entire game when he encloses the King [[notes: This refers to "Stalemate". In various historical rules, stalemate was sometimes a win for the one stalemated, sometimes a draw, or sometimes a "half-win"]]; instead, they let it come to a settlement, and only half of the stake is lost. Elsewhere, the one who imprisons the King forfeits the stake tenfold.
+
+Finally, the **Checkmate** cannot be accomplished if equal pieces remain on both sides, and the pieces of one side prevent the other from giving the **Checkmate**: or if the stronger side has only such pieces remaining as cannot achieve a **Checkmate**. For example: when the Queen is present on both sides: or if one side has the Queen, but the other has only a Soldier [[notes: "Soldat" refers to a Pawn]] which could not only be made into a Queen on the next move, but could also be protected by the King.
+
+[[meta: Catchword: Dan]]
+
+[[summary: This page explains the concept of stalemate (locking-in the King), noting that it is considered a strategic failure by the attacking player. It also details regional variations in gambling stakes for stalemate and the conditions under which a checkmate becomes impossible due to insufficient material.]]
+
+[[keywords: stalemate, rules of chess, Bishop, Knight, Pawn, Spain, checkmate, gambling stakes, historical chess rules]]

@@ -1,0 +1,23 @@
+[[meta: This page continues the tactical sequences of Chapter 5. The translation maintains the 1–64 square numbering system established on previous pages, where square 1 corresponds to a1 and square 64 to h8. The text details complex maneuvers involving the King's escape attempts and Black's relentless pursuit using Rooks and Pawns.]]
+
+### On the Game of Chess.
+
+->Qq iij<-
+
+[[margin: 5.cap:]] ...the same / with the King’s Soldiers [[note: "Soldaten" refers to the Pawns]]: The Black / [moves] the same / with the King’s Rook / offers check / and moves him / onto the White King’s Archer’s Soldier [[note: "Schützens-Soldaten" refers to the Bishop's Pawn]]:
+
+[[margin: 38.]] * **The White** / [moves] the King / to the Black King’s Rook / and Rider [[note: "Reuter" refers to the Knight]] / to nineteen [[note: Square c3]]: **The Black** / offers / with the same Rook / from twenty [[note: Square d3]] / Check: **The White** / takes / the Black King’s Rider / with the King: or moves him / to twenty-seven [[note: Square c4]]: **The Black** / gives / with the King’s Rook / from twenty-nine [[note: Square e4]] / Check-Mate.
+
+[[margin: 39.]] If however **the White** / does not set the King / to 19. (no. 38) but rather / to three [[note: Square c1]]: then **the Black** / moves / the King’s Rook / to
+
+[[margin: 40.]] five [[note: Square e1]]: * **The White** / the King’s Rook’s Soldier / to the Black King’s Rider / to seventeen [[note: Square a3]]: **The Black** / takes / with the King’s or the Queen’s Rook [[note: The original text differentiates between "des K." (masculine, King's) and "der K." (feminine, Queen's) Rooks]] / the White King’s Rider / and offers Check-Mate.
+
+[[margin: 41.]] If however **the White** / does not move the King’s Rook / to 17. (no. 40) but rather / his Rider’s Soldier / to eighteen [[note: Square b3]]: then **the Black** / takes / with the King’s Rook / nonetheless / the White King’s Rider / and offers Check: **The White** / moves the King / to ten [[note: Square b2]]: **The Black** / takes / the White King’s Rook / with his King’s Rook: **The White** / moves / the King / to the Black King’s Rider / to seventeen [[note: Square a3]] / and not to nineteen [[note: Square c3]]: (For otherwise / the Black / with the same / his King’s Rook’s Soldier / would take / and offer Check) **The Black** / the same / on the Black King’s Archer’s Soldier / to twenty [[note: Square d3]]: **The White** / the King’s Rook’s Soldier / to thirty-two [[note: Square h4]]: **The Black** / the King’s Rook / (even though / He could reach / the White King’s Rider / with the Queen’s Rook) / to three [[note: Square c1]]: **The White** / the King’s Rook / to the Black King’s Rider / to twenty-four [[note: Square h3]]: **The Black** / (in order / to relieve the same) / the Queen’s Rook / to four [[note: Square d1]]: **The White** / the King’s Rider / to twenty-two [[note: Square f3]]: **The Black** / the King’s Rook / (in order / to give Check-Mate / with the same / from thirty-three [[note: Square a5]]) / to thirty-five [[note: Square c5]]: **The White** / must / upon the same / the King’s Rider’s Soldier / to twenty-six [[note: Square b4]] / move: **The Black** / takes him /
+
+[[margin: 42.]] with the King’s Rider: * **The White** / the same / with the King: **The Black** / offers / with the Queen’s Rook / from two [[note: Square b1]] / Check: **The White** / moves the King / to twenty-five [[note: Square a4]] / or seventeen [[note: Square a3]]: **The Black** / gives / with the King’s Rook / from thirty-three [[note: Square a5]] / Check-Mate.
+
+[[margin: 43.]] If however **the White** / with the King / does not take the Black Rider / (no. 42) but rather / moves him / to twenty-five [[note: Square a4]]: then **the Black** / moves / (for the protection of the King’s Rider) / the King’s Rook /
+
+[[summary: This page outlines several tactical endgame variations where the Black pieces successfully corner and checkmate the White King, primarily using the Rooks and supporting Pawns. The text illustrates the precise movements required to overcome White's defensive attempts to flee with the King.]]
+
+[[keywords: chess tactics, endgame, King’s Rook, Rider, Archer, Soldier, checkmate, 17th-century chess, square numbering, Rochen]]

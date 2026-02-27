@@ -1,0 +1,55 @@
+[[meta: This page continues the catalog of mathematical progressions for the game of Rithmomachia. While the previous page focused on simpler progressions of three pieces, this page provides exhaustive tables for the "Greater Victory," which requires four pieces to satisfy two different mathematical proportions simultaneously—specifically Arithmetic and Harmonic (referred to here as "Music") progressions.]]
+
+# The Sixth Chapter
+
+| | | |
+|---|---|---|
+| 3. 6. 9. 12. | 3. 6. 9. 12. | 3. 6. 12. |
+| 3. 4. 6. 9. | 3. 6. 9. 9. | 4. 6. 9. |
+| 3. 9. 15. 25. | 3. 9. 15. 15. | 9. 15. 25. |
+| 4. 5. 6. 9. | 4. 5. 6. 6. | 4. 6. 9. |
+| 4. 6. 8. 12. | 4. 6. 8. 8. | 4. 6. 9. |
+| 4. 6. 8. 16. | 4. 6. 8. 8. | 4. 8. 16. |
+| 4. 12. 20. 36. | 4. 12. 20. 20. | 4. 12. 36. |
+| 5. 9. 15. 25. | 5. 15. 25. 25. | 9. 15. 25. |
+| 5. 15. 25. 45. | 5. 25. 45. 45. | 5. 15. 45. |
+| 5. 25. 45. 81. | 5. 25. 45. 45. | 25. 45. 81. |
+| 6. 9. 12. 16. | 6. 9. 12. 12. | 9. 12. 16. |
+| 7. 16. 20. 25. | 7. 16. 25. 25. | 16. 20. 25. |
+| 9. 12. 15. 16. | 9. 12. 15. 15. | 9. 12. 16. |
+| 9. 12. 15. 25. | 9. 12. 15. 15. | 9. 15. 25. |
+| 9. 45. 81. 225. | 9. 45. 81. 81. | 9. 45. [[gloss: 81.]] 225. |
+| 9. 25. 45. 81. | 9. 45. 81. 81. | 25. 45. 81. |
+| 9. 81. 153. 289. | 9. 81. 153. 153. | 81. 153. 289. |
+| 9. 12. 16. 20. | 12. 16. 20. 20. | 9. 12. 16. |
+| 9. 15. 20. 25. | 15. 20. 25. 25. | 9. 15. 25. |
+| 12. 16. 20. 25. | 12. 16. 20. 20. | 16. 20. 25. |
+| 15. 16. 20. 25. | 15. 20. 25. 25. | 16. 20. 25. |
+| 15. 20. 30. 45. | 15. 30. 45. 45. | 20. 30. 45. |
+
+---
+
+| The numbers / of the Arithmetic and Music divisions / on four stones. [[notes: "Arithmetic" (*Zahl-Kunst*) and "Music" (*Singe-Kunst*) refer to specific mathematical progressions. A "stone" is a game piece.]] | The numbers / of the Arithmetic division / in the four mentioned numbers. | The numbers / of the Music [[notes: Harmonic]] division / in the four numbers. |
+| :--- | :--- | :--- |
+| 3. 4. 5. 6. | 4. 5. 6. | 3. 4. 6. |
+| 3. 4. 6. 8. | 4. 6. 8. | 3. 4. 6. |
+| 3. 4. 6. 9. | 3. 6. 9. | 3. 4. 6. |
+| 3. 4. 5. 15. | 3. 4. 5. | 3. 5. 15. |
+| 3. 5. 7. 15. | 3. 5. 7. | 3. 5. 15. |
+| 3. 5. 9. 15. | 3. 9. 15. | 3. 5. 15. |
+| 3. 9. 15. 45. | 3. 9. 15. | 9. 15. 45. |
+| 4. 6. 8. 12. | 4. 8. 12. | 4. 6. 12. |
+| 4. 6. 12. 20. | 4. 12. 20. | 4. 6. 12. |
+| 5. 7. 9. 45. | 5. 7. 9. | 5. 9. 45. |
+| 8. 15. 120. 225. | 15. 120. 225. | 8. 15. 120. |
+| 9. 12. 15. 20. | 9. 12. 15. | 12. 15. 20. |
+| 9. 12. 15. 45. | 9. 12. 15. | 9. 15. 45. |
+| 9. 15. 30. 45. | 15. 30. 45. | 9. 15. 45. |
+| 9. 15. 45. 81. | 9. 45. 81. | 9. 15. 45. |
+| 12. 15. 20. 25. | 15. 20. 25. | 12. 15. 20. |
+| 15. 20. 25. 30. | 20. 25. 30. | 15. 20. 30. |
+
+[[meta: catchword at bottom of page: 15. 20.]]
+
+[[summary: This page lists specific sets of four numbers that constitute an "even Greater victory" in Rithmomachia by simultaneously forming both Arithmetic and Harmonic (Musical) progressions. The tables serve as a reference guide for players to identify these complex winning patterns on the board.]]
+[[keywords: Rithmomachia, arithmetic progression, harmonic progression, music-art, number-art, victory conditions, mathematical games]]

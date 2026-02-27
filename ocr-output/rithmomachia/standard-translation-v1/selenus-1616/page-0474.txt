@@ -1,0 +1,31 @@
+[[meta: This page continues the chess puzzles from page 439. The previous page ended mid-sentence describing a potential checkmate. This page completes that scenario and moves into the sixth and seventh problems. The board continues to use a 1–64 numbering system rather than modern coordinates.]]
+
+# The Fourth Book / Chapter 10:
+
+**The Black player** moves the **King** to seventeen (to further provide his **Pawn** [[notes: *Soldat*, literally "soldier"]] with a free passage): **The White player** moves the **Pawn** to forty-three:
+
+**The Black player** moves his **Pawn** to twenty-six: **The White player** moves the **Pawn** to fifty-one:
+
+**The Black player** moves his **Pawn** to eighteen: **The White player** moves the **Pawn** to fifty-nine: where it is made into a **Queen** (though to no avail).
+
+**The Black player** gives **Checkmate** with the **Pawn** from ten, and in this manner keeps his promise.
+
+,, 6. **The White player** places the **King** on five; a **Pawn** on thirty-two: **The Black player** places his **King** on thirty; a **Rook** [[notes: *Rochen*, the old term for a Castle]] on twenty-two; a **Knight** [[notes: *Reuter*, literally "rider"]] on twenty-five; four **Ladies** or **Queens** on nineteen, twenty, twenty-seven, and twenty-eight; a **Footman** [[notes: *Fenden*, an archaic term for a pawn]] or **Pawn** (to hold back the **White Pawn**) on forty. Now, as **the Black player** wishes to give **the White player Checkmate** with the **Rook** in the fifth move:
+
+Then he must move a **Lady** or **Queen** (from 27) to thirty-six: **The White player** moves the **King** to four:
+
+**The Black player** moves a **Lady** (from 19) to twelve: **The White player** takes her with the **King**:
+
+**The Black player** moves the **Rook** to six: **The White player** takes a **Black Lady** from twenty with the **King**:
+
+**The Black player** moves the **Rook** to fourteen: **The White player** takes a **Black Lady** from twenty-eight with the **King**:
+
+**The Black player** offers **Checkmate** with the **Rook** from twelve.
+
+,, 7. **The Black player** sets the **King** on sixty-four; a **Pawn** on thirty-three: **The White player** sets his **King** on sixty-two; the **Queen** on fifty-eight; a **Rook** on one; a **Knight** on thirty-nine; three **Pawns** on fifty-one, twenty-two, and twenty-five. Now, as **the White player** wishes to settle the match against **the Black player** with the **Queen** in the eighth move:
+
+Then he moves the **Knight** (to make room for the **Black King**)
+
+[[summary: This page describes the conclusion of one chess problem and the step-by-step solutions for two more. These problems involve complex sacrifices, including one where Black gives up four Queens to force a Checkmate with a Rook.]]
+
+[[keywords: Chess, Chess Problems, Endgame, Checkmate, Queen Sacrifice, Knight, Rook, Soldier, Footman, Numeric Board]]

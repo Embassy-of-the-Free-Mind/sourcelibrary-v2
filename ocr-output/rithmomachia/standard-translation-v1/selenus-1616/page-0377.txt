@@ -1,0 +1,25 @@
+[[meta: This page continues the tactical instruction from Book 3, Chapter 8. The previous page concluded an analysis of a specific variation where the White player gained a material advantage (two pawns and a Rook for a Knight) by exploiting the Black player’s positioning. The notation continues to use a numerical grid system common in 17th-century manuals, likely corresponding to Gustavus Selenus’s 1–64 square numbering.]]
+
+->**On the Game of Chess.**<-
+Xx
+[[meta: Catchword: K. Sol-]]
+
+[[margin: 9. cap:]]
+
+<image-desc>A rectangular woodcut ornament strip featuring symmetrical foliate scrolls, acanthus leaves, and a central grotesque mask with a stylized human face.</image-desc>
+
+## The Ninth Chapter.
+
+### How the Black King’s Soldier [[note: Pawn]], in the fifth and final way, can be protected and relieved at the start.
+
+[[margin: 1.]] It follows further, in what manner, in the fifth and final way, the **B. K. Soldier** [[note: Black King’s Pawn]] may be guarded by his **Archer** [[note: Bishop; the German *Schütze* literally means "shooter" or "archer," a common historical name for the Bishop]].
+
+If, accordingly, the **White** and the **Black** [players] play the **Kings’-Soldiers** (as often mentioned) to **twenty-eight** [[note: Square e4]] and **thirty-six** [[note: Square e5]]: The **White** [player] (having the advantage [of the first move]) [moves] the **K. Knight** against the **B. K. Soldier** to **nineteen** [[note: Square f3]]: The **Black** [player] guards it in the fifth way (of which mention was made in Chapter 5, no. 5 of this book) with the **K. Archer** [[note: King’s Bishop]] to **forty-five** [[note: Square f6]].
+
+To say a word also of this method: It is the worst and most dangerous among all others, because the pieces and **Soldiers** [[note: Pawns]] are thereby greatly hemmed in and cannot easily be moved. Although it is not advisable to play such a game as this, one can nonetheless arrange it to some extent; and commonly those who are first learning this game are accustomed to move this **Archer** in such a way—just as it is, indeed, a true **student’s move** [[note: A "Schülers-Zug" or beginner's move. This refers to what is known today as Damiano’s Defense (1. e4 e5 2. Nf3 f6), which is considered a strategic error because it occupies the square needed by the Knight and weakens the King's defense.]]—and to advance it into the field.
+
+Now, when the **White** [player] further moves the **K. Archer** to **thirty** [[note: Square c4]]: then the **Black** [player] plays the **Queen** to **fifty-two** [[note: Square d8 or possibly f7 in this specific notation]]: The **White** [player], the **K. Soldier** to **twenty-one** [[note: Square d4]]: The **Black** [player], the **K. Archer** to **thirty-eight** [[note: Square d6]]: The **White** [player], the **K. Knight** against the **B. K. Archer’s Soldier** [[note: The Pawn in front of the Bishop]] to **thirty-four** [[note: Square e4 or f5 depending on context]]: The **Black** [player] (to protect it) the **K. Knight** to **forty-one** [[note: Square h6]]: The **White** [player] (so that the **B. K. Archer’s Soldier** is not moved against his **K. Knight**) the **Queen** to **thirty-three** [[note: Square d3 or f3]]: The **Black** [player] (to make use of the **K. Archer**) the same **Soldier** to **forty-five** [[note: f6]]: The **White** [player], the **K. Archer’s Soldier** to the **B. K.**...
+
+[[summary: This page discusses the "fifth way" to protect the King's Pawn, specifically using the King's Bishop (Archer). The author identifies this as a weak "beginner's move"—now known as Damiano's Defense—and begins a step-by-step tactical analysis of the resulting moves.]]
+
+[[keywords: Chess tactics, Damiano's Defense, Schülers-Zug, Chess history, opening theory, Archer, Soldier, Reuter]]

@@ -1,0 +1,107 @@
+[[meta: This page presents a series of board diagrams that provide a visual reference for the tactical exchanges described in Chapter 10. It continues the use of the 1–64 coordinate system established in the previous pages of this manual.]]
+
+[[margin: The Second Book]]
+[[margin: Chapter 10]]
+
+### n. 2. 17.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | — | BR | BR |
+| BP | BP | BP | BP | 52 | BP | BP | BP |
+| | | | | 43 | | | |
+| | | BP | | BP | | | |
+| | | WP | | WP | | | |
+| | | WP | | | | | |
+| WP | WP | | WP | | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+[[notes: The abbreviations in these diagrams represent: BR (Black Rook), BP (Black Pawn/Soldier), BK (Black King), WR (White Rook), WP (White Pawn/Soldier), and WK (White King). While the vocabulary list provided notes 'SS' as 'Springer' (Knight), their placement in these diagrams clearly indicates the 'Soldaten' or Pawns.]]
+
+### n. 4. 7.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | BR | | | |
+| | | BP | 36 | | | | |
+| | | WP | BP | WP | | | |
+| | | WP | | | | | |
+| WP | WP | | | WP | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+
+### n. 8. 9.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | | | BR |
+| BP | BP | BP | BP | 52 | BP | BP | BP |
+| | | | | BR | | | |
+| | | BP | WP | | | | |
+| | | WP | BP | 28 | | | |
+| | | WP | | | | | |
+| WP | WP | | | WP | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+
+### n. 13. 14.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | 59 | | BR |
+| BP | BP | BP | BP | 52 | WP | BP | BP |
+| | BP | | | | | | |
+| | | | WP | | | | |
+| | | | BR | | | | |
+| | | WP | | | | | |
+| WP | WP | | | WP | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+
+<column-break/>
+
+### n. 3. 10.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | 47 | | | BR | | |
+| | | BP | | BP | | | |
+| | | WP | WP | WP | | | |
+| | | WP | | | | | |
+| WP | WP | | | | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+
+### n. 5. 6.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | 47 | | | BR | | |
+| | | BP | | | | | |
+| | 31 | WP | WP | WP | | | |
+| | | | | | | | |
+| WP | WP | | | | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+
+### n. 11. 12.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | BP | | | | | | |
+| | | | | 37 | WP | | |
+| | | | WP | | BR | | |
+| | | | WP | | | | |
+| WP | WP | | | | WP | WP | WP |
+| WR | WR | WP | W & WK | | WR | WR | |
+
+### n. 15. 16.
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BK | | 59 | | BR |
+| BP | BP | BP | BP | BK | WP | BP | BP |
+| | | | | | | | |
+| | | | W & BP | | | | |
+| | | | BR | | | | |
+| | | WP | | | | | |
+| WP | WP | | | WK | BP | WP | WP |
+| WR | WR | WP | | | | WR | WR |
+[[notes: Square **59** in this diagram highlights a key maneuver for the Rook or Queen mentioned in the accompanying text. Square numbers in this system typically run from 1 (at the bottom left) to 64 (at the top right).]]
+
+[[summary: This page contains eight specialized chess diagrams illustrating the tactical progressions and square-numbering system used by Selenus. These visual aids help the reader track complex piece exchanges and positional advantages discussed in the text of Chapter 10.]]
+[[keywords: Chess diagrams, Selenus notation, tactical analysis, 17th-century chess, board layout, move coordinates]]

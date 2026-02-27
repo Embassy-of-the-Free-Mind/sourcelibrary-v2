@@ -1,0 +1,53 @@
+[[meta: This page continues the mathematical and structural definition of the Greek musical modes, specifically detailing the intervals between the diatonic, chromatic, and enharmonic scales. It builds upon the previous page's establishment of the Hypodorian as the foundational fifteen-string scale.]]
+
+...consonance of a fourth [[notes: *diatessaron*]]. Wherefore, by the preceding rule, each individual voice sounds higher than the individual voices of the Hypodorian by a fourth. Furthermore, the Phrygian adds a tone in pitch to the Dorian: therefore, the entire Phrygian mode is modulated higher than the entire Hypodorian by the consonance of a fifth [[notes: *diapente*]]. The Lydian adds a minor semitone to the Phrygian, and the Mixolydian adds a tone to the Lydian. Therefore, the Lydian will sound higher than the Hypodorian by a fifth and a semitone, and the Mixolydian will sound higher by a fifth and a minor third [[notes: *sesquitonum*, literally "one-and-a-half tones"]]. This completes the proposition.
+
+[[margin: 26]]
+¶ The diatonic Hypolydian exceeds the diatonic Hypophrygian by a semitone; it exceeds the Dorian by three semitones [[notes: *trisemitonio*, a minor third]]; the Phrygian by a fourth; the Lydian by a fourth and a semitone; and the Mixolydian by the consonance of a fourth and a minor third. Furthermore, the Dorian exceeds the Hypolydian by a tone; the Phrygian by two tones [[notes: *ditono*, a major third]]; the Lydian by a fourth; and the Mixolydian by a fourth. The Lydian, however, sounds a tone above the Dorian, while the Lydian is three semitones above [the Phrygian] and the Mixolydian a fourth. The Lydian is a semitone above the Phrygian, and the Mixolydian is a minor third; finally, the Mixolydian is a tone above the Lydian.
+
+¶ This, like the preceding, will be demonstrated very easily.
+
+[[margin: 27]]
+### ¶ To establish the seven modes of chromatic modulation.
+
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| r | Hypodorian | | | | | | | | | | | | | | | | | | |
+| s | Hypophrygian | Tone | | | | | | | | | | | | | | | p | 7 | |
+| t | Hypolydian | Semito. | A | | | | | | | | | | | | | | p | Chro- | |
+| v | Dorian | Apotome | | A | | | | | | | | | | | | | p | ma- | |
+| x | Phrygian | Minor Third | | | A | | | | | | | | | | | | p | tic | |
+| y | Lydian | Semitone | | | | A | | | | | | | | | | | | p | mo- | |
+| z | Mixolydian | Apotome | | | | | A | | | | | | | | | | | | des |
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+
+[[notes: An *apotome* is a "major semitone" in Pythagorean tuning, roughly 114 cents, used here to define the specific spacing of the chromatic genus.]]
+
+¶ I create the chromatic fifteen-string scale [[notes: *pentadecachordum*]] **r** through the tenth, eleventh, and twelfth rules of this book, and similarly six others, namely **s, t, v, x, y, z**. I make the scale **s** higher than **r** by a tone; and scale **t** higher than **s** by a semitone. Then **v** is higher than **t** by the interval of an apotome. **x** is higher than **v** by a minor third [[notes: *trisemitonio*]]. **y** is a semitone higher than **x**, and **z** exceeds **y** by an apotome. Therefore, I say that the seven modes of chromatic modulation are thus ordered. For **r** will be the Hypodorian, **s** by definition the chromatic Hypophrygian, **t** the Hypolydian, **v** the Dorian, **x** the Phrygian, **y** the Lydian, and **z** the Mixolydian.
+
+[[margin: 28]]
+### ¶ To show how each individual chromatic mode corresponds to the others.
+
+¶ By the preceding, the chromatic Hypophrygian is distant from the Hypodorian by a tone, and the Hypolydian from the Hypophrygian by a semitone. Therefore, the Hypolydian is higher than the Hypodorian by a minor third. The Dorian is distant from the Hypolydian by an apotome; therefore, the Dorian is removed from the Hypodorian by two tones [[notes: *ditono*]]. The Phrygian is distant from the Dorian by a minor third; therefore, the Phrygian is removed from the Hypodorian by three tones and a semitone—that is, by the interval of a full consonance of a fifth [[notes: *diapente*]]. The Lydian is distant from the Phrygian by a semitone; therefore, the Lydian is a fifth plus a semitone from the Hypodorian. The Mixolydian is distant from the Lydian by an apotome; therefore, the Mixolydian is higher than the Hypodorian by the consonance of a fifth and a tone. In this manner, the remaining relationships are easily shown from the preceding: such as that the Hypolydian is a semitone from the Hypophrygian, the Dorian a tone, the Phrygian a fourth, the Lydian a fourth and a semitone, and the Mixolydian a fifth. The Dorian is distant from the Phrygian by an apotome, the Phrygian by two tones, the Lydian by a fourth, and the Mixolydian by a tritone [[notes: three whole tones]]. The Phrygian is distant from the Dorian by a minor third, the Lydian by a tone and two minor semitones, and the Mixolydian by a fourth. The Lydian is a semitone from the Phrygian and the Mixolydian is a tone. As has already been said, the Mixolydian is distant from the Lydian by a major semitone [[notes: *maiore semitonio*, here referring to the apotome]]. Thus the proposition is constructed.
+
+[[margin: 29]]
+### ¶ To likewise arrange the seven enharmonic modes.
+
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| r | Hypodorian | | | | | | | | | | | | | | | | | | |
+| s | Hypophrygian | Tone | | | | | | | | | | | | | | | p | 7 | |
+| t | Hypolydian | Diesis | A | | | | | | | | | | | | | | p | Enar- | |
+| v | Dorian | Diesis | | A | | | | | | | | | | | | | p | mon- | |
+| x | Phrygian | Ditone | | | A | | | | | | | | | | | | p | ic | |
+| y | Lydian | Diesis | | | | A | | | | | | | | | | | | p | mo- | |
+| z | Mixolydian | Diesis | | | | | A | | | | | | | | | | | | des |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | A | b | c | d | e | f | g | h | i | k | l | m | n | o | p | | |
+
+[[notes: In the enharmonic genus, a *diesis* refers to a quarter-tone interval. A *ditone* is a major third.]]
+
+¶ Let **r, s, t, v, x, y, z** be seven fifteen-string scales: and let **r** be an enharmonic fifteen-string scale according to the fifteenth rule of this book. I intend the *proslambanomenos* [[notes: the lowest note]] of scale **s** to be one tone higher than scale **r**; and **t** a diesis higher than **s**; and **v** a diesis higher than **t**; and **x** a ditone higher than **v**; and **y** a diesis higher than **x**; and **z** likewise a diesis higher than **y**. Therefore, six scales will be stretched higher than the first scale: first by a tone, then by two dieses and a ditone, and finally by two dieses. This method of stretching is for enharmonic modu...
+
+[[summary: This page mathematically defines the intervals between the seven musical modes across the diatonic, chromatic, and enharmonic genera. It uses the Hypodorian mode as a fixed starting point to calculate the pitch of each subsequent scale.]]
+[[keywords: musical modes, Diatonic, Chromatic, Enharmonic, Hypodorian, Hypophrygian, Hypolydian, Dorian, Phrygian, Lydian, Mixolydian, diapente, diatessaron, apotome, diesis, ditone, pentadecachordum]]

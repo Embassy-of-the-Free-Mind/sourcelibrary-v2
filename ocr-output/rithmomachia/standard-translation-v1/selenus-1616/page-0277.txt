@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical analysis from page 242, specifically exploring various branching outcomes (noted as 35, 36, and 37) of a complex mid-game or endgame exchange. The coordinate system remains the 1–64 square counting method common in 17th-century chess literature.]]
+
+### Chapter 14: On the Game of Chess
+
+the **White Queen**: **White** takes the **Black King’s Knight** [[notes: *Reuter*, literally "Rider," is the Knight]] with the **King’s Knight** and aims at four **Black pieces**: namely, at the **Black Queen**; at the **Black King’s Bishop** [[notes: *Schützen*, literally "Archer," is the Bishop]]; at the **Black King’s Bishop’s Pawn** [[notes: *Schützens*, meaning the pawn belonging to the Bishop]]; and at the **Black King’s Pawn** [[notes: *Soldaten*, "Soldier," is the Pawn]]. **Black** gives **Check** with the **Queen** from square twenty-five: **White** covers the **King** with his **Knight’s Pawn** [[notes: *Reuters-Soldaten*]] at eighteen and moves it against the **Black Queen**: **Black** takes it with his **King’s Pawn**: **White** moves the **Queen** (out of **Check** from the **Black King’s Knight**) to ten: **Black** takes the **White King’s Rook’s Pawn** with the **King’s Pawn** and offers **Discovered Check** [[notes: *Ab-Schach*, a move where moving one piece opens a line for another piece to give check]] from the **Queen**: **White** plays
+
+[[margin: 35.]]
+the **King** to three: * **Black** takes the **White King’s Bishop** with his **King’s Bishop**: **White** [takes] the **Black King’s Pawn** with the **King’s Rook** [[notes: *Rochen*, an archaic term for the Rook/Castle]] and aims at the **Black Queen**: If **Black** now merely moves the same out of **Check**, then **White** takes the **Black King’s Bishop** with the **Queen**: and in this manner wins one more piece than **Black**.
+
+[[margin: 36.]]
+But if **Black** does not exchange the **Bishops** (as in no. 35) but instead takes the **White King’s Knight** with his **King’s Pawn**, and (**Check** is offered because this **Pawn**, according to the custom of some places, becomes a **Queen** upon entering this **Knight’s** field—even if the first **Queen** is still present) [[notes: This refers to historical variations in rules; in some regions, players could only have one Queen at a time, but the author notes here the practice of "unlimited promotion"]]: then **White** takes it with the **Queen** and moves her
+
+[[margin: 37.]]
+against the **Black King’s Knight**: * **Black**, provided he does not wish to move the **King’s Knight** to nineteen against the **White Queen** (which he must otherwise lose, or lose the **King’s Bishop**, following the exchange of **Queens**), but instead moves his **Queen** to sixty-one (because the **White King’s Rook** stands discovered against her, and she cannot be moved to any other square): then **White** takes the **Black King’s Bishop** with his **King’s Bishop**: **Black** places the **King’s Knight** (out of danger from the **White Queen**) at forty-four, and simultaneously protects the **King’s Knight’s Pawn** and the **King’s Bishop’s Pawn**: **White** takes the **Black King’s Rook’s Pawn** with the **King’s Rook** and moves it against the **Black King’s Rook**: **Black** takes the same with this **Rook**: **White** gives **Check** with the **King’s Knight** from forty-three: **Black** must [take] him with the **Queen** or
+
+[[sig: Hh iij]]
+[[meta: catchword: des K. (of the K.)]]
+
+[[summary: This page details specific tactical variations in a chess match, focusing on the movement of the Queen and Knights, and highlights a historical rule variation regarding pawn promotion. It demonstrates the depth of 17th-century chess theory through "if-then" branching scenarios.]]
+
+[[keywords: chess tactics, Queen promotion, King's Knight, King's Bishop, Discovered Check, Rochen, 17th-century chess rules]]

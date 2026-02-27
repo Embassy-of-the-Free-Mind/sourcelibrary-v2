@@ -1,0 +1,38 @@
+[[meta: This page follows the previous introductory contents and the commendatory poem by G. Gonterius. It contains the formal dedication by the editor, Jacques Lefèvre d’Étaples, to Jean de Ganay, followed by a summary of the ten books of Jordanus Nemorarius’s Arithmetic.]]
+
+# A new commentary on Jordanus, elaborated by Jacobus Faber Stapulensis [[notes: Jacques Lefèvre d’Étaples (c. 1455–1536), a leading French humanist and theologian who sought to revitalize mathematical and philosophical studies in Paris.]]
+# to the most illustrious man Jean de Ganay, President of Paris. [[notes: Jean de Ganay (d. 1512) was a high-ranking French lawyer and statesman who served as President of the Parlement of Paris and later Chancellor of France.]]
+
+You worthily reminded me in a few words, most illustrious sir, how many benefits the parent of the sciences, **Arithmetic**, brings when known, and what darkness it leaves behind when unknown. Indeed, no field of study should escape its notice. In particular, the authority of the **laws** (in which your work is chiefly employed) seemed to you to stand in need of numbers, so that justice may be dispensed to each according to their dignity: sometimes based on **Arithmetic** and sometimes on **Geometric** reasoning. This reasoning carefully considers fields, the boundaries of lands, the diversions of waters, **alluvions** [[notes: A legal term for the gradual increase of land by the flow of water]], and many similar things which, if deprived of mathematical support, can never be fully understood. For this reason, we read that the Roman emperors **Vespasian**, **Hadrian**, **Trajan**, **Theodosius**, **Arcadius**, **Honorius**, and **Constantine**, along with many others, appointed skilled **land-surveyors** [[notes: *Agrimensores*, Roman officials trained in using geometry and arithmetic to map land and resolve property disputes]] who maintained the logic of measurements for the public good, a task perfected by the wisdom of numbers. Here, **Lucius Aboderatus** [[notes: Likely a reference to a Roman technical writer or surveyor]], a student of those matters, left behind a distinguished book.
+
+Furthermore, the study of Arithmetic, when properly understood, provides an easy path to understanding musical harmonies and an entry into the subtleties of astronomy. Even **Ancient Theology** once relied entirely on numbers as if they were steps to the divine; even now, numbers retain their mysteries in the Sacred Scriptures. Take away numbers and the discipline of numbers, and you leave the laws imperfect and justice blind. No rule for harmonies will be found; no entrance to heavenly contemplations will be open. The mysteries of the holy letters will lie hidden—indeed, even the whole of **Philosophy**, which is described as the knowledge of both human and divine things. 
+
+The benefits of the discipline when pursued, and the disadvantages when neglected, were by no means hidden from the ancients. They believed that by walking no other path than this could we reach a worthy level of contemplation. **Pythagoras**, for instance, contended that nothing could be known without the aid of numbers. And **Plato** inscribed this epigram on the porch of his Academy: *“Let no one ignorant of mathematics enter here.”* In almost the whole of the *Timaeus*, he discusses the nature of things through numbers, and in the eighth and ninth books of the *Republic*, he discourses much on this subject—things which **Theon of Smyrna** [[notes: A 2nd-century Platonist and mathematician who wrote on the mathematical knowledge needed to understand Plato]], a mathematician, left untouched because of the difficulty of the matter.
+
+Therefore, you were not without reason grieved that this "number-full" crowd of philosophers at this nourishing **University of Paris**, though eager for good literature, was destitute of so necessary a path—both for ascending to the divine and descending to human affairs. Receive, therefore, now, my unique benefactor, the ten books of the discipline of Arithmetic by the most celebrated man **Jordanus** [[notes: Jordanus Nemorarius (13th century), the most important medieval European mathematician before Fibonacci]], now illustrated by the light of a new commentary through our labors and dedicated to your name. These books will be fully capable of bringing the benefits I have listed. And if you so command, let the work, completed under your auspices, now pass to others, so that all may understand—especially that they will owe thanks to you, through whom they have obtained this literary faculty. Farewell most happily.
+
+## Argument of the ten books of Jordanus.
+
+**The First** discusses common properties of numbers: their parts, and what is produced from the parts of a divided number.
+
+**The Second** concerns the common properties of ratios and proportions.
+
+**The Third** is about **prime numbers**, **composite numbers**, numbers prime to one another, and the smallest numbers in any given ratio.
+
+**The Fourth** deals with numbers in continuous proportion, and **commensurable** and **incommensurable** numbers.
+
+**The Fifth** concerns the addition, subtraction, and division of ratios.
+
+**The Sixth** is about **square**, **cubic**, **similar plane**, and **solid** numbers.
+
+**The Seventh** is about numbers that are **even**, **odd**, **even-times-even**, **even-times-odd**, **odd-times-even**, **perfect**, **abundant**, and **deficient**. [[notes: These terms describe different ways numbers can be factored or their relationship to the sum of their divisors.]]
+
+**The Eighth** concerns the **shapes of numbers**: triangles, squares, pentagons, hexagons, heptagons, octagons, pyramids, serrated forms [[notes: Prisms]], and tesserae [[notes: Cubes or dice-shaped numbers]].
+
+**The Ninth** is about equality, inequality, and various types of ratios (multiples, superparticulars, and superpartients).
+
+**The Tenth** is about **Arithmetic**, **Geometric**, and **Musical** means, and about the lesser (minor) means.
+
+[[summary: This page contains a dedicatory letter from Jacques Lefèvre d’Étaples to Jean de Ganay, arguing that mathematics is the essential foundation for law, music, theology, and philosophy, followed by a summary of the ten books of Jordanus Nemorarius's Arithmetic.]]
+
+[[keywords: Jacques Lefèvre d'Étaples, Jean de Ganay, Jordanus Nemorarius, University of Paris, Arithmetic, geometry, law, music, Pythagoras, Plato, Theon of Smyrna, perfect numbers, figurate numbers, ratios]]

@@ -1,0 +1,70 @@
+[[meta: This page continues the mathematical proofs of musical intervals, shifting focus from the minor semitone (the limma) to the major semitone (the apotome, with the ratio 2187:2048) and the musical comma. The author uses the Euclidean algorithm to prove these are the smallest possible whole numbers for the ratio and then places the major semitone between the standard ratios of 16:15 and 15:14.]]
+
+[[margin:
+2187
+2048
+139
+102
+37
+28
+9
+1
+]]
+
+by the interval **e d**: therefore **e** and **d** are the numbers of the major semitone [[notes: In Pythagorean tuning, the major semitone or "apotome" is the ratio 2187:2048]]. If, however, you wish to know if these are the smallest terms [[notes: "Smallest terms" refers to a fraction or ratio that cannot be simplified further, like 2/3 instead of 4/6]], you may easily learn this from the fifteenth [proposition] of the third [book] of *Arithmetics* by subtracting **d** from **e**, and subtracting what remains from **d** as many times as you can. By doing this in sequence, as you see in the subtraction appearing at the side, you will finally be left with a remainder of one. Therefore, by that same fifteenth proposition, **d** and **e** are prime to one another. They are, consequently, the smallest in their proportion by the twentieth proposition of that same book: which is what was to be proven.
+
+---
+
+[[margin: 24]]
+
+### ¶ The ratio of the major semitone: it exceeds the *sesquiquintadecima* proportion.
+
+| 2187 | 2184 8/15 | 2048 | 136 8/15 |
+| :---: | :---: | :---: | :---: |
+| a | c 15 | b | d 15 |
+
+¶ Let **a** and **b** be the smallest terms of the ratio of the major semitone found through the preceding [demonstration]: I say that the ratio of **a** to **b** is greater than a *sesquiquintadecima* [[notes: A "sesquiquintadecima" is the ratio 16:15, or 1 + 1/15]]. For I take, as has often been done in the preceding pages, the fifteenth part of the number **b** (2048) by the tenth proposition of this book; this is found to be one hundred thirty-six and eight-fifteenths of one, which shall be **d**. Therefore, add **d** to **b** and let it become **c**: it is certain that the ratio of **c** to **b** is exactly 16:15. But **c** is a smaller number than **a**. For **a** is the number two thousand one hundred eighty-seven. **c**, however, is only two thousand one hundred eighty-four and almost a half (a little more). Therefore, by the eleventh [proposition] of this book, the ratio of the major semitone is larger than the 16:15 proportion, exceeding it: which is what was to be proven.
+
+---
+
+[[margin: 25]]
+
+### ¶ The interval of the apotome: it is less than the *sesquiquartadecima* interval. From this, it is manifest that the proportion of the major semitone is found positioned between the *sesquiquintadecima* and the *sesquiquartadecima*.
+
+| 2194 4/14 | 2187 | 2048 | 146 4/14 |
+| :---: | :---: | :---: | :---: |
+| c 14 | a | b | d 14 |
+
+¶ We have already said that the apotome and the major semitone are the same thing. Let **a** and **b** be the smallest numbers of the major semitone, such as two thousand one hundred eighty-seven and two thousand forty-eight. I take, by the tenth [proposition] of this book, the fourteenth part of **b**, namely of two thousand forty-eight, which is one hundred forty-six and four-fourteenths, which shall be **d**. I add that fourteenth part to **b**, and let the resulting sum be the number **c**. Then the ratio of number **c** to **b** is a *sesquiquartadecima* proportion [[notes: The ratio 15:14, or 1 + 1/14]]. But **c** is a larger number than **a**, since two thousand forty-eight and one hundred forty-six and four-fourteenths raise the total sum of **c** to two thousand one hundred ninety-four and nearly a quarter of one. And **a** is only the sum of two thousand one hundred eighty-seven. It is therefore established that the 15:14 proportion is larger than the major semitone: and this is what was proposed. The corollary is known from the preceding.
+
+---
+
+[[margin: 26]]
+
+### ¶ The minor semitone and the major semitone do not fall into a *superparticular* proportion; rather, it is necessary that they consist of a *superpartient* ratio.
+
+[[notes: In ancient music theory, a "superparticular" ratio is one where the numerator is exactly one greater than the denominator (like 3:2 or 9:8). These were considered more "pure." A "superpartient" ratio is more complex, where the difference is greater than one (like 256:243).]]
+
+¶ For the minor semitone, by the corollary of the twenty-first [proposition] of this book, falls between the 19:18 and 20:19 ratios. And yet, no other superparticular ratio can fall intercepted in the middle between 19:18 and 20:19. For those are the closest superparticulars, one larger and one smaller; therefore, the minor semitone does not consist of a superparticular ratio. Nor, by the same logic, does the major semitone. For by the corollary of the preceding [proposition], it falls in some middle proportion between 16:15 and 15:14, two neighboring superparticulars which admit no superparticular in the middle. Thus, the major semitone does not fall in a superparticular ratio. Furthermore, since the ratios of the minor and major semitones are smaller than many superparticulars (as has been seen), they will also be smaller than the "double" ratio (2:1), which is the smallest of the *multiples* [[notes: Multiples are ratios like 2:1, 3:1, etc.]], as it is named from the smallest number. For no whole number is smaller than two. Therefore, the ratio of the minor semitone is not a multiple; likewise, neither is the major semitone. It remains, therefore, by a sufficient division—since they are between a larger and smaller term—that they are in the *superpartient* class: which is what was proposed. 
+
+¶ However, for the sake of the sophists [[notes: Here, "sophists" refers to overly pedantic or trivial arguers]], one may note that the tone and its parts—whether the consonances or the parts of the consonances when "intense" [sharpened/higher]—always fall into a superparticular, superpartient, or multiple ratio. When "remiss" [flattened/lower], they fall into a sub-superparticular, sub-superpartient, or sub-multiple. But even if this is so, we are accustomed to say they all belong to the superparticular, superpartient, or multiple ratios, regarding the "sub-" versions as the same and counting them as one. Similarly for the superpartient/sub-superpartient and multiple/sub-multiple.
+
+---
+
+[[margin: 27]]
+
+### ¶ To find the musical comma on a string.
+
+[[notes: The Pythagorean comma is the tiny discrepancy found when comparing twelve perfect fifths to seven octaves, or the difference between a major and minor semitone.]]
+
+-> [[margin: (Diagram of a monochord string) ]] <-
+| a | f | g | c | b |
+|---|---|---|---|---|
+| 256 | | | 243 | |
+| d | | | e | |
+
+¶ Let **a b** be the string upon which it is proposed to find the musical comma: in which **a b** and **c b** are a *sesquioctave* proportion [[notes: 9:8 ratio]] and a whole tone. Furthermore, let **d** and **e** be the smallest terms of the minor semitone [[notes: 256 and 243]]. I divide the space **a b** into equal parts according to the number **d** (256); from that number of parts, starting from **b** toward **a**, I take the number **e** (243), and at the end of those parts, I place the mark **f**. Then, whatever the proportion of **d** to **e**, that will be the proportion of **a b** to **f b**. Therefore, **a b** to **f b** is a minor semitone. Again, I divide the space **c b** into equal parts according to the number **e** (243), and measuring those parts from **b** toward **a**, I take them according to the number **d** (256); and at their end, I place the mark **g**. It is also manifest that **g b** and **c b** are a semi... [[notes: Text cuts off; likely "semitonium maius" or major semitone.]]
+
+[[summary: This page provides mathematical proofs for the ratios of the major semitone (apotome) and demonstrates that semitones are "superpartient" rather than "superparticular" ratios. It concludes by beginning a practical demonstration of how to measure the Pythagorean comma on a monochord string.]]
+
+[[keywords: Major Semitone, Apotome, Pythagorean Comma, Superpartient Ratio, Monochord, Musical Mathematics, Sesquiquintadecima, Sesquiquartadecima]]

@@ -1,0 +1,17 @@
+[[meta: This page continues the move-by-move tactical breakdown of a chess opening (specifically the Damiano Defense). The previous page established the coordinate system (1–64) and the terminology for pieces: Soldiers (Pawns), Riders (Knights), and Archers (Bishops). This page concludes one variation and begins the author’s critique of Damiano’s original text.]]
+
+### The Fourth Book / Chapter 5:
+
+> " [so that it] is not pulled) his King’s Soldier [[notes: King's Pawn]] / onto the Black King’s Soldier / onto twenty-eight: The Black player / (to protect the same) the King’s Archer-Soldier [[notes: King's Bishop's Pawn]] / to forty-six: The White player / the King’s Archer-Soldier / (to / separate the Black King and the Black King’s Soldier from one another) to thirty: The Black player / the King’s Soldier / (which is then better / than if He / had taken the White King’s / or the White King’s Archer-Soldier: since otherwise / his game / would fall into a considerable disorder / in addition to the lack / of the one Rider [[notes: Knight]]) to twenty-nine: The White player / the King’s Archer [[notes: King's Bishop]] / against the Black Queen / to thirty-four: The Black player / against the same / (to cover the Queen) the King’s Archer-Soldier / to forty-three: The White player / the same / to twenty-five: The Black player / against the same / the King’s Rider-Soldier [[notes: King's Knight's Pawn]] / to thirty-four: The White player / the same / to eighteen: The Black player / (to break the White’s game) the King’s Archer-Soldier / against the White King’s Soldier / to thirty-five: The White player / takes him / with the same: The Black player / the same / with the King’s Archer: 
+<margin>21.</margin>
+> " * The White player / moves / the King’s Rider / (to / move the same next / to twenty-eight: to not allow the Black player / to move the King’s Soldier forward: or if it should happen / to take it away: and by this stroke / to bring his game / into a good order / since this defense is not bad) to thirteen.
+
+Now that we have, until this point, let ourselves be instructed by *Damiano* [[notes: Pedro Damiano, the 16th-century Portuguese author whose chess manual Selenus is translating and critiquing]], (although he, in his little book, presented the moves very obscurely and incomprehensibly): so we also wish to reflect further upon the same, and for the one who must defend himself, before the conclusion of this Chapter, to remind him of the following regarding this example:
+<margin>22.</margin>
+namely that * the White player / sets up his moves more securely and usefully if He moves not the Rider to 13 (*no. 21*) but rather the Queen to the Black King’s Soldier (because then / three pieces / namely the said Queen: her Archer: and the King’s Rider / would pursue the same) to twelve, first of all: The Black player / (so that He / does not lose the same / or the King’s Soldier / because the White Queen / would hold captive the one which should protect this / by the White King’s Rider) moves / to this White Rid-
+
+[[meta: catchword: er / the]]
+
+[[summary: This page completes a detailed sequence of chess moves involving pawn structures and piece positioning. The author, Gustavus Selenus, then begins a critical analysis of Damiano’s original instructions, suggesting that moving the Queen to a central square (12) is a superior strategy to Damiano's suggested Knight move.]]
+
+[[keywords: Damiano, chess tactics, Bishop, Knight, Queen, pawn structure, 17th-century chess, notation]]

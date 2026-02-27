@@ -1,0 +1,18 @@
+[[meta: This page continues from page 289, concluding a sentence about protecting the White King's Bishop's square. The notation continues to use the 1–64 numerical system for the board squares.]]
+
+### The Third Book / Chapter 4:
+
+field [to prevent] the **White King’s Bishop** [[notes: *W. K. Schützen*, literally "White King’s Archer"]]): then **White** gives **Check** with the **Queen** from nineteen, and moves her onto the **Black King’s Bishop**: **Black** must take the **White King’s Pawn** [[notes: *W. K. Soldaten*, literally "White King’s Soldier"]] with the **King**:
+
+[[margin: 34.]]
+**White** offers **Check** with the **King’s Bishop’s Pawn** from twenty-two: * **Black** moves the **King** to thirty: **White** gives **Check** with the **King’s Knight** [[notes: *K. Reuter*, literally "King's Rider"]] from twenty-four, and reveals his **Rook** [[notes: *Rochen*, an archaic term for the Rook derived from the Persian 'rukh']] against the **Black King’s Bishop** [[notes: This describes a discovered attack or check]]: **Black** must move the **King** to thirty-eight: **White** takes the **Black King’s Bishop** with the **Queen** and gives **Check**: **Black** must flee from the same with the **King**: **White** takes the **Black King’s Bishop** [[notes: Likely referring to a second Bishop or a piece on that square]] with the **King’s Rook**, and has kept a **Rook** as an advantage.
+
+[[margin: 35.]]
+But if **Black** does not move the **King** to 30 (as in No. 34) but rather to eight or thirty-six: then **White** takes the **Black King’s Bishop** with the **Queen** and gives **Check**: **Black** moves the **King** out of the **Check**: **White** (in order to give air [[notes: *luft zu machen*, a common chess term for creating an escape square or opening a line]] to the **King’s Rook** on seven or sixteen, so that **Black** does not trap him with the **King’s Bishop** from fifteen if he were to take his **King’s Knight’s Pawn** with the same) moves either his **Knight** to thirteen: or his **Rook’s Pawn** to thirty-two: and has a **Rook** to use against a **Bishop**.
+
+[[margin: 36.]]
+But if **Black** does not move the **Pawn** to 46 (as in No. 29) but instead takes the **White King’s Bishop** (which stands unprotected) with his **King’s Bishop**: then **White** robs the **Black King’s Knight** with the **King’s Bishop** and moves him onto his **Rook’s Pawn**: **Black** (to defend the same, because otherwise he would be **Checkmated** if **White** took him with the **Queen**) [moves] the **Queen** to fifty-two: **White** (to protect the **King’s Pawn** and to give air to the **King’s Rook**) [moves] the **King’s Knight** to thirteen: **Black** takes the **White King’s Knight’s Pawn** with the **King’s Bishop** and moves him (out of danger) onto his **Rook**: **White** [moves] the same onto him at seven: **Black** [moves] the same to twenty-four: **White** [moves] the **King’s Rook** onto the same at twenty-three: and subsequently the **King’s Rook** (to give **Check** on forty-three) to three: or the **King’s Rook** to nineteen: and [White] will be well able to get the better of **Black**, because he has a **Rook** and two **Pawns** to use against a **Bishop**.
+
+[[summary: This page details specific tactical variations (sequences 34-36) in a chess match, focusing on material advantage gained through discovered checks and positioning the Rook against the Bishop. It uses a 1-64 coordinate system to track the movement of "Archers" (Bishops), "Riders" (Knights), and "Soldiers" (Pawns).]]
+
+[[keywords: Chess tactics, 17th-century chess, piece movements, discovered check, endgame advantage, Rook vs Bishop, Chess notation]]

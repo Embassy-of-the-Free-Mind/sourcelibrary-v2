@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical advice from the previous chapter, moving from the positioning of pawns to the strategic philosophy of piece exchanges and the psychological state of the opponent.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 4:]] ...no victory won / specifically / played in such a vain manner / and the true purpose and use of this game / which is intended / for pleasure / and the exercise of memory and understanding / is not attained. Therefore / by a **chess-player** [[notes: *Schach-Zieher*; literally "chess-puller"]] / the following rules / should be well observed.
+
+1. When he sees / that the opponent / makes very good use of all his pieces / and can use them to his advantage / then he must / not give cause for an exchange of pieces / unless it be / that without it / he could not / carry out a good plan / against the enemy.
+
+If he now finds / (2.) that the **opponent** / plays better / with the **Queen** / than with the other pieces / and he can also / arrange his game more conveniently / and proceed more certainly with it / then he shall / with the same / exchange the Queen / for his own Queen. For there are many of them / who / after they / have lost their Queen / and the proper use / of the other pieces / is unknown to them / do not know / how they / should lead their game to a conclusion further. Likewise / because one finds and encounters / some / who play better with the **Knights** [[notes: *Reutern*; literally "Riders"]] / or **Bishops** [[notes: *Schützen*; literally "Archers"]] / or **Rooks** [[notes: *Rochen*]] / then he shall / in that case / also exchange them / (since a great advantage / is obtained thereby) and deprive them of them.
+
+He shall / (3.) as much as possible / take care / that he does not exchange the King's Bishop / either for another Bishop / or for the King's Knight: for he can always / distress the enemy / with the same. But if he wishes to do so now / then it shall happen / at a convenient time / or / when necessity drives him to it. For then he has to consider / more / the present harm / than future gain / especially / when the former is significant and urgent / while the latter is not very secure / nor certain.
+
+He shall / (4.) exchange or give / no **major piece** [[notes: *Haupt-Stein*; literally "Head-Stone," referring to the officer pieces]] / for two / indeed not even for three **soldiers** [[notes: *Soldaten*; pawns]] / even if it might look / as if it were well done: unless necessity / forces one to it / or if the **end** [[notes: *garauß*; a term for the finishing blow or checkmate]] / could be dealt to the enemy thereby. For in this case / he / is profitably exchanged / not only / for two / but even indeed / for a single soldier.
+
+In the aforementioned manner / must a player / who wishes to move his pieces / against the enemy / to charge him / and to rob or exchange his pieces / conduct himself: But since it is no less his duty / that he also knows / how to protect his own troop / the following rules / shall serve him for that:
+
+B
+[[meta: catchword: 1.) When]]
+
+[[summary: This page outlines strategic rules for piece exchanges, emphasizing that one should trade pieces to neutralize an opponent's strengths or when it leads to a definitive checkmate. It also introduces the idea that chess is a mental exercise for memory and understanding.]]
+
+[[keywords: chess strategy, piece exchange, Queen, Knights, Bishops, Rooks, pawns, checkmate, early modern gaming]]

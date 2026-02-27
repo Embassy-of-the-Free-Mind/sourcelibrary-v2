@@ -1,0 +1,17 @@
+[[meta: This page begins Chapter 8 of the third book. It continues the tactical analysis of chess openings, specifically focusing on a variation for Black where the Queen is used to defend the King's Pawn. The coordinate system remains the 1-64 grid used in the previous sections, where squares are numbered sequentially, typically starting from the White side (1 = a1, 64 = h8).]]
+
+->[Decorative woodcut headpiece featuring scrolling vines and stylized faces]<-
+
+## The Eighth Chapter.
+
+### How the Black Queen may protect her King’s Soldier.
+
+<margin>1.</margin> In this chapter follows the **Fourth Way** to relieve the **B. K.** [[note: *Schwarzer König*, or Black King]] Soldier; namely, with the Queen. For, when the **White** and the **Black** players move the Kings’ Soldiers [[note: the Pawns in front of the Kings]] to twenty-eight and thirty-six: and the **White** player places the **K.** Knight [[note: *Reuter*, literally "Rider"]] upon the **B. K.** Soldier at nineteen: then the **Black** player prevents him in the **Fourth Way** (of which mention was made in Chapter 5, no. 4 of this book) and moves the Queen to fifty-two.
+
+Chess players should also be briefly informed regarding this method: that (because the **K.** Bishop’s [[note: *Schütze*, literally "Shooter"]] path is thereby blocked, and the square into which his Knight might leap—should he be forced to yield the way—is occupied) it is to be esteemed by far not as good as the ones mentioned above. For, as good as it otherwise is once the said Bishop has already moved into the field, it is just as dangerous and harmful when the same still remains in his little place and is prevented from moving out.
+
+One can nevertheless (notwithstanding the above-mentioned) play forward in the following manner: then the **White** player moves the **K.** Bishop to thirty: **The Black player** moves the **K.** Bishop’s Soldier to forty-six: **The White player** (in order to displace the King [[note: This refers to the "King’s Leap," a precursor to modern castling where the King and Rook move in a specific sequence]]) moves his Rook [[note: *Rochen*, an archaic term for the Rook]] to three: **The Black player** moves the **K.** Soldier to forty-five: **The White player** leaps with the King to two: **The Black player** moves the **K.** Bishop against the **W. K.** Knight at twenty-six: **The White player** moves the **K.** Soldier to twenty-one: **The Black player** (to break the order of the Soldiers at the place where the **W.** King has leaped) moves the Queen against the **W. K.** Knight at forty-three: **The White player** (to come before and to the aid of this) moves the **K.** Knight to thirteen: **The Black player** moves the **K.** Bishop to fifty-two: **The White player** moves the **K.** Rook’s Soldier against the **B. K.** Bishop <margin>2.</margin> at seventeen: * **The Black player** shall not [take] him at thirty-three/
+
+[[summary: This page introduces the fourth method for Black to defend the King's Pawn using the Queen, while cautioning that this move can hinder the development of the King's Bishop. It then details a sequence of moves including an early form of castling known as the King's Leap.]]
+
+[[keywords: Queen defense, opening theory, King's Leap, Rochen, Schütze, 17th-century chess tactics]]

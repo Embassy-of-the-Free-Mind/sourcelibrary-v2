@@ -1,0 +1,22 @@
+### upon the lowest square. 64.
+
+Finally, it shall be good for the avoidance of confusion to draw a line under every number. Otherwise, you might mistake one for another, such as the even circle <note>original: "round"</note> marked 6 and the odd circle marked 9; these might be confused for each other without this line or some similar mark. Likewise, the triangles for 4 and 25 are both on the same side. And this is sufficient information regarding the pieces <note>original: "men"</note>, their shapes <note>original: "fashion"</note>, colors, and numbers.
+
+## ¶ The reason for these numbers and the knowledge of their proportion.
+
++-----------------------------------------------------------------------+
+| For those who seek the theoretical study <note>original: "speculation"</note> of these      |
+| numbers, rather than just the practical play, and have some           |
+| knowledge in the science of *Arithmetic*, something must be said      |
+| about *proportion*. For this purpose, there are three kinds of        |
+| *proportion*: *Multiple* <note>original: "Multiplex"</note>, *Superparticular* <note>original: "superparticuler"</note>, |
+| and *Superpartient* <note>original: "superpartiens"</note>.                             |
++-----------------------------------------------------------------------+
+
+<summary>
+This section concludes the physical description of the game pieces for Rithmomachia, advising players to underline numbers (like 6 and 9) to avoid confusion during play. It then transitions from the physical setup to the mathematical theory of the game. It introduces the three primary types of arithmetical proportions—Multiple, Superparticular, and Superpartient—which govern how the numbers on the pieces are related to one another.
+</summary>
+
+<keywords>
+Rithmomachia, Philosophers Game, arithmetic, proportion, Multiple proportion, Superparticular proportion, Superpartient proportion, game pieces, mathematical theory, numbering
+</keywords>

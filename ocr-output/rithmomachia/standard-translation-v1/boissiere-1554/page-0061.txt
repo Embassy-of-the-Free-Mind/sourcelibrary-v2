@@ -1,0 +1,16 @@
+[[meta: This page transitions from the specific mechanics of capturing the Pyramid piece to the general objectives of the game. It concludes the section on the Pyramid's "glory" and begins a hierarchy of victory conditions, starting with those for beginners.]]
+
+->RYTHMOMACHIA, GAME<-
+
+[illu]strated with its crown and glory: for the edification of the combatants, we shall propose all types of victories, and shall state that in the present combat there are two genres of victories: namely, **common** and **proper** victories. **Common victories** are those which are not specific to the game itself, but are instead permitted to train the unrefined [[notes: *Rudes* refers to beginners or those not yet versed in the mathematical principles of the game]] and make them capable of later practicing the **proper victories**. And since they are easier, we shall declare them first. Meanwhile, I will pray the more learned to bear with me as I accommodate those who are unrefined and unpracticed in this game.
+
+## Of common victories.
+
+We have five species of victories, which are: **victory of body**, **victory of wealth**, **victory of lawsuits**, **victory of honor**, and **victory of lawsuits and honor together**. **Victory of body** regards only the pieces [[notes: *Tables* refers to the physical gaming counters, similar to those used in backgammon]] without having regard for the characters or their values. **Victory of wealth** regards only the values, disregarding the number of pieces or characters. **Victory of lawsuits** [[notes: *Victoire de procès*—in this context, "lawsuits" or "disputes" refers to a victory based on the "characters" (the individual digits or numerals) marked on the pieces, rather than their summed mathematical value]] regards only the plurality of characters, without consideration for the value of them or the quantity of pieces. **Victory of honor** regards the quantity of pieces and the value of their numbers. Victory [[notes: The text breaks off here; the catchword indicates the next page begins with "of honor," completing the final category: "victory of lawsuits and honor together."]]
+
+[[margin: d'hon-]]
+
+<vocab>Rythmomachia, common victories, victory of body, victory of wealth, victory of lawsuits, victory of honor, characters, pieces</vocab>
+
+[[summary: This page introduces the different ways a player can win at Rythmomachia, distinguishing between "common" victories for beginners and "proper" victories for experts. It defines the first four types of common victories based on the number of pieces, their total value, or the number of digits captured.]]
+[[keywords: Rythmomachia, game rules, victory conditions, victory of body, victory of wealth, victory of lawsuits, victory of honor, Renaissance mathematics]]

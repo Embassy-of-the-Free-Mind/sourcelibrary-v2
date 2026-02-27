@@ -1,0 +1,27 @@
+[[meta: This page continues the discussion of the origins of chess, moving from the Greek Palamedes to the Babylonian legend involving King Evil-Merodach and the literary inventions of the Renaissance poet Vida.]]
+
+### The First Book / Chapter 2:
+
+written alongside his two predecessors: So, that **Xerxes** (others say *Xerxes Philometor* [[notes: In the medieval tradition of Jacobus de Cessolis, "Philometor" is the name of the philosopher who supposedly invented chess to teach a king morality]]) lived around the year 3635 after the creation of the world and is said to have moved King **Evil-Merodach** [[notes: Also known as Amel-Marduk, a historical King of Babylon (r. 562–560 BCE)]]—a hideous tyrant—to goodness with this game, among other circumstances. **Lucas Wielius** [[notes: An early 17th-century writer on games]] further confirms this in *Tract: de Ludo Scacch: cap: 2.* with the word **Schach** (Chess), which is said to be **Chaldean** [[notes: Referring to the Semitic language used in ancient Babylonia]]. Likewise, he claims that the chess table was made square, modeled after the **City of Babylon**. 
+
+But one might like to be informed: who actually knew this *Xerxem Philomatorem* in all of **Antiquity**, that he should be sought out again after the passing of a thousand or more years? One might also still doubt whether **Evil-Merodach** was as wicked a tyrant as the Jews depict him. **St. Jerome** [[notes: Hieronymus, the 4th-century scholar who translated the Bible into Latin]], in the 4th Chapter of the 14th Book on the Prophet **Isaiah**, considers it a fable and a Talmudic tale. Similarly, **Philipp Melanchthon** [[notes: A key figure in the Protestant Reformation and a noted scholar]], in *lib: 1. Chronic:*, recognizes him as a god-fearing and pious ruler, proving this from the final chapter of the **Second Book of Kings** [[notes: Referring to the biblical account where Evil-Merodach releases the Judean king Jehoiachin from prison]]. 
+
+Furthermore, if the word **Schach** is **Chaldean**, one asks how it came to be—since they themselves admit this game was brought from the **Chaldeans** to the Greeks, from them to the Romans, and so on to us—that the little word **Schach** remained silent and withheld among the aforementioned peoples for such a long time? The latter does not rhyme well with our game: that one would want to stage public field battles in cities. Therefore, let everyone think of this what they will.
+
+Much less, however, is **Vida** [[notes: Marco Girolamo Vida (1485–1566), an Italian bishop and poet famous for his poem *Scacchia Ludus*, which reimagined the game's origin as a contest between gods]] to be believed when he says an Italian woman, **Scacheides**, supposedly invented it. As he opines in his *Scacchia* with the following verses—perhaps out of affection for his fatherland, or else poetic license:
+
+> » *Vos primæ studia hæc, Italis monstrastis in oris*
+> » *Scacchides egregiæ, monimentum insigne sororis.*
+> » ->That is:<-
+> » You (gods) first made this pastime known
+> » Within the Italian land alone,
+> » Which received its very name
+> » From **Scacheide**, your sister of pure fame.
+
+Finally, **Vincentius Castellanus** in *lib: de reb: à Palam: invent:* and **Thomas Actius** in *tractat: de Lud: Scach:* as well as **Jacob Micyllus** [[notes: A German Renaissance humanist and poet]] hold...
+
+[[meta: The catchword "Mycil:" indicates the text will continue discussing the views of Jacob Micyllus on the following page.]]
+
+[[summary: This page critiques the theory that chess was invented in Babylon to reform the tyrant Evil-Merodach, questioning the historical validity of the names and the linguistic roots of the word "Schach." It also dismisses the poetic claim by the Italian author Vida that the game had Italian origins.]]
+
+[[keywords: Xerxes Philometor, Evil-Merodach, Babylon, Chaldean language, St. Jerome, Philipp Melanchthon, Marco Girolamo Vida, Scacchia Ludus, Scacheides, etymology of chess]]

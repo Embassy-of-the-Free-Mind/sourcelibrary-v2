@@ -1,0 +1,33 @@
+## Regarding Arithmetical Proportion <note>original: "Of Arithmeticall proportion"</note>.
+
+Arithmetical proportion is when the middle <note>original: "mydle"</note> number differs as much from the first as it does from the third. That is to say, it is when the third number has as much more than the second as the second has than the first—for example, 2, 4, 6. Here, two is the distance <note>original: "distans"</note>, for 4 exceeds 2 by two, and 6 is more than four by two.
+
+### A rule to find out arithmetical proportion between the first and the last.
+
+When you have the first and the last numbers, if you would find out the middle value in the proportion: add the first and the last together and divide the total by 2; the half is the middle value in the proportion.
+
+<vocab>Arithmetical proportion, middle number, distance, divide, Philosophers game</vocab>
+
+**Previous page (modernized) for continuity:**
+line <note>original: "lyne"</note>, direct or cross <note>original: "crosse"</note>, as in D.A.B. or else 5.1.3. if it consists <note>original: "consist"</note> of three numbers; but if it consists <note>original: "stande"</note> of four numbers, they may be set like a square, two against <note>original: "agaynst"</note> two, as in E.B.D.C. or 2.3.4.5. And after the same manner <note>original: "maner"</note> you must set them so that your adversary's <note>original: "aduersaries"</note> piece <note>original: "man"</note> makes <note>original: "make"</note> the third or fourth, when you capture <note>original: "take"</note> by proportion.
+
+### Regarding the Various Kinds of Triumphs <note>original: "Of dyuers kyndes of triumphes"</note>.
+
+There are <note>original: "be"</note> three kinds <note>original: "kyndes"</note> of triumphs: a Great Triumph, a Greater Triumph, and the Greatest and most noble of all.
+
+### Regarding the Great Triumph <note>original: "Of the great triumph"</note>.
+
+The Great Triumph consists <note>original: "standeth"</note> in proportion, either **arithmetical**, **geometrical**, or **musical** only.
+
+<sig>C.ii.</sig>
+<meta>catchword: Regarding <note>original: "Of"</note></meta>
+
+<vocab>Philosopher's game, Rythmomachia, triumphs, proportion, arithmetical, geometrical, musical</vocab>
+
+<summary>
+This text provides a foundational definition of arithmetical proportion as used in the "Philosopher's Game" (Rythmomachia). It explains that such a proportion exists when there is a common difference (the "distance") between consecutive numbers in a set. It also provides a practical mathematical formula for players: to find the middle term of a three-part arithmetical proportion, one must average the first and last terms. This page transitions from basic piece placement into the specific mathematical requirements for achieving various tiers of victory, known as "Triumphs."
+</summary>
+
+<keywords>
+The Philosopher's Game, Rythmomachia, Arithmetical Proportion, Mathematical Rules, Great Triumph, Proportion Theory, Early Modern Education.
+</keywords>

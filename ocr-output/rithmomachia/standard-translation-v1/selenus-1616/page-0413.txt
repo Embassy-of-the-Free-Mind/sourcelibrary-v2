@@ -1,0 +1,18 @@
+[[meta: This page continues the detailed tactical analysis of a specific chess variation from the previous page, where White and Black are maneuvering through a complex mid-game exchange. The text uses the Selenus numbering system, which assigns a unique number from 1 to 64 to every square on the board, rather than modern coordinate notation.]]
+
+### 1. cap: Of the Game of Chess.
+
+twenty-two: **Black** [moves] the King’s Rook [[notes: *Rochen* is the archaic term for the Rook or Castle]] (in order to place the King on fifty-eight) to fifty-nine, and will thus arrange his game well.
+
+6. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If, however, **Black** does not move the Knight [[notes: *Reuter* (Rider) refers to the Knight]] to 43 (no. 3), but rather the King’s Pawn [[notes: *Soldat* (Soldier) refers to the Pawn]] (to give his Bishop room) to forty-four: then **White** places the King’s Knight (to give check with it from fifty-four) on thirty-nine: **Black** (to ward off the check) the King’s Knight to forty-eight: **White** the Queen to thirty-two: **Black** (to prevent the check from the White King’s Knight from 54 and the discovered check [[notes: *Ab-Schach* refers to a discovered check, where moving a piece reveals an attack by another]] from the White Queen) the King’s Bishop [[notes: *Schütze* (Archer) is the term used for the Bishop in the Selenus variant]] to fifty-three: **White** the King’s Knight (to move it to thirty-six) to nineteen: **Black** (to move the King) his Bishop to fifty-two: and will thus not only arrange his game well, but also be able to do no small damage to White.
+
+7. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If, however, **White** does not take the Black Pawn (no. 2)
+8. but instead moves his King’s Pawn to thirty-six: * then **Black** plays the King’s Bishop to thirty-five: **White** (to hinder Black so that he cannot conveniently move his pieces) the King’s Bishop’s Pawn to thirty-eight: **Black** (to break White’s schemes) the King’s Knight’s Pawn [[notes: *Reuters-Soldat* is the Pawn originally standing in front of the Knight]] to forty-seven.
+
+9. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If **Black** does not wish to move the Bishop to 35 (no. 8), but instead takes the White King’s Bishop’s Pawn with his King’s Pawn: then **White** captures the same with the King’s Bishop: **Black** (to make a free path for his King’s Bishop, or to move the King’s Knight to fifty-two and subsequently to thirty-seven) moves the King’s Pawn to forty-four: yet it is better that he move the King’s Bishop out onto the field (so that it is not hemmed in) before he takes the White King’s Bishop’s Pawn.
+
+[[gloss: Chess-Game, Knight, Pawns, Rook, King, Queen, Bishop, Check, Discovered Check, White, Black]]
+
+[[summary: This page provides alternative tactical branches for a chess match, detailing how Black can respond to White's threats by repositioning the King and utilizing discovered checks. It emphasizes the importance of piece mobility and preventing one's own pieces from being "hemmed in."]]
+
+[[keywords: Chess tactics, Selenus notation, King's Knight, King's Bishop, Discovered Check, Piece Mobility, 17th-century chess]]

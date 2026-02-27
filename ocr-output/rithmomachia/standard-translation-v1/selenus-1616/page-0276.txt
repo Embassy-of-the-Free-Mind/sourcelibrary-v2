@@ -1,0 +1,21 @@
+[[meta: This page continues a detailed tactical analysis of an endgame scenario. The numbering (1–64) refers to the squares of the board in an older coordinate system, and the text continues from page 241, where the Black King was being moved in response to a series of checks.]]
+
+### The Second Book / Chapter 14
+
+...forty-five, and opens a path for his **King’s Bishop** [[notes: *Schützen*, literally "Archer," is the Bishop]] toward the **White King’s Rook** [[notes: *Rochen*, an archaic term for the Rook/Castle]]: **White** moves the same [Rook] to sixty-three: **Black** [moves] the **King** to forty-three: **White** takes the **Black King’s Knight’s Pawn** [[notes: *S. K. Reuters Soldaten*, the pawn in front of the Black King's Knight]] with his **King’s Knight**: **Black** offers **Check** with the **King’s Rook** from forty-four: **White** moves the **King** to twenty-one: **Black** offers **Check** with the **King’s Bishop** from twenty-eight: **White** moves the **King** to twenty-two: and secures for him a good stronghold [[notes: *Festung*; a defensive position or safe square]] at fifteen: he can also win all the more easily against **Black**, even if **Black** should happen to promote one of his **Pawns** [[notes: *Soldaten*, "Soldiers"]] to a **Queen**.
+
+It should be noted here that these moves (from no. 6 to this point), although they could be varied in many ways, have for the most part been played through move by move for this reason: because all sorts of situations—which awaken good reflection in a player and can be usefully employed or omitted in other games—arise and occur among them.
+
+[[margin: 32.]]
+But if **White** does not protect the **Pawn** with the **Knight** at 19 (no. 4), but instead moves the **King’s Pawn** toward the **Black King’s Knight** [[notes: *Reuter*, "Rider"]] at thirty-six:
+[[margin: 33.]]
+* then **Black** takes the **White King’s Pawn** with his **King’s Knight** and moves onto the same [square]: **White** takes the **Black King’s Knight** with his **King’s Pawn** and moves onto the **Black Queen’s** [square]: **Black** takes the **White Queen** with the **King’s Knight**: **White** [takes] the **Black Queen** with the **King’s Pawn**: **Black** [takes] the **White King’s Knight** with his **King’s Knight**: **White** (so that he does not lose his **King’s Rook** to the **Black King’s Bishop** giving check, should he take this **Black Knight** with the Knight's Pawn) moves the **King’s Rook’s Pawn** toward the **Black King’s Bishop** at twenty-four: **Black** [moves] the same to forty: **White** [moves] the **King’s Bishop** to thirteen, and thereby captures the **Black King’s Knight** or **Bishop**.
+
+[[margin: 34.]]
+But if **Black** does not take the **White Pawn** with his **Knight** (no. 33), but instead moves the **King’s Knight** (in order to avoid the **White King’s Pawn**) to the [square of] the **White King’s Knight** (which is already held captive by his **King’s Bishop**) at thirty-seven first: then **White** (to further protect the same) plays the **King’s Bishop** to thirteen: **Black** takes the **White King’s Pawn** with the **King’s Knight** and moves onto
+
+[[meta: catchword: the White]]
+
+[[summary: This page concludes a specific endgame sequence where the White King finds safety in a "fortress" and then details alternative variations (32-34) focusing on pawn exchanges and knight maneuvers. The author emphasizes that these detailed move-by-move examples are intended to train the player's tactical judgment for use in other games.]]
+
+[[keywords: endgame tactics, promotion, checkmate strategy, King's fortress, chess variations, historical chess notation]]

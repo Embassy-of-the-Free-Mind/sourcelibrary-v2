@@ -1,0 +1,52 @@
+[[meta: This page continues the mathematical discourse of the previous section, moving from specific ratio types to the fundamental "Figure of Threefold Equality." This is a foundational Pythagorean concept where all numerical inequality is shown to derive from equality (1:1:1).]]
+
+# The Figure of Threefold Equality
+
+<margin>
+¶ These are the rules:
+1 The first.
+2 The first and second.
+3 The first, the second twice, and the third.
+</margin>
+
+| Line | [A] | b | m | n | Equa: | 2 | 2 | 2 | li: | 3 | 3 | 3 | ty. | 4 | 4 | 4 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Doubles | [B] | 1 | 2 | 4 | | 2 | 4 | 8 | | 3 | 6 | 12 | | 4 | 8 | 16 |
+| Triples | [C] | 1 | 3 | 9 | | 2 | 6 | 18 | | 3 | 9 | 27 | | 4 | 12 | 36 |
+| Quadruples | [D] | 1 | 4 | 16 | | 2 | 8 | 32 | | 3 | 12 | 48 | | 4 | 16 | 64 |
+| Inv. Doubles | [E] | 4 | 2 | 1 | | 8 | 4 | 2 | | 12 | 6 | 3 | | 16 | 8 | 4 |
+| Sesquialters | [F] | 4 | 6 | 9 | | 8 | 12 | 18 | | 12 | 18 | 27 | | 16 | 24 | 36 |
+| Inv. Triples | [G] | 9 | 3 | 1 | | 18 | 6 | 2 | | 27 | 9 | 3 | | 36 | 12 | 4 |
+| Sesquitertians | [H] | 9 | 12 | 16 | | 18 | 24 | 32 | | 27 | 36 | 48 | | 36 | 48 | 64 |
+| Inv. Quadruples | [K] | 16 | 4 | 1 | | 32 | 8 | 2 | | 48 | 12 | 3 | | 64 | 16 | 4 |
+| Sesquiquartans | [L] | 16 | 20 | 25 | | 32 | 40 | 50 | | 48 | 60 | 75 | | 64 | 80 | 100 |
+
+[[notes: The table demonstrates how to generate sequences of ratios. "Inverted" (conversi) ratios flip the order, and "Sesquialters" or "Sesquitertians" are specific fractional ratios like 3:2 or 4:3.]]
+
+<margin>
+[[image-desc: A geometric diagram showing pairs of horizontal lines of varying lengths labeled with letters. 
+Top pair: b, m.
+Middle pair: p, n.
+Bottom pair: p, a ending with an o.
+The lines illustrate the numerical proportions discussed in the text.]]
+</margin>
+
+¶ The Pythagorean Magi, the ancient priests, and those who deal especially with divine matters, admire equality and likewise the trinity. In their secrets, they silently venerate these in the image of numbers as the principles of all things, from which every proportion of things has flowed: the bond of proportions, and all admirable harmony; and all things go back to being recalled in the quaternary [[notes: The "quaternary" or number four was sacred to Pythagoreans as the *Tetractys*, representing the completion of the spatial dimensions and the source of all harmony]]. Therefore, concerning the mysteries of the ancients which the author intends more generally, it must first be demonstrated in the "threefold equality." To perform this rightly, three ancient rules are sufficient everywhere, as noted for us by the **Divine Severinus** [[notes: "Severinus" refers to Boethius (Anicius Manlius Severinus Boethius), whose 6th-century work *De Arithmetica* was the standard authority on mathematics for the Middle Ages and Renaissance]]. 
+
+The first rule is: **The First**. 
+The second is: **The First and Second**. 
+The third is: **The First, the Second twice, and the Third**. 
+
+Let there be, therefore, **a**, **b**, and **p**, three equal terms—whatever you wish—as of monads (1s), dyads (2s), triads (3s), or any other number you like. And by the first rule, you will take the first unity, which I place under the first, and let it be **b**. Then, by the second rule, I take the first and second together, which I place under the second; let them be **m**. Using the third rule: I take the first and the second twice, and the third once, which I place under the third; let them be **n**. I say that **b**, **m**, and **n** are born as continuous doubles from equality [[notes: If you start with 1, 1, 1, the rules produce 1, (1+1)=2, and (1+2+1)=4, creating the sequence 1, 2, 4, where each number is double the previous]]. For since the first unity **a** and **b** are the same, and the first and second unity are double the first unity **a**, and the first and second unity are **m**; therefore the number **m** is double to **b**. And since the second unity taken twice equals **m**, and the first and third together equal **m**, then **n** is the second unity twice and the first and third once. Therefore **n** is double to **m**. Thus **b**, **m**, and **n** are continuous doubles from equality, just as it was said through the first-born [ratios]. 
+
+¶ You can show the same through the twenty-sixth [proposition] of the second [book]. For since **a** is to **o** as **o** is to **p**, then by the twentieth of the second, **o** and **p** are to **a** and **o** as **o** is to **a**. And because **o** and **p** are to **a** and **o** just as **o** is to **a**, therefore by the sixth of that same second book, **o**, **p**, and **a** are to **o**, **a**, and **o** just as **o** and **a** are to **a**. And **o**, **p**, and **a** together are **n**, and **a** and **o** are **m**, and **a** is the same as **b**. Therefore **b**, **m**, and **n** are continuously proportioned; but **m** to **b** is known to be double, therefore **n** to **m** is also double. And in all following things, this mode of arguing is effective. And whenever a threefold equality of terms is taken, the same arguments shall hold.
+
+¶ Secondly, I say that from the continuous doubles **b**, **m**, and **n**, triples are procreated. I take a value equal to **b** and place it under **b** in the third line; let it be **c**. Then I take **b** and **m** together and place them under **m**; let them be the **m** of the third line. Again, I take **b** and **m** twice, and **n**, and place them under **n**: let it be **f**, which is **n** in its own way. I say that **c**, **m**, and **n** of the third line are triples [[notes: Using the rules on the "doubles" (1, 2, 4) produces (1, 3, 9), which are triples]]. For by the twenty-sixth of the second book, with the help of the sixth of the same, **c**, **m**, and **n** are continuously proportional. But since **b** and **m** above are double to **b**, therefore **b** and **m** above are triple to **b**. But **b** and **m** from above are the lower **m**; therefore the lower **m** is triple to **c**. Wherefore **n** is also triple to that same **m**. Thus **c**, **m**, and **n** are continuous triples. And by the same rules and demonstrations, quadruples will be born from triples, and any others from quadruples. It follows in this way that any multiple you wish arises from the first lesser [ratio].
+
+¶ Thirdly, I say that from continuous multiples, "superparticulars" are born [[notes: A superparticular ratio is one where the larger number contains the smaller once plus one part, like 3:2 (sesquialter) or 4:3 (sesquitertian)]]. For example, from doubles come sesquialters; from triples, sesquitertians; from quadruples, sesquiquartans; and so the following superparticulars arise in order from their natural multiple parents. I invert the doubles that were found; let the inverted ones be **e**, **m**, and **n**. Then **e** will be double to **m**, and **m** double to **n**; wherefore **m** is half of **e**. I take a value equal to **e**, which is **f**, and place it under **e**. Then I take **e** and **m** together and place them below under **m**; let it be the lower **m**. Again, I take **e** and **m** twice and **n** together, and place them below under **n**; let it be the lower **n**. By the twenty-sixth of the second book, with the help of the sixth of the same, **f**, **m**, and **n** are continuously proportional. But since **e** and **f** are equal, and **m** is half of the whole **e**, therefore **m** together contains the whole **e** and its half. Therefore, by definition, **e** and **m** are sesquialter to **e**. But **e** and **m** together are the lower **m**. Therefore the lower **m** is sesquialter to **f**. Wherefore **n** to **m** is also sesquialter, which was to be shown. And so, by these same rules, proceed with sesquitertians, sesquiquartans, sesquiquintans, and the remaining superparticulars by inverting the terms of their sets.
+
+Now it remains to demonstrate the same thing that the author intended when any number of terms are taken. However many equal terms there are, continuous doubles will be born if we rightly use the above rules in succession. First indeed by taking the first term and placing it under the first. Second, by taking the first and second and placing them under the second. Third, by taking the first, the second twice, and the third, and placing them under the third. Then, understanding the third, fourth, and fifth equality to be taken continuously according to the number of the third extreme term placed below. And resume the rules: first, by taking the first term of the threefold equality and placing it under the extreme—you will find it already placed. Second, by taking the first and second and placing them under the fourth. Third, by taking the first, the second twice, and the third and placing them under the fifth. And according to the number of that fifth term placed below, I again understand three continuous terms of equality—namely, the fifth, sixth, and seventh. And with the rules resumed with the fifth already held, I complete the seventh and the lower seventh terms; and according to the requirement of the seventh extreme, I again understand the terms of the threefold equality—namely, the seventh, eighth, and ninth. And from every third place, I understand a threefold equality joined together, of which any term is understood according to the number of the extreme coming below in each individual place. And if it pleases, this may be extended to infinity. And I say that those placed continuously are doubles. This you will demonstrate very easily by resuming the proofs as many times as the trinities of equalities are resumed, just as with the things above. If you desire triples, they will be born in the same way from doubles. Only this must be observed: that in any third place, the terms of the triples are taken together from the three doubles which are born...
+
+[[summary: This page details the "Figure of Threefold Equality," a method attributed to Boethius for generating all mathematical ratios (doubles, triples, sesquialters) from a state of equality. It provides specific rules for transforming sets of three numbers to demonstrate that all numerical inequality originates from unity.]]
+
+[[keywords: Threefold Equality, Boethius, Pythagorean mathematics, geometric ratios, sesquialter, sesquitertian, numerical proportions, Tetractys]]

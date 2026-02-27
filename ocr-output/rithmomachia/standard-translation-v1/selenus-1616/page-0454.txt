@@ -1,0 +1,123 @@
+[[meta: This page provides a visual appendix to the tactical scenarios discussed in Chapter 7. It consists of eight chess board diagrams—presented here as tables—illustrating specific variations (numbered 3 through 21) in the handicap match where White has surrendered a Knight.]]
+
+# The Fourth Book / Chapter 7:
+[[notes: The header refers to the continuation of the tactical analysis of chess. "7. cap" is an abbreviation for "7. capitulum," meaning Chapter 7.]]
+
+<column-break/>
+
+->no. 3. 12.<-
+[[notes: These numbers likely refer to move variations or specific "notes" in the text that these diagrams illustrate. "jz" is translated here as "12," following the 17th-century convention where 'j' is 1 and 'z' is 2.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | BQ | BK | BP | BR | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | | | | | | |
+| | | | BP | BP | | | |
+| | | | WP | 28 | | | |
+| | | | | WP | | | |
+| WP | WP | WP | | | WP | WP | WP |
+| WR | WR | WP | WR | WK | WP | WR | WR |
+[[notes: The notation used here is: BR = Black Rook (Schwarzer Roch), BP = Black Pawn (Schwarzer Soldat), BQ = Black Queen (Schwarze Königin), BK = Black King (Schwarzer König), WP = White Pawn (Weißer Soldat), WR = White Rook (Weißer Roch), and WK = White King (Weißer König). The numbers like "28" indicate the square occupied by a piece or the destination of a move.]]
+
+->no. 5. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BK | | | BR | |
+| BP | BP | | BR | BP | BP | BP | |
+| | | | | BP[[gloss:ch.]] | | | |
+| BQ | BP | WP | | | | | |
+| | | | WR | | | | |
+| | | WR | | | | | |
+| WP | WP | WP | 13 | | WP | WP | WP |
+| WR | | WP | | WK | | WR | WR |
+[[notes: "ch." is translated from the gloss "c," standing for "check" (Schach).]]
+
+->no. 10. 11.<-
+[[notes: "jo. jj." in the source text represents 10 and 11.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | | | BR | BR | |
+| BP | BP | | BK | | BP | BP | BP |
+| | | | | | | | |
+| | WR | BP[[gloss:ch.]] | | | | | |
+| | | | BP | | | | |
+| | | | 21 | | 19 | | |
+| WP | WP | WP | | | WP | WP | WP |
+| WR | | WP | | WK | | WR | WR |
+
+->no. 17. 18.<-
+[[notes: "j7. j8." in the source text represents 17 and 18.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | BQ | BK | BP | BR | BR |
+| BP | BP | | BP | 52 | BP | BP | BP |
+| | | | | | | | |
+| | | BP | | WR | | | |
+| | | | | | | | |
+| | | | | | | | |
+| WP | WP | WP | | WP | WP | WP | WP |
+| WR | WR | WP | | WK | WP | WR | WR |
+
+<column-break/>
+
+->no. 4. 9.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BK | | BR | BR | |
+| BP | BP | | BP | BP[[gloss:ch.]] | BP | BP | BP |
+| | | | | | | | |
+| BQ | WP | WP | | | | | |
+| | | | | BP | | | 26 |
+| | | | WR | | | | |
+| WP | WP | WP | | WR | WP | WP | WP |
+| WR | | WP | | WK | | WR | WR |
+
+->no. 6. 7.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BK | | BR | | |
+| BP | WR | | BR | BP | BP | BP | |
+| | | | | | | | |
+| | BP[[gloss:ch.]] | WP | | | | | |
+| | | | | | | | |
+| | | BR | | | | | |
+| WP | | WP | 13 | | WP | WP | WP |
+| WR | | WP | 5 | WK | | WR | WR |
+
+->no. 14. 15.<-
+[[notes: "j4. j5." in the source text represents 14 and 15.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | BQ | BK | BP | BR | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | | | | | | |
+| | | | | BP | | | |
+| | | | | WP | 28 | | |
+| | | | | | | | |
+| WP | WP | WP | | WP | WP | WP | WP |
+| WR | WR | WP | WR | WK | WP | WR | WR |
+
+->no. 20. 21.<-
+[[notes: "zo. zj." in the source text represents 20 and 21.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | BQ | BK | BP | BR | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | | | | | | |
+| | | | | BP | | | |
+| | | | 30 | WR | 28 | | |
+| | | | | | | | |
+| WP | WP | WP | | WP | WP | WP | WP |
+| WR | WR | WP | | WK | WP | WR | WR |
+
+[[summary: This page contains a series of eight technical chess diagrams illustrating various tactical outcomes and piece positions related to the variations discussed in Chapter 7. These diagrams serve as a visual reference for the "handicap" match analysis between a master and a student.]]
+
+[[keywords: Chess diagrams, tactical variations, piece notation, handicap match, 17th-century chess, board positions]]

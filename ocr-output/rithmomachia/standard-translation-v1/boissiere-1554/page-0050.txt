@@ -1,0 +1,15 @@
+[[meta: This page continues from the mathematical derivations of the game pieces' values. The author moves from abstract calculations to the practical physical arrangement of the pieces on the board, comparing the setup to military formations described by ancient historians.]]
+
+->OF PHILOSOPHERS.<-
+
+## Another arrangement, not to be overlooked, for finding the required numbers
+
+In another way, you may naturally and without further artifice arrange the **pieces** [[notes: The original French uses the word *tables*, which in the context of early board games refers to the playing pieces or "men."]] according to their values, colors, and shapes: in such a way that the smallest number of the same shapes always comes first. They will be found in such an arrangement that it remains only to move them into their true position on the **board** [[notes: *Tablier* refers to the game board. Rythmomachia was played on a grid, usually 8x16 squares.]] as described above. And because such an arrangement seemed convenient to me for the **unlearned** [[notes: *Les rudes* refers to beginners or those without formal training in the complex mathematical ratios required for the game.]], I did not wish to omit it.
+
+## Concerning the procedure and order of the game.
+
+Some dare to claim that the current arrangement of the game takes the form of a **battalion** [[notes: Rythmomachia was frequently framed as a "Battle of Numbers," where mathematical progression mirrored military strategy.]]. It is indeed true that **Polybius** [[notes: Polybius (c. 200–118 BC) was a Greek historian famous for his works on Roman military tactics and history.]] says that at the rear of the battalion, it is good to leave, in a certain proportion, fewer people than at the front, while nonetheless occupying the same space as those in the front; because if the first were weak, they could retreat to the spacious rank at the rear; and thus they will battle twice. Likewise, in the battalion there are **wings** [[notes: The text uses *efles*, an archaic spelling of *ailes*, referring to the flanks of a military formation.]], the light cavalry, and others; which somewhat resembles the arrangement of this game. However, I certainly find no **relevance** [[notes: *Convenance* here means a logical connection or suitability.]] of batteries [[notes: Likely referring to military engagements or artillery positions.]] to games,
+
+[[summary: The author provides a simplified method for beginners to organize game pieces by value and shape before placing them on the board. He also discusses and critiques the popular comparison between the game's setup and ancient military formations described by Polybius.]]
+
+[[keywords: Rythmomachia, game board, Polybius, military tactics, battalion, mathematics, educational method]]

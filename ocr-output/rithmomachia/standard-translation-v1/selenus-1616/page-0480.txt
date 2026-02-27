@@ -1,0 +1,21 @@
+[[meta: This page continues the preface by the translator, likely August the Younger, Duke of Brunswick-Lüneburg (writing under the pseudonym Gustavus Selenus), who is introducing his German edition of the game. He contextualizes the game's academic value and lists his historical sources.]]
+
+-># Preface.<-
+
+Since it is also filled with many arts and clever maneuvers, it leads the learned—almost as if through games and jokes—toward the **Art of Numbering** and the **Art of Singing** [[notes: These refer to Arithmetic and Music, two of the four branches of the *Quadrivium*, the mathematical arts of the medieval and Renaissance curriculum.]] (two noble and useful arts), making them skilled in both; thus it benefits their spirits and intellect in no small way.
+
+[[markup: Iacobus Frater Stapulensis]] [[notes: Jacques Lefèvre d’Étaples (c. 1455–1536) was a prominent French humanist and theologian. He published a brief, influential work on Rythmomachia in 1496.]] described this game in the Latin language in the manner of a dialogue, though quite briefly.
+
+[[markup: Claudius Buxerius]] [[notes: Claude de Boissière (fl. 1550s) was a French mathematician and author of *Le Tres-excellent et ancien jeu pythagorique, dict Rythmomachie* (1554/1556).]], however, a native of the Dauphiné, explained and illustrated it somewhat more extensively in the year 1556.
+
+[[margin: ” ” ”]] Furthermore, [[markup: Thomas Morus]] [[notes: Sir Thomas More (1478–1535), the English statesman.]] also mentions it with few words in the fifth chapter of his [[markup: Utopia]].
+
+However, the true original manuscript, as the aforementioned [[markup: Pythagoras]] drafted it in the Greek language, has—to my knowledge—not been found anywhere, even unto this hour.
+
+Since I now intend to translate this game into my [[markup: mother-tongue]] [[notes: Early modern German.]], I have wished to make use of the labors and thoughts of the two aforementioned authors: not indeed to the end that I should bring it word-for-word into the [[markup: Welsche]] [[notes: A term used by German speakers to refer to foreign, specifically Romance (French or Italian) languages and cultures. The author is likely explaining that he isn't doing a literal translation of his French and Latin sources.]] as they described it, but rather to prepare a brief explanation (in order to have the opportunity to indicate with more detail some matters which they perhaps set down too briefly; to condense others which they described too at length; and finally, to present more clearly that which they published in a somewhat dark and unintelligible manner).
+
+[[meta: catchword: Das]]
+
+[[summary: The translator discusses the pedagogical value of Rythmomachia for arithmetic and music, citing historical works by Lefèvre d'Étaples, Claude de Boissière, and Thomas More. He explains his intent to provide a clear, expanded German translation rather than a literal word-for-word copy of foreign sources.]]
+
+[[keywords: Arithmetic, Music, Rythmomachia, Jacques Lefèvre d'Étaples, Claude de Boissière, Thomas More, Pythagoras, Translation, Quadrivium]]

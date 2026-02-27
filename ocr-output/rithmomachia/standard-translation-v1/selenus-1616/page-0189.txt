@@ -1,0 +1,26 @@
+[[meta: This page continues the detailed technical instructions for a specific endgame maneuver. It follows the previous page's explanation of driving the Black King into a corner using a Knight and Rook to set up a specific checkmate with a designated Pawn.]]
+
+### 5. Chapter: On the Game of Chess.
+
+...to **sixty-two**: **White** [moves] the **Knight** [[notes: *Reuter*; literally "Rider," the standard term for the Knight in this period]] to **fifty-five**: **Black** [moves] the **King** to **sixty-three**: **White** [moves] the **Knight** to **forty-five**: **Black** [moves] the **King** to **sixty-four**: **White** [moves] the **Knight** to **sixty-two**: **Black** [moves] the **King** to **sixty-three**: **White** [moves] his **Knight** to **fifty-six**: **Black** [moves] the **King** to **sixty-four**: (for he can only be moved into this and the sixty-third square until the **White King's Knight's Pawn** [[notes: *W. K. Reuters-Soldat*; refers to the pawn starting in front of the King's Knight]] comes closer to him). **White** [moves] his **King's Knight's Pawn** two squares forward to **thirty-one**: **Black**, the **King** to **sixty-three**: **White**, the aforementioned **Pawn** to **thirty-nine**: **Black**, the **King** to **sixty-four**: **White**, the **Pawn** to **forty-seven**: **Black**, the **King** to **sixty-three**: **White** offers [[notes: *beut*; from *bieten*, to offer or present check]] **check** with his **Knight** on **forty-six**, and with the same [piece] blocks three squares into which the **Black King** may not enter on his account: one next to the **Rook** [[notes: *Rochen*; an archaic term for the Rook, derived from the Persian *rukh*]]; the other two alone: specifically, on the **Black Queen's** side, the **fifty-sixth**: the **sixty-first** and **sixty-third**: **Black** can place the **King** on **sixty-two** or **sixty-four**: **White**, with his **Pawn** (because all passages are blocked to him by his **Rook** and **Knight**, and this **Pawn** is protected by the **Rook**) gives **checkmate** to the **Black King** on **fifty-five** (as the **illustration** shows).
+
+->**Illustration of the Mate**<-
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **B. K.** | | **B. K.** | | | | | |
+| | **W. P.** | | | | | | **W. R.** |
+| | | **W. Kt.** | | | | | |
+
+[[notes: This table represents the partial chessboard diagram from the original text. **B. K.** stands for Black King (*Schwarzer König*), **W. P.** for White Pawn (*Weißer Bauer/Soldat*), **W. R.** for White Rook (*Weißer Rochen*), and **W. Kt.** for White Knight (*Weißer Springer/Reuter*).]]
+
+If **White**, however, initially moves his **Rook** not to **49** but to **fifty-six**, he can just as well deliver **checkmate** with his **King's Knight's Pawn** on **fifty**, and arrange and complete his moves according to the prescribed manner.
+
+That (7.) he who promises that he will offer **checkmate** with a certain and marked **Pawn** on
+
+X
+den [[meta: catchword]]
+
+[[summary: This page provides a move-by-move technical walkthrough of a complex chess endgame, demonstrating how to use a Knight and Rook to trap the King so a specific Pawn can deliver the final checkmate. It illustrates the precise coordination required between pieces to "corral" the opposing King into a corner.]]
+
+[[keywords: Checkmate, Knight, Rook, Pawn, Chess Endgame, Chess Strategy, Piece Coordination, Game Rules]]

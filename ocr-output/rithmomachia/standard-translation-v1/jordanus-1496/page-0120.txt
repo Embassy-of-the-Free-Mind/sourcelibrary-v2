@@ -1,0 +1,57 @@
+[[meta: This page continues the discussion of the three genera of music, moving from the general definitions of Diatonic and Enharmonic into a specific mathematical and historical construction of the Chromatic genus. It builds upon the intervals established in the previous book (the tone, semitone, and major consonances) to map out the Greek tetrachord system.]]
+
+# ¶ To establish the Chromatic of the principal tetrachords.
+<page-num>10</page-num>
+
+| | | | |
+| :--- | :---: | :--- | :---: |
+| Proslambanomenos [[notes: The "added note" at the bottom of the Greek scale, corresponding to a low A]] | A | | A |
+| Hypate hypaton [[notes: The "lowest of the low" notes]] | b | Tone | b |
+| Parhypate hypaton | c | Minor Semitone | c |
+| Lichanos hypaton | d | Apotome [[notes: The "major semitone" in Pythagorean tuning]] | d |
+| Hypate meson [[notes: The "lowest of the middle" notes]] | e | Trisemitonium [[notes: An interval of three semitones, known today as a minor third]] | e |
+
+¶ Timotheus of Miletus [[notes: A famous Greek musician and poet known for his innovations and for adding strings to the lyre]] once introduced Chromatic [melodies] among the Lacedemonians [[notes: The Spartans]], providing a softer song than the previous Diatonic: in which mode of singing we now seek the *hypaton* tetrachord [[notes: A tetrachord is a block of four notes spanning the interval of a fourth]]. Therefore, let **b c d e** be the tetrachord assigned to the *hypatae* [[notes: The principal or lowest notes]] to be established in chromatic melody. I place the string **a** before it: let this be the **proslambanomenos**: which I make a **sesquioctave** [[notes: A 9:8 ratio]] to **b** (the *hypate hypaton*), the first string of the tetrachord to be established. Then I make **a** a **sesquialter** [[notes: A 3:2 ratio, forming a perfect fifth]] to **e** (the *hypate meson*): and so, as in all cases, **a** to **b** will be a tone, and **a** to **e** a **diapente** [[notes: A perfect fifth]]. Then I make **b** to **c** a minor semitone and **b** to **d** a tone. Therefore, **c** to **d** will be an **apotome**. And because, by the thirteenth [proposition], if a tone (**a b**) is taken away from the consonance of a **diapente** (**a e**), a **diatessaron** [[notes: A perfect fourth]] is left behind. Therefore, **b e** will measure a **diatessaron**. But since, by the sixth [proposition] of the third [book], a **diatessaron** consists of two tones and a minor semitone, and **b c** and **c d** together make a tone: therefore **d e** contains a tone and a minor semitone. Thus, **d e** is a **trisemitonium**. Since, therefore, **b c** (*hypate hypaton* and *parhypate hypaton*) is a minor semitone, and **c d** (*parhypate hypaton* and *lichanos hypaton*) is a major semitone [[notes: Referred to here as an apotome]], and **d e** (*lichanos hypaton* and *hypate meson*) is a **trisemitonium** as has been shown: it is established by definition that the tetrachord **b c d e** is constituted in the chromatic genus. For we call the **trisemitonium** and the **trihemitonium** the same thing.
+
+# ¶ To join the middle Chromatic tetrachord.
+<page-num>11</page-num>
+
+| | | | |
+| :--- | :---: | :--- | :---: |
+| Proslambanomenos | A | | A |
+| Hypate hypaton | b | Tone | b |
+| Parhypate hypaton | c | Minor Semitone | c |
+| Lichanos hypaton | d | Apotome | d |
+| Hypate meson | e | Trisemitonium | e |
+| Parhypate meson | f | Minor Semitone | f |
+| Lichanos meson | g | Apotome | g |
+| Mese [[notes: The "middle" note, the central pivot of the Greek system]] | h | Trisemitonium | h |
+
+¶ Let **e f g h** be the middle tetrachord (*meson*) to be established in the chromatic genus: I make **a** to **h** a double and sounding **diapason** [[notes: An octave, having a 2:1 ratio]]. And I make **e** to **f** a minor semitone, and likewise I make **e** to **g** a tone. Thus **f** to **g** will be an **apotome**. But since the consonance of a **diapente** has been shown from **a** to **e**, if that is subtracted from the **diapason** consonance of **a h**, then by the twenty-second [proposition] of the third [book], a **diatessaron** remains. Therefore, **e** to **h** (*hypate meson* to *mese*) is a **diatessaron**. And since a **diatessaron** fills out two tones and a minor semitone, and **e g** is a tone, therefore **g h** contains a tone and a minor semitone. Thus **g h** will be a **trisemitonium**. Therefore **e f g h**, consisting of two semitones (**e f** and **f g**) and the **trisemitonium** (**g h**), will be a tetrachord established in the chromatic genus. This was to be demonstrated.
+
+# ¶ To add the remaining two tetrachords in the same genus to the aforesaid, and to place the consonance of the double diapason in a fifteen-string system.
+<page-num>12</page-num>
+
+| | | | | |
+| :--- | :---: | :--- | :--- | :---: |
+| Proslambanomenos | A | | | A |
+| Hypate hypaton | b | Tone | | b |
+| Parhypate hypaton | c | Min. Semi. | | c |
+| Lichanos hypaton | d | Apotome | | d |
+| Hypate meson | e | Trisemitonium | | e |
+| Parhypate meson | f | Minor Semitone | | f |
+| Lichanos meson | g | Apotome | | g |
+| Mese | h | Trisemitonium | | h |
+| Paramese diezeugmenon [[notes: "Disjunct" note]] | k | Tone | Trite syn. [[notes: Third note of the "conjunct" tetrachord]] Minor Semitone | k |
+| Trite diezeugmenon | l | Min. Semi. | Paranete syn. Apotome | l |
+| Paranete diezeugmenon | m | Apotome | Nete syn. Trisemitonium | m |
+| Nete diezeugmenon [[notes: The "lowest" string in position, highest in pitch, of the disjunct tetrachord]] | n | Trisemitonium | | n |
+| Trite hyperboleon [[notes: Third note of the "extreme" tetrachord]] | o | Minor Semitone | | o |
+| Paranete hyperboleon | p | Apotome | | p |
+| Nete hyperboleon | q | Trisemitonium | | q |
+
+[[notes: The table above illustrates the "Greater Perfect System" in the Chromatic genus. It shows the fifteen notes of the Greek scale, including the overlapping "synemmenon" (conjunct) tetrachord which allowed for modulation.]]
+
+[[summary: This page explains the mathematical construction of the Chromatic genus in Greek music theory, detailing the specific intervals—minor semitone, apotome, and trisemitonium—that form the tetrachords. It also attributes the introduction of this "softer" style of music to the historical figure Timotheus of Miletus and presents the full fifteen-note system.]]
+
+[[keywords: Chromatic genus, tetrachord, Timotheus of Miletus, Pythagorean tuning, trisemitonium, apotome, Greater Perfect System, Greek music theory]]

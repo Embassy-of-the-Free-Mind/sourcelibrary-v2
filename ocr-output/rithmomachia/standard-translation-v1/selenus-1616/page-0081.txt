@@ -1,0 +1,19 @@
+[[meta: This page continues the discussion from page 50 regarding the physical layout of the chessboard, moving from its basic dimensions to its symbolic representation as a military battlefield with tactical borders.]]
+
+### Regarding the Game of Chess.
+
+[[margin: Chapter 4:]]
+Through this square space is indicated a level ground or room, upon which two Kings clash and one offers battle to the other in a very skillfully arranged **Order of Battle** [[notes: *Schlacht-Ordnung* refers to the formal tactical arrangement of troops common in 17th-century warfare]].
+
+This space is square—perhaps (leaving aside other conjectures, about which Th. Actius treats in quest. 6, n. 104 towards the end [[notes: Thomas Actius (Tommaso Azzi) was a 16th-century Italian jurist who wrote *De ludo scacchorum*, a treatise on the legal and moral aspects of chess]]) because the square figure is otherwise regarded as the very best, and here as the most convenient, for the proceedings that follow.
+
+The borders of the board indicate the trenches and fortifications which both armies have and use for their security. For when the pieces stand in the corners and at the borders, they protect themselves much better than when they are moved into the middle of the field where they can easily be surrounded; there they can receive and await an attack or **skirmish** [[notes: *Scharmützel*, a minor fight or preliminary engagement]]. These borders also signify the boundary of life and death for these **little war-men**: for those who are lifted from the board by the enemy are regarded as if they had perished and been slain in battle.
+
+The board is divided into sixty-four squares for the purpose that the pieces' movements, order, and attacks may be more surely contained. There are so many so that the thirty-two pieces may occupy as many squares—sixteen each—on the two outermost **rank-lines** [[notes: *Zwerch-linien*, literally "cross-lines" or ranks]] opposite one another for the **Order of Battle**: and yet the half-part of the board (which likewise consists of thirty-two squares, and indicates the place where one attacks the other, either with the whole troop or with common skirmishes) might remain empty in the middle between the two forces.
+
+Further information regarding this table is to be found below in the eleventh chapter of this book, etc.
+
+->[image-desc: A decorative woodcut tailpiece featuring symmetrical floral scrollwork and acanthus leaves flanking a central cartouche that contains a stylized mask or lion's head.]<-
+
+[[summary: This page explains the military symbolism of the chessboard, comparing the board's borders to defensive fortifications and justifying the 64-square layout as a balance between starting positions and maneuvering space.]]
+[[keywords: chessboard, military metaphor, tactical formation, Thomas Actius, 17th-century chess, fortifications, skirmish]]

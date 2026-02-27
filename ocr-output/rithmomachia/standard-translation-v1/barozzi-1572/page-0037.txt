@@ -1,0 +1,20 @@
+[[meta: This page continues the explanation of the seventh capture method, the "siege," which was introduced at the very end of page 14.]]
+
+so surrounded by other pieces of its adversaries, that it cannot move according to its own path, nor can it even be helped by the other pieces of its companions by taking prisoner any of those pieces that besiege it: then said piece is understood to be besieged, and it is removed from the game, as in the following example: if there is a white triangle in **A**, and there are 4 black pieces in squares **B, C, D, E**,
+
+| **B** | **C** |
+| :---: | :---: |
+| | **A** | |
+| **E** | **D** |
+
+[[notes: The diagram illustrates the "siege" rule. The piece at position A (the intersection of four squares) is captured if it is blocked on all sides by opposing pieces (B, C, D, and E) and cannot be rescued.]]
+
+there is no doubt that the said triangle is besieged, as no other white piece is able to help it by taking any of the said 4 black pieces that besiege it. And note that there is no piece in this game which cannot besiege and be besieged. But there are two pieces that cannot be taken except by the siege alone, namely the **190** [[notes: The value of the Black Pyramid, a complex piece made of multiple values stacked together]] of the black pyramid, and the **153** white square.
+
+Having already explained all 7 ways of fighting, before we come to the victories, we will note some general rules which serve for combat, the first of which is: That one cannot make any capture unless one plays their piece according to its own proper path [[notes: Each shape—circles, triangles, and squares—has a specific number of spaces it must move]], except in four cases. The first is when there is some piece in **cover** [[notes: *Couerta* (cover) refers to a piece that sits between two others, blocking a potential arithmetic capture line]] between two pieces that can be captured; as soon as that piece is removed by either the one or the other player: without moving any other piece, the one of the said two uncovered pieces that can be captured is taken. And if the one who removed the cover is the victor [[notes: The player whose piece is now able to perform the capture]], having removed the cover counts as a move. But if he is the one defeated,
+
+[[meta: catchword: toccando (touching)]]
+
+[[summary: This page concludes the explanation of the "siege" capture rule, noting that the Black Pyramid and the White 153 Square can only be captured this way. It then introduces general rules of combat, specifically the rule of "discovered" captures when a blocking piece is moved.]]
+
+[[keywords: siege, pyramid, 153 square, capture rules, cover, Rithmomachia strategy, movement paths]]

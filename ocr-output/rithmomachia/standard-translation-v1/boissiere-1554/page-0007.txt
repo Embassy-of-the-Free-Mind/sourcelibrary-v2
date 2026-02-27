@@ -1,0 +1,19 @@
+[[meta: This page continues the dedication to Antoine Escallin des Emars. The first word "casse" completes the word "efficace" (efficacy or power) from the previous page's final line. The author, Claude de Boissière, transitions from the military utility of mathematics to its philosophical and recreational value, citing classical authorities like Aristotle, Plato, and Pythagoras.]]
+
+ciency of the harmonies of music. In short, along with Aristotle, I conclude that anything lacking the principle of quantity is of no account. [[notes: Aristotle argued that quantity is a fundamental category of being; without it, physical reality cannot be measured or understood.]] Following this is the authority of the divine Plato, who says:
+
+> "Those who are Arithmeticians by nature are 
+> suited and fit for every noble discipline 
+> and sound knowledge."
+
+For this reason, he rightly wished this inscription to be placed over the gate of his Academy:
+
+> "Let no one ignorant of Geometry enter here."
+
+under which name of Geometry, Arithmetic is also included. [[notes: In the Renaissance, "Geometry" often served as a shorthand for the Quadrivium—the four mathematical arts of arithmetic, geometry, music, and astronomy.]] Moved by this authority, and after having worked devotedly with these numbers for many days, there came into my hands an excellent arrangement and composition of numbers drawn from the proportions and harmonies of Pythagoras. This was introduced among the ancient Philosophers as a game and recreation, to soothe their vexations and refresh through virtue their minds, which had been troubled by long study. [[notes: Pythagoras (c. 570–495 BC) is credited with discovering the mathematical ratios that govern musical harmony. The "game" mentioned here likely refers to Rithmomachia, or "The Philosophers' Game," a complex mathematical board game popular in the Middle Ages and Renaissance.]] Among these Philosophers, if Lucan [[notes: Lucan (39–65 AD) was a Roman poet whose epic *Pharsalia* depicts Julius Caesar.]] and other historians chose to include Julius Caesar—noting that even amidst the turmoil of civil wars, he never abandoned the noble study of the celestial sciences [[notes: "Celestial sciences" refers to astronomy and the calculation of time; Caesar famously reformed the calendar.]]—then with even greater reason, there should be included in this number of Philosophers...
+
+[[meta: catchword: mis &]]
+
+[[summary: Boissière cites Aristotle and Plato to argue that mathematics is the foundation of all noble knowledge. He introduces a mathematical game based on Pythagorean principles, intended as a virtuous recreation for scholars, and compares such intellectual pursuits to those of Julius Caesar.]]
+
+[[keywords: Aristotle, Plato, Pythagoras, Julius Caesar, Lucan, Arithmetic, Geometry, Music, Philosophy, Rithmomachia, Celestial Sciences]]

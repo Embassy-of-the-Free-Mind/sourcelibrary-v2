@@ -1,0 +1,33 @@
+[[meta: This page continues the explanation of the "Greatest Victory" in Rithmomachia. The previous page introduced the concept of using four stones to satisfy multiple mathematical proportions; this page explores the philosophical and musical significance of these specific number sets.]]
+
+# The Sixth Chapter
+
+[[meta: catchword: brings]]
+
+This final victory, by which the game is concluded, is the most sublime and excellent of all. When players, through great effort and reflection, have composed such divisions [[notes: "divisions" here refers to mathematical proportions or ratios]] upon four stones, they shall derive a singular delight from them. Consider that in these fourfold numbers, all the divisions from which the lovely harmonies of the Art of Music (*Singe-Kunst*) originate are revealed. These may also be tested and experienced with pleasure upon all manner of stringed instruments (*SeitenSpiel*) or organ pipes (*Pfeifwerck*) through weight or measure.
+
+> (Buxer. fol: 35. a. [[notes: Referring to Claude de Boissière, also known as Buxerius, a 16th-century French mathematician who wrote on Rithmomachia.]]
+> "These ratios, if examined by weight, as in metals, or if
+> experienced by measure, as in strings, always supply and
+> exhibit musical harmony.
+> Idem fol: 39. b.
+> "There are furthermore certain ratios, such as 5, 9, 45, 81, or 5, 25,
+> 45, 225, and those of the same pair and kind, which fall to the 
+> recreation of those who are sharper and more subtle; therefore 
+> they are to be left to those who, as Faber [[notes: Likely Jacobus Faber Stapulensis, an influential Renaissance humanist]] says, imitate the
+> best hunters, who take more delight in tracking and pursuing 
+> wild beasts than in those already captured and presented.")
+
+For better instruction, let us take the first four numbers—namely 2, 3, 4, 6—from among these fourfold numbers, and demonstrate the harmonies of the Art of Music from them:
+
+For when one compares the last two, such as 4 and 6, or the first two, such as 2 and 3: the difference will be found in a "one-and-a-half" division [[notes: a 3:2 ratio]]. That is to say, the smaller number is contained within the larger one and a half times. From this division arises the harmony which the Greeks call *Diapente* and modern singers call the *Quinta* [[notes: the perfect fifth]].
+
+Furthermore, when the two middle numbers, such as 3 and 4, are compared, there arises the division of a whole and a third part [[notes: a 4:3 ratio]]. That is to say, the higher number contains the smaller one once, along with its third part. From this comes the harmony which the Greeks call *Diatessaron* and today's singers call the *Quarta* [[notes: the perfect fourth]].
+
+Further, if the first number (2) is held and compared against the third (4), or the second (3) against the fourth (6): one finds a twofold division [[notes: a 2:1 ratio]]. That is to say, the higher numbers contain the lesser numbers twice. This division...
+
+[[vocab: *Art of Music*, *Diapente*, *Fifth*, *Diatessaron*, *Fourth*, *Stringed instrument*, *Organ pipes*]]
+
+[[summary: This page explains the "Greatest Victory" of Rithmomachia by linking the game's mathematical proportions to the musical harmonies of the Fourth, Fifth, and Octave. It cites Renaissance authorities like Buxerius and Faber to emphasize that the game's complexity is intended for "subtle" minds who enjoy the intellectual "hunt" of mathematics.]]
+
+[[keywords: Rithmomachia, Music Theory, Mathematical Proportions, Diapente, Diatessaron, Buxerius, Faber Stapulensis, Pythagorean Harmonies]]

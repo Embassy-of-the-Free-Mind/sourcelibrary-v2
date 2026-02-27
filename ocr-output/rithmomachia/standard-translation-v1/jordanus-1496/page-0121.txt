@@ -1,0 +1,36 @@
+[[meta: This page continues from the previous discussion on the construction of the Chromatic tetrachord. Having established the first group of notes, the author now extends this logic to complete the full fifteen-string scale (the pentadecachord) and provides the mathematical proof for these specific musical proportions.]]
+
+¶ Let **k l m n o p q** be used to complete the remaining tetrachords: since the *meson* [[notes: middle]] tetrachord is separated from the *neton diezeugmenon* [[notes: the "disjunct" tetrachord, usually starting an octave above the lowest note]] tetrachord, I therefore make the distance from the *mese* [[notes: the central note, "middle"]] to the *paramese diezeugmenon* a full tone. I also make the *mese* consonant with the *nete diezeugmenon* as a **diapente** [[notes: a perfect fifth]]. And I make it a **diapason** [[notes: an octave]] with the *nete hyperboleon* [[notes: the highest note of the scale]]. I divide the tetrachord **k l m n** just like the *hypaton* tetrachord; however, I divide the tetrachord **n o p q** as in the preceding *meson* tetrachord, and both will be divided according to the Chromatic genus. Since it is known that **a** to **h** is a **diapason**, and **h** to **q** is likewise a **diapason**, it follows that **a** to **q** sounds a **bis diapason** [[notes: a double octave]]. Since it is comprised of fifteen voices and strings, it is clear that what was proposed has been achieved. But if you make **k l m** the *synemmenon* [[notes: the "connected" tetrachord used for modulation]] tetrachord, you should divide it like the Chromatic *meson* tetrachord; you will see the proposal is easily accomplished.
+
+<margin>13</margin> ¶ To assign the numbers of the Chromatic fifteen-string scale.
+
+| | | | | | |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| Proslambanomenos | A | | 2592 | 5971968 | |
+| Hypate hypaton | b | 256 | 2304 | 5308416 | Tone |
+| Parhypate hypaton | c | 243 | 2187 | 5038848 | Minor Semitone |
+| Lichanos hypaton | d | | 2048 | 4718592 | Major Semitone [[notes: also called an Apotome]] |
+| Hypate meson | e | | 1728 | 3981312 | Tritemitonium [[notes: an interval of three semitones, like a minor third]] |
+| Parhypate meson | f | | | 3779136 | Minor Semitone |
+| Lichanos meson | g | | | 3538944 | Major Semitone |
+| Mese | h | | 1296 | 2985984 | Tritemitonium |
+| Paramese diezeugmenō | k | | 1152 | 2654208 | Tone |
+| Trite diezeugmenon | l | | | 2519424 | Minor Semitone |
+| Paranete diezeugmenō | m | | | 2359296 | Major Semitone |
+| Nete diezeugmenon | n | | 864 | 2221056 | Tritemitonium |
+| Trite hyperboleon | o | | | 2108268 | Minor Semitone |
+| Paranete hyperboleon | p | | | 1974272 | Major Semitone |
+| Nete hyperboleon | q | | 648 | 1492992 | Tritemitonium |
+
+¶ Let **b** and **c** be the smallest numbers of the minor semitone, found through the eighteenth [proposition] of the second [book] of this work. Since **b** lacks a ninth part, I increase **b** and **c** by nine, and let **b** and **c** come into the second place. Therefore, since in the second place **b** has a ninth part, I increase it by eight and let it become **d**; then **b** to **d**, through the seventh [proposition] of the second [book] of the Arithmetic, will be a **sesquioctave** [[notes: a 9:8 ratio, the mathematical definition of a whole tone]]. Therefore, **b** and **d** contain a tone. And **b** to **c**, by the same logic, is a minor semitone. Therefore, **c** to **d** is an **apotome** [[notes: the remainder of a tone after a minor semitone is removed]]. Again, since **b** has an eighth part, I add its own eighth part to it and let it become **e**: **a** to **b** will be a **sesquioctave** and a tone; and since **a** has a third part, I make **a** to **e** a **sesquialter** [[notes: a 3:2 ratio, or a perfect fifth]]. And since **h** has a second part, I likewise make **a** a double to **h**. I find likewise that **h** has a ninth, a third, and a second part. I therefore make **h** a **sesquioctave** to **k**, a **sesquialter** to **n**, and a double to **q**. This done, I multiply **b** of the second place into **a b c d e h k n q** and they come into the third place as **a b c d e h k n q**. Then I multiply **c** and **d** of the second place into **e** of the second place, and **f** and **g** come into **k**; and **l** and **m** come into **n**, and **o** and **p** come into the third place. By the seventh and eighth [propositions] of the second [book] of Arithmetic, the numbers of the Chromatic fifteen-string scale will be in the third [column]: **e** and [others] are the numbers of the **diapente**. And **a** and **b** are the numbers of the tone. With the tone **a b** removed, there remains **b e**, a **diatessaron** [[notes: a perfect fourth]], and **b c** and **c d** together are a tone. Therefore, by the sixth [proposition] of the third [book], **d e** is a **tritemitonium**. And **a h** is a **diapason**, and **a e** is a **diapente**. Therefore, **e h** is a **diatessaron**. And by the eighth [proposition] of the second [book] of Arithmetic, **e f** and **f g** are a minor semitone and an apotome. Therefore, **g h** is a **tritemitonium**, and you will demonstrate in a similar way that **h k** is a tone, **k l** and **l m** are two semitones, and **m n** a **tritemitonium**, and **n o p q** two semitones and **p q** a **tritemitonium**. Thus the proposal becomes clear.
+
+<margin>14</margin> ¶ That the *parhypate* of the Diatonic and Chromatic correspond to the *parhypate*: the *paramese* to the *paramese*: and the *trite* to the *trite*.
+
+¶ For in both genera, the *hypate* to the *parhypate* observes the interval of a minor semitone. And the *mese* to the *paramese* a tone. And the *trite* to the *trite* a minor semitone. It is therefore known that those small voices in each mode of singing correspond to one another. And not only is this true, but the *hypate hypaton* and *mese meson* and *nete neton* also correspond. For in both, the *proslambanomenos* to the *hypate hypaton* sounds a tone; and to the *hypate meson* a **diapente**; to the *mese* a **diapason**; to the *nete* of the disjunct [tetrachord] a **diapason** and **diapente**; and to the *nete hyperboleon* a **bis diapason**. Therefore, what was proposed, and even more, is easily understood.
+
+<sig>b 5</sig>
+
+<vocab>tetrachord, chromatic, pentadecachord (15-string scale), diapason (octave), diapente (fifth), diatessaron (fourth), tritemitonium (minor third), semitone, apotome (major semitone), Proslambanomenos (lowest note), Hypate, Mese (middle note), Nete (highest note), Paramese, arithmetic</vocab>
+
+[[summary: This page provides the complete mathematical values for the 15-note Chromatic scale, using large integers to represent the ratios of each interval. It concludes by demonstrating that despite the differing "genera" of music, the fundamental structural notes of the Greek system remain mathematically consistent across both Diatonic and Chromatic scales.]]
+[[keywords: Chromatic genus, Greek musical theory, musical ratios, Pentadecachord, Diapason, Diapente, Pythagorean tuning, mathematical proof]]

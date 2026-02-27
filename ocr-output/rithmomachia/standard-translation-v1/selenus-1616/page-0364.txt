@@ -1,0 +1,82 @@
+[[meta: This page continues the sequence of endgame studies and chess problems from the fifth chapter of "The Third Book." While the previous page utilized full 8x8 boards with pawns (labeled BP/WP), this page shifts to simplified grids, often 10x7 or rectangular, and introduces the abbreviation "S" (likely *Springer* or Knight, though historically sometimes *Soldat* or Pawn). The page continues the idiosyncratic use of "j" for "1" in the numbering.]]
+
+[[margin: Chapter 5]]
+[[margin: The Third Book /]]
+
+### No. 88. 89.
+
+| | | |
+| :---: | :---: | :---: |
+| **BR** | **BN** | **BK** |
+| **WR** | **WN** | **WK** |
+| | **51** | |
+
+[[note: The abbreviations represent the following pieces: **BK/WK** (Black/White King), **BR/WR** (Black/White Rook, from *Roche*), and **BN/WN** (Black/White Knight, from *Springer*). The number **51** refers to a specific square on the author's coordinate system, likely indicating a key move or a destination for a piece.]]
+
+### No. 93. 94.
+
+| | | |
+| :---: | :---: | :---: |
+| **35** | **WR** | **BR** |
+| **BN** | **BK** | **33** |
+| **WN** | **WK** | |
+
+### No. 99. 111.
+[[note: The original text uses "jjj" for "111." In early modern printing, "j" was frequently used as a variant of "i" or the numeral "1," particularly at the end of a sequence or to prevent tampering with numbers in legal documents.]]
+
+[[margin: 40]]
+
+| | | |
+| :---: | :---: | :---: |
+| **BK** | **BR** | **BN** |
+| **WR** | **WN** | **WK** |
+
+### No. 107. 110.
+[[note: The original "jo7" and "jjo" are 107 and 110 respectively.]]
+
+| **63** | **61** | |
+| :---: | :---: | :---: |
+| **BK** | **BR** | **BN** |
+| **WR** | **WN** | **WK** |
+
+***
+
+### No. 91. 92.
+
+| | | |
+| :---: | :---: | :---: |
+| **WR** | **BK** | **BR** |
+| **BN** | **WN** | **WK** |
+| | **51** | |
+
+### No. 95. 96.
+
+| | | |
+| :---: | :---: | :---: |
+| **WR** | **BR** | **BN** |
+| **BK** | **WN** | **WK** |
+| | | **17** |
+
+### No. 101. 105.
+[[note: The original "joj" and "jo5" are 101 and 105.]]
+
+| | **52** | |
+| :---: | :---: | :---: |
+| **BR** | **BN** | **BK** |
+| **WR** | **WS** | **WK** |
+| | **21** | |
+
+### No. 112. 113.
+[[note: The original "jj2" and "jj3" are 112 and 113.]]
+
+| | | |
+| :---: | :---: | :---: |
+| **BK** | **BR** | **BN** |
+| | **46** | |
+| **WR** | **WN** | **WK** |
+
+[[note: These diagrams appear to be abstract representations of "checkmate" patterns or tactical maneuvers rather than complete game positions. The "10x7" grid described in the OCR suggests these problems might be intended for a specialized variant or simply a condensed notation to save space in the manuscript.]]
+
+[[summary: This page presents a series of numbered chess tactical problems (No. 88 through 113) focused on the interaction between Kings, Rooks, and Knights. The diagrams use specific square numbers and abbreviated notations to demonstrate endgame patterns and checkmate solutions.]]
+
+[[keywords: chess tactics, endgame studies, King and Rook mate, Knight maneuvers, 17th-century notation, algebraic coordinates, blackletter typography]]

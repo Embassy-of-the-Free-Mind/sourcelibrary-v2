@@ -1,0 +1,20 @@
+[[meta: This page continues the discussion of the rules of the King, specifically why he cannot be captured but only "checked." It transitions from the previous discussion of military etiquette into a linguistic analysis of the terms used in the game.]]
+
+# The Second Book / Chapter 1:
+
+...and (3.) why they are used / and have come about / to learn to recognize.
+
+Some claim that the little words **Schach** [[notes: Check]] and **Mat** [[notes: Mate]] are Hebrew. But it is called *Scacha* (as Matth. Flacius Illyr. [[notes: Matthias Flacius Illyricus (1520–1575), a Lutheran reformer and scholar who wrote the *Clavis Scripturae Sacrae*]] will have it in *Clav: Script: verb: Adorare*) in Hebrew, meaning as much as *adorare*, to worship someone / and to show him honor with a bowed or bent body; or / (as others will have it) to be surrounded by a wall / or fenced in: **Mat** or *Mot*, however / is said among them to mean to have died.
+
+In the Chaldean language [[notes: A term historically used to refer to Aramaic or ancient Babylonian languages]], **Schach** is said to serve as a warning / to take good care / of one's affairs: Therefore / the Oriental peoples / (as found in Joseph Scaligero [[notes: Joseph Justus Scaliger (1540–1609), a famous French religious scholar and father of modern chronology]], *lib: de Emendat: Temporum*, page 78) perhaps named the time of the twelve warning-years *Schaichun*.
+
+Some wish / that this little word **Schach** / though it be somewhat altered / takes its origin / from the Arabs / and in their language / signifies as much as an expulsion / a chasing away: just as then / by **Mat** / such a thing is understood / which pertains to death. Therefore the Arabs / call the place of the other life / after this death / *Mahad*.
+
+Others seek / the origin of this little word / from the modern Persians: (whose language is in use throughout the entire Orient / as the Latin is among us / in the Occident [[notes: The West]]: Joseph Scalig: *d. lib: de Emend: Temp: page 338.*) because namely these / and with them the Mauritanians [[notes: People of Northwest Africa, often called Moors in this period]] and others / call their Kings / (as we have previously recounted / from Garc. ab Orta [[notes: Garcia de Orta, a 16th-century physician and pioneer of tropical medicine]], Bizaro [[notes: Pietro Bizzari]], and Minadoo [[notes: Giovanni Tommaso Minadoi, an Italian historian of the Persian-Turkish wars]]) *Xa*, *Sah*, *Schah*, or **Schach**.
+
+We have otherwise / in the 2nd Chapter of the 1st Book / above / already surmised with Vito Amerbachio [[notes: Veit Amerbach (1503–1557), a German humanist scholar]], that these were / good German words / and that **Schachen** [[notes: to check]] signifies as much / as being hunted / or to flee. What **Mat** is / is quite well known / meaning as much / as to lose one's strength / to languish / to grow weary / to be unable to move a foot from the spot / nor go further / but / to be forced to stand still. From this German *matten* [[notes: to tire out or exhaust]] / *ermatten* / and *Schach-Mat geben* / the *Welschen* [[notes: A period term for speakers of Romance languages, particularly Italians and French]] / have made and taken their *Mattare*, and *Scacco matto dare*.
+
+To what end now / these words are used / is to be repeated here from the previous description of **Schachen** and **Matten**: namely / that one indicates to the opponent / with these words / that his King / is under attack [[notes: *Angeſprenget*, literally "galloped at" or charged]] / and that he should withdraw.
+
+[[summary: This page explores the etymology of the terms "Check" and "Mate," tracing potential origins through Hebrew, Chaldean, Arabic, Persian, and German, ultimately arguing that the terms signal the King's exhaustion and forced retreat.]]
+[[keywords: etymology, Schach, Mat, Joseph Scaliger, Persian, Arabic, linguistic history, checkmate]]

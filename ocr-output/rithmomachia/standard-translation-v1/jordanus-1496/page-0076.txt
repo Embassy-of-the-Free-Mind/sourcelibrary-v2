@@ -1,0 +1,47 @@
+[[meta: This page marks the conclusion of Book IX, which focuses on the "resolution" of complex ratios back into simple equality, and the beginning of Book X, which introduces the theory of "medieties" or means—the mathematical ways to find a middle point between two numbers.]]
+
+...and multiple superpartients are reduced through the preceding [propositions] into the superpartient, which in turn is reduced into the superparticular. For instance, if **d** is subtracted from **b** and **e** remains, which contains **d** and its parts: or into the superparticular if, after subtraction, **e** remains containing **d** and one part of it. But if **e** remains containing **d** and parts [more than one], since that subtraction cannot be carried out into infinity so as to always be resolved into superpartients, eventually a superparticular will occur, and the proposition will be shown to be true. I say that a superparticular will eventually occur and not a multiple: because from multiples, it is not multiple superpartients that are immediately produced, but superparticulars, according to the seventieth [proposition] of this book.
+
+### ¶ To reduce any given proportions to equality.
+
+¶ For by the seventy-third [proposition] of this book, multiple superpartients are reduced into superpartients, and multiple superparticulars into superparticulars; and by the preceding [proposition], superpartients into superparticulars. And by the seventy-second [proposition] of this book, superparticulars are reduced into multiples, and multiples into other [simpler] multiples until they are restored to equality. Therefore, all are reduced to equality.
+
+->The end of the Ninth [Book] of Jordanus’s Elements of Arithmetic.<-
+
+The connection of extremes is declared by the relationship of both to a mean. Of the medieties [[notes: A "mediety" (medietas) is a proportional mean, a way of finding a middle term between two values.]], some are "principal" and some are "collateral" to the principals. There are three Principal means. The first is when the differences between the greater, the middle, and the lesser are equal; this is called the **Arithmetic mediety**. The second is when the proportion of the greatest to the middle is the same as the middle to the smallest; this is called the **Geometric**. The third is when the proportion of the greatest to the smallest is the same as the difference between the greatest and middle is to the difference between the middle and smallest; this is called the **Musical** [[notes: Now more commonly known as the Harmonic mean. Its name comes from its frequent appearance in the mathematics of musical intervals.]]. There are eight Collateral means. The first is when the greatest is to the middle as the difference of the smaller terms is to the difference of the larger terms. The second is when the middle is to the smallest as the difference of the smaller is to the difference of the larger. The third is when the greatest is to the middle as the difference of the extremes is to the difference of the larger. The fourth is when the middle is to the smallest as the difference of the extremes is to the difference of the larger. The fifth is when the middle is to the smallest as the difference of the extremes is to the difference of the smaller. The sixth is when the greatest is to the smallest as the difference of the smaller is to the difference of the larger. The seventh is when the greatest is to the smallest as the difference of the extremes is to the difference of the larger. The eighth is when the greatest is to the smallest as the difference of the extremes is to the difference of the smaller.
+
+[[margin: 1]]
+[[notes: This diagram illustrates the Arithmetic mean (8, 6, 4) where the difference between each number is 2.]]
+
+### ¶ If three numbers are arranged in an arithmetic mediety: the proportion of the greater to the middle will be less than that of the middle to the minimum.
+
+¶ Let **a**, **b**, and **c** be three numbers arranged in an arithmetic mediety, of which **a** is the greatest. I say that the proportion of **a** to **b** is less than the proportion of **b** to **c**. For by the definition, the differences of **a** to **b** and **b** to **c** are equal; since therefore **a** and **b** are composed of **b** and **c** with the addition of equal numbers (namely, their differences), then by the sixteenth [proposition] of the second book, the proportion of **a** to **b** will be less than the proportion of **b** to **c**—which is what was proposed.
+
+[[margin: 2]]
+
+### ¶ In the same mediety, the two extremes joined together yield as much as the middle doubled.
+
+¶ For by the definition, the differences of the first to the middle and the middle to the extreme are equal; therefore, by the second [proposition] of the first book, the middle is the half of the extremes joined together. Thus, the middle doubled equals the extremes joined; which is what was proposed.
+
+[[margin: 3]]
+
+### ¶ In the same mediety, that which is contained under the extremes [the product] together with the square of the difference is equal to the square of the middle.
+
+¶ For by the previous proposition, the two extremes together are as much as double the middle. Let the double of the middle be **d**, divided into two equal parts of which the middle term **b** is one; and into two unequal parts which are the extremes **a** and **c**. By the nineteenth [proposition] of the first book, the square of **b** (one of the equal parts) will be as much as the product of **a** times **c** plus the product of the difference of **a** to **b** and the difference of **b** to **c**. But since those differences are equal, the square of the middle **b** will be as much as what is contained under the extremes **a** and **c** plus the square of the difference of the middle to the extreme; which is what was proposed.
+
+[[margin: 4]]
+[[notes: A table demonstrating the squares and differences in an arithmetic sequence: 20, 18, 16.]]
+
+### ¶ In the same mediety, the squares of the extremes are double the square of the middle and the square of the difference [combined].
+
+¶ Let **a**, **b**, and **c** be numbers arranged in this mediety; let **d** be the squares of **a** and **c**. I say that **d** is double the square of the middle **b** and the square of the difference combined. For let **f** be twice the product of **a** times **c**, and let **e** be twice the square of the middle **b**. For since by the second [proposition] of this book **a** and **c** joined are as much as double **b**, and by the fifteenth [proposition] of the first book **d** and **f** together are as much as the square of the whole **a+c**. But also by that same fifteenth [proposition], **e** will be the half of **d** and **f** together. Therefore, by the second part of the second [proposition] of the first book, the differences of **e** to **d** and to **f** are equal. Therefore, by the definition, in this mediety **e** is the mean between **d** and **f**. And since by the preceding [proposition] the product of **a** times **c** once with the square of the difference is as much as **b** squared, therefore **e** adds over **f** double the square of the difference; wherefore **d** will also add that much over **e**. Therefore, **d** equals double the square of the difference of **b** to **a**. Therefore, the square of **b**, which is the half of **e**, with the square of the difference of **b** to **a**, is the half of **d**; which is what was proposed.
+
+[[margin: 5]]
+
+### ¶ Given two extremes of three numbers arranged in this mediety: to find the middle.
+
+¶ Let **a** and **b** be two extremes in this proportion; add them together and take half of the sum, which by the second [proposition] of this book will be the sought-after middle; and the proposition is accomplished.
+
+[[summary: This page concludes Book IX of Jordanus de Nemore's Arithmetica, detailing how all ratios eventually reduce to equality. It then introduces Book X, defining the three principal means (Arithmetic, Geometric, and Harmonic) and eight collateral means, specifically proving properties of the Arithmetic mean.]]
+
+[[keywords: Jordanus de Nemore, Arithmetic mean, Geometric mean, Musical mean, Harmonic mean, ratio reduction, medieties, mathematical proofs, proportionality]]

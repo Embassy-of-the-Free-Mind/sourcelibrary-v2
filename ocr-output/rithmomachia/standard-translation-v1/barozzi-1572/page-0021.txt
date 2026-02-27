@@ -1,0 +1,26 @@
+[[meta: This page continues the mathematical rules for the game of Rythmomachia. The previous page concluded by showing how to find the values for the last four white squares by squaring the numbers 5, 9, 13, and 17. This page moves from the white pieces to the black pieces, applying similar arithmetic logic.]]
+
+->
+| 5 | 9 | 13 | 17 |
+| :---: | :---: | :---: | :---: |
+| ■ 25 | ■ 81 | ■ 169 | ■ 289 |
+<-
+
+Having now found the numbers that were to be written upon the white squares, there remains to find those which must be written upon the black ones. Wishing, therefore, to find the numbers of the first 4 black squares, we will operate in the way that we did when we wanted to find the numbers of the first 4 white squares: that is, we will **join** the four first black triangles with the four second black triangles, and we will have the numbers we desire, which will be these: **28, 66, 120, 190**.
+
+This is because from 12 joined [[notes: The author uses *accozzato*, meaning to couple or join together, to describe the addition of two numbers]] with 16, **28** is born; from 30 with 36, **66**; from 56 with 64, **120**; and from 90 with 100, **190**, as seen in the following figure.
+
+[[notes: In Rythmomachia, "Squares" are one of the three main ranks of pieces (alongside Circles and Triangles). Their values are not arbitrary but are derived through specific ratios. For the black side, these Square values are created by summing the values of the previously established Triangle pieces.]]
+
+->
+| ▲ 12 | ▲ 30 | ▲ 56 | ▲ 90 |
+| :---: | :---: | :---: | :---: |
+| ▲ 16 | ▲ 36 | ▲ 64 | ▲ 100 |
+| **■ 28** | **■ 66** | **■ 120** | **■ 190** |
+<-
+
+[[notes: This table visualizes the "birth" of the Square pieces. By stacking the values of the first set of black triangles (12, 30, 56, 90) with the second set (16, 36, 64, 100), the player determines the values that must be labeled on the Square pieces.]]
+
+[[summary: This page details how to calculate the values for the first four black Square pieces by summing pairs of black Triangle values. This continues the manual's technical instructions for constructing the numerical sets required to play Rythmomachia.]]
+
+[[keywords: Rythmomachia, Black Squares, Black Triangles, arithmetic, piece values, summation, Boethian mathematics]]

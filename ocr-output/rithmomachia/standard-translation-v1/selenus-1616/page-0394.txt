@@ -1,0 +1,17 @@
+[[meta: This page transitions from the visual diagrams of Chapter 9 to the instructional text of Chapter 10. The previous page provided board states for various opening gambits and defenses, while this page begins a new chapter focusing on specific responses to the King's Pawn opening, specifically the Queen's Pawn counter-move.]]
+
+(The Third Book) 10. cap:
+
+# The Tenth Chapter.
+
+## How the game is to be conducted when the White [player] moves the King’s Soldier, but the Black [player] in response moves the Queen’s [Soldier].
+
+Before we conclude the manner in which both King’s **Soldiers** [[notes: "Soldaten" or Soldiers is the period term for Pawns]] should be led onto the **field** [[notes: "plan" refers to the chessboard or the field of play]] at the start of the game, we wish briefly to consider how one must arrange the **moves** when Black, right in the first move at the **boundary** [[notes: the center of the board where the ranks meet]], makes an attack on White’s King’s Soldier with his own King’s [[notes: The text here says "K. Soldaten" (King's) but the context of the chapter title and the move to square 37 implies the Queen's Soldier/Pawn. This is likely a historical typo or refers to the "King's side" of the board generally]] Soldier.
+
+If White moves the **King’s Soldier** to **twenty-eight** [[notes: In the 1–64 numbering system used here, 28 corresponds to the square e4 in modern notation]]: then Black does not move his King’s Soldier (as was indicated many times in the previous examples) to **thirty-six** [[notes: e5]], but rather the **Queen’s Soldier** to **thirty-seven** [[notes: d5, known today as the Scandinavian Defense]]. White moves the King’s Soldier (which is indeed not an uneven move) to **thirty-six** [[notes: f4, attempting a King's Gambit structure]]: yet it is better that he take away the **Black King’s Soldier** [[notes: Again, referring to the pawn on d5]] (because he thereby gains a move against the enemy). For when Black takes the **White King’s Soldier** with the **Queen**: he [White] then moves the **King’s Knight** [[notes: "Reuter" literally translates to Rider or Horseman, the period term for the Knight]] against her to **twenty-two** [[notes: Nc3]]: Black moves the same [Queen] back to **sixty-one** [[notes: d8]]: he [White] moves the **King’s Soldier** [[notes: likely the d-pawn here, as the e-pawn was traded]] to **twenty-nine** [[notes: d4]]: and subsequently brings the **six main pieces** [[notes: "Haupt-Steine" refers to the "officer" pieces—the two Rooks, two Knights, and two Bishops]] forward into the field with great caution in order to attack the enemy and damage his position as circumstances allow.
+
+[[meta: catchword: It]]
+
+[[summary: This chapter introduces the Scandinavian Defense, where Black responds to White's King's Pawn opening by advancing the Queen's Pawn. The author advises White to capture the pawn and develop the Knights to gain a positional advantage.]]
+
+[[keywords: Chess tactics, Opening moves, Scandinavian Defense, King's Soldier, Queen's Soldier, Knight, Development, 17th-century chess]]

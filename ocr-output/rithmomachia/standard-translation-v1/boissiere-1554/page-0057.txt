@@ -1,0 +1,29 @@
+[[meta: This page continues the explanation of the "Ambush" rule, where a single piece is captured by two opposing pieces whose sum equals its value. It provides a comprehensive table of numerical combinations used by both the "Even" and "Odd" sides to execute these captures.]]
+
+RYTHMOMACHIA, GAME
+
+...numbers which by ambushes can trap or be trapped [[notes: The original French uses *seduire* (to lead astray or seduce) and *seduicts*, a common metaphorical way to describe capturing a piece in this "Battle of Numbers"]]: for the number in the middle column can be taken if it is found to be [the sum of] the two numbers and outer columns; for the numbers of the two outer columns added together are worth as much as the number between them [[notes: In the table below, the first and second columns are added together to equal the value of the third column, which represents the captured piece]].
+
+### Numbers.
+
+| Even against Odd. | | | Odd against even. | | |
+|:---|:---|:---|:---|:---|:---|
+| 4 | 8 | 12 | 3 | 5 | 8 |
+| 8 | 20 | 28 | 3 | 12 | 15 |
+| 16 | 20 | 36 | 7 | 9 | 16 |
+| 9 | 36 | 45 | 9 | 16 | 25 |
+| 4 | 45 | 49 | 12 | 30 | 42 |
+| 15 | 49 | 64 | 9 | 36 | 45 |
+| 2 | 64 | 66 | 28 | 36 | 64 |
+| 9 | 72 | 81 | 16 | 56 | 72 |
+| 36 | 45 | 81 | 25 | 56 | 81 |
+| 9 | 81 | 90 | 25 | 66 | 91 |
+| 9 | 91 | 100 | 49 | 120 | 169 |
+| 49 | 72 | 121 | 64 | 225 | 289 |
+| 72 | 153 | 225 | | | |
+| 72 | 289 | 361 | | | |
+| **The evens to be added** | | **Odds resulting** | **Odds to be added** | | **The evens resulting** |
+
+[[summary: This page provides a mathematical reference table for the "Ambush" capture rule. It demonstrates which combinations of pieces can be added together to equal and remove an opponent's piece from the board.]]
+
+[[keywords: Rythmomachia, mathematical games, Ambush, addition, capture rules, even and odd numbers]]

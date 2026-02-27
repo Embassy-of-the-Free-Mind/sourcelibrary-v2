@@ -1,0 +1,19 @@
+[[meta: This page continues the technical description of the Rider’s (Knight's) movements across the board, using a numerical coordinate system (1–64). It bridges the mechanics of the piece with the terminology of 17th-century horsemanship.]]
+
+The First Book / Chapter 9:
+
+left hand / yet forward / to twenty-eight: (there he comes again onto the path) from that / to forty-three: from that / to forty-nine: (there he comes once more onto the path / and as it were to the end of the **repolons** [[notes: A *repolon* is a term from classical dressage referring to galloping a horse back and forth on a straight line. The author uses equestrian metaphors to describe the Knight's maneuvers.]]) From there / he throws the horse / again around to the right hand / and runs backward / to thirty-four: from that / to twenty-eight: (on the line) from that to thirteen: from that to seven: (there he reaches the path again / and arrives at the place / where he began). Now / if he wishes to wheel the horse around again to the left hand / he runs first / to 13: following this he turns / to the right hand / forward / to 28: to the left hand / to 34: and to the right hand / to 49: then backward / to 43: 28: 13: and 7: there he halts / or *parando voltando* [[notes: Italian for "stopping and turning," another dressage maneuver.]], further to the right side / forward / to 22: 28: &c. gallops.
+
+Furthermore, one can indicate / with the following moves / how a horse / through the help of the thighs [[notes: Referencing the "leg aids" used by a rider to move a horse sideways.]] / is driven to the side: namely, if the aforementioned White Rider / from seven / to twenty-four: to fourteen: to thirty-one: to twenty-one: to thirty-eight: to twenty-eight: to forty-five: to thirty-five: to fifty-two: to forty-two: to fifty-nine: to forty-nine: and through the same squares / (if he has turned the horse / toward the left side / back to 59.) backward / until 7. where he is held / the horse steps cross-wise / and is urged to the sides.
+
+When they give check [[notes: *Schach-bieten*—to place the King under attack.]], no piece can be placed between them / and the King being charged / (because their gait / is entirely different / from the gait of the other pieces): rather the King / (provided one cannot take them [[the Riders]] / with another piece) must necessarily yield / and move out of the check.
+
+They are furthermore / because of their manifold jumps / and because one must / before them / on account of their singular gait / guard oneself very closely / and with diligence / more capable than the other pieces / to advance into the field against the enemy: Just as they are, in certain cases / preferred over the **Archers** [[notes: *Schützen*—the early modern term for Bishops]]: for
+
+Firstly / when the chess-players / on both sides / are equal in **Soldiers** [[notes: *Soldaten*—Pawns]], and the one / besides them / still has a Rider / and the other / still has an Archer: then his game / who has the Rider / is much better / than his / with the Archer. Considering / that the former can move his Soldiers / into such squares / into which / this
+
+[[meta: catchword: *sein* (his)]]
+
+[[summary: This page uses the language of classical horsemanship to describe the Knight's movement patterns and argues that the Knight is often superior to the Bishop in endgames where pawn structures are equal.]]
+
+[[keywords: Rider, Knight, Archer, Bishop, Soldiers, Pawns, Repolons, check, dressage metaphors, movement patterns]]

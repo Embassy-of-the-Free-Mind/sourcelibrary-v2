@@ -1,0 +1,25 @@
+[[meta: This page provides a reference table for the various mathematical "Victories" mentioned on the previous page. In Rythmomachia, winning isn't just about capturing pieces; it is about achieving a "Harmony" by placing specific sequences of numbers in the opponent's territory. This table serves as a cheat sheet for the players to recognize which sets of numbers form the required Arithmetic, Geometric, and Harmonic progressions.]]
+
+# Victories in Proportion.
+
+[[notes: This table lists the specific number sequences required to achieve the "Great Victory" (Victoria Magna). To win this way, a player must move four pieces into the opponent's side of the board so that they form three types of mathematical progressions simultaneously.]]
+
+| | D . C B A [[notes: These letters represent the four pieces or "terms" in the sequence.]] | Arithmetic | Geometric | Harmonic |
+|:---|:---|:---|:---|:---|
+| [[margin: greatest victories for the even numbers.]] | 2 3 4 6 | 2 4 6 | 2 3 4 6 | 2 3 6 |
+| | 4 6 8 12 | 4 8 12 | 4 6 8 12 | 4 6 12 |
+| | 6 8 9 12 | 6 9 12 | 6 8 9 12 | 6 8 12 |
+| [[margin: Greatest for the odd numbers.]] | 4 6 9 12 | 6 9 12 | 4 6 9 | 4 6 12 |
+| | 2 9 16 72 | 2 9 16 | 2 9 16 72 | 9 16 72 |
+| | 3 5 15 25 | 5 15 25 | 3 5 15 25 | 3 5 15 |
+| [[margin: Lesser victories.]] | 5 9 45 81 | 9 45 81 | 5 9 45 81 | 5 9 45 |
+| | 5 25 45 225 | 5 25 45 | 5 25 45 225 | 25 45 225 |
+| | 5 15 25 45 | 5 25 45 | 5 15 45 | |
+| | 12 15 16 20 | 12 16 20 | 12 15 16 20 | |
+
+[[margin: OF THE PHILOSOPHERS.]]
+
+[[gloss: Rythmomachia [[notes: The "Battle of Numbers" or "The Philosophers' Game"]], proportions, Arithmetic, Geometric, Harmonic, victories, evens, odds]]
+
+[[summary: This page consists of a mathematical reference table for Rythmomachia players, detailing the specific sets of numbers that constitute "Great" and "Lesser" victories. It shows how groups of four numbers contain nested Arithmetic, Geometric, and Harmonic progressions.]]
+[[keywords: Rythmomachia, Mathematical Progressions, Arithmetic, Geometric, Harmonic, Victories, Even and Odd Numbers, Game Strategy]]

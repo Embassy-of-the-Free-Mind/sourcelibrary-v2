@@ -1,0 +1,39 @@
+[[meta: Continuity from page 9: The previous page concluded mid-sentence while discussing the allegorical nature of chess in relation to the state and "Courtiers." This page begins by completing that thought, linking the strategic cooperation of chess pieces to human friendship and political rivalry.]]
+
+# 10 The First Book. Chapter 1.
+
+[[margin: Chapter 1]]
+
+,, ...tained. As much as it is beneficial to the game, the pieces, which are connected with one another, maintain good friendship among themselves. If we therefore wish to look at friendship only according to what brings advantage, we hold that the chess pieces on the chessboard also practice friendship (which is otherwise held in very high honor and dignity) and can carry out the excellent work of maintaining friendship.
+
+Should one now wish to observe the study, customs, vices, and virtues that are common and occur within [the game], one will find them also prettily depicted here: For just as a chess player only looks to create his own advantage in every way, and to overcome his opponent with all kinds of benefits and ruses [[notes: The original German *geschwindigkeiten* here implies cleverness or "quickness of wit" used to outmaneuver an opponent]], so every person exerts himself only for his own advantage, even to the neighbor's harm. From this, the Greeks and Romans took the proverb *Ludimus Civitates*, that is: "We play the game of chess" [[notes: Literally "We play cities." The author is equating the strategic capture of cities in war/politics with the game of chess]]: which Desiderius Erasmus of Rotterdam [[notes: A famous Dutch humanist and scholar of the Northern Renaissance, c. 1466–1536]] explains in his *Adages* [[notes: A collection of Greek and Latin proverbs]], Adage 3228, as follows:
+
+> ,, *It is a certain kind of game in which pieces were played in olden times,*
+> ,, *which antiquity called πόλεις [poleis], i. e. cities. The moderns*
+> ,, *began to call them χώρας [choras], i. e. Regions. Cratinus used*
+> ,, *the adage in "The Fugitives," and Plato alluded to this proverb*
+> ,, *in the fourth book of the Republic. For each of them [the players' positions]*
+> ,, *consists of many cities, not one city, as those who play are accustomed*
+> ,, *to say. Zenodotus reports it, though he does not indicate the same*
+> ,, *meaning of the adage. Therefore, I leave it to each to guess what*
+> ,, *seems closest to the truth. To me, it seems to fit whenever each*
+> ,, *person pursues his own convenience by whatever way possible, and*
+> ,, *lays snares in every way for his rival and competitor: which Game*
+> ,, *is frequent in the Courts of Princes, and in public Magistracies.*
+> ,, *From this game, it seems, has flowed that which is now commonly*
+> ,, *called Scacarius [Chess]:*
+
+->That is:<-
+
+,, The proverb reads: We play cities: for
+,, it is a kind of game played with stones [pieces]
+,, in former times, and these were called "cities"
+,, by the ancients, but "provinces" by those who followed.
+,, This proverb is to be used when one seeks
+,, his own advantage and benefit in every way
+,, he can and is able, and for his companion, who perhaps
+,, also [seeks] further for himself...
+
+[[summary: This page explores the moral and political allegories of chess, comparing the "friendship" of supporting pieces to human social bonds. It cites Erasmus's commentary on an ancient Greek proverb to argue that the strategic maneuvering of chess mirrors the competitive and often cutthroat nature of courtly life and politics.]]
+
+[[keywords: Friendship, Erasmus of Rotterdam, Adagia, Ludimus Civitates, Political Allegory, Courtly Life, Ancient Greece, Strategy, Plato's Republic]]

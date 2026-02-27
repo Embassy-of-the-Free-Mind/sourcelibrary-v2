@@ -1,0 +1,126 @@
+[[meta: This page continues the chess variations from page 390. The diagrams correspond to the numbered tactical scenarios (e.g., n. 5, n. 25) discussed in the preceding text. Note that in the diagrams, 'j' is used for the numeral '1' (e.g., 'j2' for 12), a common practice in early modern printing.]]
+
+### Chapter 3: Of the Game of Chess.
+->Q q q<-
+
+### No. 5. 25.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BS | BR | BK | BS | BR | BR |
+| BS | BS | | | | BS | BS | BS |
+| | | | | | | | |
+| | 39 [[notes: g5]] | BS | BS | | | | |
+| | | | WS | BS | WB [[notes: 'Schütze' or Marksman, the historical name for the Bishop]] | | |
+| | | WS | | WS | | | |
+| WS | WS | | | | | WS | WS |
+| WR | WR | | WR | WK | WB | WR | WR |
+
+---
+
+### No. 8. 9. 24.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | BR | | BR | BK | BS | BR | BR |
+| WR | BS | | BS | 52 [[notes: d7]] | BS | BS | BS |
+| | | 46 [[notes: f6]] | | | | | |
+| | | | BS | | | | |
+| | WS | BS | WS | BS | | | |
+| | | WS | | WS | | | |
+| WS | | | | | | WS | WS |
+| WR | WR | | WR | WK | WB | WR | WR |
+
+---
+
+### No. 12. 19.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BR | BK | BS | | BR |
+| | WR | | BS | BR | BS | BS | BS |
+| | | | | | | | |
+| | WS | | BS | | | | |
+| | | BS | WS | BS | | | |
+| WR | | WS | | WS | | | |
+| WS | | 14 [[notes: f2]] | | | | WS | WS |
+| WR | 7 [[notes: g1]] | | | WK | WB | WR | WR |
+
+---
+
+### No. 17. 18.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | | BK | BS | | BR |
+| | | WR | | | BS | BS | BS |
+| | WS | | BR | | | | |
+| BR | BS | 38 [[notes: f5]] | BS | | | | |
+| | | BS | WS | BS | | | |
+| | WS | | WS | | | | |
+| WS | | | | | | WS | WS |
+| | WR | | WK | WS | WR | WR | WR |
+
+<column-break/>
+
+### No. 6. 7.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | BR | | BR | BK | BS | BR | BR |
+| WR | BS | | BS | | BS | BS | BS |
+| | | | | | | | |
+| | | BS | BS | | | | |
+| | | 30 [[notes: f4]] | WS | BS | | | |
+| | | WS | | WS | | | |
+| WS | WS | | | | | WS | WS |
+| WR | WR | | | WK | WS | WR | WR |
+
+---
+
+### No. 10. 23.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BR | BK | BS | | BR |
+| WR | BS | | | BR | BS | BS | BS |
+| | | | | BS | | | |
+| | WS | 38 [[notes: f5]] | BS | | | | |
+| | | BS | WS | BS | | | |
+| WR | | WS | | WS | | | |
+| WS | | | | | | WS | WS |
+| WR | | | | WK | WB | WR | WR |
+
+---
+
+### No. 14. 15.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | | BK | | | BR |
+| | WR | | BS | | BS | BS | BS |
+| | WS | | BS | | | | |
+| | WR | | BS | | | | |
+| | | BS | WS | BS | | | |
+| | | BR | | WS | | | |
+| WS | | | | | 11 [[notes: c2]] | WS | WS |
+| | | | 5 [[notes: e1]] | WK | WB | WR | WR |
+
+---
+
+### No. 20. 21.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | | BR | BK | BS | | BR |
+| | WR | | BS | BR | BS | BS | BS |
+| | | 47 [[notes: g6]] | | | | | |
+| BR | WS | | BS | | | | |
+| | | BS | WS | BS | | | |
+| | | WS | | WS | | | |
+| WS | | WR | | | | WS | WS |
+| WR | 7 [[notes: g1]] | | | WK | WB | WR | WR |
+
+[[summary: This page contains a series of eight chess diagrams illustrating specific tactical variations discussed in the text. The boards use a numerical coordinate system (1–64) to highlight critical squares and maneuvers for both White and Black.]]
+
+[[keywords: chess tactics, chess diagrams, historical chess notation, King, Marksman, Soldier, Rook, early modern gaming]]

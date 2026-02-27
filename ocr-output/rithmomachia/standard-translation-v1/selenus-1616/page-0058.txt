@@ -1,0 +1,20 @@
+[[meta: This page continues the exploration of ancient strategy games, specifically distinguishing games of skill from games of chance, as the author seeks to trace the lineage of chess back to the Greek "petteia."]]
+
+# The First Book / 2. Chapter:
+
+"ἐν δὲ τῇ πεττείᾳ αὐτὸ μόνον τὰς ψήφους μετακίνεσι:" [[notes: A Greek phrase usually attributed to Pollux or similar ancient lexicographers, distinguishing pure strategy from dice games.]] **That is:**
+"But in the stone-game [[notes: *Stein-Spiel*, a general term for board games played with pieces or "stones"], (without dicing and blind luck), only the stones are set forth and moved."
+
+Of this we now wish to show several kinds.
+
+The first shall be given to us by the stone-game which the *Proci*, or Suitors [[notes: The *Proci* were the 108 men in Homer’s *Odyssey* who lived in Odysseus’s palace while he was missing, attempting to marry his wife, Penelope]], played in **Homer**, in the *Odyssey*, Book 1; of which **Athenæus** [[notes: A Greek rhetorician and grammarian, author of the *Deipnosophistae* or "Banquet of the Learned"]] writes in *Deipnosophistae*, Book 1, pages 16 and 17, as follows:
+
+> "Appion Alexandrinus [[notes: Apion was a Greek grammarian and commentator on Homer]] relates that he heard from Cteson of Ithaca what kind of game of *Latrunculi* [[notes: *Ludus latrunculorum*, or the "Game of Mercenaries," a Roman strategy game]] was played among the Suitors. For there were one hundred and eight Suitors, who set up as many stones as there were men, opposite one another and equal in number—so that on each side there were fifty-four, with a certain empty space left in between. In this area, which separated the battle-lines and ranks, they placed one stone, which they called **Penelope**. This was the mark and the target to see if anyone could strike it with another stone. Whoever was chosen by lot to cast, aimed and directed his stone at it; and if he happened to touch Penelope and push her forward from her seat, his stone, which he had sent, was placed in the spot of the one ejected and pushed out. And when he had again restored Penelope to the seat she held before, he would cast another stone a second time; and if he struck her again without hitting any of the other stones, he won, and conceived the highest hope of a marriage with Penelope. In this game, **Eurymachus** [[notes: One of the leading and most arrogant of the suitors]] often obtained victory and promised himself the marriage of Penelope with great hope." **That is:**
+
+> "Appion Alexandrinus relates that he was informed by Cteson of Ithaca in what manner the stone-game was played among the *Procis* (who wooed the wife **Ulysses** [[notes: The Latin name for Odysseus]] had left behind at home). For there were one hundred and eight of them, who had set as many stones as their number allowed—divided into two halves—on a space against one another in the following way: fifty-four stood on each side, and between them, exactly in the middle, an empty space was left. In this space, which separated their battle-ranks, they had placed a stone which they called **Penelope**. This was the mark and the goal which they had to try to hit with their stones. Whoever was then chosen by lot..."
+
+[[meta: catchword: to throw]]
+
+[[summary: This page describes an ancient game played by Penelope's suitors in Homer's Odyssey, as recorded by Athenaeus. It highlights the game as one of pure skill (petteia) rather than chance, where 108 pieces were used to target a central piece named after the Queen.]]
+
+[[keywords: Petteia, Stone-game, Homer, Odyssey, Penelope, Suitors, Athenaeus, Strategy games, Ancient Greece, Eurymachus]]

@@ -1,0 +1,26 @@
+<header>The Philosophers' Game.</header>
+
+<image-desc>A diagram illustrating game pieces for the "Philosopher's Game" (Rythmomachia). It consists of a grid of eight squares arranged in two rows of four. The squares contain the following numbers and algebraic (cossic) symbols:
+- Top row: 289; 169; 81 with three symbols resembling the cossic sign for square (zensus); and a stack of square pieces labeled 25 with one square symbol.
+- Bottom row: 361; 225 with one square symbol; 121; and 49.
+Behind the grid are drawings of stacked square or pyramidal pedestals representing game pieces of various heights.</image-desc>
+
+| 289 | 169 | 81 <br> ʒ ʒ ʒ | 25 <br> ʒ |
+| :---: | :---: | :---: | :---: |
+| 361 | 225 <br> ʒ | 121 | 49 |
+
+And thus you have all the pieces <note>original: "men"</note> that are marked with algebraic <note>original: "cossicall"</note> signs.
+
+### The setting in array.
+
+The teachers of this kind of playing do not favor <note>original: "allowe"</note> the former method of placement, or any other, as much as the natural placing of every piece under the one from which it arises. So they consist of <note>original: "conteyne"</note> six ranks in length, extending to the furthest edge of the board <note>original: "Table"</note> in this manner <note>original: "sorte"</note>.
+
+<sig>D. iii.</sig>
+
+<summary>
+This page concludes the description of game pieces marked with "cossic" (algebraic) symbols, specifically highlighting the numbers 289, 169, 81, 25, 361, 225, 121, and 49. It then introduces the rules for "the setting in array," or the starting lineup of the game. The text notes that expert players prefer a "natural" arrangement where pieces are placed according to their mathematical origins (how one number "arises" from another), resulting in a starting formation that spans six ranks toward the opponent's side of the board.
+</summary>
+
+<keywords>
+Rythmomachia, Philosophers' Game, algebraic signs, cossic signs, mathematical gaming, board game setup, game array, 16th-century mathematics, zensus, square numbers
+</keywords>

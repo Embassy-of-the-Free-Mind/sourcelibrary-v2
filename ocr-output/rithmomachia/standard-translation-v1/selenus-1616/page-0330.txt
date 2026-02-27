@@ -1,0 +1,71 @@
+[[meta: This page marks a transition from the tactical chess prose of the preceding pages to a series of technical diagrams or pattern grids. These tables serve as visual references for the variations discussed in "The Third Book."]]
+
+# 4. cap: The Third Book /
+
+[[margin: 4. cap: The Third Book /]]
+
+->no. 2. 7.<-
+
+[[notes: These grids utilize a shorthand common in 17th-century instructional manuals. The letters likely represent a combination of colors and materials: **S** for *Schwarz* (Black), **W** for *Weiß* (White), **R** for *Roth* (Red), and **K** for *Kupfer* (Copper) or possibly *König* (King) depending on the specific game application. The numbers likely refer to specific squares on the board or thread counts.]]
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| SR | SS | S& | SK |
+| 42 | WR | WS | WK |
+| 37 | | | |
+
+->no. 8. 11. 12. 13. 14. 15. 25. 46.<-
+
+| | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 52 | SR | SS | S& | SK | 45 |
+| WR | 43 | WS | WK | 41 | 37 |
+| 33 | | | | | |
+
+->no. 18. 24.<-
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| SR | SS | WS | WR |
+| WK | SK | W& | WS_c [[notes: The subscript '_c' likely denotes a specific variation or 'color' distinction within the white set.]] | |
+
+->no. 22. 23.<-
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| 41 | 25 | 41 | |
+| | | | |
+
+<column-break/>
+
+->no. 3. 4.<-
+
+| | | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| SR | SS | S& | SK | WR |
+| WS | WK | 45 | | |
+
+->no. 9. 10.<-
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| | 50 | | |
+| | | | |
+
+->no. 20. 21.<-
+
+| | | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| 58 | 42 | SR | SS | WS |
+| WR | WK | | | |
+
+->no. 26. 27. 40.<-
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| 51 | 41 | | |
+| | | | |
+
+[[summary: This page presents a series of coded grids and reference tables labeled for "The Third Book," likely providing visual data for the chess variations or pattern-making techniques described in the text.]]
+
+[[keywords: Third Book, pattern grids, textile shorthand, chess variations, 17th-century diagrams]]

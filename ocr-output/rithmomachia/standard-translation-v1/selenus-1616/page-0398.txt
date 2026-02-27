@@ -1,0 +1,57 @@
+[[meta: This page continues the critique of Damiano’s chess openings. The text specifically addresses a scenario (n. 6) where White is advised to avoid exchanging a Bishop for a Knight, contrary to Damiano's original advice, in order to maintain a stronger board presence and ensure the King's safety.]]
+
+# The Third Book / 11. cap:
+[[notes: Chapter 11: On the Game of Chess.]]
+
+[[margin: II.]]
+Therefore, the **White**—as **Damianus** [[notes: Pedro Damiano (1480–1544), author of a famous early chess manual]] indeed considers it in n. 6—should not take the **S. K. Reuter** [[notes: *Schwarzer Königs-Reuter*, or Black King's Rider (Knight)]] with his **K. Schützen** [[notes: *Königs-Schütze*, or King's Archer (Bishop)]]; rather, he should pay diligent attention to the **Black’s** schemes and move his **Queen** away from the place where she stands, behind the **K. Schützen** (unless he wishes to be deprived of victory). In summary: let the **Black** play as he will; if the **White** is experienced in this game, he will win it much more easily if he does not exchange his **K. Schützen** for the **S. K. Reuter**, but instead moves out into the field with his **Reutern** [[notes: Riders (Knights)]] and places his **King** in a secure location. The **Black**, however, if he intends to use his **Rochen** [[notes: Rooks or Castles]] subsequently, will certainly be threshing empty straw [[notes: A period idiom meaning to engage in a futile or useless effort]]. Therefore, let the **White** (notwithstanding that **Damianus** considers it advisable) give no cause for the exchange of pieces; for it is much more the **Black's** concern to strive for this, so that he might the better extricate himself from the enemy's schemes.
+
+| **n. 2. 3.** | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| SR | SS | SK | | | | | |
+| | | | | | | | |
+| | | | | **46** | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| WS | WR | WK | | | | | |
+
+| **n. 4. 5. 7.** | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | SK | | | | |
+| SR | SS | | | | | | |
+| | | | | **46** | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| WS | | | | | | | |
+| | | WK | WR | | | | |
+
+| **n. 6. jj.** | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | SR | | | SK | | |
+| | | | | | | | SS |
+| | | | | | | | |
+| | | | | **zz** | | | |
+| | | | | | | | |
+| | WS | | | | | | |
+| | | | | | | | |
+| | | WR | | | WK | | |
+
+| **n. 8. 9.** | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | SR | | | | | SK | |
+| | | SS | | | | | |
+| | | | | | | | |
+| | | | **38** | | | | |
+| | | | | **35** | | | |
+| | | | | | | | |
+| | | | | | WS | | |
+| | | | | | | WK | WR |
+
+[[meta: catchword: Das]]
+
+[[summary: On this page, the author provides a technical critique of chess tactics, arguing against the exchange of a Bishop for a Knight as previously suggested by Damiano. He emphasizes that White can secure a much easier victory through piece development and King safety, rendering Black's subsequent Rook maneuvers ineffective.]]
+
+[[keywords: chess theory, Pedro Damiano, opening gambits, Bishop vs Knight, chess terminology, King safety, piece exchange]]

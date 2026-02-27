@@ -1,0 +1,27 @@
+[[meta: This page serves as a detailed visual companion to the previous diagram, moving from a general grid layout to the specific numerical values and shapes of the pieces used by one of the players in Rithmomachia.]]
+
+### ->Illustration of the Game Pieces and their Values<-
+
+[[image-desc: A full-page engraving of a Rithmomachia game board, showing a portion of a checkered grid. Twenty-four game pieces are arranged in the central area of the visible board, spanning four rows and six columns. The pieces are rendered with three-dimensional shading.]]
+
+[[notes: **Rithmomachia**, or "The Battle of Numbers," was a highly sophisticated board game popular in Europe from the 11th through the 17th centuries. Unlike chess, which is a game of military strategy, Rithmomachia was a game of mathematical harmony, used to teach Boethian arithmetic and Pythagorean number theory. Players "captured" pieces not just by landing on them, but by using mathematical equalities or progressions.]]
+
+| | **Square Pieces** | **Square Pieces** | **Triangular Pieces** | **Triangular Pieces** | **Circular Pieces** | **Circular Pieces** |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Row 1** | 49 | 28 | 16 | 12 | 9 | 2 |
+| **Row 2** | 121 | 66 | 36 | 30 | 25 | 4 |
+| **Row 3** | 225 | 120 | 64 | 56 | 49 | 6 |
+| **Row 4** | 361 | **Pyramid 91** | 100 | 90 | 81 | 8 |
+
+[[notes: The numbers on these pieces follow specific mathematical relationships. The **Circles** represent simple "even" numbers. The **Triangles** represent "Superparticular" ratios (like 12 and 16, where 16 is 12 plus one-third of 12). The **Squares** represent even more complex "Superpartient" ratios.]]
+
+[[notes: The **Pyramid 91** is a special composite piece. As noted in the illustration, its value is derived from the sum of the first six squares: 1² (1) + 2² (4) + 3² (9) + 4² (16) + 5² (25) + 6² (36) = 91. In gameplay, the Pyramid is the most powerful piece, acting somewhat like a Queen in chess but with significantly more complex rules for its capture.]]
+
+[[gloss: **Rithmomachia**: From the Greek *arithmos* (number) and *mache* (battle).]]
+[[gloss: **Pyramid**: A "perfect" piece made of stacked layers, each representing a square number.]]
+
+[[notes: A large water stain is visible at the top right of the paper, likely a result of the manuscript's age and previous storage conditions.]]
+
+[[summary: This page provides a detailed visual inventory of the pieces for the game Rithmomachia, illustrating the specific numerical values for the circles, triangles, squares, and the complex pyramid piece. It highlights the mathematical relationships—such as the sum of squares forming the pyramid—that define the game's logic.]]
+
+[[keywords: Rithmomachia, arithmetic, mathematical game, pyramid piece, number theory, Boethian proportions, board game history, Renaissance education]]

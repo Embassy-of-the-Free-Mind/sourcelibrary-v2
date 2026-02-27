@@ -1,0 +1,64 @@
+[[meta: This page continues the mathematical analysis of musical intervals, moving from the "ditone" (major third) discussed on the previous page to the "diatessaron" (perfect fourth) and the "diapente" (perfect fifth). It relies heavily on the authority of Boethius to refute the ear-based theories of Aristoxenus.]]
+
+<page-num>41</page-num>
+
+[[margin: 7]]
+# ¶ Five tones exceed two diatessaron consonances by one comma, and thus they turn out to be larger.
+
+¶ The musician Aristoxenus [[notes: A Greek philosopher and pupil of Aristotle who argued that musical intervals should be judged by the ear rather than strictly by mathematical ratios.]] thought that the **diatessaron** consonance [[notes: The interval of a perfect fourth.]] consisted of two whole tones and a full semitone. Consequently, he believed that two **diatessaron** consonances would fill the space of five whole tones. His error is easily proven by the third book of music by the Saint Severinus Boethius [[notes: Boethius (c. 480–524 AD) was the primary authority on music theory in the Middle Ages; his "De institutione musica" transmitted Greek mathematical music theory to the West.]] and by the preceding arguments. 
+
+For according to the preceding section, the **diatessaron** consonance does not consist of two tones and a full semitone, but rather of two tones and a *minor semitone* [[notes: In the Pythagorean system used here, the semitone is not exactly half of a tone. The "minor semitone" (or limma) is slightly smaller than a true mathematical half.]]. This is placed between the 18/19 and 19/20 proportions in the twenty-first [proposition] of the second book. A full semitone, however, would be placed between the 16/17 and 17/18 proportions according to the fourteenth [proposition] of the same book. Therefore, a minor semitone is smaller than a full semitone. 
+
+Since, as was said in the preceding part, the **diatessaron** consonance contains two tones and a minor semitone, it follows that two **diatessaron** consonances will contain four tones and two minor semitones. And because, by the thirty-third [proposition] of the second book, a single whole tone contains two minor semitones and one **comma** [[notes: The "comma" is a tiny, almost imperceptible interval that represents the mathematical discrepancy between different ways of tuning the same note.]], two **diatessaron** consonances therefore contain five tones *minus* one comma. Thus, five whole tones exceed two **diatessaron** consonances by one comma and turn out to be larger, which is what was intended to be shown.
+
+---
+
+[[margin: 8]]
+# ¶ To establish the diapente consonance on an assigned string.
+[[notes: "Diapente" is the ancient term for the interval of a perfect fifth.]]
+
+->**Consonance of a diapente.**<-
+
+[[notes: The diagram illustrates a monochord—a single-stringed instrument used for measuring intervals. By dividing the string into three equal parts (a-c, c-d, d-b), the ratio of the whole string (3 parts) to two-thirds of the string (2 parts) creates the perfect fifth.]]
+
+¶ Let **a b** be the assigned number upon which the **diapente** consonance is ordered to be placed. I divide **a b** into three mutually equal parts by the marks **a, c, d, b**, so that **a b** contains three parts and **c b** contains two of them. By definition, the relationship of **a b** to **c b** will be a **hemiolium** or **sesquialter** interval [[notes: Both "hemiolium" and "sesquialter" refer to the ratio of 3:2.]]. But since the **diapente** consonance, by definition, arises from that interval ratio, then **a b** to **c b** will sound a **diapente**. Thus, on the given chord or assigned string, the **diapente** consonance is established in the ratio of **a b** to **c b**.
+
+---
+
+[[margin: 9]]
+# ¶ Three tones are less than a diapente consonance, and four tones exceed that same consonance.
+
+¶ Although it is well enough known from the fifth [proposition] of this book that a **tritone** [[notes: An interval of three whole tones, famous for its dissonant, "unstable" sound.]] cannot produce a **diapente** consonance, it is also shown here that the **tritone** is smaller than the **diapente** consonance. For by the eighteenth [proposition] of the first book, three **sesquioctaves** [[notes: The ratio 9:8, which defines a whole tone.]] are less than a **sesquialter** interval (3:2). Furthermore, by the nineteenth [proposition] of the same book, four **sesquioctaves** exceed the **sesquialter** interval. Since the **diapente** consonance is situated in the **sesquialter** ratio, it follows that three tones consisting of three **sesquioctaves** are less than a **diapente** consonance, and four tones consisting of four **sesquioctaves** transcend that same consonance in size. This is the whole of what was proposed.
+
+---
+
+[[margin: 10]]
+# ¶ The diapente consonance consists of three tones and a minor semitone. From this, it follows that if a tone is subtracted from a diapente, a diatessaron consonance remains; if a diatessaron is subtracted, a tone remains.
+
+¶ According to the fifteenth [proposition] of the first book, if a **sesquitertium** interval (4:3) is taken away from a **sesquialter** interval (3:2), a **sesquioctave** (9:8) will be left behind. As was seen in the demonstration of the sixth [proposition] of this book, a **sesquitertium** (the fourth) contains two tones with a minor semitone. Therefore, the **diapente** consonance—which contains a **sesquioctave** (that is, a tone) beyond those two tones and a minor semitone—will consist of three tones and a minor semitone, just as was proposed. 
+
+The **corollary** is thus recognized: for the **diapente**, by this present proof, contains three tones with a minor semitone. If a tone is subtracted, the remainder is two tones and a minor semitone; and by the sixth [proposition] of this book, two tones with a minor semitone constitute a **diatessaron** consonance. Therefore, if a tone is subtracted from a **diapente** consonance, a **diatessaron** remains. Likewise, since a **diapente** consists of three tones with a minor semitone, if a **diatessaron** consonance (which is completed by two tones and a minor semitone) is subtracted, a whole tone will be left over, as the second part of the corollary proposes. This is the entirety of the corollary.
+
+---
+
+[[margin: 11]]
+# ¶ The diapente consonance contains less than eight minor semitones.
+
+¶ Since one whole tone contains two minor semitones and one **comma**, three tones and one minor semitone will contain seven minor semitones and three **commas**. And since three **commas**, by the thirty-fifth [proposition] of the second book, are narrower than a minor semitone, the **diapente**—which by the preceding proof consists of three tones and a minor semitone—will contain less than eight minor semitones. Just as it has been easily shown that the **diapente** consonance does not yet reach the eighth minor semitone or the eighth **diesis** [[notes: A "diesis" is a very small interval, often used to describe the difference between major and minor semitones.]], so it would be just as easy to show that the same consonance does not yet reach the seventh **apotome** [[notes: An "apotome" is the "major semitone," which is slightly larger than the "minor semitone" or limma.]].
+
+---
+
+[[margin: 12]]
+# ¶ The diapente consonance is joined from a ditone and a sesquitone.
+[[notes: A "ditone" is a major third (two tones), and a "sesquitone" is a minor third (one and a half tones).]]
+
+¶ By the penultimate [proposition], the **diapente** consists of three tones and a minor semitone. A **ditone** and a **sesquitone** together also make three tones and a minor semitone. Therefore, a **ditone** and a **sesquitone** coupled together equally join to form a **diapente** consonance, which is what was intended.
+
+---
+
+[[margin: 13]]
+# ¶ The difference between the diapente and diatessaron consonances is a tone. From this, it follows that if a tone is added to a diatessaron consonance, it restores the diapente.
+
+[[summary: This page mathematically defines the Perfect Fifth (diapente) as being composed of three whole tones and a minor semitone, refuting Aristoxenus's claim that five tones equal two fourths. It establishes the basic arithmetic of musical intervals, showing how tones, fourths, and fifths relate to one another through ratios.]]
+
+[[keywords: Diapente, Diatessaron, Aristoxenus, Boethius, Hemiolium, Sesquialter, Sesquitertium, Comma, Minor Semitone, Monochord tuning]]

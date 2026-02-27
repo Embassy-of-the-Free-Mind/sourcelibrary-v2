@@ -1,0 +1,118 @@
+[[meta: This page continues the tactical chess analysis from the previous page, where the author was refuting the theories of Pedro Damiano. The diagrams here provide visual references for the moves discussed in the text, illustrating the positions of the "Riders" (Knights) and "Soldiers" (Pawns) across specific numbered squares.]]
+
+[[margin:
+Chapter 5:
+**The Fourth Book/**
+]]
+
+[[notes: The following diagrams use historical piece names: Rider (Knight), Archer (Bishop), and Soldier (Pawn). In these tables, the pieces are abbreviated as follows: BK/WK = Black/White King; BN/WN = Black/White Knight (Rider); BP/WP = Black/White Pawn (Soldier). The numbers in the cells (e.g., 28, 45) represent the author's coordinate system, numbering the 64 squares of the board from the bottom-left (1) to the top-right (64).]]
+
+### No. 3, 4
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | BN | BK | BP | BN | BN |
+| BP | BP | BP | | | BP | BP | BP |
+| | | | | | | | |
+| | | | BP | BP | | | |
+| | | | WP | 28 | | | |
+| | | | | WP | | | |
+| WP | WP | WP | | | WP | WP | WP |
+| WN | WN | WP | WN | WK | WP | WN | WN |
+
+### No. 7, 8
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | BN | BK | BP | | BN |
+| BP | BP | | 53 | 52 | BP | BP | BP |
+| | | | | BN | | | |
+| | WP | | BP | | | | |
+| | | | WP | BP | | | |
+| | | WN | | WP | | | |
+| WP | WP | | | | | WP | WP |
+| WN | | WP | WN | WK | | WN | WN |
+
+### No. 13, 14, 15
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | | BK | BP | BN | WN |
+| BP | BP | BP | BP | BN | | | BP |
+| | | | | 43 | BP | | |
+| | | | | | | | |
+| | | | | BP | | | |
+| | | | WP | | | | |
+| WP | WP | WP | | | | WP | WP |
+| WN | WN | WP | | WK | WP | WN | WN |
+
+### No. 19, 20
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | BN | BK | BP | BN | BN |
+| BP | BP | BP | | | BP | BP | BP |
+| | | | 45 | | | | |
+| | | | BP | BP | | | |
+| | | | | 28 | | | |
+| | | | WP | | WN | | |
+| WP | WP | WP | | WP | | WP | WP |
+| WN | WN | WP | WN | WK | WP | | WN |
+
+<column-break/>
+
+### No. 5, 6
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | BN | BK | BP | BN | BN |
+| BP | BP | | | | BP | BP | BP |
+| | | | 45 | 44 | 43 | | |
+| | | | | BP | | | |
+| | | | | WP | BP | | |
+| | | | WN | | WP | | |
+| WP | WP | | | | | WP | WP |
+| WN | | WP | WN | WK | WP | WN | WN |
+
+### No. 10, 11
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | BN | BK | BP | BN | BN |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | | | | |
+| | | | | 37 | BP | 35 | |
+| | | | | | | | |
+| | | | | WP | | | |
+| WP | WP | WP | | WP | | WP | WP |
+| WN | WN | WP | WN | WK | WP | WN | WN |
+
+### No. 16, 17
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | BP | | BK | BP | WN | |
+| BP | BP | BP | BP | | | | BP |
+| | | | | | | BP | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | WP | | | |
+| WP | WP | WK | | WN | | | WP |
+| WN | WN | WP | | | | | BN |
+
+### No. 21, 22
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BN | | | BN | BK | | BN | BN |
+| BP | BP | | | | | | BP |
+| | | | BP | BP | | | |
+| | | | | | BP | BP | BP |
+| | | | WP | BP | | | |
+| | | | | WP | | WN | WP |
+| WP | WP | | 13 | 12 | | WP | WP |
+| WN | WN | | WN | WK | WP | | WN |
+
+[[summary: This page contains eight specialized chess diagrams illustrating tactical problems and piece positions (No. 3 through No. 22). It focuses on the movement of Kings, Riders (Knights), and Soldiers (Pawns) within the author's unique 1-64 square coordinate system.]]
+
+[[keywords: chess diagrams, 17th-century chess, board game notation, Rider, Soldier, King, chess tactics, move coordinates]]

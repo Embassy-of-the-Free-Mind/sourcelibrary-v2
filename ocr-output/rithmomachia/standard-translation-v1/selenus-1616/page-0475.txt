@@ -1,0 +1,36 @@
+[[meta: This page continues the sequence of chess problems from page 440. The text completes the seventh example—a complex endgame maneuver involving pawn promotion—and introduces the eighth example, which focuses on a coordinated checkmate using two Rooks and two Knights. The numbering system remains the 1–64 grid used throughout the manual.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 10:]] (to make) to forty-five: **The Black player** moves the **King** to fifty-six:
+
+**The White player** gives **Check** with the **Rook** [[notes: *Rochen*, the archaic term for a Castle]] from eight: **The Black player** moves the **King** to forty-seven.
+
+**The White player** moves his **King** (to protect the forty-sixth square) to fifty-three: **The Black player** moves the **King** to thirty-eight:
+
+**The White player** moves the **King** (to preserve the forty-seventh square) to fifty-four: **The Black player** moves the **King** to thirty-seven:
+
+**The White player** gives **Check** with the **Rook** from forty: **The Black player** moves the **King** to forty-four:
+
+**The White player** moves the **Rook** (to take heed of the forty-third square) to thirty-five: **The Black player** moves the **King** to fifty-two:
+
+**The White player** moves a **Soldier** [[notes: *Soldat*, a synonym for pawn]] (from 51) to fifty-nine/ and with the same, offers **Check** just like a **Queen** [[notes: This describes pawn promotion, where a pawn reaching the far side of the board becomes a more powerful piece]]: **The Black player** moves the **King** to forty-four:
+
+**The White player** gives **Checkmate** with the **original Queen** from fifty-one.
+
+8.) Finally, the **Author** adds the following two to the previous seven examples: namely (1.) how **the White player**, with his two **Rooks** (which are placed on thirty-six and thirty-eight) and with the two **Knights** [[notes: *Reuter*, literally "riders"]] (which are moved to twenty and twenty-two), can give **the Black King** (who stands on twenty-nine) **Checkmate** in the fourth move.
+
+**The White player** moves a **Knight** (from 20) to five: **The Black player** moves the **King** to twenty-one (avoiding being exposed [[notes: *aufzureissen*, literally to be "torn open" or forced into the open]] from behind the other Knight at fourteen):
+
+**The White player** moves the same [[notes: referring to the second Knight]] (to protect the thirteenth square: from 22) to seven: **The Black player** moves the **King** to twenty-nine:
+
+**The White player** moves the last-mentioned **Knight** to twenty-four: **The Black player** moves the **King** to twenty-one:
+
+**The White player** moves a **Rook** (from 38) to thirty-seven and gives **Checkmate** (since **the Black player** cannot move his **King** to fourteen, twenty-two, or thirty, because of the two **White Knights**).
+
+[[meta: catchword: 9.) How/]]
+
+[[gloss: Chess, Game of Chess, Rook, Knight, Soldier (Pawn), Queen, King, Checkmate, Examples]]
+
+[[summary: This page concludes a complex checkmate involving pawn promotion and introduces a new puzzle demonstrating a four-move checkmate using the combined power of two Rooks and two Knights.]]
+[[keywords: Checkmate, Pawn promotion, Rochen, Reuter, Knight maneuvers, Chess puzzles, 17th-century chess]]

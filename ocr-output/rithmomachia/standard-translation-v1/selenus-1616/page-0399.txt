@@ -1,0 +1,17 @@
+[[meta: This page transitions from the general critique of Damiano’s openings to a specific demonstration of a Queen’s Pawn opening. It maintains the 17th-century numbering system for the board squares and uses the period-specific names for the pieces: Archers for Bishops and Riders for Knights.]]
+
+# 12. Cap: On the Game of Chess. 365
+
+## The Twelfth Chapter.
+
+### How one should play on both sides a game which is started by the Queen’s Soldiers [[notes: Queen's Pawns]], and how to take care therein.
+
+After Damiano’s opinion [[notes: Pedro Damiano (1480–1544), a Portuguese apothecary and author of one of the earliest chess manuals]] has been revealed and the necessary reminders have been considered, this chapter (or example) shall set forth and share with lovers of this game how such a match, started by the **Queen’s Soldiers**, may be further conducted and arranged.
+
+[[margin: 1.]] For when the **White** and the **Black** move the **Queen’s Soldiers** to twenty-nine and thirty-seven: then the **White** plays the **K. Archer** [[notes: *Königlicher Schütze* or King's Bishop]] to twenty-seven: The **Black** [plays] his **K. Archer** to thirty-five: The **White** [moves] the **K. Archer’s Soldier** [[notes: The King's Bishop's Pawn]] toward the **S. K. Soldier** [[notes: *Schwarzer Königs-Soldat* or Black King's Pawn]] to thirty: The **Black** takes the same with him: The **White** (to block his path) moves the **K. Rider** [[notes: *Königlicher Reuter* or King's Knight]] to twenty-two: The **Black** [moves] his **K. Rider** toward the **W. K. Soldier** at forty-six: The **White** [moves] the **K. Soldier** toward the **S. K. Archer** (to open the path of the **K. Archer** to the **S. K. Soldier**) to twenty-eight: The **Black** [moves] the **K. Archer** to forty-two: The **White** (provided he does not wish to take the **S. K. Soldier** with the **K. Archer**) [moves] the **K. Soldier** toward the **S. K. Rider** to thirty-seven: The **Black** [moves] the same (to get out of danger and to protect the **K. Soldier**) to forty: The **White** [moves] the **K. Rider’s Soldier** against the same (opposite the **S. K. Soldier**) to thirty-one: and will in this way bring him into his power (insofar as one is permitted to pass the soldiers unhindered past the opponent's soldiers): But if he (instead of the aforementioned move) offers **Check** with the **Queen** from thirty-two and moves her toward the **S. K. Rider**: then the **Black** covers the Ki-
+
+[[meta: catchword: the Ki-]]
+
+[[summary: This page initiates a technical demonstration of a chess opening involving the Queen's Pawns, providing a step-by-step move list using historical terminology and a square-numbering system. It emphasizes tactical positioning of the "Archers" (Bishops) and "Riders" (Knights).]]
+
+[[keywords: Queen's Pawn, Damiano, Archer, Rider, Chess opening, White and Black, tactical maneuvers]]

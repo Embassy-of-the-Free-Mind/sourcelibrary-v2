@@ -1,0 +1,38 @@
+[[meta: This page continues the systematic definitions of mathematical terms following the visual "Formula" established on the previous page. Lefèvre d’Étaples is translating the complex Greek-influenced vocabulary of Boethius into clear Latin definitions for the student.]]
+
+Number is a multitude collected from units.
+[[margin: n]] [[notes: Likely an abbreviation for *nota* (note) or *numerus* (number).]] Number taken **by itself** is a number that is not considered in comparison to another, nor is it applied to geometric figures.
+Number **in relation to something** is that which is considered when taken in comparison to another.
+Number is said to be **according to figure** insofar as it is applied to geometric figures. [[notes: These are "figurate numbers" like triangles, squares, or pyramids, usually represented by arrangements of dots.]]
+An **even number** is that which can be divided into two equal parts.
+An **odd number** is that which cannot be divided into two equal parts.
+An **evenly even** number is an even number whose parts allow for division into two equal parts all the way down to unity. [[notes: *Pariter par*; these are powers of 2 (2, 4, 8, 16...), which can be halved repeatedly until you reach 1.]]
+An **evenly odd** number is an even number whose halves do not admit an equal partition. [[notes: *Pariter impar*; numbers like 6, 10, or 14. They are even, but when you halve them, you get an odd number which cannot be halved again.]]
+An **oddly even** number is an even number whose halves admit an equal partition, but the partition of those parts into two equals fails before reaching unity. [[notes: *Impariter par*; numbers like 12 or 20. You can halve them more than once, but you hit an odd number before you get down to 1.]]
+A **perfect number** is an even number whose composite parts [[notes: its divisors or factors]], when all are taken together, fill up the sum of its whole. [[notes: For example, 6 is perfect because its divisors 1, 2, and 3 add up to 6.]] A **part** is that which, when taken a certain number of times, measures its whole without exceeding or falling short.
+A **diminished number** is one whose collected parts return less than the whole itself; it is also called **imperfect**. [[notes: Now commonly called "deficient" numbers, like 8, whose divisors 1, 2, and 4 add up to 7.]]
+An **abundant number** is one whose parts, when brought into one, exceed the sum of the whole; it is also called **superfluous**. [[notes: For example, 12, whose divisors 1, 2, 3, 4, and 6 add up to 16.]]
+A **prime number** is an odd number that is measured only by unity; it is also named **incomposite**.
+A **composite number** is a number that is measured not only by unity but also by another number; it is also called **secondary**.
+A number **prime only in relation to another** is a number that is composite in itself, but when compared to another, is measured only by the unity common to both. [[notes: These are "relatively prime" numbers, like 9 and 10. Both are composite, but they share no common factor other than 1.]] Even. Odd.
+**Equality** is when an equal number is compared to an equal.
+**Inequality**, however, is when an unequal number is compared to an unequal.
+**Greater inequality** is when we compare a greater number to a lesser.
+**Lesser inequality**, on the other hand, is whenever we compare a lesser number to a greater.
+A **multiple number** is when the greater number, compared to the lesser, contains it more than once, such as twice, thrice, four times, and so on.
+We also consider **Unity**—the source and principle of numbers—by the name of number. [[notes: In ancient and medieval mathematics, 1 was often considered the "father" of numbers rather than a number itself; Lefèvre is following a more modern convention here.]]
+**Double** is when the greater number, compared to the lesser, contains the lesser twice.
+**Triple** is when it contains it thrice.
+**Quadruple** is when it contains it four times.
+**Quintuple** is when it contains it five times; and in this manner hereafter according to the natural progression of numbers.
+A **superparticular number** is when the greater number, compared to the lesser, contains the whole lesser number within itself plus one part of it.
+**Sesquialter** is a superparticular number when the greater contains the whole lesser plus its half; it is also called **hemiolius**. [[notes: A 3:2 ratio.]]
+**Sesquitertius** is when the greater contains the whole lesser plus its third part; it is also called **epitritus**. [[notes: A 4:3 ratio.]]
+**Sesquiquartus** is when the greater contains the whole lesser plus its fourth part. And if it contains a fifth, it is called **sesquiquintus**, and so on according to the series of numbers.
+A **superpartient number** is when the greater contains the whole lesser within itself and additionally some parts of it, such as two, three, four, or however many the comparison brings. It is understood that these parts do not [together] make up one [additional] part of the lesser. [[notes: This refers to ratios like 5:3 (one and two-thirds).]]
+**Superbipartient** is when the greater contains the lesser and two of its parts.
+**Supertripartient** is when it contains three of its parts additionally.
+**Superquadripartient** with four; and in this manner hereafter.
+
+[[summary: This page provides a glossary of fundamental arithmetic definitions, categorizing numbers into types (even, odd, perfect, prime) and defining the complex ratios (multiple, superparticular, superpartient) used in Renaissance mathematics. These terms form the building blocks for the study of proportions and musical theory.]]
+[[keywords: arithmetic, even number, odd number, perfect number, prime number, ratio, sesquialter, sesquitertius, superparticular, superpartient]]

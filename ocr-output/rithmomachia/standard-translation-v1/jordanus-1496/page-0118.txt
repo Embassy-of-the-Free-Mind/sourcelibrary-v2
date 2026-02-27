@@ -1,0 +1,36 @@
+[[meta: This page continues the mathematical and structural construction of the Greater Perfect System. Having previously established the first three tetrachords (the *hypaton*, *meson*, and *diezeugmenon*), the author now completes the fifteen-note scale by adding the final, highest tetrachord, the *hyperboleon*, and provides a table of the mathematical ratios required to tune the system.]]
+
+¶ Let $n$, $o$, $p$, $q$ be the *tetrachord hyperboleon* [[notes: The "highest" or "extreme" tetrachord in the Greek scale]]. Just as in the previous examples, I make the interval from $n$ (*nete diezeugmenon*) to $q$ (*nete hyperboleon*) a *sesquitertia* ratio [[notes: A 4:3 ratio, which defines the interval of a perfect fourth]]; and therefore it sounds a *diatessaron* [[notes: A perfect fourth]] with it. And I make the interval from $p$ to $q$ a whole tone, and likewise $o$ to $p$ a whole tone. By the sixth rule of the third book, the interval from $n$ to $o$ will be a minor semitone. Therefore, the *tetrachord hyperboleon* $n|o|p|q$ is measured in the diatonic genus by a minor semitone followed by two tones. But also, as shown previously, the $h$ (*mese*) sounds a *diapente* [[notes: A perfect fifth]] with $n$ (*nete diezeugmenon*); therefore, the interval from $h$ to $q$ (*mese* to *nete hyperboleon*), consisting of a *diapente* and a *diatessaron*, sounds a *diapason* [[notes: An octave]]. Consequently, $a$ (*proslambanomenos*) to $q$ (*nete hyperboleon*) will sound a double octave (*bis diapason*). And since the entire *polychord* from $a$ to $q$ is completed by exactly fifteen strings, a double octave is established in this fifteen-string scale (*pentadecachordo*) in the diatonic genus. This was the entire purpose of the demonstration.
+
+# ¶ To find the numbers for the fifteen-string scale established in the diatonic melody.
+
+| | | | | | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---|
+| Proslambanomenos [[notes: The lowest note]] | a | 9 | 2 1 6 | 1 7 2 8 | 1 3 8 2 4 | |
+| Hypate hypaton | b | 8 | 1 9 2 | 1 5 3 6 | 1 2 2 8 8 | Tone |
+| Parhypate hypaton | c | | | | 1 4 5 8 | 1 1 6 6 4 | Minor Semitone |
+| Lichanos hypaton | d | | | 1 6 2 | 1 2 9 6 | 1 0 3 6 8 | Tone |
+| Hypate meson | e | | | 1 4 4 | 1 1 5 2 | 9 2 1 6 | Tone |
+| Parhypate meson | f | | | | | 8 7 4 8 | Minor Semitone |
+| Lichanos meson | g | | | | 9 7 2 | 7 7 7 6 | Tone |
+| Mese [[notes: The central "middle" note]] | h | | | 1 0 8 | 8 6 4 | 6 9 1 2 | Tone |
+| Paramese diezeugmenon | k | | | | 7 6 8 | 6 1 4 4 | Tone |
+| Trite diezeugmenon | l | | | | 7 2 9 | 5 8 3 2 | Minor Semitone |
+| Paranete diezeugmenon | m | | | 8 1 | 6 4 8 | 5 1 8 4 | Tone |
+| Nete diezeugmenon | n | | | 7 2 | 5 7 6 | 4 6 0 8 | Tone |
+| Trite hyperboleon | o | | | | | 4 3 7 4 | Minor Semitone |
+| Paranete hyperboleon | p | | | | 4 8 6 | 3 8 8 8 | Tone |
+| Nete hyperboleon [[notes: The highest note]] | q | | | 5 4 | 4 3 2 | 3 4 5 6 | Tone |
+| | | 1st | 2nd | 3rd | 4th place | |
+
+---
+
+¶ The numbers that are especially required in the discipline of music are: doubles, triples, quadruples, *hemioli*, *epitriti*, and *epogdoi*—that is: duple (2:1), triple (3:1), quadruple (4:1), *sesquialtera* (3:2), *sesquitertia* (4:3), and *sesquioctave* (9:8). Therefore, if you wish to know to which number a larger number is a duple: divide it by two. To which it is a triple: divide by three. To which it is a quadruple: divide by four. To which it is a *sesquialtera*: divide by three and multiply the resulting third by two [[notes: e.g., if the larger number is 3, 3÷3=1, 1×2=2, establishing the 3:2 ratio]]. To which it is a *sesquitertia*: divide by four and multiply the resulting fourth by three [[notes: e.g., 4:3]]. To which it is a *sesquioctave*: divide by nine and multiply the resulting ninth part by eight [[notes: e.g., 9:8]]. And these numbers will always emerge correctly through the eighth [rule] of the second [book] of *Arithmetic* if the larger is a duple, triple, quadruple, *sesquialtera*, *sesquitertia*, or *sesquioctave*.
+
+¶ And if, on the other hand, you wish to know which number a smaller number makes into a duple: multiply it by two. For a triple: multiply by three. For a quadruple: multiply by four. For a *sesquialtera*: divide it by two and add that half to it. For a *sesquitertia*: divide it by three and add that third. For a *sesquioctave*: divide it by eight and add that eighth part. And immediately, through the same eighth rule and definitions, you will recognize the sought-after value.
+
+¶ But now let us turn to demonstrating our proposal. Let there be the fifteen-string scale (*pentadecachordum*) just discovered in the diatonic genus, whose numbers are sought: $a, b, c, d, e, f, g, h, i, k, l, m, n, o, p, q$. I multiply together two, three, four, and the smallest terms of a tone—that is, twenty-four—by 9 and 8 (the smallest terms of a tone ratio), and in the second column there come $a$ and $b$ which, by the seventh rule of the second book of *Arithmetic*, are in the *sesquioctave* (9:8) proportion and contain a tone. I take the *sesquitertia* of number $a$, let it be $d$; and the *sesquialtera*, which is $e$; and its half (*subduplum*), which is $h$. Again, I take the *sesquitertia* of number $b$, which is $m$; and its *sesquialtera*, which is $n$; and its half, which is $q$. Because $a$ to $d$ is a *diatessaron* and $a$ to $e$ is a *diapente*, then by the thirteenth rule of the third book, $d$ to $e$ is a tone; and by the same reasoning, $m$ to $n$ is a tone. And if $d$ had an eighth part, I would add it to $d$ to make $c$ a *sesquioctave* to $d$, with $c$ and $d$ containing a tone. But since $d$ is found to lack an eighth part, I multiply $a, b, d, e, m, n, q$ by eight; and they will arise in the third column. These numbers, by the same seventh rule, will preserve the same proportion to each other as those placed in the second column. Because the $d$ placed in the third column now has an eighth part, that eighth part added to $d$ becomes $c$; and $c$ to $d$ will be a *sesquioctave*, thus containing a tone. Likewise, by adding an eighth part to $h$, it becomes $g$; and by adding an eighth part to $m$, it becomes $l$; and likewise for $q$.
+
+[[summary: This page completes the construction of the Greater Perfect System, a two-octave scale of fifteen notes, and provides the mathematical ratios (9:8, 4:3, 3:2) used to calculate the frequency or string length of each note. It includes a detailed table of these values and a practical guide for calculating various musical proportions.]]
+
+[[keywords: Tetrachord Hyperboleon, Pentadecachord, Diatonic Genus, Proslambanomenos, Sesquioctave, Sesquialtera, Sesquitertia, Greater Perfect System, Pythagorean Tuning, Mathematical Music Theory]]

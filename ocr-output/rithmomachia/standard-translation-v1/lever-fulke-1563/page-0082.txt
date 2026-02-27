@@ -1,0 +1,43 @@
+# The Philosopher's <note>original: "Philosophers"</note> Game.
+## ¶ For Division. <note>original: "Diuision"</note>
+
+| Even against Odd | Spaces | Capture | Odd against Even | Spaces | Capture | To capture by cossic signs <note>original: "cossical signes"; referring to early algebraic notation for roots and squares</note> |
+| :--- | :---: | :--- | :--- | :---: | :--- | :--- |
+| 6 <note>original: "5"</note> | 2 | 3 | 12 | 2 | 6 | 2 captures 16 Square <note>original: "ꝙ", abbreviation for "quadratus" (square)</note> |
+| 72 | 2 | 36 | 16 | 2 | 8 | 2 captures 64 Square |
+| 15 | 3 | 5 | 30 | 2 | 15 | 3 captures 81 Square |
+| 36 | 3 | 12 | 90 | 2 | 45 | 3 captures 9 Square |
+| 9 | 3 | 3 | 12 | 3 | 4 | 4 captures 16 Square |
+| 20 | 4 | 5 | 16 | 4 | 4 | 4 captures 64 Square |
+| 36 | 4 | 9 | 36 | 4 | 9 | 5 captures 25 Square |
+| 64 | 4 | 16 | 64 | 4 | 16 | 6 captures 36 Square |
+| 15 | 5 | 3 | 100 | 4 | 25 | 7 captures 49 Square |
+| 25 | 5 | 5 | 20 <note>original: "22"</note> | 5 | 4 | 8 captures 64 Square |
+| 45 | 5 | 9 | 30 | 5 | 6 | 9 captures 81 Square |
+| 42 | 6 | 7 | 100 | 5 | 20 | 15 captures 225 Square |
+| 72 | 6 | 12 | 12 | 6 | 2 | |
+| 49 | 7 | 7 | 36 | 6 | 6 | |
+| 72 | 8 | 9 | 90 | 6 | 15 | |
+| 45 | 9 | 5 | 120 | 6 | 20 | |
+| 81 | 9 | 9 | 28 | 7 | 4 | |
+| 36 | 12 | 3 | 56 | 7 | 8 | |
+| 91 | 13 | 7 | 16 | 8 | 2 | |
+| 42 | 14 | 3 | 64 | 8 | 8 | |
+| | | | 120 | 8 | 15 | |
+| | **20** | | 36 | 9 | 4 | |
+| | | | 81 | 9 | 9 | |
+| | | | 225 | 9 | 25 | |
+| | | | 90 | 10 | 9 | |
+| | | | 66 | 11 | 6 | |
+| | | | 28 | 14 | 2 | |
+| | | | | **27** | | |
+
+<sig>D.</sig>
+
+<summary>
+This page continues the reference tables for Rithmomachia (The Philosopher's Game), specifically focusing on captures made through division. A capture occurs when a piece's value, divided by the number of empty spaces between it and an opponent's piece, equals the value of the capturing piece (or vice-versa). The table includes a section for "cossic signs," which provides a quick reference for capturing square pieces using their square roots. For instance, a piece with a value of 4 can capture a piece with a value of 16 if there are 4 spaces between them (16 divided by 4 equals 4).
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, Division Rules, Capture Tables, Cossic Signs, Square Roots, Early Modern Math, Mathematical Games, Even and Odd Numbers
+</keywords>

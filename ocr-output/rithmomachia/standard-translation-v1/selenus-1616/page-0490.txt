@@ -1,0 +1,24 @@
+[[meta: This page continues the mathematical progression for the black pieces in Rythmomachia. On the previous page, we saw the derivation for white pieces; here, the author describes how the black triangles are calculated using the black circles as a base.]]
+
+# The Second Chapter
+
+[[image-desc: Two rows of four dark, shaded circles containing numbers. Row 1: 3, 5, 7, 9. Row 2: 9, 25, 49, 81. Each number in the second row is the square of the number directly above it. Below these is a row of four dark, shaded triangles containing numbers: 12, 30, 56, and 90. These values are the sums of the pairs of circles above them (3+9=12, 5+25=30, 7+49=56, 9+81=90).]]
+
+In the same manner, the numbers of the **black triangular stones** are found: for from the summed numbers of the eight black round stones, the numbers of the first four black triangular stones—namely, 12 from 3 and 9; 30 from 5 and 25; 56 from 7 and 49; and 90 from 9 and 81—are derived. [[notes: In the game of Rythmomachia, the pieces are not arbitrary. Each piece's value is calculated based on mathematical progressions. Here, a triangle's value is the sum of a base number and its square.]]
+
+[[image-desc: A diagram illustrating numerical ratios and geometric numbers. The first row contains four circles with the numbers 4, 6, 8, and 10, labeled from left to right as "Tertia", "Quinta", "Septima", and "Nona". The second row consists of four triangles with the numbers 12, 30, 56, and 90, labeled as "Sesquitertia", "Sesquiquinta", "Sesquiseptima", and "Sesquinona". The third row consists of four triangles with the numbers 16, 36, 64, and 100.]]
+
+| **Tertia** | **Quinta** | **Septima** | **Nona** |
+| :--- | :--- | :--- | :--- |
+| **4** | **6** | **8** | **10** |
+| *Sesquitertia* | *Sesquiquinta* | *Sesquiseptima* | *Sesquinona* |
+| 12 | 30 | 56 | 90 |
+| 16 | 36 | 64 | 100 |
+
+[[notes: The Latin terms in the second row describe "superparticular" ratios, where the larger number contains the smaller number plus one-nth of it. For example, *Sesquitertia* represents the ratio 4:3. In the first column, 16 is 4/3 of 12. These complex ratios were a central part of medieval music theory and mathematics, which this game was designed to teach.]]
+
+->119<-
+->Kkk<- [[notes: "Kkk" is a signature mark, a guide for the bookbinder to ensure the pages were gathered in the correct order.]]
+
+[[summary: This page details the arithmetic calculation of the black triangular pieces in the game of Rythmomachia. It explains how triangles are derived from the sums of round pieces and their squares, further categorizing them by classical Latin ratios.]]
+[[keywords: Rythmomachia, mathematics, number theory, Pythagorean ratios, game pieces, black triangles, Sesquitertia, superparticular ratios]]

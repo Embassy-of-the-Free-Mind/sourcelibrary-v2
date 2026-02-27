@@ -1,0 +1,27 @@
+[[meta: This page continues the mathematical derivation of the values for the game pieces in Rythmomachia, specifically focusing on how the values for the White Triangles are calculated using the Black Rounds as a base.]]
+
+# Of the Battle of Numbers.
+
+...[numbers] which result from the **summed numbers of two round stones**: such as, for the first, 6, which is produced by 2 and 4; for the second, 20, which is produced by 4 and 16; for the third, 42, which is produced by 6 and 36; and for the fourth, 72, which is produced by 8 and 64. [[notes: These are the values for the first row of triangles, calculated by adding the value of a round stone (n) to its square (n²). For example, 2 + 4 = 6.]]
+
+| Secunda | Quarta | Sexta | Octaua |
+| :--- | :--- | :--- | :--- |
+| **3** | **5** | **7** | **9** |
+| *Sesquialtera* | *Sesquiquarta* | *Sesquisexta* | *Sesquioctaua* |
+| 6 | 20 | 42 | 72 |
+| 9 | 25 | 49 | 81 |
+
+[[notes: This table illustrates the ratios used in the game. The terms "Sesquialtera," "Sesquiquarta," etc., refer to "superparticular" ratios where the larger number contains the smaller number plus one part of it. For example, Sesquialtera (3:2) means 3 is 2 plus half of 2. In this game's progression, these ratios determine the relationships between circles and triangles.]]
+
+The values of the **four remaining White Triangular stones** are found as follows: one places the four triangular stones just described beneath the first four **Black Round stones**; beneath those, however, one places these four remaining, as-yet-unlabeled triangular stones. One then labels them with the sums that arise from the added numbers of **one black round stone and one white triangular stone**; or from the numbers contained on the first black round stones when they are **multiplied by themselves** [[notes: squared]]. (Therefore, these last four white triangles and the last four black round stones have the same values).
+
+Namely: with **9**, which comes from 3 and 6, or from three times 3; with **25**, which comes from 5 and 20, or from five times 5; with **49**, which comes from 7 and 42, or from seven times 7; and finally, with **81**, which comes from 9 and 72, or from nine times 9.
+
+[[notes: The author is explaining two ways to arrive at the same value for the second row of triangles: either by adding the "root" (the Black Round stone) to the "triangle" above it, or simply by squaring the "root." For example, 3 (Round) + 6 (Triangle) = 9, which is the same as 3 × 3.]]
+
+Ell iij
+[[meta: catchword: Gleicher / Same]]
+
+[[summary: This page provides the mathematical formulas and a diagram for determining the values of the Triangular pieces in Rythmomachia, specifically showing how White Triangles are derived from Black Round pieces through addition and squaring.]]
+
+[[keywords: Rythmomachia, Number Battle, mathematics, Pythagorean ratios, Sesquialtera, Sesquiquarta, Triangular stones, Round stones, squaring numbers, game pieces]]

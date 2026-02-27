@@ -1,0 +1,14 @@
+[[meta: This page continues the mathematical explanation of how to calculate the values for the square game pieces, specifically focusing on "superpartient" ratios. In the previous page, we began discussing how these pieces are derived from the triangular pieces.]]
+
+->## OF THE PHILOSOPHERS.<-
+
+*...[su]perpartients* [[notes: This word completes "superpartients" from the previous page. A superpartient ratio is one where the larger number contains the smaller number plus several parts of it (e.g., 5/3, which is 1 and 2/3)]], in even number, which are **super-bipartient thirds**, **super-quadripartient fifths**, **super-sextupartient sevenths**, and **super-octopartient ninths** [[notes: These terms describe specific ratios. For example, "super-bipartient thirds" means a number contains another plus two-thirds of it ($1 + 2/3$)]]. The first, therefore, which is 15, requires another which together with it completes its **super-bipartient thirds** proportion: namely, one that contains it and in addition two of its thirds. Now, the third part of 15 is 5. The number that will contain 15 and two of its third parts will therefore be 25 [[notes: Calculations: 15 + (5 x 2) = 25]]. Which you shall place behind 15; and so with the others. But note that the **Pyramid** [[notes: The Pyramid is the most complex piece in Rithmomachia, usually a stack of values representing several proportions at once]] will be counted as one of the **square tables** [[notes: "Tables" refers to the game pieces themselves; in this game, circular pieces are multiples, triangular are superparticulars, and square are superpartients]]. If this has seemed difficult to you, see the inscription of the following tables.
+
+### Instructional arrangement to more surely locate and order the tables in their true places.
+
+<sig>C</sig>
+
+[[vocab: perpartientes, super-bipartient thirds, super-quadripartient fifths, super-sextupartient sevenths, super-octopartient ninths, Pyramid, square tables, places]]
+
+[[summary: This page explains the mathematical ratios used to determine the values of the square pieces (superpartients) in the game of Rithmomachia, using the number 15 and its relation to 25 as a primary example. It also notes that the unique "Pyramid" piece is categorized among the square pieces.]]
+[[keywords: Rithmomachia, Pythagorean arithmetic, superpartient ratios, Pyramid piece, early modern gaming, mathematical proportions]]

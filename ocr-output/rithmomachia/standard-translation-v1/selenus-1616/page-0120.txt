@@ -1,0 +1,24 @@
+[[meta: This page continues the discussion on the promotion of the Soldier (Pawn) and begins to detail the specific capture patterns of each piece on the board, following the previous page's debate on the "natural" transition from Soldier to Queen.]]
+
+### The First Book / Chapter 10:
+
+Furthermore, some desire—which is likewise common in **England**, as **Arthur Saul** [[notes: Arthur Saul was the author of *The Famous Game of Chesse-play* (1614), one of the earliest chess manuals in English.]] intends—that a **Soldier** [[notes: The Pawn.]], because of his good conduct when he reaches the enemy’s side of those same fields, be permitted to take on the characteristics of a **Rook** [[notes: Historically called a *Rochen*.]], **Knight** [[notes: Historically called a *Reuter* or Rider.]], or **Bishop** [[notes: Historically called a *Schütze* or Archer.]], to be used according to their unique abilities; and from that same Soldier, a **Queen** can also be made, should necessity require it.
+
+Their method of striking and capturing is to be understood from the previous report: namely, that they can remove the main and common pieces which they encounter ahead of them on the nearest lines and fields along the **diagonal** [[notes: Literally "along the slant," referring to the pawn's diagonal capture.]], or at the corners, be it to the right or the left side. Those pieces, however, which stand beside or behind them on the nearest lines and fields, they must allow to remain there (unless it be according to certain measures, of which mention has already been made above, and of which further report shall follow below).
+
+They perform these strikes, however, in the following manner:
+
+-> **The Soldier** <-
+
+| Origin Piece | Targets the Third Field of: |
+| :--- | :--- |
+| **Of the King’s** { Rook / Knight / Bishop / Own } | the { Knight / Rook and Bishop / Knight and King / Bishop and Queen } **of the King.** |
+| **Of the Queen’s** { Own / Bishop / Knight / Rook } | the { King and Bishop / Queen and Knight / Bishop and Rook / Knight } **of the Queen.** |
+
+Otherwise, they are also permitted to offer **Check** [[notes: *Schach-bieten* in the original German.]] to the **King** (since everyone, the lowly as well as the high, occasionally finds opportunity in an open field battle to injure and damage a foe). Indeed, they often deliver the **finishing blow** [[notes: *Den garaus machen*, meaning to checkmate or end the game.]] to him, insofar as he is unable to retreat from them, nor—since no other piece can be placed in between them, because there is no field into which a piece or Soldier could be moved—can he conveniently have his own pieces move them to the side or take the Soldier himself.
+
+[[meta: catchword: Their]]
+
+[[summary: This page describes the movement and capture rules for the Soldier (Pawn), noting English variations in promotion rules and providing a logical mapping of diagonal capture paths. It also emphasizes the Pawn's unique ability to check the King without the possibility of an intervening piece.]]
+
+[[keywords: Soldier, Pawn, Check, Checkmate, Arthur Saul, England, Rook, Knight, Bishop, Queen, capture rules, promotion]]

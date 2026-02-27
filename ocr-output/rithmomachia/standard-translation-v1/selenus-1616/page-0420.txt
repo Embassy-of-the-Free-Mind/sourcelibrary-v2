@@ -1,0 +1,26 @@
+[[meta: This page continues the tactical variations of the "third variety" of opening, where White plays without the King’s Bishop’s Soldier (f-pawn) and explores the resulting positional struggles. It maintains the numbered coordinate system (1–64) where 1 is a1 and 64 is h8.]]
+
+and instead of the King’s Soldier, moves the King’s Bishop’s Soldier [[notes: The f-pawn]] to twenty-two [[notes: f3]]: then Black moves the King’s Soldier [[notes: The e-pawn]] to thirty-six [[notes: e5]]: White moves the same King’s Soldier to twenty-nine [[notes: e4]]: Black moves the same to twenty-eight [[notes: d4]]: White [moves] the King’s Bishop [[notes: *Schütze*, literally "marksman" or "archer," was a common 17th-century term for the Bishop]] to twenty-seven [[notes: c4]]: Black [moves] the King’s Soldier to thirty-seven [[notes: f5]]: White [moves] the King’s Soldier to twenty [[notes: d3]]: Black moves the King’s Bishop’s Soldier to the [square of the] White King’s Soldier at thirty-eight [[notes: f4]]:
+
+## The Fourth Book,
+
+[[margin: 5.]]
+* White takes (though to his own detriment) the Black King’s Knight [[notes: *Reuter*, meaning "rider" or "cavalier," the Knight]] with his King’s Bishop: Black [takes] the same with the King’s Rook [[notes: *Rochen*, the archaic term for the Rook]]: White gives **Check** with the **Queen** from thirty-two [[notes: h4]] and moves her to the Black King’s Rook’s Soldier [[notes: the h7 pawn]]: Black [moves] to the same the King’s Bishop and covers the **King** with him at fifty-three [[notes: f7]]: White takes the Black King’s Rook’s Soldier with the same [the Queen]:
+
+[[margin: 6.]]
+* Black [takes] the White King’s Soldier with his King’s Bishop’s Soldier: White [takes] the same with the Queen, rescuing her from danger, and finally creates a free path for the King’s Knight with her.
+
+[[margin: 7.]]
+If, however, Black does not take the White Soldier with his own Soldier (as in no. 6), but instead moves it to thirty [[notes: f4]] (in order to block the path of the White Queen and the White King’s Bishop): then White plays the King’s Knight’s Soldier to
+
+[[margin: 8.]]
+thirty-one [[notes: g4]]: * Black (in order to capture the White Queen—provided he is given enough time to move the King’s Rook to her at sixty-four [[notes: h8]]—and to defend the King’s Knight’s Soldier in the future) moves the King’s Bishop to forty-six [[notes: f6]]: White (to prevent this misfortune which awaits his Queen in good time) rescues her for this time at twenty-four [[notes: h3]].
+
+[[margin: 9.]]
+If, however, Black understands the moves of Chess [[notes: literally "the Chess-moves"]] and, instead of the King’s Bishop (no. 8), moves the King’s Knight to fifty-two [[notes: f6]] (in order to protect the King’s Soldier in any event): then White must move the Queen to twenty-four [[notes: h3]] (unless he wishes to forfeit her or the entire game). For if he does not do this, but instead moves the Knight’s Soldier to thirty-nine [[notes: g5]]: Black places the King’s Bishop at forty-four [[notes: d6]]: White [moves] the King’s Knight to twenty-four [[notes: h3]]: Black [moves] to the White Queen the King’s
+
+[[meta: catchword: Rook/]]
+
+[[summary: This page details specific move sequences and counter-moves in a specialized chess opening, focusing on the vulnerability of the Queen and the tactical use of the "Soldiers" (pawns) and "Marksmen" (bishops). It illustrates how a single incorrect pawn move can force a player to retreat their most powerful piece to avoid a total loss.]]
+
+[[keywords: Chess tactics, Selenus notation, King's Bishop, Queen maneuver, 17th-century chess, piece terminology, defensive play]]

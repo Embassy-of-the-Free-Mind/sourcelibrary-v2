@@ -1,0 +1,35 @@
+[[meta: This page provides a visual representation of the final, "perfect" arrangement of pieces described at the end of the previous page. It transitions from the written rules of movement to a spatial reference for the players.]]
+
+# The Diagram of the Philosopher’s Game
+
+Below is the layout of the board for Rithmomachia [[notes: The name "Rithmomachia" comes from the Greek for "The Battle of Numbers." It was a highly sophisticated game popular in the Middle Ages and Renaissance that combined mathematical theory with strategic play, often compared to a more complex form of chess.]], illustrating the positions of the pieces after they have been moved into their starting "perfect" order.
+
+-> **The Arrangement of the Board** <-
+
+| | Column 1 | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Row 1** (Dark) | 361 ■ | 225 ■ | | | | | 121 ■ | 49 ■ |
+| **Row 2** | Pyramid ▲ | 120 ■ | 64 ▲ | 56 ▲ | 30 ▲ | 36 ▲ | 66 ▲ | 28 ▲ |
+| **Row 3** | 100 ■ | 90 ▲ | 15 ▲ | 64 ● | 25 ● | 9 ● | 12 ▲ | 81 ▲ |
+| **Row 4** | | | 8 ● | 6 ● | 4 ● | 2 ● | | |
+| **Row 5** | | | | | | | | |
+| **Row 6** | | | | | | | | |
+| **Row 7** | | | | | | | | |
+| **Row 8** | | | | | | | | |
+| **Row 9** | | | | | | | | |
+| **Row 10** | | | | | | | | |
+| **Row 11** | | | | | | | | |
+| **Row 12** | | | | | | | | |
+| **Row 13** | | | 2 ● | 4 ● | 6 ● | 8 ● | | |
+| **Row 14** | 9 ▲ | 6 ▲ | 4 ● | 16 ● | 36 ● | 64 ● | 72 ▲ | 81 ▲ |
+| **Row 15** | 15 ■ | 45 ■ | 20 ▲ | 20 ▲ | 42 ▲ | 49 ▲ | Pyramid ▲ | 153 ■ |
+| **Row 16** (Light) | 25 ■ | 81 ■ | | | | | 169 ■ | 289 ■ |
+
+[[notes: **Piece Legend:** ● = Circles (the basic units), ▲ = Triangles, ■ = Squares. The Pyramids are unique, tiered pieces composed of the values of multiple other shapes stacked together.]]
+
+[[notes: On the original manuscript, the numbers on the dark pieces (Rows 1–4) are written upside down. This is to allow the player on the opposite side of the table to read the values of their opponent's pieces as they advance across the board.]]
+
+[[notes: The faint, mirrored text visible across the board is "ink bleed-through" from the reverse side of the paper. It includes phrases like *ordine della prima* ("order of the first") and *le bianche sono* ("the white ones are"), which refers to the instructional text detailing how to move the white pieces into these positions.]]
+
+[[summary: This page contains a diagram of the 8x16 Rithmomachia board, showing the pieces in their complex "perfect" starting positions. It acts as a visual guide for the mathematical setup required before play begins.]]
+[[keywords: Rithmomachia, Philosopher's Game, game board, arithmetic proportions, Renaissance education, geometric pieces, board setup]]

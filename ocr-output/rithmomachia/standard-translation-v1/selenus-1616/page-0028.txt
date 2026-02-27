@@ -1,0 +1,12 @@
+[[meta: This page represents a physical blank side of a leaf in the manuscript. It follows the previous page's systematic breakdown of the treatise's structure and the "Common and usual" modes of play.]]
+
+[[page-type: blank]]
+
+[[warning: This page contains no original text on this side. There is significant water staining at the top and bottom edges, and mirrored bleed-through (ghosting) of text from the reverse side of the leaf is visible.]]
+
+[[vocab: blank page, water damage, bleed-through]]
+
+[[notes: In historical manuscripts, blank pages often occur at the end of sections or on the reverse (verso) side of important diagrams. The "ghosting" or "bleed-through" mentioned here is a common preservation issue where the ink's acidity or past exposure to moisture causes the writing from the other side of the paper to become visible as a faint, mirrored image.]]
+
+[[summary: This page of the manuscript is blank and contains no written content. It shows physical signs of age, including water damage and ink ghosting from the reverse side.]]
+[[keywords: blank page, water damage, bleed-through, manuscript condition]]

@@ -1,0 +1,20 @@
+[[meta: This page begins the Second Book, Chapter 4. It transitions from the general match etiquette discussed at the end of Chapter 3—specifically the rule that the winner usually begins the next game—into the formal procedures and tactical rules for moving pieces on the board.]]
+
+[[header: The Second Book / Chapter 4:]]
+
+<image-desc>A rectangular decorative woodcut ornament featuring symmetrical floral and leafy scrollwork with a central face or mask-like figure.</image-desc>
+
+### The Fourth Chapter.
+# How a player should move his pieces skillfully and cautiously, lead them into the field and against the enemy, capture the enemy’s pieces, exchange with the same, and on the contrary, protect himself.
+
+Now follow the ordinances according to which the means (of which a report was made in the first chapter of this book) must be put into practice: However, in this chapter, they shall be directed toward those means which are to be undertaken with the **thirty warring pieces** [[notes: In this period, the 32 pieces of the set were often divided into the two Kings and the "thirty warring pieces" (16 pawns and 14 major pieces).]], and thereafter (in the following fifth chapter) the remaining orders concerning the two Kings shall be introduced.
+
+As for what concerns, first of all, **the Moving**: it is required of a Chess-player—so that the game may be conducted as skillfully and elegantly as possible—that he not only [moves] that same piece which he has touched (unless such touching happens perhaps only because he wishes to set it more squarely in its field: in which case, he must not only make this understood with words [[notes: Similar to the modern "J'adoube" or "I adjust"]], but also must quickly withdraw his hand: for if he **hesitates** [[notes: *verweglet*, meaning to dawdle or delay indecisively]] and does not immediately carry out this adjustment, it may easily be perceived that he did indeed wish to move the piece, but since he noticed it might bring harm to his game, he regretted it). 
+
+Furthermore, if he cannot move the touched piece because the fields to which it could be moved are already occupied by his other pieces, then he must move another piece, and has not lost his turn because of it. But he must also place a lifted piece into the field which he first touches with it. A good player does not refuse to do this, nor does he seek to excuse himself by saying that he has not yet let the piece out of his hand: considering that such would be an impolite objection, and would also, because it strikes against reason, [be rejected] by the...
+
+[[meta: catchword: gegens (against/opposite)]]
+
+[[summary: This page introduces the formal rules of conduct for moving chess pieces, specifically detailing the "touch-move" rule and the etiquette for adjusting pieces on the board. It emphasizes that the rules for the thirty "warring pieces" are distinct from the special rules governing the Kings.]]
+
+[[keywords: Chess etiquette, Touch-move rule, Warring pieces, Chess strategy, 17th-century gaming, Rules of play]]

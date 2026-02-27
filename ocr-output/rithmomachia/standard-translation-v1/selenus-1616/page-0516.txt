@@ -1,0 +1,37 @@
+[[meta: This page continues from the numerical capture tables of the previous section, transitioning into the tactical rule of "Besieging."]]
+
+# The Fifth Chapter
+
+[[notes: This diagram illustrates the "Besieging" rule on a Rithmomachia board. Rithmomachia, the "Philosophers' Game," was played on a double-sized chessboard (8x16 or 8x16+1). The letters represent the positioning of various game pieces, known as "calculi."]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| | B | | | | | D | |
+| | | | I | | F | | |
+| A | | | | | | | E |
+| | | | M | K | | | |
+| | C | | | | | L | |
+| | | | N | H | | | |
+| | | G | | | | P | |
+| | | | L | O | | | |
+| | | | | | | | |
+| | | H | | | | | |
+| A | | | | | | K | |
+| | | | E | | B | | |
+| | I | | | | | | |
+| | | | C | L | | | |
+| | D | | | | | | |
+| | | | | | F | | |
+| | | | G | | | | |
+
+(Buxer: fol: 28. a. 47. a.) [[notes: "Buxer" refers to the author Augustus Selenus, specifically his 1616 work on chess and Rithmomachia. These citations point the reader to specific pages (folios) in that master volume.]]
+
+>> *Closing in, Besieging, or Interception, is carried out thus: Four*
+>> *Pieces, in whatever way they are placed, whether in a straight line*
+>> *or in a circuit, like Knights,* [[notes: The author uses the Latin "Sonipedes," which literally means "noisy-footed ones," a poetic term for horses. In gaming terms, this refers to the leaping move of a Knight in chess.]] *if they [surround] an opposing Piece, thus*
+
+[[meta: circum-]] [[notes: This is a "catchword," a common feature in early printing where the first syllable of the next page is printed at the bottom of the current one to ensure the binder or reader follows the correct sequence. It suggests the next page begins with "circumveniunt," meaning "they surround."]]
+
+[[summary: This page introduces the sixth and final method of capture in Rithmomachia: Besieging (Interclusio). It provides a board diagram showing how pieces might be positioned to trap an opponent's stone.]]
+
+[[keywords: Rithmomachia, capture rules, Besieging, Interclusio, Augustus Selenus, game pieces, board layout]]

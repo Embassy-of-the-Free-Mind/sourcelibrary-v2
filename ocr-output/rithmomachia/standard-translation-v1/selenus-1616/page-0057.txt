@@ -1,0 +1,21 @@
+[[meta: This page continues the argument regarding the origins of chess, transitioning from historical legends about the Babylonian King Evil-Merodach to a scholarly comparison of chess with the strategy games of Ancient Greece and Rome.]]
+
+## 2. Chapter: Of the Game of Chess.
+
+->D 3<-
+
+[[meta: catchword: ἐν δὲ]]
+
+**Micyllus** [[notes: Jacob Micyllus (1503–1558), a German Renaissance humanist and scholar]], in his explanation of **Ovid**, argues that the invention of this game cannot be attributed solely to the **Greeks**, nor the **Latins**, nor—after them—to other **Barbarian nations**. Even if one admits that various peoples have added to the game over time, directing the moves in different ways, increasing or decreasing the number of pieces, or giving them different names: it remains true that the **Romans** and **Greeks** possessed such a game in which one player delivered a battle to the other using fictional **little soldiers of war**.
+
+Let that be enough, then, regarding the inventors of this game. Now we wish briefly to consider the most prominent **authors** who have written about what the game of chess is or how it is played. We do this for a specific purpose: so that we may see from their accounts whether today's **chess** corresponds in some way (as briefly mentioned) to the game which the Greeks called **πεττείαν** (*petteia*) and the Latins called **Ludum Latrunculorum** [[notes: "The Game of Mercenaries" or "Game of Pawns," a popular Roman strategy game played on a grid]].
+
+Regarding what concerns the Greek **πεττείαν**, or "stone-game," it is cited by many. However, so that we may proceed with greater certainty, it is necessary to correctly distinguish between the two games: **κυβείαν** (*kybeia*) and **πεττείαν** (*petteia*), because translators have not always taken care to do so. Indeed, it was shown and proven above from **Eustathius** that **Palamedes** [[notes: A mythical Greek hero often credited with inventing games to keep the army entertained during the Siege of Troy]] invented these two distinct games. Of these, he dedicated and consecrated one—namely the **Dice-Game**—to **Fortune** (as if she were a conjured or fictional goddess), perhaps intending to show that the other game did not belong to her (as **Pausanias** suggests in *lib: 2. p. 120.*).
+
+**Plato** also speaks of these distinctly in *lib: 2. de Rep:* [[notes: Plato’s *Republic*]]: **πεττευτικὸς καὶ ἢ κυβευτικὸς ἱκανῶς ἔση᾽ ἂν εἰς πολ.** That is: *No one should be ignorant of the stone-game nor the dice-game.* **Aristotle** (*lib: 1. Rhet: c. 11.*) also mentions them with a clear distinction. This is to be understood in the following way, as **Hesychius** (an ancient grammarian and historian) sets it down: **ἐν ἧ μὲν γὰρ τοὺς κύβους ἀναρρίπτουσιν**, That is: *In the dice-game, the dice are thrown high into the air, as if to chance.* (But as for what **κύβοι**, *Tesseræ*, or dice were actually called; how one played with them, such as **πλειστοβαλεῖν**, to throw the highest number, or **ταβλίζειν**, playing on a board; and what instruments or equipment were used for this, one may see in **Pollux**, *lib: 9. c. 7. circ: pr: & lib: 10. c. 31. in f.*)
+
+[[gloss: **Schach-Spiel** (Chess), **Petteia** (Greek strategy game), **Kybeia** (Greek dice game), **Palamedes**, **Plato**, **Aristoteles**, **Hesychius**, **Pollux**, **Ludum Latrunculorum** (Roman strategy game), **Krieges-Männelein** (Little soldiers/Chess pieces)]]
+
+[[summary: This page argues that while many cultures contributed to chess, its roots lie in the strategy games of the Greeks and Romans. It emphasizes the crucial distinction between games of chance (dice) and games of skill (stones/chess), citing classical authorities like Plato and Aristotle.]]
+
+[[keywords: Chess history, Petteia, Ludus Latrunculorum, Palamedes, Games of skill vs. chance, Classical scholarship, Roman games, Greek games]]

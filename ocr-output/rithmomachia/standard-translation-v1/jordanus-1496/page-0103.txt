@@ -1,0 +1,49 @@
+[[meta: This page continues the mathematical proof from page 10 regarding the irrationality of dividing certain musical intervals. It moves from discussing the "comma" to the "diaschisma" and "schisma," eventually defining the composition of a whole tone.]]
+
+...we say are the proportions. Therefore, let **a** and **b** first be the smallest numbers of the minor semitone, found through the eighteenth [proposition] of this book. For it was also demonstrated there that **b** arises from the number nine multiplied by itself [[notes: 9 × 9 = 81]] and the number three multiplied into the product of nine by itself [[notes: 3 × 81 = 243]]. But the number which arose from the multiplication of nine by itself was a square, and three is not a square. Therefore, by the fourteenth [proposition] of the sixth [book] of *Arithmetics* [[notes: Likely referring to a standard textbook of the era, such as Boethius’s *De Arithmetica*]], the number **b**, the extreme of the minor semitone, resulting from the multiplication of a non-square by a square, is not a square number. 
+
+If it is possible, therefore, for the proportion of a *diaschisma* [[notes: A "diaschisma" is half of a minor semitone]] to be known in numbers, let there be two joined diaschismata, **c, d, e**, in their smallest numbers, according to the sixth [proposition] of the fourth [book] of *Arithmetics*. For it is manifest, since a diaschisma is half of a minor semitone, that **c-d** and **d-e** together are a minor semitone, and the interval from **c** to **e** is that of a minor semitone. But since the proportions **c-d** and **d-e** are continuous in their smallest terms, then by the fifth [proposition] of the fourth [book] of *Arithmetics*, **c** and **e** are in their smallest proportion. Thus, they are the smallest numbers in the proportion of a minor semitone. 
+
+But **a** and **b** were also established as such; therefore, **c** and **e** will be the same numbers as **a** and **b**—namely, **c** is the same as **a**, and **e** is the same as **b**. Furthermore, because the proportion of **c** to **d** is the same as **d** to **e**, then by the first [proposition] of the sixth [book] of *Arithmetics*, the number **c** is a square and the number **e** is a square. Wherefore **b**, being the same number as **e**, would also be a square. But **b** was demonstrated to be non-square. Therefore, the same number would be both square and non-square, which is impossible. Thus, the *diaschisma* cannot be held in a known [rational] proportion. 
+
+The same shall be shown for the proportion of the *schisma* [[notes: A "schisma" is half of a musical comma]]. For let **a** and **b**, designated below, be the smallest numbers of the comma. Since by the twenty-eighth [proposition] of this book, **b**, the smaller term of the comma's proportion, arises from the multiplication of the number eight by the square of the side of two hundred fifty-six [[notes: The author is performing complex calculations to show the comma cannot be split into two equal rational parts]], and eight is not a square; therefore, by the fourteenth [proposition] of the sixth [book] of *Arithmetics*, **b**, the smaller term of the comma, is not a square. Therefore, just as in the demonstration of the first part, the designated numbers **a** and **b** cannot be divided into equal proportions. Thus, the ratio of the *schisma*—namely its half—is unknown and irrational. The corollary is known from the method of demonstration.
+
+[[margin: 33]]
+# The Tone: It consists of two minor semitones and a comma.
+
+$\P$ For the *sesquioctave* ratio [[notes: The 9:8 ratio, which defines a whole tone]] consists of two minor semitones and one comma. For it exceeds two *dieses* and two minor semitones by one comma; and the tone exists in that same ratio. Therefore, the tone consists of two minor semitones and a comma.
+
+[[margin: 34]]
+# $\P$ The Tone differs from two minor semitones by one comma.
+
+$\P$ For when one comma is subtracted from the *sesquioctave* proportion, two minor semitones are left; therefore, when the same comma is drawn away from the tone, two *dieses* and two minor semitones remain. Thus, the tone differs from two minor semitones by one comma.
+
+[[margin: 35]]
+# $\P$ The minor semitone is greater than three commas, but less than four. Whence it is manifest that the apotome contains more than four and fewer than five commas.
+
+| | |
+|---|---|
+| **r** | 277531995223258301621530747994112 |
+| **q** | 328128389443693511257285776231761 |
+| **p** | 263600061952401802360312389697536 |
+| **o** | 2178396179632950626746368 |
+| **n** | 2153693963075557766310747 |
+| **m** | 2067895430987964852731904 |
+| **l** | 17098604835172352 |
+| **l2** | 16677181699666569 |
+| **b** | 16231265527136256 |
+| **g** | 134217728 |
+| **f** | 129140163 |
+| **e** | 127401984 |
+| **d** | 524288 |
+| **c** | 531441 |
+| **b** | 243 |
+| **a** | 256 |
+
+[[notes: The massive numbers in this table are required to calculate the ratios of very small musical intervals like the comma (the difference between $3^{12}$ and $2^{19}$). The author uses these to prove that these intervals are "irrational" in the sense that they cannot be perfectly halved into whole-number ratios.]]
+
+$\P$ Greek curiosity was not deterred by the labor of calculation from investigating how many commas are in a *diesis*, how many in an *apotome* [[notes: The major semitone]], and finally how many are in a tone. Had I not known this was attempted by those before me, I would have set it aside, as it seems to me to bring more labor than use or utility to musical melodies. However, those who desire to know it will discover it in this way: Let **a** and **b** be the smallest numbers of the minor semitone, and **c** and **d** the smallest numbers of the comma, found through the seventeenth and eighteenth [propositions] of this book. I multiply **b** into **c** and **d**, and let **e** and **f** be produced; and I multiply **a** into **c**, and let **g** result. By the seventh [proposition] of the second [book] of *Arithmetics*, the relationship of **f** to **e** is that of a comma, and by the eighth [proposition] of the same, the relationship of **g** to **e** is that of a *diesis* and a minor semitone. Then I multiply **e** by **e**, and **f** by **f**, and **e** by **g**, and let **h, l, l2** be born. By the sixth [proposition] of the fourth [book] of *Arithmetics*, it can very easily be known that **l2** and **h** contain two commas. And by...
+
+[[summary: This page uses mathematical proofs to show that musical intervals like the diaschisma and schisma are irrational and cannot be expressed as simple ratios. It also defines the whole tone as being composed of two minor semitones and one comma, providing a table of massive numbers to support these calculations.]]
+
+[[keywords: Tone, Minor Semitone, Comma, Diaschisma, Schisma, Apotome, Sesquioctave, Pythagorean Tuning, Mathematical Music Theory]]

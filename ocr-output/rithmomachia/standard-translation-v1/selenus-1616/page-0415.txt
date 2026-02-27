@@ -1,0 +1,24 @@
+[[meta: This page continues the technical manual on chess by Gustavus Selenus. While the previous page provided diagrams for specific variations in the Fourth Book, this page begins "The Second Chapter" of a section focused on games played with "handicaps" or "odds." Specifically, it addresses the scenario where the White player is granted two opening moves in exchange for removing their King’s Bishop’s Pawn from the board.]]
+
+2. cap: On the Game of Chess.
+
+<image-desc>A horizontal woodcut headpiece featuring symmetrical acanthus leaf scrolls and floral motifs.</image-desc>
+
+# The Second Chapter.
+## Concerning the Second Method / of playing: when two moves / are taken against the King’s Bishop’s Pawn / in order to remove the same / from the board.
+
+[[notes: In historical chess, giving "odds" was common. Here, the White player gets to make two moves at once to start the game, but must play without the pawn in front of the King's Bishop (the f-pawn in modern notation).]]
+
+Now, since not only the White player, but also the Black player, has received an advantage: the remaining five advantages will also reveal themselves. For one takes either a double or a single lead: or a chess piece: and gives something back in return as an advantage [[notes: "Advantage" here refers to "odds" given to balance the skill level of players]]. If, then, one player (for example, the White player) takes two moves, and gives up the **King’s Bishop’s Soldier** [[notes: The pawn in front of the Bishop. Selenus calls pawns "Soldiers" and Bishops "Archers" or "Marksmen" (*Schützen*)]] as the advantage: the **Second Method** arises in the following manner. (This pawn must be defended, according to Chapter 10 in Book 1, because the attacks and incursions that can befall the King at that spot are numerous, considering that on his side there are not as many **bulwarks** [[notes: *bollwercke*, meaning defensive pieces]] and defenses as there are on the Queen’s side; for this reason, it is commonly separated from the other soldiers):
+
+[[margin: 1.]] In this case, the White player should not move the **King’s and Queen’s Soldiers** (as mentioned in no. 1 of the previous chapter): for although they seem like good moves, they nevertheless bring little benefit. This is because the Black player, if he places the **King’s Soldier** on thirty-six [[notes: Square 36 corresponds to e5 in modern algebraic notation]] in response to these two moves, will bring the White player's game into great disorder. For if White takes that pawn with his **Queen’s Soldier**: Black, with his
+
+[[margin: 2.]] **Queen**, **gives check** [[notes: *Schach-beut*, literally "offers check"]] from twenty-five [[notes: Square 25 is h4]]. * White then covers the King with his **Knight’s Soldier** [[notes: *Reuters-Soldat*, the pawn in front of the Knight, or the g-pawn]] on eighteen [[notes: g3]], and moves it toward the Black Queen. The Black player then takes the **King’s Soldier** [[notes: the e4 pawn]] with his Queen and gives check once more: thus winning the **King’s Rook** [[notes: *Rochen*]] and a soldier as an advantage.
+
+[[margin: 3.]] But if the White player does not cover his King (as in no. 2) but instead moves him to thirteen [[notes: d2]]: then the Black player immediately takes
+
+[[meta: catchword: "gleiche" (the same/equal), indicating the start of the next page's text.]]
+
+[[summary: This page explains the dangers of moving the center pawns too early when playing with the "Two Moves for a Pawn" handicap. It demonstrates a specific trap where Black can use their Queen to check the White King and win a Rook if White isn't careful.]]
+
+[[keywords: Chess strategy, Odds, King's Bishop's Pawn, Handicap, Opening traps, Gustavus Selenus]]

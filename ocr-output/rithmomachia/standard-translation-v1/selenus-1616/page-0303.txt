@@ -1,0 +1,19 @@
+[[meta: This page marks the beginning of the Second Chapter. It transitions from the visual diagrams of the previous page to a technical breakdown of opening moves and defenses. The author continues to reference the coordinate system where squares are numbered 1 through 64 (starting from a1).]]
+
+# The Second Chapter.
+
+## How a game / according to Damiano’s [[notes: Pedro Damiano was a Portuguese chess player who published a famous manual in 1512.]] proposal / through the protection / of the King’s Soldier / on the Black side / further / yet with improvement / shall be executed.
+
+The Second Method / which Damiano uses in his description of the Game of Chess : occurs / through the relief [[notes: *Entsetzung*—meaning the defense or reinforcement]] of the Black King’s Soldier / and can / according to his opinion / be put into action in the following manner :
+
+[[margin: ,,]] When, namely / the White / moves the King's Soldier / to twenty-eight : [[notes: This corresponds to the move d2-d4 in modern notation, assuming the King starts on the d-file.]] The Black / moves his King's Soldier / [[margin: ,,]] to thirty-six : [[notes: d7-d5.]] and the White / moves against the same / [[margin: ,,]] the King’s Knight / to nineteen : [[notes: b1-c3.]] then the Black / can protect it / in three ways : as / with the King’s Knight / [[margin: ,,]] (which is then the best /) from forty-six : [[notes: g8-f6.]] or / with the [[margin: ,,]] King’s Soldier / (which however / because the King’s Bishop [[notes: *Schütze*—literally "shooter" or "archer," the early term for the Bishop]] / is thereby [[margin: ,,]] blocked in / and one cannot / use the same / [[margin: ,,]] is not so good) from forty-five : [[notes: e7-e6.]] or / with the King’s Bishop's [[margin: ,,]] Soldier / (which is the worst and most dangerous /) from [[margin: ,,]] forty-three. [[notes: c7-c6. This variation is famously known today as Damiano's Defense, though here it refers to a slightly different pawn structure.]] [[margin: ,,]]
+
+[[margin: ,,]] What, however / is to be held of this / opinion of Damiano / that shall / (after we / according to his indication / have carried out the game / yet [[margin: ,,]] with improvement / in this / and the two following Chapters / with [[margin: ,,]] him) be sufficiently explained in the sixth Chapter / of this Book. [[margin: ,,]]
+
+[[margin: ,,]] We take, therefore / in this Chapter / for ourselves / the first protection / (as being / that which should be the best) with the King’s Knight / [[margin: ,,]] from forty-six : the others, however ; shall / (from the third [[margin: ,,]] and fourth Chapters) be noted below. [[margin: ,,]]
+
+[[margin: 1. ,,]] Now when the White / and the Black / move both [[margin: ,,]] King’s Soldiers / to the borders : [[notes: Moving to the "borders" or "frontiers" refers to the pawns meeting in the center of the board.]] and the White / attacks the [[margin: ,,]] Black King’s Soldier / with the King’s Knight / at 19. : then [[margin: ,,]] the Black moves / (to hinder his intention) the [[margin: ,,]]
+
+[[summary: This page introduces Chapter 2, analyzing Pedro Damiano's chess openings. It specifically details three ways Black can defend a central pawn against an attacking Knight, ranking them from best to worst.]]
+
+[[keywords: Pedro Damiano, chess openings, King's Soldier, King's Knight, King's Bishop, chess strategy, Gustavus Selenus]]

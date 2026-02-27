@@ -1,0 +1,27 @@
+[[meta: This page continues the tactical analysis from page 416. The previous text ended mid-sentence discussing a defensive move to protect the King's Soldier (King's Pawn). This page explores the consequences of that defense and provides alternative variations to secure a victory for the White player.]]
+
+->Vom Schach-Spiel.<-
+[[notes: "On the Game of Chess."]]
+
+## 7. cap:
+[[notes: Chapter 7.]]
+
+[[notes: The text begins mid-sentence, continuing from the previous page's move.]] ...er, to prevent [the loss], [moves] the **King’s Archer’s Soldier** [[notes: The Bishop's Pawn]] onto the **Black King’s Soldier** [[notes: The Black King’s Pawn]], at thirty: **The Black player** / (to protect the same) [moves] the **King’s Archer’s Soldier** to forty-six: **The White player** / takes / the **Black King’s Soldier** / with his **King’s Archer’s Soldier**: **The Black player** / [takes] the same / with the **King’s Archer’s Soldier**: **The White player** / offers / with the **King’s Archer** [[notes: The Bishop]] / from thirty-nine / **Check**: **The Black player** / covers the King / (provided He does not wish to move him) with the **King’s Archer** / at fifty-three: **The White player** / (to relieve the **King’s Archer**: and to exchange the **Queen**, along with the **Archers**) moves the **Queen** / to thirty-two: strengthens his game in this manner, provides an opportunity for those pieces which might cause him trouble to be removed, and attains / in addition to the captured **Rider** [[notes: The Knight]] / the victory of this game, provided he is careful.
+
+But if **the Black player** / (to prevent this exchange of pieces) / moves the **King’s Rider** / to forty-three: then **the White player** / advances / the **King’s Rider** / to twenty-two: **The Black player** / [moves] the **King’s Archer** / to forty-five: **The White player** / [moves] the **King’s Rider** / to twelve: **The Black player** / [moves] the **King’s Rook’s Soldier** [[notes: The Rook's Pawn]] / against the **White King’s Archer** / at forty-eight: **The White player** / takes / with the same / the **Black King’s Archer** / and offers **Check**: **The Black player** / takes him / with the **King’s Rider**: **The White player** / [takes] the **Black King’s Archer’s Soldier** / with the **King’s Rider**: **The Black player** / moves / against the same / and the **White King’s Rider’s Soldier** [[notes: The Knight's Pawn]], the **Queen** / to thirty-four: **The White player** / (to protect the **Soldier**) [moves] the **King’s Rider** / (out of danger) to twenty-seven: and in this way brings / his pieces / into a good order.
+
+[[margin: 13.]]
+But if **the White player** / does not [move] the **King** / to 20. (no. 2) [[notes: Referring to a numbered variation in the text]] but rather / (to bring the Black player into disorder) advances / the
+[[margin: 14.]]
+**King’s Soldier** / to twenty-nine: * then **the Black player** / plays / the **King’s Soldier** / to twenty-eight: **The White player** / the **King’s Archer’s Soldier** / to thirty: **The Black player** / his **King’s Archer’s Soldier** / to forty-six: **The White player** / the **King’s Archer** / (so that the same / is not hemmed in) / to twenty-seven: **The Black player** / the **King’s Soldier** / against the **White King’s Archer’s Soldier** / at thirty-seven: **The White player** / (to / defend / the same / by the **King’s Archer**) [moves] his **Soldier** / to twenty: thus his pieces / will be free / and with them / he shall easily prevail over the Black player.
+
+<vocab>Schach (Check), König (King), Königinne (Queen), Soldaten (Soldiers/Pawns), Schützen (Archers/Bishops), Reuter (Riders/Knights), Rochens-Soldaten (Rook's Pawns), Schach-Spiel (Game of Chess)</vocab>
+
+Sgg ij
+[[notes: This is a signature mark for the bookbinder, indicating the sequence of the gathered pages.]]
+
+[[meta: Catchword at bottom: "Wan" (If), matching the first word of the next page.]]
+
+[[summary: This page details specific move sequences in a chess match, focusing on tactical exchanges of Bishops and Queens to secure a positional advantage. It describes how White can force favorable trades or reposition Knights to maintain control of the board.]]
+
+[[keywords: chess tactics, early modern chess, piece exchanges, Bishop's pawn, Knight maneuvers, King's Archer, game of chess]]

@@ -1,0 +1,51 @@
+[[meta: This page transitions from the general philosophy of chess to a specific set of regulations titled the "Cartel of the Imperial Court." These rules define the specific movements and conditions of the game as practiced in high-society circles, likely within the Holy Roman Empire during the 17th century.]]
+
+...we have also wished to share this with [[notes: *Schach-Ziehern* literally means "chess-movers," a charming period term for players.]] chess-players, to whom it may not perhaps have occurred before.
+
+# Cartel
+## Of the Game of Chess
+### at the
+## Imperial Court.
+
+->1.<-
+Every *Pedina* [[notes: From the Italian *pedina*, meaning pawn. In this period, German chess terminology was heavily influenced by Italian masters like Greco and Salvio.]] or **Pawn** may, in its first move, "
+leap forward unto the third field. "
+
+->2.<-
+However, should a *Pedina* from the opposing side stand "
+immediately next to the same third field, this first pawn "
+must make a stop at the first [[notes: This describes the *en passant* rule. If a pawn jumps two squares past an enemy pawn, the opponent can capture it as if it had only moved one square.]], and may not move before him except for one field. "
+Yet if he wishes to move forward, the opponent has the right "
+to cast him out and place his own *Pedina* in that spot, "
+just as if the first had only moved forward one field, and the "
+opponent had taken him there. "
+
+->3.<-
+As long as the King has received no Check, he may "
+exchange with the **Rook** [[notes: *Rochen* is the archaic term for the Rook, derived from the Persian *rukh*.]], as far as he wishes with both pieces, "
+provided the fields between them are empty. "
+
+->4.<-
+Once the King has received a Check, he "
+may never exchange [[notes: "Exchange" refers here to the move of Castling. In some historical variations, the ability to castle was lost permanently once the King was put in check.]] again. "
+
+->5.<-
+As soon as a *Pedina* reaches the last field of his opponent, "
+he becomes a full **Queen**, and can, in that same move, "
+immediately offer Check with it. "
+
+->6.<-
+As many *Pedinae* as one brings to the end, so many "
+Queens does he have; and it is thus permitted to make "
+three or four Queens together. "
+
+->7.<-
+If the King is robbed of all his pieces [[notes: This refers to the "Bare King" rule. In some historical rulesets, taking all of an opponent's pieces except the King resulted in a different grade of victory or a specific type of draw.]], "
+it is not a Checkmate, but rather a ***Robada***. "
+
+[[margin: P iij]] [[notes: This is a signature mark for the bookbinder, indicating the third leaf of the 'P' gathering.]]
+[[meta: catchword: 8. Wan]]
+
+[[summary: This page outlines the formal rules of chess as played at the Imperial Court, detailing pawn moves, the en passant rule, castling, and promotion. It specifically identifies the 'Robada' as a distinct outcome when a King is left without any supporting pieces.]]
+
+[[keywords: Chess rules, Imperial Court, Pawn, Rook, Castling, En Passant, Queen promotion, Robada, 17th-century games]]

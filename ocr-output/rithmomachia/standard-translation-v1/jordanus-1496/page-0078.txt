@@ -1,0 +1,89 @@
+[[meta: This page continues the mathematical proofs concerning arithmetic progressions, which the author calls "arithmetic medietas." On the previous page, Jordanus established the basic relationship between the terms and their differences. This section moves into operations on these sequences: how to construct them to fit specific ratios, how to sum them, and how they behave under addition, subtraction, multiplication, and division.]]
+
+...if, however, the quantity were odd, **l**, **m**, **n**, and **o** would have to be doubled, and by the corollary of the seventh proposition of the second book, the difference would result as double to **g**. If, therefore, a mean is taken between them, the difference of both these and those to the mean will be **g**. And so the whole proposition will be manifest.
+
+---
+
+[[margin:
+**Diagram for Proposition 11:** 
+40, 35, 30, 25, 20 are placed above a line **k**. 
+8, 7, 6, 5, 4 are below it, marked with **f** and **g**. 
+To the side, pairings are listed: 8 with 2, **b** with 1, **c** with 1, **h** with 5, **d** with 5, and **e** with 4.
+]]
+
+### ¶ To take any number of terms in an arithmetic mediety such that their differences are not less than a given number, and the ratio of the extremes is equal to a given ratio. [[margin: 11]]
+
+¶ Let **a** and **b** be the terms of the given ratio, and let their differences be known. Let **d** be the number of terms to be taken, and **e** the number which the differences must not be less than. I multiply **a** and **b** by a number one less than **d**, resulting in **f** and **g**, whose difference **c** will measure [the intervals] that many times. I therefore take means according to the equal differences of **c**, and it follows that all the numbers will be according to the number **d**. Next, I multiply **c** until it becomes greater than **e**; let this be done by [multiplying by] **h**. I then multiply **h** by **f**, **g**, and all the mean terms, resulting in **k**, **l**, and the means between them. It is manifest that the ratio of the extremes is equal to the ratio of **a** to **b**, and the number of terms taken is according to **d**, and the differences between them are equal and greater than the given number **e**. This is what was proposed.
+
+[[margin:
+**Diagram for Proposition 12:** 
+Two rows of numbers: (4, 5, 6, 7) and (9, 8, 7, 6). 
+Lines connect the top smallest to bottom largest, showing how they sum to 13.
+]]
+
+### ¶ If, after taking any number of terms in this mediety, as many other terms having the same difference are joined (the largest to the smallest), it is necessary that the resulting sums be equal. [[margin: 12]]
+
+¶ Let **a**, **b**, **c**, **d** be any terms in this mediety [[notes: This refers to an arithmetic progression, where the "jump" between numbers is the same, like 2, 4, 6, 8.]] of which **a** is the smallest; and let **e**, **f**, **g**, **h** be as many terms in the same mediety where **e** is the largest. Let the differences of both sets be equal. I say that **a** and **e** added together are equal to **b** and **f**, and so on for the others following in this manner. For because **a** and **e** are the outer terms of **b** and **f**, and the differences are equal by the hypothesis, then by the third proposition of the first book, **a** and **e** together are equal to **b** and **f**. One may argue the same way for the remaining terms.
+
+[[margin:
+**Diagram for Proposition 13:** 
+Shows sets (8, 7, 6, 5) and (1, 2, 3, 4) paired together. 
+Below, a sequence from 7 down to 1 labeled **a** through **g**.
+]]
+
+### ¶ To sum any number of given terms in this mediety. [[margin: 13]]
+
+¶ This demonstrates how to find the total sum of the terms, which some call a "progression" [[notes: Jordanus is describing the formula for the sum of an arithmetic series.]]. If there is an even number of terms, such as **a**, **b**, **c**, **d**, **e**, **f**, **g**, **h**, then by the preceding proposition, **a** + **h** is equal to **b** + **g** and **c** + **f** and **d** + **e**, following the middle of the series. If, therefore, the sum of the two extremes **a** and **h** is multiplied by half the total number of terms in the entire series, the total sum of all terms combined will result. But if the number of terms is odd, as in **a**, **b**, **c**, **d**, **e**, **f**, **g**, there will be one middle term, which is **d**. Its difference from the extremes **a** and **g** will be the same. Therefore, by the second proposition of the first book, it is the mean of **a** and **g**, and likewise the mean of **b** and **f**, and the mean of **c** and **e**. Thus, the total number of terms in the series multiplied by this middle term produces the sum of all. This is what was proposed.
+
+[[margin:
+**Diagram for Proposition 14:** 
+A vertical addition table: 3+3=6, 2+2=4, 1+1=2.
+]]
+
+### ¶ If any terms of this mediety are added to as many others—whether they are equal to the first or are terms taken from the same mediety—adding the smaller to the smaller, the results will also be arranged according to the same mediety. [[margin: 14]]
+
+¶ For whether equals are added to equals, or any numbers are added to as many others established in the same mediety in this manner, because equal differences are added to equal differences, the total differences will be equal to one another. Therefore, by the definition of the composite, they will be established in this mediety. This is what was proposed.
+
+[[margin:
+**Diagram for Proposition 15:** 
+A grid of 10s (g, h, k), 8-6-4 (a, b, c), and 2-2-2 (d, e, f).
+]]
+
+### ¶ If as many equals are taken away, or if they themselves are subtracted from equals, the remainder will be found in the same mediety. [[margin: 15]]
+
+¶ For when equals are removed from any of them, the differences of the remainders will be the same as the differences of the wholes. Likewise, if they are subtracted from equals, the differences will remain the same as those of the subtracted terms. Therefore, by definition, the remainders will be in arithmetic proportion. This is what was intended.
+
+[[margin:
+**Diagram for Proposition 16:** 
+Rows (4, 3, 2), (8, 6, 4), and (6, 4, 2) showing the results of subtraction.
+]]
+
+### ¶ If, however, from the same terms, other smaller terms given in the same mediety are taken away from the smaller, the remainders will either be equal or will follow the ratio of the same mediety. [[margin: 16]]
+
+¶ This is in a certain way the reverse of the fourteenth and fifteenth propositions. For given **a**, **b**, **c** as the larger terms in this mediety and **d**, **e**, **f** as the smaller, if their differences to the first are equal, then when **d**, **e**, **f** are subtracted from **a**, **b**, **c**, the remainders will be equal—namely, the difference of **a** to **d**, and thus they are equal to each other. But if the numbers taken (such as **g**, **h**, **k**) do not have an equal difference relative to each of **a**, **b**, **c**, then since the differences of the subtracted parts and the wholes are equal [in their own series], the differences of the remainders will also be equal. And since the remainders are not equal to each other, this mediety will exist between them. This is what was proposed.
+
+[[margin:
+**Diagram for Proposition 17:** 
+Scaling rows: (16, 12, 8), (8, 6, 4), and (4, 3, 2) to show the effect of doubling or halving.
+]]
+
+### ¶ If any terms of this mediety are either multiplied or divided by the same number, the products or the quotients will be continued in this mediety in the same order. [[margin: 17]]
+
+¶ Let any numbers in this mediety be given, such as **a**, **b**, **c**, which are multiplied by **p** to produce **f**, **g**, **h**, and which are divided by **e** to produce **k**, **l**, **m**. I say the products **f**, **g**, **h** and the quotients **k**, **l**, **m** are continued in this mediety in the same order. For because the differences of the multiplied terms **a**, **b**, **c** are equal, then by the corollary of the seventh proposition of the second book, so are the differences of the products. And likewise, by the same rule, however many times the quotients **k**, **l**, **m** go into **a**, **b**, **c**, just as many times the differences [of the quotients] will go into the differences [of the originals], and in the same order. Therefore, what is proposed is known.
+
+[[margin:
+**Diagram for Proposition 18:** 
+A column for a through d (4, 5, 15, 4), a column for k through e (5, 4, 3, 2, 1), and the final progression (20, 16, 12, 8, 4).
+]]
+
+### ¶ To divide a given number into any number of parts that exceed each other in an arithmetic mediety. [[margin: 18]]
+
+¶ Let the number to be divided be **a**, and **b** be the number of parts into which it is proposed to be divided. I find, through the thirteenth proposition of this book, the sum of all numbers from unity up to **b**, which let be **c**, and which shall be as the parts designated by it. If you wish, resolve **a** into similar parts; then divide the resolved part by **c**, and let the resulting number according to **a** be **d**. Multiply all numbers from unity to **b** (which are in this mediety, as is known) by **d**, and let the parts **f**, **g**, **h**, **k** result, designated from **c**, which by the preceding proposition will be in this mediety. And by the ninth proposition of the first book, it is manifest that they constitute **a**. And they are taken according to the number **b**. Thus, what was proposed has been achieved.
+
+### ¶ If between proportional numbers a mean is designated according to this mediety, the ratio of the extremes to those [means] will be one [and the same]. [[margin: 19]]
+
+[[gloss: arithmetica medietas, proportio, coaceruatio, progressio, multiplicatio, divisio, differentia, extremorum proportio]]
+
+[[summary: This page explores how to manipulate arithmetic progressions, providing methods for constructing a sequence with a specific ratio, summing a series (coaceruatio), and proving that arithmetic progressions remain valid sequences when terms are added, subtracted, multiplied, or divided by a constant.]]
+
+[[keywords: arithmetic mediety, progression, summing a series, ratio of extremes, Jordanus de Nemore, medieval mathematics, arithmetic operations]]

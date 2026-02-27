@@ -1,0 +1,30 @@
+[[meta: This page provides the definitive list of number sets required for the "Great Victory," the ultimate goal of Rithmomachia. It follows the previous page's introduction to combined proportions by providing a comprehensive table and explaining the philosophical and sensory "delight" of achieving such a mathematical harmony on the board.]]
+
+->Table of all the Arithmetic, Geometric, and Musical proportions together, which can occur in this game.<-
+
+| All 3 proportions together | Arithmetic alone | Musical alone | Geometric alone |
+| :--- | :--- | :--- | :--- |
+| [[margin: †]] 2 3 4 6 | 2 4 6 | 2 3 6 | 2 3 4 6 |
+| 2 9 16 72 | 2 9 16 | 9 16 72 | 2 9 16 72 |
+| 3 5 15 25 | 3 5 25 | 3 5 15 | 3 5 15 25 |
+| 4 6 8 12 | 4 8 12 | 4 6 12 | 4 6 8 12 |
+| [[margin: †]] 4 6 9 12 | 6 9 12 | 4 6 12 | 4 6 9 |
+| [[margin: †]] 5 9 45 81 | 9 45 81 | 5 9 45 | 5 9 45 81 |
+| 5 25 45 225 | 5 25 45 | 25 45 225 | 5 25 45 225 |
+| 6 8 9 12 | 6 9 12 | 6 8 12 | 6 8 9 12 |
+| 12 15 16 20 | 12 16 20 | 12 15 20 | 12 15 16 20 |
+
+---
+
+[[margin: Note that all the 4 aforementioned numbers have within them the 3 proportions together, but in the 3 marked with a cross [[notes: The dagger symbol † in the table.]] the Musical consonances are not found. And therefore **Buxero** [[notes: Claude de Boissière, a 16th-century French mathematician who wrote a famous manual on Rithmomachia.]] did not include them, even though **Fabro** [[notes: Jacques Lefèvre d'Étaples, also known as Faber Stapulensis, whose 1496 work on the game was a primary source for later authors.]] does include them.]]
+
+This is therefore the greatest, most excellent, and final [[markup: vittoria]] (victory) that ends the [[markup: giuoco]] (game). For when one has, with great effort, arranged 4 pieces in the enemy's field whose numbers form these three proportions together, those who are playing come to feel a wonderful delight. They contemplate how, in these 4 numbers so situated, are found all those proportions from which all musical [[markup: conſonantie]] (consonances) are born. If they then wish to experiment with these same proportions on strings of various kinds, or in wind instruments using the weights and measures of these numbers, they will hear the sweetness of all those harmonies that Music can provide. To make this clearer, we will give an example using 4 numbers from those in the table of the final victory written above. Taking, then, the numbers 2, 3, 4,
+
+[[notes: The author is explaining that the "Great Victory" is not just a win condition, but a physical manifestation of Boethian mathematical harmony. The mention of "weights and measures" refers to the ancient Pythagorean idea that musical intervals are governed by fixed numerical ratios (e.g., 2:1 for an octave).]]
+
+<sig>F 2</sig>
+[[meta: catchword: 6, which]]
+
+[[summary: This page presents a table of number sets that satisfy Arithmetic, Geometric, and Harmonic (Musical) proportions simultaneously, marking the ultimate win condition of the game. The author notes a scholarly disagreement between Boissière and Lefèvre d'Étaples regarding whether certain sets truly produce musical harmony.]]
+
+[[keywords: Great Victory, Arithmetic proportion, Geometric proportion, Harmonic proportion, Musical consonances, Claude de Boissière, Jacques Lefèvre d'Étaples, Pythagorean harmony]]

@@ -1,0 +1,40 @@
+[[meta: This page continues the detailed explanation of how the chessboard is divided into quadrants named after the primary pieces—the King and Queen—and how individual squares are identified within those territories.]]
+
+### The First Book / Chapter 11
+
+...named: for that same small square in the **White King’s** quarter, upon which his **Rook** stands, is the **White King’s Rook’s** square. Conversely, on the same line, moving upwards into the **Black King’s** quarter, the square where his **Rook** is placed is the **Black King’s Rook’s** square. Furthermore, the small square or field in the **White Queen’s** quarter where her **Rook** is placed is the **White Queen’s Rook’s** square. The same holds true for the **Black Queen’s** quarter. Furthermore:
+
+->**The Black Queen’s Quarter.**<-
+| R. | Sp. | Sc. | K. |
+| :---: | :---: | :---: | :---: |
+| B. | B. | B. | B. |
+
+[[notes: The top-left quadrant of the board.]]
+
+->**The Black King’s Quarter specifically.**<-
+| K. | Sc. | Sp. | R. |
+| :---: | :---: | :---: | :---: |
+| B. | B. | B. | B. |
+
+[[notes: The top-right quadrant of the board.]]
+
+->**The White Queen’s Quarter.**<-
+| B. | B. | B. | B. |
+| :---: | :---: | :---: | :---: |
+| R. | Sp. | Sc. | K. |
+
+[[notes: The bottom-left quadrant of the board.]]
+
+->**The White King’s Quarter specifically.**<-
+| B. | B. | B. | B. |
+| :---: | :---: | :---: | :---: |
+| K. | Sc. | Sp. | R. |
+
+[[notes: The bottom-right quadrant of the board. In these diagrams: **R** = *Roch* (Rook), **Sp** = *Springer* (Knight), **Sc** = *Schütze* (Bishop), **K** = *König* or *Königin* (King or Queen), and **B** = *Bauer* (Pawn).]]
+
+Along the **Rook’s** line, moving upwards, that square which is closest to a **Rook’s** square (so long as a **Soldier** [[notes: *Soldat*, another term used here for the Pawn]] still stands upon it) is called the **King’s** or **Queen’s Rook’s Soldier’s** square. However, if the soldier has been moved from there to another square, it is called the **Rook’s second square**. Furthermore, the two squares that follow this one on the same line are called the **third** and **fourth** squares of the **Rook**. A similar rule should be applied to the
+->remaining<-
+
+[[summary: This page explains the nomenclature of the chessboard squares, dividing the board into quadrants for the King and Queen and defining the "lines" or files belonging to each piece. It introduces the method of numbering squares (1st through 4th) starting from the home rank of each player.]]
+
+[[keywords: Chessboard quadrants, square nomenclature, Rook's line, White King, Black King, White Queen, Black Queen, Soldier, Pawn, Rook's square]]

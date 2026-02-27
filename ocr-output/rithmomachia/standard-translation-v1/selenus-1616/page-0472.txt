@@ -1,0 +1,39 @@
+[[meta: This page continues the tactical sequence of chess problems from the previous page. It employs a square-numbering system (1-64) rather than modern coordinates. The focus here is on achieving a checkmate with specific pieces—specifically a Rook in the third scenario and promoted Pawns in the fourth.]]
+
+### The Fourth Book / Chapter 10:
+
+**Black** [moves] the **King** to eighteen: **White** [moves] his **King** to one, where he stood at the beginning: **Black** offers **Checkmate** with the other **Rook** [[notes: *Rochen*, the traditional term for the Rook or Castle]] from square three.
+
+4.) **White** places the **King** on seven: a **Pawn** [[notes: *Fende* or *Soldat*, literally a "foot soldier"]] on twenty-five: **Black** [places] the **King** (to hold back the White **Pawn**) on thirty-three: and four **Pawns** side-by-side on twenty, twenty-one, twenty-two, and twenty-three: So that now, one of these four Black **Pawns** shall **Mate** the White **King** in the twelfth move, either on eight or on six:
+
+So **Black** moves a **Pawn** (from 21) to thirteen: **White** [moves] the **King** to eight:
+
+**Black** [moves] a **Pawn** (from 20) to twelve: **White** [moves] the **King** to seven:
+
+**Black** [moves] a **Pawn** (from 12) to four and makes it a **Queen** [[notes: Promotion—in this era, a pawn reaching the furthest rank was "made a Queen"]]: **White** moves the **King** to eight:
+
+**Black** [moves] the newly obtained **Queen** to eleven: **White** [moves] the **King** to seven:
+
+**Black** [moves] the **Queen** to twenty: **White** [moves] the **King** to eight:
+
+**Black** [moves] the **Queen** to twenty-nine: **White** [moves] the **King** to seven:
+
+**Black** [moves] the **Queen** to thirty-eight: **White** [moves] the **King** to eight:
+
+**Black** [moves] the **Queen** to thirty-one: **White** [moves] the **King** to seven:
+
+**Black** [moves] the **Queen** to twenty-four: **White** [moves] the **King** to eight:
+
+**Black** [moves] a **Pawn** (from 13) to five and makes yet another **Queen**: **White** moves the **King** to seven:
+
+**Black** offers **Check** with the queen just mentioned from fourteen: **White** moves the **King** to eight or six:
+
+**Black** [moves] the first-made **Queen** (from 24) to fifteen and gives **Checkmate**.
+
+5.) **White** places the **King** on seven: a **Pawn**
+
+[[meta: catchword: Pawn (daten)]]
+
+[[summary: This page concludes one chess problem involving a Rook mate and details a lengthy 12-move problem where Black promotes two Pawns to Queens to deliver a specific checkmate. It illustrates the complex, puzzle-like nature of early modern chess studies.]]
+
+[[keywords: Chess strategy, Checkmate, Pawn promotion, Queen, Rook, Selenus numbering system, Endgame puzzles]]

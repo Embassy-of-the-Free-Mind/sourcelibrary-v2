@@ -1,0 +1,24 @@
+[[meta: This page continues the detailed tactical analysis of a chess game using the author's 1–64 coordinate system. It follows the "Third Book" and focuses on specific checkmate sequences (numbers 49–54) resulting from previous variations.]]
+
+->### The Third Book / 4th Chapter:<-
+
+[[meta: catchword: little]]
+
+49. * **The Black** / moves the King / to [square] twenty-six:
+**The White** / gives / with the Queen / from nineteen / **Check**: **The Black** / must move the King / to twenty-five: **The White** / gives / with the King's Rider’s Soldier [[notes: *K. Reuters-Soldaten*, the King's Knight's Pawn]] / from eighteen / **Check**: **The Black** / must move the King / to seventeen: **The White** / gives / with the King’s Archer [[notes: *K. Schützen*, the King’s Bishop]] / from three / **Check**: and (because **the Black** / must move his King / to nine) with the Queen / from ten / **Check-Mate**.
+
+50. But if **the Black** / does not move / the King / to 26. (no. 49.)
+instead / to twenty-five: then **the White** / gives / with the
+51. King's Rider’s Soldier / from eighteen / **Check**: * **The Black** / moves / the King / to seventeen: **The White** / gives / with the Queen / from thirty-three / **Check**: **The Black** / moves / the King / to ten: **The White** / gives / with the King’s Archer / from thirty-seven / **Check**: **The Black** / must / with the King / retreat to two: **The White** / gives / with the Queen / from one / **Check-Mate**.
+
+52. But if **the Black** / does not place / the King / on 17. (no. 51.)
+instead on twenty-six: then **the White** / gives / with the King’s
+Archer / from twelve / **Check**: **The Black** / must / move the King / to seventeen: **The White** / gives / with the Queen / from thirty-three / **Check**: **The Black** / must move the King / to ten: **The White** / gives / with the King’s Archer / from nineteen / **Check**: **The Black** / must place the King / on two: **The White** / with the Queen / from one / **Check-Mate**.
+
+53. But if **the White** / does not give / with the Queen / (no. 48.) instead / with the King’s Archer / from 51. **Check**: then **the Black** / moves / the King / to twenty-five or twenty-six [[notes: *funf = oder sechs und zwantzig*]]: If He places him / in this field [[notes: square 26]]: then **the White** / gives / with the Queen / from twenty-eight / **Check-Mate**: but if He moves him / to that little spot [[notes: square 25]]: then **the White** / takes / with the Queen / the Black King's Archer / and gives **Check**: He / must move the King / to twenty-six: **The White** / gives / with the Queen / from seventeen / **Check-Mate**.
+
+54. But when **the Black** / does not take / the White Soldier / with the King’s Rider [[notes: *K. Reuter*, the King's Knight]] / (no. 47.) but instead places the same / on sixty / or fifty-three / or eight- or twenty-six: then **the White** / when He / moves the King’s Archer / to twenty-one / his Queen / (if He / moves the same / to fifty-eight) after
+
+[[summary: This page presents a series of branching "if-then" scenarios for a chess endgame, demonstrating multiple paths to checkmate for the White side using the Queen, Bishop (Archer), and Pawn (Soldier). It employs a numerical coordinate system for squares 1-64 common in early modern chess manuals.]]
+
+[[keywords: Checkmate, King's Archer, King's Rider, King's Knight's Pawn, chess tactics, Selenus notation, early modern chess]]

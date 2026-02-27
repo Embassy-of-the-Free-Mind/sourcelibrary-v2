@@ -1,0 +1,22 @@
+[[meta: This page begins the Third Book of the treatise, moving from the general opening variations of the previous section into specific tactical maneuvers. The author transition from describing moves involving pawns to focusing on the utility of the Knight, referencing the work of the Portuguese master Damiano.]]
+
+1. Cap: On the Game of Chess.
+
+<image-desc>A decorative woodcut headpiece consisting of a rectangular border filled with intricate scrolls of foliage and flowers, with two bird-like figures at the center facing outward.</image-desc>
+
+## The Third Book/
+# Of the Description/ of the Game of Chess.
+### The First Chapter.
+#### How one/ in the Eighth Manner/ might make an incursion with the King’s Knight/ and move against him.
+
+After/ in the last eight chapters/ of the previous Second Book/ the seven ways/ how the game/ when it/ on both sides/ with the King’s Soldiers [[notes: "Soldaten" or Soldiers refers to Pawns, the foot-soldiers of the chessboard.]]/ is started/ might not unusefully be conducted/ have been described: Thus there remains/ the eighth/ and last manner/ given in the 7th Chapter/ of the aforementioned 2nd Book/ also to be recorded: and this [manner] corresponds/ with the/ seventh way mentioned in the 12th, 13th, 14th, and 15th Chapters/ of the 2nd Book/ in that/ the White [player]/ immediately in the second move/ makes the attack/ on the Black King’s Soldier/ but is distinguished in this/ that in this [manner]/ it is carried out/ not with the Soldier/ from 27 [[notes: Early chess manuals often numbered the 64 squares of the board from 1 to 64. In this specific system, square 27 likely refers to the starting position of a pawn or a specific coordinate in the author's diagram.]], but with the King’s Knight/ from nineteen/ the same is performed.
+
+Now this manner/ with the Knight [[notes: The German text uses "Reuter," literally "Rider," which we know today as the Knight.]]/ was particularly pleasing to Damianus/ of Portugal [[notes: Pedro Damiano (1480–1544) was a Portuguese apothecary and chess player who wrote the first great chess manual of the 16th century, "Questo libro e da imparare giocare a scachi," published in 1512.]]/ in the execution of this game/ even so/ that it almost appears/ as if He/ had disregarded the previous manners/ nor known how to use them. Therefore, [he] has augmented/ and presented this manner/ with all sorts of variations of moves: Which we/ according to our promise/ [translate] here from his Spanish booklet [[notes: Though Damiano was Portuguese, his work was widely translated and associated with the "Iberian" style of play; the author here likely refers to a Spanish edition or the general influence of that region's masters.]]/ yet more clearly/ than was done by Him/ in this and the following chapters/ and shall at the same time point out/ where he has erred/
+
+Kk [[notes: This is a signature mark, a printer's tool to help the bookbinder assemble the pages in the correct sequence.]]
+
+meta: catchword: and/ [[notes: A catchword was a common feature in old printing where the first word of the following page was printed at the bottom right of the current page to assist the reader and the binder.]]
+
+[[summary: This page introduces Chapter 1 of the Third Book, focusing on the "eighth manner" of opening a game by attacking with the King's Knight. The author cites the Portuguese master Damiano as a primary influence for this strategy while promising to clarify and correct Damiano's original text.]]
+
+[[keywords: Chess openings, King's Knight, Damiano of Portugal, Chess history, 17th-century printing, Chess tactics, Pawns, Riders]]

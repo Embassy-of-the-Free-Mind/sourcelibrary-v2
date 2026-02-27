@@ -1,0 +1,47 @@
+[[meta: This page continues the mathematical proofs concerning the division of the "Tone" (the 9:8 ratio). Having previously argued that a tone cannot be divided into two equal whole-number ratios, the author now demonstrates that the two closest approximations—the 17:16 and 18:17 ratios—flank the true mathematical midpoint.]]
+
+7 times 7 and the product divided by 17, and there will come 18 seventeenths; which complete one whole and one seventeenth. Therefore, the unity is 7 and one seventeenth of the unity of the given sum of eighteen, for the sake of one seventeenth [[notes: The author is performing a complex fractional calculation to determine the value of remainders when dividing intervals]]. If, however, I wish to find the eighth part of the sum of seventeen: I multiply 17 by eight and whatever the product is, I divide by eight, and there will come 17 eighths, which make two units and one eighth [[notes: $17/8 = 2.125$]]. There will be, therefore, two and an eighth of one whole sum of seventeen, which is the eighth part; which was what was sought. And so in any of these, anyone may be able to exercise themselves; they have, however, by this particular and exemplary demonstration been shown to have weight and momentum for what follows.
+
+[[margin: 11]]
+### If two unequal numbers are compared to the same smaller number: the ratio of the larger to it is greater, and the ratio of the smaller to it is smaller.
+
+| 9 | 8 | 7 |
+|---|---|---|
+| a | b | c |
+
+Let **a** and **b** be two unequal numbers of which **a** is greater and **b** is smaller; let them be compared to the same smaller number **c**. I say that the ratio of **a** to **c** is greater than **b** to **c**. For since, by the eighth postulate of extremes, the ratio of **a** to **c** is composed of the ratios of **a** to **b** and **b** to **c** as its parts [[notes: In early music theory, ratios were "added" by multiplying them: $(a/b) \times (b/c) = a/c$]]: therefore the ratio **b** to **c** is a part of the ratio **a** to **c**, and the ratio **a** to **c** is the whole. And since, by the last common axiom, *every whole is greater than its part*: therefore the ratio **a** to **c** is greater than the ratio **b** to **c**. And so it is to be done concerning any others by a similar argument.
+
+[[margin: 12]]
+### The sesquisextadecima ratio exceeds a whole half-tone.
+[[notes: "Sesquisextadecima" refers to the ratio 17:16. In the Pythagorean system, a "Tone" is 9:8. If you divide a tone, you don't get two equal halves in whole numbers. You get 17:16 and 18:17. This proposition proves that 17:16 is the "larger" half.]]
+
+<image-desc>A horizontal diagram representing the division of a musical interval into segments, with letters a, c, d, e, f, g, h, i, k, b in boxes in the top row, and l, m, n, o, p, q, r, s, t in the bottom row.</image-desc>
+
+| a | c | d | e | f | g | h | i | k | b |
+|---|---|---|---|---|---|---|---|---|---|
+| l | m | n | o | p | q | r | s | t | |
+
+Because the middle of this has shown the space of the extremes of a tone divided into two equal parts: to divide a tone minimally into two equal parts geometrically, and to retain the **sesquiseptimadecima** [[notes: 18:17 ratio]] and **sesquisextadecima** [[notes: 17:16 ratio]] sections on this side and that on the other. This indeed shows that the **sesquisextadecima** ratio, which is left there on the side of the tension and sharpness [[notes: The higher-pitched side of the interval]], is greater than a hemitone and a whole half-tone. And the following will show that the **sesquiseptimadecima**, taken from the heavier [[notes: lower-pitched]] part, is smaller than the same half-tone. Let it be, therefore, as in the fifth [proposition] of this, the space **a b** divided into eighteen equal parts through **a c d e f** and the remaining marks. So that **a b** contains eighteen of those parts, and **c b** sixteen, and **l b** seventeen. It is manifest that **a b** and **c b**, as seen before, are a tone [[notes: 18:16 simplifies to the 9:8 ratio of a whole tone]]; and **l b** (17) to **c b** (16) is a **sesquisextadecima**, which relationship I say is greater than a whole semitone. For since by the tenth [proposition] of this, a unit and a sixteenth of one is a sixteenth part of the sum seventeen. Which, if added to the same sum, becomes eighteen and a sixteenth of one. But eighteen and a sixteenth of one to seventeen, by definition, is **sesquisextadecima**. There are, therefore, eighteen and a sixteenth of one to seventeen, and seventeen to sixteen, two joined **sesquisextadecimas**. But eighteen and a sixteenth of one, by the preceding, is greater than a **sesquioctaua** [[notes: 9:8 ratio]] to sixteen. For eighteen to sixteen, as seen before, is a **sesquioctaua**. Therefore, the **sesquisextadecima** increased twice transcends a tone and the interval of a tone. Wherefore, by the ninth axiom, the **sesquisextadecima** ratio exceeds a whole half-tone. For whatever, being increased twice, transcends something, it is necessary that it be beyond its half. From which it is known by stronger right that the **sesquiquintadecima** [[notes: 16:15 ratio]] and every ratio greater than **sesquisextadecima** exceeds a whole half-tone.
+
+[[margin: 13]]
+### The sesquiseptimadecima: is smaller than a whole half-tone.
+[[notes: This refers to the 18:17 ratio.]]
+
+| 19 | I | 19 | I | 18 | I | 17 | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| d | 8 | c | 17 | 8 | b | | **A** to **b** contains a **sesquiseptimadecima** ratio: |
+| | | | | | | | which is narrower than a whole half-tone. |
+
+Let **a** be eighteen parts of the interval and **b** seventeen, **c** nineteen and one seventeenth, and **d** indeed nineteen and one eighth. By the tenth [proposition] of this, **a** to **b** is a **sesquiseptimadecima**. And **c** to **a** is similarly a **sesquiseptimadecima**. There are, therefore, **c** to **b** two **sesquiseptimadecimas** joined to each other. But also by the same, **d** to **b** is a **sesquioctaua** and a tone [[notes: 9:8 ratio]]. For **d** contains **b** and its eighth part. But the ratio of **d** to **b** is greater than the ratio of **c** to **b**. For an eighth part of one is greater than one seventeenth. Therefore, the **sesquiseptimadecima** ratio, by the tenth axiom, is smaller than a whole semitone. For that which, being doubled, does not fill the whole, does not contain the half either. It is therefore known that the **sesquiseptimadecima** ratio is smaller than a whole half-tone.
+
+[[margin: 14]]
+### It is necessary that the whole half of a tone falls between the sesquisextadecima and sesquiseptimadecima ratio.
+
+For by the twelfth [proposition], the **sesquisextadecima** is greater than the half of a tone: and by the thirteenth, it is smaller than the same half of a tone. But by common knowledge, it is necessary that the half itself consists between the greater and the lesser than the half. Therefore it is necessary that the whole half-tone falls between the **sesquisextadecima** and the **sesquiseptimadecima**. But that can happen in no way in a known and whole number, as the seventh [proposition] of this has shown: just as in geometry the diagonal of a square cannot be measured by a certain and established number of its side [[notes: This is a reference to irrational numbers, like the square root of 2, which cannot be expressed as a simple fraction]]. But this last [point] must be sought from another place.
+
+[[margin: 15]]
+### To join a minor semitone to two tones on a string.
+
+[[summary: This page uses mathematical proofs to demonstrate that a musical "tone" (9:8) cannot be divided into two equal whole-number ratios, showing that the 17:16 ratio is slightly larger than a half-tone while the 18:17 ratio is slightly smaller. The author likens this mathematical impossibility to the irrationality of a square's diagonal, grounding musical theory in Euclidean geometry.]]
+
+[[keywords: sesquisextadecima, sesquiseptimadecima, half-tone, semitone, musical ratios, Pythagorean tuning, 9:8 ratio, irrational numbers, musical intervals, music theory]]

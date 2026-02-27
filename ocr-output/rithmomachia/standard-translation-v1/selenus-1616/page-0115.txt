@@ -1,0 +1,19 @@
+[[meta: This page transitions from the symbolic virtues and movements of the Knight to the final category of chess pieces: the pawns. It begins Chapter 10, which identifies these pieces not merely as "peasants" but as "soldiers," assigning them specific social roles and historical identities.]]
+
+Of the Game of Chess.
+
+[[margin: 10.ca:]]
+## The Tenth Chapter.
+
+### Concerning the pieces / which are placed before the Major Pieces [[notes: *Haupt-Steine*, referring to the back-rank pieces like the King, Queen, Rook, Knight, and Bishop.]] / and in this description / are called Soldiers : their positioning and movement : their virtues and utility : also the precedence / which one has over the other.
+
+[[image-desc: A woodcut illustration of a chess piece. The piece is depicted as the bust of a soldier wearing a Renaissance-style helmet, mounted upon a decorative, goblet-shaped pedestal.]]
+
+-> Ein Soldat. <-
+[[notes: "A Soldier."]]
+
+After the eight most noble / there are still / on each side / eight common pieces / or little men of war : which in several other languages / [are called] *Pedinæ* or *Pedonæ* [[notes: Latin terms for pawns, derived from *pes* (foot), signifying foot soldiers or infantry.]] : in our mother tongue / by those / who draw [compare] this game / to a whole Regiment [[notes: *Regiment* here refers to a system of government, a social order, or a "rule" of the various estates of society.]] / its estates and offices / (of which mention has already been made / in the five previous chapters / and further information shall be provided / at the end of this chapter ) [called] Peasants : (For in times past / there were only two estates / namely the Rulers / to which the eight noble pieces are compared : and then / those who till the soil / for which reason they are called *Bawere* [[notes: An archaic spelling related to "building" or "cultivating."]] among us / and by the unlearned / are called *Bauren* [[notes: *Bauern*, the standard German word for peasants or farmers.]] : to these, however, their various offices are assigned / and / as will follow hereafter / special names / have been given) By others / [called] *Linden* / *Lenden* / as if to say *Wenden* or *Wenden* [[notes: A complex etymological play. The author links the pieces to the "Wends" (Sorbs), a Slavic minority in Germany. In this period, the term was often used to denote commoners, servants, or "foreign" subjects.]] / that is / humble folk / (as the small remnant of the Wends / is still present in Germany : Whom one otherwise / after they were long ago / overcome and expelled by the Saxons : Of which, among other historians, D. Chytræus [[notes: David Chytræus (1530–1600) was a prominent Lutheran theologian and historian; his *Saxonia* is a definitive history of the Saxon regions.]], in Book 1 of his *Saxonia* :
+
+[[summary: This page introduces the pawns, identifying them as "Soldiers" or "Peasants" who represent the common people and the infantry in the social allegory of chess. It begins an etymological and historical discussion of their names, linking them to the Wends of Germany.]]
+
+[[keywords: Soldiers, Pawns, Peasants, Pedonæ, Social Estates, David Chytræus, Wenden, Saxon history]]

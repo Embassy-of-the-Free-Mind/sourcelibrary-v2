@@ -1,0 +1,54 @@
+# A table of all <note>original: "al"</note> the arithmetical proportions that are <note>original: "be"</note> in this game.
+
+| | | | | | | | | |
+|---|---|---|---|---|---|---|---|---|
+| 2 | 3 | 4 | 6 | 7 | 8 | 28 | 64 | 100 |
+| 2 | 4 | 6 | 6 | 9 | 12 | 30 | 36 | 42 |
+| 2 | 5 | 8 | 6 | 36 | 66 | 42 | 49 | 56 |
+| 2 | 7 | 12 | 7 | 8 | 9 | 42 | 66 | 90 |
+| 2 | 9 | 16 | 7 | 16 | 25 | 49 | 169 | 289 |
+| 2 | 15 | 28 | 7 | 64 | 121 | 56 | 64 | 72 |
+| 2 | 16 | 30 | 9 | 12 | 15 | 72 | 81 | 90 |
+| 3 | 4 | 5 | 9 | 45 | 81 | | **49** | |
+| 3 | 5 | 7 | 9 | 81 | 153 | | | |
+| 3 | 6 | 9 | 12 | 16 | 20 | | | |
+| 3 | 9 | 15 | 12 | 20 | 28 | | | |
+| 4 | 5 | 6 | 12 | 42 | 72 | | | |
+| 4 | 6 | 8 | 12 | 66 | 120 | | | |
+| 4 | 8 | 12 | 15 | 20 | 25 | | | |
+| 4 | 12 | 20 | 15 | 30 | 45 | | | |
+| 4 | 20 | 36 | 15 | 120 | 225 | | | |
+| 4 | 30 | 56 | 16 | 36 | 56 | | | |
+| 5 | 6 | 7 | 20 | 25 | 30 | | | |
+| 5 | 7 | 9 | 20 | 28 | 36 | | | |
+| 5 | 15 | 25 | 20 | 42 | 64 | | | |
+| 5 | 25 | 45 | 28 | 42 | 56 | | | |
+
+## The Philosophers' Game <note>original: "The Philosophers game"</note>.
+
+For example, if I would know what the middle <note>original: "midle"</note> number is in proportion between 5 and 25: first, I add 5 to 25, which is 30. Half of thirty is 15, which is the middle value in proportion between 5 and 25. Thus, I have 5, 15, and 25 in arithmetical <note>original: "Arithmeticall"</note> proportion.
+
+---
+
+->*<-
+
+->A table<-
+
+| | | | |
+|---|---|---|---|
+| 4 | 3 | 2 | 1 |
+| 9 | 6 | 3 | 2 |
+| 16 | 10 | 4 | 3 |
+| 25 | 15 | 5 | 4 |
+| 36 | 21 | 6 | 4 |
+| 49 | 28 | 7 | 4 |
+| 64 | 36 | 8 | 4 |
+| 81 | 45 | 9 | 4 |
+| 4 | 3 | 2 | 2 |
+| 9 | 6 | 3 | 2 |
+| 16 | 10 | 4 | 2 |
+| 25 | 15 | 5 | 2 |
+
+<summary>This text explains how to identify and calculate arithmetical proportions (arithmetic means) within the context of Rythmomachia, or "The Philosophers' Game." By adding two numbers and dividing the sum by two, a player finds the middle value of a progression. The document provides extensive reference tables of numerical values used in the game to assist players in recognizing these mathematical relationships during play.</summary>
+
+<keywords>Rythmomachia, Philosophers' Game, arithmetic mean, arithmetical proportion, mathematical tables, 16th-century education, number theory, Renaissance games</keywords>

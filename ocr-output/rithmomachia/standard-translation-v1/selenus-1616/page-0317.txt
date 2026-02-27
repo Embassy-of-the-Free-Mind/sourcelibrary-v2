@@ -1,0 +1,27 @@
+[[meta: This page continues the analysis of the opening gambit discussed on page 282, transitioning from the diagrams to a detailed technical commentary and correction of Pedro Damiano’s earlier theories.]]
+
+[[margin: Chapter 4]]
+
+# On the Game of Chess.
+
+<image-desc>A decorative woodcut banner with symmetrical floral and foliage patterns, commonly used as a chapter headpiece.</image-desc>
+
+## The Fourth Chapter.
+### A thorough improvement of the game which was set forth in the previous third chapter, according to the report of Damiano.
+
+After the fourth move of the Black side was carried out in the preceding chapter (wherein he first blocked the check from the White Queen with the **Pawn** on 42, as noted in Chapter 3, No. 2; and subsequently, in its place, moved the **King** out of check to 52, as noted in Chapter 3, No. 18) according to the instructions of Damiano—and the game was played forward, though not without the necessary reminders—this chapter shall now take up the other variation. This occurs when the Black **King**, in the fourth move, is moved out of check to 52 (as in No. 18). This is done so that the two errors which Damiano committed during Black’s sixth move (to be found below at No. 2 and 7) may appear all the more clearly, and so that the moves on White’s side may be fundamentally improved.
+
+[[margin: 1.]] When, therefore, the White moves the **King’s Pawn** [[notes: Selenus calls the pawn a *Soldat* or "Soldier"]] to 28; the Black moves his **King’s Pawn** to 36; the White moves the **King’s Knight** [[notes: *Reuter*, literally "Rider"]] to 19 against the same; the Black protects it with the **King’s Bishop’s Pawn** [[notes: *Schützen Soldat*, or "Archer's Soldier"]] from 43; the White takes the Black **King’s Pawn** with the **King’s Knight**; the Black takes the same with the **King’s Bishop’s Pawn**; and the White gives check with the **Queen** from 33: then the Black moves the **King** (No. 18) to 52. The White takes the Black **King’s Bishop’s Pawn** with the **Queen** and offers check once more. The Black must move the **King** to 51. The White offers check with the **King’s Bishop** [[notes: *Schütze*, or "Archer"]] from 30.
+
+[[margin: 2. *]] The best move which the Black can use against this is to move the **King’s Pawn** to 37 and cover the **King** with it.
+
+Damiano now posits the above in the previous chapter (No. 18), and he is indeed correct thus far. However, it can be seen from his report that he did not understand the reason why the game is better played in this manner. For, if one were to play it forward as he indicates, it would be the worst and most dangerous game for the Black side that could be devised on the chessboard (as can be seen from what follows).
+
+For, when the White takes the Black **King’s Pawn** with the **King’s Bishop** and offers check for the second time (as in Chapter 3, No. 25); the Black moves the **King** to 42; the White moves the **King’s Rook’s Pawn** [[notes: *Rochen Soldat*, or "Rook's Soldier"]] to 25; the Black moves his **King’s Rook’s Pawn** to 41; the White (in order to baffle the opponent [[notes: The original idiom *einen blawen Dampf zu machen* literally means "to make a blue steam," signifying an intent to deceive, smoke out, or distress the opponent]]) takes the Black **King’s Knight’s Pawn** with the **King’s**...
+
+[[meta: signature: Nn iij]]
+[[meta: catchword: Bishop's]]
+
+[[summary: This page critiques and improves upon a specific chess opening maneuver described by the 16th-century master Pedro Damiano. The author, Gustavus Selenus, argues that Damiano failed to understand the tactical dangers for Black in this variation, particularly involving a check sequence that leaves the Black King vulnerable.]]
+
+[[keywords: Damiano Gambit, chess strategy, opening theory, Gustavus Selenus, 17th-century chess, notation, King's Pawn, King's Knight, blue steam]]

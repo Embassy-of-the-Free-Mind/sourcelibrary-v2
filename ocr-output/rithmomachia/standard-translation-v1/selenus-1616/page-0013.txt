@@ -1,0 +1,23 @@
+[[meta: This page continues the defense of the work's length and detail, citing Renaissance humanists and classical poets to justify why a seemingly small subject like chess deserves such an expansive and dignified treatment.]]
+
+[[margin: He holds it]]
+Too great and wordy / it never was /
+From which nothing can be taken / even by a hair.
+Also / for another / following **Francesco Filelfo** [[notes: Francesco Filelfo (1398–1481) was a prominent Italian Renaissance humanist known for his scholarship and his role in reviving Greek studies in Italy]]: that one must do justice / not only to the important / but also / to the lowly matters / in order to keep them / in their proper dignity: *“Not only does he (he writes / in Book 1 of the Convivia) seem worthy of praise and admiration who shows himself great and distinguished in great matters, but much more so he who makes small things (as they are called) both greatest and most splendid. For to a great and excellent man, nothing can be either small or lowly. Indeed, anyone seems to me to act rightly if he does all things according to their dignity.”*
+
+Upon this, a distinguished man from the **Magistrates of Augsburg** [[notes: The *Duûmviris Augustanis* refers to the two presiding mayors or chief magistrates of the city of Augsburg, a major center of printing and culture]] also looked / when the following treatise / (as it was then only roughly drafted) was shown to him: on the cover / instead of his formal opinion / he inscribed / the following verses from **Virgil** [[notes: Publius Vergilius Maro (70–19 BC), the famed Roman poet. These lines are from his *Georgics*, a poem about farming and bees, often cited when a writer tackles a "small" subject]]:
+[[margin: in place of his formal opinion / he noted.]]
+*“Slight is the subject of the labor, but the glory is not slight; if the adverse deities permit, and Apollo hears when called.”*
+But how far the
+**Author** has been favored / in this regard by **Apollo** [[notes: The Greek and Roman god of music, poetry, and the arts]], (insofar as it is fitting for a Christian / to speak in such a manner / or merely / to allude to it) that / every **Honest Man** [[notes: Translated from *Biderman*, meaning a respectable, upright person of good character]], with a rightful judgment for Art / may conclude for himself.
+Written at **Jetzelffließ** [[notes: The author’s place of residence or an estate; the spelling is characteristic of the early 17th century]]. In the Year 1 6 1 6. the 25th of
+July.
+
+->):( ij<-
+
+<sig>):( ij</sig>
+[[meta: Catchword: Der]]
+
+[[summary: The author concludes his preface by defending the depth of his chess treatise, citing the humanist Filelfo and the poet Virgil to argue that even "small" subjects like games deserve scholarly dignity. The page includes a formal sign-off dated July 25, 1616.]]
+
+[[keywords: Francesco Filelfo, Virgil, Apollo, Augsburg, Jetzelffließ, Renaissance Humanism, Chess history, Preface, 1616]]

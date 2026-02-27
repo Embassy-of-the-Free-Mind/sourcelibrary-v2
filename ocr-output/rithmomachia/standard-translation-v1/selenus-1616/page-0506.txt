@@ -1,0 +1,22 @@
+[[meta: This page continues the instructions for the initial setup of the Rythmomachia board, moving from the general theory of number relationships to the practical placement of pieces for both the White and Black sides.]]
+
+[[margin: [[gloss: The Battle of Numbers]]]]
+
+Refer to page 464. [[notes: This is a cross-reference likely pointing to a specific printed manual or a corresponding diagram in a mathematical textbook.]]
+
+->amen framen<- [[notes: As noted in the transcription, this cryptic phrase is likely a printer's mark or a corruption of a devotional formula, common in early modern manuscripts to signal the end of a section or a blessing on the work.]]
+
+---
+
+# The Third Chapter
+
+[[notes: This section explains the opening layout for Rythmomachia, or the "Philosophers' Game." Unlike Chess, which focuses on military hierarchy, Rythmomachia was an educational tool used to teach "Boethian Arithmetic." This system, based on the works of the 6th-century philosopher Boethius, classified numbers by their proportions and relationships. The game was played on a board of 8x16 squares (effectively two chessboards joined together).]]
+
+->**White**<-
+
+Four White Round Stones: (namely: those numbered 2, paired with 4; those with 4, with 16; those with 6, with 36; those with 8, with 64) [[notes: These represent the "Even" side's basic pieces. In this game, the pieces are categorized by shape: Rounds are the simplest, Triangles are more complex, and Squares are the strongest. The numbers here represent squares ($2^2=4$, $4^2=16$, etc.).]] Position and set these eight triangular and eight square stones in order, just as they were defined in the preceding second chapter and as clearly illustrated in the diagram.
+
+In the same manner, one must proceed with the placement of the Black Stones, with the only difference being that the squares are counted from the top downward and toward the right hand. The stones, however, are to be situated on the left side, which constitutes the ri... [[notes: The text cuts off, likely intended to say "rival" or "right" side of the board relative to the player's perspective.]]
+
+[[summary: This page provides specific instructions for the initial setup of the White and Black pieces in Rythmomachia, detailing the mathematical values of the "Round" stones and the mirrored placement of the opponent's forces.]]
+[[keywords: Rythmomachia, Philosopher's Game, Boethian Arithmetic, game pieces, mathematical proportions, board games, Renaissance education]]

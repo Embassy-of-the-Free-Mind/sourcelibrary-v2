@@ -1,0 +1,23 @@
+[[meta: This page transitions from the general description of the board's dimensions to the specific roles and positions of the pieces, beginning with the King. It establishes the piece not just as a wooden "stone," but as a personified leader of a military host.]]
+
+### The First Book / Chapter 5
+
+### The Fifth Chapter.
+
+# Regarding the two Kings of the Black and the White Hosts: their position, and the squares in which they must be placed at the start, and their movement.
+
+-> [Image: A decorative woodcut border at the top of the chapter features symmetrical floral scrollwork and two small grotesque faces.] <-
+
+-> [Image: A woodcut illustration of a chess king piece. The piece is depicted as a pedestal or chalice shape supporting the bust of a bearded king wearing a crown. Beneath the illustration, a small label reads "The King."] <-
+
+Now we wish to take up for our study, in particular, the **chess-men** [[notes: *Schach-Mänlein*, literally "little chess-men," a personification common in early modern gaming manuals]], regarding their names, dignity, position, and movements. These they have received from Art as a **mimic of Nature** [[notes: *Natur Nach-Affin*, suggesting that the game’s rules are an artificial imitation of natural or social hierarchies]]; and we shall assign these traits to them in this First Book as if they themselves stood and walked, so that we may hereafter know how to use them correctly in moving and advancing.
+
+And indeed, among the most noble and other common stones, the **King** is the head and the soul of the entire **war-host** [[notes: *Krieges-hauffens*, a term for a body of troops or a military assembly]]. For upon him the loss and gain of the game rests, and the other stones win or lose together with him.
+
+Concerning his position, the **fourth square** from the right hand is assigned to him (insofar as one plays with the White stones) or from the left hand (if one uses the Black stones).
+
+[[meta: catchword: anzu- (likely leading to *anzuweisen*, meaning "to assign" or "to indicate")]]
+
+[[summary: This page introduces the King as the most vital piece on the board, described as the "soul" of the military host whose safety determines the outcome of the game. It also specifies the King's starting position on the fourth square of the home rank.]]
+
+[[keywords: Chess King, Schach-Mänlein, war-host, starting position, 17th-century chess, military metaphor]]

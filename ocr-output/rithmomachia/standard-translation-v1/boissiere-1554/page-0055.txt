@@ -1,0 +1,77 @@
+[[meta: This page serves as a mathematical reference table for the "Assault" capture rule described on the previous page. It provides a list of specific piece values and the distances (empty squares) required to successfully capture an opposing piece through multiplication.]]
+
+# RYTHMOMACHIA, GAME [[notes: The title "IEV" is an archaic spelling of "Jeu," meaning game. Rythmomachia, or the "Philosophers' Game," was a highly complex board game used in the Middle Ages and Renaissance to teach arithmetic and harmony.]]
+## Of Numbers.
+
+<image-desc>A horizontal curly bracket spans the page width, separating the title from the instructional text.</image-desc>
+
+->Evens against odds, odds<-
+->against evens.<-
+
+<image-desc>Two smaller decorative brackets, each grouping a set of three columns of numbers below.</image-desc>
+
+| | | |
+|---|---|---|
+| 4 by | 3. Equals | 12 |
+| 6 by | 2. Equals | 12 |
+| 2 | 6 | 12 |
+| 4 | 4 | 16 |
+| 8 | 2 | 16 |
+| 2 | 8 | 16 |
+| 6. | 5 | 30 |
+| 15. | 2. | 30 |
+| 4 | 7 | 28 |
+| 9 | 4 | 36 |
+| 4 | 9 | 36 |
+| 8 | 7 | 56 |
+| 8 | 8 | 64 |
+| 16 | 4 | 64 |
+| 9 | 9 | 81 |
+| 45 | 2 | 90 |
+| 15 | 6 | 90 |
+| 9 | 10 | 90 |
+| 25 | 4 | 100 |
+| 20 | 6 | 120 |
+| 25 | 9 | 125 |
+
+---
+
+| **Evens** | **The spaces** | **Odds** |
+| :--- | :--- | :--- |
+| **to be mul-** | **in** | **produced** |
+| **tiplied** | **between** | |
+
+<column-break/>
+
+| | | |
+|---|---|---|
+| 3. by | 2 equals | 6 |
+| 3 by | 3 equals | 9 |
+| 5 | 3 | 15 |
+| 3 | 5 | 15 |
+| 5 | 4 | 20 |
+| 5 | 5 | 25 |
+| 9 | 4 | 36 |
+| 12 | 3 | 36 |
+| 3 | 12 | 36 |
+| 3. | 14 | 42 |
+| 9 | 5 | 45 |
+| 5 | 9 | 45 |
+| 7 | 7 | 49 |
+| 16 | 4 | 64 |
+| 36 | 2 | 72 |
+| 12 | 6 | 72 |
+| 9 | 9 | 81 |
+
+---
+
+| **Odds** | **The spaces** | **Odds** |
+| :--- | :--- | :--- |
+| **to be mul-** | **in** | **pro-** |
+| **tiplied** | **between** | **duced** |
+
+[[notes: The term "nompairs" is an archaic spelling for "impairs" (odds). The middle column refers to the "loges," which are the empty squares or "lodgings" between two pieces on the board. The final column, "provenus," indicates the product of the first two columns and represents the value of the piece to be captured.]]
+
+[[summary: This page contains reference tables for the "Assault" capture method in Rythmomachia, listing specific combinations of piece values and distances that result in a capture. It serves as a mathematical cheat sheet for players to quickly identify which opponent pieces are vulnerable based on their position on the board.]]
+
+[[keywords: Rythmomachia, mathematics, board game, multiplication, even numbers, odd numbers, capture by assault, Renaissance education]]

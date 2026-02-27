@@ -1,0 +1,18 @@
+# The Philosophers game.
+
+The last order of squares is found by doubling every one of the first order of circles <note>original: "roundes"</note>, and then adding one; finally, by multiplying that number by itself. For example, twice 2 is 4, and 1 added is 5; so 5 times 5 is 25. Likewise, twice 3 is 6, and [one] added is 7; then 7 times 7 is 49. These are on the even side: 25, 81, 169, 289. And on the odd side: 49, 121, 225, 361.
+
+These numbers must be set upon the pieces <note>original: "men"</note> both on the upper side and also on the underside. Except for one of the Kings, which must be marked only on the bottom with the whole number of their pyramid <note>original: "pyramis"</note>. This is because the sides must have other numbers; namely, the highest point of the even King must have 1. Mark the circle <note>original: "rounde"</note> next under him with 4; the uppermost triangle with 9; the lowermost <note>original: "nethermost"</note> with 16; the uppermost square must have 25; and the lowermost square shall have 36. 
+
+The King of the odd side has 16 upon his head (which is a circle, not pointed), 25 upon his first triangle, 36 on the second triangle, and 49 upon the first square.
+
+<sig>.E.iii.</sig>
+<meta>catchword: vpon</meta>
+
+<summary>
+This page details the final calculations for the piece values in the Philosopher's Game (Rithmomachia), specifically focusing on the highest order of squares and the complex numbering of the "King" pieces (pyramids). The square values are derived through a specific formula: (2n + 1) squared, where n is a value from the first order of circles. Additionally, it explains that while most pieces have their value on both sides, the King pieces are unique; their total value is on the base, while each constituent layer (circles, triangles, and squares) is labeled with its own specific value.
+</summary>
+
+<keywords>
+Philosopher's Game, Rithmomachia, arithmetic, squares, circles, triangles, pyramid, game pieces, mathematical proportions, even numbers, odd numbers
+</keywords>

@@ -1,0 +1,35 @@
+<header>The Philosophers' Game.</header>
+
+7 times 7, then 36 (from 6), 25 (from 5), and 16 (from
+4). These numbers make the whole pyramidal <note>original: "pyra-midall"</note>
+number 190. Because it
+does not rise to the point of one, it ought not
+to be sharp-pointed, as has been
+said before.
+
+<image-desc>A small rectangular grid representing a portion of a game board, containing symbols for game pieces: triangles in the top row and circles in the middle row, some containing faint numbers or symbols.</image-desc>
+
+### Of the placing, encamping, or setting in array <note>original: "letting in araie"</note>.
+
+To return again to the plain and
+easy playing of this game: following
+the description of the army and their armor, next follows
+either the order of their battle or encamping. 
+Because it is more plain
+and easily seen with the eye than learned
+by the ear, I refer you to the
+table where the battle is arranged in
+such order as this kind of play
+requires.
+
+<sig>B.ii.</sig>
+
+<image-desc>A large grid diagram of a game board (Rythmomachia). The board is divided into squares, with various geometric pieces (circles, triangles, and squares) placed at the top and bottom ends in a starting formation. Each piece contains a printed numeral, representing its value in the game.</image-desc>
+
+<summary>
+This text completes the description of the "King of Odd" piece in Rythmomachia, noting that its pyramidal value (190) is formed by the sum of squares from 8x8 down to 4x4. Because it lacks the final squares (3x3 down to 1x1), the physical piece is flat-topped rather than pointed. The author then transitions to the setup of the game board, directing the reader to a visual diagram of the "battle" array, asserting that the starting positions are easier to understand visually than through written instruction.
+</summary>
+
+<keywords>
+The Philosophers' Game, Rythmomachia, pyramidal number, game setup, board game history, mathematical games, King of Odd, array, encamping, 16th-century education.
+</keywords>

@@ -1,0 +1,30 @@
+[[meta: This page continues the instructions for setting up the game pieces for Rithmomachia, specifically focusing on the "Towers" (Pyramids), which are the most complex pieces in the game. It follows the previous discussion on how to calculate the values of the square pieces.]]
+
+# Of the Battle of Numbers
+
+[[notes: "Zahl-Kampf" is a literal translation of *Rithmomachia*, a mathematical board game popular in the Middle Ages and Renaissance. It was used to teach Boethian arithmetic.]]
+
+...written upon them as follows: On the largest and lowest level of the **White Tower** [[notes: In Rithmomachia, the "Tower" or Pyramid is a piece made of stacked smaller pieces; it is the most powerful piece on the board]] (which has six steps and belongs to the group of **even numbers**), one writes **36**; on the second, **25**; on the third, **16**; on the fourth, **9**; on the fifth, **4**; and then, on the sixth and highest, **1**. At the very base, however, one writes the sum of these aforementioned numbers added together, namely **91**. In the same manner, on the first and lowest level of the **Black Tower** (which has five steps and belongs to the group of **odd numbers**), one marks **64**; on the second, **49**; on the third, **36**; on the fourth, **25**; and on the fifth and highest, **16**. At the bottom of the base, the sum of these added numbers is marked, namely **190**.
+
+> (Buxer: fol: 16. a. [[notes: A reference to Claude de Boissière (Latinized as Buxerius), whose 1556 work *Nobilissimus et antiquissimus ludus Pythagoreus* was a primary source for this game.]]
+> *Let the first base of the Pyramid of Even Numbers be noted as 6: etc.*
+> *The second as 5, the third as 4, the fourth as 3, the fifth as 2, and the sixth as 1. From*
+> *these six numbers, the marking of the pieces and the lower square*
+> *depends. For the Pyramid of Odd Numbers, let the first base*
+> *be noted as 8, the second as 7, the third as 6, the fourth as 5, and the fifth as 4.*
+> *But because it is still missing three levels, which prevents it from reaching*
+> *unity, it is therefore called the **Tricurta** [[notes: "Tricurta" means "thrice-shortened" or "truncated," referring to a pyramid that does not taper to a single point]]. However, the marking of the pieces and*
+> *the lower square also depends on these five numbers.)*
+
+These aforementioned numbers, although they were devised through the singular and ingenious reflection of the first inventor of this game and taken from the divisions of **Arithmetic** [[notes: "Zahl-Kunst," literally "Number-Art"]]: yet I have with particular diligence passed over those same divisions in silence. I have preferred to direct my report toward how one might discover these numbers through **practical use** rather than through mere theory. For I considered that the minds and thoughts of those who are eager to learn this game without undue effort would otherwise be confused by these difficult mathematical divisions. Furthermore, those who possess no knowledge of such divisions could not so easily grasp or learn them.
+
+In conclusion, one should diligently observe the following when marking these aforementioned numbers:
+
+1.) That they be written on both sides of the pieces: on the **White** with black ink, and on the **Black** with white ink.
+
+[[meta: catchword: 2.) That]]
+
+Mmm ij
+
+[[summary: This page explains how to label the "Tower" or Pyramid pieces with specific numerical sequences and sums. The author notes that he is focusing on practical instructions rather than the complex underlying arithmetic to make the game more accessible to beginners.]]
+[[keywords: Rithmomachia, Battle of Numbers, Pyramid pieces, Tricurta, Boissière, mathematical games, arithmetic education]]

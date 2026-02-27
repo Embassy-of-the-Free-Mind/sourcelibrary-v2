@@ -1,0 +1,37 @@
+[[meta: This page provides the visual diagram for the calculation method described on the previous page. It illustrates how to derive the values for the triangular pieces—representing superparticular proportions—by adding the base numbers (multiples) to their squares.]]
+
+[[margin:
+Even
+number
+Addition of the multiples.
+The result governing the [super]particulars. [[notes: In the context of Rythmomachia, "particulars" refers to the superparticular ratios, where a number contains another plus a fraction of it.]]]]
+
+-> 2 . 4 . 6 . 8 . <-
+[[notes: These are the base even numbers.]]
+
+-> 4 . 16 . 36 . 64 . <-
+[[notes: These are the squares of the numbers above (e.g., 8 x 8 = 64).]]
+
+-> 6 . 20 . 42 . 72 . <-
+[[notes: These are the "pronic" or "heteromecic" numbers, created by adding the base number to its square (e.g., 8 + 64 = 72). These values will be inscribed on the triangular game pieces.]]
+
+---
+
+[[margin:
+Odd
+number
+Addition of the multiples.
+The result governing the [super]particulars.]]
+
+-> 3 . 5 . 7 . 9 . <-
+[[notes: These are the base odd numbers for the opposing side of the board.]]
+
+-> 9 . 25 . 49 . 81 . <-
+[[notes: These are the squares of the odd numbers.]]
+
+-> 12 . 30 . 56 . 90 . <-
+[[notes: Following the same rule, these are the sums used for the odd-numbered player's triangles (e.g., 9 + 81 = 90).]]
+
+[[summary: This page contains a mathematical diagram illustrating how to generate the values for the triangular pieces in Rythmomachia. By adding a base number to its square, the player derives pronic numbers which form the foundation for superparticular proportions.]]
+
+[[keywords: Rythmomachia, superparticular ratio, pronic numbers, even and odd numbers, arithmetic diagram, Renaissance mathematics]]

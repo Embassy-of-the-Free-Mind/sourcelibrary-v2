@@ -1,0 +1,10 @@
+[[meta: This page continues the description of captures in Rythmomachia, specifically addressing "discovered" captures where a blocking piece is moved to reveal a mathematical relationship between two other pieces.]]
+
+->RYTHMOMACHIA, THE GAME<-
+
+numbers being so arranged, if some **piece** [[notes: The original French uses "table," referring to the game pieces.]] of yours was found between the two which covered and prevented your capture, as soon as you have moved said blocking piece by its regular movement and uncovered your **4**, you shall take the **12**: and for the same reason, the opponent can uncover their piece and take your **4**, if it were their turn to play, without however moving the taking pieces to the place of the captures [[notes: In this game, unlike Chess, the capturing piece does not always move to the square of the piece it takes; it often captures from a distance based on mathematical "sight lines."]]: For one must not play twice [[notes: This suggests that moving a piece and then moving another to capture would count as two moves, which is forbidden; however, uncovering a capture with a single move is permitted.]], and for these captures, the numbers contained in the table that we have set out above for the capture by assault shall be used, as well as those that follow by division.
+
+[[vocab: Rythmomachia, to play, capture, division, numbers, pieces]]
+
+[[summary: This page explains "discovered" captures, where moving a blocking piece reveals a mathematical capture (multiplication or division) between two other pieces. It also clarifies that pieces capturing by mathematical ratio do not physically move to the captured piece's square.]]
+[[keywords: discovered capture, capture by assault, movement rules, Rythmomachia, mathematical capture, piece displacement]]

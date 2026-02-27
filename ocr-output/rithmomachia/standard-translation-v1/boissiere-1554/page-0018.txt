@@ -1,0 +1,26 @@
+[[meta: This page continues the instructions for generating the game pieces of Rythmomachia. Having established the base "requiring" numbers on the previous page, the author now explains how to calculate their corresponding "required" counterparts—the squares—which form the first set of ratios known as "multiple proportions."]]
+
+# OF THE PHILOSOPHERS.
+
+[[margin: Multiplied number.]]
+[[margin: Requiring.]]
+[[margin: Required.]]
+
+*Having thus prepared in eight pieces* [[notes: The original French uses "tables," referring to the game pieces or counters, similar to "tables" used in backgammon.]] *this first order of such requiring numbers, in order to find those that match and are required to form a multiple proportion* [[notes: In Renaissance mathematics, a "multiple proportion" is a ratio where the larger number is a perfect multiple of the smaller one, such as 2:1 (double), 3:1 (triple), or 4:1 (quadruple).]] *with each of them: take and multiply each of these requiring numbers individually by itself, and it will produce its required number, which will match with it in a multiple proportion. Let us take for example the first requiring number of the evens, which is 2, and multiplying it by itself will yield 4, the true required number of 2, matching it in a multiple proportion, namely double.* [[notes: The piece is called "double" because the ratio of 4 to its base 2 is 2.]] *You shall do the same for the first requiring number of the odds which is 3: saying 3 times 3, makes 9. You will say then that 9 is the required number to form a multiple proportion, namely triple with 3, the first requiring number of the odds; and thus, by multiplying each of the requiring numbers, you will have the required numbers to complete the multiple proportion as you see depicted here with its names and types.*
+
+->*double. quadruple. sextuple. octuple.*<-
+
+| 2 | 4 | 6 | 8 |
+| :---: | :---: | :---: | :---: |
+| 4 | 16 | 36 | 64 |
+
+->*Triple. Quintuple. Septuple. Nonuple.*<-
+
+| 3 | 5 | 7 | 9 |
+| :---: | :---: | :---: | :---: |
+| 9 | 25 | 49 | 81 |
+
+[[gloss: Rythmomachia (The Philosophers' Game), multiple proportion, evens, odds, double (2:1), triple (3:1), requiring numbers (the base numbers 2–9 used to generate the game's ratios), required numbers (the resulting squares).]]
+
+[[summary: This page illustrates how to generate the first set of ratios for the game board by squaring the base "requiring" numbers. This process creates the "multiple" pieces, where the value of a piece is the square of its base, representing ratios like double, triple, and quadruple.]]
+[[keywords: Rythmomachia, mathematics, proportions, squares, even numbers, odd numbers, game pieces]]

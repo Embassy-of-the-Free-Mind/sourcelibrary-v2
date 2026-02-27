@@ -1,0 +1,55 @@
+[[meta: This page follows the discussion of geometric means and serves as a reference index. It provides a structured concordance between the classic definitions found in Boethius's *De Arithmetica* and the later, more rigorous proofs established by the medieval mathematician Jordanus Nemorarius.]]
+
+# A guide to the properties of numbers to be found in Boethius and demonstrated in Jordanus.
+
+->The Divine Severinus Boethius<- [[notes: Boethius (c. 480–524 AD) was a Roman philosopher whose works on music and arithmetic were the standard textbooks for the liberal arts throughout the Middle Ages.]] ->Jordanus.<- [[notes: Jordanus Nemorarius (active 13th century) was a foundational figure in medieval European mathematics, known for bringing a more rigorous, Euclidean style of proof to arithmetic.]]
+
+| Properties of numbers. | Chapter. | Book. | Proposition. | Book. |
+|-------------------------|:------:|:------:|:-----------:|:------:|
+| **Number.** | | | | |
+| 1 | 7 | I | 2 | I |
+| 2 | 7 | I | 2 | I |
+| **Even number.** | | | | |
+| 1 | 5 | I | 2 | 7 |
+| 2 | 5 | I | 2 | 7 |
+| 3 | 46 | 2 | 10 | 7 |
+| 4 | 46 | 2 | 12 | 7 |
+| **Odd number.** | | | | |
+| 1 | 5 | I | 3 | 7 |
+| 2 | 46 | 2 | 11 | 7 |
+| 3 | | | 10 | 7 |
+| **Evenly even number.** [[notes: These are powers of 2, such as 4, 8, 16, etc.]] | | | | |
+| 1 | 9 | I | 31 | 7 |
+| 2 | 9 | I | 29 | 7 |
+| 3 | 9 | I | 32 | 7 |
+| 4 | 9 | I | 54 | 7 |
+| 5 | 9 | I | 25 | 4 |
+| 6 | 9 | I | 26.40 | 2.7 |
+| **Evenly odd number.** [[notes: Numbers that are the product of an odd number and 2, such as 6, 10, 14.]] | | | | |
+| 1 | 10 | I | 33 | 7 |
+| 2 | 10 | I | 34 | 7 |
+| 3 | 10 | I | 35 | 7 |
+| 4 | 10 | I | 35 | 7 |
+| 5 | 10 | I | 2 | I |
+| 6 | 10 | I | 3 | I |
+| **Oddly even number.** [[notes: Numbers that are multiples of 4 but are not simple powers of 2, like 12 or 20.]] | | | | |
+| 1 | 11 | I | 37 | 7 |
+| 2 | 11 | I | 38 | 7 |
+| 3 | 11 | I | 40 | 7 |
+| **Perfect number.** [[notes: A number equal to the sum of its proper divisors, like 6 (1+2+3).]] | | | | |
+| 1 | 20 | I | 0 | 0 |
+| 2 | 20 | I | 60 | 7 |
+| **Deficient and abundant numbers.** [[notes: Numbers where the sum of divisors is less than (deficient) or greater than (abundant) the number itself.]] | | | | |
+| 1 | 0 | 0 | 55 | 7 |
+| 2 | 0 | 0 | 55 | 7 |
+| **Prime and composite numbers.** | | | | |
+| 1 | 0 | 0 | 1 | 3 |
+| 2 | 0 | 0 | 2 | 3 |
+| 3 | 17 | I | 25 | 7 |
+| 4 | 17 | I | 25 | 7 |
+| **Numbers prime to each other.** [[notes: Two numbers that share no common factor other than 1, such as 8 and 9.]] | | | | |
+| 1 | 17 | I | 12 | 3 |
+| 2 | 18 | I | 15 | 3 |
+
+[[summary: This page contains a reference table linking specific classifications of numbers to the writings of Boethius and Jordanus Nemorarius. It serves as a study guide for understanding the properties of even, odd, prime, and perfect numbers in a late-Renaissance mathematical context.]]
+[[keywords: Boethius, Jordanus Nemorarius, arithmetic, number theory, perfect numbers, prime numbers, even and odd, medieval mathematics]]

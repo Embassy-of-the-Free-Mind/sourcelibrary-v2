@@ -1,0 +1,29 @@
+<header>The Philosophers' Game.</header>
+
+## Of the Kings.
+
+<image-desc>A woodcut illustration depicting two pyramidal game pieces (from the board game Rythmomachia) placed upon a grid of six squares. The pyramid on the left, which the text identifies as the "king of odd," consists of five tiers with the numbers 16, 25, 36, 49, and 64 visible on its faces. The pyramid on the right, the "king of even," consists of six tiers with the numbers 1, 4, 9, 16, 25, and 36 visible on its faces.</image-desc>
+
+The kings contain within them such
+numbers that, when all are added 
+together, they make the whole pyramidal <note>original: "piramidall"</note>
+number. The lowest square of the even [king] is
+36, which arises from multiplying 6
+by itself. The next square, which must be
+smaller, is 25, arising by multiplying
+five by itself. And so follows 16 (from 4),
+then 9 (from 3), lastly 4 (from 2), and
+a single 1. All
+these added together make 91. After the
+same manner is the king of odd <note>original: "odde"</note> composed.
+The lowest square is 64, arising from 8
+multiplied by itself. The next is 49, from
+7 times...
+
+<summary>
+This section explains the composition of the "King" pieces in the Philosophers' Game (Rythmomachia). These pieces are "pyramidal numbers," formed by stacking a series of square numbers. The "King of Even" is a pyramid with a base of 36 (6x6), totaling 91 when the smaller squares (25, 16, 9, 4, and 1) are added. The "King of Odd" begins with a larger base of 64 (8x8) and follows the same cumulative logic.
+</summary>
+
+<keywords>
+The Philosophers' Game, Rythmomachia, pyramidal number, king of even, king of odd, square numbers, arithmetic progression, mathematical games, 16th-century mathematics.
+</keywords>

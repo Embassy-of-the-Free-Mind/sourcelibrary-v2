@@ -1,0 +1,18 @@
+[[meta: This page concludes the discussion regarding the "Judges" (Bishops), specifically linking their physical movement on the board to the philosophical concept of perfection and the necessity of their moral integrity.]]
+
+## 2nd Chapter: Of the Game of Chess.
+
+[[meta: catchword: The]]
+
+[...neither] undertake nor do [anything]: unless the **Judge’s** counsel be present; and for this reason, it is necessary that they be perfect in their art [[notes: *Kunst*—referring here to the professional skill, wisdom, and legal expertise required of a judge]] and in their morals: and this is demonstrated by the gait and the movement they have when they go from the **Knights** [[notes: *Rittern*—the Knight pieces]] onto the third field [[notes: In medieval chess, the Bishop (or *Alfin*) moved by leaping exactly two squares diagonally. If one counts the starting square as the first, the landing square is the "third field."]]; for since six is the first perfect number [[notes: In medieval numerology, a "perfect number" is a positive integer that is equal to the sum of its proper divisors. As 1 + 2 + 3 = 6, it was considered a symbol of harmony and completeness.]], they complete their gait and movement perfectly: 
+-> it is because <-
+-> the end joins itself to the <-
+-> beginning. &c. <-
+
+---
+
+[[notes: The woodcut tailpiece below depicts a "mascaron"—a decorative element featuring a human-like face—common in Renaissance and Baroque printing to signal the end of a section or chapter.]]
+
+[[summary: This page concludes the allegorical description of the Bishop's movement, arguing that the Judge must be perfect in both skill and morality, much like the mathematical "perfection" of the number six. It emphasizes that no significant action should be taken without a judge's counsel.]]
+
+[[keywords: Chess, Bishop, Judges, Knight, Perfect Number, Medieval Law, Morality, Numerology]]

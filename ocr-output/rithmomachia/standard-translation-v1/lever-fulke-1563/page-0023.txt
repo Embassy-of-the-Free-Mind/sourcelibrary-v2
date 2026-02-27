@@ -1,0 +1,18 @@
+# The Philosophers game.
+
+...one of the first order and another of the second order: as 2 and 4 make 6; 3 and 9 make twelve. On the even side, they are these: 6, 20, 42, 72. On the odd side: 12, 30, 56, 90.
+
+The second order of triangles is made by adding one to every one of the first order of circles <note>original: "roundes"</note>, and then multiplying that number by itself. For example, 2 is one of the first order of circles; add one to it, which is 3. Then 3 times 3 is 9, a triangle of the second order on the even side. Likewise, add 1 to 3 (a circle on the odd side), so it is 4. Then 4 times 4 is 16. On the even side <note>original: "parte"</note>, they are: 9, 25, 49, 81. On the odd side: 16, 36, 64, 100.
+
+The first order of squares (in which the kings are contained) is made by adding two triangles together—one of the first order and another of the second. For example, 6 and 9 make 15; likewise, 12 and 16 make 28. Among the even numbers, they are 15, 45, and 91, with the King being 153. Among the odd numbers, they are 28, 66, 120, and the King, 190.
+
+<sig>A.iiij.</sig>
+<meta>catchword: The</meta>
+
+<summary>
+This page explains the mathematical calculations used to determine the values of the pieces in the Philosopher's Game (Rithmomachia). It describes how the first order of triangles is derived by adding circles from different ranks, and how the second order of triangles is created by squaring the value of a circle plus one. Finally, it details how the first order of squares, which includes the powerful King pieces, is formed by the sum of two triangles (one from each order). These calculations are divided into "even" and "odd" categories corresponding to the two sides of the game.
+</summary>
+
+<keywords>
+Philosopher's Game, Rithmomachia, arithmetic, triangles, squares, kings, circles, even numbers, odd numbers, mathematical proportions, game pieces
+</keywords>

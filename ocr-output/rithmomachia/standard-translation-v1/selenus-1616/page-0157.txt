@@ -1,0 +1,34 @@
+[[meta: This page continues the discussion of the rules regarding the King's safety. The previous page ended mid-sentence with "publicly announces to," which leads into the start of this chapter's reasoning for the checkmate rule.]]
+
+-># Of the Game of Chess<-
+
+[[margin: Chapter 1:]] because: since (2.) this is also a game in which the King—despite having a full army and without the loss of most of his soldiers—is often struck and **Checkmated**. Since this cannot be predicted from a simple retreat or a sign, it must be used as a "lot" [[notes: Meaning a final, decisive verdict or "drawing of lots"]] and an indubitable signal that the battle is now lost, the Leader is captured, and thus the field is won by one side.
+
+However, it often happens that the **Checkmate** either counts for nothing once it is given, or it is prevented, or it cannot be carried out due to inability and the fact that the pieces on both sides are equal.
+
+The **Checkmate** counts for nothing when the King no longer has a single piece left with him: for this game is so ordered that one must leave him at least one piece from his company [[notes: This refers to the historical "Bare King" rule. In many older versions of chess, if you stripped the opponent's King of all his pieces (leaving him "bare"), the game might be declared a draw or a lesser victory, depending on local customs]].
+
+The **Checkmate** is prevented through the "locking-in" and "enclosure" of the King. This occurs when a King—without being placed in Check—is so enclosed and restricted that he cannot move from his place, nor expect help and rescue from his soldiers, nor move any of them. Instead, if he wished to leave his square, he would have to step into **Check** and danger himself (which is against the nature of this game).
+
+For Example: If a **White Rook** [[notes: The "Roche" is the archaic term for the Rook, derived from the Persian word 'rukh']] stood on the line of the **Black soldiers** [[notes: "Soldaten" or "Schützen" refers to the Pawns]], and the **Black King** was in his Pawn's square, but a **White Knight** [[notes: "Reuter" or "Springer" refers to the Knight, literally a "Rider" or "Jumper"]] had been moved into the third square of that same **Black Pawn**: then the King would indeed be "locked in." However, one gives him neither **Check** nor **Discovered Check** [[notes: "Ab-Schach" or discovered check occurs when moving one piece reveals an attack from another]]. A similar thing would happen to the **White King** if he were moved into his Rook's square, and the **Black King** was in the third square of that aforementioned White Rook, while a **Black Rook** stood in the second square of the **White King's Knight**. Likewise, when the **Black King** in his Pawn...
+
+[[notes: The following diagrams illustrate the "Patt" or stalemate positions described above. In these scenarios, the King is not under direct attack but has no legal moves, as any move would put him in Check.]]
+
+| | | |
+| :--- | :--- | :--- |
+| (Dark Square) | **Black King** | (Dark Square) |
+| (Light Square) | (Dark Square) | **White Rook** |
+| **White Knight** | (Light Square) | (Dark Square) |
+
+| | | |
+| :--- | :--- | :--- |
+| (Dark Square) | **Black King** | (Dark Square) |
+| **Black Rook** | (Dark Square) | (Light Square) |
+| (Dark Square) | **White King** | (Dark Square) |
+
+R
+[[meta: catchword: gensz (the start of the word "gensz-weise" or "pawns" continuing on the next page)]]
+
+[[summary: This page defines the conditions of Checkmate and Stalemate (Patt), explaining that Checkmate is the formal signal of a lost battle. It also details the "Bare King" rule and provides specific board examples where a King is trapped but not in check, resulting in a draw.]]
+
+[[keywords: Checkmate, Stalemate, Patt, Roche, Rook, Reuter, Knight, Bare King rule, Chess rules, 17th-century chess]]

@@ -1,0 +1,22 @@
+[[meta: This page continues the defense of Chess's ancient lineage, transitioning from a discussion of the Roman "Stone-Game" (Latrunculorum) to a bibliography of notable medieval and Renaissance chess authors. It then begins a geographic survey of how different nations play the game, starting with the customs of the Turks.]]
+
+# ->On the Game of Chess.<-
+
+[[margin: Chapter 2]]
+...lived after the birth of Christ. He was followed by **Cunrad von Ammenhusen** [[notes: A Swiss monk and secular priest (c. 1337) from Stein am Rhein, famous for his "Chess Book," a vast rhyming compendium of medieval knowledge based on the work of de Cessolis]], a monk and vicar of the city of Stein, around the year of Christ 1337. He indeed translated the booklet of the aforementioned **de Casolis** [[notes: Jacobus de Cessolis, a Dominican friar whose 13th-century chess treatise was one of the most popular books of the Middle Ages]] from Latin into German rhymes, but he improved it here and there to such an extent that it should be regarded more as a new book than a mere translation. Furthermore: **Dr. Jacob Mennel** in the year of Christ 1507; then **Thomas Actius Forosemproniensis**; **Hieronymus Vida** [[notes: Marco Girolamo Vida, author of the famous poem *Scacchia Ludus*]]; **Damianus** of Portugal [[notes: Damiano of Odemira, author of the first great chess manual of the 16th century]]; **Rui Lopez** the Spaniard [[notes: Ruy López de Segura, a priest and chess master whose name is still used for a popular opening move today]]; **Girolamus Zanucchus**; **Gregorius Ducchus** of Brescia; **Cosmus Gracinus** of Florence; **Felix Paciottus**; **Joannes Cochanovius** the Pole [[notes: Jan Kochanowski, the greatest Polish poet of the Renaissance]]; **Arthur Saul**, an Englishman; and **Lucas Wielius**.
+
+Having recounted the inventors and writers, we now wish to observe those who have partaken in this delight. And if we look around, we shall find that almost all distinguished nations have amused themselves with it—and still do—though not all in the same manner (a fact we do not wish to leave unmentioned here, as far as the information has reached us). First, in **Asia**, the **Turks**; as reported by **Petrus Bellonius Cenomanus** [[notes: Pierre Belon, a French naturalist and traveler]], a physician and Frenchman, in Book 3 of his *Observations* (worthy of reading), which he wrote in his mother tongue in A.D. 1549 and which **Carolus Clusius** of Arras [[notes: Charles de l'Écluse, a renowned botanist who translated Belon’s travels]] translated into Latin, Chapter 49, page 483, in the following manner:
+
+[[margin: cc]]
+> *In Latrunculorum Ludo, Turcae sunt industrij, eoq; maximè delectantur : Interdum enim, totum diem, ludendo traducunt, eapropter Latrunculos semper circumferunt, Alveiq; loco, Telam pictam. Admodùm illis convenit hic Ludus. Nam cùm humi sedeant ociosi, facilè ludendo, totum diem, impendere possunt. Eburnei nonnunquàm, personis sculpturâ expressis, reperiuntur, sed eâ, quam Reginam, nos vocamus, carere nobis visi sunt, aliamq; ejus loco substituere :* **That is:**
+
+[[margin: cc]]
+> The Turks are very cunning at the Game of Chess and take no small delight in it. Indeed, they sometimes spend an entire day moving the chess pieces. For this reason, they carry the chessmen with them at all times, and instead of a wooden chessboard, they carry a cloth upon which the squares are drawn. This game suits them quite well; for since they otherwise sit idly upon the earth, they can easily spend the whole day upon it.
+
+[[notes: The Latin text notes that the Turks often lacked the piece Europeans called the "Queen," substituting another in its place—historically, the "Vizier" or "Advisor," as Islamic tradition often avoided figurative human representations and used different names for the pieces.]]
+
+<sig>E iij</sig>
+[[meta: catchword: Man]]
+
+[[summary: This page lists influential historical authors of chess treatises and begins a cultural survey of chess-playing nations, specifically describing the habits of the Turks, including their use of portable cloth boards.]]
+[[keywords: Cunrad von Ammenhusen, Jacobus de Cessolis, Hieronymus Vida, Ruy Lopez, Pierre Belon, Turkish chess, chess history, chess authors, cloth chessboard]]

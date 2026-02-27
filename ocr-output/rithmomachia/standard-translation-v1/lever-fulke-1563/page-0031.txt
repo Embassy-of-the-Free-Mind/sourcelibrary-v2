@@ -1,0 +1,35 @@
+# The Philosophers' Game
+
+## The first order of squares
+
+<margin>
+Superparticulars <note>original: "supparticulres"</note> added
+</margin>
+
+<margin>
+Being the squares
+</margin>
+
+**White Pieces**
+
+| 6 <br>*(Triangle)* | 20 <br>*(Triangle)* | 42 <br>*(Triangle)* | 72 <br>*(Triangle)* |
+| :---: | :---: | :---: | :---: |
+| 9 <br>*(Triangle)* | 25 <br>*(Triangle)* | 49 <br>*(Triangle)* | 81 <br>*(Triangle)* |
+| **15** <br>**(Square)** | **45** <br>**(Square)** | **91** <br>**(Square)** | **153** <br>**(Square)** |
+
+<br>
+
+**Black Pieces**
+
+| 12 <br>*(Triangle)* | 30 <br>*(Triangle)* | 56 <br>*(Triangle)* | 90 <br>*(Triangle)* |
+| :---: | :---: | :---: | :---: |
+| 16 <br>*(Triangle)* | 36 <br>*(Triangle)* | 64 <br>*(Triangle)* | 100 <br>*(Triangle)* |
+| **28** <br>**(Square)** | **66** <br>**(Square)** | **120** <br>**(Square)** | **190** <br>**(Square)** |
+
+<summary>
+This page illustrates the numerical derivation of the "first order" of square pieces used in the Philosophers' Game (Rythmomachia). It presents two grids (one for the white pieces and one for the black pieces) showing that the value of each square piece is determined by adding a "superparticular" value to a base square value. For example, on the white side, the square piece 15 is the sum of the triangles 6 and 9. On the black side, the square piece 28 is the sum of triangles 12 and 16.
+</summary>
+
+<keywords>
+Philosophers' Game, Rythmomachia, superparticular, squares, triangles, mathematical progression, arithmetic ratios, early modern gaming, board game history.
+</keywords>

@@ -1,0 +1,15 @@
+[[meta: This page continues the rules regarding the capture and "ransoming" of the Pyramid piece in Rythmomachia. The previous page ended with the syllable "cap-", concluding here as "capturée" (captured) or "surprise".]]
+
+# OF THE PHILOSOPHERS.
+
+ed. And if it [[notes: referring to the Pyramid]] has no equal counter, the opposing party shall choose one at their pleasure. For example: between the Pyramid and the 5, there are five intervals; five then multiplied by the 5 intervals must capture the base 25, which is within the Pyramid. Therefore, it shall be ransomed by giving another counter [[notes: The original French uses *table*, the standard term for a gaming piece in this period]] of 25. And if the player has none, the opposing party shall choose one at their pleasure. But when such an occurrence befalls the largest base of the Pyramid, then it cannot be ransomed; thus it is captured [[notes: The "largest base" is the foundation of the stacked Pyramid; while the smaller "levels" can be sacrificed to save the piece, losing the foundation results in the loss of the entire piece]]. 
+
+Now, someone may tell me that those who have written on this game have only mentioned that the Pyramid could ransom its lesser bases by equal counters—as if, should the Pyramid be defeated in its base of 25, it could only be ransomed by another 25; and in the event that the defeated player had no more counters marked 25 than the victor, the victor could not demand another. I answer you that it is not reasonable for the victor to be deprived of his right, and by the same logic that the said victor could have been defeated and ransomed by the 25 of the Pyramid, so having defeated it, he may compel you and ransom it [[notes: This is a clarifying rule; the author argues that the winner should always be compensated, even if the specific numerical piece isn't available]]. However, an imprisoned Pyramid [[notes: "Imprisonment" refers to a piece being physically surrounded on all sides, rather than just being mathematically "captured" from a distance]] cannot be ransomed.
+
+->Of Victories.<-
+
+Because often, through lack of consideration for the victory gained, the victor may be frus... [[notes: The text cuts off here at the end of the page]].
+
+[[summary: This page clarifies the rules for "ransoming" the Pyramid piece, explaining that smaller numerical levels can be traded to save the piece from capture, and establishing the victor's right to choose an alternative ransom if a matching piece is unavailable.]]
+
+[[keywords: Rythmomachia, Pyramid, capture, ransom, gaming pieces, victory conditions, Renaissance mathematics, game rules]]

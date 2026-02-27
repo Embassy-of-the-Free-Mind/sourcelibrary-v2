@@ -1,0 +1,17 @@
+[[meta: This page continues the detailed rules of Rythmomachia, moving from the mathematical "Ambush" capture described on the previous page to the concept of "Imprisonment," which relies on blocking an opponent's movement rather than simple arithmetic.]]
+
+# OF THE PHILOSOPHERS.
+
+## Concerning Imprisonment.
+
+**I**F a group of numbers can so besiege another that it cannot exit directly without moving through the corners like the bishops in chess [[notes: The original French uses *fols des eschets* (fools of chess), which was the standard name for the Bishop in the medieval and Renaissance periods]], and it has no help from any others of its own livery [[notes: "Livery" refers to the piece's side or team, "Even" or "Odd"]]: that piece shall be taken by imprisonment when the final piece involved in the imprisonment is played, without placing another in its stead [[notes: Unlike "Capture by Assault," where a piece might move into the captured piece's space, imprisonment simply removes the trapped piece from the board]].
+
+->Example.<-
+
+The square piece [[notes: Rythmomachia pieces are shaped as circles, triangles, or squares, each representing different numerical progressions]] of 15, surrounded and besieged by opposing numbers, cannot exit in any manner whatsoever; therefore, by right, it must be taken. All numbers can be imprisoned by this means, and can likewise imprison others, just as we have said regarding capture by assault [[notes: A rule where a piece is captured if an opponent of equal value moves into its path]]. Furthermore, if you can move your piece to some place, or reveal it in such a way that empty spaces are found between that piece and an opponent's piece, through which your multiplied piece equals the opponent's piece, you could take it without moving into its space. In whatever capture it may be, if you have through negligence forgotten to take a piece, and at the next turn you find the pieces still so arranged, you may still take your opponent's piece; and because no capture is made without a move, you shall play the victorious piece in place of 
+
+<sig>D iij</sig>
+
+[[summary: This page explains the "Imprisonment" rule, where a piece is captured by being surrounded so it cannot move, and notes that captures can still be claimed if a player previously forgot to take the piece.]]
+
+[[keywords: Imprisonment, Rythmomachia, Chess bishops, square pieces, capture by assault, movement rules, negligence]]

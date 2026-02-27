@@ -1,0 +1,15 @@
+[[meta: This page continues the transition from the symbolic military roles of the pieces discussed on page 48 to the physical requirements of the game, specifically the design of the pieces and the layout of the board.]]
+
+# The First Book / Chapter 4:
+
+How the King, as well as the other fifteen **pieces** [[notes: *Steine*, literally "stones," was the standard term for chess pieces in this period]], should be shaped, carved, turned, or cast: this is left to the invention and ideas of each individual artist. Therefore, it is necessary for us—since we only wish to instruct the player regarding the **squares** in which they stand and the manner in which they should be moved—to record certain facts about them. However, one can depict and use them in the manner seen in the figures and sketches placed before the following six chapters, which is not without use.
+
+Before we now report specifically on these pieces, we must first examine the place and space upon which these **little war-men** [[notes: *Krieges-Männlein*. The author continues the military metaphor, viewing the pieces as a miniature army]] will subsequently set up their camp, formation, and battle. This is the chess table and board, or, as the ancients called it, the **Schach-Zabel** [[notes: *Zabel* is an archaic German word for board or table, derived from the Latin *tabula*]].
+
+Regarding its form and shape, it is square, exactly as long as it is wide, surrounded by four borders: and contains eight broad lines upwards and just as many across: therefore it attains and receives sixty-four squares, which, one after the other, are distinguished—now white, now black (as the following figure shows)—convenient for playing.
+
+->[An illustration of a square chessboard consisting of an 8x8 grid of alternating light and dark squares, enclosed within a double-line border.]<-
+
+[[summary: This page discusses the artistic freedom in designing chess pieces and introduces the physical chessboard, defining its 8x8 grid and alternating black-and-white square pattern.]]
+
+[[keywords: chessboard, pieces, craftsmanship, 64 squares, Schach-Zabel, military metaphor, game setup]]

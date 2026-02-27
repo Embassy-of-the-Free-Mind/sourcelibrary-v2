@@ -1,0 +1,23 @@
+# The Philosophers' Game.
+
+## Of the marching or moving of the pieces. <note>original: "remouing of the men"</note>
+
+Once the army <note>original: "battell"</note> is properly placed, it follows next that we must know the manner of marching and moving. Every kind of piece has its own specific type of motion, and first we must speak of the rounds <note>original: "roundes"; referring to the circular pieces</note>.
+
+### The motion of the rounds.
+
+The rounds must move into the space that is next to them diagonally <note>original: "cornerwyse"</note>, as shown in the table: from space A to any of these: B, C, D, or E.
+
+### Of the triangles.
+
+The triangles move <note>original: "passe"</note> across three spaces, counting the one in which they stand as the first and the one to which they move as another; that is, leaping over one... <note>catchword: "one" implies the sentence continues: "leaping over one space."</note>
+
+<vocab>Philosopher's game, Rythmomachia, army, rounds, motion, triangles, marching</vocab>
+
+***
+
+<summary>
+This page begins the explanation of the rules of movement for Rythmomachia (The Philosophers' Game). It establishes that each type of piece has a unique way of moving across the board. Specifically, it describes the movement of the "rounds" (circles) as a one-square diagonal move and begins to describe the "triangles" as moving three spaces (a leap of two squares).
+</summary>
+
+<keywords>Rythmomachia, Philosophers' Game, movement rules, circles, triangles, board game strategy, mathematical game</keywords>

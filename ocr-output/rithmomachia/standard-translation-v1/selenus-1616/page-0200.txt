@@ -1,0 +1,23 @@
+[[meta: This page continues the instructions for the practical game examples in Chapter 6. The author is drawing a parallel between the strategic "order of battle" in warfare and the proper arrangement of chess pieces.]]
+
+->### The Second Book / 6. cap:<-
+
+arrangement; when the **pieces** [[notes: *Steine*; literally "stones," the standard term for chess pieces in 17th-century German]] stand well-protected near one another, they can injure the enemy so much better than in a poorly-arranged game, offering many distinguished and useful moves. Thus, a well-ordered game helps and benefits a good **Chess-player** [[notes: *Schach-Zieher*; literally "chess-mover"]] no less than a well-made **order of battle** benefits a **General** when he wishes to attack his enemy.
+
+That (3.) in these [examples], one accommodates both players at the same time, and has recorded with special diligence not only what was found useful for the attack, but especially for defense and protection on both sides.
+
+That (4.) the benefit which even the most inexperienced player may carry away will be no small thing: provided that he follows the **order** he will find in these books and diligently observes how his opponent moves against him. Considering this, he might, in the manner mentioned, overcome and defeat even the most experienced and best players.
+
+That (5.) he who in these [examples] is called **the White** (as already indicated above in the 2nd Chapter of this book) uses the **white pieces**; but he who is called **the Black** uses the **black pieces** in this game.
+
+That (6.) so that time is not spent in vain while reading these, one must write **numerical digits** into the squares of the **Chess-Table** [[notes: *Schachs Tabel*; the chessboard. The author refers to his own coordinate system explained in Book 1, where squares were numbered to help readers follow recorded games]] (by virtue of the 11th Chapter in the first book) and must place these, along with the pieces, before one's eyes (to see how the recorded moves in the following examples are intended).
+
+That (7.) one should keep a close watch on and diligently weigh the **position of the pieces** when they are moved from the squares in which they were initially arranged into other squares by the recorded moves. For thereby one will sufficiently notice the good intentions of the applied diligence, and be able to grasp and retain something useful therefrom.
+
+That (8.) because one must often stop in these [games] depending on the opportunity of the moves, and because—due to many variations—one did not wish to describe a started game until the very end (as briefly mentioned): in such a case, one should begin again and continue play from that same arrangement of pieces in which they stood during the last move before the numbers to which the beginning **§** [[notes: The section symbol is used here to mark branching points or variations in the game's notation]] points and refers back. This, however, is not found more easily than by starting again from the beginning of the Chapter, and as soon as one reaches the sought-after move, which before a beginning...
+
+[[meta: catchword: gehenden (beginning)]]
+
+[[summary: The author provides eight practical instructions for studying the chess examples in the book, comparing chess strategy to military maneuvers and explaining how to use his coordinate system and section marks to follow game variations.]]
+
+[[keywords: chess strategy, order of battle, white and black pieces, chessboard coordinates, game variations, military metaphor]]

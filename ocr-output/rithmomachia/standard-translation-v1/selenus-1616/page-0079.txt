@@ -1,0 +1,38 @@
+[[meta: This page continues the discussion from page 48 regarding the arrangement and nature of the chess pieces, specifically focusing on how they mirror military and social hierarchies.]]
+
+->Vom Schach-Spiel.<-
+[[notes: "On the Game of Chess"]]
+
+[[margin: 4. cap:]]
+
+...colonels and leaders / can be much better recognized / and how they / are natured [[notes: *Genaturet* refers to their inherent character or the way they move/act]] / be noted.
+
+Therefore, one finds / on each side / sixteen stones: which / as they / [are] in two heaps / separated from each other / are thus equal in the number of stones / and only in colors / distinguished.
+
+Eight of these / are called / the **Main-Pieces** [[notes: *Haupt-Steine*, referring to the "noble" pieces of the back row as opposed to the pawns]] / and are / as follows / named:
+
+1. The King /
+2. The Queen /
+3. 4. { Rooks / } One for the King /
+5. 6. } Two { Shooters / } [[notes: *Schützen* was an early German term for the Bishop]] the other / for the
+7. 8. { Knights / } [[notes: *Reuter*, literally "Riders"]] Queen.
+
+These eight most noble pieces / if one wishes to aim / at the purpose of this game: can be distinguished / in the following manner: Namely / as the **General Field-Marshal** / upon whom everything depends / and for whose sake / the other pieces / betake themselves / to this war: namely the **King**: As the **Field-Marshal** / as / the **Queen**: As the **Colonels and Commanders** / as / the **Rooks**: As the **Cavalry** / as / the **Knights**: As the **Elite Mercenaries** [[notes: *Doppel Soldner*, or "double-pay soldiers," were experienced troops who took greater risks for twice the pay]] / as / the **Shooters** [Bishops]: For they are more rightly / than / the **Pike-men** / (as *Johann Jacobi von Wallhausen / in his Art of War on Foot / page 59* [[notes: Johann Jacobi von Wallhausen (c. 1580–1627) was a renowned military strategist of the era]] / not without cause / contrary to the Hungarian custom / opines) worthy of double pay.
+
+The remaining eight pieces / which stand in the other cross-line / and the next fields / before the above-indicated Main-Pieces / are / in this *Treatise* / called the **Soldiers** / by which / the **Infantry** is indicated.
+
+*Fr. Jacobus de Casallis* [[notes: Likely referring to Jacobus de Cessolis, a 13th-century Dominican friar whose book on chess as a metaphor for society was a medieval bestseller]], *(in Tractatu de Moribus Hominum & Officio Nobilium)* Likewise / *Jacobus Publicius Florentinus* [[notes: A 15th-century Italian humanist and author]]: *(in his book on the Orator & Artificial Memory)* divide these pieces / into special offices / and therefore give them / the following distinct names.
+
+| Interrex [[notes: Regent]] | Eques Auratus [[notes: Gilded Knight]] | Vir Consularis [[notes: Counselor]] | Rex [[notes: King]] | Regina [[notes: Queen]] | Vir Consularis [[notes: Counselor]] | Eques Auratus [[notes: Gilded Knight]] | Interrex [[notes: Regent]] |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | | | | | | | |
+| **Colonus** [[notes: Farmer]] | **Faber** [[notes: Smith]] | **Scriptor** [[notes: Scribe]] | **Thesaurarius** [[notes: Treasurer]] | **Medicus** [[notes: Physician]] | **Caupo** [[notes: Innkeeper]] | **Teolonarius** [[notes: Toll-gatherer]] | **Lusor** [[notes: Player/Gambler]] |
+
+These authors wish / as it appears / to draw the *Game of Chess* / toward an entire Government [[notes: *Regiement* here refers to the structure of a state or administration]] / its estates and offices. Although it is now / not actually directed solely to that end / we nevertheless intend / for the reader’s pleasure and delight / to make further mention / of this / in its proper place / in the future.
+
+<sig>S ij</sig>
+[[meta: catchword: Wie]]
+
+[[summary: This page defines the sixteen pieces of each side, categorizing the eight "Main-Pieces" (noble ranks) and eight "Soldiers" (infantry). It links chess roles to 17th-century military ranks and cites historical authors who viewed the board as a microcosm of social and governmental structures.]]
+
+[[keywords: chess pieces, military ranks, King, Queen, Rook, Bishop, Knight, Pawn, Johann Jacobi von Wallhausen, Jacobus de Cessolis, Jacobus Publicius, social hierarchy, allegory]]

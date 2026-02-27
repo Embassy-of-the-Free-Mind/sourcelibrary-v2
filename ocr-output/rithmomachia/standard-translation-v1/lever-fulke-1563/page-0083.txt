@@ -1,0 +1,19 @@
+<header>The Philosopher's <note>original: "Philosophers"</note> Game.</header>
+
+## ¶ Regarding the Triumph <note>original: "Of the triumph"</note>
+
+The triumph occurs after the King has been completely <note>original: "cleane"</note> captured. It is created in the adversary's camp using your own men as well as the pieces captured from your adversary, or both, in the proportions that have been shown before. It is proclaimed that once those men are placed, they may not be captured, as was sufficiently declared previously. There is no difference between the triumphs, except <note>original: "sauyng"</note> that some will not allow a triumph unless it consists of at least <note>original: "lest"</note> four numbers and two proportions. All three proportions are required for the greater victory, making only two kinds of triumphs.
+
+-> ¶ There follows the third <-
+-> kind of playing at <-
+-> the Philosopher's <-
+-> game. <-
+
+<sig>C.ij.</sig>
+<meta>catchword: There</meta>
+
+<summary>
+This section describes the "Triumph" in the game of Rythmomachia (The Philosopher's Game). A triumph is a specific endgame condition achieved after the opponent's King is captured. It involves arranging pieces—both those remaining and those captured—within the opponent's territory to form specific mathematical proportions. The text notes that once these pieces are set in a triumph, they are immune to capture, and it distinguishes between triumphs based on the number of proportions achieved, specifically noting the requirements for a "greater victory."
+</summary>
+
+<keywords>Rythmomachia, Philosopher's Game, Triumph, King capture, mathematical proportions, victory conditions, historical board games, early modern gaming</keywords>

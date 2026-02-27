@@ -1,0 +1,40 @@
+[[meta: This page concludes the mathematical division of musical intervals discussed on the previous page and transitions into the practical definitions of the Greek musical system, including the three genera (Diatonic, Chromatic, and Enharmonic) and the naming of the notes.]]
+
+...the consonances of the **diapente** [[notes: The perfect fifth]] and the **diapason** [[notes: The octave]] are divided into two equal parts. In this way, you may find the **schismata** and **diaschismata** [[notes: Very small mathematical intervals used in tuning theory to account for the "comma," or the tiny discrepancy between ratios]], and the **quarter-tone dieses** assigned by the intervals of the comma, the diesis, and the complete semitone, by taking mean proportional strings as was done in the preceding sections. However, these things may be immediately clear to those somewhat practiced in **geometry** [[notes: In the Renaissance, music was part of the "Quadrivium" along with arithmetic, geometry, and astronomy; musical intervals were often calculated using geometric methods]]. Once you have discovered these things, learn (if you like) how to divide a **tone** and a **semitone** in the voice by means of a string, and any other consonance you wish in the art of music.
+
+->$\mathbb{C}$ End of the Third [Book] of the Elements of Music.<-
+
+---
+
+[[margin: b]]
+The **harmonic rule** [[notes: Also known as the monochord, a single-stringed instrument used to measure mathematical intervals]] is an instrument by which (with the judgment of reason applied) consonances and the parts of consonances are sought out upon a string. There are three genera [[notes: Classes or styles]] of melodies: **Diatonic**, **Chromatic**, and **Enharmonic**. 
+
+The **Diatonic** genus is a melody whose division proceeds continuously by a minor semitone and two whole tones. The **Chromatic** ascends by two unequal semitones and a **trihemitone** [[notes: An interval of three half-tones, or a minor third]]. The **Enharmonic**, however, ascends by two **dieses** and a **ditone** [[notes: An interval of two whole tones, or a major third]]. In this context, a **diesis** is half of a minor semitone; it arises from the division of the difference between its outer limits, and it is also called a **tetrartemeria** [[notes: A Greek term meaning "fourth part," referring here to a quarter-tone]]. It is necessary that the always larger part be found as the higher pitch, and the smaller as the lower pitch. Voices, strings, chords, and spaces are named in this order, striving from the low pitch to the high, in each genus of melody.
+
+| Greek Names | Latin Names |
+|---------------------|-----------------------|
+| $\mathbb{C}$ **Proslambanomenos** | Added [note] |
+| **Hypate hypaton** | Principal of the principals |
+| **Parhypate hypaton** | Next to the principal of the principals |
+| **Lichanos hypaton** | Index of the principals |
+| **Hypate meson** | Principal of the middle [notes] |
+| **Parhypate meson** | Next to the principal of the middle |
+| **Lichanos meson** | Index of the middle |
+| **Mese** | Middle [note] |
+| **Trite syneuzgmenon** | Third of the conjunct [tetrachord] |
+| **Paranete syneuzgmenon** | Penultimate of the conjunct |
+| **Nete syneuzgmenon** | Last of the conjunct |
+| **Paramese diezeugmenon** | Near-middle of the disjunct |
+| **Trite diezeugmenon** | Third of the disjunct |
+| **Paranete diezeugmenon** | Penultimate of the disjunct |
+| **Nete diezeugmenon** | Last of the disjunct |
+| **Trite hyperbolion** | Third of the excellent [notes] |
+| **Paranete hyperbolion** | Penultimate of the excellent |
+| **Nete hyperbolion** | Last of the excellent |
+
+$\mathbb{C}$ A **Monochord** is that which contains a melody on a single string. A **Tetrachord** is that which contains it on four strings. A **Polychord**, however, is that which contains it on more than four strings: such as a **pentachord** which has five, a **hexachord** which has six; and so it is to be understood for the heptachord, octochord, enneachord, decachord, hendecachord, dodecachord, tridecachord, tessaradecachord, and the **pentadecachord**, which is the last and consists of fifteen strings in all. 
+
+$\mathbb{C}$ The **Proslambanomenos** is, in every genus, the lowest string added to the first of the tetrachords; it is distant from the first string of the first tetrachord by the interval of a whole tone. A **conjunct tetrachord** is one whose beginning is the end of the preceding tetrachord. A **disjunct tetrachord**, however, is one whose first string in every genus of melody is separated from the final string of the preceding tetrachord by one whole tone.
+
+[[summary: This page marks the conclusion of the third book on musical elements and defines the "harmonic rule" (monochord). It details the three ancient Greek musical genera and provides a comprehensive table of note names, explaining the construction of tetrachords and the fifteen-string system.]]
+[[keywords: Monochord, Diatonic, Chromatic, Enharmonic, Tetrachord, Proslambanomenos, Mese, Nete, Diesis, Musical Theory]]

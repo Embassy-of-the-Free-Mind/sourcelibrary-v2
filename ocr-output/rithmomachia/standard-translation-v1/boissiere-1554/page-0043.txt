@@ -1,0 +1,29 @@
+[[meta: This page continues the mathematical setup for the game pieces. The previous page explained that when calculating the odd-numbered side, the number 2 cannot be used as a multiplier (an "opposite") because it is too small to generate the necessary ratios. Instead, the sequence is shifted.]]
+
+# THE GAME OF RYTHMOMACHIA
+
+...number 10, in compensation for the first 2 which could not serve us as an opposite; and this same 10 will be convenient to be the opposite to 9 [[notes: In Rythmomachia, numbers from the "Odd" and "Even" sides are paired to calculate the values of the game pieces. Because the math requires specific ratios, the author is explaining a substitution in the pairing sequence to ensure the numbers remain functional within the game's rules]].
+
+->**THE TABLE OF NUMBERS**<-
+
+| **ODD NUMBERS** | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Superpartient** [[notes: A ratio where a number contains another number once, plus two or more parts of it.]] | 361 | 225 | 121 | 49 | / 181, 120, 66, 28 |
+| **Superpartient** | 100 | 64 | 36 | 16 | / 90, 54, 30, 12 |
+| **Multiples** | 81 | 49 | 25 | 9 | / 9, 7, 5, 3 |
+| | | | | | |
+| | | | **[ Lines connecting 9, 7, 5, 3 to the numbers below ]** | | |
+| | | | | | |
+| **EVEN NUMBERS** | | | | | |
+| **Multiples** | 2 | 4 | 6 | 8 | / 4, 16, 36, 64 |
+| **Superparticular** [[notes: A ratio where the larger number contains the smaller number once, plus one part of it (e.g., 3:2 or 4:3).]] | 6 | 20 | 42 | 72 | / 9, 25, 49, 81 |
+| **Superpartient** | 15 | 45 | 91 | 153 | / 25, 81, 169, 289 |
+| | | | | | **10** |
+
+Almost this same form of arrangement had been invented by Marcial Rogier [[notes: Likely a contemporary of the author or a fellow mathematician involved in the mid-16th century revival of this game]], our well-beloved companion, though not in this specific order.
+
+[[meta: Catchword "Des" (Of) indicates the next page likely begins a new section or chapter, possibly titled "Des proportions" or similar.]]
+
+[[summary: This page concludes the mathematical logic for pairing odd and even numbers to generate the game's pieces, specifically addressing a substitution of the number 10 for 2 to maintain the required ratios. It features a comprehensive table of the game's numerical progressions and credits a colleague, Marcial Rogier, for a similar system.]]
+
+[[keywords: Rythmomachia, Superpartient, Superparticular, Multiples, Marcial Rogier, Mathematical proportions, Renaissance games, Number theory]]

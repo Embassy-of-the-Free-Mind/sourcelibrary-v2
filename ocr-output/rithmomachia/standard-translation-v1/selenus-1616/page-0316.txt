@@ -1,0 +1,129 @@
+[[meta: This page presents a series of eight technical chess diagrams that illustrate the tactical variations of the openings discussed on the previous page. The boards use the 1–64 numbering system and specialized piece designations found in Gustavus Selenus’s 1616 manual, which was heavily influenced by the work of Pedro Damiano.]]
+
+[[margin: Chapter 4]]
+
+[[margin: The Third Book]]
+
+[[margin: 282]]
+
+[[notes: The following diagrams track specific moves labeled by number (e.g., No. 2, 18). The abbreviations represent the colors of the pieces used in the original woodcut illustrations: **SR** (Silk-Red), **SS** (Silk-Black), **WS** (White-Silk), and **WR** (White-Red). **SK** and **WK** designate the Black and White Kings, respectively; **S&** represents the Black Queen. The numbers within the cells (e.g., 42, 52) indicate the position or square number to which a piece has moved according to the 1–64 coordinate system.]]
+
+->No. 2. 18.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | SK | SS | SR | SR |
+| SS | SS | SS | SS | 52 | | SS | SS |
+| | | | | | 42 | | |
+| | | | SS | | | | WR |
+| | | | WS | | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+---
+
+->No. 7. 15.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | | WR |
+| SS | SS | SS | SS | | 51 | | SS |
+| | | | | SR | SS | | |
+| | | | | | | | |
+| | | | WS | S& | | | |
+| | | | | WS | | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | WR | | | WK | WS | | WR |
+
+---
+
+->No. 19. 25.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | SS | SR | SR |
+| SS | SS | SS | SS | | SK | SS | SS |
+| | | | | | 42 | | |
+| | | | 37 | WR | | | |
+| | | WS | | WS | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | | | WR |
+
+---
+
+->No. 26. 27.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | SS | SR | SR |
+| SS | WS | SS | | | | SS | |
+| | | | 45 | | | SK | SS |
+| | | | | WR | | | |
+| | | | | WS | | | WS |
+| WS | WS | WS | WS | | WS | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+<column-break/>
+
+->No. 3. 4.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | SK | SS | SR | WR |
+| SS | SS | SS | SS | S& | | | SS |
+| | | | | | 43 | SS | |
+| | | | | | | | |
+| | | | | WS | | | |
+| WS | WS | WS | WS | | WS | WS | WS |
+| WR | WR | WS | | WK | WS | | WR |
+
+---
+
+->No. 8. 11. 12.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | | | SS | | WR |
+| SS | SS | SS | SS | | SK | | SS |
+| | | | SR | 45 | 44 | SR | SS |
+| | | | WS | | | | |
+| | | | | WS | | | |
+| | | | WR | | WS | | |
+| WS | WS | WS | | | WS | WS | WS |
+| WR | | | | WK | | | WR |
+
+---
+
+->No. 20. 21. 22.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | SS | SR | SR |
+| SS | SS | SS | SS | | | | SS |
+| | | | | | | | SK |
+| | | | 37 | | WR | SS | |
+| | | | WS | | WS | | WS |
+| | | | | WS | | | |
+| WS | WS | WS | | | WS | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+---
+
+->No. 30. 31. 32.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | SS | S& | | | SR | SR |
+| SS | WS | | | | | SS | |
+| | | | SS | SS | | SK | SS |
+| | | | | WR | | | |
+| | | | | | WS | | WS |
+| | | 23 | | | 21 | | |
+| WS | WS | WS | WS | | WS | WS | |
+| WR | WR | WS | | WK | | | WR |
+
+[[gloss: Silk-Red, Silk-Black, White-Silk, White-Red, Weaving pattern, Trimmings]] [[notes: These terms from the original glossary likely describe the physical appearance or materials used for the pieces in a luxury edition of the book.]]
+
+[[summary: This page contains eight chess diagrams visualizing the progression of a specific opening sequence. It illustrates the movement of pieces using a specialized color-coded notation system (Red and Black silk vs. White silk and Red) and the 1–64 square coordinate system common in 17th-century German chess literature.]]
+
+[[keywords: chess diagrams, Gustavus Selenus, opening theory, Pedro Damiano, 17th-century chess, piece notation, tactical analysis]]

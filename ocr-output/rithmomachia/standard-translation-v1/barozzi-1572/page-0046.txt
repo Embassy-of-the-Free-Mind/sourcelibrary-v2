@@ -1,0 +1,31 @@
+[[meta: This page continues the systematic catalog of number sets required for the "Great Victory" in Rithmomachia. Having covered Arithmetic-Musical combinations on the previous page, the author now presents the Geometric-Musical combinations. The catchword "Tauo-" from page 90 correctly introduces the "Tauola" on this page.]]
+
+## Table of all Geometric & Musical proportions that can occur in this game
+
+| Geometric & Musical together | | | | Geometric alone | | | Musical alone | | |
+|----------------------|---|---|---|-----------------|---|---|-------------|---|---|
+| 2 | 3 | 6 | 12 | 3 | 6 | 12 | 2 | 3 | 6 |
+| 3 | 4 | 6 | 9 | 4 | 6 | 9 | 3 | 4 | 6 |
+| 3 | 4 | 6 | 12 | 3 | 6 | 12 | 4 | 6 | 12 |
+| 3 | 6 | 8 | 12 | 3 | 6 | 12 | 6 | 8 | 12 |
+| 4 | 6 | 12 | 36 | 4 | 12 | 36 | 4 | 6 | 12 |
+| 5 | 9 | 45 | 225 | 9 | 45 | 225 | 5 | 9 | 45 |
+| 9 | 15 | 25 | 45 | 9 | 15 | 25 | 9 | 15 | 45 |
+| 9 | 25 | 45 | 225 | 9 | 45 | 225 | 25 | 45 | 225 |
+| 9 | 12 | 16 | 72 | 9 | 12 | 16 | 9 | 16 | 72 |
+| 9 | 15 | 45 | 225 | 9 | 45 | 225 | 9 | 15 | 45 |
+| 15 | 20 | 30 | 45 | 20 | 30 | 45 | 15 | 20 | 30 |
+| 20 | 30 | 36 | 45 | 20 | 30 | 45 | 30 | 36 | 45 |
+| 25 | 45 | 81 | 225 | 25 | 45 | 81 | 25 | 45 | 225 |
+
+---
+
+The **Great Victory** [[notes: "Massima uittoria" is the highest win condition in Rithmomachia, requiring a player to arrange captured pieces in the opponent's side of the board to form mathematical progressions.]] is nothing other than to situate 4 pieces in the adversary's field in such a manner that their numbers contain all three of the aforementioned [[markup: proportioni]] (proportions): that is, the **Arithmetic**, the **Geometric**, and the **Musical** together. [[notes: In this context, "Musical" refers to the Harmonic proportion, where the reciprocal of the numbers forms an arithmetic progression. For example, 2, 3, 6.]] But which numbers in this [[markup: giuoco]] (game) are able to contain these three said proportions together, the following table demonstrates.
+
+[[notes: The vocabulary terms below highlight the core concepts of Rithmomachia, often called the "Philosophers' Game," which was used in the Middle Ages and Renaissance to teach Boethian mathematics.]]
+
+[[markup: proportioni]] (proportions), [[markup: Arithmetica]] (Arithmetic), [[markup: Geometrica]] (Geometric), [[markup: Musica]] (Musical/Harmonic), [[markup: Massima uittoria]] (Great Victory), [[markup: giuoco]] (game), [[markup: Rithmomachia]] (Rithmomachia)
+
+[[summary: This page provides a reference table for number sets that satisfy both Geometric and Musical (Harmonic) proportions, essential for achieving the "Great Victory" in Rithmomachia. It concludes by defining the Great Victory as the successful arrangement of four pieces that simultaneously embody Arithmetic, Geometric, and Harmonic progressions.]]
+
+[[keywords: Rithmomachia, Great Victory, Geometric proportion, Musical proportion, Harmonic progression, mathematical games, Renaissance mathematics]]

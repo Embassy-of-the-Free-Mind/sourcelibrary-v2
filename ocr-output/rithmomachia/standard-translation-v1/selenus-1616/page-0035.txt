@@ -1,0 +1,21 @@
+[[meta: Continuity from page 4: The text continues justifying the game of chess by citing legal and theological authorities who distinguish it from forbidden gambling, framing it instead as a mental exercise and a symbolic representation of warfare.]]
+
+-> # On the Game of Chess. <-
+
+[[margin: 1st Chap.]]
+**Steph. Costa**, J. U. D. [[notes: *Juris Utriusque Doctor*, meaning Doctor of both Civil and Canon Law]] in his treatise *On Play*, printed in Pavia, A.D. 1478; **Cosmas Guimier** at the same place; **Innocent** in the chapter *Lator*, regarding Homicide; **Joan: Andreæ** in the chapter *Clerici*, on the life and honesty of the Clergy; **Hug: Laur: & Archidiac: & Præpos:** in the chapter *Episcopus*, dist. 35. **Jul: Clarus**, book 5, *Sentent: recept: Ludus*, no. 2. **Augustin: ad Ang: de Malefic:** under the word *Meridore de mali dadi*, no. 3. **Bertachin:** in his treatise *On Bishops*, in the 1st part, final cause, question 7. **Rosel: de Rosellis**, among various criminal counsels, counsel 46, no. 5, book 1. All these testify to it: and **Gregor: Lopez à Touar**, in the glossary on law 57, title 5, first part, folio 49. b. column 2, has captured the reasons particularly well: that this Game is regarded for delight, and then for the exercise of the Mind, and must be directed toward that end in its proper use.
+
+Just as other artful Games are a merry imitation and mimicry of serious business: so too (3.) is this Game nothing other than a clever and merry depiction of a serious and proper field battle. Therefore, the Romans called it *Ludum Latronum*, that is, the Soldiers' Game (of which further report is to be found in the following second Chapter), and not without justification.
+
+The Indians, Persians, Egyptians, and Arabs had an eye toward this quality in their interpretation of dreams regarding the Game of Chess: as **Apomasar**, a Greek writer, shows in the 241st Chapter of his short interpretation and meaning of dreams according to their teachings, where he says:
+
+[[notes: "Apomasar" refers to the Greek translation of a work by the 9th-century Persian astrologer Abu Ma'shar, or more likely in this context of dream-lore, Achmet son of Seirim (Ahmad ibn Sirin).]]
+
+> If one dreams that he is playing the Game of Chess with another acquaintance, and they play for the sake of winning, and he wins in the dream, he shall also win in other matters, and his wish shall succeed for him. But if he plays with a stranger, he shall contend with enemies, yet without bloodshed; and whichever wins in the dream shall overcome the other.
+
+> If a King, or a powerful man, or a military commander dreams that he is playing the Game of Chess, it signifies that he shall engage in an encounter with the enemy and may certainly expect it. If he has now won in the dream, it shall also go according to his wish in the war. But if he has been defeated, he shall also be overcome by his enemies in the war. If he dreams that he takes many pieces in the game, he shall
+
+[[meta: The text cuts off with the catchword "Er/vie," which leads into the description of capturing enemies in war on the following page.]]
+
+[[summary: This page provides legal and scholarly justifications for chess, defining it as a mental exercise and a symbolic "Soldiers' Game." it also introduces historical dream interpretations from various cultures, suggesting that winning at chess in a dream foretells success in real-world conflicts.]]
+[[keywords: Chess history, Ludum Latronum, dream interpretation, Apomasar, legal authorities, military symbolism, mental exercise]]

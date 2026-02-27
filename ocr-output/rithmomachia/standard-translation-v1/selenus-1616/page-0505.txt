@@ -1,0 +1,25 @@
+[[meta: This page transitions from the general setup of the Rithmomachia board to the specific mathematical values and initial positioning of the pieces, focusing on the "Even" side and the logic of mirrored placement for the opponent.]]
+
+[[margin: [[gloss: The Battle of Numbers]]]]
+
+Refer to page 464. [[notes: This is a cross-reference likely pointing to a specific printed manual or a corresponding diagram in a mathematical textbook.]]
+
+->amen framen<- [[notes: As noted in the transcription, this cryptic phrase is likely a printer's mark or a corruption of a devotional formula, common in early modern manuscripts to signal the end of a section or a blessing on the work.]]
+
+---
+
+# The Third Chapter
+
+[[notes: This section explains the opening layout for Rythmomachia, or the "Philosophers' Game." Unlike Chess, which focuses on military hierarchy, Rythmomachia was an educational tool used to teach "Boethian Arithmetic." This system, based on the works of the 6th-century philosopher Boethius, classified numbers by their proportions and relationships. The game was played on a board of 8x16 squares (effectively two chessboards joined together).]]
+
+->**White**<-
+
+Four White Round Stones: (namely: those numbered 2, paired with 4; those with 4, with 16; those with 6, with 36; those with 8, with 64) [[notes: These represent the "Even" side's basic pieces. In this game, the pieces are categorized by shape: Rounds are the simplest, Triangles are more complex, and Squares are the strongest. The numbers here represent squares ($2^2=4$, etc.).]] Position and set these eight triangular and eight square stones in order, just as they were defined in the preceding second chapter and as clearly illustrated in the diagram.
+
+In the same manner, one must proceed with the placement of the Black Stones, with the only difference being that the squares are counted from the top downward and toward the right hand. The stones, however, are to be situated on the left side, which constitutes the right side from the perspective of the opponent. [[notes: This describes the rotational symmetry of the board setup. Just as in modern Chess, the players sit opposite each other, so "right" and "left" are relative to the player's perspective. The "Black" side represents the "Odd" numbers.]]
+
+The Towers [[notes: More commonly called "Pyramids" in Rythmomachia literature, these are the game's most complex pieces. A Pyramid is not just one number, but a stack of values. For example, the "91" Pyramid mentioned in the illustration description is a "perfect" pyramid because it is the sum of the first six squares ($1+4+9+16+25+36=91$). Capturing an opponent's Pyramid was a primary goal of the game.]]
+
+[[summary: This page explains the initial setup of the Rithmomachia board, focusing on the mathematical relationships between the pieces and how they should be positioned symmetrically for both players.]]
+
+[[keywords: Rithmomachia, Philosophers' Game, Boethian arithmetic, mathematical proportions, game pieces, board game setup, Pyramids, Renaissance education]]

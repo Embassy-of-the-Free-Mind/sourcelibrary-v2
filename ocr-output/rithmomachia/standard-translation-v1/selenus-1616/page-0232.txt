@@ -1,0 +1,127 @@
+[[meta: This page provides a visual appendix of board states corresponding to the tactical commentary begun on page 200. The diagrams represent specific variations in the "Second Book" of the treatise, utilizing the author's unique 1–64 coordinate system rather than modern algebraic notation.]]
+
+[[margin: Chapter 11: The Second Book!]]
+
+### Variation no. 4. 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | | | | |
+| | | BB | | BP | | | |
+| | | | | WP | 27 | | |
+| | | | WP | | 19 | | |
+| WP | WP | WR | WP | | WP | WP | WP |
+| WR | WR | WB | | WK | WP | WR | WR |
+
+[[notes: In these diagrams, 'BK' likely refers to both the King and the Queen, as old manuscripts occasionally used a single signifier for the royal pieces or the transcription may have simplified the original icons. The numbers 27 and 19 indicate specific squares in the 1–64 numbering system, marking where pieces have moved from or are targeting.]]
+
+### Variation no. 11. 12.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | | | | |
+| | | BB | | BP | | | |
+| | | | WP | WP | WP | | |
+| | | | WP | | WR | | |
+| WP | WP | WR | | BK | WP | WP | WP |
+| WR | WR | WB | | WK | WB | | WR |
+
+### Variation no. 18. 27.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | 50 | BP |
+| | | | | 43 | | | |
+| | | | | | | BP | BR |
+| | | | | WP | BP | | |
+| | | WP | WP | | | | |
+| WP | WP | | | WB | WR | WP | WP |
+| WR | WR | WB | | WK | | WR | |
+
+### Variation no. 23. 26.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | BR | |
+| BP | BP | BP | BP | | BP | | |
+| | | | | BR | | | BP |
+| | | | | | WP | | |
+| | | | WP | | | | |
+| | | WP | WP | | | | |
+| WP | WP | | | WP | | | WR |
+| WR | WR | WB | | WK | | WR | |
+
+***
+
+### Variation no. 9. 14. 15.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | BR | | | |
+| | | BB | | BP | | | |
+| | | | | WP | WP | 26 | |
+| | | | WP | | | | |
+| WP | WP | WR | WP | | | WP | WP |
+| WR | WR | WB | | WK | WB | WR | WR |
+
+### Variation no. 16. 17.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BP | BP |
+| | | | | 43 | | | |
+| | | | | | | 34 | BR |
+| | | | | | WP | BP | |
+| | | | WP | WP | | | |
+| WP | WP | | | | | WR | WP | WP |
+| WR | WR | WB | | WK | WB | WR | WR |
+
+### Variation no. 19. 22.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | | BR |
+| BP | BP | BP | BP | | BP | BR | |
+| | | | | 44 | 43 | | BP |
+| | | | | | | BP | |
+| | | | | WP | | | WP |
+| | | | WP | WP | | WR | |
+| WP | WP | | | WP | | | |
+| WR | WR | WB | | WK | | WR | |
+
+### Variation no. 28. 29.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BKt | BR | BB | BK | BK | | 5 8 | BKt |
+| BP | BP | BP | BP | | BP | | BP |
+| | | | | | BR | | 4 1 |
+| | | | | | | BP | |
+| | | | | WP | | | |
+| | | | WP | WP | | | WP |
+| WP | WP | | | | WP | WR | |
+| WR | WR | WB | | WK | | WR | |
+
+[[gloss:
+**BKt / SRc:** Black Knight (*Schwarzer Reuter*)
+**BR / SR:** Black Rook (*Schwarzer Roche*)
+**BB / SSc:** Black Bishop (*Schwarzer Schütze*)
+**BK / SK:** Black King (*Schwarzer König*)
+**BP / SS:** Black Pawn (*Schwarzer Soldat*)
+**WP / WS:** White Pawn (*Weißer Soldat*)
+**WB / WSc:** White Bishop (*Weißer Schütze*)
+**WR / WR:** White Rook (*Weißer Roche*)
+**WK / WK:** White King (*Weißer König*)
+]]
+
+[[summary: This page provides technical chess diagrams illustrating the tactical variations discussed in Chapter 11. It uses a 64-square coordinate system and archaic piece names to map out specific mid-game and endgame positions.]]
+
+[[keywords: chess diagrams, tactics, variations, historical notation, Rook, Knight, Bishop, Pawn, Second Book]]

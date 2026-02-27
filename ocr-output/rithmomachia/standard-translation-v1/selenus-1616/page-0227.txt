@@ -1,0 +1,21 @@
+[[meta: This page continues the technical analysis of specific chess variations using a numbered coordinate system (1–64). Note that while the previous page's translation metadata mentioned Chapter 19, the header on this page explicitly identifies this section as Chapter 11.]]
+
+### 11. Chapter: Of the Game of Chess.
+
+...and twenty: **The Black** player sets the King’s Knight [[notes: *Reuter*, literally "rider," refers to the Knight]] on forty-six: **The White** player (to keep the same trapped) moves the King’s Bishop [[notes: *Schützen*, literally "archers" or "shooters," refers to the Bishop]] on thirty-nine: **The Black** player (to set the same free again, so that he may no longer be forced to cover his King) moves the King’s Bishop on fifty-three: **The White** player (to oppose the enemy, or to jump with the King to two [[notes: A reference to an early form of castling or a specific king-leap rule]] on the following move) moves his Rook [[notes: *Rochen*, an archaic term for the Rook or Castle]] on three: Therefore, if he understands the game, he will be able to arrange it well, and not only harm the enemy but also make his moves so much more secure.
+
+[[margin: 7.]] But if **the Black** player does not protect his King’s Pawn [[notes: *Soldaten*, or "soldiers," refers to the Pawns]] either with the Knight (no. 5) or with the King’s Pawn (no. 6), but instead moves the **Queen** to fifty-two: then this move is much more useful to the game: for **the White** player (so that he does not lose his King’s Pawn) cannot then move his King’s Pawn to twenty-nine: considering that if it happens, **the Black** player takes the same with his King’s Pawn and subsequently (when **the White** player frees the King from the check [[notes: *Schach*]] of his King’s Bishop from thirty-one) takes the White King’s Pawn with his King’s Knight, and through the same (if the King’s Bishop has not moved forward to twelve) gives a discovered check [[notes: *Ab-Schach*, a move where moving one piece reveals a check from another piece behind it]] from the Queen. Even if **the White** player then makes other moves, he will nevertheless not gain much. However, this should be understood only insofar as **the Black** player knows how to lead the game: for otherwise, even though **the White** player moves the King’s Pawn to 29 (no. 6), he will nevertheless not necessarily win.
+
+[[margin: 8.]] But if **the White** player does not move the Knight to 19 (no. 4) but instead moves the King’s Bishop’s Pawn to twenty-seven, and in this way breaks and destroys the Black player's game:
+
+[[margin: 9. *]] then the same player (to protect his King’s Pawn) plays his left **Knight** to twenty-six: **The White** player moves his King’s Knight further to nineteen against the Black King’s Pawn and protects
+
+[[margin: 10.]] with the same its Rook’s Pawn: * **The Black** player moves the King’s Knight to the White King’s Rook at eleven: **The White** player moves the King’s Pawn to the Black King’s Bishop at twenty-nine:
+
+[[margin: 11. *]] **The Black** player takes it with the King’s Pawn: **The White** player takes the Black King’s Knight with his **Queen**.
+
+[[margin: 12.]] But if **the Black** player does not clear away the White Pawn (no. 11) but instead the White King’s Rook with his King’s Knight:
+
+[[summary: This page details specific tactical variations in a chess opening, focusing on the movement of the King's Knight and Bishop. It explores a counter-strategy for Black involving a Queen move to square 52 that can lead to a discovered check.]]
+
+[[keywords: Chess tactics, Reuter, Knight, Schützen, Bishop, Rochen, Rook, Soldaten, Pawns, discovered check, Ab-Schach, 17th-century chess]]

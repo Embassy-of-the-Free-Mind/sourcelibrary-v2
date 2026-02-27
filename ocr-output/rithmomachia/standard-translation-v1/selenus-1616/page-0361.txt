@@ -1,0 +1,36 @@
+[[meta: This page continues from the tactical discussions of Chapter 5. While the previous page focused on prose descriptions of moves, this page provides visual diagrams illustrating specific endgame positions or "problems." The notation continues the 1-64 numbering system for squares (where 1 is a1 and 64 is h8).]]
+
+### 5. Chapter: On the Game of Chess.
+->Le<- [[note: This "Le" is a signature mark, used by early printers to help bookbinders assemble the pages in the correct order.]]
+
+No. 7. 12. [[note: In the original typography, the 'j' stands for 1 and 'z' for 2; thus 'jz' is 12.]]
+[[image-desc: An 8x8 grid diagram of a chessboard. Pieces are denoted by: **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). The board shows numerical markers on square 39 [[note: g5]] and square 30 [[note: f4]].]]
+
+No. 15. 48.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). The number 22 [[note: f3]] is marked on the lower half of the board.]]
+
+No. 19. 20.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King) arranged in a specific problem layout.]]
+
+No. 26. 46.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). The numbers 15 [[note: g2]] and 17 [[note: a3]] are present on the board, and the **WK** (White King) is positioned in the lower center.]]
+
+<column-break/>
+
+No. 9. 10.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). Numerical markers 20 [[note: d3]] and 13 [[note: e2]] are positioned on the board.]]
+
+No. 18. 21.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). The numbers 26 [[note: b4]] and 21 [[note: e3]] are present. One square in the middle-right area [[note: g4/h4 area]] contains a combined label **S&WS**, indicating a Black Pawn and White Pawn in close proximity or conflict.]]
+
+No. 22. 47.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). Numerical markers 38 [[note: f5]] and 35 [[note: c5]] are present on the board.]]
+
+No. 28. 33.
+[[image-desc: An 8x8 grid diagram of a chessboard containing **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WR** (White Rook), **WS** (White Pawn), and **WK** (White King). The number 19 [[note: c3]] is marked on the board.]]
+
+[[gloss: **Chess-Play**, **Rook** (the "Roche" was the common term for the Rook), **Pawn** (literally "Stone"), **King**, **Knight** (literally "Springer" or Jumper)]]
+
+[[summary: This page serves as a visual reference for Chapter 5, presenting eight numbered chessboard diagrams that illustrate specific tactical "problems" or endgame scenarios. It uses a 17th-century nomenclature for pieces and a 1-64 square numbering system to guide the player through common patterns.]]
+
+[[keywords: Chess strategy, Endgame diagrams, Roche, Chess terminology, 17th-century gaming, Checkmate problems]]

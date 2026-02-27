@@ -1,0 +1,39 @@
+[[meta: This page continues the tactical demonstration from page 383. The previous sentence ended mid-instruction regarding the movement of the Bishop’s Soldier and the King’s Bishop. The text here completes that maneuver and concludes the variation with a decisive advantage for White.]]
+
+# The Fourth Book / Chapter 2:
+
+Soldier with the King’s Bishop [[notes: *Schütze*, literally "Archer" or "Marksman," was the standard German term for the Bishop at this time]], and declares **Check**: **The Black** [moves] toward him (in order to cover the King) the King’s Bishop to fifty-three [[notes: In the 1–64 numbering system used by Selenus, 53 corresponds to the square e7]]: **The White** (in order to relieve the same) takes the **Black** King’s Soldier [[notes: *Soldat* is the author's term for a Pawn]] with the **Queen**, and through this brings his game into a good order; he can then safely and without danger harm the **White** [[notes: This appears to be a slip in the original text; context suggests he means the Black player is now the one who must defend]], who must take more care to defend and entrench himself than to injure or attack him, and thus, without any special further thought, win the game.
+
+->n. 2. 3. <- ->n. 6. 7.<-
+
+[[notes: The following diagrams illustrate specific board states discussed in the text. The abbreviations used are SR (Schwarzer Roche/Black Rook), SS (Schwarzer Springer/Black Knight), SK (Schwarzer König/Black King), WR (Weiſſer Roche/White Rook), WS (Weiſſer Springer/White Knight), and WK (Weiſſer König/White King).]]
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | | | | | | SR |
+| | | | | | | SS | |
+| | | | | | | | SK |
+| | | | | | | | |
+| | | | | WS | | | |
+| | | | | | | j 3 | |
+| | | | | | j 8 | S 8 | |
+| WR | | | | | | | WK |
+
+->**Diagram n. 2. 3.**<-
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | | | | | | |
+| | | | | 46 | | | |
+| | | | | | | | |
+| | | | WS | | | SS | |
+| | | SS | | WS | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+
+->**Diagram n. 6. 7.**<-
+
+[[summary: This page concludes a specific chess variation where White utilizes a Queen maneuver to disrupt Black's defense, leading to a winning position. It includes two technical diagrams illustrating piece coordinates and board states according to the Selenus numbering system.]]
+
+[[keywords: Chess tactics, Gustavus Selenus, 17th-century chess, notation, Bishop, Pawn, Queen maneuver, endgame strategy]]

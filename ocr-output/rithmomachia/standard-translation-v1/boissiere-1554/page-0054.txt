@@ -1,0 +1,18 @@
+[[meta: This page continues the definition of the "Assault" capture method, completing the sentence started on page 25. It explains how multiplication and distance are used to remove an opponent's piece from the board.]]
+
+# OF THE PHILOSOPHERS.
+
+...rightfully, it may carry it off by a **capture of assault**, as soon as it has moved, without moving the piece again into its place [[notes: In an "Assault" capture, the capturing piece does not move to the opponent's square. The phrase *la table* refers to the game piece itself, as "tables" was a common term for game pieces in the 16th century, similar to "tablemen" in backgammon.]].
+
+### Example
+
+If between the 5 of the odd numbers and the 45 of the even numbers there are nine spaces [[notes: Called *loges* or "lodgings" in the original French, these are the squares on the board.]], as you see in the second column of the previous board [[notes: The *tablier* refers to the gridded game board, which in Rythmomachia was typically an 8x16 rectangle.]], since the said 5 of the field of the odds, being moved and multiplied by the nine interposed spaces, makes itself equal to the said 45 of the field of the evens: It can take that 45 as soon as it plays that 5 into the place where it stands. And here you may consider the other numbers suited for this.
+
+[[notes: The "Assault" is one of the most famous rules of Rythmomachia. It demonstrates the game's mathematical nature: a piece captures an enemy at a distance if its own value, multiplied by the number of empty squares between them, equals the enemy's value. Here, 5 (the piece) × 9 (the distance) = 45 (the target).]]
+
+->D ij<- [[notes: This is a signature mark, a guide for the bookbinder to ensure the pages were assembled in the correct sequence.]]
+
+[[gloss: odd numbers, even numbers, spaces (squares), game board, capture by assault, multiplied, Rythmomachia]]
+
+[[summary: This page explains the "Assault" capture rule in Rythmomachia, where a piece captures an opponent's piece at a distance through multiplication. It uses the example of a 5 piece capturing a 45 piece across nine empty squares.]]
+[[keywords: Rythmomachia, capture by assault, multiplication, mathematical games, game board, Renaissance education, number theory]]

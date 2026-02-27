@@ -1,0 +1,24 @@
+[[meta: This page continues the tactical instructions from the previous visual appendix, moving from diagrams of specific positions back into descriptive text for Chapter 8, which details a handicap game where Black plays without a Knight.]]
+
+# Of the Game of Chess.
+
+[[margin: 8th cap:]]
+
+<image-desc>A rectangular woodcut headpiece ornament featuring symmetrical scrollwork, foliage, and grotesque masks or figures.</image-desc>
+
+### The Eighth Chapter.
+### In what manner White should observe his moves when he grants Black the advantage and the latter plays without the King’s Rider [[notes: "Reuter" (Rider) is the early modern German term for the Knight.]].
+
+But if White does not take the Black Queen (as described in the previous three chapters) but instead takes the Black King’s Rider: and gives Black, in return, the advantage [[notes: In handicap chess, "giving the advantage" usually refers to allowing the opponent to move first or removing one's own piece to balance skill levels; here, it refers to the specific setup of the "Sixth Kind" of game.]]: then the Sixth Kind shall arise in this manner.
+
+[[margin: 1. 2. sig: [[notes: "sig" likely refers to "significatio" or "signum," marking specific move sequences or variations.]]]]
+Black moves the King’s Soldier [[notes: "Soldat" (Soldier) is the period term for a Pawn.]] to thirty-six: White moves his King’s Soldier to twenty-eight: * Black (in order to block White’s intention) moves the King’s Archer’s [[notes: "Schütze" (Archer) refers to the Bishop.]] Soldier to forty-six: White (to also break Black’s plans) moves the King’s Soldier to the Black King’s Soldier at twenty-nine: Black takes it with the same: White takes the same (since it can be done without fear of any danger) with the Queen: Black moves against her the King’s Archer’s Soldier (so that their Rider [[notes: Knight]] may come out) to thirty-eight: White offers check with the Queen from thirty-six: Black covers the King either with the Queen (in which case the Queens are captured on both sides) or else with his Archer at fifty-two: White takes (in this latter case) the Black King’s Rider’s Soldier with the Queen, moves the same to the Black King’s Rook, thereby obtains that Soldier, and disrupts Black’s formation.
+
+[[margin: 3.]]
+But if Black does not move the Soldier to 46 (as in no. 2), but instead moves the King’s Archer to thirty-eight: then White moves the King’s Archer’s Soldier to twenty-two: Black moves the King’s Rider to forty-six: White moves against the same the King’s Archer to thirty-nine: Black moves the King’s Rook to fifty-nine: White moves against the Black King’s Soldier the King’s Rider to nineteen: Black moves the King’s Archer’s Soldier to the White King’s Soldier at
+
+[[notes: The text ends mid-sentence as is common with catchwords. The numbering system used here (e.g., 28, 36, 46) refers to the 17th-century convention of numbering the chessboard squares from 1 to 64, starting from White's side.]]
+
+[[summary: This page initiates Chapter 8, describing the opening moves and tactical responses for a handicap chess match where Black plays without a King's Knight. It details how White can exploit Black's attempts to free their pieces, potentially leading to the capture of a Rook or the trading of Queens.]]
+
+[[keywords: Chess strategy, handicap match, King's Rider, King's Archer, opening moves, 17th-century chess, notation]]

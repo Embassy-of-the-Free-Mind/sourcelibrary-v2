@@ -1,0 +1,20 @@
+[[meta: This page continues the citation from Julius Pollux, providing a German commentary on the Latin description of "Latrunculi" before introducing another scholarly source, Alexander ab Alexandro, to further link ancient Roman "stone-games" to the history of Chess.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 2]] ...pieces, toward a mutual encounter and conflict, in such a way that while they strive to invade the others who are proceeding from the opposing line—either to thrust them from their seat or to destroy them—they are protected either by guards placed around them or by the terrain, acting as a natural fortress, so that they do not fall into ambushes or lie open to the enemy's incursions. **That is:**
+
+**The Stone-Game** [[notes: Referring to *Ludus latrunculorum*, a Roman strategy game often cited by early modern scholars as a precursor to Chess or Draughts]] was played on a square table with small square places or fields, which were called **Cities**. Within these, two groups of different stones stood opposite one another, arranged in a skillful manner to attack and waylay each other. These pieces were called **Dogs** [[notes: In Greek and Roman games, the term "dog" was often used for a piece or a specific throw of the dice]] or **Little Stones**. They are led out onto the field between certain fixed goals or boundaries to engage in a battle with one another. They are moved forward so that when they encounter those from the opponent's group to attack them, strike them from the field, and slay them, they fall upon them with a shared purpose, being well-protected and watched over. This is done by providing them with "escorts" who wait upon them, or by keeping them in fortified places, just as if they were in castles, so that they do not fall into the enemy's ambush or be overtaken and harried by them.
+
+Finally, this game is described as it was also customary among the ancients by **Alexander ab Alexandro** [[notes: A Neapolitan jurist (c. 1461–1523) whose work *Genialium Dierum* "Genial Days" explored ancient customs]] in Book 3, Chapter 21 of his *Genialium Dierum*, with the following words:
+
+> The Game of Stones [*Ludus Calculorum*] is said to have been the preeminent game among the Ancients; these stones were also called **Latrones** [[notes: Literally "bandits" or "mercenaries," giving the game *Latrunculi* its name]]. For these were divided into two troops, differing in color, of which some were Soldiers and others the Enemy. Their play consisted of drawing up the troops, as if preparing to engage in a battle line, proceeding from here and there under the image of the Enemy, with a prescribed limit as to how far each should advance. Thus, it was necessary to be cautious so that while each person strives to invade the enemy, they do not lie open to the incursions of the other. These pieces were even made of gemstones, and the game was frequent among both men and women. **That is:**
+
+As history reports, the **Chess- or Stone-Game** was held in the highest esteem among the Ancients, and the stones were called **Latrones** (hired soldiers). For they were divided into two groups: namely, into Soldiers and into Enemies, and were also distinguished by different colors...
+
+[[margin: E ij]]
+[[meta: catchword: ...distinguished.]]
+
+[[summary: This page translates and comments on classical descriptions of the game "Latrunculi," framing it as an ancient form of Chess or tactical stone-game involving "Soldiers" and "Enemies" on a board of "Cities." It emphasizes the strategic nature of the game, including protection, ambushes, and the use of luxury materials like gemstones for the pieces.]]
+
+[[keywords: Chess history, Latrunculi, Alexander ab Alexandro, Roman games, Ludus Calculorum, tactical games, board game terminology]]

@@ -1,0 +1,27 @@
+[[meta: This page provides a visual diagram to accompany the textual descriptions of movement found on page 42. It illustrates the potential range of motion for the Rounds, Triangles, and Squares from a central starting point 'A' on the 112-square Rythmomachia board.]]
+
+->OF THE PHILOSOPHERS,<-
+43
+
+[[margin: F iij]] [[notes: This is a printer’s signature, used by bookbinders to ensure pages were folded and gathered in the correct order. 'F iij' indicates the third leaf of the sixth gathering.]]
+
+| | | | | | | | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | **Q** | | | **R** | | | **K** | | | |
+| | | | | | | | **H** | | | | | | |
+| | | | | | | **E** | **Y** | **B** | **X** | | | | |
+| | | | | **P** | **G** | **V** | **A** | **S** | **F** | **L** | | | |
+| | | | | | | **D** | **T** | **C** | | | | | |
+| | | | | | | **&** | **I** | | | | | | |
+| | | | | **O** | | | **N** | | **Z** | **M** | | | |
+| | | | | | | | | | | | | | |
+
+[[notes: This diagram acts as a "move map" for the pieces described previously. If a piece starts at position **A**:
+1. The **Rounds** (one space diagonally) can move to **E, B, D,** or **C**.
+2. The **Triangles** (two spaces in a straight line) can move to **G, F, H,** or **I**.
+3. The **Squares** (three spaces in any direction) can move to the outer perimeter: **P, L, R, N** (straight) or **Q, K, O, M** (diagonally).
+The additional letters **Y, V, S, T, X, Z,** and **&** illustrate the intermediate squares or alternative paths available during these maneuvers.]]
+
+[[summary: This page presents a visual reference diagram for the "Game of Philosophers" (Rythmomachia), mapping out the movement range of the Rounds, Triangles, and Squares from a central point. It serves as a geometric guide to the rules of mobility established on the preceding page.]]
+
+[[keywords: Rythmomachia, Game of Philosophers, board game diagram, movement rules, Renaissance mathematics, checkerboard, piece mobility]]

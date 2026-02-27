@@ -1,0 +1,11 @@
+[[meta: This page continues the mathematical explanation of calculating proportions for the Square pieces in the game of Rythmomachia. While the previous page provided tables, this text walks the reader through the specific arithmetic steps required to generate these complex numbers.]]
+
+# RITHMOMACHIE, 18V
+[[meta: catchword: qua- (referring to the word "quatriefmes" which would begin the next page)]]
+
+The first name of these proportions is **superbipartient thirds**, which is as much as to say two-thirds more. And it begins with *bi* [[notes: From the Latin *bis*, meaning twice]]. I will therefore take the part twice. And if the name began with *tri*, three times; by *quadri*, four times: and so on for the others. Let us say, then, **superbipartient thirds**. Namely, that the **required number** [[notes: The larger number being calculated]] must contain the **requesting number** [[notes: The base number from the table on the previous page]], which is in the row of evens. Namely 15, and two-thirds more. Now, the third part of the requesting 15 is 5: as appears in the number of parts to be taken. Therefore, if I take it twice, it will yield 10: as appears in the number of parts taken, which two-thirds (being 10), joined to the requesting number (which is 15), will yield 25. You will say this number is "required" and agrees in a superbipartient thirds proportion with the requesting 15.
+
+Next, I come to the second name, which is **supertripartient fourths**, which is as much as to say three-fourths more. That is to say, the **required number** must contain the second **requesting number**, which is 28, situated in the row of odds in the first place, and contain in addition three-fourths of the same. Now, the fourth part of the requesting 28 is 7, as appears in the number to be taken: therefore, take that 7 three times, and it will yield 21 in the number taken, which 3 [[notes: The text cuts off here, but the calculation would conclude with adding 21 to 28 to reach 49.]]
+
+[[summary: This page explains the arithmetic logic behind "superpartient" ratios used to value the Square pieces in Rythmomachia, specifically demonstrating how to calculate 25 from 15 and 49 from 28.]]
+[[keywords: Rythmomachia, proportions, superbipartient, supertripartient, even numbers, odd numbers, arithmetic, square pieces]]

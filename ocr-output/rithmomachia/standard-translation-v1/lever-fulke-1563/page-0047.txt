@@ -1,0 +1,149 @@
+-># A Table to capture <note>original: "take"</note> any of the pieces <note>original: "men"</note> by addition, subtraction, multiplication, or division.<-
+
+---
+
+### Addition
+
+| Lead Piece | Combined With | Resulting Capture |
+| :--- | :--- | :--- |
+| **1** | 2 | 3 |
+| | 3 | 4 |
+| | 4 | 5 |
+| | 5 | 6 |
+| | 6 | 7 |
+| | 7 | 8 |
+| | 8 | 9 |
+| | 15 | 16 |
+| | 120 | 121 |
+| --- | --- | --- |
+| **2** | 3 | 5 |
+| | 4 | 6 |
+| | 5 | 7 |
+| | 6 | 8 |
+| | 7 | 9 |
+| | 28 | 30 |
+| | 64 | 66 |
+| --- | --- | --- |
+| **3** | 4 | 7 |
+| | 5 | 8 |
+| | 6 | 9 |
+| | 9 | 12 |
+| | 12 | 15 |
+| | 42 | 45 |
+
+<column-break/>
+
+### Subtraction <note>original: "Substractio"</note>
+
+| Value 1 | Value 2 | Difference |
+| :--- | :--- | :--- |
+| 10 | 14 | 4 <note>unclear in original</note> |
+| 4 | 7 | 3 |
+| 5 | 8 | 3 |
+| 8 | 12 | 4 |
+| 12 | 16 | 4 |
+| 16 | 20 | 4 |
+| 21 | 49 | 28 |
+| 25 | 50 | 25 |
+| --- | --- | --- |
+| 7 | 12 | 5 |
+| 15 | 20 | 5 |
+| 20 | 25 | 5 |
+| 25 | 30 | 5 |
+| --- | --- | --- |
+| 6 | 15 | 9 |
+| 12 | 21 | 9 |
+| --- | --- | --- |
+| 30 | 36 | 6 |
+| 36 | 42 | 6 |
+| 66 | 72 | 6 |
+| --- | --- | --- |
+| 7 | 15 | 8 |
+| 8 | 15 | 7 |
+| 9 | 16 | 7 |
+| 42 | 49 | 7 |
+| 49 | 56 | 7 |
+| --- | --- | --- |
+| 8 | 16 | 8 |
+| 12 | 20 | 8 |
+| 20 | 28 | 8 |
+| 28 | 36 | 8 |
+
+<column-break/>
+
+### Addition
+
+| Lead Piece | Combined With | Resulting Capture |
+| :--- | :--- | :--- |
+| 8 | 56 | 64 |
+| 8 | 9 | 17 |
+| 9 | 36 | 45 |
+| 9 | 72 | 81 |
+| 9 | 81 | 90 |
+| 9 | 91 | 100 |
+| --- | --- | --- |
+| 12 | 16 | 28 |
+| 12 | 30 | 42 |
+| --- | --- | --- |
+| 15 | 24 | 39 |
+| 15 | 30 | 45 |
+| 15 | 49 | 64 |
+| 15 | 66 | 81 |
+| --- | --- | --- |
+| 16 | 20 | 36 |
+| 16 | 56 | 72 |
+| 16 | 153 | 169 |
+| --- | --- | --- |
+| 20 | 25 | 45 |
+| 20 | 36 | 56 |
+| 20 | 100 | 120 |
+| --- | --- | --- |
+| 25 | 56 | 81 |
+| 25 | 66 | 91 |
+| --- | --- | --- |
+| 28 | 36 | 64 |
+| 28 | 72 | 100 |
+
+<column-break/>
+
+### Subtraction <note>original: "Substract"</note>
+
+| Value 1 | Value 2 | Result |
+| :--- | :--- | :--- |
+| 66 | 30 | 36 |
+| 30 | 36 | 66 |
+| 30 | 42 | 72 |
+| 30 | 90 | 120 |
+| 101 | 14 | 151 <note>unclear in original</note> |
+| --- | --- | --- |
+| 36 | 36 | 72 |
+| 36 | 45 | 81 |
+| 36 | 64 | 100 |
+| --- | --- | --- |
+| 42 | 49 | 91 |
+| 45 | | nothing <note>original: "noth."</note> |
+| --- | --- | --- |
+| 49 | 91 | 42 |
+| 121 | 49 | 72 |
+| 169 | 120 | 49 |
+| --- | --- | --- |
+| 56 | | |
+| 56 | 64 | 120 |
+| 56 | 169 | 225 |
+| --- | --- | --- |
+| 64 | | |
+| 64 | 225 | 289 |
+| --- | --- | --- |
+| 72 | | |
+| 72 | 81 | 153 |
+| 72 | 153 | 225 |
+| 72 | 289 | 361 |
+| | | nothing <note>original: "nothig"</note> |
+
+<summary>
+This page provides a comprehensive look-up table for "The Philosophers' Game" (Rythmomachia). It lists the specific numerical combinations required to capture an opponent's piece using the four basic operations of arithmetic: addition, subtraction, multiplication, and division. The tables are organized by leading numbers and their mathematical relationships to other pieces on the board, serving as a tactical guide for players to determine which pieces can legally capture others based on their numeric values.
+</summary>
+
+<keywords>
+Rythmomachia, capture table, arithmetic game, mathematical capture, addition, subtraction, pieces, game pieces, numerical relationships, medieval games.
+</keywords>

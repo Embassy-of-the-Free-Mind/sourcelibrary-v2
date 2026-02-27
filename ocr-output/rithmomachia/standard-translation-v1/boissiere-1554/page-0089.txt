@@ -1,0 +1,27 @@
+[[meta: This page continues the rules of movement for Rythmomachia established on page 43, detailing the specific distances each piece must travel and the special 'Knight’s move' available to non-royal pieces. It then introduces the mathematical categories of captures and interactions between pieces.]]
+
+RYTHMOMACHIA, THE GAME.
+[[meta: catchword: Prin-]]
+
+## Universal Rule.
+
+No piece [[notes: The original French uses the word *table*, which in early gaming manuals refers to the playing pieces or "men" themselves.]] may move except to its determined place, such that the **Squares** shall not stop in the next space nor in the third, but rather in the fourth; the **Triangles** shall not stop in the following space, but rather in the third. [[notes: This describes the fixed movement range of the pieces: Rounds move 1 space (to the 2nd), Triangles move 2 spaces (to the 3rd), and Squares move 3 spaces (to the 4th).]]
+
+## Irregular Movement.
+
+Every piece, except for the **Kings** or **Pyramids**, can escape or transport themselves wherever they see fit in the manner of the **Knights in Chess** [[notes: This refers to the "L-shaped" jump—two squares in one direction and one square perpendicularly.]], such as from position **B** to **T, L,** or **V**, provided they are not in *obsidion* [[notes: From the Latin *obsidio*, meaning a siege or blockade. In this game, it occurs when a piece is surrounded on all sides.]] or imprisonment: for as soon as the final imprisoning piece is placed, those imprisoned can no longer leave, as their power is lost.
+
+## Of the Foundations. [[notes: The original heading *Des Bastieres* refers to the fundamental "bases" or methods by which one piece may capture or interact with another.]]
+
+->Equality ————— Encounter<-
+->Addition } ————— Ambush<-
+->Subtraction }<-
+->Multiplication } ————— Assault<-
+->Division }<-
+->Obsidion ————— Imprisonment<-
+
+[[notes: These terms represent the different ways a piece is captured. For example, "Equality" (Encounter) occurs when a piece of the same value lands on the space of an opponent. "Addition," "Subtraction," "Multiplication," and "Division" (Ambush and Assault) occur when the mathematical values of one or more pieces can be calculated to equal the value of an opponent's piece. "Obsidion" (Imprisonment) is a capture by surrounding the opponent.]]
+
+[[summary: This page outlines the specific movement constraints for Squares and Triangles and introduces the "Knight's move" as an escape maneuver. It also categorizes the various mathematical methods of capturing an opponent's pieces, ranging from simple equality to complex arithmetic operations.]]
+
+[[keywords: Rythmomachia, board game rules, Squares, Triangles, Knight's move, Obsidion, mathematical capture, Renaissance gaming, arithmetic]]

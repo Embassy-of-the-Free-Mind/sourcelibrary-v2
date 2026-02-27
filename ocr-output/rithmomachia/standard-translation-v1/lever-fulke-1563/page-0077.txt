@@ -1,0 +1,17 @@
+...subtraction <note>original: "straction"</note> does not differ from the former method, except for the opinion of those who would have the two capturers <note>original: "takers"</note> stand only in the next spaces to the one who is captured.
+
+### Of capturing <note>original: "takyng"</note> by Multiplication.
+
+Capturing by multiplication differs from the others. In this kind of play, it works like this: when your piece <note>original: "man"</note> stands so that, being smaller than your opponent's <note>original: "aduersaries"</note> piece, you may multiply your piece by the empty <note>original: "voyde"</note> spaces between them. If the product is equal to <note>original: "all one to"</note> the opponent's piece, you may capture <note>original: "take"</note> him. You do this without moving into his space <note>original: "place"</note>, unless you see <note>original: "espye"</note> him there before you move your piece.
+
+### Of capturing <note>original: "takynge"</note> by Division.
+
+Likewise <note>original: "Lykewise"</note>
+
+<summary>
+This page continues the technical rules for capturing pieces in Rithmomachia (The Philosopher's Game). It concludes a variation on the "Subtraction" rule regarding the positioning of capturing pieces. It then introduces "Multiplication" capture, where a piece of a lower value can capture a higher-value piece if its value multiplied by the number of empty spaces between them equals the opponent's value. Finally, it introduces the section on capture by "Division."
+</summary>
+
+<keywords>
+Rithmomachia, The Philosopher's Game, capture mechanics, Multiplication, Subtraction, Division, mathematical games, 16th-century games, board game rules.
+</keywords>

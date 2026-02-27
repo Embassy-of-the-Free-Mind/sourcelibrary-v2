@@ -1,0 +1,16 @@
+[[meta: This page continues the specific numbering of the squares for one half of the board, completing the sequence from square 22 to 32, and then explains how this system is mirrored for the opposing side to facilitate blindfold play.]]
+
+### The First Book / Chapter II:
+
+...and white: her **Bishop’s** [[notes: *Schütze*, literally "Archer" or "Shooter," the early German term for the Bishop]] third / the twenty-second / and black: her **Knight’s** [[notes: *Reuter*, literally "Rider," the early German term for the Knight]] third / the twenty-third / and white: her **Rook’s** [[notes: *Rochen*, from the Persian *Rukh*]] third / the twenty-fourth / and black: In the fourth and last horizontal line [[notes: *Zwerch-linie*, what we now call a "rank"]], the **King’s Rook’s** fourth square / the twenty-fifth / and black: his **Knight’s** fourth / the twenty-sixth / and white: his **Bishop’s** fourth / the twenty-seventh / and black: the **King’s** fourth / the twenty-eighth / and white: the **Queen’s** fourth / the twenty-ninth / and black: her **Bishop’s** fourth / the thirtieth / and white: her **Knight’s** fourth / the thirty-first / and black: her **Rook’s** fourth / the thirty-second / and white. 
+
+These aforementioned numbers, upon which the **White Army** [[notes: *Hauffen*, literally "heap" or "host," referring here to the collection of white pieces]] is placed, are now (as mentioned) marked and calculated from the right to the left: the others, however, upon which the **Black Pieces** are arranged, are calculated from the left to the right hand, and thus recorded and reckoned as being opposite to one another. 
+
+Furthermore, the square that immediately follows a white square (either on a horizontal or an ascending line [[notes: Rank or file]]) is always black: and the squares nearest to a Black one are always white: Therefore, one can very easily keep the squares in mind with the said distinction from one square to the other, and when one [knows] of the one...
+
+->Hauffens<-
+[[notes: This is a "catchword," a common printing practice where the first word of the next page is printed at the bottom of the current one to ensure the binder follows the correct order.]]
+
+[[summary: This page completes a detailed 1-32 numbering system for one half of the chessboard, explaining that the system is mirrored for the opponent's side and emphasizing the alternating colors of the squares. This systematic layout was designed to help players visualize the board and play without looking at it.]]
+
+[[keywords: Chessboard geometry, board numbering, blindfold chess, piece names, Rook, Knight, Bishop, White Army, Black Army]]

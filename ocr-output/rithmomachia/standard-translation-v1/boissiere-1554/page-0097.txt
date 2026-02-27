@@ -1,0 +1,18 @@
+[[meta: This page continues the specific rules of capture ("batterie") for the Game of Philosophers, picking up mid-sentence from the end of the previous page where the mechanics of replacing a captured piece were being described.]]
+
+->RYTHMOMACHIA, THE GAME<-
+
+...that you shall play, and you shall move your own piece to the position of the one you have captured.
+
+4 There is no capture or taking, except by the preceding rule, by which I am constrained to move my victorious piece [[notes: "Table" in the original, referring to the circular, square, or triangular counters used in the game.]] to the place of the captured one, unless through my negligence I failed to take the preceding move: for on the following move I may take it if I still find it arranged as before. But in taking it, because no capture is made without moving, you shall play the victorious piece to the place of the captured one; and what I say of the pieces must also be understood for the pyramids, (I mean) when after my capture nothing remains of that pyramid. For if there still remained some base to be stripped away [[notes: "Degrader." In Rythmomachia, a Pyramid is a stack of pieces; a player might capture one layer at a time rather than the whole stack.]], even though I have won some other base of it, nevertheless, because of that base which still remains to it, I shall not move it from its place [[notes: Meaning the Pyramid itself is not moved or removed yet.]], but shall play my victorious piece wherever it seems good to me, according to the rules of the game.
+
+5 Every captured piece shall be turned over to the side bearing the livery [[notes: The "livery" refers to the colors or markings identifying which player the piece belongs to. Captured pieces were often flipped to show they had changed sides.]] of the victor, and placed at the far end of his field.
+
+## Of the Triumph.
+
+After having won or conquered the King or pyramid, yet before having total victory, it [[notes: The sentence continues onto the next page with the word "faudra" (will be necessary).]]
+
+[[gloss: Rythmomachia, pyramids, capture, triumph, rule]]
+
+[[summary: This page details the physical movement of pieces during a capture, specifically how a capturing piece replaces the victim on the board. It also clarifies that Pyramids stay in place until their final layer is captured and explains how captured pieces are "turned" to show they have changed allegiance.]]
+[[keywords: Rythmomachia, capture mechanics, Pyramid pieces, livery, game rules, movement, 16th century games]]

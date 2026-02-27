@@ -1,0 +1,13 @@
+[[meta: This page continues the author's technical justification for his modifications to the game's rules. He is concluding his argument regarding the types of "victories" (mathematical sequences) before introducing a variant of the game based on an English manuscript.]]
+
+12.15.29. [[notes: These numbers represent a mathematical sequence used to demonstrate proportions in the game.]] but I will tell you, if all three are contained therein, you cannot fail to find the two. As for the other victories that I have added, I did so so that the game—which previously was known by only a few people—might not only be easy for the learned, but also could be easily understood by the unlearned [[notes: Literally "the rough" or "the rude," referring to those without formal university training in mathematics.]]. And so that this "good," which was held privately and almost abolished, might be shared and restored to the **public** [[notes: *Republique* here refers to the "commonwealth" or the "Republic of Letters"—the international community of scholars.]]. And if there is anything else changed or added, I am ready to give a sufficient account of it when the need arises.
+
+### Another pleasant way of playing.
+
+Following the report of **Thomas Randolph**, [[notes: An English diplomat and politician who studied at the University of Paris in the 1550s.]] a studious man at the University of Paris, a copy of the game of **Rythmomachia** was shared with me by a very kind person, **Thomas Toclife**, [[notes: Likely Thomas Topcliffe, another English scholar or traveler present in the academic circles of Paris at the time.]] an Englishman, and certainly a man of great erudition and mastery of the disciplines. This copy (as I have heard) was extracted from an **ancient Chaldean book**, [[notes: "Chaldean" was often used in the Renaissance to suggest ancient, mystical, or near-eastern origins, adding a sense of prestige and antiquity to the text.]] and the way of playing is somewhat different from the preceding one, yet it does not differ much from the movement of **chess**. I am certainly of the opinion that this way of playing is the fulfillment and perfection of our game, and I presuppose that some an-
+
+[[meta: catchword: an- (anticipating *anciens*, or "ancients")]]
+
+[[summary: The author explains that his rule changes are intended to make the game accessible to the public rather than a private elite. He then introduces a new variant of Rythmomachia brought to him by English scholars in Paris, claiming it derives from an ancient "Chaldean" source and plays similarly to chess.]]
+
+[[keywords: Rythmomachia, accessibility, Thomas Randolph, Thomas Toclife, University of Paris, Chaldean book, chess, mathematical proportions]]

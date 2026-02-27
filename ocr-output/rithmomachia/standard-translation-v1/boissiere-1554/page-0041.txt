@@ -1,0 +1,13 @@
+[[meta: This page continues the instructions for setting up the board for Rythmomachia, transitioning from the round "multiple" pieces to the triangular pieces. It explains the mathematical derivation of the "superparticular" proportions used for this second tier of game pieces.]]
+
+RYTHMOMACHIE, GAME
+[[meta: Catchword: The field]]
+
+# Of the triangular pieces containing the superparticular proportion, and first of the even number.
+
+*Carefully consider in the following figure which number is linked by certain straight lines, and afterwards you will easily be able to find the triangular pieces [[notes: "Tables triangulaires" refers to the triangle-shaped game pieces, which were mathematically more complex than the round ones]] of the superparticular proportion [[notes: A "superparticular" ratio is one where the larger number contains the smaller number plus one part of it—for example, 3:2 (one and a half) or 4:3 (one and a third)]], which must be arranged after the preceding round and multiple pieces, as follows. Multiply the first even number of the Multiples, which is 2, by the first of the odd numbers that corresponds to it on the opposite side, namely by 3, and there will result 6—the first triangle for the superparticular proportion. And you shall do the same with the others, and you will have all the even numbers required for the superparticular proportion, which will be 6, 20, 42, 72. But to obtain their required numbers [[notes: These "required" numbers are the values that form the other half of the mathematical ratio for the opposing player]], multiply each of the aforementioned opposites that correspond to them on the other side by themselves—namely 3, 5, 7, 9—and there will result the numbers that are required to complete the superparticular proportion of even numbers, which will be 9, 25, 49, 81.*
+
+[[gloss: Rythmomachia (The Philosophers' Game), triangular pieces, superparticular proportion, even number, multiples, odd number, numbers, triangle]]
+
+[[summary: This page explains the mathematical formulas used to determine the values of the triangular game pieces, specifically focusing on how even and odd numbers are multiplied to create "superparticular" ratios. This setup reflects the game's purpose as an educational tool for medieval arithmetic and Pythagorean number theory.]]
+[[keywords: Rythmomachia, triangular pieces, superparticular proportion, mathematics, even and odd numbers, Renaissance education, game setup]]

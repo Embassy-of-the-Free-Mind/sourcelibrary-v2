@@ -1,0 +1,25 @@
+[[meta: This page begins Chapter 11, shifting focus from the King’s Pawn openings discussed in the previous chapters to openings beginning with the Queen’s Pawn. It references the transition from medieval "slow" chess to the modern style and cites the influential theorist Damiano of Odemira.]]
+
+11.cap: On the Game of Chess. 361
+
+<image-desc>A decorative woodcut headpiece featuring symmetrical scrolling acanthus leaves, floral motifs, and a central stylized face or mask.</image-desc>
+
+## The Eleventh Chapter.
+
+### In what manner—according to Damiano’s opinion—the one who leads the White forces can pursue his game when he begins with the Queen’s Soldiers, and how it may be improved.
+
+It is to be hoped that from what has been extensively handled thus far—from the eighth chapter of the Second Book until now—it has been sufficiently understood how one may make the beginning of the game with the King’s **Soldier** [[notes: "Soldaten" or Soldiers is the period term for Pawns]] and how to further carry it out. Now follows the other **group** [[notes: "Hauffe," meaning the side or set of openings]] of those games which are started with the Queen’s Soldier. And it is to be reminded at the beginning that, according to the opinion of the best chess-players: the first kind, which is started by the King’s Soldier, is in many ways better than this second kind, which makes the beginning through the Queen’s Soldier. (Even though D. Mennel [[notes: Jakob Mennel, author of an early German chess book in 1507]] and others in their books on this game wish to instruct the beginner otherwise when they say:
+> *Antè Reginam, Debes producere primam:*
+> **Before the Queen / You should move out the first / wisely / in the first move:**
+[[notes: This Latin and German rhyme suggests that moving the Queen's Pawn first is the "wise" or standard opening.]]
+and, so far as one arranged the chess-moves according to the **old slow way** [[notes: Referring to medieval chess where pieces like the Queen and Bishop had very limited movement and pawns only moved one square]], of which a description follows below in the last book: they might not be in the wrong.)
+
+Now, after **Damianus** [[notes: Damiano of Odemira, a Portuguese apothecary whose 1512 book was a foundational text for modern chess]] has dealt with the first kind, he has likewise taken this latter kind for himself, which we then shall hear of in this chapter according to his instruction; in the following example, however, we also wish to set forth our own opinion regarding it.
+
+<margin>1.</margin> If White now moves the **Queen’s Soldier** to **twenty-nine** [[notes: In the 1–64 numbering used by the author, 29 corresponds to d4]]: then Black moves his **Queen’s Soldier** to **thirty-seven** [[notes: d5]]: White moves the same [rank] **King’s Bishop’s Soldier** [[notes: The pawn in front of the King's Bishop]] to **thirty** [[notes: This move, 1. d4 d5 2. f4, is known today as the Bird's Opening or a variation of the Stonewall Attack]]: Black takes it with the [Queen's] Soldier: White moves the **King’s Soldier** (so that his **Bishop** [[notes: "Schütze" or Archer, the period term for Bishop]] can lie in wait for the Black Soldier) to **twenty-eight** [[notes: e4]]: Black (to protect the same) moves the **King’s Knight’s Soldier** to **nine and thirty** [[notes: g5]]: White (to bring the Black soldiers into disorder)
+
+Z z ii
+
+[[summary: This page introduces Chapter 11, focusing on Queen's Pawn openings. It compares the modern preference for King's Pawn starts against older medieval traditions and begins a specific move-by-move analysis of a Queen's Pawn gambit attributed to Damiano.]]
+
+[[keywords: Damiano, Jakob Mennel, Queen's Pawn, Opening Theory, Chess History, Soldiers, Pawns, Bird's Opening]]

@@ -1,0 +1,11 @@
+**The Philosophers' game.**
+B. vii.
+
+As 20 multiplied by 45 is 900, the square root <note>original: "roote... square"</note> is 30, which, multiplied by itself, is 900. But if you do not wish <note>original: "lyste"</note> to take such trouble <note>original: "suche paynes"</note>, here is a table that may serve your purpose <note>original: "serue your tourne"</note> for geometrical proportion to be used
+->in this game.<-
+
+->A table<-
+
+<summary>This passage provides a mathematical example of finding a geometric mean: multiplying 20 by 45 results in 900, the square root of which is 30. The author acknowledges that these calculations can be tedious and introduces a reference table to help players identify geometrical proportions more easily during the game.</summary>
+
+<keywords>Geometrical proportion, square root, geometric mean, Rythmomachia, Philosophers' Game, mathematical table, arithmetic</keywords>

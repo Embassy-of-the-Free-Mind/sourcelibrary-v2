@@ -1,0 +1,79 @@
+[[meta: This page continues the mathematical tables for captures in Rithmomachia, providing specific examples of how White pieces capture Black pieces and vice versa through multiplication across empty squares.]]
+
+# Table of all the numbers that in this game can be won by multiplying.
+
+---
+
+## Whites against Blacks
+
+| | | |
+|---|---|---|
+| 4 | times 3 | makes 12 |
+| 6 | 2 | 12 |
+| 2 | 6 | 12 |
+| 4 | 4 | 16 |
+| 8 | 2 | 16 |
+| 2 | 8 | 16 |
+| 6 | 5 | 30 |
+| 15 | 2 | 30 |
+| 4 | 7 | 28 |
+| 9 | 4 | 36 |
+| 4 | 9 | 36 |
+| 8 | 7 | 56 |
+| 8 | 8 | 64 |
+| 16 | 4 | 64 |
+| 6 | 11 | 66 |
+| 9 | 9 | 81 |
+| 45 | 2 | 90 |
+| 15 | 6 | 90 |
+| 9 | 10 | 90 |
+| 20 | 5 | 100 |
+| 25 | 4 | 100 |
+| 20 | 6 | 120 |
+| 25 | 9 | 225 |
+
+[[notes: In these tables, "via" has been translated as "times" and "fa" as "makes." The first column represents the value of the attacking piece, the second column represents the number of empty squares between it and the target, and the third column is the value of the piece being captured.]]
+
+Whites
+multiplied
+
+Product
+squares,
+
+<column-break/>
+
+## Blacks against Whites.
+
+| | | |
+|---|---|---|
+| 3 | times 2 | makes 6 |
+| 3 | 3 | 9 |
+| 3 | 5 | 15 |
+| 5 | 3 | 15 |
+| 5 | 4 | 20 |
+| 5 | 5 | 25 |
+| 9 | 4 | 36 |
+| 12 | 3 | 36 |
+| 3 | 12 | 36 |
+| 3 | 14 | 42 |
+| 9 | 5 | 45 |
+| 5 | 9 | 45 |
+| 7 | 7 | 49 |
+| 16 | 4 | 64 |
+| 36 | 2 | 72 |
+| 12 | 6 | 72 |
+| 9 | 8 | 72 |
+| 9 | 9 | 81 |
+
+Blacks
+multiplied
+
+Product squares
+
+[[notes: The term "Caselle prodotti" likely refers to the "Product" resulting from the multiplication, which determines if a capture is successful based on the distance (squares) between pieces.]]
+
+---
+
+[[summary: This page provides a reference table for Rithmomachia players, listing the specific mathematical combinations (attacking piece value x distance) required to capture an opponent's piece through multiplication. It distinguishes between White's attacks on Black and vice-versa.]]
+
+[[keywords: Rithmomachia, multiplication, mathematical game, capture rules, Whites and Blacks, arithmetic ratios]]

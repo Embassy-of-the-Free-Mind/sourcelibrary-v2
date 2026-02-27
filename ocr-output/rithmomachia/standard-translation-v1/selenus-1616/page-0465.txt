@@ -1,0 +1,40 @@
+[[meta: This page continues from the discussion of the history of chess in German lands, specifically transitioning from the "Smaller Game" mentioned at the end of page 430 to the "Welsche-Schach" and the poetic evidence provided by Cunrat von Ammenhusen regarding the "Great Game" or Courier Chess.]]
+
+### Of the Game of Chess.
+
+[[margin: Chapter 9:]] Finally, the game that has been treated up to this point in these four books is called **Welsche-Schach** [[notes: "Welsch" was a historical term used by Germans to refer to Romance-speaking people, particularly Italians or French; "Welsche-Schach" likely refers to the "foreign" or "standard" version of chess as it evolved toward modern rules]] by these people, and is played with the same moves (as mentioned therein): only that they begin with the **Queen’s** and **Rook’s soldiers** [[notes: "Soldaten" or soldiers refers here to the Pawns]] (as was briefly mentioned earlier in this chapter in the description of **Courier-Chess**); also, the remaining soldiers move only one square forward, and the **Queen** cannot move everywhere until she has made the aforementioned **Joy-Leap** [[notes: The "Freudensprung" or Leap of Joy was a special initial move in medieval chess that allowed the Queen or King to move two or three squares on their first turn to speed up the game]] for herself into her third square: Likewise, they do not allow the **King** to jump, nor to swap his place with another piece [[notes: This refers to the early rules regarding Castling, which had not yet been standardized]].
+
+Regarding both of these games, but especially the **Great Game**, **Cunrat von Ammenhusen**—a monk and secular priest from the city of **Stein** [[notes: Likely referring to Stein am Rhein]]—sets down the following German verses in his manuscript (which was made in the year written 1337 after the birth of God, and was shared with the author from the **Rappolstein Library** [[notes: The library of the Counts of Rappolstein in Alsace]]):
+
+[[margin: cc]] One thing I truly wish to say,
+[[margin: cc]] I have seen many a game at play
+[[margin: cc]] Where one saw, if they looked with care,
+[[margin: cc]] Sixteen pieces more were there.
+[[margin: cc]] But according to this lore
+[[margin: cc]] Which this book keeps in its store,
+[[margin: cc]] The **SchachZabel** [[notes: "Schachzabel" is the Middle High German term for the chessboard or the game of chess itself]] has no more
+[[margin: cc]] Than two and thirty pieces in all.
+[[margin: cc]] For both sides I now shall call:
+[[margin: cc]] One **King**, one **Queen**, and standing by,
+[[margin: cc]] Two **Elders** [[notes: "Alten" or Elders; an early name for the Bishop, derived from a misunderstanding of the Arabic "Al-Fil" (the Elephant)]], two **Knights**, to meet the eye.
+[[margin: cc]] A **Rook** at either end is found,
+[[margin: cc]] And before each, a **Pawn** [[notes: "Vende" in the original, an old term for Pawn]] on its ground.
+[[margin: cc]] This shall be for one side's might,
+[[margin: cc]] Just as if it were a fight;
+[[margin: cc]] And the other half just the same,
+[[margin: cc]] That is the true **SchachZabel** game.
+[[margin: cc]] But I will count those I saw more,
+[[margin: cc]] As I have spoken of before:
+[[margin: cc]] On either side, eight pieces small,
+[[margin: cc]] Four great ones, and four small in all.
+[[margin: cc]] The great ones I shall name for you,
+[[margin: cc]] So you may know them as is due:
+[[margin: cc]] There is a **Trulle** [[notes: A "Trulle" or "Schalk" was a piece in Courier Chess, often translated as the Jester or Fool]] and **Couriers** two,
+[[margin: cc]] And a **Counselor** [[notes: "Ratgeb" or Advisor]]. That makes four, 'tis true,
+[[margin: cc]] Who on each side should take their stand
+
+Jii
+[[meta: catchword: The]]
+
+[[summary: This page describes "Welsche-Schach" and its specific movement rules, then cites a 1337 poem by Cunrat von Ammenhusen to contrast the standard 32-piece game with the expanded 48-piece "Great Game" or Courier Chess.]]
+[[keywords: Welsche-Schach, Cunrat von Ammenhusen, Schachzabel, Courier Chess, Joy-Leap, medieval chess rules, chess pieces]]

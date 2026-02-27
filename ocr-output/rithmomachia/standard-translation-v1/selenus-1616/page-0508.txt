@@ -1,0 +1,26 @@
+[[meta: This page begins Chapter 4, detailing the specific movement rules for the different types of pieces—Rounds, Triangles, Squares, and the composite Towers—in Rythmomachia, frequently drawing comparisons to Chess to aid the reader.]]
+
+The Fourth Chapter.
+[[meta: catchword: Orbes (Circles/Spheres)]]
+
+*[A wide horizontal decorative woodcut ornament featuring symmetrical scrollwork, foliage, and stylized faces or masks integrated into the design.]*
+
+## The Fourth Chapter.
+
+### How the pieces and towers shall be moved, according to this game.
+
+The pieces of this game are moved forward and backward, to the right and left sides, along the length and width of the board; yet each of these three forms is moved in a particular way.
+
+The **Rounds** are moved straight forward (just like the **Pawns** [[notes: The original German uses *Soldaten* (soldiers), the standard term for pawns in early modern German chess.]]) out of their field into the next adjacent field. The **Triangles** (like the **Bishops** [[notes: The text uses *Schützen* (Archers) or *Alten* (the Old Ones), which were common names for the Chess Bishop before the terminology standardized. In Rythmomachia, Triangles move to the third square diagonally, skipping one.]]) move toward the corners of the fields, yet always jumping over one into a third field. The **Squares** move straight and diagonally, backward and forward, and to both sides (like the **Queen**), yet jumping over two fields into a fourth field.
+
+The **Towers** [[notes: In Rythmomachia, "Towers" or Pyramids are stacks of smaller pieces. For example, a "Tower" might consist of a Square, a Triangle, and a Round piece stacked together.]] (because they are composed of all three types of pieces: the **Rounds** as well as the **Triangles** and **Squares**) may be moved according to the players' pleasure and the state of their game, just like the Round, Triangle, and Square pieces, to the first, third, and fourth fields: and their movement is comparable to that of the **Queen** in the Game of Chess. If they are then besieged and surrounded by other pieces, they may (since they represent the place of the **King**, as it were) jump like the **Knights** [[notes: The text uses *Reutern* (Riders).]] and in this way escape danger: except in this case, however, it is not permitted to them: and the other pieces do not enjoy this freedom.
+
+(Buxer: fol: 24. b [[notes: Quirin Buxer’s 1608 arithmetic text is a primary source for these rules.]])
+
+> ->The stones shall proceed straight, now to the right, now to the left; now forward, now backward: however, they shall not move obliquely through the corners, like the insane **Chess-lovers** [[notes: *Areiphili* is a Greek-derived term meaning "lovers of Ares" (war), used here to describe Chess enthusiasts.]]: unless it seems otherwise to the players, and something else is decreed by them. But in attacks, they shall reach as far as those seats which their Multiplication shall judge necessary.<-
+
+The same [author], fol: 44. a. b. where he provides the other **Chaldean** [[notes: "Chaldean" in this period often refers to ancient mathematical or astrological traditions; here it likely refers to a more complex variation of the rules.]] method of playing.
+
+[[summary: This page explains the movement rules for the three types of pieces (Rounds, Triangles, and Squares) and the composite Towers, using Chess pieces as a familiar point of comparison for the reader. It also notes a special "Knight's jump" ability for Towers when they are trapped.]]
+
+[[keywords: movement rules, Rounds, Triangles, Squares, Towers, Chess comparison, Quirin Buxer, Chaldean method, Rythmomachia]]

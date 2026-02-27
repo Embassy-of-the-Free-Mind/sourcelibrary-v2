@@ -1,0 +1,19 @@
+[[meta: This page continues the description of the Rider's (Knight's) movement, specifically detailing the L-shaped path and the mathematical possibilities of its reach depending on its position on the board.]]
+
+9. cap: Of the Chess-Game.
+
+because they are moved through the first square straight and into the second diagonally: or into the first diagonally and into the last straight. In the former way, the fields are of the same color; in the latter way, however, they are to be understood as being of different colors [[notes: The author is explaining the "L" shape of the Knight's move as a combination of one square straight and one diagonal. He notes that depending on how you visualize the path, it looks like it stays on one color or moves to another, though in standard play, a Knight always lands on a square of the opposite color]]. From this, it follows that they have two kinds of jumps: a near one and a distant or wide one. For example: the White King’s Rider’s nearest jump is into the second field of that same King; the farthest, however, is into the third field of his Archer [[notes: Bishop]] or Rook [[notes: *Rochen*]].
+
+Accordingly, the White King’s Rider can jump from his field into the three aforementioned fields: the White Queen’s Rider into her other [fields]: those of her Archer and her Rook’s third field. Likewise, the jumps of the two Black Riders are to be understood in the same way.
+
+Furthermore, these jumps cannot occur if the fields into which these Riders are to jump are occupied and possessed by their own [pieces]. However, if one of their enemies is staying therein, they have the power to dash in there and (provided it serves their advantage or prevents an impending misfortune) to snatch them away from the chess-table [[notes: *Schach-Tafel*—the board]]. Otherwise, they may take their way around the entire chessboard to come to the aid of their own and to damage the enemy.
+
+If they stand in a Rook’s field (where they have the fewest jumps), they can strike only on two lines and into two fields (namely, into the third field of their own line and into the second field of the Archer's). In other fields, they can jump into four, six, or even eight fields and four lines. These last jumps they perform when they have two fields in front of them, on each side, and behind them—as if they were **redoubling** [[notes: *radoppieren*—a term from classical dressage referring to a horse performing a tight, doubling turn or a specific galloping pace]], remaining always in the center of a circle with the horse's hind legs. But for this, they must stand in a fourth or third field of a King, a Queen, or an Archer.
+
+If one wished to move them up toward the corners, one could thereby signify the manner or "school" [[notes: *Schule*—referring to a riding academy or the art of dressage]] in which one is accustomed to school a horse in a **serpentine** fashion [[notes: *Schlangen-weiß*—moving in an S-shape or zig-zag to avoid projectiles]] (so that one is not so easily hit by the Archers) and to maneuver it for the sword. For example: the White Queen’s Rider runs to the right hand, forward, from seven to twenty-two: (NB: seek the understanding of this and the following numbers below, at the end of the 11th Chapter of this First Book). From there, he turns to the
+
+[[meta: catchword: left]]
+
+[[summary: This page describes the mechanics of the Knight's (Rider's) move, explaining its L-shaped trajectory and how its range increases from two squares in the corner to eight in the center. The author uses equestrian metaphors, comparing the move to dressage maneuvers and tactical battlefield riding.]]
+
+[[keywords: Rider, Knight, chess moves, capture, board geometry, dressage, radoppieren, serpentine movement, Archer, Rook]]

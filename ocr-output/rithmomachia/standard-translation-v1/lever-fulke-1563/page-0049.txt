@@ -1,0 +1,15 @@
+# The Philosopher's Game.
+
+By this table, any person <note>original: "man"</note>, though he has <note>original: "haue"</note> little <note>original: "small"</note> or no skill in arithmetic, may learn to play this game and, while playing, learn some part of arithmetic.
+
+## Regarding capturing by proportion <note>original: "Of takynge"</note>.
+
+If the players <note>original: "Gamesters"</note> are so inclined <note>original: "be disposed"</note>, they may also capture pieces <note>original: "take men"</note> by proportion: arithmetic, geometric, or musical. But because it is not necessarily required that they should do so, I will first proceed with the method of victory <note>original: "prosecute the maner of triumph"</note>, in which they may also learn to capture by proportion, as shall be seen afterward. For when they can join two or three of their pieces <note>original: "men"</note> to one of their opponent's <note>original: "aduersaries"</note> pieces in such order as the victory <note>original: "triumph"</note> is set—so that those three or four numbers have any of these three proportions—they may capture their opponent's piece.
+
+<summary>
+This page introduces the rules for capturing pieces in "The Philosopher's Game" (Rythmomachia) using mathematical proportions. The author explains that even those unskilled in arithmetic can learn the game and improve their mathematical abilities through play. It describes how pieces can be captured using arithmetic, geometric, or musical proportions, particularly when arranging pieces to achieve specific victory conditions known as "triumphs."
+</summary>
+
+<keywords>
+The Philosopher's Game, Rythmomachia, arithmetic, capture rules, mathematical proportions, arithmetic proportion, geometric proportion, musical proportion, triumphs, victory conditions, educational games.
+</keywords>

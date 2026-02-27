@@ -1,0 +1,20 @@
+[[meta: This page continues the list of exceptional cases where a stone may be captured without a direct move, following the discussion of the "Besieging" rules and the start of the ten general rules for combat in Rhythmomachia.]]
+
+# The Fifth Chapter
+
+...can be taken, having been moved: so the victor [[notes: "Segener" is an older spelling of "Sieger," referring here to the player making the capture.]] takes the same, and nonetheless moves one of his own stones.
+
+4.) The third case is as follows: When one of the players does not notice that he could take the other’s stone, but instead leaves it standing, and subsequently—when it is his turn once again—notices that the stone has not been moved out of danger, but can still be taken by him: then he may indeed take it, and move one of his stones at the same time.
+
+5.) The fourth and last case happens thus: When two stones are moved against one another in such a way that one can overcome the other through **multiplication** and **division**, and the one player does not take the other’s stone through multiplication or division, but instead moves another of his stones: then the other player, because both these stones are still present in their previous position, can take one of them away with **division** or **multiplication**, and move one of his stones as he pleases at the same time. [[notes: Capture by multiplication and division (also called "Proportion") occurs when the value of one stone multiplied or divided by the number of spaces between it and an opponent's stone equals the value of that opponent's stone.]]
+
+->(Buxer : fol : 28. a. b. 47. a.)<-
+[[notes: This citation refers to the work of Gustavus Selenus (the pseudonym of Duke Augustus the Younger), whose 1616 book "Das Schach- oder König-Spiel" included a comprehensive section on Rhythmomachia.]]
+
+> *>> Since in the combined move, which operates reciprocally through **Multiplication** and **Division**, if the Enemy has forgotten to intercept your covered **Stone** through **Multiplication**: you may afterwards take his **Stone** through **Division**, or vice-versa, and transfer your **Stone** into the place of the captured one. Furthermore, there is no type of capture or combat in which we are compelled to transfer the winning **Stone** into the place of the defeated one, except in the preceding example, or if by chance or fortune, through our negligence, some **Stone** defeated in a previous stroke is still left in its place, and we, about to play, see and find it exposed to capture. For then we can first take that **Stone**: and since no capture happens unless a move is made, as soon as we have taken the defeated piece, we as players shall transfer the **Victor** into the place of the **Defeated**, and if a **Pyramid** redeems itself, it shall be substituted in the place of the redeemer. [[notes: A "Pyramid" is a composite piece made of several tiered values; "redeeming itself" likely refers to a rule where a captured pyramid can be ransomed or partially salvaged.]] Finally, what we said a moment ago regarding the **Stones**, you should understand the same for the **Pyramid** when nothing remains in it: but if after the current capture some **Bases** [[notes: The individual stones that make up the tiers of the pyramid.]] still remain in that **Pyramid**, even if you have captured it with some other **Base**, yet because it is not entirely deprived of strength, you shall leave it thus diminished in its seat: you shall however play the winning **Stone** at your discretion according to the prescribed laws.)*
+
+[[meta: catchword: 6.) When]]
+
+[[summary: This page details specific rules regarding "forgotten" captures and the mechanics of capturing through multiplication and division. It emphasizes that if a player overlooks a capture opportunity, they may still claim it on a later turn if the tactical situation remains unchanged.]]
+
+[[keywords: Rhythmomachia, multiplication, division, capture rules, Pyramid, Gustavus Selenus, mathematical games, board game history]]

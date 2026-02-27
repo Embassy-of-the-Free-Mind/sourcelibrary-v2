@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical walkthrough from Chapter 18. The notation follows a numbering system common in 17th-century manuals, where the 64 squares of the board are numbered 1 to 64. The translation maintains the archaic terminology for the pieces: "Soldier" for Pawn, "Archer" for Bishop, "Rider" for Knight, and "Rook" for the Castle.]]
+
+### On Chess-Play.
+
+[[margin: 18. cap:]]
+against the White King’s Archer [[notes: "Archer" (Schütze) is the early modern term for the Bishop.]]: **the White** / gives / with the same / from thirty-nine / Check: **the Black** / covers the King / with the King’s Rider [[notes: "Rider" (Reuter) is the Knight.]] / on forty-six: **the White** / takes the Black King’s Soldier [[notes: "Soldier" (Soldat) is the Pawn.]] / with the King’s Archer: **the Black** / gives / with the Queen / from forty / Check / and moves the same / onto the White King’s Archer: **the White** / defends him / and covers the King / with the King’s Rider / on twenty-two: **the Black** / moves the King’s Archer / against the White King’s Rider / (which / is already held captive by his Queen) / onto thirty-one: **the White** / takes the Black King’s Rider / with his King’s Archer / and gives Check: **the Black** / takes the same / with the King’s Rider’s Soldier: thus he will / keep the Soldiers well together / and arrange / and lead / his game / according to the cause and occasion given to him by the White.
+
+[[margin: 20.]]
+But if **the Black** / does not move the Queen’s [Soldier] to 46, (n. 19.) but rather the King’s Archer-Soldier / against the White King’s Soldier / onto thirty-five: then **the White** / takes him / with the same: **the Black** / gives / with the Queen / from twenty-five / Check: **the White** / moves the King / (which then / in this case / is the best move / he can make) / onto three: **the Black** / (so that the Queen / may take away the White King’s Archer) / [moves] the King’s Soldier / against the White King’s Rider-Soldier / onto nineteen:
+
+[[margin: 21. *]]
+**the White** / takes / with the King’s Archer / the Black King’s Rider: **the Black** / with the King’s Soldier / [takes] the White King’s Rider-Soldier / and gives Check: **the White** / takes the same / with the King: **the Black** / [takes] the White King’s Archer / with his King’s Rook [[notes: "Rook" (Rochen) is the Castle.]]: Thus **the White** / will find himself in a poor formation / and be easily overcome / by the Black.
+
+[[margin: 22.]]
+But if **the White** / does not take the Black Rider / (n. 21.) but rather moves the King’s Archer / against the Black King’s Soldier / (in order to also / protect his King’s Rider-Soldier) / onto thirty-seven: then **the Black** / robs the White King’s Rider-Soldier / with the King’s Soldier / and gives Check: **the White** / takes him / with this Archer / and rescues the same / without loss / of his pieces: **the Black** / gives / with the Queen / from twenty-seven / Check: **the White** / covers / the King / with the Queen / onto nineteen / and at the same time protects / his Soldier: **the Black** / takes the same / with his Queen: **the White** / [takes] the same / with the King’s Archer: **the Black** / moves / the King’s Soldier / onto forty-five / and covers their Archer /
+
+[[summary: This page details specific move sequences and variations in a chess game, focusing on the tactical consequences of Pawn exchanges and checks. It illustrates how White can fall into a disadvantageous position if the King's defense is poorly managed.]]
+
+[[keywords: Chess tactics, 17th-century chess, Archer, Rider, Rook, Soldier, King's defense, board numbering, opening variations]]

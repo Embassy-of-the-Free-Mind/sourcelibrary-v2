@@ -1,0 +1,17 @@
+[[meta: This page follows the Boston Public Library bookplate. It is a flyleaf containing handwritten cataloging notes used by librarians and bibliophiles to identify the specific edition and its historical record.]]
+
+->through<- [[notes: Likely a processing mark indicating the book has been checked through a specific stage of cataloging or acquisition.]]
+->450-<- [[notes: Possibly a price, a shelf mark, or a previous dealer's inventory number.]]
+
+2
+
+Hain 9436 [[notes: This refers to entry number 9436 in Ludwig Hain’s *Repertorium bibliographicum* (published 1826–1836), a foundational reference work for identifying books printed in the 15th century. This specific entry identifies the volume as the *Sermones de tempore* (Sermons for the Liturgical Year) by Jordanus de Quedlinburg, printed in Strasbourg in 1483.]]
+
+1/2 M [[notes: Likely an abbreviation for "half Morocco," a style of bookbinding where the spine and corners are covered in Morocco leather (goatskin), while the sides are covered in cloth or marbled paper.]]
+
+**Incunabula** [[notes: From the Latin word for "cradle" or "swaddling clothes," this term refers to books printed during the infancy of the printing press, specifically those published before the year 1501.]]
+**Jordanis** [[notes: The Latin genitive form of Jordanus, referring to Jordanus de Quedlinburg (c. 1300–1380), a prominent German Augustinian friar and author whose sermons were among the most widely read texts of the late Middle Ages.]]
+
+[[summary: This leaf contains handwritten bibliographic notes that identify the volume as an incunable—a book printed before 1501. The reference to "Hain 9436" specifically links this copy to the recognized catalog entry for the sermons of Jordanus de Quedlinburg.]]
+
+[[keywords: Hain, bibliography, incunabula, Jordanus de Quedlinburg, library cataloging, bookbinding, Sermones de tempore]]

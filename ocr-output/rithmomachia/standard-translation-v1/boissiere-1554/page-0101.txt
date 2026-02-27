@@ -1,0 +1,19 @@
+[[meta: This page completes the author's introductory preface, clarifying that his goal is mathematical instruction rather than literary polish. It then transitions into a dramatic dialogue based on the work of Jacques Lefèvre d'Étaples, featuring students of the Pythagorean school seeking to learn the "Philosophers' Game."]]
+
+<header>RYTHMOMACHIA, THE GAME</header>
+
+...[multi]ple, for superparticular [[notes: These terms—multiple and superparticular—refer to specific Pythagorean mathematical ratios used to determine the values and movements of the pieces in the game.]], and others: you must understand that my intention was not to show or instruct anyone in the French language, but rather in the excellence of this game. Therefore, I pray all lovers of virtue to take in good part what I have done for their recreation. I shall therefore begin here to recount what Faber [[notes: "Faber" refers to Jacques Lefèvre d'Étaples (c. 1455–1536), a leading French humanist and mathematician whose Latin treatise on Rythmomachia is the basis for this text.]] wrote about it.
+
+## The Rythmomachia of Jacques Lefèvre d'Étaples. A Dialogue.
+### Bathillus, Alcmeon, Brontin.
+
+Bath. Oh, Alcmeon, you have arrived at just the right moment.
+Alc. What is the matter, my young children?
+Bath. It is that we greatly desire to learn something from you.
+Alcm. And what is that, my son Bathillus?
+Bath. It is that before we rank ourselves among the number of the six hundred disciples of Pythagoras [[notes: Pythagoras was a Greek philosopher whose followers believed that the universe was ordered by numerical ratios. Being one of his "six hundred disciples" implies entering the inner circle of mathematical and philosophical wisdom.]], we wish to know a little of the rougher things; we even often address the disciples of Pythagoras themselves as they return from their evening assembly and disputation, to inquire at least about the lighter matters that they are not forbidden to reveal. And in fact, we have learned a portion of Arithmetic, and now, provided that it does not displease you, very...
+
+[[meta: catchword: volon- (likely "volontiers" or "willingly")]]
+
+[[summary: The author concludes his introduction by prioritizing mathematical gameplay over eloquent French, then begins a pedagogical dialogue where students of Pythagoras seek to learn the game of Rythmomachia.]]
+[[keywords: Rythmomachia, Jacques Lefèvre d'Étaples, Pythagoras, Arithmetic, Dialogue, Humanism, Mathematical Ratios]]

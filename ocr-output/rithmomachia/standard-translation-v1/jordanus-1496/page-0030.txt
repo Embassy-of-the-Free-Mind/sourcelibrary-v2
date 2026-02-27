@@ -1,0 +1,67 @@
+[[meta: This page shifts from the properties of continuous proportions to the operations of "adding" and "subtracting" ratios. In medieval arithmetic, adding two ratios is equivalent to multiplying them (compounding), while subtracting one ratio from another is equivalent to dividing them. These propositions establish the formal rules for these operations using the language of Euclid and Jordanus de Nemore.]]
+
+<page-num>82</page-num>
+
+¶ Every ratio is said to "add" a ratio over any other ratio when, being continued with that other, it compounds it. The difference of one ratio to another is called that ratio by which the same is said to exceed the remainder.
+[[notes: To "add" ratios means to multiply them together. For example, if you add the ratio 3:2 to 2:1, you get (3/2) × (2/1) = 3:1. The "difference" between 3:1 and 2:1 is the ratio you'd need to multiply 2:1 by to get 3:1, which is 3:2.]]
+
+¶ That which the ratio of the first to the second adds over the ratio of the third to the fourth is the ratio which exists between the product of the first and fourth and the product of the second and third.
+
+[[margin:
+| e 6 | f 4 | g 3 |
+| :--- | :--- | :--- |
+| **a 2** | **b 1** | **c 4** | **d 3** |
+]]
+
+¶ This teaches how to subtract a ratio from a ratio: and that whatever ratio is left over when a smaller ratio is subtracted from a larger, we here name the "difference" of the ratio from the ratio. Let there be four numbers: **a** and **b** (the first and second), **c** and **d** (the third and fourth). Let the ratio of **a** to **b** be greater than that of **c** to **d**. Let **e** be produced from **a** times **d**, and **f** from **b** times **c**. I say that the ratio which **a** to **b** adds over the ratio **c** to **d** is the ratio between **e** and **f**. For I multiply **b** by **d** to produce **g**. Because **b** times **c** makes **f**, and **b** times **d** makes **g**, therefore (by the seventh proposition of the second book) the ratio **c** to **d** is the same as **f** to **g**. And because **a** times **d** makes **e**, and **b** times **d** makes **g**, therefore (by the eighth proposition of the second book) **e** to **g** is as **a** to **b**. Since the ratio **a** to **b** was set as greater than **c** to **d**, then **e** to **g** is a greater ratio than **f** to **g**. Therefore (by the ninth proposition of the second book) **e** is greater than **f**. Thus, from the definition of a compounded ratio had from the second book of this work, the ratio **e** to **g** is compounded of the ratios **e** to **f** and **f** to **g**. Therefore, the ratio **e** to **g** adds the ratio **e** to **f** over the ratio **f** to **g**. Consequently, the ratio **a** to **b** also adds the ratio **e** to **f** over the ratio **c** to **d**. Which is what was proposed.
+¶ It is worth noting, however, that if once a smaller ratio has been taken away from a larger, the remaining difference is still a larger ratio, the smaller should be taken from it again, and this should be done as many times as possible until the remainder is either equal to the subtracted ratio or smaller than it. In this way, it will be easy to know how many times the smaller ratio was contained in the larger, and what smaller part it might further add.
+[[notes: The author is describing a process similar to the Euclidean Algorithm, but applied to ratios (logarithmic in nature) to find how many times one ratio "fits" into another.]]
+
+[[margin: 2]]
+¶ By how much the ratio of the first to the second exceeds the ratio of the third to the fourth, by that same amount does the ratio of the first to the third exceed the ratio of the second to the fourth. Likewise, the ratio of the fourth to the third exceeds the ratio of the second to the first by that same amount.
+
+[[margin:
+| e 6 | f 4 | g 12 |
+| :--- | :--- | :--- |
+| **a 2** | **c 4** | **b 1** | **d 3** |
+
+| e 6 | f 4 | g 8 |
+| :--- | :--- | :--- |
+| **d 3** | **c 4** | **b 1** | **a 3** |
+]]
+
+¶ Let the hypothesis be the same as before: I say first that by whatever ratio (as **e** to **f**) the ratio **a** to **b** exceeds the ratio **c** to **d**, by that same ratio **a** to **c** exceeds the ratio **b** to **d**. Second, the ratio **d** to **c** exceeds the ratio **b** to **a** by that same ratio. The first is clear: for since **a** to **b** (first to second) is a greater ratio than **c** to **d** (third to fourth), then (by the twelfth proposition of the second book) the ratio **a** to **c** (first to third) is greater than **b** to **d** (second to fourth). Now make **a** the first, **c** the second, **b** the third, and **d** the fourth; argue by the preceding proposition and you will see the result. The second is similarly clear: for because **a** to **b** is greater than **c** to **d**, then (by the eleventh proposition of the second book) **d** to **c** will be greater than **b** to **a**. Now make **d** the first, **c** the second, **b** the third, and **a** the fourth; argue by the preceding proposition, and you will easily see what was proposed.
+
+[[margin: 3]]
+¶ If some ratio adds over another as much as a third adds over a fourth: it will be that the ratio compounded from the first and fourth is equal to the ratio compounded from the remaining two.
+[[notes: In modern terms: if $(a/b) / (c/d) = (e/f) / (g/h)$, then $(a/b) \times (g/h) = (c/d) \times (e/f)$.]]
+
+[[margin:
+e 8 --- f 4 --- g 3
+a 2 --- b 1 --- c 4 --- d 3
+
+| a 2 | c 4 | e 4 | g 8 |
+| :--- | :--- | :--- | :--- |
+| **b 1** | **d 3** | **f 2** | **h 6** |
+
+i—16, k—8, l—6, m—12, n—64, q—48, o—32, p—24
+]]
+
+¶ Before we come to demonstrating the proposition: I wish to demonstrate in what manner a ratio is to be added to a ratio. I say that the ratio of the products—the first of one ratio multiplied by the first of the other, and the second of one multiplied by the second of the other—is the ratio compounded of those two ratios. Let **a** to **b** and **c** to **d** be two ratios which I wish to add and from them blow forth [[notes: *proflare* — a vivid metaphor for creating or forging a new ratio]] a single ratio. I multiply **c** by **a** to get **e**, and **d** by **b** to get **g**. I say the ratio **e** to **g** is compounded of the ratios **a** to **b** and **c** to **d**. For I multiply **c** by **b** to get **f**; by the seventh of the second book, the ratio **a** to **b** is as **e** to **f**. And by the eighth of the same, the ratio **c** to **d** is as **f** to **g**. Since the ratio **e** to **g** is compounded of the ratios **e** to **f** and **f** to **g**, it is therefore compounded of **a** to **b** and **c** to **d**, which was intended.
+
+Now let us come to demonstrating the proposition. Let the ratio **a** to **b** add over the ratio **c** to **d** as much as the ratio **e** to **f** adds over **g** to **h**. I say that the ratio compounded of ratios **a** to **b** and **g** to **h** is equal to the ratio compounded of ratios **c** to **d** and **e** to **f**. I multiply **g** by **a** and **b** to get **i** and **k**, and **b** by **h** to get **m**. By the seventh of the first, **i** is to **k** as **a** is to **b**. And since **i** times **g** makes **l**, and times **h** makes **m**, by the same rule **l** to **m** is as **g** to **h**. Therefore, the ratio **l** to **m** is compounded of **a** to **b** and **g** to **h**. Next I multiply **c** by **l**, **l** by **l**, and by **m**, resulting in **n, o, p**... [[notes: The proof continues by showing the resulting products maintain the proportionality required by the definition of "adding" ratios.]] ...so the proposition is constructed.
+
+[[margin: 4]]
+¶ If unequal ratios are added to one [ratio]: the difference of the added ratios and the compounded ratios will be the same.
+
+[[margin:
+p 24, q 6, r 20, s 8
+a 4 --- b 2, c 6 --- d 3, e 5 --- f 4
+g 24, h 12, i 6, l 120, m 60, o 48, n 30
+]]
+
+¶ Let **a** to **b** be any ratio; let **c** to **d** and **e** to **f** be two unequal ratios, where **c** to **d** is the greater and **e** to **f** the smaller. Let ratio **c** to **d** be added to ratio **a** to **b**, and let the compounded ratio be **p** to **q**. Let ratio **e** to **f** also be added to the same ratio **a** to **b**, and let the result be **r** to **s**. I say that the difference between ratio **p** to **q** and ratio **r** to **s** is the same as the difference between ratio **c** to **d** and ratio **e** to **f**. I multiply **c** by **a** and **b** to get **g** and **h**, and **b** by **d** to get **l**. By the seventh of the second, the ratio **g** to **h** is as **a** to **b**, and **h** to **l** is as **c** to **d**. Therefore, the ratio **g** to **l** is compounded of ratios **a** to **b** and **c** to **d**, and is the same as the ratio **p** to **q**. Next I multiply **e** by **g**, **h**, and **l**, and...
+
+[[summary: This page establishes the fundamental operations for combining and comparing ratios. It defines "adding" a ratio as multiplication and "subtracting" as division, providing geometric-style proofs for how these operations interact.]]
+
+[[keywords: ratio, compounding ratios, proportion, multiplication of ratios, Jordanus de Nemore, mathematical proof, arithmetic difference]]

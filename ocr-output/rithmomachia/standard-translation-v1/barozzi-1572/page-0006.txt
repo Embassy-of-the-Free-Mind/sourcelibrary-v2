@@ -1,0 +1,38 @@
+[[meta: This page is the formal title page of the work, following the blank flyleaves described on the previous page. The transcription accounts for the mirrored show-through (bleed-through) often found in 16th-century manuscripts and early printed books, presenting the text in its intended orientation.]]
+
+# THE MOST NOBLE
+# AND MOST ANCIENT
+## PYTHAGOREAN GAME
+## NAMED
+# RYTHMOMACHIA
+## THAT IS, THE BATTLE
+### OF HARMONIES
+### OF NUMBERS
+
+[[notes: **Rythmomachia** (from the Greek for "The Battle of Numbers") was a highly sophisticated board game played by monks, scholars, and noblemen from the 11th through the 17th centuries. Unlike Chess, which simulates physical combat, Rythmomachia is a "clash" of mathematical ratios. The **Pythagorean** label refers to the ancient belief that numbers are the fundamental building blocks of the universe and music.]]
+
+->Together with another newly invented one.<-
+
+[[notes: Barozzi refers here to a supplemental game or a variation of the rules he developed himself, which he includes later in this treatise to expand upon the traditional medieval rules.]]
+
+->Translated by Francesco Barozzi, Venetian Gentleman,<-
+->into the vernacular so that<-
+->everyone may understand it.<-
+
+[[notes: **Francesco Barozzi** (1537–1604) was a brilliant Venetian mathematician and humanist. His decision to write in the **vernacular** (the "volgare" or common Italian language) instead of Latin was a deliberate choice to democratize knowledge, allowing people outside of university circles to master complex mathematical and musical theories.]]
+
+<image-desc>A woodcut printer's device featuring a winged caduceus (the staff of Hermes) with two entwined serpents, rising from clouds at the base.</image-desc>
+
+[[notes: The **caduceus**, the winged staff of the god Hermes, traditionally represents eloquence, wisdom, and the reconciliation of opposites—a fitting symbol for a game that harmonizes conflicting numbers.]]
+
+->IN VENICE<-
+
+->By Gratioso Perchacino<-
+
+->1572<-
+
+[[notes: Venice was the printing capital of the world during the Renaissance. **Gratioso Perchacino** was a known printer active in Venice and Padua, specializing in legal and scientific texts.]]
+
+[[summary: This title page introduces Francesco Barozzi’s 1572 treatise on Rythmomachia, a mathematical board game based on ancient Pythagorean harmony. It emphasizes the author's goal of making complex scholarly knowledge accessible to the public by publishing in the Italian vernacular.]]
+
+[[keywords: Rythmomachia, Francesco Barozzi, Pythagoreanism, mathematics, Venice, 16th century, board games, music theory, Gratioso Perchacino]]

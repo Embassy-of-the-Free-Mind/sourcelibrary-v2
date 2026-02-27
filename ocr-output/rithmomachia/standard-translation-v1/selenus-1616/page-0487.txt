@@ -1,0 +1,29 @@
+[[meta: This page continues the specific instructions for marking the game pieces, moving from general organization to the specific numbers and mathematical relationships (specifically squares) assigned to the round pieces for both the "even" and "odd" sides.]]
+
+# Of the Number-Battle.
+
+[[notes: *Zahl-Kampf* is the German translation of *Arithmomachia*, a mathematical board game popular in the Middle Ages and Renaissance that was used to teach Pythagorean number theory.]]
+
+| 2 | 4 | 6 | 8 |
+| :---: | :---: | :---: | :---: |
+| 4 | 16 | 36 | 64 |
+
+Accordingly, first, record the first four **Even** or **Equal** numbers [[notes: In early mathematics, even numbers were called "equal" because they could be divided into two equal halves]] (that is, 2, 4, 6, 8) upon four round white stones, specifically one number on each. Then, once they have been placed side-by-side in the order of the said numbers, lay the remaining four white round stones beneath them. Upon these, write and place the sums that arise from the four simple numbers when they are multiplied by themselves [[notes: This refers to squaring the numbers]]; for example, on the stone placed under the one marked with 2, write 4; under 4, write 16; under 6, write 36; and finally, under the one beneath 8, write 64.
+
+(Buxer : fol : 7. a. [[notes: A reference to Claude de Boissière, also known as Buxerius, a 16th-century French mathematician who wrote a definitive manual on the game in 1554.]]
+
+[[margin: cc cc cc cc]]
+> *These numbers (2, 4, 6, 8) are contained within the scope of the monad and the decade [[notes: The "monad" is 1 and the "decade" is 10; these are the single-digit even numbers]], and are called **Postulators** or **Petitioners**. For since a single and solitary number is unable to enact any proportion, it requires another of the same color and shape to enter into a ratio with it.*)
+
+| 3 | 5 | 7 | 9 |
+| :---: | :---: | :---: | :---: |
+| 9 | 25 | 49 | 81 |
+
+[[notes: Though the German text for this section is not explicitly in the OCR, the provided image description shows the corresponding set for the "Odd" side (black pieces). These follow the same mathematical logic: the top row contains the odd numbers 3, 5, 7, and 9, while the bottom row contains their squares: 9, 25, 49, and 81.]]
+
+Lll ij
+[[meta: catchword: Oders]] [[notes: This is a printer's mark indicating the first word of the next page will be "Oders" (Or).]]
+
+[[summary: This page explains how to assign numerical values to the round pieces in Arithmomachia. It dictates that one side uses even numbers (2-8) and their squares, while the other uses odd numbers (3-9) and their squares.]]
+
+[[keywords: Arithmomachia, number-battle, even numbers, odd numbers, squares, Postulatores, mathematical games, Buxerius]]

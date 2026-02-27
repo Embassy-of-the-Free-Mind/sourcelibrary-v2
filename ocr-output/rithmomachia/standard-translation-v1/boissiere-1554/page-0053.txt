@@ -1,0 +1,22 @@
+[[meta: This page continues from the previous discussion on the movement of pieces, transitioning into the specific rules for capturing an opponent's pieces. It moves from the general "paces" of the shapes (rounds, triangles, and squares) to the first two methods of capture: Encounter and Assault.]]
+
+# RYTHMOMACHIA, 18V [[notes: Rythmomachia was a complex mathematical board game, often called the "Philosophers' Game." Unlike Chess, which is purely tactical, this game required players to use arithmetic to capture pieces.]]
+
+## Concerning the encounter.
+
+*If one number encounters another at its [allowed] pace that is of the same value and quantity as itself, it shall capture it, without transporting itself to the place of the defeated piece.* [[notes: In an "encounter" (rencontre) capture, a piece is taken if an opponent's piece of the exact same value is able to land on its square. Interestingly, the text specifies that the capturing piece does not actually move into the vacated square.]]
+
+## Example.
+
+*I presuppose that the triangular piece [[notes: Triangles move exactly three spaces, as established on the previous page.]] belonging to the Even side is positioned three spaces away—counting from the 25 which belongs to the camp of the Odds, as appears in the first column of the board. Seeing, then, that the triangular piece of the Evens can move three spaces, it shall take the said 25 of the Odds on the same move that you would play it to the place where you see [the target] to be; and you shall see in the following numbers those which can be taken by encounter: for there are identical numbers in the camp of the Evens and the camp of the Odds.* [[notes: Both players' "armies" contain certain identical square numbers, making them vulnerable to this specific type of capture.]]
+
+->9, 16, 36, 25, 49, 64, 81.<- [[notes: These are the shared values—perfect squares—that exist in both the "Even" and "Odd" camps.]]
+
+## Concerning the assault.
+
+*If one number finds another larger one to which it can be made equal by being multiplied by the spaces that are between the two of them, whether obliquely or straight—* [[notes: This begins the explanation of the "Assault" (assault). This capture method is more complex: if a smaller piece (e.g., a 4) is a certain number of spaces away from a larger piece (e.g., a 12), and the value of the smaller piece multiplied by the distance (3 spaces) equals the larger piece (4 x 3 = 12), the larger piece is captured.]]
+
+<vocab>Rythmomachia, encounter, triangular piece, evens, odds, board, assault</vocab>
+
+[[summary: This page explains the first two methods of capture in Rythmomachia: "Encounter," based on equal values, and the beginning of "Assault," based on multiplication and distance.]]
+[[keywords: Rythmomachia, Encounter, Assault, capture rules, triangular pieces, square numbers, mathematical games]]

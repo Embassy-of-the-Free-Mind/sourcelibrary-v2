@@ -1,0 +1,18 @@
+[[meta: This page continues the tactical refutation of Damiano’s critique of the opening 1. e4 e5 2. Nf3 f6. The previous page ended mid-sentence as White’s Knight creates a fork, threatening both the Black Queen and the Rook.]]
+
+# The Third Book | Chapter 7:
+
+Knight [[note: *Reuter*, literally "Rider," the standard term for the Knight in this period.]] and moves the same toward the Black Queen and the Black King’s Rook. The Black player does not take him with the Rook’s Soldier [[note: The Rook's Pawn.]] (as he would otherwise lose the Rook), but rather takes the White King’s Soldier with the Queen and offers check. The White player moves the King out of check or covers him with his Shooter [[note: *Schütze*, the Bishop.]] on twelve [[note: Square d2 or f2 in this coordinate system.]]. The Black player takes the White King’s Knight with the Queen and thus wins one of the White’s **principal pieces** [[note: *Haupt-Steinen*, referring to the minor or major pieces rather than pawns.]] without any loss to himself.
+
+[[margin: 5.]] But if the White player does not wish to give check (as in no. 4), but instead moves the King’s Knight to nineteen: then the Black player takes the White King’s Soldier with the Queen and offers
+[[margin: 6.]] check. *The White player covers the King with the Queen on twelve: The Black player exchanges the same with his Queen; following this, (in order to bring his pieces into the field and the game into proper order) he moves their Soldier to thirty-seven, and in this way (because his King has a good **stronghold** on fifty-one, which is a vacant and unthreatened square) he loses no turn during the time of distress and the King’s displacement.* [[note: *Verſetzung*, an early term for the maneuver that would become castling.]]
+
+[[margin: 7.]] But if the White player does not cover the King with the Queen (as in no. 6), but rather with the King’s Shooter on twelve: then the Black player plays the King’s Soldier to thirty-seven. The White player moves the King’s Knight toward the Black Queen and its Soldier on twenty-two. The Black player moves the same to forty-four. The White player (in order to displace the King to two) moves his Rook to three. The Black player moves the King’s Shooter’s Soldier [[note: The f-pawn, which protects the e-pawn in this structure.]] (in order to further protect the King’s Soldier, strengthen his game, and provide room and space for the King so that he may jump unhindered wherever he wishes as often as necessity demands) to forty-six. The White player lets his King jump over his Rook to two. The Black player moves the King’s Shooter to forty-five. The White player moves the King’s Rook to four. The Black player moves the King’s Knight (in order to conveniently rescue his Queen from the impending danger, should the White King’s Rook be uncovered against her because of the Bishop) to fifty-two: and thus his game will be securely arranged, since the White player can neither reach him nor inflict damage.
+
+[[margin: 8.]] But if the White player does not take the Soldier with the Knight (as in no. 2), but instead moves the King’s Shooter to thirty: then the
+
+[[meta: catchword: the]]
+
+[[summary: This page provides a technical defense of the f6 pawn move, demonstrating through specific sequences how Black can counter White's Knight fork and safely exchange pieces to maintain a solid position. It emphasizes the "stronghold" for the King and the preservation of tempo during development.]]
+
+[[keywords: chess strategy, Damiano's Defense, piece exchange, Knight fork, King's displacement, Rider, Shooter, Soldiers]]

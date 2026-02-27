@@ -1,0 +1,28 @@
+[[meta: This page continues the mathematical instructions for the game of Rythmomachia, moving from the calculation of triangular pieces to the calculation of the "White Squares." It references Claude de Boissière (Buxerius), a 16th-century author who wrote extensively on this mathematical board game.]]
+
+# The Second Chapter
+
+[[image-desc: Four numbers (5, 9, 13, 17) positioned above four squares. Each square contains a number (25, 81, 169, 289) with a small dot centered below it. [[notes: These represent the square values ($5^2, 9^2, 13^2, 17^2$) that belong to the white square pieces in the game.]]]]
+
+The numbers of the remaining **White Square Stones** are found in the following way: One begins with 5 and takes four unequal numbers [[notes: "Unequal" here refers to odd numbers]] that follow one another, yet in such a way that one odd number is always skipped in between: namely, 5, 9, 13, 17. Thus, 7, 11, and 15 are not used. These numbers are then multiplied by themselves [[notes: squared]] and written upon the four last Square Stones as 25, 81, 169, and 289.
+
+->(Buxer: fol. 14. a.)<-
+[[notes: This refers to the work of Claude de Boissière, also known as Buxerius, a French mathematician who published a famous manual on Rythmomachia in 1556.]]
+
+[[image-desc: A mathematical table detailing numerical progressions. The numbers in the final two rows (Required Superpartient and Required product...) are enclosed within square boxes, each with a dot positioned at the bottom center of the frame.]]
+
+| | Third. | Fifth. | Seventh. | Ninth. |
+| :--- | :---: | :---: | :---: | :---: |
+| *Parts to be increased according to the ratio of the denominator.* | 5 | 9 | 13 | 17 |
+| *The Increase.* | 10. | 36. | 78. | 136. |
+| | *Two-parts over three.* | *Four-parts over five.* | *Six-parts over seven.* | *Eight-parts over nine.* |
+| *Required Superpartient* | 15 | 45 | 91 | 153 |
+| *The required product from the addition of the superpartient and the increase.* | 25 | 81 | 169 | 289 |
+
+[[notes: This table demonstrates how the square values are derived using "superpartient" ratios. In Rythmomachia, a superpartient ratio is one where the larger number contains the smaller number plus multiple fractional parts of it (e.g., 25 is 15 plus two-thirds of 15). The "Increase" row added to the "Required Superpartient" row results in the final value of the square stones (25, 81, 169, 289).]]
+
+[[meta: catchword: The]]
+
+[[summary: This page explains the mathematical derivation of the values for the White Square stones in the game of Rythmomachia. It uses a sequence of odd numbers and complex superpartient ratios to arrive at the final values of 25, 81, 169, and 289.]]
+
+[[keywords: Rythmomachia, White Squares, Buxerius, mathematical progression, superpartient ratios, arithmetic game]]

@@ -1,0 +1,37 @@
+[[meta: This page continues the mathematical demonstration of musical theory. While the previous page likely introduced the first two sets of numbers (examples), this page focuses on the third and fourth examples, using the numbers 4, 6, 9, 12 and 6, 8, 9, 12 to show how every fundamental musical interval can be extracted from the ratios and "differences" (subtractions) between these specific values.]]
+
+### Third Example.
+
+->D. &emsp; C. &emsp; B. &emsp; A.<-
+->4. &emsp; 6. &emsp; 9. &emsp; 12.<-
+
+The **Diapente** [[notes: A Perfect Fifth, the interval created by a 3:2 ratio.]], the [numbers] B & C [9:6] and D & C [4:6], and the difference of C & A [12-6=6] to D [4], and the difference of C & B [3] or B & A [3] to the difference of C & D [2], and A [12] to the difference of A & D [8]. [[notes: All these comparisons result in the 3:2 ratio. For example, 12 to 8 is 3:2.]]
+
+The **Diatessaron** [[notes: A Perfect Fourth, the interval created by a 4:3 ratio.]], the [numbers] A & B [12:9], and the difference of A & D [8] to C [6], or to the difference of A & C [6]. [[notes: 8 to 6 simplifies to 4:3.]]
+
+The **Diapasson** [[notes: An Octave, the interval created by a 2:1 ratio.]], the [numbers] A & C [12:6], and the difference of A & D [8] to D [4], and the difference of A & C [6] to the difference of C & B [3], or to the difference of A & B [3], and the [number] C [6] to the differences of C & B [3] and B & A [3], and the [number] D [4] compared to the difference of C & D [2], and the A [12] to the difference of A & C [6].
+
+The **Diapasson** together with the **Diapente** [[notes: A Perfect Twelfth, the interval created by a 3:1 ratio.]], the [numbers] A & D [12:4], and the [number] C [6] to the difference of C & D [2], and the difference of C & A [6] to the difference of C & D [2], and the [number] B [9] to the differences of B & A [3] and B & C [3].
+
+The **Disdiapasson** [[notes: A Double Octave, the interval created by a 4:1 ratio.]], the difference of A & D [8] to the difference of D & C [2], and the [number] A [12] to the differences of A & B [3] and B & C [3]. [[notes: The author is likely referring to the individual differences of 3, where 12 to 3 is 4:1.]]
+
+The **Tone** [[notes: A Whole Tone, the interval created by a 9:8 ratio.]], the [number] B [9] to the difference of A & D [8].
+
+---
+
+### Fourth Example.
+
+->D. &emsp; C. &emsp; B. &emsp; A.<-
+->6. &emsp; 8. &emsp; 9. &emsp; 12.<-
+
+The **Diapente**, the [numbers] A & C [12:8] and B & D [9:6], and the difference of A & D [6] to the difference of A & C [4], and the difference of B & D [3] to the difference of C & D [2], and the [number] B [9] to the difference of A & C [4], [[notes: The ratio 9:4 is actually a compound fourth, but the author lists it here; it may be an error or a specific harmonic nuance.]] and the difference of A & B [3] to the difference of C & D [2], and the [number] B [9] to the difference of A & D [6].
+
+The **Diatessaron**, the [numbers] A & B [12:9] and C & D [8:6], and the [number] C [8] to the difference of A & D [6], and the difference of A & C [4] to the differences of A & B [3] and B & D [3].
+
+The **Diapasson**, the [numbers] A & D [12:6], and the [number] A [12] to the difference of A & D [6], and the [number] C [8] to the difference of A & C [4], and the [number] D [6] to the differences of A & B [3] and B & D [3], and the difference of A & C [4] to the difference of C & D [2], and the difference of C & D [2] to the difference of C & B [1].
+
+The **Diapasson** together with the **Diapente**, the [number] A [12] to the difference of A & C [4], and the [number] B [9] to the differences of A & B [3] and B & D [3], and the [number] D [6] from the differen-
+ce [[notes: The word is cut off here at the bottom of the page; based on the catchword "za," the word is "differenza" (difference).]]
+
+[[summary: This page provides a mathematical proof for musical intervals by calculating the ratios between four set numbers and their internal differences. It demonstrates how octaves, fifths, and fourths are naturally nested within specific numerical sets like 4-6-9-12 and 6-8-9-12.]]
+[[keywords: music theory, mathematical proportions, Diapente, Diatessaron, Diapasson, harmonic ratios, Renaissance science]]

@@ -1,0 +1,24 @@
+# The Philosophers' Game
+
+<sig>B.i.</sig>
+
+<warning>The lower half of the page is heavily obscured by show-through (mirrored text) from the reverse side. While some right-reading fragments are visible, they are largely illegible against the background noise.</warning>
+
+| Fourth | Sixth <note>original: "sixt"</note> | Eighth <note>original: "eight"</note> | Tenth |
+| :--- | :--- | :--- | :--- |
+| 7 | 11 | 15 | 19 |
+| 28 | 66 | 120 | 190 |
+
+<image-desc>A woodcut diagram of a rectangular grid with two rows and four columns. The cells have a black background with light-colored numerals. Top row: 28, 66, 120, 190. Bottom row: 49, 121, 225, 361.</image-desc>
+
+Super-tripartient fourths <note>original: "Supertripartiens quartas"</note> | Super-quintupartient sevenths <note>original: "supquintuparties septimas"</note> | Super-septupartient eighths <note>original: "supseptupartiens octauas"</note> | Super-nonupartient tenths <note>original: "supnonpartiens decimas"</note>
+
+->sixths <note>original: "sextas"</note><-
+
+<summary>
+This page details a further set of mathematical proportions for the pieces in the Philosophers' Game (Rythmomachia). It focuses on the "superpartient" ratios, specifically those where the numerator exceeds the denominator by more than one (e.g., 7/4, 11/6, 15/8, and 19/10). The tables and diagrams provide the numerical values for the resulting game pieces, which include the numbers 28, 66, 120, and 190 (derived from multiplying the base ratio by the denominator) and their squares (49, 121, 225, and 361).
+</summary>
+
+<keywords>
+The Philosophers' Game, Rythmomachia, proportions, superpartient, super-tripartient, super-quintupartient, super-septupartient, super-nonupartient, arithmetic ratios, game pieces, mathematical grid.
+</keywords>

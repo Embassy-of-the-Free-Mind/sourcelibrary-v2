@@ -1,0 +1,31 @@
+[[meta: This page continues from the previous illustrations of chess positions. The author, writing under the pseudonym Gustavus Selenus (Augustus the Younger, Duke of Brunswick-Lüneburg), is now moving from diagrams into a theoretical critique of Pedro Damiano, a famous Portuguese chess master of the 16th century. The focus is on the various ways to defend the "King's Pawn" after it has moved forward.]]
+
+The Third Book) 5. cap:
+
+# The Fifth Chapter.
+
+-> Is a trial of the opinion of Damiano, which <-
+-> was mentioned in the Second Chapter of this book: <-
+-> and shows how the Black King’s Soldier [[note: Pawn]] can be protected <-
+-> with the Queen’s Rider [[note: Knight]], and how <-
+-> the game may be conducted therefrom. <-
+
+---
+
+<margin>5. cap:</margin>
+<margin>Of the First Way:</margin>
+**The** opinion of Damiano—regarding how one can protect the Black King’s Soldier [[note: The King’s Pawn, specifically the one on the e5 square in modern notation]] in three ways (namely, with one major piece and two soldiers)—has now been sufficiently recounted and improved upon from the Second Chapter until here. Now, we also wish to set down our own opinion, establishing a certain order among the protections (organized into different chapters). Within these, we shall indicate and reveal the harm and the benefit which players will find therein according to the circumstances; also, which among them all is the best and safest, and which one should be most observed and used. This is for the benefit and good not only of those who are already well-experienced in the game, but also, and primarily, for those who do not yet know how to manage it so well.
+
+And it is to be known that one can protect and defend the Black King’s Soldier not only in three, but in five ways (namely, with three major pieces and two soldiers), as follows:
+
+1. Firstly: with the Queen’s Rider [[note: The Queen's Knight]], (which protection Damiano, above in the 2nd Chapter of this book, considers to be the best. He does not, however, consider the inconveniences which arise from it—provided the opponent is well-acquainted with the game—which shall be indicated in the following part of this chapter) from [square] forty-six. [[note: Early modern chess manuals often numbered the board 1–64. Square 46 here refers to the f6 square, a move now known to be weak, which Selenus is preparing to critique.]]
+
+2. Secondly: with the King’s Soldier [[note: The King's Pawn]], (which he [[note: Damiano]] does not consider to be quite so good; further reports of which shall follow below in the 6th Chapter) from [square] forty-five.
+
+3. Thirdly: with the King’s Archer’s Soldier [[note: The King's Bishop's Pawn, or the f-pawn]], (whi-
+
+[[meta: catchword "che Er" indicates the next page begins with "che Er" (which he).]]
+
+[[summary: This page introduces a critique of the chess opening theories of Damiano, specifically focusing on five ways to defend the King's Pawn. The author intends to provide a detailed guide for both masters and beginners on the advantages and disadvantages of each defensive move.]]
+
+[[keywords: Chess theory, Damiano Defense, King's Pawn, Queen's Knight, opening strategy, Gustavus Selenus, chess history]]

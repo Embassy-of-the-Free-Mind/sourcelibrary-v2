@@ -1,0 +1,30 @@
+[[meta: This page continues the introduction of Chapter 10, transitioning from a discussion on the social status of "Peasants" to the military terminology of "Soldiers." It explains the naming conventions and the symbolic tactical placement of the pawns on the chessboard.]]
+
+# The First Book. 10. cap:
+
+[...of which the previous page] makes mention / has paid little heed) but by those / who have an eye for the art of war / they are called common **Soldiers**. This latter name / we shall grant them / in this our treatise / and not unfairly so.
+
+These eight **Soldiers** receive their surnames [titles] both from the side of the King / and then the Queen / where they stand / and then from each **Major Piece** [[notes: *Haupt-Steine*, literally "Head-Stones," referring to the back-rank pieces: King, Queen, Bishop, Knight, and Rook.]] / before which they are placed / in the following manner:
+
+| Side | Sub-category | Collective Name |
+| :--- | :--- | :--- |
+| **The King’s** | Own / Archer's [[notes: *Schützen*, the pawns in front of the Bishops.]] / Rider's [[notes: *Reuter*, the pawns in front of the Knights.]] / Rook's | **Soldiers** |
+| **The Queen’s** | Own / Archer's / Rider's / Rook's | |
+
+Regarding their quarters [[notes: *Losierungen*, referring to their starting positions/billeting on the board.]]: one places them in the next **rank** [[notes: *Zwerch-linie*, or horizontal line.]] / before the Major Pieces / from one side of the square / to the other / and they must (except for the **Riders** [[notes: The Knights, who are the only pieces capable of jumping over others.]], who can find their own way / and break through) when they are led out of the camp / or the battle formation / to face the enemy / give way and open the path.
+
+With this arrangement / the inventor of this ingenious game / intended to suggest:
+
+1. That the most noble / and the lowliest soldiers / should not have the same quarters:
+2. That common soldiers / are not drawn into the great and secret **Council of War** / as the commanders are:
+3. That they are / as it were / a wall / and breastwork / for the King / and the other Major Pieces:
+4. That if they / commit an error or mistake / it is not so dangerous or harmful / as if one of the captains / (whereby victory / might be made uncertain) should stumble / or be captured:
+5. That for the preservation / of the whole estate / because the common folk / are more capable of enduring labor / they are rightfully placed / at the very front / to catch the first blows:
+6. That a larger number of **Infantry** [[notes: *Fuß-Volck*, literally "foot-folk."]] / can be maintained with less expense / than the **Cavalry** [[notes: *Reuterey*.]]:
+7. And finally / that one hinders and blinds the enemy / with the Infantry / so that they do not immediately perceive the Cavalry.
+
+[[meta: catchword: Ihren (Their)]]
+
+[[summary: This page explains the naming of the eight pawns based on the major pieces they stand before and justifies their front-rank positioning using military and social metaphors of the 17th century. It highlights the pawn's role as a protective "breastwork" and the tactical advantage of using infantry to screen more valuable units.]]
+
+[[keywords: Soldiers, Pawns, Major Pieces, Chess Strategy, Infantry, Cavalry, Military Symbolism, 17th Century Chess]]

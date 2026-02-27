@@ -1,0 +1,22 @@
+[[meta: This page follows a series of mathematical tables illustrating the "Assault" capture rule. It transitions from multiplication-based captures to the "Ambush" rule, which relies on the addition of two pieces to equal the value of an opponent's piece.]]
+
+<header>->OF THE PHILOSOPHERS.<-</header>
+
+### Ambush.
+
+If two smaller numbers can be placed around another larger one, and the sum and value [[notes: The original uses "puissance & quantité" (power and quantity), referring to the mathematical value of the game pieces]] of the two is equal to that of the said larger one, they will capture it. This takes effect as soon as the second piece is positioned, without moving the victorious piece to the square of the captured one [[notes: In Rythmomachia, capture often happens "at a distance." Unlike Chess, the capturing piece does not always land on the square of the piece it removes]].
+
+#### Example.
+
+*To properly understand this example, look at the third, fourth, and fifth columns in width starting from letter B, up to the even piece 36, where three spaces are contained. From this, you may conclude that if the odd piece, which is 12, were at the said square B, it would easily capture the 36 (an even number) by "assault" according to the previous rules [[notes: Capture by "Assault" occurs when a piece's value multiplied by the number of empty spaces between it and an opponent equals the opponent's value. Here, 12 multiplied by the 3 spaces equals 36]]. To this end, you would move that 12 to square B.*
+
+*But since your opponent, playing the even numbers, had prepared an 8 in "ambush" in the third column right next to square B—if you advance your 12 to the said square B next to his 8, that opponent will move his 4 (which is in the fifth column) to the other square, C, right next to your 12. And because his 8 (which was in ambush) and his 4—which by addition are equal in strength and value to 12—are two against one, they will capture that 12. And so it goes for the others. And you can see here the*
+
+[Signature mark: D iij]
+[[meta: catchword: the]]
+
+[[notes: Rythmomachia, also known as the Philosophers' Game, was a complex board game popular among medieval and Renaissance scholars. It used numbered pieces (circles, triangles, and squares) to teach Boethian number theory. This page explains the "Ambush" (Embusche) rule, where two pieces flank an opponent and their combined sum equals the opponent’s value.]]
+
+[[summary: This page explains the "Ambush" capture rule in Rythmomachia, where two pieces whose sum equals an opponent's value can capture it by surrounding it. It provides a tactical example involving a piece valued at 12 being countered by an 8 and a 4.]]
+
+[[keywords: Rythmomachia, capture rules, Ambush, addition, arithmetic game, strategy, Renaissance mathematics]]

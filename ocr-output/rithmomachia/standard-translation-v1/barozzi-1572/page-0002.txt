@@ -1,0 +1,32 @@
+[[meta: Continuity from the front cover: This page represents the interior front flyleaf or "pastedown," featuring the official institutional bookplate and library ownership markings.]]
+
+COOK
+42843
+.1465
+[[notes: This is the specific shelfmark for the Eugene B. Cook collection. These numbers allow librarians and researchers to locate the physical volume within the vast archives of the university.]]
+
+# LIBRARY OF PRINCETON UNIVERSITY
+
+### PRESENTED BY
+#### THE ESTATE OF
+
+## EUGENE B. COOK
+
+### CLASS OF 1850
+
+[[notes: Eugene B. Cook (1830–1915) was a renowned American master of chess problems and a dedicated bibliophile. A graduate of the Princeton Class of 1850, he amassed one of the largest chess libraries in the world. Upon his death, his collection of over 3,000 volumes was bequeathed to Princeton University, forming the foundation of their specialized chess holdings.]]
+
+---
+
+[[insert:
+Princeton University Library
+[[image-desc: Barcode sticker]]
+32101 075891588
+]]
+[[notes: This modern barcode is the "digital fingerprint" of the book, used for contemporary inventory and tracking within the library's electronic system.]]
+
+[[gloss: Eugene B. Cook, Princeton University Library, bookplate]]
+
+[[summary: This page displays the formal bookplate identifying the volume as part of the Eugene B. Cook collection at Princeton University, following his bequest to his alma mater.]]
+
+[[keywords: Eugene B. Cook, Princeton University, bookplate, chess collection, library history, provenance]]

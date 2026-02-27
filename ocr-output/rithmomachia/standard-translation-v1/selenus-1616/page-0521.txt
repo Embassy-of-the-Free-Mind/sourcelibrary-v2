@@ -1,0 +1,37 @@
+[[meta: This page transitions from the mechanics of moving and capturing pieces (specifically the Pyramids/Towers) to the final objective of the game. It introduces the mathematical foundations required to achieve a "Grand Victory" in Rhythmomachia, which involves creating specific numerical progressions on the board.]]
+
+# On the Battle of Numbers.
+
+<image-desc>A decorative horizontal woodcut banner featuring scrolling acanthus leaves, floral patterns, and a central ornamental mask or grotesque face, typical of 17th-century book ornamentation.</image-desc>
+
+# The Sixth / and final Chapter.
+## In what manner the game is ended / and the victory / against the enemy / is obtained.
+
+In order that one may the better understand the victory / and the triple / overcoming of this game: one must first of all / quite well know and become acquainted with / the three-fold divisions: namely / of **Arithmetic** / of **Geometry** / and of **Music** [[notes: The original German terms are *Zahl-Kunst* (Number-Art), *Meß-Kunst* (Measuring-Art), and *Singe-Kunst* (Singing-Art). These represent three of the four subjects of the "Quadrivium," the classical educational curriculum.]], which / are used for the attainment of the same.
+
+The division of **Arithmetic** / is this:
+When three given numbers / exceed each other by an equal difference: As / is the division / between 2. 4. 6. for the difference / which remains / when the lesser number / is subtracted from the higher / namely / two (which are between 2. and 4.) that very same / is also / between 4. and 6: For these are also two numbers / apart from one another.
+
+> (Buxer: fol: 33. b.
+> *Proportio Arithmetica est, quæ Medium, pari intervallo a* cc
+> *Numerum, ab Extremis, ostendit distare.*) cc
+[[notes: This Latin quote from Claude de Boissière (Buxerius) translates as: "Arithmetic proportion is that which shows the middle number to be distant from the extremes by an equal interval."]]
+
+The division of **Geometry** / is of the following nature.
+When three numbers / are set down / and the lesser / is found as many times in the middle one / as the middle one / is found in the higher. As for example: in 2. 4. 8. for 2 is twice / in 4: and 4 is twice / in 8.
+
+> (Buxer : fol : 34. b.
+> *Proportione Geometricâ conjunguntur Numeri, cum Diffe-* cc
+> *rentiâ Extremorum ad Medium, eam habent inter se rationem,* cc
+> *quam Extremorum alter ad Medium.*) cc
+[[notes: This definition explains that in a geometric progression, the ratio between the terms remains constant.]]
+
+The division / of **Music** [[notes: This refers to **Harmonic Proportion**, often called the "Art of Singing" in this period because it governs the mathematical intervals used in musical tuning.]] / is as follows:
+When three numbers / are set / and the difference / of the two lesser numbers / is found as many times in the difference / of the two greater numbers / as the smallest / can be reckoned into the highest: as / in 2. 3. 6. among which / the difference / between 2 and 3 is one / and between 3 and 6 is three: now just as one / is three times in 3 / so also 2 / is three times in 6.
+
+<sig>Ooo 3</sig>
+[[meta: catchword: (Buxer.]]
+
+[[summary: This page introduces the final chapter on winning Rhythmomachia, explaining that victory requires an understanding of the three classical proportions: Arithmetic, Geometric, and Harmonic (Musical). It provides mathematical definitions and examples for each, such as 2-4-6 for Arithmetic and 2-4-8 for Geometric.]]
+
+[[keywords: Arithmetic, Geometry, Music, Harmonic Proportion, Rhythmomachia, Claude de Boissière, Buxerius, mathematical victory, Quadrivium]]

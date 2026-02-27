@@ -1,0 +1,29 @@
+[[meta: The previous page concluded the technical tactical diagrams and coordinate-based variations for Chapter 15 of the Second Book. This page marks a significant structural transition in the manuscript, serving as the formal title page for the Third Book of the treatise.]]
+
+### The
+# Third Book
+## of the Description / of the Chess Game.
+
+-> A <-
+-> [[markup: unclear: book]] <-
+-> [[markup: unclear: ...]] <-
+-> [[markup: unclear: ...]] <-
+-> [[markup: unclear: ...]] <-
+
+[[insert:
+[[markup: unclear: ...]]
+]]
+
+->Xerxes Philomater.<- [[notes: According to medieval and Renaissance chess lore, Xerxes (also known as Philometor or "Friend of the Mother") was the legendary philosopher-courtier credited with inventing chess. He supposedly created the game to reform the character of the Babylonian king, Evil-merodach, teaching him that a monarch’s power depends entirely on the well-being and cooperation of his subjects.]]
+
+->Amilinus Evilmerodach.<- [[notes: Amil-Marduk, known biblically as Evil-merodach, was a historical King of Babylon (reigned c. 562–560 BCE). In early chess literature, he is often cast as the student—or sometimes the tyrant—who is humbled and educated by the strategic logic of the chessboard.]]
+
+->Leipzig, at the house of Henning<- [[notes: "Lipsiæ" in the original Latin refers to Leipzig, which was a preeminent center for the European book trade and intellectual life during the 17th century.]]
+
+->Gross the Younger.<- [[notes: Henning Gross the Younger (1582–1649) was a prominent Leipzig publisher and bookseller. His family firm was responsible for some of the era's most significant scholarly and technical publications; his name here serves as a mark of the book’s high production quality.]]
+
+[[gloss: A, Book]]
+
+[[summary: This is the decorative title page for the third section of the manuscript. It identifies the subject as the continued description of chess and invokes the legendary figures Xerxes and Evilmerodach, who were traditionally associated with the game's invention as a moral and political allegory.]]
+
+[[keywords: Third Book, Chess History, Xerxes Philomater, Evil-merodach, Leipzig printing, Henning Gross the Younger, title page, 17th-century treatise]]

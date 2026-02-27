@@ -1,0 +1,29 @@
+[[meta: This page continues the instructions for setting up the game of Rythmomachia. The previous page ended while describing the arrangement of the "odd" and "even" battalions on the board, specifically the complex ratios of the superpartients. This page concludes the setup description and details the specific rules for movement and capture.]]
+
+# OF THE PHILOSOPHERS.
+
+*...the rounds in the second place, the triangles in the third, and the squares in the fourth: counting the place where they are situated.*
+
+2 *The pieces [[notes: The original uses the term "tables," which in the context of board games like backgammon or Rythmomachia refers to the playing pieces or counters.]] can take one another in their vicinity, moving no differently than the **Rook** [[notes: Referred to as "le Roch" in the original, this is the chess piece we now call the Rook or Castle.]] in chess.*
+
+3 *A number finding another equal to itself captures it.*
+
+4 *If two numbers are equal to another and can be positioned around it: they shall capture it.*
+
+5 *If you multiply a smaller number by the empty spaces [[notes: The "loges vuides" are the empty squares between two pieces.]] that lie between it and a larger number, and if the product of such multiplication is equal to the larger number, that number shall capture it.*
+
+6 *A number which cannot move straight like a Rook, being besieged by the enemy, shall be taken.*
+
+7 *If any piece equal to the largest base of the **Pyramid** [[notes: The Pyramid is the most complex piece in the game, made up of several stacked values. Capturing it required specific mathematical totals.]] encounters that Pyramid, it shall capture it—or be captured itself, if it is the one encountered.*
+
+8 *If any number multiplied by the intervening spaces becomes equal to the great base of the Pyramid, it shall capture it.*
+
+9 *If it happens that the other bases of your Pyramid are encountered by any pieces equal to them, said base shall be taken, if it is there.*
+
+<sig>G iij</sig>
+
+[[gloss: Rithmomachie, game of the philosophers, rounds, triangles, squares, Pyramid, Rook of chess, empty spaces, base]]
+
+[[summary: This page outlines the fundamental rules of movement and the various mathematical methods for capturing pieces in Rythmomachia, including capture by equality, addition, and multiplication. It also introduces the specific rules for attacking the "Pyramid," the game's most complex piece.]]
+
+[[keywords: Rythmomachia, board game rules, mathematical capture, Pyramid piece, chess move, Rook, Boethian ratios, early modern gaming]]

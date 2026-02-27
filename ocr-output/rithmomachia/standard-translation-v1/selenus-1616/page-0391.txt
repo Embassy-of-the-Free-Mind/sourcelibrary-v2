@@ -1,0 +1,20 @@
+[[meta: This page completes the tactical sequence from Chapter 9 regarding the defense of the Black King’s Pawn. The notation continues using the 1–64 coordinate system, and the terminology remains consistent: Soldiers (Pawns), Shooters (Bishops), Riders (Knights), and Rochen (Rooks).]]
+
+# Of the Game of Chess.
+
+[[margin: 9. cap:]]
+then **the Black** [player] takes / with the **K. Soldier** [[notes: King's Pawn]] / the **W. K. Shooter’s Soldier** [[notes: White King’s Bishop’s Pawn]]: **The White** [player] / [takes] the same / with the **K. Shooter** [[notes: King’s Bishop]]: **The Black** [player] / (in order / to give no cause / for the entanglement [[notes: *verwechslung*, literally "confusion" or "mixing up"]] / of the **Shooters** / and **Riders**) / moves the **K. Shooter** / to **forty-four** / and the game is / on both sides / in fair order and position.
+
+[[margin: 53.]]
+But if **the White** [player] / does not move the **Queen** / to **25** / (no. 2) / but rather / with his **K. Shooter** / takes the **S. K. Shooter’s Soldier** [[notes: Black King’s Bishop’s Pawn]] / and offers check: then **the Black** [player] / should not / take him / with the **K. Rider** [[notes: King's Knight]] / (in order / to defend the **K. Shooter**) / but rather / with the **Queen**: **The White** [player] / captures her / with the **K. Rider** / and moves him / to the [square of the] **S. K. Rochen** [[notes: Black King’s Rook]]: **The Black** [player] / takes / the **W. Queen** / with his **K. Shooter**: **The White** [player] / [takes] the **S. K. Rochen** / with the **K. Rider**: **The Black** [player] / because he / can well obtain / the aforementioned **W. Rider** / with his **King** / and thus [gain] two **Main Stones** [[notes: *Haupt-Steine*, referring to major pieces]] / has a good game. Therefore, **the White** [player] / should rather / move the **Queen** / back to **25** (as in no. 2) / than press / into the **Black** ranks [[notes: *hauffen*, literally "heap" or "host"]].
+
+->Let this now be / enough mentioned / concerning the five manners and ways<-
+->with which one may / protect the **S. K. Soldier**.<-
+
+[[notes: The decorative woodcut below marks the end of this chapter or section.]]
+
+*A decorative woodcut tailpiece featuring a central grotesque mask or face with a beard and foliage headpiece, surrounded by symmetrical ornate scrollwork, stylized leaves, and floral motifs.*
+
+[[summary: This page concludes Chapter 9's analysis of defensive variations for Black's King's Pawn, advising White to retreat the Queen rather than pursue a risky material exchange. It finishes with a summary of the five defensive methods discussed in this section.]]
+
+[[keywords: Chess tactics, Queen retreat, Piece value, Main Stones, Rider, Shooter, Rochen, Opening theory]]

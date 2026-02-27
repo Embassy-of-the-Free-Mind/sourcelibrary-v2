@@ -1,0 +1,51 @@
+[[meta: This page continues from the previous discussion on the mathematical proportions of musical intervals. Having established the size of the whole tone and its division into semitones (the minor limma and the major apotome) and commas, the author now applies these ratios to larger intervals like the major third (ditone), the perfect fourth (diatessaron), and the tritone.]]
+
+<page-num>III</page-num>
+
+[[margin: 2]]
+# ¶ Likewise, the ditone [[notes: A "ditone" is a Pythagorean major third, consisting of two whole tones (an 81:64 ratio).]], being in the middle between the sesquitertia and the sesquiquarta, does not at all complete or perfect musical harmony.
+
+| 85 1/3 | 81 | 80 | 72 | 64 | 21 1/3 | 16 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| D | A | E | B | C | F | G |
+
+¶ We say that harmony and consonance are the same thing, and the demonstration of this proceeds like the previous one. Let **a, b,** and **c** be two tones established in their smallest terms, such as 81, 72, and 64 [[notes: In Pythagorean tuning, a whole tone is the ratio 9:8. Therefore, 64 * 9/8 = 72, and 72 * 9/8 = 81]]. I say that the ditone from **a** to **c** consists of a proportion smaller than a sesquitertia [[notes: A 4:3 ratio, the perfect fourth]] and larger than a sesquiquarta [[notes: A 5:4 ratio, the "just" major third]], and it by no means completes a musical consonance. For I take the third part of **c** through the twelfth [proposition] of this second [book], as has often been done, and there comes twenty-one with a third part of one; let this number be **f**. Therefore, I add **f** (21 and a third) to the number **c** (64), and the sum is 85 with a third part of one; let this be **d**. It is manifest that **d** to **c** is a sesquitertia [4:3]. But **d** is greater than **a**, for **a** contains only eighty-one, while **d** contains eighty-five and more. Therefore, the sesquitertia proportion is greater than the ditone. And again, I take the fourth part of **c**, which is **g** [16], which I add to **c**, and **e** [80] arises, which will be sesquiquarta [5:4] to **c**. But **a** is greater than **e**. Therefore, by the eleventh [proposition] of this second [book], the ditone transcends the sesquiquarta. And since no superparticular [[notes: A ratio of the form (n+1):n]] or multiple mean falls between the sesquitertia and the sesquiquarta, the ditone is therefore placed in a superpartient proportion [[notes: A more complex ratio where the numerator is more than one part larger than the denominator]]. For this reason, it does not yet perfect a musical consonance, even if it is euphonious [[notes: Pleasant-sounding]] in musical modulations and strikes the ear sweetly.
+
+---
+
+[[margin: 3]]
+# ¶ The interval of a ditone exceeds the sesquitone by only an apotome.
+
+¶ For a sesquitone [[notes: A minor third]] contains one whole tone and the minor semitone of a second tone. But since a tone is composed of a minor semitone and an apotome [[notes: The "apotome" is the Pythagorean major semitone]] joined together, it follows that only an apotome is missing from the sesquitone to complete a second tone. But the ditone possesses two whole and intact tones. Therefore, the interval of a ditone exceeds the interval of a sesquitone by only an apotome (and by only a major semitone), which is what was proposed.
+
+---
+
+[[margin: 4]]
+# ¶ To place the diatessaron consonance on a given string.
+
+[[insert: A horizontal line representing a string or musical monochord, marked at specific points to illustrate mathematical divisions. Above the line are the numerals 4, 3, 1, and 1/3. Below the line, corresponding points are labeled with the letters a, c, d, e, and b. This diagram demonstrates the placement of the diatessaron interval within a given string length.]]
+
+¶ Since the epitrita or sesquitertia proportion [4:3] creates the consonance of the diatessaron [[notes: A perfect fourth]], I therefore divide any given string, such as **a b**, into four equal portions: **a c**, **c d**, **d e**, and **e b**. I say that **a b** sounds the diatessaron in relation to **c b**. For **a b** contains **c b** and additionally **a c**, which is equal to a third part of **c b**. Therefore, the interval **a b** is sesquitertia to **c b**. Therefore, **a b** sounds a diatessaron to **c b** by definition, and the diatessaron consonance is placed on the given string **a b**, which is what was proposed.
+
+---
+
+[[margin: 5]]
+# ¶ The tritone exceeds the consonance of the diatessaron.
+
+¶ For by the eighteenth [proposition] of the first [book], three sesquioctave proportions [[notes: Three 9:8 whole tones]] are more than a sesquitertia [4:3] interval. But by definition, three tones consist of three sesquioctaves. Therefore, the tritone consists of three sesquioctaves, and the consonance of the diatessaron consists of the epitrita or sesquitertia interval. Therefore, the tritone exceeds the diatessaron consonance, as was proposed.
+
+---
+
+[[margin: 6]]
+# ¶ The diatessaron consonance must necessarily consist of two tones and a minor semitone. From this, it is easily established that a sesquitone falls short of the diatessaron by a tone, and a ditone falls short of the diatessaron by a minor semitone. Likewise, it is found that the diatessaron consonance contains five dieses and two commas.
+
+-> The Diatessaron Consonance <-
+[[insert: A horizontal diagram representing the Diatessaron interval. The main line is labeled "Diatessarum consonantia" above. Below the line, the letters a, c, and b mark primary points. Vertical strokes divide the line into segments representing musical steps, with additional markings below identifying specific proportional divisions.]]
+
+¶ Let **a b** and **c b** be the consonance of the diatessaron. I say it consists of two tones and a minor semitone. For since **a b** and **c b** are a diatessaron, **a b** and **c b** will be sesquitertia by the conversion of the definition. But since a minor semitone is, by definition, that by which the sesquitertia is greater than two tones, then **a b** and **c b** contain a minor semitone and two tones. Therefore, the diatessaron consonance consists of two tones and a minor semitone. And the first corollary is easily recognized from this: since a sesquitone contains only a tone and a minor semitone, it therefore lacks one tone to complete the diatessaron consonance according to the present [proposition]. And since a ditone embraces only two tones, it will lack a minor semitone to complete the same. The second [corollary] is indeed not difficult to see from this. For since a tone contains two dieses and one comma by the thirty-third [proposition] of the second [book], two tones will contain four dieses and two commas. But by the present [proposition], the diatessaron consonance adds one diesis [[notes: In this context, a diesis is likely synonymous with the minor semitone or limma]]. Therefore, the diatessaron consonance contains five dieses and two commas, which is the whole of what was proposed.
+
+[[meta: catchword: ss]]
+
+[[summary: This page defines the mathematical construction of the major third (ditone), the perfect fourth (diatessaron), and the tritone using ratios. It concludes that the perfect fourth is exactly two whole tones plus a minor semitone, and calculates its size in micro-intervals like dieses and commas.]]
+
+[[keywords: ditone, sesquitertia, sesquiquarta, harmony, consonance, sesquitone, apotome, diatessaron, tritone, semitone, diesis, comma]]

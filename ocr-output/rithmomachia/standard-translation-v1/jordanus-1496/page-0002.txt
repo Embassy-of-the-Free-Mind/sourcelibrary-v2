@@ -1,0 +1,34 @@
+[[meta: This page follows the marbled endpaper and serves as the official bookplate of the Boston Public Library, indicating the volume's provenance and its place within the library's collections.]]
+
+[[insert: 34051
+*m*
+Villa 103]]
+
+**Accessions**
+**Shelf No.**
+[[insert: Q. 404.31]]
+
+[[image-desc: At the top center of the bookplate is the seal of the City of Boston, featuring two stars above it. The seal depicts a ship in a harbor and is surrounded by two concentric rings of text.]]
+
+> [[notes: The Latin motto of the City of Boston.]] AS TO OUR FATHERS, MAY GOD BE TO US.
+> BOSTON FOUNDED A.D. 1630. CITY CHARTER GRANTED A.D. 1822.
+
+[[image-desc: Centered on the plate is a portrait of Nathaniel Bowditch inside an ornate circular frame decorated with scrolls and foliage.]]
+
+-> [[notes: "Ob." is an abbreviation for the Latin *obiit*, meaning "died."]] NATHANIEL BOWDITCH DIED MARCH 16, 1838 <-
+
+-> **BOSTON PUBLIC LIBRARY** <-
+
+-> FROM THE <-
+
+-> **Bowditch Fund.** <-
+
+-> *Received* ___________________ <-
+
+-> [[notes: The Heliotype Printing Co. was a Boston-based firm specializing in an early photomechanical process that allowed for high-quality reproductions of images.]] Heliotype Printing Co. <-
+
+[[gloss: Boston Public Library, Bowditch Fund, Nathaniel Bowditch, Heliotype Printing Co., bookplate]]
+
+[[summary: This page is a formal library bookplate from the Boston Public Library, identifying the book as a purchase from the Bowditch Fund. It features the seal of the City of Boston and a portrait of the mathematician and navigator Nathaniel Bowditch.]]
+
+[[keywords: bookplate, Boston Public Library, Nathaniel Bowditch, provenance, Heliotype Printing Co., city seal]]

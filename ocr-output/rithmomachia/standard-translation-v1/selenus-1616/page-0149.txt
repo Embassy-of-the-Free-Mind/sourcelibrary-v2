@@ -1,0 +1,30 @@
+[[meta: This page returns to the primary subject of the manuscript—chess—following the previous page which contained a mirrored ink transfer from an unrelated religious text. We are now at the beginning of "The Second Book," which shifts from history and theory to the practical mechanics of play.]]
+
+# 1. cap: On the Game of Chess.
+
+<image-desc>An ornate rectangular woodcut headpiece featuring a symmetrical design of scrolling acanthus leaves and foliage, with two birds perched among the branches.</image-desc>
+
+### The Second Book /
+# Of the Description / of the
+# Game of Chess.
+### The First Chapter.
+
+->On the means / to achieve victory / in the game /<-
+->specifically concerning Check /<-
+->and Check-mate.<-
+
+<image-desc>A large ornamental drop cap 'A' decorated with intricate scrolling floral and vine patterns.</image-desc>
+
+As the entire art of chess-moving [[notes: "Schach-Ziehens" refers to the tactical movement of pieces on the board]] consists in this following treatise, it is to be repeated here from the conclusion of the last chapter of the preceding book. Because this section might therefore run somewhat longer than the previous part, it will have to be divided again into two main points: the first shall deal with the means, and how they are generally to be put into effect; regarding the second, namely the usage, it can be found below at the beginning of the sixth chapter of this book.
+
+These means are all encompassed within the encounter and the pitched battle [[notes: "Schlacht-liefferung" literally means the "delivery of battle," an archaic term for engaging an enemy army]] of both forces. For the game of chess is nothing other than a pleasant, ingenious encounter or battle of the little chess-men. [[notes: "Schach-Männlein" (little chess-men) is a charming personification of the pieces common in early modern German chess literature.]]
+
+Now, one strikes either at the two Kings or at the remaining thirty stones: [[notes: "Steine" (stones) was a standard term for chess pieces, similar to how we might call them "men" today.]] In this encounter, final victory and loss do not depend on [the thirty stones], as they do in the other attack—namely, when the King cannot escape. However, because one cannot reach the King without an encounter or the deployment of some of the thirty stones, the means to be used in this regard shall first...
+
+[[notes: The sentence ends abruptly here due to the page break, continuing with the catchword "chet" on the following page.]]
+
+<sig>Q</sig>
+[[meta: catchword: chet /]]
+
+[[summary: This page introduces the second book of the treatise, which focuses on the tactics of achieving victory. The author defines chess as a metaphorical battle between two armies of "little chess-men" and explains that capturing pieces is the necessary means to reach the ultimate goal: trapping the King in checkmate.]]
+[[keywords: Chess tactics, Checkmate, Second Book, military metaphor, Chess pieces, Strategy, 17th-century gaming]]

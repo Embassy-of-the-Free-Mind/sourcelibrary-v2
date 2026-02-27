@@ -1,0 +1,22 @@
+[[meta: This page continues from the classifications of "foundations" or capture methods established at the end of page 43. It transitions from the general list of capture types to the specific rules and mathematical examples for "Equality" and "Ambush" (using Addition and Subtraction).]]
+
+->OF THE PHILOSOPHERS.<-
+F iiij
+
+### Capture by equality or encounter.
+
+This capture does not differ from the one we showed above regarding encounter. [[notes: "Encounter" (rencontre) refers to a capture where a piece moves into a position where its own value exactly matches the value of the opponent's piece it is targeting, provided the distance is correct.]] Therefore, you shall use the same numbers.
+
+### Capture by ambush, or Addition or Subtraction.
+
+Having added the value of two pieces together or subtracted one from the other: If the result is equal to some piece of the adversary located in any space [[notes: The original term *loge* (lodge) refers to the squares or cells on the game board.]] where each of the two [capturing pieces] can reach it by their regular movement, the adversary's piece shall be captured. 
+
+**Example of addition:** let there be the **Round 16** in **D** and the **Triangle 9** in **F**, which are two pieces of the even-numbered side, [[notes: In Rythmomachia, one player plays with "Even" numbers and the other with "Odd" numbers. Here, the author is providing an example where two "Even" pieces combine to capture an "Odd" piece.]] and let the **25** of the odd side be in space **A**. It will follow (inasmuch as the two even numbers **9** and **16** are worth **25**) [[gloss: b]] that this **25** shall be captured when the last of the two pieces, **9** and **16**, is placed in **D** or **F**. And for this capture, the numbers we have previously adapted for "ambush" will be convenient. 
+
+Regarding **subtraction**, let us propose two numbers from the even side, namely the **Square 15** in **L** and the **Round 6** in space **B**, and let the adversary’s number of **9** be located in **A**. It will follow (since...
+
+[[meta: catchword: pour autant (inasmuch as)]]
+
+[[summary: This page explains the mathematical mechanics of capturing pieces in Rythmomachia, specifically through Equality (matching values) and Ambush (adding or subtracting the values of two pieces to match an opponent's piece).]]
+
+[[keywords: Rythmomachia, Capture, Addition, Subtraction, Ambush, Mathematical Games, Even and Odd numbers, Round, Triangle, Square]]

@@ -1,0 +1,21 @@
+[[meta: This page follows the title page. In the 17th century, a "Privilegium Cæsareum" or Imperial Privilege acted as an early form of copyright, granted by the Emperor to protect a printer's investment from being pirated by others.]]
+
+<image-desc>A rectangular ornamental woodcut header featuring elaborate scrollwork, foliage, and various figures including cherubs (putti), human figures, and possibly mythological creatures.</image-desc>
+
+# Privilegium Cæsareum.
+[[notes: This Latin title translates to "Imperial Privilege." It was a legal document issued by the Holy Roman Emperor that gave a publisher the exclusive right to print a specific work for a set number of years.]]
+
+We, Matthias, by the Grace of GOD, Elected Roman Emperor, forever Increaser of the Empire, King in Germany, Hungary, Bohemia, Dalmatia, Croatia, and Slavonia, etc. Archduke of Austria, Duke of Burgundy, Styria, Carinthia, Carniola, and Württemberg, etc. Count of Tyrol, etc. 
+[[notes: Matthias I was the Holy Roman Emperor from 1612 to 1619. His long list of titles serves to demonstrate his supreme authority over a vast, multi-ethnic territory. "Increaser of the Empire" (Semper Augustus) was a traditional title for the Emperor dating back to Roman times.]]
+
+Publicly acknowledge with this letter, and make known to all and sundry, that our and the Empire’s dear and faithful Henning Groß, the Younger, bookseller in Leipzig, has humbly brought before Us and made it known: how he, at the request of distinguished people, has with special diligence, thoroughly and orderly composed the **Chess- or King-Game** by **Gustavus Selenus** in four distinct books, and also decorated it with useful copperplate engravings, the like of which has never before been released; and such **Chess- or King-Game**, together with a
+
+[[margin: Stamp: Bavarian State Library Munich.]] 
+[[notes: This is a modern library mark indicating the physical book's current home.]]
+
+[[gloss: Catchword: to end]]
+[[notes: A "catchword" was a printer’s tool: the first word of the following page was printed at the bottom of the current one to ensure the pages were bound in the correct order.]]
+
+[[summary: This page contains the opening of the Imperial Privilege granted by Emperor Matthias I to the Leipzig bookseller Henning Groß. It establishes the legal authority to publish Gustavus Selenus’s work on chess, noting its unique quality and the inclusion of fine copperplate illustrations.]]
+
+[[keywords: Privilegium Cæsareum, Emperor Matthias I, Henning Groß, Leipzig, copyright, 17th-century publishing, copperplate engravings]]

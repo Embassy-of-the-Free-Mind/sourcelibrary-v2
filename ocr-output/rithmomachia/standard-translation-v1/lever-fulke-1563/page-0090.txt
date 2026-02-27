@@ -1,0 +1,21 @@
+->The Philosopher's Game<-
+
+... (except the lowest and greatest) are captured <note>original: "taken"</note>, the King may redeem him with any piece <note>original: "man"</note> of his that is of the same number. If he has none of the same number, he may redeem him with any of his pieces <note>original: "men"</note> that his adversary chooses <note>original: "wyll chuse"</note>. But if his lowest square is captured <note>original: "taken"</note>, no ransom will deliver him. Also, if the whole King is captured at once <note>original: "at onis"</note>—that is, the whole number of the Pyramid <note>original: "Pyramis"</note>—he cannot be redeemed.
+
+### Regarding the Triumph <note>original: "triumphe"</note>
+
+To take away the tediousness of long play from those who are young beginners, writers of this game have invented diverse kinds of short victories; therefore, they divide <note>original: "deuise"</note> victory into "proper" and "common." Nothing needs to be said here regarding the proper victory, for all things belonging to it are sufficiently set forth in the first kind of playing.
+
+### Regarding the Common Victory
+
+The common victory (they say) occurs in five ways <note>original: "maners"</note>, for men contend either for bodies, goods, quarrels <note>original: "quarelles"</note>, honor, or else for both quarrels and honor.
+
+<meta>catchword: Victory</meta>
+
+<summary>
+This page outlines the rules for ransoming and redeeming pieces in the "Philosopher's Game" (Rithmomachia), specifically focusing on the King (the Pyramid piece). It explains how individual components of the Pyramid may be redeemed unless the lowest square or the entire Pyramid is captured. The text also introduces the concept of different victory conditions, categorizing them into "proper" and "common" victories to make the game faster for beginners, and lists the five "manners" of common victory based on thematic goals like "bodies" or "honor."
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, Pyramid, King, capture, redemption, ransom, victory conditions, proper victory, common victory
+</keywords>

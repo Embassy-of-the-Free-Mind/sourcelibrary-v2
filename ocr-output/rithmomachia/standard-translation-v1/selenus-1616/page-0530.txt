@@ -1,0 +1,35 @@
+[[meta: This page continues the catalog of harmonic ratios used to achieve victory in Rithmomachia, specifically finishing the "Ninth" set of numbers and transitioning into the general rules for winning the game. It references the work of Buxer to emphasize the flexibility of the rules and the strategic placement of pieces.]]
+
+### The Sixth Chapter /
+
+The **Fifteenth**, the A, against the difference / A, C, (5).
+Likewise / the D, against the difference / C, D, (3). Likewise / the B, and
+the difference / B, C, (1) compared against the differences / B, D, and A, B,
+(4). [[notes: In the complex math of this game, the "Fifteenth" or Double Octave is a 4:1 ratio. The numbers in parentheses likely refer to the resulting values from the differences between the pieces' positions or values.]]
+
+->(Buxer : fol : 39. b.)<-
+> We have explained before that Victories are obtained within the enemy's camp. However, it will often happen that not all the Counters intended and placed for achieving Victory are located within the Enemy’s line, but rather some remain in Our own camp, which might seem to hinder the attainment of Victory. Nevertheless, let this not delay us; let us consider it sufficient for our purpose if the Half or the Greater part is established in the Enemy’s field. You will also notice that those Counters which you have won from the Enemy are suitable for the perfection of Victory, if you do not find it undesirable to join them with those in the opposing camp, or if you can fashion a Harmony representing Victory from the Counters you have attacked, which you may then arrange as if it were already achieved. Nor is it our intention to diminish the freedom of the Players; thus, it is not strictly required that they fix and unfix the laws of the Game according to a single opinion. For since Games serve the will of the Players, they must also depend upon their judgment. [[notes: This Latin passage from Buxer emphasizes that while victory usually happens in the opponent's territory, players have the flexibility to use captured pieces to complete their mathematical "harmonies."]]
+
+Before we now conclude this description, we shall first
+indicate several **Main Rules** which one must generally note and
+observe regarding these three different victories, and
+add them to the previous ones.
+1.) One must first obtain the **Great**; followed by the **Greater**;
+and finally the **Greatest** victory. Therefore, the Greatest cannot
+happen unless the Greater has preceded it; nor can the Greater be
+put into effect unless the Great is first attained. [[notes: In Rithmomachia, victories are tiered based on how many mathematical progressions (Arithmetic, Geometric, and Harmonic) a player can arrange in the opponent's end of the board.]]
+2.) The **Victory** shall and must be obtained through the **moves**
+which properly belong and are entitled to the pieces.
+3.) One should, as much as possible, put the victories into effect
+with the **opponent's pieces** which are still present on the board
+or standing by the table: (that is, the pieces should be placed and
+set right against the opponent's pieces so that they may, with them,
+bring about the aforementioned victories) also driving and forcing
+the same with one's moves, so that He must set and move his pieces
+to the place and end that
+
+[[meta: catchword: through]]
+
+[[summary: This page concludes the mathematical ratios for the game and transitions into the strategic "Main Rules" for winning. It emphasizes that a player must achieve lesser victories before the "Greatest" victory and highlights the importance of using the opponent's pieces to complete harmonic sequences.]]
+
+[[keywords: Fifteenth, Double Octave, Buxer, Main Rules, Victory, Counters, Rithmomachia, Harmonic progressions, game strategy]]

@@ -1,0 +1,9 @@
+[[meta: This page continues from the previous page's instructions on crafting the game pieces. It transitions from the simple shapes (circles, triangles, and squares) to the construction of the most complex and powerful pieces in the game: the Pyramids.]]
+
+->RYTHMOMACHIA, THE GAME<-
+
+...cut out two square pyramids, of which the bases or feet are equal to the other square pieces [[notes: These "square pieces" refer to the square-shaped counters mentioned on the previous page]], constructed in such a way that they have 6 tiers: that is to say, 6 squares placed one upon the other, always diminishing in size as they reach toward the summit and point of the pyramid, like steps. And then, the summits and points of these shall be cut and shortened, so that the one for the **even numbers** has 6 tiers remaining, and that space remains atop its summit to be able to later write two numerical characters [[notes: In Rithmomachia, each side has one Pyramid. The "Even" side's pyramid is usually made of six squares (36, 25, 16, 9, 4, 1), and the "Odd" side's pyramid is made of five (64, 49, 36, 25, 16), though variations exist]]. Similarly, for the other pyramid of the **odd numbers**, there must remain five tiers, with space above them at the summit to be able to contain three digits. And after having thus formed, painted, and polished the said pieces [[notes: The original French uses *tables*, which refers to the flat gaming pieces or counters]], along with their boards, you will apply their numbers as follows:
+
+[[summary: This page describes the physical construction of the "Pyramids," the most complex pieces in Rithmomachia, which are built by stacking square pieces into tiers. It specifies the number of tiers for both the even and odd players' pyramids and prepares the reader for the numerical labeling of the pieces.]]
+
+[[keywords: Rithmomachia, game pieces, square pyramids, even numbers, odd numbers, mathematical games, Renaissance pedagogy]]

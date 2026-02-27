@@ -1,0 +1,40 @@
+[[meta: This page continues the numerical breakdown of the "Turkish" army’s strength based on the "ensigns" (game pieces) captured, then provides a corresponding loss table for the "Christian" army. It concludes the section on "Simple Victories" and introduces "Proper Victories," which involve mathematical progressions.]]
+
+# OF THE PHILOSOPHERS. [[notes: A reference to *Rythmomachia*, also known as "The Philosophers' Game," a mathematical board game that uses a military metaphor of two opposing armies.]]
+
+| | |
+|:---|:---|
+| Seven [ensigns] | 1218. |
+| Eight | 1349 [[notes: Mathematically, this should be 1392 (174 x 8), suggesting a potential printer's error or OCR misread of the original manuscript]]. |
+| Nine ensigns are worth | 1566. |
+| Ten make | 1740 men. |
+
+---
+
+| | |
+|:---|:---|
+| But if the Emperor of the Christians loses two of his ensigns, He will lose | 260 Christians. |
+| If three ensigns | 390 |
+| If four | 520 |
+| If five | 650 |
+| If six ensigns, a loss of | 780 men. |
+| If seven, of | 910 |
+| If eight, of | 1040 |
+| If nine, of | 1170 |
+
+If ten ensigns, He will lose his entire army, which amounts to 1,300 combatants, excluding the two captains and 10 ensign-bearers [[notes: These pieces correspond to the specific values of the white game pieces calculated on previous pages]].
+
+->End of the last of the simple victories.<- [[notes: A "Simple Victory" in Rythmomachia is won by capturing pieces or reaching a set point total, rather than achieving a complex mathematical progression.]]
+
+## Of proper victories.
+
+*A proper victory is the arrangement and disposition of various numbers in the adversary's camp, constituting within itself a certain proportion: and is rightly called a proper victory, because all*
+
+[[notes: The text cuts off here at the "catchword"—the first word of the next page—which is "tout" (all).]]
+
+<sig>B</sig> [[notes: A "signature mark" used by early printers to help bookbinders assemble the pages in the correct order.]]
+
+[[vocab: ensigns, Christians, Proper victory, arrangement, proportion, combatants]]
+
+[[summary: This page completes the point-to-soldier conversion tables for the game's military allegory and defines the "Proper Victory," where a player wins by arranging pieces in specific mathematical proportions on the opponent's side.]]
+[[keywords: Rythmomachia, military allegory, Simple Victory, Proper Victory, ensigns, mathematical proportions, Christian army, Turkish army]]

@@ -1,0 +1,27 @@
+[[meta: This page continues the tactical sequences of Chapter 5 from Book 3. The translation maintains the 1–64 square numbering system: squares 1-8 represent the first rank (a1-h1), 9-16 the second (a2-h2), and so on, up to 64 (h8). The text explores complex "if-then" scenarios (variations) focusing on how the Black player can force a checkmate regardless of the White King's movement.]]
+
+### The Third Book / 5. cap: [[note: Chapter 5]]
+
+Rook / to two [[note: Square b1]]: and on the following move / from thirty-three [[note: Square a5]] / with the King’s Rook / gives Check-Mate / unimpeded.
+
+44. &emsp;&emsp; If, however, the **White** / moves the **King** / not to 25. (no. 43.) but rather to **eighteen** [[note: Square b3]]: then the **Black** / moves / the **King’s Rook** / to **two** [[note: Square b1]] / and offers check: The **White** / sets / the **King** / on **twenty-five** [[note: Square a4]] / or **seventeen** [[note: Square a3]]: The **Black** / offers / with the **King’s Rook** / from **thirty-three** [[note: Square a5]] / Check-Mate.
+
+45. &emsp;&emsp; But if the **White** / does not move the **King** / to 18. (no. 44.) but rather to **ten** [[note: Square b2]]: then the **Black** / offers check / either / with the **King’s Rook** / from **eleven** [[note: Square c2]] / or with his **Rider** [[note: "Reuter" refers to the Knight]] / from **twenty** [[note: Square d3]]. The **White** / moves / the **King** / to **eighteen** [[note: Square b3]]: The **Black** / offers check / with the **King’s Rook** / from **two** [[note: Square b1]]: The **White** / moves / the **King** to **twenty-five** [[note: Square a4]] / or **seventeen** [[note: Square a3]]: The **Black** / takes / with the **King’s Rook** / either / the **White King’s Rook’s Soldier** [[note: "Soldaten" refers to the Pawn]]: or moves the same / (provided He / offered check / with the **King’s Rider** / from 20.) to **thirty-three** [[note: Square a5]] / and gives Check-Mate.
+
+46. &emsp;&emsp; If, however, the **White** / moves not the **King** / to 13. (no. 26.) but rather his **Rook’s Soldier** / to **seventeen** [[note: Square a3]] / (so that the **Black** / might not move his **King’s Rider** / to **twenty-six** [[note: Square b4]] / in front of the exchange of **Archers** [[note: "Schützen" refers to the Bishops]] / on the **King’s Archer** / nor win the game through this move): then He / does indeed arrange / his game / somewhat better: nevertheless / He takes / (as can be seen from the previous report / no. 15. at the end) to his own detriment / the **Black King’s Soldier** / with the **King’s Rider**.
+
+47. &emsp;&emsp; If, however, the **Black** / moves not the **Archer** / to 35. (no. 22.) but rather / the **King’s Soldier** / to **thirty-eight** [[note: Square f5]]: then He / (if He moves the **King’s Archer’s Soldier** / to **forty-six** [[note: Square f6]]) can / nonetheless rescue the **King’s Archer** / in time of need / by moving him to **fifty-four** [[note: Square f7]] / and bring him away: If He then moves him / (instead of the **Soldier** / to 38.) to **twenty-nine** [[note: Square e4]]: then He can / just as well / safely set him back again.
+
+48. &emsp;&emsp; If, however, the **White** / does not take / the **Black Rider** / with the **Archer** / (no. 15.) but rather / moves the **King’s Archer’s Soldier** / to **twenty-two** [[note: Square f3]]:
+
+49. * so the **Black** / plays the **King’s Soldier** / to **forty-five** [[note: Square e6]]: The **White** / [moves] his **King’s Soldier** / to the **Black King’s Archer** / at **twenty-nine** [[note: Square e4]]:
+
+50. * The **Black** / [moves] the same / to **forty-seven** [[note: Square g6]]: The **White** / [moves] the **King’s Soldier** / to the **Black King’s Rider** / (whom his **King’s Archer** / previously held captive)
+
+[[meta: catchword: auf sie= (likely leading to "siebenzehen" / seventeen on the next page)]]
+
+[[vocab: Schach-Mat (Checkmate), König (King), Rochen (Rook), Reuter (Knight), Schütze (Bishop), Soldat (Pawn)]]
+
+[[summary: This page continues a dense technical analysis of chess endgames and mid-game maneuvers, using a numerical square system. It specifically details how Black can counter White's attempts to escape check using a combination of Rook and Knight (Rider) movements.]]
+
+[[keywords: chess tactics, 17th century chess, checkmate sequences, Selenus notation, King's Rook, King's Rider, King's Archer, Pawn structure]]

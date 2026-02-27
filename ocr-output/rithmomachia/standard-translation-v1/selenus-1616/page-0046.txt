@@ -1,0 +1,50 @@
+[[meta: This page continues the transition from historical chronicles of chess-related violence to a literary example from Giovanni Boccaccio’s "Il Filocolo." While the previous page discussed the fatal consequences of anger during the game, this passage illustrates a player using chess strategically to win favor through intentional loss.]]
+
+# The First Book / Chapter 1:
+
+,, And after this, having entered into many and various conver-
+,, sations, Filocopo’s eye wandered to a corner of the place where they
+,, were staying, where he saw hanging a [[term: scacchiero]] [[notes: chessboard]], most noble and
+,, rich; having seen it, he said: "Sir, do you delight in playing [[term: scacchi]] [[notes: chess]],
+,, for I see such a beautiful [[term: scacchiero]]?" Sadoc replied: "Yes, 
+,, very much; and do you know how to play?" To which Filocopo replied: "I 
+,, know a bit of it." Then Sadoc said: "Now, let us play together, until
+,, such time as this heat passes, and you can return to the city." 
+,, "That pleases me much, my lord," replied Filocopo. 
+,, Sadoc then had carpets spread out in a cool loggia [[notes: an open-sided gallery or porch]], 
+,, and had the [[term: Scacchiero]] brought, and they sat down, the one
+,, on one side and the other on the other. They arranged the [[term: scacchi]] [[notes: the chess pieces]], 
+,, and the [[term: giuoco]] [[notes: game]] began; so that it would not appear
+,, childish, they placed a large quantity of [[term: bisanti]] [[notes: bezants—gold coins originally from Byzantium, used here as the gambling stakes]] from each side,
+,, ready for the merit of the winner. They set themselves to play, then:
+,, the one to win the posted bezants, the other to lose 
+,, them and to acquire friendship. Filocopo, while playing, real-
+,, ized that he knew more of the [[term: giuoco]] than the Castellan. Filocopo 
+,, then cornered the Castellan’s [[term: Re]] [[notes: King]] in his seat with one of his [[term: Roc-]]
+,, [[term: chi]] [[notes: Rooks or Castles]] and with the [[term: Cavaliero]] [[notes: Knight]], the [[term: Re]] having 
+,, on his left one of the [[term: Alfieri]] [[notes: Bishops; from the Arabic "al-fil" meaning elephant]]. The Castellan besieged Filocopo’s king
+,, with many [[term: scacchi]] [[notes: here meaning checks or pieces]], and only one square, for his 
+,, safety, remained for him in the leap of his [[term: Rocco]]. But Filocopo, 
+,, whose turn it was to play, where he should have moved his 
+,, second [[term: Cavaliero]] to give [[term: scacco matto]] [[notes: checkmate]] to the [[term: Re]], 
+,, knowing this well, instead moved his [[term: Roc-]]
+,, [[term: co]] and placed it in the square remaining for the safety of his 
+,, [[term: Re]]. The Castellan, joyful, began to laugh, seeing that Fi-
+,, locopo was [[term: matto]] [[notes: mated/defeated]], whereas Filocopo could have [[term: mattare]] 
+,, [[notes: mated]] him; and giving him [[term: scacco]] with a [[term: pedona]] [[notes: pawn]], 
+,, pushing forward, he there [[term: mattò]] [[notes: mated]] him. Drawing 
+,, the bezants to himself, he said laughing: "Young man, you know nothing of 
+,, the [[term: giuoco]]," even though he had clearly noticed what Filocopo had
+,, done; but out of greed for the bezants, he had endured it, 
+,, pretending not to notice. To which Filocopo replied: 
+,, "My lord, thus appear the fools." The second [[term: giuo-]]
+,, [[term: co]] was set up, and the quantity of bezants was doubled 
+,, on each side. The Castellan played shrewdly, and Filocopo no less. 
+,, The Castellan made no good move without saying: "Young man, 
+,, it would have been better for you to let your Falcon go, than to follow it here."
+
+[[meta: catchword: Filoco-]]
+
+[[summary: This page recounts a scene from Boccaccio's Filocolo where the protagonist, Filocopo, intentionally loses a high-stakes chess match to the Castellan Sadoc to gain his favor. Despite the Castellan realizing the ruse, his greed for the gold bezants leads him to mock the young man's skill while accepting the victory.]]
+
+[[keywords: Boccaccio, Filocolo, chess strategy, bezants, checkmate, social gambling, chivalric literature, Middle Ages]]

@@ -1,0 +1,25 @@
+[[meta: This page continues from the introductory dialogue between Alcmeon and Bathillus. Having established the three types of mathematical inequalities (multiple, superparticular, and superpartient), the text now describes the physical setup of the game board and the organization of the "battalions" of numbers.]]
+
+-> # THE GAME OF RYTHMOMACHIA, <-
+
+[[notes: The name "Rythmomachia" literally means "The Battle of Ratios" or "The Battle of Numbers." It was used as a tool to teach Boethian mathematics through play.]]
+
+...divide into two orders the multiples derived from the first four even numbers [[notes: In this system, even numbers were considered feminine and odd numbers masculine; the game begins by setting these two "armies" against one another.]]: namely, doubles, triples, quadruples, sextuples, and octuples. These are placed on a board having 64 squares [[notes: This is the same size as a standard chessboard, though the pieces were often circular, triangular, or square to denote their mathematical value.]]. After these, place two orders of the same **superparticulars**, which are sesquialter, sesquiquarter, sesquisexter, and sesquioctave [[notes: These terms describe ratios where the larger number contains the smaller number plus one part of it. For example, sesquialter (3:2) is 1 and 1/2.]]. And after these, the **superpartients**, such as superbipartients, superquadripartients, supersextupartients, and superoctupartients [[notes: These are more complex ratios where the larger number contains the smaller plus multiple parts, such as 5:3 (one and two-thirds).]]. We shall call the squares the **camps**, and the numbers the **battalion of even numbers**.
+
+And against these, in as many squares and arranged in the same manner, we shall dispose the **battalion of odd numbers**, such that the first two ranks will be of multiples—namely triple, quintuple, sextuple, and octuple. The following two ranks will be the superparticulars, and the two after that the superpartients having the same affinity. And thus shall your two battalions be completed: the odd numbers here, and the even numbers there.
+
+## Boissière.
+
+[[notes: Claude de Boissière was a 16th-century French mathematician and author of a popular manual on Rythmomachia published in 1554. His version of the game added specific social ranks to the mathematical pieces.]]
+
+The arrangement is the same as described above, except that he wishes to call the smaller numbers of each proportion **Counts**, and the larger ones **Dukes**.
+
+### Rules.
+
+1 The pieces [[notes: The original French uses *tables*, which refers to the flat playing stones or tablets.]] can move in all directions.
+
+[[markup: catchword: les]]
+
+[[summary: This page explains the layout of the Rythmomachia board, describing how even and odd numbers are organized into "battalions" based on mathematical ratios. It also notes Claude de Boissière's specific terminology for the pieces, calling them Counts and Dukes.]]
+
+[[keywords: Rythmomachia, ratios, even and odd numbers, superparticular, superpartient, Claude de Boissière, board game, mathematics, Renaissance education]]

@@ -1,0 +1,23 @@
+[[meta: This page is the title page of the work following the institutional divider (page 333). It transitions from library markings to the printed content of a 16th-century mathematical treatise.]]
+
+# THE
+# MOST EXCEL-
+## LENT AND ANCIENT
+*Pythagorean game, called Rythmomachia [[notes: From the Greek words for "number" and "battle." It was a highly complex board game used in the Middle Ages and Renaissance to teach mathematical proportions through the capture of numbered pieces.]], very suitable & very useful for the recreation of virtuous spirits, to obtain true & prompt skill in all numbers & proportion: illustrated by master Claude de Boissiere of Dauphiné [[notes: A French mathematician and surveyor who wrote several practical guides on arithmetic and geometry.]], & newly expanded by the same author.*
+
+[[meta: The center of the page contains the printer's mark of Guillaume Cavellat, featuring a hen, and a circular stamp from the "BIBLIOTHECA REGIA" (The Royal Library of France), which includes the royal coat of arms with three fleurs-de-lis.]]
+
+->IN PARIS,<-
+->*At the shop of Guillaume Cavellat at the sign of the fat*<-
+->*hen [[notes: In 16th-century Paris, buildings were identified by hanging signs rather than numbers. Cavellat’s "Fat Hen" (La Poule Grasse) was a famous landmark in the bookseller's district.]], in front of the College of Cambray. 1556*<-
+
+---
+
+->*The games are sold at the shop of Jean Gentil*<-
+->*at the great court of the palace [[notes: Referring to the Palais de la Cité, the former royal residence which by this time served as the high court of justice and a major commercial hub for books and luxury goods.]].*<-
+
+## WITH PRIVILEGE FROM THE KING [[notes: An early form of copyright where the King granted a printer the exclusive right to publish a specific book for a set number of years, protecting them from unauthorized copies.]]
+
+[[summary: This is the title page for a 1556 edition of a book on "Rythmomachia," a mathematical strategy game. It identifies Claude de Boissiere as the author and provides details on where to buy both the book and the physical game sets in Renaissance Paris.]]
+
+[[keywords: Rythmomachia, Claude de Boissiere, mathematics, board games, Guillaume Cavellat, 16th-century printing, Paris, educational games]]

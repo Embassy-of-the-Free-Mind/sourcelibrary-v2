@@ -1,0 +1,23 @@
+[[meta: This page marks the beginning of the introductory material for the treatise. It follows a lengthy alphabetical index of authors and authorities cited throughout the work, concluding with the letter Q on the previous page. This page introduces the book's main subject—chess—through a neo-Latin poem that contrasts the intellectual depth of chess with the perceived mindlessness of gambling and blood sports.]]
+
+<page-type>preface</page-type>
+<sig>A</sig>
+<meta>catchword: FAL-</meta>
+
+<image-desc>A rectangular decorative woodcut headpiece featuring symmetrical arrangements of stylized foliage, floral blooms, and scrolling vines.</image-desc>
+
+## On the Polyglot [[notes: From the Greek *polyglottos*, meaning "many-tongued." This refers to the author's use of multiple languages and diverse sources in the text.]] and most illustrious WORK ON THE GAME OF CHESS, by the Author GUSTAVUS SELENUS. [[notes: "Gustavus Selenus" was the pseudonym of Augustus the Younger, Duke of Brunswick-Lüneburg (1579–1666). The name is an anagram: *Gustavus* is an anagram of *Augustus*, and *Selenus* comes from *Selene* (the moon), referring to his city of Lüneburg (Luna-burg).]]
+
+**A**way with the dice-box, the dice, the knucklebones, and games of hazard! I believe there is no wit in your pastimes. Away with the acrobats and the tightrope walkers! The games you provide are emptier than emptiness itself. Begone, those whom Plato banishes from his Republic [[notes: A reference to Plato’s *Republic*, in which he argues for the exclusion of certain poets and corrupting entertainments from the ideal state]]; trainers of gladiators, beast-fighters, and wrestlers, stay far away. You indeed produce bloody spectacles in cruel theaters.
+
+But hither, turn your faces and your minds with joy. Behold, **GUSTAVUS SELENUS** presents a battle that is waged without slaughter and without blood; in which a wise disposition rules, and where blind Fate claims no right for herself. Here, chance ascribes nothing to itself, nor does the shifting throw of the dice; instead, a single, watchful skill commands the pieces to advance or retreat, or to strike down the enemy of one’s own cohort. 
+
+For one side is Black, and the other is White. Accompanied by an equal number of armed men, the King enters the field of battle. The Black side is like an Ethiopian scorched by the heavy heat of Sirius [[notes: The "Dog Star," associated in antiquity with the scorching "dog days" of summer]]; the White side comes from the northern fields of the Seven Oxen [[notes: *Septemtriones*, a Latin term for the seven stars of the Big Dipper, used here to represent the North]]. Each King leads his Bride [[notes: The Queen]] at his side, along with foot-soldiers, "horn-footed" steeds [[notes: Knights; *cornipes* is a classical poetic term for a horse]], elephants [[notes: *Barros*, an archaic term for elephants, which in the older Oriental forms of chess represented the piece that became the Bishop or the Rook]], those armed with lances, and those with quivers. 
+
+These constantly guard their Leader as he moves with free step, keeping him from harm and defending his safety with their own deaths. The clash begins! But after a thousand perils, he gains the victory and carries off the palm of praise who has employed the most diligent strategy. The other, cornered, lurks shamefully in a confined space [[notes: A poetic description of checkmate, where the King is trapped in a corner of the board]].
+
+->(?)<-
+
+[[summary: This page features a prefatory neo-Latin poem by Gustavus Selenus (Duke Augustus the Younger) introducing his work on chess. The poem elevates chess as a game of skill and intellect, contrasting it with mindless gambling and the violent spectacles of the Roman arena.]]
+
+[[keywords: Gustavus Selenus, Chess, De Ludo Latrunculorum, Neo-Latin poetry, Augustus the Younger, chess pieces, strategy vs chance]]

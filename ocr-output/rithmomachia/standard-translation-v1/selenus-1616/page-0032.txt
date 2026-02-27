@@ -1,0 +1,36 @@
+[[meta: Continuing from the title page, this text begins the first chapter of the book, moving from the formal title to the philosophical justification for why humans play games and the specific history of chess.]]
+
+### The First Book / Chapter 1
+
+The human mind, due to constant work and toil, becomes weary and worn out; often it is also distressed and confused by the many turns of fortune. Indeed, the mind cannot remain at rest: it is always active. If it has nothing to do with serious matters, then there are influences both within and without that can easily lead it astray onto sidetracks and errant paths. To counter this, prudent Nature has not only introduced sleep but has also provided all kinds of opportunities for lovely **Music**, for pastime, and for play. **Art**, as a diligent servant and follower of Nature, has now taken careful note of this and has publicly brought various types of games onto the scene—among which is this excellent **Game**—specifically to further the goals of her mistress [Nature]. Many distinguished people have subsequently taken up these games for their particular benefit and have known how to use them well. From this, it clearly follows that neither playing, nor the invention or practice thereof, nor the players themselves, are to be blamed or rejected in their own right.
+
+With this, **Pascalius Justus**, of Eeklo, Doctor of Philosophy and Medicine, agrees very well in his work *On Dice, or, on Curing the Desire for Gambling in Money*, in books published in the year 1560, specifically in the Dedicatory Epistle. His words—as they beautifully illuminate our opinion and also mention the **Game of Chess** several times—are quite rightly cited here, as follows:
+
+[[notes: Pascalius Justus (Paschasius Justus Turcq) was a 16th-century Dutch physician. His book was a pioneering medical and psychological look at gambling addiction.]]
+
+> [[margin: „]] Yet I do not entirely condemn the Game which is practiced without greed,
+> [[margin: „]] without any passion or disturbance, at the proper time and in the proper manner,
+> [[margin: „]] for the sake of soothing sickness or labors: by Hercules, no more
+> [[margin: „]] than if, when we have satisfied heavy and serious business, we then either
+> [[margin: „]] play the strings, or make use of leisure, sleep, or other forms of rest. For indeed,
+> [[margin: „]] the first invention of Dice is not said to have been a vice: For the Lydians,
+> [[margin: „]] due to a scarcity of resources, are said to have invented Dice so that they might
+> [[margin: „]] more easily endure hunger; just as they did with knuckle-bones and ball games.
+> [[margin: „]] Indeed, *Latrunculi* also (the common people call it **Chess**) are said to have
+> [[margin: „]] been invented so that soldiers might consume their leisure during a long siege. 
+> [[margin: „]] But as Horace says, it is no shame to have played, but rather not to have
+> [[margin: „]] cut the play short. And good men: Cato and Portius played at Dice; and
+> [[margin: „]] Domitian and Claudian, who even published a book on that art. Likewise
+> [[margin: „]] the Emperor Verus and Augustus; Maecenas indeed, and Q. Galba, were
+> [[margin: „]] players of *Latrunculi*; Caesar and Scaevola, and a certain Ticinius (of whom
+> [[margin: „]] Cicero writes) were the best players of ball games. 
+> [[notes: "Latrunculi" (Ludus latrunculorum) was a popular Roman strategy board game. In the Renaissance, scholars often used this Latin term to refer to Chess.]]
+> **That is:**
+
+I do not reject the game entirely and completely, especially—
+
+[[meta: The text ends with the catchword "insonder-" (especially), which is a printer's tool where the first word of the following page is printed at the bottom of the current one to ensure the pages are bound in the correct order.]]
+
+[[summary: This page argues that games and recreation are a natural necessity for the weary human mind, citing the physician Pascalius Justus to defend chess and other games against charges of immorality.]]
+
+[[keywords: philosophy of play, Pascalius Justus, Latrunculi, Chess history, Roman games, Lydians, recreation, mental health]]

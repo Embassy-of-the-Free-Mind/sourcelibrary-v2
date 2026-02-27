@@ -1,0 +1,17 @@
+[[meta: This page completes the mathematical demonstration of "superpartient" proportions used to determine the values of the Square pieces in Rythmomachia. It then transitions from the arithmetic of the pieces to the construction of the "Pyramids," the most complex pieces in the game.]]
+
+# PAGE 14
+
+->OF THE PHILOSOPHERS.<-
+
+fourths, which is 21; if you add this with 28, which is the aforementioned **requesting number** [[notes: The base value from which the calculation starts]], you will have 49 as the result, which is the **required number** in a **superpartient** proportion—specifically, fourths—along with the aforementioned **retaking number** 28. [[notes: "Retaking number" refers to the base number used again to complete the addition.]] And so, as you see, when the name contains *bi*, as in **bipartient**, we have retaken the part (five) 2 times, and the result was 10 in the row of evens, which, when joined to the **requesting** 15, yielded the **required number** 25. And also when we said **supertripartient fourths**, we retook the part (seven) three times, and it yielded 21 as the **retaken number**, which, when added to the **requesting number** 28, yielded 49, the **required number**. Thus, the beginning of the proportion’s name will show you how many times you must retake the part of the **requesting number** written above; and having retaken or multiplied it, the **retaken number** will show you the quantity which, when joined to the **requesting number**, will always yield the proportional **required number**, as clearly appears by the example.
+
+Now that you have all three of your proportions and all your tables noted, it only remains to mark the two **pyramids**. [[notes: In Rythmomachia, the Pyramid is a special piece made by stacking several other values; it is the most powerful piece on the board.]] Let us then take the first, which is made of the even numbers and their color, having 6 levels: to mark and understand it, let us pretend we wish to build a pyramid of **barleycorns**, [[notes: A common period metaphor for visualizing discrete units or "atoms" of a number.]] and let us assume that to make the...
+
+<i> [[notes: This is a "signature mark" used by early modern printers to keep the pages in the correct order for binding.]]
+
+[[gloss: proportion, superpartient, bipartient, tripartient, pyramids, barleycorns, even numbers]]
+
+[[summary: This page concludes the arithmetic instructions for calculating complex "superpartient" proportions for game pieces and introduces the construction of the Pyramid pieces using the analogy of stacking grains of barley.]]
+
+[[keywords: Arithmetic, Proportions, Rythmomachia, Superpartient, Pyramids, Mathematical terminology, Game pieces]]

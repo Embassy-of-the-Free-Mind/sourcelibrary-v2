@@ -1,0 +1,31 @@
+[[meta: This page continues the rules of Rithmomachia from page 22. Having established the spatial requirements and the "warning" system for a final mathematical victory, it concludes the general rules and introduces the "Lesser Victories"—simpler ways to win based on point totals or piece counts rather than complex progressions.]]
+
+23
+
+G
+
+The seventh and last rule is that when one wishes to achieve the **ultimate victory**, before it is proclaimed, one must gather many pieces around those already situated in the enemy’s field to secure the victory. This is so that the enemy, once warned of the victory you intend to make, cannot in any way delay or disturb said victory. [[notes: Because the opponent is warned of an impending victory, they will try to capture the pieces forming your mathematical progression. This rule suggests bringing "reinforcements" to protect the pieces you've placed in the opponent's territory.]]
+
+After these seven general rules, it will not be out of place to note that should there be those who do not care to reach this ultimate victory, but wish to play this game more **roughly** [[notes: *Rozamente*—meaning "simply" or "crudely." The author is distinguishing between the "Great Victories" of mathematical philosophy and the "Common Victories" which are more like standard capture-based games.]], they could use other sorts of victories, which are seven in number.
+
+The first is to focus on **stripping** the opponent of pieces; and whoever shall first strip the companion [[notes: *Compagno*—here meaning the opponent/partner in play.]] of his pieces, let him be the winner.
+
+The second is to focus on stripping the adversary of the **value of the numbers**; and whoever shall first reach a certain sum, without regard for the number of pieces taken, let him be the winner.
+
+The third is to focus on stripping the opponent of **characters**—that is, the digits of the numbers [[notes: "Cifre" or "charatteri" refers to the physical symbols written on the pieces. In some variations of the game, winning was based on how many individual digits you collected, regardless of their mathematical value.]]—and whoever shall reach a certain number of digits sooner, without regard for the pieces themselves or the value of their numbers, let him be the winner.
+
+The fourth is to focus on stripping the adversary of both **pieces** and the **value of their numbers** together; and whoever first reaches a certain number of pieces and the specific sum contained within them, let him have won the game, without having any regard for the digits of those numbers.
+
+The fifth is to focus on stripping the opponent of **pieces** and **digits** together; and whoever first reaches a certain number of pieces and the digits contained on them, let him have won the game without any regard for the value of the numbers.
+
+The sixth is to focus on stripping the opponent of **digits** and the **value** of them together; and whoever first arrives at a certain number of digits and the specific sum contained in them, let him be the winner, without any regard for the pieces themselves.
+
+The seventh and last is to focus on stripping the opponent of the **pieces**, the **value** of their numbers, and the **quantity of digits**; and whoever first reaches a certain number of pieces and a certain number of digits together, and 
+
+[[meta: catchword: alla — to the]]
+
+<vocab>uittoria (victory), pezzi (pieces), nemico (enemy), giuoco (game), numeri (numbers), cifre (digits/figures), charatteri (characters/symbols), summa (sum/total)</vocab>
+
+[[summary: This page concludes the main rules for the "Ultimate Victory" in Rithmomachia and introduces seven "Common Victories." These secondary winning conditions are based on capturing specific quantities of pieces, achieving a certain total point value, or collecting a specific number of digits.]]
+
+[[keywords: Rithmomachia, game rules, victory conditions, mathematical games, Renaissance, point totals, capture mechanics]]

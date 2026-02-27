@@ -1,0 +1,59 @@
+[[meta: This page continues the classification of mathematical forms, moving from ratios on the previous page to "solid numbers"—three-dimensional geometric representations of numbers—and the theory of the ten means (proportions).]]
+
+A **perfect pyramid** is one whose sides’ rise toward the peak does not fail before reaching unity [[notes: In figurate arithmetic, a pyramid is a series of stacked polygons. A "perfect" one ends in a single point or "unity" (1).]]. 
+
+A **curtailed pyramid**, however, is one whose sides’ rise does not reach all the way to unity. If it lacks only the final unit, it is called **curtailed**. If it lacks the unit and one plane, it is called **twice-curtailed**. If it lacks two, it is named **thrice-curtailed**, and so on in this fashion.
+
+A **cube** is a solid number contained by six equal surface and plane numbers; it provides a height equal to its length and width. These same numbers are called **dice** [[notes: *Tessere* in Latin refers to the square tiles or dice used in games.]], which always have twelve equal sides, eight solid angles, and six surfaces.
+
+A **brick** (*laterculus*) is a solid number that, while having a width equal to its length, possesses a shorter height. [[notes: Essentially a "flat" rectangular prism with a square base.]]
+
+A **beam** (*aster*) is one which, while its length is equal to its width, has a greater height. [[notes: A "tall" rectangular prism with a square base, often called a "column" in other texts.]]
+
+A **wedge** (*luneus*) is that which contains unequal length, width, and height. [[notes: Often called a *scalene* solid; all three dimensions are different.]]
+
+A **circular number** is when a "side" (a number) is multiplied by itself and the resulting square ends in that same number. And again, when that same side is multiplied by the square, a cube is born which revolves back to the same digit; this cube is called a **sphere** or a **spherical cube**. [[notes: For example, 5 is a circular number because $5 \times 5 = 25$ (ends in 5), and $5 \times 5 \times 5 = 125$ (ends in 5).]] And furthermore, however many times you multiply that side into the cube, or even unto infinity, the resulting number will always end in and revolve back to that same side-number.
+
+A **parallelepiped** is a solid number contained by equidistant (parallel) surface and plane numbers that are neither entirely equal nor entirely unequal.
+
+A **mean** (*medietas*) is a similar relationship between two or more proportions.
+
+An **arithmetic mean** is a mean whose terms preserve equal differences. [[notes: For example, 1, 2, 3. The difference between each is 1.]]
+
+**Terms** are the numbers that constitute the proportions of the mean.
+
+The **difference** is the amount by which one number exceeds and surpasses another.
+
+A **continuous arithmetic mean** is one contained in three continuous numbers.
+
+But if it is contained in four numbers discontinuously, it is called a **disjunct arithmetic mean**. [[notes: Continuous: 2, 4, 6. Disjunct: 2, 4 and 8, 10.]]
+
+A **geometric mean** is a mean whose terms preserve equal proportions. [[notes: For example, 2, 4, 8. Each number is doubled.]] If it is contained in three continuous terms, it is **continuous**; if in four discontinuously, it is named **disjunct**.
+
+A **harmonic mean** is one in which the ratio of the greatest term to the smallest is the same as the ratio of the difference of the larger terms to the difference of the smaller terms. [[notes: For example, 3, 4, 6. The ratio of $6:3$ (2) is the same as the ratio of the differences: $(6-4):(4-3)$, which is $2:1$ (2).]]
+
+The **fourth mean** is one in which the ratio of the greatest term to the smallest is the same as the ratio of the difference of the smaller terms to the difference of the larger terms.
+
+The **fifth mean** is one in which the ratio of the middle term to the smallest is the same as the ratio of the difference of the smaller terms to the difference of the larger terms.
+
+The **sixth mean** is one in which the ratio of the greatest term to the middle term is the same as the ratio of the difference of the smaller terms to the difference of the larger terms.
+
+The **seventh mean** is such that the ratio of the greatest term to the smallest is the same as the ratio of the difference of the extremes to the difference of the smaller terms.
+
+The **eighth mean** is such that the ratio of the greatest term to the smallest is the same as their difference [[notes: the difference of the extremes]] to the difference of the larger terms.
+
+The **neth mean** is such that the ratio of the middle term to the smallest is the same as the difference of the extremes to the difference of the smaller terms.
+
+The **tenth mean** is such that the ratio of the middle term to the smallest is the same as the difference of the extremes to the difference of the larger terms. And these last seven, which were specifically added so that the **Pythagorean Ten** might be completed [[notes: The Pythagoreans believed the number 10 (the *decad*) was the perfect number of the universe]], consist of three terms.
+
+->Properties of Numbers.<-
+
+[[margin: 1]]
+Every number is found to be half of the two numbers placed closest to it when they are joined together. [[notes: For example, 5 is half of $4+6$.]]
+
+[[margin: 2]]
+Every number is the mean of any two numbers lying outside it and equally distant from it. [[notes: For example, 5 is the mean of 3 and 7, or 2 and 8.]]
+
+[[summary: This page defines three-dimensional "solid" numbers like cubes and pyramids, explains "circular" numbers that reproduce themselves through multiplication, and details the ten types of mathematical means recognized in the Pythagorean-Boethian tradition.]]
+
+[[keywords: Figurate numbers, Solid numbers, Cubes, Pyramids, Arithmetic mean, Geometric mean, Harmonic mean, Circular numbers, Pythagorean decad]]

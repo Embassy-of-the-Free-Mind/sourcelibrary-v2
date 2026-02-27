@@ -1,0 +1,20 @@
+[[meta: This page begins Chapter 13 of the Third Book, transitioning from the visual tactical diagrams of the previous chapter to a discussion on suboptimal opening moves. It focuses on players who begin with pieces (Knights) or flank pawns rather than the recommended central pawns, a style the author considers "inexperienced."]]
+
+The Third Book / Chapter 13:
+
+# The Thirteenth Chapter.
+
+## In what manner some people are accustomed to beginning this game with the Knights, or with the Rook-Bishop’s and Knight’s Soldiers—yet to their own detriment.
+
+---
+
+There now follows the third kind (of which mention was made in the seventh chapter of the Second Book) [[notes: Gustavus Selenus frequently cross-references his own manual to build a comprehensive system of play.]] which some inexperienced players are in the habit of using: in which they begin this game not with the King’s or Queen’s Soldiers [[notes: "Soldaten" or Soldiers refer to the Pawns.]], but with other pieces. For they perhaps, before and prior to moving any Soldiers, set out the Knights [[notes: "Reuter" (Riders) refers to the Knights.]] first: or make their beginning with the Rook-Bishop’s or Knight’s Soldiers [[notes: These refer to the Pawns located in front of the Bishops and Knights.]]. Since such games do occasionally occur and happen, a brief report shall also be made of them.
+
+When now (1.) the White player has the first move and begins his game with a Knight: then the Black player is advised that (if White moves the King’s Knight to nineteen) [[notes: Selenus uses a 1–64 numbering system starting from White's bottom left (a1 is 1, h1 is 8, a8 is 57, and h8 is 64). Square 19 corresponds to c3 in modern notation.]] he should move the King’s Soldier to thirty-seven [[notes: Square 37 is e5. In the 17th century, occupying the center with pawns was considered the only "correct" way to open.]], so that the same White player, by moving the King’s Soldier to twenty-eight [[notes: Square 28 is d4.]], does not bring his game into a good order.
+
+But if (2.) White moves the King’s Knight to twenty-two [[notes: Square 22 is f3.]]: then Black should move the King’s Soldier to thirty-seven (so that White does not immediately bring his game into a better order with the King’s Soldier, but must instead still make many futile moves). But if he does not wish to prevent it, but instead sets the King’s Soldier on thirty-six [[notes: Square 36 is d5.]]: then he nonetheless has a better order in his game: Because White [must generally use] the King’s Bishop’s Soldier [[notes: "Schützen-Soldaten" refers to the Bishop's Pawn.]], with which the one who first attacks his enemy must commonly come to the aid of his game)
+
+[[meta: catchword: men) - This is the "catchword" at the bottom of the page, indicating the start of the first word on the following page (kommen).]]
+
+[[summary: This page discusses unconventional openings, specifically starting with Knights or flank pawns, which the author advises against. It provides specific counter-moves for Black to maintain central control against these "inexperienced" starts.]]
+[[keywords: Opening theory, Knights, Pawns, Chess strategy, King's Knight, Central control, 17th-century chess]]

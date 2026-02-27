@@ -1,0 +1,27 @@
+The second row <note>original: "order"</note> of circles <note>original: "roundes"</note> discovered as previously mentioned are not all marked with algebraic <note>original: "cossicall"</note> signs. Only 4 and 9 are marked with the root sign, and 81 is marked with the square <note>original: "quadrate"</note> sign. The others have none because among their opponents' <note>original: "aduersaries"</note> pieces <note>original: "men"</note>, there are none that can serve as an algebraic <note>original: "cossicall"</note> root to them in the manner this game requires.
+
+| 64 | 36 | 16 | 4 |
+| :---: | :---: | :---: | :---: |
+| | | | ℞ |
+
+| 81 | 49 | 25 | 9 |
+| :---: | :---: | :---: | :---: |
+| ℨ | | | ℞ |
+
+The first row <note>original: "order"</note> of triangles (having the same numbers that were taught before) all lack algebraic <note>original: "cossicall"</note> signs, except for 6, which is marked with the root sign.
+
+| 72 | 42 | 20 | 6 |
+| :---: | :---: | :---: | :---: |
+| | | | ℞ |
+
+| 81 | 56 | 30 | 12 |
+| :---: | :---: | :---: | :---: |
+| | | | |
+
+<summary>
+This section of the manual for the Philosophers' Game (Rythmomachia) details the specific mathematical markings required for the second row of circular pieces and the first row of triangular pieces. It explains that only certain numbers—specifically those that have a corresponding "root" or "square" represented among the opponent's pieces—receive algebraic (cossic) signs. For the circles, only 4, 9, and 81 are marked, while in the first set of triangles, only 6 is marked with a root sign.
+</summary>
+
+<keywords>
+Rythmomachia, Philosophers' Game, algebraic signs, cossic signs, root, square, quadrate, circles, triangles, game pieces, mathematical proportions
+</keywords>

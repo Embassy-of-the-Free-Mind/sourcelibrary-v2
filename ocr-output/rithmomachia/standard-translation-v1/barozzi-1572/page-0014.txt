@@ -1,0 +1,34 @@
+[[meta: This page transitions from the physical description of the playing pieces to the mathematical logic that governs them. The author begins organizing the "soldiers" into two opposing armies and explains the philosophical hierarchy of the shapes—rounds, triangles, and squares—that dictates the order in which they are numbered.]]
+
+->○ △ □<-
+
+->1<-
+->4<-
+->9<-
+->16<-
+->25<-
+->36<-
+->**91**<-
+
+->9<-
+->16<-
+->25<-
+->36<-
+->49<-
+->64<-
+->**199**<-
+
+## Second part, which treats the numbers that should be painted upon the pieces.
+
+Since we must, in this second part of our Treatise, deal with the numbers that should be painted upon the pieces (which is nothing other than determining which numbers should be assigned to which pieces), let us place before our eyes the pieces already described above. Since these have two sides, one white and one black, we shall turn half of them with the white face upward and the other half with the black face upward, so that they form two ranks [[notes: The author uses the word *schiere*, meaning military ranks or battalions, framing the game as a formal battle]] of pieces: one white and one black. In each of these ranks, there shall be 8 rounds, 8 triangles, and 8 squares—counting, however, the bases of the pyramids as two squares [[notes: In the game of Rythmomachia, the pyramid is a composite piece; its base is counted as a square for the purposes of piece distribution]]. The levels of these pyramids being movable and having two faces, one white and one black, they shall be arranged in such a way that one pyramid is made white (this being the one with six levels) and the other black. 
+
+Once the two ranks have been separated in this manner, we shall begin to write the numbers upon the pieces of both ranks in the following order. First, we shall write the numbers upon the rounds, as this is the first, simplest, and most noble figure of Geometry. Then upon the triangles, this being the second figure of Geometry. Then upon the squares, as this is the third figure of said Geometry. And first, I will write the numbers upon the white rounds, and then upon the black rounds; likewise first upon the white triangles, and then upon the black; and similarly first upon the white squares, and then upon the black. And it is necessary to note that upon the pieces
+
+H
+[[meta: catchword: wh-]]
+
+[[gloss: Geometry, pyramids, rounds, triangles, squares, numbers, ranks]]
+
+[[summary: This page establishes the organizational rules for the game's two "armies" and introduces the geometric hierarchy used to assign numerical values to the pieces. It specifies that the pieces are divided by color and shape, with the pyramid's base being categorized as a square.]]
+
+[[keywords: Rythmomachia, Geometry, Pyramids, Mathematical proportions, Game pieces, Renaissance education]]

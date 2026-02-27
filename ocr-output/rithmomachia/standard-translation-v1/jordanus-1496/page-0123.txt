@@ -1,0 +1,42 @@
+[[meta: This page continues from the previous discussion of the Chromatic genus, now providing the mathematical and structural framework for the Enharmonic genus—the most complex of the three Greek musical systems. It also establishes the "Fixed" and "Movable" notes of the fifteen-string scale (the pentadecachord), which is essential for understanding how ancient musicians tuned their instruments.]]
+
+<page-num>IIII</page-num>
+<sig>b 4</sig>
+
+¶ Let the numbers **a b c d e f g h k l m n o p q** be the numbers of the **Diatonic pentadecachord** [[notes: A fifteen-string scale spanning two octaves]] established in the first position, found according to the eighth rule of this book. I place **a b e h k n q** again in a second position: in the corresponding places, I change **c** in the second position to **d**, and **f** to **g**; **l** to **m**, and **o** to **p**. With these arranged in the second position: from those in the second position, I take the difference of **b d**, and I add half of it to **b**, and let it become **c**. Similarly, I take the difference of **e g** and add half of the difference to **g**, and let it become **f**. I take the difference of **k m** and with the half of the difference added to **m**, let it become **l**. Finally, I take the difference of **n p** and with the half added to **p**, let it become **o**. 
+
+I declare that the numbers **a b c d e f g h k l m n o p q** placed in the second position are the numbers of the **Enharmonic pentadecachord**. For **a b** will be a tone. **b c** and **c d** are two **dieses** [[notes: In the Enharmonic genus, the semitone is split into two very small intervals called quarter-tones or 'dieses']] constituting the minor semitone **b d**. For that which was **b c** in the Diatonic is made **b d** in the Enharmonic, and **d e** is a **ditone** [[notes: A major third, consisting of two whole tones]]. For what is **c e** in the Diatonic is here **d e** in the Enharmonic. But in the Diatonic modulation, **c e** is a ditone, for it contains the tone **c d** and the tone **d e**. In this same manner, **e f g** will be found to be two dieses, and **g h** a ditone. **h k** is a tone; **k l m** two dieses; **m n** a ditone. **n o p** two dieses; **p q** a ditone. Thus, the numbers of the Enharmonic pentadecachord have been collected just as was proposed. This is what was intended.
+
+<margin>17</margin> ¶ That the Diatonic **parhypate hypaton** passes into the **lichanos** in Enharmonic modulation; and the **parhypate meson** into the **lichanos meson**; and the **trite** into the **paranetes**.
+
+¶ This is immediately easy to see. For in the Diatonic pentadecachord, a tone falls between the **proslambanomenos** [[notes: The lowest "added" note]] and the **hypate hypaton**; and a minor semitone falls between the **hypate** and the **parhypate hypaton**. In the Enharmonic, however, a tone similarly falls between the proslambanomenos and the hypate hypaton; and a minor semitone falls between the hypate and the **lichanos hypaton**. Therefore, the Diatonic *parhypate* is changed in Enharmonic modulation and passes into the *lichanos*. This can be shown for the remaining notes in the same way. This is also easily perceived by the senses: if the *proslambanomeni* are placed in unison in both the Diatonic and Enharmonic genera of modulation, then it will be manifest that the *lichanos* of the latter is equal in sound (unison) to the *parhypate* of the former; and likewise, the *paranetes* of the latter are equal in sound to the *tritis* of the former.
+
+<margin>18</margin> ¶ Certain notes agree across the three genera of modulation: the **proslambanomeni**, the **principal hypatae**, the **middle hypatae**, the **mese**, the **paramese**, the **nete** (both disjunct and conjunct), and the **excellent netes** [[notes: These are the "fixed" notes that provide the skeleton of the scale; they do not change pitch regardless of whether the music is Diatonic, Chromatic, or Enharmonic]].
+
+¶ For in all three genera—through the fourth, fifth, sixth, seventh, tenth, eleventh, twelfth, and fifteenth rules—the *proslambanomeni* sound a tone relative to the *hypatae hypaton*. These same notes sound a **diapente** [[notes: A perfect fifth]] relative to the *hypatae meson*, a **diapason** [[notes: An octave]] to the *mesas*, and a **diapason plus a diapente** [[notes: An octave plus a fifth, or a twelfth]] to the *netas disiunctas*. To the *netas coniunctas*, they would sound a **diapason plus a diatessaron** [[notes: An octave plus a fourth, or an eleventh]] if the tone were removed. And to the *netas excellētes*, the *proslambanomeni* harmonize as a **bis diapason** [[notes: A double octave]]. Therefore, the voices that have been brought forward agree across the three genera. This is what was proposed.
+
+<margin>19</margin> ¶ To investigate which strings are **mobile** and which are **immobile** within the pentadecachords.
+
+| | | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| Proslambanomeni | a | **Stable** | | |
+| Hypate hypaton | b | **Stable** | | |
+| Parhypate hypaton | c | **Unstable** | | |
+| Lichani hypaton | d | **Unstable** | | |
+| Hypate meson | e | **Stable** | | |
+| Parhypate meson | f | **Unstable** | | |
+| Lichani meson | g | **Unstable** | | |
+| Mese | h | **Stable** | | |
+| Paramese diezeugmenon | k | **Stable** | Trite synezeugmenon. | **Unstable** |
+| Trite diezeugmenon | l | **Unstable** | Paranete synezeugmenon. | **Unstable** |
+| Paranete diezeugmenon | m | **Unstable** | Nete synezeugmenō. | **Stable** |
+| Nete diezeugmenon | n | **Stable** | | |
+| Trite hyperboleon | o | **Unstable** | | |
+| Paranete hyperboleon | p | **Unstable** | | |
+| Nete hyperboleon | q | **Stable** | | |
+
+¶ We call those strings **stable** and **immobile** which, in every division of the pentadecachords, maintain the same intervals and the same relationship to the *proslambanomenon*. We call those **unstable** and **mobile** which do not maintain this. Thus, we shall find the stable and unstable notes. Since, according to the preceding rule, the *proslambanomeni*, the principal *hypatae*, the middle *hypatae*, the *mese*, the *paramese*, and the *netai* (whether conjunct, disjunct, or excellent) agree in the three genera, they maintain the same intervals, as is now clear from what has been demonstrated. Therefore, the *proslambanomenos*, *hypate hypaton*, *hypate meson*, *mese*, *paramese*, *nete synezeugmenon*, *nete diezeugmenon*, and *nete hyperboleon* will be simply immobile and firm. But since the seventeenth rule of this book showed that the *parhypates* of the Diatonic modulation pass into the Enharmonic middle...
+
+[[summary: This page describes the mathematical construction of the Enharmonic genus by splitting semitones into quarter-tones (dieses) and identifies which notes in the 15-string Greek scale remain fixed (stable) or change (mobile) across the three musical genera.]]
+
+[[keywords: Enharmonic genus, Pentadecachord, Diesis, Ditone, Stable strings, Mobile strings, Greek music theory, Diapason, Proslambanomenos]]

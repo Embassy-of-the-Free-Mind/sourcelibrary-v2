@@ -1,0 +1,15 @@
+[[meta: This page serves as a brief instructional interjection within Chapter 8. While the previous page was detailing specific moves (16–18), the author pauses here to explain the visual aids—the "Schemata" or diagrams—that he has provided to help the reader follow the complex variations without having to draw their own boards.]]
+
+The Second Book / Chapter 8
+
+# To the Reader.
+
+<image-desc>An ornamental woodcut drop cap 'O' containing a diagram of three overlapping circles or spheres within a decorated frame.</image-desc> **A**lthough instructions were given above—in the 6th Chapter of this book—regarding how one might easily remember the variations of moves in the examples and, whenever one wishes, immediately visualize them; nevertheless, the Author has seen fit to include and share as many *Schemata* [[notes: Diagrams or woodcut illustrations of the chessboard]] as may be necessary in this and the following chapters (in which the examples are described in great detail). This was done because the Author realized that recording such moves oneself might be somewhat difficult for beginners and unpracticed chess players—or perhaps inconvenient for those burdened with higher affairs who lack the spare time—so that the reader may be served in this regard and everything might be made that much easier.
+
+However, if at times a diagram for a referenced Number [[notes: The numbered variations, such as the 16th or 17th variation discussed on the previous page]] is omitted, one can use the diagram assigned to the nearest preceding Number found before it. Simply play the moves up to the first move of the Number in question, and in this way, prepare the missing diagram for oneself.
+
+Regarding the letters in these squares: they indicate the Chess Pieces in the following manner: **(K)** King; **(K)** Queen [[notes: In the original German, both *König* and *Königin* start with K; the diagrams distinguish them by context or slight variations in the woodcut symbols]]; **(Ro)** Rook [[notes: *Roche*, the historical term derived from the Persian *Rokh* (chariot)]]; **(Sc)** Bishop [[notes: *Schütze*, literally "Archer" or "Sharpshooter." At this time, the piece we call a Bishop was often depicted as an archer or a "runner" (*Läufer*) in German-speaking lands]]; **(R)** Knight [[notes: *Reuter*, literally "Rider"]]; **(S)** Pawn [[notes: *Soldat*, literally "Soldier"]]. The **w** and **S**, however (which are placed before the aforementioned letters), indicate the **White** and **Black** colors of the Chess Pieces.
+
+[[summary: This page contains an address to the reader where Gustavus Selenus explains his decision to include woodcut diagrams (Schemata) to assist those who find it difficult to track move variations. He also provides a legend for the abbreviations used for each chess piece.]]
+
+[[keywords: Chess diagrams, Schemata, piece notation, Schütze, Reuter, Roche, Soldat, 17th century chess terminology, Gustavus Selenus]]

@@ -1,0 +1,31 @@
+[[meta: This page continues the exploration of the etymology of the word "Schach" (chess), moving from general theories about its origin in the game's pieces to specific scholarly arguments from Renaissance humanists like Polydore Vergil and Vitus Amerbach.]]
+
+<header>About the Game of Chess.</header>
+<sig>F iij</sig>
+<meta>catchword: Empire/</meta>
+
+[[margin: Chapter 2]]
+
+### The Second Part / led by Polydore Vergil (Book 2, Chapter 13 of *On the Inventors of Things* [[notes: Polydore Vergil (c. 1470–1555) was an Italian humanist priest who wrote a famous history of "firsts" and origins]]), who believes that this game is called Chess or the "Game of Stones" because of the pieces, which are nowadays called *Scacos*. His words are as follows:
+
+> *Today, these counters, or little stones, or "thieves" with which we play-fight (for it is a contest resembling a battle), are called "Scacos," perhaps named from the word "scandere" [to climb], because the pieces, when moved toward the opponent’s side, seem to climb upward.*
+
+->That is:<-
+
+> The pieces used in this game (which is not unlike a battle) are called Chess-pieces today, perhaps from the Latin word **scandere** [[notes: Latin for "to climb" or "to ascend"]], because the pieces, when they are moved toward the opponent’s side, appear as if they are climbing upward.
+
+This opinion might seem to many to be a bit of a stretch. Therefore, others seek the origin of the name from the way the word is used within the game itself.
+
+However, we believe that the name of a thing should primarily be researched and derived from its nature and manner as much as possible. In this regard, Vitus Amerbach [[notes: Vitus Amerbach (1503–1557) was a German humanist and theologian]], in his *Exposition of Book 2 of Ovid's Tristia*, may have hit the mark best when he writes about this name in this way:
+
+> *The Game of Little Mercenaries [Ludus Latrunculorum] is now called the Game of Chess [Ludus Scachorum], perhaps named from "fugando" [chasing or putting to flight], if we may take the etymology from our own language. For there is, within it, a certain image of a battle.*
+
+->That is:<-
+
+> The game which the Romans called **Ludum Latrunculorum** [[notes: As mentioned on the previous page, this literally means the "Game of Little Mercenaries"]] is now called the Game of Chess; perhaps (if one wishes to take the origin of this word from our German language) named because of the **Schacken**—the driving and chasing away (of which a further report shall follow below) of the opponent's pieces. For hidden within it is the image of a battle and the routing of the enemy.
+
+Indeed, it is not unbelievable that the Germans (who were well acquainted with this game, as can be gathered from what was previously cited from Olaus Magnus, the Bavarian Chronicles, and Metellus [[notes: These are various historical and geographical sources the author used to prove chess had a long history in Northern Europe and Germany]])—after they [conquered] the Roman Empire—
+
+[[summary: This page discusses two scholarly theories for the origin of the word "Chess": one deriving it from the Latin word for "climbing" (scandere) and another from a German word for "chasing" (schacken). It highlights the Renaissance view of chess as a simulation of a military battle.]]
+
+[[keywords: Chess etymology, Polydore Vergil, Vitus Amerbach, Ludus Latrunculorum, Scandere, Schacken, Chess pieces, History of Chess]]

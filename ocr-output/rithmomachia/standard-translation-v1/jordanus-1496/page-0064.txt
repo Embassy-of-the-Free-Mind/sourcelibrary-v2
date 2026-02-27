@@ -1,0 +1,46 @@
+[[meta: This page continues Jordanus de Nemore's exploration of ratio theory in Book IX. Having discussed how unit fractions and parts combine, he now moves into the "composition" of ratios—essentially what we would call the multiplication of fractions. He uses the Boethian categories: multiple (n:1), superparticular (n+1:n), and superpartient (n+m:n where m > 1).]]
+
+¶ Let **a** to **b** be a superpartient ratio [[notes: A superpartient ratio is one where the larger number contains the smaller number plus more than one "part" or unit fraction, such as 5:3 (which is 1 + 2/3)]]. And let the sum of **a** and **b** be **c**. I say that **c** to **a** is superpartient, and **c** to **b** is a multiple-superpartient ratio [[notes: A multiple-superpartient ratio contains the smaller number multiple times plus some extra parts, e.g., 8:3 is 2 + 2/3]]. For I take from the greater **a** a number **d** equal to **b**; and let **e** be the remainder. Because **a** is superpartient to **b**, by definition **e** will be parts of **b**. And because **c** is the sum of **a** and **b**, and **a** is the sum of **d** and **e**, then **c** is the sum of **b**, **d**, and **e**. Since **d** equals **b**, the sum of **b** and **d** is double **b**. Thus **c** is more than double **b** by the amount **e**. But **e** was shown to be parts of **b**; therefore **c** contains **b** some number of times plus its parts. Thus, by definition, **c** to **b** is a multiple-superpartient ratio. This is the second part of the theorem. The first part—that **c** is superpartient to **a**—is clear. For since **e** is parts of **b**, it follows that **b** is parts of **a**; otherwise **a** would be a multiple of **b**, which contradicts our hypothesis. And since **c** exceeds **a** by the amount **b**, then **c** to **a** is superpartient. This is what was proposed.
+
+[[margin: 20]]
+¶ Every ratio of a composite sum to the greater of its components is found to be either superparticular or superpartient; but to the lesser component, it is found to be multiple, multiple-superparticular, or multiple-superpartient.
+¶ First, it is clear that the composite sum to the greater component is superparticular or superpartient. For the composite exceeds the greater component by the amount of the lesser, which (by the first proposition of the first book) will be either a "part" [[notes: a unit fraction like 1/3]] or "parts" [[notes: a non-unit fraction like 2/3]] of the greater. If it is a part of the greater, then by definition the composite to the greater is superparticular. If it is parts, it is superpartient. It can never be a multiple of the greater. Second, it is shown that the composite to the lesser is multiple, multiple-superparticular, or multiple-superpartient. For the ratio of the greater component to the lesser, by division, is either multiple, superparticular, superpartient, multiple-superparticular, or multiple-superpartient. If the ratio of the greater to the lesser is multiple, then since the lesser measures the greater and also itself, it will measure the whole sum. Therefore, the composite will then be a multiple of it. And if the greater to the lesser is superparticular or multiple-superparticular, by the eighteenth [proposition] of this book, the composite to the lesser will be multiple-superparticular. And if the greater to the lesser is superpartient or multiple-superpartient, by the nineteenth [proposition] of this book, the composite to the lesser will be multiple-superpartient. Thus the whole proposition is known.
+
+[[margin: 21]]
+¶ Whatever ratio of a greater to a lesser is added to a multiple ratio, the total will be either multiple, multiple-superparticular, or multiple-superpartient.
+¶ Let any multiple ratio be given, and any other ratio of a greater to a lesser, which (by the sixth of the fifth book) is contained in the least terms **a**, **b**, and **c**. Thus, let **a** to **b** be the given multiple ratio, and **b** to **c** be the other ratio of greater relationship. I say that the total ratio **a** to **c** is either multiple, multiple-superparticular, or multiple-superpartient. Because **a** is greater than **b**, and **b** is greater than **c**, and the ratio **a** to **b** is multiple: by the ninth of the second book, the ratio **a** to **c** is greater than the ratio **a** to **b**. Therefore, the ratio **a** to **c** adds to the ratio **a** to **b** either a whole number—in which case the total will be multiple—or a part, or a number with a part—in which case it will be multiple-superparticular—or parts, or a number with parts—in which case it will be multiple-superpartient. Thus, what is said is known.
+
+[[margin: 22]]
+¶ If two multiples are joined [[notes: "Joined" here refers to compounding or multiplying the ratios]], the composite ratio will be multiple.
+¶ For each is denominated by a number [[notes: The "denomination" of a ratio is the value of the fraction it represents; for a multiple ratio like 3:1, the denomination is 3]]. If these numbers are multiplied by each other, a number results which (by the eighth of this book) denominates the composite ratio; therefore it will be multiple. This is what was proposed.
+
+[[margin: 23]]
+¶ Given a multiple ratio, to find a superparticular ratio which, when combined with it, constitutes a multiple ratio. From this it is clear that from any multiple joined with a "total" superparticular, a multiple one degree higher in denomination results.
+¶ Multiples and superparticulars are called "total" when the denomination of the multiple and the denomination of the part in the superparticular are taken from the same number. For example, a "double" (2:1) and a "sesquialter" (3:2) [[notes: Sesquialter literally means "one and a half"; it is denominated by 2 because it is 1 + 1/2]]. For the double is from 2, and the sesquialter is similarly taken from 2, as it contains the whole and one-half. Likewise "triple" (3:1) and "sesquiquarta" (5:4)... [[notes: The text seems to skip or err, as triple usually pairs with sesquitertia (4:3)]] and so on. Let **a** be any given multiple ratio and **b** the number denominating it. Let **c** be a superparticular ratio whose number **d** denotes the part. Let **d** be equal to **b**. Let **e** be the total denomination of the superparticular ratio **c**, which is denominated by unity and the number of the part. Since one times **b** makes **b**, and the part denoted by **b** taken **b** times makes one: therefore the total denomination multiplied by **b** makes a number one greater than **b**, which we call **f**. By the eighth of this book, **f** is the denomination of the ratio composed of **a** and **c**. Therefore the ratio composed of **a** and **c** is a multiple. And because the number denominating the composite is one greater than the number denominating ratio **a**, the corollary and the whole proposition are known.
+
+[[margin: 24]]
+¶ Given a superparticular ratio, to find as many multiples as desired which, when joined with it, compose a multiple ratio.
+¶ Let **a** be the given superparticular ratio, and let the part which (with unity) denominates it be **b**. I take as many multiples as I wish, such that the denominating number of each is a multiple of **b**. Following the method of the previous demonstration, **a** will constitute a multiple ratio with any of those multiples, and the goal is achieved.
+
+[[margin: 25]]
+¶ Given a multiple ratio, to take as many superparticulars as desired, any of which will produce a multiple-superparticular when combined with it.
+¶ Let **a** be the given multiple ratio, for which we are commanded to find as many superparticulars as desired to constitute a multiple-superparticular. I take **b**, the number denominating the multiple ratio **a**, and I take **c**, **d**, **e**, **f** as many multiples of **b** as I want, and the parts denoted by them in order. I take the superparticulars denoted by those parts of **c**, **d**, **e**, **f**, which we call **g**, **h**, **k**, **l**. I say that any of these joined with the given multiple constitutes a multiple-superparticular... [[notes: Jordanus here is showing that if you don't pick the specific "total" superparticular described in Margin 23, the result will not be a pure multiple, but will fall into the "multiple-superparticular" category (like 2 x 1 1/4 = 2 1/2)]].
+
+| 4 | 6 | | 8 | 10 |
+|---|---|---|---|---|
+| d | | | e | f |
+| 2 | 1 | | | |
+| a | | | | |
+| b | | 2 | | |
+| 11 | 10 | | 22 | 10 |
+| 1 | | | | |
+| | 8 | | 18 | 8 |
+| k | | | | |
+| | 6 | | 14 | 6 |
+| h | | | | |
+| 5 | 4 | | 10 | 4 |
+
+->[[margin: composite]]<-
+
+[[summary: This page explains the rules for combining (multiplying) different types of numerical ratios. It specifically proves how adding a multiple ratio to others results in complex ratios and identifies the specific conditions under which a multiple and a superparticular ratio combine to form a new, higher multiple.]]
+[[keywords: ratio theory, multiple ratio, superpartient, superparticular, Jordanus de Nemore, Arithmetica, composition of ratios, Boethian mathematics]]

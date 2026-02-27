@@ -1,0 +1,18 @@
+[[meta: This page continues the description of the fifth pawn, representing physicians, apothecaries, and surgeons. It elaborates on the medical theories of the time, specifically the treatment of the "humors" and the psychological impact of emotions on physical health.]]
+
+### 10. Chapter: On the Game of Chess. 99
+
+...then provide him with warm **medicine**; if it comes from heat / then provide him with cool **medicine** [[notes: This refers to the theory of the Four Humors, where health was maintained by balancing hot, cold, moist, and dry qualities.]]: or whether it comes / from sorrow / from fright / or from joy. It often happens / that a man / who sickens from sadness / and then recovers / is better off than one / who falls ill from sudden joy: for they are often found / to be suddenly dead / or else their limbs become **paralyzed** [[notes: *vergichtig*, meaning stricken with palsy or gout-like stiffness]] and useless. Now it is to be known / and also noted / that **joy** / is a wide pouring out of the spirit / into a state that is fitting / and pleasant: a wise man / is never joyful in a way / that exceeds the strength / of the conscience / and is born from practice / and is neither suppressed nor destroyed / only when strength fails / for what fortune has given / does not concern him: for **Love** and **joy** / may do the same / as a strike / of heaven’s lightning / or thunder. 
+
+Secondly / they [[notes: the physicians]] should be chaste of body / and grave in their manners / coming with honored and orderly words / and they shall comfort the sick / that they may soon become healthy. Therefore they are placed / on the **chessboard** [[notes: *Schachzabel*]] / before the **Queen** / because women have many **sicknesses** [[notes: *Sichtumbs*]] and special **ailments** [[notes: *gebresten*]] / for which they [[the physicians]] should appear / with manners / with discipline / and with honor / before all people. 
+
+Thirdly / that which the **Apothecaries** / among the prominent people / should have / is this / that they prepare with great diligence / whatever belongs to the **medicine** / according to the **Doctor’s** word and art / so that they do not / put one herb in place of another / and that they do not falsify it / and that they do not put forward / old and rotten roots / for new, fresh ones / and that they do not / give poisonous things / to unlearned doctors / and simple people / and that they do not thereby give / or bring anyone / a cause / for death. 
+
+Fourthly / the **Surgeons** [[notes: *WundArtzt*, literally "Wound-Doctor"]] / should be compassionate / toward the aforementioned people / and should not be inclined or too hasty / to cut / or to burn [[notes: Cauterizing wounds with heat was a common but feared practice.]] / wounds or ulcers / lest they lose their **reputation** [[notes: *laumden*]] / and be called butchers / rather than healers of wounds: All **Doctors** should also / strive / to do what they do with good manners / and that they / first / make the sick healthy in spirit / and help the suffering of the soul / before the suffering of the body / so that they do not have / disordered words / promises / sorrow / or joy.
+
+N iij
+[[meta: catchword: The]]
+
+[[summary: This page outlines the ethical and professional duties of medical practitioners, linking physical health to emotional states like joy and sorrow. It explains why the physician pawn stands before the Queen and warns apothecaries and surgeons against malpractice and cruelty.]]
+
+[[keywords: medicine, humors, physicians, apothecaries, surgeons, Queen, ethics, surgery, psychology]]

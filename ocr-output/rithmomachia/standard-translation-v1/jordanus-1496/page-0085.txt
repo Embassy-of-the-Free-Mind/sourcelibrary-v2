@@ -1,0 +1,30 @@
+[[meta: This page begins the first volume of Jacques Lefèvre d’Étaples’s *Elementa Musicalia* (1496). The previous material discussed the mathematical properties of means (arithmetic, geometric, harmonic) in a more abstract numerical sense, likely following the tradition of Jordanus de Nemore. Now, Lefèvre transitions from pure mathematics to the application of these ratios in the science of music, framing the work as an offering to his patron, Nicolas de Haqueville.]]
+
+# The Musical Elements of Jacques Lefèvre d’Étaples to the most illustrious man Nicolas de Haqueville, President of the Inquest. [[notes: Nicolas de Haqueville was a prominent legal official in the Parlement of Paris and a patron of humanist scholars.]]
+
+**I** had determined, most illustrious man, to dedicate these night-watches [[notes: *Vigilias* refers to the scholarly work performed by candlelight at night.]] of mine—whatever they may be worth—concerning the elements of music to no one before I knew them to have been proven. For it did not escape me that demonstrations (in which alone the force of science consists) could not fail to be approved. But even if you hold the judgments of the present age in low regard, these men from antiquity will rightly be able to commend musical labors to you most highly:
+
+| | | |
+|----------|----------|----------|
+| Mercury | Lamyrus | Ptolemy |
+| Orpheus | Ismenias the Theban | Eubulides |
+| Pythagoras of Samos | Terpander of Lesbos | Hippasus |
+| Amphion of Thebes | Lycaon of Samos | Aristoxenus |
+| Linus | Theophrastus of Eresos | Philolaus the Pythagorean |
+| Arion of Lesbos | Histiaeus of Colophon | Archytas of Tarentum |
+| Abydas the Phrygian | Timotheus of Miletus | Albinus |
+| Coroebus the Lydian | Nicomachus | Saint Severinus Boethius |
+| Hyagnis the Phrygian | Plato | |
+| Marsyas | Aristotle | |
+
+And many others like them, all of whom eternal memory has made distinguished through the most alluring of disciplines, Music. Among these, I include my two teachers, Jacques Labinius and Jacques Turbelinus, as men who shall live for posterity through this art. Her wonderful effects also commend her. For the Pythagoreans softened the ferocity of minds with strings. Asclepiades [[notes: A Greek physician who used music as a form of medical treatment.]] quelled the seditions of a raging mob with frequent song; he also healed the deaf with a trumpet. Damon the Pythagorean brought drunk and thus impudent youths back to temperance with more solemn modes. Antiquity cured fever and wounds with musical modulation. With the same sweetness, she corrected the pains of sciatica and of the hips, which Ismenias the Theban is remembered to have attempted. Theophrastus is recorded to have employed musical modes for moderating the disturbances of the mind. 
+
+Nor is this without cause; for music is like a certain law and rule of moderation. For this reason, Diogenes [[notes: Referring to Diogenes the Cynic.]] rightly mocked those musicians who, while they kept their lyres tuned to harmonic agreements, bore a disordered mind, utterly devoid of the harmony of life. Xenocrates freed the frenzied with instrumental modes. Thales of Crete put diseases and the plague to flight with the sweetness of the lyre. Saint Severinus [[notes: Severinus Boethius, the primary authority on music in the Middle Ages.]] is the authority that Terpander and Arion relieved the Boeotians and Lesbians from most serious diseases through song. Herophilus the physician used to weigh the pulses of the sick by musical rhythms. 
+
+But the musician Timotheus, when he wished, made Alexander [[notes: Alexander the Great.]] fierce and raging for arms, and at other times, when he pleased, drew him back from arms to banquets, softened. Orpheus the Thracian bent the senses of wild beasts with strings and song; that is, by singing laws to the lyre, he led the beast-like customs of men back to a moderated humanity. Deer are captured by pipes and held by the study of modulations. Hyperborean swans are enticed by the songs of the lyre. Indian elephants are soothed by instrumental sweetness. Small birds are ensnared by pipes. Songs move the still tender senses of infants, and rattles soothe those who are crying. Arion won over the dolphins to himself with his strings. Serpents are burst by songs [[notes: A common ancient folk belief that certain sounds or spells could physically harm snakes.]]. The spirits of the buried are summoned by songs. On the Actian shore, the sea is remembered to resound with the lyre. At Megara, a stone resounds like a lyre, and it plays at the stroke of anyone striking it. 
+
+And I could bring forward many such things, most illustrious man, for the commendation of music. But since this discipline—now dedicated to you by me and by the study of good letters—is commended by so many and such great authorities, both recent and ancient: may you receive it with a favorable mind, as it is about to have light under your auspices. And know that I am one among your humble clients, an observer of your virtues and your name. Farewell.
+
+[[summary: This page serves as a formal dedication of the *Elementa Musicalia* to Nicolas de Haqueville, enumerating a "who's who" of ancient music theorists and listing the legendary psychological and physical healing powers of music.]]
+
+[[keywords: Jacques Lefèvre d’Étaples, music theory, Boethius, Pythagoras, music therapy, Nicolas de Haqueville, Renaissance humanism, Timotheus, Orpheus]]

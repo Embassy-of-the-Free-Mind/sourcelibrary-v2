@@ -1,0 +1,12 @@
+[[meta: Continuity from the previous page: This page is the flyleaf immediately following the library bookplate. It serves as a protective blank sheet before the start of the manuscript’s primary content.]]
+
+[This page is blank]
+
+[[notes: The presence of a blank flyleaf is typical in historical bindings, serving as a buffer to protect the title page or main text from the outer covers. This specific page shows significant **foxing**—a term for the brownish-yellow spots caused by the oxidation of iron or the growth of fungi in the paper fibers over centuries. The **bleed-through** visible here is the faint ghosting of ink or markings from the pages on either side, a result of the paper’s porosity and the passage of time.]]
+
+[[margin: Digitized by Google]]
+[[notes: This small digital watermark in the corner indicates that the volume was scanned as part of the Google Books project, a massive effort to preserve and make searchable the world's library collections.]]
+
+[[summary: This page is a blank flyleaf displaying the physical aging of the volume through foxing and staining. It contains no written text but bears a modern digital watermark from the scanning process.]]
+
+[[keywords: flyleaf, foxing, paper preservation, Google Books, digitization, bibliography]]

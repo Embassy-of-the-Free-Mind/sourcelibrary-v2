@@ -1,0 +1,19 @@
+[[meta: The previous page concluded the formal introduction and publisher information for the "Second Book" of a treatise on chess. However, the current page presents a significant physical anomaly: it is not a direct continuation of the chess text, but rather a "mirrored impression." This occurs when the wet ink of one book is pressed against the blank page of another (often during binding or tight storage), leaving a ghost image. The text identified here belongs to a religious volume associated with the Franconian Hohenzollerns, not the chess manual.]]
+
+## A
+# Prayer Book
+### of the Clergy
+### of the Princely
+### House of
+### Brandenburg-
+### Culmbach. [[notes: Brandenburg-Culmbach (later known as Brandenburg-Bayreuth) was a territory of the Holy Roman Empire ruled by the House of Hohenzollern. In the 16th and 17th centuries, this court was a significant center of Lutheranism.]]
+
+---
+
+->Profession of the<-
+->Christian faith<- [[notes: The Latin "Professio fidei Christianae" refers to a formal statement of religious doctrine. In this context, it likely refers to the specific Lutheran confessions adopted by the Brandenburg-Culmbach court.]]
+
+<vocab>Prayer book, Clergy, Princely House, Brandenburg, Culmbach, Profession of the Christian faith</vocab> [[notes: This vocabulary list identifies the key subjects of the mirrored title page, emphasizing the ecclesiastical (church-related) and noble nature of the original source volume.]]
+
+[[summary: This page captures a mirrored ink transfer from a title page of a Lutheran prayer book belonging to the House of Brandenburg-Culmbach. Its presence here is a physical artifact of book history, showing where a religious text was once pressed against this manuscript.]]
+[[keywords: Prayer book, Brandenburg-Culmbach, Hohenzollern, Profession of Faith, Clergy, mirrored text, Lutheranism, 17th century]]

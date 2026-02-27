@@ -1,0 +1,45 @@
+[[meta: This page continues the mathematical demonstration of how the number sets in Rithmomachia correspond to musical harmonies. It concludes a previous example and provides two new sets, "The Third" and "The Fifth," illustrating how the "Greatest Victory" in the game is achieved through these proportions.]]
+
+# The Sixth Chapter
+
+...numbers under D, or compared with the **difference** of the numbers under B and D (which is 2 or 4).
+
+The **Diatessaron**, or the **Fourth**, can be found and obtained from B, or from the difference between A and D (4 or 8), compared with the difference between A and C (3 or 6), or compared with C. [[notes: In Pythagorean tuning, the Fourth is defined by the ratio 4:3.]]
+
+The **Diapason**, or the **Octave**, is understood by holding A against C, or against the difference A, C (which is 6). In like manner, it is found by holding B against D, or against the differences B, A, and B, D (2 or 4). [[notes: The Octave is defined by the ratio 2:1.]]
+
+The **Diapason with the Diapente**, or the **Twelfth**, is established by A against D, or against the differences B, A, and B, D (2 or 4). Also, C, or the difference A, C (3 or 6), compared and held against the differences C, B, and C, D (1 or 2). [[notes: The Twelfth—an octave plus a fifth—is defined by the ratio 3:1.]]
+
+The **Disdiapason**, or the **Fifteenth**, is indicated by B, or the difference A, D (4 or 8), compared against the differences B, C, and C, D (which is 1). [[notes: The Fifteenth—a double octave—is defined by the ratio 4:1.]]
+
+## The Third.
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 3. | 5. | 15. | 25. |
+
+The **Fifth** is B compared against the differences B, A, and B, C (which is 10). [[notes: 15 to 10 simplifies to a 3:2 ratio, the "Sesquialter" ratio of a Perfect Fifth.]] In like manner, D compared against the difference D, C (which is 2). [[notes: 3 to 2 ratio.]]
+
+The **Fourth** is the difference A, C (20) compared with B. [[notes: 20 to 15 simplifies to a 4:3 ratio, the "Sesquitertial" ratio of a Perfect Fourth.]]
+
+The **Octave** is the difference A, C (20) compared with the differences A, B, and B, C (which is 10). [[notes: 20 to 10 simplifies to a 2:1 ratio.]]
+
+The **Twelfth** is B held against C. [[notes: 15 to 5 simplifies to a 3:1 ratio.]]
+
+The **Fifteenth** is the difference between B and D (12) compared against D. [[notes: 12 to 3 simplifies to a 4:1 ratio.]]
+
+## The Fifth.
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 4. | 6. | 9. | 12. |
+
+The **Fifth** is found in B to C. [[notes: 9 to 6 simplifies to 3:2.]] Also C, or the difference A, C (6) compared with D. [[notes: 6 to 4 simplifies to 3:2.]] Also the differences B, C and A, B (3) compared with the difference C, D (2). [[notes: 3 to 2 ratio.]] Also A compared with the difference A, D (which is 8). [[notes: 12 to 8 simplifies to 3:2.]]
+
+The **Fourth** is A to B. [[notes: 12 to 9 simplifies to 4:3.]] Also the difference A, D (8) held against C, or against the difference A, C (which is 6). [[notes: 8 to 6 simplifies to 4:3.]]
+
+The **Octave** is A to C. [[notes: 12 to 6 simplifies to 2:1.]] Also the difference A, D (8) against D. [[notes: 8 to 4 simplifies to 2:1.]] Also the difference A, C (6), or C, held and compared against the differences B, C and A, B (which is 3). [[notes: 6 to 3 simplifies to 2:1.]]
+
+[[summary: This page provides a detailed mathematical breakdown of how specific sets of four numbers in Rithmomachia contain the essential ratios of classical music theory. By calculating the "differences" between these numbers, players can derive the ratios for the Fourth, Fifth, Octave, Twelfth, and Fifteenth.]]
+
+[[keywords: Rithmomachia, musical ratios, Diapason, Diatessaron, Diapente, Disdiapason, Pythagorean harmony, mathematical proportions, difference, Greatest Victory]]

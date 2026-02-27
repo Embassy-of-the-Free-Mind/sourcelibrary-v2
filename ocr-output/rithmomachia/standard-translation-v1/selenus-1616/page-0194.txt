@@ -1,0 +1,28 @@
+[[meta: This page continues the tactical advice for endgames where one side has a slight material advantage, specifically focusing on how to defend with a minor piece against a Rook to force a draw.]]
+
+# The Second Book / Chapter 5
+
+...caused, and his **King**, with the **Bishop** [[notes: *Schützen*; literally "Archer" or "Shooter," the traditional German name for the Bishop]], is subsequently only confined.
+
+Furthermore, when one has only a **Knight** [[notes: *Reuter*; literally "Rider" or "Cavalier"]], but the other has a **Rook** [[notes: *Rochen*; the archaic term for the Rook, from the Persian *rukh*]]: then the former must not move the **Knight** to a place that the player with the **Rook** would most desire—even if he exerted all diligence to obtain it. Nor should he place the **King** on the outermost four lines at the edges of the board, where he would have to expect a check because of the other's **King** and **Rook**. Nor should he let the aforementioned **Knight** wander far from him (so that he may come to his aid at any time); otherwise, the other would block the paths, prevent the way, and give **Checkmate** with his **Rook**.
+
+Further, if one has a **Bishop** and the other a **Rook**: then the former should strive—since he is certain that his **Bishop** (which alone among the fifteen [[notes: Referring to the fifteen pieces other than the King on one side]] still remains) need not be taken according to the custom of the game—to place his **King** in a **Rook’s** square [[notes: A corner square]] so that the **Bishop** can cover him. For example: if someone on the **Black side** [[notes: *Schwartzen hauffen*; literally "black heap" or group]] still has the **Queen's Bishop** alongside the **King**: he should then move the **King** into his **Rook's** square. This is so that the **Bishop** can protect him in his **Knight's** or other **Rook's** square, should he perhaps receive a check from the **White Rook** on the **King's Rook's** line or on his own back rank [[notes: *Haupt-Steine Linie*; literally the "main-piece line," referring to the rank where the major pieces start]]. For the other **King** cannot hinder him or block the path so that he could not come out from behind his **Bishop**. In consideration that one **King** cannot give check to the other, but can only confine and shut him in, whereby nothing is won. Now, if the **Bishop** stands still, he moves the **King** into the other square of his **Rook**. The same reasoning applies if the **White** or **Black King** has been moved and placed on a square of the other three **Rooks**.
+
+When also someone has a **Pawn** [[notes: *Soldaten*; literally "Soldier"]]: (to which two squares [remain]...
+
+| R | | Sc. | K. |
+|---|---|---|---|
+| | | | Sc. |
+| | | | R |
+| | | | |
+
+[[notes: This diagram illustrates the defensive "fortress" described in the text, where the King (K) and Bishop (Sc.) coordinate to prevent the Rook (R) from delivering mate.]]
+
+...come out from behind his **Bishop**, or block him: Considering that one **King** cannot give check to the other, but can only confine and shut him in, whereby nothing is gained. Now, if the **Bishop** stands still, he moves the **King** into the other square of his **Rook**. The same logic applies if the **White** or **Black King** has been moved and placed on one of the other three **Rook** squares.
+
+Also, if one has a **Pawn**: (to which two squares [remain] before...
+
+[[meta: catchword: ehe]]
+
+[[summary: This page explains defensive strategies for endgames involving a Rook against a Knight or a Bishop, detailing how the weaker side can avoid checkmate by staying centralized or creating a "fortress" in the corner squares.]]
+[[keywords: Rook, Knight, Bishop, Pawn, endgame tactics, checkmate defense, King movement, 17th-century chess]]

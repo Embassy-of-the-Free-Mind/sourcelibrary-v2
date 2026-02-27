@@ -1,0 +1,7 @@
+[[meta: This page is a flyleaf or endpaper following the Errata section. In early modern books and manuscripts, these pages were often left blank or used by later librarians and collectors to record inventory details.]]
+
+->XXX XXX X.90<-
+[[notes: This is a shelfmark—a unique identification code used by a library or collector to mark a book's specific location on a shelf. The alphanumeric sequence "X.90" likely refers to a specific cabinet or section and the item's position within it.]]
+
+[[summary: An otherwise blank flyleaf featuring a library shelfmark or inventory number, marking the manuscript's place in a historical collection.]]
+[[keywords: shelfmark, flyleaf, library cataloging, manuscript provenance]]

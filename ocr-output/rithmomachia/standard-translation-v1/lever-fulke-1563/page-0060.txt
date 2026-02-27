@@ -1,0 +1,30 @@
+## A Table of Musical Proportion.
+
+| | | |
+|---|---|---|
+| 2 | 3 | 6 |
+| 3 | 4 | 6 |
+| 3 | 5 | 15 |
+| 4 | 6 | 12 |
+| 4 | 7 | 28 |
+| 5 | 8 | 20 |
+| 5 | 9 | 45 |
+| 6 | 8 | 12 |
+| 7 | 12 | 42 |
+| 8 | 15 | 120 |
+| 9 | 15 | 45 |
+| 9 | 16 | 72 |
+| 12 | 15 | 20 |
+| 15 | 20 | 30 |
+| 25 <note>original: "5"; mathematically, 25 is required to complete the musical proportion with 45 and 225</note> | 45 | 225 |
+| 30 | 36 | 45 |
+| 30 | 45 | 90 <note>original: "49"; 90 is the correct harmonic mean for this sequence</note> |
+| 72 | 90 | 120 |
+
+-> 17. <-
+
+<sig>C.i.</sig>
+
+<summary>This page presents a reference table of "musical proportions" (harmonic triples) for use in the Philosophers' Game (Rythmomachia). Each row contains three numbers where the ratio of the lowest to the highest is equal to the ratio of the differences between the terms. This table serves as a quick-reference guide for players to identify valid moves or captures based on harmonic mathematical principles without having to perform the manual calculations described on the previous page.</summary>
+
+<keywords>The Philosophers' Game, Rythmomachia, musical proportion, harmonic mean, mathematical table, 16th-century arithmetic, number theory, educational games</keywords>

@@ -1,0 +1,42 @@
+[[meta: This page provides the visual diagram referenced on the previous page. It illustrates the starting positions for both the "Black" and "White" sides on an 8x16 grid. This layout serves as the definitive reference for the mathematical progressions described in the earlier text.]]
+
+[[margin: 4]]
+
+# The Board and Starting Positions for Rithmomachia
+
+->**The Arrangement of the Philosophers' Game**<-
+
+[[notes: This diagram represents the initial setup of *Rithmomachia* (The Philosophers' Game), a complex board game popular in the Middle Ages and Renaissance. Unlike Chess, which focuses on social hierarchy, this game is based on Boethian number theory and the harmony between arithmetic, geometry, and music.]]
+
+| Column 1 | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | **361** | **225** | **121** | **49** | | |
+| | | **[Pyramid]** | **120** | **99** | **48** | | |
+| | | *191* | *85* | *37* | *21* | | |
+| | | *153* | *45* | *25* | *9* | | |
+| | | 16 | 12 | 9 | 8 | | |
+| | | 9 | 7 | 5 | 3 | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | 2 | 4 | 6 | 8 | | |
+| | | 4 | 16 | 36 | 64 | | |
+| | | *6* | *20* | *42* | *72* | | |
+| | | *9* | *25* | *49* | *81* | | |
+| | | **15** | **45** | **[Pyramid]** | **153** | | |
+| | | **25** | **81** | **169** | **289** | | |
+
+[[notes: **Shape Legend:**
+- **Bold numbers** (Rows 1-2 and 15-16) represent **Squares** (*Quadrati*).
+- *Italicized numbers* (Rows 3-4 and 13-14) represent **Triangles** (*Triangoli*).
+- Standard numbers (Rows 5-6 and 11-12) represent **Circles** (*Tondi*).
+- **[Pyramid]** indicates the most powerful piece on the board, composed of multiple shapes stacked together to reach a specific total value.]]
+
+[[gloss: The "Dark" or Black pieces occupy the top six rows, while the "Light" or White pieces occupy the bottom six rows. The four central rows remain empty at the start of the game, serving as the "field of battle" where players move their pieces to capture opponents through mathematical calculations.]]
+
+[[notes: Readers may notice that each row is mathematically related to the one behind it. For example, in the White circles (bottom), the second row (4, 16, 36, 64) consists of the squares of the first row (2, 4, 6, 8).]]
+
+[[summary: This page features a woodcut diagram showing the opening setup for Rithmomachia. It displays the 8x16 grid and the specific placement of circles, triangles, and squares for both the black and white sides, including the specialized pyramid pieces.]]
+
+[[keywords: Rithmomachia, game board, mathematical proportions, pyramid piece, number theory, renaissance gaming, arithmetic progression]]

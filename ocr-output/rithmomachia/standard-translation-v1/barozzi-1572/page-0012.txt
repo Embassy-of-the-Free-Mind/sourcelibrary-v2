@@ -1,0 +1,13 @@
+[[meta: This page contains the illustration promised at the end of the previous page. It provides the visual layout of the game board described in the introductory text.]]
+
+->**[Figure: The Game Board of the Philosophers]**<-
+
+[[notes: This woodcut illustration depicts the rectangular grid used for Rythmomachia. While the preceding text described an 8x16 board (the equivalent of two chessboards), this specific diagram shows a grid of 8x12 squares. Such discrepancies were not uncommon in early printed manuals, reflecting variations in play or errors in woodblock carving.]]
+
+[[notes: Modern readers will notice faint lettering appearing in the upper portion of the grid. These Latin words—including fragments like *solis* (of the sun), *non* (not), and *quid* (what)—are not part of the game board itself. They are "show-through" or "ghosting," where the heavy ink from the text on the reverse side of the page has bled through the paper over time.]]
+
+[[notes: The small gap at the bottom center of the border line likely served as a guide for the printer or a symbolic entry point for the "armies" of numbers that would occupy the white and black squares.]]
+
+[[summary: This page provides the visual reference for the Rythmomachia board, illustrating the checkered 8x12 grid where the numerical pieces are maneuvered.]]
+
+[[keywords: Game Board, Woodcut, Checkerboard, Rythmomachia, Grid, Printing, Ghosting]]

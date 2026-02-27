@@ -1,0 +1,21 @@
+# The Philosophers game.
+
+The shape <note>original: "fashion"</note> of all three kinds: its foundations are two squares, upon which are set two triangles, and upon them rounds. But this difference is between the kings: that the king of the even numbers has a pointed top, while the king of the odd numbers is not pointed. The reason depends upon the consideration of their numbers, by which they arise into pyramidal shapes <note>original: "fashion"</note>.
+
+The third thing considered in the pieces <note>original: "men"</note> is the number that must be written or engraved <note>original: "graue"</note> upon them. To learn these clearly for practice, note these short rules.
+
+There are two ranks or orders of each kind of piece <note>original: "men"</note>.
+
+The first rank or order of circles <note>original: "roundes"</note> are the digits, even or odd. Namely, of the even: 2, 4, 6, 8; and of the odd: 3, 5, 7, 9.
+
+The second order of circles <note>original: "rounds"</note> are found by multiplying these digits by themselves—as 2 times 2 is 4, and 3 times 3 is 9. For the even, they are 4, 16, 36, 64; for the odd, they are 9, 25, 49, 81.
+
+The first order of the triangles are found by adding two of the circles <note>original: "roundes"</note> together
+
+<summary>
+This page details the physical construction and numerical marking of the pieces in the Philosopher's Game. It explains that the King pieces are built from a base of squares, topped with triangles and circles, forming a pyramidal shape. A distinction is made between the "even" and "odd" kings based on their physical points. The text then begins to explain the mathematical rules for assigning numbers to the pieces, starting with the "rounds" (circles), which use simple digits and their squares, and moving into the "triangles," which are calculated by adding circular pieces together.
+</summary>
+
+<keywords>
+Philosopher's Game, Rhythmomachia, King pieces, pyramidal numbers, even numbers, odd numbers, game piece construction, mathematical games, game rules, digits, squares.
+</keywords>

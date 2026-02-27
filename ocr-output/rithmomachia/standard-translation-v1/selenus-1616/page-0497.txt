@@ -1,0 +1,11 @@
+[[meta: This page provides the visual reference for the game board layout mentioned on the previous page regarding the orientation and labeling of the Rithmomachia pieces.]]
+
+### ->To page 463.<-
+
+[[image-desc: A copperplate engraving of an 8x8 grid, designed to look like a standard chessboard with alternating shaded and unshaded squares. In the center of the board, several geometric symbols are positioned to demonstrate piece placement. Circles are located in the third column (rows four and five), triangular or arrowhead shapes appear in the fifth column (rows four and five), and squares or rectangles are placed in the sixth column (rows four and five).]]
+
+[[notes: This diagram illustrates the setup or movement patterns for **Rithmomachia**, also known as "The Battle of Numbers." The grid is the field upon which the "Towers" (Pyramids) and other pieces described on the previous page would be moved. The geometric symbols—circles, triangles, and squares—represent the different classes of pieces, which each follow specific mathematical progressions (multiple, superparticular, and superpartient).]]
+
+[[summary: This page features a technical diagram of an 8x8 board for the game of Rithmomachia, showing the starting positions or movement paths of the circular, triangular, and square pieces.]]
+
+[[keywords: Rithmomachia, game board, geometry, mathematical games, copperplate engraving, board layout, technical diagram]]

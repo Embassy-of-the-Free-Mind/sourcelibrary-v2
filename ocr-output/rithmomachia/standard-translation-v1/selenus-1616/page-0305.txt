@@ -1,0 +1,26 @@
+[[meta: This page continues the technical analysis of a chess opening from page 270. The text concludes a specific sequence of moves—likely a variation of the "Damiano Defense"—where the White player has moved their Queen to square 32 (h4) and the Black player responds. The numbering system for the board follows a 1–64 sequence starting from square 1 (a1) to 64 (h8).]]
+
+### 2. Cap: Of the Game of Chess.
+
+[[margin: 5.]] [Knight's] Pawn [[notes: The word "tens-Soldaten" completes "Königs-Ritter-Soldaten" from the previous page. "Soldat" or Soldier is the historical term for a Pawn.]] to obtain, he must trade one piece for another; as the King’s Rider [[notes: "Reuter" or Rider refers to the Knight.]] for the Rook’s and the King’s Rider (if the Black player takes his King’s Rider with the King’s Archer [[notes: "Schütze" or Archer refers to the Bishop.]]) for that Archer’s Pawn. Therefore, the Black player has a good game, especially * if he does not exchange the Queen (no. 4), but moves the King’s Archer against the White Queen to **forty-seven** [[notes: Square 47 corresponds to g6 in modern notation.]]. If the White player now moves the same Queen to **thirty-two** [[notes: Square 32 corresponds to h4.]], then the Black player takes the King’s Rider with the King’s Archer. The White player takes the same with the King’s Rider’s Pawn. Whereby his game not only falls into disorder, but is also very torn apart on both sides; the opponent, however, is given a good opportunity to win against him with a well-ordered game.
+
+Although *Damianus* [[notes: Pedro Damiano (1480–1544) was a Portuguese chess player and author of one of the earliest printed chess manuals. Though the "Damiano Defense" is named after him, he actually considered it inferior.]] regards this method as the best among the others, it is truly very hard and vexing for beginning players. In it, the rules and orders of this game are not observed or weighed at all, such as: That one should not place one Soldier in front of another (for, although a Soldier is captured for an advantage in this example, the game is nonetheless brought into great disorder by it). Likewise, that one should not leave the King alone, nor tear the game apart and bring it into disorder (just to win a single Soldier). And finally, that one who wishes to lead this game rightly should strive above all else that the King be placed in a secure location (for the opponent, in this his principal game, has good opportunity to break in from all sides).
+
+->n. 2. 3. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n. 4. 5.<-
+
+| | | | | | | | | | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| SR | | | | | | | | | SR | | | | | | |
+| | SS | | | | | | | | | SS | | | | | |
+| | | **46** | | | | | | | | | **47** | | | | |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+| | | | WS | | | | | | | | WS | | | | |
+| | | | | | | | | | | | | | | | |
+| | WR | | | WK | | | | | WR | | | WK | | | |
+
+[[notes: These diagrams illustrate the "Check" and "Defense" positions discussed in the text. The left (n. 2. 3.) shows the positioning around square 46 (f6), and the right (n. 4. 5.) shows the tactical focus on square 47 (g6).]]
+
+[[summary: This page critiques a chess strategy attributed to Damiano, arguing that while it may win a pawn, it dangerously compromises the King's safety and the overall structural integrity of the board. The author advises beginners against such risky play, emphasizing the fundamental rule of securing the King first.]]
+
+[[keywords: Chess strategy, Damiano Defense, Knight, Bishop, Pawn, King's safety, tactical analysis, 17th-century chess]]

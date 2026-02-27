@@ -1,0 +1,13 @@
+[[meta: This page continues the instruction on the rules of Rythmomachia, transitioning from subtraction-based captures to those involving multiplication and division.]]
+
+OF THE PHILOSOPHERS.
+
+## Capture by assault in multiplication or division.
+
+*If you can manage, by uncovering one of your **pieces** [[notes: The original French uses "tables," which refers to the playing pieces or tokens used in Rythmomachia.]] or moving it by its regular motion so that there are as many **empty spaces** between it and an opponent’s piece, either diagonally or straight, as your piece's value is contained within the opponent's, then as soon as you have played into that spot, you shall take the opponent’s piece by **assault in multiplication**. Conversely, in as much as the opponent's number contains yours as many times as there are empty spaces between them, the opponent could have taken yours by **division**, as soon as it was played in that spot. Example of multiplication: let the opponent's **number 12** be located in L, and your **round 4** be in D [[notes: L, D, and V refer to specific labeled squares on the grid of the Rythmomachia board.]]. If you play the 4 into D—since there are then three spaces between your 4 and the 12, and your 4 multiplied by that number [3] produces 12, matching the opponent's number—you shall suddenly take that 12. By multiplication on the contrary, as soon as the opponent has placed their number 12 in L, they will take your 4 in V by division; or else if your* [[notes: The text ends mid-sentence, likely continuing the logic of division or alternative positioning on the next page.]]
+
+[[vocab: multiplication, division, empty spaces, opponent, number, spaces, round 4, number 12]]
+
+[[summary: This page explains how to capture an opponent's piece using multiplication or division based on the number of empty spaces between two pieces. If the value of a player's piece multiplied by the number of intervening spaces equals the value of the opponent's piece, a capture is made.]]
+
+[[keywords: Rythmomachia, capture by assault, multiplication, division, game pieces, mathematical games, Renaissance board games]]

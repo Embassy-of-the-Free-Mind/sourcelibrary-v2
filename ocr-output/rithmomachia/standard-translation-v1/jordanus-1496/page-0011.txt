@@ -1,0 +1,51 @@
+[[meta: This page continues from the previous discussion on the properties of squares and products of divided numbers. It concludes a proof (likely Proposition 19) stating that the product of equal parts is equal to the product of unequal parts plus the square of the difference between them.]]
+
+...in itself. It is established, therefore, that the product of one of the equal parts multiplied by itself is as much as the product of one of the unequal parts multiplied by the other, together with the square of the difference between those parts [[notes: This is a geometric way of stating the identity $x^2 = (x + d)(x - d) + d^2$]].
+
+### 20 If a number is divided by any two different divisions: the product of the greatest of the dividing parts multiplied by the least, plus the product of the difference between the greatest and the larger middle part multiplied by the difference between that same greatest part and the smaller middle part, is equal to the product of the two middle parts multiplied by one another.
+
+[[margin: 
+[[image-desc: Diagram for Proposition 20 consisting of horizontal segments and numerical labels. Segment b: 8, Segment d: 6, Segment e: 5, Segment c: 2. Vertical lines labeled f and g indicate differences between the segments. A sum of 15 is indicated at the bottom left of the diagram.]]
+]]
+
+As in the preceding proof, one may first observe that when any number is cut by two divisions in this manner—by one division into **b** and **c**, and by a second into **d** and **e**—let **b** be the greatest and **c** the least, with **d** and **e** being the greater and lesser of the middle parts. The difference of the first to the second is the same as the third to the fourth when they are so ordered. For since **d** and **e** are balanced by the surrounding parts **b** and **c**, they are equidistant from them by the second part of the third proposition. Therefore, the difference of **b** to **d** (which we call **f**) will be the same as the difference of **e** to **c**. Also, the difference of **b** to **e** (which we call **g**) will be the same as the difference of **d** to **c**. For by the eighth concept, the difference of the extremes **b** and **c** is composed of the differences of **b** to **d** and **d** to **c**. And the difference of the extremes **d** and **c** is composed by the same logic from the differences of **d** to **e** and **e** to **c**. But since the difference of **d** to **e** is common to both, and the difference of **e** to **c** is proven equal to the difference of **b** to **d**, the differences of **b** to **e** and **d** to **c** will be equal to each other. 
+
+Therefore, let the number **a** be divided in the manner described and the differences assigned. I say that the product of **b** (the greatest) times **c** (the least), plus the product of **f** times **g**, is equal to the product of **d** times **e** (one middle part by the other). For the product of **d** times **e** is as much as the product of **d** times **c** and **f** [[notes: Jordanus uses "f" here to represent a segment length equal to a difference]]. For **e** is divided into **c** and one **f**. But the product of **d** times **c** and **f** is equal to the product of **c** and **f** times **d**. Thus, what results from **f** times **d** is equal to the product of **f** times **c** and **g**. Since the product of **f** times **c** is the same as **c** times **f**, and the product of **c** times **d** and **f** is as much as **c** times **b**, it is established that the product of **d** times **e** is as much as **c** times **b** plus the product of **f** times **g**, which is what was proposed.
+
+### 21 If a whole is a certain part of a whole, and the subtracted portion is the same part of a subtracted portion: then the remainder will be the same part of the remainder as the whole is of the whole.
+
+[[margin: 
+[[image-desc: Diagram for Proposition 21 using semicircular arcs. Large arcs for 24: 18 (a) and 6 (b). Smaller arcs for 12: 9 (c) and 3 (d). Labels a, b, c are placed below the arcs.]]
+]]
+
+Let **a b** be a number from which **b** is subtracted, leaving **a** as the remainder. Let there be another number **c d** from which **d** is subtracted, leaving **c** as the remainder. Let the whole **c d** be the same part of the whole **a b** as the subtracted part **d** is of the subtracted part **b** [[notes: For example, if the whole is half of another whole, and the part taken away is half of the other's part]]. I say then that the remainder **c** is the same part of the remainder **a** as the whole **c d** is of the whole **a b**. I take a number **e** of which **c** is the same part as **d** is of **b**. I understand four numbers: **c** (first), **e** (second), **d** (third), and **b** (fourth). It is established by the fourth proposition that if **c** is the same part of **e** as **d** is of **b**, then the composite **c d** is the same part of the composite **e b** as **c** is of **e**. And since it was posited that **c d** is that part of **a b**, then **a b** is the same multiple of **c d** as **e b** is of **c d**; thus by the third concept they are equal to each other. Therefore **e** is equal to **a**. Just as **c** is to **e**, so also is **c** to **a**. But since **c** to **e** is as the subtracted to the subtracted and the whole to the whole, therefore **c** is to **a** (remainder to remainder) as the whole is to the whole, which is what was proposed.
+
+### 22 If a whole is certain parts of a whole, and the subtracted portion is the same parts of a subtracted portion: the remainder will be the same parts of the remainder as the whole is of the whole.
+
+[[margin: 
+[[image-desc: Diagram for Proposition 22 with semicircular arcs. Arc for 12: divided into 9 (a) and 3 (b). Arc for 8: divided into 6 (c) and 2 (d). Labels a, b, c below.]]
+]]
+
+Let **a b** be a number with subtracted part **b** and remainder **a**. Let **c d** be another number with subtracted part **d** and remainder **c**. If the whole **c d** is "parts" of the whole **a b** [[notes: "Parts" (plural) in medieval Latin mathematics refers to a proper fraction where the numerator is greater than one, like 2/3, whereas "a part" (singular) refers to a unit fraction like 1/3]], and **d** is the same parts of **b**: I say that **c** is the same parts of **a** as **c d** is of **a b**. Set a number **e** such that **c** consists of the same parts of it as **d** does of **b**, and argue in exactly the same way using the fifth proposition as you did in the previous proof using the fourth.
+
+### 23 Every part of a part is a part of the whole denominated by the number produced by the multiplication of the two numbers that denominate those parts.
+
+[[margin: 
+[[image-desc: Diagram for Proposition 23 showing six parallel segments. a (24), b (6), c (3), d (4), e (2), f (8).]]
+]]
+
+Let **a** be the whole number, **b** be a part of it, and **c** be a part of **b**. Let the number denominating **b** in **a** be **d** [[notes: To "denominate" a part means to name it by its ratio; if **b** is a third of **a**, the denominator is 3]], and the number denominating **c** in **b** be **e**. Let **f** be the number produced by multiplying **d** by **e**. I say that **c** is denominated in **a** by the number **f**. For I divide **f** into parts equal to **c**, and similarly **a** into parts equal to **b**. Since however many times **b** is in **a**, that is how many times **e** is in **f**. For **d** is the common denominator of both by hypothesis, since it measures **b** into **a** and **c** into **f**. Thus, as many parts by number as **a** has to **b**, so many does **f** have to **e**. And since **c** measures **b** according to **e**, then **c** will measure the first part of **a** (equal to **b**) according to the first part of **f** (equal to **e**). By the same reasoning, the second by the second, and the third by the third, and so on. Therefore, by the tenth proposition, **c** will measure **a** according to **f**. By definition, therefore, **c** is denominated in **a** by **f**, and **f** will be the denominator itself. Thus, a part of a part is a part of the whole **a** denominated by the number **f**, which is produced by the multiplication of the two numbers denominating those parts, which is what was intended.
+
+### 24 If a first number is the same part of a second as a third is of a fourth; and if the second is the same part of a fifth as the fourth is of a sixth: then the first will be the same part of the fifth as the third is of the sixth.
+
+[[margin: 
+[[image-desc: Diagram for Proposition 24 showing line segments with relationships. First set: a (12), b (4), e (2). Second set: c (18), d (6), f (3). Relationships indicated: g (3), h (2), l z (6).]]
+]]
+
+Let there be six numbers: **a** (1st), **b** (2nd), **c** (3rd), **d** (4th), **e** (5th), and **f** (6th). Let **a** be the same part of **b** as **c** is of **d**, and let **b** be the same part of **e** as **d** is of **f**. I say that **a** is the same part of **e** as **c** is of **f**. For let **g** be the denominator of **a** in **b**, and **h** the denominator of **b** in **e**. Since **a** is a part of **b** and **b** is a part of **e**, by the preceding proposition, **a** is denominated as a part of **e** by the number **l z**, which is produced by multiplying **g** by **h**. But the number **h** denominating **b** in **e** is also the denominator of **d** in **f**, and **g** denominating **a** in **b** also denominates **c** in **d**. Therefore, by the same preceding proposition, **c** will be denominated in **f** by the same number **l z**, which results from multiplying **g** by **h**...
+
+<sig>a iij</sig>
+
+[[summary: This page explores advanced proportional relationships between numbers, including the "part of a part" rule (multiplying denominators) and how ratios are maintained when numbers are divided or subtracted. It relies on the work of Jordanus de Nemore to establish foundational rules for medieval arithmetic.]]
+
+[[keywords: Jordanus de Nemore, Arithmetica, proportions, denominators, multiplication of parts, Euclidean number theory, medieval mathematics]]

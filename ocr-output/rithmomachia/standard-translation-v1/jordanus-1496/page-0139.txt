@@ -1,0 +1,59 @@
+[[meta: This page continues the exploration of figurative numbers, transitioning from two-dimensional shapes like squares and pentagons into three-dimensional solids like pyramids and cubes. It also introduces the theory of "medieties" (means), which was the cornerstone of ancient music theory and mathematical harmony.]]
+
+14 **Oblong numbers** [*altera parte longiores*] placed continuously and alternately between **squares** preserve a similarity of relationship to the squares, but not a similarity of their differences. Conversely, **squares** related to the **oblong numbers** placed between them maintain an equality of differences, but not of their proportions. [[notes: An oblong number is $n(n+1)$, like 2, 6, 12. A square is $n^2$, like 1, 4, 9. If you interleave them (e.g., 1, 2, 4, 6, 9), the "relationship" or ratio changes, but the mathematical properties follow specific patterns discovered by Neo-Pythagorean mathematicians.]]
+
+15 When **oblong numbers** and **squares** are arranged alternately, the differences starting from two are doubled, and they maintain the same relationship to each other as the whole series does.
+
+### Properties of Pyramids
+### *Pyramidis proprietates*
+
+1 Every **pyramid** rises from a certain multi-angled figure [*multangula figura*], upon which all similar and related figures are stacked. [[notes: In ancient arithmetic, a "pyramid" is a three-dimensional number formed by stacking layers of polygons. For example, a square pyramid is built by stacking a $1 \times 1$ square on a $2 \times 2$, then a $3 \times 3$, and so on.]]
+
+2 The base of any **pyramid** is the largest of the multi-angled numbers suited for the pyramid's structure.
+
+3 A **triangular pyramid** is created from triangular numbers stacked one above the other in continuous order down to unity.
+
+4 **Square pyramids** are made from squares, **pentagonal** from pentagons, and **hexagonal** from hexagons, stacked one above the other in this same manner, and so on for the rest.
+
+### Properties of the Cube
+### *Cubi proprietates*
+
+1 All **cubes** will be produced if, after arranging the odd numbers in their natural order after unity, the first two are joined, then the next three, then the next four, and so on in this sequence. [[notes: This is a beautiful property: $3+5=8$ ($2^3$), $7+9+11=27$ ($3^3$), $13+15+17+19=64$ ($4^3$).]]
+
+2 **Cube numbers** are joined by two mean values of the same proportion.
+
+3 If a **cube** multiplies a **cube**, the resulting form is a **cube**.
+
+4 If a **cube** multiplies an **oblong number**, a **cube** will never be produced.
+
+### Properties of the Arithmetic Mean
+### *Medietatis Arithmetice proprietates*
+
+1 An **arithmetic mean** [*medietas arithmetica*] always maintains a difference in the proportions of its terms. [[notes: In an arithmetic progression like 2, 4, 6, the "difference" is the same (2), but the "proportion" or ratio is different ($4/2$ is not the same as $6/4$).]]
+
+2 An **arithmetic mean** is produced continuously if the natural series of numbers is extended without interruption. Similarly, it occurs if numbers are selected at equal intervals. Thus, even numbers following each other, and likewise odd numbers, inviolably preserve this rule of the mean.
+
+3 In a joined **arithmetic mean**, the middle term is half of the sum of the two extremes. [[notes: For 2, 4, 6, the middle (4) is half of $2+6$.]]
+
+4 In a disjoined **arithmetic mean**, the sum of the extremes equals the sum of the middle terms. [[notes: In 2, 4, 6, 8, the extremes $2+8$ equal the means $4+6$.]]
+
+5 In the same mean, as the terms are to themselves, so are the differences to the differences.
+
+6 A joined **arithmetic mean** contains less under its extremes than the square of the middle term by the amount of the square of the differences between the terms. [[notes: For 2, 4, 6, the product of extremes is $2 \times 6 = 12$. The square of the mean is $4^2 = 16$. The difference is 4, which is the square of the common difference (2).]]
+
+7 In a disjoined mean, the product of the extremes is less than the product of the means by the product of the differences between the terms.
+
+8 In any number of terms arranged continuously in this mean, the smaller terms maintain larger proportions, while the larger terms maintain smaller proportions.
+
+9 The middle number of an **arithmetic mean** with determined extremes is found if half the sum of the extremes is taken.
+
+### Properties of the Geometric Mean
+### *Geometrice medietatis proprietates*
+
+1 In a **geometric mean**, for any terms arranged continuously, the ratios of both the larger and smaller terms are equal. [[notes: In 2, 4, 8, the ratios are equal ($4/2 = 8/4$). This is the definition of a geometric progression.]]
+
+2 The **geometric mean** preserves a reciprocal proportionality among its terms; for example, if the first is to the second as the second is to the third, then conversely, the third is to the second as the second is to the first; one should know this also happens in a disjoined mean.
+
+[[summary: This page details the mathematical generation of three-dimensional "pyramid" and "cube" numbers and introduces the formal properties of arithmetic and geometric means. These principles were essential to medieval and Renaissance understandings of cosmic harmony and proportion.]]
+
+[[keywords: pyramid numbers, cubes, arithmetic mean, geometric mean, medietas, figurative numbers, Nicomachus, Boethius]]

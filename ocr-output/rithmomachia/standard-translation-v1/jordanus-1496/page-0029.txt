@@ -1,0 +1,94 @@
+[[meta: This page continues the exploration of geometric progressions (numbers in "continuous proportion") within Book IV of Jordanus de Nemore's *Arithmetica*. While the previous page discussed mean proportionals between two terms, this page focuses on the properties of divisors within a sequence starting from unity (the number 1) and concludes with the formal proof for the summation of a geometric series.]]
+
+<page-num>LXIIII</page-num>
+
+[[margin: 25]] **IF numbers are taken in continuous proportion starting from unity: none of them will divide the last one except according to one of the numbers arranged in that same series.**
+[[notes: To "measure" or "divide according to" a number means that the divisor goes into the dividend a specific number of times. For example, in the series 1, 2, 4, 8, 16, the number 4 divides 16 exactly 4 times; since 4 is also in the series, the rule holds.]]
+
+¶ Let **a, b, c, d, e, f** be numbers in continuous proportion starting from unity [[notes: Modern notation would be $1, r, r^2, r^3, r^4, r^5$]]. I say that none of them divides **f** except by some number placed in that same order. For since unity is in **a** as many times as **e** is in **f**, therefore by definition **e** divides **f** according to **a**. Likewise, as unity is to **a**, so **d** is to **e**; and as **a** is to **b**, so **e** is to **f**. Therefore, by equal proportionality, as unity is to **b**, so **d** is to **f**. As many times, then, as unity is in **b**, so many times is **d** in **f**. Therefore, by definition, **d** divides **f** according to **b**. And because again by equal proportionality (through the twenty-first proposition of the second book) as unity is to **c**, so **c** is to **f**; therefore, as many times as unity is in **c**, so many times is **c** in **f**. Wherefore **c** divides **f** according to itself. and since **d** has been shown to divide **f** according to **b**, then alternately (by the eighth proposition of the first book) **b** divides **f** according to **d**. And since **e** was also shown to divide **f** according to **a**, alternately **a** will divide **f** according to **e**. It is thus demonstrated that **a, b, c, d, e** divide the last number **f** according to some number placed in that same order, which was the proposition.
+
+[[margin: 26]] **IF in a series of numbers in continuous proportion from unity the second number from unity is a prime number: no number will divide the last one except for those in the order of the preceding terms.**
+[[notes: This proposition states that if the common ratio of the geometric progression is a prime number (like 3 in the series 1, 3, 9, 27), then the only possible divisors of the terms in the sequence are the smaller powers of that prime already present in the sequence.]]
+
+¶ Let **a, b, c, d** be numbers in continuous proportion from unity, and let **a** be a prime number. I say that no number will divide **d** except one of the preceding numbers in the order **a, b, c, d**. For if any other number divides **d**, let it be **e**, which divides it according to **f**. Since, therefore, the prime number **a** divides **d** (which is the product of **e** and **f**), then by the fourth proposition of the third book, **a** must divide either **e** or **f**. Suppose it divides **e**. I consider four numbers: **a, e, f, c**. By the preceding [logic], the product of the extremes (**a** and **c**) produces **d**, and the product of the means (**e** and **f**) produces the same **d**. Therefore, by the twenty-fifth of the second book, as **a** is to **e**, so **f** is to **c**. But **a** divides **e**, therefore **f** also divides **c**. Let **f** then divide **c** according to **g**. By the same reasoning, **f** or **g** will divide **b**; let that be according to **h**. Finally, by the same process, you will conclude that either **g** or **h** divides **a**. But this would mean **a** is not a prime number, which is against the hypothesis. If **g** or **h** is set equal to **a**, you will argue by the premise that the others are equal to those in the order **a, b, c, d**, which proves the proposition.
+
+[[margin: 27]] **In numbers proportional from unity, if any prime number divides the last one, it will also divide the second number from unity.**
+
+¶ Let **a, b, c, d** be continuously proportional from unity, and let **e** be a prime number that divides the last term **d**. I say that **e** itself divides **a**, the second term from unity. For if the prime **e** does not divide **a**, then by the first proposition of the third book, **e** will be prime relative to **a**. And since as many times as unity is in **a**, so many times **a** is in **b**, then **a** divides **b** according to itself. Wherefore, by the eleventh of the third book, **b** is prime relative to **e**. And since as many times as unity is in **a**, so many times **b** is in **c**, then **b** divides **c** according to **a**. Wherefore, by the tenth of the third book, **c** is prime relative to **e**. And again, as many times as unity is in **a**, so many times **c** is in **d**; therefore **c** divides **d** according to **a**. By the same tenth proposition, **e** is prime relative to **d**. Therefore **e** does not divide **d**, which is the opposite of what was stated.
+
+[[margin: 28]] **IF the first of a series of continuously proportional numbers is subtracted from the second and from the last: the ratio of the remainder of the second to the first is the same as the ratio of the remainder of the last to the sum of all the preceding terms.**
+[[notes: This is a classic medieval phrasing of the formula for the sum of a geometric progression. In modern terms: $\frac{ar - a}{a} = \frac{ar^n - a}{\sum_{i=0}^{n-1} ar^i}$.]]
+
+¶ Let **a, b, c, d, e, f,** and **g k** be numbers in continuous proportion. Let the first, **a b**, be taken from the second, **c d**, and let the remainder of the second be **l d**. Likewise, let **a b** be taken from the last, **g k**, and let the remainder be **h k**. I say that the proportion of **l d** to **a b** is the same as **h k** to the sum of **a, b, c, d,** and **e f**. I take for **g k** the number **e g m** equal to **e f**, and **g n** equal to **c d**. And I understand **g k, g m,** and **g n** as three wholes. Since **g m** equals **e f**, the proportion of **g k** to **e f** is as the whole **g k** to the whole **g m**. And since **g n** equals **c d**, the proportion of **e f** to **c d** is as the whole **g m** to the whole **g n**. By the same logic, the proportion of **c d** to **a b** is as **g n** to **g h**. Furthermore, the proportion of the whole **g k** to the whole **g m** is as the remainder of **g k** minus **g m** is to **g m** minus **g n**, because the numbers **g, k, e, f** and **c, d** as placed are continuously proportional. And the proportion of the whole **g m** to the whole **g n** is as the remainder **g n** minus **g m** to **g h** minus **g n**. Therefore, by the fifth of the second book, **m k** to **n m** and **n m** to **h n** (remainders to remainders) are as wholes to wholes. That is, **m k** is to **n m** as **e f** is to **c d**, and **n m** is to **h n** as **c d** is to **a b**. Therefore, by permutation through the third of the second book, as **m k** is to **e f**, so is **n m** to **c d** and **h n** to **a b**. Thus, by the twenty-second [proposition], as the sum **h n m l k** [[notes: identifying the total segment]] is to the sum of **e f, c d,** and **a b**, so is **h n** (one of the parts) to **a b** (the corresponding part). But since **g n** is equal to **c d** and **g h** is equal to **a b**, then **g h** will be equal to **c l**. Therefore **h n** equals the number **l d**. For when equals are taken from equals, the remainders are equal. Therefore, the proportion that **l d** has to **a b** will be the proportion that **h k** has to the sum of all the preceding terms. Which was the proposition.
+
+[[margin: 29]] **Given two numbers, and having taken as many proportionals as you like according to their proportion: if the smaller is multiplied by the smaller and the larger by the larger, and the difference of the products is divided by the difference of the given [original] numbers: the resulting number will be the sum of all the others accumulated.**
+[[notes: This is an alternative method for calculating the sum of a geometric series. If the series is $g_1, g_2, ... g_n$ with ratio $a/b$, the sum is $\frac{(g_n \cdot a) - (g_1 \cdot b)}{a-b}$.]]
+
+¶ Let **a** and **a h** be two numbers and **h b** be their difference. Let **c d, e f, f g** be any number of terms in continuous proportion of **a b** to **a h**. Let **a b** be multiplied by **c d** to produce **l m**. Likewise, let **a h** be multiplied by **f g** to produce **l n**. Let the difference between **l m** and **l n** be the number **n m**. I say that if **n m** is divided by **h b** (the difference of the first to the second), the result is **c g**, the sum composed of **c d, e f, g**. For from **a b** times **d e** comes **l o**, and times **e f** comes **l p**, and times **f g** comes **l q**. By the tenth of the first book, what is produced by **a b** times **f g** is equal to what is produced by **a h** and **h b** times that same **f g**. And from **a b** times **f g** comes **l q**, and from **a h** times the same comes **l n**. Therefore, from **h b** times **f g** (by that same tenth proposition) comes **n q**. Furthermore, I consider four numbers: **a b** (first), **a h** (second), **e f** (third), and **f g** (fourth). Since the proportion of the first to the second is as the third to the fourth, by the twenty-fifth of the second book, the product of the first and last (**a b** and **f g**) is equal to the product of the means (**a h** and **e f**). But the product of **a b** and **f g** is **l q**; therefore the product of **a h** and **e f** is **l q**. And since the product of the whole **a b** and **e f** is **l p**, then by the tenth of the first book, the product of **h b** and **e f** is **p q**. By the same and similar argumentation: the product of **h b** and **d e** is **p o**, and times **c d** is **o m**. Therefore, by the ninth of the first book, **h b** multiplied by the whole sum **c g** produces **n m**. Thus, by the sixth [proposition] on division in the first book, if the product **n m** is divided by the same number **h b**, the original number **c g** will return. Which was to be demonstrated.
+
+->¶ The end of the fourth book of the Elements of Arithmetic by Jordanus.<-
+
+<column-break/>
+
+[[notes: The diagrams below provide visual and numerical examples for the proofs above. The first three illustrate geometric progressions: powers of 2 (2, 4, 8, 16, 32, 64), powers of 3 (1, 3, 9, 27, 81), and powers of 6 (1, 6, 36, 216, 1296). The larger arc diagrams visualize the proportional relationships and remainders used in the summation proofs for Propositions 28 and 29.]]
+
+<image-desc>
+A set of three horizontal parallel lines representing proportions.
+Top line: 8 (c) --- 64 (f)
+Middle line: 4 (b) --- 32 (e)
+Bottom line: 2 (a) --- 16 (d)
+</image-desc>
+
+<image-desc>
+A vertical sequence of horizontal lines with numeric values representing powers of 3:
+81
+27 (letters c, e)
+9 (letters b, g)
+3 (letters a, h)
+1 (I)
+</image-desc>
+
+<image-desc>
+A vertical list of numeric values associated with letters representing powers of 6:
+1296 (d)
+216 (c)
+36 (b)
+6 (a)
+1 (l)
+3 (e)
+</image-desc>
+
+<image-desc>
+A complex geometric diagram for Proposition 28 involving arcs and points on a baseline. 
+Top arcs are labeled with numbers 27, 18, 12, 8. 
+Smaller arcs below are labeled 18, 12, 8 and 9, 6, 4. 
+Letters g, h, n, m denote points or segments. 
+Baseline points are e and f. 
+Additional numbers 8, 12, 1, 40, 58 are present near the center.
+A smaller arc diagram below shows 8, 4 and labels a, b.
+</image-desc>
+
+<image-desc>
+A nested arc diagram for Proposition 29. 
+Top arc numbers: 324, 216, 144, 96, 64. 
+Associated points: m, o, p, q, n. 
+Below the arcs are boxes containing the values 32, 48, 72, 108. 
+A summation value of 260 is indicated at the bottom.
+</image-desc>
+
+<image-desc>
+A semi-circular arc diagram with a top value of 65. 
+Smaller arcs below are labeled 27, 18, 12, 8. 
+Points on the baseline are c, d, e, f, g.
+</image-desc>
+
+<image-desc>
+The final small arc diagram at the bottom right. 
+Top value: 12. 
+Lower values: 8, 4. 
+Points: a, h, b.
+</image-desc>
+
+[[summary: This page concludes Book IV of Jordanus de Nemore's *Arithmetica*, focusing on divisors of geometric progressions and providing the formal proofs for calculating the sum of a geometric series. These propositions lay the groundwork for understanding exponential growth and series summation in medieval mathematics.]]
+
+[[keywords: Jordanus de Nemore, Arithmetica, continuous proportion, geometric progression, prime numbers, divisors, series summation, unity, ratio]]

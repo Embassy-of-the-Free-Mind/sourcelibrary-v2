@@ -1,0 +1,14 @@
+[[meta: This page continues the tactical demonstration from page 250. The opening text completes a conditional sentence regarding a potential move by the White player.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 15:]]
+[...fers the following move] / that he / with the Queen / might take away / his King’s **Soldier** [[notes: *Soldat* (Soldier) is the historical term for a Pawn]]: (for if he / moved it / to twelve [[notes: This refers to a square in an older numerical coordinate system, likely d2 in modern algebraic notation]]: he would give **Checkmate**) **Black** / takes / the **W[hite] K[ing]’s Soldier** / with the Queen / moves her / to the **W[hite] K[ing]’s Rider** [[notes: *Reuter* (Rider/Cavalier) is the historical term for the Knight]] / and offers **check** / once more: the **White** player / covers the King / with the Queen / on twelve / and defends his Knight: the **Black** player / takes / the **W[hite] K[ing]’s Rook** [[notes: *Rochen* is an archaic term for the Rook, derived from the Persian *rukh*]] / with the Queen: the **White** player / plays / the **King’s Knight** / to the **B[lack] K[ing]’s Rook** / at forty-two [[notes: Likely the f6 square]] / and offers / from the Queen / **Discovered Check** [[notes: *Ab-Schach* (Off-check) is the historical term for a discovered check]]: the **Black** player / covers / the King / with his Knight / on fifty-two [[notes: Likely the d7 square]]: the **White** player / takes / the **B[lack] K[ing]’s Rook** / with his King’s Knight: the **Black** player / moves / the **King’s Archer** [[notes: *Schütze* (Archer) is the historical term for the Bishop]] / to the **W[hite] K[ing]’s Archer** / at seventeen [[notes: Likely the a3 square]]: thus exchanging the Bishops and Queens: moves the King / to fifty-eight [[notes: Likely the f8 square]] / and also obtains / the **White Knight** / along with the entire game.
+
+->[[notes: A decorative woodcut vignette appears here, depicting a lion’s mask centered within ornate baroque scrolls and leaf motifs.]]<-
+
+Ii iij
+[[meta: catchword: The]]
+
+[[summary: This page describes the conclusion of a complex chess variation involving a discovered check and a series of piece exchanges. Ultimately, the sequence leads to a dominant position where the player captures the opponent's Knight and secures the win.]]
+[[keywords: Chess tactics, 17th-century chess, Discovered Check, Piece notation, Rook, Knight, Bishop, Pawn, Chess strategy]]

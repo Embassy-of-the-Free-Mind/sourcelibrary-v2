@@ -1,0 +1,66 @@
+[[meta: This page continues the study of arithmetic geometry, moving from ratios of inequality to "figured numbers"—numbers represented as geometric shapes like squares, pentagons, and "oblongs." It explains how complex shapes are built from simpler ones, a core tenet of Pythagorean philosophy.]]
+
+<sig>E</sig>
+
+[[margin: 3]] All **squares** [*tetragoni*] are born from the sum of odd numbers collected and heaped together in their natural order. [[notes: This refers to the fact that adding consecutive odd numbers always results in a square: 1+3=4 (2²), 1+3+5=9 (3²), and so on.]]
+
+[[margin: 4]] Every **square** arises from the composition of two adjacent triangular numbers. [[notes: A "triangular number" is the sum of integers: 1, 3, 6, 10. For example, 3 + 6 = 9, which is a square.]]
+
+[[margin: 5]] **Squares**: if numbers of similar relationship are taken continuously from unity, they are found in the odd-numbered positions, always with one omitted in the middle.
+
+[[margin: 6]] All **squares** are joined by a single mean.
+
+[[margin: 7]] If a **square** multiplies a **square**, the result is a **square**.
+
+[[margin: 8]] If, however, a **square** multiplies an **oblong** number [*altera parte longiorem*], a square will never be produced. [[notes: An "oblong number" is a number multiplied by itself plus one, like 2×3=6 or 3×4=12.]]
+
+[[margin: 9]] **Pentagonal numbers** [*penthagoni*] arise from the sequence of natural numbers following unity: they are formed by collecting numbers with a gap of two between them, together with the previous pentagonal number or numbers. [[notes: To find pentagonal numbers, you sum the series 1, 4, 7, 10... where each number increases by 3.]]
+
+[[margin: 10]] Every **pentagonal number** is composed of a whole square and the next smaller triangular number.
+
+[[margin: 11]] **Hexagonal numbers** [*hexagoni*] are generated in this way by leaving out three numbers in the middle.
+
+[[margin: 12]] Every **hexagonal number** is constituted from a triangular number and the next following pentagonal number.
+
+[[margin: 13]] **Heptagonal numbers** [*heptagoni*] are generated in this way by leaving out four numbers in the middle.
+
+[[margin: 14]] Every **heptagonal number** is constituted from a hexagonal number and the next lower triangular number. In the creation of this figure, the two next smallest triangular numbers must be placed at a distance.
+
+[[margin: 15]] **Octagonal numbers** [*octogoni*]: these are produced by skipping five numbers.
+
+[[margin: 16]] Every **octagonal number** arises composed of a heptagonal number and the triangular number immediately below it. And in this way, one should understand the same for **enneagons** (9-sided), **decagons** (10-sided), **hendecagons** (11-sided), and **dodecagons** (12-sided) by continuously skipping one more number. They are constituted from the next smaller figures and the triangular numbers immediately below them, just like the others. Thus it happens that all figures are found most easily to rise from triangles and to be resolved back into them; this brings no small support and weight to the understanding of **Pythagoras** as well as several of the **Platonists**. [[notes: This highlights the Neoplatonic belief that the triangle is the "elemental" shape of all geometry and, by extension, the universe.]]
+
+---
+
+->Properties of Oblong Numbers<-
+[[notes: *Altera parte longior* literally means "longer by another part." In Greek/Latin mathematics, this refers to a number of the form n(n+1), represented as a rectangle where one side is exactly one unit longer than the other.]]
+
+[[margin: 1]] All **oblong numbers** are procreated from even numbers arranged naturally and heaped together, just as squares are created from odd numbers. [[notes: For example, 2+4+6=12, which is 3×4.]]
+
+[[margin: 2]] Every **oblong number** will be procreated if even numbers, ordered naturally, are multiplied one by one into odd numbers, likewise naturally arranged.
+
+[[margin: 3]] All **long-sided** or **oblong numbers** surround the angular squares when two natural series of numbers are arranged according to length and width and multiplied into one another.
+
+[[margin: 4]] Each **oblong number** in its natural order, when compared to each square in its order, produces and gives birth to every part of numbers.
+
+[[margin: 5]] Each **oblong number** in its natural position, when compared to each square (starting from the second square in the natural order), will similarly restore all the **superparticular ratios**. [[notes: A "superparticular ratio" is a fraction like 3/2 or 4/3, where the top number is exactly one unit larger than the bottom.]]
+
+[[margin: 6]] **Oblong numbers** are separated by even differences, just as squares are separated by odd differences.
+
+[[margin: 7]] **Oblong numbers** placed continuously in the middle of the nearest squares preserve the same relationship of proportion; they extend and spread themselves from the "double" ratio into every species of superparticular.
+
+[[margin: 8]] Every **oblong number**, when taken twice and added to the two squares on either side of it, creates a square.
+
+[[margin: 9]] Any two adjacent **oblong numbers** added with double the middle square likewise produce a square.
+
+[[margin: 10]] **Oblong numbers** doubled and added to their two surrounding squares return squares, but specifically those that some **odd number** measures.
+
+[[margin: 11]] Adjacent **oblong numbers** with double the middle square likewise produce squares, but specifically those that an **even number** measures.
+
+[[margin: 12]] **Oblong numbers** in their natural order, when coupled one-to-one with squares following their natural series, constitute **triangular numbers** in a continuous series.
+
+[[margin: 13]] All **oblong numbers** are born by subtracting one side from the squares. [[notes: Mathematically, $n^2 - n = n(n-1)$, which is the oblong number of the previous rank.]]
+
+[[summary: This page details the construction and properties of polygonal numbers (squares, pentagons, etc.) and oblong numbers, demonstrating how all geometric numbers can be reduced to triangular numbers. It emphasizes the interconnectedness of arithmetic and geometry, a key concept in Pythagorean and Platonic thought.]]
+
+[[keywords: figured numbers, squares, oblong numbers, triangular numbers, pentagons, Pythagoras, Plato, superparticular ratios, arithmetic geometry]]

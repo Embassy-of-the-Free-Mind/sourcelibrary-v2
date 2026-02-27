@@ -1,0 +1,43 @@
+[[meta: This page continues the mathematical demonstration of how ratios (intervals) are combined to create new musical relationships. It moves from simple addition of ratios—such as the Fourth and Fifth creating an Octave—to finding common mathematical terms for multiple different ratios.]]
+
+### [[margin: 11]] ¶ A double interval is joined from the two largest superparticulars: namely, the sesquialter and the sesquitertius.
+
+| 6 | 4 | 3 | A to C is a double interval. |
+|---|---|---|---|
+| a | b | c | A to B is sesquialter; B to C is sesquitertius. |
+
+¶ Let **a**, **b**, and **c** be an interval sequence: let **a** be sesquialter [[notes: A ratio of 3:2, like a musical Fifth]] to **b**, and **b** be sesquitertius [[notes: A ratio of 4:3, like a musical Fourth]] to **c**. I say that **a** is double [[notes: A ratio of 2:1, like a musical Octave]] to **c**. For since **a** is sesquialter to **b**, then by the eighth proposition of this book, two of **a** are equal to three of **b**. And again, because **b** is sesquitertius to **c**, then by the same rule, three of **b** are equal to four of **c**. Since three of **b** were established as equal to two of **a**, it follows that two of **a** are equal to four of **c**—because whatever things are equal to the same thing are equal to each other. Since the number four is the double of the smaller collected number, namely two, then by the preceding rule, one **a** will be double one **c**. This last point can also be demonstrated thus: for if two of **a** are equal to four of **c**, then one **a**, by the eighth proposition, is equal to two of **c**, because if the wholes are equal, their halves are also equal. But two of **c** are double one **c**; therefore, since one **a** is equal to two of **c**, **a** is double **c**, which was to be shown.
+
+### [[margin: 12]] ¶ From a double interval and a sesquialter, a triple interval is born.
+
+| 6 | 3 | 2 | A to C is a triple interval. |
+|---|---|---|---|
+| a | b | c | A to B is a double interval; B to C is a sesquialter. |
+
+¶ Let there be the interval sequence **a**, **b**, and **c**: where **a** is double to **b**, and **b** is sesquialter to **c**. I say that **a** is triple to **c**. For since **a** is double to **b**, by definition **a** contains **b** twice; therefore, **a** equals two of **b**. And because **b** is sesquialter to **c**, **b** contains **c** plus its half-part. Therefore, by the eighth proposition of this book, two of **b** are equal to three of **c**. Since two of **b** were equal to one **a**, it follows that three of **c** are equal to one **a**. But three of something is the triple of one; therefore, by the tenth proposition, one **a** is the triple of one **c**, which was to be demonstrated.
+
+### [[margin: 13]] ¶ Two double intervals join to form a quadruple interval.
+
+| 4 | 2 | 1 | A to C is a double interval [[notes: This likely refers to the compounded result of the two doubles]] |
+|---|---|---|---|
+| a | b | c | A to C is a doubled double interval |
+
+¶ Let **a** be double to **b**, and **b** be double to **c**. I say that **a** is quadruple to **c**. For because **a** is double to **b**, two of **b** are equal to one **a**. And again, because **b** is double to **c**, two of **c** are equal to one **b**. If two of **c** are equal to one **b**, then four of **c** will be equal to two of **b**. But two of **b** were established as equal to one **a**; therefore, four of **c** will equal one **a**. Since four is the quadruple of one, by the tenth proposition, one **a** is the quadruple of one **c**, which was to be shown.
+
+### [[margin: 14]] ¶ To find a term to which we may assign as many superparticulars as we wish.
+
+| 9 | 8 | 6 | A to C is sesquialter. |
+|---|---|---|---|
+| a | b | c | B to C is sesquitertius. |
+
+¶ Let it be proposed to find a term to which we can assign both a sesquialter and a sesquitertius. I take two and three, the numbers naming the parts of the sesquialter and the sesquitertius [[notes: In a sesquialter (3:2), the "extra" part is 1/2; in a sesquitertius (4:3), the "extra" part is 1/3]]. I multiply two by three, and from that multiplication comes **c** [[notes: 2 x 3 = 6]]. It is clear that **c** (6) has both a half-part and a third-part. I add to **c** its half-part, and let the sum be **a** [[notes: 6 + 3 = 9]]. And again, I add to **c** its third-part, and let the sum be **b** [[notes: 6 + 2 = 8]]. Since **a** (9) contains **c** (6) and its half-part, then by definition **a** is sesquialter to **c**. And since **b** (8) contains **c** (6) and its third-part, **b** likewise is sesquitertius to **c**. Thus, the term **c** has been found to which the requested superparticulars are rightly assigned. By this rule, one should operate for any others: as if a sesquioctavus (9:8) and a sesquinonus (10:9) were to be assigned, multiply eight by nine, and a term will arise possessing an eighth and a ninth part, to which you will rightly assign the sesquioctavus and sesquinonus. In the same manner, you may assign three, four, or as many as you please to the same term.
+
+| 640 | 600 | 576 | 540 | 480 |
+|---|---|---|---|---|
+| a | b | c | d | e |
+
+For example, if it were requested to assign to the same term a sesquitertius, a sesquiquartus, a sesquiquintus, and a sesquioctavus, let three, four, five, and eight be multiplied together [[notes: 3 x 4 x 5 x 8 = 480]]. Let the result be **e**, which therefore contains within itself a third, a fourth, a fifth, and an eighth part. I add to **e** its third part, making the sum **a** [[notes: 480 + 160 = 640]]. And its fourth part making **b** [[notes: 480 + 120 = 600]]. Its fifth part making **c** [[notes: 480 + 96 = 576]]. Finally, its eighth part making **d** [[notes: 480 + 60 = 540]]. I say by the demonstration above that **a**, **b**, **c**, and **d** are established as the sesquitertius, sesquiquartus, sesquiquintus, and sesquioctavus to **e**, just as the set formula shows.
+
+[[summary: This page demonstrates how musical intervals like the Octave, Twelfth, and Double Octave are mathematically composed of smaller ratios, and provides a method for finding a common base number (lowest common multiple) to express multiple different ratios simultaneously.]]
+
+[[keywords: sesquialter, sesquitertius, double interval, triple interval, quadruple interval, superparticular, musical ratios, harmonics]]

@@ -1,0 +1,21 @@
+[[meta: This page begins Chapter 4, following the introduction of the modern "current-game" and its authors on page 47. It transitions from the history of the game to the physical components required to play: the pieces and the board.]]
+
+The First Book / Chapter 4:
+
+<image-desc>A decorative woodcut headpiece consisting of a rectangular border filled with symmetrical, ornate scrolling foliage and floral patterns, featuring a central stylized mask or face.</image-desc>
+
+### The Fourth Chapter.
+## Concerning the Chess-Pieces, their Names, Number, and Divisions: Likewise, concerning the Chess-Board in general.
+
+The things which are subject to this game and, so to speak, provide the substance for it—without which it cannot be put into practice—are (as mentioned in the previous chapter) the **Chess-Pieces**, or the little **war-men** [[notes: The German *Krieges-Mänlein* reflects the 17th-century view of chess as a literal miniature simulation of military conflict]], and then the **Board**, which provides them with the place and the field of action.
+
+Now as for the pieces, they are called (by virtue of the previous second chapter) by the **Greeks**, *πεσσοὶ ψήφοι* [[notes: *Pessoi* and *psephoi* were terms for pebbles or counters used in ancient Greek board games]]; by the **Latins**, *Calculi*, or more properly, *Latrunculi* [[notes: Refers to *Ludus latrunculorum*, a strategy game played in the Roman Empire]], and *Milites*; by **Polydore Vergil** [[notes: Polydore Vergil (c. 1470–1555) was an Italian humanist scholar and historian who wrote about the origins of things]], *Scaci*; and by us, **Chess-Pieces**, or **Figures**, **Chess-** or **War-Men**.
+
+In number, there are **thirty-two** of them; and they are deemed sufficient for the impending battle. For although their number might seem somewhat too few—considering it could happen that many pieces might be needed for the protection of an attacked position as well as for the execution of an assault, whereby others would be so weakened that everything would seem to be ventured and hazarded at once—one can, nevertheless, at times well counter two or three of the attacking enemy with just one piece. Furthermore, one may perform a successful stratagem with only one or two pieces, of which the end of the fourth chapter in the Second Book, and the manifold styles and types of play in the Second, Third, and Fourth Books, will report in greater detail.
+
+They are, however, divided into **two sides**: one of **White**, and the other of **Black** color. By this, it is indicated that in a military army, as much as possible, one single kind of people should be appointed and used. This is in consideration of the fact that among a mixture of many different peoples, misunderstanding, lack of reason, and treachery are easily feared, and few nations [are faithful] to their...
+
+[[meta: The text cuts off here with the catchword "Obersten," which means "Superiors" or "Commanders," indicating the sentence will conclude on the next page regarding loyalty to leadership.]]
+
+[[summary: This page introduces the physical components of chess, defining the pieces through their Greek, Latin, and German names. It explains that the thirty-two pieces are divided into two distinct colors to represent the necessity of a unified, loyal army in warfare.]]
+[[keywords: Chessmen, Chess-board, terminology, Latrunculi, Polydore Vergil, military metaphor, white and black pieces]]

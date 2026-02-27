@@ -1,0 +1,22 @@
+[[meta: This page marks a transition from the conclusion of Chapter 5, which discussed specific endgame scenarios and social rules for drawn games, to the beginning of Chapter 6. This new chapter serves as the introduction to the second major division of the book, moving from basic rules to practical application and strategic examples.]]
+
+->The Second Book / 6. cap:<-
+
+<image-desc>Decorative woodcut headpiece featuring symmetrical acanthus leaf scrolls and floral motifs.</image-desc>
+
+## The Sixth Chapter.
+
+### Regarding the complete use of this game,
+### through manifold types and examples in
+### general; how one should conduct
+### oneself within them.
+
+Now that the First Part—concerning how one attains the use of this game—has been dealt with in the preceding five chapters through certain means, principles, and orders: there remains (by virtue of the beginning of the first chapter of this book) the Second Part, which presents how the indicated means and principles must be directed in manifold ways and manners for the complete use of this Art and game, illustrated with all kinds of examples. From this, he who has a desire and love for this artful game may well learn and grasp not only those moves mentioned therein, but also many others of the same kind; likewise, in what fashion and on which sides one should attack the enemy; how to capture him unawares and otherwise cause him damage; and conversely, how he may protect himself against the same, effectively meet his incursions and attacks, and deliver the *coup de grâce* [[notes: *den garauß machen*; literally "to make an end of," meaning to finish the opponent or deliver checkmate]] to him.
+
+But the reason why one wishes to present these so manifold varieties is this: just as the Art itself [[notes: *Kunst*; here referring to the systematic skill or science of chess]], in all things, rests upon certain means and rules, the practice [[notes: *Gebrauch*; the application of the theory]]—because it consists of particular and singular pieces and is therefore very extensive—cannot be so narrowly grasped or constrained by a few rules. Thus, here too, the means and principles (which only aim at how one might *absolute* [[notes: purely or by itself]], for one’s own sake, reach the goal of this game) are indeed set down here in a certain measure. But once these means and rules are *applied* [[notes: *appliciret*; the author uses a Germanized Latin term here]] upon the Chess-table and must be taken in hand, it will be found that—because there are so many pieces and squares present on the Chess-board—one cannot put them into effect in only one single way.
+
+[[meta: catchword: Dan (For/Then)]]
+
+[[summary: This page introduces Chapter 6, transitioning the reader from basic rules to the practical application of chess strategy. The author explains that while the rules are fixed, the vast number of possible positions on the board requires a wide variety of examples to achieve true mastery.]]
+
+[[keywords: Chess strategy, practical application, Chess-table, tactical examples, Art of Chess, gameplay variety]]

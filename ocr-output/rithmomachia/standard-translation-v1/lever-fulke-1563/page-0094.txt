@@ -1,0 +1,32 @@
+<header>The Philosophers game.</header>
+<meta>catchword: On</meta>
+<page-num>7</page-num>
+
+...wins 348 soldiers <note>original: "men"</note>, he has obtained two standards; if he wins 522, he has gotten three standards, and so forth for the rest.
+
+If the odd army wins 260, they win two standards; if they win 390, they win three standards, and so on for the rest.
+
+## A Table of the Victory of Standards.
+
+| | |
+| :--- | :--- |
+| One standard of the even army contains: | 130. |
+| Two standards: | 260. |
+| Three standards: | 390. |
+| Four standards: | 520. |
+| Five standards: | 650. |
+| Six standards: | 780. |
+| Seven standards: | 910. |
+| Eight standards: | 1040. |
+| Nine standards: | 1170. |
+| Ten standards: | 1300. |
+
+<vocab>The Philosophers game, standards, even army, odd army, victory</vocab>
+
+<summary>
+This page details the specific numerical requirements for achieving a "Victory of Standards" in the Philosopher's Game (Rithmomachia). Because the even and odd armies have different total values, the number of captured points required to claim a "standard" differs for each side. For the even army to win standards, they must capture the higher-value pieces of the odd army (at 174 points per standard). Conversely, the odd army needs only 130 points to claim one of the even army's standards. A reference table is provided for calculating the even army's standards in increments of 130.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, Victory of Standards, even army, odd army, scoring table, standards, mathematical game
+</keywords>

@@ -1,0 +1,90 @@
+[[meta: This page consists of a series of "weaving patterns" or diagrammatic tables, which the author uses to visualize specific variations and positions discussed in the tactical analysis of Chapter 15. It follows the text on page 251 which described a sequence of exchanges.]]
+
+# The Second Book / Chapter 15
+
+->No. 1. 15.<- [[notes: The "j" in the original text is an archaic form of the number "1". These numbers refer to specific game variations or move sequences discussed in the accompanying text.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.R. | B.R. | B.S. | B.R. | B.K. | B.S. | B.R. | B.R. |
+| B.S. | B.S. | B.S. | B.S. | | B.S. | B.S. | B.S. |
+| | | | 45 | | | | |
+| | | 38 | | B.S. | | | |
+| | | | | W.S. | W.S. | | |
+| | | | | | | | |
+| W.S. | W.S. | W.S. | W.S. | | | W.S. | W.S. |
+| W.R. | W.R. | W.A. | W.R. | W.K. | W.A. | W.R. | W.R. |
+[[notes: Piece Abbreviations: B.R. = Black Rider (Knight), B.S. = Black Soldier (Pawn), B.K. = Black King, B.A. = Black Archer (Bishop). White pieces follow the same logic with "W." The numbers 45 and 38 represent specific squares in the author's 1-64 coordinate system.]]
+
+->No. 4. 7.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.R. | B.R. | B.K. | | | | | B.R. |
+| B.S. | B.S. | B.S. | | | W.A. | | B.S. |
+| | | | | 44 | B.R. | | |
+| | | | B.A. | | W.S. | | |
+| | | | | | B.S. | B.S. | B.R. |
+| | W.R. | | | | | | |
+| W.S. | W.S. | W.S. | W.R. | 12 | | W.S. | W.S. |
+| W.R. | | W.A. | | W.K. | | W.R. | W.R. |
+
+->No. 8. 11. 14.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.R. | B.R. | B.K. | 61 | | | | B.R. |
+| B.S. | B.S. | B.S. | | | W.A. | | B.S. |
+| | | | | | B.R. | | |
+| | | | B.A. | | W.S. | | |
+| | | | | 28 | B.S. | B.S. | |
+| | W.R. | | | 20 | | | |
+| W.S. | W.S. | W.S. | W.R. | | | B.R. | W.S. |
+| W.R. | | W.A. | W.K. | | W.R. | | |
+
+<column-break/>
+
+->No. 2. 3.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.R. | B.R. | B.K. | | | B.A. | | B.R. |
+| B.S. | B.S. | B.S. | | | W.A. | | B.S. |
+| | | | | | B.S. | 44 | B.R. | |
+| | | | | | | | B.S. | |
+| | | | | | W.S. | W.S. | B.S. | B.R. |
+| | | | W.R. | | | | |
+| W.S. | W.S. | W.S. | 13 | | | W.S. | W.S. |
+| W.R. | W.R. | W.A. | | | W.K. | | W.R. |
+
+->No. 5. 6.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.R. | | B.K. | | | | | B.R. |
+| B.S. | B.S. | B.S. | W.A. | | | | B.S. |
+| | | | | | | B.R. | |
+| | | | B.A. | | W.S. | | |
+| | | | | | | B.S. | B.S. | B.R. |
+| | W.R. | | | | | | |
+| W.S. | W.S. | W.S. | W.R. | | | W.S. | W.S. |
+| W.R. | | W.A. | | W.K. | | W.R. | W.R. |
+
+->No. 12. 13.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| B.R. | B.R. | B.K. | B.R. | | | | |
+| B.S. | B.S. | B.S. | 53 | | | | B.S. |
+| | | | | | W.A. | B.R. | |
+| | | | B.A. | | W.S. | | |
+| | | | | | | B.S. | B.S. | |
+| | W.R. | | | | | | |
+| W.S. | W.S. | W.S. | W.R. | | | B.R. | W.S. |
+| W.R. | | W.A. | W.K. | | W.R. | | |
+
+[[notes: In these diagrams, the author uses abbreviations to represent the pieces: SR (B.R.) for Black Rider/Knight, SS (B.S.) for Black Soldier/Pawn, SK (B.K.) for Black King, SSc (B.A.) for Black Archer/Bishop, WS (W.S.) for White Soldier/Pawn, WR (W.R.) for White Rider/Knight, WK (W.K.) for White King, and WSc (W.A.) for White Archer/Bishop. The numbers inside the grids designate the destination squares of the moves being analyzed.]]
+
+[[summary: This page presents six chess diagrams, referred to as "weaving patterns," which illustrate various tactical variations (numbered 1 through 15) for the 15th chapter. These grids provide a visual reference for the piece positions and movement options discussed in the preceding and following text.]]
+
+[[keywords: chess diagrams, weaving patterns, variations, Black Rider, White Archer, tactical analysis, chess notation, historical chess]]

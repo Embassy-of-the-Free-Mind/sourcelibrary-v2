@@ -1,0 +1,22 @@
+The Philosopher's <note>original: "Philosophers"</note> game.
+
+<warning>Heavy bleed-through from the reverse side obscures parts of the page, showing a faint grid and geometric shapes.</warning>
+
+* ¶ C.iij.
+
+The design <note>original: "fashion"</note> of both the pieces <note>original: "men"</note> and the kings is as has been <note>original: "hath bene"</note> last declared; the inscription of numbers is the same, but without algebraic <note>original: "cosical"</note> signs.
+
+## Regarding the order of the battle <note>original: "Of the order of the battell"</note>.
+
+The order of battle follows the first manner <note>original: "maner"</note>, but not so far from the board's <note>original: "bordes"</note> end. Specifically, the four squares are positioned in the spaces <note>original: "plattes"</note> nearest to the board's end, with the rest following accordingly,
+->joined to them, as in the<-
+->first kind of<-
+->playing.<-
+
+***
+
+<summary>
+This page details the physical appearance and starting positions for the third variation of Rythmomachia (The Philosopher's Game). The pieces and kings retain their previous designs and numerical values, but notably omit "cossic" (early algebraic) signs. The "order of battle" or starting formation is similar to the first version of the game, though the pieces are placed closer to the edges of the board.
+</summary>
+
+<keywords>Philosopher's Game, Rythmomachia, game pieces, algebraic signs, cossic signs, board setup, historical gaming, board games, 16th-century games</keywords>

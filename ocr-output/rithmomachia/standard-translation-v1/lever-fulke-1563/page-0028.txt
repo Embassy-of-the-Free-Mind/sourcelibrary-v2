@@ -1,0 +1,19 @@
+# The Philosophers Game.
+
+## Of superparticular proportion.
+
+Superparticular <note>original: "superparticulier"</note> proportion occurs when a larger number contains a smaller number plus one part of that smaller number, which serves as a common measure for the whole. For example, 12 contains 9 plus 3 (which is a third part of 9). Similarly, 6 contains 4 plus 2 (which is one-half of 4). 
+
+This proportion, being the most significant next to multiple <note>original: "multipler"</note> proportion, is best represented by a triangular shape <note>original: "trianguler forme"</note>, which has the fewest lines and angles next to a circle. To understand the nature of this proportion, consider this figure:
+
+| (Top row) | 9 | 6 | 4 | 2 |
+| :--- | :---: | :---: | :---: | :---: |
+| **(Bottom row)** | **12** | **8** | **6** | **3** |
+
+<summary>
+This page explains the concept of "superparticular proportion" as used in the Philosophers Game (Rithmomachia). It defines the proportion as a ratio where a larger number contains a smaller number plus a specific unit fraction of that smaller number (such as 3/2 or 4/3). The author notes that these proportions are traditionally represented by triangular game pieces, as the triangle is the simplest geometric form after the circle. A table illustrates these ratios with specific numerical examples used in the game.
+</summary>
+
+<keywords>
+Philosophers Game, Rithmomachia, superparticular proportion, mathematics, arithmetic ratios, triangular pieces, sesquialtera, sesquitertia, geometry, game pieces
+</keywords>

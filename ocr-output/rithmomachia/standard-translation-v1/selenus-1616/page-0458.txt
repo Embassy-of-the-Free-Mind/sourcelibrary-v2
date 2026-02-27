@@ -1,0 +1,75 @@
+[[meta: This page continues the tactical play-by-play for Chapter 8. The text completes a sentence from the previous page, detailing a sequence where White systematically dismantles Black's defense after a series of exchanges.]]
+
+### The Fourth Book / Chapter 8.
+
+...but [moves] his Queen (in order to still make some use of her) to forty-six [[notes: The author uses a numbering system from 1 to 64 to identify the squares of the board, starting from the white side.]]: then White takes the Black King’s Archer [[notes: *Schütze* or Archer is the period term for the Bishop.]] with his King’s Rider’s [[notes: *Reuter* or Rider is the period term for the Knight.]] Soldier [[notes: *Soldat* or Soldier is the period term for the Pawn.]] and moves him to the Black King’s Rider’s Soldier’s [square]: Black offers check with the Queen from twenty-eight and moves her to the White King’s Archer and the White King’s Archer’s Soldier: White covers the King with the same at twelve: Black (in order to take the White King’s Archer) robs [captures] his Soldier: White (if he does not wish to rescue the same with the King’s Rider from twenty-two—in which case he would trap the Black Queen—but rather with his Queen) moves her Soldier to twenty-one: Black offers check with the King’s Archer from thirty-one: White covers the King with the King’s Rider at thirteen, thus organizing his game well, and finally Black (who lacks an Archer and a Rider) must yield and clear the field [[notes: A military metaphor for resigning or losing the position]].
+
+---
+
+->n. 5. 8.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | 60 | SK | | SR |
+| SS | SS | SS | | | | 50 | SS |
+| | | | | | SR | SS | WR |
+| | | SS | | SS | SS | | |
+| | | WS | | | | | |
+| | | | | WR | | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WR | WR | WS | | WK | WR | | |
+
+[[notes: In these diagrams, 'S' stands for Soldier (Pawn), 'R' for Rider (Knight) or Rook, and 'K' for King. 'W' and 'S' prefixes denote White (*Weiß*) and Black (*Schwarz*).]]
+
+<column-break/>
+
+->n. 6. 7.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | | SK | | SR |
+| SS | SS | SS | | | | SR | SS |
+| | | | | | | SS | WR |
+| | | SS | | SS | SS | | |
+| | | WS | WS | | | | |
+| | | | | WR | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | WS | | WK | WR | | |
+
+---
+
+->n. 9. j0.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | 59 | | SR |
+| SS | SS | SS | | | | | SS |
+| | | | | | SR | SS | WR |
+| | | SS | | SS | SS | | |
+| | | WS | | | | | WR |
+| | | | | | | | |
+| WS | WS | WS | WS | | | WS | WS |
+| WR | WR | WS | | WK | WR | | |
+
+<column-break/>
+
+->n. jj. jz.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | SR | | | SK | SR | | |
+| SS | SS | SS | | | 52 | | SS |
+| | | | 46 | | SR | SS | WR |
+| | | SS | | SS | SS | 34 | |
+| | | WS | | | WS | WR | |
+| | | | | | | | |
+| WS | WS | WS | WS | | | | WS |
+| WR | WR | WS | | WK | WR | | |
+
+[[meta: catchword: The]]
+
+[[notes: The catchword "Das" (The) at the bottom indicates the first word of the following page.]]
+
+[[summary: This page describes a specific endgame sequence where White maneuvers to trap the Black Queen or gain a material advantage, concluding with Black's inevitable defeat. It includes four technical diagrams illustrating different variations of the board state described in Chapter 8.]]
+
+[[keywords: chess tactics, early modern chess, Knight maneuvers, Bishop sacrifice, piece exchanges, 17th-century notation, checkmate patterns]]

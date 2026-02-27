@@ -1,0 +1,38 @@
+# Layout of the Board for the Philosopher's Game
+
+->**The Arrangement of the Board and Pieces**<-
+
+| Column 1 | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| (S) 49 | (S) 121 | | | | | (S) | (S) |
+| (T) 28 | (T) 66 | (T) 36 | (T) 30 | (T) 56 | (T) 64 | | |
+| (C) 16 | (C) 12 | (C) 9 | (T) 25 | (T) 49 | (T) 81 | (T) 100 | |
+| | | (C) 2 | (C) 6 | (C) 12 | (C) 30 | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | (C) 8 | (C) 6 | (C) 4 | (C) 2 | | |
+| (T) 81 | (T) 72 | (C) 64 | (C) 36 | (C) 16 | (C) 4 | (T) 9 | (T) 9 |
+| (S) 153 | (P) Pyramid | (S) 49 | (S) 42 | (S) 20 | (S) 25 | (S) 45 | (S) 15 |
+| (S) 289 | (S) 169 | | | | | (S) 81 | (S) 25 |
+
+***
+
+**Key for the Diagram:**
+*   **(C)** = Circle
+*   **(T)** = Triangle
+*   **(S)** = Square
+*   **(P)** = Pyramid <note>original: "Piramis"</note> (A complex piece representing a stack of different mathematical layers)
+
+***
+
+<summary>
+This page presents a visual diagram of the 8x16 grid used in Rithmomachia (The Philosopher's Game). It illustrates the starting positions for the "third manner" of play, showing the placement of squares, triangles, circles, and pyramids at opposite ends of the board. The white pieces are arranged at the bottom, and the black pieces mirror them at the top, following specific numerical and geometric sequences.
+</summary>
+
+<keywords>Rithmomachia, Arithmomachia, Philosophers' Game, board game diagram, game pieces, mathematical grid, pyramid piece, 16th-century strategy, historical gaming</keywords>

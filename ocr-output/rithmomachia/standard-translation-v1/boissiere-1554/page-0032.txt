@@ -1,0 +1,11 @@
+[[meta: This page continues the mathematical construction of the "Even Pyramid" (starting from a base of 36) and introduces the construction of the "Odd Pyramid" (starting from a base of 64).]]
+
+### OF THE PHILOSOPHERS.
+
+16. After this, you shall continue until the summit, always placing one step or base upon the other, decreasing the side of each base by one grain [[notes: "Grains" are the individual units or counters that make up the area of the square pieces]]: So that your first base, with 6 grains on its side, the second [has] 5, the third 4, also the fourth will have only 3, the fifth 2, the sixth 1. From which 6 sides you will mark the squares or bases, as we have shown, and as we will show hereafter in an illustration: It remains to mark the surface of it, or the top of the summit, where previously you had left space to apply two numbers; to mark that place of the summit, gather the square numbers [[notes: A "square number" is the product of a number multiplied by itself, such as 6x6=36]]: Namely the 6 steps or bases of the preceding squares placed in the steps of the pyramid, which are 36, 25, 16, 9, 4, 1: and you will have 91, the suitable number for the summit of your pyramid. And because you already had one of the square tables from the row of **even** numbers, marked with the same number 91: you shall remove that table and put this pyramid in its place, and thus nothing will be superfluous [[notes: In Rithmomachia, the Pyramid is a special piece that represents the sum of several squares. By replacing the 91-square with the 91-pyramid, the total value of the set remains balanced]].
+
+As for the pyramid of the **odd** [[notes: Referring to the side of the board belonging to the "Odd" numbers player]], you will have no other difficulty than in the previous one, except that the first base is 64 with its side of 8: the second 49, and its side 7: the third, 36 with its side 6: the fourth 25, with its side 5: the fifth 16, with its side 4, and to reach unity there would still remain 3 bases, but this pyramid is
+
+[[summary: This page concludes the calculation for the "Even" pyramid (summing to 91) and begins the instructions for the "Odd" pyramid, which starts with a larger base of 64.]]
+
+[[keywords: Pyramid, square numbers, arithmetic, Rithmomachia, base, summit, even and odd]]

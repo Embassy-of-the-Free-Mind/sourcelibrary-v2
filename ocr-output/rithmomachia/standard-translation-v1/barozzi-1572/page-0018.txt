@@ -1,0 +1,22 @@
+[[meta: This page continues the mathematical instructions for the game of Rythmomachia, shifting the focus from the calculation of the white triangles to the values required for the opponent's black triangles. It builds upon the sequence of odd numbers and their squares established on the preceding pages.]]
+
+Similarly, if you wish to find the numbers that are written upon the **black triangles**, you shall join the numbers of the **black rounds** together, in the same way you did with those of the white rounds. By doing so, you will easily produce the numbers for the first four **black triangles**, which will be these: 12, 30, 56, and 90. These are produced by combining the first four black rounds with the second four; that is, from 3 with 9 comes 12; from 5 with 25 comes 30; from 7 with 49 comes 56; and from 9 with 81 comes 90. Thus, you shall have the numbers for the first four black triangles, as seen in the following figure.
+
+| ( 3 ) | ( 5 ) | ( 7 ) | ( 9 ) |
+| :---: | :---: | :---: | :---: |
+| / 6 \ | / 20 \ | / 42 \ | / 72 \ |
+| / 9 \ | / 25 \ | / 49 \ | / 81 \ |
+[[notes: This diagram displays the base odd numbers in circles at the top, with the previously calculated white triangle values beneath them. In Rythmomachia, triangles represent the "superparticular" proportion, where a number contains another number plus one fractional part of it (for example, 12 contains 9 plus 1/3 of 9).]]
+
+| ( 3 ) | ( 5 ) | ( 7 ) | ( 9 ) |
+| :---: | :---: | :---: | :---: |
+| ( 9 ) | ( 25 ) | ( 49 ) | ( 81 ) |
+| **▲ 12** | **▲ 30** | **▲ 56** | **▲ 90** |
+[[notes: This second table illustrates the specific addition mentioned in the text: the base number (row 1) added to its square (row 2) equals the value of the black triangle (row 3). This creates a sequence of "superparticular" ratios known as *Sesquialtera* (3:2), *Sesquiquarta* (5:4), etc., which were fundamental to Boethian mathematics.]]
+
+Si
+
+[[gloss: black triangles, black rounds, white rounds, numbers, geometry, addition, progression]]
+
+[[summary: This page explains how to determine the values for the first four black triangle pieces in Rythmomachia by summing the base odd numbers with their squares. It provides a visual guide to the mathematical progression used to set up the game board.]]
+[[keywords: Rythmomachia, black triangles, superparticular proportion, arithmetic progression, medieval board games, Boethian mathematics]]

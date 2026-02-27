@@ -1,0 +1,27 @@
+[[meta: This page transitions from the visual diagrams of Chapter 10 to the instructional prose of Chapter 11. It continues the use of the 1–64 coordinate system, where each square of the board is numbered sequentially rather than using modern algebraic notation (e.g., e2, e4).]]
+
+11. cap: Vom Schach-Spiel.
+[[notes: "Of the Game of Chess."]]
+
+<image-desc>An ornamental woodcut headpiece with symmetrical floral and foliage scrollwork.</image-desc>
+
+### The Eleventh Chapter.
+
+## How one must play in the fifth, but especially in the sixth manner.
+
+The fifth manner is: when the Black player, on the second move, in the recorded example of the Eighth Chapter, varies the play; and instead of the King’s Bishop [[notes: *Schützen*, literally "archers" or "shooters," was a common early German term for the Bishop]], moves the King’s Bishop’s Pawn [[notes: *Soldaten*, or "soldiers," refers to the Pawns]] to forty-six: The White player, however, to thwart the opponent’s plans, moves the King’s Knight [[notes: *Reuter*, or "rider," refers to the Knight]] to nineteen: or his Bishop’s Pawn to twenty-seven.
+
+The sixth manner is: When the Black player, in the second move, moves neither the Bishop to 38: (as mentioned in the three previous Chapters) nor the Bishop’s Pawn to 46: (as set down shortly above at the beginning of this Chapter) but rather, with the King’s Knight, attacks the White King’s Pawn from [square] forty-three, in the following manner:
+
+[[margin: 1.]] The White player moves the King’s Pawn to 28: The Black player
+[[margin: 2.]] moves his King’s Pawn to 36. * The White player moves the King’s Bishop to 30: The Black player performs the attack, as stated, with the Knight upon the White King’s Pawn from [square] forty-three: The White player (to defend the Pawn) moves the King’s [side] Pawn [[notes: likely the Queen's Pawn or the King's Bishop's Pawn depending on the coordinate orientation]] to twenty-one: The Black player moves the King’s Bishop to thirty-eight: The White player moves the King’s Knight to the Black King’s Pawn at nineteen: the Black player, to protect the same and to [attack] the White King’s Bishop’s Pawn, moves his King’s Knight to twenty-six. The White player moves the Queen (so that this Black Knight does not capture her, or the King’s Rook [[notes: *Rochen* is the traditional term for the Rook, derived from the Persian 'rukh']) to twelve: the Black player captures the White King’s Bishop’s Pawn with the King’s Bishop and offers Check: The White player moves his King to five. The Black player moves the King’s Bishop to forty-seven (so that he does not lose the same, or the Knight, if perhaps the White player moves his King’s Rook’s Pawn to seventeen): the White player [moves] his King’s Rook (in order not to [lose] the same in Check from the Black King’s Knight at eleven...
+
+[[notes: The coordinate system used here is the 1–64 system popularized by Selenus. In this system, 28 to 36 represents the classic e4 to e5 opening. The "Soldaten" (Pawns) are named by the piece they stand in front of, such as the "King's Bishop's Soldier."]]
+
+<sig>Bb iij</sig>
+[[meta: "Bb iij" is a signature mark for the bookbinder, indicating the third leaf of the 'Bb' gathering.]]
+[[meta: catchword: zu verlies]]
+
+[[summary: This page begins Chapter 11, detailing specific variations of the opening game. It focuses on the "fifth" and "sixth" methods of play, specifically how White should respond to various defensive and aggressive maneuvers by Black's King's Knight and Pawns.]]
+
+[[keywords: Chess opening, King's Knight, King's Bishop, King's Pawn, 1-64 coordinate system, Selenus, chess tactics, 17th-century chess]]

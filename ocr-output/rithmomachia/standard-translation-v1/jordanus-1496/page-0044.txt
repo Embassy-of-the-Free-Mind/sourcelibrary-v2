@@ -1,0 +1,94 @@
+[[meta: This page continues Book VII of Jordanus de Nemore's Arithmetica, moving from the basic definitions of even and odd numbers toward more complex relationships involving ratios, progressions, and arithmetic means.]]
+
+<margin>
+| | | |
+|---|---|---|
+| f | 7 | 14 |
+| e | 6 | sesquisepti. 12 |
+| d | 5 | sesquiquanti. 10 |
+| c | 4 | sesquiquarti. 8 |
+| b | 3 | sesquitertii 6 |
+| a | 2 | sesquialteri. 4 |
+| | | Dupli 2 |
+| 1 | | 1 |
+</margin>
+
+[[notes: This table illustrates musical-arithmetic ratios. "Sesquialteri" refers to the ratio 3:2, "Sesquitertii" to 4:3, etc. These ratios were fundamental to medieval music theory and the Pythagorean understanding of the cosmos.]]
+
+<margin>18</margin> ¶ ¶ **If the doubles of all numbers arranged in a natural series starting from unity are taken: all even numbers starting from unity will be produced; and the proportions of these parts, taken in the same order, will be the same as the proportions of the numbers arranged from unity.**
+
+¶ I arrange the numbers starting from unity according to their natural series: unity, **a**, **b**, **c**, **d**, **e**, **f**. Of these, I take their doubles in order: **g**, **h**, **k**, **l**, **m**, **n**, **o**. I say, first, that all even numbers from unity up to **o** have been captured. Second, I say that the proportions of the numbers arranged from unity—such as **a** to unity, **b** to **a**, **c** to **b**, **d** to **c**, **e** to **d**, **f** to **e**—are exactly the same as the proportions in the order of the parts—such as **h** to **g**, **k** to **h**, **l** to **k**, and so on for the rest. The first point is clear: it is manifest that doubles are even, since any of them can be divided into two equal halves. That no other number besides those taken is even is certain, because such a number would not have a middle among the numbers; if it did have one, it would coincide with one of those assigned. It is therefore certain that all evens have been captured. The second point is also clear. For whatever the proportion of **a** to **h** is, it is the same as unity to **g**. Therefore, by permuting through the third proposition of the second book, the proportion of **a** to unity is the same as **h** to **g**. Likewise, as **b** is to **l**, so **a** is to **h**. Therefore, by the same logic, the proportion of **b** to **a** is the same as **l** to **h**. Proceeding consistently by the same method, you will conclude the entire proposition as firm.
+
+<margin>
+| | | | |
+|---|---|---|---|
+| f | 7 | n | 13 |
+| e | 6 | m | 11 |
+| d | 5 | l | 9 |
+| c | 4 | k | 7 |
+| b | 3 | h | 5 |
+| a | 2 | g | 3 |
+| | 1 | | 1 |
+</margin>
+
+<margin>19</margin> ¶ **If numbers arranged in a natural series starting from unity are joined two by two continuously: all odd numbers starting from unity will be created. Furthermore, any two adjacent odd numbers will be prime to each other.**
+
+¶ Let an order of numbers be arranged from unity according to their natural series; let any two adjacent numbers be joined. I say, first, that all odd numbers starting from unity are created. Second, I say that any two adjacent ones are prime to each other [[notes: "Prime to each other" or "coprime" means they share no common divisor other than 1]]. The first is clear: for any two adjacent numbers in the natural series differ by only a single unit by definition; therefore, one is even and the other is odd. Thus, when added together, by the second proposition of this book, they constitute an odd total. That there is no odd number except those created this way is established because otherwise that odd number could not be divided into two primary parts where one exceeds the other by unity, which would be against the definition. If it is so divided, it will be composed of two numbers adjacent in the natural series, which is what was proposed. The second is also clear. Since every odd number (starting from unity) has even numbers surrounding it by adding or subtracting unity, and every even number has surrounding odd numbers differing from it by only a single unit, by conception, the difference between any two adjacent odd numbers is the binary [[notes: the number 2]]. But the binary is a prime number since it is measured by no other number except unity. Therefore, the binary (which is a prime number) added to unity constitutes the first odd number; that same binary added to the number three (also prime), by the first proposition of the third book, constitutes a number prime to the other. You may argue similarly by the ninth proposition of the third book, and it is easy to show this for any two adjacent odds; which is what was proposed.
+
+<margin>
+| | | | |
+|---|---|---|---|
+| f | 64 | n | 729 |
+| e | 32 | m | 243 |
+| d | 16 | l | 81 |
+| c | 8 | k | 27 |
+| b | 4 | h | 9 |
+| a | 2 | g | 3 |
+| | 1 | | 1 |
+</margin>
+
+<margin>20</margin> ¶ **In a sequence of proportional numbers starting from unity, if the second number after unity is even, all the rest will be even; if the same is odd, all the rest must likewise be odd.**
+
+¶ For if the second is even, because it is measured by unity, the second will measure the third, and the third the fourth, and so on; wherefore by the twenty-ninth of the first book, the second (which is even) will measure all the rest. Therefore, all the rest are even by the twelfth of this book, which is what was proposed for this part. And if the second is odd, because it is measured by unity, then that number multiplied by itself will measure the third, and by the twenty-fifth of the second book, the third will measure the fourth in the same way, and so on. Therefore, by the eleventh of this book, every one of them will be odd; which is the whole of the proposition.
+
+<margin>
+| | | | |
+|---|---|---|---|
+| b | 8 | e | 7 |
+| c | 6 | f | 5 |
+| a | 4 | d | 3 |
+</margin>
+
+<margin>21</margin> ¶ **Between any two numbers where either both are even or both are odd: there is one mean number. Furthermore, if there is one mean, it is necessary that both outer numbers be either even or odd.**
+
+¶ For if both are even, when added together they constitute an even number by the first proposition of this book. And if both are odd, the same will happen by the third proposition of this book. If, therefore, half of that sum is taken, by the second part of the second proposition of the first book, that will be the number from which those numbers are equidistant by definition [[notes: an "arithmetic mean"]]. Therefore, that number will be the mean between them. The second part is clear, for if there is a mean between them, by the first part of the second proposition of the first book, that mean doubled is equal to the two joined together; since that sum is even (because it is a double), if one of them is even, the other must be too by the sixth of this book. And if one of them is odd, the other must be too by the seventh of the same; which is what was proposed.
+
+<margin>
+c —— 13
+a —— 4
+d —— 6
+e —— 7
+b —— 9
+</margin>
+
+<margin>22</margin> ¶ **Between an even and an odd number, there is either no mean or there are two. If there are two means between them, it follows that one is even and the other is odd.**
+
+¶ If an even and an odd differ by unity, no mean will fall between them. But if they differ by any greater amount, such as even **a** and odd **b**: I say there are two means between **a** and **b**. For by the second proposition of this book, **a** and **b** joined together constitute an odd number, such as **c**. This, by the ninth of the same, can be divided into two parts differing by unity, which are **d** and **e**. I say these are equidistant from **a** and **b** by the third proposition of the first book. Therefore, by definition, they are means, which is the first point. Second, I say that if there are two means between **a** and **b**, one is even and the other is odd. For if two means, such as **d** and **e**, lie between them, they will differ by unity by definition. Therefore, one of them will be even and the other odd. Joined together, **d** and **e** will constitute an odd by the second of this book. But **a** and **b** joined together constitute the same sum by the third proposition of the first book. Therefore, if one was even, the other will be odd by the ninth of this book; and if one was odd, the other will be even by the eighth of the same; which is what was proposed.
+
+<margin>
+a —— 5
+c —— 4
+d —— 2
+f —— 3
+e —— 2
+1
+b —— 1
+</margin>
+
+<margin>23</margin> ¶ **Between any odd number and unity, there is one mean, and it is the greater portion of that number. Conversely, if one mean exists between unity and some number, that number must be odd.**
+
+¶ Let **a** be any odd number and **b** be unity. I say that between **a** and **b** there is one mean, which is the greater portion of **a**. I also say that if there is one mean between **a** and **b**, the number **a** is odd. The first is clear: for since the odd number **a** exceeds unity **b** by an even number, such as **c** (which is the difference between **a** and **b**). And because **c** is even, let it be divided into two equals, **d** and **e**. Having taken the number **f** of which **e** is the difference to **b**: I say this is the mean between **a** and **b**. For since by conception the difference of **a** to **b** is composed of the differences of **a** to **f** and **f** to **b**, and the difference of **a** to **b** is **c**. Therefore **c** is composed of **e** (the difference of **f** to **b**, its half) and **d** (its other half); wherefore **d**, equal to **e**, is the difference of **a** to **f**. It is therefore...
+
+[[summary: This page establishes the relationships between natural numbers and their parity, demonstrating how doubles create evens and consecutive sums create odds. It further explores arithmetic means, proving that parity determines whether one, two, or no middle terms exist between two values.]]
+
+[[keywords: arithmetic mean, parity, even numbers, odd numbers, proportions, sesquialter, coprime, Jordanus de Nemore]]

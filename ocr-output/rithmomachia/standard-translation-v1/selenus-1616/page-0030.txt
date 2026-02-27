@@ -1,0 +1,33 @@
+<meta>This page contains a mirrored ink-transfer (offset) from a facing title page. While the previous page focused on a treatise on the game of chess, this page introduces a religious work—the Gospel of Jesus Christ. It was common in the early modern period for disparate manuscripts or printed works to be bound together in a single volume, which explains the transition from a secular topic like chess to a sacred text.</meta>
+
+<note>This text appears as a mirrored image from the opposite page; the following translation reflects the intended reading of that facing page.</note>
+
+<margin>
+Ambrose
+</margin>
+
+<margin>
+Augustine
+</margin>
+
+<note>The margins feature Saint Ambrose and Saint Augustine, two of the four original "Doctors of the Church." Their presence on a title page served to signal the theological authority and orthodoxy of the text.</note>
+
+### ❦ This is ❦
+
+# Gospel
+
+## of Jesus
+## Christ.
+
+-> ❦ <-
+
+---
+
+-> Of Professor Henning <-
+-> of Clermont. <-
+
+<note>original: "Professoris Henningii Claromontano." This likely refers to a scholar associated with the Jesuit Collège de Clermont in Paris, a major center of learning in the 16th and 17th centuries.</note>
+
+<summary>This is a title page for a Gospel text, featuring a decorative architectural border and the names of Church Fathers and a scholar from the College of Clermont. The page exists here as an unintended ink-transfer from a facing sheet, indicating this religious text was once pressed against the chess manuscript.</summary>
+
+<keywords>Gospel, Jesus Christ, Saint Ambrose, Saint Augustine, College of Clermont, woodcut border, title page, ink-transfer</keywords>

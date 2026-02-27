@@ -1,0 +1,44 @@
+[[meta: This page continues the visual catalog of chess endgame positions, transitioning from the prose descriptions to a series of technical diagrams. While the previous page mentioned Chapter 5, the margin here identifies this section as part of the "Third Book, Chapter 3," which focuses on specific "Scelete" (skeletal) or simplified board configurations. The square-numbering system (1–64) remains the primary method for tracking piece movement and location.]]
+
+[[margin:
+The Third Book /
+3. cap: [[note: Chapter 3]]
+]]
+
+### No. 30. 31.
+
+[[image-desc: A 10x10 square grid [[note: Though standard chess is 8x8, these early diagrams often used 10x10 grids to leave room for notation or coordinate markings]]. The grid contains abbreviations for the pieces: **SS** (Black Pawn), **SK** (Black King), **WK** (White King), **SR** (Black Rook), **WS** (White Pawn), and **WR** (White Rook). The numbers **31** [[note: g4]] and **30** [[note: f4]] are marked in the central rows.]]
+
+### No. 38. 39.
+
+[[image-desc: A 10x10 square grid containing chess notation: **SR** (Black Rook), **SS** (Black Pawn), **SK** (Black King), **WS** (White Pawn), **WK** (White King), and **WR** (White Rook). The number **19** [[note: c3]] appears in the center, and the number **3** [[note: c1]] appears in the lower-middle section.]]
+
+### No. 49. 52. 61.
+
+[[image-desc: A 10x10 square grid with piece abbreviations including **SR**, **SS**, **SK**, **WS**, **WK**, and **WR**. The numbers **45** [[note: e6]], **52** [[note: d7]], and **2** [[note: b1]] are distributed in the middle rows. The bottom rows are densely filled with **WS** (White Pawn) and **WR** (White Rook) abbreviations, suggesting a configuration near the white starting line.]]
+
+### No. 53. 59.
+
+[[image-desc: A 10x10 square grid featuring chess symbols. Abbreviations include **SR**, **SS**, **SK**, **WS**, **WK**, and **WR**. The numbers **32** [[note: h4]] and **45** [[note: e6]] are present. The bottom rows contain multiple entries of **WS**, **WR**, and **WK**, showing a concentration of White forces.]]
+
+<column-break/>
+
+### No. 34. 35.
+
+[[image-desc: A 10x10 square grid. It contains abbreviations **SS** (Black Pawn), **SK** (Black King), **WK** (White King), **WS** (White Pawn), **SR** (Black Rook), and **WR** (White Rook). The number **30** [[note: f4]] is written in the middle-left area of the grid.]]
+
+### No. 42. 43. 44. 45.
+
+[[image-desc: A 10x10 square grid with chess piece abbreviations including **SS**, **SK**, **SR**, **WS**, **WR**, and **WK**. The numbers **25** [[note: a4]], **15** [[note: g2]], and **10** [[note: b2]] are written in the right-hand columns of the grid.]]
+
+### No. 53. 56.
+
+[[image-desc: A 10x10 square grid containing piece abbreviations **SR**, **SS**, **SK**, **WS**, **WK**, and **WR**. The numbers **47** [[note: g6]] and **31** [[note: g4]] are written in the upper half. The bottom rows are filled with White pieces (**WS**, **WR**, and **WK**).]]
+
+### No. 64. 65.
+
+[[image-desc: A 10x10 square grid. Abbreviations include **SR**, **SS**, **SK**, **WS**, **WK**, and **WR**. The numbers **47** [[note: g6]] and **43** [[note: c6]] are visible in the middle. The bottom rows feature multiple entries for White's Pawns, Rooks, and King.]]
+
+[[summary: This page presents eight specialized chess diagrams (labeled "Scelete") from Chapter 3 of the third book. These grids illustrate complex endgame or tactical "problems" using a numerical 1-64 coordinate system and standardized abbreviations for pieces like the "Soldat" (Pawn) and "Rocque" (Rook).]]
+
+[[keywords: chess notation, endgame problems, Scelete, 17th-century chess, White King, Black Rook, chess diagrams, tactical study]]

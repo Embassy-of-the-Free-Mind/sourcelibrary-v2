@@ -1,0 +1,31 @@
+<sig>C.ij.</sig>
+<warning>Significant bleed-through from the verso page makes the table data difficult to distinguish in some sections.</warning>
+
+## The Philosophers' Game <note>original: "The Philosophers game"</note>.
+
+For example, if I would know what the middle <note>original: "midle"</note> number is in proportion between 5 and 25: first, I add 5 to 25, which is 30. The half of thirty is 15, which is the middle value in proportion between 5 and 25. Thus, I have 5, 15, and 25 in arithmetical <note>original: "Arithmeticall"</note> proportion.
+
+---
+
+->*<-
+
+->A table<-
+
+| | | | |
+|---|---|---|---|
+| 4 | 3 | 2 | 1 |
+| 9 | 6 | 3 | 2 |
+| 16 | 10 | 4 | 3 |
+| 25 | 15 | 5 | 4 |
+| 36 | 21 | 6 | 4 |
+| 49 | 28 | 7 | 4 |
+| 64 | 36 | 8 | 4 |
+| 81 | 45 | 9 | 4 |
+| 4 | 3 | 2 | 2 |
+| 9 | 6 | 3 | 2 |
+| 16 | 10 | 4 | 2 |
+| 25 | 15 | 5 | 2 |
+
+<summary>This text provides a practical example of how to calculate an arithmetical proportion (finding the arithmetic mean) by adding two numbers and dividing by two. This mathematical rule is applied within the context of Rythmomachia, or "The Philosophers' Game," and is accompanied by a reference table of numerical values used in the game.</summary>
+
+<keywords>Rythmomachia, Philosophers' Game, arithmetical proportion, arithmetic mean, mathematics education, 16th-century gaming</keywords>

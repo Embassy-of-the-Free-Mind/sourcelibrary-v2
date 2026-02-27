@@ -1,0 +1,21 @@
+[[meta: This page presents a visual diagram following the instructions for piece construction on the previous page. While the text has thus far focused on the physical geometry of the "Pyramid" pieces, this diagram displays a grid of letters and symbols, likely serving as a mnemonic or a coordinate guide for the layout of the game board or the identification of specific numerical pieces.]]
+
+### THE MNEMONIC GRID [[notes: This diagram represents a specialized arrangement of the Latin alphabet and symbols within a checkerboard grid. In Renaissance mathematical treatises, such grids often acted as a "memory palace" or a shorthand for complex numerical tables, helping players remember the positions and ratios of their pieces.]]
+
+| | | | | | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | **Q** | | **R** | | **K** | | | | | |
+| | | | | **H** | | | | | | | |
+| | | | **E** | *y* | **B** | **X** | | | | | |
+| | | **P** | **G** | **V** | **A** | **S** | **F** | **L** | | | |
+| | | | **D** | **T** | **C** | | | | | | |
+| | | | **&** | **I** | | | | | | | |
+| | | **O** | | **N** | | **Z** | **M** | | | | |
+
+[[notes: The grid consists of 84 squares (12 columns by 7 rows). The letters are positioned in a specific pattern: those on white squares were originally printed in black ink, while those on black squares were printed in white or light ink for contrast. The inclusion of the ampersand (&) alongside the alphabet suggests this grid might serve as a complete index for the game's counters, which were often labeled with letters or symbols to correspond with their mathematical properties.]]
+
+->9<-
+
+[[summary: This page features a 12x7 checkerboard diagram containing letters and an ampersand. It serves as a symbolic or mnemonic reference chart for the game of Rythmomachia, likely used to identify or position the pieces described in the preceding text.]]
+
+[[keywords: mnemonic grid, checkerboard diagram, Latin alphabet, Rythmomachia, gaming notation, Renaissance cipher, mathematical games]]

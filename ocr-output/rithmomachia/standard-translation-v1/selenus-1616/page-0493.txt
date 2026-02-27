@@ -1,0 +1,28 @@
+[[meta: This page continues the mathematical rules for the game of Rythmomachia. It follows the previous page’s discussion on calculating the White Square pieces and now shifts the focus to the calculation of the Black Square pieces.]]
+
+# On the Battle of Numbers
+
+[[image-desc: A mathematical table showing how two sets of triangles are added to create the first four black square pieces.]]
+
+| | | | | |
+| :--- | :---: | :---: | :---: | :---: |
+| **Row 1: Triangles** | 12 | 30 | 56 | 90 |
+| **Row 2: Triangles** | 16 | 36 | 64 | 100 |
+| **Row 3: Sum (Squares)** | 28 | 66 | 120 | 190 |
+
+The numbers of the first four **black square stones** [[notes: "Stones" refers to the game pieces used in Rythmomachia]] are found from the sums of the added numbers which are marked upon the eight black **triangular stones**: For 12 and 16 make 28; 30 and 36 make 66; 56 and 64 make 120; 90 and 100 make 190.
+
+---
+
+[[image-desc: A diagram showing four squares containing the numbers 49, 121, 225, and 361. Above each square is its square root: 7, 11, 15, and 19 respectively.]]
+
+The numbers for the remaining four **black square stones** are sought in the same manner as the last four white square stones, except that one begins not from 5, but from 7 (hence the numbers omitted in the list of the aforementioned last four white square stones are marked here) in the following way: 7, 11, 15, 19. Furthermore, 9, 13, and 17 (which were used for the aforementioned three last white square stones) are omitted. These numbers now, multiplied by themselves [[notes: This refers to squaring the numbers, e.g., $7 \times 7 = 49$]], give the sought-after numbers: namely, 49, 121, 225, 361.
+
+->(Buxer: fol: 14. a.)<-
+[[notes: A citation to Claude de Boissière (Buxerius), whose 1556 work "Le très excellent et ancien jeu d'arithmétique, dit Rithmomachie" served as a primary source for this text.]]
+
+->MMm<-
+
+[[summary: This page provides the mathematical formulas for determining the values of the Black Square pieces in Rythmomachia, using both the addition of triangular pieces and the squaring of a specific sequence of odd numbers.]]
+
+[[keywords: Rythmomachia, Battle of Numbers, Black Squares, Triangular Stones, Claude de Boissière, mathematical progression, Renaissance games]]

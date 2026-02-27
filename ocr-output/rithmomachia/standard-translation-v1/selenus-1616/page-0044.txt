@@ -1,0 +1,30 @@
+[[meta: This page continues the quote from Olaus Magnus regarding the use of chess as a character test for suitors, then transitions into a historical anecdote illustrating the dangers of poor sportsmanship and the vice of envy between royal houses.]]
+
+# The First Book / Chapter 1
+
+> » ...pleasure / to suffer with foresight / or to know how to endure with modesty and politeness / etc. Because of this warning / careful and prudent parents / could now take quite good heed / as to how far they / regarding their daughters’ marriages / should go / whether they / should accept or reject the suitors.
+
+We have an example of this / regarding the son of the King of France / named **Pipinus** [[notes: Pepin the Short (c. 714–768), King of the Franks and father of Charlemagne]], who / because he could not win / against his fellow player / became so enraged that he / struck him dead with the **chessboard**. We wish here / to set down the entire history / for the lovers of German Antiquities / as it was recorded from a written Bavarian Chronicle / (which is present in the library of **Marcus Welser** [[notes: Marcus Welser (1558–1614) was a German humanist scholar, historian, and publisher]]).
+
+> » *Okarius Filium habuit, in curiâ Pipini, bonis moribus, plus*
+> » *quàm Filius Pipini, adornatum: quòd Invidia fomitem admini=*
+> » *strabat; quoniam ex Fortunâ, sapè crescit Invidia. Et dùm Filij,*
+> » *dictorum Principum, in Scaco luderent, Filius Okarij, semper Pi=*
+> » *pini Filium vicit. Pipini tamen Filius, de potentiâ Patris præsu-*
+> » *mens, Filium Ducis per tempora percutiens, interfecit.* That is:
+> » Duke **Okar** in Bavaria [[notes: Likely referring to Duke Odilo or Tassilo of Bavaria in this legend]] / had / at the court of King **Pepin** / a son / who / with good manners / and politeness / far surpassed Pepin’s son: from which then envy / which commonly arises due to the prosperity and virtues of another / was ignited in no small measure. As often as / the sons of these two princes / practiced chess / the Duke’s son always won / and the King’s son lost. Finally / Pepin’s son (boasting of his lord father’s / might and power) killed the Duke’s son: for he struck him / on the head / in the temple [[notes: The German text uses "Schlafe" (temple), translating the Latin "tempora"]].
+
+Of this history / **Metellus of Tegernsee** [[notes: Metellus von Tegernsee (c. 1160) was a Benedictine monk and poet known for the *Quirinalia*, a collection of poems about Saint Quirinus of Tegernsee]], (who lived around the year 1060) / recorded the following notable verses / in his *Quirinalia*:
+
+> » *Divâ progenie par, geminum prodierat decus*
+> » *Fratrum, bellipotens ac locuples divitijs honos,*
+> » *Pipinum quibus & fama refert stemmate proximum,*
+> » *Insignis Caroli, qui Validus regna tulit, Patrem.*
+> » *Alter Bajarici jure Comes præcipuus soli,*
+> » *Burgundis alius belligero robore Dux probus,*
+
+[[meta: catchword: Quem]]
+
+[[summary: This page recounts a legendary historical anecdote where the son of King Pepin the Short, outled by the superior manners and chess skills of the Duke of Bavaria's son, murders his opponent with a chessboard in a fit of envious rage. It cites various scholarly sources, including Marcus Welser and Metellus of Tegernsee, to validate the story as a lesson in character.]]
+
+[[keywords: Pepin the Short, Okarius of Bavaria, Chess Murder, Envy, Marcus Welser, Metellus of Tegernsee, Quirinalia, Royal Education, Board Games]]

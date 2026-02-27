@@ -1,0 +1,27 @@
+[[meta: This page continues the explanation of the "Besieging" (Interclusio) rule from page 474, completing the Latin sentence regarding surrounding a piece so it cannot move.]]
+
+# On the Battle of Numbers.
+
+...surround it, so that its lawful movement is blocked, it is captured as soon as you choose to play the fourth of those outermost Stones: as is clearly shown in the following example (the Table of the first Chapter): For the opposing Circular Stone will be intercepted in A, if four others are placed in B, C, D, E: but if a Triangle is in A, your four Stones must be placed in V, Y, T, S. [[notes: In Rithmomachia, pieces move differently based on their shape: Circles move 1 space, Triangles 2, and Squares 3. To "besiege" a piece, you must occupy every space it could legally move to.]]
+
+->The following Numbers are conquered by Siege alone:<-
+->Evens or White. Odds, or Black.<-
+->2. 4. 6. 153. 3. 5. 7. 190.)<-
+[[notes: These specific numbers are often the "Kings" or base values of the pyramids in the game, which are so mathematically powerful they cannot be taken by simple arithmetic captures, only by being surrounded.]]
+
+Now that the six methods of combat [[notes: These "Kampf-Stücke" or "battle-pieces" are the various ways to capture: Meeting, Assault, Ambuscade, Proportion, and now Besieging.]] have been described, before we proceed to the preservation of victory and how the game must be brought to an end: we will first set forth Ten Rules which are further useful for the aforementioned combat.
+
+1.) One cannot take another’s stone with his own stone, so long as it is not moved according to its proper gait: [[notes: "Gait" refers to the specific number of spaces a piece is allowed to move.]] however, four cases are excepted:
+
+[[margin: (Buxer: fol: 47. a.]] [[notes: "Buxer" refers to Gustavus Selenus, the pseudonym of Duke Augustus the Younger of Brunswick-Lüneburg, who wrote a famous treatise on this game in 1616.]]
+*Stones cannot be moved from their place to capture others at the same time and in the same throw, unless their movement is legitimate and straight, except in a Siege.*
+
+->*In all captures, only one step must be made.)*<-
+
+2.) The first excepted case is this: When one moves a stone—which stands between two other stones that could take one another, and which covers them from each other—to another space: then he may indeed remove from the board that stone (out of these two now-exposed stones) which he can take according to the rules of the game, but he may not move another stone at the same time; instead, because he has moved one stone and taken another as mentioned, it is counted as one move (which is not unlike a **Discovered Check** [[notes: The original German uses "Ab-Schach," a term from Chess where moving one piece reveals an attack from a piece standing behind it]]). But if he leaves the stone standing which he could and should have taken, and the opponent becomes aware that he overlooked it, then the opponent may not only duly take his stone, but also move one of his own stones regardless.
+
+3.) The second [[notes: rule]] is as follows: When one moves his stone to a place from which the same, by the opponent's stones—
+
+[[summary: This page concludes the rules for Besieging and introduces the "Ten Rules" of Rithmomachia. It specifically details Rule 1 regarding legal moves and Rule 2, which describes a "discovered" capture similar to discovered check in chess.]]
+
+[[keywords: Rithmomachia, Besieging, Interclusio, Discovered Capture, Ab-Schach, Gustavus Selenus, Game Rules, Mathematical Games]]

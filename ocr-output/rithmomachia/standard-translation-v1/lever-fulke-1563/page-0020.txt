@@ -1,0 +1,34 @@
+# The Philosopher's Game.
+
+<page-num>19</page-num>
+
+->**[Example of the Game Board]**<-
+
+| Row | Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 | Col 7 | Col 8 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **1** | | | | | | | | |
+| **2** | | | | | | | | |
+| **3** | | | | | | | | |
+| **4** | | | | | | | | |
+| **5** | | | | | | | | |
+| **6** | | | | | | 6 | | |
+| **7** | K | | | | L | | | M |
+| **8** | | | | X | E | | | Z |
+| **9** | | | | B | S | C | | |
+| **10** | R | H | Y | A | T | I | | N |
+| **11** | | | | E | V | D | W | |
+| **12** | | | | | G | | | |
+| **13** | Q | | | | P | | | O |
+| **14** | Bisected Circle | | | Square (12) | | | Dotted Triangle | |
+| **15** | | | Circle (9) | | | Circle with Triangle | Triangle with Square | Circle (6) |
+| **16** | Triangle (4) | | | Circle (3) | | | Square with internal shape | |
+
+***
+
+<summary>
+This page features a detailed diagram of the game board for the Philosopher's Game, also known as Rhythmomachia <note>original: "Rhythmomachia"</note> (The Battle of Numbers). The board is a vertical grid of 128 squares (8 columns by 16 rows). The diagram illustrates the positioning of various game pieces, represented by letters (K, L, M, X, E, etc.) and geometric shapes including circles, triangles, and squares. Some shapes contain specific numerical values (e.g., 3, 4, 6, 9, 12) or other geometric forms, representing the mathematical nature of the game.
+</summary>
+
+<keywords>
+Philosopher's Game, Rhythmomachia, board game diagram, 128 squares, arithmetic game, geometric pieces, historical gaming, mathematical recreation.
+</keywords>

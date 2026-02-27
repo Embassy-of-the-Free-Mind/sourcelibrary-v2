@@ -1,0 +1,22 @@
+[[meta: This page continues the tactical advice regarding chess handicaps (odds). The previous page discussed the relative values of the Rook, Knight, and the King’s Bishop’s Pawn when given as an advantage to a weaker player.]]
+
+# The Second Book, Chapter 3:
+
+still has many stones [[notes: *Steine*, the common historical term for chess pieces]] / in reserve / can give Check-Mate. As: if the Black King / stood on his field: and the White
+Queen / were moved into his third field [[notes: Likely referring to the third rank from the opponent's perspective, or the square f3/f6 depending on the setup]]: then he would be / without any remedy / if she / could not be taken / Check-Mated. Therefore, every man should / look ahead wisely / and not easily enter into such an agreement / unless it be for a Rook: also / if he has entered into it in such a manner / he should always strive / to trade that same jumping Queen [[notes: *springende Königin*; while the Queen's modern move was established by this era, "leaping" may refer to her aggressive entry into the position]] / with the loss / of another good stone / or however he best can / and drive her from the
+Table [[notes: *Tabel*, the chessboard]].
+
+In the manner / as mentioned / are the advantages now to be
+taken / and given.
+
+It must however / (8.) he who / from the other / has received an advantage / also use it well / and direct and set his thoughts / as much as possible / toward this / that he trades one stone / for another / with him / for so long until he / is certain that the advantage he took / will serve his benefit. For we see / that / when the camps of two Potentates [[notes: *Potentaten*, meaning powerful rulers or sovereign princes; the author frequently uses military metaphors for chess]] / clash together / and must fight with one another / and the one / over the other / has gained an advantage / the former / presses forward with the same / until it / strikes down the latter / and brings away / the glory of the conquered field-battle. He can also / for that reason / not be blamed at all. For that same player / who / after he has attained an advantage / in his game / has spared his sword / which he / with great glory / and honor / could have used proudly / and for his trouble / might have been crowned King / in the field / yet still loses the same / is rightly worthy of mockery.
+
+In the same way / (9.) if the opponent / also attains an advantage / be it now / as small / as it will / in this game / and with the same / might perhaps win / then the other should / trade and exchange his stones / cautiously / so that he does not lose the game / nor in the least / ruin it / or bring it into disorder. For oftentimes / even when one / has an advantage / a game / is lost thereby. Therefore / one should / at all times / in the trading or exchanging of stones / (of which more will be thought / below / in the 4th Chapter of this book) take good heed: therefore bring the same / into no disorder / nor place oneself in danger.
+
+Hereby (10.) this is still to be remembered: that to one / who to the other / (as mentioned several times / above in this Chapter)
+
+[[meta: catchword: been]]
+
+[[summary: This page provides strategic advice on how to handle material advantages, advising players to simplify the game through piece trades once they are ahead. It employs a vivid military metaphor comparing a chess player to a "Potentate" leading an army in a field-battle.]]
+
+[[keywords: Checkmate, Queen, Rook, strategy, piece trading, military metaphor, Potentates, handicaps, Early Modern Chess]]

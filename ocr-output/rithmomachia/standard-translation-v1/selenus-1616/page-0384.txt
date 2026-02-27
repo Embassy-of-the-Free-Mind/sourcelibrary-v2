@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical demonstration from page 349, following a specific variation of play. The text continues to use a 1–64 numbering system for the board, where pieces are maneuvered toward a Checkmate.]]
+
+### The Third Book / 9. cap:
+
+[[note: Chapter 9.]]
+
+...Bishop's / **Soldiers** [[note: *Soldat* or "Soldier"; the early modern term for a Pawn]] / takes / and moves onto the **W. K. Knight's** / **Soldiers**: then **the White** [player] / (in order / to relieve the same / and not to lose / the **K. Rook**) / sets / the **K. Knight** [[note: *Reuter* or "Rider"; the early modern term for a Knight]] / on twenty-two: **The Black** [player] / [moves] the **K. Bishop** [[note: *Schütze* or "Archer"; the early modern term for a Bishop]] / (out of the future danger) / to forty-four: **The White** [player] / gives **Check** / with the **Queen** / from thirty-three: **The Black** [player] / covers the **King** / (provided He does not / move him / to fifty-three: In which case / **the White** [player] / if He had previously / moved the **K. Knight's** / **Soldier** / to eighteen: could place the **King** / on thirteen / and the **K. Rook** on four: and can entrench [[note: *verſchantzen*; a term for "fortifying" the King, referring here to the maneuver of Castling]] the **King** / in the **Queen's** quarter: Still covers [the King] / with his **Knight** / on fifty-one: Upon which move / **the White** [player] / with the **K. Bishop** / exchanges / the **B. K. Bishop**: The **K. Knight** / to thirty-seven: the **K. Rook** / to three: and the aforementioned **Knight** / (provided He / has moved / the **K. Knight's** / **Soldier** / toward the **W. Queen** / to forty-two) / moves / to forty-three / and offers **Check**: Can also further maintain / his game / against **the Black** [player] / (so long as He / only minds his defense / regardless of the fact that He has lost a Knight) / with the **K. Bishop** / to fifty-one / and moves the same / toward the **W. Queen**: **The White** [player] / takes him / with the **K. Bishop** / and offers **Check**: **The Black** [player] / takes the same / with the **K. Knight** / and moves it / to the **W. K. Bishop's** [square]: **The White** [player] / (to relieve the same / in the future) / [moves] the **K. Rook's** / **Soldier** / to twenty-five: **The Black** [player] / [moves] the **K. Knight's** / **Soldier** / toward the **W. Queen** / to forty-two: **The White** [player] / [moves] the same / to 
+
+[[margin: 27.]] twenty-six: * **The Black** [player] / [moves] to the **W. K. Bishop's** [square] / the **K. Rook's** / **Soldier** / to forty-one: **The White** [player] / offers / **Check** / with the **Queen** / from sixty-two: **The Black** [player] / must cover / the **King** / with his **Knight** / on sixty-one: **The White** [player] / takes it / with the **Queen** / and offers **Check** / once again: **The Black** [player] / must / move / the **King** / to fifty-one: **The White** [player] / gives / **Check** / 
+
+[[margin: 28.]] with the **K. Rook** / from three: * **The Black** [player] / moves / the **King** / to forty-four: **The White** [player] / gives / **Check-Mate** / with the **Queen** / from fifty-two.
+
+[[margin: 29.]] But if **the Black** [player] / moves the **King** / not to 44. (no. 28.) / but rather / to fifty: then **the White** [player] / gives / with the **Queen** / (provided
+
+<center>
+**Schach**, **Schachspiel**, **Reuter**, **Rochen**, **Schütze**, **König**, **Königin**, **Soldaten**, **Schach-Mat**
+</center>
+
+[[summary: This page details a complex sequence of chess moves using 17th-century terminology, leading to a Checkmate for the White player. It also includes an early description of the benefits and mechanics of castling, referred to as "entrenching" the King.]]
+
+[[keywords: Chess tactics, Checkmate, Castling, Early Modern Chess, Knight, Bishop, Rook, Pawn, Game Strategy]]

@@ -1,0 +1,13 @@
+## Regarding the Triumph <note>original: "Of the triumphe"</note>.
+
+When the King is captured <note>original: "taken"</note>, the triumph must be prepared to be set in the adversary's camp. The adversary's camp refers to the entire space between the first row <note>original: "front"</note> of his pieces <note>original: "men"</note>—as they were originally placed—to the lower <note>original: "neither"</note> end of the board <note>original: "table"</note>, containing 40 spaces, or as some prefer <note>original: "wil"</note>, 48. When you intend to make a triumph, you must proclaim it, warning <note>original: "admonishing"</note> your adversary that he should not interfere <note>original: "medle"</note> with any piece <note>original: "man"</note> that you have placed for your triumph to capture it. Furthermore, you must move <note>original: "bryng"</note> all your pieces that serve for the triumph using their direct moves <note>original: "motions"</note>, and not by their diagonal <note>original: "flying"</note> moves <note>original: "draughtes"</note>.
+
+Therefore, to triumph is to place three or four pieces within the adversary's camp in an arithmetic, geometric, or musical proportion, using both your own pieces and those of your enemy that have been captured <note>original: "taken"</note>, standing in a straight <note>original: "right"</note>
+
+<summary>
+This page details the rules for "the triumph," a specific victory condition in the game of Rythmomachia. It defines the boundaries of the "adversary's camp" (the opponent's starting territory) and explains the protocol for achieving a triumph once the opponent's King is captured. The player must announce their intent and then arrange three or four pieces—either their own or captured ones—into a specific mathematical proportion (arithmetic, geometric, or musical) within that camp using only direct, non-diagonal moves.
+</summary>
+
+<keywords>
+The Philosopher's Game, Rythmomachia, Triumph, adversary's camp, mathematical proportions, arithmetic proportion, geometric proportion, musical proportion, game rules, movement, King capture.
+</keywords>

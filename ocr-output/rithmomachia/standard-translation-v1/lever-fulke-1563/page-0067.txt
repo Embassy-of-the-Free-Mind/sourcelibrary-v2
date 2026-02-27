@@ -1,0 +1,27 @@
+# The Philosophers' game.
+
+<sig>D.ij.</sig>
+<meta>Catchword: So</meta>
+
+| The sign | |
+| :--- | :--- |
+| of the root <note>original: "rote"</note>. | 𝓏 |
+| of the square <note>original: "quadrate"</note>. | 𝔃 |
+| of the cube, or solid square <note>original: "solide quadrate"</note>. | 𝓬 |
+| of the fourth power <note>original: "foursquared quadrat"</note>. | 𝔃𝔃 |
+| of the fifth power <note>original: "sursolide"</note>. | ſ𝔃 |
+| of the sixth power <note>original: "squared cube"</note>. | 𝔃𝓬 |
+
+Every number may be taken for a root <note>original: "rote"</note>, such as 2. This number multiplied by itself is a square <note>original: "quadrate"</note>, such as 4. The square multiplied by the root gives a cube or solid square; for example, 4 multiplied by 2 gives 8, which is a cube. 
+
+Multiply the cube by the root, and so you have a fourth power <note>original: "squared quadrat"</note>; for example, 8 multiplied by 2 gives 16, which is a square of a square. Multiply the square of the square (the fourth power) by the root, and the product is the fifth power <note>original: "sursolyde"</note>; for example, 2 times 16 is 32, which is a fifth power. 
+
+Multiply the fifth power by the root, and the product is the sixth power <note>original: "quadrate of a cube"</note>; for example, 2 times 32 is 64, which is a square of a cube. Thus you have the root, square, cube, fourth power, fifth power, and sixth power: 2, 4, 8, 16, 32, 64.
+
+<summary>
+This page defines the mathematical powers and their corresponding algebraic (cossic) symbols used in the advanced version of the Philosophers' Game. It provides a clear progression of exponents using the number 2 as a base, explaining how to calculate each power from the root (2) up to the sixth power (64). The text establishes the terminology for squares, cubes, fourth powers (squared quadrats), fifth powers (sursolids), and sixth powers (squared cubes).
+</summary>
+
+<keywords>
+mathematical powers, cossic signs, root, square, cube, sursolid, fourth power, sixth power, Rythmomachia, algebraic notation, Renaissance mathematics, powers of two
+</keywords>

@@ -1,0 +1,27 @@
+[[meta: This page marks a formal transition from the tactical instructions of the Third Book to the opening of the Fourth Book. The previous page ended with a technical conclusion on pawn movements and odds.]]
+
+[[margin: Xerxes Philomater.]] [[notes: In the legendary history of chess common in the 17th century, Xerxes—a philosopher, not the Persian king—is often credited with inventing the game to reform a tyrant. The name "Philomater" suggests a "lover of learning."]]
+
+[[margin: Amilinus Evilmerodach.]] [[notes: Evil-merodach was a historical King of Babylon. Medieval lore frequently identifies him as the monarch for whom the game of chess was created, intended to cure his madness or teach him statecraft.]]
+
+❦ The ❦
+
+# Fourth Book/
+
+->of the Descrip-<-
+->tion/of the Chess-<-
+->Game.<-
+
+❦
+
+---
+
+->LEIPZIG,<- [[notes: *Lipsiae* is the Latin name for Leipzig, a major center of printing and the book trade in the Holy Roman Empire.]]
+
+->At the expense of HENNING<-
+
+->GROSS the Younger.<- [[notes: The term *Sumtibus* indicates that Henning Gross the Younger was the publisher who financed the production of this ornate volume.]]
+
+[[summary: This is the decorative title page for the Fourth Book of Gustavus Selenus’s chess treatise. It features allegorical and historical figures associated with the mythical origins of chess, signaling a transition into a new section of the work.]]
+
+[[keywords: Fourth Book, Title Page, Leipzig, Henning Gross, Xerxes Philomater, Evilmerodach, Chess History, 17th Century Printing]]

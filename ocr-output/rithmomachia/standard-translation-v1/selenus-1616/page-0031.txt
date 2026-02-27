@@ -1,0 +1,20 @@
+[[meta: The previous page featured a mirrored ink-transfer of a religious title page, likely from being pressed against a different work during binding. This page marks the actual beginning of the treatise on chess, returning to the primary subject of the manuscript.]]
+
+## The First Book /
+# Of the Description / of the
+# Game of Chess.
+### The First Chapter.
+#### Of the Nature, Kind, and Properties /
+##### of the Chess-Art.
+
+[[margin: 1. cap.]]
+There is nothing in this world that is to be undertaken with counsel and understanding which must not necessarily be classified as an **Art**. [[notes: In the 17th century, "Art" (Kunst) referred to a systematic branch of knowledge or a technical skill governed by rules, similar to how we might describe a "science" or "discipline" today.]] For our weakened nature [[notes: A common philosophical reference to the "post-fall" state of humanity, suggesting that humans are no longer naturally perfect and require structured systems to achieve excellence.]] is unable to conduct itself as the necessity of a matter requires without certain order, laws, rules, measure, or methods. Therefore, over time, the arts were invented by the wisest and most excellent men, and were further brought to perfection by their descendants: a fact which all **Philosophy** and the various arts flowing from it sufficiently prove.
+
+Accordingly, we shall make a good beginning to our undertaking if we likewise posit that the **Game of Chess** is an art: since the proof will, it is hoped, be provided by the work itself. For this will be revealed and handed to us, first by the nature and property of this game, and subsequently by the measure and manner in which one may properly grasp, teach, and learn it.
+
+Regarding the first: **Aristotle** says, in the introduction to his *Metaphysics*, that all arts are medicines for human needs and frailties. [[notes: The author is dignifying chess by linking it to classical Greek philosophy, suggesting that games are not merely distractions but "remedies" for the stresses and limitations of the human mind.]] Now it happens at times that...
+
+[[meta: The text ends mid-sentence with the catchword "der," indicating the first word of the next page.]]
+
+[[summary: This page serves as the formal introduction to the treatise, arguing that chess should be considered a disciplined "Art" or science rather than a mere pastime. The author justifies this by citing the human need for order and referencing Aristotle’s view of arts as remedies for human frailty.]]
+[[keywords: Chess-Art, Aristotle, Metaphysics, Philosophy, logic, rules of play, Early Modern education]]

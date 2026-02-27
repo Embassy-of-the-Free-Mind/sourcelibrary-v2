@@ -1,0 +1,26 @@
+[[meta: This page begins Chapter 9, marking a transition from the tactical play-by-play of "Current Chess" in Chapter 8 to a historical and geographical study of older chess variants. It specifically introduces the famous chess-playing village of Ströbeck.]]
+
+9. cap: On the Game of Chess.
+
+Ggg ii
+
+[[meta: catchword: The]]
+
+[[image-desc: A rectangular woodcut ornamental border with scrolling foliage and floral motifs, enclosing the chapter title.]]
+
+# The Ninth Chapter.
+## How the Inhabitants of Ströbeck play Chess in three ways; and call them (1.) the Courier Game: (2.) the Old: and (3.) the Italian Chess, because of the different moves and boards.
+
+[[notes: Ströbeck (written here as Ströpeke) is a German village near Halberstadt with a unique chess heritage dating back to at least the 11th century. According to legend, a prisoner taught the villagers the game, and it became so central to their culture that it was taught in schools and used to settle local disputes.]]
+
+Now that, hopefully, enough has been shown—both in theory and, primarily, in practice—regarding what is necessary to know about the new and currently common "Current Chess" [[notes: *Current-Schach-Spiel* refers to the modern form of chess we recognize today, which was becoming standardized in the 17th century]]: We shall now also briefly mention the other two types of this game, namely the Great or "Courier" Chess game, and then the Small game (which, according to the third chapter of the first book, was derived from the Great game alongside the previously mentioned Current or complete Chess game) and quickly reveal them to the enthusiasts of this game for their enjoyment.
+
+However, this Great game has not been very common in Germany or Italy [[notes: The author uses *Welsch-land*, a historical term used by Germans to refer to Romance-speaking lands, particularly Italy]] for nearly three hundred years or more (as can be seen from the German rhymes of Von Ammenhausen, which are placed at the end of this chapter): instead, over time, it has almost entirely died out. It is now only found and kept as a unique game among the inhabitants of the village of Ströbeck. This village is situated in the ancient County of Ascania, which was the ancestral seat of the old Electors of Brandenburg and Saxony, as well as the current Lower Saxon Dukes and the Princes of Anhalt (who still carry the title of Counts of Ascania for that reason); it is now subject to the Cathedral Provostry of the Diocese of Halberstadt. This extraordinary chess-player [[notes: referring to the village or its collective tradition]] is also mentioned by the famous jurist Petrus Heigius in *poster: quæst. 10. n. 49*.
+
+The Other and Smaller [game] has come to take its place; nevertheless (following the invention of the previously mentioned complete Chess game), it has been very much marginalized within the last hundred years: some examples of this are set down and can be found in the following chapter.
+
+The nature of the Great or Courier Game is now arranged in the following manner.
+
+[[summary: This page introduces the historical and regional variants of chess, highlighting the village of Ströbeck as the final stronghold of "Courier Chess," a game that had otherwise vanished from Europe.]]
+
+[[keywords: Ströbeck, Courier Chess, Ascania, Halberstadt, Petrus Heigius, Konrad von Ammenhausen, Chess history, German chess traditions]]

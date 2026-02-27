@@ -1,0 +1,27 @@
+[[meta: This page continues from the previous illustrations of game states. It transitions from the visual grids to the descriptive text of Chapter 9, detailing specific move sequences and variations known as "Ways" (Arten).]]
+
+->Vom Schach-Spiel.<-
+[[margin: 9.cap:]]
+
+[[notes: The woodcut headpiece shows Mannerist style masks and foliage, typical of 17th-century book decorations.]]
+
+## The Ninth Chapter.
+
+### Concerning the Second and Third Way to proceed further with a game.
+
+[[notes: The decorative drop-cap 'D' begins the instructional text.]]
+
+The **Second Way** is: when the **Black** player, according to the previous arrangement made in the Eighth Chapter, varies his moves in the third turn; and instead of moving the **Queen** to 45, he moves her **Archer’s Pawn** [[notes: "Schützens-Soldat" translates to Archer's Soldier. In early German chess, the Bishop was often called the "Schütze" (Archer), and the "Soldat" is the Pawn.]] to forty-six: if the **White** player now moves his **King’s Archer’s Pawn** to twenty-two in the fourth turn, then the **Black** player makes an incursion with the **King’s Pawn** from thirty-seven. To prevent this, the **White** player—if he wishes to take some care of his game in the beginning—should move not the **King’s Archer's**, but specifically the **King’s Archer’s Pawn** to twenty-seven and attack the **Black** player’s quarter. From this arises the **Third Way** to carry out the game further, specifically as follows:
+
+[[margin: 1.]] After the **White** player has moved the **King’s Pawn** to 28; the **Black** player, the **King’s Pawn** to 36; the **White** player, the **King’s Archer** [[notes: The Bishop]] to 30; the **Black** player, the **King’s Archer** to 38; the **White** player, the **Queen** to 12; and the **Black** player moves not the **King’s Pawn** to 45 (as was set down in the third turn of the 8th Chapter) but rather their **Archer’s Pawn** to forty-six: the **White** player also did not move the **King’s Archer’s Pawn** to 22 (as mentioned at the start of this Chapter regarding the **Second Way**), but instead made the attack with the **King’s Archer’s Pawn** from twenty-seven:
+
+[[margin: 2. *]] then the **Black** player takes the same with his **King’s Pawn**. The **White** player moves the **King’s Knight** [[notes: "Reuter" or "Reiter" (Rider) refers to the Knight.]] to nineteen (in order to keep an eye on the twenty-fifth square). The **Black** player moves the **King’s Archer** to forty-seven (as a precaution). The **White** player moves the **King’s Pawn** (so that their **Archer** may subsequently take the **Black King’s Pawn**) to twenty-nine. The **Black** player (to defend him) moves the **King’s Knight’s Pawn** to thirty-four. The **White** player (to disrupt the opponent's plots) moves the **King’s Rook’s Pawn**...
+
+[[notes: The text ends mid-sentence with the catchword "Solda-", which would be completed as "Soldaten" on the following page. The numbers used for the squares refer to a 1-64 coordinate system common in early modern chess manuals like those of Gustavus Selenus.]]
+
+<sig>A a</sig>
+[[meta: catchword: Solda-]]
+
+[[summary: This page describes specific opening variations in a chess match, focusing on how White should respond if Black deviates from the standard moves established in the previous chapter. It introduces a defensive strategy involving pawn maneuvers and the positioning of the "Archer" (Bishop) and "Rider" (Knight).]]
+
+[[keywords: Chess, Chess Openings, King's Pawn, Archer, Bishop, Knight, Pawn, 17th Century Games]]

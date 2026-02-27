@@ -1,0 +1,50 @@
+[[meta: This page continues the discussion of Jean Pierre de Mesmes’ narrative framing of Rithmomachia—the "Philosopher's Game"—as a tactical battle between the Holy Roman Empire (the "Christians") and the Ottoman Empire (the "Turks").]]
+
+### ->On the Battle of Numbers.<-
+
+*...number of Soldiers, so the individual **Standard-Bearers** [[notes: Latin: *AnteSignani*; those who fight in front of the standards. In this game, these refer to the high-value pieces.]] of the Turks surpass our Christians by 44 Soldiers; so that the entire Army of the Turks is 440 Soldiers greater in number than ours: nevertheless, the Red Counters [[notes: *Calculi*; the circular, square, or triangular pieces used in the game. Here, Red represents the Turks and White represents the Christians.]] express larger Numbers than the White.*
+
+*In the very encounter and beginning of this Playful Battle, the two Commanders shall come to this agreement: namely, that he shall be the Victor and shall triumph who carries away more **Signs** [[notes: *Signa*; standards or trophies, representing captured enemy pieces.]] from the Enemy.*
+
+*But if our Caesar [[notes: Referring to the Holy Roman Emperor as the leader of the Christian side.]] should surpass the Turk himself by Two Signs:*
+
+| | | | | | | |
+|:---:|:---|:---:|:---|:---:|:---|:---:|
+| | Two | | 348 | | Three | |
+| | Three | | 522 | | Four | |
+| | Four | | 696 | | Five | |
+| | Five | **Signs,** | 870 | **Infantry:** | Six | |
+| **These** | Six | **will give** | 1044 | **If by** | Seven | **Signs;** |
+| | Seven | | 1218 | | Eight | |
+| | Eight | | 1392 | | Nine | |
+| | Nine | | 1566 | | Ten | |
+| | Ten | | 1740 | | | |
+
+*Behold the greatest slaughter of the Turks.*
+
+*But if our Emperor should be overcome by the Turk by Two Signs:*
+
+| | | | | | | |
+|:---:|:---|:---:|:---|:---:|:---|:---:|
+| | Two | | 260 | | Three | |
+| | Three | | 390 | | Four | |
+| | Four | | 520 | | Five | |
+| | Five | **Signs,** | 650 | **Soldiers:** | Six | |
+| **These** | Six | **will give** | 780 | **If by** | Seven | **Signs;** |
+| | Seven | | 910 | | Eight | |
+| | Eight | | 1040 | | Nine | |
+| | Nine | | 1170 | | Ten | |
+| | Ten | | 1300 | | | |
+
+*And this is the greatest disaster of the Christians.*
+
+*The same author, folio 41. a.*
+
+*Regarding the other Victories that I have gathered here, I did so so that this Game—which within the memory of our ancestors was reached only by a few—might in our time be understood not only by the learned but also by the unlearned. For I could never persuade myself that it was just for these good things, which pertain to everyone and should be common to the whole Republic and all people, to remain hidden among a few private individuals.*
+
+Qqq ij
+[[meta: Catchword: Siebey]]
+
+[[summary: This page explains a narrative variant of Rithmomachia where game pieces represent Christian and Turkish soldiers, using tables to calculate the "slaughter" or "disaster" based on captured pieces (signs). The text concludes with a humanist argument by the author for making the complex mathematical game accessible to everyone, not just scholars.]]
+
+[[keywords: Rithmomachia, Battle of Numbers, Jean Pierre de Mesmes, Ottoman Empire, Holy Roman Empire, mathematical games, standard-bearers, infantry, Renaissance education]]

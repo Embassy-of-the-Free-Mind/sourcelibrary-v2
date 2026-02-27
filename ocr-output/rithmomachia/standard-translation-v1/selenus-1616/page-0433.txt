@@ -1,0 +1,28 @@
+[[meta: This page continues the critical analysis of Pedro Damiano’s chess strategies. The numbering system used (1–64) refers to a linear counting of the squares, common in 16th and 17th-century manuals, rather than the modern algebraic notation (a1–h8).]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 3]]
+
+27. * That the **Black** / should move the **King’s Archer** [[notes: *K. Schützen*—'Archer' was a common term for the Bishop during this period]] / to 36 / and following / give check / with the **King’s Rook**: Wherefore / the **White** / could not escape **Checkmate**.
+
+This is likewise / no small error: for / the **Black** / if He / moves his **King’s Archer** / (which anyway / on 45, to which he / was moved in no. 13 above / has the same power / which he / supposedly gains / through this move) to 36: does no damage / nor disruption / to the **White** / much less can he / **give check** / with the **King’s Rook** / (because the **White** / would move his **King** / before this **Black Rook** / can offer itself: behind his **Knight’s Soldier** [[notes: *Reuters-Soldaten*—the pawn in front of the Knight]], to thirty-three).
+
+Therefore / the **Black** / should not (according to ***Damiano’s*** opinion / no. 20.) move the **King’s** [[notes: likely referring to the King's pawn or piece]] / but / much rather / move the **King’s Archer** / against the **White Queen** / (wherever she / may be placed by fortune) to twenty-eight: then he / following / can give **Checkmate** / by force.
+
+28. For the **Black** / if the **White** / moves the **Queen** / (provided she / had taken his **King’s Knight’s Soldier** / no. 26 above: and the **Black Archer** / charges her / from 28) to his **Queen** [[notes: likely meaning the Queen's square or a specific file]] / to twenty-three: offers check / with the **King’s Rook** / from twenty-seven: The **White** / moves / the **King** / to thirty-three / or eighteen: The **Black** / gives / **Checkmate** / with the **Queen** / from twenty-six.
+
+29. But if the **White** / does not move the **Queen** / to 23. (no. 28.) but / (provided she / was moved to 10. d. no. 26 above) to twelve: then / the **Black** / offers check / with the **King’s Rook** / from twenty-seven /
+
+30. **Check** : * The **White** / moves / the **King** / to eighteen: The **Black** / gives **Check** / with the **King’s Rook** / from nineteen / and
+
+31. a **Discovered Check** [[notes: *Ab-Schach*—literally 'off-check,' occurring when one piece moves to reveal an attack from another]] / from the **King’s Archer** : * The **White** / moves / his **King** / (since / two enemies / charge him / at once) [[notes: This refers to a double check, where the King is attacked by both the Rook and the Archer simultaneously]] to twenty-five: The **Black** / gives **Checkmate** / with the **Queen** / from seventeen.
+
+32. But if the **White** / does not move the **King** / to 25. (no. 31.) but / to ten: then / the **Black** / gives **Check** / with the **Queen** / from twenty-six / or seventeen: The **White** / places the **King** / on one: The **Black** / moves the **King’s Rook** / to the **White Queen** / to eleven / and gives / a **Discovered Check** / from the **King’s Archer**: The **White** / covers / the **King** / with the **Queen** / on nineteen: or / with his **Rook** / on ten: The **Black** / takes / with
+
+<sig>Eee</sig>
+[[meta: catchword: der Kö- (the King-)]]
+
+[[summary: This page continues a technical critique of Pedro Damiano's chess openings, specifically focusing on how Black can force a checkmate if White misplays their Queen and King. The author emphasizes the power of the "Archer" (Bishop) and the "Roch" (Rook) in delivering discovered and double checks.]]
+
+[[keywords: Chess history, Pedro Damiano, King's Archer, Discovered check, Checkmate variations, 17th-century chess notation, Rochen]]

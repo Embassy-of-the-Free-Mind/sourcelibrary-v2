@@ -1,0 +1,22 @@
+[[meta: This page continues the explanation of "multiple proportions" started on the previous page. It defines the base numbers (2 through 9) that serve as the foundation for the game's mathematical ratios and explains why the pieces are divided by parity—even versus odd.]].
+
+### OF THE PHILOSOPHERS.
+
+[...held] between 1 and 10, and such numbers, taken individually, will be the source and origin of all proportions: observing however that the even numbers should be in one color, and the odd in another, insofar as the pieces [[notes: The original French uses the word "tables," which in the context of early games refers to the playing pieces or counters, much like the "tables" in backgammon.]] of the even numbers must not be mixed with those of the odd numbers; nonetheless, because a number taken individually cannot by itself create any proportion: you must presuppose that each of the four even numbers requires another of its own color to make a proportion according to itself. Each of the odd numbers does the same. Therefore, the said 4 evens and 4 odds shall be called *requiring* or *claiming* numbers. [[notes: *Nombres requerans* or *pretendans* are the foundational numbers from which more complex ratios on the board are derived. They "claim" or "require" another number to form a mathematical relationship, such as 2 requiring 4 to create a "double" proportion.]]
+
+## The first pieces belonging to the first part of multiple proportions.
+
+| | | | | |
+| :--- | :---: | :---: | :---: | :---: |
+| **Even.** | 2 | 4 | 6 | 8 |
+| | | | | |
+| **Odd.** | **3** | **5** | **7** | **9** |
+
+->**Requiring numbers.**<-
+
+[[gloss: The diagram above represents the base pieces for both players. In the original text, the even numbers (2, 4, 6, 8) are shown in white circles, while the odd numbers (3, 5, 7, 9) are shown in solid black circles to distinguish the two sides of the game.]]
+
+[[gloss: *proportions multiplices*: multiple proportions (ratios like 2:1, 3:1); *nombres pairs*: even numbers; *nombres impairs*: odd numbers; *nombres requerans*: requiring numbers; *nombres pretendans*: claiming numbers.]]
+
+[[summary: This page establishes the basic numeric units for the game, explaining that numbers 2 through 9 serve as the "origin" of all proportions. It introduces the mechanical rule that even and odd numbers belong to different sides and must be colored differently to maintain proper mathematical ratios during play.]]
+[[keywords: Rythmomachia, parity, even and odd numbers, multiple proportions, game pieces, mathematical ratios, Renaissance gaming]]

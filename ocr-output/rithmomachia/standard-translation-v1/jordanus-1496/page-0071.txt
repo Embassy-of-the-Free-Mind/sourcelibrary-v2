@@ -1,0 +1,65 @@
+[[meta: This page continues the mathematical proofs concerning the subdivision of ratios. Having previously discussed how a double ratio (2:1) is composed of a sesquialtera (3:2) and a sesquitertia (4:3), the author now moves to Proposition 54, dealing with ratios less than quadruple (4:1), and continues into Propositions 55 through 58, which explore the relationships between complex "multiple" ratios and their simpler components.]]
+
+<margin>54</margin>
+# ¶ To divide a given ratio that is less than quadruple into two superpartients.
+
+¶ Let the smallest terms of the given ratio be **a** and **b**: which, when joined together, make **d**: and let **e** be greater than **d** by one, which when joined make **f**: to which is added an equal **d**. Let the whole be **fg**: and let **a** be multiplied by **fg** to produce **h**: and from **a** and **b** [multiplied] into the same, let there be made **hlz** and **l**. It is therefore clear that from **b** into **fg** comes **lz**: and from **b** into **g** comes **lz**. Wherefore from **b** into **f** comes **l**. Likewise, let **c** be triple to **a**, and from **c** into **g** let there be made **mn**: and let **n** be equal to **lz**. By the eighth [proposition] of the second [book], the ratio of **hlz** and **lz** to **h** will be as **ab** to **a**. And because **ab** by hypothesis is less than quadruple **a**: therefore **b** is less than triple **a**. Wherefore it is less than **c**. And because **g** is equal to **d** and **n** is equal to **g**: it is established that **m** is equal to or a multiple of **d** by the twelfth [proposition] of the first [book]. Likewise, because **d** and **e** are prime to each other: therefore by the ninth [proposition] of the third [book], **f** will be prime to each. And by the same, **f** and **g** together are prime to **d**. And because **a** is less than **d** and prime to it by the same ninth [proposition]: that which is made from **a** into **fg**, namely **h**, will not be measured by **d** according to the tenth [proposition] of the same. And because **d** measures **lz** and **d** does not measure **h**: therefore **lz**, by the twenty-third [proposition] of the first [book], will not measure **h**. And because **fg** is greater than triple **d**: therefore **h** will be greater than **n**: therefore greater than **lz**. Therefore **lz** will be parts of **h** [[notes: "Parts" here refers to a superpartient relationship, where the smaller number does not divide the larger evenly but shares multiple common parts.]]. And by the same reasoning, because **ab** is less [than quadruple] and prime to **f**, it will not measure **f**, which is made from **ab** into **fg**: namely **hlzl**. And because **f** measures **l**: therefore **l** will not measure **hlzl**: wherefore neither **hlz**. And because by the ninth [proposition] of the first [book] **l** is as much as **lz** twice and **b**. And **n** is equal to **lz** and **m** is equal to or greater than **d** and greater than **b**, and **h** is greater than **mn**: then **hlz** will be greater than **l**. Therefore **l** will be parts of it. It is thus established that **hlz** to **h** is superpartient, and **hlz** to **hlz** is also superpartient: into which the ratio between **a** and **b** has been divided: and what was proposed has been done.
+
+<margin>
+[[notes: This complex diagram uses lines to represent numerical values (h, i, lz, c, b) to visually prove how a ratio (like 20:10) can be broken into specific fractional segments (like 15, 7, and 3) following the geometric logic of the text.]]
+->[A complex geometrical and numerical diagram illustrating Proposition 54. At the top, a broad arc connects 20 and 10 with 15 marked in the center. Below this are two nested smaller arcs: one connecting 20 and 7, another connecting 7 and 3. Below the arcs are horizontal segments labeled with letters and numbers: h (10, 7, 3), i (12), i (9, 6, 3), lz (4, 3), c (3), and b (8, 1) with intermediate segments labeled 1, 2, and 4.]<-
+</margin>
+
+---
+
+<margin>55</margin>
+# ¶ Every multiple-superparticular [ratio] exceeds its corresponding simple multiple by a superparticular [ratio] denominated by the number produced by multiplying the multiple number by the denominator of the part.
+
+¶ Let the ratio of **b** to **a** be a multiple-superparticular [[notes: A ratio like 5:2, which is "double sesquialtera"—it contains the smaller number twice (multiple) plus a half (superparticular).]]; and let **c** to **a** be a similar simple multiple [[notes: Using the 5:2 example, the simple multiple would be 4:2, or "double".]]. I say that the ratio of **b** to **a** exceeds the ratio of **c** to **a** by a superparticular ratio denominated by the number that comes from multiplying the multiple number by the denominator of the superparticular part. For let **d** be the amount by which **b** exceeds **c**, and let **e** be the denominator of the multiple, and **f** the denominator of the superparticular: it is therefore clear that **a** will be in **c** according to **e**: and **d** in **a** according to **f**. Therefore, let **g** be produced from **e** multiplied by **f**: and by the twenty-third [proposition] of the first [book], **d** will be in **c** according to **g**. Therefore **b** will contain **c** and the part denominated by **g**. Therefore the ratio **b** to **a** contains a superparticular ratio denominated by the number **g**, which is produced by the multiplication of **e** (the denominator of the multiple) by **f** (the denominator of the superparticular part): which is what was proposed.
+
+<margin>
+[[notes: This diagram demonstrates Proposition 55 using segments: if g=4, and e and f are 2, it shows the relationship where a (2) fits into c (4) twice, and the excess d (1) makes b (5).]]
+->[Diagram for Proposition 55 consisting of horizontal line segments. Line g is marked with 4; lines e and f are marked with 2; line c is marked with 4; line b is marked with 5; and line a is marked with 2.]<-
+</margin>
+
+---
+
+<margin>56</margin>
+# ¶ Every multiple-superpartient ratio whose multiple number measures the number of parts exceeds the same simple multiple by a superparticular ratio denominated by one of those parts.
+
+¶ Let the ratio of **b** to **a** be a multiple-superpartient ratio [[notes: A ratio like 8:3, which is "double" plus two-thirds.]]; and let **d** be the number denominating the multiple according to which the number of parts of **b** to **a** is taken. I say that the ratio of **b** to **a** exceeds the similar simple multiple by a superparticular denominated by one of those parts. For I take **c** to **a** as the similar multiple. And because **b** is greater than **c**: let **f** be the amount by which **b** exceeds **c**. Since **f** represents parts of **a** taken according to **d** and denominated by **a**: and **a** is a part of **c** denominated by **d**. And since from **d** into **a** comes **c**, and from **f** into **a** comes **c**. Therefore **f** is a part of **c** denominated by **a**. Therefore **b** to **a** contains a superparticular ratio over the ratio **c** to **a** denominated by one of the parts of the superpartient: which was to be demonstrated.
+
+<margin>
+->[Diagram for Proposition 56 showing segments: f (2), b (8), c (6), and a (2). This illustrates how 8 exceeds 6 by a specific ratio.]<-
+</margin>
+
+---
+
+<margin>57</margin>
+# ¶ To find a multiple-superpartient ratio which exceeds the total multiple by a superparticular, when the number of parts and the number denominating the multiple are commensurable.
+
+¶ This [proposition] proposes: that if the given numbers—one of which denominates the multiple and the other is the number of parts of the multiple-superpartient—are commensurable [[notes: "Commensurable" means they share a common divisor.]] to one another, to find the multiple-superpartient that exceeds the similar multiple by a superparticular. First, let **a** (the number denominating the multiple) and **b** (the number of parts) be commensurable. Let **b** be a number taken according to **a**, and by the preceding [proposition] the proposal will be done. Second, let **a** and **b** be commensurable: but let **b** be a part of **a**, and with the help of the preceding and the twenty-third [proposition] of the first [book], you shall conclude the proposal. Third, let **a** be a part of **b** called from **c**: I take any number greater than **a**, which however it does not measure, which let be **d**: and I multiply **c** by **d** to produce **e**. And because **c** into **a** makes **b**: **e** will be greater than **b**. And because by the seventh [proposition] of the second [book] **b** is to **a** as **a** is to **d**, and **a** does not measure **d**. Therefore neither will **b** measure **e**. I multiply **a** into **e** and let **f** be produced: to which having added **b**, let **g** be made. I say therefore that **g** to **e** is the superpartient which is sought. For **g** contains **e** according to **a** and furthermore **b** parts of **e**. And because **b** is a part of **f** which is a multiple [of e] and let it be to **c**: and **a** into **c** makes **b**. It will therefore add over **f** (the multiple to **e** denominated by **a**) the number **b** as its part: which is what was proposed. Fourth, let **a** and **b** be commensurable: but neither measures the other. And let **c** be the greatest number measuring them: and let **c** measure the number **b** according to **d**. I take **e**, any number greater than **c**, which however **c** does not measure: which I multiply by **d** and let **f** be produced, which will be greater than **b**: nor will it be measured by it. I say therefore, as was immediately demonstrated in the preceding part: that the superpartient ratio denominated by **a** and **a** parts called from **f** taken according to the number **b**: adds over the multiple called from **a**: a superparticular. This is demonstrated just as in the preceding part: and thus the whole proposition is constructed.
+
+<margin>
+->[Diagram for Proposition 57 with labeled segments: a (2), b (4), f (12), e (6), g (16). Below, another set: a (2), b (2), c (3), f (6), e (3), g (8) with b=4, g=40, f=36, e=6, f=6, b=4.]<-
+</margin>
+
+---
+
+<margin>58</margin>
+# ¶ It is necessary that a multiple-superpartient ratio, whose multiple number and the number measuring the parts are prime to each other, adds a superpartient [ratio] over the similar multiple.
+
+¶ Let **a** be the number of the multiple and **b** be the number of the parts of the superpartient: and let **a** and **b** be numbers prime to each other. I say that the multiple-superpartient denominated by **a** and parts **b**: adds a superpartient ratio over the similar multiple. For let **c** be the denominator of parts **b**; it is clear that **c** is greater than **b**: nor does **b** measure it. I therefore multiply **a** by **c** and let **d** be made; by the twenty-first [proposition] of the third [book], **b** will not measure **d**. I therefore add **b** over **d** and let **e** be made: for **e** contains [c] according to **a**. And furthermore the parts of **c** taken according to **b**; the ratio of **e** to **c** is a multiple-superpartient denominated by **a** and parts **b**. But also the ratio of **d** to **c** is a multiple called from **a**: and it adds over **d**...
+
+<margin>
+[[notes: This diagram illustrates a specific multiple-superpartient ratio (11:4), showing it as twice (the multiple 8:4) plus 3/4 (the superpartient excess).]]
+->[Diagram for Proposition 58 showing segments: e (11), d (8), c (4), and a, b. Ratio e to c is indicated as 2 3/4, and d to c as 2.]<-
+</margin>
+
+<sig>e2</sig>
+
+<vocab>proportio (ratio), multiplex (multiple), superparticularis (superparticular), superpartiens (superpartient), commensurabiles (commensurable), denominans (denominator/denominating), numerus partium (number of parts)</vocab>
+
+[[summary: This page details four mathematical propositions (54-58) concerning the classification and subdivision of ratios. It explains how complex ratios, like multiple-superpartients, can be analytically separated into simpler multiple and fractional components.]]
+
+[[keywords: ratios, superpartient, superparticular, multiple ratios, Euclidean geometry, commensurability, mathematical proofs, proportional logic]]

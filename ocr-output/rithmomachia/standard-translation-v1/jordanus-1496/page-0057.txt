@@ -1,0 +1,47 @@
+[[meta: This page continues the mathematical demonstration of how different classes of numbers are related, specifically focusing on the construction and properties of hexagonal numbers—both the "square" (standard) variety and the "equiangular" (centered) variety—by relating them to triangular and square numbers.]]
+
+# VIII.
+
+...divided by the longer side **b** into two triangular numbers, each of which is as far from unity as the oblong number [[notes: *Altera parte longior*, literally "longer by the other part," refers to numbers of the form $n(n+1)$, such as 2, 6, 12.]] is after unity: because the side of those triangles is equal to the smaller side of the oblong. Therefore, each is as far from unity as the square **a** is after unity. One of those triangles, therefore, through the twelfth [proposition] of this book, together with the square **a**, constitutes the whole pentagonal number after unity; but also, by the preceding [proposition], that same pentagonal number with the other triangular number (which is as far from unity) constitutes a **square hexagon** [[notes: *Hexagonus tetragonicus*. In this context, this refers to the standard hexagonal numbers ($1, 6, 15, 28...$), which are also a subset of triangular numbers.]]. Therefore, **a** with the preceding oblong **b** constitutes a square hexagon: which was to be demonstrated and proposed.
+
+[[margin: 16]]
+**¶ If triangular numbers are arranged starting from unity: the third, and then every other one from the one previously taken, will be a hexagon.**
+
+¶ For by the eleventh [proposition] of this book, if oblong numbers and squares are arranged from unity and joined two by two, they all become triangular numbers. But since the first triangular number after unity is made from unity and the first oblong; the second triangular after unity (which is the third from unity) will be made from the first square after unity and the first oblong after unity by the same eleventh [proposition], which is the preceding square. Therefore, by the preceding [proposition], the third triangular from unity is a hexagon. But by the same reasoning, since every other one [skipping one] is always born from a square and the preceding oblong by the eleventh [proposition] of this book: therefore, by the preceding [proposition], the third will always be a hexagon, which is what was proposed [[notes: The author is observing that the sequence of triangular numbers is $1, 3, 6, 10, 15, 21, 28...$ If we take the 1st ($1$), 3rd ($6$), 5th ($15$), and 7th ($28$), we get the sequence of hexagonal numbers.]].
+
+[[margin: 17]]
+**¶ If six units are placed around one: so that the distance of those to each other and to that [central] one is the same, they will constitute an equiangular hexagon.**
+
+¶ For any two of those, with the middle unit, constitute an equilateral triangle. There will thus be six equilateral triangles, which I say are also equiangular to each other. For since their units are at the same distance from each other and from the middle unit: if the units of one are applied to the units of any other, they will be placed upon each other and the angles of one will not exceed the angles of the other. Thus, the six angles of the hexagon will be equal. Therefore, such a hexagon will be equiangular, as intended. And so it could be shown for an equiangular square and pentagon, if it were pleasing.
+
+[[margin: 18]]
+**¶ To constitute an equiangular hexagon from a proposed side.**
+
+¶ Let **a** be the units of the given side, to which I add one more: thus always increasing until there are as many rows as there are units in the side. And let this be done by descending [decreasing the count] until as many rows are completed as there are units in the same side. And because three sides are made equal by ascending and three similar by descending, it is clear that a hexagon has been created which I call equiangular [[notes: This describes the construction of a centered hexagonal number by stacking rows of dots, e.g., for a side of 3, the rows would be 3-4-5-4-3]]. For the middle of the rows, by the twenty-third [proposition] of the seventh [book], is always odd, because it is as far from the number of the side as the number of the side is from unity. Therefore, that greatest number has one middle [unit]. And if you mark the extremities of the six sides by **b c d e f g**, that middle unit will be the middle of row **f c**, and **b**, and row **d g**. Since they are equal and share it. It is therefore equally distant from **f** and **c**, and from **e** and **b**, and from **d** and **g**. Wherefore the six triangles: namely, [from] the middle unit [to] **f c**, the middle unit [to] **e b**, **d**, the middle unit [to] **d c**, the middle unit [to] **c b**, and the middle unit [to] **b g**, and the middle unit [to] **g f**, are mutually equilateral and, as in the preceding, equiangular. Therefore, the hexagon **b c d e f g** is equiangular: which is what was proposed.
+
+[[margin: 19]]
+**¶ If to any equiangular hexagon there is added a multiple of six [[notes: *senarij multiplex*, literally "a multiple of the six-fold"]] as great as the [hexagon] itself is from unity: it is necessary that a similar hexagon results.**
+
+¶ If the first hexagon, which is unity, has six placed around it by the penultimate [proposition], it becomes the next equiangular hexagon. For having two in its side, if to their intervals (which are also six) six units are fitted at the same distance, and to those six units another six at the corners: the next equiangular hexagon is made, having three in its side. And as the preceding second hexagon was from unity, so the multiple of six is taken as a whole: namely, double the six-fold, which is twelve. If you again place around this the triple of six—namely, twelve units in the twelve intervals and six at the six corner units—you produce the next equiangular hexagon, which as proven in the preceding, has four as its side. And because the intervals always grow by six, while the same six corners always remain, by adding the next multiple of six you will always produce an equiangular hexagon and by the same reasoning the next one: which the proposition intends.
+
+[[margin: 20]]
+**¶ If triangular numbers are arranged from unity and each is multiplied by six: the products, with unity added, will be equiangular hexagons.**
+
+¶ For if you multiply unity, which is the first triangular number, by six: the second hexagon is born; which, with the enclosed unity added, is recognized as equiangular [[notes: Triangular $1 \times 6 + 1 = 7$ (the 2nd centered hexagon). Triangular $3 \times 6 + 1 = 19$ (the 3rd centered hexagon). Triangular $6 \times 6 + 1 = 37$ (the 4th centered hexagon).]]. And since by the preceding [proposition], any hexagon adds as many sixes over the preceding as the preceding itself was from unity; and since any triangular number, by the corollary of the first, has as many units over the preceding as it was from unity; therefore, if the second triangular (which thus has two units over the first) is multiplied by six, it will add as many sixes over the preceding hexagon (which was the second) as the second hexagon was from unity. Therefore, by the preceding, it will be the next hexagon. And thus also for the third triangular, which adds three units over the second, multiplied by six: and any other. You add from the multiplication as many sixes as the triangular and the preceding hexagon were from unity; thus by the preceding you will always conclude the proposition.
+
+[[margin: 21]]
+**¶ Every equiangular hexagon exceeds the square hexagon taken in a similar place after unity by as much as the square number similarly named from unity.**
+
+¶ Let, for example, **a** be the fourth square hexagon from unity, which is also the third after unity [[notes: The sequence is 1, 6, 15, 28; the 4th is 28]]; let **b** be the square from unity of the same rank, that is the third [[notes: $3^2 = 9$]]; and let the fourth square be **c** [[notes: $4^2 = 16$]] and the middle oblong be **d** [[notes: $3 \times 4 = 12$]]. I say the third equiangular hexagon after unity [[notes: The sequence of centered hexagons is 1, 7, 19, 37... the 3rd after unity is 37]] is as far from **a** as **b** (the third square from unity) is. For by the fifteenth [proposition] of this book, **c** and **d** compose **a** [16 + 12 = 28]; but also because the difference of **b** to **d** by the twenty-fourth [proposition] of the sixth [book] is the three-unit side of **b** [12 - 9 = 3]; and the difference of **c** to **d** is the four-unit side of **c** [16 - 12 = 4]. Therefore, by the second [proposition] of the first [book], **b** and **c** together are greater than **b** by one and double **d**. Taking also the triangular from unity as large as the square **b** [[notes: This section breaks off near the table]].
+
+| | | |
+|---|---|---|
+| a | 28 | 37 |
+| c | 16 | 12 |
+| b | 9 | 6 |
+
+<sig>d 3</sig>
+
+[[summary: This page provides geometric and arithmetical proofs for the construction of hexagonal numbers. It distinguishes between standard "square" hexagons (formed from triangular numbers) and "equiangular" (centered) hexagons, demonstrating how the latter can be generated by multiplying triangular numbers by six and adding one.]]
+
+[[keywords: hexagonal numbers, square hexagons, equiangular hexagons, centered hexagonal numbers, triangular numbers, oblong numbers, figurate numbers, arithmetic proofs]]

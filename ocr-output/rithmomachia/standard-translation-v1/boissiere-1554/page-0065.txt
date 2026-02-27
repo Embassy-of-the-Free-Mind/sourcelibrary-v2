@@ -1,0 +1,10 @@
+[[meta: This page continues the rules for the "Victory of Honor" in Rythmomachia, clarifying how to handle values that exceed the target, and introduces the combined "Victory of Honor and Lawsuits" which involves gambling or higher stakes.]]
+
+eight pieces [[notes: *Tables* refers to the physical game counters/pieces]] exceeds the determined Value, the surplus shall not prevent the win: for the prefixed pieces and the determined Value are no less present for having more.
+
+### Victory of Honor and Lawsuits. ###
+
+Let the value of the numbers be determined at the pleasure of the players, as well as the quantity of digits [[notes: *Caracteres* refers to the individual numerals written on the pieces]] in which they wish the said value to be contained, and consequently the quantity of pieces in which you wish the determined value and digits to be held. And whoever first has the pre-ordained quantity of pieces, digits, and values shall have the Victory of Honor and Lawsuits. [[notes: *Proces* (Lawsuits/Process) here refers to a more complex or litigious victory condition often involving a specific sequence or set of conditions.]] And if there are more pieces, digits, or value than was established, it shall not prevent the win, as we have said above. And to adorn [[notes: *Decorer*—to enhance or make more attractive]] the practice of the game, if one determines 10 écus [[notes: *Eſcuz* (écus) were gold coins used in France; the author is suggesting playing for high stakes]] for each unit of the numbers, the Victory shall be more pleasant to the victor, and it will be a joyful thing for him to count; and the vanquished shall be much more lightened [[notes: A pun on *allegé*—meaning both "lightened" (of his money) and "quickened" (in his wits)]], exercised, and more cautious in calculating subtly.
+
+[[summary: This page explains that exceeding the target value does not invalidate a victory and describes a "Victory of Honor and Lawsuits" where players can increase the stakes by wagering écus on the mathematical outcomes.]]
+[[keywords: Rythmomachia, Victory of Honor, Victory of Lawsuits, gambling, écus, mathematical calculation, game pieces]]

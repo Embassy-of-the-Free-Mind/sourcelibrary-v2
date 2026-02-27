@@ -1,0 +1,55 @@
+[[meta: This page continues the mathematical proof from the previous page regarding how compound ratios—specifically the double ratio (2:1)—can be broken down into smaller ratios like the sesquialtera (3:2) and sesquitertia (4:3). It transitions into a broader discussion of the limits and properties of various classes of ratios.]]
+
+[[margin:
+[[notes: This diagram illustrates the mathematical relationships discussed in the text, showing how specific numerical segments correspond to the proportions of a and b.]]
+A diagram of horizontal lines representing mathematical proportions.
+The first line is labeled **a**, the second **b**.
+Below them are segments labeled with numbers:
+- A segment **c** associated with 8.
+- Parallel segments with numbers 43 and 98.
+- Parallel segments with numbers 32 and 43.
+- A final segment with number 12.
+]]
+
+Between **a** and **b**, the **double ratio**, which as was demonstrated in the forty-fifth [proposition] of this [book], consists of a **sesquialtera** [[notes: A 3:2 ratio, where the larger number contains the smaller once plus a half.]] and a **sesquitertia** [[notes: A 4:3 ratio, where the larger number contains the smaller once plus a third.]]. By the first [proposition] of the fifth [book], let there be subtracted any **superparticular** ratio **e** to **d** which is less than the sesquitertia from the ratio **a** to **b**: and let the remainder be **e** to **f**, by which **a** to **b** exceeds **e** to **d**. And because it is greater than the **sesquialtera** ratio (which is the greatest of the superparticulars) and is not a multiple, since the ratio **a** to **b** is the smallest of the multiples which cannot be resolved into other multiples, it follows that the ratio **e** to **f** is **superpartient** [[notes: A ratio where the larger number contains the smaller once, plus more than one part, such as 5:3.]]. Since **e** to **b** and **e** to **f** constitute the ratio **a** to **b**, it is established that the double ratio is divided into a superparticular and a superpartient. Fourthly, let there be between **a** and **b** any ratio constituted between a double and a triple; and let there be between **c** and **d** a ratio composed of a double and a sesquitertia. If the ratio **a** to **b** is less than the ratio **c** to **d**, then after subtracting the sesquitertia ratio from **a** to **b**, there will remain a ratio less than double, but greater than sesquialtera. Therefore, that remainder will be a superpartient; and thus the ratio **a** to **b** would be composed of a superparticular (such as the sesquitertia) and a superpartient, and is divisible into them. And if **a** to **b** be equal to or greater than **c** to **d**, because the ratio added to the double in the ratio **a** to **b** will be less than the sesquialtera (since the double and sesquialtera, by the corollary of the twenty-third [proposition] of this [book], constitute a triple), and the sesquialtera added to a sesquialtera constitutes less than a double with a sesquitertia—given that a sesquialtera and two sesquitertias are more than a sesquialtera, a sesquitertia, and a sesquioctava [[notes: A 9:8 ratio, a whole tone in music theory.]]—yet by the first of the fifth these are known to equal a double sesquialtera and that double and sesquitertia. Therefore, having subtracted the sesquialtera from the ratio **a** to **b**, there will remain a ratio less than double but also greater than sesquialtera; which is therefore a superpartient. Thus, the ratio **a** to **b** would be divisible into a superparticular sesquialtera and a superpartient, just as was proposed; which is the proof.
+
+[[margin:
+[[notes: This diagram shows the numerical breakdown of ratios: 15 to 8 is the "greatest superpartient" derived here.]]
+A diagram with three pairs of lines:
+**a** ----- 15 ---- **f** ----- 8
+**c** ----- 5 ----- **d** ----- 4
+**e** ----- 3 ----- **b** ----- 2
+]]
+[[margin: 50]]
+¶ **To find the greatest superpartient ratio which is produced from two superparticulars.**
+¶ Let **a** to **b** be a sesquialtera ratio (3:2) and **c** to **d** be a sesquiquarta ratio (5:4); and let **e** to **f** be the ratio composed of these. I say that the ratio **e** to **f** is the greatest superpartient produced from two superparticulars. For since a double ratio, from the forty-fifth [proposition] of this [book], is produced from a sesquialtera (3:2) and a sesquitertia (4:3), which are the two greatest superparticulars, the ratio **e** to **f** (being composed of 3:2 and 5:4) is necessarily less than a double ratio. But it is also greater than a sesquialtera, because it is composed of that and another. Therefore **e** to **f** is a superpartient ratio. Furthermore, any smaller superparticular joined with the ratio **a** to **b** (sesquialtera) or **c** to **d** (sesquiquarta) will, by the fifth [proposition] of the fifth [book], constitute a smaller ratio than **e** to **f**. Therefore, **e** to **f** is the greatest superpartient produced from two superparticulars; which is what was proposed.
+
+[[margin:
+[[notes: A diagram illustrating the derivation of a superpartient that cannot be further subdivided into superparticulars.]]
+A diagram with horizontal lines:
+**a** ------------ **e** --- 29
+- ------------ **c** --- 15
+**b** ----- 8 ----- **d** --- 14
+- ----- 7 -----
+]]
+[[margin: 51]]
+¶ **To find a superpartient ratio that cannot be divided into two superparticulars; from which it is evident that for any superpartient, another can be found that is larger.**
+¶ Let **b** to **a** be the greatest superpartient ratio known by the preceding [proposition], produced from two superparticulars, and let the difference of **b** to **a** be **c**. It is manifest that **a** is greater than **c** by its own parts. I then take a number **b** minus one; and then the ratio **a** to **c**, because it is denominated by a larger part, is greater than the ratio **b** to **a**. I therefore add 1 to **b** and let it become **e**. It is manifest that **e** to **b** is a superpartient since it contains **b** and some of its parts. And by the second part of the fifteenth [proposition] of the second [book], the ratio **e** to **b** will be greater than **b** to **a**. And since the ratio **b** to **a** is divided into the greatest superparticulars constituting a superpartient, as is known by the preceding, and the superpartient **e** to **b** is greater than the superpartient **b** to **a**, the superpartient **e** to **b** will not be divided into two smaller ones than **b** to **a**, nor into the same ones into which **b** to **a** is divided. It remains, therefore, that the superpartient **e** to **b** cannot be divided into any two superparticulars, which is what was proposed. And the corollary is known from the method of demonstration.
+
+[[margin: 52]]
+¶ **Only of the multiple can a smaller one not be taken; and only of the superparticular can a larger one not be taken.**
+¶ I say first that for any **multiple** ratio, a larger one can be taken. For by the thirty-seventh [proposition] of this [book], all numbers prepared from unity constitute multiples, and they are greater the further they are from unity, as the series of numbers proceeds to infinity. Therefore, for any multiple, a larger one can be taken. Second, I say that a smaller one cannot be taken for *any* multiple [[notes: meaning there is a "floor" or minimum multiple ratio, which is the double (2:1)]]. For by the same [proposition], the closer a number is to unity, the smaller the multiple it constitutes in relation to unity. But in descending, one does not go to infinity. Therefore, it is not possible to grant a smaller for any multiple, which will not happen in the others, as will be shown. Third, I say that for any **superparticular** ratio, there is a smaller one. For by the first [proposition] of this [book], that which is denoted by a smaller number is larger, and that by a larger number is smaller. And because the series of numbers grows to infinity, there will be no part so small that a smaller cannot be given. Therefore, for any superparticular, a smaller can be given. Fourth, I say that for any superparticular, a larger *cannot* be given [[notes: meaning there is a "ceiling" or maximum superparticular ratio, which is the sesquialtera (3:2)]]. For that which is denominated by a number closer to unity is larger; and since numbers do not decrease to infinity, there will eventually be a maximum among superparticulars. Thus the opposite of both occurred in the multiples, as has been shown. Fifth, I say that for any **superpartient**, a larger can be found; this is known from the corollary of the preceding. Sixth, I say that for every superpartient, a smaller can be found. For given any one, for example a superbipartient third (5:3), I take another with the same number of parts but denominated by a larger number; such as a superbipartient fifth (7:5), which, because it is denominated by smaller parts, will be less than the given superpartient. From this superbipartient fifth, a superbipartient seventh is smaller, and then a superbipartient ninth, and so on following the infinite increase of numbers; which is what was proposed. This last point can also be shown from the third part of the present [proposition], aided by the forty-ninth of this [book].
+
+[[margin:
+[[notes: A simple diagram of 7, 5, and 5, likely illustrating the addition of superpartient ratios mentioned in proposition 53.]]
+A diagram with three lines:
+**c** ----- 5 -----
+**b** ----- 5 -----
+**a** ----- 7 -----
+]]
+[[margin: 53]]
+¶ **Any two superpartients joined together will constitute a ratio less than quadruple.**
+¶ Let there be a superpartient ratio between **a** and **b**, and likewise between **b** and **c**. I say that the ratios **a** to **b** and **b** to **c** together constitute a ratio less than **quadruple** (4:1). For **a** is less than double **b**, and **b** likewise is less than double **c**. Therefore, **a** to **c**, by the fifth [proposition] of the fifth [book], is less than a quadruple ratio, which by the eighth [proposition] of this [book] consists of two doubles. The proposition is therefore clear.
+
+[[summary: This page explores the limits and boundaries of mathematical ratios, proving that while multiples can be infinitely large, they have a minimum (double), whereas superparticulars can be infinitely small but have a maximum (sesquialtera). It also demonstrates that the combination of any two superpartient ratios will always remain less than a quadruple ratio.]]
+[[keywords: double ratio, sesquialtera, sesquitertia, superpartient, superparticular, multiple ratio, mathematical limits, quadruple ratio, arithmetic proportions]]

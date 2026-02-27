@@ -1,0 +1,18 @@
+[[meta: This page concludes the discussion of how musical harmony is derived from physical properties (like the weight of metals or the length of strings) and introduces the rules for the "Great Victory." In Rythmomachia, winning is not simply about capturing pieces; it requires the player to arrange specific numerical sequences—proportions—within the opponent’s territory.]]
+
+->RYTHMOMACHIA, THE GAME<-
+
+...taken according to weight, as with metals [[notes: This refers to the legendary discovery of musical ratios by Pythagoras, who supposedly heard the harmonious intervals produced by blacksmiths' hammers of different weights]], or according to measure, as with strings [[notes: Referring to the monochord, a tool used to demonstrate how shortening a string by specific ratios creates musical notes]]: they will always yield to you true musical harmony.
+
+## On the Great Victory.
+
+The Great Victory—termed "minor" by the ancients compared to the "excellent" victory that follows [[notes: In this game, there are multiple tiers of victory. The "Great Victory" is the second-highest, while the "Excellent Victory" is the most difficult and prestigious]]—consists of the arrangement of 4 pieces [[notes: The original French uses *tables*, the standard term for the circular, square, and triangular pieces used in Rythmomachia]] in the enemy’s camp. These, in their placement and order, must represent two proportions together: whether Arithmetic and Geometric, Arithmetic and Musical, or Geometric and Musical. 
+
+To explain this more clearly, I shall provide the following table. In the first column on the left [[notes: *Seneſtre* is the archaic French word for left]], I will place the Great Victory consisting of two proportions contained within four numbers. In the two columns on the right [[notes: *Dextre* is the archaic French word for right]], I will separate these two proportions to show each one individually as they are found within the aforementioned pieces.
+
+[[meta: catchword: Exem-]] [[notes: This is a catchword, a common feature in old books where the first syllable of the next page is printed at the bottom to ensure the binder put the pages in the correct order. "Exem-" likely begins the word *Exemple* (Example).]]
+
+[[vocab: Rythmomachia, Great Victory, Arithmetic, Geometry, Music, proportions, left, right]]
+
+[[summary: This page explains the criteria for achieving a "Great Victory" in Rythmomachia, which requires forming two simultaneous mathematical proportions using four pieces in the opponent's territory.]]
+[[keywords: Rythmomachia, Great Victory, Mathematical Proportions, Arithmetic, Geometry, Musical Harmony, Renaissance Gaming]]

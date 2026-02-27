@@ -1,0 +1,23 @@
+[[meta: This page begins Chapter 7, continuing the instructional series on chess openings. While the previous page provided visual diagrams for the "Second Way" of defending the King’s Pawn, this page introduces the "Third Way"—famously known today as Damiano's Defense—and begins a technical refutation of the historical criticism of this move.]]
+
+[[note: This chapter uses archaic terminology for chess pieces. A "Soldier" (*Soldat*) refers to a Pawn, and a "Rider" (*Reuter*) refers to a Knight. The "Shooter’s Soldier" (*Schützens-Soldat*) refers to the Bishop’s Pawn.]]
+
+# The Seventh Chapter.
+## In what manner the Black player defends and protects his King’s soldier in the third way.
+
+<margin>1.</margin> There follows the Third Type and Manner of relieving the Black King’s Soldier with its Shooter’s Soldier. [[note: This describes the opening moves 1. e4 e5 2. Nf3 f6. In modern chess, f6 is the King's Bishop's Pawn, hence "Shooter's Soldier."]]
+
+For, when the White and the Black have moved their Kings’ Soldiers to twenty-eight and thirty-six [[note: Squares e4 and e5]]: and the White moves the King’s Knight to nineteen [[note: Square f3]]: The Black then prevents the same in the third manner (which was described in Chapter 5, no. 3, and in the previous 3rd and 4th Chapters of this book) with the King’s Shooter’s Soldier, from forty-three [[note: Square f6]].
+
+Although **Damianus** [[note: Pedro Damiano (1480–1544) was a Portuguese chess player who wrote one of the earliest manuals on the game. He famously described the move 2... f6 as the worst possible defense, a move which now bears his name: Damiano's Defense.]] considers this manner to be the most unsuitable of all, and—if one wanted to conduct and defend the game in the way he indicates—he does not write incorrectly; yet, the same is not found to be as useless as he claims, if one arranges it in the following manner.
+
+<margin>2.</margin> For the Black (when the White has taken his King’s Soldier with the same) should not take the White King’s Knight with the King’s Shooter’s Soldier (as Damianus believes), but rather should move the Queen further to fifty-two [[note: Square e7]]: <margin>3.</margin> * **The White** (in order to protect the same) moves the King’s Soldier to twenty-nine [[note: Square d4]]: **The Black** also moves his King’s Soldier against the White King’s Knight to forty-five [[note: Square f5]]: or takes the same with the King’s Shooter’s Soldier: From this, the Queen obtains a good opportunity to meet the future check from thirty-three [[note: Square h5]].
+
+<margin>4.</margin> But if **the White** does not move the Soldier to 29 (no. 3), but instead offers check with the Queen (in order to rescue the King’s Knight) from thirty-three: then **the Black** moves the King’s Knight’s Soldier to forty-two [[note: Square g6]] against her and covers the King with the same: **The White** takes it with the
+
+<sig>Vu ij</sig>
+<meta>catchword: King’s Knight-</meta>
+
+[[summary: This page introduces Chapter 7 and the "Third Way" of defense (Damiano's Defense), where the author argues against the historical master Damiano by suggesting the Black Queen move to square 52 (e7) instead of immediately recapturing the Knight.]]
+
+[[keywords: Chess, Damiano's Defense, Pedro Damiano, Opening Theory, 17th-century chess, King's Pawn, Knight, Queen]]

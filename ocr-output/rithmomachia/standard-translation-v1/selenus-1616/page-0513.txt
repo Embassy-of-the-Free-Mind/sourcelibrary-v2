@@ -1,0 +1,24 @@
+[[meta: This page transitions from the previous discussion on Subtraction to the final two methods of capture in Rythmomachia: Multiplication and Division. These methods rely on the physical distance (empty spaces) between pieces on the board to calculate a capture.]]
+
+# On the Battle of Numbers.
+
+-> (Buxer : fol : 44. b.
+He also calls this Method of Subtraction an Ambush.) <-
+[[notes: The author cites "Buxer" (the mathematician Claude de Boissière, known as Buxerius). Although the Latin note mentions Subtraction, the text below immediately addresses Multiplication and Division. In this period, these methods were often grouped together as "proportional captures."]]
+
+Through **Multiplication** / and **Division** / the stones / are captured or lost / in the following manner:
+
+When two stones / one White / and one Black / are moved in such a way / that between them / there are as many empty or unoccupied spaces / as the number of one / is found within the number of the other: then the lesser [number] / can take / the higher / through **Multiplication** / and the higher can be taken / by the lesser / through **Division** / in the opponent's play. Now, whichever player has the advantage / and is the first / to make the attack / he remains / the victor and conqueror. For example: when the Black Triangle / with 12 / stands on I / and the White Round stone / marked with 4 / stands on K / and thus three empty spaces / are between them: then the one who / makes the first attack with his stone / (whether it happens / through multiplication / or through division) wins. For example: when the Black Triangle / with 12 / stands on I: and the White / moves his Round stone / with 4 / onto K: then he wins / the Black Triangle / because he / can multiply his stone / by the empty spaces / and thereby produce the value of the Black stone [[notes: 4 (the stone) x 3 (the empty spaces) = 12 (the target)]]. But if the White Round stone / with 4 / stands on K: and the Black / places the Triangle / with 12 / on I: then he wins / the White stone: for he / can divide his stone’s value / by the empty spaces / into as many parts / as the value found / on the White stone [[notes: 12 (the stone) ÷ 3 (the empty spaces) = 4 (the target)]].
+
+(Buxer : fol : 46. a.
+*"But if, with my numbers thus arranged, a certain stone of mine were positioned between my 4 and the 12, which by covering the 4 prevents the 12 from being captured; as soon as I move that stone and open the way, the 4 will intercept the 12. By the same logic, if the obstruction were removed against the number 12 and it were free to play, it would strike my 4 without moving from its place: For if it stepped into another's space, it would be playing twice."*)
+[[notes: This Latin passage explains "discovery" moves—where moving a third piece out of the way "opens the line" for a capture. It also emphasizes a crucial rule of Rythmomachia: captures by proportion usually happen across a distance without the capturing piece moving into the victim's square.]]
+
+The following numbers / win / and are overcome / in this game / with Multiplication: And one finds / written on the left side / the values / of the White stones / and empty spaces / which seize a Black stone: as well as / the Black stones / and empty spaces / which seize a White stone.
+
+Nnn iij
+[[meta: catchword: A]]
+
+[[summary: This page explains the "Proportion" captures of Multiplication and Division, where a piece captures an opponent if the number of empty spaces between them acts as the mathematical factor between their two values. It includes an example of a 4 and a 12 separated by 3 spaces, and a Latin note on using "obstructions" to shield pieces from such attacks.]]
+
+[[keywords: Rythmomachia, Multiplication, Division, Capture Rules, Buxer, Triangles, Rounds, Proportions, Board Games]]

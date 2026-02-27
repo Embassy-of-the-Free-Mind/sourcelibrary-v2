@@ -1,0 +1,21 @@
+### The Philosopher's <note>original: "Philosophers"</note> game.
+
+The king of the even <note>original: "euen"</note> side must be four-square, having six <note>original: "sice"</note> steps, each one smaller <note>original: "lesser"</note> than the other. On one side, he must have these roots <note>original: "rootes"</note> marked on him: 1, 2, 3, 4, 5, 6. On the other side, the squares <note>original: "quadrates"</note> arising from these roots—that is: 1, 4, 9, 16, 25, 36.
+
+The king of the odd <note>original: "odde"</note> men must have only five steps, which are 4, 5, 6, 7, 8, lacking the roots because he cannot end in 1. The squares <note>original: "quadrates"</note> of his roots are these: 16, 25, 36, 49, 64. These must be set on in such a way that the smallest <note>original: "least"</note> is highest and the largest <note>original: "greatest"</note> is lowest.
+
+The kings <note>original: "Kinges"</note> are captured <note>original: "taken"</note> by siege <note>original: "Obsidion"</note>, or if their pyramidal <note>original: "pyramidall"</note> number is captured by any of the previously mentioned <note>original: "aforsayde"</note> means. They are also captured if, by such means, you can take all of his squares <note>original: "quadrates"</note> one after another.
+
+### The privilege of the king.
+
+<vocab>Philosophers game, Rythmomachia, King, even, odd, squares, roots, Siege, pyramidal</vocab>
+
+***
+
+<summary>
+This section describes the physical construction and capture rules for the "Kings" (pyramids) in Rithmomachia. The "Even King" consists of six levels based on the roots 1 through 6 and their squares, while the "Odd King" consists of five levels based on roots 4 through 8 and their squares. The text specifies that these pieces are captured either by "Obsidion" (siege/surrounding), by calculating their total pyramidal value, or by capturing all their constituent square values individually.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, King, Even King, Odd King, Roots, Squares, Quadrates, Obsidion, Siege, Pyramidal Number, Mathematical Games, Renaissance Board Games
+</keywords>

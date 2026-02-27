@@ -1,0 +1,19 @@
+[[meta: This page continues from the discussion of the social hierarchy of chess pieces, transitioning from the symbolic meaning of the pawns to the physical setup and orientation of the board itself.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 11]]
+
+### The Eleventh Chapter.
+
+## Regarding the Chessboard in Particular / how the Pieces are lodged therein / of its Division / Squares / and also how one might firmly visualize them and keep them in memory.
+
+Let that be enough concerning the pieces individually [[notes: Referring to the previous chapters which described the kings, queens, and pawns in isolation]]. Now we must take up the **Chessboard** [[notes: *Schach-Tabel*, literally "Chess-Table"]] once more and observe how the pieces are stationed within it, in what manner they protect their **field-positions**, and then how the board is divided according to the indicated positions and the space upon which they attack one another. This will provide better clarity for the following work and can also be helpful for those who have diligently visualized it, so as to play this game **mentally** [[notes: *im Sinne*, in the mind or by memory]] without the board and pieces (though it will not be for everyone) while in a **carriage**, while riding, or while walking.
+
+Now, so that the stationing of the pieces upon the **Chessboard** [[notes: *Schach-Bret*]] may be done correctly, it is necessary that the board be placed so that on the side where the **White King** is to stand on a black square, he has a **white square** on his right side at the very end of the **rank** [[notes: *Zwerch-linie*, or transverse line]] for his **Rook** [[notes: *Rochen*, the older name for the Rook, derived from the Persian *rukh*]]; but where his Queen’s Rook is to stand, on his and the Queen’s left side, there should be a **black square**. Conversely, it follows that the **Black King** must have a white square for the Rook on his Queen’s right side, but a black square for his own Rook on his own left side. In short: whoever leads the pieces shall place the board so that the outermost square in the nearest rank to his **right hand** is **white**. For otherwise, if the black outermost square were turned toward the right side, the chessboard might appear wider than it is long and thus not square (as some would have it): but this also pleased the **dear Ancients**, and has therefore been the practice and in use for a long time. Other reasons for this are to be further found at the end of the 9th Chapter of the last Book, and the 3rd Chapter of the **Rythmomachiae** [[notes: A complex medieval board game also known as "The Philosophers' Game," which involved mathematical ratios and was played on a board double the size of a chessboard]].
+
+<sig>G ij</sig>
+[[meta: catchword: How]]
+
+[[summary: This page explains the proper orientation and setup of the chessboard, specifically the "white square on the right" rule. It also suggests that mastering the board's layout allows a player to play "blindfold" chess while traveling or walking.]]
+[[keywords: chessboard setup, mental chess, Rook, rank, Rythmomachiae, board orientation, White King, Black King]]

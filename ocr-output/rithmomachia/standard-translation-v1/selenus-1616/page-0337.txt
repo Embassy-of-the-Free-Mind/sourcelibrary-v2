@@ -1,0 +1,26 @@
+[[meta: This page continues the tactical breakdown from Chapter 5, following a sequence of moves where material is exchanged. The text relies on the 1–64 coordinate system, where 1 is a1 and 64 is h8. For clarity: 1–8 is the first rank, 9–16 the second, and so on.]]
+
+### 5. cap: Vom Schach-Spiel.
+### [[note: Chapter 5: On the Game of Chess]]
+
+...especially / the King’s Rider [[note: Knight]] / to twenty-two [[note: Square f3]] / moves: so the **Black** [player] takes / with the King’s Archer [[note: Bishop]] / the **White** King’s Archer’s Soldier [[note: the Pawn on f2]]: The **White** [player] / [takes] the same / with the King: The **Black** [player] / [takes] the **White** King’s Rider / with the King’s Archer / and has a Soldier as an advantage.
+
+<margin>25.</margin> But if the **White** [player] / does not [move] the Queen / to 22. (or 24.) [[note: Squares f3 or h3]] / but rather moves the King’s Rider / (to open the path / for the King’s Archer / following) to four [[note: Square d1]]: then the **Black** [player] moves / the King’s Rider / to forty-three [[note: Square c6]]: The **White** [player] / moves the King’s Soldier [[note: Pawn]] / to twenty-one [[note: Square e3]]: The **Black** [player] / jumps with the King [[note: Likely a castling-style move or specific king maneuver]] / over his Archer’s Soldier / to forty-two [[note: Square b6]]: The **White** [player] / moves / to the **Black** King’s Archer / the King’s Archer / (which then / [is] a good move / in order / to exchange the Archers / or after several moves / such as / with the King’s Soldier / to twenty-nine [[note: Square e4]]: and with its Rider’s Soldier / to thirty-one [[note: Square g4]]: the **Black** / Archer / provided he is not / moved away / in time / to catch / it seems) to twenty [[note: Square d3]]: The **Black** [player] / (so that the
+
+<margin>26.</margin> same / cannot move) [moves] the King’s Rook [[note: "Rochen" is the archaic term for the Rook]] / to sixty [[note: Square d8]]: * The **White** [player] / (to liberate it) [moves] the King / to thirteen [[note: Square e2]]: The **Black** [player] / takes / the aforementioned **White** Archer / with his King’s Archer / and offers **Check**: The **White** [player] / takes / the same / with the King’s Archer’s Soldier [[note: f-pawn]]: The **Black** [player] / (in order to main-
+
+<margin>27.</margin> tain the game) moves / the King’s Rook / to sixty-one [[note: Square e8]]: * The **White** [player] / the King’s Rider / to twenty-two [[note: Square f3]]: The **Black** [player] / [moves] the King’s Rider / to the **White** King’s Archer’s Soldier / at twenty-six [[note: Square b4]]: The **White** [player] / (to protect it) [moves] the King’s Rider / to five [[note: Square e1]]: The **Black** [player] / [moves] the King’s Rider / to the **White** King’s Soldier / at thirty-six [[note: Square d5]]: The **White** [player] / [moves] the same [Soldier] / to him / at twenty-nine [[note: Square e4]]: The **Black** [player] / takes / with the same / the **White** King’s Archer’s Soldier / and offers **Check**: The **White** [player] / moves / toward him / the King / to twenty-two [[note: Square f3]]: The **Black** [player] / takes /
+
+<margin>28.</margin> with the same / the **White** King’s Archer’s Soldier [[note: The f-pawn]]: * The **White** [player] / [takes] the same / with the King’s Rider: The **Black** [player] / [takes] the same / with the
+
+<margin>29.</margin> King’s Rook / and offers **Check**: * The **White** [player] / places the King / (in order / to protect the King’s Soldier) / at thirty [[note: Square f4]]: The **Black** [player] / offers / with the King’s Archer / at forty-four [[note: Square d6]] / **Check**: The **White** [player] / moves the King / to thirty-eight [[note: Square f5]]: The **Black** [player] /
+
+<margin>30.</margin> gives / with the King’s Rook / from thirty-seven [[note: Square e5]] / **Check**: *
+
+->O q<-
+
+[[meta: catchword: (White/]]
+
+[[summary: This page continues a dense technical analysis of a chess opening or mid-game scenario, focusing on the tactical maneuvers of the "Riders" (Knights) and "Archers" (Bishops) using the 1-64 coordinate system. The sequence involves a series of checks and exchanges intended to consolidate a positional or material advantage for the Black player.]]
+
+[[keywords: Chess tactics, 17th-century chess, Rider, Archer, Rook, Check, coordinate system, Gustavus Selenus]]

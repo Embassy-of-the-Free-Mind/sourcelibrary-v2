@@ -1,0 +1,19 @@
+[[meta: This page continues the explanation of the first general rule of movement and capture in Rithmomachia. The previous page ended while explaining that a player can sometimes capture a piece without moving their own piece according to its "proper path" (its standard number of spaces), particularly when a piece providing "cover" is removed.]]
+
+it being the winner's turn to play, as soon as they have taken the opponent's piece, they may play whichever of their own pieces they wish. 
+
+The second case is if one of the players moves one of their pieces into a place where it can be taken by some piece of the opponent; then, similarly, the opponent takes that piece and then moves whichever of their own pieces they like. 
+
+The third case is when one of the players forgets, or does not notice, to take their prey and leaves it, but upon returning to play, sees it is still exposed to danger: then they take it, and afterward play whichever of their pieces pleases them. 
+
+The fourth case will be made clear below by the third general rule.
+
+The **second rule** is this: that one can never move any of those pieces that "jump" one or more squares to the place where it must go when, between the said place and the said piece, there is some other piece, belonging either to the same or to the opposing faction. [[notes: In Rithmomachia, Triangles move exactly two spaces and Squares move three. Unlike the Knight in Chess, these pieces cannot "leap" over occupied spaces; the path must be clear.]]
+
+The **third** is that if two pieces find themselves facing each other in such a way that they can win one another by *multiplication* or by *division*, and the enemy forgets to take your piece by *multiplication*: once they have played some other piece, if you find the aforementioned two pieces to be in the same position they were in, you may take theirs by *division*, playing then whichever of your pieces you like. [[notes: Capture by multiplication occurs when a piece's value multiplied by the number of spaces between it and an enemy equals the enemy's value. Capture by division is the inverse: the enemy's value divided by the distance equals the attacking piece's value.]] And conversely, if you should forget to take the opponent's piece by *division*, once you have played another piece, if the opponent finds your piece still exposed to capture, they may take it by *multiplication*, and then play whichever of their pieces seems best to them; and from this is derived the fourth case of the first general rule written above.
+
+The **fourth rule** is that the **Pyramid** [[notes: The Pyramid is the most powerful piece, created by stacking several smaller pieces (circles, triangles, squares) together to reach a total value.]] counts for as many squares, triangles, and circles as it carries with it, and with each of those, it can capture other pieces or levels [[notes: *Gradi* (degrees/levels) refers to the individual component pieces that make up the opponent's Pyramid.]] of the opposing side's Pyramid; and conversely, it can be captured by other pieces or levels of the opposing faction. But the **Pyramid** has this privilege: it can recover any of its levels that have been taken by giving in exchange one of the pieces that has the same number, thus...
+
+[[summary: This page outlines specific procedural rules for Rithmomachia, including the right to a second move after a capture, the inability to jump over occupied squares, and the technicalities of "missed" arithmetic captures. It also introduces the Pyramid's unique ability to "buy back" its lost components.]]
+
+[[keywords: Rithmomachia, multiplication capture, division capture, movement rules, Pyramid, general rules, capture mechanics]]

@@ -1,0 +1,22 @@
+[[meta: This page continues the detailed description of how the pawns—here called "Soldiers"—move and capture, expanding on the tactical reasons for the initial double-step move and introducing the concept of capturing "en passant."]]
+
+# Concerning the Game of Chess.
+
+[[margin: Chapter 10:]]
+
+Regarding their movement / they all move in the same manner: (indicating that the **Infantry** [[notes: *Fuß-Volck*, or foot-folk.]] / without order and compulsion / are of little use) moving straight ahead: yet / with this distinction: that when they / for the first time / wish to step out of their formation / they may leap forward across one square / into a third / (in order to give the **Major Pieces** [[notes: *Haupt-Steine*, referring to the back-rank pieces.]] / which stand behind them / the opportunity to engage / not only in skirmishes / but also / to scout and block the roads: and to prevent the enemy / from easily perceiving / what one might intend in the battle-formation / or what one means to carry out / against him / by obstructing his sight) they may leap forward: provided / that it is beneficial to the game: for otherwise it remains free for them / on the first move / to step only into the next square.
+
+Whether now this over-leaping of the Soldiers / applies only / to the Soldiers of the King = the Queen = and the **Rooks** / there is no single opinion. However / it is commonly granted / especially to the **Archers’** [[notes: *Schützen*, the pawns in front of the Bishops.]] and **Riders’** [[notes: *Reuter*, the pawns in front of the Knights.]] Soldiers / provided that no check has been called / nor any piece yet taken: this power is also given to them.
+
+Otherwise they stride / only / one square forward / and by this it is indicated / that the Riders / by which all Major Pieces / are here understood / can march and be led / better in the field / than the Infantry.
+
+But when these Soldiers / encounter the opponent’s Soldiers / and other Major Pieces / which stand before them in the next line / and square / diagonally / on their own color / then they can / whether on the right / or left side / take the same away / and step into that square: which then / is the third kind of their movement / and happens forward / toward the corners / just as the Archers [[notes: The Bishops.]] are moved / yet only into the next square / which is of the same color as their own.
+
+It is however the custom / held in several places / to also note here / that / when a Soldier / in the first attack / pushes past another / from the opponent’s ranks / at the borders [[notes: Referring to the squares where two pawns from opposing sides might pass each other.]], neither may pass the other / and use the straight path / forward / without harm / but must yield to the corner square / and take the other Soldier from it. If he passes by / he shall nevertheless / be lifted out by the other Soldier / insofar as it / brings some advantage to that rank / and indeed in the following manner: (of which also / in the 4th Chapter: of the 2nd Book /
+
+[[margin: F 3]]
+[[meta: catchword: further]]
+
+[[summary: This page explains the movement rules for pawns, including the strategic purpose of the initial two-square leap to clear paths for major pieces and the "en passant" capture rule. It uses military metaphors to describe chess tactics, framing the pawns as infantry and the back-rank pieces as specialized military units.]]
+
+[[keywords: Pawns, Infantry, Soldiers, Major Pieces, Initial Move, En Passant, Chess Tactics, Military Metaphor, Archers, Riders]]

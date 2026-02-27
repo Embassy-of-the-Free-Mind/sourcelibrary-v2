@@ -1,0 +1,39 @@
+->**A Description of the Numerical Battle** <note>original: "Descriptio Rithmomachiae"</note><-
+
+<warning>Note: Significant ink bleed-through from the back of the page obscures the paper and creates ghosted text across the diagram, making some numbers and the surrounding faint text difficult to read.</warning>
+
+| Column 1 | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | **[Even Side - Top]** | | | | |
+| **Row 4** | [Sq] 25 | [Sq] 81 | | | | | [Sq] 169 | [Sq] 289 |
+| **Row 5** | [Sq] 15 | [Sq] 45 | [Tr] 25 | [Tr] 20 | [Tr] 42 | [Tr] 49 | [Sq] 81 | [Py] 153/81 |
+| **Row 6** | [Tr] 9 | [Tr] 6 | [Ci] 4 | [Ci] 16 | [Ci] 36 | [Ci] 64 | [Tr] 12 | [Tr] 8 |
+| **Row 7** | | | [Ci] 2 | [Ci] 4 | [Ci] 6 | [Ci] 8 | | |
+| | | | | | | | | |
+| **Row 8** | | | | | | | | |
+| **Row 9** | | | | | | | | |
+| | | | | | | | | |
+| **Row 10** | | | [Ci] 9 | [Ci] 7 | [Ci] 5 | [Ci] 3 | | |
+| **Row 11** | [Py] 100/90 | [Tr] ? | [Ci] 81 | [Ci] 49 | [Ci] 25 | [Ci] 9 | [Tr] 12 | [Tr] 16 |
+| **Row 12** | [Sq] 190 | [Sq] 120 | [Tr] 64 | [Tr] 56 | [Tr] 30 | [Tr] 20 | [Sq] 66 | [Sq] 28 |
+| **Row 13** | [Sq] 361 | [Sq] 225 | | | | | [Sq] 121 | [Sq] 49 |
+| | | | **[Odd Side - Bottom]** | | | | |
+
+**Key to Pieces:**
+*   **[Ci]** = Circle
+*   **[Tr]** = Triangle
+*   **[Sq]** = Square
+*   **[Py]** = Pyramid (A composite piece containing multiple values)
+
+***
+
+->**The Order of the Field and the Arrangement of the Armies**<-
+<note>original: "Instructio Aciei et Depositio Exercituum"</note>
+
+<summary>
+This page provides a visual diagram of the board for Rithmomachia (The Philosophers' Game), illustrating the initial setup or "encamping" of the two opposing sides. The board is an 8x16 grid. One side (the "Even" side) is positioned at the top, and the other (the "Odd" side) is at the bottom. The diagram shows the specific placement of circles, triangles, squares, and the complex pyramid pieces, each inscribed with mathematical values that determine their movement and capture abilities during play.
+</summary>
+
+<keywords>
+Rithmomachia, The Philosophers' Game, game board layout, mathematical game, 16th-century gaming, numerical battle, game pieces, pyramid pieces, arithmetic strategy, board setup.
+</keywords>

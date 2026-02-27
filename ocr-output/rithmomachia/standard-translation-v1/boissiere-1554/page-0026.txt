@@ -1,0 +1,43 @@
+[[meta: This page continues the instructions for calculating the values of the "Square" pieces for Rythmomachia (the Philosophers' Game). It uses the sums calculated in the tables on page 11—specifically the numbers 15 and 28—to demonstrate how to derive the next level of complex proportions.]]
+
+# OF THE PHILOSOPHERS.
+[[notes: This header refers to "The Philosophers' Game" (Rythmomachia), a mathematical board game popular in the Middle Ages and Renaissance.]]
+
+And according to the etymology and meaning of the name
+that you will acquire for a required number, to per-
+fect their proportion, let us take for example the first
+requiring number found in the rank of evens, which is
+15, [[notes: Though 15 is an odd number, it is the first "Square" piece derived from the even-based triangular numbers (6 and 9) shown on the previous page.]] and similarly the first name of the
+superpartient proportion, which is superbipartient
+thirds, or dividing by 2 over three; such a name
+is as much as to say "two-thirds more."
+And thus, choose a number that contains the
+aforesaid 15, and two-thirds more. Now, the third
+part of 15 is 5; therefore, taking 2 thirds,
+you will have 10. Take then a number that contains the
+2 thirds (which make 10) and one times the afore-
+said 15: then 25 will present itself. You will then say that this number
+is required and matches with 15 in superpar-
+tient proportion, or the first species: bipartient thirds.
+[[notes: A "superbipartient thirds" ratio means the larger number is equal to the smaller number plus two-thirds of it. So, $15 + (2/3 \times 15) = 15 + 10 = 25$. The resulting ratio is 25:15, or 5:3.]]
+After coming to the second requiring number, I
+find that it is 28, in the rank of the odds, [[notes: Like 15 above, 28 is even but is derived from the "odd" sequence of triangles (12 and 16) from the previous page's table.]] and let us
+take the second of the superpartient proportion,
+which is supertripartient fourths, which is as much
+as to say "three-fourths more." And thus,
+choose a number that contains the aforesaid
+28, and 3 fourths more: now its fourth part is 7,
+wherefore taking three fourths, you will have 21. Choose then
+a number that contains the three fourths, which
+make 21, added to the aforesaid requiring number 28,
+and 49 will present itself. You will then say that it is required
+and matches with 28, in superpar-
+
+-> B iiij <-
+[[notes: This "B iiij" is a signature mark used by early printers to help binders assemble the book in the correct order.]]
+
+[[vocab: etymology, proportion, superpartient, superbipartient, odd numbers, supertripartient, arithmetic]]
+
+[[summary: This page explains the arithmetic logic for calculating the values of the "Square" pieces in Rythmomachia. It provides step-by-step examples of superpartient ratios, specifically how 15 becomes 25 and 28 becomes 49.]]
+
+[[keywords: Rythmomachia, Philosophers' Game, superpartient proportion, arithmetic, Renaissance mathematics, number theory, superbipartient]]

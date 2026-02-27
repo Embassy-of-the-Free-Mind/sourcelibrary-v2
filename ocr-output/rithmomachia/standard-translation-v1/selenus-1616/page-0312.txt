@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical analysis from page 277, focusing on a specific sequence of moves to trap or win the Black Queen. It references the work of Damiano (Pedro Damiano), a famous Portuguese chess theorist of the 1500s. The square numbering continues to follow the 1–64 system typical of 17th-century German chess manuals.]]
+
+### The Third Book / Chapter 3:
+
+» [...has another] place where he can place it) moves to **fifty-two**: then **White** takes the **Black King’s Archer’s Soldier** [[notes: The f-pawn]] with the **Queen** and offers **Check**: **Black** moves the **King** (since there is no other way to help him) to **fifty-one**: **White** offers **Check** once more with the **King’s Archer** [[notes: "Schütze" or Archer refers to the Bishop]] from **thirty**: **Black** covers the **King** with the **Queen’s Soldier** [[notes: The d-pawn]] (which is then the best move he can make) at **thirty-seven**:
+
+[[margin: 19.]] » * but if he moves the **King** (although this move is not as good) to **forty-two**: then **White** offers him **Check** with the **Queen** from **thirty-five**: **Black** (because he has no other place) moves the **King** to **forty-one**: **White** [moves] the **King’s Soldier** to **twenty-one** and offers **Discovered Check** [[notes: "Ab-Schach" refers to a check delivered by one piece when another piece moves out of its way]] from the **King’s Archer**: **Black** has no other relief than to cover the **King** with his **Rider’s Soldier** [[notes: "Reuter" or Rider refers to the Knight; here, the g-pawn]] at **thirty-four**: **White**: moves the **King’s Rook’s Soldier** [[notes: "Rochen" or Rook; here, the h-pawn]] to **twenty-five**:
+
+[[margin: 20.]] » thereby **Black** loses the **Queen**—* so long as he does not move the **King’s Soldier** to **thirty-seven**—on account of the **White King’s Archer**.
+
+Although **Damianus** [[notes: Reference to Pedro Damiano, whose 1512 book "Questo libro e da imparare giocare a scachi" was a primary source for later authors]] breaks off here and records no more than this: "That Black shall lose the Queen":
+
+[[margin: 21.]] » * yet (in order that we may carry the moves further) **White**—even if **Black** moves the King’s Soldier against the King’s Archer at 37 (as in n. 20) and simultaneously reveals the King’s Archer against his Queen—takes the **Black King’s Rider’s Soldier** with the **King’s Rook’s Soldier**, and with the same offers **Check** and a **Discovered Check** from the **King’s Rook**: Since **Black** is now attacked by two at once [[notes: A double check]] and therefore can place nothing in between, but must retreat with the **King**: he moves the same to **fifty**: **White** offers **Check** with the **Queen** from **thirty-six**: **Black** covers the **King** with his **Rider** at **forty-three**: **White** takes him with the **King’s Rook’s Soldier** and offers **Check**: **Black** takes the same with the **Queen**: **White** gives **Check** with the **King’s Archer** from **forty-one** and causes **Black** a bad game with this move: for if he moves the **King** to **forty-two**: the White—
+
+[[meta: Catchword at bottom: se/ mit (White/ with)]]
+
+[[summary: This page provides a detailed tactical walkthrough of a chess variation attributed to Damiano, demonstrating how White can force Black to lose their Queen or face a devastating double check. The author expands upon Damiano's original analysis to show the long-term consequences of the position.]]
+
+[[keywords: Damiano, chess tactics, Discovered Check, Double Check, King's Archer, Queen's Soldier, 17th-century chess, chess notation]]

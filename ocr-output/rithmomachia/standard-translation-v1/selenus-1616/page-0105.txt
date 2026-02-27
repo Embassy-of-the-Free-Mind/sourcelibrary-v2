@@ -1,0 +1,24 @@
+[[meta: This page concludes the discourse on the moral duties of the Archer/Elder (Bishop) before transitioning into the specific rules for its initial placement and movement on the board. It continues the allegory of the chess piece as a representative of the judicial class.]]
+
+# Of the Game of Chess
+[[margin: K iij]]
+[[meta: catchword: the whole]]
+
+[[margin: Chapter 8:]]
+...to find and establish, and to help those who are in the Realm with justice and integrity in rightful matters. They are to deliver judgments as they are required, providing advocacy and rightful counsel. They should be men of the people [[notes: *gemein leut*—suggesting they should be accessible or act for the common good]], so that they deviate from the right neither through favor nor through hardship [[notes: *durch lieb noch leyd*—a common legal formula meaning "through bias or fear"]]. They shall also constantly observe what is good for the land and its people. It is to be noted that Judges must possess many qualities if they wish to judge rightly for those in need.
+
+**Firstly**, every Judge shall be steadfast, so that he does not abandon the right through wealth, nor love, nor through enmity, nor through anger. Nor shall the Judge be greedy for possessions or goods.
+
+**2.** The Judge shall hate injustice, especially regarding friendship and enmity, so that he does neither through favor nor through spite, but only that which is right.
+
+**3.** He shall judge without anger.
+
+**4.** He shall not respect family kinship over justice. He shall punish a friend just as an enemy when he acts against the law. And what he commands of other people, he shall do himself. But the Judges now do not do this; for their commands are only like spiderwebs [[notes: This is a classic legal trope, often attributed to the philosopher Anacharsis, suggesting that laws trap the weak but are easily broken by the powerful]], which only seek out flies and small things. Thus, they only catch poor people with their commands. Because of this, when noblemen—who have no love for the right and do not fear the prince’s court—see this, they become robbers, arsonists, murderers, and persecutors of the poor, and ultimately the oppressors and traitors of their own Lords.
+
+**5.** The Judges who are not learned in books should frequently hear those who are learned in books, and consider what they hear so that they may carry out what is right. For this reason, they should not be burdened with common labor; rather, they should protect all workers and also remember that we do not live here forever [[notes: A *memento mori* reminder that even judges will eventually face a higher judgment]].
+
+The movement of the **Elders** [[notes: *Der Alten gang*. In this period, the Bishop was often called the "Elder" or "Old Man" (*Alte* or *Greis*) in German chess traditions]] from their position is this: the **Black** one is placed to the right hand of the **King** in his own seat; however, the **White** one is placed to the left hand of the **Queen**. They are called **White** and **Black** not because of their own essence, but because of the position they hold [[notes: This refers to the color of the square the piece occupies, which was crucial because in the older form of chess, these pieces could only move to squares of the same color]], whether he be white or black. When they stand in their own positions, they may move two squares. When the one to the right hand, who is **Black**, is moved...
+
+[[summary: This page outlines the moral requirements for Judges (represented by the Bishop piece), critiquing legal corruption through the "spiderweb" metaphor, and begins explaining the piece's starting positions and movement.]]
+
+[[keywords: Judges, Legal Ethics, Chess Allegory, Bishop, Spiderweb Metaphor, Medieval Justice, Rules of Movement]]

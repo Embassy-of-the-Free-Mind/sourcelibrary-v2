@@ -1,0 +1,13 @@
+[[meta: This page continues the sequence of blank protective leaves at the beginning of the manuscript, providing a buffer between the cover and the primary text.]]
+
+->[This page is blank.]<-
+
+[[notes: The faint, mirrored text visible on this surface is "bleed-through" or "show-through" from the reverse side of the page. This occurs over centuries as the oils and acids in the ink penetrate the fibers of the handmade paper.]]
+
+[[notes: The metal clips visible at the top right and bottom left corners are modern archival weights used by technicians during the scanning process to ensure the page remains flat and legible for the camera.]]
+
+[[notes: The modern "Digitized by Google" watermark in the corner represents the manuscript's transition into the digital age, a process that allows these fragile documents to be studied without risk to the original physical object.]]
+
+[[summary: This page is a blank flyleaf that contains no written text but serves as a physical record of the manuscript’s preservation and its modern digitization process.]]
+
+[[keywords: blank page, flyleaf, bleed-through, archival tools, digitization, paper history]]

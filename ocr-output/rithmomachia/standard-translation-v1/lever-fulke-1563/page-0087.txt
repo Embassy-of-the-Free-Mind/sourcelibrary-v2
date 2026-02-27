@@ -1,0 +1,27 @@
+# The Philosopher's Game
+
+## Of Their Movements
+
+The pieces <note>original: "men"</note> move forward and backward, to the right, and to the left, but not diagonally <note>original: "cornerwise"</note>, unless the players <note>original: "gamesters"</note> agree otherwise. The circles <note>original: "rounds"</note> move into the next space, the triangles into the third space, and the squares into the fourth. The kings move like squares. And these are their ordinary moves <note>original: "draughts"</note> while marching.
+
+## Of Capturing Pieces <note>original: "taking"</note>
+
+They are captured by encountering, by eruption, by laying weight, and by siege <note>original: "Obsidion"</note>.
+
+## Of Capturing by Encountering
+
+To capture by encountering is to capture by equality, as has been twice declared before.
+
+## Of Capturing by Eruption
+
+To capture by eruption is when a smaller <note>original: "lesse"</note> number is multiplied by the number of spaces between it and its adversary, and the resulting product is equal to the adversary's value. In this case, it may capture its enemy whether the enemy stands directly in front of it or diagonally <note>original: "cornerwise"</note>.
+
+***
+
+<summary>
+This page details the movement and capture mechanics of the Philosopher's Game (Rithmomachia). Pieces move orthogonally—circles move one space, triangles move three, and squares/kings move four—unless players agree to allow diagonal movement. The text introduces four methods of capturing an opponent's piece: "encountering" (equality of values), "eruption" (a calculation based on the piece's value multiplied by distance), "laying weight," and "siege."
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, movement rules, capturing mechanics, encountering, eruption, Obsidion, mathematical games, board game history, 16th century
+</keywords>

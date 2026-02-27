@@ -1,0 +1,14 @@
+[[meta: This page continues the author’s technical defense of his rule changes, specifically addressing how pieces are moved across the board to achieve victory and correcting mathematical oversights he attributes to Jacques Lefèvre d’Étaples.]]
+
+# RYTHMOMACHIE, 15V
+[[meta: catchword: 12.15.]]
+
+...granting victory to the even numbers, and consequently requiring that I use the odd numbers for my own victories—what is this if not to make these common victories nearly impossible to achieve? [[notes: The author is arguing against a rule where players can only win using their own set of numbers (even or odd). He argues this makes the game too restrictive.]] Those who are even slightly practiced in this same game know well that it is much easier to achieve victory using the **enemy’s pieces** [[notes: *Tables* in the original French; the term for the game pieces, similar to "men" in backgammon or checkers.]] than by using one's own. This is because victory must be achieved in the **enemy’s camp**, and it is easier to find a victory (if one can create some accord or proportion with the enemy’s pieces) than to be able to transport one's own pieces there by force.
+
+But someone will say: you have arranged the victories—which the said Faber [[notes: Jacques Lefèvre d’Étaples, the primary authority on the game at the time.]] calls **minor**—differently than they are arranged in his book. I answer you that if you had carefully examined the number of victories, you would not rebuke me on this point. You see, first, that the victories he placed among the "minors" are not minor at all; witness he himself, who says it is sufficient for minor victories to have **two proportions**. [[notes: In Rythmomachia, a "victory" is achieved by lining up numbers that form mathematical sequences (proportions). A "minor" victory usually involved two types of sequences, while a "Great Victory" involved three: Arithmetic, Geometric, and Harmonic.]] And yet, you see that in his "minor" victories, there are actually three.
+
+Take, for example, the last instance of the minors in his book, which is **12, 15, 16, 20**. He presents this example as having only two proportions—namely **Arithmetic** and **Geometry**—and yet the **Musical** [[notes: "Musical" refers to the Harmonic proportion, where the ratio of the extremes is equal to the ratio of the differences. For example, in 12, 15, 20: (20-15)/(15-12) = 5/3, and 20/12 = 5/3.]] proportion is also contained therein: namely,
+
+[[summary: The author argues that winning is easier when using an opponent's pieces within their territory and critiques Faber Stapulensis for misidentifying "minor" victories that actually contain three mathematical proportions.]]
+
+[[keywords: Rythmomachia, Faber Stapulensis, proportions, Arithmetic, Geometry, Musical proportion, game strategy, board games]]

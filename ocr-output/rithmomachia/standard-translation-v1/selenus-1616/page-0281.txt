@@ -1,0 +1,25 @@
+[[meta: This page begins the fifteenth chapter of the second book, continuing the instructional sequences from the previous section. While Chapter 14 focused on Black playing the Knight, this chapter explores variations where Black moves a Pawn (Soldier) or Bishop (Archer) instead.]]
+
+15. cap: Of the Game of Chess.
+
+[[image-desc: A rectangular decorative woodcut header at the top of the page, featuring symmetrical floral scrolls, acanthus leaves, and small human figures embedded within the ornamentation on the left and right sides.]]
+
+## The Fifteenth Chapter.
+
+### How the game is played when the Black [player]
+### does not move the Knight, as the fourteenth
+### chapter described, but rather a Soldier
+### or an Archer.
+
+[[margin: 1.]]
+So that we may now bring the second method (which was mentioned in the 12th Chapter) to an end along with this Second Book: after it was reported in the previous chapter how the Black player should continue his opening moves with the King’s Knight [[notes: *Reuter* (Rider/Knight)]]: there follows the manner in which the moves are to be pursued * when the same player, instead of the Knight (number 1 in f. of the 14th Chapter), moves his King’s Soldier [[notes: *Soldat* (Pawn)]] to forty-five [[notes: The author uses a 1-64 numbering system for the board squares common in early modern German chess manuals]]: then the White player, in response, moves the King’s Archer [[notes: *Schütze* (Archer) refers to the Bishop]] to thirty: the Black player takes the White King’s Archer’s Soldier with his King’s Soldier: the White player moves the King’s Soldier to twenty-nine: the Black player gives check with the Queen from twenty-five: the White player moves the King to three: the Black player [moves] the King’s Archer against the White Queen to twenty-six: the White player (in order to cover his Queen) moves the King’s Knight against the Black Queen to nineteen: the Black player (insofar as he wishes to give no cause for an exchange of Queens) takes him with the King’s Archer: the White player [takes] the same with the Queen and moves her onto the Black King’s Soldier: the Black player (to protect the same) moves the King’s Knight’s Soldier to thirty-four: the White player [moves] the Queen (so that he might, with her, take the Black King’s Knight’s [Pawn] or, with his King’s Archer, take the Black King’s Archer’s Soldier) to twenty-three: the Black player jumps with his King (in order not to let the Queen’s quarter be disrupted, nor to forfeit the right to castle [[notes: *Rochen* here refers to the act of castling]]) to sixty-two: the White player takes the Black King’s Archer’s Soldier with his King’s Archer and moves it to the Black King’s Knight’s [square]: the Black player [moves] the same to the White King’s Soldier at forty-three:
+
+[[margin: 2.]]
+* The White player gives check with the Queen from forty-four: the Black player covers the King/
+
+[[sig: Ii]]
+[[meta: catchword: nig/ (The word "König" is split across the page break, ending with "nig/")]]
+
+[[summary: This page opens Chapter 15, detailing a specific chess opening variation where Black moves a Pawn instead of a Knight. It provides a move-by-move technical description of the resulting tactical exchange involving the Queen and Bishop.]]
+
+[[keywords: Chess strategy, 17th-century chess, Chess opening, Soldier (Pawn), Archer (Bishop), Rider (Knight), King's Pawn Opening, Game Analysis]]

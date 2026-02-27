@@ -1,0 +1,11 @@
+[[meta: Following the previous page’s errata and mathematical corrections, this leaf serves as a physical buffer or end-paper within the binding.]]
+
+[This page is blank.]
+
+[[notes: The paper shows significant "foxing"—a term for the small, reddish-brown spots visible across the surface. This is a common form of age-related deterioration caused by fungal growth or the oxidation of iron particles within the paper pulp. The faint "ghosting" or bleed-through visible in the center is actually the ink from the text on the reverse side of the page soaking through the fibers over time.]]
+
+[[notes: A modern digital watermark from the Google digitization process is visible in the bottom right corner, which should not be confused with the historical paper watermarks often used by early modern papermakers to identify their mill.]]
+
+[[summary: This page contains no manuscript text or diagrams, acting as a structural break in the document. Its current state provides insight into the physical preservation and digital history of the manuscript.]]
+
+[[keywords: blank page, foxing, paper preservation, digitization watermark, bleed-through]]

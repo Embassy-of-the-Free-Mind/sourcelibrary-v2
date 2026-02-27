@@ -1,0 +1,25 @@
+[[meta: This page continues the discussion of the names given to chess throughout history, moving from the Greek terms mentioned on the previous page to Latin literary references and finally the German development of the word "Schach-Zabel."]]
+
+### The First Book / Chapter 2
+
+->Plautus, in *The Braggart Soldier*, Act 1.<-
+> [[margin: ,,]] For King Seleucus entreated me with the greatest effort
+> [[margin: ,,]] that I should gather and enroll mercenaries [[notes: The Latin *Latrones* originally meant hired soldiers or mercenaries, though it later came to mean robbers. In the context of chess, the game was often called *Ludus Latrunculorum*, the Game of Little Mercenaries.]] for him.
+->The same, ibid: Act 4.<-
+> [[margin: ,,]] For today I have sent my parasite [[notes: In Roman comedy, a "parasite" was a stock character who lived off the hospitality of others by providing flattery or services.]] to King Seleucus,
+> [[margin: ,,]] that he might lead the mercenaries, whom I have hired, from here to Seleucus,
+> [[margin: ,,]] who might guard his palace. —
+->Virgil: *Aeneid*, Book 12.<-
+> [[margin: ,,]] — — — — and unflinching, he breaks the fixed weapon
+> [[margin: ,,]] of the hunter [[notes: Virgil uses *Latronis* here to mean a hunter lying in wait.]], — —
+[[margin: ,, ,,]] That is, of the Hunter; for hunters were also accustomed to hire out their services. See: Jacob Pontanus of the Society of Jesus, Book 17 of *Symbolarum* on the 12th *Aeneid*, columns 2215, 2216.
+
+Nowadays, almost everywhere, the game of which we are now speaking is called **Schach-Spiel** [Chess-Game], or **Schach-Zabel-Spiel**. For the old Germans turned the "T" into a "Z"; just as happened with the city of **Zabern** in Alsace, **Zürich**, and **Zug**, etc. (which the Romans called *Tabernam*, *Thurigium*, and *Thugia*). From where it [the game] got this name, however, is not easily perceived.
+
+Some derive the naming from the pieces [stones], yet not all in the same way.
+
+For one part maintains that the modern Persians and Mauritanians [[notes: A historical term for the Moors of North Africa]] call a King and Ruler either **Xa** (as Garcia de Orta [[notes: A Portuguese Renaissance physician and pioneer of tropical medicine]] says in the place cited above), or **Saha** (as Giovanni Tommaso Minadoi [[notes: An Italian historian known for his history of the war between the Turks and Persians]] writes in Book 2 of his *Persian History*, page 42), or **Scaha**, **Scah**, or **Scach** (as Petrus Bizzarus [[notes: Pietro Bizzarri, a Renaissance historian]], Book 10 of *Persian Matters*, page 357; and Wenceslaus Budovvitz à Budovva, in his letter to Doctor Chytraeus on the state of the Church in Greece, etc., claim). Now, in this game, the win and loss of the match rests upon the Kings, who are the heads of this fictional battle. Therefore, it is not unjustly called the **Schach-** or **King-Game**; just as it is also called the **Courier-Game** [[notes: *Courier-Spiel* or Courier Chess was a popular medieval variant played on a larger board of 12x8 squares, featuring a piece called the "Courier"]] after the "couriers," which are among the best pieces. Although this name [Schach] suits the present game quite well, and we find it very pleasing in our mother tongue, it does not seem credible that, through such a long period of use, people would only recently have wished to borrow the name from barbaric peoples.
+
+[[summary: This page explores the etymological roots of the word "Chess," comparing Latin literary uses of the word *latrones* (mercenaries) to the German term *Schach-Zabel*. It discusses the linguistic shift from 'T' to 'Z' and examines the Persian origin of the word for King (*Shah*) as the source of the game's name.]]
+
+[[keywords: Etymology, Latin, Plautus, Virgil, Schach-Zabel, Persian, King, Courier Chess, Linguistics]]

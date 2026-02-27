@@ -1,0 +1,24 @@
+[[meta: This page continues the tactical variations of Chapter 4. The previous page ended mid-sentence during a description of move No. 24, where White was initiating a series of checks. This page resolves those checks and explores defensive alternatives for Black in variations 25 through 29.]]
+
+# The Third Book / Chapter 4:
+
+take it: White offers **Check** with the **Queen** from fifty: He must place the **King** on twenty-seven: White takes his [Black's] **King's Bishop** [[notes: *K. Schütze*, literally "King's Archer"]] with the **Queen** and gives **Checkmate** on forty-two: White offers **Checkmate** with the **King's Rook's Pawn** [[notes: *K. Rochens-Soldat*, literally "King's Rook's Soldier"]] from thirty-three.
+
+[[margin: 25.]]
+If, however, the Black player does not move the **Queen** to 52 (as in No. 15) but instead moves her **Pawn** [[notes: *dero Soldaten*]] against the **White King's Bishop** on thirty-seven (so that White cannot give **Check** with the **Queen** from thirty-five): then White places the **King's**
+
+[[margin: 26.]]
+**Rook's Pawn** on thirty-three and offers **Check**: * Black moves the **King** to fifty-one: White takes the **Black King's Pawn** with the **King's Bishop** and offers **Check**: Black must immediately and without rescue lose the **Queen** (because he is not permitted to cover the aforementioned **White Bishop** with her **Bishop** at forty-four, but must necessarily capture it with the **Queen** to prevent **Checkmate**).
+
+[[margin: 27.]]
+But if Black does not move the **King** to 51 (as in No. 26) but rather to forty-one: then White (as often mentioned) delivers a **Discovered Check** [[notes: *Ab-Schach*, a tactic where moving one piece reveals an attack from another]] from the **King's Bishop** and moves its **Pawn** to twenty-nine: Black (to cover the **King**) moves the **King's Knight's Pawn** [[notes: *K. Reuters-Soldaten*, the "Rider's Soldier"]] to thirty-four: White (in order to finish off the Black **King**) moves the **King's Bishop's Pawn** against the same to twenty-seven: Black (to prevent this) moves the **King's Bishop** (which is then the best move) to fifty-two: White takes the **Black King's Pawn** with the **King's Bishop**: Black moves his **King's Bishop** (which move appears very good) against the **White Queen** at forty-three: White takes the **Black King's Knight's Pawn**
+
+[[margin: 28.]]
+with his **King's Bishop's Pawn** and offers **Check**: * Black takes the same with the **King's Bishop**: White captures the **Black King's Rook** (in order to capture his **Knight** by force) with the **Queen**:
+
+[[margin: 29.]]
+* Black moves the **King's Bishop's Pawn** against the **White King's Bishop** at forty-six: White takes the **Black King's Knight** [[notes: *S. K. Reuter*]] with the same and moves it onto his [Black's] **Rook's Pawn**: Black (to defend the same, because otherwise, if White were to take it with the **Queen**, it would be **Checkmate**) moves the **Queen** to fifty-two: White (to prevent the **Black Queen** from taking the **King's Pawn** or offering **Check**) takes the **Black King's Ro-** [[notes: The text cuts off here, continuing with "ck" or "ok" on the following page.]]
+
+[[summary: This page provides a dense technical analysis of late-game chess variations, focusing on how White can force a Queen capture or Checkmate through discovered checks and pawn advances. It highlights the high-stakes nature of positioning the King's Bishop and Rook's Pawns in early modern strategy.]]
+
+[[keywords: Checkmate, Discovered Check, King's Bishop, King's Rook's Pawn, Queen capture, Chess tactics, King's Knight's Pawn]]

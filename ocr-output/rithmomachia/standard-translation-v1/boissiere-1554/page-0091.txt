@@ -1,0 +1,34 @@
+[[meta: This page continues the explanation of capture by "Ambush" using subtraction. The previous page ended mid-sentence describing a scenario where an "Even" player uses subtraction to capture an "Odd" player's piece.]]
+
+# RYTHMOMACHIA, GAME.
+
+[...ber 9 be in space A, it follows] that my two numbers 15 & 6 can go into space A [[notes: The "space" (*loge*) refers to a square on the game board.]] and that the one which is 6, being subtracted from the other 15, will leave 9, a number equal to that of the adversary which is also 9; thus, when I place the last of the two pieces in L or B, I shall take the adversary’s nine. This serves to take the proper numbers for subtraction in the present table.
+
+->Nombre,<-
+[[notes: "Nombre" (Number) is centered here as a stylistic transition to the mathematical tables below.]]
+
+| Even against Odd | | | | Odd against Even. | | |
+|:---|:---|:---|:---:|:---|:---|:---|
+| 2 | from 9 | remains 7 | | 3 | from 5 | remains 2 |
+| 4 | 16 | 12 | | 3 | 7 | 4 |
+| 4 | 20 | 16 | | 3 | 9 | 6 |
+| 4 | 9 | 5 | | 3 | 12 | 9 |
+| 6 | 36 | 30 | | 5 | 7 | 2 |
+| 6 | 42 | 36 | | 5 | 9 | 4 |
+| 6 | 72 | 66 | | 5 | 25 | 20 |
+| 6 | 9 | 3 | | 7 | 9 | 2 |
+| 6 | 15 | 9 | | 7 | 56 | 49 |
+| 8 | 36 | 28 | | 7 | 16 | 9 |
+| 8 | 64 | 56 | | 7 | 49 | 42 |
+| 8 | 20 | 12 | | 9 | 25 | 16 |
+| 8 | 72 | 64 | | 9 | 81 | 72 |
+| 9 | 16 | 7 | | 9 | 90 | 81 |
+| 9 | 25 | 16 | | 16 | 25 | 9 |
+| **Evens to be subtracted.** | **Evens from which the multiplication is made.** [[notes: "Multiplication" here likely refers to the fact that these pieces (like 16, 36, 64) are products or squares in the game's mathematical progression, even though subtraction is the operation currently being performed.]] | **Odds remaining from the even.** [[notes: This refers to the value of the "Odd" player's piece that is captured.]] | | **Odds to be subtracted.** | **Odds from which the subtraction is made.** | **The even number remaining from the odd.** |
+
+[[meta: catchword: Capture]]
+
+[[gloss: Rythmomachia, subtraction, multiplication, even, odd, remainder, space]]
+
+[[summary: This page completes the explanation of the "Ambush" capture method using subtraction and provides a detailed reference table showing which numerical combinations allow one side to capture the other's pieces.]]
+[[keywords: Rythmomachia, subtraction rules, mathematical capture, game table, arithmetic ratios, early modern gaming]]

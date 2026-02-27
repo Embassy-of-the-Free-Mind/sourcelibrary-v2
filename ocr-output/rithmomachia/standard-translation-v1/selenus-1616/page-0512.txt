@@ -1,0 +1,36 @@
+[[meta: This page continues the discussion of capture methods in Rythmomachia. While the previous page concluded the explanation of Capture by Addition, this section introduces the second mathematical capture method: Subtraction.]]
+
+# The Fifth Chapter
+
+-> *,, He calls this addition of numbers a fraud and a snare. ,,* <-
+[[notes: The Latin quote uses the word "Additionem" (Addition), but the German text below immediately begins explaining "Abziehen" (Subtraction). This may be a general reference to the "fraudulent" complexity of combining multiple numbers to trap a single piece.]]
+
+Through **Subtraction** / the stones / are won / or forfeited / in this manner.
+
+When two stones / of one side / are moved into such spaces / from which they / can strike / a single stone / of the opponent's side: and when the number of one / is subtracted from the number of the other / and produces / the same number / with which / the mentioned opponent's stone / is marked / then that stone is indeed taken: they [the capturing stones] remain / however / on the spaces / where they / were moved for that turn: For example / if the White Square / with 15 is on F: and the White Round stone / with 6 is on G: and the Black Round stone / marked with 9 / has been moved onto H: then for that reason / (since 6 taken from 15 / leaves 9 / and both of these White stones / can reach / the Black one) the Black Round stone / marked with 9 / may easily be taken / from the game. [[notes: In Rythmomachia, "reaching" a stone means the target is within the capture range—or "move distance"—of the pieces involved. Here, the two pieces "team up" mathematically to remove an opponent.]]
+
+The following numbers / win / and are conquered / in this game / by subtraction: on the left side / are the White and Black numbers / which one / subtracts from one another / to seize a Black / or White stone: but on the right hand / the numbers / which are found on the White / or Black stone / that is seized / are placed.
+
+| Two White. | One | Black. | Two Black. | One | White. |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 6. | 9. | 3. | 3. | 5. | 2. |
+| 4. | 9. | 5. | 5. | 7. | 2. |
+| 2. | 9. | 7. | 7. | 9. | 2. |
+| 9. | 16. | 7. | 3. | 7. | 4. |
+| 6. | 15. | 9. | 5. | 9. | 4. |
+| 4. | 16. | 12. | 3. | 9. | 6. |
+| 8. | 20. | 12. | 3. | 12. | 9. |
+| 4. | 20. | 16. | 7. | 16. | 9. |
+| 9. | 25. | 16. | 16. | 25. | 9. |
+| 8. | 36. | 28. | 9. | 25. | 16. |
+| 6. | 36. | 30. | 5. | 30. | 25. |
+| 6. | 42. | 36. | 7. | 49. | 42. |
+| 8. | 64. | 56. | 7. | 56. | 49. |
+| 8. | 72. | 64. | 9. | 81. | 72. |
+| 6. | 72. | 66. | 9. | 90. | 81. |
+
+[[meta: catchword: Buxer:]]
+
+[[summary: This page explains the "Capture by Subtraction" rule in Rythmomachia, where two stones can capture an opponent's stone if the difference between their values equals the value of the target. It includes a comprehensive table of possible subtraction captures for both White and Black pieces.]]
+
+[[keywords: Rythmomachia, Subtraction, Capture Rules, Mathematical Games, Arithmetic, Strategy Table, White and Black pieces]]

@@ -1,0 +1,23 @@
+[[meta: This page continues from the previous discussion on the preparations for play. It transitions from the physical setup of the board to the strategic weight of the opening move and the specific evaluation of "handicaps" (advantages) traded between players of unequal skill.]]
+
+<page-num>137</page-num>
+
+### 3rd Chapter: Of the Game of Chess.
+
+If one then understands the game, he will—on account of the **first move**, even though it does not yet make victory certain—conduct and arrange the same with much more security and caution. In consideration that he gains the opportunity to arrange his **moves** [[notes: *Züge*, the standard term for chess moves]] in such a way that the other must always remain on the defensive; and if the opponent cannot properly counter one of those moves, he must finally lose the field. Furthermore, one should not prefer the uncertain to the certain: for often a strong imagination—as if one were entirely sure of the matter—is deceptive. When one fails to hold a move in high regard because of a desire to gain honor through some new undertaking, it can cause great harm. Moreover, that which one has failed to see out of arrogance and presumption often opens the eyes of the **enemy** [[notes: *Feinde*, the common term for an opponent in early chess literature]] out of necessity (which is the mistress of all things), leading him to take notice of that which he otherwise would not have perceived, even if he is not normally so cunning.
+
+Furthermore, one not only gives, but also takes **counter-advantages** [[notes: *gegen vortheile*, referring to the practice of "handicapping" where a stronger player gives up a piece or allows the opponent extra moves to balance the game]], which players often regard as equal, but in truth are very unequal and distinct. Therefore, it will be very necessary to take great care in this, so that one does not spend more than he earns, and instead of a regained advantage, receives greater harm; regarding this, we shall set down several examples here for instruction.
+
+(1.) It is considered equal by some to give the opponent the **King's Bishop's Pawn** [[notes: *des Königes=Schützens-Soldaten*, literally the "King's Protector's Soldier." In this period, the Bishop was often called the Archer or Protector]] along with the lead [the opening move], and in return take the advantage that one may move the **King** into a corner or a nook upon a **Rook's square** [[notes: *Rochens feld*, the square where the Rook starts, here referring to a form of early castling]]. However, it is better to let the King remain in his place and instead take the pawn and the first move from the opponent. Considering that great damage can be inflicted upon the enemy with the opening move due to the lack of that same pawn (since, by virtue of the 10th Chapter in the First Book, it is counted among the most noble pieces), it is also very useful and beneficial to strip and rob the enemy of his weapons as best as possible.
+
+(2.) Sometimes one gives the opponent a **Knight** [[notes: *Reuter*, literally a "Rider"]] as an advantage, and takes from him in return either the King's Bishop's Pawn and two moves; or that his King be placed in a corner or Rook's square, while in return the King of the one who gave away the Knight may not **jump** [[notes: *springen*, referring to the "King's Leap," a special move in early chess that allowed the King to move two or three squares on its first turn, a precursor to modern castling]],
+
+<sig>S ij</sig>
+[[meta: The signature mark "S ij" indicates the sequence of the gathered paper sheets for the book binder.]]
+
+[[gloss: vermey-]]
+[[meta: This is a catchword, the first syllable of the first word on the following page, used to ensure the pages were bound in the correct order.]]
+
+[[summary: This page emphasizes the strategic importance of the opening move and warns against overconfidence. It provides specific advice on evaluating handicaps, arguing that retaining a strong pawn and the initiative is often better than gaining special King movement rights.]]
+
+[[keywords: chess strategy, opening move, handicaps, King's Bishop's Pawn, Knight, King's Leap, piece valuation]]

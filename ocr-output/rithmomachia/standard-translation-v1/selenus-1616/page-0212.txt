@@ -1,0 +1,113 @@
+[[meta: This page follows the introductory key to abbreviations. Having established that 'R' stands for Rook, 'S' for Soldier (Pawn), and 'K' for King, the author now presents a series of technical diagrams. These grids illustrate specific game scenarios or variations, using the previously defined shorthand to show piece positioning.]]
+
+[[margin: Chapter 8: The Second Book]]
+
+### No. 2, 9, 16
+[[notes: These numbers likely refer to specific game variations or problems discussed in the accompanying text. The diagrams use a grid-based notation common in 17th-century technical manuals, resembling a "Weberbuch" or weaver's draft.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BQ | BK | | BR | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | 46 | BP | | 43 | | |
+| | | BP | | BP | | | |
+| | | WP | | WP | | | |
+| | | WP | | | | | |
+| WP | WP | | WP | WQ | WP | WP | WP |
+| WR | WR | WP | | WK | | WR | WR |
+[[notes: In these tables, B = Black (Schwarz), W = White (Weiß), R = Rook (Roch), P = Pawn (Soldier/Soldat), K = King (König), and Q = Queen (Königin, often represented by an ampersand &).]]
+
+### No. 4, 5.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | | BK | | | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | BR | BP | | | | |
+| | | | | | | | BQ |
+| | | WP | WP | WP | | BR | |
+| | | WP | | | | WR | |
+| WP | WP | | WP | | | WQ | WP |
+| WR | WR | | | WK | | | |
+
+### No. 10, 15.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BQ | BK | | 58 | BR |
+| BP | BP | BP | 53 | | BP | | BP |
+| | | | BP | | BR | | |
+| | | | | | | WP | |
+| | | WP | | WP | | | |
+| | | WP | WP | | | | |
+| WP | WP | | | | | | WQ |
+| WR | WR | | | WK | | WR | |
+
+### No. 17, 18.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | | BK | | BR | BR |
+| BP | BP | | | | BP | BP | BP |
+| | 47 | BP | BP | | | | |
+| | | BP | | | | | |
+| | | WP | WP | WP | BP | 26 | BQ |
+| | | WP | | | | | |
+| WP | WP | | | WQ | | WP | WP |
+| WR | WR | WP | WK | | | WR | WR |
+
+### No. 3, 6.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | BQ | BK | | BR | BR |
+| BP | BP | BP | | | BP | BP | BP |
+| | | BR | BP | | | | |
+| | | BP | | BP | | | |
+| | | WP | | WP | WP | | |
+| | | WP | | | | | |
+| WP | WP | | WP | WQ | | WP | WP |
+| WR | WR | WP | | WK | | WR | WR |
+
+### No. 7, 8.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | | BP | BQ | BK | | BR | BR |
+| BP | BP | BP | | | BP | | BP |
+| | | BR | BP | | | | 41 |
+| | | BP | | | 36 | | WR |
+| | | WP | | WP | BP | BP | WP |
+| | | WP | | | | | |
+| WP | WP | | WP | WQ | | WP | |
+| WR | WR | WP | | WK | | | WR |
+
+### No. 13, 14.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | BQ | BK | 59 | BR | |
+| BP | BP | BP | 53 | | BP | | BP |
+| | | | | | BR | | |
+| | | | | WQ | | WP | |
+| | | WP | | | | | |
+| | | WP | WP | | | | |
+| WP | WP | | | | | | |
+| WR | WR | | | WK | | WR | |
+
+### No. 19, 20.
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| BR | BR | BP | | BK | | | BR |
+| BP | BP | | | | BP | BP | BP |
+| | | BP | BP | BP | | BR | |
+| | | | | | | | |
+| | | WP | WP | WP | BP | | |
+| | | WP | | | WR | BQ | WP |
+| WP | WP | | WR | WQ | | WP | |
+| WR | | WP | WK | 4 | 3 | | WR |
+
+[[summary: This page contains a series of eight technical chess diagrams in grid format, illustrating various board states and move variations labeled by number. The grids use abbreviated notation for Black and White pieces (Rooks, Pawns/Soldiers, Kings, and Queens) and include specific numerical markers for move sequences.]]
+
+[[keywords: chess diagrams, grid notation, technical draft, chess variations, King, Queen, Rook, Soldier, Pawn, 17th-century chess]]

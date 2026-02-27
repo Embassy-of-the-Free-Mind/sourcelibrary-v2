@@ -1,0 +1,18 @@
+[[meta: This page continues the specific rules for completing a "triumph" (the final victory sequence) on the opponent's side of the board. It transitions from the author's own instructions to a supplemental section featuring the work of the famous scholar Jacques Lefèvre d’Étaples.]]
+
+RYTHMOMACHIA, GAME
+
+## Strategies for Victory
+
+The arrangement of the triumph must be done by regular movement and not by jumping like the knights [[notes: In Rythmomachia, pieces move according to their shape: circles move one space, triangles move two, and squares move three. The "knight" (chevalier) refers to a specialized move similar to Chess, which is forbidden during the final positioning of a victory sequence.]].
+
+When you arrive in the adversary’s field to triumph within it, set out a great number of pieces [[notes: "Tables" in the original; these are the numbered counters used by the players.]] around those with which you wish to triumph, to prevent the adversary—having been warned of your triumph—from later hindering your victory. I have previously warned you and proposed the pieces of numbers proper for victories: as for **square**, **triangular**, and **pyramidal** numbers, you may see more of them in our *Arithmetic* [[notes: The game is based on Pythagorean number theory. Players used "triangular" numbers (like 6, 10), "squares" (like 4, 9), and "pyramids" (complex pieces made of stacked numbers). The author is likely referring to a separate textbook he wrote.]].
+
+## The Author’s Disclaimer
+
+Even though I have not omitted anything in the present book (to the best of my modest judgment) that is necessary to it, nevertheless, to satisfy the studious and to fill some pages that had remained empty within it, I shall add to this little work of mine that which **Jacques Lefèvre d’Étaples** [[notes: Jacques Lefèvre d’Étaples (c. 1455–1536) was a leading French humanist and theologian. His 1496 manual on Rythmomachia helped standardize the game for the Renaissance era.]] has written on the subject, to the end that by comparing his opinion to ours, one may have a better understanding of the whole, and like a judge and elector, may choose what is in 
+
+[[meta: catchword: this]]
+
+[[summary: This page provides final tactical advice on securing a "triumph" by protecting victory pieces and announces the inclusion of Jacques Lefèvre d'Étaples' classic text to provide a comprehensive guide for the reader.]]
+[[keywords: movement rules, knights, square numbers, triangular numbers, pyramidal numbers, Jacques Lefèvre d'Étaples, tactics, victory conditions]]

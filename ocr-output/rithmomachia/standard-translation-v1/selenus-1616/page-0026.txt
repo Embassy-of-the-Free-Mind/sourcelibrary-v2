@@ -1,0 +1,28 @@
+[[meta: This page follows the previously discussed blank page where the "ghost" of this diagram was visible through the paper. It serves as the formal table of contents or conceptual map for the treatise on chess.]]
+
+# TABLE, presenting a Synopsis, A[[notes: Likely *Analytica* (Analytical), describing the systematic breakdown of the subject.]]
+
+[[notes: This page uses a "Ramist tree" layout, named after the 16th-century scholar Petrus Ramus. It uses large curly braces to show how a single subject branches into smaller, more specific categories. Because the right margin is cut off, several words are incomplete.]]
+
+**THE GAME OF CHESS,** in the following **TREATISE,** is considered; either in
+
+- { **General terms** through general prerequisites, and those either more
+    - { **Internal,** } which deal with { the Genus; the Purpose pr... [[notes: likely *proposito* (proposed)]] / Knowledge; Ca... [[notes: likely *Causa* (Cause)]] / Origin; Auth... [[notes: likely *Authore* (Author)]]
+    - { **External,** }
+    - { **The Object,** which the AR[[notes: likely *ART* or *ARTIS* (of the Art)]]...
+    - { **utilizes** about wh...
+
+- { **Specific types,** through division: For it is that which, in our age, is customary, either
+    - { **More recent & more perfect,** Book 1. ch. 3. Of this, as of the others, the measures are handed down,
+        - { **Specific prerequisites,** namely { The sought-after end... Book ... / Nature, Book 2. ch. 1.
+        - { **Means,** which lead us to the sought-after end: Of these, there is considered either
+            - { **The Subject** namely ... / The players, and their...
+            - { **Application** to use, which is either
+                - { **Primary,** through C... [[notes: likely *Certamen* (Competition or match)]]
+                - { **Derived,** through Pra... [[notes: likely *Praxin* (Practice)]] / various ti... / ways of Play- / ing, a more full... Re... Pa... / gular... u... tio... / use, de... demon... / strating... Book... / where c... / is handed down, S...
+    - { **Older,** } about which Book 4. ch. 9. & 10.
+    - { **Most ancient,** }
+
+[[summary: This page provides a structural overview of the entire chess treatise, categorizing the game into its general principles and its historical variations—ancient, older, and the "modern" game of the 17th century. It acts as a visual table of contents, mapping the work's progression from basic definitions to the application of rules and specific methods of play.]]
+
+[[keywords: chess history, Ramist tree, synopsis, pedagogy, early modern chess, taxonomy of games]]

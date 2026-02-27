@@ -1,0 +1,15 @@
+[[meta: This page continues the introduction from page I, concluding the justification for the game and beginning the formal definition. The text transitions from the philosophical benefits of "virtuous" play to the specific mathematical foundations of Rythmomachia.]]
+
+->RYTHMOMACHIA, THE GAME<-
+
+*...could be a recreation for troubles, without however wasting one’s time, or straying from the limits of virtue. This game, although it was held in great esteem among the ancients and drawn from the harmonies and proportions of the subtle and ingenious Pythagoras [[notes: Pythagoras (c. 570–495 BC) was an ancient Greek philosopher who taught that the universe was built on mathematical ratios. This game was often attributed to his school in the Middle Ages and Renaissance.]]: Today, however, it is no longer in use because of the enigmatic interpretations in which, until now, it has been hidden and obscured. But seeing the utility and profit coming from it, I have set myself the duty of describing and unfolding it in such a way that not only the sorrowful may find recreation in it, but also all people of virtue, by recreating themselves within it, may acquire the habit of being able to promptly discern every proportion and harmony. In this world, there is nothing more fitting or subtle for better contemplating the quantities and admirable things in every kind of creature [[notes: In this context, "creature" refers to all of God's "creations"—the entire physical and natural world which was believed to be structured by divine geometry and music.]] than these things. Now, therefore, we shall proceed to declare it according to its order and tenor.*
+
+### Definition of the game.
+
+*Rythmomachia is as much as to say a battle of harmonious numbers, or a battle of harmonies [[notes: The name is derived from the Greek words "rhythmos" (proportion/number) and "mache" (battle). It was often called the "Battle of Numbers."]], insofar as this game is established by a marvelous harmony, and afterwards by encounters, captures, [and]*
+
+[[meta: catchword: embu- [likely "embusches" or "ambushes" on the following page]]]
+
+[[summary: This page concludes the author's introduction, arguing that Rythmomachia allows the player to understand the mathematical proportions that structure the universe. It begins the formal definition of the game as a "battle of harmonious numbers."]]
+
+[[keywords: Rythmomachia, Pythagoras, mathematics, harmony, proportions, educational games, Renaissance philosophy]]

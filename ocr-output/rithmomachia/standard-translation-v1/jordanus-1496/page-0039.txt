@@ -1,0 +1,62 @@
+[[meta: This page continues from the previous discussion in Book VI on the properties of squares and oblong numbers. The previous page concluded a demonstration regarding the differences between these figures, which this page extends into the study of powers (cubes and sixth powers) and summation properties.]]
+
+# VI
+
+A **square-cube** is a square that is equally a cube [[notes: In modern terms, this is a sixth power, like 64, which is both $8^2$ and $4^3$.]]. Given unity **a, b, c, d, e, f, g, h, i, l, m, n, o, p**: or as many numbers as you wish in continuous proportion starting from unity [[notes: A geometric progression like 1, 2, 4, 8, 16...]], these properties are immediately recognized from the tenth and eleventh [propositions] of this book. For since unity is potentially both a square and a cube, therefore by the tenth [proposition] of this book, **c** [[notes: the third term, e.g., 4]] will be a square, and by the eleventh, **d** [[notes: the fourth term, e.g., 8]] will be a cube. And by that same tenth, **e** [[notes: the fifth term, e.g., 16]] will again be a square, and again by the tenth: because **e** is a square, **g** [[notes: the seventh term, e.g., 64]] will be a square. But also because **d** is a cube, by the eleventh, **g** will also be a cube, which comes as is clearly established as the seventh from unity; wherefore the seventh from unity is a square-cube. and so proceed continuously and you will encounter a similar mode of proof everywhere.
+
+-> e i h g f <-
+-> 16 8 4 2 1 <-
+-> 512 256 128 64 32 <-
+-> p o n m <-
+-> 8192 4096 2048 1024 <-
+
+-> e d c b <-
+-> 256 64 16 4 1 <-
+
+-> o n m b <-
+-> 4096 512 64 8 1 <-
+
+[[margin: 29]]
+¶ If, among numbers in continuous proportion from unity, the second from unity is a square, all will be squares. But if the same is a cube: all will also be cubes.
+¶ The first part is clear. For by the premise, even the third will be a square. And because the second is a square, by the tenth of this book, the third from it—which is the fourth—is also a square. And by the premise, because the third is a square, skipping one, the fifth will be a square. And so on, wherefore if the second among numbers in continuous proportion from unity is a square, all will be squares. The second part is shown: for if the second is a cube: since as many times as unity is in the second, so many times the second is in the third. The second [multiplied] by itself, which is a cube, will produce the third; wherefore by the sixteenth of this book, the third will be a cube [[notes: This follows the logic that if $x$ is a cube, $x^2$ and $x^3$ etc. are also cubes in this specific proportional sequence.]]. And by the premise, the fourth will also be a cube. And by the eleventh of this book, the fourth assumed from any of those will be a cube. And those being taken continuously, all are taken. It is therefore established that if the second is a cube, all are cubes.
+
+[[margin: 30]]
+¶ If one of two adjacent oblong numbers is multiplied by the other: an oblong number results.
+¶ Let **a** and **b** be two such oblong numbers [[notes: An "oblong number" or *altera parte longior* is a number of the form $n(n+1)$, such as 6 or 12.]], and the square between them be **c**, whose side is **d**, which by the twenty-fourth of this book will be the difference between **a** and **c** and between **c** and **b**. And let the other side of the smaller oblong **a** be **e**. Then **d** will be greater than **e** by unity. And because **d** times itself makes **c**, and **d** times **e** makes **a**, the proportion of **c** to **a** will be as **d** to **e**. Likewise, let **d** times **f** make **b**; **f** will be one unit greater than **d**. Therefore, add **e** to **a** and let the composite be **g**: because from **d** times **e** comes **a**, and **f** times **e** will become **g**: as is easily shown by the tenth of the first book, since the number **f** exceeds the number **d** only by unity. And because **f** times **e** makes **g** and **d** times **e** makes **a**: by the eighth [proposition] of the second, the proportion of **g** to **a** is as **f** to **d**. But also by the seventh of the same, **b** to **c** is as **f** to **d**: wherefore **b** is to **c** as **g** is to **a**. Therefore, permuted, **b** is to **g** as **c** is to **a**: therefore by the twenty-fifth of the second, that which is produced from **b** times **a** (the given oblongs) is equal to that which is produced from **g** times **c**. But that which is produced from **g** times **c** is an oblong number by definition: since **g** and **c** differ only by unity. Since **g** is composed of **a** and **e**, and the difference of **a** from the square **c** is **d**: from which difference **d**, the number **e** added to **a** in composition is distant by only one unit. It is therefore established that the number produced from **b** times **a** is an oblong number. And this is the proposition.
+
+-> 72 (h) 12 (b) 8 (g) 4 (f) 9 (c) 3 (e) 6 (a) 2 (e) <-
+
+[[margin: 31]]
+¶ If any two adjacent oblong numbers are joined with twice the square established between them, a square results, the root of which is composed of the smaller side of the smaller [oblong] and the larger side of the larger [oblong].
+¶ For let **a** and **b** be any two adjacent oblong numbers and their middle square be **c**. And let **d** and **e** be the sides of the oblong **a**: and **f** be the side of the higher oblong **b**. I say that if **a** and **b** are joined with twice **c**, the whole aggregate, like **g**, is a square: whose root is composed of **d** and **f**. For by the twenty-fourth of this book, **e** is the difference of **a** to **c** and **b** to **c**: therefore by the second of the first, the sum of **a** and **b** is double to **c**. But double **c** with **a** and **b** (the double of the same) will be its quadruple, which composite is **g**. For since four is a square number, being produced from two multiplied by itself, the composite is thus a square. Therefore by the fourteenth of the present book, **g** is a square. And since the square **g** is quadruple to the square **c**: therefore by the third of this book, the proportion of the side of **g** to the side of **c** will be double. And since **e** is the root of **c**, and **d** and **f** placed around it are equidistant to **e**. Therefore by the second of the first, **d** and **f** together are double the side **e** of [square] **c**: wherefore the root of the square **g** is composed of **d** and **f**: which is the proposition.
+
+-> 100 (g) <-
+-> 20 25 (c) 30 (b) <-
+-> 4 (a) 5 (d) 6 (f) <-
+
+[[margin: 32]]
+¶ If any two adjacent squares are joined with twice the oblong number between them: the composite will be a square and its side [is] composed of their sides.
+¶ Let **a** and **b** be any two adjacent squares and **c** the oblong number between them, and **d** and **e** their sides. I say that squares **a** and **b** with twice **c** produce a square, such as **f**, whose side will be the sum of **d** and **e**. For by the twenty-fourth of this book, from **d** times **e** comes the oblong **c** between **a** and **b**: wherefore by the ninth of the first, **a** and **c** are as that which is produced from **d** into the sum of **d** and **e**: let that sum be **g**. And by the same, **c** and **b** are as that which is produced from **e** into **g**. And by the same ninth [proposition], that which comes from **d** and **e** into **g** is as that which is produced from **g** into itself. Therefore, the square of number **g** is as much as **a** and **c** and **c** and **b**: therefore as much as **a** and **b** and twice **c**. For **c** was [taken] twice, namely once with **a** and once with **b**: but that which was made from **a** and **b** and twice **c** is set to be **f**. Therefore **f** is a square whose side is **g**. And since **g** is composed, as was set, from sides **d** and **e** of squares **a** and **b**: the whole proposition stands.
+
+-> 25 (f) <-
+-> 4 (a) 6 (c) 9 (b) <-
+-> 2 (d) 5 (g) 3 (e) <-
+
+[[margin: 33]]
+¶ If all numbers from unity up to two numbers differing by one are heaped together: that which comes from the heaping will be a square number of the largest of those summed.
+¶ Let numbers be arranged from unity in two orders up to **e** and **d**, two numbers differing by unity, in this first manner: **unity, a, b, c, d, e**; and in a second manner: **unity, a, b, c, d**: and let the square of number **e** be **f**. I say that the square **f** is as all those numbers of the two orders heaped together [[notes: This describes the property that $1 + 2 + ... + (n-1) + n + (n-1) + ... + 1 = n^2$]]. For I mark all the squares smaller than **f**, which are arranged in order: **f, g, h, i, l, unity**. **g** will be the square of **d**: and **h** the square of **c**: and **i** the square of **b**: and **l** the square of **a**: and afterward unity, which is the square of the first unity. I understand similarly **m, n, o, p** to be the middle oblong numbers. And because by the twenty-fourth of this book the difference of **f** to **m** is **e**: and the difference of **m** to **g** is **d**. Therefore by the eighth conception [[notes: An "axiom" or "common notion"]], the difference of the extremes **f** and **g** is **e** and **d**. And so by argument the difference of **g** to **h** is **d** and **c**. And the difference of **h** to **l** is **c** and **b**: and the difference of **l** to **l** is **b** and **a**: and the difference of **l** to unity is **a** and unity. Therefore, unity being added to **a** and unity: it becomes **l**. And with **b** and **a** added, the difference... [[notes: The text continues with the arithmetic of differences to show how the sum of the sequences builds the square.]]
+
+| | | | |
+|---|---|---|---|
+| 6 | | 36 f | 30 m |
+| 5 | 5 | 25 g | 20 n |
+| 4 | 4 | 16 h | 12 o |
+| 3 | 3 | 9 i | 6 p |
+| 2 | 2 | 4 l | 2 q |
+| 1 | 1 | 1 | 1 |
+
+[[meta: Signature at bottom of page: c 2]]
+
+[[summary: This page explores advanced properties of squares, cubes, and oblong numbers. It proves that in a geometric progression, if the second term is a square or cube, subsequent specific terms follow that pattern, and demonstrates how summing arithmetic sequences relates to square numbers.]]
+
+[[keywords: square-cube, continuous proportion, oblong numbers, summation of numbers, geometric progression, Jordanus de Nemore, Arithmetica, square roots]]

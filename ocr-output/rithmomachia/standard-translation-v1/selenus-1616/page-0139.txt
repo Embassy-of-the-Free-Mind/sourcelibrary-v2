@@ -1,0 +1,25 @@
+[[meta: This page continues the systematic explanation of the board’s geometry, moving from the four quadrants discussed on the previous page to the eight vertical files and a specific numbering system used for mental visualization.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter II:]] ...to be understood by the remaining seven white and seven black **Major Pieces** [[notes: *Haupt-Steine*, literally "Head-Stones," referring to the pieces on the back rank other than the one already mentioned]].
+
+These quadrants, when they are placed back together, are further divided into eight straight, ascending lines [[notes: Known today as "files"]], which are named as follows: the first, the **King’s Rook** line; the second, the **King’s Knight** [[notes: *Reuter*, literally "Rider"]] line; the third, the **King’s Bishop** [[notes: *Schütze*, literally "Archer" or "Shooter"]] line; the fourth, the **King’s** line; the fifth, the **Queen’s** line; the sixth, the **Queen’s Bishop** line; the seventh, the **Queen’s Knight** line; and the eighth, the **Queen’s Rook** line.
+
+Now, although this division of the Chessboard into distinct quadrants, lines, and squares might serve those who wish to play this game **from memory** (that is, in the mind) [[notes: An early reference to blindfold chess]], these divisions alone are not sufficient for them. For they must—in addition to a good memory, long use, and practice—also pay heed to the counting of the squares, either within each individual quadrant or across the entire space.
+
+Regarding the number of the squares in each quadrant, one must begin the calculation from the **King’s Rook** up to the halfway point of the Chessboard (namely, into the fourth square of the **Queen’s Rook**) and keep well in memory which square is white and which is black, in the following manner.
+
+[[notes: The following diagram illustrates a numbering system for the 64 squares, intended to help a player visualize the board without looking at it.]]
+
+<image-desc>A square woodcut diagram representing a chessboard. It is an 8x8 grid of squares. The squares are numbered with Western Arabic numerals (1, 2, 3...) starting from the top right and proceeding in a right-to-left, then downward zig-zag or boustrophedon-like pattern according to the text description. There are faint annotations above the grid including a cross, a small circle, and the letter 'e'.</image-desc>
+
+If one uses the white Chess-pieces, then on the line of the **Major Pieces**, counting from the right to the left side (**in the manner of the Hebrews**) [[notes: Referring to the fact that Hebrew is read from right to left]], the **King’s Rook’s** square is the **First**, and white; his **Knight’s** is the **second**, and black; his **Bishop’s** is the **third**, and white; the **King’s** is the **fourth**, and black; the **Queen’s** is the **fifth**, and white; her **Bishop’s** is the **sixth**, and black; her **Knight’s** is the **seventh**, and white; her **Rook’s** is the **eighth**, and black.
+
+In the second horizontal row [[notes: *Zwerch-reige*, meaning a "rank" in modern chess terms]], the **King’s Rook’s second** square is the **ninth**, and black; his **Knight’s second** is the **tenth**, and white; his **Bishop’s second** is the **eleventh**, and black; the **King’s second** is the **twelfth**, and white; the **Queen’s second** is the **thirteenth**, and black; her **Bishop’s second** is the **fourteenth**, and white; her **Knight’s second** is the **fifteenth**, and black; her **Rook’s second** is the **sixteenth**, and white.
+
+In the third horizontal line, the **King’s Rook’s third** square is the **seventeenth**, and white; his **Knight’s third** is the **eighteenth**, and black; his **Bishop’s third** is the **nineteenth**, and white; the **King’s third** is the **twentieth**, and black; the **Queen’s third** is the **twenty-first**, and...
+
+[[summary: This page explains the eight vertical files of the chessboard and introduces a sequential numbering system (1–64) starting from the bottom-right and moving right-to-left, designed to help players memorize the board for blindfold play.]]
+
+[[keywords: Chess notation, blindfold chess, King's Rook, King's Knight, King's Bishop, files and ranks, memory techniques, 17th century chess]]

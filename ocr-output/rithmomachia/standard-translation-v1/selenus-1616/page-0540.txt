@@ -1,0 +1,16 @@
+[[meta: This page represents the physical front cover of the volume. Following the previous flyleaf which contained the shelfmark, we now see the exterior binding that protects the manuscript.]]
+
+->**The Front Cover**<-
+
+The manuscript is encased in a **blind-stamped binding**, a decorative technique where heated metal tools are pressed into the leather to create recessed patterns without the use of gold or ink. [[notes: Blind-stamping was a common and durable method for decorating book covers in the 16th and 17th centuries.]]
+
+The material is a **light-colored leather**, likely **pigskin**, which was highly prized for its strength and ability to hold fine detail from the stamping process. The design consists of several nested rectangular frames, each meticulously filled with **ornamental scrollwork** and **floral motifs**.
+
+In the center of the inner frame is a **lozenge-shaped** (diamond-shaped) ornament, which serves as the focal point of the cover and mirrors the intricate patterns of the borders.
+
+On the left-hand side, the binding retains its **two metal clasp hinges**. [[notes: Clasps were functional as well as decorative; they kept the volume tightly shut to prevent the pages from warping or gathering dust, which was particularly important for manuscripts kept in humid or drafty libraries.]] 
+
+The leather shows the natural patina of time, with minor staining and surface wear that reflect its centuries of history.
+
+[[summary: The front cover of the manuscript, featuring a 16th or 17th-century blind-stamped pigskin binding with intricate floral scrollwork and original metal clasp hardware.]]
+[[keywords: bookbinding, pigskin, blind-stamped, 17th century, lozenge, metal clasps, manuscript exterior]]

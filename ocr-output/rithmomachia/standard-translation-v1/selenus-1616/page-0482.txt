@@ -1,0 +1,22 @@
+[[meta: This page marks the transition from the general preface to the formal "Report" or instruction manual. While the previous page outlined the broad structure of the book, this page provides a more detailed breakdown of the gameplay mechanics for the reader.]]
+
+-># Report.<-
+
+In order that you, my dear reader, may properly understand this report, I have divided it into **Six Chapters** [[notes: Although the author specifies six chapters here, only five sections follow on this page before the concluding ornament; the sixth may be the final "conclusion" mentioned within the fifth point, or continued on a subsequent section.]], in which may be found everything noteworthy, special, and to be observed point by point:
+
+**Firstly**, the form of the **Board**, or the shape as it sits upon the table, and thereafter how one traverses and crosses it in three different ways.
+
+In the **Second**, the **Moves** [[notes: *Züge*; the legal paths pieces take across the grid.]], which are to be performed in those three ways.
+
+In the **Third**, the **Leaps** [[notes: *Sprünge*; a specialized capture mechanic in Rythmomachia where a piece "jumps" over or lands at a specific distance based on its mathematical value.]], by which one captures the **Stones**.
+
+In the **Fourth**, the **Order of the Stones**, how one should seize and attack them.
+
+In the **Fifth**, the **Art and Advantage** of the board game; namely, how one should set up a game against another, and how to place the stones and **Figures** [[notes: *Figuren*; the game pieces are shaped as circles, triangles, and squares to represent different mathematical progressions: arithmetic, geometric, and harmonic.]] most skillfully upon the board, and how to block the stones in their moves, and bring the game to its end and conclusion.
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mask with wings and a beard, flanked by elaborate scrolling foliage and hanging ornamental tassels.</image-desc>
+
+-># END<-
+
+[[summary: This page serves as a table of contents or structural outline for the instructional portion of the manual, detailing the five (intended six) key areas of gameplay including the board, movement, captures, and strategy. It introduces the "Stones" and "Figures" as the primary elements of the game.]]
+[[keywords: Table of Contents, Board, Moves, Leaps, Figures, Game Strategy, Rythmomachia]]

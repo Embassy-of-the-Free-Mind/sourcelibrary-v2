@@ -1,0 +1,23 @@
+[[meta: This page continues the classification of "common victories" in Rythmomachia, picking up from the incomplete sentence on page 29 regarding the combined victory of honor and lawsuits. It establishes the first two types of victory: the Victory of Body (based on the number of pieces captured) and the Victory of Wealth (based on the mathematical value of those pieces).]]
+
+->OF THE PHILOSOPHERS<-
+
+of honor and lawsuits together, having regard for the quantities of the **pieces**, the **characters**, and the **values** together. First, then, we shall speak of victories of body.
+
+### Victory of body.
+
+It is an easy thing to see that just as the body is that upon which wealth depends, so also the numbers depend upon the **pieces** [[notes: *Tables* refers to the physical gaming counters, similar to those used in backgammon]] of this game. Therefore, whoever shall have first won—by the rules or by the preceding combats—a certain quantity of pieces determined and proposed at the players' pleasure, without having regard for the characters or the values of them, shall have victory of body.
+
+### Example.
+
+Two players have proposed that whoever shall have first won four pieces through the preceding batteries [[notes: *Bateries* refers to the various methods of capturing an opponent's pieces, which the author likens to military engagements]], shall have won the game. Whoever then shall first have four pieces, whatever they may be, shall have victory of body.
+
+### Victory of wealth.
+
+Just as the wealth of many can often be possessed by one or more, so also the numbers of several pieces can be contained in one or more. Whoever then shall first have the sum of the number proposed and determined at the players' pleasure, without having regard for the quantity of the pieces, shall have victory of wealth.
+
+[[gloss: Victory of body, Victory of wealth, pieces, characters, values, players, won, numbers, batteries]]
+
+[[summary: This page defines the first two "common victories" of the game: the Victory of Body, won by capturing a specific number of pieces regardless of their value, and the Victory of Wealth, won by reaching a specific numerical total from captured pieces.]]
+
+[[keywords: Victory of Body, Victory of Wealth, gaming pieces, capture mechanics, mathematical total, common victories, Rythmomachia rules]]

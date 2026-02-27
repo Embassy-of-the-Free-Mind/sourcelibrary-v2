@@ -1,0 +1,21 @@
+[[meta: This page begins the detailed description of the "First Type" of opening, which we would today recognize as a variation of the King's Gambit or a development of the Italian Game, continuing the classification established on the previous page.]]
+
+The Second Book / 8th Chapter
+
+<image-desc>An ornamental horizontal woodcut headpiece featuring floral scrolls, foliage, and two circular medallions on the left and right containing portraits of figures in profile.</image-desc>
+
+## The Eighth Chapter.
+### How the First Type may be started and continued.
+
+As for the First Type [[notes: *Erste Art*; the first of the eight categories of King's Pawn openings mentioned on the previous page]], it is constituted in the following manner: 
+The White player (provided the Black player gives him no special opportunity for an attack, but only brings out his pieces to establish good order among them) brings his pieces into the field in an orderly fashion until the fifth move (in which he attacks the Black player with the King’s Bishop’s Soldier [[notes: *Königes-Schützens-Soldaten*; the King's Bishop's Pawn, located on the f-file]]) in the following way:
+
+[[margin: 1.]] For he moves (1.) because of the advantage he holds [[notes: *vorzuges*; referring to the advantage of the first move/white pieces]], the King’s Soldier [[notes: *Königes-Soldaten*; the King's Pawn]] to twenty-eight [[notes: Selenus uses a 1–64 numbering system; 28 corresponds to the square e4]]. The Black player moves his King’s Soldier to thirty-six [[notes: Square e5]]. The White player (2.) moves the King's Bishop [[notes: *K. Schützen*; Selenus calls the Bishop the 'Archer' or 'Shooter']] to thirty [[notes: Square c4]]. The Black player moves his King's Bishop to thirty-eight [[notes: Square c5]]. The White player (3.) moves the Queen to twelve [[notes: Square f3]]. The Black player moves the Queen’s Soldier to forty-five [[notes: Square d6]]. The White player (4.) moves the King’s Bishop’s Soldier to twenty-two [[notes: Square f4]].
+[[margin: 2.]] * The Black player moves the King’s Knight [[notes: *K. Reuter*; literally 'Rider']] to forty-six [[notes: Square f6]]. The White player (5.) makes the attack with the King’s Bishop’s Soldier against the Black King’s Soldier from twenty-seven [[notes: This describes the capture f4xe5, which Selenus numbers as occurring on square 27]]. * The Black player takes
+[[margin: 3.]] the White King’s Knight with his King’s Bishop [[notes: This is a deviation from modern standard play, where a Bishop would capture a Knight]]. The White player takes the same with the King’s Rook [[notes: *K. Rochen*; an old term for the Rook, derived from the Persian 'Rukh']]. The Black player takes the White King’s Bishop’s Soldier with his King’s Soldier. The White player (so that the King’s Bishop [[notes: This refers to a piece that could target that square]] may aim at this Black Soldier) moves the King’s Soldier to twenty-nine [[notes: Square e5]]. The Black player protects the same with the Queen at twenty-five [[notes: Square h4]] and offers check [[notes: *beut Schach*]]. The White player shields the King with his Knight’s Soldier [[notes: *Reuters-Soldaten*; the Knight's Pawn, here the g-pawn]] at eighteen [[notes: Square g3]], moves the same against the Black Queen and the Black King’s Soldier, and thereby causes the King’s Rook’s Soldier [[notes: *K. Rochens-Soldat*; the h-pawn]] to also receive protection from the Queen. The Black player takes it with the King’s Soldier. The White player takes the same with the King’s Rook. The Black player moves his King’s Knight to the White King’s Soldier...
+
+[[meta: catchword: Solda (referring to the continuation of the word 'Soldaten')]]
+
+[[summary: This page provides a move-by-move instructional guide for a specific chess opening, utilizing the author's unique 1-64 coordinate system and archaic terminology for the pieces. It demonstrates a variation of the King's Gambit where White seeks early development and an aggressive center.]]
+
+[[keywords: Chess openings, King's Gambit, King's Soldier, Bishop, Knight, Rook, White and Black, Chess strategy, 17th-century chess]]

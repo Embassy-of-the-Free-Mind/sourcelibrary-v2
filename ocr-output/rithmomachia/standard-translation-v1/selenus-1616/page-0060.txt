@@ -1,0 +1,54 @@
+[[meta: This page continues the scholarly investigation into ancient games, transitioning from the "Suitors' Game" and the game of "Five Lines" to a description of a geometric board game that the author identifies as Nine Men's Morris (the Mill-Game), followed by references to Roman strategy games in the works of the poet Ovid.]]
+
+# The First Book / Chapter 2:
+
+,, *By the drawing of turned straight lines, the sides of squares, equally*
+,, *dissecting [one another], it is described:* **That is:**
+,, **The Line-Game / which was depicted with straight lines / just /**
+,, **as a geometric figure / was played /**
+,, **with sixty stones / thirty of which were black / and the**
+,, **others white. This game seems / to be equal / to that**
+,, **which is played today among us / with eighteen stones / of two colors /**
+,, **divided into two heaps. These stones / are placed and laid / in a certain way**
+,, **and manner / upon the corners or angles / and midpoints / where**
+,, **the straight lines / of the four-cornered figure / meet with the**
+,, **drawn-through cross-lines. However / this same figure / is made and**
+,, **drawn / from three squares / which / because**
+,, **one is larger than the other / are distinct / and their sides /**
+,, **are intersected in the middle / with straight cross-lines. By this last game /**
+**without doubt / the Mill-Game [[notes: Known today as Nine Men's Morris or Merels; a strategy board game for two players where the goal is to form "mills"—rows of three stones]], is understood by Majolus [[notes: Simon Majolus (1510–1597), an Italian bishop whose encyclopedic work *Dies Caniculares* is a frequent source for early modern writers]].**
+
+->**How the stone-game was played among the Romans / shall be**<-
+->**understood from the following.**<-
+
+**Ovidius [[notes: Publius Ovidius Naso (43 BC – 17 AD), a Roman poet famous for his works on love]], mentions this game / in his writings / principally / in three places; Firstly / Book 2 of *The Art of Love* [[notes: *Ars Amatoria*, a series of elegies providing instruction in the crafts of courtship and seduction]],**
+**page 409.**
+
+> ,, *Whether the counter moves under the image of robbery,*
+> ,, *Let your soldier perish by a glass enemy.*
+
+->**That is:**<-
+
+,, **When you play with your beloved [[notes: The original German "Buhlschafft" refers to a lover or a romantic interest]] / with glass stones /**
+,, **upon a Chess-table [[notes: The author uses "Schach-Tabel" broadly here to mean any checkered or lined gaming board, specifically the Roman *Tabula Latrunculorum*]] / and she makes / a secret plan / against your**
+,, **stones / then simply permit / (because you should strive**
+,, **to be at her service / in all things) your stone /**
+,, **to be taken away unhindered / by her stone / and behave**
+,, **as if you / had not seen nor noticed it.**
+
+**Secondly / Book 3 of *The Art of Love*, page 440.**
+
+> ,, *Let her play cautiously, and not foolishly, the battles of the Robbers,*
+> ,, *One counter perishes with a twin enemy.*
+> ,, *The warrior, caught without his comrade, fights on:*
+> ,, *An envious rival often retraces the work begun.*
+
+->**That is:**<-
+
+,, **She / (namely / the young lady / who is sought after /**
+,, **with honor) shall cautiously / and wisely / play the Chess- or**
+**Stone-**
+
+[[summary: This page identifies the "Mill-Game" (Nine Men's Morris) as an ancient game of geometric lines and squares. It also begins citing Ovid’s "The Art of Love" to explain how strategy games like Latrunculi were used in Roman social life and courtship.]]
+
+[[keywords: Mill-Game, Nine Men's Morris, Majolus, Ovid, Art of Love, Latrunculi, Roman games, courtship, game pieces]]

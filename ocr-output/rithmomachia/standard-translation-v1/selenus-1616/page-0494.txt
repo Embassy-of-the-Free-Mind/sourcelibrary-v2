@@ -1,0 +1,33 @@
+[[meta: This page continues the mathematical demonstration for calculating the values of the Black Square pieces in the game of Rythmomachia. While the previous page established the squares through simple addition and square roots, this page introduces the more complex "Superpartient Proportion" to explain the relationship between the pieces.]]
+
+# The Second Chapter
+
+[[image-desc: A mathematical diagram at the top features four large triangles pointing downwards. Above the triangles are the column headings "Quartæ.", "Sextæ.", "Octavæ.", and "Decimæ." (Fourths, Sixths, Eighths, and Tenths) and the numbers 7, 11, 15, and 19. The diagram leads into a structured grid of numbers.]]
+
+| | Fourths | Sixths | Eighths | Tenths |
+| :--- | :---: | :---: | :---: | :---: |
+| Parts to be increased according to the ratio of the denominator [[notes: The "denominator" here refers to the ordinal position or the fractional logic used to grow the numbers]]. | 7. | 11. | 15. | 19. |
+| Increased [Value]. | 21. <br> *Three-parts-of-fourths* [[notes: In Latin, "Tripartiens quartas," a specific arithmetic ratio]]. | 55. <br> *Five-parts-of-sixths* | 105. <br> *Seven-parts-of-eighths* | 171. <br> *Nine-parts-of-tenths.* |
+| **The Petitioner** <br> *superpartient* [[notes: A "superpartient" ratio is one where the larger number contains the smaller number plus several of its parts]]. | **28** | **66** | **120** | **190** |
+| **The Requested** *produced from the addition of the petitioner and the increased value:* | **49** | **121** | **225** | **361** |
+
+---
+
+> (The same, sheet 12. a. [[notes: A citation to Claude de Boissière's 1556 manual on the game]].
+> » **The Superpartient Proportion is so named when a smaller**
+> » **number, along with several of its parts, is contained within a larger**
+> » **one: just as five contains three, along with two-thirds. Therefore,**
+> » **since this superpartient ratio includes multiple parts beyond**
+> » **the smaller number, it will not be unsuitable for use with the**
+> » **Square stones, which are composed of even more sides than**
+> » **the Triangles.**)
+
+[[image-desc: Two three-dimensional diagrams showing stacks of square slabs of decreasing size, forming pyramids. These are the "Pyramid" pieces, the most powerful in the game. The left pyramid (White) has 6 levels labeled with square numbers: 1, 4, 9, 16, 25, 36; its base is labeled with "6" on the side and "91" at the bottom. The right pyramid (Black) is shaded dark and has levels labeled with square numbers: 4, 9, 16, 25, 36, 49, 64; its base is labeled with "8" on the side and its total value is marked as "190".]]
+
+**The number of steps of both Towers [[notes: "Towers" or "Türne" refers to the Pyramid pieces, which are built by stacking the square pieces]], which are used in place of two Square stones (namely, the one in the white stones' pile marked with 91, and the one in the black pile marked with 190), are**
+
+[[meta: catchword: onto this]]
+
+[[summary: This page explains the "Superpartient Proportion" used to calculate the values of the Black Square pieces and introduces the Pyramid pieces (referred to as Towers), which are formed by stacking square values.]]
+
+[[keywords: Superpartient Proportion, Rythmomachia, Black Squares, Pyramids, Towers, arithmetic ratios, Claude de Boissière]]

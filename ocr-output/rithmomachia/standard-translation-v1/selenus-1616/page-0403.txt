@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical variations of Chapter 12, focusing on endgame maneuvers and piece exchanges. It continues to use the 1–64 square numbering system—where 1 is typically a1 and 64 is h8—and traditional piece names: Rider for Knight, Archer for Bishop, and Roc for Rook.]]
+
+# On the Game of Chess.
+
+[[margin: 12. cap:]]
+[[margin: 15.*]]
+The **Black** / must / cover / the **King** / with the **Queen** / at fifty-three [[notes: Square 53 corresponds to e7 in modern notation]]: The **White** / offers / with the **K. Rider** [[notes: King's Knight]] / from fifty-four / **Check** / and moves him / onto the [square of] the **B. K. Roc** [[notes: Black King's Rook, likely square 64/h8]]: The **Black** / [moves] the **King** / to fifty-two: The **White** / gives / with the **Queen** / from thirty-six / **Check**: The **Black** / moves the **King** / (so far as He / does not want to let / the **Queen** / be taken / at forty-four / by the **W. K. Rider**) to sixty-one: The **White** / [moves] the **K. Roc** / onto the **B. Queen** / at five [[notes: Square 5 is e1]]: The **Black** / takes him / with the same / and offers **Check**: The **White** / takes the same / with the **King**: The **Black** / (so that He / is not immediately **Check-Mated** / by the **W. Queen** / from sixty) moves / the **K. Rider** / to forty-three: The **White** / takes / the **B. K. Roc** / with the **K. Rider**: The **Black** / (because He / plays without the **Queen**) will / soon have to surrender / to the **White**.
+
+[[margin: 16.]]
+But if the **Black** / moves / the **King** / not to 52. (n. 15.) but / to sixty-one: then / the **White** / places / the **K. Roc** / onto the **B. Queen** / (in order / to keep the same trapped) at five: The **Black** / must / either / take / the **W. Roc** / with the same: or move the **K. Rider** / to forty-three: (for otherwise the **White** / would exchange the **Queens** / and give **Check-Mate**) if He has now / moved / the **K. Rider**: then / the **White** / takes / the **B. Queen** / with his **K. Roc** / and gives **Check**: The **Black** / takes him / with the **K. Rider**: The **White** / [takes] the **B. K. Roc** / with the **K. Rider**: The **Black** / moves / the **K. Rider** / (out of danger) to twenty-three: The **White** / gives / with the **K. Archer** [[notes: King's Bishop]] / from fifty-four / **Check**: The **Black** / moves / the **King** / not to sixty-two / (for then the **White** / would immediately give **Check-Mate** / with the **Queen** / from forty-eight) but / to sixty: The **White** / [moves] the **Queen** / (in order / to protect the **King’s** and her **Roc’s Soldiers** [[notes: The pawns in front of the King and the Queen's Rook]]) onto the **B. K. Roc’s Soldier** / at fifty-five: and will / be able to inflict / further damage / upon the **Black** / (since the same / has lost his best piece [[notes: Referring to the Queen]]).
+
+[[margin: 17.*]]
+But if the **Black** / makes / other moves / (besides those / which / have been described from n. 12. until now) the **White** / can, if He is now somewhat careful / nevertheless win / and keep the upper hand: In consideration / so far as He does not move the **Roc** to 31. (n. 14.) but the **K. Soldier** / to forty-five: He [does] not
+
+Aaa ij
+[[meta: catchword: alone/]]
+
+[[summary: This page details two specific tactical variations where White forces a Queen exchange or capture, leading to a winning endgame against Black. It emphasizes the importance of square 5 (e1) and the use of the King's Rider and Roc to trap the Black Queen.]]
+
+[[keywords: Checkmate, Queen exchange, King's Rider, King's Roc, King's Archer, endgame strategy, 1-64 numbering]]

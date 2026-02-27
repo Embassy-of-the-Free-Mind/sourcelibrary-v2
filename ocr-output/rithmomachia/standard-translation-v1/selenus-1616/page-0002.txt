@@ -1,0 +1,23 @@
+[[meta: This page follows the front cover and contains archival classification markings and a physical description of the book's condition.]]
+
+# Library Classification and Notes
+
+2.° Gymn. 47<sup>a</sup> [[notes: This is a shelfmark, a unique identifier used to locate the book in a library. The "2.°" indicates a "Folio" format, meaning the book is quite large, while "Gymn." likely refers to a Gymnasium library—a secondary school library from which this volume originated.]]
+
+---
+
+->[[markup: the last leaf with the printer's mark is missing]]<- [[notes: A printer’s mark, or colophon, was a decorative logo or statement at the end of a book providing details about the printer and the place of publication. Its absence here suggests the book is physically incomplete.]]
+
+[[insert: 
+36611584710010 
+36611584710010
+
+Bayer. Staatsbibliothek
+0, E 1
+]] [[notes: This section contains modern administrative data from the **Bavarian State Library** (Bayerische Staatsbibliothek) in Munich, including a barcode and a location code used for modern cataloging.]]
+
+[[vocab: printer's mark, Bavarian State Library, Gymnasium]]
+
+[[summary: This page contains the library's cataloging information and a note indicating that the final page of the original book—which would have identified the printer—is lost.]]
+
+[[keywords: shelfmark, folio, printer's mark, Bayerische Staatsbibliothek, library catalog, provenance, colophon]]

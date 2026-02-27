@@ -1,0 +1,28 @@
+[[meta: This page continues the explanation from the previous page regarding captures via multiplication and division. It specifically concludes the example where a piece valued at 4 and a piece valued at 12 are positioned with three empty squares between them.]]
+
+...in B, between which there are three empty squares: whoever moves first to encounter the other [[notes: The phrase "andato prima à trouar l’altro" suggests the player whose turn it is to move the piece into the required position.]] shall be the winner. That is, if 12 is located in A, and 4 is played in B: 4 will be the winner, and it will take 12 by multiplying itself by the number of empty squares. 
+
+But if 4 is located in B, and 12 is played in A: then 12 will win by dividing itself by the number of empty squares. Because just as multiplying 4 by 3 (the number of empty squares) results in 12, so dividing 12 by the number 3 of those same squares results in 4. And the one of the two aforementioned numbers that is produced by such multiplication or division is always the defeated one [[notes: The OCR "uinto" is an archaic spelling of *vinto* (vanquished/defeated).]], and the other is the winner. 
+
+But which numbers in this game can win against one another by multiplying and dividing, the two following tables demonstrate.
+
+[[notes: These tables serve as a quick reference for the mathematical ratios required for a capture. The first three columns show captures by multiplication, and the second three show captures by division.]]
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| 12 | 24 | 2 | | 24 | 12 | 2 |
+| 4 | 12 | 3 | | 12 | 4 | 3 |
+| 18 | 54 | 3 | | 54 | 18 | 3 |
+| 9 | 36 | 4 | | 36 | 9 | 4 |
+
+[[notes: In the table above, the third column represents the number of empty squares required between the two pieces. For example, a 9 can capture a 36 if there are exactly 4 squares between them (9 x 4 = 36).]]
+
+---
+
+->[ B ]<- ->[ A ]<-
+
+[[notes: These squares labeled B and A represent the positions on the game board—likely Rithmomachia, a medieval mathematical board game—used in the example of the 4 and the 12 mentioned above.]]
+
+[[summary: This page explains the "Capture by Ratio" rule, where pieces take one another based on the number of empty squares between them acting as a multiplier or divisor. It provides a reference table for common captures and a diagram of the board positions A and B.]]
+
+[[keywords: Rithmomachia, multiplication capture, division capture, mathematical games, capture rules, board layout]]

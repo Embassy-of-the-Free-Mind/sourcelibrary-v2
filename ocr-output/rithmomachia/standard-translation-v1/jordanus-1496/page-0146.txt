@@ -1,0 +1,85 @@
+[[meta: This page continues the dialogue between Alcmeon, Bathillus, and Brontinus regarding the rules and symbolic philosophy of Rithmomachia, following the introduction to the ratios of the game pieces.]]
+
+**Brontinus:** Why is it, Alcmeon, that I have often seen multicolored stones being polished in the artisans' workshops?
+
+**Alcmeon:** You ask a reasonable question, Brontinus. They believe this helps distinguish the battle lines [[notes: *Acies* refers to the "ranks" or "sides" of the game board—the Even side and the Odd side.]]; however, two colors seem sufficient to me. Let the side of the Even numbers be blackish, as the Evens belong to the sensible, worldly realm. [[notes: In Pythagorean thought, even numbers were often associated with the material, feminine, and divisible world, while odd numbers represented the divine and masculine.]] Let the side of the Odds be snowy and white, for the Odds are masculine, indivisible, and always express the likeness of a single, unchanging substance. Nevertheless, because of the excellence of their nature and their divinity, the Pyramids—which arise and coalesce from the stacking of squares—should be marked with a noble color. For instance, mark a **Perfect Pyramid** in red and a **Thrice-truncated** [[notes: A *tricurta* pyramid is a special game piece missing three of its layers.]] one in blue.
+
+**Bathillus:** You assign the color of the Perfect Pyramid to the side of the Evens, yet you say that side is presided over by the Odd rank.
+
+**Alcmeon:** And not without cause, Bathillus; for that pyramid is itself "Odd," and divinity resides in its highest point and summit. The side of its lowest base is 6, the first perfect number derived from the monad [[notes: A "perfect number" is one that equals the sum of its divisors; 1+2+3=6. The monad is the number 1.]]; the number of its bases is the same as the side of its base, and thus it is a perfect number of a perfect number. That very base is the first "sensible" circle of moving things—though it is third in the order of circles. For the first is the simplest and most full, whose center is everywhere and circumference nowhere. [[notes: A classic medieval definition of God.]] The second is the horizon of eternity, existing above time. The third is the horizon which revolves with time in a tireless rotation. The first is the highest point and vertex of our pyramid; the second is the second base; the third is the first and lowest base.
+
+**Bathillus:** You are weaving paradigms, Alcmeon; we are looking for a game, not symbols!
+
+**Alcmeon:** You advise me rightly, Bathillus. I was almost neglecting myself and wandering too far from the task at hand. Let the colors be decided by the players, for if you use others, it matters little. What remains of the game can be understood through these few rules; and since the subject is small, a brief explanation of the rules will suffice. Let the first be this:
+
+¶ **First.** Let the pieces be moved from wherever they are into empty spaces: the Rounds move to the second space, the Triangles to the third, and the Squares with their Pyramids to the fourth. [[notes: This describes the movement range: Rounds move 2 spaces, Triangles 3, and Squares 4.]]
+**Bathillus:** By "moving to the second," you perhaps mean into the first field?
+**Alcmeon:** So they say; for it is the second from itself, but the first after itself.
+
+¶ **Second.** Any piece can capture another by a straight move, but never by an angular or oblique move. 2
+
+¶ **Third.** If a number, in its straight course, encounters a number of the opposing side of the same value and quantity, it captures it. 3
+
+¶ **Fourth.** If two numbers of the same side are placed around a number of the opposing side such that, when joined, they equal its value, they capture the enclosed piece. 4 Thus, a 3 and a 5 capture an 8 on the opposing side, and a 4 and an 8 capture a 12. The same applies to similar cases.
+
+¶ **Fifth.** If the empty spaces between two opposing numbers, when multiplied by the smaller number, produce the larger number, the larger number is captured. 5 Thus, it happens that a 2 captures a 12 if there are six spaces between them, or it captures a 7 if there are eight. [[notes: This refers to the "Capture by Proportion."]] Likewise, a 3 captures a 6 if two spaces lie between them, a 9 if three spaces, and a 15 if five spaces.
+
+¶ **Sixth.** Any number that is deprived of all power to move in a straight path is captured. 6
+
+¶ **Seventh.** If the largest base of a Pyramid encounters a Pyramid, it captures it. If it is itself encountered, it is captured. 7
+
+¶ **Wait.** If a number, multiplied by the intervening spaces, restores the largest base of a Pyramid, it captures that Pyramid. 8
+
+¶ **Ninth.** If other bases encounter a similar Pyramid in the fields (if one is present), let them capture it; the same happens if a number multiplied by the intervals produces any of those bases. If they are encountered, let them be captured. 9
+
+¶ **Tenth.** Victory is achieved if a "Great Harmony" is established in the opponent's camp. Likewise, an inferior or less noble victory is won if a "Lesser Harmony" is established. 10
+
+¶ **Eleventh.** Captured pieces are taken as auxiliaries to help the opposing side complete a harmony. 11
+
+¶ **Twelfth.** When a Great Harmony is prepared, a piece acquired to complete the harmony is not moved from its place. 12
+
+### Tables of Victories
+
+| Greatest | d | c | b | A | | | | |
+|:---|:---:|:---:|:---:|:---:|:---|:---|:---|:---:|
+| Victories | 2 | 3 | 4 | 6 | 2.4.6 Arith. Mean | 2.3.4.6 Geo. | 2.3.6 Har. | 1 |
+| For the side | 4 | 6 | 8 | 12 | 4.8.12 Arith. Mean | 4.6.8.12 Geo. | 4.6.12 Har. | 2 |
+| of Evens | 6 | 8 | 9 | 12 | 6.9.12 Arith. Mean | 6.8.9.12 Geo. | 6.8.12 Har. | 3 |
+| | 4 | 6 | 9 | 12 | 6.9.12 Arith. Mean | 4.6.9 Geo. | 4.6.12 Har. | 4 |
+| | 2 | 9 | 16 | 72 | 2.9.16 Arith. Mean | 2.9.16.72 Geo. | 9.16.72 Har. | 5 |
+| Greatest | 3 | 5 | 15 | 25 | 5.15.25 Arith. Mean | 3.5.15.25 Geo. | 3.5.15 Har. | 1 |
+| For the side | 5 | 9 | 45 | 81 | 9.45.81 Arith. Mean | 5.9.45.81 Geo. | 5.9.45 Har. | 2 |
+| of Odds | 5 | 25 | 45 | 225 | 5.25.45 Arith. Mean | 5.25.45.225 Geo. | 25.45.225 Har. | 3 |
+| Lesser | 5 | 15 | 25 | 45 | 5.25.45 Arith. Mean | 5.15.45 Geometric | | 1 |
+| Victories | 12 | 15 | 16 | 20 | 12.16.20 Arith. Mean | 12.15.16.20 Geometric | | 2 |
+
+---
+
+->**The First Great Victories**<-
+->**Musical Consonances**<-
+**A to b:** Diapente [[notes: A Perfect Fifth (ratio 3:2).]]
+**b to c:** Diatessaron [[notes: A Perfect Fourth (ratio 4:3).]]
+**A to c:** Diapason [[notes: An Octave (ratio 2:1).]]
+**A to d:** Diapason plus Diapente [[notes: A Twelfth (ratio 3:1).]]
+**b to ad / c to d:** Double Diapason [[notes: A Double Octave (ratio 4:1).]]
+
+->**The Second Great Victories**<-
+->**Musical Consonances**<-
+**A to b:** Diapente
+**b to c:** Diatessaron
+**A to c:** Diapason
+**A to d:** Diapason plus Diapente
+**b to ad / c to d:** Double Diapason
+
+->**The Third Great Victories**<-
+->**Musical Consonances**<-
+**A to b:** Diatessaron
+**b to c:** Whole Tone; the beginning of consonances.
+**A to c:** Diapente
+**A to d:** Diapason
+**A to ac:** Diapason plus Diapente
+**C to cd:** Double Diapason
+
+[[summary: This page details the twelve rules of Rithmomachia, covering movement and complex capture methods based on addition and multiplication, alongside tables defining the mathematical and musical "Harmonies" required for victory.]]
+
+[[keywords: Rithmomachia, Pythagoreanism, mathematical game, capture rules, arithmetic mean, geometric mean, harmonic mean, musical consonances, Diapason, Diapente]]

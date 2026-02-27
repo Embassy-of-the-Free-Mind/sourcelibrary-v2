@@ -1,0 +1,15 @@
+[[meta: This page continues the instructions for the mathematical board game Rythmomachia, specifically explaining how to use the sums calculated on the previous page to determine the values that will be paired together on the game pieces.]]
+
+# RITHMOMACHIA, THE GAME
+
+### Example.
+
+I wish to find the eight numbers belonging to the first eight triangular pieces [[notes: In Rythmomachia, the game pieces are called *tables*. Triangular pieces are specifically used for "superparticular" ratios, where one number contains the whole of another plus a specific fraction (like 3:2 or 4:3).]] of the "seeking number": I take the two pieces of the first multiple class in the row of even numbers, which are 2 and 4; the result is 6, which will be my first "seeking number" in the particular proportion. After, I come to the second multiple proportion, 3 and 9, which is in the odd number row; then by adding 3 and 9, the result is 12: which will be my second "seeking number": and doing the same for the others, I will have my first eight sought or required triangular pieces.
+
+Having thus marked by this addition the eight triangular pieces containing the first number of the particular proportion called "seeking," to find which number fits with each of these seeking numbers in a particular proportion: you must consider the name of each particular species [[notes: These "species" are the specific types of ratios, such as sesquialter, sesquitertian, etc.]] hereafter, and according to the etymology and meaning of the name, you will obtain the required proportional number for them. For example, let us take the first seeking number in the row of even numbers, which is repeated in the following figure, namely 6, and the first name of the particular proportion, which is **sesquialter** [[notes: From the Latin *sesquialter*, a 3:2 ratio. The author breaks down the word to explain its mathematical function to the reader.]]; when you say *altre* [alter], it is the same as "other" [autre], and thus find a number that contains 6,
+
+[[meta: catchword: & son (and its)]]
+
+[[summary: This page explains the practical application of the previous page's calculations, showing how to derive the base values (seeking numbers) for the triangular game pieces and how to use the etymology of Latin ratio names like "sesquialter" to find their corresponding values.]]
+
+[[keywords: Rythmomachia, triangular pieces, superparticular proportion, sesquialter, seeking number, Renaissance mathematics, game pieces]]

@@ -1,0 +1,30 @@
+[[meta: This page continues the reference tables for the game of Rithmomachia. While the previous page listed Arithmetic proportions (where the difference between numbers is constant), this page focuses on Geometric proportions. These are essential for a player to claim the most prestigious form of victory.]]
+
+# Table of all the Geometric proportions that may occur in this game
+
+| | | |
+|---|---|---|
+| 2 | 4 | 8 |
+| 3 | 6 | 12 |
+| 4 | 6 | 9 |
+| 4 | 8 | 16 |
+| 4 | 12 | 36 |
+| 4 | 16 | 64 |
+| 9 | 12 | 16 |
+| 9 | 15 | 25 |
+| 9 | 45 | 225 |
+| 16 | 20 | 25 |
+| 20 | 30 | 45 |
+| 25 | 30 | 36 |
+| 25 | 45 | 81 |
+| 36 | 42 | 49 |
+| 36 | 90 | 225 |
+| 49 | 56 | 64 |
+| 81 | 90 | 100 |
+
+[[notes: A "Geometric proportion" (or progression) is a sequence of three numbers where the ratio between the first and the second is the same as the ratio between the second and the third. For example, in the row "2, 4, 8," each number is multiplied by 2 to get the next. In the more complex "4, 6, 9," the ratio is 1.5 (4 x 1.5 = 6, and 6 x 1.5 = 9). In the game of Rithmomachia, capturing or arranging pieces to form these sequences allowed a player to prove their mathematical mastery.]]
+
+[[gloss: Table, Geometric proportions, game, progression]]
+
+[[summary: This page provides a reference table of Geometric progressions for the game Rithmomachia. Players used these specific numerical triplets to achieve a "Great Victory" by aligning their pieces in the opponent's side of the board.]]
+[[keywords: Geometric proportion, Rithmomachia, mathematical progression, Boethian arithmetic, medieval games, victory conditions]]

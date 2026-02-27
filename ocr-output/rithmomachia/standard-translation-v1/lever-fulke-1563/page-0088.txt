@@ -1,0 +1,21 @@
+->The Philosopher's Game<-
+
+For pieces <note>original: "men"</note> that may be captured <note>original: "taken"</note> by eruption, look in the table of capturing by multiplication in the second kind of playing.
+
+### Of Capturing by Deceit or Lying Weight <note>original: "deceypt or lying weyght"</note>
+
+To capture by deceit or lying weight is to capture by addition. This is not like the method described before, where the adversary stands within the move <note>original: "draught"</note> of two pieces which, when added together, make the exact <note>original: "iuste"</note> number of the adversary. Instead, it is when the two numbers that are to be added stand in the spaces immediately adjacent <note>original: "next spaces"</note> to the adversary. To capture by deceit, look in the table that was set forth for capturing by addition in the first kind of playing.
+
+### Of Capturing by Siege <note>original: "Obsidion"</note>
+
+By siege <note>original: "Obsidion"</note>, all pieces may be captured when four pieces besiege the adversary, standing in the four nearest spaces...
+
+***
+
+<summary>
+This page continues the rules for Rithmomachia (The Philosopher's Game), specifically focusing on specialized capture methods. It refers the reader to previous tables for "eruption" (multiplication-based capture) and clarifies the "deceit or lying weight" method. Unlike standard addition captures where pieces move to a spot to capture, "deceit" involves positioning two pieces in the spaces immediately adjacent to an opponent's piece so their sum equals the opponent's value. Finally, it introduces "Obsidion" (siege), where a piece is captured by being completely surrounded on four sides.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, capturing rules, addition capture, deceit, lying weight, Obsidion, siege, mathematical games, 16th century board games
+</keywords>

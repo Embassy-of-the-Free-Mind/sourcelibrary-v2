@@ -1,0 +1,40 @@
+[[meta: This page begins Chapter 3, transitioning from the linguistic origins of chess discussed in the previous page to the systematic structure of learning the game. The author uses classical philosophy to categorize chess as a practical art.]]
+
+<header>On the Game of Chess.</header>
+[[margin: Chapter 3.]]
+
+->A rectangular woodcut headpiece featuring elaborate symmetrical scrollwork, foliage, and several small human faces/masks integrated into the design.<-
+
+## The Third Chapter.
+### On the Division of this Art.
+
+What is necessary to know in general regarding this Art of Chess—its nature and essence, its origin and name—has been sufficiently detailed in the previous chapters.
+
+However, as to how one may master it, and in what way and manner it may be orderly presented and learned—though it may seem difficult—the Art itself will guide us, provided we simply remember from the first chapter that it belongs to the class of those things called *Artes Operatrices* [[notes: Latin for "practical" or "operative" arts—disciplines focused on action and the creation of a finished work rather than pure theory]].
+
+For regarding these, **Averroës** [[notes: Ibn Rushd (1126–1198), a medieval Andalusian polymath; his *Colliget* was a major medical and philosophical encyclopedia influential in Europe]] writes as follows in Book 1, Chapter 1 of the *Colliget*:
+
+> *Artes Practicæ, in quantùm sunt Artes, continent tria: cc*
+> *Primum est, scire Loca suorum Subjectorum; Secundum est, scire cc*
+> *Finem quæsitum, ad adducendum ipsum, in Locum subjecti; Ter- cc*
+> *tium est, scire Instrumenta, cum quibus valeamus ducere, illum cc*
+> *Finem, in Locum subjecti.* That is: cc
+> The arts which are directed toward a trade or a work, cc
+> insofar as they are actually arts, comprise three things cc
+> which should be well-noted: First, that one cc
+> knows and learns those things [[notes: The "subjects" or materials, such as the board and pieces]] which are subject to an art, cc
+> as much as may be necessary for its purpose. Sec- cc
+> ondly, that one recognizes the **Goal** [[notes: The "Finis" or end objective, in this case, checkmate]] which this art has set for it- cc
+> self, and through which the use of those things cc
+> is modeled. Finally, that one learns to understand cc
+> the **Means** and ways [[notes: The "Instrumenta," such as the moves and rules of the game]] with and through which one can cc
+> apply the indicated Goal to those same things, cc
+> and thus achieve what one has set out to do. ec
+
+The first two belong, so to speak, to *knowledge*; the last—when, alongside the Means, the *Usage* and the *Practical Maneuvers* are also demonstrated—pertains especially to the *work* itself.
+
+Accordingly, we wish first [to address] those same things which 
+[[meta: The word "dieser" at the bottom of the page is a catchword for the beginning of the next page.]]
+
+[[summary: This page introduces Chapter 3, framing chess as a "Practical Art" and using the philosophy of Averroës to divide its study into three parts: the materials (pieces/board), the goal (checkmate), and the means (the rules and moves).]]
+[[keywords: Averroës, Colliget, Artes Practicæ, Subjectum, Finis, Instrumenta, Theory of Chess, Practical Arts]]

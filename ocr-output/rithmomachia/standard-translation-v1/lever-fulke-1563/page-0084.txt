@@ -1,0 +1,18 @@
+# The Philosopher's <note>original: "Philosophers"</note> Game.
+
+In this third kind <note>original: "kynde"</note> of play, one must also consider the table, the pieces <note>original: "men"</note>, their markings <note>original: "marking"</note>, the order of their battle, the movements <note>original: "motions"</note>, their capture <note>original: "taking"</note>, and finally their triumphing.
+
+The table is the same that has been <note>original: "hath bene"</note> described twice already. Yet some will not have it so long; but at the least <note>original: "lest"</note>, it must contain 10 squares in length and always 8 in breadth <note>original: "breadeth"</note>. The longest board is best.
+
+## ¶ Regarding the pieces <note>original: "Of the men"</note>
+
+There are 48 pieces <note>original: "men be .48."</note>, as has been said <note>original: "told"</note>, of two opposing colors. The top <note>original: "head"</note> and bottom are all of one color because pieces once <note>original: "ons"</note> taken are no longer used <note>original: "occupyed"</note> in this kind of play.
+
+## ¶ The inscriptions <note>original: "inscription"</note> and
+## design <note>original: "fashion"</note>.
+
+<summary>
+This section introduces the requirements for the "third kind" of play in Rythmomachia (The Philosopher's Game). It specifies the dimensions of the game board, recommending a 10x8 grid as the ideal size. It also describes the game pieces, noting there are 48 in total, divided into two opposing colors. Unlike other versions of the game, once a piece is captured in this mode, it is removed from the board entirely and not reused.
+</summary>
+
+<keywords>Rythmomachia, Philosopher's Game, board dimensions, game pieces, 10x8 board, piece markings, historical gaming, early modern rules</keywords>

@@ -1,0 +1,25 @@
+[[meta: This page concludes the discussion on "Towers" (Pyramids) in Rhythmomachia, specifically addressing how their movement is restricted as pieces are lost, their unique ability to escape capture via a "Knight's move," and the procedure for converting a captured Tower to one's own side.]]
+
+# The Fifth Chapter
+
+[[notes: This section continues the rules from Claude de Boissière, a 16th-century French mathematician known in Latin as Buxerius, who wrote a definitive manual on the game in 1554.]]
+
+...may use either all, or some of them, as it shall be convenient for him.
+(Buxer : fol : 47.
+> » *Every **stone** that is captured shall be overturned, and show the **Victor's color**, and shall join the end of the **Rank**, so that it may serve him as his very own stone.*)
+
+9.) When the two **Square** stones of a **Tower** have been taken: it can no longer be moved like the square pieces. The same rule applies if the **Triangular** and **Round** stones are removed. [[notes: Since the Tower or "Pyramid" is a stack of different shapes, it inherits the movement patterns of those shapes. If the Square layers are lost, the Tower loses the ability to move the long distances associated with Squares.]]
+
+10.) When a **Tower** is besieged [[notes: "Besieged" here means surrounded on all sides so that it has no legal moves.]], it can save itself with a **Knight's jump** (just as occurs in the game of **Chess**); or otherwise, a stone from its own side must come to its aid and remove one of the four pieces that are pressing upon it. If, however, one player has besieged the other's **Tower** in such a way that it cannot be helped in any manner, he takes it entirely from the game, turns its layers over, makes them match his own color,
+->and uses it like his other<-
+->stones.<-
+
+[[notes: In Rhythmomachia, capturing the opponent's Pyramid was a major feat. Turning the layers over refers to the fact that many historical game pieces were painted with one color on one side and the opponent's color on the other, allowing for "conversion" of captured pieces.]]
+
+<image-desc>A decorative woodcut tailpiece featuring a central mascaron (a stylized human face) framed by elaborate symmetrical scrollwork, drapery, and floral ornaments.</image-desc>
+
+---
+[[meta: catchword: Das (The)]]
+
+[[summary: This page explains how Pyramids lose their movement capabilities as their layers are captured and details the "Knight's move" as a unique escape mechanic. It also describes the "conversion" of a captured Pyramid to the opponent's color.]]
+[[keywords: Rhythmomachia, Tower, Pyramid, Knight's move, Chess, Buxerius, game rules, capture mechanics]]

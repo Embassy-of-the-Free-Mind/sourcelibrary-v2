@@ -1,0 +1,46 @@
+[[meta: This page continues a detailed critique of the chess variations provided by Pedro Damiano, an influential 16th-century Portuguese chess author. The translator continues to use the period-specific terminology for pieces: "Archer" for Bishop, "Rider" for Knight, and "Soldier" for Pawn. The numbering of squares (1-64) follows the system used in the previous page for continuity.]]
+
+### The Fourth Book / Chapter 4:
+
+the **Queen** / either the **White Queen** / or the **White King’s Rook** / and
+gives **Checkmate**.
+33. But if the **White** / moves the **King** / not to 18. (no. 30.) but /
+to thirty-three: then / the **White** / with the **Queen** /
+from forty-two / or seventeen / offers **Checkmate**.
+34. If however the **White** / does not move the **Queen** / neither to 23, nor to 12,
+(no. 28. 29.) but rather covers the same / (if she / was moved to 1. no. 26. at the end)
+with the **King’s Rook** / on ten: then / the **Black** / with
+the **King’s Rook** / from twenty-seven / offers **Check**: The **White** / must
+move the **King** / to eighteen / or thirty-three: The **Black** /
+gives / with the **Queen** / (even if the **King’s Rook** / had been moved forward)
+from twenty-six / or forty-two / **Checkmate**.
+35. But if the **White** / does not cover the **Queen** / with the **Rook** /
+on 10. (no. 34.) but / takes / with the same / the **Black King’s Archer** [[notes: *Schützen*—Bishop]]: then
+the **Black** / takes her / with his **Queen** / and gives **Check**: The
+**White** / covers / the **King** / with his **Rook** / on twenty-six /
+and moves him / toward the **White Queen**: The **Black** / gives /
+with the **Queen** / from four / **Check** / and moves her / to the **Black King’s
+Archer’s** square: The **White** / moves the **King** / (provided He / does not wish
+to cover him / with his **Rook** / on eighteen / nor move to seventeen)
+to thirty-three: The **Black** / moves the **King’s Rook** /
+to nineteen / and can further soon finish the **White** off.
+From the numerous piled-up errors / of ***Damiano*** [[notes: Pedro Damiano (c. 1480–1544), author of the first great chess manual of the modern era. the author here is attempting to prove his own superior mastery of the game.]], just now recounted / one can now conclude / that He / as He / wished to describe this game /
+did not have the **Chess-board** / and **Chess-pieces** / at hand /
+nor did he employ much thought / thereto: which
+then in abundance / also appears from this / * Where He / (no. 4.) posits:
+[[margin: 36.]]
+[[margin: ,,]] That the **Black** / (if the **White** / with the **King’s Rider** / had taken the
+[[margin: ,,]] **Black King’s Soldier**: and He / with the **Queen** / from
+[[margin: ,,]] 25. offered **Check**: and the **White** / had covered / himself / with the **King’s Rider’s**
+[[margin: ,,]] **Soldier** / on 18.) with the **Queen** / from 28.
+[[margin: ,,]] not only offers **Check** / but also / takes the **White King’s Soldier** /
+[[margin: ,,]] from the same square / at the same time: and he does not
+notice / that the same [square] / is entirely empty: Considering / that the
+aforementioned **Soldier** / had already robbed / the **Black King’s Archer’s-Soldier** / (no. 3.)
+and therefore / is no longer to be found / on the **King’s**- / but rather on the
+**Archer’s** line / from which he / is finally taken /
+by the **Black Queen** / (no. 5. at the end).
+
+[[summary: This page continues a rigorous technical critique of Pedro Damiano’s chess strategies, detailing specific move sequences and square-by-square errors. The author concludes that Damiano likely wrote his manual without a board in front of him, noting a physical impossibility regarding the position of a pawn.]]
+
+[[keywords: Chess strategy, Damiano, Checkmate, Archer, Rider, Soldier, Bishop, Knight, Pawn, 17th-century chess]]

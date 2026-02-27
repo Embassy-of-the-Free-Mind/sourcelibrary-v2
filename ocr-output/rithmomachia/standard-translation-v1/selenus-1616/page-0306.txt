@@ -1,0 +1,26 @@
+[[meta: This page continues from the discussion of various defenses against the King's Knight opening. While the previous page discussed the King's Knight's pawn defense, this chapter focuses on the specific (and notoriously weak) defense using the King's Bishop's pawn (f6), commonly known as the Damiano Defense.]]
+
+# The Third Book / Chapter 3:
+
+<image-desc>A decorative horizontal woodcut banner featuring a central floral motif surrounded by symmetrical scrolls, foliage, and stylized fruits.</image-desc>
+
+## The Third Chapter.
+
+### ->How a game—when the Black player’s King’s<-
+### ->Soldier is defended, conducted, and improved<-
+### ->with his Archer’s Soldier, according to<-
+### ->Damiano’s manner—can be led.<-
+
+It should now follow how the Black player could protect his King’s Soldier [[notes: "Soldat" or Soldier is the historical term for a Pawn.]] with the King’s [Knight's] Soldier from **forty-five** [[notes: Square 45 corresponds to f7 in modern notation. The text implies a move like f7-f6, though the numbering here suggests the starting position.]]; but because this method is not esteemed by *Damiano*, much less described, we shall proceed immediately with him to the third protection, which is undertaken by the King’s Archer’s Soldier [[notes: "Schützens-Soldat" refers to the Bishop's Pawn.]].
+
+[[margin: 1.]] Now, if the Black player protects his King’s Soldier (after the White player has attacked it on the second move with the King’s Rider [[notes: "Reuter" or Rider refers to the Knight.]] from **nineteen** [[notes: f3]]) with the King’s Archer’s Soldier from **forty-three** [[notes: f6]]: then *Damianus* considers this same method to be the very worst and most dangerous. For upon this move, the White player robs [[notes: "raubet," meaning captures]] the Black King’s Soldier with his King’s Rider; if the Black player then takes him with the aforementioned Soldier, the White player offers check with the Queen from **thirty-three** [[notes: h5]].
+
+[[margin: 2.]] The Black player covers the King with his Rider’s Soldier [[notes: The Knight's pawn, specifically the g-pawn.]] on **forty-two** [[notes: g6]], or moves him [[the King]] to **fifty-two** [[notes: e7]]. The White player (if the Black player has moved the aforementioned Rider’s Soldier forward) takes the Black King’s Archer’s Soldier with the Queen, but offers check once more, and moves her to the Black King’s Rook [[notes: "Rochen" or Rook. Square 64 or h8.]]. The Black player covers the King with the Queen on **fifty-two** [[notes: e7]].
+
+[[margin: 3.]] The White player takes the Black King’s Rook with the Queen. The Black player [takes] the White King’s Soldier with his Queen and offers check. The White player (in order to rid himself of the same and to come to the aid of the King’s Archer’s Soldier [[notes: Likely referring to the f-pawn or the general defense of the kingside]]) moves the King to **five** [[notes: e2]]. The Black player can do him no further damage for this time; for he must keep a good watch on the King’s Rider’s and his Rook’s Soldiers [[notes: The g and h pawns]], as one of them will certainly be lost.
+
+[[meta: catchword: Spielet (Plays)]]
+
+[[summary: This page describes the opening moves of the Damiano Defense, which the author, following Pedro Damiano, identifies as a highly dangerous and inferior strategy for the Black player. It details the tactical sequence where White sacrifices a Knight to expose the Black King to a devastating Queen check.]]
+
+[[keywords: Damiano Defense, Chess tactics, Queen check, Knight sacrifice, 17th-century chess, Pedro Damiano]]

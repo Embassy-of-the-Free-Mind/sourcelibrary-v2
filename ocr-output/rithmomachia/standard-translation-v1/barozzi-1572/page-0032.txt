@@ -1,0 +1,44 @@
+[[meta: This page continues the rules of capture in Rithmomachia, moving from the rule of "summing" (addition) to the rule of "subtraction." It provides both a situational example and a comprehensive lookup table for players to identify valid captures.]]
+
+# Page 15
+->Tauo<- [[notes: An abbreviation for *Tavola*, meaning "Table."]]
+
+Pieces are taken by **subtraction** in this manner: if two pieces of the same side [[notes: *Schiera* (rank or army), referring here to either the White or Black set of pieces.]] are found in such squares that they can both reach a piece of the opposing side, and if the number of one subtracted from the number of the other results in the number of the opponent's piece, that piece is immediately removed from the game. The other two attacking pieces remain where they are. 
+
+As in the example described below: if the **white square 15** is in square A, and the **white circle 6** is in square B, and the **black circle 9** is in square C, I say that as soon as these three pieces are found in this position, the **black circle 9** shall be removed from the game. This is because both the **white square 15** and the **white circle 6** can reach the square where the **black circle 9** is located, and 6 subtracted from 15 leaves 9.
+
+[[notes: In Rithmomachia, pieces move according to their shapes: circles move one square diagonally, triangles move two squares horizontally or vertically, and squares move three squares. For a capture to be valid, the target must be within the legal move range of both attacking pieces.]]
+
+<image-desc>A rectangular diagram divided by lines into sections. The top sections are labeled "A" and "C". Below them is a central box labeled "B" which contains a large "X". This illustrates the spatial relationship of the pieces for a subtraction capture.</image-desc>
+
+The following table shows us which numbers in the game can be won through subtraction.
+
+[[notes: This table is organized into two sets of three columns. In each set, the first two numbers represent the attacking pieces, and the third number represents the value of the piece to be captured (the difference between the first two).]]
+
+| | | | | | |
+|---|---|---|---|---|---|
+| 30 | 15 | 15 | 4 | 2 | 2 |
+| 45 | 30 | 15 | 6 | 3 | 3 |
+| 60 | 30 | 30 | 8 | 4 | 4 |
+| 60 | 45 | 15 | 10 | 5 | 5 |
+| 75 | 30 | 45 | 12 | 6 | 6 |
+| 75 | 45 | 30 | 14 | 7 | 7 |
+| 75 | 60 | 15 | 16 | 8 | 8 |
+| 90 | 30 | 60 | 18 | 9 | 9 |
+| 90 | 45 | 45 | 20 | 10 | 10 |
+| 90 | 60 | 30 | 21 | 15 | 6 |
+| 90 | 75 | 15 | 28 | 21 | 7 |
+| 100 | 91 | 9 | 36 | 28 | 8 |
+| 120 | 105 | 15 | 45 | 36 | 9 |
+| 136 | 120 | 16 | 55 | 45 | 10 |
+| 153 | 136 | 17 | 66 | 55 | 11 |
+| 171 | 153 | 18 | 78 | 66 | 12 |
+| 190 | 171 | 19 | 91 | 78 | 13 |
+| 210 | 190 | 20 | 105 | 91 | 14 |
+| 231 | 210 | 21 | 120 | 105 | 15 |
+| 253 | 231 | 22 | 136 | 120 | 16 |
+| 276 | 253 | 23 | 153 | 136 | 17 |
+| 300 | 276 | 24 | | | |
+
+[[summary: This page explains the subtraction capture rule in Rithmomachia, where an opponent's piece is taken if the difference between two reaching attackers matches its value. A detailed table of all possible subtraction combinations within the game's numeric system is provided.]]
+[[keywords: Rithmomachia, subtraction capture, mathematical board games, Renaissance games, game rules, capture by subtraction]]

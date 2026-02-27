@@ -1,0 +1,67 @@
+[[meta: This page begins Book VII of Jordanus de Nemore's Arithmetica. Having concluded the study of solid numbers and proportions in the previous book, Jordanus now shifts his focus to the fundamental properties of even and odd numbers, establishing the basic rules of parity that govern addition, subtraction, and multiplication.]]
+
+# Book VII
+
+### 1 **If any number of even numbers are added together: the result will be even.**
+¶ For by the definition of an even number, each of those assigned has a half. Furthermore, by the sixth proposition of the first book, all their halves joined together constitute the half of the sum. Therefore, since the sum can be divided into two equal parts, it will be even: which is what was intended.
+
+### 2 **If an even and an odd are joined: the composite will be odd.**
+¶ For if unity [[notes: "Unity" refers to the number 1]] is taken away from the odd number, since by definition an odd number exceeds an even one by only a single unit: an even remains. If this is added to the other even: by the preceding proposition, the composite will be even. To this, if the removed unity is restored: the whole, by definition, becomes odd. Thus it is clear that a sum consisting of an even and an odd is odd. It is therefore established what was intended.
+
+### 3 **If an odd is added to an odd: an even number will result.**
+¶ For if unity is taken from both of them, two even numbers are left, which by the second-to-last proposition [[notes: referring to Proposition 1 of this book]] will constitute an even number; if the two units that were taken away (which themselves constitute an even number) are joined to this composite, the whole again results in an even number by that same proposition. This is what the proposition intended.
+
+### 4 **If an even number of odd numbers are added together: the whole produced from them will be even.**
+¶ For since the number of parts we take is even: the number two [[notes: the "binary"]] is taken in it some number of times, meaning they will be coupled into pairs of odds, which are even by the preceding proposition. Therefore, by the first proposition of this book, when these are added together they constitute an even number: which is what was proposed.
+
+### 5 **If an odd number of odd numbers are added together: the composite will be odd.**
+¶ For if one of them is set aside, by the preceding proposition the sum of the rest will be even: therefore by the second proposition of the present book, if the set-aside odd number is added to the rest, the total that is born from all of them together will be odd: which is what was proposed.
+
+### 6 **If an even is subtracted from an even: an even remains.**
+¶ For if an odd were to remain: that remainder, when added to the part taken away, would have constituted an odd number by the second proposition of this book: which is against the hypothesis [[notes: "Against the hypothesis" is a standard logical phrase meaning the result contradicts the starting conditions, in this case that the total was even]]. Therefore the proposition is true.
+
+### 7 **If an odd is taken from an even: the remainder will be odd.**
+¶ For if the remainder were set down as even: that same remainder, joined to the odd part taken away, would have constituted an odd number by the second proposition of this book: which is against the hypothesis. Therefore the proposition will be true.
+
+### 8 **If an odd is taken from an odd: an even will remain.**
+¶ For if an odd were to remain: that same remainder, added to the part taken away, would have constituted an even number by the third proposition of this book: but the starting number was set as odd. Therefore an even remains: which is what was proposed.
+
+### 9 **If an even is subtracted from an odd: the remainder will be odd.**
+¶ For if the remainder were even: when added to the part subtracted, it would have constituted an even number by the first proposition of this book: which is against what was set down. Therefore the proposition remains true.
+
+### 10 **Every number multiplied by an even number: produces an even number.**
+¶ For if one multiplies an even number, by definition it will be added to the product as many times as there is unity in the multiplier. And since the number being multiplied is even, all those even numbers added together by the first proposition of this book constitute an even product. However, if one multiplies an odd number by an even number, the odd will be in the product as many times as there is unity in the multiplier. But unity in that multiplier is set to be an even number: therefore by the fourth proposition of this book, those odd numbers, being even in count, constitute an even number when added together: which is the whole of the proposition.
+
+### 11 **If an odd is multiplied by an odd: the result will be odd.**
+¶ For by definition, the odd number multiplied will be in the product as many times as there is unity in the odd multiplier. But in that multiplier, unity is present an odd number of times. Therefore, by the fifth proposition of this book, those odd numbers—being odd in count—constitute an odd product when added together: which is what was proposed.
+
+### 12 **Whatever number an even number measures: that number must be even.**
+[[notes: "To measure" (*numerare*) in medieval geometry means to be a factor of or to divide evenly into another number.]]
+¶ For an even number that measures can, by definition, be divided into two equal parts; if the number by which it measures is multiplied by these halves: by the ninth proposition of the first book, it produces the same product. But that same number multiplied by one of the halves produces half of the product. Therefore, the product, as it can be divided into two equal parts, is even by definition: which is what was proposed.
+
+### 13 **Whatever measures an odd number: is odd.**
+¶ For if you were to suppose that what measures it is even: by the preceding proposition, the number measured would be even: which is against the hypothesis. Therefore, whatever measures it, if any number does, will be odd: which is what was proposed.
+
+### 14 **If an odd measures an odd: it will measure it by an odd number.**
+[[notes: "By an odd number" refers to the quotient of the division.]]
+¶ For if an odd were to measure an odd by an even number: then alternately, by the eighth proposition of the first book, an even would measure the same odd number by an odd number: which is impossible by the twelfth proposition of this book. Therefore the proposition is true.
+
+### 15 **If an odd measures an even: it is necessary that it measures it by an even number.**
+¶ For if the odd were to measure it by an odd number: then by the eleventh proposition of this book, the whole would be odd. But it was set down as even. It would therefore happen against the hypothesis. Therefore the proposition is left [proven].
+
+### 16 **If an odd measures an even: it will also measure half of it.**
+¶ For if an odd measures an even: by the premise, it will measure it by an even number. Since, therefore, every even number has a half, that odd number multiplied by half of that even number will produce half of the whole, according to the eighth and ninth propositions of the first book. Therefore that odd will measure half of the measured number: which is what was proposed.
+
+### 17 **If an odd number is prime to any number: it will also be prime to its double.**
+[[notes: "Prime to" (*primus ad*) means the two numbers are coprime; they share no common factors other than 1.]]
+¶ If the odd number **a** is prime to **b**, I say it is also prime to **c**, which is the double of **b**. For if it were not prime to **c**, then **a** and **c** would communicate [[notes: "communicate" means they share a common divisor]]. Therefore, by definition, there is a number that commonly measures numbers **a** and **c**: let this be **d**. And because **d** measures **a** and **c**, and **c** is even because it is the double of **b**, and therefore **d** can be divided into two equal parts: therefore by the preceding proposition **d** will also measure half of **c**. Wherefore **a** and **b** would communicate: which is against the hypothesis. Therefore **a** will be prime to **c**: which is what was proposed.
+
+-> b 4 <-
+
+<column-break/>
+
+<image-desc>A column of fifteen mathematical diagrams illustrating the propositions on the left. The diagrams consist of lines representing numbers, divided into segments or topped with semicircular arcs to show their components (even/odd). Points are labeled with lowercase letters (a, b, c, d, e) to represent the terms of the proofs.</image-desc>
+
+[[summary: This page initiates Book VII, detailing the fundamental laws of parity for addition, subtraction, multiplication, and divisibility. Jordanus uses logical proofs to show how combinations of even and odd numbers interact, such as why two odds make an even and why an even number is always the result of multiplication by an even factor.]]
+
+[[keywords: arithmetic, parity, even numbers, odd numbers, Jordanus de Nemore, mathematical proof, factors, coprime, divisibility]]

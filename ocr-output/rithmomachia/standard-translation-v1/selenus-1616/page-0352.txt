@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical endgame maneuvers described by Gustavus Selenus, maintaining the 1–64 coordinate system where 1 is a1 and 64 is h8. The text focuses on specific "if-then" scenarios regarding the movement of the King, Queen, and Knight (Rider).]]
+
+### The Third Book / 5th Chapter:
+
+82. But if the Black [player] does not cover the King with the King’s Rider [[note: the Knight]] (as in n. 79), but instead with the Queen on fifty-four [[note: Square f7]]: then the White [player] (since he is superior to the Black [player] by a Bishop and a Rook) takes her with his Queen and gives
+
+83. Check : * The Black [player] takes her with the King: The White [player] gives Check with the King’s Rider from thirty-nine [[note: Square g5]], and moves him onto the Black King’s Rook’s Soldier [[note: the Pawn on h7]]: The Black [player] must not move the King to fifty-three [[note: Square e7]] or sixty-one [[note: Square e8]] (for the White [player] would offer Check with the King’s Rook from forty-five [[note: Square e6]] and win his King’s Rider) but instead places him on sixty-two [[note: Square f8]] or sixty-three [[note: Square g8]] or fifty-five [[note: Square g7]]: The White [player] (who, as mentioned, has a Rook and Bishop as an advantage) can in few moves become the master of the Black [player].
+
+84. If, however, the Black [player] does not take the White Queen with the King (as in n. 83) but instead with the King’s Rider and moves the same onto the White King’s Rook [[note: likely meaning the square occupied by the Rook]]: then the White [player] takes the Black King’s Archer’s Soldier [[note: the Pawn on f7]] with the same [Knight] (to rescue it and protect the King’s Rider) and can further deal well with the Black [player] using his pieces.
+
+85. But if the Black [player] does not cover the King with the Queen on fifty-four [[note: Square f7]] (as in n. 82), but instead moves the same [the King] to sixty-one [[note: Square e8]]: then the White [player] gives Check with the King’s Rook from sixty [[note: Square d8]]: The Black [player] must take it with the King’s Rook: The White [player] captures the same with the King’s Rook and gives Check-Mate.
+
+86. If, however, the Black [player] moves neither the Rider to sixty-two [[note: Square f8]] nor thirty-seven [[note: Square e5]] (as in n. 77. 78.), but instead the King’s Rook (in order to protect the King’s Rider’s Soldier [[note: the Pawn on g7]]) to sixty-three [[note: Square g8]]: then the White [player] takes the Black King’s Rider with the King’s Rook and offers Check: The Black [player] moves the King to sixty-one [[note: Square e8]]: The White [player] offers Check with the King’s Rider from fifty-one [[note: Square c7]]: The Black [player] must move the King to sixty-two [[note: Square f8]]: The White [player] [moves] the King’s Rook onto the Black Queen at six [[note: Square f1]]: The Black [player] takes it with the same [the Queen] and offers Check: The White [player] captures the same with the King’s Archer [[note: the Bishop]] and subsequently gives Check-Mate with the Queen from the Queen’s Archer’s line [[note: the c-file]].
+
+[[meta: Catchword: Setzet]]
+
+[[summary: This page outlines various branching tactical sequences where White uses their material advantage (a Rook and Bishop) to force a win or Check-Mate against the Black King. It details the precise movements of the "Rider" (Knight) and "Archer" (Bishop) within Selenus's unique 1-64 coordinate system.]]
+
+[[keywords: Check-Mate, Rider, Archer, Rook, King's Rook, Soldier, coordinate system, Gustavus Selenus, tactics]]

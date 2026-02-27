@@ -1,0 +1,25 @@
+[[meta: This page begins Chapter 9, shifting the focus from the "Judges" or "Archers" (Bishops) discussed in the previous chapter to the "Riders" (Knights). It establishes their social rank within the game's allegory and their starting positions on the board.]]
+
+The First Book / 9. cap:
+
+[[gloss: An ornamental woodcut headpiece consisting of elaborate floral and foliate scrolls.]]
+
+## The Ninth Chapter.
+
+### Of the King’s and Queen’s Riders:
+-> which fields they take and possess <-
+-> at the start of the game, and how they move. <-
+
+[[gloss: A framed woodcut illustration of a chess piece. It depicts a knight in a full suit of armor, holding a lance, mounted on a horse. The horse stands upon a decorative turned pedestal. At the bottom of the illustration, within the border, is the caption "A Rider."]]
+
+Next to the **Archers** [[notes: *Schützen*—the author's name for the Bishops]], and considered equal to or in certain cases higher than them, are the pieces which are called **Equites Auratos** [[notes: Latin for "Golden Knights," a title of nobility]], Riders, Knights, or Leapers: by which, without doubt, the cavalry is signified.
+
+Of these, there are two for each army [[notes: *hauffen*—literally "heaps," referring to the two opposing sets of pieces]], in the same manner: they have their places on both wings, between the Elephants [[notes: *Elephanten*—the Rooks/Castles]] and the Archers: and the White King’s Rider stands on a Black field—the Black King's on a White field—the White Queen’s on a White field—and the Black Queen's on a Black field.
+
+Their move is from their own field into a third [[notes: In early chess manuals, the destination square was counted as the third, with the starting square being the first]], neither straight nor toward the corners [[notes: *nach den ecken*—meaning diagonally]], but rather from a white field into a black—and from that again into a white field. Yet they always move into the second or third, rearward or forward transverse line [[notes: *Zwerch-linie*—referring to the horizontal ranks or vertical files]], or those which are at the sides. For they cannot jump along their own line to the sides, nor forward or backward—nor even from their field toward the corners into a third line in the manner of the King—but they have, as it were, a double move at one time, be-
+
+[[meta: catchword: cause]]
+
+[[summary: This page introduces the Knight, or "Rider," explaining its rank as equivalent to the Bishop and its allegorical representation of the cavalry. It details the Knight's starting coordinates and begins to describe its unique L-shaped leaping movement.]]
+
+[[keywords: Knight, Rider, Cavalry, Chess Pieces, Board Setup, Equites Auratos, Chess History, Game Rules]]

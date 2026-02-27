@@ -1,0 +1,44 @@
+[[meta: This page continues the introductory front matter of the 1616 chess treatise. The previous page ended mid-sentence in a Latin poem praising the intellectual nature of chess over games of chance. This page concludes that Latin thought with a short epigram by Georg Remus and begins a series of Italian poems (madrigals) by the famous art collector and diplomat Philipp Hainhofer.]]
+
+**AM I MISTAKEN?** This battle of the pawns [[notes: The Latin *Latronum* refers to *Ludus latrunculorum*, an ancient Roman game often cited by Renaissance scholars as a precursor to chess; here the author uses it to mean the chess pieces themselves.]] shadows forth the human 
+Vicissitudes, troubles, and the chances
+Of life; which may be tempered by care: And
+It is right for Mortals to go forth to meet a harsh Fate.
+->G. REMUS, J.C. P.A. [[notes: Georg Remus (1561–1625) was a celebrated jurist (*Juris Consultus*) and Patrician of Nuremberg (*Patricius Altdorfinus*).]] Nuremberg.<-
+
+---
+<image-desc>A rectangular decorative woodcut header featuring elaborate scrollwork, foliage, and a central face mask.</image-desc>
+
+### In praise of the most illustrious Lord GUSTAVUS SELENUS,
+### regarding the Work on the Game of Chess, a Madrigal
+### by FILIPPO HAINHOFER, Patrician [[notes: Philipp Hainhofer (1578–1647) was a prominent merchant, diplomat, and art collector in Augsburg, famous for creating "cabinets of curiosities" for European royalty.]]
+### of the City of Augsburg.
+
+To enticing battles,
+To merciful revenges,
+To feigned assaults, to simulated gains,
+In a small field, upon these pages,
+O **GUSTAVUS SELENUS**, you train the art.
+But with charming shadows
+To warlike duties
+To glorious ardors,
+You opened both wit and art;
+For it often happens that noble hearts
+(A flattering deception)
+The Game entices toward arms—the feigned leading to the real.
+
+---
+<image-desc>A rectangular decorative woodcut divider with symmetrical floral and foliate motifs.</image-desc>
+
+### ANOTHER.
+
+To command in the city, to rule warrior
+Armed squads, and to make them in an instant
+Swift, to change their ground, and now from the front
+To wheel, now all around, bold and fierce,
+
+<meta>Catchword: U fia</meta>
+
+[[summary: This page features commendatory verses in Latin and Italian praising Duke Augustus (as Gustavus Selenus). The poems frame chess as a noble "feigned battle" that prepares the mind for the real duties of statecraft and war.]]
+
+[[keywords: Georg Remus, Philipp Hainhofer, Gustavus Selenus, Augsburg, Nuremberg, chess in literature, madrigal, Neo-Latin poetry]]

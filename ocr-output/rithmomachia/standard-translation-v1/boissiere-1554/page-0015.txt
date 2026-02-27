@@ -1,0 +1,40 @@
+[[meta: This page transitions from the mnemonic grid shown on the previous page to the mathematical foundations of the game. It introduces the relationship between specific numerical ratios—derived from Boethian arithmetic—and the physical shapes of the game pieces (circles, triangles, and squares).]]
+
+THE GAME OF RYTHMOMACHIA [[notes: Rythmomachia, often called "The Philosophers' Game," was a complex mathematical board game popular among scholars in the Middle Ages and Renaissance. It was used to teach arithmetic and harmony through the movement of pieces representing different numerical ratios.]]
+
+Pyramid for
+even numbers.
+
+->On the three types<-
+->of pieces.<- [[notes: The original French uses the word "tables," which in the context of early games refers to the playing pieces or counters, similar to how backgammon is still called "tables" in some languages.]]
+
+Pyramid for
+odd numbers.
+
+[[gloss: The diagrams at the top illustrate the game's most powerful pieces: the Pyramids. On the left, a pyramid for "even" players is built from squares (1, 4, 9, 16, 25, 36). On the right, the "odd" pyramid is more complex, topped with a block showing 100, 16, and 4. The center diagram shows the three shapes used in the game: the circle (lowest value), the triangle, and the square (highest value).]]
+
+## On the application of numbers to the pieces.
+
+Here it will be necessary to repeat what we have said concerning
+proportions in Arithmetic: namely, that there are
+three simple proportions: which are, multiple,
+particular, and superpartient. [[notes: These terms refer to the "Pythagorean" ratios used in the game. "Multiple" (e.g., 2:1, 4:1), "Particular" or Superparticular (where the larger number contains the smaller plus one part of it, e.g., 3:2), and "Superpartient" (where the larger contains the smaller plus several parts of it, e.g., 5:3).]]
+
+### On multiple proportion.
+
+Multiple proportion is when one number
+contains another number more than once:
+as one *sol* contains one *liard* four times: without
+any remainder, [[notes: The *sol* (or sou) and the *liard* were French coins of the period. A *sol* was worth four *liards*, making them a perfect historical example of a 4:1 "multiple" ratio.]] of which proportion we shall hereafter
+show the types. And because in this proportion 
+one number contains the other evenly [[notes: The original French "rondement" means "roundly" or "evenly," a pun on the shape of the pieces.]], the 
+round pieces will be appropriate and suitable for it.
+Take then these round pieces, and after having
+separated those of one color from the others, mark
+eight of them according to the natural order of numbers con-
+
+[[meta: catchword: tenuz (tained/held)]]
+
+[[summary: This page introduces the mathematical rules for the game of Rythmomachia, specifically focusing on "multiple proportions." It explains that round pieces are used to represent these even ratios and uses 16th-century French currency as an analogy for the math.]]
+
+[[keywords: Rythmomachia, arithmetic, multiple proportion, sol, liard, game pieces, pyramids, Boethius]]

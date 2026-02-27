@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical analysis from page 290. The game is being described using a numerical coordinate system where squares are numbered 1 through 64. The "Soldier" refers to the Pawn, the "Archer" to the Bishop, and the "Rider" to the Knight.]]
+
+### 4. Chapter: On the Game of Chess. 291
+
+37. But if the **Black** player does not take the **White Soldier** [[notes: *W. Soldaten*, the Pawn]] (No. 28), but instead moves the **King** to fifty: then the **White** player shall further **offer Check** with the **King’s Rook’s Soldier** from forty-one:
+
+38. * The **Black** player moves the **King** to forty-two: The **White** player takes the **Black King’s Archer** [[notes: *S. K. Schützen*, the Black King's Bishop]] with the **King’s Archer’s Soldier**: The **Black** player takes the same with the **Queen**: The **White** player gives **Checkmate** with his **Queen** from thirty-three: or (provided the **Black** player has just taken the aforementioned **White Soldier** with the **King’s Rider** [[notes: *K. Reuter*, the Knight]]: or has moved the **King’s Archer** to twenty-six) from thirty-four.
+
+39. But if the **Black** player moves the **King** not to 42 (No. 38) but instead to fifty-nine: then the **White** player takes the **Black King’s Archer** with his **King’s Archer’s Soldier**: The **Black** player takes the same with the **King’s Rider** and not with the **Queen** (for she would otherwise be trapped by the following move): the **White** player moves the **King’s Rook** [[notes: *K. Rochen*]] to three, and keeps the aforementioned **Black Rider** imprisoned: The **Black** player moves the **King’s Rider** (to rescue his companion and to pursue the **White Queen**) to fifty-three: The **White** player moves the **Queen** (in order to give **Check** to the **Black King** with her from fifty, and from fifty-one or forty-four: or with the **King’s Soldier** or with the **King’s Archer**; if he has **offered Check** from twenty-seven: to give **Checkmate** from thirty-six)
+
+40. to thirty-four: * The **Black** player (to prevent this) moves his **Queen** to fifty-two: The **White** player moves the **King’s Soldier** onto the **Black King’s Rider** at thirty-six: The **Black** player (to set him free) moves the **King** to sixty: The **White** player moves the **Queen** to fifty: The **Black** player takes her with the **Queen** (for otherwise he would immediately lose the **King’s Rook**): The **White** player takes the same with the **King’s Rook’s Soldier** and moves it onto the **Black King’s Rook**: The **Black** player moves the same against him (so that it does not become a **Queen** [[notes: A reference to pawn promotion]]) to fifty-eight:
+
+41. * The **White** player takes it with the **King’s Archer**: The **Black** player takes the same with the **King’s Rider**: The **White** player moves the **King’s Soldier** onto the **Black King’s Rider** at forty-four: The **Black** player moves the same (to expose the **King’s Archer** against the aforementioned **White Soldier**) to forty-seven: The **White** player offers **Check** with the **King’s Rook** from fifty-nine and moves it onto the **Black King’s Rider**: The **Black** player [moves] the **King**...
+
+[[meta: catchword: "auf zwey" (to two) indicates the next page begins with the completion of the King's move. "Go iij" is the signature mark for the printer.]]
+
+[[summary: This page provides a dense tactical walkthrough of a chess endgame or complex mid-game exchange. It details specific piece maneuvers, including a potential checkmate sequence and a strategic battle involving pawn promotion and piece imprisonment.]]
+
+[[keywords: Chess tactics, Checkmate, Pawn promotion, 17th-century chess, Bishop, Knight, Rook, Queen maneuvers]]

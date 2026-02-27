@@ -1,0 +1,39 @@
+[[meta: This page follows the blank flyleaf. It serves as the formal title page and table of contents for the volume, introducing the core mathematical and musical texts, as well as a commendatory poem by G. Gonterius.]]
+
+# The contents of this work.
+
+**Arithmetic**, demonstrated in ten books
+**Music**, demonstrated in four books
+An **Epitome** [[notes: A concise summary or abridgment]] of the books on arithmetic by the divine **Severinus Boethius** [[notes: An influential 6th-century philosopher whose works on the "quadrivium" (arithmetic, music, geometry, and astronomy) were the standard textbooks of the Middle Ages.]]
+The game of **Rithmimachia**, which is also called the "Battle of Numbers" [[notes: A complex medieval board game designed to teach mathematical proportions and harmony.]]
+
+[[insert: 
+Bowditch
+Aug. 29. 1936
+T
+]]
+
+### G. Gonterius of Labilon: In praise of Arithmetic and Music.
+
+For a long time now, the learned sisters have lain hidden,
+Whom golden-haired Minerva [[notes: The Roman goddess of wisdom and the arts.]] keeps as her companions.
+Now, after many ages, they peacefully revisit the earth,
+And the pleasing land of Gaul [[notes: France]] pleases them above all others.
+Once, all the Achaean [[notes: Greek]] land was famous for them,
+Back when Pythagoras fled his homeland of Samos.
+Now they leave Greece and the learned cities of Pallas,
+Seeking the Seine and the homes of Paris.
+The one [[notes: Arithmetic]] comes surrounded by a crowd of every kind of number,
+And teaches through numbers whatever exists in the world.
+The other [[notes: Music]], with sweet-sounding song and tuneful strings,
+Is said to have tamed both men and wild beasts;
+She alone holds her name among the Pierian Muses,
+And nothing is usually more pleasing to the Muses than she.
+Yet the "Staple of the Sea" [[notes: A wordplay on the name of the author, Jacques Lefèvre d’Étaples; "stapule marine" refers to the town of Étaples, a trading port]] sent the master
+Who, with a joyful brow, might dedicate this work to your studies.
+This is his only study and this his care: to be of help,
+Lest his labor be in vain or come to nothing.
+
+[[summary: This page lists the volume’s contents—works by Jacques Lefèvre d'Étaples on arithmetic, music, and the game of Rithmimachia—and features a poem celebrating the arrival of these Greek sciences in Paris.]]
+
+[[keywords: Arithmetic, Music, Boethius, Rithmimachia, Jacques Lefèvre d’Étaples, Pythagoras, Paris, Renaissance education]]

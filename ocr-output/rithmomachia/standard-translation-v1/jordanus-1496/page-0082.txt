@@ -1,0 +1,75 @@
+[[meta: This page continues the exploration of "medieties"—what we now call mathematical progressions or means. Having established the basic properties of arithmetic, geometric, and harmonic medieties, the author now demonstrates how these different types of sequences relate to one another, particularly through division and multiplication. These proofs are foundational for understanding how musical scales (which rely on harmonic ratios) were calculated and reconciled with arithmetic systems.]]
+
+secondly as **g** is to **h**, so is **k** to **l**, just as **g** is to **k**. And again because by permutation **a** is to **c** as **b** is to **d**: it will be by the same reasoning **a** to **c** as **g h** to **k l**, which is as **g** to **k**. And because **a** and **c** are the wholes, and **g** and **k** are subtracted: therefore the ratio of the remainder **a** to **f** will be as the remainder to the remainder, by the fifth [proposition] of the second [book], just as the whole **a** is to the whole **c**. Wherefore by permutation, **a** is to **e** as **c** is to **f**. Which is what was proposed.
+
+---
+
+[[margin: 43]]
+
+### ¶ If between two numbers two other means are taken proportionally: if the larger is taken according to the arithmetic mediety, the smaller will be taken according to the harmonic. And if the smaller is according to the harmonic, the larger will be taken according to the arithmetic.
+
+¶ For let **a** be to **c** as **d** is to **b**. And let **c** be the larger mean according to the arithmetic mediety between **a** and **b**. I say that **d** is the mean according to the harmonic mediety between **a** and **b**. And it is converted [[notes: Meaning the proof works in reverse as well]]. For I take, by the forty-first [proposition] of this [book], **e**, **r**, and **f** which are in the ratio of **a** to **b**. Between these, let **g** be the mean according to the arithmetic mediety, and **h** according to the harmonic. Therefore, because by the forty-first [proposition] **e** is to **g** as **h** is to **f**; and by the nineteenth [proposition] of this [book] **e** is to **g** as **a** is to **c**. Wherefore **c**... [[notes: There is a slight OCR error here in "c u v ad b", likely "c ad b"]] as **a** is to **c**, and **h** to **f** as **e** to **g**. It will therefore be **h** to **f** as **d** to **b**. But since **h** is the harmonic mean to which the extreme has that same ratio that **b** has to **d**: you will easily find by the preceding [proposition] that **d** is in harmonic mediety between **a** and **b**. Moreover, you will easily prove the converse through the forty-first [proposition] of this [book] by showing that whatever mean of the arithmetic mediety is found, it is equal to the larger [mean] **c**.
+
+[[image-desc: A line diagram representing Proposition 43 with two sets of four lines. Top set: e-48, f-36, g-32, h-24. Bottom set: a-24, b-18, c-16, d-12. These numbers illustrate the relationship between arithmetic and harmonic means; for example, between 12 and 24, the arithmetic mean is 18 and the harmonic mean is 16.]]
+
+---
+
+[[margin: 44]]
+
+### ¶ To continue any number of terms in arithmetic mediety, between each pair of which means in harmonic mediety can be assigned.
+
+¶ But if it is commanded to continue three numbers in arithmetic mediety between each pair of which means in harmonic mediety can be assigned: I take **a**, **b**, and **c**, as many numbers established in arithmetic mediety, whose difference is an even number; and between them let means in the same mediety be taken, which are **d** and **e**. And let them all be multiplied by **e**. And let there result **f**, **g**, **h**, **k**, and **l**, which by the seventeenth [proposition] of this [book] will be in arithmetic mediety. And again let **c** be multiplied by **b** to make **m**. And because by the seventh [proposition] of the second [book], as the ratio of **c** to **e** is, so is **h** to **k**. And by the eighth [proposition] of the same, again as **c** to **e**, so is **m** to **l**. And between **h** and **l**, the number **k** is the larger mean in arithmetic mediety. Therefore, by the preceding [proposition], **m** is the mean between **h** and **l** in harmonic mediety. Again, let all these be multiplied by **v**, and let **n**, **o**, **p**, **q**, **r**, and **s** result; and they will be, as before, **n**, **o**, **p**, **q**, **r**, and **s** in arithmetic mediety, and **r** between **p** and **s** in harmonic mediety. Again, let **a** be multiplied by **h** and let **t** result. And by the same reasoning as before, you will show it to be the mean in harmonic mediety by the preceding [proposition] between **n** and **p**. And thus the numbers will be continued in arithmetic mediety as was proposed, and the proposition will appear accomplished. ¶ And if more terms were dealt with, as often as a harmonic mean must be placed, so often must the multiplication be performed in the manner aforesaid.
+
+[[image-desc: Two columns of lettered values. Left column: f-27, g-21, h-15, k-9, m-5, n-3. Right column: n-189, o-147, p-105, q-63, r-35, s-21. These tables show the results of the scaling/multiplication process described in the text to keep all values as whole numbers.]]
+
+---
+
+[[margin: 45]]
+
+### ¶ With two numbers being proportional to another two: it is impossible for either of the former to be a mean in harmonic mediety between the remaining two.
+
+¶ But let **a** be to **b** as **c** is to **d**: I say that **c** is not a mean according to the harmonic mediety between **a** and **b**, nor **b** between **c** and **d**. For if it were possible: let **c** then be in harmonic mediety between **a** and **b**, and **b** between **c** and **d**. For because **a** is to **b** as **c** is to **d**, and between the numbers **a**, **b** and **c**, **d** which are indeed proportional: **c** and **b** are established as means according to the harmonic mediety. Therefore, by the forty-second [proposition] of this [book], the ratio of **a** to **c** will be as **c** to **b**—namely, the greatest to the mean as the mean is to the least. Which by the thirty-fourth [proposition] of this [book] is impossible, and [thus] the proposition [is proved].
+
+[[image-desc: Two small sets of line segments. Top set: a-9, b-7, c-5, d-3, e-1. Bottom set: a-8, b-6, c-4, d-3. These represent failed or impossible harmonic sequences used in the proof by contradiction.]]
+
+---
+
+[[margin: 46]]
+
+### ¶ If three numbers taken in arithmetic mediety divide some number: those [quotients] according to which they divide will be found in the order of harmonic mediety.
+
+¶ Let **a**, **b**, and **c** be taken in arithmetic mediety; and let them divide **d** according to **e**, **f**, and **g**. I say that **e**, **f**, and **g** are ordered in harmonic mediety. [[notes: This is a crucial observation about reciprocals. If you divide a constant by an arithmetic sequence (like 2, 3, 4), the results form a harmonic sequence.]] For let there be three doubles of them **h**, **k**, and **l**, which (as will be shown) will be in harmonic mediety, and let **m** be the mean between **h** and **l** in arithmetic mediety. For because **a** in **e** and **c** in **g** constitute **d**: therefore by the twenty-fifth [proposition] of the second [book], the ratio of **a** to **c** is as **g** to **e**, and as **g** to **e** is, by the fifth [proposition] of the second [book], so is **l** to **h**. But by the nineteenth [proposition] of this [book], **l** is to **m** as **a** is to **b**. And because by the same twenty-fifth [proposition] of the second [book], **a** is to **b** as **f** is to **e**: on this account **l** will be to **m** as **k** is to **h**. But by the forty-third [proposition] of this [book], **k** is the harmonic mean between **l** and **h**. Therefore **f** is also the harmonic mean between **g** and **e**. Which is what was proposed.
+
+[[image-desc: A complex diagram with letters a, b, c, e, f, g, h, k, l, m and numbers 12, 4, 3, 2, 6, 4, 12, 8, 9, 6 showing connections between harmonic and arithmetic means.]]
+
+---
+
+[[margin: 47]]
+
+### ¶ To investigate four numbers: of which the second is established between the first and third, and the third between the second and fourth, in harmonic mediety.
+
+¶ Let **a**, **b**, **c**, and **d** be four numbers established in arithmetic mediety which divide a number **e** of the same [sort] according to **f**, **g**, **h**, and **k**. I say that **f**, **g**, **h**, and **k** are four numbers of which **g**, the second, is in harmonic mediety between **f** and **h**, the first and third; and **h**, the third, is likewise in harmonic mediety between **g** and **k**, the second and fourth. For since the three numbers **a**, **b**, and **c** established in arithmetic mediety divide **e** according to **f**, **g**, and **h**: therefore by the preceding [proposition], **f**, **g**, and **h** are in harmonic mediety. And by the same [reasoning], because **b**, **c**, and **d**, three others of an arithmetic mediety, divide the same **e** according to **g**, **h**, and **k**: therefore **g**, **h**, and **k** are in harmonic mediety. It is therefore as was proposed: **g** is the harmonic mean between **f** and **h**, and **h** is likewise the harmonic mean between **g** and **k**. Which is what was proposed.
+
+[[image-desc: A line diagram showing values e-24, a-8, f-3, b-6, g-4, c-4, h-6, d-2, k-12. This serves as a numerical example: if 8, 6, 4, 2 (arithmetic) divide 24, the results 3, 4, 6, 12 form a double harmonic sequence.]]
+
+---
+
+[[margin: 48]]
+
+### ¶ If three numbers of a geometric mediety divide some number: it is necessary that those according to which they divide are also found in the same [geometric mediety].
+
+¶ As let **a**, **b**, and **c** be established in geometric mediety which divide **d** according to **e**, **f**, and **g**: I say that **g**, **f**, and **e** are found in the same ratio. For by the twenty-fifth [proposition] of the second [book], as **a** is to **b**, so is **f** to **e**; and by the same, as **b** is to **c**, so is **g** to **f**. Wherefore **e** will be to **f** as **f** is to **g**, and **f** is the mean in geometric mediety. Which is what was proposed. [[notes: Unlike arithmetic and harmonic medieties, which flip into each other when divided, a geometric mediety remains geometric.]]
+
+[[image-desc: A line diagram showing geometric means: d-24; a-8, b-4, c-2; e-3, f-6, g-12.]]
+
+---
+
+[[margin: 49]]
+
+### ¶ If three numbers of a musical mediety divide some number: those according to which they divide will be arranged in arithmetic mediety.
+
+[[notes: "Musical mediety" is the traditional term for harmonic mediety, so named because of its importance in defining musical intervals like the octave, fifth, and fourth.]]
+
+[[summary: This page explores the reciprocal relationships between arithmetic, geometric, and harmonic medieties. It proves that dividing a constant by an arithmetic sequence results in a harmonic sequence, and vice versa, while geometric sequences remain geometric under the same operation.]]
+
+[[keywords: arithmetic mediety, harmonic mediety, geometric mediety, ratio, number, harmonic mean, musical mediety, reciprocal relationship, division in proportion]]

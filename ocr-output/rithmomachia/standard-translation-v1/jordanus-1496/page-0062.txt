@@ -1,0 +1,57 @@
+[[meta: This page continues Book IX of Jordanus de Nemore's Arithmetica, which shifts the focus from whole numbers to the properties of ratios and fractions. The previous page introduced the five species of inequality (multiplex, superparticular, etc.). Here, Jordanus establishes the fundamental "algebraic" rules for multiplication and proportions that apply to both integers and fractions.]]
+
+[[margin: [[image-desc: Diagram for proposition 6: three horizontal line segments labeled d, c, b. Below b is a mark '1'.]]]]
+**If either of two numbers is multiplied into the other, the products must be equal.** [[margin: 6]]
+[[notes: This is the Commutative Property of Multiplication ($a \times b = b \times a$). Jordanus notes it was proved for whole numbers in Book I, but here he extends it to fractions.]]
+C This is nearly the same as the eighth proposition of the first book, but a little more general because it also extends to "minutiae" [[notes: *Minutiae* is a medieval term for fractions, literally "small things."]] and fractions. For example, if number *a* (as a part or parts) multiplies number *b* (as a part or parts) and produces *c*; and *b* multiplies *a* and produces *d*, I say that *c* and *d* are equal. For by the definition [of multiplication], *c* will be to *b* as *a* is to one; therefore, alternately, *c* is to *a* as *b* is to one. Therefore, by the inversion of the definition, *b* into *a* produces *c*. Thus *d*, which is made from *b* into *a*, is equal to *c*, which was to be demonstrated.
+
+---
+
+[[margin: [[image-desc: Diagram for proposition 7: two horizontal lines labeled c and b. To the right of c is the number 28. To the right of b are numbers 4 and 7. Below b is a '1'.]]]]
+**The product of two will be to either factor a ratio named by the other factor. And if the ratio of the product to one factor is named by the other, the same product is produced by multiplying one by the other.** [[margin: 7]]
+[[notes: "Named by" (*denominata*) refers to the "denomination" of a ratio—its numerical value. For example, the ratio 12:3 is "named" by 4.]]
+C From two numbers *a* and *b*, let *c* be produced. I say the ratio of *c* to *a* is named by *b*, and the ratio of *c* to *b* is named by *a*. For by the preceding [proposition], *a* into *b* makes *c*, and *b* into *a* also makes *c*. And by the definition, the ratio of *b* to one is the same as *c* to *a*. But the ratio of *b* to one is named by *b*; therefore, the ratio of *c* to *a* will also be named by *b*. Similarly, because *a* into *b* makes *c*, by the definition, the ratio of *a* to one is the same as *c* to *b*. But the ratio of *a* to one is named by *a*; therefore, the ratio of *c* to *b* will be named by *a*, which is what was proposed. The converse is proved by a similar method of inversion. From this, we can demonstrate any multiple for any number: by taking the whole number from unity as many times as the multiple is sought, and multiplying that whole number by the assigned number, the product will be the required multiple of the assigned number.
+
+---
+
+[[margin: [[image-desc: Diagram for proposition 8: a complex arrangement of horizontal lines. Top lines are f (labeled 6) and e (labeled 3). Below is d (labeled 2) and b (labeled 4). At the bottom is c (labeled 12). A '+' symbol is placed between the b and c lines.]]]]
+**C If a ratio is composed of two others, it is produced from the multiplication of one of those [denominations] into the other.** [[margin: 8]]
+[[notes: This explains how to "compound" ratios. In modern terms, if you have ratios $a:b$ and $b:c$, the ratio $a:c$ is found by multiplying their numerical values ($a/b \times b/c = a/c$).]]
+C To multiply one ratio into another is to multiply the denomination of one into the denomination of the other. Here, to produce a compound ratio is to multiply the denominations of those two ratios to produce the denomination of the compound ratio. Let the ratio of *c* to *a* be composed of the ratios of *c* to *b* and *b* to *a*. I say the ratio of *c* to *a* is produced from the multiplication of the ratio of *c* to *b* into the ratio of *b* to *a*. For I take *d* as the denomination of the ratio *c* to *b*, and *e* as the denomination of the ratio *b* to *a*, and *f* as the denomination of the whole ratio *c* to *a*. Since the ratio *c* to *a* is named by *f*, then by the second part of the preceding [proposition], *f* into *a* makes *c*, and by the same logic, *e* into *a* makes *b*. Therefore, by the seventh [proposition] of the second book [[notes: A reference to an earlier rule of proportions]], as *c* is to *b*, so *f* is to *e*. But *d* is the denomination of the ratio *c* to *b* by hypothesis. Therefore, by the second part of the preceding [proposition], *d* into *e* produces *f*—that is, the denomination of one of those ratios multiplied into the denomination of the other produces the denomination of the whole, which is what was proposed.
+
+---
+
+[[margin: [[image-desc: Diagram for proposition 9: four horizontal lines labeled f, e, d, b with numbers 16, 2, 8, 4 respectively in the margin next to them.]]]]
+**C Of three continuous proportionals, the product of the first and the last is equal to the product of the middle multiplied by itself.** [[margin: 9]]
+[[notes: This is the rule for a geometric progression $a, b, c$: if $a/b = b/c$, then $ac = b^2$.]]
+C This was nearly demonstrated in the twenty-seventh [proposition] of the second book, except that this is a bit broader and relies on a different method of demonstration. Let *a*, *b*, and *c* be three continuous proportionals, and let *b* multiplied by itself make *d*. Let *e* be the denomination of the ratio *b* to *a*. I say that the product of *a* into *c* is equal to *b* squared. Since *e* names the ratio *b* to *a*, it will also name the ratio *c* to *b*. Therefore, by the second part of the penultimate [proposition], *e* into *b* produces *c*. Therefore, by the eighth [proposition] of the second book, the ratio of *d* to *c* is the same as *b* to *e*. But by the same second part of the penultimate, *a* into *e* makes *b*. Therefore, by the first part of the same, *a* names the ratio of *b* to *e*, and thus also the ratio of *d* to *c*. Therefore, *a* into *c* produces *d*. It is therefore clear that *b* multiplied by itself is equal to *a* into *c*, which is the proposition.
+
+---
+
+[[margin: [[image-desc: Diagram for proposition 10: four horizontal lines e, d, b, c with numbers 12, 3, 6, 2. The number 4 is placed at the end of the line for c.]]]]
+**C If the first is to the second as the third is to the fourth, then the product of the first and fourth is equal to the product of the second and third.** [[margin: 10]]
+[[notes: This is the standard "cross-multiplication" rule for proportions: if $a/b = c/d$, then $ad = bc$.]]
+C This is similar to what the twenty-fifth [proposition] of the second book proposes. Let the ratio of *a* to *b* be as *c* to *d*, and let *b* into *c* make *e*. I say that *a* into *d* is also equal to *e*. For let *f* be the denomination of the ratio *b* to *a*; it will also name the ratio *d* to *c*. Therefore, by the second part of the seventh [proposition] of this book, *f* into *c* produces *d*. Thus, by the eighth [proposition] of the second book, *e* is to *b* as *d* is to *f*. But *f* into *a* makes *b* by the same second part of the seventh [proposition] of this book; therefore, by the first part of the same, *a* names the ratio *b* to *f*, and therefore also the ratio *e* to *d*. By the second part, therefore, *a* into *d* makes *e*, which is what was proposed.
+
+---
+
+[[margin: [[image-desc: Diagram for proposition 11: three horizontal lines a, b, c with numbers 2, 3, 2 and a '1' below.]]]]
+**C If parts [fractions] named by one of two numbers are taken as many times as the other number, the ratio of the resulting sum to the other will be named by that same number. From this, it is manifest that all those [parts] relate to one as the other number relates to the denominator.** [[margin: 11]]
+[[notes: This explains the relationship between fractions and ratios. If you take the fraction $1/b$ and add it together $a$ times, you get $a/b$.]]
+C Let *a* and *b* be two numbers, and let parts named by *b* be taken according to *a*, and let *c* be the sum of them. I say the ratio of *a* to *b* is named by *c*. For since there are as many such parts in one as there are units in *b*, it will be that just as *a* is to *b*, so are those parts to one. Or, one multiplied by those [parts] produces *c* itself; therefore, by the seventh [proposition] of this book, the ratio of *c* to one is named by *c*, the sum of those parts. Therefore, the ratio of *a* to *b* is named by the same. The corollary is known from the method of demonstration: for it was shown from this that just as *c* is to one, so is *a* to the denominator *b* which was set to name *c*. And this has been shown.
+
+---
+
+[[margin: [[image-desc: Diagram for proposition 12: six horizontal lines f, c, a, b, d, e with corresponding numbers 6, 5, 3, 2, 1.]]]]
+**C Parts [unit fractions] named by numbers that are prime to each other do not constitute a single [unit fraction].** [[margin: 12]]
+[[notes: This proves that $1/a + 1/b$ cannot be simplified into another unit fraction $1/n$ if $a$ and $b$ have no common factors.]]
+C Let *a* and *b* be numbers prime to each other, and let their sum be *c*, which by the ninth [proposition] of the third book is prime to both *a* and *b*. Let *d* be the part named by *a* (i.e., $1/a$) and *e* be the part named by *b* (i.e., $1/b$). I say that *d* and *e* do not form one [unit] part. I multiply *a* into *b* to produce *f*, which by the twenty-fourth [proposition] of the third book is the least number they measure. This same *f*, by the tenth [proposition] of the third book, is prime to *c*. By the second [proposition] of this book, *d* is the reduced parts named by *f* taken according to *b*, and *e* is the reduced parts named by *f* taken according to *a*. Therefore, *d* and *e* together are parts named by *f* taken according to *c* (i.e., $c/f$). Therefore, by the corollary of the preceding [proposition], *d* plus *e* is to one as *c* is to *f*. But *c* is not [a part of] *f*, since they have been shown to be prime to each other; therefore *d* and *e* together do not constitute one part. This is what was proposed.
+
+---
+
+**C If parts [unit fractions] are named by any number of numbers in a sequence from unity, it is impossible for one [unit fraction] to be composed from them.** [[margin: 13]]
+
+<vocab>proportio (ratio), proportionalium (proportionals), denominata (named/denominated), productum (product), numerus (number), unitas (unity/one), diffinitio (definition), propositum (proposition/proposed)</vocab>
+
+[[summary: This page establishes fundamental rules for ratios and fractions, including the commutative property of multiplication, cross-multiplication in proportions, and the proof that adding unit fractions with coprime denominators cannot result in another unit fraction.]]
+[[keywords: commutative property, ratio, denomination, proportion, unit fractions, coprime numbers, Jordanus de Nemore]]

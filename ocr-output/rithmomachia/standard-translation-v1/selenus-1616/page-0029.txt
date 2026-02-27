@@ -1,0 +1,27 @@
+[[meta: This page is the formal title page for the first section of the manuscript. It follows a blank leaf and features an elaborate architectural frame (described in the image description) which was common for scholarly works of the early modern period.]]
+
+### The
+# First Book/
+## of the Descrip-
+## tion/ of the Chess-
+## Game.
+
+[[insert: 
+Belonging to the Monastery of Wessobrunn.
+]]
+[[notes: The Latin "Monasterij Wessobrunnensis" indicates this volume was part of the library at Wessobrunn Abbey, a famed Benedictine monastery in Upper Bavaria. The "sis" in the transcription is the grammatical suffix of the monastery's name in Latin.]]
+
+[[margin: Xerxes Philometer.]]
+[[notes: Philometer (or Philometor) is a name often attributed to a legendary Chaldean philosopher who, according to medieval and Renaissance tradition, invented chess to teach morality to a king.]]
+
+[[margin: Amilinus Evilmerodach.]]
+[[notes: Evil-Merodach was a historical King of Babylon (son of Nebuchadnezzar). In the "Chess Book" by Jacobus de Cessolis—one of the most copied works of the Middle Ages—chess was supposedly created to cure this king of his madness and tyranny.]]
+
+---
+
+->For sale at the shop of Henning Gross the Younger.<-
+[[notes: Henning Gross the Younger (1582–1649) was a prominent publisher and bookseller in Leipzig. This line suggests the manuscript is either a transcript of a printed book or a prepared copy intended for the book trade.]]
+
+[[summary: This is the title page for the first book of a treatise on chess, identifying the monastery where it was kept and citing the legendary historical figures credited with the game's invention.]]
+
+[[keywords: Chess history, Wessobrunn Abbey, Evil-Merodach, Xerxes Philometer, Henning Gross, 17th-century books, title page]]

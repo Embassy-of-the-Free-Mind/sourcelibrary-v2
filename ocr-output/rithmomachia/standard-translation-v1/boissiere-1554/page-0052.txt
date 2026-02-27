@@ -1,0 +1,35 @@
+[[meta: This page transitions from the general military theory of piece arrangement mentioned on the previous page to the specific rules of movement and the categorization of capture methods. It bridges the gap between the symbolic "battalion" and the practical mechanics of the game.]]
+
+# RYTHMOMACHIA, THE GAME [[notes: The name "Rythmomachia" (or Rithmomachia) is derived from the Greek words for "number" and "battle." It was a highly popular educational board game in the Middle Ages and Renaissance that taught arithmetic and music theory through a tactical simulation.]]
+
+nevertheless, we shall grant that they possess some form of a **battalion** [[notes: The author continues the military metaphor from the previous page, treating the mathematical pieces as soldiers in a tactical formation.]], wherefore we shall speak first of the arrangement and the movement.
+
+### Concerning the movement of the pieces.
+
+First, all shall move straight forward, or to the right, or to the left, or backward; some wish to allow movement in all directions, which I leave to the discretion of the players.
+
+Secondly, the group of **squares** moves by 4 steps, or 4 **spaces** [[notes: The original term *loges* (lodgings) refers to the individual squares on the grid.]]: the **triangles** move by 3, and the **rounds** [[notes: Circles.]] move into the next adjacent space. When I say the fourth space, I mean counting both the place where the piece is and the place where it goes [[notes: This is "inclusive counting," a standard mathematical practice in the Renaissance where the starting square is counted as "one." Therefore, a square moves three empty squares and lands on the fourth.]].
+
+## The procedure of their combat.
+
+The numbers may take one another by **encounter**, **assault**, **ambush**, and **imprisonment** [[notes: These are the four primary ways to capture an opponent's piece. Unlike Chess, where capture is purely positional, Rythmomachia requires specific mathematical conditions—such as a piece's value equaling its target's, or two pieces' values adding up to the target's—to effect a capture.]]: and for these captures, an example is proposed to you on this **board** [[notes: *Tablier* refers to the physical game board.]] in which you may consider them according to how we shall declare them hereafter...
+
+->**DIAGRAM OF THE BOARD IN PLAY**<-
+
+| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Row 1** | | | | | | | △ 25 | | | ● 25 | | | | | |
+| **Row 2** | □ 45 | | | | | | | | | | ● 5 | | | | |
+| **Row 3** | | | | | | | | | | | | | | | |
+| **Row 4** | | | | | | ○ 8 | | | | | | | | | |
+| **Row 5** | | ○ 3 | | ○ 36 | | | **B** | | | ▲ 12 | | | | | |
+| **Row 6** | | | | | | ○ 4 | **C** | | | | | | | | |
+| **Row 7** | | | | | | | | | | | | ● 3 | | | |
+| **Row 8** | | | | | | | | | | | ● 6 | □ 15 | ■ 28 | | |
+| **Row 9** | | | | | | | | | | | | ▲ 20 | | | |
+
+[[notes: In this diagram, white shapes (○, △, □) represent one player's pieces, and black/filled shapes (●, ▲, ■) represent the opponent's. The letters **B** and **C** likely mark specific locations for a move or capture explained in the following text.]]
+
+[[summary: This page explains the movement rules for the three types of pieces in Rythmomachia (Circles, Triangles, and Squares) and introduces the four methods of capturing an opponent's numbers. It includes a diagram of a game board to illustrate these tactical maneuvers.]]
+
+[[keywords: Rythmomachia, board game, movement rules, capture methods, mathematical games, Renaissance education, inclusive counting]]

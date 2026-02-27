@@ -1,0 +1,25 @@
+[[meta: This page continues the instructions for setting up the Rithmomachia board, specifically moving from the calculation of the square pieces' values (the superpartients) to their physical placement on the grid relative to the triangles, circles, and the Pyramid.]]
+
+# THE PHILOSOPHERS' GAME
+
+Having thus perfected your hidden and sacred layout, take the two **superpartient** [[notes: A mathematical ratio where a larger number contains a smaller number plus several of its fractional parts (e.g., 5:3). These ratios are represented by square pieces, the most advanced in the game]] proportions, which make up the four **square tables** [[notes: "Tables" (from the Latin *tabulae*) refers to the game pieces themselves. In Rithmomachia, the shape—circle, triangle, or square—indicates the mathematical complexity of the piece]] on each side, and transfer them inseparably to the four squares at each of the two corners of the **tablier** [[notes: The game board, which is a rectangular grid of 8 by 16 squares]]. 
+
+Afterward, in front of the said squares on each side, you will arrange the two triangular pieces of the proportion nearest to each side, placing the largest number toward the edge of the board. The other two triangular proportions that remain in the middle should be extended to the row of the **Pyramid** [[notes: The Pyramid is the most complex piece on the board, acting as a "captain." It is often physically built by stacking smaller pieces, and its value is the sum of various proportions]]. Place the largest number of each of these two proportions near the squares or the Pyramid; thus, the four triangles will occupy the four squares of the second rows. Next to these, you will join the **multiple circles** [[notes: Circular pieces represent "multiple" ratios (like 2:1 or 4:1), which are the foundational blocks of the game's numerical hierarchy]] exactly as they were arranged previously. 
+
+And so the arrangement of the **even numbers** [[notes: In Rithmomachia, one player (the Dark side) typically uses pieces derived from even numbers, while the other (the Light side) uses pieces derived from odd numbers, representing a conflict between numerical properties]] is completed.
+
+->**THE BOARD OF RITHMOMACHIA**<-
+
+| Column 1 (Dark Squares) | Column 2 (Dark Misc) | Column 3 (Dark Triangles) | Column 4 (Dark Circles) | ... | Column 13 (Light Circles) | Column 14 (Light Triangles) | Column 15 (Light Circles) | Column 16 (Light Squares) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Square** (361/225) | **Pyramid** | **Triangle** (100) | **Circle** (9) | | **Circle** (8) | **Triangle** (2) | **Circle** (64) | **Square** (81/25) |
+| **Square** (120) | **Circle** (81) | **Triangle** (90) | **Circle** (7) | | **Circle** (6) | **Triangle** (6) | **Circle** (36) | **Square** (45) |
+| | **Circle** (49) | **Triangle** (64) | **Circle** (5) | | **Circle** (4) | **Triangle** (25) | **Circle** (16) | **Square** (15) |
+| | **Circle** (25) | **Triangle** (56) | **Circle** (3) | | **Circle** (2) | **Triangle** (20) | **Circle** (4) | |
+| | **Circle** (9) | **Triangle** (30) | | | | **Triangle** (42) | | |
+| **Square** (121/49) | | **Triangle** (36) | | | | **Triangle** (49) | | **Square** (289/169) |
+| **Square** (66/28) | | **Triangle** (12) | | | | **Triangle** (72) | | **Square** (153) |
+| | | **Triangle** (16) | | | | **Triangle** (81) | **Pyramid** | |
+
+[[summary: This page explains how to physically place the square, triangular, and circular pieces on the 8x16 Rithmomachia board. It details the completion of the "Even" side of the board and provides a visual map of the starting positions for both Dark and Light pieces.]]
+[[keywords: Rithmomachia, Philosophers' Game, arithmetic, proportions, Pyramid, game board, Pythagorean, superpartient]]

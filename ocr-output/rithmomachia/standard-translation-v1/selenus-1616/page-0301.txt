@@ -1,0 +1,17 @@
+[[meta: This page completes the analysis of the first variation of Damiano's Defense. The text begins mid-sentence, concluding the scenario from page 266 where White reacts to a "harmful move" by Black. The numbering refers to the Selenus system, where squares are numbered 1 to 64, starting from White's left-hand corner (a1).]]
+
+# 1. cap: Of the Game of Chess.
+
+[[margin: 1. cap:]] ...a harmful move [[notes: This refers to the final move discussed on the previous page]] / and White moves / in its place / with better advantage / the King's Bishop's Soldier [[notes: *Soldaten* (Soldiers) are Pawns. The King's Bishop's Soldier is the pawn on the f-file.]] / to twenty-two [[notes: Square f3]]: then if Black moves / the King's Knight / to [the square of] White's King's Bishop's Soldier / to forty-six [[notes: Square f6]]: then White has / so far as He / knows how to move / the pieces / a Soldier for advantage / and the victory / in his hands.
+
+[[margin: 31.]] But if Black / does not take / the White Soldier / with the Knight / (no. 2.) [[notes: Referring to a previous variation]] / but instead / moves the Queen / to [the square of] White's King's Knight / to fifty-two [[notes: Square d7]]: then White plays / (to protect it) / the King's Soldier / to twenty-nine [[notes: Square e4]]: Black / further [moves] against the White Knight / the King's Soldier / to forty-five [[notes: Square e6]]: White / [moves] the same [Knight] / to nineteen [[notes: Square c3]]: Black / takes / with the Queen / the White King's Soldier / and offers Check: White / covers the King / with his Bishop [[notes: *Schützen* (Shooters) are used here for Bishops.]] / to twelve [[notes: Square d2]]: Black / (in order to obtain the White King's Bishop's Soldier / by force) / [moves] the King's Bishop / to thirty-five [[notes: Square c5]]: White / [moves] the same [Bishop] / to twenty-two [[notes: Square f3]]: Black / [moves] the King's Knight / to fifty-three [[notes: Square e7]]: White / [moves] his King's Knight / against the Black Queen / to thirteen [[notes: Square e2]]: Black / [moves] the same [the Queen] / to fourteen [[notes: Square f2]]: whereby He / causes / the exchange of both Queens / and / since White / has no advantage / brings his game / into good order.
+
+Whosoever now / keeps in mind and observes / that which has been mentioned / which one / for the use and benefit / of Chess-players / regarding the First Variation / of Damiano's game [[notes: Pedro Damiano (1480–1544) was a Portuguese chess player whose 1512 book was a standard text for centuries.]] / has wished to indicate / and remind / the same can / even though the opening / proposed by Damiano / is not so very good / arrange his game / in a not unserviceable way.
+
+->[[image-desc: A decorative baroque-style woodcut tailpiece featuring a central grotesque mask or face. The mask is framed by elaborate scrolling foliage, floral motifs, and symmetrical ornamental drapes ending in tassels.]]<-
+
+Ll iiij
+[[meta: catchword: Das]]
+
+[[summary: This page concludes an analysis of a variation of the Damiano Defense, demonstrating how White can maintain an advantage or how Black can force a Queen exchange to equalize the game. It concludes the section with a general assessment of Damiano's opening strategies.]]
+[[keywords: Damiano's Defense, Selenus notation, Chess tactics, Queen exchange, 17th-century chess, Pedro Damiano]]

@@ -1,0 +1,46 @@
+[[meta: This page continues the specific technical instructions for constructing the "Huts" (defensive formations) in Old Chess, as adapted by the author from Jakob Mennel's 1507 treatise. It focuses on the coordinates and piece movements required for these historic setups.]]
+
+-> Das Vierte Buch/ 10. cap. <-
+
+> » Soldiers / to seventeen: and (so far as / field 35 / is cleared and se-
+> » cured by the King's Archer's-Soldier [[notes: The "King's Archer" is the King's Bishop; the "Soldier" is a Pawn. This refers to the King's Bishop's Pawn.]]) to thirty-five: the K. Archers /
+> » to twenty: the K. Rook's-Soldiers / to twenty-five: the K.
+> » Archers / to thirty-four: the King with the Queen /
+> » at once / the latter to nineteen: the former to eighteen. When now
+> » the pieces / stand thus / it is called a **Hut**, and the W. King /
+> » is safe from **Checks** [[notes: *Schachen*]].
+
+> » The **Other** / is made in the following manner on the side of the **Black** /
+> » : He moves / the K. Rook's-Soldier /
+> » to thirty-three: the K. Soldier / to forty-four: the K. Archer /
+> » over his Knight's-Soldier / to
+> » forty-one: the K. Knight [[notes: *Reuter*, literally "Rider"]] / to forty-three: the
+> » King / and the Queen / in one move / the former / to fifty-eight:
+> » the latter to fifty-nine: and in this way / across the width of the fields /
+> » of the first exit / the Queen has moved / into the third field:
+> » When now the pieces / stand thus / it is called **the Iron Hut** /
+> » and is a good, secure Hut.
+
+> » The **third** is to be made in the following way: The White /
+> » moves / the K. Soldier / to twenty-nine: the King /
+> » to fourteen: (since he / finds a Soldier / on the same
+> » field / he has the power / in the first exit /
+> » to push the same forward) and the Queen / at the same time /
+> » to twenty-one: and so has / in two moves / also a good
+> » **Hut**.
+
+Besides these three / there are many other good Huts: but
+through daily practice / one will / surely learn them: Also,
+the Huts / (just like the entire Game) are better learned
+by **visual observation** [[notes: *Augenschein*, literally "eye-shine" or firsthand sight]] / than from written instructions: Also,
+one should not understand it / as if the moves / must be made exactly /
+one after the other / but rather / one can / adopt a
+different order / and move here / then there / until the pieces /
+finally / are arranged / just as indicated /
+and as they should stand / in the Hut: Unless / the opponent /
+moves his pieces / before one's eyes / and in the way / so that
+he could not properly / make the Hut / of his will.
+
+[[summary: This page provides specific move sequences for three defensive chess formations called "Huts," including the "Iron Hut," using an archaic 1-64 coordinate system. The author notes that while these sequences are recorded, the game is best learned through practice and visual experience rather than rigid adherence to written scripts.]]
+
+[[keywords: Old Chess, Hütte, Iron Hut, Jakob Mennel, chess tactics, King's Archer, Knight, Queen's leap, chess coordinates, defensive formations]]

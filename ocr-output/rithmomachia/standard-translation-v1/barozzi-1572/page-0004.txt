@@ -1,0 +1,12 @@
+[[meta: Continuity from the previous page: This page is the verso (the back side) of the initial flyleaf. It continues the protective buffer of blank paper before the manuscript’s formal beginning.]]
+
+[This page is blank]
+
+[[notes: While this page contains no written text, its physical condition tells a story of the book's history. The **foxing**—those reddish-brown spots—is a common sign of aging in handmade paper, usually caused by high humidity reacting with iron minerals in the paper or fungal growth. The **staining** suggests the book may have been stored in a damp environment at some point in its several-hundred-year history. The partial ink marks in the upper corner are likely the "ghost" or bleed-through of a **library stamp** from an adjacent page, used by past curators to indicate which collection this volume belonged to.]]
+
+[[margin: Digitized by Google]]
+[[notes: This is a modern digital watermark added during the scanning process to acknowledge the role of the Google Books project in archiving the physical volume.]]
+
+[[summary: This page is a second blank flyleaf exhibiting significant signs of age and environmental wear, such as foxing and moisture staining. It contains no legible text but shows faint traces of library markings from surrounding pages.]]
+
+[[keywords: flyleaf, foxing, paper degradation, library stamp, manuscript history, digitization]]

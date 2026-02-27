@@ -1,0 +1,25 @@
+[[meta: This page continues the tactical walkthrough from Chapter 5, Book 3, focusing on specific counter-moves and material exchanges. The text employs the coordinate system common in 17th-century treatises, where squares are numbered 1 through 64 starting from the White side’s left (a1).]]
+
+### Of the Game of Chess.
+[[meta: catchword: whose]]
+
+<margin>3. cap:</margin>
+[[insert: ...the]] Soldiers [[note: "Soldiers" (Soldaten) refers to Pawns]], with his King's Archer [[note: The "Archer" (Schütze) is the Bishop]], and offers **Check**: The **White** [player] takes the same with the King. The **Black** [player] offers **Check** with the Queen from twenty-nine [[note: Square e4]] and takes (once the **White** King has been moved out of **Check**) the White King's Rider [[note: The "Rider" (Reuter) is the Knight]]: whereby he will obtain a better game (because he has gained a move's advantage thereby). Furthermore, the White King, because **Check** was offered to him and he was moved forward out of his square, may no longer leap [[note: This refers to an early form of castling where the King could move multiple squares once per game]], regardless of the fact that, according to the state of this game, both Queens are still present, and the **Black** player can attack him with better opportunity, which would be of great consequence to him.
+
+<margin>17.</margin>
+But if the **Black** player does not wish to take the White Soldier (no. 16), but rather places the Queen upon the White King's Soldier—namely, the Soldier of the Rider and the Archer [[note: Likely referring to the f-pawn or e-pawn depending on the file configuration]]—at twenty-nine [[note: Square e4]]: * so
+
+<margin>18.</margin>
+**White** (in order to prevent the **Checkmate** from the Black Queen at eleven [[note: Square c2]]) moves the King's Rider to twenty-six [[note: Square b4]]: The **Black** player does not take him with the King's Archer (for **White** would take him with the Queen and thereby considerably secure his game), but rather, with greater benefit, takes the White King's Soldier with his Queen and offers **Check**: therefore, if **White** moves the King to three [[note: Square c1]] or covers with the Queen at twelve [[note: Square d2]]: he loses his Rider or gives cause for an exchange of Queens. But if he covers him with the same [[note: the Knight]] at twenty [[note: Square d3]]: then the **Black** player takes him with the King's Archer: *
+
+<margin>19.</margin>
+The **White** player [takes] the same with the King's Soldier: The **Black** player [takes] the White King's Rider's Soldier with the Queen and moves her onto his Rock [[note: The "Rock" (Rochen) is the Rook or Castle]]: The **White** player [moves] the same to three [[note: Square c1]]: The **Black** player (in order to obtain the same by force) moves the King's Archer to seventeen [[note: Square a3]]: The **White** player (so as not to lose it for nothing) moves the Queen to twelve [[note: Square d2]]: The **Black** player takes the White King's Rock with the Queen and offers **Check**: The **White** player captures her with his Queen: The **Black** player [captures] her with the King's Archer: The **White** player [captures] the same with the King: The **Black** player (since he obtained the White King's Rock in exchange for his King's Archer) will now easily win further against the **White** player.
+
+<margin>20.</margin>
+But if the **White** player does not take the Black Archer with the Queen (no. 19), but rather with the King's Archer's Soldier: then the **Black** player takes the White King's Rider's Soldier with the Queen and moves her to
+
+[[vocab: Check, King, Queen, Knight, Bishop, Rook, Pawn, Checkmate, White, Black]]
+
+[[summary: This page details a sequence of moves where Black aggressively uses the Queen and Bishop to force material advantages. The analysis concludes with a successful exchange where Black wins a Rook (Rock) for a Bishop (Archer), securing a winning endgame.]]
+
+[[keywords: tactics, material exchange, Rider, Archer, Rock, checkmate threats, square numbering]]

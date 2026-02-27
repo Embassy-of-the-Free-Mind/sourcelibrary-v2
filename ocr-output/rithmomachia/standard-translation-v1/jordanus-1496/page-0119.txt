@@ -1,0 +1,52 @@
+[[meta: This page continues the mathematical proof from the previous page, detailing how to find the specific integer values for each note in the fifteen-string scale (the Greater Perfect System) by expanding the numerical values to avoid fractions.]]
+
+#### IIII
+
+...to $q$ let $p$ be made. And they will be identical: $a$ to $h$, $l$ to $m$, and $p$ to $q$ will be *sesquioctave* [[notes: A ratio of 9:8, which defines a whole tone in Pythagorean tuning]] and the numerical values of the tones. And $h$ is found to have a ninth part; I increase that by eight and let $k$ result. Thus, $h$ to $k$ will be *sesquioctave* by the eighth [rule] of the second [book] of Arithmetics. And if $g$ had a ninth part, I would make $f$ *sesquioctave* to $g$. But since it lacks one, I increase all the numbers found in the third position by eight, and let there arise in the fourth position $a, b, c, d, e, g, h, k, l, m, n, p, q$. These, by the same seventh [rule], will be in the same mutual relationships as the numbers of the third position. Therefore, by adding its eighth part to $g$, I make $f$; and by adding an eighth part to $p$, I make $o$. 
+
+I say, therefore, that the numbers established in the fourth position are the numbers of the *pentadecachordon* [[notes: The fifteen-string scale covering two octaves]]. For $a$ to $b$ is a *diatessaron* [[notes: A perfect fourth]], and $a$ to $d$ is a tone, and $c$ to $d$ is a tone; therefore, by the sixth [rule] of the third [book], $b$ to $c$ is a minor semitone. And because $a$ to $h$ is a *diapason* [[notes: A perfect octave]] and $a$ to $e$ is a *diapente* [[notes: A perfect fifth]], therefore, by the twentieth [rule] of the third [book], $e$ to $h$ is a *diatessaron*; and $g$ to $h$ and $f$ to $g$ are shown to be *sesquioctaves* and tones. Therefore, by the sixth [rule] of the third [book], $e$ to $f$ is a minor semitone. And by the same agreement, you may show $k$ to $l$ and $n$ to $o$ to be minor semitones; and the others are known to be tones relative to each other. 
+
+Therefore, the numbers for the diatonic *pentadecachordon* have been found. For there is a tone from the number of the *proslambanomenos* [[notes: The lowest, "added" note]] to the number of the *hypate hypaton*; and from the *hypate hypaton* to the *parhypate hypaton*, a minor semitone. From the *parhypate hypaton* to the *lichanos hypaton*, and from the *lichanos* to the *hypate meson*, are two tones. From the *hypate meson* to the *parhypate meson*, a minor semitone. From the *parhypate meson* to the *lichanos meson*, and from the *lichanos* to the *mese*, and from the *mese* to the *paramese* of the disjuncts [[notes: The *diezeugmenon* or "separated" tetrachord]], are three tones. From the *paramese* to the *trite*, a minor semitone. From the *trite* to the *paranete*, and from the *paranete* to the *nete*, are two tones. From the *nete* to the *trite hyperboleon* [[notes: The "extreme" or highest tetrachord]], a minor semitone. From the *trite* to the *paranete*, and from the *paranete* to the *nete*, are two tones. Therefore, the proposition is known.
+
+¶ Three species of diatonic *diatessaron* [[notes: The different ways the semitone can be placed within a perfect fourth]] consonances sound together from the *proslambanomenos* to the *parhypate meson*. And four species of *diapente* [[notes: Perfect fifth]] from the *proslambanomenos* to the *trite diezeugmenon*. Indeed, there are seven species of *diapason* [[notes: Perfect octave]] between the *proslambanomenos* and the *paranete hyperboleon*.
+
+->**Species of Diatessaron, Diapente, and Diapason**<-
+
+| | Species of diatessaron | | | Species of diapente | | | | Species of diapason | | | | | | |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | 1st | 2nd | 3rd | 1st | 2nd | 3rd | 4th | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th |
+| Proslamba. a | | | | | | | | | | | | | | |
+| Hypate hyp. b | To. | o | o | To. | o | o | o | To. | o | o | o | o | o | o |
+| Parhyp. hyp. c | Se. | Se. | o | Se. | o | o | o | Se. | Se. | o | o | o | o | o |
+| Licha. hyp. d | To. | tone | tone | To. | tone | o | o | To. | tone | tone | o | o | o | o |
+| Hypate me. e | | tone | tone | To. | tone | o | o | To. | tone | tone | tone | o | o | o |
+| Parhyp. me. f | | | Semi. | | Se. | Se. | o | Se. | Se. | Se. | Se. | Se. | o | o |
+| Licha. me. g | | | | | tone | tone | tone | To. | tone | tone | tone | tone | o | o |
+| Mese h | | | | | | tone | tone | To. | tone | tone | tone | tone | tone | o |
+| Para. die. k | | | | | | | tone | To. | | tone | tone | tone | tone | tone | tone |
+| Trite die. l | | | | | | | | Se. | | | Se. | Se. | Se. | Se. | Se. |
+| Para. die. m | | | | | | | | | | | | tone | tone | tone | tone |
+| Nete die. n | | | | | | | | | | | | | tone | tone | tone |
+| Trite hyper. o | | | | | | | | | | | | | | Se. | Se. |
+| Para. hyp. p | | | | | | | | | | | | | | | tone |
+| Nete hyp. q | | | | | | | | | | | | | | | |
+
+[[notes: In this table, "To." or "tone" indicates a whole step, and "Se." or "Semi." indicates a minor semitone. The "o" characters act as placeholders showing which intervals belong to which species.]]
+
+¶ The **first species of diatessaron** consists of a tone, a minor semitone, and a tone. The **second**, of a semitone and two tones. The **third**, of two tones and a following semitone. 
+
+¶ The **first species of diapente** is that which consists of a tone, a minor semitone, and two tones. The **second**, of two tones, a semitone, and a tone. The **third**, of a semitone and three tones. The **fourth**, of three tones and a semitone. 
+
+¶ The **first species of diapason** is that which consists of a tone, a minor semitone, two tones, a minor semitone, and two tones [[notes: This describes the structure of a Dorian scale/mode in the medieval system]]. The **second**, of a semitone, two tones, a semitone, and three tones [[notes: Phrygian]]. The **third**, of two tones, a semitone, three tones, and a semitone [[notes: Lydian]]. The **fourth**, of a tone, a semitone, three tones, a semitone, and a tone [[notes: Mixolydian]]. The **fifth**, of a semitone, three tones, a semitone, and two tones. The **sixth**, of three tones, a semitone, two tones, and a semitone. The **seventh**, of two tones, a semitone, two tones, a semitone, and a tone. 
+
+¶ Thus, according to the definition, the **first species of diatessaron** will be from *proslambanomenos* to *lichanos hypaton*. For from *proslambanomenos* to *hypate hypaton* is a tone; and from *hypate hypaton* to *parhypate hypaton* is a minor semitone; and from *parhypate hypaton* to *lichanos hypaton* is a tone. And likewise by definition, the **second species of diatessaron** is found from *hypate hypaton* to *hypate meson*. And the **third**, from *parhypate hypaton* to *parhypate meson*. 
+
+¶ The **species of diapente** shall be taken by their definitions in this manner: the **first** from *proslambanomenos* to *hypate meson*. The **second** from *parhypate hypaton* to *lichanos meson*. The **third** from *hypate meson* to *paranete diezeugmenon*. And the **fourth** from *parhypate meson* to *trite diezeugmenon*. 
+
+¶ And the **seven species of diapason** are sought similarly by their definitions: the **first** from *proslambanomenos* to *mese*. The **second** from *hypate hypaton* to *paramese diezeugmenon*. The **third** from *parhypate hypaton* to *trite diezeugmenon*. The **fourth** from *lichanos hypaton* to *paranete diezeugmenon*. The **fifth** from *hypate meson* to *nete diezeugmenon*. The **sixth** from *parhypate meson* to *trite hyperboleon*. The **seventh**, indeed, from *lichanos meson* to *paranete hyperboleon*. But these things are easy to know once the figure above has been examined diligently.
+
+h 2
+
+[[summary: This page calculates the specific numerical ratios for the fifteen-note scale and categorizes the different species (patterns) of fourths, fifths, and octaves that occur within it. It provides a comprehensive map of the diatonic genus used in classical and medieval music theory.]]
+
+[[keywords: pentadecachordon, diatessaron, diapente, diapason, species of consonances, Pythagorean tuning, Greater Perfect System, Greek music theory, minor semitone, tone ratios]]

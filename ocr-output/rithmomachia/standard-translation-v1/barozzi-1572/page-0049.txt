@@ -1,0 +1,41 @@
+[[meta: This page continues the mathematical breakdown of musical proportions derived from specific number sets. The previous page established that the ratios between numbers like 2, 3, 4, and 6 correspond to the fundamental intervals of music. This page extends that logic to more complex tables and sets of differences between those numbers.]]
+
+of this game: as well as to excite the minds of those who have no knowledge of such sciences to seek to understand the origin of **Musical consonances** from those who know it.
+
+## TABLE OF CONSONANCES
+
+->First Example.<-
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 4. | 6. | 8. | 12. |
+
+The **Diapente** [[notes: The Greek term for a "Fifth," an interval produced by the ratio 3:2.]] consonance is shown to us by the numbers A [and] B, or the number A compared to the difference of the numbers A [and] D. Similarly the numbers C [and] D, or the number C compared to the difference B [and] D, and the difference A [and] C to the difference B [and] D, or even to the number D. [[notes: Using the table: A(12):B(8) is 3:2. A(12) to the difference of A-D(12-4=8) is 12:8 or 3:2. C(6):D(4) is 3:2. C(6) to the difference of B-D(8-4=4) is 6:4 or 3:2. Difference of A-C(12-6=6) to difference B-D(8-4=4) is 6:4 or 3:2.]]
+
+The **Diatessaron** [[notes: The Greek term for a "Fourth," an interval produced by the ratio 4:3.]], the numbers B [and] C, and the difference A from the difference A [and] C, or to the C, and the B to the difference A [and] C. [[notes: B(8):C(6) is 4:3. B(8) to the difference of A-C(12-6=6) is 8:6 or 4:3.]]
+
+The **Diapasson** [[notes: The Greek term for an "Octave," an interval produced by the ratio 2:1.]], the A [and] C, and the B [and] D, or indeed the B to each of the differences B [and] D, and A [and] D: and the difference A [and] D to the D, or to the differences A [and] B & B [and] D: and the A to the difference A [and] C. [[notes: A(12):C(6) is 2:1. B(8):D(4) is 2:1. Difference A-D(12-4=8) to D(4) is 2:1. A(12) to difference A-C(12-6=6) is 2:1.]]
+
+The **Diapasson with the Diapente** together [[notes: An Octave plus a Fifth, known as a "Twelfth," produced by the ratio 3:1.]], the A [and] D, and the A to the differences B [and] A & B [and] D, and the C to the differences C [and] B & C [and] D, and the difference A [and] C to the differences C [and] B & C [and] D. [[notes: A(12):D(4) is 3:1. C(6) to the difference C-B(8-6=2) is 3:1.]]
+
+The **Disdiapasson** [[notes: The Greek term for a "Double Octave" or "Fifteenth," produced by the ratio 4:1.]], to the differences B [and] C & C [and] D, and the difference A [and] D to the said differences B [and] C & C [and] D. [[notes: Difference A-D(12-4=8) to the differences B-C(2) or C-D(2). 8:2 is 4:1.]]
+
+->Second Example.<-
+
+| D. | C. | B. | A. |
+|:---:|:---:|:---:|:---:|
+| 3. | 5. | 15. | 25. |
+
+The **Diapente**, the B to the differences B [and] A & B [and] C, and the D to the difference D [and] C. [[notes: B(15) to difference A-B(25-15=10) is 15:10 or 3:2. D(3) to difference C-D(5-3=2) is 3:2.]]
+The **Diatessaron**, the difference C [and] A to the number B. [[notes: Difference A-C(25-5=20) to B(15) is 20:15 or 4:3.]]
+The **Diapasson**, the difference A [and] C to the differences A [and] B & B [and] C. [[notes: Difference A-C(20) to difference A-B(10) is 20:10 or 2:1.]]
+The **Diapasson with the Diapente** together, the B to the C. [[notes: B(15):C(5) is 3:1.]]
+The **Disdiapasson**, the difference B [and] D to the D. [[notes: Difference B-D(15-3=12) to D(3) is 12:3 or 4:1.]]
+
+<sig>C I — I</sig>
+<meta>catchword: Ter-</meta>
+
+<vocab>consonantie, Musicali, Diapente, Diatessaron, Diapasson, Disdiapasson, differenza</vocab>
+
+[[summary: This page provides two numerical tables (4, 6, 8, 12 and 3, 5, 15, 25) to demonstrate how the mathematical differences between these numbers correspond to fundamental musical intervals like the Fifth, Fourth, and Octave. It serves as a bridge between the study of arithmetic proportions and the science of music.]]
+[[keywords: musical consonances, Diapente, Diatessaron, Diapasson, Disdiapasson, arithmetic ratios, music theory, mathematical proportions]]

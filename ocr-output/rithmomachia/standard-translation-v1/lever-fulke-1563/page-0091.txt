@@ -1,0 +1,23 @@
+The Philosopher's Game.
+
+<meta>catchword: Victory</meta>
+
+## ¶ Victory of Bodies.
+
+Victory of bodies is simply to capture <note>original: "take"</note> a certain number of pieces <note>original: "men"</note>; for example, if the players <note>original: "game-sters"</note> agree that whoever first captures 4, 5, 6, or 10 pieces, etc., shall win the game.
+
+## ¶ Victory of Goods.
+
+Victory of goods is to capture a certain total value <note>original: "number"</note> without regard for the number of pieces <note>original: "men"</note>. For instance, if it is agreed <note>original: "covenanted"</note> that whoever first captures pieces amounting to a total of 100 or 200 shall have the victory.
+
+## ¶ Victory of Quarrel.
+
+Victory of quarrel <note>original: "quarell"</note> is when neither the number of pieces <note>original: "men"</note> nor the total value <note>original: "number"</note> is considered, but rather the digits <note>original: "characters"</note> of the numbers. For example, if it is determined that whoever first captures a total of 100 within eight digits <note>original: "characters"</note>, regardless of how many pieces they are on, shall win. For instance: 2, 4, 6, 8, 24, 64. If you have 100 within eight digits, it does not matter <note>original: "skilleth not"</note> even if the total is more than 100; as in this example, the total is more than 100 by 4 <note>original: "by .4."; the sum of the example provided is 108</note>.
+
+<summary>
+This section describes three specific types of "common victories" in the Philosopher's Game (Rithmomachia). "Victory of Bodies" is won by capturing a set number of the opponent's pieces. "Victory of Goods" is won by capturing pieces whose combined numerical values reach a predetermined goal. "Victory of Quarrel" is won by capturing a specific total value using a specific number of digits (characters), regardless of how many individual pieces those digits are spread across.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, Victory of Bodies, Victory of Goods, Victory of Quarrel, Board Game Rules, Medieval Mathematics, Capture Mechanics
+</keywords>

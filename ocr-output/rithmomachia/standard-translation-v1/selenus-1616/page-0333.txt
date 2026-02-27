@@ -1,0 +1,32 @@
+[[meta: This page continues Chapter 5 of Book 3. On the previous page, the author began listing five ways to defend the Black King's Pawn (the "Soldier" on square e5). He is currently critiquing the work of the Portuguese master Pedro Damiano (Damianus) and uses a 1–64 square coordinate system where square 1 is a1 and square 64 is h8.]]
+
+# Of the Game of Chess.
+#### Pp iij [[note: This is a signature mark, used by early printers to keep the pages in the correct order for binding.]]
+-> catchword: Wan <-
+
+<margin>5. cap:</margin>
+...[which] he values much worse) from [square] forty-three [[note: square c6]]: Although some who wish to use this method would perhaps not arrange and place them in the manner (as he writes about it, and as was explained out of necessity in the preceding 3rd and 4th Chapters, and as shall be further shown below in the 7th Chapter).
+
+<margin>4.</margin>
+Fourthly: with the Queen, from [square] fifty-two [[note: square d7]]: Although she could indeed be moved to forty-three [[note: square c6]] to protect this soldier [[note: Pawn]], she is more usefully placed on the former square, because the soldier is equally sufficiently provided for there. Furthermore, she would only block and hinder the path of this soldier [[note: the c7 pawn]], whose assistance one occasionally greatly needs.
+
+<margin>5.</margin>
+Fifthly: with the King’s Archer [[note: The German "Schütze" (Archer) was the contemporary name for the Bishop]], from [square] forty-five [[note: square e6]].
+
+<margin>6.</margin>
+Regarding the first method [[note: defending with the Knight on c6]], Black plays, etc. (to defend his King’s Soldier) the King’s Rider [[note: Knight]], etc.
+
+<margin>7. (n. 1.)</margin>
+To [square] 46 [[note: square f6]]: * White [moves] the King’s Archer to thirty-etc. [[note: square 30, which is f4]].
+sig: Black [moves] his King’s Archer to thirty-eight-etc. [[note: square 38, which is f5]].
+sig: White [moves] the King’s Archer’s Soldier [[note: the f-pawn]] to twenty-two [[note: square f3]]: Black [moves] to the White King’s Soldier, etc. not the King’s Rider (*as Damiano* believes) to forty-three [[note: square c6]], but rather (to give White no occasion for several moves which are to be found above in the 2nd Chapter of this 3rd Book) the Queen to fifty-two [[note: square d7]].
+
+<margin>8.</margin>
+* White [moves] the King’s Soldier [[note: the e-pawn]] to the Black King’s Archer and Soldier on twenty-nine [[note: square e4]]: Black takes him with the Soldier: White [takes] the same with the King’s Archer’s Soldier and moves him again to the Black King’s Archer: Black takes the White King’s Soldier with the Queen and gives check:
+
+<margin>9.</margin>
+* White moves the King to thirteen [[note: square e2]]: Black gives check with the King’s Archer from thirty-one [[note: square g4]]: White must cover the King with the King’s Rider on twenty-two [[note: square f3]], and moves him toward the Black Queen: Black gives check with the same from twenty-seven [[note: square c4]]: White moves the King to fourteen [[note: square f2]] and exposes his King’s Archer to the Black Queen: Now, if Black moves the Queen out of danger, White gives check with the King’s Rook [[note: "Rochen"]] from [square] four [[note: square d1]], and thus arranges his game not poorly.
+
+[[summary: This page continues a technical analysis of chess openings, specifically focusing on defending the King's Pawn. The author provides a move-by-move refutation of the strategies proposed by Damiano, using a 1-64 coordinate system to describe piece movement and positioning.]]
+
+[[keywords: Chess strategy, Damiano, Gustavus Selenus, opening theory, King's Pawn, 17th century chess, coordinate system, Archer, Rider, Soldier]]

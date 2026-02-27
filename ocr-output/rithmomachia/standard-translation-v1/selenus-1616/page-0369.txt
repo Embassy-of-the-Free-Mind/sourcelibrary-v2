@@ -1,0 +1,26 @@
+[[meta: This page continues the tactical examination of the "Second Way" of defending the King's Pawn in Chapter 6. The previous page discussed moves involving the King's Bishop and Queen to counter the "First Way" (Damiano's defense).]]
+
+### Chapter 6: On the Game of Chess.
+
+...but / can make use of himself / at a better opportunity: nonetheless, the previous arrangement / is more useful and appropriate.
+
+[[margin: 13.]] But if the **Black** player / does not want to arrange / his pieces / as just described / (notwithstanding that they / are positioned far better / than those of the **White** player) / *nor move the Bishop / to 52. (no. 12)* [[note: In this era, the "Schütze" (Archer/Shooter) refers to the Bishop.]] but rather the Queen / to sixty-two: then the **White** player / plays / the King's Knight [[note: "Reuter" (Rider) refers to the Knight.]] / to the Black King's Bishop's [square] / at twenty-five: [[note: This 1-64 numbering system was specific to the author, Gustavus Selenus.]] The **Black** player / [moves] the same / to the White Queen's [square] / at twenty-six: The **White** player / [moves] the same / to the Black King's Rook's [square] / at twenty-three: The **Black** player / [moves] the King's Bishop / between these two / to the White Queen's [square] / (in order / to defend / the King's Rook) / to forty-four / and in such a manner / arranges his game / not poorly.
+
+[[margin: 14.]] But if the **Black** player / does not take / the White Bishop / with the Rook / (no. 11) but rather / takes the White King’s Pawn [[note: "Soldat" (Soldier) refers to the Pawn.]] / with the King’s Bishop’s Pawn / and moves it onto his [the White King's] Knight: (which move / indeed seems good / but is very bad) / then **White** / plays / the King’s Bishop / to thirty-seven: The **Black** player / takes / the White King’s Knight / with his King’s Bishop’s Pawn: The **White** player / [takes] the same / with the Queen: thus obtaining / the Black King’s Knight’s Pawn / by force: and can / with the same / from fifty-one / give **Checkmate**: The **Black** player / (in order to prevent the same) / moves the Queen / to fifty-two or fifty-three: The **White** player / takes / the Black King’s Knight’s Pawn / with the King’s Bishop / and obtains with it / also their Rook / together with the entire game.
+
+Therefore / it is not to be advised / for the **Black** player / if he / wishes to win the game / (considering there are much better ways to arrange it) / to take the mentioned White Pawn / (no. 14) / rather / it is a harmful move for him: even if those / who / understand little of these **chess-moves** / might perhaps / value and esteem it highly.
+
+We herewith conclude this *Other manner* / of protecting the King's Pawn / and diligently omit / other examples / which might perhaps still be added to these / because
+
+->the two mentioned above<-
+->are held to be the best.<-
+
+---
+
+<image-desc>A decorative woodcut divider with symmetrical floral patterns and scrollwork.</image-desc>
+
+[[margin: Now This]]
+
+[[summary: This page concludes the discussion on the "Second Way" of protecting the King's Pawn, detailing a specific tactical trap where an enticing pawn capture by Black leads to a forced checkmate or the loss of a Rook. The author dismisses alternative moves favored by less experienced players in favor of two primary defensive lines.]]
+
+[[keywords: Chess tactics, Opening theory, Checkmate, King's Pawn, Queen, Knight, Bishop, Rook, Gustavus Selenus]]

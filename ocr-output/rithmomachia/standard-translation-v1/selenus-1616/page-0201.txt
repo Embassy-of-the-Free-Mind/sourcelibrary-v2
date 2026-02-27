@@ -1,0 +1,24 @@
+[[meta: This page concludes the pedagogical instructions for studying the game examples in Chapter 6. It offers practical advice for players to track their progress through complex variations and "sub-games" without losing their place on the board.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 6:]]
+found at the preceding § [[notes: The author uses symbols like § and * as bookmarks to help the reader navigate between different branching variations of a game.]] or *; and proceed until one is again directed back. If the variation of the moves is not hard to find, one can sometimes play back up the board and place the **pieces** [[notes: *Steine*; literally "stones," the standard term for chess pieces in 17th-century German]] into the indicated squares accordingly; however, this requires some practice and memory.
+
+But if one has no desire to repeat the moves from the beginning of the chapter, nor to set all the pieces on the board once more according to their original order—(even though it would not be unhelpful, so that he might learn this artful game from its foundations and through practice, which finally makes a master)—he can instead sketch on paper as many square figures as are necessary for an example, divided into sixty-four empty squares. He should record within them the positions of the pieces as they were found before a preceding § or *; and he should write the numbers appearing in the margin above them for reference. Then, let him play forward. And when he is directed back again, he can reorder the chess pieces on the **Chess-Table** [[notes: *Schach-Tabel*; the chessboard]] according to that same sketch or record, with which the enclosed numbers in the text correspond.
+
+(9.) When two people wish to attempt these examples and study them, it would not be unhelpful if a third person could read the moves out to them quite clearly and slowly, so that they may keep their eyes and thoughts only upon the chess pieces. However, this remains freely left to:
+
+->each person's own judgment and<-
+->opportunity.<-
+
+[[notes: The woodcut tailpiece here serves as a decorative "finis" or conclusion to the chapter, a common practice in 17th-century printing to fill empty space and signal the end of a section.]]
+
+*A decorative woodcut tailpiece featuring a central lion-like mask or grotesque face surrounded by ornate scrollwork, stylized foliage, and acanthus leaf patterns.*
+
+Q iij
+[[meta: catchword: The]]
+
+[[summary: This page provides practical study tips for 17th-century chess players, suggesting they draw paper diagrams or use a "caller" to read moves aloud to help navigate complex game variations. This concludes the instructional preface to the game examples in Chapter 6.]]
+
+[[keywords: chess pedagogy, game variations, chess notation, study habits, 17th-century gaming, chess pieces, memory training]]

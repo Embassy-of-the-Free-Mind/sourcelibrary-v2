@@ -1,0 +1,25 @@
+[[meta: This page continues the tactical analysis from Chapter 13, focusing on variations where Black moves the Queen instead of the Knight. The numbering system for the squares refers to a 1-64 grid common in 17th-century manuals.]]
+
+### The Second Book / Chapter 13
+
+...captured pieces (which can be found diligently depicted after check-mate has been given) provides a clear account. [[notes: This likely refers to an engraved illustration showing the final board state, common in early chess treatises like those of Gustavus Selenus.]] <image-desc>manicule pointing right</image-desc>
+
+8. &emsp;&emsp; But if **Black**, according to the other method, does not move the Knight to 43 (no. 1) but rather moves the Queen to twenty-five and gives check: then **White** places the King on three:
+
+9. * **Black** moves the King’s Soldier [[notes: *Soldat*, the common term for a Pawn]] to forty-five: **White** moves the King’s Knight [[notes: *Reuter*, literally "Rider"]] to the Black Queen at nineteen: **Black** moves the same to twenty-six: **White** (so that, in all cases, the Queen may have protection from the King’s Rook [[notes: *Rochen*, the archaic term for the Rook]]; and so he may also make use of it) moves the King to eleven: **Black** moves the King’s Knight to White’s King’s Soldier at forty-three: **White** (in order to protect the same) moves the King’s Rook to four, and has thus well-arranged his game: even though **Black** has a Soldier to his advantage, his game has fallen into great disorder through its capture.
+
+10. &emsp;&emsp; But if **Black** does not move the Soldier to 45 (no. 9) but rather moves the King’s Bishop [[notes: *Schütze*, or "Marksman," the historical German name for the Bishop]] to thirty-eight: then **White** moves (in order to prevent the check-mate on eleven) the King’s Soldier to twenty-nine: **Black** moves the same to forty-seven: **White** moves the King’s Knight to 
+
+11. the Black Queen at nineteen: * **Black** moves the same to twenty-six: **White** takes the Black King’s Bishop’s Soldier with the King’s Bishop and gives check: **Black** takes the same with the King: **White** gives check with the King’s Knight at thirty-six, and the Black Queen cannot escape him.
+
+12. &emsp;&emsp; But if for these reasons **Black** does not move the Queen to 26 (no. 11) but rather to forty-three: then **White** advances the King’s Soldier against her at thirty-six:
+
+13. * **Black** moves the same to White’s King’s Bishop at forty-six: **White** (to protect him) moves the Queen to twelve: and can thus obtain the Black King’s Soldier with the King’s Bishop and have a good game.
+
+14. &emsp;&emsp; But if **Black** does not move the Queen to 46 (no. 13) but rather (in order to defend the King’s Soldier) to thirty-five: then **White** advances the King’s Bishop against her at twenty-one: **Black** moves her (to further defend her and the King’s Soldier) to twenty-six: **White** advances the King’s Rook’s Soldier against her at seventeen:
+
+[[meta: catchword: the]]
+
+[[summary: This page provides a technical breakdown of chess variations where Black attempts to use the Queen aggressively. White successfully counters these moves, demonstrating how to trap the Queen or force a positional advantage despite being down a pawn.]]
+
+[[keywords: chess strategy, Queen sacrifice, King's Knight, Rochen, Marksman, Soldier, seventeenth-century chess, game analysis]]

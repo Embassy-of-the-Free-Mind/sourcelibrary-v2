@@ -1,0 +1,28 @@
+[[meta: This page continues the tactical discussion from the previous chapter, moving from defense against major pieces to the precise movement required for Pawn promotion and the concept of "Opposition." It also addresses specific endgame scenarios involving "wrong-colored" Bishops and the "Spanish" rules for stalemate.]]
+
+# The Second Book / 5th Chapter:
+
+...Checkmate can be given. Now, if it is the turn of the player who wishes to promote the **Pawn** [[notes: *Soldat*; literally "Soldier"]] into a **Queen**, then the other player must observe this rule: that if his opponent (in order to protect this **Pawn**) moves around with his **King** and thus steps out somewhat from behind the **Pawn**, he should place himself directly opposite him on the same line, with one square between them [[notes: This describes the fundamental chess concept of "Opposition," where Kings face each other to block progress]]. For then the opponent can neither make a **Queen** out of the **Pawn** nor give **Checkmate**; especially if he does not place his **King** behind the **Pawn**, he will lose it. If, however, he only traps the other’s **King** [[notes: Stalemate]], he wins half the stake according to the **Spanish rule** [[notes: *Spanier ordnung*; in certain historical regional rules, a stalemate was not a draw but a "half-win" or resulted in a specific penalty for the player who could not move]].
+
+|   | S.K. |   |
+|---|---|---|
+|   |   | B. |
+|   | WK. |   |
+[[gloss: S.K. = Black King (*Schwartzer König*); B. = Pawn (*Bauer*); WK. = White King (*Weisser König*)]]
+
+->Provided that the **White** player has only the **King** (it being understood that his<-
+remaining pieces can no longer be moved) and his **Bishop** [[notes: *Segesner*; an archaic term for the Bishop, likely referring to a "scythe-bearer," though later the text uses *Schütze* or "Archer"]], the **Queen’s Rook’s Pawn**, and its protector (who cannot reach the square of the **Black Rook** into which his companion, the **Pawn**, is finally to be moved and thus take on the properties of a **Queen**) [[notes: This describes the "wrong-colored Bishop" endgame, where a Bishop cannot control the promotion square of its Rook's Pawn]]: then such a game is regarded as a **robbed and closed** one [[notes: *geraubtes und geschloßnes*; a stalemate or draw]], in which nothing is won, but rather all is cancelled out. Therefore, everyone must strive (in order to lie in wait for the advantage and win it from the **White Pawn** with his own **King**) to reach the place from which he could defend himself, namely, the **Rook’s**...
+
+| S.K. |   |   |   |
+|---|---|---|---|
+|   |   |   |   |
+|   |   |   |   |
+| W.B. | WK. |   | WS |
+[[gloss: S.K. = Black King; W.B. = White Pawn; WK. = White King; WS = White Bishop (*Weisser Schütze*)]]
+
+...into which the aforementioned **Bishop** [[notes: *Schütze*; literally "Archer"]] cannot reach, nor drive him out, as well as the **Rook’s** or the **Knight’s Pawn’s** [[notes: *Reuters-Soldat*; the Pawn on the Knight's file]] square.
+[[meta: catchword: "zu bes" – to oc(cupy)]]
+
+[[summary: This page explains the concept of "Opposition" to prevent a Pawn from promoting and details the "wrong-colored Bishop" scenario, where a player cannot win if their Bishop cannot reach the Pawn's promotion square. It also mentions historical Spanish stalemate rules.]]
+
+[[keywords: Opposition, Pawn promotion, Queen, Bishop, Rook's Pawn, Spanish rule, Stalemate, Endgame tactics]]

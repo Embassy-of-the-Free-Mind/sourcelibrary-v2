@@ -1,0 +1,24 @@
+[[meta: This page continues the discussion of variant victory conditions in Rithmomachia, moving from the complex "Greatest Victory" to "Common Victories." It specifically explores rules established by the 16th-century mathematician Claude de Boissière (Buxerius), focusing on capturing pieces that sum to specific totals like 100, or achieving victory through a specific count of digits or pieces.]]
+
+# Of the Battle of Numbers
+
+*(...64 & 36, containing 100: or if one has acquired a Counter of 100, decorated, without regarding the number or multitude of the Counters, provided that the Counters are worth 100, he emerges as the Victor.)*
+
+3) When they triumph over the enemy with the **digits** [[notes: In this context, "digits" or "ciphers" refers to the individual numerals written on a piece. For example, the number "25" consists of two digits.]] of the captured **numbers** (regardless of whether the enemy still had more pieces, or if the total value of the enemy's numbers reached a higher sum).
+
+>(Buxer: fol. 30. b. [[notes: Claude de Boissière, also known as Buxerius, was a French mathematician who published a notable work on Rithmomachia in 1554. "Folio 30b" refers to the specific page in his book.]]
+*As it is: A Law was established by the contestants, that whoever first achieves 100, or any chosen Number, using exactly eight digits, shall win the Game. Thus, he who captures the first six Counters—comprising 2, 4, 6, 8, 20, and 64, which together make 100—using only a count of eight digits, or captures other Counters making the same Sum with the same eight signs, being not at all concerned with the number of Counters captured, must necessarily be the Victor. Nor should one be troubled if more than 100 is contained in the aforementioned eight digits, and four are left over: For if the count of eight digits exceeds the number of one hundred by four, it is worth much more than 100, and the surplus of four shall not prevent the count of signs and their power from being seen as reaching the intended goal and agreement.*)
+
+4) When they not only rob the enemy of the **pieces**, but also simultaneously surpass him with the **numbers** (regardless of whether the enemy had more digits of the numbers on his pieces).
+
+>(Buxer: fol. 31. a.
+*As it is: A decree of play was established by the contestants, that whoever arrives more quickly at 100, written and depicted upon eight counters, the power and victory of the Game rests with him. Therefore, he who obtains these Counters—2, 4, 6, 8, 4, 16, 45, 15—or 3, 5, 7, 9, 25, 9, 12, 30—which both equal 100, has attained Victory. You will note, however, that even if you have won one or another Counter containing 100 at the very threshold of the contest, you will not reign as Victor until that value and power is joined with eight Counters; because if the value and virtue of the eight Counters above exceeds the number of one hundred, that superfluity will not be an obstacle to receiving the crown: since you have acquired for yourself the value of the number prefixed in eight Counters.*)
+
+5) When they [defeat] the enemy with the **pieces** and **digits**
+
+Qqq
+[[meta: catchword: the Num-]]
+
+[[summary: This page details specific "Common Victory" conditions in Rithmomachia, where a player wins by capturing pieces that sum to a target value (like 100) while meeting specific requirements for the number of pieces or the count of digits involved. It cites Claude de Boissière's rules to allow for more flexible and faster gameplay compared to the "Greatest Victory."]]
+
+[[keywords: Rithmomachia, Battle of Numbers, Claude de Boissière, Buxerius, victory conditions, digits, mathematical games, 16th-century gaming, number theory]]

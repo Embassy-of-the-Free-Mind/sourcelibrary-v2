@@ -1,0 +1,25 @@
+[[meta: This page continues from page 247. The catchword "ta..." from the previous page combined with the "nig" here completes the word "König" (King). This section continues the tactical analysis of an opening where Black has moved a Pawn instead of a Knight.]]
+
+->Das Ander Buch / 15. Cap.<-
+[[meta: The Second Book / 15th Chapter]]
+
+King [[notes: *nig/auf* completes *König auf* (King to) from the previous page]] (so that he does not lose his Knight and Rook) with the King’s Knight to fifty-three [[notes: In this 1-64 numbering system, 53 corresponds to the square f3 in modern notation]].
+
+[[margin: 3.]]
+But if the **White** player, with the Queen from 44 (no. 2), does not **offer check**, but rather moves his Knight to thirteen (in order to protect the King’s Soldier [[notes: *Soldat* (Pawn)]] and move him against the Black Queen at nineteen in the following turn): then the **Black** player (to prevent this) moves the King’s Knight’s Soldier to twenty-six: **The White player** moves the King’s Soldier against the Black King’s Knight to thirty-six: **The Black player** takes it with the King’s Soldier: **The White player** takes the same with his King’s Soldier and aims once more at the Black King’s Knight: **The Black player** (so that he may give **Checkmate** with the Queen from eleven) moves the King’s Archer [[notes: *Schütze* (Archer/Bishop)]] to thirty-eight: **The White player** does not take (for this reason) the Black King’s Knight with his King’s Soldier: but rather
+
+[[margin: 4.]]
+\* moves his Archer to forty-four and offers **check**: (This move, though it appears good, is nevertheless not the best, as no. 7 below demonstrates) the **Black** player covers the King with the King’s Knight to fifty-three: **The White player** takes it,
+
+[[margin: 5.]]
+with the aforementioned Archer and offers **check** again: \* **The Black player** takes the same with the King: **The White player** gives him **check** again with the Queen from thirty-nine: thus winning the Black King’s Archer, who stands at his side and intended to assist the Black Queen in the **Checkmate**, and has, by offering **check** with the King’s Archer beforehand, supposedly made a good move.
+
+[[margin: 6.]]
+If, however, the **Black** player takes the **White** Archer not with the King (no. 5) but with his Knight: then the **White** player (to prevent the **Checkmate** from eleven, and to open the path for the King’s Archer against the Black King’s Soldier) moves the King’s Knight to the Black King’s Archer at twenty-eight.
+
+[[margin: 7.]]
+But since the **Black** player can make even better moves than his opponent, if he takes the **White King’s** Archer neither with the King (no. 5) nor with his Knight (no. 6), but moves the King to sixty-three: it is therefore much better that the **White** player does not **offer check** with the Archer at 44 (no. 4), but rather (to prevent the **Checkmate**) moves the King to twelve: **The Black player** offers **check** with his Queen from eleven: **The White player** moves the King to
+
+[[summary: This page provides a detailed move-by-move tactical analysis of a specific chess opening, focusing on how White can respond to Black's threats of a quick checkmate. It weighs the benefits of checking with a Bishop versus making defensive King moves to secure the position.]]
+
+[[keywords: Chess tactics, opening theory, Gustavus Selenus, 17th-century chess, Bishop sacrifice, checkmate threats, square numbering system]]

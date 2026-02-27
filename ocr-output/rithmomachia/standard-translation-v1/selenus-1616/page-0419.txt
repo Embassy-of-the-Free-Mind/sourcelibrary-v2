@@ -1,0 +1,24 @@
+[[meta: This page begins a new chapter, following the previous tactical demonstrations regarding specific openings. The previous page ended with White winning a game through a decisive Bishop and Queen maneuver.]]
+
+# Chapter 3: On the Game of Chess.
+
+[[meta: A rectangular decorative woodcut headpiece featuring symmetrical scrolling vines, acanthus leaves, and floral motifs.]]
+
+## The Third Chapter.
+
+### Of the third variety, when White plays without the King’s Bishop’s Soldier and has the first move, but may only use one piece.
+
+Furthermore, when White does not take the two moves (of which we spoke in the preceding chapter) but instead only takes the lead- or first-move for the aforementioned King’s Bishop’s Soldier [[notes: *Schützens-Soldat* refers to the pawn standing in front of the Bishop, which was commonly called the "Archer" or "Marksman" in 17th-century Germany]]: then from this arises the third variety, in the following manner:
+
+[[margin: 1.]] If White then moves the King’s Soldier [[notes: *Soldat* (Soldier) is the author's term for a Pawn]] to twenty [[notes: Selenus uses a coordinate system numbering the board from 1 to 64, starting from White's bottom-left (a1) to Black's top-right (h8)]]: then Black moves his King’s Soldier to thirty-six: White [moves] the same King’s Soldier to [[margin: 2.]] twenty-nine: * Black takes him with the same: White [takes] the same with the King’s Soldier: Black declares **Check** with the **Queen** from twenty-five: White moves between them and against her the King’s Knight’s Soldier [[notes: *Reuters-Soldat*]] to eighteen: Black declares **Check** once again with the same from twenty-eight, and moves her to the White King’s Rook: White (so that he does not lose the same) covers the **King** with the **Queen** at twelve: and the **Queens** on both sides are taken by force: in consideration that they, for the sake of their Kings (whom they must not allow to fall into **Check** or remain uncovered), cannot be moved forward. Thus, the removed Soldier brings a very poor disadvantage if the game is played without the Queens.
+
+[[margin: 3.]] But if Black does not take the White Soldier (no. 2), but instead moves the King’s Soldier to twenty-eight: then White plays the King’s Bishop’s Soldier to thirty, arranges his game very well in this way, and can move his pieces further into the field with deliberation.
+
+[[margin: 4.]] However, if White does not wish to cause the exchange of both Queens through the moves recorded (no. 1, 2), but starts the game in the following way,
+
+[[margin: Ccc ij]]
+[[meta: catchword: and]]
+
+[[summary: This page describes a tactical opening sequence where White leads with the King's Soldier, potentially leading to a forced exchange of Queens. The author notes that such an exchange can be disadvantageous if the game continues without these powerful pieces.]]
+
+[[keywords: Chess tactics, King's Soldier, Queen exchange, Selenus notation, 17th-century chess, King's Gambit variations]]

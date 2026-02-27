@@ -1,0 +1,18 @@
+<header>The Philosopher's game.</header>
+<meta>Catchword: men</meta>
+
+## Victory of Honor.
+
+Victory of honor is when a determined total <note>original: "number"</note> is achieved using a set number of pieces <note>original: "men"</note>. For example, if it is decided that whoever first reaches 100 using 8 pieces <note>original: "men"</note> shall win the game. Such as in these: 2, 4, 6, 8, 4, 16, 45, 15. Even if the total is somewhat more than 100, as long as it is within 8 pieces <note>original: "men"</note>, it does not matter <note>original: "skilleth not"</note>.
+
+## Of Victory of Honor and Quarrel.
+
+The victory of honor and quarrel <note>original: "quarell"</note> is when one obtains the decreed total <note>original: "number"</note> using the decreed number of pieces <note>original: "men"</note> and the decreed number of digits <note>original: "characters"</note>. For example: let 100 be the decreed total, 8 the determined number of pieces <note>original: "men"</note>, and 9 the determined number of digits <note>original: "characters"</note>. He who obtains 2, 4, 6, 8, 4, 6, 9, and 64 obtains the victory of honor and quarrel. It shall be no hindrance though 8 pieces <note>original: "men"</note>
+
+<summary>
+This section continues the explanation of victory conditions in Rithmomachia. "Victory of Honor" requires reaching a target value using a specific number of captured pieces. "Victory of Honor and Quarrel" is a more complex condition requiring the player to meet three criteria simultaneously: a target total value, a specific count of captured pieces, and a specific count of digits (characters) across those pieces.
+</summary>
+
+<keywords>
+Victory of Honor, Victory of Quarrel, Rithmomachia, Philosopher's Game, captured pieces, numerical digits
+</keywords>

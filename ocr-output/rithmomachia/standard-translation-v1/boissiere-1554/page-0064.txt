@@ -1,0 +1,14 @@
+[[meta: This page continues the rules for "Common Victories" in Rythmomachia. It concludes the "Victory of Lawsuits" (started on page 30) and introduces the "Victory of Honor."]]
+
+# OF THE PHILOSOPHERS. #
+
+quantity of pieces, he shall have the victory. But if someone should say that in the aforementioned eight characters [[notes: *Characters* here refers to the individual digits or numerals written on the pieces]] there are 4 more than 100: I answer you that if the value of these eight characters exceeds 100 by this number 4, it is worth 100 all the more. Such a surplus of 4 does not prevent the required quantity of characters and the predetermined value from being fulfilled.
+
+->Victory of Honor.<-
+
+Since honor is a singular good that never leaves the body, whoever shall have a certain quantity of pieces [[notes: *Tables* refers to the physical gaming counters, similar to those used in backgammon or chess]] accompanied by a certain value of numbers—which quantity of pieces and value of numbers shall be prefixed and ordained at the players' pleasure—he shall have the **victory of honor**.
+
+Example: The players have determined that whoever first reaches 100 using eight pieces shall win the game. Whoever, therefore, has these eight pieces: 2, 4, 6, 8, 4, 16, 45, and 15; or indeed 3, 5, 7, 9, 25, 9, 12, and 30—which both equal 100—shall have the victory of honor. And note that although [[notes: *Iacoit* is an archaic French term for "although" or "even if"]] you might have a single piece or two worth 100 from the very first move, you will not be the victor until the said value is accompanied by the eight pieces; and if the value of the said
+
+[[summary: This page clarifies that exceeding a target sum still counts as a victory in the "Victory of Lawsuits" and introduces the "Victory of Honor," which requires reaching a specific total value using an exact number of game pieces.]]
+[[keywords: Rythmomachia, Victory of Honor, Victory of Lawsuits, mathematical games, game pieces, Renaissance mathematics]]

@@ -1,0 +1,36 @@
+[[meta: This page serves as the internal title page for the second major work within this volume. Having concluded his treatise on Chess (the "King's Game") on the previous page, the author now introduces a mathematical game called Rythmomachia. The author, "Gustavus Selenus," is the pseudonym of Augustus the Younger, Duke of Brunswick-Lüneburg.]]
+
+# Rythmomachia.
+
+## An Excellent and Ancient Game
+
+->of<-
+->**PYTHAGORAS**:<-
+[[notes: Pythagoras (c. 570–495 BC) was the famous Greek philosopher and mathematician. While the game was actually invented in the Middle Ages (around the 11th century), it was traditionally attributed to Pythagoras to emphasize its mathematical complexity and prestige.]]
+->Which<-
+->**GUSTAVUS SELENUS**,<-
+[[notes: "Gustavus Selenus" is an anagrammatic pseudonym. *Gustavus* contains the same letters as *Augustus*, and *Selenus* refers to the Greek goddess of the moon, *Selene*, an allusion to his territory of Lüneburg (Luna-burg).]]
+->from the treatise of<-
+->**FRANCESCO BAROZZI**,<-
+->**A Venetian Nobleman/**<-
+[[notes: Francesco Barozzi (1537–1604) was an Italian mathematician and humanist. His 1572 work *Rythmomachia* is one of the most significant historical sources for the game's rules.]]
+->translated into German / and added to his preceding treatise,<-
+->on the King’s Game [[notes: *König-Spiel* refers to Chess]], (since it likewise<-
+->requires sharp reflection) / and improved<-
+->with useful glosses from<-
+->**Claude de Boissière of Dauphiné**.<-
+[[notes: *Claudio Buxero Delphinate* is the Latinized name of Claude de Boissière (c. 1510–1570), a French mathematician who published a well-known manual on Rythmomachia in 1554.]]
+
+->With the PRIVILEGE of His SACRED IMPERIAL MAJESTY.<-
+[[notes: A "Privilege" was an early form of copyright granted by the Holy Roman Emperor, protecting the publisher from unauthorized reprints.]]
+
+---
+
+->At the house of<-
+->**HENNING GROSS the Younger.**<-
+->**1616.**<-
+[[notes: Henning Gross the Younger was a prominent bookseller and publisher in Leipzig.]]
+
+[[summary: This is the title page for a German translation and expansion of a mathematical board game called Rythmomachia, or "The Battle of Numbers." It identifies the author as Gustavus Selenus and notes that the game is intended as a companion to the author's previous work on Chess because of its intellectual depth.]]
+
+[[keywords: Rythmomachia, Pythagoras, Gustavus Selenus, Duke Augustus the Younger, Francesco Barozzi, Claude de Boissière, King's Game, Chess, 17th-century printing, mathematical games]]

@@ -1,0 +1,16 @@
+[[meta: This page continues the complex rules for capturing the "Pyramid" piece and transitions into the general rules of play for Rythmomachia. It picks up mid-sentence from page 46, which was discussing how the Pyramid piece—a stack of shapes—loses its abilities as its component parts are captured.]]
+
+->OF THE PHILOSOPHERS.<-
+
+...remain the two squares below, and it shall no longer move according to the squares, forasmuch as it is degraded from the quadrangular form; and just so it may be degraded from the form and privilege of the triangular and round pieces contained within it, so that when nothing remains of it, it shall be taken. It may also be taken in one stroke by imprisonment [[notes: Also called "siege," as explained on the previous page.]]: for all its power is then lost in a single blow, and the same shall happen if one can capture the number which contains all the bases [[notes: In Rythmomachia, the Pyramid's total value is the sum of the numbers on its layers. This total "base" number is the target for mathematical capture.]]: which some mark at the peak [[notes: "Coupeau."]] of the pyramid, and others at the bottom.
+
+## General Rules.
+
+1 No piece [[notes: The original French uses "table," referring to the game counters.]] can move out of its path to capture, or cause another piece to be captured, by an irregular movement, except in siege: for one may imprison irregularly [[notes: This means that while normal captures require pieces to move in their set patterns (like chess), a "siege" capture allows you to use any available piece to surround the enemy, regardless of whether that piece's specific mathematical value usually allows that movement.]].
+2 In all captures, only one move is made.
+3 Forasmuch as multiplication and division are reciprocal operations, if the adversary fails to capture one of your exposed pieces by multiplication, you may afterward capture theirs by division; or if they have failed to capture by division, you may capture it by multiplication, then...
+
+[[gloss: Rythmomachia, squares, triangles, rounds, pyramid, siege, multiplication, division]]
+
+[[summary: This page concludes the rules for "degrading" a Pyramid piece and lists the general rules of movement and capture, specifically highlighting the reciprocal relationship between multiplication and division.]]
+[[keywords: Rythmomachia, Pyramid, Game Rules, Siege, Mathematical Capture, 16th Century Games]]

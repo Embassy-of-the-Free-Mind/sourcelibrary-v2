@@ -1,0 +1,23 @@
+[[meta: This page continues the analysis of variations following the Damiano Defense. The previous page ended with a scenario where the Black King is forced to square 50.]]
+
+### Chapter 4: On the Game of Chess. 285
+
+(the **King** must retreat to square fifty) White delivers **Checkmate** from square fifty-one.
+
+[[margin: 11.]] If, however, the Black player moves the **King’s Knight** [[notes: *Reuter*, or "Rider"]] to square forty-one (to prevent the check from the White **Queen** at square thirty-five) instead of the **Pawn** [[notes: *Soldat*, or "Soldier"]] (as in No. 8): then White delivers **Checkmate** with the **King’s Rook’s Pawn** from square thirty-three.
+
+[[margin: 12.]] But if Black does not move the **Knight** to 41 (as in No. 11), but rather to fifty-two or forty-three: then White delivers **Checkmate** with the **Queen** from square thirty-four.
+
+[[margin: 13.]] If Black then does not move the **Knight** (as in No. 11 and 12), but instead moves the **King’s Bishop** [[notes: *Schütze*, or "Archer"]] against the White **Queen** at square forty-five: then White gives **Check** with her from square thirty-five. Black must move the **King** to square forty-one. White advances the **King’s Pawn** to square twenty-nine and delivers a **discovered check** [[notes: *Ab-Schach*, a move where moving one piece opens a line for another piece to give check]] from the **King’s Bishop**. Black covers the **King** with his **Knight’s Pawn** at square thirty-four. White takes it with the **King’s Rook’s Pawn**, giving **Check** with that same pawn and a **discovered check** from the **Rook** [[notes: *Rochen*]]. Black moves the **King** to square fifty. White delivers **Checkmate** with the **Queen** from square fifty-one.
+
+[[margin: 14.]] If, however, Black does not move the **Bishop** to 45 (as in No. 13), but instead moves his **Queen** against the White **Queen** at square forty-three: then White gives **Check** with her from square sixty. Black must move the **King** to square forty-one. White moves the **King’s Pawn** to square twenty-nine and delivers a **discovered check** from the **King’s Bishop**. Black must cover the **King** with his **Knight’s Pawn** at square thirty-four. White takes it with the **King’s Rook’s Pawn** and gives **Check** to the Black **King** and the Black **Queen** with that pawn, while also giving a **discovered check** from the **King’s Rook**. Black must flee with his **King** to square fifty because of the **double check**. White takes the Black **Queen** with the **King’s Rook’s Pawn** and gives **Check** once again. Black takes it with the **King** or his **Knight**. White delivers **Checkmate** with the **Queen** from square fifty-one.
+
+[[margin: 15.]] If, however, Black moves his **Queen** against the White **Queen**, not to 43 (as in No. 14), but to square fifty-two:
+
+[[margin: 16. *]] then White moves the **King’s Rook’s Pawn** to square thirty-three,
+
+[[meta: catchword: thirty-three / (dreyßig)]]
+
+[[summary: This page continues the tactical breakdown of various responses to White's attack, focusing on how White can force a checkmate even if Black attempts to block with a Knight, Bishop, or Queen. It highlights the power of discovered checks and double checks in this specific endgame sequence.]]
+
+[[keywords: Checkmate, Discovered Check, Queen, King, Knight, Bishop, Rook, Tactics, Damiano Defense]]

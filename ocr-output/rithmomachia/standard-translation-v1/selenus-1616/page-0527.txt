@@ -1,0 +1,23 @@
+[[meta: This page continues the mathematical and musical explanation of the "Greatest Victory" in Rithmomachia, specifically analyzing the ratios found within the fourfold number sets and how they correspond to classical musical intervals.]]
+
+->**Of the Number-Battle.**<-
+
+brings about the harmony which the Greeks call **Diapason**, and which we call the **Octave**.
+Furthermore, when the first number (2) is compared with the last (6), one obtains a triple division: that is, the higher number contains the smaller number three times. From this arises the harmony which the Greeks call the **Diapason** and **Diapente** together, and which we call the **Twelfth** (*Duodecima*).
+Finally, if the difference between 3 and 4 (which is one) is compared with 4, a quadruple division is found, and the higher number contains the smaller number four times. This harmony, which the Greeks call **Disdiapason**, is called the **Fifteenth** (*Quinta Decima*) by our singers. [[notes: These ratios—2:1 (Octave), 3:1 (Twelfth), and 4:1 (Double Octave/Fifteenth)—form the mathematical foundation of Pythagorean music theory, which the author links here to the game's strategy.]]
+In the same manner, when the other four distinct numbers are considered, every line will be found to contain all the harmonies of the Art of Music (according to the following explanation), except for those three marked with an asterisk (*).
+While this investigation and contemplation might seem of little necessity to one who seeks to achieve victory in this game—since these numbers must already be well known to them—I have nevertheless chosen to briefly touch upon and mention it in this place. I do this not only to provide a small indication to those practiced in the Arts of Number and Song regarding the magnificent delight they may draw and obtain from this final victory at the conclusion of the game, but also to encourage the minds of those who have no knowledge of such **Liberal Arts** (*freien Künsten*), so that they might learn the true origin and beginning of the harmonies in the Art of Music from experienced singers. [[notes: The "Liberal Arts" (Artes Liberales) were the traditional curriculum of higher education; Arithmetic and Music were two of the four subjects in the mathematical "Quadrivium."]]
+The first and fourth examples of the four numbers, in which the three aforementioned divisions are contained, are as follows:
+
+| D. | C. | B. | A. |
+| :---: | :---: | :---: | :---: |
+| 2. | 3. | 4. | 6. |
+| 4. | 6. | 8. | 12. |
+
+The **Diapente** or **Fifth** is shown to us by the number under the letter A compared with the numbers under letter B, or with the difference of the numbers under A and D (which in this example is 4 or 8). Likewise, the number under C, or the difference of the numbers under A and C (which is 3 or 6), compared with the...
+
+[[meta: catchword: numbers]]
+
+[[summary: This page explains how specific ratios between game pieces in Rithmomachia correspond to musical intervals like the Octave, Twelfth, and Fifteenth. The author argues that the game is not just a pastime but a way to understand the mathematical foundations of the Liberal Arts, specifically music.]]
+
+[[keywords: Rithmomachia, music theory, Pythagorean intervals, Diapason, Diapente, Octave, Liberal Arts, Singe-Kunst, mathematical proportions]]

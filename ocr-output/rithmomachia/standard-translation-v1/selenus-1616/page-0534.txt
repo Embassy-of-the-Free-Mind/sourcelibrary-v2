@@ -1,0 +1,27 @@
+[[meta: This page continues the list of "Common Victories" in Rithmomachia—the medieval "Philosopher's Game." It concludes the rules by Claude de Boissière (Buxerius) and introduces a narrative variation by Jean Pierre de Mesmes that frames the mathematical contest as a crusade-era battle between the Holy Roman Empire and the Ottoman Empire.]]
+
+### The Sixth Chapter
+
+...of the digits [[notes: Referring to the count of individual numerals (ciphers) making up a number, as discussed on the previous page.]], (regardless of what the total value of the numbers might be) they would be superior.
+
+6) When they surpass the opponent both with the **digits** of the numbers and also with the **value** of the same (notwithstanding that the opponent might already have more pieces).
+
+7) When they are superior to their opponent not only in the **pieces** [[notes: "Steine," literally "stones," the physical counters used in the game.]], but especially also in the **value** and the **digits** of the numbers.
+
+(Buxer: fol: 31. b.) [[notes: Claude de Boissière, known as Buxerius, was a 16th-century French mathematician. This citation refers to his 1554 manual on Rithmomachia.]]
+
+> When, by the agreement of the players, it is established that whoever holds a certain sum of Numbers and value, and likewise a certain quantity of Counters and Marks (in which they wish the Value to be included), so that he who holds the perfect and fixed value and quantity must necessarily obtain the victory: he, adorned with this quantity of Counters and the value of these Marks, shall acquire mastery of the Game, even if more Counters or a higher value than what was established fall to his lot.
+
+(Idem, fol: 32. a.)
+
+> This last species of "Simple Victories" was quite successfully devised by Jean Pierre de Mesmes of Le Mans [[notes: Johannes Petrus Mesmius Marsanus (1516–1578), a French astronomer and mathematician.]], a professor of Mathematics in Paris [[notes: Lutetia is the Latin name for Paris.]], in this manner:
+>
+> One of the players will pretend to be **Charles Caesar** [[notes: Charles V (1500–1558), the Holy Roman Emperor.]], the Emperor of the Christians; specifically the one who defends the side of the **White Counters**. For the color white befits Christians. The other, however, shall say he is **Suleiman** [[notes: Suleiman the Magnificent (1494–1566), Sultan of the Ottoman Empire.]], Lord of the Turks, ruling the host of **Red Counters**. For the Turks delight most in the color red.
+>
+> The White Counters, including the **Pyramid** [[notes: The Pyramid is the most complex piece in Rithmomachia, made by stacking several numbers together.]], contain 1,312 points (once the Roots of the Square numbers expressed in the Pyramid are subtracted); our fictional Emperor will imagine as many Foot-soldiers for himself. The last two [[notes: Likely meaning the two most valuable pieces.]] of this Army shall become the Generals. These Generals will create for themselves 10 **Standard-bearers** [[notes: *Antesignanos*, literally those who stand before the standard; elite vanguard officers.]]. There remain, therefore, 1,300 Foot-soldiers, who, divided by 10, will give each Standard-bearer 130 Warriors.
+>
+> The Red Counters, with the Pyramid, comprise 1,752 points, once the Roots expressed in the Pyramid are removed. The Emperor of the Turks will give himself that many Warriors. Two last Generals of the entire Army and 10 Standard-bearers will be created: there remain 1,740 Foot-soldiers, who, distributed among 10, means each Standard-bearer will have 174 Foot-soldiers. Just as the Turkish Generals themselves overcome the Christians in num- [[meta: catchword: -ber]]
+
+[[summary: This page describes the final conditions for a "Simple Victory" in Rithmomachia and introduces a 16th-century thematic variant by Jean Pierre de Mesmes that reimagines the game as a conflict between Emperor Charles V and Sultan Suleiman.]]
+
+[[keywords: Rithmomachia, victory conditions, Charles V, Suleiman the Magnificent, Jean Pierre de Mesmes, Claude de Boissière, Pyramid piece, mathematical games, 16th-century mathematics]]

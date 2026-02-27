@@ -1,0 +1,25 @@
+[[meta: This page continues the detailed move-by-move analysis of Chapter 5. The numbering follows the system established earlier in the book where squares are numbered 1 to 64, starting from a1 (1) through h1 (8), then a2 (9), and so on, ending at h8 (64).]]
+
+### The Third Book, Chapter 5
+
+Soldiers / and pulls it again / onto the [[note: White]] King's Archer [[note: "Schütze" (Archer) is the period term for the Bishop]] :
+
+53. * **The Black** / gives / with the same / from thirty-one [[note: Square g4]] / **Check : The White** / covers / the King / with the King’s Rider [[note: "Reuter" (Rider) is the period term for the Knight]] / on twenty-two [[note: Square f3]] : **The Black** / (to break the White’s play) moves / the King’s Soldiers [[note: "Soldaten" (Soldiers) refers to Pawns]] / to thirty-seven [[note: Square e5]] :
+
+54. * **The White** / takes it / with the King’s Soldier : **The Black** / [takes] the same / with the Queen / (who / from the White King’s Rider / because her King’s Archer holds the same prisoner [[note: A reference to a pin, where the White Knight cannot move without exposing the King]] / has nothing to fear) and moves her / onto the White King’s Archer : Can thus bring his game / into a good order : the White King’s Archer’s-Soldier however / is / by his companions / abandoned.
+
+55. If however the White / does not take / the Black Soldier / (no. 54.) but rather plays / the King’s Soldier / to thirty-six [[note: Square d5]] / then the Black / moves / the King’s Archer / (in order to keep the White King’s Rider pinned / because of the White Queen) to twenty-six [[note: Square b4]] : and will thus / provided He / brings his King / to a safe place / cautiously / also be provided / with a good game / in the event that He / understands the moves : even if / with the White / perhaps / a fine arranged order / whereby his pieces / when He / finally takes / his King’s Soldier / with the King’s Rider / are somewhat freer and more open : is present.
+
+56. If however the Black / does not offer Check / with the Archer / (no. 53.) but moves the same / to forty-seven [[note: Square g6]] : then the White plays / the King’s Archer’s-Soldier / onto the Black King’s Rider / to thirty-seven [[note: Square e5]] : **The Black** / [moves] the same / (so as not to lose it) to sixty-three [[note: Square g8]] :
+
+57. * **The White** / [moves] the King’s Rider / to twenty-two [[note: Square f3]] : **The Black** / (to move the King to fifty-eight [[note: Square b8]]) his Rook [[note: "Rochen" is the archaic term for the Rook or Castle]] / to fifty-nine [[note: Square c8]] : **The White** / [moves] the King’s Rider / onto the Black King’s Rook’s-Soldier / to thirty-four [[note: Square b5]] : **The Black** / [moves] the same onto him / to forty-one [[note: Square a6]] : **The White** / [moves] the same / to nineteen [[note: Square c3]] : **The Black** / [moves] the King’s Archer’s-Soldier / onto the White King’s Archer / and the White King’s Archer’s-Soldier / to forty-six [[note: Square f6]] : **The White** / does not take it / with the King’s Archer’s-Soldier /
+
+58. * but rather / moves the King’s Archer / to thirty-two [[note: Square h4]] : **The Black** / [moves] the King’s Soldier / to forty-five [[note: Square e6]] / and brings his game / provided He / is practiced in the same / into a quite correct order.
+
+59. If however the White / [moves] not the Archer / to 32. (no. 58.) but rather
+
+[[meta: catchword: sondern (but rather)]]
+
+[[summary: This page continues a dense tactical manual, providing branching "if-then" scenarios for a chess match. It focuses on the strategic positioning of the "Archer" (Bishop) and "Rider" (Knight) to create pins and control the center of the board.]]
+
+[[keywords: Chess tactics, 17th-century chess, Bishop, Knight, Pawn, Rook, Augustus II of Brunswick-Lüneburg, Gustavus Selenus]]

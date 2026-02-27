@@ -1,0 +1,38 @@
+[[meta: This page marks the formal beginning of the instruction manual for Rhythmomachia. It transitions from the introductory justifications found in the previous pages to a practical, step-by-step guide on the game's components and rules.]]
+
+Of the Battle of Numbers.
+
+---
+
+## The First Chapter.
+### How the Board and Pieces of this ancient game are to be fashioned.
+
+[[notes: The "Battle of Numbers" refers to *Rhythmomachia*, a highly complex mathematical board game popular in the Middle Ages and Renaissance. It was used both for entertainment and to teach Pythagorean number theory.]]
+
+<image-desc>A rectangular game board for the game of Rhythmomachia (Battle of Numbers), consisting of an 8x16 grid of checkered black and white squares. In the central section of the board, specific squares are marked with letters and symbols. The arrangement of characters is as follows: in the second column from the left, O, N, Z, and M; in the third column, & and I; in the fourth column, P, G, V, A, S, F, and L; in the fifth column, D, T, and C; in the sixth column, E, Y, B, and X; in the seventh column, H; and in the eighth column, Q, R, and K.</image-desc>
+
+[[meta: catchword: The]]
+
+[[notes: Vocab: **Zahl-Kampf** (Battle of Numbers), **Tafel** (Board), **Steine** (Game pieces/Stones), **Capittel** (Chapter), **Rhythmomachia** (The Greek-derived name for the game).]]
+
+-># The Report.<-
+
+In order that you, my dear reader, may properly understand this report, I have divided it into **Six Chapters** [[notes: Although the author specifies six chapters here, only five sections follow on this page; the sixth likely refers to the "conclusion" or perhaps a subsequent section not listed here.]], in which may be found everything noteworthy, special, and to be observed point by point:
+
+**Firstly**, the form of the **Board**, or the shape as it sits upon the table, and thereafter how one traverses and crosses it in three different ways.
+
+In the **Second**, the **Moves** [[notes: *Züge*; the legal paths pieces take across the grid according to their geometric shape.]], which are to be performed in those three ways.
+
+In the **Third**, the **Leaps** [[notes: *Sprünge*; a specialized capture mechanic in Rhythmomachia where a piece "jumps" over or lands at a specific distance based on its mathematical value.]], by which one captures the **Stones**.
+
+In the **Fourth**, the **Order of the Stones**, how one should seize and attack them.
+
+In the **Fifth**, the **Art and Advantage** of the board game; namely, how one should set up a game against another, and how to place the stones and **Figures** [[notes: *Figuren*; the game pieces are shaped as circles, triangles, and squares to represent different mathematical progressions: arithmetic, geometric, and harmonic.]] most skillfully upon the board, and how to block the stones in their moves, and bring the game to its end and conclusion.
+
+<image-desc>A decorative woodcut tailpiece featuring a central grotesque mask with wings and a beard, flanked by elaborate scrolling foliage and hanging ornamental tassels.</image-desc>
+
+-># END<-
+
+[[summary: This page introduces the first chapter of a manual for Rhythmomachia (The Battle of Numbers), outlining a five-point plan to teach the board's layout, movement, and mathematical capture mechanics. It establishes the pedagogical structure of the book, moving from physical components to advanced strategy.]]
+
+[[keywords: Rhythmomachia, Battle of Numbers, game board, mathematical games, game pieces, strategy, Renaissance education, Pythagorean theory]]

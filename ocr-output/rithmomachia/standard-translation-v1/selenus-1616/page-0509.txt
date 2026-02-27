@@ -1,0 +1,25 @@
+[[meta: This page continues the discussion of Chapter 4, providing specific movement distances and rules for the Circles, Triangles, Squares, and Pyramids, including a special "Knight's move" escape rule and a citation from the humanist Jacques Lefèvre d'Étaples.]]
+
+# On the Number-Battle.
+
+*The **Circles** move into the following space by an oblique step, no differently than the **Soldiers of Mars** [[notes: *Areiphili* is a Greek-derived humanist term for chess pawns (soldiers). The "oblique step" here likely refers to their ability to move to any adjacent square, including diagonals, to reach the "second" space.]]; as, (in the Table of the first Chapter) from space A to B, C, D, or E.* ,,
+
+*The **Triangles** cross three spaces, if you also count the first one in which they were standing; they always walk in a straight line, like **Elephants** or **Rooks** [[notes: In early chess, the "Elephant" (Alfil) was the precursor to the Bishop, but moved in jumps. Here, the author compares the Triangle's three-square move to the straight-line power of a Rook.]], namely from space A to F, G, H, or I.* ,,
+
+*The **Squares** tend toward the fourth space, starting from the one from which they departed; they move however they wish, like the **Chess Queen**; namely from A to K, L, M, N, O, P, Q, or R.* ,,
+
+*The **Pyramids**, since they contain the forms of all the pieces [[notes: In Rythmomachia, a Pyramid is a stack made of a Square, a Triangle, and a Circle.]], enjoy the privilege of the **Lady** [[notes: *Domina*, a common term for the Chess Queen.]]: for they can choose from all of those movements the one that most pleases them.* ,,
+
+*All pieces, except for the **Pyramids**—which sustain the persona of the **Kings**—can flee or fly out wherever they please, provided they curve their steps into a crescent-like circle, like the **Steeds of Chess** [[notes: *Sonipedes* (literally "noisy-footed") is a poetic term for horses, referring here to the Knight's L-shaped leap.]]; that is, from B to R, V, T, or L. This is so they cannot be shut in or intercepted; for then they would not be free to escape. Furthermore, by these leaps, they can capture no one, yet they can blockade [[notes: *Obsidere* can mean to besiege, blockade, or occupy a strategic position.]] them.* ,,
+
+->Jacobus Faber Stapulensis, folio 51. a<-
+[[notes: Jacques Lefèvre d'Étaples (c. 1455–1536) was a French humanist whose work on Rythmomachia, first published in 1496, codified many of these rules.]]
+
+*(Let the pieces be moved from anywhere into empty fields: the **Rounds** into the Second; the **Triangles** into the Third; the **Quadrangles** with their **Pyramid** into the Fourth, counting the space in which they sit. Every piece, by whatever straight movement, can take [[notes: *Tollere* (to lift/remove), the standard term for capturing a piece in this game.]] a piece, but never by an angular and oblique one.)* ,,
+
+[image: A decorative woodcut tailpiece featuring a central grotesque face framed by symmetrical scrollwork, acanthus leaves, and floral garlands.]
+
+Nnn [[meta: catchword: The]]
+
+[[summary: This page defines the movement distances for Rythmomachia pieces: Rounds move to the 2nd square, Triangles to the 3rd, and Squares/Pyramids to the 4th. It also introduces a "Knight’s move" used specifically for escaping or blockading, but not for capturing.]]
+[[keywords: Rythmomachia, Circles, Triangles, Squares, Pyramids, Jacques Lefèvre d'Étaples, Chess comparisons, Knight's move, capture rules]]

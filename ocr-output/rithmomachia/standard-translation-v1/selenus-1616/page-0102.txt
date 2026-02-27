@@ -1,0 +1,29 @@
+[[meta: This page continues the comparison between the Archer (modern Bishop) and the Rider (modern Knight), highlighting the tactical advantages of the Archer’s long-range movement.]]
+
+# The First Book / Chapter 8
+
+[[notes: The diagrams below illustrate the Archer's ability to control space and protect other pieces, including the "Spieß" (Pike/Spear), a piece used in historical German chess variants like Courier Chess or Selenus Chess. In these games, the Spieß often moved like a modern Queen but with a restricted range.]]
+
+**[Diagram 1: A 4x4 grid showing a White King (W.K.) at the top right, a Black King (S.K.) and White Archer (W.Sc.) in the second row, and another White Archer (W.Sc.) in the bottom row.]**
+
+**[Diagram 2: A 4x4 grid showing a Black King (S.K.) at the top right, a White King (WK.) in the second row, and two White Archers (WSc.) in the third and fourth rows of the first column.]**
+
+**[Diagram 3: A 3x3 grid showing a Black King (S.K.) at top center, a White Archer (WSc.) in the middle, and a White Pike (WSp) and White King (WK.) in the bottom row.]**
+
+**[Diagram 4: A wide 7x3 grid showing various pieces including White Kings (WK.), Black Kings (S.K.), White Pikes (WSp.), and Black Pikes (SSp.) arranged to demonstrate tactical coverage.]**
+
+2. An **Archer** [[notes: *Schütze*, the modern Bishop]] strikes his enemy / from afar / much better / and more subtly / than a **Rider** [[notes: *Reuter*, the modern Knight]].
+
+3. He protects / his **King** / from all sorts of **Checks** [[notes: *Schachen*]] / which may be offered to him / much more than a **Rider**.
+
+4. When he covers his **King** in such a manner / and places himself between the same / and the opponent's **Piece** [[notes: *Stein*, literally "stone"]] / which offers him check / he has a more favorable opportunity / than the **Rider** / even if the **Rider** likewise covers the **King** / to take away the **Piece** / which wishes to finish off his **King**. [[notes: This refers to the Bishop's ability to "interpose" or block a check while simultaneously threatening the attacking piece along the same diagonal.]]
+
+5. He can / in turn cover / and hold captive / all / both the **Principal** [[notes: *Heupt-Steine*, the major pieces like the Queen or Rook]] as well as the **Common Pieces** / of his enemy / which is impossible for the **Rider**.
+
+6. He protects / his **Soldiers** [[notes: *Soldaten*, the modern Pawns]] / much better / and is also defended by them: an example of which / is in Chapter 14 / of the Second Book.
+
+[[meta: The catchword "ches/" indicates that the next page will likely continue with "ches" or a word beginning with those letters, such as "beliches" or "welches".]]
+
+[[summary: This page lists the tactical advantages of the Archer (Bishop) over the Rider (Knight), focusing on its long-range defensive capabilities and its synergy with Pawns. It includes diagrams demonstrating piece positioning in a variant of the game involving the Pike (Spieß).]]
+
+[[keywords: Archer, Bishop, Rider, Knight, Check, King, Soldier, Pawn, Pike, Spieß, tactics, defense]]

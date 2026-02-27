@@ -1,0 +1,28 @@
+[[meta: This page transitions from calculating the superparticular ratios for the even-numbered side of the board to the calculations required for the odd-numbered side. It provides a mathematical bridge between the two sets of triangular game pieces.]]
+
+->OF THE PHILOSOPHERS. 20<-
+
+[[notes: The following diagram illustrates the numerical relationships between the "Odd Field" and the "Even Field" used to derive the pieces for Rythmomachia. The lines show how numbers are multiplied across fields to create the specific ratios required for the game pieces.]]
+
+| **The Field of Odd Numbers** | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 81 | 49 | 25 | 9 | | | |
+| 9 | 7 | 5 | 3 | | | **Multiply** |
+| | | | | | | |
+| **Even Numbers** | 2 | 4 | 6 | 8 | | |
+| | 4 | 16 | 36 | 64 | | |
+| | 6 | 20 | 42 | 72 | | |
+| | 9 | 25 | 49 | 81 | | **Superparticulars** |
+
+### To obtain the superparticular numbers in the field of odd numbers.
+
+This operation does not differ from the preceding one, namely that to find the **requesting numbers** [[notes: "Requerants" are the intermediary products used to determine the mathematical proportions of the pieces]] one must multiply the first and smallest of the **odd numbers**, by the first and smallest of the opposite field [[notes: The "opposite field" refers to the even numbers side of the mathematical table]], and to obtain the **required numbers** [[notes: "Requis" are the final values that will be written on the game pieces themselves]] one must multiply those same opposites by themselves. 
+
+But you must note that you will not take for the opposite the first number, which is 2; rather, you shall begin at the following number, 4. By multiplying the 3 [from the odd field] by this 4, you will have 12, the first requesting number; and that same 4 multiplied by itself will yield the first of the required numbers, 16. And thus you shall do for the others as the lines of the following table will guide you, in which you will see added the
+
+->C iiij<-
+
+[[gloss: odd (nompair), even (pair), superparticular (superparticuliers), multiply (multiplier), requesting numbers (requerants), required numbers (requis), field (champ)]]
+
+[[summary: This page explains how to calculate the values for the triangular pieces on the "odd" side of the board using superparticular proportions. It details a multiplication process involving both odd and even base numbers to determine the values 12 and 16 as the first set.]]
+[[keywords: Rythmomachia, mathematics, superparticular proportion, triangular pieces, odd numbers, even numbers, game pieces, calculation]]

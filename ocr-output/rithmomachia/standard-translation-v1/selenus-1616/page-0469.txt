@@ -1,0 +1,32 @@
+[[meta: This page transitions from the general defensive "Huts" discussed in the previous chapter to specific tactical "Examples" or puzzles. It uses a 1-64 numbering system for the board, which was common in early modern chess treatises. The text illustrates the rules of "Old Chess," where pieces like the Queen had much more restricted movement than in the modern game.]]
+
+### Chapter 16: On the Game of Chess.
+
+Concerning finally the **examples**, they are arranged as follows:
+
+[[margin: cc cc cc cc cc cc cc cc cc cc]]
+1.) When the **White** has placed his **King** on four; his **Queen** on five; the **Rooks** [[notes: *Rochen*, from the Old Persian *rukh*, refers to the Rook or Castle]] on sixty and on sixty-three; three **Soldiers** [[notes: *Soldaten* refers to the Pawns]] on thirteen, on fourteen, and on twenty-three: then the **Black**—when he has moved his **King** to thirty-seven; the **Queen** to forty-five; both **Rooks** to sixteen and fifty-one; both **Riders** [[notes: *Reuter*, the Knights]] to twenty-five and thirty-three; and a **Soldier** to fifty-six—can give him **Checkmate** with this Soldier in the seventh move.
+
+For, when the Black moves a **Rider** (from 25) to ten and offers check [[notes: *Schach-beut*, literally "offers check"]]: The White moves the **King** to twelve;
+
+The Black offers check with the other **Rider** from eighteen [[notes: The text says 18, though the setup mentioned 33; this may refer to a previous move in the sequence]]: The White moves the **King** to twenty-one;
+
+The Black moves a **Rook** (from 51) to nineteen and offers check: The White (since the **Queen**, which can only be moved one field [[notes: In older versions of chess, the Queen—or *Fers*—was the weakest piece, moving only one square diagonally. Here the author notes she cannot move far enough to capture the Rook]], must not take it) places one of his **Rooks** (from 60) in between on twenty;
+
+The Black offers check with the first **Rider** from four: The White (since he can neither strike the same with the **Queen**, considering that she cannot strike sideways next to herself [[notes: Another reference to the Queen's restricted diagonal movement]], nor take it with the **Rook**, which the Black **Rook** holds captive) moves the **King** to twenty-two;
+
+The Black also offers check with the other **Rider** from twenty-eight: The White moves the **King** to thirty-one;
+
+The Black moves the **Queen** (since she does not strike from afar) to thirty-eight and offers check: The White moves the **King** to thirty-nine;
+
+The Black moves the King's Rook's-Soldier against him to forty-eight and gives **Checkmate**.
+
+[[margin: cc cc cc cc]]
+2.) The **White** can give the **Black** **Checkmate** either with a **Rook** in the third move, or with the **Soldier** standing on 12 in the fifth move, when the pieces on both sides are placed as follows: Namely, the Black's
+
+[[gloss: Iii iii]]
+[[margin: catchword: King]]
+
+[[summary: This page provides a move-by-move walkthrough of a complex seven-move chess puzzle where Black delivers checkmate using a pawn. It serves as a practical application of the historical rules of chess, specifically highlighting the very limited movement of the Queen in this era.]]
+
+[[keywords: Chess, Chess Puzzles, Tactics, Checkmate, Medieval Chess, Queen's Movement, Rooks, Knights, Pawns]]

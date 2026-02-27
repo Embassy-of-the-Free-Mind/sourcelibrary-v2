@@ -1,0 +1,11 @@
+# The Philosophers' game.
+
+The pieces <note>original: "men"</note> are 48 in number as before—24 on a side—with two opposing kings of even and odd numbers. They must be of different colors, as has been said. The bottom of every piece must have its enemy's color and its own number mark. This differs in one point from the previous version of play: captured enemy pieces may only serve to celebrate a victory <note>original: "triumphe"</note>, but they may not fight on the side of the player who captures them.
+
+## ¶ Of the marking of the pieces <note>original: "men"</note>.
+
+They are marked with the same numbers that have been shown before, and therefore are to be identified as was previously taught. However, besides their numbers, they are marked with algebraic <note>original: "cossicall"</note> signs. These are signs used in the rule called the rule of the thing <note>original: "regula cossa"</note>, or algebra, representing roots, squares <note>original: "quadrats"</note>, cubes, fourth powers <note>original: "foursquared quadrats"</note>, sursolids <note>original: "sursolides"</note>, and sixth powers <note>original: "quadrats of cubes"</note>. All these six signs must be included in this game.
+
+<summary>This section describes the pieces and markings for the advanced version of Rythmomachia (The Philosophers' Game). It specifies that there are 48 pieces in total, divided into even and odd sides led by kings. A key rule change from the basic version is that captured pieces are removed from play and cannot be used by the captor. Additionally, the pieces are marked with algebraic (cossic) symbols representing mathematical powers from roots to sixth powers, integrating early algebraic notation into the gameplay.</summary>
+
+<keywords>The Philosophers' Game, Rythmomachia, algebraic notation, regula cossa, mathematical powers, game pieces, Renaissance mathematics, historical board games</keywords>

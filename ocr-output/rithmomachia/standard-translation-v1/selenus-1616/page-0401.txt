@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical chess demonstrations from page 366. It utilizes a 17th-century numbering system where the board's 64 squares are numbered sequentially, and pieces are named traditionally: Riders for Knights, Archers for Bishops, and Rocs for Rooks.]]
+
+### 12. Cap: On the Game of Chess.
+
+**Discovered Check** [[notes: "Ab-Schach" refers to a discovered check, where moving one piece reveals an attack from another.]]: The **Black** / covers / the **King** / with the **K. Rider** [[notes: King's Knight]] / at forty-six: The **White** / takes him / with the **Queen** / and offers **Check**: The **Black** / must cover the **King** / with the **Queen** / at fifty-three: The **White** / takes her / with the **Queen** / and gives **Check-Mate**.
+
+[[margin: 7.]] If, however, the **White** / does / not / take / the **B. Soldier** [[notes: Black Pawn]] / (n. 3.) but / instead / moves / the **K. Roc’s Soldier** [[notes: King's Rook’s Pawn]] / against the **B. K. Rider** [[notes: Black King's Knight]] / at thirty-one: then the **Black** / places / the same / at fifty-five: The **White** / takes / with the **K. Soldier** / the **B. K. Archer’s Soldier** [[notes: Black King's Bishop's Pawn]] / and moves him / onto the same: The **Black** / [moves] the same / against the **W. K. Soldier** / at forty-five: The **White** / [moves] the same / against him / (provided He / does not / wish to take him / with the **K. Archer** [[notes: King's Bishop]]: nor [move] the **K. Soldier** / when the **B. K. Soldier** / has taken / this **Archer**: against the **B. Queen** / at 54: nor move the **K. Archer** / to 39 / in order to capture the **B. Queen** / if she / perhaps / had taken the aforementioned **Archer** / and had to cover the **King** / at 53) at thirty-six: The **Black** / [moves] the same / against the **W. K. Rider** / at twenty-eight: The **White** / [moves] the **K. Soldier** / against the **B. Queen** / at fifty-four / and offers / from the **Queen** / a **Discovered Check**: The **Black** / must cover the **King** / with the **Queen** / at fifty-three: The **White** / moves / against her / the **K. Archer** / at thirty-nine: The **Black** / must / not / take / the **W. K. Rider** / with his **K. Rider** / (for then the **White** / would take / his **Queen** / with the **K. Archer** / and immediately give **Check-Mate**) *
+
+[[margin: 8.]] instead / he moves / the **K. Archer** / to thirty-five: The **White** / takes / the **B. Queen** / with the **K. Archer** / and offers **Check**: The **Black** / takes him / with the **K. Archer** / and moves the same / against the **W. Queen**: *
+
+[[margin: 9.]] The **White** / [moves] the same [[notes: the Queen]] / against the **B. K. Rider** / at fourteen / and protects her **Rider**: The **Black** / must take the same / with him: The **White** / [takes] the same / with the **Queen**: and can / further / easily win / against the **Black** / (who / must play / without the assistance of his **Queen**).
+
+[[margin: 10.]] If, however, the **White** / does not / move / the **Queen** / to 14. (n. 9.) / but / instead / takes / the **B. K. Archer** / with the same / and offers **Check**: then the **Black** / takes her / with the **King** / and moves him / onto her **Soldier**: The **White** / takes the **B. K. Rider** / with his **K. Rider**: The **Black** / [takes] the **W. K. Soldier** / with the **King**: The **White** / moves / the **K. Soldier** / onto the
+
+Aaa
+[[meta: catchword: onto the]]
+
+[[summary: This page continues the technical breakdown of a chess match, detailing specific maneuvers to achieve checkmate or gain a material advantage by capturing the opponent's Queen. It highlights the "Ab-Schach" or discovered check as a decisive tactical weapon.]]
+
+[[keywords: Chess tactics, Discovered Check, Checkmate, Queen capture, 17th-century chess, King's Rider, King's Archer]]

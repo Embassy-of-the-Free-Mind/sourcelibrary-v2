@@ -1,0 +1,23 @@
+[[meta: This page continues the tactical play-by-play for Chapter 8. The text picks up from the previous page's unfinished sentence describing a sequence of moves involving the King's Soldier and Rider.]]
+
+# Of the Game of Chess.
+
+[[margin: 1. cap:]] ...the same with the King’s Soldier: White moves the King’s Rider’s [[notes: "Reuter" or Rider is the period term for the Knight.]] Soldier [[notes: "Soldat" or Soldier is the period term for the Pawn.]] against the Black King’s Archer [[notes: "Schütze" or Archer is the period term for the Bishop.]] at twenty-six and captures it through this move without any hindrance. For Black may not move him [the Archer] away because of the King (since he covers the same from the White King’s Rook [[notes: "Rochen" or Rook. This describes a "pin," where a piece cannot move because it would expose the King to check.]]).
+
+7. If, however, Black does not take the White Soldier with the King’s Archer (no. 6) but instead with the King’s Soldier: then White moves the King’s Rider to the Black King’s Archer’s [square] at twenty-five, thereby preventing Black's intention, and finally wins the game.
+
+8. But if Black does not cover the King (no. 5) but instead moves him to sixty: then White moves the King’s Rider to the Black King’s Archer’s [square] at twenty-five.
+
+9. * Black [moves] the King’s Archer against the White Queen to fifty-nine: White takes the Black King’s Archer with the King’s Rook, moves him to the Black Queen’s [square], and thus captures it without damage or loss of his pieces: For if Black takes the same with the King’s Rider’s Soldier: He [White] captures the Black Queen with his Queen, and rescues it from the Black King’s Archer: If, however, Black takes the White Rook with the Queen: then He [White] takes her with the King’s Rider: Black [takes] the White Queen with the King’s Archer: He [White] [takes] the same with the King’s Rider, and thus obtains two Archers besides the King’s Rider: He can also still use five main pieces [[notes: "Haupt-Steine" refers to the non-pawn pieces: King, Queen, Rook, Rider, Archer.]]: whereas Black now has only three remaining.
+
+10. If, however, Black does not move the Archer (no. 9) but instead (in order to protect the Queen where necessary) moves the King’s Rook to 59: then White moves the King’s Rider’s Soldier to the Black King’s Archer’s [square] at twenty-six.
+
+11. * Black [moves] the King’s Archer to fifty-two: White takes the Black King’s Archer with the King’s Rider (so as not to lose it in vain): Black takes the same with the King’s Rider’s Soldier: both Queens are thus taken: and White obtains from Black’s forces the King’s Rider as well as his Soldier.
+
+12. If, however, Black does not move the Archer to 52 (no. 11) nor the King’s Rider’s Soldier against the White King’s Rider at thirty-four (since White would exchange the Queen and would obtain his King’s Archer with the mentioned Rider) but...
+
+Ggg
+
+[[summary: This page continues a technical analysis of chess variations, detailing how White can exploit a pinned Bishop (Archer) and navigate exchanges to achieve a material advantage. It highlights specific moves using a 1-64 coordinate system and focuses on the tactical sacrifice and trade of major pieces like the Queen and Rook.]]
+
+[[keywords: Chess tactics, Archer, Rider, Rook, Soldier, King's Rook, pinned piece, material advantage, early modern chess terminology]]

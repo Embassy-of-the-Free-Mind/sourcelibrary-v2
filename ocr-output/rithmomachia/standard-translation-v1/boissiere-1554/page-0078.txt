@@ -1,0 +1,14 @@
+[[meta: This page transitions from the mathematical table of the "Excellent Victory" to a philosophical and musical explanation of why these specific number sequences create harmony. The author uses a military metaphor—the relationship between a soldier, a captain, and a prince—to explain the concept of proportion.]]
+
+->OF THE PHILOSOPHERS.<-
+
+# Of the musical consonances and harmonies,
+## resulting from the joy and triumph of
+## victorious numbers, by the well-suited
+## and corresponding agreement in all
+## their proportions.
+
+*Certainly, whoever wishes to carefully consider the good fortune of victories will recognize that they arise more from the agreement, union, and suitability that must proportionally exist among the combatants than from anything else.* [[notes: The author is drawing a parallel between the "harmony" of a winning army and the mathematical harmony of the game pieces. In Rythmomachia, winning is not just about capturing pieces, but about capturing specific sets of numbers that form mathematical ratios.]] *I call the "proportional agreement of combatants" that which occurs when the soldier responds to and satisfies the captain in his proportion, which is to render him honor and obedience. Similarly, when the captain responds to and satisfies his proportion, which consists of being faithful to the prince, and providing a good example and animating his soldiers—without, however, indulging their vices.* [[notes: This social hierarchy mirrors the numerical hierarchy of the game: just as a soldier must obey a captain, a smaller number must relate to a larger one through a specific ratio (like the "sesquialter" or 3:2 ratio) to create "harmony."]] *In short, I set aside other examples that you might better consider yourself, and will return to the consonances that arise from the alliance and proportion of numbers.* [[notes: "Consonance" here refers to the Pythagorean belief that musical intervals—like the Octave or the Fifth—are the physical manifestation of perfect numerical ratios.]] *To prove this point, let us take the first four numbers of the first victory, which are 2, 3, 4, and 6. From these, if you take the last two, 4 and 6, or indeed the first two, 2 and 3, you find...* [[meta: The sentence concludes on the following page. The catchword "i" at the bottom of the original page likely leads into the word "trouuerons" (we will find).]]
+
+[[summary: This page uses a military metaphor to explain how mathematical proportions create "harmony" or "consonance" in the game of Rythmomachia. It introduces the specific winning number sequence 2, 3, 4, and 6 as a primary example of this numerical agreement.]]
+[[keywords: Rythmomachia, musical consonance, proportions, military metaphor, Pythagorean harmony, victorious numbers, ratio, numerical alliance]]

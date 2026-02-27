@@ -1,0 +1,25 @@
+[[meta: This page continues the description of the "Excellent Victory" (Victoria Praestantissima). While the previous page introduced the concept of capturing four pieces that embody the three mathematical proportions, this page explains the physical arrangement of those pieces on the game board and provides a reference table for the winning number combinations.]]
+
+### THE GAME OF RYTHMOMACHIA
+
+[[notes: Rythmomachia, or "The Battle of Numbers," was a complex board game used in the Middle Ages and Renaissance to teach mathematics and music theory.]]
+
+...between them that, in comparison to another, does not generate harmony and joy; and they must be arranged around some square or tile of the game board [[notes: The *tablier* is the grid-based board, often 8x16 squares.]] upon four other squares corresponding to the four corners of the middle square, whichever one it might be. These victories I shall present in order in the following table on the left-hand side [[notes: *Senestre* is the archaic term for left.]]. And so that one may better contemplate the three proportions [[notes: The three "medieties" or proportions are Arithmetic, Geometric, and Harmonic.]], I will arrange each in its place on the right [[notes: *Dextre* is the archaic term for right.]] directly across from the said victories. To this arrangement, if anyone wishes to raise an objection, they should have a little patience, for after the arrangement of these, we shall answer them.
+
+---
+
+| Arithmetic, Geometry, & Music, together. | Arithmetic alone. | Music alone. | Geometry alone. |
+|:---|:---|:---|:---|
+| **D C B A** | | | |
+| 2 3 4 6 | 2 4 6 | 2 3 6 | 2 3 4 6 |
+| 4 6 8 12 | 4 8 12 | 4 6 12 | 4 6 8 12 |
+| 6 8 9 12 | 6 9 12 | 6 8 12 | 6 8 9 12 |
+| 4 6 9 12 | 6 9 12 | 4 6 12 | 4 6 9 |
+| 3 5 15 25 | 5 15 25 | 3 5 15 | 3 5 15 25 |
+| 12 15 16 20 | 12 16 20 | 12 15 20 | 12 15 16 20 |
+
+<vocab>Rythmomachia, proportions, Arithmetic, Geometry, Music, game board, victories</vocab>
+
+[[summary: This page describes the physical layout required for an "Excellent Victory" in Rythmomachia, where four pieces must surround a central square. It also provides a mathematical table demonstrating how specific sets of four numbers contain Arithmetic, Geometric, and Harmonic (Musical) proportions simultaneously.]]
+
+[[keywords: Rythmomachia, Excellent Victory, Victoria Praestantissima, Arithmetic proportion, Geometric proportion, Harmonic proportion, mathematical games, Renaissance education]]

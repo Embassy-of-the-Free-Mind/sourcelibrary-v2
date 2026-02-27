@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical variations from Chapter 12. The text maintains the 1-64 sequential square numbering system and traditional piece names: Rider for Knight, Archer for Bishop, and Roc for Rook.]]
+
+### The Third Book / 12. Chapter:
+
+onto the **B. K. Archer’s Soldier** [[notes: Black King's Bishop's Pawn]] / at forty-four / and gives / from the **K. Archer** [[notes: King's Bishop]] / **Discovered Check** [[notes: "Ab-Schach" occurs when moving one piece reveals an attack from another piece behind it.]]: The **Black** / moves / the **King** / to sixty-one: The **White** / takes / the **B. K. Archer’s Soldier** / with the **K. Soldier** [[notes: King's Pawn]] / and moves it / onto [the square of] the **B. K. Rider** [[notes: Black King's Knight]]: The **Black** / [moves] onto him / the same / at forty-one: The **White** / takes him / with the **K. Archer**: The **Black** / [takes] the same / with the **K. Rider’s Soldier** [[notes: King's Knight's Pawn]]: The **White** / gives / with the **K. Roc** [[notes: King's Rook]] / from [square] five / **Check**: The **Black** / must / with the **King** / retreat / onto the **Queen’s Archer’s** [[notes: Queen's Bishop's]] file: The **White** / (since He has two **Riders** / to use against one **Archer**) will / eventually be able to win against the **Black** / (whose pieces / He has hemmed in / and whose order he has torn apart) once He has / brought / the **King** / behind his **Soldiers**.
+
+[[margin: 11.]] If, however, the **Black** / does not / move / the **Archer** / to 35 (note 8) / but / instead / takes / the **W. K. Archer** / with the **Queen**: then the **White** / captures her / with his **Queen** / and offers **Check-Mate**.
+
+[[margin: 12.]] But if the **Black** / does not / move / the **Rider** - to 47 (note 2) / but [moves] the **K. Soldier** / onto the **W. K. Soldier** / at four
+
+[[margin: 13.]] and forty: * then the **White** / takes / the **B. K. Rider** / with his **Queen**: The **Black** / [takes] the same / with the **Queen**: The **White** / [takes] the same / with the **K. Roc**: The **Black** / moves / the **K. Archer** / between the **W. K. Roc** / and **Rider** / to thirty-one / and causes / for the **White** / a **bad game** [[notes: "Böses Spiel" refers to a position of significant disadvantage.]].
+
+[[margin: 14.]] Therefore, the **White** / should / not / take the **B. Rider** / (note 13) / but / move / the **K. Roc’s Soldier** [[notes: King's Rook's Pawn]] / against the same / at thirty-one: The **Black** / takes / the **W. K. Soldier** / with his **K. Soldier**: The **White** / [takes] the same / (provided He / does not yet wish to take / the **B. K. Rider** / with the **K. Roc’s Soldier**) with the **K. Rider**: (For the **B. K. Archer’s Soldier** / cannot take him / because he is / held captive / by his **Queen**) [White] then offers / with the same / (provided He is not prevented) from fifty-four / **Check** / and wins / the **B. K. Roc**: The **Black** / (to prevent this) moves / the **K. Rider’s Soldier** / against the **W. Queen** / at thirty-nine: The **White** / takes him / with the **K. Archer**: The **Black** / [takes] the same / with the **K. Archer’s Soldier** / and moves once more / against the **W. Queen**: The **White** / takes him / with the same / and offers **Check-**
+
+[[meta: The catchword at the bottom "Der Schwarz" (The Black) indicates the subject of the first sentence on the following page.]]
+
+[[summary: This page continues the analysis of specific chess variations, focusing on the consequences of different pawn and knight exchanges. It demonstrates a winning endgame strategy for White based on superior piece coordination and a potential checkmate if Black misplays their Queen.]]
+
+[[keywords: Chess tactics, Discovered Check, Checkmate, Endgames, Queen exchange, Gustavus Selenus, 17th-century chess]]

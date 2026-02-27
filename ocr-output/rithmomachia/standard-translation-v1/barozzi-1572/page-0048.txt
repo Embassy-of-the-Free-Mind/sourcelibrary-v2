@@ -1,0 +1,17 @@
+[[meta: This page continues the explanation of the "Great Victory" table from page 49, specifically breaking down the mathematical relationships within the number set 2, 3, 4, 6 to show how they contain all the fundamental musical harmonies.]]
+
+6, which are the first four in the said table, and create the **Greatest Victory**: we will find in them all the proportions from which all **Musical consonances** are born. Because if we compare the last two among them—the 4 and the 6—or the first two—the 2 and the 3—we will find them joined in *sesquialter* proportion [[notes: A ratio of 3:2, where the larger number contains the smaller plus half of its value.]]; that is, the greater contains the lesser once and a half. This proportion gives rise to the consonance called *Diapente* by the Greeks, and the *Fifth* by common musicians.
+
+Then, if we compare the two in the middle, namely the 3 and the 4, the *sesquitertian* proportion [[notes: A ratio of 4:3, where the larger number contains the smaller plus one-third of its value.]] will appear; that is, the greater contains the lesser and its third part, from which is born the consonance called *Diatessaron* by the Greeks, and the *Fourth* by common musicians.
+
+Afterwards, if we compare the first, which is 2, to the third, which is 4—or the second, which is 3, to the last, which is 6—we will find the *double* proportion; that is, the greater contains the lesser twice, which proportion generates the consonance called *Diapasson* by the Greeks, and the *Octave* by common musicians.
+
+Furthermore, if we make a comparison of the first, which is 2, to the last, which is 6, it will yield the *triple* proportion; that is, the greater contains the lesser three times, which produces the consonance called *Diapasson and Diapente* together by the Greeks [[notes: An Octave plus a Fifth, known as a Twelfth.]], and the *Twelfth* by modern common musicians.
+
+Finally, if we compare the difference between the 3 and the 4—which is unity [[notes: The number 1.]]—with the third number, which is 4, we will find the *quadruple* proportion; that is, the greater contains the lesser four times, from which is born the musical consonance called *Disdiapasson* by the Greeks [[notes: A double octave.]], and the *Fifteenth* by common musicians.
+
+And similarly, if we contemplate any other set of four numbers contained in the above-written table, we will find in each of them all the musical consonances, except in the three sets marked with a cross [[notes: Refers to the dagger symbol † used in the table on page 49 to indicate exceptions.]], as can be contemplated in the following table. Even though it is not necessary for everyone who plays this game and wishes to achieve this victory to know these things, I nonetheless wanted to touch upon them briefly to hint to those versed in **Arithmetic** and **Music** the great sweetness and delight they can take in the final victory and end...
+
+[[summary: This page explains how the specific number sets required for the game's "Great Victory" correspond to the mathematical ratios of musical intervals, such as the Fourth, Fifth, and Octave. The author argues that understanding these harmonic relationships adds a layer of intellectual "delight" to winning the game.]]
+
+[[keywords: Rithmomachia, musical consonance, arithmetic proportion, Diapente, Diatessaron, Diapasson, Pythagoras, harmony, ratios, Greatest Victory]]

@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical variations of the "third variety" of opening. The numbering system (1–64) designates the squares of the board, likely starting from White's left (a1) to Black's right (h8). The gameplay here describes a complex mid-game struggle involving a trapped Queen and aggressive Rook maneuvers.]]
+
+->**On the Game of Chess.**<-
+
+[[margin: Chap. 3]]
+10. **Rook** [[notes: *Rochen*, the archaic term for the Rook, derived from the Persian *rukh*]] to sixty-four [[notes: h8]]: **White** takes, with the same, the **Black King’s Knight’s Soldier** [[notes: the g7 pawn]]:
+
+11. **Black** moves the **King’s Bishop** [[notes: *Schütze*, literally "marksman" or "archer," was the common 17th-century term for the Bishop]] to fifty-three [[notes: e7]] and traps the **White Queen**:
+
+12. **White** advances the **King’s Rook** (notwithstanding that he might take the **Black King’s Bishop’s Soldier** with the **King’s Knight** [[notes: *Reuter*, meaning "rider" or "cavalier," the Knight]] perhaps to better advantage) to seven [[notes: g1]]: **Black** (provided he does not wish to take the **White King’s Knight** with the **King’s Rook**) [moves] the **Queen** to the **White King’s Knight’s** and **Bishop’s Soldiers** [[notes: the g2 and f2 pawns]] at forty [[notes: h5]]: **White** [moves] the **King’s Knight’s Soldier** (intending to break through from fifty-four [[notes: f7]] with the **Queen**) to forty-seven [[notes: g6]]: **Black** [moves] the **King’s Knight** to the **White King’s Soldier** at thirty-five [[notes: c5]]: **White** [moves] the **King’s Knight** to thirty-nine [[notes: g5]]: **Black** [moves] the **King’s Knight** against the same and against the **White Queen** at forty-five [[notes: e6]]:
+
+13. **White** (provided he does not wish to **give Check** with the **King’s Knight** from fifty-four [[notes: f7]]: in which case the **Black King’s Rook** might be caught and the **Queens** exchanged: and therefore Black would suffer loss in the previous no. 12 by moving the **King’s Knight** to 35 and 45) takes it [[notes: the Knight]] with the same and gives **Check**: **Black** takes the same with the **King’s Bishop**: **White** moves the **King’s Rook** against the **Black Queen** at thirty-nine [[notes: g5]]: **Black** takes with her [[notes: the Queen]] the **White King’s Bishop’s Soldier**, moves the same to the **White King’s Soldier** [[notes: the e2 pawn]], and gives **Check**: (for if he were to take the **White Rook** with the **King’s Bishop**, the **White Queen** would take his **King’s Soldiers** and thus break through: and if he then took her with the **Queen**, both his **Rooks** would be lost to the **White Queen**)
+
+14. **White** moves the **King** to eleven [[notes: c2]]: **Black** [moves] the **King’s Rook** to twenty-four [[notes: h3]]: **White** (so that he is not immediately **Checkmated** by Black’s next move) [moves] the **King’s Bishop’s Soldier** to twelve [[notes: d2]]: **Black** takes the **White King’s Soldier** with the **Queen** and offers **Check**: **White** moves the **King** to three or four [[notes: c1 or d1]]: **Black** takes the **White King’s Rook’s Soldier** with the **King’s Rook**: **White** (so that **Black** does not immediately defeat him with the **King’s Rook** from eight [[notes: h1]] or—if he has advanced the **King’s Bishop**—from five [[notes: e1]]) moves the **King’s Rook** to seven [[notes: g1]]: **Black** (in order not to let the **White Queen** go yet) takes her **Soldier** with the **Queen**;
+
+Eee iij
+[[meta: catchword: Queen ;]]
+
+[[summary: This page details a dense sequence of chess moves focusing on a tactical struggle where the White Queen is nearly trapped and the players exchange Knights to navigate a series of checks. It highlights the high stakes of early modern play, where one misstep leads to the loss of both Rooks or immediate checkmate.]]
+
+[[keywords: Chess tactics, Rook, Knight, Bishop, Queen, Checkmate, 17th-century chess, Game of Chess, Chess notations]]

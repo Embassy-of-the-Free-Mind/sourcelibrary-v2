@@ -1,0 +1,50 @@
+[[meta: This page continues from the previous table of ratios, explaining the specific rules—the "trine perfection"—for transforming one type of numerical ratio into another. It moves from generating ratios to "resolving" or reducing them back to their simplest forms.]]
+
+...are derived from the threefold equality of terms taken according to the third number of each extreme of the triples.
+And quadruples likewise are taken from triples by taking three continuous triples according to the requirements of equality, the third of the extreme triples, and by this analogy in the following multiples. And sesquialters, sesquitertians, sesquiquartans, [[notes: These are ratios where the larger number contains the smaller once plus a fraction: 3:2 (sesquialter), 4:3 (sesquitertian), and 5:4 (sesquiquartan).]] and those following will be born from inverted doubles, triples, quadruples, and those following, taken with the same observation—doubles, triples, quadruples, and the rest being inverted as often as necessary from the threefold equality. However, the first and greatest of the extremes of the inverted multiples should equal each individual third superparticular, just as the method of demonstrating is the same everywhere as in the preceding sections.
+
+[[margin:
+| d | e | f | |
+|---|---|---|---|
+| 4 | 6 | 9 | Superparticulars |
+| 4 | 10 | 25 | Multiple super- |
+| a | b | c | particulars |
+]]
+
+71 ¶ Given superparticulars or multiple superparticulars, to produce multiple superparticulars and superpartients; and given superpartients or multiple superpartients, to produce superpartients and multiple superpartients. [[notes: A "superpartient" ratio is one where the larger number contains the smaller once plus several fractional parts, such as 5:3 (one and two-thirds).]]
+¶ Let **a**, **b**, and **c** be superparticular terms, and let **a** be taken once to be **e** (the first number), and let **a** once and **b** once be **f** (the second number), and so on according to the precepts of trine perfection [[notes: "Trine perfection" refers to the three-step rule of addition: 1st number, 1st+2nd, 1st+2*2nd+3rd.]] as was done previously, resulting in **d**, **e**, and **f**, which will be continuously proportional. According to the eighteenth theorem of this book, the proportion of **e** to **d** is a multiple superparticular; therefore, **e**, **f** to **e** will likewise be. Thus, **d**, **e**, and **f** will be continuous multiple superparticulars. In the same way, from multiple superparticulars, multiple superparticulars are born. If indeed you begin with the terms **a**, **b**, and **c** inverted, by the same eighteenth theorem there will arise continuous superpartients; thus the first part is established. The second part will be made clear in the same way by the nineteenth theorem of this book, given the order of superpartients or multiple superpartients. For if the grouping begins from the smaller term, multiple superpartients will arise; if from the larger term, superpartients will arise; thus the proposition stands.
+
+¶ From the last two conclusions, you can gather: From the first equality, doubles are born. From doubles, triples. From triples, quadruples; and in this manner the remaining multiples follow. From inverted multiples, superparticulars are born: as from doubles, sesquialters; from triples, sesquitertians; and so with the following superparticulars from the following multiples. And from superparticulars come multiple superparticulars: as from sesquialters come double sesquialters; from sesquitertians come double sesquitertians; and in this manner for the rest. Likewise, from multiple superparticulars come multiple superparticulars: but from double superparticulars come triple superparticulars, and from triple superparticulars come quadruple superparticulars. And from inverted superparticulars are born superpartients: as from sesquialters come superbipartients; [[notes: A superbipartient ratio is 5:3.]] from sesquitertians come supertripartients. From double sesquialters and double sesquitertians are constituted superbipartients and supertripartients. From superpartients come multiple superpartients: as from superbipartients come double superbipartients; from supertripartients come double supertripartients. From multiple superpartients come likewise multiple superpartients: but from double, triple, or quadruple superpartients come triple, quadruple, or quintuple superpartients. From inverted superpartients or multiple superpartients, superpartients are born. These rules are widely applicable everywhere from the three precepts. And you may express this in a long series whenever you wish: if you proceed by continuously fitting the three precepts to the terms of continuously proportional superparticulars three by three, multiple superparticulars will be born, but only through three and three continuous proportionals. And in the same way, in inverted order, superpartients will be born, but only in three and three continuously proportional terms. But enough on these matters for now.
+
+[[margin:
+[[image-desc: A decorative shield-shaped frame containing letters and numbers organized in rows.]]
+| l | m | n |
+|---|---|---|
+| 8 | 12 | 18 |
+| g | h | k |
+| 9 | 12 | 16 |
+| a | b | c |
+| 9 | 3 | 1 |
+| d | e | f |
+]]
+
+72 ¶ To reduce given superparticulars into multiples, and those into smaller multiples until they reach equality.
+¶ One may observe that proportions are only resolved into those from which they were created. Thus, this mode of resolution appears in all things in which the mode of creation was the same. Let **a**, **b**, and **c** be given as continuous superparticular terms; let **d** be equal to **a** as the first number; and let **d** be taken from **b** to leave **e**; and from **c** let **d** be taken and **e** twice to leave **f**. I say that **d**, **e**, and **f** are continuously proportional and multiples. That they are continuously proportional is clear: for taking **g**, **h**, and **k** as three terms in continuous proportion from **d** and **b**, those which arise from them by the superior method of grouping will be continuously proportional according to the preceding rules, and let them be **l**, **m**, and **n**. And because **l** is to **a** as **d** is to **g**, and **m** to **h** as **b** to **e**, and so forth, therefore **d**, **e**, and **f** are continuously proportional. And because **b** to **a** is superparticular by hypothesis, by the sixteenth theorem of this book **e** to **d** will be a multiple of the same denomination. Thus, the given superparticulars are reduced into their multiples. If, therefore, the given superparticulars were sesquitertians, they are resolved into triples; if sesquialters, into doubles. If they are reduced into triples, you will prove in the same way as before, with the help of the seventieth theorem, that those multiples are reduced into doubles, and doubles into equality: which is the proposition.
+
+73 ¶ To resolve multiple superparticulars into superparticulars, and multiple superpartients into superpartients.
+¶ Let **a**, **b**, and **c** be three multiple superparticular terms. Let **d** be equal to **a**, which is subtracted from **b** to leave **e**, and subtracted in the same manner as in the preceding. If **b** to **a** is a multiple superparticular both denoted by the same number, by the forty-first theorem the task is done. And so too for superpartients. But if the multiple is of a larger denomination, this will not happen in the first resolution; rather, we shall resolve it first into multiples of a denomination smaller by one, the denomination of the part always remaining the same, until we come to where the denomination of the multiple and the part are the same, and thus what is proposed will easily appear.
+
+¶ It is possible for any superpartients to be reduced into superparticulars.
+74 ¶ Since, according to the seventy-seventh theorem, superpartients are born from superparticulars, let **a**, **b**, and **c** be superpartients of this kind. Let **d** equal **a**; let **d** be subtracted from **b** to leave **e**, and from **c** let **e** be subtracted twice; and let **f** remain. By that seventy-seventh theorem, the superparticulars from which they were born will result. But you do not always happen upon the goal in the first reduction, though it happened here. Sometimes they will be resolved in the first reduction into multiple superparticulars, which will finally be reduced into superparticulars by the preceding rule; once this is done, the task is complete. Sometimes into superpartients or multiple superpartients.
+
+[[margin:
+| 9 | 15 | 25 |
+|---|----|----|
+| a | b | c |
+| 9 | 6 | 4 |
+| d | e | f |
+]]
+
+[[summary: This page details the mathematical transformation of numerical ratios, explaining how to generate complex proportions (like superpartients) from simpler ones (like multiples) and how to reverse the process back to a state of equality (1:1). It relies on a three-step additive rule known as "trine perfection" to navigate the hierarchy of Pythagorean ratios.]]
+
+[[keywords: superparticular, superpartient, multiple superparticular, trine perfection, numerical reduction, Pythagorean mathematics, ratios, sesquialter, sesquitertian]]

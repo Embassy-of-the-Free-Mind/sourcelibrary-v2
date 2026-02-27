@@ -1,0 +1,23 @@
+[[meta: This page continues the scholarly investigation into ancient board games, moving from Ovid's poetic descriptions to formal definitions of "Latrunculus" and "Dammen-Spiel" (Draughts/Checkers), attempting to link these Roman games to the origins of Chess.]]
+
+# The First Book / Chapter 2:
+
+that game (which we call **Draughts** [[notes: Known as *Damenspiel* in German or Checkers in American English]] and which is played on a **Chess-board** with twenty-four—namely twelve white and twelve black—round stones, placed on six horizontal lines with four stones per line in twenty-four squares of the same color, leaving two empty horizontal lines between the two groups) might actually refer to **Ancient Chess** (the description of which is to be found below in the ninth chapter of the final Book). It is suggested that our modern version was taken and brought down to us from that ancient game, for in that game, one uses twelve principal and twelve lesser stones. However, one cannot conclude anything with certainty; these are merely thoughts that provide some food for reflection. One may further consult the following authors on this matter: **Theodor Zwinger** [[notes: A Swiss scholar (1533–1588) known for his massive encyclopedia, *Theatrum Humanae Vitae*]] in his *Theatro Humanæ vitæ*, Volume 21, book 3, pages 3783 and 3786; **Cicero**, book 1 of *De Oratore*; and **Quintilian**, book 12.
+
+Furthermore, **Julius Pollux** [[notes: A Greek grammarian and sophist of the 2nd century AD]], in *De Rerum vocabulis*, book 9, chapter 7, reports the following:
+
+> The game which is said to be played with many pieces [*Calculorum*] is **Latrunculus** [[notes: Often translated as "The Game of Little Soldiers" or "Bandits," the most famous Roman strategy game]], containing spaces within itself situated upon lines. The board itself is called a **City** [*Civitas*], while each individual piece is called a **Dog** [*Canis*]. Furthermore, since the pieces are distinguished by two colors, the art of this game is to take away the piece of a different color from the middle by trapping it between two pieces of the same color.
+
+->**That is:**<-
+
+> The game which is played with many stones is called *Latrunculus* in the Latin language, and it comprises various fields which are contained within lines. However, the *Laterunculus* [[notes: A variation of the name for the board or the game]] is called a **City** or a Community, and every stone is called a **Dog**. Now, because these stones are of two different colors, the most important thing to observe in this game is that one should clear away and destroy a stone of another color by using two stones of the same color.
+
+The opinion of Pollux is explained even more clearly by the aforementioned **Bishop Majolus** [[notes: Simon Majolus (1510–1597), an Italian bishop and author of *Dies Caniculares*]], on page 575, where he writes:
+
+> The game of **Latrunculi** consisted of distinct square spaces on a square tray or dice-box, which they called *πόλεις* [*poleis*, or "cities"]. In these, two opposing battle lines of distinct pieces were arranged in a suitable layout, as if for mutual ambushes and conflicts; these pieces were called *πύες* [[notes: Likely a corruption of the Greek word for "dogs" or "pawns"]] and **Dogs**, as well as **Latrunculi**. These are led out within defined limits,
+
+[[meta: catchword: mites, (continuing the word "limites")]]
+
+[[summary: The author discusses the similarities between Draughts (Checkers) and the Roman game Latrunculi, citing classical authorities like Julius Pollux and Bishop Majolus to describe how pieces (called "dogs") were moved and captured on a board referred to as a "city."]]
+
+[[keywords: Draughts, Checkers, Latrunculus, Julius Pollux, Chess history, Roman games, Game strategy, Bishop Majolus]]

@@ -1,0 +1,24 @@
+[[meta: This page continues from the previous discussion on how Checkmate can be prevented or rendered void, specifically focusing on scenarios where piece promotion doesn't save a player and introducing the concepts of Kingly defense.]]
+
+->### Chapter 1: Of the Game of Chess.<-
+
+Otherwise, a King might be found in such a position that, even though a **Pawn** [[notes: "Soldat" or soldier]] has been promoted to a **Queen**, he is nevertheless given **Checkmate**. For example: when the King of the White army stands in the second square of the Black Queen’s **Rook** [[notes: "Roche," the archaic term for the Rook]]; the Black **Queen** in her own square; the Black King in the third square of his Queen’s **Bishop** [[notes: "Schütze," literally meaning 'Archer,' the common term for the Bishop in this period]]; and the player with the White pieces
+
+| | WB | BR | |
+| :--- | :--- | :--- | :--- |
+| | **WK** | | |
+| | | **BK** | |
+| BR | | | |
+
+moves his Queen’s **Knight’s** [[notes: "Reuter," literally 'Rider,' the common term for the Knight]] **Pawn** into the Black Queen’s Knight’s square and there promotes it to a **Queen**: despite this, the Black player still gives **Checkmate** with his Queen in the fourth square of her **Rook**. Likewise, when only a **Rook** remains on both sides, even if one side still had a **Knight** and a **Bishop** in addition; or if only two **Bishops**, or two **Knights**, or two **Pawns** are present for both sides. How one player or the other should behave in these and similar cases can be sought in the further instructions of the following fifth chapter.
+
+This shall now be enough concerning the means that one can undertake against the King, among which **Checkmate** "shuts the door" [[notes: A metaphorical way of saying Checkmate ends the matter or concludes the game]]. Next follow the means ordained for the protection of the King: namely, **fortification**, **defense**, **numerical superiority**, and the **capture** [[notes: "Raubung," literally 'robbing' or 'plundering']] of the opponent's pieces.
+
+Regarding the **Fortification** [[notes: "Beschanztung," meaning to entrench or wall-in. In this context, it refers to the strategic positioning of pieces to shield the King, including the early forms of castling]] of the King: this is one of the most necessary means in this game and carries with it both the loss and the preservation of the same. For when the King can stand peacefully and be safe from the offering of **Check** through the screen of his pieces, it is a very great advantage and aid in this game. But if he stands exposed and can be reached by a **Check** from the side or otherwise, he easily becomes a fugitive [[notes: "Feldflüchtig," meaning one who flees the field of battle]] and must vacate one square after another.
+
+->R ij<-
+[[meta: catchword: vacate.]]
+
+[[summary: This page describes specific endgame scenarios where Checkmate is achieved despite piece promotion and introduces the fundamental defensive strategies for the King, particularly 'fortification.']]
+
+[[keywords: Checkmate, Promotion, Rook, Bishop, Knight, Pawn, Fortification, King's Safety, Chess Strategy]]

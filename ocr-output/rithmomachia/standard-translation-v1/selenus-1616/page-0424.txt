@@ -1,0 +1,20 @@
+[[meta: This page continues the tactical analysis from page 389. The coordinate system remains a 1–64 grid where 1 is a1 and 64 is h8. The author continues to use "Reuter" (Knight/Rider), "Schütze" (Bishop/Marksman), and "Soldat" (Pawn/Soldier).]]
+
+### The Fourth Book / Chapter 3:
+
+...takes the same with the **King**, or with his **Rook**: **White** moves the **King’s Knight** (out of danger) to fourteen [[notes: f2]].
+
+[[margin: 24.]]
+If **White**, however, places the **Queen** (after **Black** has moved the **King’s Knight** to 52 [[notes: d7]]) on 24 [[notes: h3]]: (no. 9) then **Black** moves the **King’s Knight** to the **White King’s Soldier** [[notes: the pawn]] on thirty-five [[notes: c5]]: **White** (to protect it) moves the **Queen** to six [[notes: f1]]: **Black** gives **Check** with the **Queen** from twenty-five [[notes: a4]]: and thus causes a bad game for **White**, which he can easily lose if he does not know how to take sufficient care.
+
+It is therefore not useful for **White**, although it may have the appearance of a good game, to play in such a manner, ra-
+[[margin: 25.]]
+-ther, * he should let the **Black King’s Knight** remain on his square (no. 5) and (in order to bring his pieces into the field) give **Check** with the **King’s Bishop** [[notes: literally "Schützen" or marksman]] from thirty-nine [[notes: g5]]: If **Black** then covers the **King** with the (aforementioned) **King’s Knight** on fifty-three [[notes: e7]] or forty-six [[notes: f6]]: then **White** (to protect the **King’s Soldier** [[notes: pawn]]) moves the **King’s Knight** to twelve [[notes: d2]]: and will thus give no cause for the exchange of both **Queens** (as happened in no. 2), but will rather prevent it through other useful moves.
+
+-><image-desc>A decorative woodcut tailpiece featuring a central stylized mask or grotesque head surrounded by symmetrical scrolling acanthus leaves and floral flourishes.</image-desc><-
+
+[[meta: Catchword: Das]]
+
+[[summary: This page outlines specific chess maneuvers intended to avoid a disadvantageous queen exchange and maintain board control. It warns against a seemingly "good" move that leads to a vulnerable position and instead advises developing pieces while applying pressure through a check.]]
+
+[[keywords: chess tactics, opening theory, Queen exchange, development, 17th-century chess, Selenus system]]

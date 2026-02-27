@@ -1,0 +1,34 @@
+[[meta: This page continues the translated passage from Nicolas Trigault’s account of Matteo Ricci’s observations in China. The text concludes the description of Chinese Chess (Xiangqi) and begins an account of the game of Go (Weiqi).]]
+
+### ->The First Book / Chapter 2:<-
+
+» [considered] higher and more noble / esteemed and used. They are
+» indeed / not very unlike / our own Chess-pieces / but yet in
+» the following [ways] / distinct. For the King / does not move / beyond the /
+» four places / or little houses / nearest to his station: as likewise /
+» the two Elders [[notes: The *Shi* or Advisors, often called Mandarins, who are confined to the "Palace" area of the board]] : whom / **Riccius** [[notes: Matteo Ricci]], calls the King’s learned Assessors. They do not / employ a Queen / but
+» rather two other pieces / which they / call **Powder-** / or **Fire-**
+» **Mortars** [[notes: The *Pao* or Cannons, a unique piece in Chinese Chess]] / and which have / ingenious properties / about them.
+» These precede two Knights [[notes: Referred to as "Riders" in the text]] / and follow two Infantrymen / (who / in these two spaces / or lines / precede them / in the next space)
+» closely at their heels. The movement / of this piece / is fashioned /
+» almost like the movement of our Rook or Elephant [[notes: The Rook was historically often depicted as a war-elephant in certain traditions]]. Yet it does not strike / the leader of the opposing army /
+» the King : unless it be / that between it / and the King / whom one wishes to attack / there stands a piece / either from its own /
+» or the opponent’s troop [[notes: This describes the "cannon" mechanic where the piece must hop over exactly one "screen" piece to capture]]. From this it then follows / that the
+» King / can prevent and ward off / this assault in three ways:
+» First / when he / in his own person / (so to speak) retreats /
+» and without shame or reproach / saves himself / with flight / to the next space: Secondly / when he / opposes it / with yet another piece [[notes: By placing a second piece between the Cannon and the King, the "screen" is doubled and the attack is blocked]]:
+» Lastly / when he / entirely clears the side / where he has been /
+» attacked / and lets the piece / which covered him / withdraw /
+» and places it / upon another space [[notes: By removing the single "screen" piece, the Cannon no longer has a hurdle to jump and thus cannot attack the King]].
+
+» They have furthermore / yet a more excellent game / among
+» them / of the following sort:
+» Many of them play / with two hundred pieces / of which
+» some are white / some black / upon a board / divided into three
+» hundred spaces [[notes: This is a description of *Weiqi*, known in the West as Go. While a standard board has 361 intersections, early European accounts often approximated the number]]. With these pieces / each one / attempts / to hunt / and to enclose / the other’s pieces / in the middle of the board / (so that he / can all the better / master the remaining spaces). Whoever now / has occupied the most spaces / on the board / to him / at the last / the victory / is ascribed. This game / is vehemently favored / and used / by those / who sit in the Government [[notes: The "Literati" or Mandarin class of scholar-officials]] : they also often / spend the entire / day / therewith. For those / who are practiced / and cunning / in this game / can indeed / delay [a move] for a whole hour. Whoever now / is experienced in this game / and well-
+
+<meta>catchword: abge-</meta>
+
+[[summary: This page concludes the technical description of the "Cannon" piece in Chinese Chess and introduces the game of Go, noting its popularity among the Chinese ruling class.]]
+
+[[keywords: Xiangqi, Cannons, Pao, Weiqi, Go, Matteo Ricci, Chinese Chess, Mandarins, Board Games]]

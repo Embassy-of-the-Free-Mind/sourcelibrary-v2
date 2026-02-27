@@ -1,0 +1,23 @@
+[[meta: This page continues the transition from the complex calculation of the "superpartient" square pieces to the physical setup of the board. It specifically focuses on the "multiple" circles—the foundational pieces of the game—and how their values are derived from a simple sequence of even and odd numbers.]]
+
+->OF THE PHILOSOPHERS. 19<-
+C iij
+
+## Another arrangement of the pieces, with an allegory not to be disregarded, and first concerning the multiple numbers.
+
+The arrangement of the **round tables** [[notes: "Tables" refers to the game pieces; here, the round pieces represent the simplest numerical ratios]] containing the **multiple proportion** [[notes: A ratio where a larger number is a perfect multiple of a smaller one, such as 2:1 (double) or 3:1 (triple)]] is in no way different from the one we have shown above. That is to say: one must arrange the first rows according to the natural progression of numbers, such as 2, 3, 4, 5, 6, 7, 8, 9; choosing for the **field of the even** [[notes: "Champ" or field refers to the side of the board belonging to the player using even numbers]] 2, 4, 6, 8, and for the **field of the odd** 3, 5, 7, 9. Similarly, you will find the number required to complete this proportion by multiplying each of these by itself—for example, 2 times 2 makes 4—for 4, when compared with 2, creates a type of multiple proportion, namely **double**. And so it is with the others, as you may better observe in this table.
+
+| The Field | Category | Values | |
+| :--- | :--- | :--- | :--- |
+| | **Of the even** | 4, 16, 36, 64 | **Required** |
+| **The Field** | | 2, 4, 6, 8 | **Ranks** [[notes: "Regrãts" likely refers to the base ranks or steps from which the other values are calculated.]] |
+| | | | |
+| | | 3, 5, 7, 9 | **Ranks** |
+| | **Of the odd** | 9, 25, 49, 81 | **Required** |
+
+[[notes: In the original diagram, a large brace on the right groups all these values under the label "Required" (Requis), indicating these are the necessary pieces to complete this section of the board. The author refers to an "allegory" to remind the reader that these mathematical progressions were seen as reflections of cosmic order and harmony.]]
+
+[[vocab: multiple proportion, progression of numbers, field of the even, field of the odd, Ranks, Required]]
+
+[[summary: This page explains the mathematical derivation of the circular pieces for Rithmomachia, showing how the "multiple" ratios are created by squaring a base sequence of even and odd numbers. It emphasizes the orderly progression from simple "ranks" to the "required" values needed for gameplay.]]
+[[keywords: Rithmomachia, multiple proportion, even numbers, odd numbers, mathematical progression, Renaissance games, circular pieces]]

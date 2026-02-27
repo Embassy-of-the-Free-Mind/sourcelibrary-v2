@@ -1,0 +1,21 @@
+[[meta: This page continues the discussion from page 10 regarding the allegorical connections between chess and society. The previous page ended mid-sentence describing how people in the world—like chess pieces—often seek only their own advantage.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 1.]]
+
+...strives for his own gain, and in a deceitful manner seeks to plot against his opponent to hinder him; and this way of playing is more than common at the courts of noblemen and in the council-halls of the cities. It is from such games, it appears, that the game of chess took its origin.
+
+In contrast, it provides a good instruction for virtue. For just as an experienced [[term: chess-player]] [[notes: The original German *Schach-Zieher* literally means "chess-mover"]] in this game does not lose heart on account of various mishaps and reversals of fortune, but knows how to meet them prudently with sound reason, so every person should take the opportunity to boldly face all adversities and mishaps of human life—yet with good deliberation and modesty—and to wisely overcome them.
+
+If one, however, wished to interpret the recently mentioned proverb, *Ludimus Civitates* [[notes: Latin for "We play at cities"]], or as *Seneca* [[notes: Lucius Annaeus Seneca, a Roman Stoic philosopher]] expresses it in *Epistle 106* near the end: *Ludimus Latrunculis*—that is: we play with [[term: chess-pieces]] [[notes: *Latrunculi* was a popular Roman strategy game; early modern scholars often translated this as "chess" to make it relatable to their readers]]—according to its guidance, it would reveal to us the nature of study. For just as two people exert themselves greatly in [[term: playing chess]], where one plots against the other with great subtlety, and yet—although they achieve their permitted joy and delight along with good exercise of the mind—they create no utility for themselves (for they have become neither more pious nor more evil through it) nor for common life, but rather apply their wit in vain in this case and have only played: so it is indicated herewith that many people, lamentably, apply even serious matters (such as study) only to all kinds of subtlety and brooding. They concern themselves only with that which is meant for the sharpening of the understanding and for mere knowing, which only burdens the mind while otherwise being of little use or benefit. On the contrary, they disregard and entirely omit what would serve for the instruction of the soul and guidance toward the good, and thus for common life. This is what *Seneca* intended to show with this proverb (which *Johann Alexander Brassicanus* [[notes: A 16th-century German humanist and jurist]], J.C., in *Proverbia Symmicta*, Proverb 80, did not explain so fully) in the mentioned Epistle, in which he presents to us the right use of philosophy and study. His words are also set down here for further reflection:
+
+-> *Latrunculis Ludimus, in supervacuis subtilitas teritur. Non* <-
+[[notes: Latin: "We play with chess-pieces; subtlety is wasted on superfluous things. Not..."]]
+
+B 3
+[[meta: catchword: faciunt]]
+
+[[summary: This page explores chess as an allegory for both the cunning of courtly politics and the resilience needed to face life's misfortunes. It also uses Seneca's writings to warn that intellectual "subtlety" in study, much like chess, can become a useless distraction if it does not lead to moral improvement or public benefit.]]
+
+[[keywords: Chess, Virtue, Seneca, Philosophy, Ethics, Strategy, Humanism, Latrunculi, Scholarly Subtlety]]

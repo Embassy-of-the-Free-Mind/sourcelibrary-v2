@@ -1,0 +1,30 @@
+[[meta: This page continues the tactical instructions for chess openings, specifically focusing on the "Fourth Type" of variation. It builds on the visual diagrams provided on page 189 by detailing the specific moves and outcomes of this strategy.]]
+
+->The Second Book / 10th Chapter<-
+
+<image-desc>An ornamental rectangular woodcut headpiece featuring symmetrical scrolling foliage, floral motifs, and a central stylized blossom.</image-desc>
+
+# The Tenth Chapter.
+
+## Being a description of the fourth type of how, according to the same, the moves should be arranged.
+
+The Fourth Type is: When White changes the third move (which is to be found at the beginning of the Eighth Chapter) so that instead of moving the Queen to 12, the Queen’s Bishop’s Pawn [[notes: The original term *Schützen-Soldaten* literally translates to "Archer’s Soldier." In this period, the Bishop was often called the Archer (*Schütze*), and the "Soldier" is the Pawn.]] stands on twenty-two: and Black, following this, makes an attack with the King’s Knight [[notes: *Reuter* translates to "Rider" or "Cavalier," the common name for the Knight.]] upon White’s King’s Pawn from forty-three in the following manner:
+
+[[margin: 1.]] White moves the King’s Pawn to 28: Black moves his King’s Pawn to 36: White moves the King’s Bishop [[notes: *Schützen* or "Archer."]] to 30: Black moves his King’s Bishop to 38: White does not move the Queen to 12 (as happened in the preceding three types) but rather her Bishop’s Pawn to twenty-two: [[notes: This describes a variation of the Giuoco Piano opening, specifically moving toward a center-pawn attack. The numbers 1–64 refer to an old square-numbering system common in 17th-century German chess manuals like those by Augustus Sellinus.]]
+
+[[margin: 2.]] * Black makes an attack with the King’s Knight from forty-three upon White’s King’s Pawn:
+
+[[margin: 3.]] White advances the King’s Pawn onto the Black King’s Bishop and Pawn at twenty-nine:
+
+[[margin: 4.]] * Black takes it with this Pawn:
+
+[[margin: 5.]] * White takes the same with the Queen’s Bishop’s Pawn and moves it onto the Black King’s Bishop: * Black offers a **Check** with the same from thirty-one: White covers the King with the King’s Bishop at thirteen: Black takes it with the King’s Bishop and offers Check once more: White takes the same with the King’s Knight and simultaneously protects his King’s Pawn, thereby achieving a fair game. If, however, Black immediately moves the King’s Pawn onto the White King’s Bishop and Pawn at thirty-seven: White’s game will be spoiled, as he is placed in a doubt as to whether he should strike or not, and his Queen’s Bishop’s Pawn will also be left entirely undefended.
+
+[[margin: 6.]] But if Black does not give Check with the Bishop from 31 (as in move 5), but instead moves it to forty-seven, then White places the Queen at twenty-one, and in that way arranges his game not at all poorly.
+
+[[meta: catchword: When]]
+
+[[vocab: Check, King, Queen, Knight, Bishop's Pawns, White, Black, Game]]
+
+[[summary: This page describes the "Fourth Type" of chess opening, a variation where White prioritizes center control with pawns rather than early Queen development. It details the tactical consequences of Black's Knight attack and the subsequent exchanges of pieces near the King's side.]]
+[[keywords: chess tactics, opening theory, Queen's Bishop Pawn, King's Knight, Giuoco Piano, chess history]]

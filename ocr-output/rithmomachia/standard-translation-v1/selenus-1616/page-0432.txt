@@ -1,0 +1,26 @@
+[[meta: This page continues the author's critique of Pedro Damiano’s chess strategies. The previous page established the 17th-century numbering system (1–64) and the specialized terminology for pieces: 'Schütze' (Archer) for Bishop, 'Rochen' for Rook, and 'Soldat' (Soldier) for Pawn.]]
+
+# The Fourth Book / Chapter 4:
+
+[[margin: 25.]]
+> » The **White** / (no. 16.) the same / to 19: The **Black** / the **King’s Rook** / to 59: * The **White** / the **Queen** / (in order not to lose her / no. 17.) to another square.
+
+In this matter, **Damianus** [[notes: Pedro Damiano, the 16th-century Portuguese master whose work this text critiques.]] now commits a considerable error: For he / does not realize / that the **Black King’s Bishop** [[notes: *S. K. Schütze*—'Schütze' or Archer was the common term for the Bishop.]] / stands between the same [[the Queen]] / and the **Black King’s Rook**: and that her **Pawn** / (in order to help this ruined game in some way: also / for the **Black Queen** / or her **Bishops** / to prevent the twenty-eighth square: and / to open the way for the **King’s Bishop** / so that the same / might prevent the **Check** / of the **Black King’s Rook** / from twenty-seven) might be moved with more benefit / to twenty-one. Therefore, the **White** / should just leave the **Queen** standing / since he has no reason (as can be seen from the reasons just mentioned) to move her: notwithstanding / that **Damianus** / strongly forbids it: and in the counter-play / he should come to the aid of his very bad game / with another good move.
+
+Yet / be it so / that we / concede this to the **White** / (who must be the better player / and / because of the advantage given / must have worse—but the **Black** / better moves) /
+> » and admit to **Damiano**: That he / (as the **Black** / moved the **King’s Rook** / to 59.) with the **Queen** / (in order / not to lose her: as if it had been / highly necessary / at this move) had / (no. 17. 25.) to flee: thus he further asserts / that the **Black** / if the **White** / the **Queen** / to another / (though not discovered by him) place / should flee / with his **Queen** / from 36. should give **Check** [[notes: *Schach*—the standard term for Check.]]: Which is, however / a
+
+tangible error: For to him / according to the current arrangement of his game / it is not possible / from 36. but indeed / from twenty-eight / to give **Check**.
+
+[[margin: 26.]]
+> » Further / he suggests / (no. 19.) that the **White** / should place the **Queen** / in such a place / where she / can defend against the **Check** / from the **Black Queen** / from 28: but he does not mention the place / where she might conveniently / be moved: considering /
+
+that no more than two or three squares / (namely / the fifty-fifth / if she takes from the same / the **Black King’s Knight’s Pawn** [[notes: *Reuters-Soldaten*—literally 'Rider's Soldiers', meaning the pawns in front of the Knight.]] / and aims at their **Rook**: or the tenth: or the first square) stand open to her / into which she / can be placed to prevent the same **Check**.
+
+If it is now conceded / that the **White** / placed the **Queen** / in one square / among the three: then he writes (no. 20.) further:
+
+[[meta: catchword: *daß (that)]]
+
+[[summary: The author identifies multiple tactical errors in Damiano's chess analysis, specifically regarding the movement of the Queen and the impossibility of a check from square 36. He suggests alternative pawn moves to stabilize the board and lists the only three viable squares for a White Queen retreat.]]
+
+[[keywords: Pedro Damiano, Chess tactics, Bishop, Rook, Queen retreat, checkmate defense, 17th-century chess notation]]

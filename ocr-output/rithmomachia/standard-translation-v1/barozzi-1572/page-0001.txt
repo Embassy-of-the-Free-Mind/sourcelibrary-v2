@@ -1,0 +1,22 @@
+[[meta: This is the front cover of the volume. As the exterior of the book, there is no preceding page of text for continuity.]]
+
+# Front Cover
+
+The volume is bound in a historical **marbled paper** featuring a "stone" or "shell" pattern. This decorative technique was created by floating pigments on a liquid bath—often made of carrageenan moss—and transferring the floating design onto a sheet of paper. This specific pattern shows dark "stones" outlined with striking veins of vibrant blue and tan.
+
+[[notes: Marbling was a standard practice in hand-binding from the 17th through the 19th centuries, providing a durable and aesthetically pleasing surface that helped hide wear and tear.]]
+
+The spine is reinforced with a plain tan material, likely buckram or a similar sturdy cloth used during a later rebinding for library use. Affixed to the cover are several modern administrative labels:
+
+[[insert: Princeton University Library 32101 075891588]]
+[[notes: This is a modern barcode label used for the library’s digital cataloging system.]]
+
+[[insert: RECAP]]
+[[notes: RECAP refers to the "Research Collections and Preservation Consortium," a high-density storage facility shared by Princeton, Columbia, and the New York Public Library.]]
+
+[[insert: Cook 42843 .14 65]]
+[[notes: This is the "call number" or shelfmark, which tells the librarian exactly where the book is located. The prefix "Cook" indicates that this volume is part of a specific designated collection within the library’s holdings.]]
+
+[[summary: The front cover of the manuscript features a traditional shell-patterned marbled paper binding and contains modern library inventory labels from Princeton University.]]
+
+[[keywords: marbled paper, library binding, Princeton University, shelfmark, book conservation]]

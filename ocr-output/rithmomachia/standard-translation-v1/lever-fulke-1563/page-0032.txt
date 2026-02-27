@@ -1,0 +1,25 @@
+# The Philosophers' Game
+
+## The second order follows.
+
+<image-desc>A mathematical diagram illustrating the "second order" of pieces for the game Rythmomachia. The layout consists of four vertical columns. At the top of each column, within a triangular outline, is a rank label ("Third", "Fifth", "Seventh", and "Ninth"). Below these are two rows of numbers (5, 9, 13, 17 and 10, 36, 78, 136). The middle section contains two rows of double-bordered squares, each containing a number and a small dot centered below it. The first row contains 15, 45, 91, and 153; the second row contains 25, 81, 169, and 289. Beneath the squares, translated Latin terms describe the mathematical ratios of the columns. At the very bottom are four large shaded triangles pointing upward.</image-desc>
+
+| Third | Fifth | Seventh | Ninth |
+| :--- | :--- | :--- | :--- |
+| 5 | 9 | 13 | 17 |
+| 10 | 36 | 78 | 136 |
+| **15** | **45** | **91** | **153** |
+| **25** | **81** | **169** | **289** |
+| Super-bipartient thirds <note>original: "superbipartiens tertias"</note> | Super-quadripartient fifths <note>original: "supquadrupartiens quintas"</note> | Super-sextupartient sevenths <note>original: "supsextupartiens septimas"</note> | Super-octupartient ninths <note>original: "supoctupartiens nonas"</note> |
+
+<br>
+
+<meta>catchword: Fourth</meta>
+
+<summary>
+This page details the "second order" of pieces used in the Philosophers' Game (Rythmomachia). It focuses on the "superpartient" ratios, which are complex arithmetic proportions used to determine the values of the square and triangular pieces. The table illustrates four specific ratios: superbipartient (5:3), superquadripartient (9:5), supersextupartient (13:7), and superoctupartient (17:9). The resulting values (such as 15, 45, 91, 153 and 25, 81, 169, 289) represent the numerical identities of the game pieces within this specific class.
+</summary>
+
+<keywords>
+Rythmomachia, Philosopher's Game, second order, superpartient, superbipartient, superquadripartient, supersextupartient, superoctupartient, mathematical proportions, arithmetic progression, early modern mathematics.
+</keywords>

@@ -1,0 +1,61 @@
+[[meta: This page continues the classification of even numbers, specifically defining and exploring the "odd-times-even" number. On the previous page, the author established "even-times-even" numbers (powers of two). Here, the focus shifts to numbers that have both even and odd factors but are not simply doubles of odd numbers.]]
+
+[[margin: 37 [[image-desc: Line diagram with three segments labeled 12, 6, and b.]]]]
+
+### 37 ¶ A number formed from two factors, which is not among the doubles [powers of two] and whose half is even, is an "odd-times-even" number.
+
+¶ Let **a** be any even number whose half **b** is also even; let **a** not be among the number of doubles starting from unity [[notes: "Doubles starting from unity" refers to the sequence 1, 2, 4, 8, 16... or $2^n$]]. I say that **a** is an **odd-times-even** [[notes: *Impariter par*. In classical arithmetic, these are even numbers that can be divided by 2 more than once, but eventually result in an odd number greater than 1. Examples include 12, 20, or 24.]] number. For since its half **b** is even, it is not **even-times-odd** [[notes: *Pariter impar*, numbers like 6 or 10 which, when halved, immediately yield an odd number]]. And since it is not among the number of doubles starting from unity, then by the twenty-ninth [proposition] of this book, it is not **even-times-even**. Therefore, by a sufficient division of categories, it is **odd-times-even**, which is what was proposed. 
+
+But it is also shown thus: since the half of **a** is even, and the even number two measures it [[notes: To "measure" means to divide exactly]] according to that half, by the definition of **a**, it is not an even-times-odd number. But also, since it is not among the doubles from unity, if it is divided into two halves, and those halves again into halves, in this continuous division it is necessary that something other than unity must occur which stops the division into two halves. Therefore, that number will be odd. And because that [odd number] is a part of a part, by the twenty-third [proposition] of the first [book], it is also a part of the whole. Wherefore, by the fifteenth [proposition] of this book, that odd number will measure the whole according to an even number. But since it measures the whole according to an even number, then by the definition of the whole **a**, it is **odd-times-even**. This again is what was proposed.
+
+[[margin: 38 [[image-desc: Line diagram with three segments labeled c (96), b (12), and a (8).]]]]
+
+### 38 ¶ From the multiplication of an even-times-even by an odd-times-even, an odd-times-even is produced.
+
+¶ Let **a** be an even-times-even number; let it be multiplied by **b**, an odd-times-even, and let **c** be produced. I say that **c** is an odd-times-even number. For by the hypothesis, the number **a** measures **c** according to **b**, which is even. And since an odd number measures **b** (since it is odd-times-even), that same odd number, by the twenty-third [proposition] of the first [book], will measure **c**. And it will only do so according to an even number; otherwise, by the eleventh [proposition] of this book, **c** would be odd. It is established, therefore, by the definition, that **c** is odd-times-even. And this was proposed.
+
+[[margin: 39 [[image-desc: Three sets of line diagrams. Top: a (12), b (6). Middle: a (24), b (12), c (6), d (4), e (2). Bottom: a (48), b (12), c (6), d (8), e (4).]]]]
+
+### 39 ¶ Every odd-times-even number is formed from an even-times-even multiplied by an even-times-odd. From which it follows that an even-times-even measures every odd-times-even an odd number of times.
+
+¶ Let **a** be any odd-times-even number: I say that it is formed from an even-times-even multiplied by an even-times-odd. For the half of **a** is even; otherwise, **a** would be even-times-odd. Therefore, let **b** be the half of **a**. If the half of **b** is odd, then **b** is even-times-odd by the thirty-third [proposition] of this book. And since two measures **a** according to **b**, it is clear that an even-times-even [[notes: In this case, the number 2]] measures **a** according to an even-times-odd. 
+
+But if **b**, the half of the odd-times-even **a**, is even: let it be **c**, whose half is also odd. Thus **d** [[notes: Referring to the odd core found through division]] will be even-times-odd by the thirty-third [proposition] of this book, and by the twenty-third of the first, it will measure **a**. Let this be according to **e**, and let **c** be two. Because **b** measures **a** according to **c**, and **d** measures **b**, therefore by the twenty-fifth of the second [book], the proportion of **b** to **d** is the same as **e** to **c**. But **b** is double **d**; therefore **e** is double **c**. Wherefore, by the eighteenth [proposition] of this book, **e** is even-times-even, and it measures **a** according to the even-times-odd **d**. The whole proposition is thus established. 
+
+And if the even-times-odd were to occur further along in the process of division: by taking the second-to-last of the even numbers in place of **b**, its half in place of **d**, and the multiplier in place of **c**, you will conclude the proposition by the same twenty-fifth of the second. And universally, as many times as this sub-division occurs, so many times let there be a doubling of the even-times-even from unity. By taking the second-to-last of the evens with its half through the thirty-third of this [book] and the twenty-fifth of the second, you will similarly conclude the proposition. [[gloss: The corollary is evident by taking the half of the even-times-odd and the double of the even-times-even; this even-times-even with an even-times-odd measured the odd-times-even, supported by the twenty-fifth [proposition] of the second [book].]]
+
+[[margin: 40]]
+
+### 40 ¶ If even-times-evens are arranged in length and even-times-odds in width, those numbers produced at their angular intersections are only odd-times-evens. In their length, there is a similarity of proportions; in their width, an equality of differences.
+
+<columns>2</columns>
+[[margin: Width (Latitudo): Even-times-odds]]
+-> L e n g t h (Longitudo) <-
+-> Continually proportional. <-
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **m** | 26 | 52 | 104 | 208 | 416 | 832 | 1664 |
+| **l** | 22 | 44 | 88 | 176 | 352 | 704 | 1408 |
+| **k** | 18 | 36 | 72 | 144 | 288 | 576 | 1152 |
+| **i** | 14 | 28 | 56 | 112 | 224 | 448 | 896 |
+| **h** | 10 | 20 | 40 | 80 | 160 | 320 | 640 |
+| **g** | 6 | 12 | 24 | 48 | 96 | 192 | 384 |
+| | 2 | 4 | 8 | 16 | 32 | 64 | |
+| | **b** | **c** | **d** | **e** | **f** | | |
+-> [C] Even-times-evens. <-
+-> L e n g t h <-
+
+<column-break/>
+
+[[margin: The differences of these are equal.]]
+
+¶ Let **b, c, d, e, f** (even-times-evens) be arranged along the length, and **g, h, k, l, m** (even-times-odds) along the width. I say first that those produced from **b** multiplied by **g, h, k, l, m**, and from **c** multiplied by the same, and similarly from **d, e,** and **f** multiplied by the same, are all odd-times-evens, and only such. For all of those are made from the multiplication of an even-times-even by an even-times-odd. Thus, by the thirty-eighth [proposition] of this book, any of them is an odd-times-even. And if there were another odd-times-even besides those which begin from those even-times-evens in their series and are produced by even-times-odds, that number would not be made from an even-times-even multiplied by an even-times-odd, which is impossible by the preceding [proposition]. What is said is therefore confirmed. 
+
+¶ Second, I say all those in the length—such as all in line **g** and all in line **h**, and so for the rest—are continually proportional [[notes: Meaning they form a geometric progression, in this case doubling at each step]]. For since the number two (**b**), the first of the even-times-evens, multiplies **g**, it is manifest that the second in line **g** which is produced from it is double **g**, and in the proportion of **c** to **b**. But **c** to **b** acting on **g** makes the second after **g**, and **c** acting on **g** makes the third; therefore, by the eighth [proposition] of the second [book], the proportion of **c** to **b** is that of the third to the second. And so similarly demonstrate for the rest by the eighth of the second, aided by the twenty-ninth of this book, which demonstrates that **b, c, d, e, f** are continually proportional. And from this, it is ready to be demonstrated by the twenty-sixth of the second that the product of one of the means and the sixth is the same as the product of the extremes... [[notes: The text continues to explain properties of geometric series within the table]].
+
+¶ Third, I say all numbers along the width in any of the lines, starting from **g** and extending to **m** in width, have equal differences [[notes: Meaning they form an arithmetic progression]]. For that those in the first line (which are the even-times-odds) have continuous equal differences is immediately known by the thirty-sixth [proposition] of this book. But it is [also] declared that the differences of the numbers in the second line are equal. For by the ninth of the first, the product of **b** and **g** and the product of **b** and the difference added to **g** is equal to the product of **b** and **h**. Therefore, the second [number] of the second line of odd-times-evens exceeds the product of **b** and **g**...
+
+[[summary: This page defines and categorizes "odd-times-even" numbers, demonstrating that they are the product of powers of two and doubles of odd numbers. It concludes with a complex table illustrating the geometric and arithmetic relationships between these classifications.]]
+
+[[keywords: odd-times-even, even-times-even, even-times-odd, arithmetic progression, geometric progression, number theory, multiplication table, proportions]]

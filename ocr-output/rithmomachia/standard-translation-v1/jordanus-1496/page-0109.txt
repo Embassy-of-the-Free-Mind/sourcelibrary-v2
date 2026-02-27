@@ -1,0 +1,44 @@
+[[meta: This page continues the mathematical demonstration of musical intervals. The previous page established that an octave (diapason) is slightly less than six whole tones and is composed of a perfect fourth (diatessaron) and a perfect fifth (diapente). This page now examines why certain combinations of these intervals are considered "consonant" (pleasant) while others are not, based on their mathematical ratios.]]
+
+...but the number eight is not a **multiple** [[notes: A ratio like 2:1, 3:1, etc.]] of three, nor is it **superparticular** [[notes: A ratio where the numerator is the denominator plus one, like 3:2 or 4:3]]. For although eight contains three twice, there remains a remainder of two, which is not a single part of three, but multiple parts. Thus, the ratio of eight to three is "double-superbipartient" [[notes: Expressed as 2 2/3 or 8:3]]. Therefore, the **diapason plus diatessaron** (an octave plus a fourth) is not a consonance. According to the definition, every consonance consists of either a superparticular or a multiple ratio. 
+
+This can be easily understood from the new book of *Problems* [[notes: Referring to the *Problemata*, a work attributed to Aristotle]], where **Aristotle** agreed with the **Pythagoreans** [[notes: Followers of Pythagoras who believed the universe and music were governed by numbers]]. He asks: "Why can a double-fifth or a double-fourth not produce a consonance, while a double-octave is customary?" He says this is because the **diapente** (fifth) is in a **sesquialter** ratio (3:2) and the **diatessaron** (fourth) is in a **sesquitertian** ratio (4:3). If two sesquialter or sesquitertian numbers are placed in order, the extremes will have no [simple] ratio to each other; they will be neither superparticular nor multiple. But because the **diapason** (octave) consists of a **double** ratio (2:1), when this is doubled, the extremes hold a **quadruple** ratio (4:1) to each other. You see, therefore, how Aristotle makes only superparticular or multiple ratios into consonances, rejecting **superpartient** [[notes: Ratios where the numerator exceeds the denominator by more than one, like 5:3 or 8:3]] ratios entirely. In truth, the disagreement of **Ptolemy** [[notes: Claudius Ptolemy, the influential astronomer and music theorist]] with the Pythagoreans should be considered more a matter of terminology than of reality. But enough on these matters.
+
+[[margin: 25]] **¶ The diapason plus diapente: consists of a triple ratio. Thus, the diapason plus diapente is a single consonance.**
+
+¶ Because the **diapason plus diapente** (an octave plus a fifth) consists of a **triple** ratio (3:1), this is because (following the twelfth proposition of the first book) a triple interval is born from a double and a sesquialter interval (2/1 × 3/2 = 6/2 or 3/1). Since the double and sesquialter are the intervals of the **diapason** and **diapente**, the joined **diapason** and **diapente** consist of a triple ratio. Since experience already shows that this harmony reaches the ear tunefully and sweetly, by definition, this harmony is a consonance. This is the whole point.
+
+[[margin: 26]] **¶ The diapason, diapente, and tone: produce a melody but fall short of being a consonance.**
+
+| 27 | | | 8 |
+|:---:|:---:|:---:|:---:|
+| e | | | f |
+| 3 | | 9 | 8 |
+| a | b | c | d |
+
+¶ We call "**melos**" [[notes: From the Greek for song or melody]] a vocalization that is sweet and acceptable to the ears, or a pleasant meeting of several voices. It is immediately known that the **diapason**, **diapente**, and **tone** joined together constitute a *melos*. For as experience tells us, this vocalization of sounds falls sweetly upon the ears. However, it is shown that they produce no consonance. For by the preceding, the **diapason plus diapente** consists of a triple ratio. Let **a** and **b** be 3 and 1 (the smallest numbers of the triple ratio), and let **c** and **d** be 9 and 8 (the smallest numbers of the whole tone). I multiply **c** by **a** (9 × 3 = 27) and **d** by **b** (8 × 1 = 8), which results in **e** and **f**, namely 27 and 8. Between these is the **diapason**, the **diapente**, and a **tone**. But **e** to **f** (27:8) is neither superparticular nor multiple; rather, it contains **f** three times plus three-eighths of it. It is thus a "triple-supertripartient-eighths" ratio. Therefore, **e** and **f** do not sound together in any consonance. This is the whole point.
+
+[[margin: 27]] **¶ The bis-diapason consonance: is found to be established in a quadruple relationship.**
+
+¶ That the **bis-diapason** (double octave) consists of a quadruple ratio (4:1) is immediately manifest. For by the thirteenth proposition of the first book, two double intervals (2:1 × 2:1) join to form a quadruple interval. Since the **diapason** consists of a double ratio, the double octave forms a quadruple relationship, which is a **multiple**. Since the double octave reaches the ear as sweet and well-modulated (as perceived by the senses), by definition it is a consonance. This was to be demonstrated.
+
+¶ The Pythagoreans and all earlier musicians restricted the range of harmony to the quadruple limits and the **bis-diapason** consonance. They did not venture further, either because they found that specific range was the natural limit of the human voice, or because a more shrill sound seemed to them (as has been said) to abandon moderation, or because they felt this scope was sufficient for musical instruction. Posterity, however, wandered further, increasing it to a triple octave (8:1 ratio) or even more. Necessary speculation does not seem to rest on these, but it will be enough to have touched upon a few points briefly. For those who desire to know the modulations beyond the double octave will perceive them by easy demonstration from what preceded. The double octave plus a fourth (bis-diapason ac diatessaron) consists of a ratio of 4 and 3/4, and therefore is clearly not a consonance. The double octave plus a fifth (bis-diapason ac diapente) is in a **sextuple** ratio (6:1) and is therefore numbered among the consonances. The triple octave is in an **octuple** ratio (8:1).
+
+[[margin: 28]] **¶ To arrange all consonances in their order on a given string: and to experience them perceptibly through the senses.**
+
+| A | c | d | e | f | g | b |
+|---|---|---|---|---|---|---|
+
+¶ Let **a-b** be a given string (*chorda*) upon which we propose to place the consonances of the **diatessaron**, **diapente**, **diapason**, **diapason-plus-diapente**, and **bis-diapason**. I place the fixed leg of a compass at point **a**, and I extend the mobile leg to one-fourth of the whole string's length, marking it **c**. Then I extend the leg to one-third of the string and mark it **d**. Then to the midpoint of the whole string, which I designate **e**. Then with the compass I take two-thirds (*bisses*) of the whole string and mark it **f**. Then I extend the compass to three-fourths (*dodrans*) of the string and mark it **g**. 
+
+Then: 
+- **a-b** and **c-b** sound a **diatessaron** [[notes: This is a comparison of the whole string to the remaining 3/4 length, a 4:3 ratio]]. 
+- **a-b** and **d-b** sound a **diapente** [[notes: Whole string to 2/3 length, a 3:2 ratio]]. 
+- **a-b** and **e-b** sound a **diapason** [[notes: Whole string to 1/2 length, a 2:1 ratio]]. 
+- **a-b** and **f-b** sound a **diapason-plus-diapente** [[notes: Whole string to 1/3 length, a 3:1 ratio]]. 
+- Finally, **a-b** and **g-b** sound the **bis-diapason** [[notes: Whole string to 1/4 length, a 4:1 ratio]]. 
+
+Place a musical bridge [[notes: A movable support used on a monochord]] under each mark on the string and listen carefully to the sounds compared to the sound of the whole string. You will note the proposed harmonies in their order. You will be able to experience this more readily if you set up a second string of equal pitch and tone to **a-b**, so you can compare its sound to the strikes on the sections of the first string.
+
+[[summary: This page uses mathematical ratios to determine which musical intervals are "consonant." It proves that while an octave plus a fifth (3:1) and a double octave (4:1) are consonances, an octave plus a fourth (8:3) is not, concluding with a practical guide for marking these intervals on a monochord string.]]
+[[keywords: diapason, diapente, diatessaron, whole tone, consonance, ratio, monochord, Pythagoras, Aristotle, Ptolemy]]

@@ -1,0 +1,22 @@
+[[meta: This page is the reverse (verso) of the preceding title page. In the physical volume, this side was left blank by the printer, but the thinness of the 17th-century paper has allowed the ink from the front side to seep through. Curiously, the "ghost" text visible here does not match the Chess Book title page previously translated, but instead reveals a different work entirely.]]
+
+<->(This page is the blank reverse of a title page; the text below is a mirrored impression bleeding through from the other side.)<-
+
+[[margin: Mirrored bleed-through]]
+
+# [[markup: Mirrored Title]]
+
+->A Prayer-Book<-
+->of the<-
+->holy Father<-
+->**EPHREM**<-
+
+[[notes: This text refers to Saint Ephrem the Syrian (c. 306–373 AD), a prolific Syriac composer of hymns and biblical exegesis. His works were popular in 17th-century Germany as "Bet-Bücher" (Prayer Books) for personal devotion. The fact that this text appears here suggests that the printer, Henning Gross the Younger, was using the same press or paper stock for a devotional project at the same time as this chess treatise.]]
+
+❦
+
+[[notes: The image description mentions a decorative woodcut border with architectural columns. In the 1600s, title pages were often framed by "triumphal arches" or "portals," symbolizing the reader's entry into the knowledge contained within the book.]]
+
+[[summary: This page is physically blank but contains a "ghost image" or bleed-through from the recto side. The mirrored text identifies the page as part of a prayer book by St. Ephrem the Syrian, offering a glimpse into the simultaneous printing projects in Henning Gross's Leipzig workshop.]]
+
+[[keywords: Verso, Bleed-through, Ephrem the Syrian, Devotional Literature, Printing Artifact, Henning Gross, Leipzig, 17th Century Printing]]

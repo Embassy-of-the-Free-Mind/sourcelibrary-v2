@@ -1,0 +1,22 @@
+->The Philosopher's <note>original: "Philosophers"</note> game.<-
+I. i.
+
+Likewise, by division <note>original: "Diuision"</note>, if your piece <note>original: "man"</note> is greater than the opponent's <note>original: "aduersarye"</note> and stands so that, when divided by the empty <note>original: "voyde"</note> spaces, the quotient is the same as <note>original: "all one with"</note> the opponent's piece, you may capture <note>original: "take hym vp"</note> him. You do this without moving into his space <note>original: "place"</note>, unless you see him standing there before you move <note>original: "drawe"</note>.
+
+## Of capturing <note>original: "taking"</note> by algebraic <note>original: "Cossicall"</note> signs.
+
+By algebraic <note>original: "Cossicall"</note> signs, any piece <note>original: "man"</note> that has these signs—square <note>original: "Ʒ"</note>, root <note>original: "ꝛ"</note>, cube <note>original: "Ʒꝛ"</note>, or square-square <note>original: "ꝛꝛ"</note>—meeting its root in its ordinary move <note>original: "draught"</note> that has the sign for a square <note>original: "Ʒ"</note>, captures <note>original: "taketh him up"</note> him, or else is captured by him. This occurs without moving into his space <note>original: "place"</note>, unless he may capture him before he moves <note>original: "remoue"</note>.
+
+## Of the kings and their capture <note>original: "taking"</note>.
+
+<vocab>Division, Algebraic signs <note>original: "Cossicall signes"</note>, Philosopher's game, Rithmomachia <note>original: "Rythmomachia"</note>, kings, root</vocab>
+
+catchword: The
+
+<summary>
+This page details further technical rules for Rithmomachia (The Philosopher's Game). It explains the "Division" capture, where a larger piece captures a smaller one if the quotient of the larger value divided by the number of intervening spaces equals the smaller value. It also introduces captures based on "Cossical" (algebraic) signs, involving mathematical relationships between roots and powers (squares and cubes), and begins a section regarding the unique rules for capturing kings.
+</summary>
+
+<keywords>
+Rithmomachia, The Philosopher's Game, board games, division capture, Cossical signs, algebraic notation, 16th-century mathematics, game rules, mathematical captures.
+</keywords>

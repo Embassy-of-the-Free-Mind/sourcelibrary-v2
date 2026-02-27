@@ -1,0 +1,17 @@
+[[meta: This page continues the mathematical and philosophical explanation of how numbers from the "Odd" and "Even" fields of the game board interact. It concludes the sentence from page 21 regarding the multiplication of numbers to create "superparticular" proportions.]]
+
+# OF THE PHILOSOPHERS.
+
+which is 2, to multiply it and help it compose the first of its **superparticulars** [[notes: A superparticular ratio is one where the larger number contains the smaller number plus one part of it, such as 3:2 or 4:3.]] which is 6: for 2 times 3 equals six, which is the first of the superparticulars of the field of even numbers. And so the others have done, from which it followed that the field of even numbers—recognizing that it had received such a benefit from the numbers of the field of odd numbers—wished to receive odd numbers into its own field. It composed from them the second row of its superparticulars by the addition of the odd with its even partner, just as 3 and 6 make 9. 
+
+And after having thus received the odd number into its field, it has married that odd number of the second row of superparticulars with the odd numbers of the first row, in order to afterward create the first order of **superpartients** [[notes: A superpartient ratio is more complex than a superparticular; it is where the larger number contains the smaller number plus more than one part of it (for example, 5:3).]]. As you see, the superparticulars 6 and 9 joined together make 15, the first superpartient of the two fields of even numbers. 
+
+Therefore, the noble alliance of these numbers is already sufficiently apparent. It remains to see their procreation. The **Pythegoreans** [[notes: Followers of Pythagoras, the ancient Greek philosopher who believed that numbers were the ultimate reality and the soul of the world.]] called odd numbers "male" and even numbers "female." Therefore, if numbers are taken in this way, their alliance is already easily apparent; and what is more, if in the field of even numbers you take 2, the root [[notes: In this context, "root" refers to the base number from which a higher proportion is derived.]] of the required **multiple** 4 (which is a female number), and join it with three, the root of the required superparticular 9 (which...
+
+->∴<-
+
+[[gloss: superparticuliers (superparticulars), superpartients (superpartients), Pithagoriens (Pythagoreans), impair (odd), pair (even), masle (male), femelles (female), racine (root), multiplice (multiple)]]
+
+[[summary: This page explains the "noble alliance" between even and odd numbers in Rythmomachia, showing how they combine to form complex ratios. It introduces the Pythagorean concept of gendered numbers (odd as male, even as female) to describe their mathematical "procreation."]]
+
+[[keywords: Rythmomachia, superparticular, superpartient, Pythagoras, mathematical philosophy, numerology, male and female numbers, proportions]]

@@ -1,0 +1,17 @@
+[[meta: This page continues the instructions for Rithmomachia, moving from the basic "feigned" setup shown on the previous page to the "perfect" or advanced arrangement used by experienced players.]]
+
+Having thus made <gloss>in</gloss> this way the first and feigned arrangement, let the second and perfect one be made in this manner. First, you shall separate the 8 white squares into two parts, moving 4 of them as they are found into one corner of the game board, and the other 4 into the other, so that the places they previously occupied remain empty. [[notes: The "feigned" (*finta*) arrangement was likely a simplified starting position for beginners. The "perfect" (*perfetta*) arrangement described here is the standard opening for the full game.]] Once this is done, let triangle 9 be moved over square 15, and let triangle 6 descend over square 45; and similarly, let triangle 81 be moved over square 153, and let triangle 72 descend over square 91—that is, over the pyramid. [[notes: In Rithmomachia, the Pyramid is a special piece made of stacked values. The "91" refers to the White Pyramid, which is the sum of the first six squares: 1, 4, 9, 16, 25, and 36.]] Then, let triangle 25 descend next to square 45, and triangle 49 next to the pyramid. Then let the two remaining triangles come down just as they are until they are arranged in the same row between the two triangles 25 and 49. Likewise, let the 8 circles come down just as they are found until they fall above the four triangles 25, 20, 42, and 49. The same order shall be kept for the black pieces. In this way, the second and perfect arrangement of the two sides—that is, the white and the black—will have been made, as is exquisitely seen in the following figure.
+
+->**The Perfect Arrangement of Pieces**<-
+
+| Shape Type | | | Pieces and Values | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Circles (Tondi)** | 8 | 3 | 4 | 15 | |
+| **Circles (Tondi)** | 38 | 16 | 4 | | |
+| **Triangles (Triangoli)** | 20 | 25 | 18 | | |
+
+[[notes: This diagram represents a portion of the "perfect" setup described in the text. The circular pieces (tondi) are the most basic, while the triangles and squares represent more complex mathematical ratios. The numbers on the pieces are not random; they follow specific arithmetical progressions (multiplex, superparticular, and superpartient) which players used to "capture" opposing pieces.]]
+
+[[summary: This page explains the transition from the basic training setup to the advanced "perfect" arrangement of a Rithmomachia board. It details the specific movement of triangular and circular pieces into their starting positions relative to the squares and the Pyramid.]]
+
+[[keywords: Rithmomachia, Philosophers' Game, board game setup, mathematical games, Pyramid piece, Boethian arithmetic, Renaissance gaming]]

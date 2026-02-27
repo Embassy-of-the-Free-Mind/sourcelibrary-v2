@@ -1,0 +1,17 @@
+your opponent's <note>original: "mans"</note> move <note>original: "draught"</note>, you may capture <note>original: "take"</note> him without moving into his space <note>original: "place"</note>, unless you see <note>original: "espye"</note> him standing in your move's path <note>original: "draught"</note> before you play; then you must capture him and move into his space.
+
+### Of capturing <note>original: "takynge"</note> by Addition.
+
+Capturing <note>original: "takyng"</note> by addition is exactly like <note>original: "all one with"</note> the first type of play in all respects, except <note>original: "sauing"</note> that some require the pieces <note>original: "men"</note> that capture by addition to stand in the adjacent <note>original: "next"</note> spaces to the piece that is captured, either directly or diagonally <note>original: "cornerwyse"</note>; however, the former way is better.
+
+### Of capturing <note>original: "taking"</note> by subtraction.
+
+What <note>original: "That whiche"</note> was said in the first type of subtraction, and what was just <note>original: "last"</note> said of addition, may both be applied <note>original: "referred"</note> here. For this subtraction...
+
+<summary>
+This page continues the explanation of capture mechanics in Rithmomachia (The Philosopher's Game). It concludes the rules for capture by "Equality," noting when a player must move into the captured piece's space. It then explains "Addition," where multiple pieces combine their values to capture an opponent's piece, noting variations in required positioning (adjacent or diagonal). Finally, it begins to describe the method of capture by "Subtraction."
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, game rules, capture mechanics, Addition, Subtraction, Equality, mathematical game, board game history, 16th-century games.
+</keywords>

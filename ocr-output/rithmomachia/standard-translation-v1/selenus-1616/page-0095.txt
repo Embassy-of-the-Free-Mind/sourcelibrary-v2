@@ -1,0 +1,20 @@
+[[meta: This page transitions from the discussion of the Queen to the Rooks. The previous page concluded the description of the Queen's restricted movement in the medieval and early modern tradition, emphasizing her role as a protector of the King rather than the dominant offensive force she became in modern chess.]]
+
+# Of Chess.
+
+### The Seventh Chapter.
+## Concerning the Rooks, their Position, and Movements.
+
+<image-desc>An ornamental woodcut header featuring scrolling acanthus leaves. Below it, an illustration of a chess Rook, depicted as an elephant standing on a decorative pedestal with a fortified stone tower on its back. The illustration is captioned "A Rook." below the image.</image-desc>
+
+->A Rook.<-
+
+<margin>Chapter 7</margin>
+After we have related the office, power, and ability of the Queens (as Field Marshals [[notes: In early modern chess theory, the Queen was often likened to a *Feldmarschall* or high-ranking military coordinator, reflecting her role in directing the defense of the King]]) of the entire army in the previous chapter: so we will now also take up the Colonels, Captains, and Commanders. There are, however, two of these in each company [[notes: *Hauffen* (heap/crowd) was a common military term for a division or body of troops]]: and they are called *Interreges* [[notes: Latin for "between kings," usually meaning a regent or viceroy]] by the ancients—that is, Governors of far-off lands (because they have their place on the borders, or rather, because they administer the place of the King and Queen, who reside in the middle of the company, at the corners of the battle order). They are otherwise called Elephants, Towers, or Rooks (due to the ancient custom of foreign peoples, who conducted their battles and wars with elephants and towers built upon them, as "Rocks"—the name the Italians [[notes: *Welschen* was a historical German term for Italians or people speaking Romance languages]] give to a fortress: an example of which can be read in the First Book of the Maccabees, Chapter 6, verses 30, 34 to 38 [[notes: This biblical passage describes the war elephants of the Seleucid Empire, which carried wooden towers manned by soldiers]]).
+
+Their position is at the corners of the lines on which the Kings and Queens are placed: and the one on the White King’s side stands on white: and the one on the Black’s side on black.
+
+[[meta: catchword: the White]]
+
+[[summary: This page introduces the Rook, explaining its historical nomenclature as a governor or war elephant and its starting position on the board's corners. The author links the piece's imagery to biblical accounts of ancient warfare to explain why it is depicted as a tower-bearing elephant.]]
+[[keywords: Rook, Elephant, Interreges, Chess History, Military Order, Maccabees, Game Setup]]

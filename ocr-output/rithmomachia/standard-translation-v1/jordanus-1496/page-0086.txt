@@ -1,0 +1,35 @@
+[[meta: This page continues the preface of Jacques Lefèvre d’Étaples’s *Elementa Musicalia*. The previous page ended mid-sentence, where Lefèvre was beginning to introduce his teachers, Jacques Labin and Jacques Turbelin, to whom he dedicates this specific section. He transitions here from the general defense of music to a more personal address regarding the distinction between a mere performer and a true musical scientist.]]
+
+->### Jacques Lefèvre d’Étaples to Jacques Labin and Jacques Turbelin, Musicians: his most dear teachers.<-
+
+**People** wish for there to be the same distinction between a singer and a musician as there is between an orator and a rhetorician [[notes: In the Renaissance, a "rhetorician" was one who understood the theory and rules of speech, while an "orator" was the one who practiced it; Lefèvre argues that one cannot truly be an orator without knowing the underlying theory.]]; indeed, it has always been your judgment that no one deserves to be called a singer who has not also been a musician. You separate the beautiful mimics and actors from the honorable assembly of singers, just as one might keep Epicureans [[notes: Followers of Epicurus, often stereotyped in this period as seekers of base pleasure rather than intellectual truth.]] away from a sober table and the chaste dogma of philosophers. And not without justice: for Homer, the divine Poet, everywhere introduces the learned and serious singer as one who modulates his voice, as in the *Odyssey*, where he portrays Penelope addressing Phemius the Harper [[notes: Phemius was the court singer in Ithaca who performed for the suitors in the *Odyssey*.]], who set words to the movement of strings, with these words:
+
+> "Furthermore, weeping, she spoke to the divine singer:
+> Phemius, you know many deeds of men that soothe the heart,
+> The deeds of men and gods, which add praise to those who did them;
+> Compose something from among those."
+
+And I have no doubt that you are exactly the kind of men Homer approves of, since I long ago learned the very elements of music from you. For this reason, I commit my labors to you for your examination. I confess that I undertook these labors all the more gladly because I have never read any work where the science of music was handed down through its basic elements—neither among the Greeks nor the Latins. Instead, I found many "introductions," among which the most noble of all is that which Saint Severinus Boethius [[notes: Boethius (c. 480–524 AD) was the primary authority on music theory in the Middle Ages and Renaissance. His *De institutione musica* transmitted Greek musical thought to the West.]] left as his monument. Him alone have I chosen as the leader of my studies, especially in this matter. If, therefore, you approve of this work, it is enough for me. For in our own work, we prefer to follow the judgments of others rather than to praise our own. Farewell.
+
+| Ancient authors who wrote on music | | Distinguished recent authors who wrote on the same. |
+|-----------------------------------|---|---------------------------------------------------|
+| Democritus | Plato | Albinus |
+| Heraclides Ponticus | Aristotle | Saint Severinus [Boethius] |
+| Timotheus of Miletus | Theophrastus | Basil |
+| Philolaus the Pythagorean | Nicomachus | Hilary |
+| Archytas of Tarentum | Aristoxenus | Augustine |
+| The two Theodoruses | Ptolemy | Ambrose |
+| Xanthus the Athenian | | Belasius. |
+
+### The Argument of the Four Books of Music.
+
+**The First Book** discusses the intervals suited to musical modulations: the multiple (double, triple, quadruple) and the superparticular [[notes: A "superparticular" ratio is one where the numerator is one greater than the denominator, such as 3:2 or 4:3.]] (the *sesquialtera* [3:2], *sesquitertia* [4:3], *sesquioctave* [9:8], and the series of double, triple, quadruple, and quintuple *sesquioctaves*).
+
+**The Second** deals with the whole tone, the half-tone, the minor semitone, the major semitone, the comma, the schisma, and the diaschisma [[notes: These terms refer to the minute mathematical differences between notes in Pythagorean tuning.]].
+
+**The Third** concerns the *sesquitone* [minor third], the *ditone* [major third], the *diatessaron* [fourth], the *diapente* [fifth], the fifth plus a tone, the *diapason* [octave], the octave plus a minor third, the octave plus a major third, the octave plus a fourth, the octave plus a fifth, the octave plus a fifth and a tone, the double octave, and the division of the whole tone and all consonances. It also covers the consonances of the greatest harmonies and certain means.
+
+**The Fourth** treats the monochord, tetrachord, pentachord, heptachord, octochord, and pentadeccachord [[notes: Instruments or systems with 1, 4, 5, 7, 8, and 15 strings respectively.]]; the diatonic, chromatic, and enharmonic melodies [[notes: The three "genera" of Greek music theory.]]; and the modes of melody. Let these points, contracted into a brief summary, be the argument of the book.
+
+[[summary: Lefèvre addresses his music teachers, Jacques Labin and Jacques Turbelin, distinguishing the theoretical "musician" from the mere "singer" and outlining the four books of his treatise on musical ratios and intervals.]]
+[[keywords: Jacques Lefèvre d’Étaples, Boethius, Music Theory, Pythagorean intervals, sesquialtera, monochord, Odyssey, Humanism]]

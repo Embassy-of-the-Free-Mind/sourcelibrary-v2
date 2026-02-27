@@ -1,0 +1,17 @@
+[[meta: This page continues the tactical demonstration of a game where White has been granted an initial advantage of two moves. The text picks up mid-sentence from the previous page, detailing the specific exchange of pieces and the resulting positional struggle.]]
+
+# The Fourth Book / 1. cap:
+
+the King’s Bishop’s Pawn [[notes: The original German uses *Schütze* (Archer) for the Bishop, a term common in the Selenus variant of chess]] to thirty: **Black** to the same: and of the White King’s Pawn, the King’s Pawn to thirty-seven:
+
+2. * **White** takes it with the King’s Pawn: **Black** [takes] the same with the King’s Bishop’s Pawn: **White** [takes] the same with his King’s Bishop’s Pawn: **Black** [takes] the same with the Queen: **White** moves against the same [the Queen] the King’s Knight [[notes: *Reuter* (Rider) refers to the Knight]] to twenty-two: Although White thereby wins a move [[notes: Gaining a "tempo," or a time advantage, by forcing the opponent to react]], and Black, because of this granted advantage, must break and tear his game apart (so that the pieces may be moved freely and not remain enclosed): he [Black] can nonetheless bring the same into a reasonable order (notwithstanding that White’s pieces can be moved quite freely and unhindered wherever they are needed) if he moves the Queen back (out of danger) to sixty-one: as can be seen from the following moves: **White** then moves,
+
+3. the King’s Bishop to twenty-seven: * **Black** the King’s Knight to forty-three: **White** the King’s Knight to thirty-nine (in order to give check with the same from fifty-four, and to obtain the Black King’s Rook [[notes: *Rochen* is the archaic term for the Rook or Castle]]): **Black** (to prevent the same check) [moves] the King’s Knight onto the White King’s Bishop at thirty-seven: **White** the same to twenty: **Black** offers
+
+4. check with the Queen from forty: * **White** moves his Queen between [the pieces] to thirteen: **Black** takes it with his Queen and offers check once more: **White** takes the same with the King: and Black, in this manner, brings his game into a reasonable order.
+
+5. If, however, White does not cover the King with the Queen (as in no. 4) but with her Bishop to 13 and moves the same against the Black Queen: then **Black** moves the same to forty-seven: **White** the King’s Rook’s Pawn to thirty-two: **Black** the King’s Knight onto the White King’s Pawn at forty-six: **White** the King’s Bishop onto the Black King’s Knight at thirty: **Black** (to protect it) the King’s Pawn to forty-four: **White** (to keep the same captured) the Queen to twelve: **Black** (to release the same) the King’s Bishop to fifty-two: **White** the King’s Bishop (to relieve their pawn) to
+
+[[summary: This page provides a move-by-move technical analysis of a chess opening where White has a two-move advantage. It describes a complex exchange resulting in a Queen trade and discusses positional strategies for freeing trapped pieces.]]
+
+[[keywords: chess tactics, Queen exchange, Gustavus Selenus, Bishop, Knight, Rook, checkmate strategy, 17th century chess]]

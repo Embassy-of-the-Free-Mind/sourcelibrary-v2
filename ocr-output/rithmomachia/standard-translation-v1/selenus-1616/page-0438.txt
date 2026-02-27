@@ -1,0 +1,47 @@
+[[meta: This page continues the tactical analysis of a chess game where players are using the 1-64 numbering system common in early modern European manuals. The "Rider" refers to the Knight, the "Archer" to the Bishop, the "Rook" is the "Rochen," and "Soldiers" are Pawns.]]
+
+### The Fourth Book / Chapter 5:
+
+8. " If the Black player, however, does not cover / the King / with the /
+" Archer / on 53. (no. 7.) specifically / but moves the same / to fifty-
+" two: then his game / will stand / in a poor order: For the White player / moves / the King’s Rider’s Soldier [[notes: This refers to the King's Knight's Pawn]] / to
+" twenty-three: The Black player / (in order / to prevent / the check / which
+" might befall him / from the White King’s Archer / out of twenty-four)
+" moves the Queen / to / the White King’s Rider’s square / at forty: The White player / (in order to defend the same / and make it free / and also through the
+" same / to bring / the Black Queen / into danger) moves the King’s
+" Archer / to thirteen: For the Black player / loses her / (so
+" far as He does not / remove her / in time: and the White player /
+" with the King’s Rider / takes that Archer’s Soldier / and
+" gives check) in such a manner: But if He moves her / out
+" of danger / then He / nevertheless / has a dangerous game.
+
+The Other Way / is described by *Damiano* [[notes: Pedro Damiano (1480–1544) was a Portuguese chess player whose book "Questo libro e da imparare giocare a scachi" was a primary source for many later chess writers like Augustus the Younger.]], in the following
+9. " manner: When the White player / does not move the King’s Soldier to 20. (no. 2.)
+" but rather / the King’s Soldier [[notes: Here meaning the Knight's Pawn or another pawn near the King]] / to twenty-one:
+10. " * then / the Black player / moves the King’s Archer’s Soldier /
+" to thirty-five: The White player / moves against the same / the King’s
+" Soldier / to twenty-eight: The Black player / takes
+" him / with the same: The White player / gives / with the Queen /
+" out of thirty-three / check: The Black player / covers
+" the King / with the King’s Rider’s Soldier / on forty-
+11. " two / and moves him / onto the same: * The White player / takes /
+" with the same [[notes: with the Queen]] / the Black King’s Soldier / and gives check once more /
+" and takes either / the Black Queen: (so far as the Black player /
+" covers / the King / with the same / on fifty-two)
+" or the Black King’s Rook: or its Archer’s Soldier:
+" Yet it is better / and more useful / that the White player / should not / take
+" the Black King’s Rook / but rather the Black Queen: for otherwise /
+" the Black player / would win.
+
+Now this / which has been mentioned thus far / actually flows /
+from *Damiano’s* instruction. However, one cannot / see / for
+what reasons / He / was moved to this opinion / that the
+White player / (who / has obtained / the King’s Rider / as an advantage /
+from the Black player) should with his Queen / not / take the Black King’s Rook / but rather /
+the Black Queen / and thus / lead to the exchange / of both Que-
+
+[[meta: catchword: "niginne" (Queens)]]
+
+[[summary: This page continues technical chess analysis, specifically critiquing a variation of the Damiano Defense. It debates whether White should prioritize capturing the Black Queen or the Rook during a tactical exchange when playing with a material advantage.]]
+
+[[keywords: Chess tactics, Damiano, Knight, Bishop, Queen exchange, 1-64 coordinate system, early modern chess, endgame strategy]]

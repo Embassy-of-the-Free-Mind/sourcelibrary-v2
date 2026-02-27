@@ -1,0 +1,25 @@
+[[meta: This page continues the practical instructions for labeling the game pieces of Rithmomachia. It follows the discussion on the mathematical composition of the Pyramids (referred to here as "Towers") and focuses on the physical legibility of the pieces during a match.]]
+
+# The Second Chapter
+
+2.) That they [the numbers] be marked on the outside, on the edge of the **Towers**, so that they may be better kept in view. [[notes: The "Towers" or Pyramids are composed of multiple stacked layers; marking the outer edges allowed players to see the value of each specific layer even when the piece was fully assembled.]]
+
+3.) That a white or black **point** or **little dot** (to distinguish the bottom side of the number from the top) be placed beneath them:
+
+[[image-desc: Six geometric shapes arranged in two rows. Each shape contains a number with a small dot positioned directly below it to indicate the correct orientation. 
+First row: 
+- An unshaded circle containing the number 6.
+- A shaded circle containing the number 9.
+- An unshaded triangle containing the number 81.
+Second row: 
+- A shaded triangle containing the number 16.
+- An unshaded square containing the number 15.
+- A shaded square containing the number 66.]]
+
+For in the absence of this (since the **pieces** [[notes: The original German uses the word *Steine* (stones), which was the standard term for board game pieces, much like we use "men" or "pawns" today.]], during play, are often knocked over or moved), one—as the **illustration** indicates—would find it difficult to distinguish 6 from 9, 16 from 91, 18 from 81, 15 from 51, 66 from 99, etc.; rather, one would only be delayed and confused.
+
+[[image-desc: An ornate woodcut tailpiece featuring a central mask with a stylized headdress, surrounded by symmetrical scrollwork and floral motifs. Two lion heads are visible at the top corners, and beaded ornaments hang from the sides.]]
+
+[[summary: This page explains the practical necessity of marking game pieces with orientation dots to prevent confusion between similar-looking numbers like 6 and 9. It emphasizes that clear labeling is essential for smooth gameplay in the complex "Battle of Numbers."]]
+
+[[keywords: Rithmomachia, game pieces, Pyramids, numbering, orientation marks, Renaissance board games, mathematical education]]

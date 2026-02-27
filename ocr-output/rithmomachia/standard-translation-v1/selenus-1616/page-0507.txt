@@ -1,0 +1,17 @@
+[[meta: This page concludes the description of the board's orientation for Rythmomachia and provides a classical military justification for the game's layout, drawing on the theories of the historian Polybius.]]
+
+# Of the Number-Battle.
+[[notes: "Zahl-Kampf" is a literal translation of *Rythmomachia* (from the Greek *rhythmos*—number/proportion—and *mache*—battle). It was a competitive way to practice the complex number theory of Boethius.]]
+
+...the white host, sixty-four empty squares: (into which many the Chess-board is also divided) and this unoccupied, square space has, on the right hand, at the bottom corner, a white square. [[notes: While the Rythmomachia board is 8x16 squares, the "empty" middle ground between the two starting armies consists of an 8x8 area, identical in size to a standard chessboard.]]
+
+(Buxer: folio 24. a. [[notes: This refers to Quirin Buxer, whose 1608 work *Arithmeticae facilis* discussed the rules and allegories of the game.]]
+> This arrangement of the Game is like a military formation. Nor does it seem to differ from that which Polybius [[notes: Polybius (c. 200–118 BC) was a Greek historian whose descriptions of Roman military tactics were highly influential during the Renaissance.]] left in his writings: that the rearmost part of a formation ought to be more open, so that fewer soldiers stand at the Rear than at the Front; yet the space for both should be equal and fair. For if the forward soldiers suffer from weakness or toil and become feeble, they may retreat to the rear of the formation, from which the opportunity to fight again is granted. Likewise, light-armed Cavalry imitate the appearance of Wings in a formation, which agrees and harmonizes significantly with the arrangement of this Game.)
+
+[[notes: The following image is a decorative woodcut tailpiece, a common printer's ornament used to fill empty space at the end of a chapter or section.]]
+
+*A decorative woodcut tailpiece featuring a central grotesque mask or face with a leafy beard, framed by symmetrical, intricate scrolling acanthus leaves and floral ornaments.*
+
+[[summary: This page completes the technical setup of the Rythmomachia board, noting its similarities to a chessboard, and cites the historian Polybius to compare the game's piece arrangement to a tactical military formation.]]
+
+[[keywords: Rythmomachia, Number-Battle, Chessboard, Polybius, Military Strategy, Quirin Buxer, Agmen]]

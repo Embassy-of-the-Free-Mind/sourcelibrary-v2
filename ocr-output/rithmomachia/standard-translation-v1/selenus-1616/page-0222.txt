@@ -1,0 +1,18 @@
+[[meta: This page continues the detailed tactical analysis of the 10th Chapter. It uses the 1-64 square numbering system common in early modern chess treatises. The text describes complex exchanges following a specific opening variation, focusing on how White can force an advantage or a checkmate through discovered checks.]]
+
+### The Second Book / 10th Chapter:
+
+takes, especially the King’s Bishop [[notes: *K. Schützen* — literally "King's Archer," the Bishop on the King's side.]], and moves it to **forty-seven**: then White takes the Black King’s Pawn [[notes: *S. K. Soldaten* — Black King's Soldier/Pawn.]] with his King’s Pawn and moves against the Black King’s Knight [[notes: *S. K. Reuter* — Black King’s Rider.]]: The Black player takes White’s King’s Pawn with the same [Knight] and moves it to White’s King’s Bishop’s 
+[[margin: 11.]] Pawn: * White advances his Queen to **thirty-seven** against him and the Black King’s Bishop’s Pawn; through this move, he obtains either a Pawn or a Knight, and brings his game not only into a better position but perhaps even to an end.
+
+[[margin: 12.]] If, however, White does not move his Queen to **37** (as in n. 11), but instead takes the Black King’s Bishop’s Pawn with his King’s 
+[[margin: 13.]] Bishop and offers Check: * then Black does not take it with the King (for otherwise White would give Check with the Queen at **nineteen** and obtain the King’s Knight in addition to the Pawn) but instead moves the King to **fifty-nine**: White moves the Queen to the Black King’s Knight and, to protect his King’s Bishop, to **nineteen**; thus, White has a good game regardless of what Black chooses to play. For, if the latter moves the aforementioned Knight against the White Queen and the White King’s Bishop to **thirty-four**: White takes the same with the King’s Bishop and moves it against the Black Queen. Black takes it with the Queen and moves to the White King’s Pawn: White places the King’s Bishop at **thirty-seven** and offers a Discovered Check [[notes: *Ab-Schach* — a move where one piece moves out of the way to reveal a check from a piece behind it, in this case, the Queen.]] from his Queen: Black must move the King either to **sixty** or **fifty-two**: White offers Check again with the Queen from **fifty-one**: Black moves the King (since he can take flight to no other place) to **sixty-one**: White moves the King’s Bishop’s Pawn against the Black Queen at **twenty-seven**, thereby protecting the aforementioned King’s Pawn and preventing the Black Queen from giving Check from square **six** (because of which White's King’s Rook [[notes: *K. Roche* — the Rook or Castle.]] would otherwise be lost if this Black Queen were to take the King’s Knight’s Pawn).
+
+[[margin: 14.]] But if Black moves his King not to **59** (as in n. 13) but to **fifty-two**: White moves the Queen not to **nineteen** but, with greater profit, to **thirty-seven**: Black takes the White King’s Bishop’s Pawn with his King’s Bishop and offers Check: White (since the Black Bishop is supported by his King’s Knight and therefore cannot be taken) moves the King to **twelve**:
+
+[[sig: d 2]]
+[[meta: catchword: * der]]
+
+[[summary: This page details a sequence of moves where White utilizes a discovered check to force the Black King into a vulnerable position while simultaneously protecting the King's Rook. It emphasizes the strategic value of the Queen's placement and the utility of the Bishop in coordinating attacks.]]
+
+[[keywords: Chess tactics, Discovered Check, King's Bishop, King's Knight, Rook, Queen maneuvers, Opening variations, Chess notation]]

@@ -1,0 +1,18 @@
+[[meta: This page continues the tactical instructions for a handicap game where White plays without a King's Bishop's Pawn and Black plays without a Queen's Knight. The text uses a specific 1-64 coordinate system for the board, common in 17th-century manuals before the standardization of algebraic notation.]]
+
+# On the Game of Chess.
+
+[[margin: 5.cap:]] ...be exchanged/ and with the help of the King’s Rook [[margin: cc]] (whom the Black Queen/ attended to) thus escapes the danger. [[margin: cc]]
+
+[[margin: 4.]] But if the Black player does not take the White Soldier [[notes: "Soldier" refers to a Pawn]] (no. 3), but instead moves the King’s Soldier to twenty-eight: then the White player breaks the Black player’s game when he pushes the King’s Archer’s Soldier [[notes: "Archer" refers to a Bishop; this is the King's Bishop's Pawn]] onto the Black King’s Soldier at thirty: The Black player (to defend him) [[margin: cc]] moves the King’s Archer’s Soldier to forty-six: The White player [[margin: cc]] (regardless of this) takes him with the King’s Archer’s Soldier: The Black player takes the same with his King’s Archer’s [[margin: ca]] Soldier: The White player moves the King’s Rider [[notes: "Rider" refers to a Knight]] onto the same at twenty-two: [[margin: cc]]
+[[margin: 5.]] * The Black player moves the King’s Archer (regardless of the fact that the same prevents the Queen from being able to protect her Archer’s Soldier) [[margin: ce]] to forty-five: The White player takes the Black King’s Archer’s Soldier with the King’s Rider: The Black player gives check [[margin: ca]] with the Queen from twenty-five: The White player does not cover the King with his Rider’s Soldier at eighteen (for he would cause himself a poor game), [[margin: cc]] but rather moves him to thirteen: The Black player takes the White King’s Rook’s Soldier with the King’s Archer: The White player gives check [[margin: ca]] with the King’s Rider from fifty-four, and moves him onto the Black King’s Rook: which subsequently cannot escape him [[margin: cc]] (because the Black player, in order not to lose his Queen to the White King’s Rook, [[margin: ca]] dare not take him away with the King’s Archer). [[margin: ca]]
+
+[[margin: 6.]] But if the Black player does not move the Archer to 45 (no. 5), [[margin: cc]] but rather moves the King’s Rider (to prevent the King’s Archer’s Soldier) [[margin: ca]] to forty-three: or moves the King’s Archer to forty-four: then the White player gives check with the King’s Archer from thirty-nine: [[margin: cc]]
+[[margin: 7.]] * The Black player covers the King with the King’s Archer at fifty-three: [[margin: cc]] The White player (in order to exchange the Queen: or to obtain the Black King’s Archer’s Soldier, who, even though he stands on the Queen’s line, is yet incorrectly addressed by Damiano [[notes: Pedro Damiano (1480–1544) was a famous Portuguese chess theorist; the author here disputes Damiano's terminology]] as the King’s Soldier: should the Black player perhaps take away his King’s Archer from fifty-three with the King’s Rider) [[margin: cc]] pushes the Queen to thirty-two. [[margin: cc]]
+
+[[margin: Eee iij]]
+[[meta: catchword: 8. Bede-]]
+
+[[summary: This page provides a dense technical walkthrough of a specific chess opening and variation, focusing on how the White player can trap the Black King's Rook or exchange Queens advantageously. It highlights a disagreement with the famous master Damiano regarding the naming of specific pawns on the board.]]
+
+[[keywords: chess tactics, Damiano, Archer, Rider, Soldier, King's Rook, check, coordinates, handicap game]]

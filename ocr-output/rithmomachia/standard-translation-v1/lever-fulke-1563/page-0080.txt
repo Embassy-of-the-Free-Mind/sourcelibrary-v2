@@ -1,0 +1,17 @@
+<header>The Philosopher's <note>original: "Philosophers"</note> game.</header>
+
+If any of the king's squares <note>original: "quadrates"</note> are captured <note>original: "taken"</note>, he may redeem it with any of his pieces <note>original: "men"</note> having the same number. The king must then move into the place of the piece that redeemed him. 
+
+But if he has none with the same number, he may redeem it for any of his pieces that his adversary will choose; he likewise moves into the place of the piece by whom he is redeemed.
+
+<sig>E</sig>
+
+***
+
+<summary>
+This passage outlines the rules for "redeeming" captured components of a King (pyramid) in Rithmomachia. If one of the square values that make up the King is captured, the player can recover it by sacrificing another piece of the same value and moving the King to that piece's former position. If no piece of the same value is available, the opponent chooses which piece must be sacrificed to redeem the lost square.
+</summary>
+
+<keywords>
+Rithmomachia, Philosopher's Game, King, Squares, Quadrates, Redeem, Capture, Rules of Play
+</keywords>

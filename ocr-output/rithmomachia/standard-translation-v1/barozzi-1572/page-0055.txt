@@ -1,0 +1,23 @@
+[[meta: This page concludes the instructional text on Rythmomachia with a final exhortation on the game’s benefits for both the unlearned and the scholarly. It then transitions into a detailed Errata sheet ("Table of Errors") to correct printing mistakes in the preceding pages, which was common in early modern printing.]]
+
+...which contains within itself many other games, and does not diminish the delight of those, but increases it and makes it more perfect; and not only provides delight and utility to the unlearned and the **rough** [[notes: *Rozi*—meaning those without formal education or simple-minded.]], but also to the **learned** and **subtle minds**. Therefore, no one should hesitate to embrace it and acquire it, to excite one's mind from playful things to more serious and grave matters; and to recreate [[notes: *Recrearla*—in the sense of refreshing or restoring the mind's vigor through "recreation."]] it at times when it feels fatigued and tired from studies.
+
+---
+
+->*T H E  E N D .*<-
+
+## Table of errors occurred.
+
+On page [[notes: *car.* is an abbreviation for *carta*, meaning "leaf" or "page." In early books, pages were often numbered by the leaf rather than by the individual side.]] 1.a [[notes: "a" refers to the Recto (front) side of the leaf; "b" refers to the Verso (back) side.]] in line 7, where it reads *cucurato*, read **curato**. On the same page 1.b, line 6, where it reads *sexta*, read **sesta**. On page 4.a, in line 11 where it reads *perilche*, read **pche** [[notes: *Pche* is a shorthand for *perché* (because/why).]]. On page 4.b, in the figure, in the third circle at the bottom where it is written 41, write **49**. On page 6.b, where it is read twice: *thus joining the 4 first white triangles*: read it **one time only**. On page 7.b, in the third circle of the figure where it is written 125, write **225**. On page 8.a, in the 3rd line, where it reads *il notaremo*, read **notaremo**. On page 9.b, in the fourth black circle from the top of the figure, where it is written 7, write **9**. On page 10.a, in the 1st line, where it reads *questo modo*, read **à questo modo**. And in the 4th line, where it reads *tirandoli li 4*, read **tirando li 4**. On page 10.b, in the figure, in the white triangle that is near the square 45, in which 20 is written, write **25**; and in the circle in which 38 is written, write **36**. On page 11.b, in the third line, where it reads 7, read **6**; and in line 11, where it reads *da qual*, read **dal qual**; and in the second-to-last line, where it reads *maggiori* [[notes: Greater]], read **minori** [[notes: Lesser]]; and the figure on said page should be made in this way:
+
+[[notes: Diagram of three diamonds (rhombuses) in a chain. The left is marked "B", the center is empty, and the right is marked "A".]]
+
+On page 12.a, the first figure must be in this way:
+
+[[notes: Diagram of four diamonds in a chain. From left to right: "B", empty, "C", "A".]]
+
+On page 12.a, in the fourth line, where it reads the 16 triangle, read the **16 circle** [[notes: *Tondo* refers to the circular pieces.]]. And where it reads with the 9 circle, read with the **9 triangle**. On page 12.b, the figure should stand like this:
+
+[[summary: This final page of the manual concludes the author's praise for Rythmomachia as a tool for mental refreshment and provides a detailed list of errata for the book's diagrams and text. These corrections ensure the mathematical and geometric accuracy of the complex rules explained in previous chapters.]]
+
+[[keywords: Errata, conclusion, pedagogy, mathematics, printing errors, diagrams, Rythmomachia]]

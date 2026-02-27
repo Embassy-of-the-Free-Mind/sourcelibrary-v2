@@ -1,0 +1,19 @@
+# The Philosophers' Game.
+
+## To find the middle between the first and the last.
+
+Multiply the first by the last, then double the product, and divide the whole by the first and the last added together; the quotient is then the middle number. For example, having 6 and 12, I would like to know the middle in musical proportion <note>original: "Musicall proportion"; now commonly known as the harmonic mean</note>. First, I multiply one by the other, and the product is 72. That doubled is 144. This divided by 18—which is the sum <note>original: "addition"</note> of 6 and 12—gives the quotient 8. Thus, I have 6, 8, and 12 in musical proportion. And in this way, you must work to find out the third <note>This likely refers to the middle term in a three-number sequence</note> in musical proportion. But if you would rather play than work, the following table shall serve your turn.
+
+| | | |
+|---|---|---|
+| 3 | 4 | 6 |
+| 6 | 8 | 12 |
+| 12 | 16 | 24 |
+
+### A table
+
+The rule to find out the last number is by multiplying the first and second together and then dividing the product by the difference of the first and second subtracted from <note>original: "taken from"</note> the first number.
+
+<summary>This section provides mathematical instructions for calculating the terms of a musical (harmonic) proportion. It specifically details the formula for finding the middle term (harmonic mean) between two numbers by doubling their product and dividing by their sum. It also provides a secondary rule for finding the third term in a sequence given the first two, and includes a reference table of common harmonic triples (3-4-6, 6-8-12, 12-16-24) used in the game of Rythmomachia.</summary>
+
+<keywords>The Philosophers' Game, Rythmomachia, musical proportion, harmonic mean, mathematical table, arithmetic rules, harmonic progression</keywords>

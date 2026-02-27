@@ -1,0 +1,36 @@
+[[meta: This page transitions from the general defense and benefits of chess to a historical investigation into its origins, continuing the scholarly tone established in the previous chapter.]]
+
+<header>The First Book / Chapter 2:</header>
+
+<image-desc>A decorative woodcut headpiece featuring classical figures, possibly deities or muses, reclining among floral and foliate scrolls.</image-desc>
+
+## The Second Chapter.
+
+### Concerning the Authors, Writers, Artists, and Names of this Entirely Artful Game.
+
+Let that now be sufficient regarding the nature and essence of this wide-ranging game; we shall now examine its origin and invention, as well as what else pertains to it. There are, however, many different conjectures and opinions on the matter.
+
+For firstly, some wish to attribute the invention of this game to the **Egyptians**: as can be heard from **Cœlius Rhodiginus** [[notes: Ludovico Ricchieri (1469–1525), an Italian scholar whose *Antiquae Lectiones* was a massive compendium of classical knowledge]], Book 20, Chapter 14 of his *Antiquae Lectiones*; and from **Jodocus Damhouderius** [[notes: Joos de Damhouder (1507–1581), a Flemish jurist]], in *Paranæf: Christ: in Admon: ad Milit:* page 229. The words of Damhouderius read as follows:
+
+> „ Among all games of the intellect, Chess is considered no common thing; it was invented by the **Egyptians**, those seekers of hidden things and cultivators of the mind: although others attribute it to **Palamedes** [[notes: A legendary Greek hero of the Trojan War, often credited with inventing the alphabet, numbers, and games like dice to keep the soldiers entertained during the long siege]].
+
+->That is:<-
+
+> „ Among those games in which the intellect must 
+> „ be used, the **Game of Chess** is not to be 
+> „ esteemed as a small thing: it was brought 
+> „ onto the path by the **Egyptians**, who were 
+> „ ingenious inventors of difficult and almost 
+> „ unsearchable things, and who omitted no 
+> „ opportunity to sharpen their wits: yet some 
+> „ wish to give the honor of the invention to **Palamedes**.
+
+The aforementioned **Rhodiginus** nevertheless believes that they invented it not for playing or for pleasure, but rather to hide secret and important matters under it—as under a **cloak** [[notes: *Deck-Mantel* — a pretext or mask]]—and to bring them to light in a concealed manner, as was otherwise their custom in other things.
+
+Others (as **Thomas Actius Forosemproniensis** [[notes: Tommaso Azzio, a 16th-century Italian legal scholar who wrote about the laws of games]] recounts in *Tract: de Schach: Ludo*) recognize **Lydus** and **Tyrrhenus**, who were present at the Siege of the City of **Troy**, as the inventors of this game: but with what grounds this is claimed is not easily guessed. To be sure, **Herodotus** [[notes: The "Father of History," writing in the 5th century BCE]], in Book 1, writes generally 
+
+[[meta: Catchword: "that," used to ensure the reader follows the flow of the sentence onto the next physical page.]]
+
+[[summary: This page begins a historical survey of the origins of chess, citing various Renaissance scholars who credit the invention to the Egyptians, the Greek hero Palamedes, or figures from the Trojan War. It suggests the game was viewed by some not just as a pastime, but as a system for concealing secret wisdom.]]
+
+[[keywords: History of Chess, Egyptian origins, Palamedes, Cœlius Rhodiginus, Jodocus Damhouderius, Thomas Actius, Lydus and Tyrrhenus, Trojan War, intellectual games]]

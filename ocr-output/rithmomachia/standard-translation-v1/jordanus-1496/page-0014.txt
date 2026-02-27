@@ -1,0 +1,57 @@
+[[meta: This page continues from the previous discussion on proportional parts, concluding the proof of the first proposition of Book II and proceeding through propositions dealing with the manipulation of ratios, such as permutation and composition.]]
+
+...**b**: whatever part or parts **c** is to **d**. If **a** is to **b** the same whole part as **c** is to **d**: as shown in the first diagram: **d** will be the same multiple of **c** as **b** is of **a**. Therefore, whatever proportion **b** (as a multiple) has to **a**, the same proportion **d** (as an equal multiple) will have to **c**. But if **a** is the same parts of **b** as **c** is of **d**: then by the twenty-first [proposition of Book I], **b** will contain **a** and its part or parts as many times as **d** contains **c** and its part or parts. Therefore, the denomination [[notes: In medieval arithmetic, the "denomination" of a ratio is the number or fraction that expresses its value]] of **b** to **a** will be similar to that of **d** to **c**: and the proportion of **b** to **a** is the same as **d** to **c**. If the number **a** is greater than **b**: the same conclusion is evident by a similar argument, setting **b** as the first number, **a** as the second, **d** as the third, and **c** as the fourth.
+
+<image-desc>Diagram in the left margin showing horizontal lines with numbers and labels. Top: lines labeled 'b' with number 2 and 'a' with number 6, next to lines with numbers 3 and 9. Bottom: lines labeled 'b' with number 6 and 'c' with number 2, next to lines with numbers 9 and 3.</image-desc>
+
+[[margin: 2]]
+# **If the first is to the second as the third is to the fourth: and the first is greater than the second, then the third will be greater than the fourth.**
+
+¶ Let there be four numbers as before: **a** the first, **b** the second, **c** the third, and **d** the fourth; and let **a** be greater than **b**. I say also that **c** is greater than **d**. For by the preceding proposition, since the proportion of **a** to **b** is the same as **c** to **d**, then conversely the proportion of **b** to **a** is the same as **d** to **c**. But **b** is positioned as smaller than **a**: therefore, by the first proposition of the first book, **b** is a part or parts of **a**. Consequently, **d** is the same part or parts of **c**, and thus **d** is smaller than **c**, which was to be shown. You can also prove this directly: because **a** is greater than **b**, it contains **b** some number of times, or some number of times plus a part or parts. Since it has the same proportion to **d**, then **c** will contain **d** just as many times, or just as many times plus the same part or parts. Therefore, **c** is greater than **d**, which is the proposition. And you could very easily prove similarly that if the first were smaller than the second, the third would be smaller than the fourth. For if the first is smaller than the second, by the first of the first book, it will be a part or parts of the second; and since the third has the same proportion to the fourth, the third will be the same part or parts of the fourth, and thus smaller than the fourth. And if the first were equal to the second, you would similarly prove the third is equal to the fourth.
+
+| a 2 | b 6 | c 3 | d 9 |
+|---|---|---|---|
+| a 3 | b 8 | c 6 | d 16 |
+| a 6 | b 2 | c 9 | d 3 |
+
+[[margin: 3]]
+# **If the first is to the second as the third is to the fourth: it will be, by permutation, as the first is to the third, so the second is to the fourth.**
+
+¶ This demonstrates "permuted proportionality," which is when we conclude that as the antecedent is to the antecedent, so the consequent is to the consequent [[notes: In the ratio a:b, 'a' is the antecedent and 'b' is the consequent. This proposition proves that if a:b = c:d, then a:c = b:d]]. Let there be four numbers: **a** the first, **b** the second, **c** the third, and **d** the fourth; and let the proportion of **a** to **b** and **c** to **d** be similar. I say the proportion of **a** to **c** and **b** to **d** is also similar. First, if **a** is smaller than **c**, then through **b**: because the proportion of **a** to **b** and **c** to **d** is similar, it follows that whatever part **a** is of **b**, the same part **c** is of **d**. Therefore, by the twenty-seventh of the first book: whatever part or parts **b** is to [**d**], that same part or parts **a** will be to **c**. Thus, the proportion of the first **a** to the third **c** and the second **b** to the fourth **d** will be the same. Second, if **a** is parts of **b** as in the second figure: you will argue the same way using the twenty-eighth of the first book. Third, if **a** is greater than **b**: by making **b** the first, **a** the second, **d** the third, and **c** the fourth, you will achieve the same result very easily with the help of the first proposition of this book.
+
+[[margin: 4]]
+# **If the first is to the second as the third is to the fourth, and the first is greater than the third: the second will also be greater than the fourth.**
+
+¶ Let **a** be the first number, **b** the second, **c** the third, and **d** the fourth, with a similar proportion of **a** to **b** and **c** to **d**; and let **a** be greater than **c**. I say **b** is greater than **d**. For since as **a** is to **b**, so **c** is to **d**, then by permutation through the preceding proposition, as **a** is to **c**, so **b** is to **d**. But **a** is greater than **c**: therefore, **b** is also greater than **d** by the second proposition. This is the proposition.
+
+| a 3 | b 9 | c 2 | d 6 |
+|---|---|---|---|
+
+[[margin: 5]]
+# **If as the whole is to the whole, the part taken away is to the part taken away: the remainder will be to the remainder as the whole is to the whole.**
+
+<image-desc>Two arch-shaped diagrams labeled with numbers and letters. The first arch has 8 at the top, with 6 and 2 at the base, labeled a, b, c. The second arch has 16 at the top, with 12 and 4 at the base.</image-desc>
+
+¶ Let **ab** be the whole number, **a** the part taken away, and **b** the remainder; and let **cd** be another whole number, **c** the part taken away from it, and **d** the remainder. Let there be a similar proportion of **ab** to **cd** and **a** to **c**. I say the proportion of **b** to **d** is the same as **ab** to **cd**. For if **ab** is smaller than **cd**: it will be shown by the twenty-first, first, and twenty-second propositions of the first book—under the distinction of whatever part or parts **ab** was to **cd**—that the remainder **b** is the same part or parts to the remainder **d**. Therefore, whatever the proportion of the whole to the whole, the same will be that of the remainder to the remainder. But if **ab** is greater than **cd**: conversely, whatever part or parts **cd** is to **ab**, the same part or parts **d** will be to **b**. Thus, the proposition is concluded again by the first of this book.
+
+[[margin: 6]]
+# **If the first is to the second as the third is to the fourth: the first and second together will be to the second as the third and fourth together are to the fourth.**
+
+¶ This demonstrates "joined proportionality" [[notes: Known today as the "componendo" property of proportions: if a:b = c:d, then (a+b):b = (c+d):d]], which is whenever we conclude the joined antecedent and consequent to the consequent, just as the joined antecedent and consequent [of the second ratio] relate to its consequent. Let the first number **a** relate to the second **b** as the third **c** relates to the fourth **d**. I say therefore: as **a+b** is to **b**, so is **c+d** to **d**. For since the proportion of **a** to **b** and **c** to **d** is similar: if **a** is smaller than **b**, then whatever part or parts **a** is of **b**, the same part or parts **c** is of **d**. Therefore, **b** is in **a+b** once [with **a** remaining], and **d** is in **c+d** once [with **c** remaining]. And in **a+b**, **a** exceeds by the same part or parts of **b** as **c** exceeds in **c+d** relative to **d**. Therefore, whatever proportion **b** has to **a+b**, the same will **d** have to **c+d**. By the first proposition of this book, then, whatever proportion **a+b** has to **b**, the same will **c+d** have to **d**. This is the proposition for this case. But if **a** is set as greater than **b**, as in the second figure: by the first proposition, whatever part or parts **b** is to **a**, the same part or parts **d** is to **c**. Therefore, **b** adding itself once to become **a+b**, **a+b** will be the same part or parts [of the whole] as **c+d** is, where **d** likewise adds itself once to **c**. Thus, the proportion of **b** to **a+b** and **d** to **c+d** is the same. Therefore, by the first of this book, the proportion of **a+b** to **b** is the same as **c+d** to **d**, which is again the proposition.
+
+| a 2 | b 6 | c 3 | d 9 |
+|---|---|---|---|
+| a 4 | b 3 | c 8 | d 6 |
+
+[[margin: 7]]
+# **If one number multiplies two others: the proportion of the products and the numbers multiplied will be the same. From this it is manifest that the differences of multiples are equally multiple to the differences of the sub-multiples.**
+
+¶ Let **a** multiply number **b** to produce **d**; and let the same **a** multiply **c** to produce **e**. I say the proportion of **b** to **c** (the numbers multiplied) is the same as **d** to **e** (the products). For since **b** is in **d** according to **a**, and **c** is in **e** also according to **a**, however many times **b** is in **d**, so many times **c** is in **e**. Therefore, the proportion of **b** to **d** is the same as **c** to **e**. By permutation through the third proposition, the proportion of **b** to **c** is the same as **d** to **e**. This is the proposition and its corollary. [[notes: This is a fundamental rule of distributive property in ratios: a*b : a*c = b : c.]]
+
+| b 5 | c 4 | d 10 | e 8 |
+|---|---|---|---|
+| a 2 | f 1 | g 2 | |
+
+[[summary: This page covers Book II, Propositions 2 through 7 of Jordanus de Nemore's Arithmetica, establishing the logical rules for manipulating ratios. It includes proofs for permutation, the subtraction of proportional parts, and the addition of terms (componendo), as well as the effect of multiplication on ratios.]]
+
+[[keywords: Jordanus de Nemore, Arithmetica, ratio, proportion, permutation, joined proportionality, multiplication, medieval mathematics, Euclid's Elements]]

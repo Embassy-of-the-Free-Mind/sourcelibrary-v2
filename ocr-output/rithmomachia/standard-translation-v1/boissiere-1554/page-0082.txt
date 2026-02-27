@@ -1,0 +1,12 @@
+[[meta: This page concludes the author's primary instructions on the game's versatility—noting that its pieces can be used for Chess or Backgammon—and begins a scholarly defense of his simplified rules compared to earlier mathematicians.]]
+
+<header>OF THE PHILOSOPHERS.</header>
+
+[...squar]e for a knight; a single triangle for a bishop [[notes: In the 16th century, the chess piece we now call the bishop was often called the "fool" (*fol* or *fou*) in French.]]; and eight rounds for the eight pawns. And thus, you will be able to play backgammon [[notes: *Tables* was a common term for the family of board games that includes modern backgammon.]] and other games with this one. Through this game, therefore, everyone may find recreation, from the most simple to the most subtle and ingenious. Therefore, having satisfied my undertaking, I shall bring an end to the present treatise.
+
+### Response to objections.
+
+Now, someone might ask me: why have you not set out the victories of even numbers and those of odd numbers, each one specifically, as Faber Stapulensis [[notes: Jacques Lefèvre d’Étaples (c. 1455–1536), a leading French humanist and mathematician whose 1496 work on Rythmomachia was the standard academic text of the era.]] did? I answer you first that the game itself would be nearly infinite due to its great length, and would cause frustration to the players; I believe this is the reason why the said game had previously fallen into disuse. Therefore, by making the victories common [[notes: Meaning the win conditions can be met by using a combination of even and odd pieces, rather than strictly one or the other.]], I have made the game more open so that victory may be achieved more easily. Secondly, you know well that although the said Faber divided the victories—specifically establishing those for even and those for odd—he nevertheless says that the player with the even numbers may achieve or complete his victory using the pieces [[notes: *Tables* in the original French.]] he has acquired from the odd numbers. If then he divides and determines for my...
+
+[[summary: The author concludes his manual by explaining how to adapt Rythmomachia pieces for Chess and Backgammon, then defends his simplified victory rules against the more rigid systems of Jacques Lefèvre d’Étaples.]]
+[[keywords: Rythmomachia, Chess, Backgammon, Faber Stapulensis, Jacques Lefèvre d'Étaples, game design, victory conditions, even and odd numbers]]

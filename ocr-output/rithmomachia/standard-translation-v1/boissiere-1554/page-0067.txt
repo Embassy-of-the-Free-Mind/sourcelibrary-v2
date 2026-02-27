@@ -1,0 +1,21 @@
+[[meta: This page continues the military allegory for Rythmomachia established on the previous page. Having calculated the values for the "Christian" (white) pieces, it now concludes that calculation and moves to the "Turkish" (red) army values and the victory conditions based on capturing enemy standards.]]
+
+### RYTHMOMACHIA, THE GAME
+
+...making 12 from the number 1,312. There remain 1,300 foot soldiers whom you shall divide into 10 parts. In this way, each **ensign-bearer** [[notes: In this military metaphor, the "ensign-bearers" or standard-bearers represent the specific game pieces that lead groups of other pieces]] shall be followed by 130 infantrymen.
+
+   The red pieces and their **pyramid** contain 1,752 points, excluding the Roots of the square numbers contained within the said pyramid. The top two [[notes: literally "the last two," referring to the highest-value pieces that form the apex of the pyramid]] of this sum shall be made **Captains** of the Turkish army, and the next 10 shall be **ensign-bearers**. One must subtract from the sum of 1,752 these two Captains and the 10 ensign-bearers; therefore 1,740 shall be ready to fight. But these must be divided into 10 parts. In this way, every 174 **Janissaries** [[notes: The elite infantry of the Ottoman Sultan's household]] shall have one ensign-bearer.
+
+   At the beginning of the combat and the game, the two Emperors shall agree that he who has won a greater number of ensigns from his enemy shall be the **Victor** and master of the field.
+
+   Therefore, if the Christian Emperor overcomes the Grand Turk by two ensigns, those two Turkish ensigns won by the Emperor will represent 348 Janissaries.
+If he wins three ensigns: The three will make 522 Turks.
+If four: The four will make 696 Turks.
+If five: The five will make 870.
+Six: 1044.
+
+[[meta: catchword: Les (The)]]
+
+[[summary: This page details the numerical conversion of game points into a military simulation, defining the size of the "Turkish" army and how the capture of specific pieces (ensign-bearers) translates into capturing large numbers of soldiers.]]
+
+[[keywords: Rythmomachia, Janissaries, Turkish Army, Christian Army, Ensign-bearers, Military Allegory, Jean Pierre de Mesmes, 16th-century gaming]]

@@ -1,0 +1,26 @@
+[[meta: This page continues the critique of chess tactics, specifically examining a sequence of moves described by the 16th-century master Pedro Damiano. The author is transitioning from demonstrating the moves to pointing out errors in Damiano's original text.]]
+
+# The Fourth Book / 4. cap:
+# The Fourth Book / Chapter 4:
+
+Whether this—which has been set down in these three preceding numbers—can happen, the following no. 25 will report and reveal.
+
+[[margin: 19.]] » Has then the White (as Damianus [[notes: Pedro Damiano (1480–1544) was a Portuguese apothecary and chess player who wrote one of the earliest definitive manuals on the game.]] sets down at the end of this chapter) placed the **Queen** in such a place where she can fend off the **Check** of the **Black Queen** from **twenty-eight**:
+[[margin: 20.]] » so the **Black** plays (so that he may not afterwards be denied the **Checkmate** of the **White King** by his **King’s Rook’s** [[notes: *K. Rochen*—the Rook was often called a "Rock" or "Castle" in early modern German.]] check) the **King’s Bishop** [[notes: *K. Schützen* or "King's Archer."]] to **thirty-six**.
+
+This is thus set down here from Damiano's report, although it was published by him in slightly different words and without indicating the reasons. Now we wish further to indicate several errors which may be found in the same: and likewise, we shall by design pass over several more ways and manners (especially those which were thought of by him in the fifth chapter of his little treatise: namely, how the **Black**, if he has the advantage or the first move in this case, should move and lead the game). Considering that these are not easily understood, since he published and brought them forth very obscurely, with many confused moves from which he himself (as is to be presumed) could hardly have extricated himself, and which are also against the practice of this game. For, according to his report, two pieces—namely the **King’s Knight** [[notes: *K. Reuter* or "King's Rider."]] and the **King’s Bishop’s Soldier** [[notes: *K. Schützens-Soldat* or Pawn.]]—would have to stand together on **fifty-one** (that is, in the **Black King’s Bishop’s** second field), and that same **Soldier** could finally, regardless of this, be moved two fields forward; likewise, some pieces would be taken away or swapped with each other which are no longer present on the **Chessboard**. Even if these moves were more clearly recorded and altered where possible, they are nonetheless of little or no use to those who do not know how to play.
+
+However, this which has been mentioned regarding Damiano thus far, and might further be thought of below, is not set down
+» to disparage him, but rather to warn the **Chess-players**, so that they
+» do not deceive themselves in such arrangements of this game if they
+» should wish to follow such harmful ways, and to reveal the same to
+» them (so that it does not appear as if one has given a hasty assent [[notes: *Jäh-wort*—literally a "sudden word" or impulsive agreement.]]
+» even to what is wrong and thoughtless).
+
+[[margin: 21.]] Damianus thus writes above (n. 9.) that the
+
+->**Black**<-
+[[meta: catchword: Schwarz]]
+
+[[summary: On this page, the author critiques the instructions of the chess master Pedro Damiano, pointing out logical impossibilities in his notation—such as two pieces occupying the same square—and warns readers against following flawed tactics.]]
+[[keywords: Pedro Damiano, Chess tactics, King's Bishop, King's Knight, notation errors, 17th-century chess, King's Rook]]

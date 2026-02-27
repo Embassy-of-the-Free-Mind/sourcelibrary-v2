@@ -1,0 +1,29 @@
+[[meta: This page continues the mathematical rules for the board game Rythmomachia. The previous page ended mid-sentence, describing the creation of the first four white triangles. This page explains how to use those triangles to generate the values for the Square pieces.]]
+
+white [[notes: This fragment completes the sentence from the previous page.]], the first four white triangles were produced. In the same way, by **joining** the four first white triangles with the four second white triangles, the four first white squares will be produced, which will be these: **15, 45, 91, 153**. This is because from the 6 joined with the 9, 15 is born; from the 20 with the 25, 45; from the 42 with the 49, 91; and from the 72 with the 81, 153. As the following figure shows you.
+
+[[notes: In Rythmomachia, "Square" pieces are often calculated by summing the values of "Triangle" pieces. The author uses the word "accozzato," meaning joined or coupled, to describe this addition.]]
+
+->
+| ▲ 6 | ▲ 20 | ▲ 42 | ▲ 72 |
+| :---: | :---: | :---: | :---: |
+| ▲ 9 | ▲ 25 | ▲ 49 | ▲ 81 |
+| **■ 15** | **■ 45** | **■ 91** | **■ 153** |
+<-
+
+[[notes: This table recreates the diagram in the manuscript. It shows two triangles being summed to create the square value below them. These specific numbers are central to the "Superparticular" and "Superpartient" ratios used in the game's theory.]]
+
+Having already found the numbers of the first 4 white squares, and desiring to find those of the other 4 as well, you will proceed in this way: Begin from the number **5** and take the 4 following odd numbers, always skipping one odd number between them [[notes: The author is describing a sequence of odd numbers where you skip every other one: 5, (7), 9, (11), 13, (15), 17.]], which will be these: **5, 9, 13, 17**. Then, multiply these numbers by themselves, and the numbers you desire will be born, which will be: **25, 81, 169, 289**. This is because from 5 multiplied by itself, 25 is born; from 9, 81; from 13, 169; and from 17, 289, as is seen in the following figure.
+
+[[notes: The author is now using "squaring" (multiplying a number by itself) to generate the values for the remaining square pieces. This marks a shift from simple addition to more complex arithmetic operations.]]
+
+->
+| 5 | 9 | 13 | 17 |
+| :---: | :---: | :---: | :---: |
+| **x 5** | **x 9** | **x 13** | **x 17** |
+| **■ 25** | **■ 81** | **■ 169** | **■ 289** |
+<-
+
+[[summary: This page explains the arithmetic methods for determining the values of "Square" pieces in Rythmomachia, either by summing existing triangle values or by squaring specific odd numbers. It serves as a practical guide for players to set up or understand the mathematical logic of the game board.]]
+
+[[keywords: Rythmomachia, Mathematics, Squares, Triangles, Arithmetic Progressions, Number Theory, Board Games, Renaissance Education]]

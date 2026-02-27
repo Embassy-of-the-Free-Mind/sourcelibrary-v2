@@ -1,0 +1,39 @@
+[[meta: This page transitions from the visual diagrams of the previous page into a detailed prose description of specific chess openings. The text focuses on "handicap" games (odds), where players remove certain pieces to balance the skill level. The terminology continues from previous sections: an "Archer" is a Bishop, a "Rider" is a Knight, and a "Soldier" is a Pawn. The numbering (e.g., 36, 20) refers to the author's specific coordinate system for the 64 squares of the board.]]
+
+# The Fourth Book / Chapter 5.
+
+<image-desc>A rectangular horizontal woodcut headpiece featuring elaborate scrolling foliage and floral patterns. Integrated into the design are three expressive, mask-like faces: one in the center looking forward and two on the sides in profile or semi-profile, characteristic of 17th-century decorative printing.</image-desc>
+
+## The Fifth Chapter.
+
+### In what manner the White player (according to both Damiano's [[notes: Pedro Damiano was a Portuguese chess master whose 1512 manual was a primary source for this book]] and the Author's opinion), when he has set aside his King’s Archer’s Soldier [[notes: The King's Bishop's Pawn]] from his other chess pieces, and has likewise set aside the Black player’s Queen’s Rider [[notes: The Queen's Knight]], and gives the Black player the advantage [[notes: The "advantage" or "Vorzug" here refers to the first move or "odds"]], can begin and complete the game in three ways.
+
+But if the White player does not take the advantage in moves, but rather a major piece—namely the Queen’s or the King’s Rider—as an advantage, and in return grants another advantage, the three final types of play emerge from this. For when the White player takes the Black King’s Rider and gives the Black player the advantage and the King’s Archer’s Soldier [[notes: King's Bishop's Pawn]] at the start: one arrives at the Fourth Type, which Damiano explains in three ways in the 6th and 7th Chapters of his little chess-book, and which is set down and improved in this chapter in the following manner.
+
+[[margin: 1. „]] The first way of this Fourth Type is: When the White player 
+[[margin: „]] takes the Black King’s Rider as an advantage and leaves his King’s Archer’s Soldier, 
+[[margin: „]] along with the advantage [of the first move], to the Black player: the Black player 
+[[margin: „]] begins upon this and moves the King’s Soldier to thirty-six [[notes: Square e5 in modern notation]]. 
+[[margin: 2. „]] * The White player moves the King’s Soldier to twenty [[notes: Square e4]]. 
+[[margin: „]] The Black player moves the Queen’s Soldier to thirty-seven [[notes: Square d5]]. 
+[[margin: „]] The White player moves his Queen’s Soldier to twenty-nine [[notes: Square d4]] 
+[[margin: 3. „]] against the Black King’s Soldier. * The Black player takes it with the King’s Soldier. 
+[[margin: „]] The White player takes the same with his Queen’s Soldier. 
+[[margin: „]] The Black player offers check with the Queen from twenty-five [[notes: Square h4]]. 
+[[margin: „]] The White player, to cover the King, moves his Rider’s Soldier to eighteen [[notes: Square g3]]. 
+[[margin: „]] The Black player offers check with the Queen from twenty-eight [[notes: Square e4]]. 
+[[margin: „]] The White player covers the King with his Queen on twelve [[notes: Square e2]], 
+[[margin: „]] giving cause and occasion for the Queens to be ex- 
+[[margin: „]] changed (since one holds the other captive). 
+[[margin: „]] 
+[[margin: „]] 
+[[margin: „]] 
+[[margin: „]] 
+[[margin: „]] 
+[[margin: „]] 
+
+[[meta: catchword: changed (wechßlet)]]
+
+[[summary: This page describes a specific chess opening involving "odds" play, where White starts without a Bishop's Pawn and Black starts without a Knight. It details a sequence of moves leading to an early Queen exchange.]]
+
+[[keywords: Damiano, handicap play, King's Archer's Soldier, Queen's Rider, chess openings, exchange, 17th-century chess]]

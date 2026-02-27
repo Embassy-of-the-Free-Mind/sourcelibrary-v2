@@ -1,0 +1,16 @@
+[[meta: This page continues the instructions for the black circular pieces (rounds) following the odd numbers 3, 5, 7, and 9, and then transitions to the rules for determining the values of the triangular pieces.]]
+
+one after the other, as they follow, we shall place beneath them the other 4 black rounds, upon which we shall mark those numbers that result from the multiplication of the first odd numbers—already written—by themselves [[notes: As with the even numbers on the previous page, the author is instructing the reader to square the base numbers: 3x3, 5x5, etc.]]. That is: beneath the 3, we shall mark 9; beneath the 5, 25; beneath the 7, 49; and beneath the 9, 81. For from 3 multiplied by itself is born 9; from 5, 25; from 7, 49; and from 9, 81. And thus we shall have written the numbers upon the eight black rounds, as the following figure demonstrates.
+
+| ( 3 ) | ( 5 ) | ( 7 ) | ( 9 ) |
+| :---: | :---: | :---: | :---: |
+| ( 9 ) | ( 25 ) | ( 49 ) | ( 81 ) |
+
+[[insert: 49]] [[notes: A handwritten "49" appears in the margin, likely a correction or emphasis by a previous reader noting the square of 7.]]
+
+Having already determined the numbers to be inscribed upon the 16 circular pieces, it follows that we must also find those that should be written upon the triangles. Beginning, then, with the white ones, we shall take the first two white rounds that stand one above the other—namely, the 2 and the 4 that is born from it—and we shall join them together [[notes: In Rythmomachia, the "minor" or triangular pieces are created through a specific ratio (superparticularis). Here, the author simplifies the rule: the triangle's value is the sum of a base number and its square (n + n²).]], and we shall produce 6, which shall be the first number to be written upon the first white triangle. Similarly, by joining the two second white rounds—that is, the 4 and the 16—the number 20 will be born, which shall be the number for the second white triangle. Likewise, from the joining of the 6 and the 36 (the third white rounds in order), the number 42 will be produced for the third white triangle. Finally, if one joins [[notes: The original Italian *accozzaranno* implies clashing or bringing things together, fitting for a game often called the "Battle of Numbers."]] the 8 and the 64, the last two white rounds, there will come the 72, which should be written upon the fourth white triangle. And thus we shall have found the numbers that go upon
+
+[[gloss: multiplication, odd numbers, black rounds, white rounds, triangles]]
+
+[[summary: This page explains how to assign values to the black circular pieces using the squares of odd numbers and begins the instructions for calculating the values of the triangular pieces by summing the values of the circular pieces.]]
+[[keywords: Rythmomachia, arithmetic, square numbers, triangular pieces, mathematical games, Renaissance pedagogy]]

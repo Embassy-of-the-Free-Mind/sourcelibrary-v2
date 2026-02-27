@@ -1,0 +1,46 @@
+[[meta: This page continues the mathematical exploration of number theory, moving from the geometric construction of squares using gnomons on the previous page to the specific properties and classifications of even numbers: the "even-times-even" (powers of two) and "even-times-odd" (doubles of odd numbers).]]
+
+proportions of others: through the twentieth [proposition] of this book, all others are equal. And since two [[notes: *Binarius*, or the number two]] is the first number after unity: therefore, by the twenty-sixth of the fourth [book], whatever is assigned by that fact as the last, no one shall measure [[notes: In classical arithmetic, "to measure" means to divide evenly without a remainder]] it except some number placed in the preceding order of those equals. Wherefore, since any such number will be even and measured by no odd number except unity: by definition, any of them will be **even-times-even** [[notes: *Pariter par*; in modern terms, these are powers of two ($2^n$), which have no odd factors other than 1]]. That no others besides these are even-times-even is clear. For if another were given: divide it by half, and its half by half, and so on until a number is encountered that can no longer be divided. If this number were odd, since by the twenty-third of the first it will measure the final [original] number, the given number would not be even-times-even, as was supposed. If, however, it were unity: because its double was two, it will belong to the numbers doubled from unity.
+
+30 **¶ If an even-times-even is multiplied by an even-times-even: an even-times-even will be produced.**
+¶ Let **a** and **b** be two even-times-even numbers: let one be multiplied by the other and let **c** result. I say that **c** is an even-times-even number. For if **c** is not even-times-even: then let some odd number, if it is possible, measure it, which let be **d**. Because, therefore, the odd **d** measures the product **c** from two undivided numbers **a** and **b**: therefore, by the fifth of the third, the odd **d** shares a factor with either **a** or **b**. Therefore, whatever number it is will commonly measure **d** and **a** or **b**. Because **d** is posed as odd: by the thirteenth of this book, it will be odd. Therefore, an odd number will measure **a** or **b**, namely an even-times-even number. This is impossible [[notes: Because by definition, powers of two have no odd divisors]]. Therefore, **c** will not be measured by an odd number; and since by the twelfth of this book it is even, by definition it is established that it is even-times-even. Which is what was proposed.
+
+31 **¶ Whatever measures an even-times-even: is itself also even-times-even.**
+¶ Let **a** be even-times-even, which any number **b** measures: I say that **b** is an even-times-even number. For if **b** were an odd number, since it is posed to measure **a**, **a** would not be an even-times-even number. This is against the hypothesis. Therefore, **b** will be an even number; if it were not even-times-even, some odd number would measure it. Wherefore that same odd, by the twenty-third of the first, would measure the even-times-even number **a**. This is impossible. It is manifest, therefore, that no odd measures **b**. Wherefore by definition it is even-times-even.
+
+32 **¶ If any number of even-times-even numbers starting from unity are taken: all of them, along with unity added to them, will produce a number one less than the [next] even-times-even.**
+¶ Let there be unity, and **a**, **b**, **c**, **d**, **e** even-times-even numbers proceeding in order: I say that unity, **a**, **b**, **c**, **d** aggregated together constitute a number one less than **e** [[notes: This is the formula for the sum of a geometric progression: $1 + 2 + 4 + 8 + 16 = 32 - 1$]]. For by the twenty-ninth of this book, each of the following is double the preceding: wherefore the following is as if the preceding were doubled. But **a**, the second from unity, exceeds it by one; wherefore unity and **a** are one less than **b**, which is **a** doubled. Therefore, one less than **b**. Wherefore unity, **a**, and **b** are one less than **b** doubled: therefore [one less] than **c**. Wherefore unity, **a**, **b**, and **c** are one less than **d**. Wherefore again unity, **a**, **b**, **c**, and **d** together are one less than **e**. Which is what was proposed.
+
+33 **¶ Every number whose half is odd: is even-times-odd.**
+¶ Let **a** be an even number, whose half is the odd number **c**, and **b** be two: I say **a** is an even-times-odd number [[notes: *Pariter impar*; numbers of the form $2 \times \text{odd}$, such as 6, 10, 14]]. For because **c** is the half of **a**: therefore the two **b** will measure **a** according to it [c]. I say again that whatever other even number measures **a**, it measures it according to an odd number. And let it be that another even **c** measures it according to **d**: I say **d** is odd. For because that which is made from **d** into **e** is **a**, and that which is from **b** into **c** is likewise **a**: therefore by the twenty-fifth of the second, the proportion of **d** to **b** is the same as **c** to **e**. Therefore, by permutation, the proportion of **d** to **c** is that of **b** to **e**. But since every even number other than two is made by continually adding two, first to two and then to its predecessor: therefore two measures every even number. **b** will therefore measure **c**: wherefore also **d** will measure an odd; it is therefore, by the thirteenth of this book, odd. Therefore, whatever even measures **a**, measures it according to an odd: wherefore by definition **a** is even-times-odd. Which is what was proposed.
+
+34 **¶ If an odd is multiplied by an even-times-odd number: that which results will be even-times-odd.**
+¶ Let **a** be an odd number, and **b** an even-times-odd: and **c** the number produced from **a** into **b**. I say **c** is an even-times-odd number: for let **d** be the half of **c**; and since by the twelfth of this book it is even, and **e** is two. Because **e** into **d** makes **c** and likewise **a** into **b** makes **c**: therefore by the twenty-fifth of the second, the proportion of **e** to **a** is as **b** to **d**. Wherefore by permutation, the proportion of **e** to **b** is as **a** to **d**. But the two **e** is [contained] oddly in **b**, since **b** is even-times-odd. Therefore also the odd **a** is [contained] oddly in **d**. And **a** measures the number **d** according to an odd. Therefore by the eleventh of this book **d** is odd, and **c** by the preceding [proposition]: since its half **d** is odd, it will be even-times-odd. Which is what was proposed.
+
+35 **¶ From even numbers arranged from unity, the third from the first, and the third from that, with one always intervening, all those taken as thirds are even-times-odd only.**
+¶ Let the even numbers be continued from unity: and let them be **a, b, c, d, e, f, g, h, k, l, m**: and so following. I say the third **c**, and the [next] third from it, and **g** again the third from this, and so on, with one always intervening, are even-times-odd. For by the eighteenth of this book, the halves of those evens are numbers arranged from unity in natural order: of which one is even and the other odd, placed alternately. Of the first of the evens, i.e., two, since its half is unity which is potentially odd: it will also be potentially even-times-odd. The second from it will not be even-times-odd: because its half is even. But **c**, the third, and the seventh and ninth, will be even-times-odd by the penultimate of this book, since their halves are odd. Which is the proposal as to this. Nor will any other evens be even-times-odd: because their halves are even, so that even like two will measure them according to an even: wherefore by definition they will not be even-times-odd. Which is the whole proposition.
+
+36 **¶ Of even-times-odd numbers taken continually: the differences are equal.**
+¶ This is because if all evens are taken continually, the difference of all of them will be the same: namely two. Therefore, the parts being taken according to the requirement of the preceding and continually even-times-odd with one intervening: by perception, their differences will be composed from the differences of those same numbers to the middle ones: which since the middle ones are equal, the totals will also be equal by perception. Which is what was proposed.
+
+->[Column Break]<-
+
+[[notes: The following diagrams represent numerical relationships and geometric progressions described in the text.]]
+
+| | II | 22 | |
+|---|---|---|---|
+| m | I I | 22 | m |
+| | I0 | 20 | |
+| | 9 | 18 | |
+| k | 8 | 16 | k |
+| | 7 | 14 | |
+| g | 6 | 12 | f |
+| | 5 | 10 | |
+| e | 4 | 8 | d |
+| | 3 | 6 | |
+| c | 2 | 4 | b |
+| I | 2 | | a |
+
+[[summary: This page defines and proves the properties of "even-times-even" numbers (powers of two) and "even-times-odd" numbers (doubles of odd numbers). It includes proofs regarding their multiplication, divisors, and the constant differences found in their sequences.]]
+
+[[keywords: Arithmetic, powers of two, even-times-even, even-times-odd, number theory, geometric progression, divisors, parity]]

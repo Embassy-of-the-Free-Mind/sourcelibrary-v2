@@ -1,0 +1,16 @@
+[[meta: This page transitions from the calculation of round pieces (representing "multiple" proportions) to the triangular pieces, which represent "superparticular" proportions. It explains the mathematical definition of these ratios and the method for deriving the new set of base numbers for the triangles by adding the values of the previous round pieces.]]
+
+RYTHMOMACHIA, THE GAME
+
+Now you have all the numbers and distinct proportions belonging to the multiple proportion designated by the first 16 round pieces [[notes: The original "tables" refers to the game pieces, often called "men" or "counters" in period games like backgammon.]]: it remains for us to come to the particulars.
+
+### Of the Superparticulars.
+
+A superparticular proportion is when one number contains another number once, and additionally one of its parts [[notes: In Renaissance arithmetic, a "superparticular" ratio (n+1)/n occurs when the larger number contains the smaller number plus one-half, one-third, etc. For example, 3:2 or 4:3.]]: just as a *liard* contains a *double* once and one of those two parts, which is a *tournois* [[notes: These refer to old French coins. A *liard* was worth 3 *deniers*, a *double* was 2 *deniers*, and a *denier tournois* was 1. Thus, 3 contains 2 once, plus 1 (which is half of 2).]]. And for this superparticular proportion, the figure of the triangle will be very suitable, which (after the round) holds the first place [[notes: In the hierarchy of shapes used in the game, rounds are the simplest, followed by triangles, then squares.]]. After, therefore, having separated the triangles of one color from the other: you will find the eight numbers suitable to mark the first eight pieces in this superparticular proportion, and you shall do this by the addition of the two numbers contained in each of the aforementioned preceding multiple proportions, observing and applying the pieces to each other of the same livery and color. And since these eight pieces desire eight others, in order to complete the superparticular proportion with them, they shall be called "requirers" [[notes: These are the base numbers from which the opponent's pieces must be calculated to form a valid ratio.]].
+
+<meta>catchword: Exam-</meta> [[notes: This is a "catchword," a printer's tool where the first syllable of the next page is printed at the bottom of the current one to ensure correct binding.]]
+
+<vocab>Rythmomachia, multiple proportion, superparticular proportion, triangle, liard, double, tournois, requirers</vocab>
+
+[[summary: This page introduces the triangular game pieces and the "superparticular" ratio. It explains that these new base numbers are created by adding together the pairs of numbers found on the previous round pieces.]]
+[[keywords: Rythmomachia, superparticular ratio, mathematics, game pieces, triangles, French currency, proportion]]

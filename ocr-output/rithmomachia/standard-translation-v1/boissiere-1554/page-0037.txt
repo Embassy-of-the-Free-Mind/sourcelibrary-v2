@@ -1,0 +1,31 @@
+[[meta: This page continues the mathematical explanation of the "superpartient" ratios, focusing on the square game pieces. It provides the final setup for the Rithmomachia board, following the previous discussion of triangular pieces and their ratios.]]
+
+->## THE PHILOSOPHERS' GAME.<-
+
+...**superpartients** [[notes: This term refers to a ratio where the larger number contains the smaller number plus several fractional parts of it—for example, 5:3, which is 1 plus 2/3. This completes the sentence from the previous page.]], in even numbers, which are: **super-bipartient thirds**, **super-quadripartient fifths**, **super-sextupartient sevenths**, and **super-octopartient ninths** [[notes: These are complex ratios used to determine the values of the square pieces. "Super-bipartient thirds" means a value of $1 + 2/3$. Thus, the ratio of 25 to 15 is super-bipartient because 25 contains 15 once, plus 10 (which is two-thirds of 15).]]. 
+
+The first value, therefore, which is 15, requires another number which, together with it, completes the **super-bipartient thirds** proportion: specifically, a number that contains 15 plus two-thirds of its value. Now, one-third of 15 is 5. Therefore, the number containing 15 and two of its thirds (10) will be 25 [[notes: Calculation: $15 + (5 \times 2) = 25$.]]. You shall place this piece behind the 15; and follow the same logic for the others. 
+
+Note that the **Pyramid** [[notes: The Pyramid is the most powerful and complex piece in Rithmomachia. It is "built" from several other pieces and represents multiple mathematical proportions simultaneously.]] will be counted as one of the **square tables** [[notes: In this context, "tables" refers to the game pieces themselves, derived from the Latin *tabula*. In Rithmomachia, circles represent simple multiples, triangles represent "superparticular" ratios ($1 + 1/n$), and squares represent the complex "superpartient" ratios described here.]]. If these calculations seem difficult, refer to the arrangement in the following diagrams.
+
+### Instructional arrangement to more surely locate and order the pieces in their true places.
+
+| | | | | | | | | | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+| 49 | 28 | 16 | 12 | 9 | 3 | | | | | 8 | 64 | 72 | 81 | 153 | 289 |
+| 121 | 66 | 36 | 30 | 25 | 5 | | | | | 6 | 36 | 42 | 49 | **Pyramid** | 169 |
+| 225 | 120 | 64 | 56 | 49 | 7 | | | | | 4 | 16 | 20 | 25 | 45 | 81 |
+| 361 | **Pyramid** | 100 | 90 | 81 | 9 | | | | | 2 | 4 | 6 | 9 | 15 | 25 |
+| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |
+
+[[notes: This table represents the 8x16 grid of the game board. The pieces are clustered in the center of each side, separated by four empty columns. The left side (Black/Dark) and the right side (White/Light) face each other. Each column represents a different mathematical progression: circles (inner), triangles (middle), and squares (outer).]]
+
+<sig>C</sig>
+
+[[vocab: superpartientes: ratios of 1 + (x/y); super-bipartient thirds: 1 + 2/3 ratio; super-quadripartient fifths: 1 + 4/5 ratio; super-sextupartient sevenths: 1 + 6/7 ratio; super-octopartient ninths: 1 + 8/9 ratio; Pyramid: the most complex game piece; square tables: the square-shaped game pieces; places: the specific coordinates on the 8x16 board]]
+
+[[summary: This page explains the mathematical ratios used to calculate the values of the square game pieces in Rithmomachia and provides a diagram of the starting board state. It highlights the "Pyramid" as a special square piece and demonstrates the "superpartient" ratio using the example of 15 and 25.]]
+[[keywords: Rithmomachia, Philosophers' Game, arithmetic proportions, superpartient, Pyramid piece, game board layout, Boethian mathematics, mathematical games]]

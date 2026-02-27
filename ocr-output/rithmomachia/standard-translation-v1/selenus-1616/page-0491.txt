@@ -1,0 +1,22 @@
+[[meta: This page continues the mathematical derivation of the game pieces for Rythmomachia, the "Battle of Numbers." The previous page established the values for the black triangular pieces (12, 30, 56, and 90) by adding a base number to its square. This page completes the black triangles and moves on to the white square pieces.]]
+
+# Of the Battle of Numbers.
+
+When one now unites the numbers of the four **black triangular stones** just described with the numbers of the first **white round stones** (provided that the 2 is omitted and the 10, which follows the 8 in the order of even numbers, is placed at the end): or if one multiplies each of these four even numbers [[notes: "Even numbers" refers here to the sequence 4, 6, 8, and 10.]] by itself: (whereby the first three black triangular stones have the same numbers as the last three white round stones) then the sums of these reveal the numbers of the four remaining black triangular stones: namely **16**, which is 4 and 12, or four times 4; **36**, which is 6 and 30, or six times 6; **64**, which is 8 and 56, or eight mahl 8; and **100**, which is 10 and 90, or ten mahl 10. [[notes: The author is explaining how to arrive at the values for the larger black triangles. For example, 4 (a white round stone) + 12 ( a black triangular stone) = 16 (the next black triangle). This also happens to be the square of 4.]]
+
+(Buxer : fol : 9. a.) [[notes: "Buxer" refers to Augustus the Younger, Duke of Brunswick-Lüneburg, who wrote a famous treatise on Rythmomachia and Chess under the pseudonym Gustavus Selenus.]]
+
+->*We call a superparticular proportion one in which the larger number contains the smaller number once, plus one part of it that measures the whole: as 3 contains 2 once, plus a unit. But since the superparticular ratio, according to the Multiple, holds the primary place, it has been judged more suitable for us in describing the Triangle, which stands in the second rank from the Circle.*<- [[notes: This Latin passage defines a "superparticular ratio" (n+1 : n), a core concept in Pythagorean arithmetic used to determine the relationships between the pieces.]]
+
+[[image-desc: A series of twelve geometric shapes arranged in three rows of four.
+Row 1: Triangles with the numbers 6, 20, 42, and 72.
+Row 2: Triangles with the numbers 9, 25, 49, and 81.
+Row 3: Squares with decorative borders on the left and top edges, containing the numbers 15, 45, 91, and 153.]]
+
+The first four **white square stones** are described using the sums that result from adding the numbers of the eight **white triangular stones** together: namely with **15**, which is 6 and 9; with **45**, which is 20 and 25; with **91**, which is 42 and 49; and with **153**, which is 72 and 81. [[notes: Squares in this game are formed by the union of two triangles. Here, the values of the white squares (15, 45, 91, 153) are created by pairing the triangles shown in the illustration above them (e.g., 6 + 9 = 15).]]
+
+[[meta: catchword: The]]
+
+[[summary: This page explains the mathematical calculation for the remaining black triangular pieces (16, 36, 64, 100) and the first four white square pieces (15, 45, 91, 153). It relies on the relationships between squares, circles, and triangles to determine piece values in Rythmomachia.]]
+
+[[keywords: Rythmomachia, Arithmetic, Superparticular ratio, Black Triangles, White Squares, Duke Augustus of Brunswick-Lüneburg, Buxer, Mathematical Games]]

@@ -1,0 +1,26 @@
+[[meta: This page continues the tactical variations discussed in the previous chapter regarding the Black Queen's defense of the King's Pawn. The coordinate system uses a 1–64 grid, where 1 is typically the square a1 (White's bottom-left) and 64 is h8 (Black's top-right). The text remains focused on specific sequences of moves to either capture the Queen or gain a material advantage.]]
+
+->### On the Game of Chess.<-
+
+[[margin: 6. cap: [[note: Chapter 6.]]]]
+...from thirty [[note: Square c4]] / particularly / (in order / to exchange / both sides’ Bishops / and his game / therefore / well to arrange) to forty-four [[note: Square d6]] / move: For he otherwise / if he moved the same / to 33 [[note: Square a5]] / would lose / either the same [Bishop] / or / the Queen / (as is to be seen / from the following moves): For / if upon this move / the White player / moves the **K. Knight’s Soldier** [[note: The Pawn in front of the King’s Knight]] / again / toward his **K. Bishop** / upon
+
+[[margin: 3.]] twenty-six [[note: Square b4]]: and * He [[note: The Black player]] / moves the same / to forty-two [[note: Square b6]]: The White player / moves the **K. Knight’s Soldier** / further / toward his Queen / upon thirty-four [[note: Square b5]]: He / moves the same [[note: the Queen]] / to twenty-seven [[note: Square c4]]: The White player / the **K. Knight** / (in order / for their Bishop / to open the pass / or the *firing-hole* [[note: *Schieß-loch*; a military metaphor for the diagonal path of the Bishop, which "shoots" across the board]] / upon the same) to twenty-three [[note: Square g3]] / or seven [[note: Square g1]]: and can thus / bring his Queen / unhindered / into his power.
+
+[[margin: 4.]] If, however, the Black player / does not move the Bishop / to 42. (as in no. 3) / but rather / takes with the same / (because He is intent / to choose the lesser of two evils) / the **W. K. Knight’s Soldier**: then the White player / takes him / with / the **K. Rook’s**
+
+[[margin: 5.]] **Soldier**: * The Black player / moves / the Queen / toward the same / to forty-two [[note: Square b6]]: The White player / (in order to relieve him) / moves the **K. Knight** / to nine [[note: Square a2]]: following this / the **K. Knight** / to nineteen [[note: Square c3]]: thus entrenching [[note: *verschantzet*; another military term for fortifying a position]] / in turn / the King’s quarter / and is superior to the Black player / by one Bishop.
+
+[[margin: 6.]] If, however, the Black player / moves the Queen / to the **W. Soldier** / not to 42. (no. 5) / but rather / to twenty-seven [[note: Square c4]]: then / the White player / (in order to rescue the same) / moves the **K. Knight** / to nine [[note: Square a2]]:
+
+[[margin: 7.]] * The Black player / moves further upon the same / the **K. Knight** / to forty-one [[note: Square a6]]: The White player / the **K. Knight** / to nineteen [[note: Square c3]] / and opens for the Bishop / the road / toward the **B. Queen**: The Black player / must / place Her / upon forty-three [[note: Square c6]]: The White player / moves upon her / and the **B. K. Knight** / the **K. Rook’s Soldier** / to thirty-four [[note: Square b5]]: The Black player / moves the same / to forty-two [[note: Square b6]]: The White player / the **K. Knight** to twenty-five [[note: Square a4]]: and attains the **B. Queen** / by force.
+
+[[margin: 8.]] If, however, the Black player / does not place the Knight / upon 41. (no. 7) / but rather / the Queen / upon forty-three [[note: Square c6]]: then / the White player / moves the **K. Knight** / to nineteen [[note: Square c3]]: The Black player / the **K. Knight’s Soldier** / (in order / to give the Queen air [[note: i.e., to create an escape square]]) / to forty-two [[note: Square b6]]: The
+
+[[margin: 9.]] White player / the **K. Knight** / to thirty-four [[note: Square b5]]: * The Black player / the Queen / to fifty [[note: Square b7]]: The White player / takes / with the **K. Knight** / the **B.**
+
+[[meta: catchword: K. Schü (abbreviation for King's Bishop)]]
+
+[[summary: This page details various tactical branches in a chess opening where White seeks to trap or win the Black Queen. It utilizes military terminology such as "firing-holes" and "entrenching" to describe piece movements and defensive structures.]]
+
+[[keywords: Chess tactics, Queen capture, 1-64 coordinate system, King’s Knight, King’s Bishop, 17th-century chess, piece exchange]]

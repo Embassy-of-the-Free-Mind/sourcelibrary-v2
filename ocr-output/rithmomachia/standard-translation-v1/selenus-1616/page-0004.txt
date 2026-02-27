@@ -1,0 +1,28 @@
+[[meta: This page is the reverse (verso) of the title page. The text here is a mirrored "bleed-through" where the heavy ink from the front side has soaked through the paper over centuries. The page features a striking architectural border and an illustration of figures playing games, which provides visual context for the manual's contents.]]
+
+->The<-
+->Chess- or<-
+->King-Game<-
+[[notes: "König-Spiel" is a literal translation of the Persian word *Shah* (King), which is the root of the word "Chess." In the 17th century, it was common to emphasize the "royal" nature of the game.]]
+
+->from<-
+
+->**GUSTAVUS SELENUS**<-
+[[notes: This is the pseudonym of Duke Augustus the Younger of Brunswick-Lüneburg. The name is an elaborate wordplay: "Gustavus" is an anagram of "Augustus," and "Selenus" refers to the Greek moon goddess Selene, a nod to his residence in Lüneburg (Luna-burg or "Moon-city").]]
+
+->In four distinct books<-
+->with special diligence<-
+
+[...]
+
+->**RYTHMO-MACHIA**<-
+[[notes: Also known as the "Philosopher's Game," Rythmomachia was a complex medieval and Renaissance board game that combined the strategy of chess with the principles of Pythagorean number theory. It was intended to teach mathematical ratios and proportions.]]
+
+[...]
+
+->LEIPZIG<-
+[[notes: Recorded in the text as "LIPSIAE," the Latin name for Leipzig, which was one of the most important centers for the book trade and printing in Europe during this period.]]
+
+[[summary: This page shows the mirrored bleed-through of the main title page text, framed by an ornate Baroque engraving. The illustration at the bottom depicts a social scene of men engaged in the very games—Chess and Rythmomachia—that the book describes.]]
+
+[[keywords: Chess, King-Game, Gustavus Selenus, Augustus the Younger, Rythmomachia, Leipzig, 17th-century printing, bleed-through]]

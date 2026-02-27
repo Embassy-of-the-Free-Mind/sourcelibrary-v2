@@ -1,0 +1,9 @@
+[[meta: This page is blank. As noted on the previous page, the text regarding the Pythagorean game of Rithmomachia ended abruptly with the incomplete word "gam...", suggesting a physical break or a lost leaf in the original manuscript's sequence.]]
+
+-> [This page is blank] <-
+
+[[notes: In historical bookmaking (codicology), blank pages often signal the end of a "quire"—a gathering of folded sheets of paper or parchment. However, because the text on the preceding page was cut off mid-word, this specific blank space likely indicates a missing portion of the original text or an interruption in the copying process. Such gaps are significant to historians as they help track the physical history and survival of the volume over the centuries.]]
+
+[[summary: This page contains no text in the original source. It follows an unfinished sentence regarding mathematical games and serves as a physical transition or a gap in the surviving manuscript.]]
+
+[[keywords: blank page, codicology, manuscript transition, Rithmomachia, missing text]]

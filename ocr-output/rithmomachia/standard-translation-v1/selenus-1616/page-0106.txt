@@ -1,0 +1,20 @@
+[[meta: This page continues the description of the Judges (Bishops), detailing their movements on the chessboard and how these moves allegorically represent their duties toward various social classes, such as farmers, doctors, and merchants.]]
+
+### The First Book / Chapter 8
+[[meta: catchword: undertake]]
+
+-> the one who goes to the right side, he places himself upon the black and empty field before the **Farmer** [[notes: *Ackerman*—The pawn representing the laborers]]: this is fitting, for the **Judge** protects the workers and their possessed goods with the law. And when he goes to the left side, he goes upon the black empty field before the **Physician**, which is fitting: for by virtue of their art [[notes: *kunſt*—referring to their specialized professional knowledge]], the Judges and the Physicians are kindred, although they differ in their offices; for the Physician shall have the love to restore health, while the Judge shall have the love for the unity of peace.
+
+The one on the left hand, who is on the white [square], has two exits from his own place: one to the right hand, onto the white field before the **Merchant**, because merchants often need counsel, and their disputes [[notes: *krieg*—here meaning legal conflicts or "wars of words" rather than armed combat]] are ended and settled by a Judge. The other move is to the left hand, onto the white and empty field of the **Rogue** and the **Gambler**; for as they often commit strife and theft, they shall be fined and punished by the Judges.
+
+It is to be known that the Elders [[notes: *die Alten*—a reference to the Bishop piece, which was known in medieval chess as the *Alfin* or "Elder"]] always move from the third square or field onto the third field [[notes: In medieval chess, the Bishop (Alfin) moved exactly two squares diagonally, leaping over the intermediate square]], always to keep their own place in this manner: if he is on black, he shall always go on black; if he is on white, he shall go on white, and always diagonally [[notes: *iber eck*—literally "over the corner"]]. This signifies the certainty that the Judges should always have in their proceedings; for the three fields signify three things that the Judge should observe:
+
+1. He shall look upon the matter rightly.
+2. He shall give just speech.
+3. And he shall judge the matter according to how it has been presented, according to the law, never departing from justice.
+
+It is to be known that the one on the right hand, where the black square is, and his own field where he stands by the **King**: when he goes to the right hand and further, then when he goes to the left hand, and thereafter when he goes again to the right and the left—in six positions [[notes: *stemung*—likely referring to a sequence of moves]], he completes a true circle across the entire board and then returns to the place where he stood before. So too goes the one on the left hand who is on white, as is evident to anyone who looks at it. This signifies that as all perfection should be in the Realm, it should foremost reside in those who shall give counsel to the King and the **Queen**; for the King shall undertake [[notes: catchword: *angreif-*]] no great or doubtful matter—
+
+[[summary: This page explains the movement of the Bishop (Judge/Elder) in medieval chess, linking its diagonal leap to the Judge's responsibility to protect different social classes and maintain legal consistency.]]
+
+[[keywords: Chess history, Bishop movement, Alfin, Judges, Legal allegory, Medieval social orders, Justice]]

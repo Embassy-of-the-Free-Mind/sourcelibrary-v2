@@ -1,0 +1,19 @@
+[[meta: This page continues the technical description of Courier Chess pieces and their specific movement rules as practiced in the village of Ströbeck, following the setup described on page 427.]]
+
+### The Fourth Book / Chapter 9
+
+The **Couriers** (which are the best pieces, and from which this game derives its name) move like the **Archers** or the **"Old Ones"** [[notes: These are the precursors to the modern Bishop, which in this variant had different leaping or sliding rules]] toward the corners on the same color, as far or as near as they can go unhindered: one, two, three, or more squares. However, they do not jump over other pieces; rather, like the **Rooks** (of which mention was made above in Chapter 8 of the First Book), they are moved right up to the edges of the board.
+
+-> <image-desc>A framed woodcut illustration of a chess piece known as "The Man" (Der Man). The piece is depicted as a bust of a bearded man wearing a round, turban-like hat and a high-collared garment. The bust rests upon a decorative, turned pedestal base similar to a chalice stem. Below the figure, within the frame, is the German caption "Der Man."</image-desc> <-
+
+The **Secret Counselors** (whom those in **Ströbeck** [[notes: *Ströpeke* refers to Ströbeck, a German village famous for its unique chess traditions since the 11th century]] call the **"Men"**) are moved just like the **"Old Ones"** and **Rooks**—obliquely and crosswise, forward or backward, and to the sides—but only one square per move. Thus, when they are positioned on their square and cross-line, they can protect eight squares at once. [[notes: This piece moves exactly like a modern King, though it is not the piece that must be checkmated.]]
+
+The **Kings** have a movement identical to these: (suggesting that Lords should follow good counsel in reasonable matters and establish their rule according to such faithful deliberations), for they do not jump, but are only moved into the next square.
+
+The **Queens** [[notes: In Courier Chess, the Queen—or *Fers*—was a much weaker piece than in modern chess]] leap on their first move into their third square. After this completed move or leap (which they call the **"Joy-Leap"**), they subsequently have the movement of the **Courier**, but are moved only one square forward or backward at a time. Thus, the White Queen always remains on the white squares, and the Black Queen on the black squares. [[notes: This confirms the Queen moves only one square diagonally at a time, which is why she is color-bound.]]
+
+[[meta: Catchword: Die]]
+
+[[summary: This page details the movements of the Courier, the Secret Counselor (the "Man"), the King, and the Queen in the Ströbeck variant of Courier Chess, highlighting the Queen's special "Joy-Leap" opening move.]]
+
+[[keywords: Courier Chess, Ströbeck, Chess history, Piece movements, The Man, Secret Counselor, Joy-Leap, Königinne, Currierer]]

@@ -1,0 +1,62 @@
+[[meta: This page shifts the focus from the Chromatic genus discussed on the previous page to the Enharmonic genus. While the Chromatic uses semitones, the Enharmonic genus is characterized by even smaller intervals called dieses—essentially quarter-tones—and large leaps of a ditone (a major third). The author continues to use the fifteen-string system, or pentadecachord, as the framework for these mathematical divisions.]]
+
+AD
+15
+
+## ¶ To establish the Enharmonic Pentadecachord.
+
+| | | | | |
+|:---|:---:|:---|:---|:---:|
+| Proslambanomenos [[notes: The lowest note of the scale, literally "the added note"]] | a | | a | |
+| Hypate hypaton | b | Tone | b | |
+| Parhypate hypaton | c | diesis | | c | |
+| Lichanos hypaton | d | diesis | | d | |
+| Hypate meson | e | ditonus [[notes: A major third, literally "two tones"]] | | e | |
+| Parhypate meson | f | diesis | | f | |
+| Lichanos meson | g | diesis | | g | |
+| Mese | h | ditonus | | h | |
+| Paramese diezeugmenon | lz | tonus | Trite syn. diesis | lz |
+| Trite diezeugmenon | l | diesis | Paranete syn. diesis | l |
+| Paranete diezeugmenon | m | diesis | Nete syn. ditonus | m |
+| Nete diezeugmenon | n | ditonus | | n | |
+| Trite hyperboleon | o | diesis | | o | |
+| Paranete hyperboleon | p | diesis | | p | |
+| Nete hyperboleon | q | ditonus | | q | |
+
+---
+
+The composition of this is very easy. For, as in the others preceding, I make the interval from **a** to **b** the distance of a tone, and from **a** to **e** a **diapente** [[notes: a perfect fifth]]. And I make the distance from **b** to **d** a minor semitone. I then divide the string **c** in the middle of the difference between **b** and **d**; therefore, there will be a **diesis** of a quarter-measure and four-part division equally from **b** to **c**, and likewise from **c** to **d** a **diesis**. 
+
+However, according to the fourth [chapter] of the second [book] of this work, this [diesis] is wider, while the other is more contracted; nor, by the thirty-second [chapter] of the same, can a minor semitone be divided into two equal parts by a certain and established number [[notes: A reference to the Pythagorean mathematical proof that a tone or semitone cannot be divided into two perfectly equal ratios using whole numbers]]. And from **a** to **e** is a **diapente**; therefore, when the tone of **a** to **b** is subtracted, what remains is the **diatessaron** [[notes: a perfect fourth]] from **b** to **e**. And since a **diatessaron** encompasses a minor semitone and two tones, and since **b** to **d** is a minor semitone, it follows that what remains from **d** to **e** is a **ditonus**. 
+
+Therefore, **b c d e** will be the *hypates hypaton*, *parhypates hypaton*, *lichanos hypaton*, and *hypates meson* tetrachord: proceeding through **b** to **c**, then to **d**, and then the **d** to **e** ditone; this is divided by definition into the Enharmonic genus. Similarly, you may establish the **e f g h** *meson* tetrachord by making **a** to **h** a **diapason** [[notes: an octave]], and **e** to **g** a minor semitone, and partitioning the middle difference through **f** so that **e** to **f** and **f** to **g** are two dieses. 
+
+For when the **diapente** consonance of **a** to **e** is subtracted from the **diapason** consonance of **a** to **h**, the remaining distance **e** to **h** is a **diatessaron**. And since **e** to **g** is a minor semitone, it follows that **g** to **h** will be a **ditonus**. And since **e** to **f** and **f** to **g** are two dieses and **g** to **h** a **ditonus**, this partition of the tetrachord is seen to be made in the Enharmonic genus. 
+
+And having made the **h** (*mese*) a **diapente** to the *nete diezeugmenon* and a **diapason** to the *nete hyperboleon*, and the string *mese* being separated by a tone from the *paramese* of the disjunct tetrachord—just as the *proslambanomenos* is from the *hypate hypaton*—you will partition the disjunct tetrachord **lz l m n** just like the *hypaton* tetrachord **b c d e**, and the **n o p q** *hyperboleon* (the highest) tetrachord like the *meson* tetrachord **e f g h**. Furthermore, you will partition the **h lz l m** conjunct tetrachord [[notes: the *synemmenon*]] like the *meson* tetrachord, and that too is easily done.
+
+16
+
+## ¶ To collect the numbers of the Enharmonic Pentadecachord.
+
+| | | | | | |
+|:---|:---:|:---:|:---|:---:|:---|
+| Proslambanomenos | a | 13824 | | 13824 | |
+| Hypate hypaton | b | 12288 | Tone | 12288 | Tone |
+| Parhypate hypaton | c | 11664 | Minor Semitone | 11976 | Diesis |
+| Lichanos hypaton | d | 10368 | Tone | 11664 | diesis |
+| Hypate meson | e | 9216 | Tone | 9216 | ditonus |
+| Parhypate meson | f | 8748 | Minor Semitone | 8982 | diesis |
+| Lichanos meson | g | 7776 | Tone | 8748 | diesis |
+| Mese | h | 6912 | Tone | 6912 | ditonus |
+| Paramese diezeugmenon | lz | 6144 | Tone | 6144 | Tone |
+| Trite diezeugmenon | l | 5832 | Minor Semitone | 5988 | diesis |
+| Paranete diezeugmenon | m | 5184 | Tone | 5832 | diesis |
+| Nete diezeugmenon | n | 4608 | Tone | 4608 | ditonus |
+| Trite hyperboleon | o | 4374 | Minor Semitone | 4491 | diesis |
+| Paranete hyperboleon | p | 3888 | Tone | 4374 | diesis |
+| Nete hyperboleon | q | 3456 | Tone | 3456 | ditonus |
+
+[[summary: This page explains the geometric and mathematical construction of the Enharmonic scale, which uses quarter-tone intervals (dieses) and major thirds (ditones). The author provides both the logical derivation of these intervals within the tetrachord system and a table of specific numerical values for a 15-string monochord.]]
+
+[[keywords: Enharmonic genus, Pentadecachord, Tetrachord, Diesis, Ditonus, Diapason, Diatessaron, Musical mathematics, Monochord division]]

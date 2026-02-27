@@ -1,0 +1,63 @@
+[[meta: This page is the Errata section, a standard feature in early modern printing where the author or printer lists corrections for mistakes discovered after the pages were set in type. It follows the philosophical conclusion of the treatise on Rythmomachia.]]
+
+<image-desc>A decorative horizontal border consisting of repeating, intricate symmetrical scrollwork and floral motifs.</image-desc>
+
+# The sequence, to be inserted or read as follows:
+
+| Page. | Line. | | Page: | Line: | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 5. | 5. | § The Game [[notes: Latin *Ludus*]]. | 229. | 14. | still [[notes: German *noch*]]. |
+| 10. | 28. | and of the competitor. | 231. | 25. | upon [[notes: German *auf*]]. |
+| 16. | 16. | <insert><s>placed, the other.</s></insert> [[notes: This and the following entry are Italian phrases struck through in the original manuscript.]] | 233. | 7. | [[notes: Entries for pages 233 and 234 are grouped together.]] |
+| 16. | 38. | <insert><s>your Falcon,</s></insert> | 234. | 24. | sees the King [[notes: Likely referring to a "check" in chess]]. |
+| 18. | 32. | noticed. | 234. | 5. | |
+| 25. | 17. | Benincasius [[notes: Likely a reference to the Italian mathematician or a specific authority cited in the text]]. | 247. | 13. | [[notes: Entries for p. 247 are grouped together.]] |
+| 28. | 25. | from the. | 247. | 19. | are. |
+| 34. | 9. | the same. | | | Queen. |
+| 44. | 16. | had [[notes: Italian *chavuto*, an archaic form of *avuto*]]. | 256. | 1. | on the right. |
+| 48. | 13. | *pebble* [[notes: Greek *ψῆφον* (psephon), referring to a game piece or counter]]. | 256. | 10. | of his K. [[notes: Abbreviation for King]]. |
+| 51. | 11. | the. | 256. | 15. | and the White. |
+| 53. | 13. | are [[notes: Archaic German *seynd*]]. | 262. | 29. | at fourteen. |
+| 73. | 3. | upon the White's. | 266. | 36. | the fourteenth. |
+| 85. | 16. | the Regents [[notes: A specific high-ranking piece in Rythmomachia]]. | 269. | 24. | and both of them. |
+| 89. | 28. | are. | 277. | 32. | n. 6. in F. |
+| 96. | 32. | when the. | 306. | 3. | takes / at W. K. [[notes: White King]]. |
+| 98. | 1. | not. | 311. | 2. | forty / moves. |
+| 98. | 12. | of geomancy [[notes: *Gromantrey* likely refers to geomancy, a method of divination that was often grouped with mathematical games in the Renaissance]]. | 314. | 16. | fifty-one. |
+| 101. | 16. | you wish. | 318. | 25. | deafens / stuns [[notes: German *taubet*]]. |
+| 106. | 18. | the left. | 331. | 29. | [[notes: Entries for p. 331 and 334 are grouped together.]] |
+| 119. | 17. | [[notes: Entries for p. 119, 124, and 128 are grouped together.]] | 334. | 36. | of the B. K. [[notes: Black King]]. |
+| 124. | 31. | are. | | | at sixty-two. |
+| 128. | 28. | | 362. | 5. | Soldier [[notes: The most basic piece in Rythmomachia]]. |
+| 135. | 29. | quick. | 365. | 30. | the same. |
+| 142. | 19. | that He [gave] him equal. | 414. | 29. | set / place. |
+| 154. | 41. | a vise [[notes: *Schrupstoch* is likely an archaic variant of *Schraubstock*, perhaps used here as a metaphor for a "bind" or "trap" in the game]]. | 415. | 1. | [[notes: Entries for p. 415 are grouped together.]] |
+| 155. | 23. | are. | 415. | 27. | of the Black / sees. |
+| 157. | 6. | forty-one. | | | the White. |
+| 168. | 26. | in the. | 422. | 36. | from. |
+| 171. | 8. | has desire. | 429. | 12. | [you] draw/move. |
+| 188. | 16. | White, gives. | 446. | 8. | Faber [[notes: Referring to Jacques Lefèvre d’Étaples, mentioned on the previous page]]. |
+| 209. | 20. | at thirty-five. | 456. | 4. | black. |
+| 210. | 4. | the same. | 461. | 6. | Sum. |
+| 213. | 20. | the White. | 464. | 34. | Stones / with [[notes: "Stones" refers to the game pieces]]. |
+| 214. | 27. | are. | 476. | 16. | the same. |
+| 221. | 9. | at 2 or 4. | 486. | 7. | 3. or 6. |
+| | | | 490. | 2. | to be respected [[notes: Latin *suspiciendus*]]. |
+| | | | 491. | 36. | to give [[notes: Latin *donere*, likely a misspelling of *donare* corrected here]]. |
+
+---
+
+Other minor errors, regarding punctuation, or one or two parenthesis marks, sometimes omitted, the reader himself will easily correct, and forgive the hurried printer [[notes: *Typographo*]].
+
+<image-desc>A circular woodcut emblem depicting a heraldic crest with an eagle or similar bird of prey.</image-desc>
+
+<insert>
+Bavarian
+State
+Library
+MUNICH
+</insert>
+
+[[summary: This page serves as a formal errata list for the book, providing a table of corrections for specific words, page numbers, and lines. It highlights the collaborative but often rushed nature of early modern printing, where authors had to provide a final list of fixes for the reader's attention.]]
+
+[[keywords: Errata, corrections, printing history, Rythmomachia, Chess, technical terminology, Bavarian State Library]]

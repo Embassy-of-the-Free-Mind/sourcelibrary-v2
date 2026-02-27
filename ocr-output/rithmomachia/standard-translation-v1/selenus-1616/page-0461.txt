@@ -1,0 +1,26 @@
+[[meta: This page continues the detailed description of Courier Chess as played in Ströbeck, specifically focusing on the starting positions and the unique movements of the pieces on the 12x8 board described on the previous page.]]
+
+### Chapter 9: On the Game of Chess.
+
+...upon which the aforementioned pieces—as in the previous game—are placed, distinguished by their color.
+
+The **Kings** and **Queens** also stand in the middle of the board: the **White King** on a black square—the **Black King** on a white square—the **White Queen** on a white square—and the **Black Queen** on a black square.
+
+To the **Kings** (to whom the government is commanded, and upon which they must direct all their thoughts), the **Secret Counselors** [[notes: In Courier Chess, this piece is known as the *Mann* or Sage]] are assigned. To the **Queens** (who, being somewhat more at leisure, should nevertheless gladden their Lords and delight them with pastimes), the **Joyful Counselors** [[notes: This piece is known as the *Schleich* or Sneak/Jester]] are assigned on the next square at their side.
+
+Between these Counselors and the **Archers** (whom the ancients call the **"Old Ones"**), the **Couriers** are placed.
+
+In front of these twelve aforementioned **Main Pieces**, they arrange the twelve **Soldiers** or **Pawns** [[notes: The text uses *Fenden*, an archaic term for foot soldiers or pawns]] on the next horizontal line.
+
+Regarding their movement: the **Rooks** [[notes: *Rochen*]] and **Knights** [[notes: *Reuter*, literally "Riders"]] move just as was indicated in the 7th and 9th chapters of the First Book, and they are considered, alongside the **Couriers**, to be the best pieces.
+
+The **"Old Ones"** or **Archers** jump to the third square [[notes: This is a leaping move, similar to the Knight, but landing two squares away diagonally]], regardless of whether a piece—be it one of their own or an empty square—lies between the square where they stand and the third square into which they jump. They move according to the points or corners of the squares [[notes: Diagonally]] and capture the opponent's pieces from those squares if any happen to be there. They also give **Check** [[notes: *Schach*]] into a third square (even if a piece from their own or the opponent's side stands between them and the King). However, they may not move any further or any closer than that.
+
+->Ein Currierer.<-
+[[notes: The illustration depicts a "Courier," the namesake piece of this chess variant. He is shown as a mounted messenger blowing a trumpet, symbolizing speed. In the game, the Courier was the most powerful piece, moving any distance diagonally, much like the modern Bishop, which was a significant advantage over the limited "Archers" described above.]]
+
+[[vocab: Chess-Game, Kings, Queens, Secret Counselors, Joyful Counselors, Couriers, Archers, The Old Ones, Soldiers, Pawns, Rooks, Knights]]
+
+[[summary: This page describes the starting positions and unique movement rules for Courier Chess, specifically the leaping move of the "Archers" and the roles of the "Secret" and "Joyful" Counselors. It highlights the Courier as one of the most powerful pieces on the expanded board.]]
+
+[[keywords: Courier Chess, Ströbeck, chess history, board game rules, Secret Counselor, Joyful Counselor, Archers, chess pieces]]

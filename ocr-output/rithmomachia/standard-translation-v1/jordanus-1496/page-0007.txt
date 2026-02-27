@@ -1,0 +1,51 @@
+[[meta: This page marks the formal beginning of the mathematical treatise, transitioning from the introductory dedication and summary provided on the previous pages to the core definitions, axioms, and postulates of Book I of Jordanus de Nemore’s Arithmetic.]]
+
+# ¶ The Elements of Arithmetic by the most distinguished man, Jordanus de Nemore [[notes: Historically known as Jordanus Nemorarius (fl. 13th century), he was one of the most important mathematicians of the Middle Ages. This edition features the commentary of the humanist Jacques Lefèvre d’Étaples.]]: with the demonstrations of Jacques Lefèvre d’Étaples: dedicated to Jean de Ganay, Senator of Paris.
+
+[[margin: v]]
+**Unity** is the distinction of a thing by itself. **Number** is a collective quantity of distinct things. The **natural sequence of numbers** is said to be that in which their counting proceeds by the addition of unity. The **difference** of numbers is called that by which the greater exceeds the smaller. Numbers are said to be **equidistant** from others when their differences to those others are equal. A number is **multiplied** by another when it is added to itself as many times as there is unity in the multiplier; and that which grows from the multiplication is named the **product**. A number is said to **count** [[notes: In modern terms, "to divide" or "to be a factor of"]] another when, being multiplied by some factor, it produces it. A **part** is a smaller number of a larger one when the smaller counts the larger; and the one that is counted is called a **multiple**. The **denominator** is the number according to which a part is taken in its whole. **Similar** parts are those that are denominated by the same number. The number by which another is divided is named the **divisor**; the parts into which it is distributed are called the **dividends**. A **sum and simple part** of a number [[notes: This refers to the relationship where numbers share a common measure or divisor]] is when two numbers have a common part; as many times as that part is in the smaller, the smaller is said to be so many parts of the larger, and as many parts as that common part is found in the larger.
+
+->**¶ Axioms.**<-
+[[notes: *Dignitates* (literally "Dignities") refers to "common notions" or axioms—statements so self-evident they require no proof.]]
+
+<image-desc>Along the right margin, there are very faint, ghost-like ink impressions of geometric and circular diagrams. These include vertical scales with horizontal markers and overlapping circular arcs, likely bleed-through from the following page or light printing of intended figures for mathematical proofs.</image-desc>
+
+[[margin: 1]] Every part of a number is less than its whole.
+[[margin: 2 o]] Every part is smaller which has a larger denominator [[notes: For example, 1/4 is smaller than 1/2 because 4 is larger than 2]].
+[[margin: 3]] Whatever things are equally multiple of equals (or of the same thing), those things shall also be equal.
+[[margin: 4]] Those things for which the same number is an equal multiple, or whose multiples are equal, are themselves equal.
+[[margin: 5]] Every part of a number is a part of unity, denominated by that number.
+[[margin: 6]] Any whole number is formed from unity as many times as unity is a part of it.
+[[margin: 7]] If unity is multiplied by any number, or the same by unity, it produces itself.
+[[margin: 8]] The difference between the extremes is composed of their differences to the middle.
+[[margin: 9]] If a number exceeds another, and the difference is added to the smaller or subtracted from the larger, the remaining numbers are equal.
+[[margin: 10]] Things that are equal to the same thing are equal to each other.
+[[margin: 11]] And if equals or the same common thing be subtracted from equals, the remainders are equal.
+[[margin: 12]] And if unequals are subtracted from equals, the remainders will be unequal.
+[[margin: 13]] If two larger things are added together and likewise two smaller things together, the sum of the larger turns out greater than the sum of the smaller.
+[[margin: 14]] If you add equals to equals, the wholes will also be equal.
+[[margin: 15]] And if unequals to equals, the wholes will be unequal.
+[[margin: 16]] The parts taken together are equal to their whole.
+[[margin: 17]] For whatever things the proportion to the same number is one and the same, those things are equal to each other.
+[[margin: 18]] As many times as a number can be subtracted from another, so many times is it countable within it.
+[[margin: 19]] Proportions that consist of equal proportions are equal to each other.
+[[margin: 20]] Those things whose halves are equal are also equal as wholes.
+
+->**¶ Postulates.**<-
+[[notes: *Petitiones* (literally "Requests") are postulates—assumptions necessary for the logical construction of the system.]]
+
+[[margin: 1]] That for any number, any number of equals can be taken.
+[[margin: 2 C]] That for any number, there exists another as much larger as one wishes.
+[[margin: 3]] That the sequence of numbers can be extended to infinity.
+[[margin: 4]] That no number can decrease to infinity [[notes: Because in this system, 1 is the smallest discrete unit]].
+[[margin: 5]] That unity does not "count" [[notes: divide]] anything smaller than itself.
+[[margin: 6]] If a number multiplies a given number, and the same divides the product, the given number returns; and conversely, if some number divides a given number, and that which results is multiplied by it, likewise the given number returns.
+
+---
+
+¶ We have added these few axioms and postulates so that the discipline may present itself more easily everywhere; the author [[notes: Jordanus]] suppressed them as they are generally known to all and necessary at every turn.
+
+[[sig: a 2]]
+
+[[summary: This page introduces the fundamental definitions, axioms, and postulates of arithmetic as interpreted by Jacques Lefèvre d'Étaples. It establishes the basic rules for numbers, multiplication, and equality that form the foundation for the subsequent mathematical proofs.]]
+[[keywords: Jordanus de Nemore, Jacques Lefèvre d’Étaples, Arithmetic, Axioms, Postulates, Unity, Number theory, Renaissance mathematics]]

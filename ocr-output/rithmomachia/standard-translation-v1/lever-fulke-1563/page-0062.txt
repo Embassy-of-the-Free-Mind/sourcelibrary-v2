@@ -1,0 +1,68 @@
+# A table of Arithmetical and Geometrical proportion.
+
+| | | | |
+|---|---|---|---|
+| 2 | 3 | 4 | 8 |
+| 2 | 4 | 6 | 8 |
+| 2 | 4 | 6 | 9 |
+| 2 | 4 | 5 | 8 |
+| 2 | 7 | 12 | 72 |
+| 2 | 9 | 12 | 16 |
+| 2 | 12 | 48 | 72 |
+| 3 | 6 | 9 | 12 |
+| 3 | 4 | 6 | 9 |
+| 3 | 9 | 15 | 25 |
+| 4 | 5 | 6 | 9 |
+| 4 | 6 | 8 | 9 |
+| 4 | 6 | 9 | 12 |
+| 4 | 6 | 8 | 16 |
+| 4 | 12 | 20 | 36 |
+| 4 | 8 | 12 | 16 |
+| 4 | 8 | 12 | 36 |
+| 4 | 8 | 16 | 28 |
+| 4 | 12 | 20 | 100 |
+| 4 | 16 | 28 | 49 |
+| 4 | 16 | 28 | 64 |
+| 4 | 20 | 36 | 100 |
+| 5 | 9 | 15 | 25 |
+| 5 | 15 | 25 | 45 |
+| 5 | 25 | 45 | 81 |
+| 6 | 9 | 12 | 16 |
+| 7 | 16 | 20 | 25 |
+| 7 | 49 | 91 | 169 |
+| 8 | 9 | 12 | 16 |
+| 8 | 64 | 120 | 225 |
+
+<column-break/>
+
+| | | | |
+|---|---|---|---|
+| 9 | 12 | 15 | 16 |
+| 9 | 12 | 15 | 25 |
+| 9 | 12 | 16 | 20 |
+| 9 | 45 | 81 | 225 |
+| 9 | 25 | 45 | 81 |
+| 9 | 12 | 16 | 20 |
+| 9 | 15 | 20 | 25 |
+| 9 | 81 | 153 | 289 |
+| 12 | 16 | 20 | 25 |
+| 15 | 16 | 20 | 25 |
+| 15 | 20 | 30 | 45 |
+| 16 | 20 | 25 | 30 |
+| 16 | 36 | 56 | 81 |
+| 20 | 25 | 30 | 45 |
+| 30 | 36 | 42 | 49 |
+| 36 | 42 | 40 | 56 |
+| 42 | 49 | 56 | 64 |
+| 49 | 56 | 64 | 72 |
+| 49 | 91 | 169 | 289 |
+| 56 | 64 | 72 | 81 |
+| 64 | 72 | 81 | 90 |
+| 72 | 81 | 90 | 100 |
+
+---
+->52.<-
+
+<summary>This page contains a reference table of Arithmetical and Geometrical proportions for "The Philosophers' Game" (Rythmomachia). It lists specific sets of four numbers that satisfy the requirements for a "Greater Triumph"—a high-level victory achieved when a player captures or arranges pieces that simultaneously exhibit different types of mathematical progression. These sets serve as a technical guide for players to identify complex winning combinations during the game.</summary>
+
+<keywords>Arithmetical proportion, Geometrical proportion, Rythmomachia, The Philosophers' Game, number theory, 16th-century mathematics, mathematical victory conditions, mathematical tables</keywords>

@@ -1,0 +1,65 @@
+<meta>This page continues the mathematical proof regarding musical intervals. The previous page discussed why an octave plus a fourth is not considered a true consonance because its ratio (8:3) is neither a multiple nor a superparticular ratio, according to Pythagorean theory and Aristotle's "Problems." This page now focuses on the specific distances between the endpoints of these intervals on a monochord—a single-stringed measuring device—and assigns specific numerical values to them.</meta>
+
+<page-num>29</page-num>
+## ¶ Regarding the **consonances** <note>In this context, "consonances" refers to musical intervals that sound pleasant together because of their mathematical ratios.</note> arranged in this manner: the end of a **perfect fourth** <note>original: "diatessaron"</note> sounds a **whole tone** <note>original: "tonum"</note> from the end of a **perfect fifth** <note>original: "diapente"</note>; relative to the end of an **octave** <note>original: "diapason"</note>, it sounds a **perfect fifth**; relative to the end of an **octave plus a fifth**, it is **dissonant** <note>original: "inconsonus"</note>; but relative to the end of a **double octave** <note>original: "bis diapason"</note>, it sounds an **octave plus a fifth**.
+
+<image-desc>A horizontal line representing a monochord division with vertical strokes marking points. Above the line are the letters: a, c, d, e, f, g, b. The spacing reflects musical intervals.</image-desc>
+
+-> | a | | c | d | | e | | f | g | | b | <-
+
+¶ Let $a, c, d, e, f, g, b$ be arranged in the manner of the twenty consonances already mentioned. I say that point $c$ <note>This refers to the segment of the string from c to b.</note>, the end of the **perfect fourth**, sounds a **whole tone** relative to point $d$ (the end of the fifth); relative to $e$, it is a **perfect fifth**; relative to $f$, it is **dissonant**; and relative to $g$ and $b$ <note>The text likely means the segment gb.</note>, it sounds an **octave plus a fifth**. 
+
+Following the previous proof, the ratio between the full string $ab$ and the segment $cb$ is a **perfect fourth** (4:3), and $ab$ to $db$ is a **perfect fifth** (3:2). Therefore, if we subtract the fourth ($ab$ to $cb$) from the fifth ($ab$ to $db$), by the corollary of the tenth theorem, a **whole tone** (9:8) remains. What remains is the distance between $cb$ and $db$; therefore, $cb$ to $db$ sounds a **whole tone**. 
+
+And since by the previous proof $ab$ to $eb$ sounds an **octave**, if the **perfect fourth** $ab$ to $cb$ is subtracted from the **octave** $ab$ to $eb$, then according to the twenty-second theorem, what remains is a **perfect fifth**. Since the remainder is $cb$ and $eb$, then $cb$ relative to $eb$ sounds a **perfect fifth**. 
+
+Furthermore, by the previous proof, $ab$ to $fb$ is an **octave plus a fifth**; if the **octave** $ab$ to $eb$ is subtracted, what remains is a **perfect fifth**. This remainder is $eb$ to $fb$. Therefore, $eb$ to $fb$ is a **perfect fifth**. But as just shown, $cb$ to $eb$ is also a **perfect fifth**; therefore, $cb$ to $fb$ is **two perfect fifths** <note>original: "bis diapente"</note>. Yet, according to the fourteenth theorem, a consonance cannot be composed of two perfect fifths <note>In this system, 3:2 squared results in 9:4, which was not classified as a primary consonance.</note>; therefore, $cb$ is **dissonant** relative to $fb$. 
+
+Finally, as is known from the preceding, $ab$ to $gb$ sounds a **double octave**. If the **octave** $ab$ to $eb$ is subtracted, $eb$ to $gb$ remains as an **octave**. But $cb$ to $eb$ was shown in the second part of this proof to be a **perfect fifth**. Therefore, adding the **perfect fifth** $cb$ to $eb$ to the **octave** $eb$ to $gb$ creates an **octave plus a fifth**. Thus, $cb$ and $gb$ sound an **octave plus a fifth**. This completes the entire proposition.
+
+<page-num>30</page-num>
+## ¶ With the consonances placed thus: the end of the **perfect fifth** relative to the end of the **octave** measures a **perfect fourth**; and relative to the end of the **octave plus a fifth**, it measures an **octave**. Relative to the end of the **double octave**, it is **harmonious** <note>original: "euphonus"</note> but is not yet a [standard] **consonance**.
+
+<image-desc>A line diagram identical in structure to the previous one, showing divisions labeled a, c, d, e, f, g, b.</image-desc>
+
+-> | a | | c | d | | e | | f | g | | b | <-
+
+¶ Following the previous hypothesis: I say that the segment $db$ (the end of the **perfect fifth**) relative to $eb$ sounds a **perfect fourth**. Relative to $fb$, it is an **octave**. And relative to $gb$, it sounds a **perfect fourth plus an octave**. 
+
+According to the second-to-last proof, $ab$ to $eb$ is an **octave**, and $ab$ to $db$ is a **perfect fifth**. Subtracting the **perfect fifth** $ab$ to $db$ from the **octave** $ab$ to $eb$, by the twenty-second theorem, leaves a **perfect fourth**. This remainder is $db$ and $eb$; therefore $db$ relative to $eb$ sounds a **perfect fourth**. 
+
+And since it was shown previously that $eb$ to $fb$ is a **perfect fifth**, and now that $db$ to $eb$ is a **perfect fourth**, then by the twentieth theorem, the consonance $db$ to $fb$ (forged and joined from those two) will sound an **octave**. 
+
+Again, since $eb$ to $gb$ was shown to be an **octave**, and $eb$ to $fb$ a **perfect fifth**, by the twenty-second theorem $fb$ to $gb$ is a **perfect fourth**. Since $db$ to $fb$ was just shown to be an **octave**, $db$ to $gb$ is an **octave plus a perfect fourth**. While this sound is **harmonious** <note>original: "euphona"</note>, the twenty-fourth theorem has shown it is not a technical **consonance**; thus the whole proposition is clearly demonstrated. From this, it is likewise known that the end of the **octave** relative to the end of the **octave plus a fifth** measures a **perfect fifth** (as $eb$ to $fb$), and relative to the end of the **double octave**, it sounds an **octave**.
+
+<page-num>31</page-num>
+## ¶ With the consonances thus arranged: to designate the numbers for the whole string and each of its sections.
+
+| 24 | | 18 | | 16 | | 12 | | 8 | | 6 | |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **a** | | **c** | | **d** | | **e** | | **f** | | **g** | | **b** |
+
+¶ I multiply two, three, and four by each other <note>2 x 3 x 4 = 24</note>. The resulting product, which will have a half, a third, and a fourth part, I set as the number for the whole line, which I call the number $ab$. From this, I remove a fourth part <note>24 - 6 = 18</note>, and the remainder is $cb$. The first number (24) will be in a **sesquitertian** <term>Sesquitertian: A ratio of 4:3, where the larger number contains the smaller plus one-third of it.</term> ratio to this. Therefore, it is a **perfect fourth**. 
+
+From the same number (24), I remove a third part <note>24 - 8 = 16</note>, and the remainder is $db$; thus $ab$ to $db$ will be **sesquialter** <term>Sesquialter: A ratio of 3:2, where the larger number contains the smaller plus one-half of it.</term>; therefore, it is a **perfect fifth**. 
+
+Again, from $ab$ I take away half, and let the remainder be $eb$ <note>24 / 2 = 12</note>; $ab$ to $eb$ will be **double** <note>original: "duplus"</note>, resulting in an **octave**. 
+
+I take only a third of the number $ab$ to be $fb$ <note>24 / 3 = 8</note>; therefore the relationship of $ab$ to $fb$ is **triple** <note>original: "tripla"</note>. Thus $ab$ and $fb$ will contain an **octave plus a fifth**. 
+
+Finally, let $gb$ be only a fourth of $ab$ <note>24 / 4 = 6</note>; $ab$ to $gb$ will be **quadruple** <note>original: "quadruplus"</note>. Therefore $ab$ and $gb$ are the numbers for a **double octave**. These are the numbers designated for the whole string $ab$ and each of its sections according to the assigned consonances. This was to be demonstrated.
+
+<page-num>32</page-num>
+## ¶ To assign any number of **harmonic means** <note>original: "harmonicas medietates"</note>: between whose terms and all their differences every musical consonance may be found.
+
+| Harmonic | | 12 | | 8 | | 6 | | | **Perfect Fourth** <note>Ratio 4:3</note> | $b$ to $c$ | **Perfect Fourth** |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
+| **Means** | | 6 | | 4 | | 3 | | | **Perfect Fifth** <note>Ratio 3:2</note> | $a$ to $b$ | **Perfect Fifth** |
+| | | **a** | | **b** | | **c** | | | **Octave** <note>Ratio 2:1</note> | $a$ to $c$ | **Octave** |
+| **Differences** | | | | 2 | | 1 | | | **Octave + Fifth** <note>Ratio 3:1</note> | $c$ to $e$ | **Octave + Fifth** |
+| | | | | **d** | | **e** | | | **Double Octave** <note>Ratio 4:1</note> | $b$ to $e$ | **Double Octave** |
+
+¶ A **harmonic mean** is defined in Arithmetic as occurring when, among three terms, the ratio of the greatest to the least is the same as the ratio of the difference of the larger terms to the difference of the smaller terms. Therefore, let $c$ be any number having a third part, which is $e$. Double $c$, and let that doubled number be $a$. It is clear that $a$ is to $c$ as a double. And because $c$ contains three $e$s, $a$ contains six $e$s. Add $e$ to $c$ to create $b$...
+
+<summary>This page uses geometry and arithmetic to define the exact positions on a string (monochord) that produce musical intervals like the octave, fifth, and fourth. It demonstrates that the ratios of the lengths of these string segments correspond to the fundamental mathematical ratios of Pythagorean music theory.</summary>
+<keywords>monochord, perfect fourth, perfect fifth, octave, double octave, sesquitertian, sesquialter, harmonic mean, musical ratios, mathematical proportions</keywords>

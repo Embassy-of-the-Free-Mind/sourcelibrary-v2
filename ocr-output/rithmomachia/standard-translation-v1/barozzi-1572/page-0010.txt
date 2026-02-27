@@ -1,0 +1,18 @@
+[[meta: This page continues from the previous discussion of Jacques Lefèvre d'Étaples' Latin text, outlining the specific structure of the work to follow. The mention of bleed-through in the source indicates that this page (the recto) is thin enough that the decorative woodcut 'P' from the following page (the verso) is visible in reverse.]]
+
+->● are used while playing. In the second, I will treat the numbers,<-
+[[notes: The pieces in Rythmomachia were marked with specific numbers and geometric shapes (circles, triangles, and squares). The numbers were not arbitrary but followed Pythagorean mathematical progressions.]]
+->which must be painted upon the pieces. In the third, I will teach how to place<-
+->the pieces upon the Board. In the fourth, I will show the<-
+[[notes: The *Tauoliero* (game board) used for Rythmomachia was an 8x16 grid, essentially two chessboards placed side-by-side.]]
+->way to move the pieces. In the fifth, I will ex-<-
+->plain the way to fight. In the<-
+[[notes: "Fighting" (*combater*) in this game refers to the unique capture mechanics. Unlike the physical capture of Chess, Rythmomachia pieces are "captured" when they satisfy mathematical conditions, such as the "Capture by Equality" or "Capture by Multiplication."]]
+->sixth & last I will<-
+->clari-<-
+->fy<-
+->the victories, by which the game is won.<-
+[[notes: "Victories" in this context refers to the different ways to end the game. These ranged from simple captures to "Philosophical Victories," which required the winner to arrange a set of numbers in a perfect mathematical or harmonic progression in their opponent's territory.]]
+
+[[summary: This page provides a table of contents or outline for the treatise, breaking the explanation of Rythmomachia into six distinct parts ranging from the pieces and their numbers to the conditions for victory.]]
+[[keywords: Rythmomachia, Game Pieces, Game Board, Movement, Capture Rules, Victory Conditions, Mathematical Games]]

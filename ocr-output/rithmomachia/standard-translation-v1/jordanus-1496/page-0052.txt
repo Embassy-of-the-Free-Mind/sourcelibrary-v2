@@ -1,0 +1,15 @@
+[[meta: This page completes the proof regarding "even-times-even" numbers (powers of 2) and begins a series of propositions regarding the classification of numbers as "deficient" or "abundant" based on their prime factors. This follows the medieval tradition of number theory derived from Nicomachus and Euclid.]]
+
+...the twenty-sixth [proposition] of the ninth [book] [[notes: The author is likely referencing Euclid’s *Elements*, Book IX, Proposition 36, which describes the properties of sums of geometric progressions (1, 2, 4, 8...).]], all of those [parts] taken together are less than that very number by exactly unity [[notes: "Unity" refers to the number 1. The sum of the divisors of any power of 2 is always $2^n - 1$. For example, the divisors of 8 are 1, 2, and 4, which sum to 7]]. Therefore, the number itself is deficient [[notes: A "deficient" number is one whose proper divisors add up to less than the number itself]]. Which is what was proposed.
+
+## 55 ¶ Every number produced from only two prime numbers is deficient.
+
+¶ Let **a** and **b** be two prime numbers which, when multiplied together, produce **c**. I say that **c** is deficient. For its parts [[notes: its proper divisors]] are **a**, **b**, and unity. Therefore, because **c** is produced from **a** multiplied by **b**, and **a** is greater than unity, it follows that **b** must be smaller than the whole number **c**. And because **b** is prime, it has no other divisor except unity; the same is true for **a**. Therefore, the sum of **a**, **b**, and unity cannot reach the total value of **c** [[notes: For example, if we take the primes 3 and 5, their product is 15. The divisors are 1, 3, and 5. Their sum is 9, which is less than 15, making 15 a "deficient" number]].
+
+## 56 ¶ If a number is produced from any number of primes, and the greatest of them is less than all the others taken together with unity, it is necessary that the number is abundant.
+
+¶ If a number is formed by multiplying several primes together—for instance, **a, b,** and **c**—and the largest prime factor is smaller than the sum of the other factors plus one, that number will always be "abundant" [[notes: An "abundant" (*habundans*) number is one where the sum of its proper divisors exceeds the number itself. For example, in the number 30 (2 × 3 × 5), the largest prime 5 is less than 2 + 3 + 1. The divisors of 30 (1, 2, 3, 5, 6, 10, 15) sum to 42, which is greater than 30]].
+
+[[summary: This page concludes the proof that all powers of two are deficient and establishes that the product of any two prime numbers is also deficient. It then introduces a specific condition for determining if a number is abundant based on the sum of its prime factors.]]
+
+[[keywords: deficient numbers, abundant numbers, prime factors, even-times-even, Jordanus de Nemore, number theory, Euclid's Elements]]

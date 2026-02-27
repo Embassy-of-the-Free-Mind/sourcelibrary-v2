@@ -1,0 +1,27 @@
+[[meta: This page transitions from the visual diagram of the pieces to the practical instructions for setting up the "Battle of Numbers" (Rythmomachia) board. It specifically begins the instructions for the "Even" side, which was detailed numerically on the previous page.]]
+
+->On the Battle of Numbers.<-
+
+[[notes: "Zahl-Kampf" or Rythmomachia (The Philosophers' Game) was a highly complex board game played by medieval and Renaissance scholars to practice music theory and arithmetic. Unlike chess, which is a game of military strategy, Rythmomachia is a game of mathematical proportions.]]
+
+# The Third Chapter.
+
+## In which squares of this checkered board the twenty-four black and twenty-four white pieces are to be placed.
+
+You should lay the board [[notes: The "Tabel" or board for Rythmomachia is an 8x12 grid, larger than a standard chessboard.]] for this game before you in such a way that its length extends from the player's left side toward his right, and its width stands vertically. For when a person sits at the center of this board, he can better observe all the squares (since they are somewhat closer to his sight in this manner) and can more conveniently move the pieces with his right hand toward the left side.
+
+[[margin: (Buxer: fol: 17. a.)]]
+[[margin: (a. 16.)]]
+[[notes: This Latin passage is a citation from a 16th-century authority on the game, emphasizing that the board's orientation is not just a matter of comfort, but a tactical necessity for viewing the numerical "ranks" of the enemy.]]
+> Since the length of your board might hinder your eyes from seeing clearly, or you might be deceived by the various representations of numbers; strive that the length of the board extends toward the right and left: so that you may more easily judge the enemy's battle line and play to the right; since sitting in the middle place, one has both lines closer.
+
+[[margin: (n. 15.)]]
+Now, when one has taken the board before himself in the manner mentioned above: one should first devise and arrange a specific order from which the correct placement of these pieces may follow. (Otherwise, without this method, it would be difficult and quite troublesome to arrange them if the pieces were mixed together). One should begin with the **White Round Pieces**: count the squares from the corner of the board closest to the right hand, moving from the bottom up across the width and height into the third square—then following the length toward the left hand until the sixth square—and in that square, place the first white **Round Piece** marked with **2**. Next, in the following square (moving upward), place the one marked with **4**; above this, the one with **6**; and finally, in the third square (counting from the top down), the one marked with **8**. Beside these first four white Round Pieces (toward the right hand), the remaining...
+
+[[notes: The numbers 2, 4, 6, and 8 are the "roots" of the Even side. In Rythmomachia, pieces are categorized as Circles, Triangles, and Squares. Circles are the weakest and simplest pieces, while Squares are the most powerful. This setup describes the formation of the circular "front line."]]
+
+<sig>Mm m iij</sig>
+[[meta: catchword: four]]
+
+[[summary: This page explains the physical orientation of the Rythmomachia board and begins the step-by-step instructions for placing the white pieces, starting with the basic circular pieces (2, 4, 6, 8).]]
+[[keywords: Rythmomachia, Board Setup, Mathematical Games, Round Pieces, Early Modern Gaming, Boethian Ratios]]

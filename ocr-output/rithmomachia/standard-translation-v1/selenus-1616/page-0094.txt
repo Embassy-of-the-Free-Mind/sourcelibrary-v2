@@ -1,0 +1,46 @@
+[[meta: This page continues the description of the Queen piece, moving from her physical appearance to her conduct and her specific movements on the board. In medieval chess, the Queen was significantly less powerful than in the modern game, and her moves were often limited to reflect social expectations of female modesty and staying close to the King.]]
+
+### The First Book / Chapter 6:
+
+[[meta: catchword: The]]
+
+,, and in manners / the Queen shall raise her daughters in chastity / and pu-
+,, rity.
+,, The Queen's move / on the [[notes: *Schach-Zabel* refers to the chessboard or the game itself]] / from her place
+,, is / when she is joined to the King / then she has the nature of two pieces /
+,, the Old Man [[notes: *Der Alte* (the Old Man) or *Alphin* was the predecessor to the modern Bishop, which moved exactly two squares diagonally]] and the Rook / the Old Man’s path is thus / if she is black /
+,, so she goes to the black field / to the right hand / if it is empty /
+,, before the idler or scribe [[notes: *Lotter* (idler/vagabond) and *Schreiber* (scribe) are names for specific pawns]]: to the left side / on the
+,, black empty field / before the city guard: But the Rook's move /
+,, she has / in two ways / the first / to the right hand / on the
+,, black field / <unclear>from the Old Man onto it</unclear> / if it is empty / the second time
+,, to the left hand / on the field / where the Knight / had
+,, stood / the third time forward / on the black field / before the
+,, <term>Physician</term> [[notes: *Arzet* refers to the pawn representing the doctor or apothecary]]: and that is because / the Queen / has her deeds through the King's
+,, grace / and not by power. The Knight's
+,, move / the Queen does not have for the reason / that they are fighters and war-
+,, riors / and that women do not belong in battle / because they are of a
+,, weaker nature / but when she moves from her place / she should thereafter / only
+,, go to the next square / diagonally forward or backward / for capture /
+,, or for flight. It is a question / since Chess / is a <term>war</term> [[notes: *Urleug* is an archaic word for war or conflict]]
+,, game / why the Queen / is placed among warriors / in
+,, battle / and yet women / do not belong to such things /
+,, nor are they useful? That happened because / in former times
+,, women / went to the field / with the men. It also
+,, happened for the King / as a pastime / and for joy / and
+,, that she / might also thereby show the love / that she has for the King / and
+,, that the Realm / remains / with the heirs and that they should care
+,, for / the Realm's Lords / and its citizens: However /
+,, the field may be / where the Queen stands / by the King / whether it be white or
+,, black / she shall not change it / but remain upon it: that
+,, signifies / that she is modest and chaste / and not quickly impudent:
+,, and therefore is her move / to the next square: for at home / she may /
+,, with her own people engage in merry play and pastime: for she
+-> among the enemies / is not as safe / in honor and reputation / <-
+-> as among her own: and a woman should seldom <-
+-> let herself be seen in haste / for it <-
+-> makes her unworthy. <-
+
+[[summary: This page explains the movement of the Queen piece, which in this version of chess is limited to short steps and specific "leaps" to mirror the restricted social role of noblewomen. It justifies the Queen's presence in a "war game" as a symbol of domestic loyalty, the production of heirs, and the preservation of the King's honor.]]
+
+[[keywords: Queen, Chess-Board, Bishop, Rook, Physician, War Game, Chastity, Reputation, Royal Manners]]

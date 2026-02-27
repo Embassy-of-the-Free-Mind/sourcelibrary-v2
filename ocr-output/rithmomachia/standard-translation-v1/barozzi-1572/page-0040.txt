@@ -1,0 +1,34 @@
+[[meta: This page transitions from the rules regarding capturing the Pyramid piece to the conditions for winning the game of Rithmomachia. It introduces the mathematical foundations—Arithmetic, Geometric, and Harmonic proportions—required to achieve the various levels of victory.]]
+
+...will know how to achieve these victories. The three proportions, therefore, ne-
+cessary for said victories are called Arithmetic, Geome-
+tric, and Musical [[notes: In the Renaissance, this referred to the "Harmonic proportion," which relates to the mathematical intervals found in music.]]. The Arithmetic proportion is when,
+given three numbers, they exceed one another by one and the
+same difference; such as the proportion that exists between these
+three numbers: 2, 4, 6; because the difference from 2 to 4
+is the same as that from 4 to 6. Geometric proportion is when,
+given three numbers, the smaller is contained within the middle one as
+many times as the middle is contained in the larger. As in the num-
+bers 2, 4, 8: the 2 is contained twice in the 4, and similarly the
+4 is contained twice in the 8. Musical proportion is when, given
+three numbers, the difference between the two smaller ones is contained by
+the difference of the two larger ones as many times as the
+smaller number is contained by the larger; as seen in the num-
+bers 2, 3, 6. In these, the difference from 2 to 3 is one, and the
+difference from 3 to 6 is 3. And just as one is contained three
+times within 3, so too is 2 contained three times within 6. These
+are the three proportions—Arithmetic, Geometric, and Mu-
+sical—necessary for the victories of our game. Now we shall de-
+clare the victories, which are three: one is called the Great,
+the other the Greater, and the other the Greatest. The Great victory
+is nothing other than to place three pieces in the opponent's field,
+the numbers of which have among themselves one of the three afore-
+said proportions: either the Arithmetic, the Geometric, or
+the Musical. Thus, this victory can be achieved in three
+ways according to these three proportions. But as for which are the
+Arithmetic, Geometric, and Musical proportions
+which can be made in this game to achieve the Great
+victory, the following three tables demonstrate.
+
+[[summary: This page defines the three mathematical proportions—Arithmetic, Geometric, and Harmonic—that players must form with their pieces in the opponent's territory to achieve a "Great Victory" in Rithmomachia.]]
+[[keywords: Arithmetic proportion, Geometric proportion, Harmonic proportion, Great Victory, Rithmomachia, mathematical theory, victory conditions]]

@@ -1,0 +1,24 @@
+[[meta: This page continues the tactical analysis of Chapter 10, following the numbering from the previous page. It details specific exchanges involving the Knight (Reuter) and Bishop (Schütze), using the 1–64 numbering system for the board squares.]]
+
+# Of the Game of Chess.
+
+[[margin: 10.cap:]]
+
+15. \* Black / takes / the White King’s Knight [[notes: *Reuter* — literally "Rider," the early modern German term for the Knight.]] / with the King’s Bishop [[notes: *Schütze* — "Archer," the term used here for the Bishop.]]: White [takes] / the same / with the King’s Rook [[notes: *Rochen* — an older term for the Rook, derived from "Roc."]]: Black / moves / his King’s Rook / or the Queen / to the White King’s Bishop’s [square] / at **fifty-nine**: White [moves] / the King’s Rook / to **three** / and will thus / provided He / knows how to play / likely win the game.
+
+16. If, however, Black / does not take / the White Knight / (n. 15.) with the Bishop / but instead / moves the Queen / to the White King’s Bishop’s [square] / at **fifty-nine** : White plays / the same [Knight] / to **thirty-three** : Black / takes the White King’s Knight / with his King’s Bishop : White [takes] / the Black King’s Knight / with the Queen : Black / gives / Check with the Queen / from **eleven** / and simultaneously defends / her King’s Bishop : White / moves the King / to **five** : Black / (to / prevent / the Check / from the White King’s Bishop / at **thirty-four**) [moves] the King’s Rook’s Pawn [[notes: *Soldaten* — "Soldiers," the term for Pawns.]] / to **forty-one** : White [moves] / the King’s Knight / (to / keep an eye / on the third square) / to **thirteen** : Black [moves] / the King’s Rook / to **fifty-nine** : White [moves] / the Queen / (so that / the Black King’s Rook / from **twenty-seven** / does not harass her) / to **twenty-one** : Black / [moves] the King’s Knight / to the White King’s Pawn / at **forty-six** : White / [moves] the King’s Knight / against the Black Queen / at **twenty-eight** : Black / takes / the White King’s Pawn / with that Knight / and likewise aims / at the White Queen : White / if He takes the Black Queen / wins the following / (let Black move / as He will) / his King’s Bishop / or his King’s Knight / indeed even the entire game.
+
+17. If, however, Black / does not [move] his Knight / to **43** (n. 2.) but instead / moves his Queen / to **fifty-two** : then He will / be better able / to arrange his game : and White / must not / move the King’s Pawn / (because otherwise / his King’s Pawn / would be taken / by the Black Queen)
+
+-> not advance <-
+-> to twenty-nine. etc. <-
+
+---
+
+<image-desc>A decorative horizontal fleuron consisting of symmetrical floral and leaf patterns.</image-desc>
+
+The
+
+[[summary: This page provides detailed move-by-move instructions for specific chess endgames and exchanges, focusing on the strategic positioning of the Queen, Knight, and Bishop. It illustrates how White can secure a winning advantage through precise tactical responses to Black's maneuvers.]]
+
+[[keywords: Chess tactics, chess notation, Knight, Bishop, Rook, Queen, endgame strategy, early modern games]]

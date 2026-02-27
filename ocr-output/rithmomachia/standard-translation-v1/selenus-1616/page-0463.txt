@@ -1,0 +1,23 @@
+[[meta: This page continues the detailed breakdown of the movement rules for Courier Chess, specifically focusing on the minor pieces and the unique opening requirements traditional to the village of Ströbeck.]]
+
+# On the Game of Chess.
+
+[[margin: Chapter 9]]
+
+[[image-desc: A woodcut illustration of a chess piece named "The Sneaker" (Der Schleich). The piece is depicted as a bust of a jester wearing a hood with bells and holding a fool's scepter (marotte), placed upon a decorative, chalice-like pedestal.]]
+
+->The Sneaker.<-
+
+The **Whimsical Advisors** or ***Moriones*** [[notes: *Moriones* is Latin for fools or jesters]], (whom they call the **Sneakers** because of their creeping gait, as it were), are moved by them like the **Rooks**, yet only one square—forward, backward, or to the right or left side.
+
+The **Soldiers**, ***Fenden***, or ***Finen*** [[notes: These are archaic terms for pawns, derived from the Latin *pedinus* or the French *pion*]] move and capture other pieces just as was mentioned above in Chapter 10 of the First Book. However, the soldiers of both the **Queens** and the **Rooks** on both sides are moved forward two squares for their first move. Furthermore, neither they nor the **Queen** can capture other pieces until they have completed these aforementioned leaps; however, the soldiers of the **King** and the other major pieces are moved only one square forward at the start.
+
+Whoever has the first move must always, at the beginning, leap to the third square with the **Queen's pawn** and both **Rooks' pawns**; and the other player, move for move, must hop toward him with the same pawns. After these three moves, each tries his best with these and the other pieces. [[notes: This describes a "mandatory opening" where the game only truly begins after both players have moved their two Rook-pawns and their Queen-pawn two squares forward.]]
+
+Since the **Secret Counselor** or **Man** is deemed the best piece for the protection of the **King** at the end, he must be well-regarded and protected by both sides.
+
+Let this now be a brief reminder of the **Courier Game**, recorded *in transitu* [[notes: Latin for "in passing" or "along the way"]] as much as could be learned from the oral reports of those in **Ströbeck** [[notes: *Ströpeke* is the local dialect name for Ströbeck, a German village famous for its chess tradition]]; for they had no written records to show, but rather claimed that they inherited it from their ancestors from time immemorial and have practiced it accordingly.
+
+[[summary: This page describes the movement of the Sneaker and Pawns in Courier Chess, noting a specific mandatory opening ritual involving the Queen's and Rooks' pawns. It concludes by noting that these rules were collected from the oral traditions of the village of Ströbeck.]]
+
+[[keywords: Courier Chess, Ströbeck, Sneaker, Moriones, Pawns, Fenden, Opening Gambits, Chess History, German Traditions]]

@@ -1,0 +1,29 @@
+[[meta: This page continues the exploration of figurate numbers, specifically moving from the properties of the number three to a sophisticated method for identifying "square-triangular numbers"—integers that are simultaneously perfect squares and triangular sums.]]
+
+# VIII
+
+¶ If we take the first even and odd numbers after unity [[notes: Meaning the numbers 2 and 3]], and to their sum the smaller is added; and again, to the sum of these the smaller [of the previous pair] is added: it will result that while the first of the first pair is even, the following will be odd. Of the third pair, the first is even and the following are odd, and so on. By doubling the square of the even numbers and taking the square of the extreme odd numbers, the square-triangular numbers [[notes: *Tetragoni triangulares* are numbers like 36, which is both 6x6 and the sum of 1 through 8]] are determined.
+
+| (1-2) | (3-4) | (5-6) | (7-8) | (9) |
+| :--- | :--- | :--- | :--- | :--- |
+| ( I ) | | | | |
+| ( 2 a ) ( 3 b ) | ( 5 c ) ( 7 d ) | ( 12 e ) ( 17 f ) | ( 29 g ) ( 41 h ) | |
+| 4 | 9 | 25 | 49 | 144 | 289 | 841 | 1681 | |
+| | k | l | m | n | o | p | | |
+| **A** | **B** | **C** | **D** | |
+| ->Duplus<- | ->Duplus<- | ->Duplus<- | ->Duplus<- | |
+| 8 | 50 | 288 | 1682 | |
+| 36 | 1225 | 41616 | 1413721 | |
+| Te | tra | go | ni | tri | an | gu | la | res |
+
+¶ Let **a** and **b** be the first even and odd numbers after unity, namely 2 and 3, which joined together make **c** [5], to which if **a** is added it becomes **d** [7]. Likewise, **c** and **d** compose **e** [12], to which **c** is added to become **f** [17], and **e** and **f** compose **g** [29], and **e** is added to **g** to become **h** [41]. I say first that **a** is even and **b** is odd, and **c** and **d** are odd. Likewise **e** is even, and **f**, **g**, and **h** are odd. For **a** being even and **b** being odd is the hypothesis. And because **c** is composed of **a** and **b**: by the second [proposition] of the seventh [book] [[notes: Likely referring to Euclid's *Elements*, Book VII, Prop. 2, regarding even and odd sums]], **c** is also odd. And because **d** consists of **a** (even) and **c** (odd), by the same second proposition, **d** is odd. And because **e** consists of **c** and **d** (two odds), **e** will be even by the fourth proposition of the same book. And because **f** consists of **c** (odd) and **e** (even), by the second proposition **f** is odd, and by the same, **g** and **h** will be odd; which is what was intended. 
+
+Secondly, I say that double the square of **a** terminates a square-triangular number. To terminate a square-triangular number is to be the side of a square that is equally a triangle. It is clear then that because unity doubled constitutes **a**, and **a** taken twice completes its square: therefore **a** is distant from its square by two units and sustains a single mean, namely **b**: whose difference to **a** is unity [[notes: The author is describing the relationship between "side" and "diameter" numbers, which approximate the ratio of √2]]. And because by the seventh [proposition] of the sixth [book], the amount by which the square of **b** exceeds the square of **a** is what results from unity multiplied by **b** and **a** together. But **b** and **a** together [3+2=5] are one greater than the square of **a** [4] which was double to **a**. Therefore the square of **b** [9] is one greater than double the square of **a** [8]. But double the square of **a** [8] multiplied by the square of **b** [9], since they differ by only one unit, produces by definition an *oblong* number [[notes: *Altera parte longior*, a number of the form n(n+1)]]. The square of **a**, which is the half, multiplied by the square of **b** produces the half of that oblong number by the eighth [proposition] of the second [book]. Therefore, by the fourth [proposition] of this book, the square of **a** multiplied by the square of **b** produces a triangular number [4 x 9 = 36]. And because it is produced by the multiplication of a square by a square: therefore by the fourteenth [proposition] of the sixth [book] the same will also be square [[notes: *Tetragonicus*]]. Thus, what was said has been achieved. 
+
+Thirdly, I say the square of **d**, the extreme of the odd numbers, terminates a square-triangular number. For I take the square of **c** which is **k** [25] and the square of **d** which is **l** [49]: I say **k** doubled [50] exceeds **l** [49] by one. For the square of **c** doubled is, by the fifteenth [proposition] of the first [book], as much as double the square of **a** and double the square of **b**, plus four times **b** times **a**. [[notes: The author is performing complex algebraic expansions using geometric proofs to show that these specific numbers always fall into a pattern where $2x^2 = y^2 \pm 1$]]. Therefore, by this reasoning, proceed with the following numbers to show what has been proposed: and the proposition will be entirely established.
+
+<sig>g i</sig>
+
+[[summary: This page provides a mathematical proof and a computational table for finding numbers that are both square and triangular, using a recursive sequence known today as Pell numbers. It demonstrates that the square of these specific values, when multiplied, results in a number that fits both geometric shapes.]]
+
+[[keywords: square-triangular numbers, Pell numbers, figurate numbers, arithmetic proof, side and diameter numbers, Euclidean geometry]]

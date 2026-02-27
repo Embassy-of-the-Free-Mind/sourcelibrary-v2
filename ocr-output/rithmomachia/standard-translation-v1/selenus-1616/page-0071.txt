@@ -1,0 +1,25 @@
+[[meta: This page continues the account of historical chess masters, concluding a description of a player’s matches before moving on to the famous blindfold player Mangiolinus of Florence and the etymology of the game's names in Greek and Latin.]]
+
+# Of the Game of Chess.
+
+[[margin: Chapter 2]]
+In the third [game], however, he moved the chess pieces himself: he won two games; but the third he completed to such an extent that his opponent could no longer move any of his pieces, and was simultaneously checkmated [[notes: The original German *aufgehoben* suggests the opponent's position was "lifted" or neutralized, effectively ending the game]]. At this, people wondered greatly.
+
+In the same vein, *Raphaël Volaterranus* [[notes: A humanist scholar, also known as Raffaele Maffei, 1451–1522]] relates in *lib. 29. Comment. Urban. fol. 313. b.* and from him, *Joan. Ravisius Textor* [[notes: Jean Tixier de Ravisi, a French scholar known for his encyclopedic "Officina"]] in *Officin. col. 906*:
+
+> In the following century (namely 1400 A.D.), *Zehner* writes, 
+> *Mangiolinus of Florence was so practiced in the Game of Soldiers, or Latrunculi, that he played from memory through another, not looking at all; while his adversary saw more clearly and yet lost.*
+
+That is:
+In the year 1400 after the birth of Christ, there lived one in Florence by the name of **Mangiolinus**, who was exceedingly practiced and experienced in the Game of Chess; so much so that he could play against another by dictating his moves from memory to a surrogate [[notes: A "surrogate" here refers to a person moving the pieces on the master's behalf]], never casting his eyes upon the table or the pieces. Thus, even though his opponent had the stones standing before him on the chessboard and watched his own advantage diligently, Mangiolinus was still able to win.
+
+Regarding the names of this game: the Greeks called it <term>πεττείαν</term> (*petteia*), <term>πεσσοὺς</term> (*pessoi*), meaning the "Stone-Game," but the art itself they called *peteuticen*: regarding which one may look up *Cæl. Rhod. lib. 20. c. 14. 27. Antiq.* [[notes: Lodovico Ricchieri, or Caelius Rhodiginus, an Italian philologist]].
+
+The Latins called it *Ludum Latronum*, or *Latrunculorum*, that is, the "Soldiers' Game": but the art itself they called *Latrunculariam* (by virtue of the words of *Seneca, in d. Epist. 117*). For *Latrones* (as *Robertus Stephanus* [[notes: Robert Estienne, the famous 16th-century printer and lexicographer]] in Volume 3 of his *Thesauri ling. Latinæ* and *Dionys. Lambinus* in his commentary on Plautus state) were called, among the ancients, hired soldiers, or as Festus says, those who served as mercenaries, from <term>λατρεύω</term> (*latreuo*), i.e., I serve. For they served for pay, or they carried iron [weapons] at their sides (*latera*). It was the custom that the Commander would keep these men around him and send them first into every danger. But Varro, in Book 6 of *The Latin Language*, thinks they were called *Latrones* as if they were *Laterones*, because they were accustomed to be at the sides; those whom people now call attendants or bodyguards [[notes: The author is distinguishing between the ancient meaning of "soldier/guard" and the later meaning of "thief" or "robber" to explain the noble origin of the chess-piece names]].
+
+F 2
+[[meta: catchword: Plautus]]
+
+[[summary: This page describes the remarkable blindfold chess abilities of Mangiolinus of Florence and provides a scholarly etymology of the game's names, linking the Latin term for chess pieces (*latrunculi*) to ancient mercenary soldiers and bodyguards.]]
+
+[[keywords: Mangiolinus of Florence, blindfold chess, etymology, Petteia, Ludus Latrunculorum, Robertus Stephanus, Varro, history of chess terminology]]

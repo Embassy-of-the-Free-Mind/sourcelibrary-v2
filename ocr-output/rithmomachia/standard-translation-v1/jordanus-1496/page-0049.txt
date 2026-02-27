@@ -1,0 +1,85 @@
+[[meta: This page continues the mathematical proofs regarding the classification of even numbers. On the previous page, the author began defining "odd-times-even" numbers (numbers like 12, 20, or 24, which have an even half that is not itself a power of two). This page explores how these different categories—even-times-even, even-times-odd, and odd-times-even—interact through addition and division.]]
+
+...first, namely of the odd-times-even of the same line: nevertheless, it is as much as what is produced from **b** into the difference of **g** to **h**. And because again, by the same first [proposition] of the first [book], it is as much as what is produced from **b** into **h** plus the difference of **k** to **h**: as much as what is produced from **b** into **k**. Therefore, what is produced from **b** into **k** adds over that which is produced from **b** into **h**—namely the third of the odd-times-even over the second—as much as what is produced from **b** into the difference of **k** to **h**. But the difference of **k** to **h** is as great as was proved: as great as the difference of **h** to **g**. Therefore, the difference of those odd-times-even is equal. And so consequently, by the ninth [proposition], you will find the same for the rest. And from this, it is easily demonstrable by the second [proposition] of the first that any of them doubled is as much as the two placed around it joined together [[notes: This describes an arithmetic progression where the middle term is the average of its neighbors; for example, in 12, 20, 28, the middle 20 doubled (40) equals 12 + 28]]. And by the third [proposition] of the same first [book]: that two means joined together are as much as the extremes, and those placed at an equal interval from them taken together.
+
+[[margin: 41]]
+### ¶ Whatever number an odd-times-even number measures, that same number is also an odd-times-even.
+
+¶ Let **a** be any odd-times-even number which measures [[notes: "Measures" means to divide exactly without a remainder.]] **b**. I say that **b** is an odd-times-even number. For because the even number **a** measures **b**: therefore, by the twelfth [proposition] of this book, **b** will be even. Whereby it happens that as many times as **a** measures **b**, so many times the half of **a** measures the half of **b**. But since the half of **a** is odd-times-even, it is even [[notes: This follows the definition that an "odd-times-even" number, like 12, has an even half, like 6]]. Therefore, by the twelfth [proposition] of this book, the half of **b** is also even. But some odd number measures **a**, an odd-times-even number; therefore, the same will measure **b** by the twenty-third [proposition] of the first [book]. Therefore, **b** is, by definition, an odd-times-even number, which is what was proposed.
+
+[[margin: 42]]
+### ¶ If an odd-times-even—or an even-times-even above two—is joined to an even-times-odd, the result will be an even-times-odd.
+
+¶ Let **a** be any even-times-odd [[notes: *Pariter impar*: a number like 6 or 10, which when halved once, results in an odd number.]] to which is joined any **b**, either odd-times-even or even-times-even [[notes: *Pariter par*: a power of two, like 4, 8, or 16.]] above two; and let **c** be the sum. I say that **c** is an even-times-odd number. For since **a** is even-times-odd, its half is odd. And because **b** is odd-times-even, by the thirty-seventh [proposition] of this book, its half is even. Therefore, the half of **b** and the half of **a** together, by the second [proposition] of this book, constitute an odd number. But the number constituted from the half of **a** and the half of **b** is the half of the sum **c**. Therefore, by the thirty-sixth [proposition] of this book, **c** is even-times-odd. And so you shall argue if an even-times-even number above two is added to an even-times-odd. Which is what was proposed.
+
+[[margin: 43]]
+### ¶ If an even number of even-times-odd numbers are joined together, the sum will be either even-times-even or odd-times-even.
+
+¶ For because the half of any of those is odd, by the fourth [proposition] of this book, the half of the sum will be even. Therefore, the sum is not, by the thirty-third [proposition] of this book, an even-times-odd number. Wherefore, by a sufficient division of categories, it will be either even-times-even or odd-times-even. Which is what was proposed.
+
+[[margin: 44]]
+### ¶ If an odd number of even-times-odd numbers are joined together, an even-times-odd is composed.
+
+¶ For because the half of any of those even-times-odd numbers is odd, and they are odd in number: therefore, by the fifth [proposition] of this book, their halves added together constitute an odd number. Therefore, the half of the sum is odd. Thus, by the thirty-third [proposition] of this book, the sum is even-times-odd. Which is intended.
+
+[[margin: 45]]
+### ¶ If any number of different even-times-even numbers above two are added to themselves, the result constituted from them will be an odd-times-even.
+
+¶ Let **a**, **b**, **c**, and **d** be any number of even-times-even numbers above two [[notes: Powers of two like 4, 8, 16...]], and let **d** be the greatest; and let **e** be the double of **d**, and let **f** be the sum of **a**, **b**, **c**, and **d**. I say that **f** is an odd-times-even number. For since **a**, **b**, **c**, and **d** are even, by the first [proposition] of this book, **f** is even. And since **a**, **b**, **c**, and **d** are even-times-even numbers above two, their halves are even numbers. Therefore, added together, by the first [proposition] of this book, they constitute an even number. And since by the thirty-second [proposition] of this book, **a**, **b**, **c**, and **d** added together are less than **e**: therefore **f** is less than **e**. But **e** is the first even-times-even number after **d**; therefore **f** is not an even-times-even number [[notes: The sum of distinct powers of two is never a power of two itself, except in the trivial case of a single term]]. And since its half is even, therefore by the thirty-seventh [proposition] of this book, it is an odd-times-even number. Which is what was proposed.
+
+[[margin: 46]]
+### ¶ To find even-times-odd numbers according to a given even number, which joined together make an even-times-even.
+
+[[margin: a]]
+¶ Let **a** first be the even number according to which we are commanded to find such even-times-odd numbers that are composed; and let that same **a** be an even-times-even number. As many units as there are in **a**, let there be so many continuous even-times-odd numbers from unity whose half is **b**, **c**; and let **d** be the first ascending even-times-even. And if between **c** and **d** there is again any even-times-odd: I take even-times-odd numbers here and there around **d** according to the half of **a**, so that all are taken according to the number **a**. And let the lower ones be **c**, **g**, **e**, and the upper ones **f**, **e**. For since **d** is even and is not even-times-odd: by the thirty-fourth [proposition] of this first book, the even numbers here and there, **g** and **e**, are even-times-odd. Wherefore **g** and **e** are equally distant from the number **d**. And since similarly, by the same [logic], after **e** follows **f** with one part placed below, and after **g** follows **c** with one interposed: then **c** and **f** will also be equidistant here and there from the number **d**. Therefore, by the second [proposition] of the first, **g** and **e** together are double **d**, of that same even-times-even **d**. Wherefore by the twenty-ninth [proposition] of this book, **g** and **e** are an even-times-even. And by the same second [proposition] of the first, **c** and **f** together are double that same even-times-even **d**. Therefore, the even-times-odd numbers taken together according to the number **a**—namely **g**, **e**, **f**, **c**, **f**—are four times **d**, and double the double of **d**. Wherefore by the twenty-ninth [proposition] of this book, **c**, **g**, **e**, and **f** together are an even-times-even, or they are as much as what is produced from the even-times-even **a** into the even-times-even **d**. Wherefore by the thirtieth [proposition] of this book, what is produced therefrom is even-times-even. Which is what was proposed as to this.
+
+But if **a** is not even-times-even: I take any even-times-even number such as another **a**, which has even-times-odd numbers on either side, such as **b**, **c**, **d**, **e**. And I take the double of **a**, which is **g**, which also by the twenty-ninth [proposition] of this book is even-times-even. And let **f** and **h** be its surrounding even-times-odd numbers. Then I take **l**, the double of **g**, which is also even-times-even, and **k** and **m**, the surrounding even-times-odd numbers. Similarly, I take **o**, the double of **l**, and the surrounding even-times-odd numbers **n**, **p** and **r**... and this so many times until we have even-times-odd numbers taken according to the given number **a**. Because they are so taken, I say that the number composed from **b**, **c**, **d**, **e**, **f**, **h**, **k**, and the other taken even-times-odd numbers is even-times-even. And let **q** be an even-times-even taken as double to **o**. For since by the second [proposition] of the first, **c** and **d** together are as much as **g**, the double of **a**; and also by the same, **b** and **e** as much as **g**, the double of **a**. Therefore **c**, **d**, **b**, and **e** together are as much as **l**, the double of **g**. But by the same second [proposition] of the first, **f** and **h** are as much as **l**, the double of **g**. Therefore **b**, **c**, **d**, **e**, **f**, **h** are as much as **o**, the double of **l**. But **k** and **m** are as much as **o**, the double of **l**, by the same second [proposition]. Therefore **b**, **c**, **d**, **e**, **f**, **h**, **k**, **m** are as much as **q**, the double of **o**. But **r** and by the same second [proposition] **n**, **p** are as much as **q**, the double of **o**. Therefore **b**, **c**, **d**, **e**, **f**, **h**, **k**, **m**, **n**, **p** together are as much as **s**, the double of **q**, which by the twenty-ninth [proposition] of this book is even-times-even. And thus the proposition stands.
+
+[[margin: 48]]
+| Symbol | Value/Context |
+| :--- | :--- |
+| b | 12 |
+| a | 48 |
+| c | 48 |
+| a | 18 |
+| b | 10 |
+| e | 48 |
+| d | 18 |
+| c | 14 |
+| b | 10 |
+| a | 6 |
+| d | 30 |
+| c | 14 |
+| b | 10 |
+| a | 6 |
+| f | 120 |
+| e | 128 |
+| d | 64 |
+| c | 32 |
+| b | 16 |
+| a | 8 |
+| f | 22 |
+| e | 18 |
+| d | 16 |
+| g | 14 |
+| c | 10 |
+| b | 6 |
+| r | 504 |
+| q | 252 |
+| p | 130 |
+| o | 128 |
+| n | 126 |
+| m | 66 |
+| l | 64 |
+| lz | 62 |
+| h | 34 |
+| g | 32 |
+| f | 30 |
+| e | 22 |
+| d | 18 |
+| a | 15 |
+| c | 14 |
+| b | 10 |
+
+[[summary: This page details five propositions (41-45) and a construction (46) regarding the arithmetic properties of even numbers categorized as even-times-even, even-times-odd, and odd-times-even. It focuses on how sums of these specific types of numbers result in other specific types, culminating in a method to sum even-times-odd numbers to produce a power of two.]]
+[[keywords: Number theory, Arithmetic, Even-times-even, Even-times-odd, Odd-times-even, Summation, Mathematical Proofs]]

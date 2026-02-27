@@ -1,0 +1,56 @@
+[[meta: This page continues the geometric and arithmetic demonstrations of figurate numbers, moving from the construction of polygons—specifically octagons—into the three-dimensional realm of "solid" numbers, such as pyramids and prisms (serratiles).]]
+
+...the following square, namely **n**. Therefore, by adding **n** again, and then the following oblong number **p** to the equiangular hexagon **o**, according to the twenty-third [proposition] of this book, a complete octagon results. This octagon follows unity in the same sequence as the equiangular hexagon **o** followed unity. Thus, the resulting octagon, which we may call **q**, will be an octagon of the given side **a**, and it will show the sum requested. 
+
+But let us suppose again that the side given, **a**, is an odd number, and **b** and **c** are the surrounding even numbers (where **b** is smaller and **c** is larger). Let half of **b** be **d**, and half of **c** be **e**. By the second [proposition] of the first [book], **d** and **e** together constitute **a**. I add **d** to **a** to make **f**, and **d** to **f** to make **g**. I then multiply **a** by **e**, resulting in **h**, which for the same reason as above will be the triangular number of side **a**. Next, I multiply **a** by **f**, resulting in **k**, which will be its square; and multiplying **a** by **f** again results in **l**, which for the prior reason will be the pentagon of side **a**. Finally, I multiply **a** by **g**, resulting in **m**, which by the fourteenth [proposition] of this book will be the "square-style" hexagon [[notes: *Hexagonus tetragonicus*, the standard hexagonal numbers like 1, 6, 15, 28... which differ from the "equiangular" or centered hexagons discussed earlier]] of the given side **a**. As for the equiangular hexagon and the octagon of side **a**, seek them as was shown just before.
+
+<image-desc>
+A vertical scale on the right margin with horizontal lines and corresponding numbers:
+o — 19
+n — 19
+m — 15
+l — 12
+k — 9
+h — 6
+g [symbol, possibly representing 3]
+f — 4
+
+Below the scale is a geometric figure consisting of a semicircle atop a horizontal line. The line is marked with points c, e, a, d, b. Between points 'a' and 'd' is the number '2', and between 'd' and 'b' is '1'. Between 'e' and 'a' is '3'. Inside the outer semicircle are two inner arcs labeled with numbers '4', '2', and '2'.
+</image-desc>
+
+[[margin: 26]]
+¶ **Every pyramid whose base is a triangle is joined by four equal triangular numbers.**
+¶ For three triangular numbers are raised from the three sides of the base, which are applied together and meet at a point, and the base itself is the fourth triangular number. And since every two [of these triangles] share a common side, they will all be equilateral to one another, and therefore equal. Thus, what is asserted is confirmed by the definition.
+
+[[margin: 27]]
+¶ **If triangular numbers are continuously fitted one on top of the other starting from unity, all the pyramids starting from unity will be produced; the base of any one of them will be the largest of its constituent triangles.**
+¶ Let **a, b, c, d, e, f** be any number of triangular numbers taken continuously, each one smaller than the next down to unity (**f**). Let them be fitted and applied to one another in this order: so that **b** is placed under **a**, **c** under **b**, **d** under **c**, **e** under **d**, and **f** likewise under **e**. I say that all the pyramids starting from unity have been taken, and the base of any one of them is the largest of its triangles. For since those numbers are arranged vertically and meet at unity, they constitute a pyramid by definition. By the corollary of the first [proposition] of this book, these will all be the triangular numbers starting from unity. 
+
+Thus, if you consider unity, it is the first "potential" pyramid. If you take the first triangular number whose side is two, and the unity placed above it is fitted to it, they appear as equal triangular numbers meeting together; this constitutes the second pyramid [[notes: In modern terms, a tetrahedron with side 2, containing 1 + 3 = 4 units]], whose side will be the second triangular number. Since these triangular numbers are taken continuously in height, the third pyramid will also be constituted, whose "side" [[notes: The "side" of a solid number in this context refers to the side of its base]] will be the third triangular number; and the fourth pyramid, whose side will be the fourth triangle, and so on. Because the base of any of these is the largest of its triangles, it follows from the preceding that the base is a triangular number equal to any of the triangular sides. If the side is the fifth triangle, by the corollary of the first [proposition], it is composed of all the preceding triangles; thus the base will be the fifth triangle and the largest of that pyramid, and so it stands for any other.
+
+<image-desc>
+A diagram of a triangular number represented by dots. The rows are labeled from bottom to top as a, b, c, d, e, f. To the right of the diagram are the numbers '15 b' and '21 a'.
+</image-desc>
+
+[[margin: 28]]
+¶ **If for any number with equal sides, all similar numbers from unity up to itself are placed on top in height: the resulting composition will be a pyramid, and its base will be that same number. If, however, the stacking and erection of this kind fails to reach unity: the pyramid will be called "truncated" as many times as there are levels omitted from unity.**
+¶ This teaches how to form pyramids from square bases, pentagonal, hexagonal, heptagonal, octagonal, enneagonal, decagonal, and however many angles you wish, using the same logic as the preceding triangular pyramids. For if squares are fitted together from some given number down to unity, all the sides (which by the corollary of the first [proposition] will be triangular numbers taken continuously from unity) will meet at a single vertex. They will constitute a whole pyramid whose base is the given square upon whose sides the faces of the pyramid are raised to meet at the summit. 
+
+The second part is immediately clear: for if any triangular number is given, such as the sixth from unity, and under it are placed the fifth, fourth, third, and second in the manner said before—but unity is missing—the sides will lean toward each other but will not meet. Therefore, by definition, that figure will be a **truncated pyramid** [[notes: *curta pyramis*, literally "short pyramid"]]. If only the fifth, fourth, and third were stacked, and the second and unity were missing, it would be called a **twice-truncated** (*biscurta*) pyramid; if three were omitted, it would be **thrice-truncated** (*tricurta*). As many as are omitted, that is how many times it is called truncated. The same logic applies to truncated pyramids born from squares, pentagons, hexagons, and the figures that follow. What is proposed is therefore known.
+
+[[margin: 29]]
+¶ **If two pyramids whose bases are adjacent triangular numbers are joined, a pyramid is created whose base is a square equilateral to the larger of the triangles.**
+¶ For each of them is composed of all the triangular numbers from their base down to unity. The base of the smaller pyramid is the first triangular number before the base of the larger. When joined together, by the fifth [proposition] of this book, they make a square; and the second triangle of one and the second of the other make the following square. This continues until the final unity of the smaller pyramid and the penultimate triangle of the larger make the first square after unity. If unity is then added, we have all the squares stacked up to that square whose side is equal to the side of the larger triangular base. By the previous [proposition], a pyramid is composed of all squares from unity, and its base is a square. Thus, what was proposed is achieved.
+
+[[margin: 30]]
+¶ **If any number of equal triangular numbers are stacked in height: the result is a "serratilis" number.**
+¶ Because they are equal, their sides can be fitted and applied directly and continuously upward, one over the other: so that side **de** is over side **ab** and **df**, and **fe** is over sides **ac** and **cb**, and side **gh** is over side **de**, and so on to the last. Since all the sides are equal, the sides placed directly above, which occupy the highest place, will be equal and parallel to those at the bottom. It is clear by definition, therefore, that a **serratilis** [[notes: *numerus serratilis*, or a "saw-like number," refers to a triangular prism. In medieval arithmetic, these were seen as "columns" with polygonal bases.]] has been made.
+
+<image-desc>
+A diagram showing a "numerus serratilis" represented by stacked dots forming a three-dimensional prism. The dots are labeled with letters: a and b at the front base, c behind; d and e at the next level front, f behind; g and h at the third level front, i behind; and a single dot l at the top.
+</image-desc>
+
+[[sig: D 4]]
+
+[[summary: This page explains the transition from 2D polygonal numbers to 3D solid numbers, demonstrating how stacking triangles, squares, or other polygons creates pyramids or prisms (serratiles). It also introduces the concept of truncated pyramids when the stack does not reach a single point (unity).]]
+[[keywords: octagon, triangular numbers, square numbers, pyramids, truncated pyramids, serratilis, prism, Boethius, solid numbers]]

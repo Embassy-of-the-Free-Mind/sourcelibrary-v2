@@ -1,0 +1,35 @@
+[[meta: This page continues a detailed chess endgame problem from page 438. The previous page ended mid-sentence; the word "Soldaten" (Pawns) is completed here. The text uses a numerical grid system (1–64) for the board rather than modern algebraic notation (e.g., e4).]]
+
+### Chapter 10: Of the Game of Chess.
+
+[...Pawns] to twenty-six: **Black** [moves] his **King** to twenty-three: a **Rook** [[notes: *Rochen*, the traditional term for the Rook or Castle]] to sixteen: a **Bishop** [[notes: *Schütze*, literally "archer" or "shooter," the early German name for the Bishop]] to twenty-four: a **Pawn** [[notes: *Soldat*, literally "soldier"]] to thirty-four (to hold back the **White Pawn**): Now, as **Black** has promised to give **White Checkmate** with the **Pawn** on the seventeenth move:
+
+Then his **Bishop** leaps to thirty-eight (to make room for the **White King**): **White** moves the **King** to six:
+
+**Black** [moves] the **Rook** to fifteen: **White** [moves] the **King** to five:
+
+**Black** [moves] the **Rook** to fourteen: **White** [moves] the **King** to four:
+
+**Black** [moves] the **King** to twenty-two: **White** [moves] the **King** to five:
+
+**Black** [moves] his **King** to twenty-one: **White** [moves] the **King** to four:
+
+**Black** [moves] the **Rook** to thirteen: **White** [moves] the **King** to three:
+
+**Black** [moves] the **Rook** to twelve: **White** [moves] the **King** to two:
+
+**Black** [moves] the **King** to twenty: **White** [moves] the **King** to three:
+
+**Black** [moves] the **King** to nineteen: **White** [moves] his **King** to two:
+
+**Black** [moves] his **Rook** to eleven: **White** [moves] the **King** to one:
+
+**Black** [moves] the **King** to eighteen: **White** [moves] his **King** to two:
+
+**Black** leaps with the **Bishop** to twenty and offers **Check**: **White** moves the **King** to one:
+
+**Black** [moves] the **Rook** to thirty-five (remembering his promise; for otherwise he could have given **Checkmate** with that same piece from square three or nine; and so that he might move his **Pawn** forward, and **White**—since his **King** is trapped—might have a move): **White** must take it with his **Pawn**:
+
+[[summary: This page continues a complex chess puzzle where Black maneuvers to fulfill a "promised" checkmate using a Pawn. It illustrates the precise coordination of King, Rook, and Bishop required to trap the White King and force a specific concluding move.]]
+
+[[keywords: Chess strategy, Checkmate, Endgame problems, Rook, Bishop, King, Historical board notation]]

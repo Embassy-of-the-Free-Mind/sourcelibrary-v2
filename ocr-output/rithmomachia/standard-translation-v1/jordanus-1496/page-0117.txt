@@ -1,0 +1,54 @@
+[[meta: This page continues the mathematical demonstration of musical ratios on the monochord. Having established the fundamental octochord (eight-note scale), the author now expands the system to include the higher tetrachords, ultimately constructing the full fifteen-note "Great Perfect System" of Greek music theory.]]
+
+$f$ to $g$ is a tone, for both are born from the *sesquioctava* ratio [[notes: The *sesquioctava* is the 9:8 ratio, which mathematically defines a whole tone in Pythagorean tuning]]. Therefore, by the sixth [rule] of the third [book], $e$ to $f$ will be a minor semitone. Thus, $e|f|g|h$ is the *tetrachord meson* [[notes: The "middle" tetrachord in the Greek system]], proceeding by a minor semitone and two tones, divided in the diatonic genus. And because $a$ (the *proslambanomenos*) and $e$ (the *hypate meson*) were shown in the preceding [section] to sound a *diapente* [[notes: A perfect fifth, 3:2 ratio]]; and in the present [section], $e$ and $h$ (the *hypate meson* and *mese*) sound a *diatessaron* [[notes: A perfect fourth, 4:3 ratio]]. Therefore, by the twenty-third [rule], the *proslambanomenos* sounds an octave (*diapason*) with the *mese*. Thus, the eight-stringed scale $a|b|c|d|e|f|g|h$ contains the *diapason* consonance, which was the entire goal.
+
+[[margin: 5]]
+
+## ¶ Having established the eight-string scale: to add the tetrachord of the disjunct notes in the same genus, and to contain the twelve-string scale of an octave and a fifth.
+
+| | | | |
+|:---|:---:|:---:|:---:|
+| Proslambanomenos | a | | a |
+| Hypate hypaton | b | | b |
+| Parhypate hypaton | c | | c |
+| Lichanos hypaton | d | | d |
+| Hypate meson | e | | e |
+| Parhypate meson | f | | f |
+| Lichanos meson | g | | g |
+| Mese | h | | h |
+| Paramese diezeugmenon | k | Trite coniunctarum | k |
+| Trite diezeugmenon | l | Paranete coniunctarum | l |
+| Paranete diezeugmenon | m | Nete coniunctarum | m |
+| Nete diezeugmenon | n | | n |
+
+¶ Let $k$ $l$ $m$ $n$ be the *tetrachord diezeugmenon*, which is also called "disjunct." I make $h$ to $k$ (the *mese* to the *paramese* of the disjuncts) a *sesquioctava* [9:8 ratio]. And to $m$ (the *paranete* of the disjuncts) a *sesquitertia* [4:3 ratio]. To $n$, indeed (the *nete* of the disjuncts), a *sesqualtera* [3:2 ratio]. Then, I make $l$ to $m$ (the *trite* to the *paranete*) a *sesquioctava*. Thus, the *mese* sounds a fourth (*diatessaron*) with the *paranete* of the disjuncts and a fifth (*diapente*) with the *nete*. Therefore, by the thirteenth [rule] of the third [book], there is a whole tone interval between $m$ and $n$ (the *paranete* and the *nete*). And between $l$ and $m$ (the *trite diezeugmenon* and the *paranete*), there is likewise a tone. But since the *mese* sounds a fourth with the *paranete*, and $l$ to $m$ is a tone, and likewise $h$ to $k$ is a tone, therefore by the sixth [rule] of the third [book], $k$ to $l$ will be a minor semitone. Thus, from the *paramese* to the *trite diezeugmenon* will be a minor semitone; from the *trite* to the *paranete* a tone; and from the *paranete* to the *nete diezeugmenon* likewise a tone. Thus the tetrachord of the disjuncts is joined to the upper eight-string scale in the diatonic genus. And since the preceding demonstrated that $a$ to $h$ is an octave (*diapason*) and the present shows $h$ to $n$ is a fifth (*diapente*), therefore $a$ to $n$ (the *proslambanomenos* and the *nete diezeugmenon*) in the twelve-string scale $a$ $b$ $c$ $n$ contain an octave and a fifth (*diapason ac diapente*).
+
+But if, in a softer mode of singing [[notes: This refers to the "soft hexachord" or the use of B-flat, creating the *conjunct* system]], we wish to divide or establish a tetrachord joined to the string *mese*: let that be the tetrachord $h$ $k$ $l$ $m$, which are the *mese*, *trite synezeugmenon*, *paranete synezeugmenon*, and *nete synezeugmenon*. I make the *mese* to the *nete synezeugmenon* a *sesquitertia* [4:3 ratio]. Thus they sound a fourth (*diatessaron*), and $l$ to $m$ (the *paranete synezeugmenon* to the *nete*) is distant by a tone, and likewise $k$ to $l$ is a tone. Therefore, by the sixth [rule] of the third [book], $h$ to $k$ (the *mese* to the *trite synezeugmenon*) will be the interval of a minor semitone. And $k$ to $l$ and $l$ to $m$ are two tones, and this *tetrachord synezeugmenon* is divided just like the disjuncts in the diatonic genus.
+
+[[margin: 7]]
+
+## ¶ To join the tetrachord of the highest notes (*hyperbolæon*) in the same diatonic genus to those mentioned above: and to complete the consonance of two octaves (*bis diapason*) in a fifteen-string scale (*pentadecachordo*).
+
+| | | | | | |
+|:---|:---|:---:|:---:|:---|:---:|
+| A re | Proslambanomenos | a | | | a |
+| b mi | Hypate hypaton | b | | | b |
+| c faut | Parhypate hypaton | c | | | c |
+| d solre | Lichanos hypaton | d | | | d |
+| e lami | Hypate meson | e | | | e |
+| f faut | Parhypate meson | f | | | f |
+| g solreut | Lichanos meson | g | | | g |
+| a lamire | Mese | h | | | h |
+| b mi | Paramese diezeugmenon | k | b fa | Trite syn. | k |
+| c solfaut | Trite diezeugmenon | l | c solfaut | Paranete syn. | l |
+| d lafolre | Paranete diezeugmenon | m | d lafolre | Nete syn. | m |
+| e lami | Nete | n | | | n |
+| f faut | Trite hyperbolæon | o | | | o |
+| g solreut | Paranete hyperbolæon | p | | | p |
+| a lamire | Nete hyperbolæon | q | | | q |
+
+<sig>h i</sig>
+
+[[summary: This page uses mathematical ratios to explain the construction of the higher Greek tetrachords (the disjunct, conjunct, and highest notes). It demonstrates how these units combine to form a full two-octave scale, mapping ancient Greek terminology onto the medieval Guidonian system of "A re, B mi, C faut."]]
+
+[[keywords: tetrachord, diapason, diapente, diatessaron, Mese, Diezeugmenon, Synezeugmenon, Hyperbolæon, monochord, musical ratios, Pythagorean tuning]]

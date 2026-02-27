@@ -1,0 +1,23 @@
+[[meta: This page continues the discussion of Chapter 12 regarding the "immediate purpose" of chess—victory—and how it serves as a bridge to the practical instruction found in the subsequent books.]]
+
+The First Book / Chapter 12:
+
+> There are certain things which, at the very beginning, bring delight: such as **Hunting** and **Chess-playing**. For whoever undertakes such things enters into a shared understanding with one who is experienced in them, insofar as it concerns the **Goal** they set for themselves—namely, victory and triumph—and he finds immediate delight in the observation of it. Just as he delights in it from the beginning unto the end, so too is a well-achieved victory charming and agreeable to him.
+
+Secondly, this purpose directs and brings us to the use of the **Materials**, or [[gloss: <term>Chess-pieces</term>]], for which they were formed and presented by Art, and how we should use them to our advantage.
+
+Lastly, it leads us to the **Means** themselves: because the purpose encompasses within its scope the putting of those means into action (as can be seen from the description thereof). For what is victory in this game other than a [[notes: *Niderlegung*, or "laying down." The author is describing the concept of Checkmate as the physical and symbolic surrender of the piece.]] **laying down of the King**? Namely, when the King is attacked and rushed upon by one of the opponent’s troop in such a way that he cannot escape, but must instead surrender himself as a prisoner.
+
+From this, one can now see what victory in this game actually is, alongside the **Means** by which one may arrive at the same. However, since the entire Art rests upon these final points (for as [[notes: Galen of Pergamon was an ancient Greek physician whose writings on logic and method remained authoritative through the 17th century.]] **Galenus** testifies in *Meth: cur: lib: 9. c. 7*):
+
+> *Totius Artis summa, in eo consistit, ut Instrumenta tibi pares, ad obtinendum Finem:* That is: The sum and substance of an entire Art consists in this—that one strives to prepare the means to attain the intended goal.
+
+Therefore, it shall suffice that here we merely take note of what victory actually is. Regarding the **Means** in themselves, and how they may be put into practice, a sufficient report will be found in the following three books.
+
+### Appendix.
+
+The following [[notes: A *Cartel* in this era was often a printed broadsheet, challenge, or public declaration. Here, it refers to a summary document or table of rules.]] **Cartel**, which was issued in public print some years ago, makes mention in summary fashion—partly in the first six clauses—of what was mentioned above in the 4th, 5th, 6th, 7th, 8th, 9th, and 10th chapters. Partly, however, in the last three clauses, it illustrates what we have set forth in this final chapter of the First Book regarding victory; we have [[meta: The sentence breaks here at the catchword "ben wir," which completes the word "haben" (we have) on the next page.]]
+
+[[summary: This page defines victory in chess as the "laying down of the King" (checkmate) and explains that the purpose of the game dictates how the pieces are used. It serves as a transition to the next three books, which focus on the practical means and strategies of play.]]
+
+[[keywords: Victory, Checkmate, Galenus, Chess-pieces, Strategy, Purpose of Chess, Cartel]]

@@ -1,0 +1,59 @@
+[[meta: This page continues the exploration of Book VI, specifically focusing on the relationship between square and cubic numbers (sixth powers), and the properties of plane (superficial) numbers. It builds upon the definitions of means and proportions established in the previous pages.]]
+
+<image-desc>A diagram at the top left consisting of horizontal lines and brackets. The lines are labeled with letters 'a', 'b', 'c', 'd' and assigned the values 1, 2, 3, 4. A larger horizontal line above them is labeled 'm' and assigned the value 5.</image-desc>
+
+[[margin: 34]]
+¶ Whatever is gathered from numbers taken twice from unity: is an oblong [[notes: *Altera parte longior*, literally "longer by one part," refers to a number of the form $n(n+1)$, such as $2 \times 3 = 6$.]] number and is less than its sides: the greatest of those gathered.
+¶ Let there be numbers of this kind taken in a double order: unity, **a**, **b**, **c**, **d**, which are added together to make **m**. I say that **m** is an oblong number, and its lesser side is **d**. For by the preceding [proposition], if I add **e** to the aforesaid numbers, a square **f** is made, whose difference from the middle oblong is **e**. Therefore, removing the number **e** from the square **f**, there remains the oblong number midway between **f** and the next smaller square. But what remains when **e** is removed is the sum of the two assigned orders, namely **m**. Therefore **m** is the oblong mean between **f** and the next smaller square. But that oblong mean is made from **d** times **e**, the sides of those squares, by the twenty-fourth [proposition] of the present [book]. But **d** is the lesser; therefore the lesser side of the oblong **m** is **d**, which is the greatest of the assigned orders. Thus the whole proposition stands firm.
+
+---
+
+<image-desc>Diagram featuring lines labeled with letters and numbers: 'a' is 64, 'e' is 16, 'b' is 8, 'c' is 4. A separate horizontal line 'o' is marked as 512.</image-desc>
+
+[[margin: 35]]
+¶ If a number is a square-cube: the side of the square will be a cube, while the side of the cube will be a square [[notes: A "square-cube" is a number that is both a square and a cube, which we identify as a sixth power ($x^6$). For example, 64 is $8^2$ and $4^3$. Its square root (8) is a cube ($2^3$), and its cube root (4) is a square ($2^2$).]].
+¶ Let **a** be a square-cubic number, whose side as a square is **b**, and whose side as a cube is **c**. I say that **b** is a cube and **c** is a square. The first part is evident: for I multiply **b** by **a** and let it become **d**. It is clear that **d** is a cube and **a** is a cube that measures it according to **b**. Therefore, by the corollary of the seventeenth [proposition] of this [book], **b** is a cube because it is the first. The second part is shown: let **e** be the square of **c**. Since that which is contained under the extremes **c** and **e** is equal to that which is made from **b** times itself [[notes: Meaning $c \times e = b^2$]], therefore by the twenty-sixth of the second [book], **e**, **b**, and **c** are in continuous proportion. But **e** was first established as a square; therefore **c**, by the tenth [proposition] of this [book], is also a square. Thus the whole proposition is established.
+
+---
+
+<image-desc>Diagram with letters and large numbers: 4096 and 262144 at the top. Below, a series of lines: 'a' is 256, 'd' is 512, 'e' is 128, 'b' is 64. A line 'f' is indicated on the right.</image-desc>
+
+[[margin: 36]]
+¶ If there are two square-cubic numbers: the mean between them in continuous proportionality will be a cube; but each of the two [other] means will be a square.
+¶ Let **a** and **b** be two square-cubics. Because **a** and **b** are squares, by the corollary of the fourth [proposition] of this [book], there is one proportional mean between them, which is **c**. And because **a** and **b** are cubes, by the same corollary, there are two proportional means between them, which are **d** and **e**. I say, therefore, that **c** is a cube, and **d** and **e** are squares. That **c** is a cube is declared thus: for I multiply **a** by **b** and let **f** be produced. Because **a** and **b** are cubes, **f** will also be a cube by the sixteenth [proposition] of this [book]. And since **a**, **c**, and **b** are proportionals, then by the twenty-sixth of the second [book], the cube **f** is made from **c** multiplied by itself. Wherefore **f** is the square of **c**. Thus **f** is a square-cube; wherefore **c**, the side of **f** as a square, is a cube by the preceding [proposition], which is the first [point]. But that **d** and **e** are squares is clear from this: because **b**, **e**, and **d** are in continuous proportion and **b** is first a square, therefore the third, **d**, is also a square by the tenth [proposition] of this [book]. Likewise, **a**, **d**, and **e** are proportional numbers and **a** is first a square; therefore by the same tenth [proposition], the third, **e**, is a square. Thus the whole proportion is known.
+
+---
+
+<image-desc>A large branching tree diagram. The left branch contains numbers 729 (g), 243 (h), 81 (k), 27 (l), 9 (m), 3 (n). The right branch contains larger numbers: 386691489 (o), 14348907 (p), 531441 (q), 19683 (r), 729 (s), 27 (t).</image-desc>
+
+[[margin: 37]]
+¶ To find two square-cubics between which any number of proportional means may be taken.
+¶ If I am commanded to find two square-cubics between which any number of proportional means may be placed, I take numbers proportional [starting from unity] more by two than the means I am commanded to find [[notes: To find 4 means, take 6 terms in proportion]]. For example, if I am commanded to find two square-cubics between which there are four proportional means, I take six numbers in continuous proportion, such as **a, b, c, d, e, f**. Of these, let the cubes be taken in order: **g, h, k, l, m, n**, which by the sixth [proposition] of this [book] are also proportional. Let these cubes indeed be multiplied by themselves in order, and let **o, p, q, r, s, t** be produced. I say, therefore, that **o** and **t** are two such square-cubics. For since **g, h**, and the others are multiplied by themselves, **o, p, q, r**, and the others are squares. And because **g, h**, and the others (that is, their sides) are proportional, by the fifth [proposition] of this [book], **o, p, q**, and the others (their squares) are proportional. But since **g** and **n** are cubes, then by the sixteenth [proposition] of this [book], **o** and **t** will be cubes. Therefore **o** and **t** are square-cubics between which the four numbers **p, q, r, s** are proportional means, which is what was proposed.
+
+---
+
+<image-desc>A small diagram showing numbers 12, 2, 3 and various letter labels including qm, pl, ok, nh, mg, and r.</image-desc>
+
+[[margin: 38]]
+¶ To find two square-cubics between which it is possible to take means according to given numbers.
+¶ Let the given numbers be **a** and **b**, and the goal be to find two square-cubics between which there are proportional numbers according to **a** and also according to **b**. Let **a** be two and **b** be three. Because proportions are always one more than the means themselves, and **a** is two, therefore to find means according to **a**, there must be three proportions. And because **b** is three, to find means according to **b**, there must be four proportions. I multiply three by four and let **e** be produced. According to **e**, I arrange continuous proportions in the numbers **r, d, e, f, g, h, l, m, n, o, p, q**. Let **q** and **r** be set as square-cubics by the preceding [proposition]. And I join four of those proportions as here, according to groups of four, and I will have three proportional means, namely **n, l**, and **f**, by equal proportionality. And similarly I join three of them as here, by groups of five, and I will have **m** and **g**, two proportional means between the square-cubics **q** and **r**, which is what was proposed.
+
+---
+
+<image-desc>A diagram of vertical lines with numbers 6, 3, 2 on the left and 24, 6, 4 on the right, labeled with letters a, g, d, b, e, f.</image-desc>
+
+[[margin: 39]]
+¶ Between any two similar plane numbers: it is necessary that there be a third number in continuous proportionality [[notes: This is Euclid VIII.18: between two similar plane numbers there is one mean proportional]].
+¶ Let **a** and **b** be similar plane [[notes: *Superficiales*, or numbers representing the area of rectangles with proportional sides.]] numbers, and the sides of **a** be **c** and **d**, and the sides of **b** be **e** and **f**. I say that between **a** and **b** there is one number in continuous proportion. For because **a** and **b** are similar by definition, their sides are proportional. Therefore, as is the proportion of **c** to **d**, so is **e** to **f**. Wherefore, by permutation, as is the proportion of **c** to **e**, so is **d** to **f**. I multiply **e** by **d** and let it become **g**. And because **c** times **d** makes **a**, and **b** times that same **d** [[notes: This likely means "e times d"]] makes **g**, therefore by the eighth [proposition] of the second [book], the proportion of **a** to **g** is as **c** to **e**. And because again **e** times **d** makes **g** and **e** times **f** makes **b**, therefore the proportion of **g** to **b** is as **d** to **f**. But the proportion of **c** to **e** was proven to be as **d** to **f**; therefore the proportion of **a** to **g** is as **g** to **b**. Thus, the number **g** is a proportional mean between **a** and **b**, which was to be demonstrated.
+
+---
+
+<image-desc>A diagram with lines and numbers 9, 3, 4 and 16, 3, 4, labeled with letters a, d, e, c, f, g, b.</image-desc>
+
+[[margin: 40]]
+¶ And if a third number falls between them as a proportional mean: then any two numbers will be similar plane numbers.
+¶ This is the converse of the preceding. For let **a** and **b** be any two numbers between which **c** is a proportional mean. I say that **a** and **b** are plane and similar. Let **d** and **e** be the least numbers in the proportion of **a** to **c**, which, because they are the least, will measure **a** and **c** equally by the nineteenth [proposition] of the third [book]; let this be according to **f**. And [the same numbers] **k** [should be **d, e**] will measure **c** and **b** equally; let this be according to **g**. It is therefore manifest, since **a** is contained under two sides **d** and **f**, and **b** is contained under two sides **e** and **g**, that **a** and **b** are plane numbers by definition. But that they are similar is clear. For because by hypothesis **d** and **e** measure **c** and **b** according to **g**, **d** measures **c** according to **g**, and **e** measures **c** according to **f**, as was also posited. Therefore, by the twenty-fifth [proposition] of the second [book], **d, f** and **e, g** are proportionals. But **d** and **f** are the sides of **a**, and **e** and **g** are the sides of **b**. Therefore, **a** and **b** are similar plane numbers by definition, which is what was proposed.
+
+[[summary: This page explores the properties of square-cubics (sixth powers) and the existence of proportional means between various classes of numbers. It demonstrates that square-cubics have specific root properties and that "similar plane numbers" (rectangles with proportional sides) always share a single mean proportional.]]
+
+[[keywords: square-cube, sixth power, oblong number, mean proportional, similar plane numbers, Euclid Book VI, continuous proportion, superficial numbers]]

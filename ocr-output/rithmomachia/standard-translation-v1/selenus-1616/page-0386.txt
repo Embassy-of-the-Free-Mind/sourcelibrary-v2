@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical variations of the ninth chapter. The coordinate system remains a 1–64 grid, and the text employs early modern chess terminology where pieces are named as military figures: Soldiers (Pawns), Riders (Knights), and Archers (Bishops).]]
+
+### The Third Book / Chapter 9:
+
+33. Rook / [takes] the **B. K. Rook’s Soldier** [[note: The Black King's Rook's Pawn]] / and gives **Check**: * **The Black** [player] / covers the **King** / with his **Rook** / on fifty-one: **The White** [player] / takes him / with the **Queen** / and gives **Check**: **The Black** [player] / moved / the **King** / to sixty-one: **The White** [player] / takes / the **B. K. Rider** [[note: Black King's Knight]] / with the **Queen** / and gives **Check-Mate**.
+
+34. But if **the Black** [player] / does not cover / the **King** / with the **Rook** / on 51. (no. 33) but / moves the same [the King] / to sixty-one: then **the White** [player] / takes / the **B. K. Rook** / with the **Queen** / and
+
+35. gives **Check**: * **The Black** [player] / covers / the **King** / with the **K. Rider** / on sixty-three: **The White** [player] / takes him / with the **Queen** / and gives / **Check-Mate**.
+
+36. But if **the Black** [player] / places / the **King** / (because He does not want to cover him / with the **Rider** / on 63. no. 35) on fifty-four: then **the White** [player] / takes / the **B. K. Rook** / with the **Queen**: **The Black** [player] / cannot take her / with the **K. Rider** / (since the **W. K. Rook** / holds the same captive [[note: The Knight is "pinned" against the King by the Rook and cannot legally move]]) / but rather / **the White** [player] / will, with his remaining power / further stand his ground against him / and soon overcome him.
+
+37. But when **the Black** [player] / moves / not the **Rook** / to 59. (no. 32) but / the **Queen** / to thirty-four / and gives **Check**: then **the White** [player] / places the **King** / on twenty-two: **The Black** [player] / [moves] the **K. Rider** / to forty-six: **The White** [player] / does not take / with the **Queen** / the mentioned **B. Rider’s Soldier** [[note: The Black Knight's Pawn]] / (for **the Black** [player] / [would] give **Check** / with the **K. Archer** [[note: *Schütze*, the historical term for a Bishop]] / from thirty-one: and / when He [White] had moved the **King** / to thirty / or twenty-three: [Black would] offer **Check** again / with the **K. Rider** / on forty / and in such a manner / would obtain his [White's] **Queen**) / nor moves / the **K. Rider’s Soldier** / to twenty-three / (for **the Black** [player] / would then move the **K. Rook** / against his **Queen** / to sixty-two: He [White] would have to move the same / to fifty: **The Black** [player] / would move / the **K. Archer** / to twenty-four / in order to protect the fifteenth square: He [White] / [moves] the **Rider’s Soldier** / to thirty-one: **The Black** [player] / [moves] the **Rider** / to forty / and gives / **Discovered Check** [[note: *Ab-Schach*, literally "off-check," occurs when moving one piece reveals a check from another]] / from the **Rook**: He [White] / placed the **King** / on twenty-nine: **The Black** [player] / would give **Check** / with the **Archer** / from fifteen / and move him / onto his **K. Rook**: He [White] [moves] the **K. Archer’s Soldier** / forward / to twenty-two: **The Black** [player] / would give **Check** / with the **Rook** / from thirty /
+
+[[meta: catchword: Check:]]
+
+[[summary: This page details specific endgame or mid-game maneuvers where White achieves checkmate through a series of Queen captures or pins Black's Knight with a Rook. It also explores a complex counter-play scenario involving discovered checks and the tactical value of the "Archer" (Bishop).]]
+
+[[keywords: Check-mate, Queen, Rook, Rider, Archer, Soldier, Discovered Check, Pinning, Chess Tactics]]

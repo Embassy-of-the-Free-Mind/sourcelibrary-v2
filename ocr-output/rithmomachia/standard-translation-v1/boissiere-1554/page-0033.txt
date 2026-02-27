@@ -1,0 +1,15 @@
+[[meta: This page concludes the mathematical construction of the "Odd Pyramid" (reaching a total of 190) and transitions into the rules for the initial setup of the game pieces on the board.]]
+
+->RYTHMOMACHIE, IEV<-
+
+presupposing it is thus cut so that it lacks 3 steps or bases before it reaches unity: and for this reason, it is called **tricurte** [[notes: From the Latin *tri-curtata*, meaning "thrice-truncated." In this game, some pyramids are "perfect" (ending at 1), while others are truncated and missing their top-most squares]]. And you shall mark the surface of it upon the summit—where previously you had left space to apply the 3 characters [[notes: Meaning the three digits]] of the number resulting from the addition of all its bases—which will be 190 [[notes: This pyramid is formed by the squares of 8, 7, 6, 5, and 4 (64+49+36+25+16 = 190)]]. And because you already had a square piece among the odd numbers marked with that same number, you shall remove that piece to make room for the pyramid: and thus you will have your whole game marked and perfected. It remains that you must mark each piece beneath its number with a small dot, as appears in the following [illustrations], so that the arrangement of the board does not confuse you if it is turned upside down.
+
+### Of the positioning of the pieces, and first, of the camp of even numbers.
+
+In the positioning lies most of the skill [[notes: The French *artifice* implies both the technical setup and the strategic "art" of the game]]; nevertheless, it will be very easy by this means. First, make a mock setup, and once you have completed it, you will soon have arranged your camp in its proper order, specifically in the manner that follows. And first, because your board [[notes: The *tablier* is the rectangular grid, traditionally 8 cells wide by 16 cells long]] is long and might prevent you from seeing the numbers: similarly, so that the diverse representation
+
+[[meta: catchword: des]]
+
+[[summary: The author explains how to complete the "Odd Pyramid" (190), advising players to replace the corresponding square piece with it. The text then shifts to the strategic setup of the game board, starting with the even numbers' side.]]
+
+[[keywords: Rythmomachie, tricurte, pyramid, even numbers, odd numbers, game board setup, mathematical games]]

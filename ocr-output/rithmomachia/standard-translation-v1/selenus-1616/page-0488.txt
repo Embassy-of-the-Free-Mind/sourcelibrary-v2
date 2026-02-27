@@ -1,0 +1,25 @@
+[[meta: This page completes the instructions for the black round stones (the odd numbers) and begins the explanation for the next class of pieces, the triangles, specifically how their values are derived from the round pieces.]]
+
+### The Second Chapter
+
+The aforementioned arrangement, which is observed with the eight white round stones, is also to be applied to the **Black Round Stones**: however, in place of the even ones, the first four **Odd Numbers** [[notes: The original German uses *Ungleichen Zahle* (unequal numbers), a common period term for odd numbers because they cannot be divided into two equal whole parts]] (namely 3, 5, 7, 9) are used. Subsequently, on the four lower black round stones, the sums that arise from multiplying the said numbers by themselves [[notes: Squaring the numbers]] (namely 9, 25, 49, 81) shall be written.
+
+( Buxer : fol : 7. a. ) [[notes: Claude de Boissière, known as Buxerius, was a 16th-century mathematician. His work "The Noble Game of Arithmetic" is a primary source for these rules.]]
+
+> » These numbers (3, 5, 7, 9) are also contained within the scope of the monad and the decade [[notes: The "monad" is 1 and the "decade" is 10; Buxerius is noting that these are the single-digit odd numbers]]; though they, like the preceding Even Numbers, are singular, nevertheless every ratio of numbers flows from them as if from a fountain and origin. Furthermore, since in Multiple Proportion [[notes: A "multiple" ratio is one where a larger number contains a smaller number exactly two, three, or more times, such as 2:1 or 3:1]], one number entirely encompasses the other, they are most suitable for describing the circles.
+
+| 2 | 4 | 6 | 8 |
+| :---: | :---: | :---: | :---: |
+| 4 | 16 | 36 | 64 |
+| **6** | **20** | **42** | **72** |
+[[notes: This table illustrates the relationship between the White Round stones and the White Triangles. The top row is the root (n), the middle row is the square (n²), and the bottom row—the triangles—is the sum of the two (n + n²). For example: 2 + 4 = 6; 8 + 64 = 72.]]
+
+The numbers for the **White Triangular Stones** are found in the following manner: First, the eight white round stones remain in their order, just as they were placed during the discovery of their numbers. Following this, one places beneath them four white triangular stones and marks upon them the sum—
+
+[[notes: The text cuts off here due to the page break, intended to be continued with the word "sums" on the next page.]]
+
+P lll
+[[meta: catchword: men/]]
+
+[[summary: This page explains how to number the black round pieces using odd numbers and their squares, and introduces the calculation for the triangular pieces by summing the values of the round pieces.]]
+[[keywords: Arithmomachia, Odd Numbers, Squares, Multiple Proportion, Buxerius, Triangular Stones, Mathematical Ratios]]

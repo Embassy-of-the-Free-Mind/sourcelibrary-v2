@@ -1,0 +1,23 @@
+[[meta: This page continues the scene from Giovanni Boccaccio’s "Il Filocolo," where the protagonist, Filocopo (an alias for Florio), is playing a high-stakes chess match against the Castellan, Sadoc. In the previous pages, they had begun a match involving large sums of gold coins (bezants) as Filocopo attempts to win the Castellan’s favor through a display of both skill and strategic humility.]]
+
+### Of Chess.
+C ij
+[[margin: Chapter 1]]
+
+*Filocopo remained silent, showing that the loss of the [[term: bisanti]] [[notes: gold coins, specifically bezants]] pained him greatly, etc. Having brought the [[term: giuoco]] [[notes: game]] almost to an end and being on the verge of [[term: mattare]] [[notes: delivering checkmate]] to the Castellan, and showing by his actions that he noticed this, he [[term: tavolò]] [[notes: forced a draw or stalemated; literally "tabled" the game]] that match.* The Castellan recognized within himself the courtesy of Filocopo, who desired to lose rather than win, and said to himself: "This is the noblest and most courteous youth I have ever seen." They rearranged the [[term: scacchi]] [[notes: the chess pieces]] for the third game, and the quantity of [[term: bisanti]] increased even further. Before the play began, the Castellan said to Filocopo: "Young man, I pray and conjure you by the power of all the Gods, that you play as best you know how, and do not spare me as you have done until now." Filocopo replied: "My lord, the disciple can hardly play with the master without being defeated, but since it pleases you, I shall play as well as I know how."
+
+The third game began, and after playing for a long space of time, Filocopo had the better of it. The Castellan, realizing this, began to grow angry and his face changed color; he strained his mind to see if he could recover the game through mastery. But the more he played, the worse his position became. Filocopo took the [[term: Cavaliero]] [[notes: Knight]] with an [[term: Alfino]] [[notes: the Bishop; in medieval chess, this piece was often called the 'Alfil,' derived from the Arabic word for elephant]] and gave him [[term: scacco]] [[notes: check]].
+
+The Castellan, because of this move, grew angry beyond measure—more for the loss of the [[term: bisanti]] than for the game itself—and he struck the [[term: scacchi]] with his hands, throwing both them and the [[term: scacchiere]] [[notes: chessboard]] to the ground.
+
+Seeing this, Filocopo said: "My lord, because it is the custom of the wisest to grow angry at this game, I do not deem you less wise for being angry against the chess pieces. But if you had looked well at the game before you spoiled it, you would have seen that I was but two moves away from being [[term: matto]] [[notes: checkmated]] by you. I believe you saw it, but to be courteous to me, you chose to show yourself angry and lose the game; but it shall not be so. These [[term: bisanti]] are all yours." And showing that he wished to match his own coins to the quantity of the Castellan’s, he added three times as many of his own. The Castellan, pretending to be listening to other words, took them, saying: "Young man, I swear to you by the soul of my father, that in my days I have played with many, and never found anyone who could [[term: mattare]] me at this game except you; and likewise, I have never found a more courteous youth than you in all my days."
+
+->That is:<-
+
+[[vocab: Filocopo, Castellan, bezants, chess, Bishop, Knight, chessboard, game, check, checkmate]]
+
+[[meta: catchword: After]]
+
+[[summary: This page depicts Filocopo using the game of chess as a diplomatic tool, intentionally allowing a draw and later using flattery and a large "loss" of gold to soothe the angry Castellan. The passage highlights the social and emotional volatility associated with high-stakes chess in the Renaissance, as well as the protagonist’s noble character.]]
+
+[[keywords: Filocolo, Boccaccio, chess etiquette, gambling, bezants, checkmate, medieval sportsmanship, Bishop, Knight]]

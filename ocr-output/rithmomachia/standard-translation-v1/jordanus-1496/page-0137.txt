@@ -1,0 +1,42 @@
+[[meta: This page continues the classification of mathematical relationships, moving from the properties of individual numbers (like perfect or prime numbers) to the properties of ratios of inequality and geometric "figured" numbers.]]
+
+<page-type>text</page-type>
+<sig>i 3</sig>
+
+## Properties of Superpartients.
+
+1 Every superpartient ratio leaves a greater superpartient above itself. The "greater" ratio is that which takes its name from a larger number. [[notes: In Pythagorean arithmetic, a "superpartient" ratio is one where the larger number contains the smaller number once, plus more than one part of it. For example, 5:3 (a superbipartient) contains 3 once plus two-thirds of 3.]]
+2 All superpartients arise from comparing the continuous series of odd numbers starting from five against the continuous series of numbers succeeding by threes. [[notes: This describes a method of generating ratios like 5:3, 7:4, 9:5, etc.]]
+
+## Properties of the Species of Superpartients
+
+1 Continuous "superbipartients" [[notes: Ratios like 5:3]] will be born if the number two is multiplied into both terms of the first superbipartient, and then again into the resulting terms, and so on as many times as two is multiplied into the produced terms.
+2 Continuous "supertripartients" [[notes: Ratios like 7:4]] will arise by a similar creation if the number three is multiplied into the terms of the first supertripartient and then into the resulting terms, and so on. And "superquadripartients" [[notes: Ratios like 9:5]] if you multiply four into the first terms of that same inequality. The same holds true if you multiply by any other number; you can draw out the formations of the remaining species of superpartients by a similar creation.
+
+## Properties of Multiple Superparticulars
+
+1 Multiple superparticulars are born continuously from the odd numbers collected in their order starting from five, compared to continuous numbers succeeding from two. [[notes: A "multiple superparticular" ratio is one where the larger number contains the smaller several times, plus one part over. For example, 5:2 is "double sesquialter" (2 and 1/2).]]
+2 "Double sesquialters" [[notes: The ratio 5:2, 10:4, 15:6...]] are created continuously if the numbers from five, leaping forward by fives, are compared to continuous even numbers starting from two.
+3 "Double sesquitertians" [[notes: The ratio 7:3, 14:6, 21:9...]] will likewise arise if the numbers from seven, exceeding each other by sevens in a perpetual series, are compared to triples rising from three.
+4 "Double sesquiquartans" [[notes: The ratio 9:4, 18:8...]] are born if the numbers from nine, leaping by nines, are compared to quadruples from four; in this same manner, "sesquiquintans" are easily found from quintuples and elevens, and so on for the rest.
+
+## Properties of Multiple Superpartients
+
+1 "Double superbipartients" [[notes: The ratio 8:3, where 8 contains 3 twice plus 2 parts of 3 (2 and 2/3).]] are born if eight is compared to three, and those progressing by eights are compared to those exceeding by threes.
+2 "Double supertripartients" [[notes: The ratio 11:4 (2 and 3/4).]] are born by a certain law if those from eleven (and exceeding by the same number) are compared to four and those jumping by the sum of four in an uninterrupted series.
+3 And "double superquadripartients" [[notes: The ratio 14:5 (2 and 4/5).]] are found from fourteen and its multiples compared to five and its multiples. By this diligence, the discovery of all such ratios is very easy. And by this art, the series for "triple superbipartients," "supertripartients," and any others is easily gathered.
+
+## Properties of Plane and Solid Numbers.
+
+1 Every plane number can be resolved into triangles. [[notes: "Plane numbers" are numbers that can be represented as geometric shapes. The author notes that any polygon can be subdivided into triangles.]]
+2 All plane figures compared to their nearest neighbors—as a square to a triangle, or a pentagon to a square—surpass each other by a triangle. [[notes: For example, the 4th square number (16) is the 4th triangle (10) plus the 3rd triangle (6).]]
+3 Every solid number holds a pyramid as its origin. [[notes: Just as plane figures start with the triangle, three-dimensional "solid" numbers are built up from a pyramidal base.]]
+
+## Properties of the Species of Plane Numbers.
+
+1 All triangles [[notes: Triangular numbers: 1, 3, 6, 10, 15...]] arise if, in a natural quantity of numbers, the next following number is always added to the previous ones.
+2 Squares [[notes: "Tetragoni"]] are all those found as "angular" numbers when natural numbers are arranged in a double series in both length and width and are multiplied into one another. They are called "angular" because they complete a diagonal series from the monad [[notes: The number one]] up to the opposite corner.
+
+[[summary: This page explains the generation of complex mathematical ratios (superpartients and multiple superparticulars) and introduces figured numbers, such as triangles, squares, and pyramids, which bridge arithmetic and geometry.]]
+
+[[keywords: arithmetic, ratios, superpartient, sesquialter, plane numbers, solid numbers, square numbers, triangular numbers, pyramid numbers]]

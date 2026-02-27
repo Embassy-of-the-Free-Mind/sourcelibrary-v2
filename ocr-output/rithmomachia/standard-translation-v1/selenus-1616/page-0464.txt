@@ -1,0 +1,19 @@
+[[meta: This page continues the discussion of the history of chess in Germany, moving from the specific rules of Courier Chess to the heraldic evidence of the game's antiquity in various regions and the eventual simplification into the standard game.]]
+
+### The Fourth Book / Chapter 9
+
+Yet we cannot leave unmentioned here that in the aforementioned **County of Ascania**, the town of **Aschersleben** bears a **chessboard** in its coat of arms; therefore, a portion of it is also recorded in the coat of arms of the **Princes of Anhalt** (as Counts of Ascania). Presumably, the **game of chess** was in common use and held in no small regard in that place in former times, more so than in the single village of **Ströbeck**. This also lends no small support to our opinion (namely, that the **Germans**, by virtue of Chapter 2 in the 1st Book, pages 39 and 43, must have been good chess players since years immemorial). Accordingly, it is not to be wondered at that their neighbors, the **Slavs** or **Wends** [[notes: The Wends are a historical Slavic population living near Germanic settlement areas]], also showed themselves to be somewhat knowledgeable of the game of chess at that time: in that they may have given the name **Rochlitz** to a town in **Upper Lusatia** [[notes: A historical region in Germany and Poland]] because of it. Indeed, **Matthæus Dresserus**, in *descriptione Urbium Germaniæ* [[notes: "Description of the Cities of Germany," a historical geographical work]], almost conjectures this in the following words:
+
+> *Rochlicium vel a Slavis sic nominatum, quasi Ludus Latruncularius, quo delectata fuerunt plurimæ gentes. Cujus notam in Insigni suo gerit oppidum.* That is: **Rochlitz** was named as such by the **Wends** because of the **game of chess**, which many nations have delighted in using: just as the town still bears a **Rook** [[notes: "Rochen" in German, referring to the chess piece]] in its coat of arms because of it.
+
+However, the **Smaller Game** arose from the aforementioned **Extensive Game** in the following manner:
+
+The board of this **Courier Game**, or **Great Chess**, was turned: the uppermost part of it was shifted to the side, and thus the outermost **white square** (as it is still in use today, and perhaps still observed because of this change) was placed on the **right hand**. Four cross-lines, or **thirty-two squares**, were separated from it and brought into a square space. Sixteen pieces (namely **eight Soldiers**, **four Couriers**, **two Men**, and **two Sneakers**) were removed, and the entire game was drawn closer together in the number of its squares and pieces.
+
+This game has been described by **Fr. Jacobus de Casallis** [[notes: Likely referring to Jacobus de Cessolis, a 13th-century monk whose chess sermon was a medieval bestseller]], **Fr. Conradus von Ammenhusen**, and **Dr. Jacob Mennel**. It is called the **Old Chess Game** by the inhabitants of **Ströbeck**, and without the sixteen named pieces, it is played just like the extensive **Courier Game**.
+
+[[meta: catchword: It will be]]
+
+[[summary: This page argues for the long history of chess in Germany by citing heraldic symbols in Aschersleben and Rochlitz. It also explains how standard chess was derived from the more complex Courier Chess by reducing the board size and removing specific pieces.]]
+
+[[keywords: Aschersleben, Rochlitz, Courier Chess, Ströbeck, Heraldry, Evolution of Chess, Wends, Matthæus Dresserus, Jacobus de Cessolis]]

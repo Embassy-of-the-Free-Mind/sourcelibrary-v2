@@ -1,0 +1,15 @@
+[[meta: This page continues the mathematical explanation of how to calculate the values for the "superpartient" pieces in Rythmomachia. The previous page provided a visual layout of the numbers and mentioned the work of Marcial Rogier. This page details the specific arithmetic steps—adding the roots of previous numbers—to generate the next set of squares in the sequence.]]
+
+THE PHILOSOPHERS.
+
+## On the superpartients.
+
+Just as we said above that the first square tables [[notes: In this context, "tables" refers to the numerical charts or the game pieces themselves, which were often called "tabliers" or "tables."]] containing the numbers required for the **superpartient** proportion [[notes: A ratio where the larger number contains the smaller number once, plus two or more parts of it (for example, 5:3 or 7:4).]] are found by adding the two numbers that proceed in **superparticular** proportion, you shall use a similar method in this arrangement.
+
+But to find the final tables of their required numbers, you must choose in each row the two tables of numbers that were required for the two proportions already laid out—namely, the **multiple** and **superparticular** proportions. And because all the required numbers are **square numbers**, you will take the **roots** [[notes: The "root" is the number that, when multiplied by itself, produces the square (e.g., 3 is the root of 9).]] of those two preceding required numbers and add them together. 
+
+Afterward, you will multiply the result by itself, and you will have the required numbers for the superpartient proportion. For example: I want to find the required number that follows after 15 in the second position. I choose the two tables of required numbers from the two proportions (multiple and superparticular) that are already laid out in that row, which are 4 and 9. The roots of these are 2 and 3. I then add them together, which results in 5. The **square** of that number is 25, which will be suitable to show the required number for the superpartient proportion. And thus you shall be able to...
+
+[[summary: This page explains the mathematical formula for calculating the values of the "superpartient" game pieces by adding the square roots of the "multiple" and "superparticular" pieces and then squaring the result. It provides a step-by-step example using the numbers 4 and 9 to arrive at 25.]]
+
+[[keywords: Rythmomachia, superpartient, superparticular, square roots, mathematical proportions, Renaissance mathematics, game pieces, arithmetic progression]]

@@ -1,0 +1,67 @@
+[[meta: This page continues the study of the "composition" of ratios—the mathematical process we now call multiplication. Jordanus is systematically exploring how different classes of ratios (Multiples, Superparticulars, and Superpartients) interact when combined. He uses the Boethian terminology established in earlier books to categorize the results.]]
+
+<margin>26</margin> ### **¶ To find any number of multiples which, with a given superparticular, constitute a multiple-superparticular.**
+¶ Let **a** be the given superparticular ratio [[notes: A superparticular ratio is of the form (n+1):n, like 3:2 or 4:3]], let **b** be the number naming its part [[notes: The denominator, e.g., 2 for a sesquialter (3:2)]], and let **m** be its total denomination. Let any number of multiples be assumed, whose naming numbers are **c, d, e, f**. It is manifest by the twenty-third [proposition] of this book that **b** into **c**, and into **d**, and into **e**, and into **f**, constitutes a number of a multiple and a denomination. I therefore take **g, h, k, l**, an equal number of multiples, each one greater than the denomination. And because **g** adds one over the multiple **c**: if the total denomination **m** of the superparticular ratio is multiplied by **g**, there will result a number with a part named by **b**; therefore the ratio is a multiple-superparticular. As in the present figure, there will result a septuple-sesquialter ratio [[notes: A ratio of 7 1/2 or 15:2]]. And you shall demonstrate the same for **h, k**, and **l**.
+
+->f—10, e—8, d—6, c—4<-
+->i—11, k—9, h—7, g—5<-
+->3, 2 | a—2, b—1.2, m—I<-
+
+---
+
+<margin>27</margin> ### **¶ Given a multiple, to find any number of superparticulars which, with that same multiple, compose a multiple-superpartient.**
+¶ Let **a** be the given multiple and **b** the number naming it. I take any number of numbers greater than it but not multiples of it, which are **g, h, k, l**, and let the parts named by them be **c, d, e, f**. So that **c** is named by **g**, and **d** by **h**, and so on for the following. I say that **b** into **c**, into **d**, into **e**, and into **f** produces not a single part, but parts [[notes: In this context, "parts" (plural) refers to a superpartient ratio, where the numerator is greater than 1, e.g., 2/3 or 3/5]]. For if **b** is multiplied by **c**, there result **m** parts named by **g**. By the corollary of the eleventh [proposition] of this book, as the ratio of **b** to **g**, so is **m** to one. But by the hypothesis **b** is "parts" of **g** [[notes: Meaning b/g is a non-reducible fraction with a numerator > 1]]; therefore **m** is parts of one. And thus if **b** is multiplied by **d, e,** and **f**, parts will result. Therefore, the superparticulars named by those parts, when combined with the given multiple, will each constitute a multiple-superpartient.
+
+->l—9, f—I | k—7, e—I | h—5, d—I | g—3, c—I<-
+->a—2, b—2 | 3, 2, I<-
+
+---
+
+<margin>28</margin> ### **¶ The sesquialter is the only superparticular which, with no multiple, produces a multiple-superpartient.**
+¶ This is because the sesquialter [[notes: The ratio 3:2, or 1 1/2]] is named from the second [number, 2], which is a half of one; and a half multiplied into any number either produces a whole number or adds a half. For the number two measures every number, or else a unit remains. Therefore, the number naming the part of a sesquialter, when multiplied by the denominator of a multiple, will produce either a multiple or a multiple-superparticular [[notes: For example, 3/2 x 2 = 3 (multiple) and 3/2 x 3 = 4 1/2 (multiple-superparticular). It can never produce something like 4 2/3]]. Thus, it will not produce a multiple-superpartient with a multiple. That every other superparticular can effect a multiple-superpartient with some multiple is known from this: if you take a multiple naming-number one less than the number naming the part of the given superparticular, you will achieve the proposition by the preceding [theorem]. You can also easily know the first part from the method of demonstrating the twenty-sixth [proposition] of this book, just as you know the second part from the preceding.
+
+**Composite**
+| | | |
+| :--- | :--- | :--- |
+| f 10 | 9 | 20 / 9 |
+| e 8 | 7 | 16 / 7 |
+| d 6 | 5 | 12 / 5 |
+| c 4 | 3 | 8 / 3 |
+| a 2 | 1 | |
+
+---
+
+<margin>29</margin> ### **¶ The double is the only multiple which, with no superpartient, effects a multiple ratio.**
+¶ This proposes that the double [[notes: The ratio 2:1]] constitutes a multiple with no superpartient, while every other multiple can constitute a multiple with some superpartient. The first part is clear: let **a** be a double ratio and **b** the number naming it [2]; let **c** be any superpartient ratio. I say that **a** with **c** does not constitute a multiple ratio. For I take the parts of **c** which are named by **d** and counted by **e** [[notes: i.e., the fraction e/d]], and I multiply **b** into those parts; there will result similar parts counted by the number produced from two—that is, **b** into **e**. Let the number of those parts be **f**; I say that this is not a whole number. For it will not be equal to **d**, because **e** would then measure **d** [[notes: If f/d were an integer, e/d wouldn't be a superpartient in its simplest form]]. Nor will **d** measure it. It will not measure it by one, because they would be equal. Nor by two, because then **d** and **e** would be equal. Nor by anything greater than two, because **d** is greater than **e**. Therefore, since **b** into **e** (the denominator into the parts) does not constitute a whole number, no multiple will be produced. The second part is clear: for given any other multiple such as **a**, I take the number **b** naming it, which I make the denominator of some parts; and I take a number of parts one less than **b**, which is **c**; and let **d** be the superpartient of parts **c**. I say that **a** and **d** together constitute a multiple. For because **b** is the name of **a** and the denominator of the parts of **d**, therefore **b** into **c** will constitute a whole number. Thus the composite will be named by a number; wherefore it will be a multiple. This is what was proposed.
+
+**Composite**
+->e 15 3 | a 3 I | b 3 | c 2 | d 5.3<-
+->b, e, f, b | 3, 2, 4, 2 | 3, 2, I, 5 . 3<-
+
+---
+
+<margin>30</margin> ### **¶ Given a superpartient, to find any number of multiples which, each multiplied by it, produce a multiple.**
+¶ Let **a** be the given superpartient, let the number of parts be **b**, and the number naming them be **c**. I first take a multiple named by **c**, which is **d**; then those named by multiples of **c** as many as I wish, which let be **e, f, g**. I say that the given superpartient **a** with any of the multiples **d, e, f, g** constitutes a multiple. For **b** into **c** will constitute a number, and into **e** also a number because it is double [c], and into **f** triple, and **g** quadruple, by taking the multiples of the denominator **c** in order. Therefore, the superpartient **a** with any of those multiples constitutes a multiple. This is what was proposed.
+
+**Composite**
+->60-3, 45-3, 30-3, 15-3<-
+->f-12, e-9, d-6, c-3.I, a-5.3, b-2<-
+
+---
+
+<margin>31</margin> ### **¶ To find any number of superpartients, each of which with a proposed multiple constitutes a multiple-superparticular.**
+¶ Let the proposed multiple be **a**, whose naming number is **b**. I take any number greater than **b**, which is **c**. And I multiply **b** into **c**, and let it be **d**. And I take **e**, which is one less than **d**. I also take the parts named by **e** according to the number **c**, which are **f**. Since **b** into **c** constitutes **d**, therefore **b** into **f** will constitute similar parts according to the number **d**. But those taken according to the number **d** make one and one more besides [[notes: i.e., (b * c) / (bc - 1) = d / (d-1) = 1 + 1/(d-1)]]. Let **g** be the superpartient named by the said parts from **e** and taken according to number **c**; because **b** into **f** constitutes a number and a part, that same superpartient with **a** will constitute a superparticular; and by the same reasoning, you may take as many superpartients as you wish which with **a** will constitute a superparticular. This is what was proposed.
+
+->26, 5<-
+->f-8.5, e-5, d-6, c-2.I, b-2<-
+
+---
+
+<margin>32</margin> ### **¶ To take some multiples which, led into a given superparticular, create multiple-superpartients.**
+¶ Let **a** and **b** be the least [terms] of the given superparticular ratio. Because they are prime to each other, I seek, by the last [proposition] of the third [book], a multiple of **a** which exceeds a multiple of **b** by one; let this be **c**, and let the number by which **a** measures **c** be **d**. I take a unit, which is **e**. The ratio of **d** to **e** will be the multiple named by **d**. But by what was demonstrated at the beginning of the third...
+
+->d-2, e-1 | b-3, c-10 | a-2, e-1 | b-1, 8<-
+
+[[summary: This page details how different classes of ratios—multiples, superparticulars, and superpartients—combine to form new ratios. It identifies unique mathematical properties, such as the sesquialter (3:2) and the double (2:1) being the only ratios in their classes that cannot produce certain composite results.]]
+
+[[keywords: Jordanus de Nemore, ratio theory, multiple ratio, superparticular, superpartient, sesquialter, composition of ratios, Boethian arithmetic]]

@@ -1,0 +1,31 @@
+[[meta: This page continues the rules of Rythmomachia, shifting from Geometric proportions to Musical proportions—what modern mathematicians call "Harmonic proportions." This completes the set of three mathematical relationships (Arithmetic, Geometric, and Musical) that players must master to achieve the most prestigious "Great Victories" in the game.]]
+
+->THE PHILOSOPHERS.<-
+
+## On Musical Proportion.
+
+Musical proportion occurs when the differences between the two outer numbers and the middle number share the same ratio as the two outer numbers themselves. For example: 3, 4, 6. It is easy to see that the difference between the first number (3) and the middle number (4) is 1, and the difference between the last number (6) and the middle (4) is 2. Seeing that these differences, 1 and 2, have a double ratio between them just as the two outer numbers 3 and 6 do, we conclude that this is a musical proportion; and so it is for the others.
+
+[[notes: In the Renaissance, this was called "Musical Proportion" because it describes the mathematical relationship between the lengths of strings that produce harmonious intervals. For instance, in the example 3, 4, 6: the ratio of 3:6 (the outer numbers) is 1:2, which in music is an octave. The differences (1 and 2) also form a 1:2 ratio. This proportion was considered the most "perfect" and difficult to achieve in the game.]]
+
+---
+
+### Examples of those found in the game.
+
+| | | | | | | | | | | |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2 | 3 | 6 | \|\| | 5 | 9 | 45 | \|\| | 12 | 15 | 20 |
+| 3 | 4 | 6 | \|\| | 6 | 8 | 12 | \|\| | 15 | 20 | 30 |
+| 3 | 5 | 15 | \|\| | 7 | 12 | 42 | \|\| | 25 | 45 | 225 |
+| 4 | 6 | 12 | \|\| | 8 | 15 | 120 | \|\| | 30 | 36 | 45 |
+| 4 | 7 | 28 | \|\| | 9 | 15 | 45 | \|\| | 72 | 90 | 120 |
+| 5 | 8 | 20 | \|\| | 9 | 16 | 72 | \|\| | | | |
+
+As for the accord and harmony corresponding to such musical proportions, we shall speak of them more fully [[notes: The original French word here is *amplement*, partially obscured by page wear.]] after the treatise on excellent victories. Let it suffice you for now that such proportions [[notes: The text cuts off here at the bottom of the page; it likely concludes by stating that these proportions are essential for the game's highest level of play.]]
+
+<sig>E iij</sig>
+
+[[gloss: musical proportion, outer numbers (extremes), middle number (mean), harmony, treatise]]
+
+[[summary: This page defines Musical (Harmonic) proportion and provides a reference table of the specific numerical combinations found on the Rythmomachia game board. It marks the transition toward explaining the "Excellent Victories," the game's most complex winning conditions.]]
+[[keywords: Musical Proportion, Harmonic Proportion, Rythmomachia, Great Victory, Renaissance Mathematics, Arithmetic Ratios]]

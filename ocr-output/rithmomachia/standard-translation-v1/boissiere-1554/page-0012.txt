@@ -1,0 +1,12 @@
+[[meta: This page continues the introduction from page 4, finishing a sentence that explains how the strategic "battles" of the game lead to a higher understanding of mathematical harmony. It transitions from the philosophical benefits to the practical setup of the game board and pieces.]]
+
+->OF PHILOSOPHERS.<-
+
+...ambushes and imprisonments of numbers, resulting after victory in harmony. And for the explanation of this game, five things are necessary (namely: the description of the board and the pieces; the inscription of the pieces with their numbers; the placement of these on the board; the procedure of play; and the victories); these things we shall declare to you hereafter according to their order.
+
+### Of the board and the pieces.
+
+Prepare a board having at least ten squares or spaces in length, and if there are 16, it will be better, insofar as the multiplication of numbers can be more effectively carried out; and the said board shall have a width of only eight squares or spaces [[notes: While a standard chessboard is 8x8, Rythmomachia was traditionally played on a double-sized board of 8x16, providing more room for complex numerical maneuvers]]. Next, take 48 pieces [[notes: The original French uses the word *tables*, which refers to the flat, disc-like counters used in games like backgammon]], of which the first third, being 16, should be round like common gaming pieces; and the second third, also 16, should be in the shape of a triangle, yet of the same size as the first; and the final third, 16, should be in a square shape. Next, for each of these three groups, make it so that one half is different from the other by painting them in a certain color; you will assign one color for painting even numbers and the other for odd numbers [[notes: In Rythmomachia, one player represents "Even" numbers and the other "Odd," each with their own set of differently shaped pieces]]. Afterward you will make...
+
+[[summary: This page outlines the physical requirements for Rythmomachia, specifying a board (ideally 8x16) and 48 pieces divided into three shapes: circles, triangles, and squares, color-coded by parity (even and odd).]]
+[[keywords: Rythmomachia, game board, game pieces, geometry, circles, triangles, squares, even and odd numbers, mathematical proportions]]

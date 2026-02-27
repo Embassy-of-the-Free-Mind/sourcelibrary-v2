@@ -1,0 +1,21 @@
+[[meta: This page continues the catalog of famous historical figures associated with chess, moving from general national reputations to specific individuals in antiquity and the Middle Ages, including Roman emperors and a Renaissance Pope.]]
+
+## The First Book / 2. Chapter:
+
+As for what concerns other / individual persons / who have distinguished themselves / in this game / above others: one will find / in Homer’s *Odyssey*, Book 1 [[notes: Homer describes the suitors of Penelope playing a game with stones, often interpreted by Renaissance scholars as an early form of chess]], the aforementioned suitors / or wooers: In Euripides’ *Iphigenia in Aulis*, Protesilaus and the Ajaces, who / occupied themselves / with the *pellsis* [[notes: Likely a printer's error or variation of *pessoi*, the Greek term for game pieces or "stones"]], or chess-pieces. Likewise / the mentioned Justus Ecloviensis testifies / of Augustus and Verus, both Roman Emperors: Maecenas, and Q. Galba, that they / were good chess-players. Scaevola is mentioned by Valerius Maximus, Book 8, Chapter 8. Mention was made / shortly before / of Charlemagne.
+
+Of Pope Leo the Tenth / Paulus Jovius, Bishop of Nocera, writes in Book 4 of his biography, page 86, as follows:
+
+> „ *He always condemned gambling as a plague to domestic affairs and character; however, at Chess [[notes: The Latin text uses "Latrunculis," an ancient Roman game often used as the Latin name for Chess in this period]], he played so subtly and sharply, even with the most practiced players, that no one seemed able to equal him, whether in skill or speed, in joining or concluding a battle.* That is:
+> „ Pope Leo / the tenth of that name / always hated and rejected / the game of dice / as being / to a person / in his conduct and livelihood / very harmful / and, as it were, a pestilential poison: But Chess / he favored / [playing] very shrewdly / even with the most practiced masters / and indeed was far superior to almost all / in experience and skill / in conducting this battle of the stones / and in obtaining victory / with swift haste.
+
+Giovanni Villani, in Book 7, Chapter 12, Number 3, on page 195, mentions a Saracen or Turk / with the following words:
+
+> „ *In those times (in the Year of Christ 1266), there came to Florence a Saracen named Buzecca, a very great master of playing at chess; and in the people's palace, before Count Guido Novello, he played at one time on three chessboards with the best masters of chess in Florence, playing with two from memory and with the third by sight, and two games he won, and the third he made a draw [[notes: Villani uses "tavo-la," referring to a "tabula" or draw/stalemate]]; which thing was held to be a great marvel.* That is:
+> „ Around the same time / (namely / in the year 1266 / after the birth of Christ) / there came a Turk / to Florence / named Buzecca / a cunning and practiced chess-player: He played / in the presence of Count / Guido Novello / in the great communal palace / or hall / simultaneously / on three chessboards / with the most distinguished chess-players in / Florence / with two in his mind / or from memory / with the
+
+[[meta: catchword: third]]
+
+[[summary: This page lists famous historical and legendary chess players, ranging from Greek heroes like Ajax to Roman emperors and Pope Leo X. It concludes with the first recorded instance of a simultaneous blindfold exhibition by the Saracen master Buzecca in 13th-century Florence.]]
+
+[[keywords: Homer, Euripides, Augustus, Pope Leo X, Giovanni Villani, Buzecca, Florence, blindfold chess, Latrunculi, Saracens]]

@@ -1,0 +1,19 @@
+[[meta: This page concludes the debate from the previous page regarding whether a player fulfills a specific wager if the designated pawn promotes to a Queen before delivering checkmate. It then transitions into general strategic advice for protecting the King.]]
+
+# ->On the Game of Chess.<-
+
+[[margin: 5. cap:]]
+...and by his giving of **check-mate**; in such a manner, that he has neither preserved nor won anything. These differing opinions, which have been sought out and brought to hand regarding this question, we have briefly wished to record here, so that players—in order to prevent unnecessary quarreling—might easily agree upon a certain opinion regarding this disputed case at the beginning of the game.
+
+Furthermore, a **chess-player** [[notes: *Schach-Zieher*; literally "chess-puller," a common term for a player at the time]] must not only concern himself with checking and mating, but also know how to make use of his **King** at the opportune time and when necessity demands it. Before he uses the **King** to remove a piece—be it a major piece or another—especially when he has been placed in check, he must consider well. For the **opponent** often seeks, and indeed obtains, the opportunity to finish him off through such a move. But even more so, he must attend to how he might protect the **King** and place him in safety: for (by virtue of the 1st Chapter of this book) much depends significantly upon this; he should also carefully note the following rules for that purpose.
+
+That he (1.) brings and sets the **King** in a safe place as quickly as possible—especially when his **soldier** [[notes: *Soldat*; the standard term for a pawn in this period]] is lost and he is exposed—whether he leaps [[notes: *springe*; refers to an early rule where the King could move two squares or "leap" on his first move, a precursor to modern castling]] into a third square or is moved to the nearest field.
+
+That he (2.) does not shift the **soldiers** from their own fields, nor place them in other positions, behind which the **King** has retreated: unless it happens out of necessity (perhaps to give the **King** a free exit, or to make room so that he might retreat into their fields when necessary if he were exposed; or else to ward off and drive away an enemy piece that might be dangerous or obstructive; or else to achieve something special and useful thereby). In such a case, he must take great care that his game is in such a state that he might suitably refortify and entrench the place with his **major pieces** [[notes: *Haupt-Steinen*; literally "head-stones," referring to the more powerful pieces like Rooks, Knights, and Bishops]] where it was torn open and brought into disorder by this move. However, as to how these pieces might be moved in such a case of necessity, no certain measure or rule can be given that one must follow of necessity; rather, one must act or refrain as the state and arrangement of the game requires (which is left to the reflection and pleasure of the **chess-player**). Provided, however, that no special, high, and significant...
+
+<sig>X ii</sig>
+[[meta: catchword: ehehafs — likely "ehehaft," meaning a legal or valid excuse/necessity]]
+
+[[summary: This page advises players to agree on rules before a match to avoid disputes and provides strategic counsel on King safety, emphasizing the importance of the King's "leap" and the preservation of the pawn shield.]]
+
+[[keywords: checkmate, chess strategy, King's leap, pawns, major pieces, rules of chess, 17th-century chess]]

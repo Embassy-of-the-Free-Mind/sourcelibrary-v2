@@ -1,0 +1,119 @@
+[[meta: This page continues the visual demonstrations of chess tactics from the previous section. It consists entirely of chessboard diagrams illustrating various scenarios or "problems" numbered non-sequentially. These grids correlate with the instructional text of Chapter 9.]]
+
+-> # On the Game of Chess. <-
+
+[[meta: catchword: It]]
+
+[[margin: Ch. 9:]]
+
+### No. 24. 25.
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | SR | | SK | | | | SR |
+| SS | SS | SS | SSc | 52 | | SS | SS |
+| | | | | | | WS | |
+| | | SSc | | SS | | | |
+| | | WSc | | WS | | SSc | WR |
+| | | | WS | | | | |
+| WS | WS | WS | | | WS | WS | |
+| WR | WR | | | WK | WR | | |
+
+[[notes: In these diagrams, the abbreviations denote the following: **S** for Schwarz (Black), **W** for Weiß (White), **K** for König (King), **R** for Rochen (Rook), **S** for Soldat (Pawn/Soldier), and **Sc** for Schütze (Bishop). The numbers, such as **52**, refer to the position of a square according to a 1–64 counting system common in early modern chess manuals.]]
+
+### No. 28. 29.
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | SR | | WR | | | | SR |
+| SS | SS | SS | | | SK | 50 | |
+| | | | SS | 44 | | SS | SS |
+| | | SS | | SR | | WSc | |
+| | | | | WS | | | WS |
+| | | | WR | WS | | | |
+| WS | WS | WS | | | | WS | |
+| WR | | | | WK | WR | | |
+
+### No. 32. 37.
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | SR | | | | 59 | | SR |
+| SS | SS | WR | | | | | SS |
+| | | | SS | SK | | SS | |
+| | | SS | | | | 34 | |
+| | | | | WS | | | |
+| | | | WS | | | | |
+| WS | WS | WS | WK | WR | | SSc | |
+| WR | | | | | | | WR |
+
+### No. 39. 40. 41.
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | SR | | 61 | 60 | | | SR |
+| SS | WR | | SR | SK | | | SS |
+| | | | SS | 44 | | SS | |
+| | | SSc | WR | | | WS | |
+| | | | | WS | | | |
+| | | | WS | | | | |
+| WS | WS | WS | | | | SSc | |
+| WR | | | | WK | WR | | |
+
+### No. 27. 30.
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | SR | | | SK | | | SR |
+| SS | SS | SS | | | SR | | SS |
+| | | | SS | | | SS | 41 |
+| | | SSc | | SK | | WSc | |
+| | | | | WS | | WR | WS |
+| | | | WR | WS | | | |
+| WS | WS | WS | | | | WS | |
+| WR | | | | WK | | | WR |
+
+[[notes: The term "Schütze" (Archer) was the standard German name for the Bishop before the modern term "Läufer" (Runner) became universal. The "Rochen" (Rook) takes its name from the Persian "Rukh," often depicted in Europe as a fortress.]]
+
+### No. 31. 38. 42. 45.
+
+| | | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | SR | | | | 60 | 59 | | SR |
+| SS | SS | WR | | | SK | | | SS |
+| | | | SS | 44 | 43 | SS | | |
+| | | SS | | SR | | SR | | |
+| | | | | WS | | | WS | |
+| | | | WR | WS | | | | |
+| WS | WS | WS | | | | WS | | |
+| WR | | | | WK | | | WR | |
+
+### No. 33. 34.
+
+| | | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | | | | 61 | | SR | | |
+| SS | | | | SR | SK | 51 | | WR |
+| | | | SS | | | SS | | |
+| | | SS | WR | | | | | |
+| | | | | | WS | | | |
+| | | | WS | | | | | |
+| WS | WS | WS | WK | WR | | SSc | | |
+| WR | | | | | | | | |
+
+### No. 47. 48.
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SR | SR | SR | | SK | WR | | |
+| SS | SS | SS | 53 | | 51 | WSc | |
+| | | | SS | SSc | | | |
+| | | SS | | SS | | | |
+| | | WS | | WS | | | WR |
+| | | | WS | | | | |
+| WS | WS | WS | | | | WS | WS |
+| WR | WR | | | WK | | | |
+
+[[summary: This page presents a series of eight technical chess diagrams illustrating complex board states and tactical maneuvers. These serves as a visual reference for the specialized strategies and endgame patterns discussed in Chapter 9 of the treatise.]]
+
+[[keywords: chess diagrams, endgame tactics, Rochen, Schütze, Soldat, 17th-century chess, historical maneuvers]]

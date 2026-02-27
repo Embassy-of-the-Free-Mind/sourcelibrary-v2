@@ -1,0 +1,34 @@
+[[meta: This page continues the mathematical tables for the game of Rythmomachia. While the previous page provided the sequences for combining Arithmetic and Musical progressions, this page provides the reference sequences for combining Geometric and Musical progressions. It then begins the definition of the "Excellent Victory," the game's ultimate win condition.]]
+
+->OF THE PHILOSOPHERS.<-
+[[notes: This is part of the title *Le Jeu des Philosophes*, the French name for Rythmomachia, a complex mathematical board game popular in the Middle Ages and Renaissance.]]
+
+# Example.
+
+| Geometry & Music together. | | | | Geometry alone. | | | Music alone. | | |
+|---|---|---|---|---|---|---|---|---|---|
+| 2 | 3 | 6 | 12 | 3 | 6 | 12 | 2 | 3 | 6 |
+| 3 | 4 | 6 | 9 | 4 | 6 | 9 | 3 | 4 | 6 |
+| 3 | 4 | 6 | 12 | 3 | 6 | 12 | 4 | 6 | 12 |
+| 3 | 6 | 8 | 12 | 3 | 6 | 12 | 6 | 8 | 12 |
+| 4 | 6 | 12 | 36 | 4 | 12 | 36 | 4 | 6 | 12 |
+| 5 | 9 | 45 | 225 | 9 | 45 | 225 | 5 | 9 | 45 |
+| 9 | 15 | 25 | 45 | 9 | 15 | 25 | 9 | 15 | 45 |
+| 9 | 25 | 45 | 225 | 9 | 45 | 225 | 25 | 45 | 225 |
+| 9 | 12 | 16 | 72 | 9 | 12 | 16 | 9 | 16 | 72 |
+| 9 | 15 | 45 | 225 | 9 | 45 | 225 | 9 | 15 | 45 |
+| 15 | 20 | 30 | 45 | 20 | 30 | 45 | 15 | 20 | 30 |
+| 20 | 30 | 36 | 45 | 20 | 30 | 45 | 30 | 36 | 45 |
+| 25 | 45 | 81 | 225 | 25 | 45 | 81 | 25 | 45 | 225 |
+
+---
+
+## On the excellent victory.
+
+*The excellent victory* [[notes: Known in Latin as the **Victoria Praestantissima**, this was the most difficult and prestigious way to win the game.]] *is the situation and arrangement of 4 pieces* [[notes: The original French uses **tables**, which refers to the playing pieces themselves, similar to how we use "men" in checkers.]] *in the enemy's camp, equipped and armed with such numbers that, in their magnitude and harmony, they contain 3 proportions: namely Arithmetic, Geometry, and Music* [[notes: "Music" here refers to a Harmonic proportion. The Renaissance player sought to mirror the "Music of the Spheres" or the mathematical order of the universe on the game board.]]: *which are of such great harmony and agreement that there is no* [[notes: The text ends mid-sentence on this page, likely continuing with a description of how these mathematical ratios represent a perfect, unassailable order.]]
+
+[[gloss: Geometry, Music, Arithmetic, proportions, excellent victory, numbers]]
+
+[[summary: This page completes the reference tables for combining Geometric and Harmonic progressions and introduces the "Excellent Victory," the highest achievement in Rythmomachia. To win this way, a player must arrange four pieces in the opponent's territory that simultaneously demonstrate Arithmetic, Geometric, and Harmonic proportions.]]
+
+[[keywords: Rythmomachia, Victoria Praestantissima, Harmonic proportion, Geometric progression, Arithmetic progression, Renaissance mathematics, Quadrivium]]

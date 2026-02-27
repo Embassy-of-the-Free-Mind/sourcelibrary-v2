@@ -1,0 +1,21 @@
+[[meta: This page continues the list of rules for conduct and strategy during a chess match. It focuses on how to interpret an opponent’s retreats, the strict prohibition of distracting behavior (with financial penalties), and the psychological art of the "feint"—using one's eyes and hands to mislead the opponent about where the next strike will land.]]
+
+### 4. Chapter: Of the Game of Chess
+-> 145 <-
+
+...[if it] should then be found that he [[notes: The opponent]] retreats or is intent on a counter-measure. However, if other moves are available through which one could reach **Checkmate**, he should not value the piece [[notes: *Stein*, literally "stone"]] too highly, nor delay because of it, much less disrupt or displace such games. 
+
+He should also (5.) pay close attention to the opponent's moves: therefore (to provide one example out of many), when the opponent pulls his pieces back without being forced to do so, one should certainly assume that he does this in order to gain a greater advantage against him. Therefore, one should put his own moves into action in such a way—and regard such a retreat—so that he does not regret a too-hasty pursuit when it is too late; he should not follow thoughtlessly or too far, but otherwise arrange his game well for the preservation of his intentions.
+
+On the other hand (6.), while the other is considering how he wishes to make his move, the opponent must meanwhile be **still and quiet**. For if he then wishes to engage in much talking, singing, or any other **monkey-business** [[notes: *AffenSpiel*; a colorful term for buffoonery or distracting antics]] in order to lead the other’s opinions and thoughts astray: such is also considered unseemly play and is not proper to do. In fact, the one who employs this **little prank** [[notes: *Pößlein*; a trick or piece of mischief]] shall lose, for that reason, a third of the money he has staked. For this game requires silence and no commotion, and all conversation through which one might hinder the other in his game and moves must be abandoned.
+
+A **chess player** [[notes: *Schach-Zieher*; literally "chess-mover"]] should also (7.) arrange the order of his moves in such a way that he overcomes his enemy with power rather than by chance, or through the enemy's oversight and negligence. Above all, he should strike **fear and terror** into him, considering that he who does not know how to set or order this game well will all the sooner and more easily **draw the short straw** [[notes: *den kürtzern ziehet*; a common idiom for losing]] and lose the **stake** [[notes: *Schantze*; the game, the chance, or the wagered prize]]. 
+
+Yet it shall in no way be reproachful to a player if he knows how to get the better of his opponent through **misdirection and blinding**. As when he pretends to use a piece that is of little harm to the opponent and holds his hand over it—yet without touching it—but then, after his adversary has moved, performs a necessary and more beneficial move for the game with a different piece. Or, he may cast his eyes upon a place where there is the least danger (so that the other is made cautious and fearful, keeping a diligent watch on that spot, and thereby forgetting to look out for himself in a more dangerous place).
+
+<sig>L ij</sig>
+[[meta: catchword: wendet/ (turns)]]
+
+[[summary: This page outlines the psychological discipline of chess, forbidding distracting behavior like singing or talking under threat of a fine, and describing tactical feints where a player uses hand gestures and eye contact to deceive their opponent.]]
+
+[[keywords: etiquette, sportsmanship, checkmate, strategy, feints, gambling stakes, AffenSpiel, Early Modern gaming]]

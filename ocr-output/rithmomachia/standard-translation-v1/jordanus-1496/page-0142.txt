@@ -1,0 +1,59 @@
+[[meta: This page continues the systematic index and concordance of mathematical principles. It transitions from the basic definitions of even and odd numbers found on the previous page to the more complex relational properties of numbers (ratios) and their geometric classifications (plane and solid numbers).]]
+
+# E
+
+### **->The Divine Severinus Boethius<- &nbsp;&nbsp;&nbsp;&nbsp; ->Jordanus.<-**
+[[notes: This heading lists the two primary authorities being compared. Boethius represents the classical Roman tradition of arithmetic, while Jordanus Nemorarius represents the advanced medieval development of those same ideas.]]
+
+| Properties of numbers. | Chapter. | Book. | Proposition. | Book. |
+| :--- | :---: | :---: | :---: | :---: |
+| **Equality and inequality.** | | | | |
+| 1 | 32 | 1 | 70 | 9 |
+| 2 | 32 | 1 | 70 | 9 |
+| 3 | 1 | 2 | 75 | 9 |
+| **Multiple.** [[notes: A "multiple" ratio occurs when a larger number contains a smaller number exactly two, three, or more times (e.g., 2:1, 3:1).]] | | | | |
+| 1 | 26.27. | 1 | 38.70 | 9 |
+| 2 | 23 | 1 | 37 | 9 |
+| 3 | 23 | 1 | 52 | 9 |
+| **Types of multiples.** | | | | |
+| 1 | 23 | 1 | 38 | 9 |
+| 2 | 23 | 1 | 38 | 9 |
+| 3 | 23 | 1 | 38 | 9 |
+| **Superparticular.** [[notes: A ratio where the larger number contains the smaller once, plus one fractional part (for example, 3:2 or 4:3).]] | | | | |
+| 1 | 24 | 1 | 52 | 9 |
+| 2 | 24 | 1 | 37 | 9 |
+| **Types of superparticulars.** | | | | |
+| 1 | 24 | 1 | 38 | 9 |
+| 2 | 24 | 1 | 38 | 9 |
+| 3 | 24 | 1 | 38 | 9 |
+| **Superpartient.** [[notes: A ratio where the larger number contains the smaller once, plus two or more fractional parts (for example, 5:3 or 7:4).]] | | | | |
+| 1 | 28 | 1 | 52 | 9 |
+| 2 | 28 | 1 | 42 | 9 |
+| **Types of superpartients.** | | | | |
+| 1 | 28 | 1 | 7 | 2 |
+| 2 | 28 | 1 | 7 | 2 |
+| **Multiple superparticular.** [[notes: A ratio where the larger number contains the smaller multiple times plus one fractional part (e.g., 5:2, which is twice plus one-half).]] | | | | |
+| 1 | 29 | 1 | 43 | 9 |
+| 2 | 29 | 1 | 7 | 2 |
+| 3 | 29 | 1 | 7 | 2 |
+| 4 | 29 | 1 | 7 | 2 |
+| **Multiple superpartients.** [[notes: A ratio where the larger number contains the smaller multiple times plus two or more fractional parts (e.g., 8:3, which is twice plus two-thirds).]] | | | | |
+| 1 | 31 | 1 | 7 | 2 |
+| 2 | 31 | 1 | 7 | 2 |
+| 3 | 31 | 1 | 7 | 2 |
+| **Plane number.** [[notes: A number that can be represented as the product of two factors, analogous to the area of a rectangle.]] | | | | |
+| 1 | 6 | 2 | 0 | 0 |
+| 2 | 19 | 2 | 0 | 0 |
+| **Solid number.** [[notes: A number that can be represented as the product of three factors, analogous to the volume of a solid.]] | | | | |
+| 1 | 21 | 2 | 0 | 0 |
+| **Types of plane numbers.** | | | | |
+| 1 | 9 | 2 | 1 | 8 |
+| 2 | 27 | 1 | 38 | 9 |
+| 3 | 12 | 2 | 26 | 7 |
+| 4 | 18 | 2 | 5 | 8 |
+| 5 | 38 | 2 | 10 | 6 |
+| 6 | 46 | 2 | 4 | 6 |
+
+[[summary: This page provides a concordance table indexing various classes of numerical ratios (such as multiples and superparticulars) and geometric numbers (plane and solid) across the works of Boethius and Jordanus. It serves as a cross-reference for students or scholars navigating these foundational mathematical texts.]]
+
+[[keywords: Boethius, Jordanus Nemorarius, arithmetic, ratios, superparticular, superpartient, plane numbers, solid numbers, medieval mathematics, concordance]]

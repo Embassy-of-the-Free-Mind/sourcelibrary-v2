@@ -1,0 +1,26 @@
+# The Philosophers' Game.
+
+<warning>Significant bleed-through from the reverse side of the page shows circular diagrams and text overlapping with the primary content.</warning>
+
+The second row <note>original: "order"</note> of triangles all have their algebraic <note>original: "cossicall"</note> signs, except for one (which is the number 100). For example, 9 has the signs for both the root and the square <note>original: "quadrate"</note>. The numbers 25, 36, and 49 have the sign of the square. 64 has the signs of the square, the cube, and also the square of the cube <note>original: "quadrat of cube"</note>. Finally, 16 and 81 have the signs of the square and the fourth power <note>original: "foure squared quadrate"</note>.
+
+| 81 | 49 | 25 | 9 |
+| :---: | :---: | :---: | :---: |
+| ℨ ℿ | ℨ | ℨ | ℞ ℨ |
+
+| 100 | 64 | 36 | 16 |
+| :---: | :---: | :---: | :---: |
+| | ℨ ℭ ℨℭ | ℨ | ℨ ℿ |
+
+In the first row <note>original: "order"</note> of squares, only 15 is marked with the root sign; all the rest lack <note>original: "doe want"</note> their algebraic <note>original: "cossicall"</note> signs in this game.
+
+<sig>.D.ij.</sig>
+<meta>catchword: The</meta>
+
+<summary>
+This text details the mathematical markings on the pieces used in Rythmomachia (The Philosophers' Game). It explains which pieces in the second row of triangles are marked with algebraic (cossic) symbols representing roots, squares, cubes, and higher powers like the square-of-a-cube or fourth power. It notes that while most of these triangles (9, 16, 25, 36, 49, 64, 81) possess these markings, the number 100 does not. Furthermore, in the first row of square pieces, only 15 is marked as a root.
+</summary>
+
+<keywords>
+Rythmomachia, Philosophers' Game, algebraic signs, cossic signs, triangles, squares, square root, cube, fourth power, mathematical proportions, 16th-century gaming
+</keywords>

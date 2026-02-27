@@ -1,0 +1,94 @@
+[[meta: This page provides the visual diagrams corresponding to the tactical variations discussed in Chapter 12. These boards illustrate the specific positioning of pieces described in the preceding text, utilizing the 1–64 square numbering system typical of Gustavus Selenus's work.]]
+
+# On the Game of Chess.
+[[margin: Chapter 12]]
+
+->No. 2. 12.<-
+[[notes: These numbers refer to the specific tactical variations described in the text.]]
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SSc | SR | SR |
+| SS | SS | | | SS | SS | SS | SS |
+| | 47 | SS | | 44 | | SSc | |
+| SR | | | WS | | | | |
+| WR | | | | WS | WS | | |
+| | WS | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | WS | WR | WR |
+[[notes: Piece Key: SR = Black Roc (Rook), SK = Black King, SSc = Black Archer (Bishop), SS = Black Soldier (Pawn), WS = White Soldier, WR = White Roc, WK = White King. The numbers 47 and 44 represent specific squares (b6 and e6 respectively) being highlighted in this variation.]]
+
+->No. 8. 11.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | SSc | SR | SR |
+| SS | | WS | SR | SS | SS | SS | SS |
+| | SS | | | | | SSc | |
+| | WS | | | WS | 35 | | |
+| WR | WS | | | SR | WS | | |
+| | | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | | WR | WR |
+
+->No. 13. 14. 17. 18.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SSc | SR | SR |
+| SS | SS | | | | SS | SS | SS |
+| | | SS | 45 | SS | | SSc | |
+| SR | | | WS | | | | |
+| WR | 31 | | | WS | WS | | |
+| | WS | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | WS | WR | WR |
+
+<column-break/>
+
+->No. 4. 5. 6.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | SR | SK | SSc | SR | SR |
+| SS | | | | SS | SS | SS | SS |
+| | 48 | SS | WS | | 44 | | SSc |
+| SR | | | | | | | |
+| WR | | | | WS | WS | | |
+| | WS | WR | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | WS | WR | WR |
+
+->No. 9. 10.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | | SK | SSc | SR | SR |
+| SS | | WS | SSc | SS | SS | SS | SS |
+| | SS | | | | | | |
+| | | | | WS | | | |
+| WR | WS | | | SR | WS | | |
+| | | WR | | | | | |
+| | | | 14 | | WS | WS | WS |
+| WR | | | | WK | | WR | WR |
+
+->No. 15. 16.<-
+
+| | | | | | | | |
+|---|---|---|---|---|---|---|---|
+| SR | | | 61 | SK | SSc | SR | SR |
+| SS | | WR | SR | 52 | SS | SS | SS |
+| | | | | | | SS | |
+| SR | WR | | | | | | |
+| | WS | | | WS | WS | | |
+| | | | | | | | |
+| | | | | | WS | WS | WS |
+| WR | | | | WK | | WR | WR |
+
+---
+
+<sig>Aaa iij</sig>
+[[notes: This is a signature mark, used by early modern printers to ensure the pages were bound in the correct order.]]
+
+[[summary: This page consists of six chess diagrams illustrating the tactical variations of Chapter 12. These visual aids accompany the text's instructions on specific maneuvers, captures, and positioning using the Selenus 1-64 numbering system.]]
+[[keywords: chess diagrams, Gustavus Selenus, tactics, variations, chess pieces, 17th-century chess, notation]]

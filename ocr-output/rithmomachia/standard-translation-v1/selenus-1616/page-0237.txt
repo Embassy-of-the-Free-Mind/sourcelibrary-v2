@@ -1,0 +1,21 @@
+[[meta: This page continues the detailed tactical analysis of Chapter 12, focusing on the complex variations arising from piece exchanges and positioning around the 1–64 coordinate system. The text uses terminology standard for the early 17th century, such as "Soldier" for Pawn and "Archer" for Bishop.]]
+
+-> ### On the Game of Chess. <-
+
+[[margin: 12. cap:]]
+(unless he perhaps / had moved the **K. Rider** [[notes: King's Knight]] / not to 31 as in no. 8, but / to forty-seven: For otherwise the **White** / [would move] the aforementioned **Queen** / insofar as he / did not wish to leave her / at 28 / either to twelve / or seven / to rescue her **Rook** [[notes: "Rochen" is the traditional term for the Rook.]], which otherwise / at the fourteenth square / would have to fear / a mortal danger) [Black] takes / the **W. K. Rider** / with the **K. Archer** [[notes: "Schütze" or Archer is the early modern term for the Bishop.]]: The **White** / [takes] the same / with the **K. Rider's Soldier** [[notes: King's Knight's Pawn]]: The **Black** / [takes] the **W. K. Soldier** / with his **K. Soldier** / and moves against the **W. Queen** / and her **Soldier**: The **White** / takes / with the same [the Queen] / the **B. K. Archer's Soldier** [[notes: Black King's Bishop's Pawn]]: The **Black** / with his **K. Soldier** / [takes] the **W. K. Soldier** / moves the same / against their **Rider** / and offers / from the **Queen** / a Discovered Check: the **White** / (to save the same **Rider**) shields the **King** / with the same / at twelve: The **Black** / advances / once more against him / with the **K. Soldier** / to twenty-one: The **White** / announces / with the **Queen** / (unless he / wishes to take [the pawn] / with her / or relieve his **Archer's Soldier**) from thirty-three / a
+[[margin: 11.]] Check:* If now the **Black** / shields / the **King** / with the **Queen** / at fifty-one: then the **Queens** / will be exchanged on both sides / and the **W. K. Rider** / at twenty-nine / is saved: But if he moves / the **King** / to sixty-one: then / the **White** / moves the **K. Archer** / to thirty-four / thus holding / the **S. Queen** [[notes: "S." stands for "Schwarze" or Black.]] trapped / and finally brings her / into his power.
+
+[[margin: 12.]] If, however, the **Black** / (to prevent the aforementioned inconveniences / in no. 11) places the **King** / at fifty-three: then / the
+[[margin: 13.]] **White** / with his **K. Archer** / from seventeen / offers Check:* The **Black** / moves / the **King** / to forty-five or forty-six: for [moving] to 61, only to lose his **Queen** / (as in no. 11 at the end), is not to be advised.
+
+If he has now / moved to 45: then the **White** / with the **K. Archer** / from twenty-seven / offers Check: the **Black** / moves the **King** / to forty-six: (for his **Queen**, even if / she were moved forward / to thirty-six / can help him not at all) the **White** / offers / with the **Queen** / from thirty-nine / Check: Mate. [[notes: The original German "Hat" (Has) at the end of a sequence often indicates the conclusion of a checkmate or a winning position.]]
+
+[[margin: 14.]] But if the **Black** / moves the **King** / not to 45 (no. 13) / but to forty-six: then / the **White** / with the **Queen** / from thirty-nine / offers Check: The **Black** / moves the **King** / to forty-five: The **White** / (as in no. 13) offers [check]
+
+D d [[notes: This is a signature mark for the book binder.]]
+
+[[meta: Catchword "mit der" (with the) matches the start of the next page.]]
+
+[[summary: This page continues a complex tactical breakdown of exchanges involving the Queen, King's Knight, and Bishop. It details a specific sequence where White can either force a Queen exchange or trap the Black Queen, ultimately leading to a checkmate scenario if Black maneuvers poorly.]]
+[[keywords: Rider, Archer, Soldier, Discovered Check, Queen trap, Checkmate, 1-64 coordinate system]]

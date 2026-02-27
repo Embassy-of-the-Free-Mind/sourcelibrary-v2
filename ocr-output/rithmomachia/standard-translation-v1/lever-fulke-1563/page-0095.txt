@@ -1,0 +1,33 @@
+# The Philosophers' Game.
+
+| | |
+|:---|:---|
+| One standard <note>original: "stāderd"</note> of the odd army <note>original: "odde"</note> contains: | 174. |
+| Two standards: | 348. |
+| Three standards: | 522. |
+| Four standards: | 696. |
+| Five standards: | 870. |
+| Six standards: | 1,044. |
+| Seven standards: | 1,218. |
+| Eight standards: | 1,392. |
+| Nine standards: | 1,566. |
+| Ten standards: | 1,740. |
+
+You may use any of these six kinds of common victory in every one of the three kinds of playing.
+
+->THE END. <note>original: "FINIS."</note><-
+
+->Printed at London by Rowland Hall,<-
+->for James Rowbotham, and are to<-
+->be sold at his shop in<-
+->Cheapside under Bow<-
+->Church.<-
+->1563.<-
+
+<summary>
+This final page of the manual provides the scoring table for the "odd army" in the Victory of Standards within the Philosopher's Game (Rythmomachia). It establishes that for this side of the board, each standard is worth 174 points. The text concludes by clarifying that the six types of common victory are applicable across all three styles of gameplay. The colophon identifies the printer as Rowland Hall and the bookseller as James Rowbotham, located at Bow Church in Cheapside, London, in 1563.
+</summary>
+
+<keywords>
+The Philosophers' Game, Rythmomachia, standards, odd army, scoring table, common victory, Rowland Hall, James Rowbotham, Cheapside, 1563, mathematical games.
+</keywords>

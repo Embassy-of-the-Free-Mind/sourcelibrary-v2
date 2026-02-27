@@ -1,0 +1,15 @@
+## The Marching or Moving.
+
+The pieces <note>original: "men"</note> may move <note>original: "remoue"</note> in every direction into empty <note>original: "voyde"</note> spaces: forward, backward, toward both sides, straight, or diagonally <note>original: "cornerwyse"</note>. The round pieces move into the adjacent space, the triangles into the third space, and the squares into the fourth space, counting the space in which they currently stand as one.
+
+Additionally, every piece <note>original: "man"</note> except for the two kings may move like a knight in chess <note>original: "the knights draught in chesse"</note> in order to besiege an enemy or to escape from a siege themselves. However, they may neither capture <note>original: "take"</note> any piece (except by siege) nor achieve a victory <note>original: "erect a triumphe"</note> through such moves. The kings move exactly like the squares, except they do not have the jumping move <note>original: "flyinge draught"</note>.
+
+It is considered <note>original: "compted"</note> lawful among those who agree to it that the triangles and squares may move into empty spaces even if the intervening spaces are occupied by other pieces.
+
+<summary>
+This page describes the movement rules for the pieces in Rithmomachia. Each type of piece has a specific range: circles move one space, triangles move to the third space, and squares move to the fourth space. The text also introduces a special "knight's move" for escaping or initiating a siege, though this move cannot be used for direct captures or for winning the game ("triumph"). Finally, it notes an optional rule allowing triangles and squares to jump over occupied spaces.
+</summary>
+
+<keywords>
+Rithmomachia, movement rules, game mechanics, siege, knight's move, circles, triangles, squares, kings, jumping move, board game strategy, mathematical game.
+</keywords>

@@ -1,0 +1,22 @@
+[[meta: This page transitions from the technical calculations of "superpartient" proportions discussed on the previous page to a philosophical and moral interpretation of these mathematical rules. It explains how the interaction between numbers on the board mirrors the cooperation and "alliance" required in human society.]]
+
+->RYTHMOMACHIA, THE GAME.<-
+
+*to do from the others.*
+
+## Allusion or comparison of the preceding arrangement to human conduct.
+
+In the arrangement described previously, one may consider the alliance and harmony that ought to exist between human beings in order to achieve prosperity, fruitful procreation, and to attain the union of the Three-and-One [[notes: A reference to the Holy Trinity, viewed here as the ultimate source and resolution of all mathematical and worldly order.]], which is the source and resolution of all things worthy of consideration. 
+
+For just as in the process of a true alliance, we must accommodate one another after having first looked to our own needs, so too have we seen that after the first numbers of one of the two fields [[notes: In Rythmomachia, the board is divided into two "fields" or sides—one for the Even numbers and one for the Odd numbers.]] have established and multiplied themselves to obtain the required numbers and complete their **multiple proportion**, these same first numbers immediately accommodate themselves to their neighbors. 
+
+Those of one field have gone to increase and multiply those of the opposing field, helping them to compose a number that is suitable to be a "seeker" [[notes: The French *requerant* refers to a number used to derive the next level of proportions in the game's complex setup; it "seeks" its partner to create a new ratio.]] and placed in the first rank, which consists of the **superparticulars** [[notes: A ratio where the larger number contains the smaller number once, plus one part of it (for example, 3:2 or 4:3).]]. 
+
+For example: 3, which is the first of the field of odd numbers, after it has multiplied itself to become 9 (thereby completing its **multiple proportion** with itself), immediately went to assist the first number of the adversary field
+
+<i>
+[[meta: catchword: who]]
+
+[[summary: This page moves from pure mathematics to moral philosophy, arguing that the way numbers interact on the Rythmomachia board serves as a model for human cooperation and the Holy Trinity. It specifically illustrates how numbers from the "Odd" field "help" numbers in the "Even" field to create new mathematical proportions.]]
+
+[[keywords: Rythmomachia, proportions, multiple, superparticular, moral philosophy, Trinity, alliance, Odd and Even numbers]]

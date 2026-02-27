@@ -1,0 +1,46 @@
+[[meta: This page shifts from the geometry of solid numbers, discussed on the previous page, back to the specific arithmetic properties of numbers classified by their parity—their evenness or oddness. This classification follows the traditional Pythagorean-Platonic system popularized by Boethius, where numbers are categorized based on how many times they can be divided by two.]]
+
+# Properties of even numbers
+
+1 When an even number is divided into two parts: if one of those parts is even, it is necessary that the other part is also even.
+2 Likewise, when an even number is divided into two: if one of those parts is odd, the other will be odd.
+3 If an even number multiplies an even number, an even number is always born.
+4 If an even number multiplies an odd number, an even number is born.
+
+# Properties of odd numbers
+
+1 Any odd number divided into two: it is necessary that it has one even part and one odd part.
+2 If an odd number multiplies an odd number, an odd number is immediately born.
+3 If an odd number multiplies an even number, an even number will be procreated.
+
+# Properties of the even-times-even number
+[[notes: An "even-times-even" (*pariter par*) number is a power of two, such as 4, 8, 16, or 32. These numbers can be divided by two repeatedly until they reach the "unit" (1) without ever producing an odd quotient.]]
+
+1 Any even-times-even number has every part even in both "name" and "quantity."
+In "name" indeed because it has its denomination from an even-times-even number; in "quantity" truly because that part itself is an even-times-even number. [[notes: For example, in the number 16, the "fourth" part is 4. The name (fourth) and the quantity (4) are both even-times-even numbers.]]
+2 Every even-times-even number is one of the doubles taken in a continuous series starting from one. And it is necessary that any of the doubles from one—and only such a number—is an even-times-even number. [[notes: This refers to the sequence 1, 2, 4, 8, 16, 32...]]
+3 Whatever quantity of even-times-even numbers are collected together starting from one (including the unit), they equal the next number in the sequence minus one. [[notes: A property of geometric progressions: 1+2+4 = 8-1.]]
+4 Every even-times-even number is **deficient**. [[notes: A "deficient" (*diminutus*) number is one where the sum of all its proper divisors is less than the number itself. For example, the divisors of 8 are 1, 2, and 4, which sum to 7.]]
+5 Every even-times-even number is procreated from parts that respond to each other mutually.
+These mutually responding parts are: the "denominating" part and the "denominated" part. [[notes: For the number 16, the "half" (denominator 2) is 8 (the quantity). 2 and 8 are the mutually responding parts.]]
+9 In a series of even-times-even numbers arranged continuously: if the series is **odd** (in count), the product of the extreme numbers is equal to the middle number multiplied by itself. Then, the product of the numbers placed around the middle is equal, until the series is exhausted. If, however, the series is **even** (in count), the product of the extremes is equal to the product of the two middle numbers; then to those joined on either side, and in this manner until the completion of the series.
+
+# Properties of the even-times-odd number
+[[notes: An "even-times-odd" (*pariter impar*) number is an even number that, when divided by two, immediately results in an odd number—such as 6, 10, 14, or 18. They are essentially doubles of odd numbers (2n where n is odd).]]
+
+1 Any even-times-odd number has an odd half.
+2 Every even-times-odd number retains for any of its parts a different quantity and denomination; for if the quantity is even, the denomination will be odd, and it always happens conversely. [[notes: For the number 10, the "fifth" part (odd name) is 2 (even quantity).]]
+3 Every even-times-odd number is produced from odd numbers taken continuously from the unit, into which the **binary** [[notes: The number 2]] is multiplied. [[notes: e.g., 2x3=6, 2x5=10, 2x7=14.]]
+4 All even-times-odd numbers surpass each other by the count of four: continuously leaving behind four in the natural series, and being distant from each other in the fifth place. [[notes: The sequence is 6, 10, 14, 18... each separated by 4.]]
+5 Every even-times-odd number is the mean of two other even-times-odd numbers lying at an equal distance on either side and collected from the natural series.
+6 In any series of even-times-odd numbers arranged in an even and continuous series: it is necessary that the two middle parts joined together equal the sum of their nearest neighbors on either side, and those above them all the way to unity.
+
+# Properties of the odd-times-even number
+[[notes: An "odd-times-even" (*impariter par*) number is an even number that can be divided by two more than once, but eventually results in an odd number—such as 12, 20, 24, or 28.]]
+
+1 Every odd-times-even number has some parts that respond in both denomination and quantity, but others that disagree in denomination and quantity.
+2 Every odd-times-even number is procreated from an even-times-even and an even-times-odd number.
+3 When a series of odd-times-even numbers is completed in length and width: those described through the **length** keep the sixth property of the even-times-even numbers; those in the **width** keep the sixth property of the even-times-odd numbers. The length of the series is that which extends from left to right; the width is that which moves from the bottom to the top.
+
+[[summary: This page defines the specific arithmetic properties and behaviors of even, odd, and complex even numbers (even-times-even, even-times-odd, and odd-times-even). It explores how these numbers relate to their factors, their position in a series, and how they are generated through multiplication.]]
+[[keywords: arithmetic, parity, even numbers, odd numbers, even-times-even, powers of two, deficient numbers, divisors, mathematical series]]

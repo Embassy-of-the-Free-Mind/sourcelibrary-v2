@@ -1,0 +1,33 @@
+[[meta: This page continues the philosophical argument from page 11, concluding a passage from Seneca the Younger about the vanity of academic study before transitioning into historical and moral justifications for chess.]]
+
+# The First Book / Chapter 1
+
+> ...these things make men learned, but not good: wisdom is a more open, and indeed a simpler matter. A little learning is enough for a good mind. But we, as in other matters, waste ourselves on the superfluous. So too with Philosophy itself: just as in all things, we have suffered from an excess of learning. We learn not for life, but for the schoolroom. [[notes: This is a famous critique by Seneca (Epistle 106) regarding scholars who prioritize intellectual gymnastics over moral improvement.]]
+
+That (5) through this game, the nature of **governments** and **civil administrations** [[notes: The original German *Policeien* refers to the general order, regulation, and governance of a community rather than a modern police force]] is revealed. To this end, the inventor of this game—according to the report of **Polydore Vergil** [[notes: Polydore Vergil (c. 1470–1555) was an influential Italian humanist priest and historian]]—had a keen eye. His words in Book 2, Chapter 13 of *On the Inventors of Things* are as follows:
+
+> It shows that Majesty, without strength and the support of men, has very little power and is hardly safe; indeed, through such a game, it was clear enough that a King would easily be overwhelmed unless he remained vigilant and was defended by his own people. That is to say:
+
+> The inventor of this game wished to point out, as if with his finger, and demonstrate clearly that the majesty, power, and high status of a Prince cannot endure or be safe without the support and help of his subjects. Furthermore, he might easily be overpowered by foreigners and enemies if he does not diligently guard his position [[notes: *Schanze* here refers to a defensive position or "chance"]] nor be faithfully protected by his own people.
+
+That (6) from this, all manner of military schemes, soldierly wisdom, and strategic advice may be learned (as can be seen sufficiently from what follows, and as **Celio Calcagnini** [[notes: Celio Calcagnini (1479–1541) was an Italian scientist and diplomat]], in his singular book *On the Game of Dice*, page 299, proves).
+
+That (7) through this, the spirits, desires, and secret intentions of a person can often be tested and discovered. For this reason, **Ovid** [[notes: The Roman poet Publius Ovidius Naso]], in Book 3 of *The Art of Love*, page 440, after instructing a young lady how she should play the **Game of Chess** [[notes: Ovid originally referred to *Ludus Latrunculorum*, a Roman strategy game, but early modern writers often translated this as "Chess" to remain relevant to their readers]] prudently and wisely, warns her with these verses:
+
+---
+
+> --- It is a disgrace for a girl not to know
+> How to play: Love is often kindled through play.
+> But it is a small effort to use the moves wisely;
+> The greater task is to maintain one’s own composure.
+> For then we are off our guard, and are revealed in the heat of the game;
+> Our bare hearts are laid open through our play, etc.
+
+He also warns her to behave modestly while playing, and without the agitation of desire. This was also the way of the **Goths** (being a German people, as **Philipp Melanchthon** [[notes: Philipp Melanchthon (1497–1560) was a famous German reformer and scholar]], in Book 3 of his *Chronicle*, page 227...
+
+[[meta: catchword: testifies]]
+
+[[vocab: Game of Chess, Polydore Vergil, Ovid, Celio Calcagnini, Philipp Melanchthon, Governments, Civil Administrations, Majesty, Military Stratagems]]
+
+[[summary: This page explores the allegorical and practical benefits of chess, citing classical and Renaissance authorities to show how the game mirrors the relationship between a King and his subjects, teaches military strategy, and reveals a person's true character.]]
+[[keywords: Polydore Vergil, Seneca, Ovid, Celio Calcagnini, kingship, military strategy, character assessment, political allegory]]

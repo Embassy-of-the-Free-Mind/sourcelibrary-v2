@@ -1,0 +1,41 @@
+[[meta: This page marks the beginning of the formal preface to the treatise on Rythmomachia. It follows the previous blank/ghosted leaf, moving from the physical bibliography of the volume to the historical and philosophical justification for the game itself.]]
+
+-># Preface.<-
+
+->Kkk ij<-
+[[notes: This is a "signature mark," used by early modern printers and bookbinders to ensure the large sheets of paper were folded and bound in the correct order.]]
+
+## Francesco Barozzi to the Reader.
+[[notes: Francesco Barozzi (1537–1604) was a Venetian nobleman and mathematician. This text is likely a translation of his 1572 Latin work *Rythmomachia*, which revived interest in this complex medieval "Battle of Numbers."]]
+
+The ancient philosophers [[notes: The original German uses the term *Weltweisen*, literally "World-wise ones," a standard early modern term for the great thinkers of antiquity.]]—
+in order to delight and refresh the spirits of men
+when they were somewhat weary from studying or
+mental labor—
+invented many and various amusing games
+in times past. However,
+due to the long passage of time, through war,
+or also through a lack of those who
+would have taken pains—as the ancients did—to
+bring these games back into existence and standing,
+almost all of them have fallen into decline.
+
+Consequently, in our times, we have
+almost no knowledge of such games,
+except for this single one, which the very
+wise man Pythagoras invented, and in his
+mother tongue called [[markup: Rythmomachian]] [[notes: Derived from the Greek *rhythmos* (proportion/harmony) and *makhē* (battle). It was a mathematical board game played on a double-sized chessboard.]], (that is, a
+battle and harmony of numbers).
+
+This game is generally regarded and held
+by all knowledgeable people to be ingenious, useful, and
+pleasing—indeed, in truth, a game worthy
+of such a distinguished and famous inventor;
+considering that it is founded and directed
+upon numbers and the harmony
+of the **Art of Singing** [[notes: *Singe-Kunst* refers to the science of Music. In the Pythagorean tradition, music was considered a branch of mathematics because musical intervals are determined by numerical ratios.]] (which has
+its origin in those same numbers).
+
+[[summary: Francesco Barozzi introduces Rythmomachia as a "battle of numbers" designed by Pythagoras to provide intellectual recreation for weary scholars. He emphasizes that the game is a lost ancient treasure that teaches the mathematical foundations of musical harmony.]]
+
+[[keywords: Francesco Barozzi, Pythagoras, Rythmomachia, Battle of Numbers, mathematical games, musical harmony, liberal arts, intellectual recreation]]

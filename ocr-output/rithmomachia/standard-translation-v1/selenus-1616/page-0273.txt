@@ -1,0 +1,21 @@
+[[meta: This page continues the tactical endgame analysis from page 238, exploring various branching scenarios ("variations") based on Black's responses. The numbering system (1–64) for board squares remains the primary method for tracking piece movement.]]
+
+->14. cap: On the Game of Chess. 239<-
+
+If He [[notes: "He" refers to the opponent playing the Black pieces]], however, does not move the **Rook** out of danger, but instead moves the **Bishop** [[notes: *Schützen*, literally "the Archer," an early name for the Bishop]] towards the White **Rook** onto twelve: then **White** takes the mentioned Black **Rook** with the **Knight** [[notes: *Reuter*, literally "Rider"]] and gives **Check**: He [Black] moves the **King** towards it onto fifty-two: **White** [moves] the **Rook** to two, and in a few moves makes the **King's Rook's Pawn** into a **Queen** [[notes: This refers to the promotion of the pawn upon reaching the final rank]].
+
+[[margin: 22.]] But if **White** does not move the **King** to 19 (see note 21), but instead offers **Check** with the **King's Rook** at fifty-eight,
+[[margin: 23.]] and at the same time protects the **King's Knight's Pawn**: * then **Black** moves the **King** to forty-one: **White** [moves] the **King's Knight** to forty-three, and then with the **King's Knight's Pawn** from thirty-four gives the following **Checkmate**.
+
+[[margin: 24.]] But if **Black** does not move the **King** to 41 (see note 23), but to twenty-five: then **White** moves the **King's Knight** to twenty-seven and with it blocks the
+[[margin: 25.]] Black **King**: * **Black** moves the **King's Rook's Pawn** to the White **King's Knight's Pawn** at thirty-three: **White** takes it with his **King's Knight**: **Black** moves the **King's Bishop's Pawn** to thirty-eight: **White** [moves] the **King's Knight** to twenty-seven: **Black** [moves] the **King's Bishop** to fifty-five and protects the **Rook** [[notes: The original text says *dero Rothen* (the Red), which might suggest a chess set where the pieces were White and Red rather than White and Black, or it may be a typo for *Rochen* (Rook)]] with it: **White** moves the **King's Rook** to fifty: **Black** [moves] the **King's Rook** (after he has offered **Check** with the same from sixty, and **White** has moved the **King** to eleven) to the White **King's Knight** at twenty-eight: **White** [moves] the same [Knight] to ten and offers **Check**: **Black** moves the **King** to the White **King's Rook's Pawn** at seventeen: the
+[[margin: 26.]] **White King's Knight** [moves] to twenty: * **Black** takes the White **King's Rook's Pawn** with the **King**: **White** gives **Checkmate** with the **King's Rook** from forty-nine.
+
+[[margin: 27.]] If, however, **Black** does not take the White **King's Rook's Pawn** (see note 26), but rather the **Knight's Pawn** with his **King's Rook**: then **White** takes the same with the **King's Rook**: now, let **Black** move whichever piece He wishes: **White** can give him **Checkmate** by force (if He places the **King's Rook** on twenty-seven, the **King's Knight** on thirty-five, and finally the **King's Rook** on twenty-five).
+
+[[margin: 28.]] If, however, **Black** moves the **King** (because He does not wish to take the White **Pawns** with it, as in notes 26 and 27) to twenty-five...
+
+[[meta: catchword: twenty-five:]]
+
+[[summary: This page details several tactical variations in a chess endgame, specifically focusing on how White can force a checkmate or a pawn promotion using the Knight and Rook. It illustrates the consequences of Black's different defensive King moves and piece exchanges.]]
+[[keywords: Rook, Bishop, Knight, Pawn promotion, Checkmate, endgame tactics, 17th-century chess nomenclature]]

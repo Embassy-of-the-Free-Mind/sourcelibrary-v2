@@ -1,0 +1,21 @@
+[[meta: Continuity with page 346: This page continues the systematic walkthrough of chess variations within Chapter 9. The text employs a numbered coordinate system (1-64) common in 17th-century treatises to describe piece movement, picking up mid-sequence at variation twenty-two.]]
+
+# Of the Game of Chess.
+
+[[margin: 9. cap:]] [[note: *Caput* or Chapter 9.]]
+
+thirty-six, **Check**: **The Black** [player] / moves / the **King** / (so long as He / does not wish to move / the **Queen** / to forty-three / nor delay / the game / by one move) to fifty-eight: **The White** [player] / takes / the **B. Queen** / with the **K. Rook** [[note: *Rochen* or Rook; early modern chess sets often used this term, derived from the Persian 'rukh']] / and gives **Check**: **The Black** [player] / must take it / with the **King**: **The White** [player] / gives / with the **K. Bishop** [[note: *Schütze* or "Archer"; the early modern term for a Bishop]] / from forty-one / **Check**: **The Black** [player] / must move the **King** / to fifty-eight or fifty-one: **The White** [player] / gives / with the **Queen** / from forty-four / **Checkmate**.
+
+[[margin: 23.]] But if **the Black** [player] / [moves] the **Queen** / not to 59. (no. 6.) / but rather / (in order / to relieve / her **Bishop** / if perhaps **the White** [player] / with the **K. Bishop** / should take / his **K. Knight**) / moves to fifty-three: then **the White** [player] / pulls / the **K. Rook** / to three: **The Black** [player] / takes / the **W. K. Bishop's Soldier** [[note: *Soldat* or "Soldier"; the standard early modern term for a Pawn]] / with the **K. Pawn**: **The White** [player] / [takes] the **B. K. Knight** / with the **K. Bishop**: *
+
+[[margin: 24.]] **The Black** [player] / [takes] the same / with the **K. Knight's Pawn**: **The White** [player] / gives / with the **K. Bishop** / from fifty-one / **Check**: **The Black** [player] / takes it / with the **Queen** (for She [takes] the same / because if He / had to move / the **King** / to fifty-nine: he would still be overtaken / in a **discovered check** [[note: *Ab-Schach*; a move where one piece moves out of the way to allow another piece to give check]] / from forty-four) **The White** [player] / [takes] the same / with the **K. Rook**: **The Black** [player] / [takes] the same / with the **King**: **The White** [player] / [takes] the **B. K. Bishop** / with the **Queen**: and **the Black** [player] / (notwithstanding / that he has a **Rook** and **Bishop** / against his **Queen**) / provided He is only somewhat / knowledgeable of the moves / will be able to further assist himself well.
+
+[[margin: 25.]] But if **the Black** [player] / does not take / the **W. Bishop** / (no. 24.) / but rather / moves the **K. Bishop** / against the **W. Queen** / to fifty-two: then **the White** [player] / covers her / with her **Bishop** / to thirty-four: **The Black** [player] / moves / the **K. Bishop** / (out of danger) to forty-four: **The White** [player] / [moves] the **Queen** / to the **B. K. Pawn** / to eighteen: **The Black** [player] / (in order / to relieve him) [moves] the **K. Bishop** / to forty-three: **The White** [player] / [moves] the **K. Knight** [[note: *Reuter* or "Rider"; the early modern term for a Knight]] / to twenty-two: the **King** / to thirteen : and the **K. Rook** / to four : arranges his game / in such a way / very well / and will be able / to further / tackle **the Black** [player] effectively.
+
+[[margin: 26.]] But if **the Black** [player] / moves the **Queen** / neither / to 59. nor / to 53. (no. 6. 23.) / but rather / with the same / [takes] the **W. K. Bishop's**—
+
+[[meta: catchword: Bens- (Soldaten) / Bishop's (Pawn)]]
+
+[[summary: This page continues a technical breakdown of chess variations, specifically illustrating how White can force a checkmate or gain a material advantage depending on Black's Queen and King placement. It highlights the use of the discovered check and the strategic exchange of high-value pieces like the Queen and Rook.]]
+
+[[keywords: chess strategy, 17th-century chess, discovered check, King's Bishop, piece exchanges, coordinate notation, checkmate sequences]]

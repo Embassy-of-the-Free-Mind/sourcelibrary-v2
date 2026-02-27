@@ -1,0 +1,9 @@
+[[meta: This page serves as a physical buffer within the volume, following the mathematical corrections and errata found on the preceding leaf.]]
+
+[This page is blank.]
+
+[[notes: Although this page contains no handwritten text, its appearance in the digital record captures the physical reality of the manuscript’s preservation. The "Digitized by Google" watermark is a modern addition, placed during the scanning process to identify the digital provenance. The metal clips visible in the metadata are standard archival tools used to safely hold pages flat during photography, ensuring the text remains legible without straining the historical binding.]]
+
+[[summary: Page 2 is a blank leaf that serves as a structural break within the manuscript. It contains no written content, representing a pause in the document's sequence.]]
+
+[[keywords: blank page, archival preservation, digitization, structural leaf, manuscript layout]]

@@ -1,0 +1,76 @@
+[[meta: This page continues the detailed tactical analysis of a specific chess variation from page 379. The author, Gustavus Selenus, uses a unique numbering system where each of the 64 squares is assigned a number (1–64) starting from the white side. This page specifically explores deviations from the main line, providing visual diagrams for these "sub-variations" to help the reader visualize the branching possibilities.]]
+
+# The Fourth Book / 1. cap:
+
+->n. 2. 7.<-
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| BR | BR | BB | BR | BK | BB | BR | BR |
+| BP | BP | | | BP | BP | BP | BP |
+| | | BP | | | | | |
+| | | | BP | 36 | | | |
+| | | WP | WP | WP | | | |
+| | | | | | | | |
+| WP | WP | | | | WP | WP | WP |
+| WR | WR | WP | WR | WK | WP | WR | WR |
+
+[[notes: In this diagram, the pieces are: BR (Black Rook/Roche), BP (Black Pawn/Soldat), BB (Black Bishop/Schütze), BK (Black King), WR (White Rook), WP (White Pawn), WK (White King). The number 36 indicates a key square for a pawn move discussed in variation 8.]]
+
+->n. 3. 6.<-
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| BR | BR | BB | BR | BK | BB | BR | BR |
+| BP | BP | | | BP | BP | BP | BP |
+| | | | | 44 | 43 | | |
+| | | | | | | | |
+| | | | WP | | WP | | |
+| | | WR | | | | | |
+| WP | WP | | | | WP | WP | WP |
+| WR | | | WR | WK | WP | WR | WR |
+
+[[notes: The numbers 43 and 44 highlight the squares involved in the choice between moving a Knight or a Pawn, as described in point 6 below.]]
+
+->n. 4. 5.<-
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| BR | BR | BB | | BK | BP | | BR |
+| BP | BP | | | BP | BP | BP | BP |
+| | | | | | | | |
+| BR | WR | | BR | | | | |
+| | | | WP | | | | |
+| | | | | WP | | | |
+| WP | WP | | 13 | | WP | WP | WP |
+| WR | | | WR | WK | WP | WR | WR |
+
+[[notes: Point 13 in the grid likely refers to a specific tactical observation or move sequence discussed in the text regarding the movement of the Bishop (Schütze).]]
+
+->n. 8. 9.<-
+
+| | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| BR | BR | BB | BR | BK | BB | BR | BR |
+| BP | BP | | | BP | BP | BP | BP |
+| | | BP | | | | | |
+| | | | BP | WP | 35 | | |
+| | | WP | WP | | | | |
+| | | | | | | | |
+| WP | WP | | | | WP | WP | WP |
+| WR | WR | WP | WR | WK | WP | WR | WR |
+
+[[notes: The number 35 refers to the square mentioned in point 8, where Black moves the King's Bishop to counter White’s pawn advancement.]]
+
+### 1. cap: Of the Game of Chess.
+
+twenty-two: **Black** [moves] the King’s Rook [[notes: *Rochen* is the archaic term for the Rook or Castle]] (in order to place the King on fifty-eight) to fifty-nine, and will thus arrange his game well.
+
+6. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If, however, **Black** does not move the Knight [[notes: *Reuter* (Rider) refers to the Knight]] to 43 (no. 3), but rather the King’s Pawn [[notes: *Soldat* (Soldier) refers to the Pawn]] (to give his Bishop room) to forty-four: then **White** places the King’s Knight (to give check with it from fifty-four) on thirty-nine: **Black** (to ward off the check) the King’s Knight to forty-eight: **White** the Queen to thirty-two: **Black** (to prevent the check from the White King’s Knight from 54 and the discovered check [[notes: *Ab-Schach* refers to a discovered check, where moving a piece reveals an attack by another]] from the White Queen) the King’s Bishop [[notes: *Schütze* (Archer) is the historical name for the Bishop in this variant]] to fifty-three: **White** the King’s Knight (to move it to thirty-six) to nineteen: **Black** (to move the King) his Bishop to fifty-two: and will thus not only arrange his game well, but also be able to do no small damage to White.
+
+7. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If, however, **White** does not take the Black Pawn (no. 2)
+8. but instead moves his King’s Pawn to thirty-six: * then **Black** plays the King’s Bishop to thirty-five: **White** (to hinder Black so that he cannot conveniently move his pieces) the King’s Bishop’s Pawn to thirty-eight: **Black** (to break White’s schemes) the King’s Knight’s Pawn [[notes: The text ends mid-sentence here as it transitions to the next page's tactical instruction.]]
+
+[[summary: This page illustrates four distinct chess board variations (labeled n. 2 through n. 9) and provides accompanying prose explaining the strategic consequences of specific pawn and minor piece maneuvers. It emphasizes defensive responses to checks and the use of the Selenus 1-64 numbering system to track piece movement.]]
+
+[[keywords: Selenus notation, Chess diagrams, Bishop strategy, discovered check, historical chess terminology, pawn structure, 17th-century chess]]

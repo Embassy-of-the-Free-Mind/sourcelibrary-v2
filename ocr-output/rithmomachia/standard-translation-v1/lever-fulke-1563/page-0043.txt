@@ -1,0 +1,23 @@
+<header>The Philosophers' game.</header>
+<sig>C.ij.</sig>
+<meta>catchword: The</meta>
+
+triangle <note>original: "angle"</note> 12 by Addition. Also, the square 120 standing in **D** and the circle <note>original: "rounde"</note> 49 standing in **B**—or else the square 49 standing in **L**—which, being added together, make 169. If the square 169 stands in **A**, they shall capture <note>original: "take"</note> the said square 169 by Addition.
+
+---
+
+### Of Capture by Subtraction
+
+When two pieces <note>original: "men"</note> are positioned so that when the lesser is subtracted from the greater, the remaining number is equal <note>original: "all one"</note> to the opponent's piece that stands within the range <note>original: "draughtes"</note> of both attacking pieces; as soon as the second piece is set in its place, the player may capture the opponent's piece without moving into its space, unless the piece was already under threat <note>original: "finde him so"</note> before the move. 
+
+For example: the circle <note>original: "rounde"</note> 2 standing in **B** and the triangle 9 standing in **G** <note>original: "6"</note> shall capture their opponent 7 standing in **A**, because 2 subtracted from 9 remains 7. Another example:
+
+<vocab>Philosophers game, addition, subtraction, square, rounde, triangle, draughtes</vocab>
+
+<summary>
+This page concludes the specific numerical examples for "Capture by Addition" in Rythmomachia, demonstrating how values like 120 and 49 can combine to capture a 169 square. It then introduces the rule for "Capture by Subtraction." This rule allows a player to capture an opponent's piece if the difference between two of their own pieces equals the value of the target, provided the target is within the legal moving distance of both attacking pieces.
+</summary>
+
+<keywords>
+Rythmomachia, The Philosophers' Game, Capture by Subtraction, Capture by Addition, board games, 16th-century games, arithmetic, mathematical strategy
+</keywords>

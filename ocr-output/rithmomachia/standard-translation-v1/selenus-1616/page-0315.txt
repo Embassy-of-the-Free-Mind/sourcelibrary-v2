@@ -1,0 +1,18 @@
+[[meta: This page concludes the tactical analysis of an opening sequence based on the writings of Pedro Damiano. It continues the use of the 1–64 square numbering system and the specific terminology for pieces used in this 17th-century manual: Archer for Bishop, Rider for Knight, and Soldier for Pawn.]]
+
+### Chapter 3: On the Game of Chess
+
+**Archers** / (no. 30.) instead / moves the **Queen** / (in order / to defend her **King’s Archer** [[notes: The Bishop]]) to **twenty-three**: so the **Archers** are exchanged: the **Black King’s Rider** [[notes: The Knight]] / is moved to **fifty-three** / and his **Rook** / nonetheless / (because / the **Queen** / protects him) is saved.
+
+[[margin: 32.]] But if the **White** [player] / does not move the **Queen** / to **twenty-three** (no. 31.) but rather / to **twenty-one**: and the **Black** [player] / takes the **White King’s Archer** / with his **King’s Archer**: and the **White** [player] / moves the **King’s Soldier** [[notes: The pawn]] / to the **Black King’s Archer’s** [square] / at **thirty-six** / and gives **Discovered Check** [[notes: *Ab-Schach*—a move where one piece moves out of the way to reveal a check from a piece behind it]] / from the **Queen**: so he has only / exchanged the **Archers** / and his plot / against the **Black Rook** / has nonetheless / failed.
+
+This has now / following the guidance of **Damiani** [[notes: Pedro Damiano, whose 1512 book was a foundation for this text]], although he / posits it / with other words / been so set down / and herewith ends / his description / of the manner and way / when a game / is started with the **King’s Soldier** [[notes: Referring to the King's Pawn opening, 1. e4]].
+
+-><image-desc>A decorative woodcut tailpiece featuring a central grotesque mask or lion's head surrounded by elaborate symmetrical scrolling foliage and floral ornaments.</image-desc><-
+
+An ij
+[[meta: catchword: Das]]
+
+[[summary: This page completes a technical walkthrough of a chess opening, demonstrating how Black can defend their Rook from a White attack through specific exchanges. It marks the conclusion of the section based on the theories of the Portuguese master Damiano regarding the King's Pawn opening.]]
+
+[[keywords: Chess tactics, Damiano, Queen, Archer, Bishop, Rider, Knight, Rook, Discovered Check, King's Pawn Opening, 17th-century games]]

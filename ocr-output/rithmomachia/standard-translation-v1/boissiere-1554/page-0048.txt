@@ -1,0 +1,20 @@
+[[meta: This page continues the philosophical allegory of the "Pyramid" piece in Rythmomachia. It completes the thought from the previous page regarding how mathematical structures mirror the ascent from the physical world to the divine. It then transitions into a practical manual on how to calculate the different classes of numbers used on the game board.]]
+
+...leads to the base of the **perfect pyramid**: for its root is 6. This perfect pyramid afterward does not stop or end at 4, but rather pursues and conducts its numbers to the **three-and-one** [[notes: Refers to the Trinity (3 in 1), representing spiritual completion and the Godhead.]]. Likewise, the moderation and modesty maintained among earthly things not only directs us toward perfection, but is the very root of the base of perfection, by which we afterward do not stop at the **elementary quaternary** [[notes: The "quaternary" refers to the number 4, which in Renaissance thought symbolized the material world through the four elements: earth, air, fire, and water.]]; rather, we easily reach the union of the three-and-one.
+
+## Another kind of arrangement to easily find the numbers:
+
+->And, Firstly.<-
+
+### To find the required values of the multiples.
+
+Multiply (as we said above) each of the **requerants** [[notes: The "requerants" (petitioners) are the base numbers used to generate higher-order pieces in the game.]] by themselves, and you will have the required multiples; just as 2 times 2 makes 4, and so on for the others.
+
+### To find the required superparticulars
+
+Add one unit to each of those of the first order which make up the **requerants** [[notes: In Rythmomachia, a "superparticular" ratio is one where a number contains another number plus one unit of it (e.g., 3:2, 4:3). These are formed by adding 1 to the base multiple.]].
+
+[[gloss: perfect pyramid, three-and-one, elementary quaternary, multiples, superparticulars, petitioners]]
+
+[[summary: This page explains the symbolic transition from the physical elements to spiritual perfection through the "Pyramid" game piece, then provides instructions for calculating Multiples and Superparticular numbers.]]
+[[keywords: Rythmomachia, Numerology, Trinity, Four Elements, Mathematical Ratios, Superparticulars, Multiples]]

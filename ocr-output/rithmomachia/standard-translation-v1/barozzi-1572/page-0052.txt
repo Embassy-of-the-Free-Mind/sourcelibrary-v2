@@ -1,0 +1,21 @@
+[[meta: This page continues the instructions for Rithmomachia—the "Philosophers' Game"—begun on the previous page. It moves from the mathematical ratios of the pieces to the spatial requirements for winning and the etiquette of play.]]
+
+...of the color of the opposing side in whatever shape you please, provided that the pieces that constitute the **victories** [[notes: In Rithmomachia, a "Victory" is a specific winning condition achieved by lining up pieces that form mathematical progressions (Arithmetic, Geometric, or Harmonic).]] are located in squares following one after the other; as can be seen in the following example: the victories ABCD, AEFG, AHEI, BIEK, IHKL.
+
+| | A | | B | | C | | D |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **H** | | **I** | | | | | |
+| | **E** | | | | | | |
+| **K** | | **L** | | | | | |
+| | **F** | | | | | | |
+| | | | | | | | |
+| | **G** | | | | | | |
+| | | | | | | | |
+
+The fifth rule is that when the second-to-last piece is moved to achieve the final **victory**, it must be proclaimed [[notes: Similar to calling "Check" in Chess, this warns the opponent that the game is nearing its end.]], to warn the enemy to remedy the situation if he can; so that later, when he can no longer remedy it, you may honorably move the last piece that completes the final victory.
+
+The sixth rule is that once the final victory has been proclaimed, one can no longer take [[notes: "Prender" (to take/capture) refers to removing an opponent's piece from the board via the game's capture mechanics.]] any of the pieces that are already arranged and positioned to achieve it.
+
+[[summary: This page outlines the spatial positioning required to complete mathematical "victories" on the game board and details rules of conduct, including the requirement to warn an opponent before a final winning move.]]
+
+[[keywords: Rithmomachia, Philosophers' Game, victories, mathematical progression, board game rules, Renaissance games, game etiquette]]

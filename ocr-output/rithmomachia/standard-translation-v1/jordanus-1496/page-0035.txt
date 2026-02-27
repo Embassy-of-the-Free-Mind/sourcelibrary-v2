@@ -1,0 +1,63 @@
+[[meta: This page continues from Book VI of Jordanus de Nemore’s *Arithmetica*. Having established the basic properties of ratios in Book V, Jordanus now applies these principles to "figured numbers"—specifically squares and cubes. This page investigates the proportional relationships between these powers and their roots (sides), as well as the geometric properties of their differences.]]
+
+<margin>6</margin>
+### If cubes are proportional, their sides will also be proportional; and if the sides are proportional, the cubes will also be proportional.
+
+Let the hypothesis be the same as before, but let **g**, **h**, and **k** be the cube numbers of **a**, **b**, and **c** [[notes: In medieval arithmetic, the "side" (*latus*) refers to what we call the root; thus, if **a** is the side, **g** is $a^3$]]. The second part of this is evident by taking **a**, **b**, and **c** as continuously proportional and multiplying them into **d**, **e**, and **f**, their squares, which by the first part of the preceding [proposition] are continuously proportional. From this, **g**, **h**, and **k** will be produced, which by the tenth [proposition] of the fifth [book] are continuously proportional. This completes the second part.
+
+The first part is declared thus: For by the ninth [proposition] of the fifth [book], the ratio of **g** to **h** is composed of the ratios of **a** to **b**, **a** to **b**, and **a** to **b** [[notes: Jordanus is expressing $a^3/b^3 = (a/b) \times (a/b) \times (a/b)$]]. The ratio of **h** to **k** is composed of the ratios of **b** to **c**, **b** to **c**, and **b** to **c**. If **a**, **b**, and **c** are not proportional, neither are **d**, **e**, and **f**. If therefore the ratio of **a** to **b** is greater than **b** to **c**, then by the fifth [proposition] of the fifth [book], the ratio of **d** to **e** will be greater than **e** to **f**. Therefore, by the same fifth [proposition], **g** to **h** (established from the larger ratios of **d** to **e** and **a** to **b**) will be greater than **h** to **k**. Thus **g**, **h**, and **k** would not be proportional. But this contradicts the hypothesis and the whole proposition.
+
+<margin>7</margin>
+### The amount by which a square exceeds a square is the number collected from their sides and multiplied by the difference of those sides.
+
+[[notes: This is a verbal proof of the algebraic identity $a^2 - b^2 = (a+b)(a-b)$. The "number collected from the sides" is the sum ($a+b$).]]
+
+<image-desc>A geometric diagram to the right of Proposition 7 showing a large semicircle labeled with numbers 16 and 9 at the top corners, a smaller inner semicircle labeled 7, and two rectangular segments at the bottom labeled 4 and 3.</image-desc>
+
+Let **a** and **b** be two squares: **a** the greater and **b** the lesser. Let **c** be the side of **a**, and **d** the side of **b**. I say that the number by which **a** exceeds **b** is the number produced by the product of the difference of **c** to **d** and the sum of **c** and **d**. For I understand the sum of **c** and **d** to be divided into the greater number **c** and the lesser **d**. And because by the eighteenth [proposition] of the first [book], that which is made from **d** into itself, together with that which is made from the difference of **c** to **d** into the sum of **c** and **d**, is equal to that which is made from **c** into itself [[notes: Essentially: $d^2 + (c-d)(c+d) = c^2$]]. But that which is made from **c** into itself is the greater square **a**, and that which is made from **d** into itself is the lesser square **b**. Therefore, the lesser square **b** is exceeded by the greater square **a** by that number which is produced from the difference of **c** to **d** multiplied by the sum of **c** and **d**. Thus **a** exceeds **b** by that same number, which is what was proposed.
+
+<margin>8</margin>
+### If a square measures a square, its side will also measure the side of the other; and if a side is measured by a side, the square will be measured by the square.
+
+[[notes: To "measure" (*numerare*) in this context means to divide evenly. This proposition states that $a^2$ divides $b^2$ if and only if $a$ divides $b$.]]
+
+<image-desc>A line diagram to the right of Proposition 8 showing points a, b, c, d, e, f on horizontal segments. Numbers 9, 18, 36 are above the segments, and 3, 6 are below.</image-desc>
+
+Let **a** and **b** be two squares, and let **a** measure **b**. Let **c** be the side of **a** and **d** the side of **b**. I say that **c** measures **d**. I also say that if **c** measures **d**, then **a** measures **b**. For let there be, by the corollary of the fourth [proposition] of this [book], a mean proportional **e** between **a** and **b** [[notes: If $a$ and $b$ are squares, there is a geometric mean $e$ such that $a/e = e/b$]]. Then **a** to **e** and **e** to **b** will be in continuous proportion as **c** to **d**. But the first number **a**, by the hypothesis, measures the last **b**; therefore, by the thirteenth [proposition] of the fourth [book], the first **a** measures the second **e**. Consequently, **c** will measure **d**, which is the first part. The second part: for if **c** measures **d**, then **a** measures **e** and **e** measures **b**. Therefore, by the twenty-third [proposition] of the first [book], **a** will measure **b**, which is the second part and the whole proposition.
+
+<margin>9</margin>
+### If a cube measures a cube, its side will also measure the side of the other; and if a side measures a side, the cube will also measure the cube.
+
+<image-desc>A line diagram to the right of Proposition 9 showing points a-b, c-d, e-f with corresponding numbers 64, 32, 16, 8, 4, 2.</image-desc>
+
+That which was just shown regarding squares is here proposed to be demonstrated regarding cubes. The first part, by placing mean proportionals between the cubes through the corollary of the fourth [proposition] of this [book], is known just as the first part of the preceding [proposition]; and the second part likewise.
+
+<margin>10</margin>
+### Of three numbers in continuous proportion: if the first is a square, the third must also be a square.
+
+[[notes: If $a/b = b/c$ and $a = x^2$, then $c$ must be a square ($y^2$).]]
+
+<image-desc>A complex geometric diagram to the right of Proposition 10 showing multiple horizontal line segments representing numerical ratios. Points labeled a-l and numbers 100, 50, 25, 50, 25, 10, 5, 2, 1.</image-desc>
+
+Let **a**, **b**, and **c** be three numbers in continuous proportion, and let **a** be a square. I say that **c** is a square. Let **d** and **e** be the least [numbers] in the ratio of **a** to **b**. By the nineteenth [proposition] of the third [book], **d** will measure **a**. Let it be according to [the factor] **f**. Also by the same [proposition], it will measure **c** [[notes: "According to f" means $a = d \times f$]]. Since by the hypothesis the ratio of **a** to **b** is the same as **b** to **c**, let **f** be according to **g** [[notes: $c = f \times g$]]. And because **a** is posited as a square, let its side be **h**. Since **h** squared is **a**, and **d** times **f** [is **a**], then by the second part of the twenty-sixth [proposition] of the second [book], **d**, **h**, and **f** are in continuous proportion. And by the ninth [proposition] of the fifth [book], the ratio of **a** to **f** is composed of the ratios of **d** to **h** and **d** to **h**. Therefore, because **a** is to **b** as **d** is to **e**, then **b** is to **c** as **f** is to **g**. Thus **d** is to **e** as **f** is to **g**. Therefore, by permutation, **d** is to **f** as **e** is to **g**. Therefore, by the twelfth [proposition] of the fourth [book], as many mean proportionals fall between **e** and **g** as between **d** and **f**. But between **d** and **f** falls one mean proportional, **h**; therefore, between **e** and **g** there will also fall one, which let be **k**. And because it is proposed that **e** and **g** [be formed], then by the twenty-sixth [proposition] of the second [book], from **l** into itself the same **c** will be made. Therefore **c** is a square, which was to be demonstrated.
+
+<margin>11</margin>
+### If the first of four proportional numbers is a cube, the fourth will also turn out to be a cube.
+
+[[notes: If $a/b = b/c = c/d$ and $a = x^3$, then $d = y^3$.]]
+
+<image-desc>A complex diagram to the right of Proposition 11 with points a-p and several horizontal lines. Numbers include 1000, 500, 250, 125, 200, 25, 40, 5, 8, 4, 2, 1.</image-desc>
+
+Let **a**, **b**, **c**, and **d** be four numbers in continuous proportion, of which the first, **a**, is a cube. I say that the fourth, **d**, is a cube. Just as **e**, **f**, **g**, and **h** are four [numbers] in the same ratio and are the least [terms], they will be cubes by the second [proposition] of this [book]. And since **e** and **a** are cubes, by the corollary of the fourth [proposition] of this [book] there will be two mean proportionals between **e** and **a**, which let be **k** and **l**. And because by equal proportionality, as the ratio of **e** to **h** is that of **a** to **d**, then by permutation, the ratio of **e** to **a** is that of **h** to **d**. But between **e** and **a** it has been proved there are two mean proportionals. Therefore, by the twelfth [proposition] of the fourth [book], between **h** and **d** there will similarly be two mean proportionals, which let be **m** and **n**. And since by the nineteenth [proposition] of the third [book] **h** measures **d**, then by the second part of the thirteenth [proposition] of the fourth [book] **h** will measure **m**. Let **o** be the side of the cube **h**, and let **o** be in **p** as many times as **h** is in **m**. Since the ratio of **h** to **m** is as **m** to **n** tripled, the ratio of **d** to **h** will be the same as the ratio of **p** to **o** tripled. And since by the fourth [proposition] of this [book] the ratio between the cube **p** and cube **h** is the same, then **d** will be a cube, and its side will be **p**, which is what was proposed.
+
+<margin>12</margin>
+### To investigate three squares whose differences, taken continuously, are equal.
+
+[[notes: This is a classic problem: finding an arithmetic progression of squares, such as $1^2, 5^2, 7^2$ (giving $1, 25, 49$, where $25-1 = 24$ and $49-25 = 24$).]]
+
+<image-desc>Diagrams to the right of Proposition 12. Top part: horizontal segments with points a-k and numbers 7, 4, 3, 4, 10, 28, 12, 70, 30. Bottom part: A semicircle labeled with points l, m, g and containing numbers 70, 40, 28, 12, 30.</image-desc>
+
+Let **c** be the double of any number. Let it be added to any number such as **b**. Let **a** be the sum of **b** and **c**. And from **a** and **b** let **d** be made [[notes: $d = a + b$]]. And from **c** into **a** and into **b** let **h** and **k** be made. And from **a** and **b** into **d** let **e** and **f** be made. And let the number **l/m/g** be set equal to the number **e**, such that **g** is equal to **f**. Since **e/l/m/g** are equated, and from **a** into **d** comes **e**, also from **a** into **d** comes **l/m/g**. But because it is equal to **f**, which is made from **b** into **d**, therefore the residue **l** and **m**, by the tenth [proposition] of the first [book], is equal to that which is made from **c** into **d**. Wherefore, by the ninth [proposition] of the same [book], **l** and **m** are as **h** and **k**. Let **l** be equal to **h**, and **m** equal to **k**. I say therefore that **l** and **g** can be divided into two equal parts. For since **b** into **d** makes **g**, and **d** is as **b** twice and **c**, likewise **b** into itself twice—that is, into its double—and into **c** it makes **g**. And **a** into **c** makes **l**. Therefore **l** and **g** will be as that which is made from **b** into itself twice, and **a** (which is **d**) into **c**, the half of which is that which is made from **b** into itself once, and from **d** into half of **c**. Therefore, the number **l** and **g** is divisible into two equal middle parts. I divide...
+
+[[summary: This page explores the proportional and additive properties of squares and cubes. It includes proofs for the differences between squares and provides a method for finding an arithmetic progression of three square numbers.]]
+[[keywords: squares, cubes, mean proportionals, arithmetic progression, side, root, Jordanus de Nemore]]

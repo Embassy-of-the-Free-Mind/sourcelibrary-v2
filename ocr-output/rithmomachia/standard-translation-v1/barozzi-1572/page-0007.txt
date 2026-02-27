@@ -1,0 +1,35 @@
+[[meta: This page is the formal dedication of the work, following the title page. The author, Francesco Barozzi, addresses his patron, Camillo Paleotto, recalling their earlier study of the game in its Latin form and explaining his decision to produce an improved version in Italian.]]
+
+->A<-
+
+# TO THE VERY MAGNIFICENT
+## AND ILLUSTRIOUS LORD
+### THE LORD CAMILLO PALEOTTO.
+
+->*One of the Lords of the Forty of the Magnificent City of Bologna.*<-
+
+[[notes: The **Lords of the Forty** (*I Quaranta*) was the prestigious governing senate of Bologna during this period, composed of the city's most influential noble families. **Camillo Paleotto** (1511–1589) was a prominent legal scholar and member of this elite council.]]
+
+---
+
+<image-desc>A large decorative initial 'Q' featuring an engraving of a rider on a horse, set within a landscape with foliage.</image-desc>
+
+That most beautiful and most delightful Game, discovered by the most wise Pythagoras, which already six years ago I explained orally to Your Illustrious Lordship from that little book composed in the Latin language by Claudio Buxero; and I had barely begun to show it to you upon the board with the pieces, when immediately you, with your most fine spirit and very sharp intellect, learned it in such a manner that you became its master; and often, playing it with Signor Francesco Caporacia, our fellow academic, and with me, you took pleasure in it as a pastime: now, it having been composed by me in the Italian language, and reduced to that greatest ease, clarity, and brevity that I could: and ow-
+
+[[notes: **Claudio Buxero** is the Latinized name of Claude de Boissière, a French mathematician who published a well-known manual on Rythmomachia in 1554. Barozzi is refining and simplifying Boissière’s complex Latin rules for an Italian-speaking audience.]]
+
+[[notes: The "academic" mentioned, **Francesco Caporacia**, likely refers to a member of one of the private literary or scientific societies (*accademie*) that were the center of intellectual life in Renaissance Italy.]]
+
+[[notes: The word **"ow-"** at the end of the text is the start of the word "owing" (*dovendo*), which is completed by the catchword on the following page. This was a common printing practice to ensure the pages were bound in the correct order.]]
+
+<insert>
+428
+103
+146
+</insert>
+<insert>333726</insert>
+<insert>(RCPXR)</insert>
+
+[[summary: Francesco Barozzi dedicates his Italian translation of the "Pythagorean Game" (Rythmomachia) to the Bolognese nobleman Camillo Paleotto, reminiscing about their past games and noting Paleotto's exceptional skill.]]
+
+[[keywords: Camillo Paleotto, Bologna, Pythagoras, Claude de Boissière, Francesco Caporacia, Rythmomachia, Renaissance mathematics, mathematical games]]

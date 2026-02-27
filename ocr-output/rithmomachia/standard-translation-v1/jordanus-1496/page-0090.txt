@@ -1,0 +1,40 @@
+[[meta: This page continues the mathematical foundation of musical intervals, specifically focusing on what happens when intervals are doubled (compounded with themselves) and how different terms in a ratio relate to one another in terms of quantity.]]
+
+# ->[[margin: 6]]<-
+### If an interval that is not a multiple is doubled: the resulting multiplication is neither a multiple nor a superparticular interval.
+
+| 9 | 6 | 4 | [[gloss: The interval A to C is neither multiple nor superparticular.]] |
+|---|---|---|---|
+| **a** | **b** | **c** | [[gloss: A to C is the doubled interval of A to B, which is indeed not a multiple.]] |
+
+Let the non-multiple interval be **a:b**, and let its double be **a:c**, such that the ratio of **a** to **b** is the same as **b** to **c** [[notes: In early music theory, "doubling" an interval means adding it to itself, which mathematically is done by squaring the ratio or finding a continuous proportion. For example, doubling a 3:2 Fifth results in a 9:4 ratio]]. I say that the interval **a:c** is neither multiple [[notes: A ratio like 2:1 or 3:1 where the larger number is an exact multiple of the smaller]] nor superparticular [[notes: A ratio like 3:2 or 4:3 where the larger number contains the smaller plus one part of it, like $1 + 1/2$]]. 
+
+First, if **a:c** were a multiple, then by the third proposition of this book, the interval **a:b** would also have to be a multiple; but it was established at the start that **a:b** is not a multiple. Second, if you were to say that **a:c** is a superparticular interval, since **a** is to **b** as **b** is to **c**, there would be a proportional mean between the terms of a superparticular ratio, which is impossible according to the preceding proposition [[notes: Proposition 5 stated that you cannot find a middle whole number to perfectly divide a superparticular ratio like 3:2]]. Therefore, it is known that if a non-multiple interval is doubled, the resulting compound interval is by no means multiple or superparticular. This is what was proposed.
+
+# ->[[margin: 7]]<-
+### If an interval is doubled, and the result of that doubling is not a multiple, then the original interval itself was not a multiple.
+
+This is the converse of the preceding proposition. Let us use the figure from the upper proposition, in which the interval **a:c** arises from the doubling of the relationship of interval **a:b**, and let **a:c** not be a multiple interval. I say likewise that the interval **a:b** is not a multiple. For if interval **a:b** were a multiple, since **a:c** (by hypothesis) arises from interval **a:b** being doubled, then by the first proposition of this book, interval **a:c** would be a multiple. But it was established that it is not multiple. Therefore, if a non-multiple interval is born from the doubling of some interval, the original interval from which it was born will not be a multiple either; which was to be shown.
+
+# ->[[margin: 8]]<-
+### From the number of parts of a superparticular interval which, when brought together, restore the whole, and a number one greater: one may know how many larger terms taken together correspond to the smaller terms taken together.
+
+| **a** 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|
+| **b** 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| **c** 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| **d** 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+
+Let **a:b** be a superparticular interval. It is manifest by the definition of a superparticular that **a** contains **b** and one part of **b**. Let that part, according to the number **c**, constitute its own whole **b** [[notes: For example, if the ratio is 3:2 (sesquialter), the "part" is a half, so it takes 2 such parts to make a whole; here c=2]]; and let **d** be a number one greater than **c**. I say that **a** taken according to number **c** is equal to **b** taken according to **d**. 
+
+For **a** taken **c** times contains **b** taken **c** times, plus the parts of **b** taken **c** times. But it was established that those parts taken **c** times constitute one whole **b**. Therefore, **a** taken **c** times contains **b** taken a number of times one greater than **c**. And indeed, **d** is the number one greater than **c**. Therefore, **a** taken according to **c** equals **b** taken according to **d**, which was to be shown. 
+
+If you require an example for clarification: let the interval **a:b** be *sesquialter* [[notes: The 3:2 ratio, or the musical Fifth]]. Since **a** is sesquialter to **b**, **a** contains **b** and its half; and two halves (by common parlance) return their whole. I say, therefore, that two **a**’s are as much as three **b**’s. For two **a**’s contain two **b**’s, and additionally two halves of **b** (which restore one **b**); thus two **a**’s contain three **b**’s and come out equal to three. 
+
+Similarly, if **a:b** is *sesquitertia* [[notes: The 4:3 ratio, or the musical Fourth]], **a** contains the whole of **b** and a third part of **b**. Since three-thirds of **b** are equal to one **b**, by the above argument, three **a**’s contain four **b**’s and come out equal to four. Indeed, in any given superparticular, the larger terms taken according to the smaller number of the proportion are equal to the smaller terms taken according to the larger number of the proportion. For instance, if **a:b** is *sesquiquinta* [[notes: The 6:5 ratio]], since the smallest terms of a sesquiquinta are 6 and 5, five **a**’s are equal to six **b**’s. Even in non-minimal terms, since 12 and 10 are terms of a sesquiquinta, ten **a**’s are equal to twelve **b**’s. And if **a:b** is *sesquioctava* [[notes: The 9:8 ratio, or a Whole Tone]], since the minimum terms are 9 and 8, eight **a**’s are as much as nine **b**’s. And because 18 to 16 is also a sesquioctava, sixteen **a**’s are equal to eighteen **b**’s, and so on for the others. But if you wish to contemplate this not only in particular instances but universally, it will be universally true:
+
+# ->[[margin: 9]]<-
+### Given any proportion: the larger terms taken according to the number of the smaller are equal to the smaller terms taken according to the number of the larger.
+
+[[summary: This page demonstrates that doubling a non-multiple interval never results in a simple multiple or superparticular ratio, and provides a mathematical rule for finding the equilibrium point between the larger and smaller terms of a ratio.]]
+[[keywords: doubling intervals, superparticular, sesquialter, sesquitertia, sesquioctava, proportional mean, mathematical music theory]]

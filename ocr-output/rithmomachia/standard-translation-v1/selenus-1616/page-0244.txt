@@ -1,0 +1,17 @@
+[[meta: This page continues the tactical variations of Chapter 13, following from the previous page's discussion of White moving the King’s Bishop to square 30. The text resumes mid-sentence describing White’s advantage.]]
+
+# The Second Book / 13. Chapter:
+
+Soldiers [[notes: *Soldaten*, the common term for Pawns in this era]] to twenty-five, and thus ruins Black’s game, while his own remains in good order.
+
+5. But if Black does not move the Soldier to 34 (as in number 4), but instead captures White’s King’s Knight [[notes: *Reuter*, literally "Rider"]] with his King’s Bishop [[notes: *Schütze*, literally "Marksman"]]: then White takes it with the King’s Rook [[notes: *Rochen*, the archaic term for a Rook]]: Black plays the King’s Knight’s Soldier (for the protection of the King’s Soldier) to thirty-four: White [moves] the King’s Soldier to the square of Black’s King’s Knight, to thirty-six: Black [moves] the same (so that he does not lose it) to fifty-eight: White [moves] the King’s Soldier to twenty-nine: Black [moves] the Queen to fifty-two: White [moves] the King’s Knight’s Soldier to Black’s King’s Soldier at eighteen: Black takes it with the same: White [takes] the same with the King’s Rook and moves it to Black’s King’s Knight’s Soldier: Black (to prevent the same) [moves] the
+
+6. King’s Rook’s Soldier to forty-one: * White [moves] the Queen to thirty-three: Black [moves] the King’s Knight to the same [square] at forty-three: (Because White’s King’s Soldier, since he is held captive [[notes: *gefangen gehalten*, referring to a "pin" where a piece cannot move without exposing the King]] by his Queen, can do him no hostile harm) White takes Black’s King’s Bishop’s Soldier with the same [Queen] and offers check: Black takes her with his Queen: White [takes] the same with the King’s Bishop and offers check again: Black takes him with the King: White plays the King’s Rook to nineteen, holds Black’s King’s Knight trapped, and can reach and capture it without loss of his pieces.
+
+7. Although these briefly mentioned moves are good, White organizes his game even better: if he moves not the Queen to 33 (as in number 6), but rather his King’s Rook’s Soldier to twenty-five: Black (so that White’s King’s Rook is not moved to fifty) does not take it with the King’s Knight’s Soldier, but instead moves the King’s Bishop’s Soldier to forty-three: White offers check with the Queen at thirty-three: Black moves the King (because it is the best move) to sixty-one: White (as far as he knows how to play) will win the game if he takes away Black’s King’s Knight with his King’s Bishop: For even if Black clears it away in return with his King’s Rook: He [White takes] the same Black Rook’s Soldier with the Quee-
+
+[[meta: catchword: -en / takes :]]
+
+[[summary: This page details specific tactical sequences in a chess opening, describing how White can trap Black's Knight and achieve a winning position through precise Pawn and Queen maneuvers.]]
+
+[[keywords: Chess tactics, Gustavus Selenus, Opening theory, King's Bishop, King's Knight, Pins, Checkmate strategy, 17th-century chess]]

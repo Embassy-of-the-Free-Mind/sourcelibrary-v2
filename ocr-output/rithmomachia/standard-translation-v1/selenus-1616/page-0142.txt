@@ -1,0 +1,26 @@
+[[meta: This page continues the introduction of a numerical notation system for chess moves, providing a visual guide and initial piece placement for the exercises that follow in later sections of the book.]]
+
+# The First Book. Chapter 11.
+
+| 64 | 63 | 62 | 61 | 60 | 59 | 58 | 57 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 56 | 55 | 54 | 53 | 52 | 51 | 50 | 49 |
+| 48 | 47 | 46 | 45 | 44 | 43 | 42 | 41 |
+| 40 | 39 | 38 | 37 | 36 | 35 | 34 | 33 |
+| 32 | 31 | 30 | 29 | 28 | 27 | 26 | 25 |
+| 24 | 23 | 22 | 21 | 20 | 19 | 18 | 17 |
+| 16 | 15 | 14 | 13 | 12 | 11 | 10 | 9 |
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+To conclude this chapter, it should be noted that the **diagram** [[notes: *Abriß*, meaning a sketch or diagram]] set down just before can also be used for the **examples** [[notes: *Exempeln*, referring to chess puzzles or recorded games]] which are described below in the three following books. For these (to prevent the tedious, manifold repetition and circumstantial description of the squares) have been directed toward these numbers with special diligence. Accordingly, the **chessboard** [[notes: *Schach-bret*]] on which one wishes to perhaps follow and practice the following examples should be marked with numbers in the order mentioned above. The player who plays with the **White Pieces** [[notes: *Weissen Steinen*, literally "white stones"]] should have the row where the numbers begin in front of him, and the one with the **Black Pieces** should have the row where the numbers end in front of him.
+
+-> Therefore, the White King is placed on four; the Black, <-
+-> however, on sixty; the White Queen on five; <-
+-> the Black on sixty-one, at the <-
+-> beginning. <-
+
+---
+
+[[summary: This page concludes the first book's eleventh chapter by presenting a numbered grid for the chessboard and explaining how to orient the board and place the primary pieces using this 1-64 coordinate system.]]
+
+[[keywords: chessboard notation, piece placement, King, Queen, numerical coordinates, White stones, Black stones]]

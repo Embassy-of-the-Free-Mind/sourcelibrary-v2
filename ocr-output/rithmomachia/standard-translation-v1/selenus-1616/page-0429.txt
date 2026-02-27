@@ -1,0 +1,26 @@
+[[meta: This page continues the tactical analysis of a complex opening or mid-game sequence. The notation continues to use the 1–64 numbering system for the board. The author is transitioning into a critique of how these same moves were described by the Portuguese chess master Pedro Damiano.]]
+
+### # # Vom Schach-Spiel.
+### # # On the Game of Chess.
+
+[[margin: 4. cap:]] [The Black moves] his **King’s Bishop** [[notes: *K. Schützen* literally translates to "King’s Archer," the standard 17th-century German term for the Bishop.]] and moves it onto the **White King’s Rook’s** [square]:
+The White moves the same [the King] to **two**: (for, if he were to set him on a **white field**, then the Black would offer **discovered check** [[notes: *Ab-Schach* refers to a discovered check, where moving one piece reveals an attack from another.]] from his **Queen** by way of her **Bishop**, and move the same onto him). The Black offers **discovered check** from the **Queen** with her **Bishop** at **twenty-one**: The White sets the **King** on **eleven**: The Black offers **check** with the **Queen** from **twelve**: The White must place the **King** on **eighteen**: The Black (so that the **King’s Bishop** may subsequently be moved against the **White Queen** at **forty-five**)
+[[margin: 12.]] moves the **Queen** to **forty-four**: * The White takes the **Black King’s Bishop** with his **King’s Bishop’s Pawn** [[notes: *K. Schützens-Soldat* or "King’s Archer’s Soldier."]]: The Black moves the **King’s Bishop** against the **White Queen** at **forty-five** and captures the same by force.
+
+[[margin: 13.]] If, however, the White (for the reasons mentioned above) does not take the **Black Bishop** (*no. 12*) but instead moves the **Queen** to **twenty-six** (in order to exchange her for the **Black Queen**) or wherever he pleases: he is nonetheless either **Mated** or has lost the **Queen**: For, if the Black (provided the Queen was moved to 26) offers **check** with the
+[[margin: 14.]] **King’s Bishop** from **forty-five**: * He [White] moves the **King** to **seventeen**: The Black moves the **King’s Bishop** against his **Queen** at **thirty-five** and thereby brings the same into his power.
+
+[[margin: 15.]] But if the White plays the **King** not to **17** (*no. 14*) but to **twenty-five**: the Black nonetheless moves the **King’s Bishop** against the **White Queen** at **thirty-five**.
+
+->This preceding material is treated by *Damianus* [[notes: Pedro Damiano (1480–1544) was a Portuguese chess player who wrote one of the earliest manuals on the game. The author here is criticizing Damiano’s lack of clarity.]] without any<-
+->order, and so obscurely that even those who understand this game<-
+->sufficiently can hardly (to say nothing of beginners)<-
+->grasp or comprehend his meaning.<-
+
+[[margin: 16.]] If then, he [Damiano] writes further, * the White is compelled by the Black (*no. 15 inf.*) to move the **Queen** to **nineteen**: then the Black plays the **King’s Rook** [[notes: *K. Rochen* refers to the Rook or Castle.]] against her at
+[[margin: 17.]] **fifty-nine**: * The White moves the same [the Queen] to another place (so as not to lose her):
+[[margin: 18.]] * The Black gives **check** with the **Queen** at **thirty-six**, and soon thereafter **Check-Mate**.
+
+[[summary: This page details a winning sequence for Black involving a discovered check and a coordinated attack by the Queen and Bishop against the White King and Queen. The author pauses to criticize the historical master Damiano for his confusing and disorganized explanation of these same maneuvers.]]
+
+[[keywords: Bishop, Queen, Rook, Discovered Check, Checkmate, Pedro Damiano, Tactics, 17th-century Chess]]

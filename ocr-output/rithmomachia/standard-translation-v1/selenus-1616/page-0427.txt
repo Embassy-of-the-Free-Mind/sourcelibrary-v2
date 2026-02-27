@@ -1,0 +1,50 @@
+[[meta: This page continues the detailed technical analysis of chess variations according to the "third style of play" by Damiano, specifically focusing on the consequences of specific captures and the movement of the Knight and Queen.]]
+
+# Of the Game of Chess.
+
+<margin>4.cap:</margin>...takes with the Queen the White King’s Rook: The White <margin>„</margin>
+places the King’s Knight [[notes: *Reuter* (Rider) was a common term for the Knight]] upon the Black King’s Rook’s square, at **forty-two**, and <margin>„</margin>
+gives **discovered check** from the Queen: The Black <margin>„</margin>
+covers the King with his Bishop [[notes: *Schütze* (Marksman/Archer) refers to the Bishop]] at **fifty-two**: The White <margin>„</margin>
+takes with the King’s Knight the Black King’s Rook: The Black <margin>„</margin>
+moves the Queen to **twenty-eight**, giving cause for the <margin>„</margin>
+**exchange of Queens**, and must finally gain the White King’s <margin>„</margin>
+Knight (whose destruction—since he cannot be moved out of the <margin>„</margin>
+corner—is already at the door) along with the whole game. <margin>„</margin>
+
+<margin>3.</margin> If, however, the White does not take the Black Pawn with the <margin>„</margin>
+Knight (as in no. 2), but instead takes the Black King’s Bishop’s <margin>„</margin>
+Pawn with his own King’s Pawn: then the Black moves the <margin>„</margin>
+King’s Pawn to **thirty-seven**, and opens the path for the <margin>„</margin>
+
+<margin>4.</margin> King’s Bishop to the White King’s Pawn: * The White takes <margin>„</margin>
+the Black King’s Pawn with the King’s Knight: (no. 2) the Black <margin>„</margin>
+offers **check** with the Queen from **25**: The White moves <margin>„</margin>
+against her the King’s Knight’s Pawn to **18** and in this manner <margin>„</margin>
+covers the King: The Black takes the White King’s Pawn <margin>„</margin>
+with the Queen and again offers **check**: (the error of this <margin>„</margin>
+taking, look for below at no. 36.) The White covers the King <margin>„</margin>
+with the Queen at **12**: The Black takes with his Queen <margin>„</margin>
+the White King’s Rook: The White (as follows further in no. 2) <margin>„</margin>
+gives **discovered check** with the King’s Knight from **42** etc. <margin>„</margin>
+
+<margin>5.</margin> If, however, the White does not give **discovered check** from <margin>„</margin>
+the Queen (no. 4 at the end), but instead offers **check** with <margin>„</margin>
+the same from **thirty-three**: then the Black plays the King <margin>„</margin>
+to **sixty-one**: The White offers **check** again with the King’s <margin>„</margin>
+Knight from **fifty-one**, and moves him onto the Black King’s <margin>„</margin>
+Rook: The Black moves the King to **fifty-two**: The White <margin>„</margin>
+takes the Black King’s Rook with his King’s Knight: The <margin>„</margin>
+Black gives **check** with the Queen from **twenty-eight**: The <margin>„</margin>
+White covers the King with his Bishop at **twelve**: The <margin>„</margin>
+Black takes the White King’s Pawn with the Queen: then <margin>„</margin>
+exchanges the Queens, and finally wins the game: For the <margin>„</margin>
+White (conduct he it as he will) cannot lead the King’s <margin>„</margin>
+Knight out from his troop [[notes: *Hauffen* (heap/crowd) here likely refers to the cluster of pieces or the enemy's territory]]. <margin>„</margin>
+
+->**DDD ii**<-
+[[meta: catchword: nicht]]
+
+[[summary: This page continues a technical breakdown of chess moves and counter-moves, detailing variations where Black eventually wins by trapping the White Knight in the corner after an exchange of Queens. It utilizes an early 1-64 coordinate system to track piece movements.]]
+
+[[keywords: Chess strategy, Damiano, Knight, Queen exchange, discovered check, historical chess notation, endgame analysis]]

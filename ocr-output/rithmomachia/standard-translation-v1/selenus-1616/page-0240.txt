@@ -1,0 +1,19 @@
+[[meta: This page continues the tactical analysis from Chapter 12 of Gustavus Selenus’s 1616 treatise. It continues the sequence of moves where White leverages a positional advantage against the Black King's defenses. The Selenus numbering system (1-64) is used to denote specific squares.]]
+
+# The Second Book / 12. Chap: #
+
+**Rook’s Soldier** [[notes: The pawn in front of the Rook]]: the **White** / takes the **B. K. Rider** [[notes: Black King’s Knight]] / with the **K. Archer** [[notes: King’s Bishop]] / and in this way wins the game / without hindrance: For / although the **Black** / with the **Queen** / offers check / to the **W. King** / from twelve [[notes: square d2]]: the **White** / can nevertheless / cover the same [King] / with the **K. Rider** / at thirteen [[notes: square e2]] / and besides their **Rook** [[notes: the Queen’s Rook]] / can further protect the **K. Rook**: the **Black** / takes / the **W. K. Archer** / with the **K. Rook’s Soldier** / and moves him / onto the **W. Queen**: the **White** / takes / the **B. K. Rider** / with the **K. Archer** / and offers check:
+
+[[margin: 23.]] * The **Black** / takes the same / with the **K. Rider’s Soldier**: the **White** / [takes] the same / with the **Queen** / offers check / and on the next move / obtains the **B. K. Rook** / together with the entire game.
+
+[[margin: 24.]] But if the **Black** / does not take / the **W. Archer** / with the **Soldier** / (no. 23.) / but instead / covers the **King** / with his **Archer** / at fifty-two [[notes: square d7]]: then the **White** / with the **Queen** / from thirty-seven [[notes: square e5]] / offers check:
+
+[[margin: 25.]] * The **Black** / moves the **King** / to sixty [[notes: square d8]]: the **White** / takes / with the **K. Archer** / the **B. K. Archer**: the **Black** / may not take him away / either with the **King** / or with the **Queen** / (for otherwise / if a **W. Rook** / were moved to four [[notes: square d1]]: He must lose the **Queen**) / but must / because He / has a dangerous game / and can easily be defeated / by the **White** / provide for himself in another manner.
+
+[[margin: 26.]] But if the **Black** / does not move / the **King** / to 60. (no. 25.) / but instead / to sixty-two [[notes: square f8]]: then the **White** / moves the **K. Archer** / to thirty-six [[notes: square d5]] / and protects the **K. Rook’s Soldier**: the **Black** / moves the **K. Rook** / onto the **W. Queen** / and their **Rider** / to sixty-one [[notes: square e8]]: the **White** / offers check / with the **Queen** / from forty-four [[notes: square d6]] / and moves her / onto the **B. K. Archer**: the **Black** / covers the **King** / with his **Rook** / and at the same time protects / his **Archer** / at fifty-three [[notes: square e7]]: (For otherwise / if the **King** / is moved / to sixty-three [[notes: square g8]] / He loses / the **Queen**: because then / the **White** / with the **K. Archer** / takes away his **K. Archer’s Soldier** / offers check / and with the **Queen** / in the following move / captures his **Queen**) / the **White** / sets / the **K. Rook** / on five [[notes: square e1]]: the **Black** / [sets] his **K. Archer** / on the **W. K. Archer** / at forty-three [[notes: square c6]]: the **White**: [sets] the **K. Rook** / on the **B. Queen** / (and to defend / his **K. Archer**) / on four [[notes: square d1]]: the
+
+[[meta: catchword: Black /]]
+
+[[summary: This page details specific tactical variations where White utilizes the King's Archer (Bishop) and Queen to pressure the Black King, often forcing the loss of the Black Queen or Rook. It emphasizes the "Selenus" method of square numbering to track precise movements.]]
+
+[[keywords: King's Archer, Knight's Soldier, Check, Rook, Queen, Selenus Numbering, Chess Tactics, 17th Century Chess]]

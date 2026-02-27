@@ -1,0 +1,71 @@
+[[meta: This page continues the geometric and arithmetic demonstrations of figurate numbers, transitioning from the construction of equiangular (centered) hexagons to heptagons and octagons. It relies on the works of "Severinus" (Boethius) to show how higher-order polygons are built from simpler forms like triangles and squares.]]
+
+...of the oblong number **d**, the side is **b**: which is the same as the side of **e**. Therefore, by the fourth [proposition] of this book, **d** will be double **e**: but **b** and **c** have been shown to be one greater than the double of **d**. Therefore, **b** and **c** are one greater than the quadruple of **e**: thus **b**, **c**, and **d** together are one greater than the sextuple of **e**. And by the preceding [proposition], **e** taken six times with one added creates the third equiangular hexagon after unity, which is **f**. It is established, then, that **f** consists of **b**, **c**, and **d**: but **a** alone consists of **c** and **d**, as was shown. Therefore, the equiangular hexagon **f** exceeds the square-style hexagon **a** [[notes: *Hexagonus tetragonicus*, referring to the standard hexagonal numbers (1, 6, 15, 28...) which were often conceptualized as "elongated" squares in ancient/medieval arithmetic.]] by the total square **b** from unity: which is what was proposed. 
+
+¶ Note how the divine Severinus [[notes: Anicius Manlius Severinus Boethius (c. 480–524 AD), the most influential authority on arithmetic in the Middle Ages.]] shows that heptagonal numbers are continually formed from hexagons and two smaller equal triangles added below, with a further triangle placed prominently. This same thing occurs if, in an arrangement of natural numbers, the extremes are joined while continually leaving four intermediate numbers behind. For example, the second heptagon [7] is made from the second hexagon [6] and the first triangle [1] added as an equal triangle. This is also made from 1 and 6, with four numbers [2, 3, 4, 5] passed over in the middle. The third heptagon [18] is made from 15 (the third hexagon) and 3 (the second triangle) added as an equal triangle from that region [[notes: A heptagonal number is $H_n = \frac{5n^2 - 3n}{2}$. For $n=3$, $H_3 = 18$. The text confirms $15 + 3 = 18$.]]. This is also made from 1, 6, and 11. In this manner, one must proceed in the figuration and collection of these numbers for the rest.
+
+---
+
+[[margin: <image-desc>A dot diagram showing an equiangular octagon composed of 19 dots. The dots are arranged in five rows of 3, 4, 5, 4, and 3 dots respectively.</image-desc>]]
+
+[[margin: 22]]
+### ¶ To construct an equilateral octagon upon a given number.
+
+¶ Let **a** be the given number upon which we are commanded to construct an equilateral octagon. I proceed by placing rows that always exceed each other by one until there are as many rows as there are units in the side; thus three equal sides will have been made. To the largest row, I add equal rows until there are as many as there are units in the side; thus five equal sides will have been made. Then, proceeding from the last row, I add rows that are continually smaller by one until there are as many as units in the given side; thus in descending, three sides will be made equal to the aforementioned ones. There will then be eight equal sides together, and an equilateral octagon is constructed: which was to be done. 
+
+¶ There is another method and reason for finding octagons in the divine Severinus: that they arise continually from the whole heptagon and the triangle below it. The same are made if, from the natural numbers arranged, the extremes are joined while continually leaving five in the middle. For example, if you join 1 (the first triangle) to 7 (the second heptagon), the number 8 arises, which is the second octagon. This is also made from 1 and 7, with five numbers—two, three, four, five, and six—dismissed as the interval. And if you join 3 (the second triangle) to 18 (the third heptagon), it becomes 21, the third octagon. This is likewise collected from 1, 7, and 13. In this manner, one must proceed for the remaining ones.
+
+[[margin: <image-desc>A dot diagram of an equiangular octagon, identical to the one above, but with labels. The inner 9 dots (forming a 3x3 square) are labeled 'a', and the outer dots are labeled 'b'. A horizontal line separates this diagram from the text below.</image-desc>]]
+
+---
+
+[[margin: 23]]
+### ¶ If to any equiangular hexagon after unity, the whole square from unity with the following oblong number is joined, an octagon in the corresponding place after unity will result.
+
+¶ Let there be any equiangular hexagon whose side is **a** and whose largest row is **b**, which exceeds **a** by the number **c**. For since the given hexagon has triangles in the middle containing sides equal to unity: hence, the line of the largest row **b** is one less than double the side **a**; therefore **c** is one less than **a**. I therefore add equal rows to **b** according to the number **c**. And because three equal sides are made from **a** to **b**, two other equal sides will be made again from **b** with the added rows, to which I add the remaining parts of the hexagon after **b**; three other sides will again be made equal to the rest, and an octagon will be formed. And because, through the ninth [proposition] of the first [book], **c** times **b** through the added rows is as much as **c** squared plus **c** times **a**. But that which it makes in itself is a **square**; and that which it makes in **a** is an **oblong** [[notes: *Altera parte longior*, literally "longer by the other part," a number of the form $n(n+1)$]]. Since **c** and **a** differ by only one unit, and that square is as far from unity as the octagon formed is after unity. For the hexagon has a side one greater than the side of the square; and the oblong follows the square. It is established, therefore, that for an assigned equiangular hexagon after unity, the addition of the whole square from unity with the following oblong constitutes an octagon. Since it has sides equal to the hexagon, it will be the total octagon after unity: and this is the proposal.
+
+---
+
+[[margin: 24]]
+### ¶ To visually construct any of the six equilateral forms according to the arrangement of units.
+
+¶ If you desire to visually construct triangles, squares, pentagons, square-hexagons, equiangular hexagons, and octagons according to the arrangement of units: learn to figure triangles from the first [proposition] of this [book]; squares from the fifth; pentagons from the twelfth; square-hexagons from the fourteenth; equiangular hexagons from the seventeenth and eighteenth; and octagons from the twenty-second. Thus, through this path, you will have your proposal.
+
+---
+
+[[margin: <table-desc>A calculation table showing the relationship between side lengths and the sums of various figurate numbers.</table-desc>]]
+
+| 58 | 12 |
+| :--- | :--- |
+| **q** | **p** |
+| 37 | 9 |
+| **o** | **n** |
+| 28 | 14 |
+| **m** | **g** |
+| 22 | 11 |
+| **l** | **f** |
+| 16 | 8 |
+| **k** | **e** |
+| 10 | 5 |
+| **h** | **d** |
+| | 3 |
+| | **c** |
+| 4 | 2 |
+| **a** --- | --- **b** |
+
+[[margin: 25]]
+### ¶ To find the sum of any of the pre-assigned figures, given the side.
+
+¶ Let the given side be **a**, which is set as a value, and let the half of **a** be **b**. Let **c** be one less than **a**, and **d** be one greater than the same. With **c** added to **d**, let it become **e**. Again, with **c** added to **e**, let it become **f**. Similarly, with **c** added to **f**, let it become **g**. Multiply **b** by **d** and the following [letters], and let **h**, **l**, **l**, and **m** result. For since **a** times **d** constitutes an oblong number of which the triangular number of side **a** is half, therefore by the fourth [proposition] of this book, **b** (half of **a**) times **d** produces the triangular sum of side **a**; thus **h** shows the sum of the given triangular side. 
+
+And because **c** and **d** together constitute **e**, which by the second [proposition] of the first [book] is double **a**, therefore **b**, **a**, and **e** are in continuous proportion; thus what is made from **b** times **e**, by the twenty-sixth [proposition] of the second [book], is the square of **a**. And since that is **l**, **l** will show the sum of the square of the given side **a**. 
+
+And because what is made from **b** times **f**, by the ninth [proposition] of the first [book], is as much as what is from **b** times **e** and **b** times **c**. And since **c** times **a** constitutes an oblong whose half is the triangle **c** by the fourth [proposition] of this book, therefore **b** (half of **a**) times **c** produces the triangular sum whose side is **c**. But **b** times **e** produces the square **a**, which is as far after unity as the triangular **c** is from unity. Therefore, by the twelfth [proposition] of this book, **b** times **f** produces the total pentagon after unity. But that is pentagon **a**, and the product is **l**. Therefore, **l** will show the sum of the pentagon of side **a**. 
+
+And because what is made from **b** times **g** is as much as what is made from **b** times **c** and **b** times **f**. And it has been said that from **b** times **c** is made a triangle as far from unity as the pentagon made from **b** times **f** is after unity. Therefore, by the fourteenth [proposition] of this book, **b** times **g** will constitute a square-hexagon as far after unity as the pentagon is after unity; but that hexagon will be hexagon **a**, and the product **m** thus shows the sum of hexagon **a** of the assigned side. 
+
+Next, I multiply **c** by itself and let **n** result, which will be the total square from unity as far as the square-hexagon **m** is after unity. I then add **m** and **n** together and let **o** result, which by the twenty-first [proposition] will be the equiangular hexagon **a**. For it is as far after unity as the hexagon **m**. Next, I multiply **c** by **a**, and let **p** result, which will be an oblong number...
+
+[[summary: This page explains the geometric construction and arithmetic calculation of higher-order figurate numbers (heptagons and octagons) and provides a systematic method for finding the sum of any polygonal number based on its side length. It establishes the relationships between triangles, squares, hexagons, and octagons using both visual dot-patterns and algebraic-style proofs.]]
+
+[[keywords: heptagonal numbers, octagonal numbers, Boethius, Severinus, equiangular hexagon, oblong number, figurate numbers, arithmetic progression]]

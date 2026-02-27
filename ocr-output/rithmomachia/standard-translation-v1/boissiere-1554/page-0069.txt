@@ -1,0 +1,14 @@
+[[meta: This page continues from the previous discussion on "Proper Victories." The catchword from the last page was "all," which leads directly into the opening sentence here: "all [the pieces are arranged] just as the combatant..."]]
+
+->RYTHMOMACHIA, GAME<-
+
+just as the combatant, having invaded the camp of his adversary and therein making the army conform to his will without opposition, obtains victory. Similarly, the conformity and harmony of numbers, which in the adversary's camp constitutes the noble arrangement of proportions, gives to its lord and leader a most glorious victory. Now we have three kinds of proper victories, namely: mediocre, great, and excellent. [[notes: In the context of this 16th-century text, "mediocre" does not mean poor quality; it means "middle-tier" or "moderate" in difficulty compared to the "great" or "excellent" victories.]]
+
+### Of mediocre victories.
+
+A mediocre victory is when the combatant can arrange three tables [[notes: "Tables" refers to the game pieces or counters used in Rythmomachia]] in the camp of his enemy, of which the numbers are arranged according to a proportion, be it Arithmetic, Geometric, or Musical [[notes: "Musical" proportion refers to what we now call a Harmonic progression]]. Arithmetic proportion is when the differences that the two extreme numbers have from the middle [[notes: The "moyen" or mean]] are equal: as you see in these three numbers: 2, 4, 6. The difference between the first, which is 2, and the middle, 4, is 2; and also the difference between the last, 6, and the middle, 4, is 2; and thus you will conclude that 2, 4, 6, and all others like them, are an Arithmetic proportion.
+
+[[meta: catchword: Eexm- (likely "Exemple" or "Example")]]
+
+[[summary: This page defines "Proper Victories" in the game of Rythmomachia, focusing on the "Mediocre" victory which requires forming a three-term arithmetic progression within the opponent's territory.]]
+[[keywords: Rythmomachia, proportions, Arithmetic progression, mediocre victory, game pieces, mathematical harmony]]

@@ -1,0 +1,19 @@
+<header>The Philosophers game.</header>
+
+pieces <note>original: "men"</note> and 9 digits <note>original: "caracters"</note> contain somewhat more than 100, provided that there is not 100 on a single piece, as in the victory mentioned before.
+
+### Victory of Standards.
+
+They have invented another victory, which is that of standards, by mimicking <note>original: "counterfeyting"</note> two armies: one of the Christians and another of the Turks. The white pieces <note>original: "men"</note>, which are the even army <note>original: "hoste"</note>, contain 1,312 footmen (not counting the square roots <note>original: "rootes of squares"</note> represented on the Kings). Let the first and last be captains, and let them divide the whole army into 10 standards; thus, every standard shall have 130 men, besides the two captains and the ten standard-bearers. 
+
+The black pieces <note>original: "men"</note>, which are the odd army (except for the Kings' roots), total 1,752. When the two captains and ten standard-bearers are removed, there remain 1,740 soldiers—174 for every standard. He who wins more standards has the victory. If the even army...
+
+<meta>catchword: wins <note>original: "wynne"</note></meta>
+
+<summary>
+This section introduces the "Victory of Standards," a variation of the game where pieces are treated as soldiers in two opposing armies (themed as Christians vs. Turks, or Even vs. Odd). It details the mathematical division of the total numerical values of the pieces into units called "standards," led by captains and standard-bearers. The winner is the player who captures the most standards.
+</summary>
+
+<keywords>
+Victory of Standards, Rithmomachia, Philosopher's Game, even host, odd host, Christians, Turks, square roots, captains, soldiers
+</keywords>

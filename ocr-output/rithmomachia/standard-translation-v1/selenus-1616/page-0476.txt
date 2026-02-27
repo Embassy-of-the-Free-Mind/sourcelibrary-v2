@@ -1,0 +1,23 @@
+[[meta: This page concludes the manual by demonstrating the fastest possible checkmate—known today as the "Fool's Mate"—and providing a formal closing address to the reader. It maintains the 64-square grid notation used in previous chapters, where square 33 corresponds to h5 and 43 to f6.]]
+
+### The Fourth Book / of the Game of Chess. Chapter 10:
+
+9.) How (2.) **the White player** (when the pieces altogether stand in their first order against one another) can give **the Black player** **Checkmate** immediately in the second move: For, when **the Black player** moves the **King’s Bishop's Soldier** [[notes: *Schützens-Soldat*; in this period, the Bishop was often referred to as the Archer or "Schütze"]] to forty-three:
+
+**The White player** places the **King’s Soldier** [[notes: The King's Pawn]] on twenty or twenty-eight: **The Black player** [moves] his **King’s Knight’s Soldier** [[notes: *Reuters-Soldat*; the "Reuter" or Rider was the common term for the Knight]] to thirty-four:
+
+**The White player** moves the **Queen** to thirty-three and gives **Checkmate**: For **the Black player** cannot escape with his **King**, nor cover the same, nor take the **White Queen**. However, this swift **Checkmate** is only to be understood insofar as it is possible to give; for otherwise, one will find no one who begins his game and arranges the pieces in the aforementioned manner.
+
+What has now been further added to the whole work in these last two chapters, one wished to indicate to the reader as the conclusion of the same, and thus now break off. We wish to leave these thoughts to others to improve and expand upon (provided that it is done with diligence and in consideration of all moves and the intention of the *Author*): with the request that they will not judge this well-intentioned description of this most ingenious game until they have first laid a proper foundation in it and, after necessary instruction, made themselves well-acquainted and familiar with it.
+
+---
+
+->F I N I S.<-
+
+<image-desc>A decorative woodcut tailpiece featuring a central stylized mask or grotesque face, surrounded by elaborate scrolling acanthus leaves, architectural swags, and ribbon-like flourishes.</image-desc>
+
+[[meta: The catchword "Rythmo-" indicates that the next section of the volume contains a treatise on *Rythmomachia* (The Philosophers' Game), a mathematical board game often studied alongside chess in the Renaissance and Baroque periods.]]
+
+[[summary: This final page of the chess manual describes the "Fool's Mate," the shortest possible game of chess, while acknowledging its impracticality in real play. It concludes with a formal address inviting readers to study the game deeply before passing judgment.]]
+
+[[keywords: Fool's Mate, Checkmate, Queen, King's Bishop's Pawn, King's Knight's Pawn, conclusion, chess strategy, Early Modern chess]]

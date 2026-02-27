@@ -1,0 +1,27 @@
+[[meta: This page transitions from the discussion of the Rook (representing administrative stewards) to the next piece in the hierarchy, the "Schütze" or Archer. In modern English chess, this piece is known as the Bishop. The text begins to explore the various historical names and symbolic roles assigned to this piece across different cultures—ranging from Roman councilors to clergy and military ensigns.]]
+
+# 8th Chapter: On the Game of Chess.
+
+<image-desc>A decorative horizontal woodcut banner featuring foliage and two circular portraits at the ends, framing the start of the chapter.</image-desc>
+
+## The Eighth Chapter.
+
+### Concerning the Archers / both of the Kings / and of the Queens : where they should be placed / how they are moved / and why they are esteemed better / than the Knights / in this game.
+
+<image-desc>A framed woodcut illustration of a chess piece. The piece consists of a decorative, chalice-like pedestal topped with a bust of an archer wearing a cap and holding a bow with an arrow. Beneath the frame is the caption "Ein Schütze."</image-desc>
+
+->An Archer.<-
+
+After the Rooks / those are held to be the most noble stones [[notes: *Steine*, literally "stones," was the common term for chess pieces]] / which were called in former times / *Viros Consulares*, Council-Men : Otherwise also *delphinos* (that is / Princes or Lords / as the Spaniards interpret it : or lovers of mankind : as *Actius, quæst: 6. n. 5.* contends) and then Priests [[notes: *Pfaffen*; while this word later became derogatory, here it refers to the clerical identity of the piece, which survives in the English name "Bishop"]] : (perhaps because / among the common loudmouths [[notes: *Scharhänsen*, a term for boastful or talkative people]] / Councilors / and the like / are cried out as Priests / or Elders / just as in our own times / that certain great Potentate called all [such] figures / Poets : or else / because one has observed the custom / wherein the Clergy allowed themselves to be used extensively / not only in political affairs / but especially also / in matters of war / and they were therefore included / in this game of conflict [[notes: *Streits-Spiel*, an allegorical term for chess as a simulation of war]] : so that the proverb / remains true here as well:
+
+> *Quicquid agit Mundus, Monachus vult esse Secundus :*
+> No matter what anyone may undertake
+> The Priest wants to be the second man)
+
+or Ensigns [[notes: *Fendriche*, or standard-bearers]]: Wherefore the Italians [call them] / *Alfieri*, as if *Alferios, i. e.* [[notes: The author is correctly identifying the etymology of the Italian *alfiere*, which stems from the Arabic *al-fil* (the elephant), though here it is being linked to military rank.]]
+
+[[meta: catchword: feren-]]
+
+[[summary: This page introduces the "Archer" (the Bishop) as the next most important piece after the Rook, detailing its various historical names such as Councilman, Prince, Priest, and Ensign. It reflects on the historical reality of clergy members participating in both politics and warfare as a justification for their presence on the chessboard.]]
+
+[[keywords: Chess history, Bishop piece, Archer, Clergy in war, Alfieri, Etymology, Chess symbolism]]

@@ -1,0 +1,25 @@
+[[meta: This page continues the detailed analysis of the chess opening known today as the Damiano Defense. The author, Gustavus Selenus, is specifically critiquing the 16th-century master Pedro Damiano, arguing that White’s advantage is even greater than previously documented.]]
+
+# The Third Book / Chapter 4:
+
+[[margin: 3. ,,]] **Bishops:** [[notes: Selenus uses the term *Schütze* (Archer) for the Bishop.]] If the Black player then overreaches and does not notice the trick, specifically taking the White **Bishop** with his own **King’s Bishop**: then White delivers **Checkmate** from square 35 with the **Queen**. [[notes: Selenus uses a numbered coordinate system for the board rather than modern algebraic notation.]]
+
+[[margin: 4. ,,]] If, however, Black does not take the White **Bishop** (as in No. 3) but instead moves his **King’s Bishop** against the White **Queen** at square 45: (as in No. 27 of Chapter 3) then White moves her to square 40.
+
+[[margin: 5. ,,]] * Black then moves his **King’s Knight** [[notes: *Reuter*, literally "Rider"]] to square forty-six (so that he does not lose his **Rook** [[notes: *Rochen*, from the Persian 'rukh']]); White takes the same with his **King’s Bishop**. Black moves the **King’s Rook** to square sixty-three. White takes Black’s **Pawn** [[notes: *Soldat*, literally "Soldier"]] with the **Queen**, and thus has an advantage of five **Pawns**.
+
+[[margin: 6.]] If, however, White (in the event that Black does not move the **King’s Knight** to 46, as in No. 5) takes the Black **King’s Rook** with his **King’s Bishop**: he has gained four **Pawns** and a **Rook** for a **Knight**; he also keeps his **Pawns** together. Black, meanwhile, has only three or four remaining. Although, according to *Damiano’s* style, White (as can be seen shortly before No. 25 of the 3rd Chapter) only wins three **Pawns** and no more. Let every man judge for himself which is better: to win four or five **Pawns** plus a **Rook** for a **Knight**, or to win only three **Pawns** without any other advantage. And furthermore, even if Black does not move the **King’s Pawn** forward (No. 25 of Chap. 3), White still wins the entire game by force, and not just three **Pawns** as *Damianus*—without further reflection—imagined, and indeed in the following manner.
+
+[[margin: 7. ,,]] For, when Black does not cover the **King** with the **Pawn** at 37 (No. 2), but instead moves the same to forty-two: White then (regardless of what *Damianus* suggests in No. 19, Chap. 3) should not give **Check** with the **Queen** from thirty-five (considering that he has already arranged his game so well that it will surely remain his). Instead, before he gives check, he should move the **King’s Rook’s Pawn** to twenty-five.
+
+[[margin: 8.]] * If Black now plays his **King’s Rook’s Pawn** to forty-one, he occupies the very square to which his **King** could have otherwise fled for safety from the **Check** of the White **Queen**. If he moves it to thirty-three instead, and moves the **King** (when White has offered **Check** with the **Queen** from thirty-five) to forty-one: then White (when he moves the **King’s Pawn** to twenty-nine) offers a **Discovered Check** [[notes: *Ab-Schach*, a move where moving one piece reveals a check from a piece behind it]] from the **Bishop**. Black (since no other help is at hand) covers the **King** with his **Knight’s Pawn** at thirty-four. White takes it with the **King’s Rook’s Pawn** and offers **Check** once again.
+
+[[margin: 9.]] * Black moves the **King** to fifty; White delivers **Checkmate** with his **Queen** from fifty-one.
+
+[[margin: 10.]] If, however, Black (insofar as he does not wish to move the **King** out of **Check**, as in No. 9) takes the White **King’s Rook’s Pawn** with his **Queen**: White takes her with his **King’s Bishop**, gives **Check**, and continues with the **Queen** (because the Black **King**...
+
+[[meta: catchword: King/]]
+
+[[summary: On this page, Selenus continues his technical rebuttal of Pedro Damiano's chess theories, demonstrating that White can achieve a decisive material advantage or a forced checkmate rather than a mere pawn lead. He provides step-by-step variations involving bishop sacrifices and discovered checks to prove that Black's position is fundamentally lost.]]
+
+[[keywords: Chess strategy, Damiano Defense, Checkmate, Discovered Check, Bishop, Queen, Chess history, 17th-century chess]]

@@ -1,0 +1,98 @@
+[[meta: This page continues the exploration of Book VI of Jordanus de Nemore's Arithmetica. The previous page concluded a discussion on the proportional relationship between the sides (roots) and the volumes of cubes. This page transitions into finding squares with specific properties and the multiplicative behaviors of squares and cubes.]]
+
+<margin>
+1681
+q —————— e
+1       841
+r — e v ————— e
+I   29    41
+v —————— q
+      840
+The difference of three squares
+is continually the same:
+I     25     49
+— — — — — — — — — —
+I     5      6     7
+— — — b a — — — c
+   4         2
+e — — — f
+</margin>
+
+...therefore **l g** is divided into two equal means: let **r** be the difference of one of those halves to **g**, and **v** a number equal to the half, and **q** the difference of the half of **l g** to the whole **l m g**. I say that the three squares of the numbers **r**, **v**, and **q** (letting them be **r**, **e**, **v**, **q**) are those which are sought. For since the difference of squares, according to the seventh [proposition] of this [book], is produced from the differences of the sides multiplied by the sums of those sides [[notes: This refers to the identity $x^2 - y^2 = (x-y)(x+y)$]], you will see that from the difference of **r** to **v** multiplied by the sum of **r** and **v** (which is **g**), and from the difference of **v** to **q** multiplied by the sum of **v** and **q** (which is **l m g**), an equal number is produced by the twenty-fifth [proposition] of the second [book]. And let the same proportion of the differences of **v** to the difference of **v** and **q** be as the sum of **q** and **v** to the sum of **r** and **v**, or as **l m g** to **m g**, which is the same thing. 
+
+But you will perhaps grasp this last point more easily in smaller numbers found by the same method. Let **a** be six. And let the first numbers on either side be **b** and **c**. **b** being the smaller and **c** being the larger. It is certain that **b** is five, whose difference to **a** is **v**, which is certainly unity [[notes: "Unity" refers to the number 1]]. Let **e** be the difference of **v** to **b** (one to five), which is known to be four. Let **f** be the difference of **b** to **c**, which is two because it is double the difference of **b** to **a**. Thus **e** is double **f**. But **d** and **b** together are **a** by perception. And by the second [proposition] of the first [book], **b** and **c** together are double **a**. Therefore, **b** and **c** together are double **d** and **b**. Therefore, whatever the proportion of **e** to **f** (difference to difference), that same proportion is of the sum of **b** and **c** to the sum of **d** and **b**. Therefore, by the twenty-fifth [proposition] of the second [book], the product of **e** and the sum **d b** is equal to the product of **f** and the sum **b c**. Therefore, by the seventh [proposition] of this [book], the three squares of the numbers **d**, **b**, and **c** are such as were proposed to be found. Which is what was proposed.
+
+<margin>
+h ———— 100
+k ———— 64  a ———— 36
+f ———— 10  b ———— 18
+e ———— 9   c ———— 6
+g ———— 8   d ———— 2
+— — — — — — — — — —
+a —————— 25
+b —————— 24
+d —————— 13
+c —————— 12
+I  6  9
+—————
+I  4  4
+f ——————
+</margin>
+
+### 13. To find a square number which, when added to a given square number, produces a square number.
+
+**To find** a square number which, when added to a given square number, produces a square number. 13 [[notes: This is the classic problem of finding Pythagorean triples, $a^2 + b^2 = c^2$.]]
+First, let the given square number be **a**, which is divisible into two equal parts. Let its half be **b**, and let its side [[notes: its square root]] be **c**. Let **d** be the number two (the binary). Since the product of **d** and **b** equals the product of **c** by itself, then by the twenty-sixth [proposition] of the second [book], **c** is the mean proportional between two and **b**. And because **d** (two) is a prime number, and by the first [proposition] of the fourth [book] it communicates with **c**, and **c** with **b**, then **d** will also communicate with **b**. By the first [proposition] of the third [book], **d** will measure [[notes: divide evenly into]] **b**. Let **e** be the half of this **b**. Let the numbers placed around it be **f** (the larger) and **g** (the smaller), whose squares are **h** and **k**. I say that square **h** is the same as square number **l** added to the given square number **a**. For the difference of **f** and **g** is two, and their sum by the second [proposition] of the first [book] is **b**. And because from two multiplied by **b** comes **a** by the hypothesis, then by the seventh [proposition] of this [book], since **a** is formed from the difference of the sides multiplied by their sum, **a** is the difference between squares **h** and **k**. Therefore, the square **l** is found, which when added to the given square **a** produces the square number **h**. Which is what was proposed. 
+
+But second, let the assigned square **a** be such that it cannot be divided into two equal parts [[notes: i.e., it is an odd square]]. Since two does not measure it, and two is a prime number, then by the first [proposition] of the third [book], two will be prime to it. Therefore, by the fifteenth [proposition] of the third [book], two will measure the number one less than square **a**, which let be **b**. Let its half be **c**, and let the number one greater than it be **d**. Let the square of **d** be **e** and the square of **c** be **f**. I say, therefore, that square **e** exceeds the given square **a** by exactly the amount of **f** (the square of **c**). For since **c** taken twice with unity [[notes: $2c + 1$]] produces **a**, then by the eighteenth [proposition] of the first [book], the square of **c** plus the product of **a** and the difference of the larger part **d** to **c** is equal to the square of the larger part **d**. Therefore, the square of **d** exceeds the square of **c** by the given square **a**, for the difference of **d** and **c** was unity. Which is what was proposed.
+
+### 14. If a square is multiplied by a square, the product will be a square. If, however, it is multiplied by a non-square, a non-square will result. From which it is clear that if a square divides a square, it divides it according to a square.
+
+<margin>
+      c —— 36
+   4  g —— 6   b —— 9
+———— ———— ———— ————
+a —— 4  b —— 8
+      c —— 32
+</margin>
+
+First, let **a** and **b** be two squares, and let **a** be multiplied by **b** to produce **c**. I say that **c** is a square. For by the corollary of the fourth [proposition] of this [book], there is one mean proportional between **a** and **b**. Let that be **d**. Since **a**, **d**, and **b** are continuously proportional, then by the twenty-sixth [proposition] of the second [book], the product of **a** and **b** is equal to the product of **d** by itself. But what is produced from **a** times **b** is **c**. Therefore, **c** is a square. Which is intended. 
+
+Second, let **a** be a square and **b** a non-square, and let **a** be multiplied by **b** to produce **c**. I say **c** is not a square. For if **c** were a square, by the second part of the twenty-sixth [proposition] of the second [book], the side of square **c** would be a mean proportional between **a** and **b**. Wherefore, since **a** is a prime square by the tenth [proposition] of this [book], **b** would also be a square. Which is against the hypothesis. The corollary follows sufficiently from these two parts.
+
+<margin>51</margin>
+
+### 15. A square divides a non-square according to a non-square.
+
+For if it were possible for a square to divide it according to a square, then by the first part of the preceding [proposition], the product [[notes: the original non-square]] would be a square. But a square is stated to divide a non-square; therefore, this would follow in contradiction to the hypothesis. Which is what was proposed.
+
+### 16. If a cube is multiplied by a cube, that which is produced will be a cube.
+
+<margin>
+      c —— 216
+   a —— 8  g —— 108
+   e —— 4  f —— 54
+   d —— 2  b —— 27
+   I       a —— 8
+</margin>
+
+**Let** **a** and **b** be two cubes, and let **a** be multiplied by **b** to produce **c**. I say **c** is a cube. For I take the side of cube **a**, which is **d**, and the square of the side **d**, which is **e**. It is manifest that **d** and **e** are proportional between unity and **a**. And because as many times as unity is in **a**, so many times is **b** in **c**, since **a** multiplies **b** to produce **c** [[notes: Jordanus uses "a multiplies c according to b," meaning $a \times b = c$]]. By the fourteenth [proposition] of the fourth [book], however many mean proportionals there are between unity and **a**, just as many will there be between **b** and **c**. There are therefore likewise two mean proportionals between **b** and **c**, let them be **f** and **g**. Since **b**, **f**, **g**, and **c** are four proportional numbers, and **b** (the first) is by hypothesis a cube, then by the eleventh [proposition] of this [book], **c** (the fourth) will also be a cube. Which is what was proposed.
+
+### 17. If a cube is multiplied by a non-cube, a non-cube will be produced. From which it is clear that if a cube divides a cube, it divides it according to a cube.
+
+<margin>
+   c —— 160  g ——
+   a —— 8    f ——
+   e —— 4    b —— 20
+   d —— 2
+</margin>
+
+**Let** cube **a** be multiplied by number **b**, a non-cube, to produce **c**. I say **c** is not a cube. For if the product **c** were assumed to be a cube, it is manifest as in the preceding by the fourteenth [proposition] of the fourth [book] that however many mean proportionals there are between unity and **a**, just as many are between **b** and **c**. Let there be two, namely **f** and **g**. Because **c**, **g**, **f**, and **b** are continuously proportional, and **c** is assumed to be a cube, then by the eleventh [proposition] of this [book], **b** would also be a cube. But **b** was assumed by the hypothesis to be a non-cube; thus a contradiction to the hypothesis occurs. Therefore, that which is produced from them will not be a cube. Which is what was proposed. The corollary is sufficiently known from this and the preceding.
+
+### 18. If a cube divides a non-cube, it will divide it according to a non-cube.
+
+<image-desc>A circular geometric diagram with intersecting lines and points labeled with lowercase letters. It appears to illustrate geometric proportions related to circles and triangles.</image-desc>
+
+[[summary: This page demonstrates how to find Pythagorean triples (squares that sum to another square) and proves that the product or quotient of two squares is a square, and similarly for cubes. It uses the concept of mean proportionals and the relationship between sides and their higher powers.]]
+
+[[keywords: square numbers, cube numbers, mean proportional, Pythagorean triples, side, root, unity, binary, Jordanus de Nemore, Arithmetica, proportional numbers]]

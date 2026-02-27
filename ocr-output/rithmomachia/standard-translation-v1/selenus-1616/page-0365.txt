@@ -1,0 +1,22 @@
+[[meta: This page marks the beginning of Chapter 6. While the previous page concluded a long series of endgame diagrams and knight/rook maneuvers, the text now shifts back to opening theory, specifically discussing the most effective ways for the Black side to defend the King's Pawn in response to White's attack.]]
+
+6. cap: Of the Game of Chess.
+
+# The Sixth Chapter.
+
+## In what manner the Black King’s Soldier [[note: "Soldat" or Soldier is the early modern German term for the Pawn]] may be protected and guarded in the Second Way.
+
+[[margin: 1.]] It follows further how the Black player, according to the second manner, may protect his King’s Soldier with his own King’s Soldiers.
+->The White and the Black players move<-
+firstly, their Kings' Soldiers to twenty-eight and thirty-six [[note: In the numbering system used here, these coordinates likely correspond to the move 1. e4 e5]]. The White player moves his King’s Rider [[note: "Reuter" or Rider refers to the Knight]] to nineteen [[note: 2. Nf3]]. The Black player protects it in the second way (which was mentioned in the previous 5th Chapter, no. 2) with the King’s Soldier from forty-five [[note: 2... d6, known today as the Philidor Defense]].
+
+This manner is now the most secure and free way to move the pieces: regardless of the fact that it does not appear as favorable or good in the eyes of **Damiano** [[note: Pedro Damiano was a Portuguese apothecary and chess player who published a famous manual in 1512. He famously considered the defense 2... f6—which he called the "Damiano Defense"—to be weak, but the author here is defending a different "second way," likely the solid d6 move]]. For he [Damiano] did not notice, nor sufficiently consider, the manner of attack and invasion alongside the inconveniences which arise from the first way (according to the previous report); much less did he believe that one could find ways and means in this [second] manner of protecting the King's Soldier to not only provide the pieces a free passage, but also to prevent the enemy from doing him any harm. Yet, from what follows, it may be perceived and sensed that this second kind of relief for the King's Soldier is far better and more useful than the first.
+
+[[margin: 2.]] If, accordingly (upon the Black player's move), the White player moves the King’s Archer [[note: "Schütze" or Archer refers to the Bishop]] to thirty [[note: 3. Bc4]]: *so the Black player plays the King’s Archer’s Soldier to forty-six [[note: 3... c6]]; the White player moves his King’s Archer’s Soldier to twenty-two [[note: 4. c3]]; the Black player moves the King’s Soldier (in order to open the closed pass for his King's Archer) against the White King's Archer and Soldier at thirty-seven [[note: 4... d5]]:* The White player takes it with the King’s Soldier: The Black player takes the same with the King’s Arch-
+
+[[meta: signature at bottom of page]] Tt iij
+[[meta: catchword at bottom of page]] zens [[note: part of the word "Schützens" (Archer's) which continues on the next page]]
+
+[[summary: This page introduces Chapter 6, defending a specific opening line for Black (the "Second Way") against the King's Knight attack. The author argues that this defense—likely what we now call the Philidor Defense—is superior to the variations suggested by the 16th-century master Damiano.]]
+
+[[keywords: Chess openings, Philidor Defense, Damiano, King's Soldier, King's Rider, King's Archer, 17th-century chess strategy]]

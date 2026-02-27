@@ -1,0 +1,29 @@
+# The Philosophers' Game.
+
+*One and a half <note>original: "sesquialter"</note>. One and a fourth <note>original: "sesquiquart"</note>. One and a sixth <note>original: "sesqui.sext"</note>. One and an eighth <note>original: "sesqu. oct."</note>.*
+
+->3 5 7 9<-
+
+**Outlined Triangular Pieces (White Side)**
+| 6 | 20 | 42 | 72 |
+| :---: | :---: | :---: | :---: |
+| 9 | 25 | 49 | 81 |
+
+*One and a third <note>original: "sesquiter."</note>. One and a fifth <note>original: "sesquiquint."</note>. One and a seventh <note>original: "sesquisept."</note>. One and a ninth <note>original: "sesquinona."</note>.*
+
+->4 6 8 10<-
+
+**Solid Triangular Pieces (Black Side)**
+| 12 | 30 | 56 | 90 |
+| :---: | :---: | :---: | :---: |
+| 16 | 36 | 64 | 100 |
+
+<vocab>The Philosophers' Game, Rythmomachia, sesquialter, sesquiquartal, sesquisextal, sesquioctave, sesquitertian, sesquiquintal, sesquiseptimal, sesquinonal, superparticular proportion, mathematics, arithmetic game</vocab>
+
+<summary>
+This page illustrates the specific numerical values assigned to the triangular game pieces in the Philosophers' Game (Rythmomachia). It categorizes the pieces based on their "superparticular" ratios, which are derived from a base number plus a fraction of itself. The first set of triangles (representing the white side) uses ratios like one and a half and one and a fourth based on odd numbers (3, 5, 7, 9). The second set (representing the black side) uses ratios like one and a third and one and a fifth based on even numbers (4, 6, 8, 10). The tables display the resulting numbers that would appear on the physical game pieces.
+</summary>
+
+<keywords>
+Philosophers' Game, Rythmomachia, superparticular proportion, mathematics, arithmetic ratios, triangular pieces, sesquialtera, sesquitertia, sesquiquarta, game pieces, 16th-century education
+</keywords>

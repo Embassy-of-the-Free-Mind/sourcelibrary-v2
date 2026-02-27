@@ -1,0 +1,59 @@
+[[meta: This page continues the catalog of mathematical progressions used to achieve victory in Rithmomachia. It transitions from the simple "Great Victory" (requiring three pieces in one type of progression) to the "Greater Victory," which requires four pieces to satisfy two different types of progressions simultaneously.]]
+
+# On the Number-Battle.
+
+| 5. | 15. | 25. | 28. | 64. | 100. |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 5. | 25. | 45. | 30. | 36. | 42. |
+| 6. | 7. | 8. | 72. | 81. | 90. |
+
+[[notes: The table above continues the lists of arithmetic progressions from the previous page. For example, 5, 15, 25 has a common difference of 10.]]
+
+## The Numbers / of the Divisions / in
+
+### Geometry / Music /
+[[notes: "Geometry" (*Meß-Kunst*) here refers to Geometric Proportions, where the ratio between terms is constant (e.g., 2, 4, 8). "Music" (*Singe-Kunst*) refers to Harmonic Proportions, which were fundamental to music theory. In a harmonic progression (like 3, 4, 6), the ratio of the differences is equal to the ratio of the extremes.]]
+
+| | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 2. | 4. | 8. | 2. | 3. | 6. |
+| 3. | 6. | 12. | 3. | 4. | 6. |
+| 4. | 6. | 9. | 3. | 5. | 15. |
+| 4. | 8. | 16. | 4. | 6. | 12. |
+| 4. | 12. | 36. | 4. | 7. | 8. |
+| 4. | 16. | 64. | 4. | 7. | 28. |
+| 5. | 15. | 45. | 5. | 8. | 20. |
+| 9. | 12. | 16. | 5. | 9. | 45. |
+| 9. | 15. | 25. | 6. | 8. | 12. |
+| 9. | 45. | 225. | 7. | 12. | 42. |
+| 16. | 20. | 25. | 8. | 15. | 120. |
+| 20. | 30. | 45. | 9. | 15. | 45. |
+| 25. | 30. | 36. | 9. | 16. | 72. |
+| 25. | 45. | 81. | 12. | 15. | 20. |
+| 36. | 42. | 49. | 15. | 20. | 30. |
+| 36. | 90. | 225. | 25. | 45. | 225. |
+| 49. | 56. | 64. | 30. | 36. | 45. |
+| 81. | 90. | 100. | 30. | 45. | 90. |
+| 81. | 153. | 289. | 72. | 90. | 120. |
+
+The **even Greater victory** / which also / occurs in **three** / ways / is achieved in the following manner. When four stones [[notes: "Stones" refers to the game pieces.]] are placed and moved into the enemy's fields, whose numbers comprise **two** divisions / from the three mentioned above / namely / of **Arithmetic and Geometry**: of **Arithmetic and Music**: of **Geometry and Music**.
+
+The numbers / of these doubled divisions / are as follows:
+
+| The Numbers / of the Arithmetic and Geometric Divisions / on four stones. | The Numbers / of the Arithmetic / Divisions in the stated four numbers. | The Numbers / of the Geometric / Divisions in the four numbers. |
+| :--- | :--- | :--- |
+| 2. 3. 4. 8. | 2. 3. 4. | 2. 4. 8. |
+| 2. 4. 6. 8. | 2. 4. 6. | 2. 4. 8. |
+| 2. 4. 6. 9. | 2. 4. 6. | 4. 6. 9. |
+| 2. 4. 5. 8. | 2. 5. 8. | 2. 4. 8. |
+| 2. 9. 12. 16. | 2. 9. 16. | 9. 12. 16. |
+
+[[notes: The table demonstrates how four specific numbers can be grouped to form two different types of mathematical progressions at once. For example, with the pieces 2, 3, 4, and 8, a player can form an Arithmetic progression (2, 3, 4) and a Geometric progression (2, 4, 8).]]
+
+<sig>3. 6. 9.</sig>
+
+[[gloss: Zahl-Kampf: Rithmomachia / Number-Battle; Meß-Kunst: Geometry; Singe-Kunst: Music / Harmonic Proportion; Zahl-Kunst: Arithmetic; Abtheilungen: Divisions / Progressions; Steine: Game pieces / Stones]]
+
+[[summary: This page provides reference tables for Geometric and Harmonic progressions in the game of Rithmomachia and introduces the "Greater Victory." This victory condition requires a player to maneuver four pieces into the opponent's territory that simultaneously form two different types of mathematical proportions.]]
+
+[[keywords: Rithmomachia, arithmetic progression, geometric progression, harmonic proportion, musical proportion, mathematical games, board game history, victory conditions]]
