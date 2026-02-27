@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { sendEmail } from '@/lib/email';
 
 const WELCOME_HTML = `
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
@@ -61,6 +60,24 @@ const WELCOME_HTML = `
 </div>
 `;
 
+async function sendWelcomeEmail(email: string) {
+  if (!process.env.RESEND_API_KEY) return;
+
+  try {
+    const { Resend } = await import('resend');
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+      to: email,
+      subject: 'Welcome to Source Library',
+      html: WELCOME_HTML,
+    });
+  } catch (error) {
+    console.error('[subscribe] Welcome email failed:', error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -112,8 +129,8 @@ export async function POST(request: NextRequest) {
     }
     await collection.insertOne(doc);
 
-    // Send welcome email (non-blocking)
-    sendEmail({ to: normalizedEmail, subject: 'Welcome to Source Library', html: WELCOME_HTML }).catch(() => {});
+    // Send welcome email (non-blocking — don't await)
+    sendWelcomeEmail(normalizedEmail).catch(() => {});
 
     return NextResponse.json({ message: 'Subscribed successfully' });
   } catch (error) {
