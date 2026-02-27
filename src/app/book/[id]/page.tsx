@@ -179,6 +179,188 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
   }
 });
 
+// Deferred related books section — runs expensive entity queries independently
+// so the main book content streams to the user immediately
+async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, bookIndex }: {
+  bookId: string;
+  bookAuthor: string;
+  bookLanguage?: string;
+  workId?: string;
+  bookIndex?: { people?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> };
+}) {
+  const db = await getDb();
+
+  const [authorCount, workSiblings, entityRelatedBooks] = await Promise.all([
+    bookAuthor && bookAuthor !== 'Unknown'
+      ? db.collection('books').countDocuments({ author: bookAuthor, id: { $ne: bookId } })
+      : Promise.resolve(0),
+    workId
+      ? db.collection('books').find(
+        { work_id: workId, id: { $ne: bookId } },
+        { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
+      ).sort({ published: 1 }).limit(20).toArray()
+      : Promise.resolve([]),
+    getRelatedBooks(bookId),
+  ]);
+
+  const topPeople = (bookIndex?.people || []).slice(0, 3);
+  const topConcepts = (bookIndex?.concepts || []).slice(0, 3);
+  const directCitations = entityRelatedBooks.filter(rb => rb.type === 'direct');
+  const sharedCitations = entityRelatedBooks.filter(rb => rb.type === 'shared');
+  const hasLinks = authorCount > 0 || workSiblings.length > 0 || entityRelatedBooks.length > 0 || bookLanguage || topPeople.length > 0 || topConcepts.length > 0;
+
+  if (!hasLinks) return null;
+
+  const counts = [
+    workSiblings.length > 0 ? `${workSiblings.length + 1} editions` : '',
+    directCitations.length > 0 ? `${directCitations.length} cited` : '',
+    sharedCitations.length > 0 ? `${sharedCitations.length} related` : '',
+  ].filter(Boolean).join(', ');
+
+  return (
+    <>
+      {/* Citation meta tags for Google Scholar */}
+      {directCitations.map((rb) => (
+        <meta
+          key={`cite-ref-${rb.id}`}
+          name="citation_reference"
+          content={`citation_title=${rb.title}${rb.author && rb.author !== 'Unknown' ? `; citation_author=${rb.author}` : ''}${rb.published ? `; citation_publication_date=${rb.published}` : ''}`}
+        />
+      ))}
+
+      <details className="card mt-6">
+        <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+          <div className="flex items-center gap-3">
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Related Books</h2>
+            {counts && <span className="text-xs text-stone-400">{counts}</span>}
+          </div>
+          <span className="text-sm text-accent-rust hover:text-accent-gold-dark">
+            See All &rarr;
+          </span>
+        </summary>
+        <div className="px-6 pb-6">
+          {/* Work siblings — other editions of the same text */}
+          {workSiblings.length > 0 && (
+            <div className="mb-4 pb-4 border-b border-stone-100">
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                {workSiblings.length + 1} editions of this text
+              </p>
+              <div className="space-y-1.5">
+                {workSiblings.map((sibling: { id?: string; _id?: { toString(): string }; display_title?: string; title?: string; language?: string; published?: string }) => (
+                  <Link
+                    key={sibling.id || sibling._id?.toString()}
+                    href={`/book/${sibling.id || sibling._id?.toString()}`}
+                    className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                  >
+                    <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors">
+                      {sibling.display_title || sibling.title}
+                    </span>
+                    {sibling.language && (
+                      <span className="text-xs text-stone-400">{sibling.language}</span>
+                    )}
+                    {sibling.published && (
+                      <span className="text-xs text-stone-400">{sibling.published}</span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Direct citations — this book mentions authors of these works */}
+          {directCitations.length > 0 && (
+            <div className="mb-4 pb-4 border-b border-stone-100">
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                Cited authors in our library ({directCitations.length})
+              </p>
+              <div className="space-y-1.5">
+                {directCitations.map((rb) => (
+                  <Link
+                    key={rb.id}
+                    href={`/book/${rb.id}`}
+                    className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                  >
+                    <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
+                      {rb.title}
+                    </span>
+                    {rb.cited_as && (
+                      <span className="text-xs text-accent-rust shrink-0">via {rb.cited_as}</span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Shared entity context — books discussing the same people/places/concepts */}
+          {sharedCitations.length > 0 && (
+            <div className="mb-4 pb-4 border-b border-stone-100">
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                Related works ({sharedCitations.length})
+              </p>
+              <div className="space-y-1.5">
+                {sharedCitations.map((rb) => (
+                  <Link
+                    key={rb.id}
+                    href={`/book/${rb.id}`}
+                    className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                  >
+                    <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
+                      {rb.title}
+                    </span>
+                    {rb.author && rb.author !== 'Unknown' && (
+                      <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
+                    )}
+                    <span className="text-xs text-accent-sage shrink-0">{rb.shared_entities} shared</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Search pills */}
+          <div className="flex flex-wrap gap-2">
+            {authorCount > 0 && (
+              <Link
+                href={`/search?q=${encodeURIComponent('"' + bookAuthor + '"')}`}
+                className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
+              >
+                More by {bookAuthor} ({authorCount})
+              </Link>
+            )}
+            {bookLanguage && bookLanguage !== 'Unknown' && (
+              <Link
+                href={`/search?language=${encodeURIComponent(bookLanguage)}`}
+                className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
+              >
+                {bookLanguage} texts
+              </Link>
+            )}
+            {topPeople.map((p) => (
+              <Link
+                key={p.term}
+                href={`/search?q=${encodeURIComponent(p.term)}`}
+                className="px-3 py-1.5 text-sm bg-accent-rust/8 text-accent-rust rounded-full hover:bg-accent-rust/15 transition-colors"
+              >
+                {p.term}
+              </Link>
+            ))}
+            {topConcepts.map((c) => (
+              <Link
+                key={c.term}
+                href={`/search?q=${encodeURIComponent(c.term)}`}
+                className="px-3 py-1.5 text-sm bg-accent-violet/8 text-accent-violet rounded-full hover:bg-accent-violet/15 transition-colors"
+              >
+                {c.term}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </details>
+    </>
+  );
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
   const book = await getBookForMetadata(id);
@@ -269,33 +451,34 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
 
   // Inclusion projection — only fetch fields the book detail UI actually uses
   // Status dots need .updated_at; image count needs array length via .type
-  const pages = await db.collection('pages')
-    .find({ book_id: bookId }, {
-      projection: {
-        _id: 0,
-        id: 1,
-        page_number: 1,
-        photo: 1,
-        photo_original: 1,
-        archived_photo: 1,
-        thumbnail: 1,
-        thumbnail_blob: 1,
-        crop: 1,
-        'ocr.updated_at': 1,
-        'translation.updated_at': 1,
-        'summary.updated_at': 1,
-        'detected_images.type': 1,
-        display_brightness: 1,
-      }
-    })
-    .sort({ page_number: 1 })
-    .toArray();
+  const [pagesRaw, totalBooks] = await Promise.all([
+    db.collection('pages')
+      .find({ book_id: bookId }, {
+        projection: {
+          _id: 0,
+          id: 1,
+          page_number: 1,
+          photo: 1,
+          photo_original: 1,
+          archived_photo: 1,
+          thumbnail: 1,
+          thumbnail_blob: 1,
+          crop: 1,
+          'ocr.updated_at': 1,
+          'translation.updated_at': 1,
+          'summary.updated_at': 1,
+          'detected_images.type': 1,
+          display_brightness: 1,
+        }
+      })
+      .sort({ page_number: 1 })
+      .toArray(),
+    db.collection('books').estimatedDocumentCount(),
+  ]);
 
   // Serialize MongoDB objects to plain JavaScript objects
   const serializedBook = JSON.parse(JSON.stringify(book));
-  const serializedPages = JSON.parse(JSON.stringify(pages));
-
-  const totalBooks = await db.collection('books').estimatedDocumentCount();
+  const serializedPages = JSON.parse(JSON.stringify(pagesRaw));
 
   return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, matchedBySlug };
 }
@@ -353,21 +536,7 @@ async function BookInfo({ id }: { id: string }) {
   // Note: ObjectId→custom-id redirect is handled in BookDetailPage above,
   // before the Suspense boundary, so Google gets a proper 301.
 
-  // Related books: author count + work siblings (parallel, non-blocking)
-  const db = await getDb();
   const workId = (book as unknown as { work_id?: string }).work_id;
-  const [authorCount, workSiblings, entityRelatedBooks] = await Promise.all([
-    book.author && book.author !== 'Unknown'
-      ? db.collection('books').countDocuments({ author: book.author, id: { $ne: book.id } })
-      : Promise.resolve(0),
-    workId
-      ? db.collection('books').find(
-        { work_id: workId, id: { $ne: book.id } },
-        { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
-      ).sort({ published: 1 }).limit(20).toArray()
-      : Promise.resolve([]),
-    getRelatedBooks(book.id),
-  ]);
 
   // Note: projection excludes .data fields, so check for object existence instead
   const ocrCount = pages.filter(p => p.ocr).length;
@@ -395,16 +564,7 @@ async function BookInfo({ id }: { id: string }) {
         currentEdition={currentEdition}
       />
 
-      {/* Cross-book citation_reference meta tags for Google Scholar */}
-      {/* Rendered here (inside Suspense via BookInfo) instead of generateMetadata */}
-      {/* to avoid blocking initial page load with a 3-4s entity query */}
-      {entityRelatedBooks.filter(rb => rb.type === 'direct').map((rb) => (
-        <meta
-          key={`cite-ref-${rb.id}`}
-          name="citation_reference"
-          content={`citation_title=${rb.title}${rb.author && rb.author !== 'Unknown' ? `; citation_author=${rb.author}` : ''}${rb.published ? `; citation_publication_date=${rb.published}` : ''}`}
-        />
-      ))}
+      {/* Cross-book citation_reference meta tags + related books stream in separately */}
 
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
@@ -735,155 +895,16 @@ async function BookInfo({ id }: { id: string }) {
               );
             })()}
 
-            {/* Related Books — collapsed by default, matching Index card pattern */}
-            {(() => {
-              const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
-              const topPeople = (index?.people || []).slice(0, 3);
-              const topConcepts = (index?.concepts || []).slice(0, 3);
-              const directCitations = entityRelatedBooks.filter(rb => rb.type === 'direct');
-              const sharedCitations = entityRelatedBooks.filter(rb => rb.type === 'shared');
-              const hasLinks = authorCount > 0 || workSiblings.length > 0 || entityRelatedBooks.length > 0 || book.language || topPeople.length > 0 || topConcepts.length > 0;
-
-              if (!hasLinks) return null;
-
-              const counts = [
-                workSiblings.length > 0 ? `${workSiblings.length + 1} editions` : '',
-                directCitations.length > 0 ? `${directCitations.length} cited` : '',
-                sharedCitations.length > 0 ? `${sharedCitations.length} related` : '',
-              ].filter(Boolean).join(', ');
-
-              return (
-                <details className="card mt-6">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Related Books</h2>
-                      {counts && <span className="text-xs text-stone-400">{counts}</span>}
-                    </div>
-                    <span className="text-sm text-accent-rust hover:text-accent-gold-dark">
-                      See All &rarr;
-                    </span>
-                  </summary>
-                  <div className="px-6 pb-6">
-                  {/* Work siblings — other editions of the same text */}
-                  {workSiblings.length > 0 && (
-                    <div className="mb-4 pb-4 border-b border-stone-100">
-                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                        {workSiblings.length + 1} editions of this text
-                      </p>
-                      <div className="space-y-1.5">
-                        {workSiblings.map((sibling: { id?: string; _id?: { toString(): string }; display_title?: string; title?: string; language?: string; published?: string }) => (
-                          <Link
-                            key={sibling.id || sibling._id?.toString()}
-                            href={`/book/${sibling.id || sibling._id?.toString()}`}
-                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
-                          >
-                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors">
-                              {sibling.display_title || sibling.title}
-                            </span>
-                            {sibling.language && (
-                              <span className="text-xs text-stone-400">{sibling.language}</span>
-                            )}
-                            {sibling.published && (
-                              <span className="text-xs text-stone-400">{sibling.published}</span>
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Direct citations — this book mentions authors of these works */}
-                  {directCitations.length > 0 && (
-                    <div className="mb-4 pb-4 border-b border-stone-100">
-                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                        Cited authors in our library ({directCitations.length})
-                      </p>
-                      <div className="space-y-1.5">
-                        {directCitations.map((rb) => (
-                          <Link
-                            key={rb.id}
-                            href={`/book/${rb.id}`}
-                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
-                          >
-                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
-                              {rb.title}
-                            </span>
-                            {rb.cited_as && (
-                              <span className="text-xs text-accent-rust shrink-0">via {rb.cited_as}</span>
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Shared entity context — books discussing the same people/places/concepts */}
-                  {sharedCitations.length > 0 && (
-                    <div className="mb-4 pb-4 border-b border-stone-100">
-                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                        Related works ({sharedCitations.length})
-                      </p>
-                      <div className="space-y-1.5">
-                        {sharedCitations.map((rb) => (
-                          <Link
-                            key={rb.id}
-                            href={`/book/${rb.id}`}
-                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
-                          >
-                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
-                              {rb.title}
-                            </span>
-                            {rb.author && rb.author !== 'Unknown' && (
-                              <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
-                            )}
-                            <span className="text-xs text-accent-sage shrink-0">{rb.shared_entities} shared</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Search pills */}
-                  <div className="flex flex-wrap gap-2">
-                    {authorCount > 0 && (
-                      <Link
-                        href={`/search?q=${encodeURIComponent('"' + book.author + '"')}`}
-                        className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
-                      >
-                        More by {book.author} ({authorCount})
-                      </Link>
-                    )}
-                    {book.language && book.language !== 'Unknown' && (
-                      <Link
-                        href={`/search?language=${encodeURIComponent(book.language)}`}
-                        className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
-                      >
-                        {book.language} texts
-                      </Link>
-                    )}
-                    {topPeople.map((p) => (
-                      <Link
-                        key={p.term}
-                        href={`/search?q=${encodeURIComponent(p.term)}`}
-                        className="px-3 py-1.5 text-sm bg-accent-rust/8 text-accent-rust rounded-full hover:bg-accent-rust/15 transition-colors"
-                      >
-                        {p.term}
-                      </Link>
-                    ))}
-                    {topConcepts.map((c) => (
-                      <Link
-                        key={c.term}
-                        href={`/search?q=${encodeURIComponent(c.term)}`}
-                        className="px-3 py-1.5 text-sm bg-accent-violet/8 text-accent-violet rounded-full hover:bg-accent-violet/15 transition-colors"
-                      >
-                        {c.term}
-                      </Link>
-                    ))}
-                  </div>
-                  </div>
-                </details>
-              );
-            })()}
+            {/* Related Books — deferred into its own Suspense to avoid blocking page render */}
+            <Suspense fallback={null}>
+              <RelatedBooksSection
+                bookId={book.id}
+                bookAuthor={book.author}
+                bookLanguage={book.language}
+                workId={workId}
+                bookIndex={(book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index}
+              />
+            </Suspense>
           </div>
         );
       })()}

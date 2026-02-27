@@ -38,15 +38,24 @@ async function getCollections(): Promise<CollectionForGrid[]> {
   try {
     const db = await getDb();
     const docs = await db.collection('collections').find({}).sort({ order: 1 }).toArray();
-    return JSON.parse(JSON.stringify(docs.map(({ _id, ...rest }) => ({
-      slug: rest.slug,
-      name: rest.name,
-      subtitle: rest.subtitle || '',
-      description: rest.description || '',
-      book_count: rest.book_count || 0,
-      featured_images: rest.featured_images || [],
-      languages: rest.languages || [],
-    })))) as CollectionForGrid[];
+    return docs.map(({ _id, ...rest }) => {
+      // Only send the first hero image URL per collection — the UI only uses one.
+      // This avoids sending ~100KB of unused image metadata in the RSC payload.
+      const images = rest.featured_images || [];
+      const hero = images.find(
+        (img: Record<string, unknown>) => img.thumbnail_url || img.extracted_url || img.image_url
+      );
+      const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url || null;
+      return {
+        slug: rest.slug,
+        name: rest.name,
+        subtitle: rest.subtitle || '',
+        description: rest.description || '',
+        book_count: rest.book_count || 0,
+        hero_image: heroUrl as string | null,
+        languages: (rest.languages || []).slice(0, 3).map((l: { lang: string }) => l.lang),
+      };
+    }) as CollectionForGrid[];
   } catch (error) {
     console.error('Error fetching collections:', error);
     return [];

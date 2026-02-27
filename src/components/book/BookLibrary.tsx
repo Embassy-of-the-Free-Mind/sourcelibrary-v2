@@ -25,8 +25,8 @@ export interface CollectionForGrid {
   subtitle: string;
   description: string;
   book_count: number;
-  featured_images?: Array<{ thumbnail_url?: string; extracted_url?: string; image_url?: string }>;
-  languages?: Array<{ lang: string; count: number }>;
+  hero_image: string | null;
+  languages?: string[];
 }
 
 interface BookLibraryProps {
@@ -377,11 +377,8 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
             return (
               <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {shown.map((col, i) => {
-                  const hero = col.featured_images?.find(
-                    img => img.thumbnail_url || img.extracted_url || img.image_url
-                  );
-                  const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
-                  const topLangs = (col.languages || []).slice(0, 3).map(l => l.lang).join(', ');
+                  const heroUrl = col.hero_image;
+                  const topLangs = (col.languages || []).join(', ');
                   return (
                     <Link
                       key={col.slug}
