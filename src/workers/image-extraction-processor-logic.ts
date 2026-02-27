@@ -88,6 +88,11 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     return;
   }
 
+  if (job.status === 'completed' || job.status === 'completed_with_errors' || job.status === 'failed') {
+    console.log(`[IMG-EXTRACT] Job ${jobId} already ${job.status}, skipping stale message for page ${pageId}`);
+    return;
+  }
+
   const targetPageIds = job.config?.page_ids || [];
 
   // Update job status to processing (if still pending)
@@ -150,6 +155,24 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     );
     await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
+  }
+
+  // Skip if page already has image extraction results from this job or newer
+  // Prevents waste from stale queue messages re-extracting already-done pages
+  // Pass force: true in job config to override
+  const pageDoc = page as Page & { image_extraction_updated_at?: Date };
+  if (!job.config?.force && pageDoc.image_extraction_updated_at && job.created_at) {
+    const extractTime = new Date(pageDoc.image_extraction_updated_at).getTime();
+    const jobTime = new Date(job.created_at).getTime();
+    if (extractTime >= jobTime) {
+      console.log(`[IMG-EXTRACT] Skipping page ${pageId} (image extraction already current)`);
+      await jobs.updateOne(
+        { id: jobId },
+        { $inc: { 'progress.completed': 1 }, $set: { updated_at: new Date() } }
+      );
+      await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+      return;
+    }
   }
 
   const modelId = job.config.model || DEFAULT_MODEL;

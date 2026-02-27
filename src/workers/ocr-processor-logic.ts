@@ -97,6 +97,11 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     return;
   }
 
+  if (job.status === 'completed' || job.status === 'completed_with_errors' || job.status === 'failed') {
+    console.log(`[OCR] Job ${jobId} already ${job.status}, skipping stale message for page ${pageId}`);
+    return;
+  }
+
   const targetPageIds = job.config?.page_ids || [];
 
   // Update job status to processing (if still pending)
@@ -161,6 +166,23 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     );
     await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
+  }
+
+  // Skip if page already has OCR that's newer than this job
+  // Prevents waste from stale queue messages re-OCR'ing already-done pages
+  // Pass force: true in job config to override (e.g., re-OCR with new prompt)
+  if (!job.config?.force && page.ocr?.data && page.ocr?.updated_at && job.created_at) {
+    const ocrTime = new Date(page.ocr.updated_at).getTime();
+    const jobTime = new Date(job.created_at).getTime();
+    if (ocrTime >= jobTime) {
+      console.log(`[OCR] Skipping page ${pageId} (OCR already current, ${page.ocr.model || 'unknown'})`);
+      await jobs.updateOne(
+        { id: jobId },
+        { $inc: { 'progress.completed': 1 }, $set: { updated_at: new Date() } }
+      );
+      await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+      return;
+    }
   }
 
   const startTime = Date.now();
