@@ -23,6 +23,13 @@ interface Book {
   summary?: { data: string } | string;
 }
 
+// ISR: rebuild at most every hour
+export const revalidate = 3600;
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  return []; // All paths generated on demand via ISR
+}
+
 interface CategoryPageProps {
   params: Promise<{ id: string }>;
 }
