@@ -345,6 +345,7 @@ export async function GET(request: NextRequest) {
     stale_retried: 0,
     stale_failed: 0,
     stale_retranslate: 0,
+    thumbnails_fixed: 0,
     errors: [] as string[],
   };
 
@@ -1463,6 +1464,23 @@ export async function GET(request: NextRequest) {
       active_batch: batchByType,
       cost_period: null, // filled by dashboard queries against gemini_usage
     }).catch(e => console.error('[pipeline-snapshot] write failed:', e));
+
+    // ── Sweep: fix any books with stale /uploads/ thumbnails ──
+    // This catches books that aren't transitioning states (e.g. sitting at chapters_complete)
+    try {
+      const staleThumbnailBooks = await db.collection('books').find(
+        { thumbnail: { $regex: '/uploads/' } },
+        { projection: { id: 1 } }
+      ).limit(10).toArray();
+      for (const b of staleThumbnailBooks) {
+        await fixStaleThumbnail(db, b.id);
+      }
+      if (staleThumbnailBooks.length > 0) {
+        log.thumbnails_fixed = staleThumbnailBooks.length;
+      }
+    } catch (e) {
+      // Non-critical — don't fail the cron
+    }
 
     // Log time budget decision if budget was exhausted
     if (!hasTimeBudget(startTime)) {
