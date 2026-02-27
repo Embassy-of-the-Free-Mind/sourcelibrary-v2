@@ -82,9 +82,9 @@ Sent via `sendGAEvent()` helper (`src/lib/ga.ts`), fire-and-forget:
 
 Schema: `target_type` (image/page/book), `target_id`, `visitor_id`, `created_at`
 
-### Highlights
+### Highlights (UI removed Feb 2026)
 
-**Collection:** `highlights` (indexed on `book_id + page_id`)
+**Collection:** `highlights` (indexed on `book_id + page_id`). API routes still exist but no frontend UI.
 
 | Route | Purpose |
 |-------|---------|
@@ -93,9 +93,9 @@ Schema: `target_type` (image/page/book), `target_id`, `visitor_id`, `created_at`
 
 Schema: `book_id`, `page_id`, `text` (selected), `context`, `note`, `color`, `user_name`, `created_at`
 
-### Annotations (Community Notes)
+### Annotations (UI removed Feb 2026)
 
-**Collection:** `annotations`
+**Collection:** `annotations`. API routes still exist but no frontend UI — AnnotationEditor, AnnotationPanel, InlineAnnotations, and HighlightsPanel components were deleted.
 
 | Route | Purpose |
 |-------|---------|

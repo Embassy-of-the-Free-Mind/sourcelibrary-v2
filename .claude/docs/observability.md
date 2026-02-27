@@ -195,4 +195,4 @@ Book documents store `pages_count`, `pages_ocr`, and `pages_translated` as a **p
 
 ## Known Gaps
 
-1. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection. Needs admin UI + auth first.
+1. **Annotations/highlights UI removed (Feb 2026)** — API routes and DB collections remain, but all frontend components (AnnotationEditor, AnnotationPanel, InlineAnnotations, HighlightsPanel, PageAssistant, GoogleTranslate) were deleted. Reader now only has text selection → Share.
