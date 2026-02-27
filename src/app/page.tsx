@@ -11,83 +11,26 @@ import { getSiteMode } from '@/lib/site-mode.server';
 // ISR: rebuild at most every 2 minutes
 export const revalidate = 120;
 
-const INITIAL_SERVER_LIMIT = 100;
-
-async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translatedCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: number }> {
   try {
     const db = await getDb();
-
-    // Single aggregation with $facet: gets books + counts in one collection scan
     const [result] = await db.collection('books').aggregate([
       { $match: { hidden: { $ne: true } } },
       {
-        $facet: {
-          books: [
-            {
-              $addFields: {
-                id: { $ifNull: ['$id', { $toString: '$_id' }] },
-                pages_count: { $ifNull: ['$pages_count', 0] },
-                pages_translated: { $ifNull: ['$pages_translated', 0] },
-                pages_ocr: { $ifNull: ['$pages_ocr', 0] },
-                last_processed: { $ifNull: ['$updated_at', '$created_at'] },
-                translation_percent: {
-                  $cond: {
-                    if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
-                    then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
-                    else: 0,
-                  },
-                },
-                is_efm_translated: {
-                  $cond: {
-                    if: {
-                      $and: [
-                        { $eq: ['$image_source.provider', 'efm'] },
-                        { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
-                        { $gte: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 1] }] }, 100] }, 90] },
-                      ],
-                    },
-                    then: 1,
-                    else: 0,
-                  },
-                },
-                quality_score: { $ifNull: ['$quality_score', 0] },
-              },
-            },
-            { $sort: { is_efm_translated: -1, quality_score: -1, last_translation_at: -1, last_processed: -1, title: 1 } },
-            { $limit: INITIAL_SERVER_LIMIT },
-            {
-              $project: {
-                _id: 0, id: 1, title: 1, display_title: 1, author: 1,
-                thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1,
-                categories: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
-                translation_percent: 1, last_processed: 1, last_translation_at: 1, featured: 1,
-              },
-            },
-          ],
-          counts: [
-            {
-              $group: {
-                _id: null,
-                total: { $sum: 1 },
-                translated: { $sum: { $cond: [{ $gt: [{ $ifNull: ['$pages_translated', 0] }, 0] }, 1, 0] } },
-              },
-            },
-          ],
+        $group: {
+          _id: null,
+          total: { $sum: 1 },
+          translated: { $sum: { $cond: [{ $gt: [{ $ifNull: ['$pages_translated', 0] }, 0] }, 1, 0] } },
         },
       },
     ]).toArray();
-
-    const books = result?.books || [];
-    const counts = result?.counts?.[0] || { total: 0, translated: 0 };
-
     return {
-      books: JSON.parse(JSON.stringify(books)) as Book[],
-      totalBooks: counts.total,
-      translatedCount: counts.translated,
+      totalBooks: result?.total || 0,
+      translatedCount: result?.translated || 0,
     };
   } catch (error) {
-    console.error('Error fetching books:', error);
-    return { books: [], totalBooks: 0, translatedCount: 0 };
+    console.error('Error fetching book counts:', error);
+    return { totalBooks: 0, translatedCount: 0 };
   }
 }
 
@@ -146,21 +89,19 @@ async function getRecentlyTranslated(): Promise<Book[]> {
 }
 
 async function LibrarySection() {
-  const [{ books, totalBooks, translatedCount }, collections, recentlyTranslated] = await Promise.all([
-    getBooks(),
+  const [{ totalBooks, translatedCount }, collections, recentlyTranslated] = await Promise.all([
+    getBookCounts(),
     getCollections(),
     getRecentlyTranslated(),
   ]);
 
-  const languages = [...new Set(books.map(b => b.language))].filter(Boolean) as string[];
-
   return (
     <>
-      <HomePageSchema books={books} bookCount={totalBooks} translatedCount={translatedCount} />
+      <HomePageSchema books={recentlyTranslated} bookCount={totalBooks} translatedCount={translatedCount} />
       <BookLibrary
-        initialBooks={books}
+        initialBooks={[]}
         totalBooks={totalBooks}
-        languages={languages}
+        languages={[]}
         collections={collections}
         recentlyTranslated={recentlyTranslated}
       />

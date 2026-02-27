@@ -97,6 +97,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
 
   // Track whether we're in "browse" mode (no filters) or "search/filter" mode
   const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || selectedCollection !== '' || sortBy !== 'recent-translation';
+  const needsBrowseFetch = browseAll || isFiltered;
   const showCollections = !isFiltered && !selectedCollection && !browseAll && collections.length > 0;
 
   // The books we're working with
@@ -171,13 +172,13 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
     }
   }, [initialBooks]);
 
-  // When filters change, debounce and fetch from API (or revert to initialBooks)
+  // When filters change or browse mode entered, fetch from API
   useEffect(() => {
     // Reset display limit
     setDisplayLimit(DISPLAY_INCREMENT);
 
-    if (!isFiltered) {
-      // Back to default browse — use initial server data
+    if (!needsBrowseFetch) {
+      // Collections view — no books needed
       if (debounceRef.current) clearTimeout(debounceRef.current);
       abortRef.current?.abort();
       setApiBooks(null);
@@ -186,7 +187,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       return;
     }
 
-    // Debounce only for search typing — discrete filter changes (collection, language, category, sort) fetch immediately
+    // Debounce only for search typing — discrete filter changes (collection, language, category, sort, browseAll) fetch immediately
     if (debounceRef.current) clearTimeout(debounceRef.current);
     const doFetch = () => fetchBooks({
       search: searchQuery.trim(),
@@ -204,15 +205,11 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [searchQuery, selectedLanguage, selectedCategory, selectedCollection, sortBy, isFiltered, totalBooks, fetchBooks]);
+  }, [searchQuery, selectedLanguage, selectedCategory, selectedCollection, sortBy, needsBrowseFetch, totalBooks, fetchBooks]);
 
-  // For default browse, do client-side filtering on initialBooks (instant)
   const filteredBrowseBooks = useMemo(() => {
-    if (isFiltered) return allLoadedBooks;
-
-    // Default browse — use allLoadedBooks (includes any loaded-more books)
     return allLoadedBooks;
-  }, [isFiltered, allLoadedBooks, initialBooks]);
+  }, [allLoadedBooks]);
 
   // Books to display (limited for performance)
   const displayedBooks = useMemo(() => {
