@@ -12,7 +12,7 @@ import { bookUrl } from '@/lib/slugify';
 // ISR: rebuild at most every 10 minutes
 export const revalidate = 600;
 export const dynamicParams = true;
-export const maxDuration = 30;
+export const maxDuration = 60;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR
 }
@@ -194,13 +194,17 @@ async function fetchCollectionData(id: string) {
   // The client component re-fetches the accurate filtered total when expanded.
   const total = collection.book_count || 0;
 
-  // All queries run in parallel. Non-critical ones (gallery, highlights) get timeouts.
+  // All queries run in parallel with timeouts. Cold MongoDB connections from
+  // Mumbai→Virginia can take 15-20s, so even "critical" queries need protection.
   const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
-    db.collection('books')
-      .find(filter, { projection })
-      .sort({ read_count: -1, title: 1 })
-      .limit(COMPACT_LIMIT)
-      .toArray(),
+    withTimeout(
+      db.collection('books')
+        .find(filter, { projection })
+        .sort({ read_count: -1, title: 1 })
+        .limit(COMPACT_LIMIT)
+        .toArray(),
+      15000, [],
+    ),
     withTimeout(
       db.collection('books')
         .find(
