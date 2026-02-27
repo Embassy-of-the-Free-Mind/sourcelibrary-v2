@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
-export const maxDuration = 15;
+export const maxDuration = 30;
 
 /**
  * GET /api/collections/[id]
@@ -66,14 +66,16 @@ export async function GET(
       quality_score: 1,
     };
 
-    const [books, total, highlights] = await Promise.all([
+    // Use cached book_count from collection doc instead of expensive countDocuments
+    const total = (collection.book_count as number) || 0;
+
+    const [books, highlights] = await Promise.all([
       db.collection('books')
         .find(filter, { projection })
         .sort(sortObj)
         .skip(offset)
         .limit(limit)
         .toArray(),
-      db.collection('books').countDocuments(filter),
       // Top 5 books: prefer translated books with summaries, ranked by quality/reads
       db.collection('books')
         .find(
@@ -96,9 +98,10 @@ export async function GET(
       offset,
     });
   } catch (error) {
-    console.error('Collection detail error:', error);
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error('Collection detail error:', msg, error);
     return NextResponse.json(
-      { error: 'Failed to fetch collection' },
+      { error: 'Failed to fetch collection', detail: msg },
       { status: 500 }
     );
   }

@@ -25,27 +25,31 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const db = await getDb();
-  const collection = await db.collection('collections').findOne({ slug: id });
+  try {
+    const db = await getDb();
+    const collection = await db.collection('collections').findOne({ slug: id });
 
-  if (!collection) {
-    return { title: 'Collection Not Found - Source Library' };
-  }
+    if (!collection) {
+      return { title: 'Collection Not Found - Source Library' };
+    }
 
-  const description = collection.description
-    ? String(collection.description).slice(0, 200)
-    : `Browse the ${collection.name} collection on Source Library.`;
+    const description = collection.description
+      ? String(collection.description).slice(0, 200)
+      : `Browse the ${collection.name} collection on Source Library.`;
 
-  return {
-    title: `${collection.name} - Source Library`,
-    description,
-    alternates: { canonical: `/collections/${id}` },
-    openGraph: {
+    return {
       title: `${collection.name} - Source Library`,
       description,
-      type: 'website',
-    },
-  };
+      alternates: { canonical: `/collections/${id}` },
+      openGraph: {
+        title: `${collection.name} - Source Library`,
+        description,
+        type: 'website',
+      },
+    };
+  } catch {
+    return { title: 'Collection - Source Library' };
+  }
 }
 
 // ---------- Helpers ----------

@@ -69,8 +69,8 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
       const client = new MongoClient(uri!, {
         // Atlas cluster is in ap-south-1 (Mumbai), Vercel in iad1 (Virginia).
         // Cross-region latency (~200ms RTT) needs generous timeouts.
-        serverSelectionTimeoutMS: isOurLambda ? 5000 : 20000,
-        connectTimeoutMS: isOurLambda ? 10000 : 20000,
+        serverSelectionTimeoutMS: isOurLambda ? 5000 : 30000,
+        connectTimeoutMS: isOurLambda ? 10000 : 30000,
         socketTimeoutMS: isOurLambda ? 45000 : 90000,
 
         // Close idle connections after 1 minute to prevent pool exhaustion
