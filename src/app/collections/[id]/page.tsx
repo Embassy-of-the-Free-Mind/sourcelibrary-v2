@@ -12,6 +12,7 @@ import { bookUrl } from '@/lib/slugify';
 // ISR: rebuild at most every 10 minutes
 export const revalidate = 600;
 export const dynamicParams = true;
+export const maxDuration = 30;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR
 }
@@ -333,7 +334,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString()} books</span>
+            <span>{total.toLocaleString('en-US')} books</span>
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
