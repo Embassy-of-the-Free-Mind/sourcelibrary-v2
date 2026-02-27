@@ -94,40 +94,53 @@ export default function ImageWithMagnifier({
     return () => clearTimeout(checkLoaded);
   }, [src, displaySrc]);
 
+  // Calculate rendered image content size (accounting for object-contain)
+  const getRenderedImageSize = useCallback(() => {
+    if (!imgRef.current) return { width: 0, height: 0 };
+    const img = imgRef.current;
+    const rect = img.getBoundingClientRect();
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+
+    if (!naturalWidth || !naturalHeight) return { width: rect.width, height: rect.height };
+
+    if (scrollable) {
+      // Scrollable: image fills width, no object-contain — element box = content area
+      return { width: rect.width, height: rect.height };
+    }
+
+    // Non-scrollable with object-contain: content may be smaller than element box
+    const containerAspect = rect.width / rect.height;
+    const imageAspect = naturalWidth / naturalHeight;
+
+    if (imageAspect > containerAspect) {
+      return { width: rect.width, height: rect.width / imageAspect };
+    } else {
+      return { width: rect.height * imageAspect, height: rect.height };
+    }
+  }, [scrollable]);
+
   useEffect(() => {
-    // Get actual rendered image dimensions (accounting for object-contain)
     const updateDimensions = () => {
-      if (imgRef.current) {
-        const img = imgRef.current;
-        const containerRect = img.getBoundingClientRect();
-        const naturalWidth = img.naturalWidth;
-        const naturalHeight = img.naturalHeight;
-
-        if (naturalWidth && naturalHeight) {
-          // Calculate the actual rendered size with object-contain
-          const containerAspect = containerRect.width / containerRect.height;
-          const imageAspect = naturalWidth / naturalHeight;
-
-          let renderedWidth, renderedHeight;
-          if (imageAspect > containerAspect) {
-            // Image is wider - constrained by width
-            renderedWidth = containerRect.width;
-            renderedHeight = containerRect.width / imageAspect;
-          } else {
-            // Image is taller - constrained by height
-            renderedHeight = containerRect.height;
-            renderedWidth = containerRect.height * imageAspect;
-          }
-
-          setImageDimensions({ width: renderedWidth, height: renderedHeight });
-        }
+      const dims = getRenderedImageSize();
+      if (dims.width > 0 && dims.height > 0) {
+        setImageDimensions(dims);
       }
     };
 
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [isLoaded]);
+
+    // ResizeObserver catches layout changes that window resize misses
+    // (panel toggles, font loading, flex reflow)
+    const observer = new ResizeObserver(updateDimensions);
+    if (imgRef.current) observer.observe(imgRef.current);
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+      observer.disconnect();
+    };
+  }, [isLoaded, getRenderedImageSize]);
 
   // Load full image only on first hover (lazy load for magnifier)
   const [hasHovered, setHasHovered] = useState(false);
@@ -150,31 +163,40 @@ export default function ImageWithMagnifier({
     // Start loading full image on first hover
     if (!hasHovered) setHasHovered(true);
     if (!containerRef.current || !imgRef.current || !fullImageLoaded) return;
-    if (!imageDimensions.width || !imageDimensions.height) return;
 
     const containerRect = containerRef.current.getBoundingClientRect();
+    const imgRect = imgRef.current.getBoundingClientRect();
 
-    // Calculate where the actual image is rendered within the container (object-contain centers it)
-    const imgOffsetX = (containerRect.width - imageDimensions.width) / 2;
-    const imgOffsetY = (containerRect.height - imageDimensions.height) / 2;
+    // Get fresh image content dimensions (avoids stale imageDimensions state)
+    const dims = getRenderedImageSize();
+    if (!dims.width || !dims.height) return;
+
+    // Update imageDimensions state if they've drifted (e.g. after layout reflow)
+    if (Math.abs(imageDimensions.width - dims.width) > 1 || Math.abs(imageDimensions.height - dims.height) > 1) {
+      setImageDimensions(dims);
+    }
+
+    // Use actual DOM positions for offset — always accurate regardless of layout changes
+    const imgOffsetX = imgRect.left - containerRect.left + (imgRect.width - dims.width) / 2;
+    const imgOffsetY = imgRect.top - containerRect.top + (imgRect.height - dims.height) / 2;
 
     // Get cursor position relative to container
     const containerX = e.clientX - containerRect.left;
     const containerY = e.clientY - containerRect.top;
 
-    // Get cursor position relative to the actual rendered image
+    // Get cursor position relative to the actual rendered image content
     const imgX = containerX - imgOffsetX;
     const imgY = containerY - imgOffsetY;
 
     // Check if cursor is over the actual rendered image
-    const isOverImage = imgX >= 0 && imgX <= imageDimensions.width && imgY >= 0 && imgY <= imageDimensions.height;
+    const isOverImage = imgX >= 0 && imgX <= dims.width && imgY >= 0 && imgY <= dims.height;
 
     if (isOverImage) {
       setCursorPosition({ x: containerX, y: containerY });
 
       // Calculate background position as percentage of image dimensions
-      const xPercent = (imgX / imageDimensions.width) * 100;
-      const yPercent = (imgY / imageDimensions.height) * 100;
+      const xPercent = (imgX / dims.width) * 100;
+      const yPercent = (imgY / dims.height) * 100;
       setMagnifierPosition({ x: xPercent, y: yPercent });
       setShowMagnifier(true);
     } else {
