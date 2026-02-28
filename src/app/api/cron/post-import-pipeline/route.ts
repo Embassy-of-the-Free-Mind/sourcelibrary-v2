@@ -411,7 +411,11 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Priority: Image extraction submission (chapters_complete -> images_submitted) ──
-    if (hasTimeBudget(startTime)) {
+    const imagesPaused = control?.paused_phases?.includes('images');
+    if (imagesPaused) {
+      logger.decision('skip', 'Image extraction paused via processing_control.paused_phases');
+    }
+    if (hasTimeBudget(startTime) && !imagesPaused) {
       const activeImageJobs = await db.collection('jobs').countDocuments({
         type: 'image_extraction',
         status: { $in: ['pending', 'processing'] },
@@ -1044,7 +1048,11 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Phase 4: Submit translation via Gemini Batch API (metadata_enriched -> translate_submitted) ──
-    if (hasTimeBudget(startTime)) {
+    const translatePaused = control?.paused_phases?.includes('translation');
+    if (translatePaused) {
+      logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
+    }
+    if (hasTimeBudget(startTime) && !translatePaused) {
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'metadata_enriched' })
         .sort({ hidden: 1 }) // Visible books first
