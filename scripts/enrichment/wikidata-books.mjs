@@ -90,6 +90,22 @@ function normalizeTitle(title) {
 }
 
 /**
+ * Titles too generic to match reliably via title search.
+ * These match common Wikidata items that aren't the specific work.
+ */
+const GENERIC_TITLES = new Set([
+  'opera omnia',
+  'epistolae',
+  'epistolae selectae',
+  'opera',
+  'works',
+  'complete works',
+  'letters',
+  'poems',
+  'dialogues',
+]);
+
+/**
  * Score how well two titles match (0-1).
  * Handles partial matches, subtitle differences, etc.
  */
@@ -306,6 +322,9 @@ async function searchWikidataForBook(book) {
   }
 
   for (const title of titles) {
+    // Skip generic titles that produce false positives
+    if (GENERIC_TITLES.has(normalizeTitle(title))) continue;
+
     // Truncate very long titles for search
     const searchTitle = title.length > 100 ? title.substring(0, 100) : title;
     const url = `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(searchTitle)}&language=en&type=item&limit=5&format=json`;
@@ -323,7 +342,7 @@ async function searchWikidataForBook(book) {
 
         if (score < 0.5) continue;
 
-        // Validate P31 — must be a work/book type
+        // Validate P31 — must be a work/book type (rejects humans, places, etc.)
         const isWork = await validateP31(result.id);
         if (!isWork) continue;
 
@@ -343,12 +362,30 @@ async function searchWikidataForBook(book) {
   return null;
 }
 
+// P31 values that are definitely NOT works (reject these)
+const REJECT_P31 = new Set([
+  'Q5',         // human
+  'Q515',       // city
+  'Q6256',      // country
+  'Q16521',     // taxon
+  'Q4830453',   // business
+  'Q43229',     // organization
+  'Q3624078',   // sovereign state
+]);
+
 async function validateP31(qid) {
   try {
     const url = `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=P31&format=json`;
     const data = await apiFetch(url);
     const claims = data.claims?.P31 || [];
 
+    // Actively reject known non-work types
+    for (const claim of claims) {
+      const targetId = claim.mainsnak?.datavalue?.value?.id;
+      if (targetId && REJECT_P31.has(targetId)) return false;
+    }
+
+    // Check for positive work type matches
     for (const claim of claims) {
       const targetId = claim.mainsnak?.datavalue?.value?.id;
       if (targetId && VALID_WORK_P31.has(targetId)) return true;
@@ -514,6 +551,12 @@ async function main() {
 
     if (BOOK_ID) {
       bookFilter.id = BOOK_ID;
+    }
+
+    // Filter by provider (e.g., --provider=efm for Embassy of the Free Mind)
+    const PROVIDER = args.provider || null;
+    if (PROVIDER) {
+      bookFilter['image_source.provider'] = PROVIDER;
     }
 
     // Get books with their page stats
