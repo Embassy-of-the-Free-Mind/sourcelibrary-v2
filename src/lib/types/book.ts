@@ -60,6 +60,15 @@ export interface Book {
   // Internet Archive identifier (for reimport)
   ia_identifier?: string;
 
+  // Wikidata alignment (for Wikipedia/Wikidata outreach)
+  wikidata_id?: string;           // Q item for the work (e.g., "Q457894")
+  wikidata_label?: string;        // Wikidata label for verification
+  wikidata_match?: {
+    confidence: 'high' | 'medium' | 'suggested';
+    method: 'author_works' | 'title_search' | 'manual';
+    matched_at: Date;
+  };
+
   // Reading dashboard sections
   reading_sections?: Section[];
 
