@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
@@ -218,8 +218,8 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
 
   const topPeople = (bookIndex?.people || []).slice(0, 3);
   const topConcepts = (bookIndex?.concepts || []).slice(0, 3);
-  const directCitations = entityRelatedBooks.filter(rb => rb.type === 'direct');
-  const sharedCitations = entityRelatedBooks.filter(rb => rb.type === 'shared');
+  const directCitations = entityRelatedBooks.filter((rb: CitedBook) => rb.type === 'direct');
+  const sharedCitations = entityRelatedBooks.filter((rb: CitedBook) => rb.type === 'shared');
   const hasLinks = authorCount > 0 || workSiblings.length > 0 || entityRelatedBooks.length > 0 || bookLanguage || topPeople.length > 0 || topConcepts.length > 0;
 
   if (!hasLinks) return null;
@@ -233,7 +233,7 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
   return (
     <>
       {/* Citation meta tags for Google Scholar */}
-      {directCitations.map((rb) => (
+      {directCitations.map((rb: CitedBook) => (
         <meta
           key={`cite-ref-${rb.id}`}
           name="citation_reference"
@@ -287,7 +287,7 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
                 Cited authors in our library ({directCitations.length})
               </p>
               <div className="space-y-1.5">
-                {directCitations.map((rb) => (
+                {directCitations.map((rb: CitedBook) => (
                   <Link
                     key={rb.id}
                     href={`/book/${rb.id}`}
@@ -312,7 +312,7 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
                 Related works ({sharedCitations.length})
               </p>
               <div className="space-y-1.5">
-                {sharedCitations.map((rb) => (
+                {sharedCitations.map((rb: CitedBook) => (
                   <Link
                     key={rb.id}
                     href={`/book/${rb.id}`}
