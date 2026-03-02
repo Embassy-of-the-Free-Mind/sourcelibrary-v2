@@ -112,6 +112,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
           { title: queryRegex },
           { display_title: queryRegex },
           { author: queryRegex },
+          { 'reading_summary.overview': queryRegex },
         ],
         hidden: { $ne: true },
       })

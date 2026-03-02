@@ -135,7 +135,7 @@ export default function SearchPage() {
           library: library || undefined,
         };
         const [bookData, indexData, imageData] = await Promise.all([
-          searchApi.search(q, bookFilters),
+          searchApi.search(q, { ...bookFilters, search_content: 'true' }),
           searchApi.index(q, {}),
           galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }),
         ]);
@@ -457,20 +457,38 @@ export default function SearchPage() {
 
         {/* No results */}
         {noResults && (
-          <div className="text-center py-16">
+          <div className="text-center py-16 max-w-lg mx-auto">
             <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
             <h2 className="text-2xl font-serif font-medium text-primary mb-2">No results found</h2>
-            {suggestion ? (
-              <p className="text-secondary">
+            {suggestion && (
+              <p className="text-secondary mb-6">
                 Did you mean{' '}
                 <button
                   onClick={() => { setQuery(suggestion); setOffset(0); performSearch(suggestion, viewMode, 0); updateUrl(suggestion, viewMode, 0); }}
                   className="font-semibold text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
                 >{suggestion}</button>?
               </p>
-            ) : (
-              <p className="text-muted">Try different keywords.</p>
             )}
+            <p className="text-muted mb-6">
+              The library focuses on Western esoteric tradition — alchemy, Hermetica, Kabbalah, natural philosophy, and early modern science.
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {['alchemy', 'Hermes', 'Paracelsus', 'Kabbalah', 'astrology', 'Ficino'].map(term => (
+                <button
+                  key={term}
+                  onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
+                  className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+                >
+                  {term}
+                </button>
+              ))}
+              <Link
+                href="/library"
+                className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+              >
+                Browse all books
+              </Link>
+            </div>
           </div>
         )}
 

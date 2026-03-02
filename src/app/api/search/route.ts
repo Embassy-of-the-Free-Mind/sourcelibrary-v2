@@ -115,9 +115,8 @@ export async function GET(request: NextRequest) {
 
     // Helper: convert book document to search result
     function bookToResult(typedBook: Book): SearchResult {
-      const summaryText = typeof typedBook.summary === 'string'
-        ? typedBook.summary
-        : typedBook.summary?.data || (typedBook as any).reading_summary?.overview;
+      const summaryText = (typedBook as any).reading_summary?.overview
+        || (typeof typedBook.summary === 'string' ? typedBook.summary : typedBook.summary?.data);
       return {
         id: typedBook.id,
         type: 'book',
@@ -166,8 +165,7 @@ export async function GET(request: NextRequest) {
                 { title: queryRegex },
                 { display_title: queryRegex },
                 { author: queryRegex },
-                { 'summary.data': queryRegex },
-                { summary: queryRegex },
+                { 'reading_summary.overview': queryRegex },
               ],
               ...bookFilters,
             })
@@ -351,8 +349,7 @@ export async function GET(request: NextRequest) {
               { title: queryRegex },
               { display_title: queryRegex },
               { author: queryRegex },
-              { 'summary.data': queryRegex },
-              { summary: queryRegex },
+              { 'reading_summary.overview': queryRegex },
             ],
             published: { $regex: nearbyPattern },
           };
