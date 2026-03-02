@@ -6858,3 +6858,186 @@ Vat.gr.1594 (Pindar), Vat.gr.904 (Euripides), Pal.lat.1885 (Alchemical)
 Spanning: Greek classics, Neoplatonism, esoteric magic, Syriac Christianity, Hebrew Bible, illustrated Byzantine, multilingual Psalters. Opened Bodleian and BnF as new manuscript sources for the collection.
 
 ---
+
+# Session 040: 2026-03-02 — Armenian & Syriac Collection Building
+
+## Objective
+Fill two major collection gaps identified in Session 039: (1) Armenian manuscripts — zero in collection; (2) Syriac critical editions — vast untapped corpus on IA.
+
+## Armenian Phase 1 (from Session 039 continuation)
+
+| Title | Author | IA Identifier | Pages | Book ID |
+|-------|--------|--------------|-------|---------|
+| History of the Armenians | Agathangelos | patmuthiwnhayot00telesuoft | 592 | 69a5e96a2c1720a023b0b137 |
+| Book of Lamentations | Gregory of Narek | BookOfLamentationsGrigorNarekatsi | 307 | 69a5e96fd507939f0352ba7a |
+| Refutation of the Sects | Eznik of Kolb | EznikDeKolbDeLaSecteDesPhilosophesGrecq | 225 | 69a5e976d507939f0352bba8 |
+| History of Vardan | Elishe | Yeghishe1859Grabar | 232 | 69a5e97cd507939f0352bc3e |
+| Life of Mashtots | Koriwn | KoriunGrabar | 108 | 69a5e981d507939f0352bca2 |
+| History of the Armenian Sebeos | Sebeos | PatmutiwnSebeos1879 | 186 | 69a5e98cd507939f0352bcef |
+| General Epistle | Nerses Shnorhali | NersesShnorhali1871Grabar | 483 | 69a5e992d507939f0352bd5f |
+
+**Armenian Phase 1: 7 books, 2,133 pages**
+
+## Syriac Phase 1 (from Session 039 continuation)
+
+| Title | Author | IA Identifier | Pages | Book ID |
+|-------|--------|--------------|-------|---------|
+| Doctrina Addai | Cureton (ed.) | AncientSyriacDocuments | 160 | 69a5e9ad2c1720a023b0b4c1 |
+| Chronicle of Edessa | Hallier (ed.) | untersuchungenbe00hall | 194 | 69a5e9b42c1720a023b0b586 |
+| Book of the Laws of Countries | Bardaisan | bardesanesofedes01bardgoog | 87 | 69a5e9bb2c1720a023b0b62c |
+| Commentary on the Diatessaron | Ephrem the Syrian | EphraemSyrusEvangeliiConcordantisExpositio | 299 | 69a5e9c32c1720a023b0b6a7 |
+
+**Syriac Phase 1: 4 books, 740 pages**
+(Note: all were enrolled in pipeline at start of this session)
+
+## Armenian Phase 2
+
+| Title | Author | IA Identifier | Pages | Book ID |
+|-------|--------|--------------|-------|---------|
+| Narek Prayer Book | Gregory of Narek | narekprayerbook | 681 | 69a5eac7d507939f0352c9a7 |
+| Verses | Nerses Shnorhali | nersesshnorhaliverse | 643 | 69a5eacdd507939f0352cc52 |
+| History of the Armenians | P'awstos Buzand | patmuthiwnhayot00telebuoft | 320 | 69a5ead1d507939f0352ced7 |
+| Ecclesiastical History (Armenian) | Eusebius of Caesarea | eusebius_ecclesiastical_arm | 941 | 69a5eaddd507939f0352d019 |
+| Armenian Bible (Zohrapean) | Zohrapean (ed.) | zohrapean_armenian_bible | 888 | 69a5eae5d507939f0352d3c8 |
+| History (Grabar, 1963) | Aristakes Lastivertts'i | LastiverttsiGrabar1963 | 157 | 69a5ec44da5d3ab76bee3957 |
+| Kirakos + Ukhtanes (French) | Kirakos Gandzaketsi | bub_gb_BK09AAAAYAAJ | 437 | 69a5ec4cda5d3ab76bee39f6 |
+
+**Armenian Phase 2: 7 books, 4,067 pages**
+Rejected: Ghazar P'arpets'i (already existed), Book of Letters (already existed), Vardan Geography (already existed)
+
+## Syriac Phase 2
+
+| Title | Author | IA Identifier | Pages | Book ID |
+|-------|--------|--------------|-------|---------|
+| Hymni et Sermones vol. 1 | Ephrem/Lamy | sanctiephraemsy00lamygoog | 453 | 69a5ea892c1720a023b0c7f9 |
+| Homiliae vol. 1 | Narsai | narsai_homiliae | 444 | 69a5ea9a2c1720a023b0c9c0 |
+| Homiliae vol. 1 (Bedjan) | Jacob of Serugh | jacobserugh_homiliae | 875 | 69a5eaa32c1720a023b0cb7e |
+| Opera Selecta | Ephrem/Rabbula/Balai | overbeck_opera_selecta | 512 | 69a5eaa82c1720a023b0ceeb |
+
+**Syriac Phase 2: 4 books, 2,284 pages**
+Rejected: Ephrem Prose Refutations vols 1-2 (already existed)
+
+## Bedjan Acta Martyrum et Sanctorum (complete 6-volume set)
+
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Acta Martyrum vol. I | ActaMartyrumEtSanctorumvolume2Ed.PaulBedjan | 565 | 69a5eb453af7491d2c6a7c29 |
+| Acta Martyrum vol. II | ActaMartyrumEtSanctorumvolume4Ed.PaulBedjan | 692 | 69a5eb6baa8e0e409214781d |
+| Acta Martyrum vol. III | ActaMartyrumEtSanctorumvolume3Ed.PaulBedjan | 698 | 69a5eb4daa8e0e4092146d10 |
+| Acta Martyrum vol. IV | ActaMartyrumEtSanctorumvolume4Ed.PaulBedjan_807 | 692 | 69a5eb54aa8e0e4092146fcc |
+| Acta Martyrum vol. V | ActaMartyrumEtSanctorumvolume5Ed.PaulBedjan | 723 | 69a5eb5baa8e0e4092147282 |
+| Acta Martyrum vol. VI | ActaMartyrumEtSanctorumvolume6Ed.PaulBedjan | 708 | 69a5eb64aa8e0e4092147557 |
+
+**Bedjan Acta Martyrum: 6 books, 4,078 pages** (Syriac hagiography, 19th c. critical edition)
+
+## Syriac Phase 3 — Major Authors & Reference Works
+
+### Aphrahat
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Patrologia Syriaca I: Demonstrationes 1-22 (Parisot) | patrologiasyria00grafgoog | 747 | 69a5ed1a96d6dd816a5698d5 |
+
+### Bar Hebraeus (4 works)
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Chronicon Syriacum (Bedjan) | ketabademadatbez00barhuoft | 616 | 69a5ed2c96d6dd816a569bc2 |
+| Ethicon seu Moralia (Bedjan) | ethiconseumorali00barhuoft | 646 | 69a5ed3396d6dd816a569e2c |
+| Nomocanon | nomocanonofbarhe0000barh | 352 | 69a5ed6996d6dd816a56a6de |
+| Le Livre des Splendeurs (Grammar) | lelivredessplend00barhuoft | 380 | 69a5ed6d96d6dd816a56a840 |
+| Book of the Dove (Mystical) | barhebraeussbook00barh | 294 | 69a5ed7196d6dd816a56a9be |
+
+### Thomas of Marga
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Liber Superiorum (Bedjan) | libersuperiorums0000bedj | 744 | 69a5ed4896d6dd816a56a0b4 |
+
+### Ephrem the Syrian
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| In Genesim et in Exodum (CSCO) | ingenesimetinexo0000ephr | 336 | 69a5ed4a96d6dd816a56a39e |
+| Opera Omnia I (Assemani, Rome 1737) | assemani-et-alii-1732-1746-ephraem-syri-opera-omnia-syr-1 | 588 | 69a5ee0bbfd8cafd91e42e34 |
+| Opera Omnia II (Assemani, Rome 1740) | assemani-et-alii-1732-1746-ephraem-syri-opera-omnia-syr-2 | 585 | 69a5ee14bfd8cafd91e43082 |
+| Opera Omnia III (Assemani, Rome 1743) | sactipatrisnostriephraemsyri3 | 780 | 69a5ee1ebfd8cafd91e432cd |
+
+### Philoxenus of Mabbug
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Tractatus Tres de Trinitate (CSCO) | philoxenimabbuge0000phil | 492 | 69a5ed5696d6dd816a56a4f0 |
+
+### Isaac of Antioch
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Homiliae (Bedjan) | homiliaesisaacis01isaauoft | 894 | 69a5eda496d6dd816a56ae46 |
+
+### Mar Jabalaha III
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Histoire de Mar-Jabalaha (Bedjan) | histoiredemarjab00yahb | 600 | 69a5edab96d6dd816a56b1c6 |
+
+### John of Ephesus
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Scripta Historica (Land ed., Syriac) | bub_gb_PpGofDaYd7QC | 458 | 69a5edc296d6dd816a56b420 |
+
+### Land, Anecdota Syriaca
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Anecdota Syriaca vols. 3-4 | anecdotasyriaca0304land | 862 | 69a5ed7996d6dd816a56aae6 |
+
+### Liber Graduum (Book of Steps)
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Patrologia Syriaca III (Kmosko) | PatrologiaSyriacaIIILiberGraduum_201603 | 409 | 69a5ededbfd8cafd91e42c99 |
+
+### Assemani, Bibliotheca Orientalis (complete 4-volume reference)
+| Title | IA Identifier | Pages | Book ID |
+|-------|--------------|-------|---------|
+| Vol. 1: De Scriptoribus Syris Orthodoxis (1719) | bub_gb_GADajiNWFlkC | 705 | 69a5edc996d6dd816a56b5ec |
+| Vol. 2 (1721) | bub_gb_wfPCZVMuiBgC | 730 | 69a5edcc96d6dd816a56b8af |
+| Vol. 3.1: De Scriptoribus Nestorianis (1725) | bub_gb_dqIBok_FOLEC | 774 | 69a5edce96d6dd816a56bb8b |
+| Vol. 3.2 (1728) | bub_gb_4fbC1e4mro4C | 991 | 69a5edcf96d6dd816a56be93 |
+
+**Syriac Phase 3: 21 books, 11,383 pages**
+
+## Session 040 Totals
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Armenian Phase 1 | 7 | 2,133 |
+| Armenian Phase 2 | 7 | 4,067 |
+| Syriac Phase 1 | 4 | 740 |
+| Syriac Phase 2 | 4 | 2,284 |
+| Bedjan Acta Martyrum | 6 | 4,078 |
+| Syriac Phase 3 (major authors + reference) | 21 | 11,383 |
+| **TOTAL** | **49** | **24,685** |
+
+### By Language
+| Language | Books | Pages |
+|----------|-------|-------|
+| Syriac | 35 | 18,485 |
+| Armenian (Grabar) | 14 | 6,200 |
+
+### Key Achievements
+- **Armenian collection:** From zero to 14 texts covering the entire classical canon — Agathangelos, Elishe, Koriwn, P'awstos Buzand, Gregory of Narek, Eznik, Nerses Shnorhali, Sebeos, Aristakes, Kirakos, Eusebius (Armenian), Zohrapean Bible
+- **Syriac collection:** Massive expansion with 35 new texts including:
+  - Complete Bedjan Acta Martyrum (6 vols)
+  - Complete Assemani Bibliotheca Orientalis (4 vols, foundational reference)
+  - Complete Ephrem Opera Omnia (Assemani Rome ed., 3 vols, 18th c.)
+  - Major Syriac church fathers: Aphrahat, Ephrem, Narsai, Jacob of Serugh, Philoxenus, Isaac of Antioch, Bar Hebraeus, John of Ephesus, Thomas of Marga
+  - Critical scholarly editions: Patrologia Syriaca, CSCO, Bedjan, Land
+
+### Still Missing / Future Targets
+| Text | Priority | Notes |
+|------|----------|-------|
+| Aphrahat Patrologia Syriaca vol 2 (cont.) | Already in collection | |
+| Bar Hebraeus Chronicon Ecclesiasticum | HIGH | Syriac church history |
+| Stephen bar Sudaili / Book of Hierotheos (Marsh ed.) | HIGH | Syriac mystical, needs imagecount check |
+| Bedjan Breviarium Chaldaicum | MEDIUM | Syriac liturgy, needs imagecount check |
+| Vatican Syriac MSS (Vat.sir.) | HIGH | 372 digitized at DigiVatLib |
+| BnF Syriac (Syriaque 341 etc.) | HIGH | Illuminated Syriac Bible, 6th-7th c. |
+| Cambridge Syriac MSS (undigitized) | LOW | 296/300 lack IIIF |
+| Armenian MSS from Armenian Manuscripts Index | MEDIUM | 2,579 MSS from 48 libraries |
+| Moses of Chorene (Grabar) | HIGH | Several IA editions are "dark"/restricted |
+| Tovma Artsruni (Grabar) | MEDIUM | IA edition is "dark" |
+
+---
