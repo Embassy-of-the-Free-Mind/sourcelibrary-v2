@@ -37,11 +37,57 @@ const DAYS = parseInt(process.argv.find(a => a.startsWith('--days='))?.split('='
 const SKIP_THUMBNAILS = process.argv.includes('--skip-thumbnails');
 const DOWNLOAD_TIMEOUT = parseInt(process.argv.find(a => a.startsWith('--timeout='))?.split('=')[1] || '30000', 10);
 
+const MAX_RETRIES = 3; // Retry on 429/503
+
 const MONGODB_URI = process.env.MONGODB_URI;
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!BLOB_TOKEN) { console.error('Missing BLOB_READ_WRITE_TOKEN'); process.exit(1); }
+
+// User-Agent for polite scraping — identifies us to library servers
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+
+// Per-domain rate limiting (requests per second)
+const DOMAIN_RATE_LIMITS: Record<string, number> = {
+  ia: 10,       // IA is permissive
+  gallica: 3,   // BnF is strict
+  mdz: 5,
+  wellcome: 5,
+  erara: 2,     // Small Swiss library — be gentle
+  vatican: 3,
+  bodleian: 3,
+  cambridge: 3,
+  hab: 3,
+  other: 5,
+};
+
+// Token bucket rate limiter per domain
+const domainBuckets: Record<string, { tokens: number; lastRefill: number; rate: number }> = {};
+
+function getDomainBucket(source: string) {
+  if (!domainBuckets[source]) {
+    const rate = DOMAIN_RATE_LIMITS[source] || DOMAIN_RATE_LIMITS.other;
+    domainBuckets[source] = { tokens: rate, lastRefill: Date.now(), rate };
+  }
+  return domainBuckets[source];
+}
+
+async function waitForRateLimit(source: string): Promise<void> {
+  const bucket = getDomainBucket(source);
+  const now = Date.now();
+  const elapsed = (now - bucket.lastRefill) / 1000;
+  bucket.tokens = Math.min(bucket.rate, bucket.tokens + elapsed * bucket.rate);
+  bucket.lastRefill = now;
+
+  if (bucket.tokens < 1) {
+    const waitMs = Math.ceil((1 - bucket.tokens) / bucket.rate * 1000);
+    await new Promise(r => setTimeout(r, waitMs));
+    bucket.tokens = 0;
+  } else {
+    bucket.tokens -= 1;
+  }
+}
 
 // Source detection patterns
 const SOURCE_PATTERNS: Record<string, RegExp> = {
@@ -99,20 +145,48 @@ async function archivePage(page: any, db: any): Promise<boolean> {
       archivedUrl = sourceUrl;
       stats.blobFixup++;
     } else {
-      // Download from external source
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT);
+      // Rate limit before downloading
+      await waitForRateLimit(source);
 
-      let res: Response;
-      try {
-        res = await fetch(sourceUrl, { signal: controller.signal });
-        clearTimeout(timeout);
-      } catch (fetchErr: any) {
-        clearTimeout(timeout);
-        throw new Error(fetchErr.name === 'AbortError' ? 'timeout' : fetchErr.message);
+      const fetchUrl = sourceUrl;
+
+      // Download with retry on 429/503
+      let res: Response | undefined;
+      let lastErr: Error | undefined;
+      for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT);
+        try {
+          res = await fetch(fetchUrl, {
+            signal: controller.signal,
+            headers: { 'User-Agent': USER_AGENT },
+          });
+          clearTimeout(timeout);
+
+          if (res.ok) break;
+
+          // Retry on 429 and 503 with exponential backoff
+          if ((res.status === 429 || res.status === 503) && attempt < MAX_RETRIES - 1) {
+            const retryAfter = parseInt(res.headers.get('Retry-After') || '0') * 1000;
+            const backoff = retryAfter || (attempt + 1) * 3000;
+            await new Promise(r => setTimeout(r, backoff));
+            res = undefined;
+            continue;
+          }
+
+          throw new Error(`HTTP ${res.status}`);
+        } catch (fetchErr: any) {
+          clearTimeout(timeout);
+          lastErr = new Error(fetchErr.name === 'AbortError' ? 'timeout' : fetchErr.message);
+          if (attempt < MAX_RETRIES - 1 && fetchErr.name !== 'AbortError') {
+            await new Promise(r => setTimeout(r, (attempt + 1) * 2000));
+            continue;
+          }
+          throw lastErr;
+        }
       }
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res?.ok) throw lastErr || new Error('fetch failed after retries');
 
       buffer = Buffer.from(await res.arrayBuffer());
       bytes = buffer.byteLength;
@@ -317,6 +391,8 @@ async function runPool(pages: any[], db: any) {
 
 async function main() {
   console.log(`Image archiver — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, source: ${SOURCE_FILTER || 'all'}, timeout: ${DOWNLOAD_TIMEOUT}ms`);
+  console.log(`  User-Agent: ${USER_AGENT}`);
+  console.log(`  Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).map(([k, v]) => `${k}:${v}/s`).join(', ')}`);
   if (BOOK_ID) console.log(`  Book: ${BOOK_ID}`);
   if (RECENT) console.log(`  Recent: ${RECENT} books`);
   if (DAYS) console.log(`  Days: last ${DAYS}`);

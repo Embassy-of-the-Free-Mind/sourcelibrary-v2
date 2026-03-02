@@ -25,6 +25,9 @@
  * ```
  */
 
+// Polite User-Agent for external library servers
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+
 /**
  * Fetch an image from a URL and return it as a Buffer
  *
@@ -50,6 +53,7 @@ async function fetchBuffer(
   try {
     const response = await fetch(url, {
       signal: controller.signal,
+      headers: { 'User-Agent': USER_AGENT },
     });
 
     clearTimeout(timeoutId);
@@ -105,6 +109,7 @@ async function fetchBase64(
   try {
     const response = await fetch(url, {
       signal: controller.signal,
+      headers: { 'User-Agent': USER_AGENT },
     });
 
     clearTimeout(timeoutId);
@@ -171,6 +176,7 @@ async function testAccessibility(url: string, timeout = 10000): Promise<boolean>
       method: 'HEAD',
       redirect: 'follow',
       signal: controller.signal,
+      headers: { 'User-Agent': USER_AGENT },
     });
 
     clearTimeout(timeoutId);
@@ -198,7 +204,9 @@ const ia = {
   fetchMetadata: async (identifier: string): Promise<IAMetadata> => {
     const url = `https://archive.org/metadata/${identifier}`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: { 'User-Agent': USER_AGENT },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch IA metadata: ${response.status} ${response.statusText}`);
@@ -235,7 +243,9 @@ const ia = {
     }
 
     const url = `https://archive.org/download/${identifier}/${scandataFile.name}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: { 'User-Agent': USER_AGENT },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch scandata: ${response.status} ${response.statusText}`);
@@ -271,6 +281,7 @@ async function fetchBufferWithMimeType(
   try {
     const response = await fetch(url, {
       signal: controller.signal,
+      headers: { 'User-Agent': USER_AGENT },
     });
 
     clearTimeout(timeoutId);
