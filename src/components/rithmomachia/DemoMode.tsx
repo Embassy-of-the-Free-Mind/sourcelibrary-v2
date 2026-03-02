@@ -32,7 +32,7 @@ export default function DemoMode({ onExit }: DemoModeProps) {
   const [paused, setPaused] = useState(false);
   const [speed, setSpeed] = useState(1); // 0.5x, 1x, 2x
   const moveCountRef = useRef(0);
-  const commentaryEndRef = useRef<HTMLDivElement>(null);
+  const commentaryContainerRef = useRef<HTMLDivElement>(null);
   const maxMoves = 60; // cap demo length
 
   // Add opening commentary on mount
@@ -41,9 +41,10 @@ export default function DemoMode({ onExit }: DemoModeProps) {
     setCommentary([{ ...opening, moveIndex: -1 }]);
   }, []);
 
-  // Auto-scroll commentary
+  // Auto-scroll commentary within its container (not the whole page)
   useEffect(() => {
-    commentaryEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = commentaryContainerRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [commentary]);
 
   // AI plays both sides
@@ -195,7 +196,7 @@ export default function DemoMode({ onExit }: DemoModeProps) {
               <div className="text-sm font-medium">Commentary</div>
               <div className="text-xs text-muted">Move explanations with source citations</div>
             </div>
-            <div className="max-h-[400px] overflow-y-auto p-3 space-y-3">
+            <div ref={commentaryContainerRef} className="max-h-[400px] overflow-y-auto p-3 space-y-3">
               {commentary.map((entry, i) => (
                 <div key={i} className="text-sm">
                   {entry.highlight && (
@@ -218,7 +219,6 @@ export default function DemoMode({ onExit }: DemoModeProps) {
                   )}
                 </div>
               ))}
-              <div ref={commentaryEndRef} />
             </div>
           </div>
 
