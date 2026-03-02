@@ -1,7 +1,7 @@
 // SVG piece renderer — circle, triangle, square, or pyramid with copperplate engraving images
-// Uses AI-generated 3D copperplate engravings (Wan2.6-t2i)
-// Light pieces: variant 3 from individual generations
-// Dark pieces: separately generated dark variants (circle v3, triangle v3, square v0)
+// Uses AI-generated 3D copperplate engravings (Wan2.6-t2i), v3 shadow-free variants
+// Light pieces: circle v0, triangle v3, square v3 (f20 fuzz)
+// Dark pieces: circle v3, triangle v0, square v1
 
 import { Piece as PieceType } from '@/lib/rithmomachia/types';
 import { CELL_SIZE } from '@/lib/rithmomachia/constants';
@@ -23,14 +23,14 @@ const BLOB = 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/rithmomach
 // Copperplate engraving piece images (transparent PNGs, 200x200)
 const PIECE_IMAGES = {
   even: {
-    circle: `${BLOB}/v2_circle_light-NmahAFrVoEcsNlNgZk9X4SbB18bk24.png`,
-    triangle: `${BLOB}/v2_triangle_light-Muy1L6dGAf4Va3vH3HuI10RWin4eCj.png`,
-    square: `${BLOB}/v2_square_light-YXs13ZhXKrmKSMSKCt8c5ks9c1Ix3X.png`,
+    circle: `${BLOB}/v3_circle_light.png`,
+    triangle: `${BLOB}/v3_triangle_light.png`,
+    square: `${BLOB}/v3_square_light.png`,
   },
   odd: {
-    circle: `${BLOB}/v2_circle_dark_gen.png`,
-    triangle: `${BLOB}/v2_triangle_dark_gen.png`,
-    square: `${BLOB}/v2_square_dark_gen.png`,
+    circle: `${BLOB}/v3_circle_dark.png`,
+    triangle: `${BLOB}/v3_triangle_dark.png`,
+    square: `${BLOB}/v3_square_dark.png`,
   },
 } as const;
 
