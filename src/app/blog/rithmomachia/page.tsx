@@ -688,6 +688,35 @@ export default function RithmomachiaPage() {
           philosophical tradition that made this game possible, start with Boethius.
         </p>
 
+        <hr className="border-border-light my-12" />
+
+        {/* Play the Game */}
+        <h2 className="font-serif text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Play the Game
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          We&rsquo;ve built a playable version of Rithmomachia, synthesized from all five treatises.
+          Challenge an AI opponent at three difficulty levels, or watch a demonstration game with
+          move-by-move commentary drawn from the primary sources. Every rule links back to the
+          original page where it appears.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 my-8">
+          <Link
+            href="/rithmomachia"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust text-white rounded-lg font-medium hover:bg-accent-rust/90 transition-colors"
+          >
+            Play Rithmomachia
+          </Link>
+          <Link
+            href="/rithmomachia?demo=true"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border-light rounded-lg font-medium hover:bg-warm transition-colors"
+          >
+            Watch AI vs AI Demo
+          </Link>
+        </div>
+
         {/* Footer */}
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">

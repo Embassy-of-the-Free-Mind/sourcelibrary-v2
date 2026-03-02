@@ -105,18 +105,20 @@ export default function TutorialOverlay({ onClose }: TutorialOverlayProps) {
               href={sourceUrl(step.illustration.source, step.illustration.page)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 mt-4 p-3 rounded-lg border border-border-light bg-warm/50 hover:border-accent-rust/40 hover:bg-warm transition-colors group"
+              className="block mt-5 rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors group"
             >
-              <div className="shrink-0 w-8 h-8 rounded bg-accent-rust/10 flex items-center justify-center text-accent-rust text-sm font-serif">
-                ill.
-              </div>
-              <div className="min-w-0">
-                <div className="text-sm text-secondary group-hover:text-primary transition-colors">
+              <img
+                src={step.illustration.imageUrl}
+                alt={step.illustration.caption}
+                className="w-full max-h-56 object-contain bg-warm/50"
+              />
+              <div className="px-3 py-2 bg-warm/50 flex items-center justify-between gap-2">
+                <span className="text-xs text-secondary group-hover:text-primary transition-colors truncate">
                   {step.illustration.caption}
-                </div>
-                <div className="text-xs text-accent-rust/60 group-hover:text-accent-rust mt-0.5">
-                  View page in Source Library &rarr;
-                </div>
+                </span>
+                <span className="text-xs text-accent-rust/60 group-hover:text-accent-rust shrink-0">
+                  View &rarr;
+                </span>
               </div>
             </a>
           )}

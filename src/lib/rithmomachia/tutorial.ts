@@ -13,6 +13,8 @@ export interface TutorialIllustration {
   source: SourceKey;
   page: number;
   caption: string;
+  /** Direct image URL (archived Vercel Blob) */
+  imageUrl: string;
 }
 
 export interface TutorialStep {
@@ -42,6 +44,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       source: 'selenus',
       page: 248,
       caption: 'Two aristocrats playing Rithmomachia (Selenus, 1616)',
+      imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/248.jpg',
     },
   },
   {
@@ -58,6 +61,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       source: 'selenus',
       page: 498,
       caption: 'Copperplate engraving of the board (Selenus, 1616)',
+      imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
     },
   },
   {
@@ -74,6 +78,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       source: 'boissiere',
       page: 14,
       caption: 'Number table for piece values (Boissière, 1554)',
+      imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd509ff0f1d2c4518280/14.jpg',
     },
   },
 
@@ -121,6 +126,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       source: 'selenus',
       page: 499,
       caption: 'Perspective view with pyramid "towers" (Selenus, 1616)',
+      imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/499.jpg',
     },
   },
 
