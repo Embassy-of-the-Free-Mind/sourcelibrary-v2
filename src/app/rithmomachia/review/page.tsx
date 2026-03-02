@@ -273,14 +273,64 @@ export default function PieceReviewPage() {
         </div>
       </section>
 
-      {/* Section 6: Still Needed */}
+      {/* Section 6: FINAL chosen pieces — light (variant 3) + generated dark */}
+      <section style={sectionStyle}>
+        <h2 style={h2Style}>6. FINAL Chosen Pieces — In Game</h2>
+        <p style={{ color: '#6b6560', marginBottom: '1rem', fontSize: '0.875rem' }}>
+          Light = variant 3 from individual generations. Dark = separately generated dark pieces (circle v3, triangle v3, square v0).
+          These are the pieces currently used in Piece.tsx.
+        </p>
+        <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', padding: '2rem', background: '#e8e0d0', borderRadius: 8 }}>
+          {shapes.map(shape => (
+            <div key={shape} style={{ textAlign: 'center' }}>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', marginBottom: '0.75rem', textTransform: 'capitalize' }}>
+                {shape}
+              </h3>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <div>
+                  <div style={{ position: 'relative', width: 100, height: 100 }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${BLOB}/pieces/v2_${shape}_light-${
+                        shape === 'circle' ? 'NmahAFrVoEcsNlNgZk9X4SbB18bk24' :
+                        shape === 'triangle' ? 'Muy1L6dGAf4Va3vH3HuI10RWin4eCj' :
+                        'YXs13ZhXKrmKSMSKCt8c5ks9c1Ix3X'
+                      }.png`}
+                      alt={`${shape} light`}
+                      style={{ width: 100, height: 100 }}
+                    />
+                    <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontStyle: 'italic', fontSize: 22, color: '#1a1612', textShadow: '0 0 4px rgba(240,235,224,0.9)' }}>
+                      {shape === 'circle' ? '6' : shape === 'triangle' ? '42' : '153'}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.7rem', color: '#6b6560', marginTop: 4 }}>Even (light)</div>
+                </div>
+                <div>
+                  <div style={{ position: 'relative', width: 100, height: 100, background: '#2a1e12', borderRadius: 4 }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${BLOB}/pieces/v2_${shape}_dark_gen.png`}
+                      alt={`${shape} dark`}
+                      style={{ width: 100, height: 100 }}
+                    />
+                    <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontStyle: 'italic', fontSize: 22, color: '#e8dfd0', textShadow: '0 0 4px rgba(26,22,18,0.9)' }}>
+                      {shape === 'circle' ? '5' : shape === 'triangle' ? '56' : '120'}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.7rem', color: '#6b6560', marginTop: 4 }}>Odd (dark)</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Section 7: Still Needed */}
       <section style={{ marginBottom: '2rem' }}>
-        <h2 style={h2Style}>6. Still Needed</h2>
+        <h2 style={h2Style}>7. Still Needed</h2>
         <ul style={{ paddingLeft: '1.5rem', color: '#444' }}>
           <li>Pyramid piece (stacked layers — compose from circle+triangle+square or generate new)</li>
-          <li>Pick which grid source (g0 vs g2) and which column position (left/center/right) per shape</li>
-          <li>Number placement/styling — serif italic? plain? engraved look?</li>
-          <li>Mix-and-match OK — e.g. circle from g0, triangle from g2</li>
+          <li>Final visual polish on board integration</li>
         </ul>
       </section>
     </div>

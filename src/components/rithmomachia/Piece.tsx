@@ -1,7 +1,9 @@
-// SVG piece renderer — circle, triangle, square, or pyramid with value label
-// Visual style: copperplate engraving aesthetic inspired by Selenus (1616)
+// SVG piece renderer — circle, triangle, square, or pyramid with copperplate engraving images
+// Uses AI-generated 3D copperplate engravings (Wan2.6-t2i)
+// Light pieces: variant 3 from individual generations
+// Dark pieces: separately generated dark variants (circle v3, triangle v3, square v0)
 
-import { Piece as PieceType, PieceShape } from '@/lib/rithmomachia/types';
+import { Piece as PieceType } from '@/lib/rithmomachia/types';
 import { CELL_SIZE } from '@/lib/rithmomachia/constants';
 
 interface PieceProps {
@@ -13,26 +15,29 @@ interface PieceProps {
 }
 
 const HALF = CELL_SIZE / 2;
-const PIECE_RADIUS = 38;
+const PIECE_SIZE = 72; // image display size within cell
+const PIECE_OFFSET = (CELL_SIZE - PIECE_SIZE) / 2;
 
-// Unique pattern IDs per owner to avoid SVG conflicts
-const HATCH_EVEN = 'piece-hatch-even';
-const HATCH_ODD = 'piece-hatch-odd';
+const BLOB = 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/rithmomachia/pieces';
+
+// Copperplate engraving piece images (transparent PNGs, 200x200)
+const PIECE_IMAGES = {
+  even: {
+    circle: `${BLOB}/v2_circle_light-NmahAFrVoEcsNlNgZk9X4SbB18bk24.png`,
+    triangle: `${BLOB}/v2_triangle_light-Muy1L6dGAf4Va3vH3HuI10RWin4eCj.png`,
+    square: `${BLOB}/v2_square_light-YXs13ZhXKrmKSMSKCt8c5ks9c1Ix3X.png`,
+  },
+  odd: {
+    circle: `${BLOB}/v2_circle_dark_gen.png`,
+    triangle: `${BLOB}/v2_triangle_dark_gen.png`,
+    square: `${BLOB}/v2_square_dark_gen.png`,
+  },
+} as const;
 
 /** Shared SVG defs — render once inside the Board's <svg> */
 export function PieceDefs() {
-  return (
-    <>
-      {/* Even (white) pieces: very subtle stipple texture */}
-      <pattern id={HATCH_EVEN} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(30)">
-        <line x1="0" y1="0" x2="0" y2="6" stroke="#1a1612" strokeWidth="0.3" opacity="0.06" />
-      </pattern>
-      {/* Odd (dark) pieces: fine crosshatch like an engraving */}
-      <pattern id={HATCH_ODD} patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
-        <line x1="0" y1="0" x2="0" y2="5" stroke="#f0ebe0" strokeWidth="0.6" opacity="0.12" />
-      </pattern>
-    </>
-  );
+  // No patterns needed with image-based pieces, but keep the export for Board.tsx compatibility
+  return null;
 }
 
 export default function Piece({ piece, isSelected, isCurrentPlayer, isCaptured, onClick }: PieceProps) {
@@ -40,17 +45,17 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, isCaptured, 
   const cy = piece.position.row * CELL_SIZE + HALF;
   const isEven = piece.owner === 'even';
 
-  // Engraving palette — high contrast, ink on paper
-  const fill = isEven ? '#f0ebe0' : '#1a1612';
-  const stroke = '#1a1612';
-  const strokeW = isEven ? 2 : 2.5;
-  const textColor = isEven ? '#1a1612' : '#f0ebe0';
-  const hatchId = isEven ? HATCH_EVEN : HATCH_ODD;
   const selectRing = '#9e4a3a';
+  const textColor = isEven ? '#1a1612' : '#e8dfd0';
+  const textShadow = isEven ? '#f0ebe0' : '#1a1612';
 
-  // Font size scales with value length — serif italic like handwritten numbers
+  // Font size scales with value length
   const valueStr = String(piece.value);
-  const fontSize = valueStr.length <= 2 ? 24 : valueStr.length === 3 ? 19 : 15;
+  const fontSize = valueStr.length <= 2 ? 22 : valueStr.length === 3 ? 17 : 14;
+
+  // For pyramids, use the square image (they contain all shapes visually)
+  const shapeKey = piece.shape === 'pyramid' ? 'square' : piece.shape;
+  const imageUrl = PIECE_IMAGES[isEven ? 'even' : 'odd'][shapeKey];
 
   return (
     <g
@@ -64,96 +69,72 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, isCaptured, 
       role="button"
       aria-label={`${piece.owner} ${piece.shape} ${piece.value}`}
     >
-      {/* Selection ring — pulsing rust accent */}
+      {/* Selection ring */}
       {isSelected && (
-        <circle cx={HALF} cy={HALF} r={PIECE_RADIUS + 5} fill="none" stroke={selectRing} strokeWidth={3} strokeDasharray="6 3">
+        <circle cx={HALF} cy={HALF} r={PIECE_SIZE / 2 + 5} fill="none" stroke={selectRing} strokeWidth={3} strokeDasharray="6 3">
           <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite" />
         </circle>
       )}
 
-      {/* Piece shape with hatching overlay */}
-      {piece.shape === 'circle' && (
-        <>
-          <circle cx={HALF} cy={HALF} r={PIECE_RADIUS - 2} fill={fill} stroke={stroke} strokeWidth={strokeW} />
-          <circle cx={HALF} cy={HALF} r={PIECE_RADIUS - 2} fill={`url(#${hatchId})`} pointerEvents="none" />
-          {/* Inner ring — engraving detail line */}
-          <circle cx={HALF} cy={HALF} r={PIECE_RADIUS - 8} fill="none" stroke={stroke} strokeWidth={0.5} opacity={isEven ? 0.2 : 0.15} />
-        </>
+      {/* Dark background for odd pieces so cream lines are visible */}
+      {!isEven && (
+        <rect
+          x={PIECE_OFFSET}
+          y={PIECE_OFFSET}
+          width={PIECE_SIZE}
+          height={PIECE_SIZE}
+          rx={piece.shape === 'circle' ? PIECE_SIZE / 2 : 4}
+          fill="#2a1e12"
+        />
       )}
 
-      {piece.shape === 'triangle' && (
-        <>
-          <polygon
-            points={trianglePoints(HALF, HALF, PIECE_RADIUS - 2)}
-            fill={fill}
-            stroke={stroke}
-            strokeWidth={strokeW}
-            strokeLinejoin="miter"
-          />
-          <polygon
-            points={trianglePoints(HALF, HALF, PIECE_RADIUS - 2)}
-            fill={`url(#${hatchId})`}
-            pointerEvents="none"
-            strokeLinejoin="miter"
-          />
-          {/* Inner triangle — engraving detail */}
-          <polygon
-            points={trianglePoints(HALF, HALF, PIECE_RADIUS - 10)}
-            fill="none"
-            stroke={stroke}
-            strokeWidth={0.5}
-            strokeLinejoin="miter"
-            opacity={isEven ? 0.2 : 0.15}
-          />
-        </>
-      )}
+      {/* Copperplate engraving image */}
+      <image
+        href={imageUrl}
+        x={PIECE_OFFSET}
+        y={PIECE_OFFSET}
+        width={PIECE_SIZE}
+        height={PIECE_SIZE}
+      />
 
-      {piece.shape === 'square' && (
-        <>
-          <rect
-            x={HALF - PIECE_RADIUS + 4}
-            y={HALF - PIECE_RADIUS + 4}
-            width={(PIECE_RADIUS - 4) * 2}
-            height={(PIECE_RADIUS - 4) * 2}
-            fill={fill}
-            stroke={stroke}
-            strokeWidth={strokeW}
-          />
-          <rect
-            x={HALF - PIECE_RADIUS + 4}
-            y={HALF - PIECE_RADIUS + 4}
-            width={(PIECE_RADIUS - 4) * 2}
-            height={(PIECE_RADIUS - 4) * 2}
-            fill={`url(#${hatchId})`}
-            pointerEvents="none"
-          />
-          {/* Inner square — engraving detail */}
-          <rect
-            x={HALF - PIECE_RADIUS + 10}
-            y={HALF - PIECE_RADIUS + 10}
-            width={(PIECE_RADIUS - 10) * 2}
-            height={(PIECE_RADIUS - 10) * 2}
-            fill="none"
-            stroke={stroke}
-            strokeWidth={0.5}
-            opacity={isEven ? 0.2 : 0.15}
-          />
-        </>
-      )}
-
+      {/* Pyramid indicator — small nested shapes badge */}
       {piece.shape === 'pyramid' && (
-        <PyramidShape cx={HALF} cy={HALF} isEven={isEven} fill={fill} stroke={stroke} strokeW={strokeW} hatchId={hatchId} />
+        <>
+          <circle cx={HALF} cy={PIECE_OFFSET + 10} r={5} fill="none" stroke={textColor} strokeWidth={1} opacity={0.6} />
+          <polygon
+            points={`${HALF},${PIECE_OFFSET + 3} ${HALF + 5},${PIECE_OFFSET + 12} ${HALF - 5},${PIECE_OFFSET + 12}`}
+            fill="none"
+            stroke={textColor}
+            strokeWidth={0.8}
+            opacity={0.4}
+          />
+        </>
       )}
 
-      {/* Value label — serif italic like handwritten numbers in the engraving */}
+      {/* Value label — serif with shadow for legibility over engraving */}
       <text
         x={HALF}
-        y={HALF + (piece.shape === 'triangle' ? 4 : 1)}
+        y={HALF + 1}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fill={textShadow}
+        fontSize={fontSize + 1}
+        fontWeight="700"
+        fontFamily="var(--font-serif)"
+        fontStyle="italic"
+        opacity={0.7}
+        style={{ pointerEvents: 'none', userSelect: 'none' }}
+      >
+        {piece.value}
+      </text>
+      <text
+        x={HALF}
+        y={HALF + 1}
         textAnchor="middle"
         dominantBaseline="central"
         fill={textColor}
         fontSize={fontSize}
-        fontWeight="500"
+        fontWeight="700"
         fontFamily="var(--font-serif)"
         fontStyle="italic"
         style={{ pointerEvents: 'none', userSelect: 'none' }}
@@ -161,60 +142,5 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, isCaptured, 
         {piece.value}
       </text>
     </g>
-  );
-}
-
-function trianglePoints(cx: number, cy: number, r: number): string {
-  // Equilateral triangle pointing up
-  const top = `${cx},${cy - r}`;
-  const bottomLeft = `${cx - r * 0.866},${cy + r * 0.5}`;
-  const bottomRight = `${cx + r * 0.866},${cy + r * 0.5}`;
-  return `${top} ${bottomRight} ${bottomLeft}`;
-}
-
-function PyramidShape({ cx, cy, isEven, fill, stroke, strokeW, hatchId }: {
-  cx: number; cy: number; isEven: boolean; fill: string; stroke: string; strokeW: number; hatchId: string;
-}) {
-  const s = PIECE_RADIUS - 2;
-  return (
-    <>
-      {/* Outer square with hatching */}
-      <rect
-        x={cx - s}
-        y={cy - s}
-        width={s * 2}
-        height={s * 2}
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={strokeW}
-      />
-      <rect
-        x={cx - s}
-        y={cy - s}
-        width={s * 2}
-        height={s * 2}
-        fill={`url(#${hatchId})`}
-        pointerEvents="none"
-      />
-      {/* Inner triangle */}
-      <polygon
-        points={trianglePoints(cx, cy, s * 0.65)}
-        fill="none"
-        stroke={stroke}
-        strokeWidth={1.5}
-        strokeLinejoin="miter"
-        opacity={0.6}
-      />
-      {/* Inner circle */}
-      <circle
-        cx={cx}
-        cy={cy + 2}
-        r={s * 0.3}
-        fill="none"
-        stroke={stroke}
-        strokeWidth={1.5}
-        opacity={0.6}
-      />
-    </>
   );
 }
