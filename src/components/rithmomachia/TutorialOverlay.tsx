@@ -99,6 +99,28 @@ export default function TutorialOverlay({ onClose }: TutorialOverlayProps) {
             {step.text}
           </p>
 
+          {/* Illustration from primary source */}
+          {step.illustration && (
+            <a
+              href={sourceUrl(step.illustration.source, step.illustration.page)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 mt-4 p-3 rounded-lg border border-border-light bg-warm/50 hover:border-accent-rust/40 hover:bg-warm transition-colors group"
+            >
+              <div className="shrink-0 w-8 h-8 rounded bg-accent-rust/10 flex items-center justify-center text-accent-rust text-sm font-serif">
+                ill.
+              </div>
+              <div className="min-w-0">
+                <div className="text-sm text-secondary group-hover:text-primary transition-colors">
+                  {step.illustration.caption}
+                </div>
+                <div className="text-xs text-accent-rust/60 group-hover:text-accent-rust mt-0.5">
+                  View page in Source Library &rarr;
+                </div>
+              </div>
+            </a>
+          )}
+
           {/* Source citations */}
           {step.sources && step.sources.length > 0 && (
             <div className="mt-4 pt-3 border-t border-border-light">

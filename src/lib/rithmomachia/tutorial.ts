@@ -9,12 +9,20 @@ export interface TutorialSourceRef {
   detail?: string;
 }
 
+export interface TutorialIllustration {
+  source: SourceKey;
+  page: number;
+  caption: string;
+}
+
 export interface TutorialStep {
   title: string;
   text: string;
   section: 'intro' | 'movement' | 'capture' | 'victory';
   // Primary source references for this step
   sources?: TutorialSourceRef[];
+  // Featured illustration from a primary source
+  illustration?: TutorialIllustration;
 }
 
 export const TUTORIAL_STEPS: TutorialStep[] = [
@@ -30,6 +38,11 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       { source: 'barozzi', detail: 'Italian treatise (1572)' },
       { source: 'selenus', detail: 'German treatise (1616)' },
     ],
+    illustration: {
+      source: 'selenus',
+      page: 248,
+      caption: 'Two aristocrats playing Rithmomachia (Selenus, 1616)',
+    },
   },
   {
     section: 'intro',
@@ -41,6 +54,11 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       { source: 'selenus', page: 498, detail: 'Copperplate engraving of board' },
       { source: 'selenus', page: 499, detail: 'Perspective view' },
     ],
+    illustration: {
+      source: 'selenus',
+      page: 498,
+      caption: 'Copperplate engraving of the board (Selenus, 1616)',
+    },
   },
   {
     section: 'intro',
@@ -52,6 +70,11 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       { source: 'barozzi', page: 15, detail: 'Value derivation' },
       { source: 'jordanus', page: 144, detail: 'Values in Latin' },
     ],
+    illustration: {
+      source: 'boissiere',
+      page: 14,
+      caption: 'Number table for piece values (Boissière, 1554)',
+    },
   },
 
   // --- Movement ---
@@ -94,6 +117,11 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       { source: 'barozzi', page: 18, detail: 'Pyramid construction' },
       { source: 'selenus', page: 502, detail: '"Tower" with screw-fastened levels' },
     ],
+    illustration: {
+      source: 'selenus',
+      page: 499,
+      caption: 'Perspective view with pyramid "towers" (Selenus, 1616)',
+    },
   },
 
   // --- Captures ---
