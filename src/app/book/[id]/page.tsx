@@ -480,6 +480,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           photo: 1,
           photo_original: 1,
           archived_photo: 1,
+          cropped_photo: 1,
           thumbnail: 1,
           thumbnail_blob: 1,
           crop: 1,

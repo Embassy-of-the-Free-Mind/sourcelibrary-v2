@@ -495,7 +495,13 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       return page.thumbnail;
     }
 
-    const baseUrl = page.photo_original || page.photo;
+    // For split pages, prefer pre-cropped Blob image (avoids proxy overhead)
+    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
+    if (page.crop && typedPage.cropped_photo) {
+      return typedPage.cropped_photo;
+    }
+
+    const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
     if (!baseUrl) return null;
 
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {

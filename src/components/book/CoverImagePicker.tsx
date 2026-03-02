@@ -46,7 +46,12 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
     // Prefer pre-generated Vercel Blob thumbnail (fast CDN)
     if (page.thumbnail_blob) return page.thumbnail_blob;
 
-    const typedPage = page as Page & { archived_photo?: string };
+    // For split pages, prefer pre-cropped Blob image (avoids proxy overhead)
+    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
+    if (page.crop && typedPage.cropped_photo) {
+      return typedPage.cropped_photo;
+    }
+
     const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
     if (!baseUrl) return null;
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
