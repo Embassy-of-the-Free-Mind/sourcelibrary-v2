@@ -6482,3 +6482,96 @@ Note: Pali Canon texts already present from SBE volumes. Additional finds limite
 ### Session 036 TOTAL: ~200 books, ~87,600+ pages across world religious traditions
 
 ---
+
+# Session 037: 2026-03-02 — Early Science & Engineering (pre-1700)
+
+## Rationale
+
+Gap analysis revealed the collection was strong on esoteric/alchemical texts but had almost no coverage of **applied science and engineering** — the practical tradition that ran parallel to natural philosophy. The "theatre of machines" genre (Ramelli, Besson, Zonca, Errard) was entirely absent. Key areas identified as gaps:
+
+1. **Mining & metallurgy** — Agricola (already had), Ercker, Biringuccio
+2. **Machine books / theatre of machines** — Ramelli, Besson, Zonca, de Caus
+3. **Fortification** — Dürer, Errard
+4. **Ballistics & military science** — Tartaglia, Kyeser
+5. **Mechanics & statics** — Stevin, Guidobaldo del Monte
+6. **Navigation** — Medina
+7. **Natural history / mineralogy** — Gesner
+8. **Surveying & instruments** — Errard
+
+## Acquired
+
+| # | Title | Author | Year | Lang | Pages | Source | Book ID |
+|---|-------|--------|------|------|-------|--------|---------|
+| 1 | De re metallica libri XII | Georgius Agricola | 1556 | Latin | 600 | IA | 69a5b8f3486a857b0587c7b8 |
+| 2 | De la pirotechnia | Vannoccio Biringuccio | 1550 | Italian | 358 | IA | 69a5b90f486a857b0587ca12 |
+| 3 | Nova scientia | Niccolò Tartaglia | 1537 | Italian | 116 | IA | 69a5b972486a857b0587cb7c |
+| 4 | Theatrum instrumentorum et machinarum | Jacques Besson | 1578 | Latin | 165 | IA | 69a5b973486a857b0587cbf2 |
+| 5 | Beschreibung aller fürnemisten mineralischen Ertzt | Lazarus Ercker | 1574 | German | 336 | IA | 69a5b975486a857b0587cc99 |
+| 6 | Novo teatro di machine et edificii | Vittorio Zonca | 1607 | Italian | 135 | IA | 69a5b99a486a857b0587cdeb |
+| 7 | Les raisons des forces mouvantes | Salomon de Caus | 1615 | French | 182 | IA | 69a5b99dd76b98f272fcec6d |
+| 8 | Etliche Underricht zu Befestigung der Stett | Albrecht Dürer | 1527 | German | 55 | IA | 69a5b99ed76b98f272fced25 |
+| 9 | De Beghinselen der Weeghconst | Simon Stevin | 1586 | Dutch | 139 | IA | 69a5b99fd76b98f272fced5e |
+| 10 | Mechanicorum liber | Guidobaldo del Monte | 1589 | Latin | 487 | IA | 69a5b9a1d76b98f272fcedeb |
+| 11 | De Rerum Fossilium, Lapidum et Gemmarum | Conrad Gesner | 1565 | Latin | 596 | IA | 69a5b9a2d76b98f272fcefd4 |
+| 12 | Le premier livre des instruments mathematiques | Jean Errard | 1584 | French | 90 | IA | 69a5b9a3d76b98f272fcf22a |
+| 13 | L'art de naviguer | Pedro de Medina | 1569 | French | 250 | IA | 69a5b9a4d76b98f272fcf286 |
+| 14 | Le diverse et artificiose machine | Agostino Ramelli | 1588 | Italian | 722 | IA | 69a5b9a7d76b98f272fcf382 |
+| 15 | Le diverse et artificiose machine (BnF) | Agostino Ramelli | 1588 | Italian/French | 699 | Gallica | 69a5b9eed76b98f272fcf668 |
+| 16 | Bellifortis | Konrad Kyeser | c. 1430 | Latin | 321 | MDZ | 69a5b9efd76b98f272fcf925 |
+| 17 | Beschreibung mineralischen Ertzt (BSB) | Lazarus Ercker | 1574 | German | 310 | MDZ | 69a5b9f0d76b98f272fcfa68 |
+| 18 | La Fortification | Jean Errard | 1600 | French | 119 | Gallica | 69a5ba01d76b98f272fcfba0 |
+| 19 | Théâtre des instrumens mathematiques | Jacques Besson | 1578 | French | 201 | Gallica | 69a5ba02d76b98f272fcfc19 |
+| 20 | La pyrotechnie (French trans.) | Vannoccio Biringuccio | 1556 | French | 469 | Gallica | 69a5ba03d76b98f272fcfce4 |
+
+## Edition Linking (work_ids)
+
+| work_id | Editions |
+|---------|----------|
+| `ramelli-diverse-artificiose-machine` | IA (Italian), Gallica (Italian/French bilingual) |
+| `ercker-beschreibung-mineralischen` | IA (1574), MDZ (1574 BSB copy) |
+| `besson-theatrum-instrumentorum` | IA (Latin), Gallica (French) |
+| `biringuccio-pirotechnia` | IA (Italian 1550), Gallica (French 1556) |
+
+## Sources Used
+
+| Source | Books | Pages |
+|--------|-------|-------|
+| Internet Archive | 14 | 4,231 |
+| Gallica (BnF) | 4 | 1,488 |
+| MDZ (BSB) | 2 | 631 |
+| **Total** | **20** | **6,350** |
+
+## Significance
+
+These 20 books represent the core canon of Renaissance engineering and applied science:
+
+- **Ramelli** (1588) — the most famous "theatre of machines" with 195 full-page engravings of water-lifting devices, mills, bridges, and military machines. The IA copy is the Italian/French bilingual first edition.
+- **Biringuccio** (1540/1550) — the first systematic printed treatise on metallurgy and pyrotechnics, predating Agricola. Covers smelting, assaying, casting, gunpowder, and fireworks.
+- **Tartaglia** (1537) — founded the science of ballistics. First to apply mathematics to projectile trajectories.
+- **Kyeser** (c. 1430) — the most important medieval military technology manuscript. Lavishly illustrated with siege engines, firearms, battering rams, incendiary devices, and diving equipment. The MDZ copy is the famous BSB manuscript.
+- **Stevin** (1586) — foundational text of statics and hydrostatics, introducing decimal fractions to Europe.
+- **Guidobaldo** (1577/1589) — the most rigorous Renaissance treatment of mechanics (lever, pulley, inclined plane, screw).
+- **de Caus** (1615) — hydraulic engineering and automata, bridging mechanical engineering and garden architecture.
+- **Dürer** (1527) — one of the earliest printed treatises on fortification, by the great artist-engineer.
+
+## Notes
+
+- Agricola's *De re metallica* was already in the collection before this session (book ID `69a5b8f3486a857b0587c7b8`), but had not been through the pipeline — now enrolled.
+- Medina's *Art de naviguer* is the 1569 French translation of the Spanish original (1545). The French edition was the most widely circulated version in Northern Europe.
+- All 20 books enrolled in auto pipeline. Archiving started on Hetzner server.
+
+## Still Missing (Future Acquisitions)
+
+| Text | Author | Year | Why Important |
+|------|--------|------|---------------|
+| Bellifortis (Göttingen MS) | Kyeser | c. 1405 | Earlier/better manuscript than BSB copy |
+| Les Fortifications | Vauban | 1680s | Definitive military engineering, but may be post-1700 |
+| Theatrum Machinarum | Böckler | 1661 | Major German machine book |
+| De Architectura | Vitruvius | 1547 (Barbaro) | Architectural engineering, illustrated Renaissance edition |
+| Bermannus | Agricola | 1530 | Early dialogue on mining/mineralogy, precursor to De re metallica |
+| Diverse et Artificiose Machine | Strada | 1629 | Jacobus de Strada's machine book |
+| Arte de Navegar | Medina | 1545 | Original Spanish edition |
+
+### Session 037 TOTAL: 20 books, ~6,350 pages across early science & engineering
+
+---
