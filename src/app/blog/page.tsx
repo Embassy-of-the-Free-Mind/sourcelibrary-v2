@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'rithmomachia',
+    title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
+    subtitle: 'Five treatises in five languages document a mathematical board game played across Europe for six centuries — where you capture by arithmetic and win by creating harmony.',
+    date: '2 March 2026',
+    readTime: '18 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+    imageAlt: 'Copperplate engraving of a Rithmomachia game board from Selenus, Das Schach- oder König-Spiel, 1616',
+  },
+  {
     slug: 'hidden-engineers',
     title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
     subtitle: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy. A 16th-century manuscript binds Hero\'s steam engines with the Corpus Hermeticum.',
