@@ -160,8 +160,8 @@ export const POST = withAuth(async (request, session) => {
         continue;
       }
 
-      // Create proxied thumbnail URL
-      const newThumbnail = `/api/image?url=${encodeURIComponent(imageUrl)}&w=400&q=80`;
+      // Store direct URL — /api/image proxy wrappers crash Next.js Image during SSR
+      const newThumbnail = imageUrl;
 
       // Update the book
       await db.collection('books').updateOne(

@@ -470,17 +470,12 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         updates.thumbnail_blob = page.thumbnail_blob;
       }
 
-      // For main thumbnail, prefer archived_photo (full-size Blob), fall back to /api/image
-      const typedPage = page as Page & { archived_photo?: string };
-      if (typedPage.archived_photo) {
-        updates.thumbnail = typedPage.archived_photo;
-      } else {
-        const baseUrl = page.photo_original || page.photo;
-        if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-          updates.thumbnail = `/api/image?url=${encodeURIComponent(baseUrl!)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-        } else {
-          updates.thumbnail = `/api/image?url=${encodeURIComponent(baseUrl!)}&w=400&q=80`;
-        }
+      // For main thumbnail, prefer archived/cropped photos, fall back to direct source URL.
+      // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
+      const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
+      const directUrl = typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo;
+      if (directUrl) {
+        updates.thumbnail = directUrl;
       }
 
       await books.update(bookId, updates);

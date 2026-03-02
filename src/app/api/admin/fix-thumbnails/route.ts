@@ -12,23 +12,12 @@ export const POST = withAuth(async (request, session) => {
       thumbnail: { $regex: '^https://archive\\.org', $options: 'i' }
     }).toArray();
 
-    let updated = 0;
-    for (const book of books) {
-      const rawUrl = book.thumbnail;
-      // Wrap in our image proxy for caching and resizing
-      const proxiedUrl = `/api/image?url=${encodeURIComponent(rawUrl)}&w=400&q=80`;
-
-      await db.collection('books').updateOne(
-        { _id: book._id },
-        { $set: { thumbnail: proxiedUrl, updated_at: new Date() } }
-      );
-      updated++;
-    }
-
+    // Nothing to fix — archive.org URLs are valid for Next.js Image (in remotePatterns).
+    // Previously this route wrapped URLs in /api/image?url= proxy, which crashes SSR.
     return NextResponse.json({
       success: true,
-      booksFixed: updated,
-      message: `Updated ${updated} book thumbnails to use image proxy`
+      booksFixed: 0,
+      message: `No-op: archive.org URLs work directly with Next.js Image. Found ${books.length} books with archive.org thumbnails (no changes needed).`
     });
   } catch (error) {
     console.error('Error fixing thumbnails:', error);
