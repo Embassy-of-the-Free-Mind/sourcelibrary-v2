@@ -46,7 +46,7 @@ if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!BLOB_TOKEN) { console.error('Missing BLOB_READ_WRITE_TOKEN'); process.exit(1); }
 
 // User-Agent for polite scraping — identifies us to library servers
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
 
 // Per-domain rate limiting (requests per second)
 const DOMAIN_RATE_LIMITS: Record<string, number> = {
