@@ -97,7 +97,8 @@ export const POST = withAuth(async (request, session, context) => {
           translation: null,
           summary: null,
           updated_at: new Date()
-        }
+        },
+        $unset: { thumbnail_blob: '' }
       }
     );
 
@@ -127,11 +128,15 @@ export const POST = withAuth(async (request, session, context) => {
       .sort({ page_number: 1, _id: 1 })
       .toArray();
 
-    // Bulk update all page numbers in one operation
+    // Bulk update all page numbers and clear stale thumbnails
+    // (page numbers shifted, so blob paths like thumbnails/{bookId}/{oldNum}.jpg are wrong)
     const bulkOps = updatedPages.map((p, i) => ({
       updateOne: {
         filter: { id: p.id },
-        update: { $set: { page_number: i + 1 } }
+        update: {
+          $set: { page_number: i + 1 },
+          $unset: { thumbnail_blob: '' }
+        }
       }
     }));
 

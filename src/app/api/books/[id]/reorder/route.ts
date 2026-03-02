@@ -25,11 +25,15 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Update each page's page_number
+    // Update each page's page_number and clear stale thumbnails
+    // (page numbers changed, so blob paths like thumbnails/{bookId}/{oldNum}.jpg are wrong)
     const bulkOps = pages.map(({ id, page_number }) => ({
       updateOne: {
         filter: { id, book_id: bookId },
-        update: { $set: { page_number, updated_at: new Date() } }
+        update: {
+          $set: { page_number, updated_at: new Date() },
+          $unset: { thumbnail_blob: '' }
+        }
       }
     }));
 
