@@ -6575,3 +6575,117 @@ These 20 books represent the core canon of Renaissance engineering and applied s
 ### Session 037 TOTAL: 20 books, ~6,350 pages across early science & engineering
 
 ---
+
+# Session 038: 2026-03-02 — Progress Studies: Applied Science, Botany, Surgery & Dutch Golden Age Engineering
+
+## Rationale
+
+Building on Session 037's engineering focus, this session fills two major gaps:
+
+1. **Core progress studies texts** — the "great books" of early modern applied science that were still missing: foundational chemistry (Libavius, Beguin, Glauber), surgical/anatomical illustration (Paré, Fabricius, Malpighi), botanical illustration (Fuchs, Mattioli), natural history (Aldrovandi), precision instrumentation (Galileo's compass), and the first English manual of manufacturing trades (Moxon).
+
+2. **Dutch Golden Age science and engineering** — the Netherlands in 1580-1700 was perhaps the most concentrated site of technological innovation in human history. Simon Stevin (statics, hydrostatics, fortification, military engineering), Huygens (Saturn, planetary astronomy), Leeuwenhoek (microscopy), Linschoten (navigation/cartography), Waghenaer (nautical charting), de Gheyn (military drill), Stradanus (invention/technology), Swammerdam (entomology), Snellius (navigation mathematics), Marolois (military architecture), and Leeghwater (hydraulic engineering) — all represent the practical-scientific culture of the Dutch Republic.
+
+## Acquired — Core Progress Studies
+
+| # | Title | Author | Year | Lang | Pages | Source | Book ID |
+|---|-------|--------|------|------|-------|--------|---------|
+| 1 | Alchemia | Andreas Libavius | 1597 | Latin | 471 | IA | 69a5d7d74d84314297c07d7f |
+| 2 | Tyrocinium Chymicum | Jean Beguin | 1611 | Latin | 112 | IA | 69a5d7ef4d84314297c07f58 |
+| 3 | Le Theatre d'Agriculture | Olivier de Serres | 1603 | French | 948 | IA | 69a5d7f94d84314297c07fca |
+| 4 | Les Oeuvres | Ambroise Paré | 1585 | French | 1,442 | IA | 69a5d8094d84314297c08380 |
+| 5 | De Historia Stirpium Commentarii | Leonhart Fuchs | 1542 | Latin | 940 | IA | 69a5d8114d84314297c08924 |
+| 6 | De Venarum Ostiolis | Girolamo Fabricius | 1604 | Latin | 280 | IA | 69a5d8174d84314297c08cd2 |
+| 7 | De Pulmonibus Observationes Anatomicae | Marcello Malpighi | 1661 | Latin | 34 | IA | 69a5d8194d84314297c08dec |
+| 8 | Commentarii in sex libros Pedacii Dioscoridis | Pietro Andrea Mattioli | 1565 | Latin | 1,634 | IA | 69a5d988a63a00aaae8ab16a |
+| 9 | Ornithologiae tomus alter | Ulisse Aldrovandi | 1599 | Latin | 986 | IA | 69a5d8254d84314297c08e10 |
+| 10 | Mechanick Exercises | Joseph Moxon | 1683 | English | 320 | IA | 69a5d951a63a00aaae8ab028 |
+| 11 | Furni Novi Philosophici | Johann Rudolf Glauber | 1651 | Latin | 506 | IA | 69a5d82d4d84314297c091ec |
+| 12 | Le Operazioni del Compasso Geometrico | Galileo Galilei | 1640 | Italian | 94 | IA | 69a5d8324d84314297c093e8 |
+
+**Skipped (already in collection):**
+- Boyle, *Sceptical Chymist* (1661) — `6953e55c77f38f6761bf08ae`
+- Tycho Brahe, *Astronomiae Instauratae Mechanica* (1602) — `7d66e9ad-9572-49c6-82ce-0265337e491d`
+
+## Acquired — Dutch Golden Age Science & Engineering
+
+| # | Title | Author | Year | Lang | Pages | Source | Book ID |
+|---|-------|--------|------|------|-------|--------|---------|
+| 13 | Systema Saturnium | Christiaan Huygens | 1659 | Latin | 110 | IA | 69a5d8a2a63a00aaae8aa96b |
+| 14 | Maniement d'armes, d'arquebuses, mousquetz et piques | Jacob de Gheyn | 1608 | French | 264 | IA | 69a5d8aea63a00aaae8aa9db |
+| 15 | Nova Reperta | Johannes Stradanus | c.1590 | Latin | 38 | IA | 69a5d8cda63a00aaae8aaae5 |
+| 16 | Itinerario, voyage ofte schipvaert | Jan Huyghen van Linschoten | 1596 | Dutch | 506 | IA | 69a5d8d3a63a00aaae8aab0d |
+| 17 | Spieghel der Zeevaerdt | Lucas Janszoon Waghenaer | 1584 | Dutch | 125 | IA | 69a5d8d656c52e433d70a292 |
+| 18 | De beghinselen des waterwichts | Simon Stevin | 1586 | Dutch | 81 | IA | 69a5d8d856c52e433d70a311 |
+| 19 | Castrametatio, dat is legermeting | Simon Stevin | 1617 | Dutch | 73 | IA | 69a5d90256c52e433d70a364 |
+| 20 | Nouvelle maniere de fortification par escluses | Simon Stevin | 1618 | French | 74 | IA | 69a5d90456c52e433d70a3af |
+| 21 | Fortification ou Architecture militaire | Samuel Marolois | 1627 | French | 254 | IA | 69a5d90856c52e433d70a3fb |
+| 22 | Tiphys Batavus, sive Histiodromice | Willebrord Snellius | 1624 | Latin | 244 | IA | 69a5d91aa63a00aaae8aad09 |
+| 23 | Haarlemmer-Meer-boek | Jan Adriaanszoon Leeghwater | 1727 | Dutch | 58 | IA | 69a5d91da63a00aaae8aadff |
+| 24 | Ephemeri vita, of Afbeeldingh van 's Mennesch-leven | Jan Swammerdam | 1675 | Dutch | 486 | IA | 69a5d924a63a00aaae8aae3b |
+
+**Skipped (already in collection):**
+- Huygens, *Kosmotheoros* (1699) — `6990605def12272ffdc8cf1a`
+- Leeuwenhoek, *Arcana naturae detecta* (1695) — `6953e5f41479a63c11084498`
+- Drebbel, *Tractatus duo* (1628) — `9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4`
+- Clusius, *Rariorum plantarum historia* (1601) — `6957ef81cbe1dcad7b76c52d`
+
+**Failed (no IIIF/imagecount on IA):**
+- Stevin, *Wisconstige gedachtenissen* vol. 1 (1605) — KB Netherlands item on IA lacks page images
+- Mattioli, *Commentarii* (1565) — first two IA identifiers had no IIIF; found and imported via `PetriAndreaMatt00Matt`
+
+## Sources Used
+
+| Source | Books | Pages |
+|--------|-------|-------|
+| Internet Archive | 24 | 8,280 |
+| **Total** | **24** | **8,280** |
+
+## Significance
+
+### Chemistry & Materials
+- **Libavius** (1597) — first systematic chemistry textbook. Libavius organized chemical knowledge into a coherent discipline, separating it from alchemy.
+- **Beguin** (1611) — the first purely chemical textbook (no philosophical/alchemical framework). Became the standard teaching text.
+- **Glauber** (1651) — transition figure between alchemy and chemistry, famous for "Glauber's salt" (sodium sulfate). His furnace designs were practical chemical engineering.
+
+### Surgery & Anatomy
+- **Paré** (1585) — collected works of the father of modern surgery. Introduced ligature of arteries (replacing cauterization), prosthetics, battlefield medicine.
+- **Fabricius** (1604) — discovered venous valves, the key observation that led Harvey to the theory of blood circulation.
+- **Malpighi** (1661) — discovered capillaries through microscopy, completing Harvey's circulation theory. Only 34 pages but one of the most consequential short works in the history of science.
+
+### Botanical & Natural History Illustration
+- **Fuchs** (1542) — 500+ life-size woodcut illustrations of plants, among the finest botanical illustrations ever printed. The genus Fuchsia is named after him.
+- **Mattioli** (1565) — massive herbal with 1,634 pages of illustrated plant descriptions. The most widely read botanical work of the 16th century.
+- **Aldrovandi** (1599) — encyclopedic natural history with detailed illustrations. Aldrovandi built the first natural history museum.
+
+### Dutch Golden Age
+- **Stradanus, Nova Reperta** (c.1590) — extraordinary 38-plate series depicting "new inventions": the printing press, gunpowder, the compass, America, distillation, silk, spectacles, the stirrup, the clock, the windmill. A visual manifesto of technological progress.
+- **Waghenaer** (1584) — the first printed sea atlas. Revolutionized maritime navigation. The English word "waggoner" for a sea atlas derives from his name.
+- **Linschoten** (1596) — broke the Portuguese monopoly on East Indies navigation by publishing their secret sea routes. One of the most consequential acts of information warfare in history.
+- **de Gheyn** (1608) — the first standardized military drill manual, with 117 engraved plates showing every position for handling muskets, arquebuses, and pikes. Commissioned by Prince Maurice of Orange, it enabled the Dutch military revolution.
+- **Stevin** — four works spanning hydrostatics, military camp-laying, and flood-defense fortification. Stevin was the most versatile engineer-mathematician of the Dutch Republic.
+- **Snellius** (1624) — mathematical navigation treatise by the discoverer of the law of refraction (Snell's law).
+- **Leeghwater** (1727) — the classic text on Dutch water engineering and polder reclamation. His plan to drain the Haarlemmermeer (eventually executed 1849-52) became an icon of Dutch hydraulic ambition.
+- **Swammerdam** (1675) — pioneering entomological study of the mayfly, with exquisite microscopic illustrations. Swammerdam's dissection techniques and observations were foundational for biology.
+
+## Notes
+
+- All 24 books enrolled in auto pipeline. Archiving running on Hetzner server (36k+ pages from recent imports processing).
+- Stevin's *Wisconstige gedachtenissen* (1605) — the KB Netherlands digitization on IA lacks IIIF manifest and imagecount. May need to import directly from KB's own portal or find another copy.
+- The Galileo *Compasso* (1640) is a later edition of the 1606 original. The 1606 first edition would be preferable if found.
+- Session 037 + 038 together add **44 books, ~14,630 pages** of early science and engineering — transforming the collection's coverage of the practical knowledge tradition.
+
+## Still Missing (Future Acquisitions)
+
+| Text | Author | Year | Why Important |
+|------|--------|------|---------------|
+| Biblia Naturae | Jan Swammerdam | 1737-38 | Posthumous masterwork with finest insect illustrations |
+| Beeckman's Journal | Isaac Beeckman | 1604-34 | Key Dutch mechanist philosopher, mentored Descartes |
+| Vitruvius, De Architectura | Marcus Vitruvius | 1511 (Fra Giocondo) | Illustrated Renaissance edition of THE architecture text |
+| Theatrum Machinarum | Georg Andreas Böckler | 1661 | Major German machine book |
+| Bermannus sive de re metallica | Georgius Agricola | 1530 | Early mining dialogue, precursor to De re metallica |
+| Stevin, Wisconstige gedachtenissen | Simon Stevin | 1605 | Major mathematical compendium (needs non-IA source) |
+
+### Session 038 TOTAL: 24 books, ~8,280 pages across progress studies & Dutch Golden Age science/engineering
+
+---
