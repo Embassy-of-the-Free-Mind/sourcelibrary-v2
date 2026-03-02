@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'February 2026 Update — Source Library',
   description:
-    'Two months in: 4,400+ books, 30+ languages, a full AI pipeline, and the plan to build a real institution.',
+    '4,500+ books, 30+ languages, a full AI pipeline, and the plan to build a real institution.',
   alternates: { canonical: '/letter' },
 };
 
@@ -40,9 +40,9 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Drebbel&apos;s book is one of 4,400. In 77 days, Source Library has become the world&apos;s largest
+          Drebbel&apos;s book is one of 4,500. In 80 days, Source Library has become the world&apos;s largest
           collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
-          library sources, and more than a million and a half page images.
+          library sources, and more than 1.7 million page images.
         </p>
 
         {/* ── Why It Matters ── */}
@@ -66,7 +66,7 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          AI changes the unit economics. Source Library processed 4,400 books in 77 days for $4,200.
+          AI changes the unit economics. Source Library processed 4,500 books in 80 days for under $5,000.
           The translations are first drafts, not critical editions &mdash; but they make texts
           <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
           This is the difference between having to read every book in a library to find what you need
@@ -89,7 +89,7 @@ export default function LetterPage() {
           <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>{' '}
           and try it. Pick a book &mdash; any book. You&apos;ll see the original scanned pages side by side with
           an English translation. You can search across the full text of the entire collection. You can browse
-          a gallery of 71,000+ extracted illustrations. You can explore an encyclopedia that links people, places,
+          a gallery of 73,000+ extracted illustrations. You can explore an encyclopedia that links people, places,
           and ideas across books and centuries.
         </p>
 
@@ -151,15 +151,15 @@ export default function LetterPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           {[
-            { value: '4,430+', label: 'Books in collection' },
-            { value: '1.67M', label: 'Page images' },
-            { value: '467K', label: 'Pages with OCR' },
-            { value: '285K', label: 'Pages translated' },
-            { value: '1,077', label: 'Fully processed books' },
-            { value: '71K', label: 'Illustrations extracted' },
+            { value: '4,555', label: 'Books in collection' },
+            { value: '1.71M', label: 'Page images' },
+            { value: '992K', label: 'Pages with OCR' },
+            { value: '507K', label: 'Pages translated' },
+            { value: '1,083', label: 'Fully processed books' },
+            { value: '73K', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
-            { value: '~$4,200', label: 'Total AI cost' },
-            { value: '77 days', label: 'Since first commit' },
+            { value: '<$5K', label: 'Total AI cost' },
+            { value: '80 days', label: 'Since first commit' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-lg p-3 border border-border-light text-center">
               <div className="text-xl font-serif text-accent-rust">{s.value}</div>
@@ -169,8 +169,8 @@ export default function LetterPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-4">
-          The cost figure is worth lingering on. <strong>$4,200 in total AI processing costs</strong> to OCR,
-          translate, summarize, index, and extract illustrations from 4,400+ books. The average cost to fully
+          The cost figure is worth lingering on. <strong>Under $5,000 in total AI processing costs</strong> to OCR,
+          translate, summarize, index, and extract illustrations from 4,500+ books. The average cost to fully
           process a single book is about <strong>$2.40</strong>. Using batch processing, it drops
           to <strong>$1.40</strong>.
         </p>
@@ -204,7 +204,7 @@ export default function LetterPage() {
           Once a book is imported, no human intervention is needed until a scholar wants to review the output.
           For the technically inclined, the{' '}
           <Link href="/progress" className="text-accent-rust hover:underline">development timeline</Link>{' '}
-          shows how this was built over 1,024 commits in 77 days.
+          shows how this was built over 1,140 commits in 80 days.
         </p>
 
         {/* ── What We Learned ── */}
@@ -226,7 +226,7 @@ export default function LetterPage() {
           <div className="border-l-4 border-accent-rust/30 pl-6">
             <p className="text-primary font-medium mb-2">The technology is not the hard part.</p>
             <p className="text-secondary text-sm leading-relaxed">
-              Building the pipeline took two months and $4,200. But technology without scholarship is a
+              Building the pipeline took two months and under $5,000 in AI costs. But technology without scholarship is a
               curiosity. Someone has to decide which texts matter, validate the AI output, contextualize
               the translations, and connect the work to living research communities. That requires people &mdash;
               scholars, librarians, editors &mdash; and people require sustained funding. The technology is
