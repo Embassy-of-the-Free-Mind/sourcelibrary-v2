@@ -26,6 +26,7 @@ export default function RithmomachiaGame() {
   const [showTutorial, setShowTutorial] = useState(false);
   const [showDemo, setShowDemo] = useState(false);
   const [aiThinking, setAiThinking] = useState(false);
+  const [rulesExpanded, setRulesExpanded] = useState(true);
   const aiPlayerRef = useRef<Player>('odd'); // AI plays odd (black) by default
 
   // Show victory modal when game ends
@@ -34,6 +35,12 @@ export default function RithmomachiaGame() {
       setShowVictory(true);
     }
   }, [state.victory]);
+
+  // Collapse rules after first capture (user has the basics)
+  useEffect(() => {
+    const totalCaptured = state.capturedPieces.even.length + state.capturedPieces.odd.length;
+    if (totalCaptured > 0) setRulesExpanded(false);
+  }, [state.capturedPieces.even.length, state.capturedPieces.odd.length]);
 
   // AI turn
   useEffect(() => {
@@ -81,6 +88,7 @@ export default function RithmomachiaGame() {
 
   const handleNewGame = useCallback((mode: GameMode, difficulty: Difficulty) => {
     setShowVictory(false);
+    setRulesExpanded(true);
     aiPlayerRef.current = 'odd';
     dispatch({ type: 'NEW_GAME', mode, difficulty });
   }, []);
@@ -193,6 +201,79 @@ export default function RithmomachiaGame() {
             />
           </div>
 
+          {/* How to Play — prominent, collapsible */}
+          <div className="bg-warm rounded-lg border border-border-light overflow-hidden">
+            <button
+              onClick={() => setRulesExpanded(r => !r)}
+              className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-cream/50 transition-colors"
+            >
+              <span className="text-sm font-medium text-secondary">How to Play</span>
+              <span className="text-muted text-xs">{rulesExpanded ? '\u25B2' : '\u25BC'}</span>
+            </button>
+
+            {rulesExpanded && (
+              <div className="px-3 pb-3 space-y-3 text-sm border-t border-border-light pt-2">
+                {/* Objective */}
+                <div>
+                  <div className="font-medium text-secondary text-xs uppercase tracking-wide mb-1">Objective</div>
+                  <p className="text-muted leading-snug">
+                    Capture 15 enemy pieces <em>or</em> pieces worth 200+ points.
+                  </p>
+                </div>
+
+                {/* Turn flow */}
+                <div>
+                  <div className="font-medium text-secondary text-xs uppercase tracking-wide mb-1">Each Turn</div>
+                  <ol className="text-muted leading-snug space-y-0.5 list-decimal list-inside">
+                    <li>Select one of your pieces</li>
+                    <li>Move it to a highlighted square</li>
+                    <li>If a capture is possible, you&apos;ll be prompted</li>
+                  </ol>
+                </div>
+
+                {/* Movement */}
+                <div>
+                  <div className="font-medium text-secondary text-xs uppercase tracking-wide mb-1">Movement</div>
+                  <div className="text-muted leading-snug space-y-0.5">
+                    <div><span className="font-medium">Circles</span> &mdash; 1 space, diagonally</div>
+                    <div><span className="font-medium">Triangles</span> &mdash; 2 spaces, straight line</div>
+                    <div><span className="font-medium">Squares</span> &mdash; 3 spaces, straight line</div>
+                    <div><span className="font-medium">Pyramid</span> &mdash; moves as all three</div>
+                  </div>
+                </div>
+
+                {/* Capture — the key missing info */}
+                <div>
+                  <div className="font-medium text-secondary text-xs uppercase tracking-wide mb-1">How Captures Work</div>
+                  <p className="text-muted leading-snug mb-1">
+                    You don&apos;t land on enemies. After moving, the game checks if your pieces can
+                    capture an adjacent enemy by matching its value:
+                  </p>
+                  <div className="text-muted leading-snug space-y-0.5 text-xs">
+                    <div><span className="font-medium">Equality</span> &mdash; your piece = enemy&apos;s value</div>
+                    <div><span className="font-medium">Addition</span> &mdash; two of your pieces sum to enemy&apos;s value</div>
+                    <div><span className="font-medium">Subtraction</span> &mdash; difference of two of your pieces = enemy</div>
+                    <div><span className="font-medium">Multiplication</span> &mdash; your piece &times; distance = enemy</div>
+                    <div><span className="font-medium">Division</span> &mdash; your piece &divide; distance = enemy</div>
+                    <div><span className="font-medium">Siege</span> &mdash; enemy surrounded on all sides</div>
+                  </div>
+                </div>
+
+                <div className="pt-1 border-t border-border-light flex flex-col gap-1 text-xs">
+                  <button
+                    onClick={() => setShowTutorial(true)}
+                    className="text-accent-rust hover:underline text-left"
+                  >
+                    Interactive tutorial &rarr;
+                  </button>
+                  <Link href="/blog/rithmomachia" className="text-accent-rust hover:underline">
+                    Full rules with primary sources &rarr;
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+
           <ScorePanel
             capturedPieces={state.capturedPieces}
             piecesOnBoard={{ even: evenOnBoard, odd: oddOnBoard }}
@@ -204,38 +285,10 @@ export default function RithmomachiaGame() {
             <MoveHistory moves={state.moveHistory} />
           </div>
 
-          {/* Rules quick reference with source links */}
-          <div className="bg-warm rounded-lg border border-border-light p-3 text-xs text-muted space-y-1.5">
-            <div className="font-medium text-sm text-secondary mb-1">Quick Reference</div>
-            <QuickRefLine
-              label="Circles"
-              desc="move 1 space diagonally"
-              conceptKey="circleMovement"
-            />
-            <QuickRefLine
-              label="Triangles"
-              desc="leap 2 spaces orthogonally"
-              conceptKey="triangleMovement"
-            />
-            <QuickRefLine
-              label="Squares"
-              desc="leap 3 spaces orthogonally"
-              conceptKey="squareMovement"
-            />
-            <QuickRefLine
-              label="Pyramid"
-              desc="moves as all three shapes"
-              conceptKey="pyramid"
-            />
-            <div className="pt-1 border-t border-border-light">
-              <span className="font-medium">Captures:</span> equality, addition, subtraction, multiplication, division, siege
-            </div>
-            <div className="pt-1 flex flex-col gap-1">
-              <Link href="/blog/rithmomachia" className="text-accent-rust hover:underline">
-                Read the full rules &rarr;
-              </Link>
-              <SourceLinks />
-            </div>
+          {/* Source books — compact */}
+          <div className="bg-warm rounded-lg border border-border-light p-3 text-xs text-muted">
+            <div className="font-medium text-sm text-secondary mb-1">Primary Sources</div>
+            <SourceLinks />
           </div>
         </div>
       </div>
@@ -259,57 +312,29 @@ export default function RithmomachiaGame() {
   );
 }
 
-// Quick reference line with source link on the rule description
-function QuickRefLine({ label, desc, conceptKey }: { label: string; desc: string; conceptKey: string }) {
-  const concept = CONCEPT_SOURCES[conceptKey];
-  // Pick the first ref with a page number for the link
-  const ref = concept?.refs.find(r => r.page);
-  return (
-    <div>
-      <span className="font-medium">{label}</span> &mdash; {desc}
-      {ref && (
-        <>
-          {' '}
-          <a
-            href={sourceUrl(ref.source, ref.page)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent-rust/60 hover:text-accent-rust"
-            title={`${SOURCES[ref.source].author} (${SOURCES[ref.source].year}), p. ${ref.page}`}
-          >
-            [{SOURCES[ref.source].year}]
-          </a>
-        </>
-      )}
-    </div>
-  );
-}
-
 // Compact list of primary source books
 function SourceLinks() {
-  const sources: { key: SourceKey; year: number; lang: string }[] = [
-    { key: 'jordanus', year: 1496, lang: 'La' },
-    { key: 'boissiere', year: 1554, lang: 'Fr' },
-    { key: 'lever', year: 1563, lang: 'En' },
-    { key: 'barozzi', year: 1572, lang: 'It' },
-    { key: 'selenus', year: 1616, lang: 'De' },
+  const sources: { key: SourceKey; year: number; lang: string; author: string }[] = [
+    { key: 'jordanus', year: 1496, lang: 'La', author: 'Jordanus / Lefèvre' },
+    { key: 'boissiere', year: 1554, lang: 'Fr', author: 'Boissière' },
+    { key: 'lever', year: 1563, lang: 'En', author: 'Lever & Fulke' },
+    { key: 'barozzi', year: 1572, lang: 'It', author: 'Barozzi' },
+    { key: 'selenus', year: 1616, lang: 'De', author: 'Selenus' },
   ];
 
   return (
-    <div className="text-xs text-muted/70">
-      Sources:{' '}
-      {sources.map((s, i) => (
-        <span key={s.key}>
-          {i > 0 && ' · '}
-          <a
-            href={sourceUrl(s.key)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent-rust transition-colors"
-          >
-            {s.lang} {s.year}
-          </a>
-        </span>
+    <div className="space-y-0.5">
+      {sources.map(s => (
+        <a
+          key={s.key}
+          href={sourceUrl(s.key)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 hover:text-secondary transition-colors"
+        >
+          <span className="text-accent-rust/60 w-4">{s.lang}</span>
+          <span>{s.author} ({s.year})</span>
+        </a>
       ))}
     </div>
   );
