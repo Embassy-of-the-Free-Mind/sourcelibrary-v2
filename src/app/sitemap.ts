@@ -178,9 +178,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       };
     });
 
-    // Encyclopedia entities — pages with real content and book references
+    // Encyclopedia entities — only substantial entries to focus crawl budget
     const entities = await db.collection('entities').find(
-      { book_count: { $gte: 2 }, description: { $exists: true, $ne: '' } },
+      { book_count: { $gte: 5 }, description: { $exists: true, $ne: '' } },
       { projection: { name: 1, updated_at: 1, book_count: 1 } }
     ).toArray();
 

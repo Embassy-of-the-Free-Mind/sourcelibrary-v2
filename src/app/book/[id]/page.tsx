@@ -39,7 +39,8 @@ interface PageProps {
 }
 
 // Lightweight book fetch for metadata (no pages, no heavy index)
-async function getBookForMetadata(id: string): Promise<Book | null> {
+// Wrapped in cache() so generateMetadata + page component share one DB query
+const getBookForMetadata = cache(async (id: string): Promise<Book | null> => {
   const db = await getDb();
   const result = await findBookByIdOrSlug(db, id, {
     index: 0,
@@ -50,7 +51,7 @@ async function getBookForMetadata(id: string): Promise<Book | null> {
     pipeline_auto: 0,
   });
   return result ? (result.book as unknown as Book) : null;
-}
+});
 
 // Cross-book citation graph
 // "direct" = this book mentions a person who authored another book in our library (real citation)
@@ -379,7 +380,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const book = await getBookForMetadata(id);
 
   if (!book) {
-    return { title: 'Book Not Found - Source Library' };
+    return { title: 'Book Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
   const title = book.display_title || book.title;
@@ -941,6 +942,13 @@ async function BookInfo({ id }: { id: string }) {
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { id } = await params;
+
+  // Check book existence BEFORE rendering to ensure proper 404 status code.
+  // notFound() inside Suspense streams after the 200 is committed.
+  const bookExists = await getBookForMetadata(id);
+  if (!bookExists) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-cream">
