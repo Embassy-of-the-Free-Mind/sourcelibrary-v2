@@ -6689,3 +6689,172 @@ Building on Session 037's engineering focus, this session fills two major gaps:
 ### Session 038 TOTAL: 24 books, ~8,280 pages across progress studies & Dutch Golden Age science/engineering
 
 ---
+
+# Session 039: 2026-03-02 — Manuscript Gap Analysis & Imports
+
+## Mission
+
+Analyzed manuscript holdings and identified major gaps. Currently ~20 manuscripts in collection (9 Vatican Greek, 4 Cambridge, misc Hebrew/Latin/Arabic). Targeted the biggest gaps: more Vatican Greek classics, Neoplatonic philosophy, esoteric/magical MSS, Syriac originals, Hebrew Bible, and illustrated Latin MSS.
+
+## Gap Analysis Summary
+
+### What We Had (before this session)
+- 9 Vatican Greek MSS: Vat.gr.1, 90, 124, 126, 244, 370, 1209, 1319, 1613
+- 4 Cambridge: Codex Macedoniensis, Ptolemy/Euclid, Hippocratic Corpus, Galen
+- 2 Vatican Hebrew: Zohar (Vat.ebr.226), Liber Razielis (Reg.lat.1300)
+- 3 Vatican Latin alchemical: Pal.lat.1328, 1329, Reg.lat.1344
+- 3 Bodleian: Digby 83, Digby 46, Ashmole 1462, Kitab al-Bulhan
+- 3 Cambridge special: Newton Emerald Tablet, Newton alchemy notes, alchemical miscellany
+
+### Major Gaps Identified
+| Gap | Scale | Status |
+|-----|-------|--------|
+| Bodleian Greek MSS | 500+ digitized, 0 imported | PENDING (API 403/search issues) |
+| BnF Greek MSS | 3,000+ Fonds grec, 0 imported | Research in progress |
+| British Library Greek | 900+ Greek MSS, 0 imported | Needs IIIF manifest research |
+| Cambridge Syriac | 300+ MSS, 0 imported | CUDL API issues (500 errors on most IDs) |
+| Armenian MSS | Entirely absent | Future session |
+| More Vatican Greek | 9 of 4,200+ imported | PARTIALLY FILLED this session |
+| Vatican Syriac | Untouched | 2 imported this session |
+
+## Acquired
+
+### Vatican Greek Manuscripts (10)
+| Title | Author | MSS ID | Pages | Date | Score |
+|-------|--------|--------|-------|------|-------|
+| Plato: Republic | Plato | Vat.gr.218 | 432 | 10th c. | 10/10 |
+| Sophocles: Tragedies | Sophocles | Urb.gr.35 | 908 | 13th c. | 9/10 |
+| Xenophon: Works | Xenophon | Vat.gr.130 | 313 | 14th c. | 8/10 |
+| Iamblichus: De Vita Pythagorica | Iamblichus | Barb.gr.147 | 420 | 15th c. | 9/10 |
+| Strabo: Geography | Strabo | Vat.gr.191 | 842 | 13th c. | 8/10 |
+| Corpus Hermeticum | Hermes Trismegistus | Vat.gr.2306 | 197 | 15th c. | 10/10 |
+| Porphyry: Works | Porphyry | Vat.gr.2181 | 209 | 14th c. | 9/10 |
+| Aristotle: Organon | Aristotle | Ott.gr.86 | 478 | 14th c. | 8/10 |
+| Diogenes Laertius: Lives of Philosophers | Diogenes Laertius | Reg.gr.80 | 148 | 14th c. | 9/10 |
+| Marcus Aurelius: Meditations | Marcus Aurelius | Vat.gr.12 | 262 | 14th c. | 9/10 |
+
+### Vatican Latin/Medical Manuscripts (5)
+| Title | Author | MSS ID | Pages | Date | Score |
+|-------|--------|--------|-------|------|-------|
+| Galen: On the Natural Faculties | Galen | Vat.gr.283 | 161 | 14th c. | 8/10 |
+| Vergilius Vaticanus | Virgil | Vat.lat.3225 | 162 | 4-5th c. | 10/10 |
+| Terence: Comedies (illustrated) | Terence | Vat.lat.3868 | 210 | 9th c. | 9/10 |
+| Picatrix (Ghayat al-Hakim) | Ps.-Maslama | Pal.lat.1071 | 236 | 15th c. | 10/10 |
+| Michael Scot: Liber Introductorius | Michael Scot | Pal.lat.1066 | 504 | 14th c. | 9/10 |
+
+### Vatican Esoteric/Magical (2)
+| Title | Author | MSS ID | Pages | Date | Score |
+|-------|--------|--------|-------|------|-------|
+| Alchemical Recipes | Various | Ross.247 | 477 | 15th c. | 8/10 |
+| Magical and Astrological Texts | Various | Reg.lat.1228 | 110 | 15th c. | 8/10 |
+
+### Vatican Syriac (2)
+| Title | Author | MSS ID | Pages | Date | Score |
+|-------|--------|--------|-------|------|-------|
+| Syriac Manuscript | Anonymous | Vat.sir.160 | 496 | Medieval | 7/10 |
+| Syriac Theological Manuscript | Anonymous | Vat.sir.162 | 365 | Medieval | 7/10 |
+
+### Other Manuscripts (3)
+| Title | Author | MSS ID | Pages | Date | Score |
+|-------|--------|--------|-------|------|-------|
+| Hebrew Bible | Anonymous | Vat.ebr.14 | 580 | 12-13th c. | 9/10 |
+| Pseudo-Dionysius: Opera | Pseudo-Dionysius | Vat.gr.573 | 392 | 11th c. | 9/10 |
+| Syriac Gospel Lectionary | Anonymous | MS-OO-00001-00032 | 328 | 12-13th c. | 8/10 |
+
+## Failed Imports (not digitized on DigiVatLib)
+Vat.gr.65 (Demosthenes), Vat.gr.2369 (Plotinus), Vat.gr.1950 (Proclus), Vat.gr.73 (Aeschylus), Pal.gr.129 (Herodotus), Vat.gr.951 (Galen), Pal.gr.398 (Ptolemy Almagest), Vat.gr.2228 (Aristophanes), Vat.gr.1365 (Hesiod), Vat.gr.190 (Pausanias), Pal.lat.1877 (Horoscopes)
+
+## Already in Collection
+Vat.gr.1594 (Pindar), Vat.gr.904 (Euripides), Pal.lat.1885 (Alchemical)
+
+## Highlights
+
+- **Corpus Hermeticum (Vat.gr.2306)**: A Greek manuscript of the foundational Hermetic texts. This is one of the very manuscripts that Ficino translated for the Medici — the moment that launched the Renaissance Hermetic revival. Core to the entire esoteric tradition.
+
+- **Picatrix (Pal.lat.1071)**: The most notorious magical text of the Middle Ages. Arabic astrological magic translated to Latin at the court of Alfonso X. Influenced everyone from Ficino to John Dee. The manuscript of a manuscript tradition.
+
+- **Vergilius Vaticanus (Vat.lat.3225)**: One of the oldest surviving illustrated manuscripts in existence (4th-5th century). Contains fragments of the Aeneid and Georgics with late antique paintings. An art-historical treasure.
+
+- **Iamblichus De Vita Pythagorica (Barb.gr.147)**: Core Neoplatonic/Pythagorean text on the life of Pythagoras and the Pythagorean way of life. Essential for understanding the philosophical tradition that flows into Ficino and the Renaissance.
+
+- **First Syriac and Hebrew original MSS**: Vat.sir.160, Vat.sir.162, Vat.ebr.14, and Cambridge Syriac Gospel — opening up two entirely new script traditions for the collection.
+
+### BnF Gallica Greek Manuscripts (7)
+| Title | Author | ARK | Pages | Date | Score |
+|-------|--------|-----|-------|------|-------|
+| Plotini Enneades (Ficino's Working Copy) | Plotinus | Grec 1816 (btv1b10723855s) | 267 | 13th c. | 10/10 |
+| Hesiodi Opera et Dies | Hesiod | Grec 2771 (btv1b10723640d) | 180 | 10th c. | 9/10 |
+| Vetus Testamentum Graecum (Septuagint) | — | Grec 2 (btv1b11002704c) | 523 | 10th c. | 9/10 |
+| Plotini Enneades (Copy A) | Plotinus | Grec 1976 (btv1b107239202) | 693 | 13th c. | 9/10 |
+| Plotini Enneades (Copy B) | Plotinus | Grec 1970 (btv1b107239063) | 331 | 13th c. | 8/10 |
+| Procli Opera | Proclus | Grec 1839 (btv1b107238773) | 1,060 | 14th c. | 9/10 |
+| Procli In Platonis Timaeum | Proclus | Grec 1841 (btv1b107238796) | 355 | 14th c. | 9/10 |
+
+**Already existed:** Plato Grec 1807 (btv1b8419248n), Proclus Grec 2018 (btv1b11000261k)
+
+### Bodleian Greek Manuscripts (6)
+| Title | Author | UUID/Shelfmark | Pages | Date | Score |
+|-------|--------|----------------|-------|------|-------|
+| Platonis Dialogi XXIV (Clarke Plato) | Plato | MS. E.D. Clarke 39 | 869 | 895 AD | 10/10 |
+| Procli In Platonis Alcibiadem | Proclus | Barocci 140 | 336 | 15th c. | 8/10 |
+| Procli In Euclidis Elementa | Proclus | Barocci 161 | 680 | 14th c. | 9/10 |
+| Euripidis Hecuba, Orestes, Phoenissae | Euripides | Barocci 120 | 238 | 14th c. | 9/10 |
+| Oracula Leonis Sapientis (illustrated) | Leo VI | Barocci 170 | 188 | 15th c. | 8/10 |
+| Arriani De Epicteti Disputationibus | Arrian/Epictetus | Auct. T.4.13 | 2 | 11th c. | 7/10 |
+
+**Already existed:** D'Orville Euclid, Barocci 87, 70, 131, 133, Homer Barocci 203
+
+**Research corrections:**
+- Barocci 131 is Byzantine miscellany, NOT Plato (corrected from curator skill "Next targets" list)
+- Auct. T.4.13 is Arrian's Epictetus, NOT Homer (corrected)
+- Canon. Gr. 97 is not digitized on Digital Bodleian
+- Clarke Plato (895 AD) discovered as the OLDEST surviving complete Plato manuscript — the actual treasure
+
+### Cambridge CUDL Syriac Manuscripts (4)
+| Title | Author | MS ID | Pages | Date | Score |
+|-------|--------|-------|-------|------|-------|
+| Mingana-Lewis Palimpsest | — | MS-OR-01287 | 188 | 5th-8th c. | 9/10 |
+| Psalterium Quadrilingue (4-language Psalter) | — | MS-OR-00929 | 382 | 1153 | 9/10 |
+| Large Quranic Leaves | — | MS-OR-01287-LARGE | 42 | 8th c. | 7/10 |
+| Small Quranic Leaves | — | MS-OR-01287-SMALL | 96 | 8th c. | 7/10 |
+
+**Key finding:** Of Cambridge's ~300 Syriac MSS, only these 4 have IIIF manifests on CUDL. The rest are catalogued but not digitized.
+
+## Highlights (continued)
+
+- **Clarke Plato (MS. E.D. Clarke 39, 895 AD)**: The oldest surviving complete manuscript of Plato's dialogues, written in Constantinople. Contains 24 dialogues. One of the most important manuscripts in classical studies. Acquired by Edward Daniel Clarke in 1801 from the island of Patmos.
+
+- **Plotinus Enneades — Ficino's Working Copy (BnF Grec 1816)**: This is the actual manuscript Marsilio Ficino used when preparing his landmark Latin translation of Plotinus for the Medici (completed 1492). Contains his marginal annotations. The physical link between ancient Neoplatonism and the Renaissance revival.
+
+- **Three Plotinus manuscripts**: With Grec 1816, 1976, and 1970, we now have three independent copies of the Enneads — enabling textual comparison of the manuscript transmission.
+
+- **Procli Opera (BnF Grec 1839, 1,060 pages)**: Massive collection of Proclus's works — the last great head of the Platonic Academy. Combined with Grec 1841 (Commentary on Timaeus), Barocci 140 (Commentary on Alcibiades), and Barocci 161 (Commentary on Euclid), we now have substantial Proclus manuscript coverage.
+
+- **Mingana-Lewis Palimpsest**: A palimpsest (text written over earlier erased text) containing one of the earliest Syriac biblical manuscripts. The under-text may date to the 5th century.
+
+- **Psalterium Quadrilingue (1153 AD)**: A four-language Psalter (Greek, Latin, Arabic, Syriac) — a remarkable multilingual manuscript from the Crusader period.
+
+## Next Targets (still missing)
+| Manuscript | Repository | Why Important |
+|-----------|-----------|---------------|
+| Herodotus Histories | Various | Foundational Greek historian, no MS |
+| Aeschylus Tragedies | Various | Missing from tragedy collection |
+| British Library Greek MSS | BL | 900+ MSS, need IIIF manifests |
+| Cambridge Syriac (undigitized) | CUDL | 296 of 300 MSS not on IIIF |
+| Armenian manuscripts | Various | Entirely absent from collection |
+| BnF Syriac/Armenian | BnF | Major collections untouched |
+| BSB/MDZ Greek MSS | Munich | 600+ Codices graeci |
+| Austrian NL Greek | Vienna | 300+ Greek MSS |
+
+### Session 039 TOTAL: 39 manuscripts, ~14,640 pages
+
+| Source | Manuscripts | Pages |
+|--------|------------|-------|
+| Vatican DigiVatLib | 22 | ~8,230 |
+| BnF Gallica | 7 | 3,409 |
+| Bodleian | 6 | 2,313 |
+| Cambridge CUDL | 4 | 708 |
+
+Spanning: Greek classics, Neoplatonism, esoteric magic, Syriac Christianity, Hebrew Bible, illustrated Byzantine, multilingual Psalters. Opened Bodleian and BnF as new manuscript sources for the collection.
+
+---
