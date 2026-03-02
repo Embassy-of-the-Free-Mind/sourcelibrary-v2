@@ -28,7 +28,7 @@ import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
-import { BookShare } from '@/components/ui/ShareButton';
+import ShareButton from '@/components/ui/ShareButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
 import { sendGAEvent } from '@/lib/ga';
 import LikeButton from '@/components/ui/LikeButton';
@@ -966,11 +966,12 @@ export default function TranslationEditor({
                   size="sm"
                   showCount={true}
                 />
-                <BookShare
+                <ShareButton
                   title={book.display_title || book.title}
                   author={book.author}
                   year={book.published}
-                  bookId={book.id}
+                  page={page.page_number}
+                  url={`https://sourcelibrary.org/book/${(book as any).slug || book.id}?page=${page.page_number}`}
                   doi={book.doi}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full"
                 />

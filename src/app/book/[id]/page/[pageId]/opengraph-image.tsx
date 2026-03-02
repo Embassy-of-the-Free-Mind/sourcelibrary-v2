@@ -58,6 +58,19 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
   // Truncate title if too long
   const displayTitle = title.length > 50 ? title.substring(0, 47) + '...' : title;
 
+  // Extract a clean translation excerpt for the OG image
+  const rawTranslation = (page as any)?.translation?.data || '';
+  const translationExcerpt = rawTranslation
+    ? rawTranslation
+        .replace(/<[^>]+>/g, '')          // strip XML/HTML tags
+        .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
+        .replace(/\s+/g, ' ')             // collapse whitespace
+        .trim()
+        .slice(0, 220)
+        .replace(/\s\S*$/, '')            // break at last full word
+        + (rawTranslation.length > 220 ? '...' : '')
+    : '';
+
   return new ImageResponse(
     (
       <div
@@ -137,7 +150,7 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
           )}
         </div>
 
-        {/* Right side - Metadata */}
+        {/* Right side - Metadata + Translation */}
         <div
           style={{
             width: '55%',
@@ -154,7 +167,7 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              marginBottom: 16,
+              marginBottom: 12,
             }}
           >
             <div
@@ -162,8 +175,8 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
                 background: 'rgba(201, 168, 108, 0.2)',
                 border: '1px solid rgba(201, 168, 108, 0.4)',
                 borderRadius: 8,
-                padding: '8px 16px',
-                fontSize: 24,
+                padding: '6px 14px',
+                fontSize: 20,
                 color: '#c9a86c',
                 display: 'flex',
               }}
@@ -175,11 +188,11 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
           {/* Book title */}
           <div
             style={{
-              fontSize: title.length > 35 ? 36 : 44,
+              fontSize: translationExcerpt ? (title.length > 35 ? 28 : 32) : (title.length > 35 ? 36 : 44),
               fontWeight: 400,
               color: '#fdfcf9',
               letterSpacing: '-0.02em',
-              marginBottom: 12,
+              marginBottom: 8,
               display: 'flex',
               lineHeight: 1.2,
             }}
@@ -187,43 +200,84 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
             {displayTitle}
           </div>
 
-          {/* Author */}
+          {/* Author + Year */}
           <div
             style={{
-              fontSize: 28,
+              fontSize: translationExcerpt ? 18 : 28,
               color: '#c9a86c',
-              marginBottom: 8,
+              marginBottom: translationExcerpt ? 4 : 8,
               display: 'flex',
+              gap: 8,
             }}
           >
-            {author}
+            <span>{author}</span>
+            {book?.published && <span style={{ color: 'rgba(253, 252, 249, 0.5)' }}>({book.published})</span>}
           </div>
 
-          {/* Year and language */}
-          {(book?.published || book?.language) && (
+          {/* Translation excerpt — the hook that makes people click */}
+          {translationExcerpt && (
             <div
               style={{
-                fontSize: 20,
-                color: 'rgba(253, 252, 249, 0.6)',
+                marginTop: 16,
+                padding: '14px 18px',
+                background: 'rgba(253, 252, 249, 0.06)',
+                borderLeft: '3px solid rgba(201, 168, 108, 0.5)',
+                borderRadius: '0 8px 8px 0',
                 display: 'flex',
-                gap: 12,
+                flexDirection: 'column',
               }}
             >
-              {book?.published && <span>{book.published}</span>}
-              {book?.published && book?.language && <span>•</span>}
-              {book?.language && <span>{book.language}</span>}
+              <div
+                style={{
+                  fontSize: 11,
+                  textTransform: 'uppercase' as const,
+                  letterSpacing: '0.1em',
+                  color: 'rgba(201, 168, 108, 0.7)',
+                  marginBottom: 8,
+                  display: 'flex',
+                }}
+              >
+                English Translation
+              </div>
+              <div
+                style={{
+                  fontSize: 17,
+                  lineHeight: 1.5,
+                  color: 'rgba(253, 252, 249, 0.85)',
+                  fontStyle: 'italic',
+                  display: 'flex',
+                }}
+              >
+                {translationExcerpt}
+              </div>
             </div>
           )}
 
-          {/* Decorative line */}
-          <div
-            style={{
-              width: 80,
-              height: 2,
-              background: 'linear-gradient(90deg, #c9a86c, transparent)',
-              marginTop: 24,
-            }}
-          />
+          {/* Decorative line (only when no translation) */}
+          {!translationExcerpt && (
+            <>
+              {(book?.language) && (
+                <div
+                  style={{
+                    fontSize: 20,
+                    color: 'rgba(253, 252, 249, 0.6)',
+                    display: 'flex',
+                    marginTop: 4,
+                  }}
+                >
+                  {book.language}
+                </div>
+              )}
+              <div
+                style={{
+                  width: 80,
+                  height: 2,
+                  background: 'linear-gradient(90deg, #c9a86c, transparent)',
+                  marginTop: 24,
+                }}
+              />
+            </>
+          )}
         </div>
 
         {/* Source Library branding */}
