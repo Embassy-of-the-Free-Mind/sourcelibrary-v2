@@ -350,6 +350,11 @@ export async function GET(request: NextRequest) {
   };
 
   try {
+    // Extract pause flags once — used by both submission AND completion phases
+    const ocrPaused = control?.paused_phases?.includes('ocr');
+    const translatePaused = control?.paused_phases?.includes('translation');
+    const imagesPaused = control?.paused_phases?.includes('images');
+
     // ════════════════════════════════════════════════════════════════════
     // PRIORITY PASS: Run fast, late-stage phases FIRST so they don't get
     // starved by heavy enrichment/chapters work consuming the time budget.
@@ -357,7 +362,7 @@ export async function GET(request: NextRequest) {
     // ════════════════════════════════════════════════════════════════════
 
     // ── Priority: Finalize (images_complete -> complete) — with quality validation ──
-    if (hasTimeBudget(startTime)) {
+    if (hasTimeBudget(startTime) && !imagesPaused) {
       const readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
@@ -411,7 +416,6 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Priority: Image extraction submission (chapters_complete -> images_submitted) ──
-    const imagesPaused = control?.paused_phases?.includes('images');
     if (imagesPaused) {
       logger.decision('skip', 'Image extraction paused via processing_control.paused_phases');
     }
@@ -680,7 +684,6 @@ export async function GET(request: NextRequest) {
 
     // ── Phase 2: Submit OCR (archive_complete -> ocr_submitted) ──
     // Primary: Gemini Batch API (50% cheaper). Fallback: Lambda workers (realtime).
-    const ocrPaused = control?.paused_phases?.includes('ocr');
     if (ocrPaused) {
       logger.decision('skip', 'OCR submission paused via processing_control.paused_phases');
     }
@@ -904,7 +907,8 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Phase 3: Check OCR completion (ocr_submitted -> ocr_complete) ──
-    if (hasTimeBudget(startTime)) {
+    // Guard: don't advance past OCR when paused — books stay in ocr_submitted
+    if (hasTimeBudget(startTime) && !ocrPaused) {
       const ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
         .project({ id: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
@@ -1048,7 +1052,6 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Phase 4: Submit translation via Gemini Batch API (metadata_enriched -> translate_submitted) ──
-    const translatePaused = control?.paused_phases?.includes('translation');
     if (translatePaused) {
       logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
     }
@@ -1223,7 +1226,8 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Phase 5: Check translation completion (translate_submitted -> translate_complete) ──
-    if (hasTimeBudget(startTime)) {
+    // Guard: don't advance past translation when paused — books stay in translate_submitted
+    if (hasTimeBudget(startTime) && !translatePaused) {
       const translatePending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted' })
         .project({ id: 1, 'pipeline_auto.translate_job_name': 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_loop_count': 1 })
