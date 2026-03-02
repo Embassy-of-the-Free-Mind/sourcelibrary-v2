@@ -61,6 +61,41 @@ async function getCollections(): Promise<CollectionForGrid[]> {
   }
 }
 
+async function getNewArrivals(): Promise<Book[]> {
+  try {
+    const db = await getDb();
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const books = await db.collection('books').find({
+      hidden: { $ne: true },
+      created_at: { $gte: thirtyDaysAgo },
+    }).sort({ created_at: -1 }).limit(10).project({
+      _id: 0,
+      id: { $ifNull: ['$id', { $toString: '$_id' }] },
+      title: 1,
+      display_title: 1,
+      author: 1,
+      thumbnail: 1,
+      thumbnail_blob: 1,
+      language: 1,
+      published: 1,
+      pages_count: { $ifNull: ['$pages_count', 0] },
+      pages_translated: { $ifNull: ['$pages_translated', 0] },
+      pages_ocr: { $ifNull: ['$pages_ocr', 0] },
+      translation_percent: {
+        $cond: {
+          if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+          then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
+          else: 0,
+        },
+      },
+    }).toArray();
+    return JSON.parse(JSON.stringify(books)) as Book[];
+  } catch (error) {
+    console.error('Error fetching new arrivals:', error);
+    return [];
+  }
+}
+
 async function getRecentlyTranslated(): Promise<Book[]> {
   try {
     const db = await getDb();
@@ -97,10 +132,11 @@ async function getRecentlyTranslated(): Promise<Book[]> {
 }
 
 async function LibrarySection() {
-  const [{ totalBooks, translatedCount }, collections, recentlyTranslated] = await Promise.all([
+  const [{ totalBooks, translatedCount }, collections, recentlyTranslated, newArrivals] = await Promise.all([
     getBookCounts(),
     getCollections(),
     getRecentlyTranslated(),
+    getNewArrivals(),
   ]);
 
   return (
@@ -112,6 +148,7 @@ async function LibrarySection() {
         languages={[]}
         collections={collections}
         recentlyTranslated={recentlyTranslated}
+        newArrivals={newArrivals}
       />
     </>
   );

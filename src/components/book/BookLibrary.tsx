@@ -35,6 +35,7 @@ interface BookLibraryProps {
   languages: string[];
   collections?: CollectionForGrid[];
   recentlyTranslated?: Book[];
+  newArrivals?: Book[];
 }
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
@@ -42,7 +43,7 @@ type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 const DISPLAY_INCREMENT = 50;
 const API_PAGE_SIZE = 100;
 
-export default function BookLibrary({ initialBooks, totalBooks, languages, collections = [], recentlyTranslated = [] }: BookLibraryProps) {
+export default function BookLibrary({ initialBooks, totalBooks, languages, collections = [], recentlyTranslated = [], newArrivals = [] }: BookLibraryProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
@@ -445,6 +446,20 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
             );
           })()}
 
+          {/* New Arrivals */}
+          {newArrivals.length > 0 && (
+            <div className="mt-12">
+              <h3 className="text-xl md:text-2xl text-gray-900 mb-4 font-display">
+                New to the Library
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+                {newArrivals.map((book) => (
+                  <BookCard key={book.id} book={book} priority={false} />
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Recently Translated */}
           {recentlyTranslated.length > 0 && (
             <div className="mt-12">
@@ -452,7 +467,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                 Recently Translated
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
-                {recentlyTranslated.map((book, i) => (
+                {recentlyTranslated.map((book) => (
                   <BookCard key={book.id} book={book} priority={false} />
                 ))}
               </div>
