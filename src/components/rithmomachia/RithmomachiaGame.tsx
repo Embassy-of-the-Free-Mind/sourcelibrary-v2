@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { GameState, GameAction, Position, GameMode, Difficulty, Player } from '@/lib/rithmomachia/types';
 import { gameReducer, createInitialState } from '@/lib/rithmomachia/game-state';
 import { positionsEqual } from '@/lib/rithmomachia/board';
+import { SOURCES, sourceUrl, SourceKey, CONCEPT_SOURCES } from '@/lib/rithmomachia/sources';
 import Board from './Board';
 import GameControls from './GameControls';
 import CapturePanel from './CapturePanel';
@@ -12,6 +13,7 @@ import ScorePanel from './ScorePanel';
 import MoveHistory from './MoveHistory';
 import VictoryModal from './VictoryModal';
 import TutorialOverlay from './TutorialOverlay';
+import DemoMode from './DemoMode';
 
 // AI imports (lazy — only loaded when needed)
 import { getRandomMove, getRandomCaptureDecision } from '@/lib/rithmomachia/ai/random';
@@ -22,6 +24,7 @@ export default function RithmomachiaGame() {
   const [state, dispatch] = useReducer(gameReducer, createInitialState('vs-ai', 'medium'));
   const [showVictory, setShowVictory] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
   const [aiThinking, setAiThinking] = useState(false);
   const aiPlayerRef = useRef<Player>('odd'); // AI plays odd (black) by default
 
@@ -94,6 +97,11 @@ export default function RithmomachiaGame() {
     dispatch({ type: 'SKIP_CAPTURE' });
   }, []);
 
+  // Demo mode takes over the entire view
+  if (showDemo) {
+    return <DemoMode onExit={() => setShowDemo(false)} />;
+  }
+
   const evenOnBoard = state.pieces.filter(p => p.owner === 'even').length;
   const oddOnBoard = state.pieces.filter(p => p.owner === 'odd').length;
 
@@ -105,12 +113,21 @@ export default function RithmomachiaGame() {
         <p className="text-muted text-sm">
           The Battle of Numbers &mdash; a mathematical board game played across Europe for six centuries
         </p>
-        <button
-          onClick={() => setShowTutorial(true)}
-          className="mt-2 text-sm text-accent-rust hover:underline"
-        >
-          How to play
-        </button>
+        <div className="flex items-center justify-center gap-4 mt-2">
+          <button
+            onClick={() => setShowTutorial(true)}
+            className="text-sm text-accent-rust hover:underline"
+          >
+            How to play
+          </button>
+          <span className="text-border-medium">|</span>
+          <button
+            onClick={() => setShowDemo(true)}
+            className="text-sm text-accent-rust hover:underline"
+          >
+            Watch a demo
+          </button>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-6">
@@ -187,20 +204,37 @@ export default function RithmomachiaGame() {
             <MoveHistory moves={state.moveHistory} />
           </div>
 
-          {/* Rules quick reference */}
+          {/* Rules quick reference with source links */}
           <div className="bg-warm rounded-lg border border-border-light p-3 text-xs text-muted space-y-1.5">
             <div className="font-medium text-sm text-secondary mb-1">Quick Reference</div>
-            <div><span className="font-medium">Circles</span> &mdash; move 1 space diagonally</div>
-            <div><span className="font-medium">Triangles</span> &mdash; leap 2 spaces orthogonally</div>
-            <div><span className="font-medium">Squares</span> &mdash; leap 3 spaces orthogonally</div>
-            <div><span className="font-medium">Pyramid</span> &mdash; moves as all three shapes</div>
+            <QuickRefLine
+              label="Circles"
+              desc="move 1 space diagonally"
+              conceptKey="circleMovement"
+            />
+            <QuickRefLine
+              label="Triangles"
+              desc="leap 2 spaces orthogonally"
+              conceptKey="triangleMovement"
+            />
+            <QuickRefLine
+              label="Squares"
+              desc="leap 3 spaces orthogonally"
+              conceptKey="squareMovement"
+            />
+            <QuickRefLine
+              label="Pyramid"
+              desc="moves as all three shapes"
+              conceptKey="pyramid"
+            />
             <div className="pt-1 border-t border-border-light">
               <span className="font-medium">Captures:</span> equality, addition, subtraction, multiplication, division, siege
             </div>
-            <div className="pt-1">
+            <div className="pt-1 flex flex-col gap-1">
               <Link href="/blog/rithmomachia" className="text-accent-rust hover:underline">
                 Read the full rules &rarr;
               </Link>
+              <SourceLinks />
             </div>
           </div>
         </div>
@@ -221,6 +255,62 @@ export default function RithmomachiaGame() {
       {showTutorial && (
         <TutorialOverlay onClose={() => setShowTutorial(false)} />
       )}
+    </div>
+  );
+}
+
+// Quick reference line with source link on the rule description
+function QuickRefLine({ label, desc, conceptKey }: { label: string; desc: string; conceptKey: string }) {
+  const concept = CONCEPT_SOURCES[conceptKey];
+  // Pick the first ref with a page number for the link
+  const ref = concept?.refs.find(r => r.page);
+  return (
+    <div>
+      <span className="font-medium">{label}</span> &mdash; {desc}
+      {ref && (
+        <>
+          {' '}
+          <a
+            href={sourceUrl(ref.source, ref.page)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent-rust/60 hover:text-accent-rust"
+            title={`${SOURCES[ref.source].author} (${SOURCES[ref.source].year}), p. ${ref.page}`}
+          >
+            [{SOURCES[ref.source].year}]
+          </a>
+        </>
+      )}
+    </div>
+  );
+}
+
+// Compact list of primary source books
+function SourceLinks() {
+  const sources: { key: SourceKey; year: number; lang: string }[] = [
+    { key: 'jordanus', year: 1496, lang: 'La' },
+    { key: 'boissiere', year: 1554, lang: 'Fr' },
+    { key: 'lever', year: 1563, lang: 'En' },
+    { key: 'barozzi', year: 1572, lang: 'It' },
+    { key: 'selenus', year: 1616, lang: 'De' },
+  ];
+
+  return (
+    <div className="text-xs text-muted/70">
+      Sources:{' '}
+      {sources.map((s, i) => (
+        <span key={s.key}>
+          {i > 0 && ' · '}
+          <a
+            href={sourceUrl(s.key)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent-rust transition-colors"
+          >
+            {s.lang} {s.year}
+          </a>
+        </span>
+      ))}
     </div>
   );
 }

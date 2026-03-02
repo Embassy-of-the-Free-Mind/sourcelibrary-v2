@@ -1,9 +1,11 @@
 // Interactive tutorial overlay for Rithmomachia
+// Each step references specific pages in the five primary sources (1496–1616)
 
 'use client';
 
 import { useState, useCallback } from 'react';
 import { TUTORIAL_STEPS, getSectionLabel } from '@/lib/rithmomachia/tutorial';
+import { SOURCES, sourceUrl, SourceKey } from '@/lib/rithmomachia/sources';
 
 interface TutorialOverlayProps {
   onClose: () => void;
@@ -96,6 +98,36 @@ export default function TutorialOverlay({ onClose }: TutorialOverlayProps) {
           <p className="text-secondary font-body leading-relaxed text-base">
             {step.text}
           </p>
+
+          {/* Source citations */}
+          {step.sources && step.sources.length > 0 && (
+            <div className="mt-4 pt-3 border-t border-border-light">
+              <div className="text-xs text-muted mb-1.5 font-medium">Primary Sources</div>
+              <div className="space-y-1">
+                {step.sources.map((ref, i) => {
+                  const src = SOURCES[ref.source];
+                  const url = sourceUrl(ref.source, ref.page);
+                  return (
+                    <a
+                      key={i}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-1.5 text-xs text-muted hover:text-secondary transition-colors group"
+                    >
+                      <span className="text-accent-rust/60 group-hover:text-accent-rust shrink-0 w-4">
+                        {src.language.slice(0, 2)}
+                      </span>
+                      <span>
+                        {src.author} ({src.year}){ref.page ? `, p. ${ref.page}` : ''}
+                        {ref.detail && <span className="text-muted/70 ml-1">&mdash; {ref.detail}</span>}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Progress bar */}
