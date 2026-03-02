@@ -1,4 +1,4 @@
-import { Suspense, cache } from 'react';
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
@@ -39,8 +39,7 @@ interface PageProps {
 }
 
 // Lightweight book fetch for metadata (no pages, no heavy index)
-// Wrapped in cache() so generateMetadata + page component share one DB query
-const getBookForMetadata = cache(async (id: string): Promise<Book | null> => {
+async function getBookForMetadata(id: string): Promise<Book | null> {
   const db = await getDb();
   const result = await findBookByIdOrSlug(db, id, {
     index: 0,
@@ -51,7 +50,7 @@ const getBookForMetadata = cache(async (id: string): Promise<Book | null> => {
     pipeline_auto: 0,
   });
   return result ? (result.book as unknown as Book) : null;
-});
+}
 
 // Cross-book citation graph
 // "direct" = this book mentions a person who authored another book in our library (real citation)
@@ -942,13 +941,6 @@ async function BookInfo({ id }: { id: string }) {
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { id } = await params;
-
-  // Check book existence BEFORE rendering to ensure proper 404 status code.
-  // notFound() inside Suspense streams after the 200 is committed.
-  const bookExists = await getBookForMetadata(id);
-  if (!bookExists) {
-    notFound();
-  }
 
   return (
     <div className="min-h-screen bg-cream">
