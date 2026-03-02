@@ -21,11 +21,22 @@
  *   npx tsx scripts/archive-images-fast.ts --recent=50              # 50 most recent books
  *   npx tsx scripts/archive-images-fast.ts --days=7                 # books imported in last N days
  *   npx tsx scripts/archive-images-fast.ts --skip-thumbnails        # skip thumbnail generation
+ *   npx tsx scripts/archive-images-fast.ts --no-bulk               # disable bulk PDF download
+ *
+ * Bulk PDF mode (default when pdftoppm is available):
+ *   Downloads 1 PDF per book instead of N individual IIIF image requests.
+ *   Much nicer to library servers — PDFs are static/cached files, IIIF requests
+ *   require real-time image processing. Supported: Internet Archive, e-rara.
+ *   Requires: poppler-utils (brew install poppler / apt-get install poppler-utils)
  */
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
+import { execSync } from 'child_process';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as os from 'os';
 
 // CLI args
 const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '15', 10);
@@ -36,6 +47,7 @@ const RECENT = parseInt(process.argv.find(a => a.startsWith('--recent='))?.split
 const DAYS = parseInt(process.argv.find(a => a.startsWith('--days='))?.split('=')[1] || '0', 10);
 const SKIP_THUMBNAILS = process.argv.includes('--skip-thumbnails');
 const DOWNLOAD_TIMEOUT = parseInt(process.argv.find(a => a.startsWith('--timeout='))?.split('=')[1] || '30000', 10);
+const NO_BULK = process.argv.includes('--no-bulk');
 
 const MAX_RETRIES = 3; // Retry on 429/503
 
@@ -44,6 +56,14 @@ const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!BLOB_TOKEN) { console.error('Missing BLOB_READ_WRITE_TOKEN'); process.exit(1); }
+
+// Check for pdftoppm (poppler-utils) — needed for bulk PDF download
+// Install: brew install poppler (macOS) or apt-get install poppler-utils (Linux)
+let hasPdftoppm = false;
+try {
+  execSync('pdftoppm -v 2>&1', { stdio: 'pipe' });
+  hasPdftoppm = true;
+} catch {}
 
 // User-Agent for polite scraping — identifies us to library servers
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
@@ -122,10 +142,281 @@ const stats = {
   downloaded: 0,
   thumbnailed: 0,
   failed: 0,
+  bulkPages: 0,
   bytesDownloaded: 0,
   bytesUploaded: 0,
   bySource: {} as Record<string, { ok: number; fail: number }>,
 };
+
+/**
+ * Check if a book's source provider offers bulk PDF download.
+ * Synchronous check — doesn't verify URL accessibility.
+ */
+function hasBulkPdfSource(book: any): boolean {
+  const provider = book.image_source?.provider;
+  const iaId = book.ia_identifier || (provider === 'ia' ? book.image_source?.identifier : null);
+  const eraraId = book.erara_id || (provider === 'e-rara' ? book.image_source?.identifier : null);
+  return !!(iaId || eraraId);
+}
+
+/**
+ * Resolve the actual PDF download URL for a book.
+ * For IA, fetches metadata to find the real PDF filename (doesn't always match the identifier).
+ * For e-rara, uses a predictable URL pattern.
+ */
+async function resolveBulkPdfUrl(book: any): Promise<string | null> {
+  const provider = book.image_source?.provider;
+
+  // Internet Archive — must look up actual PDF filename from metadata
+  const iaId = book.ia_identifier || (provider === 'ia' ? book.image_source?.identifier : null);
+  if (iaId) {
+    try {
+      const metaRes = await fetch(`https://archive.org/metadata/${iaId}`, {
+        headers: { 'User-Agent': USER_AGENT },
+      });
+      if (!metaRes.ok) return null;
+
+      const metadata = await metaRes.json() as { files?: Array<{ name: string; format?: string; size?: string }> };
+      const files = metadata.files || [];
+      const pdfs = files.filter(f => f.name.endsWith('.pdf'));
+      if (pdfs.length === 0) return null;
+
+      // Prefer Image Container PDF (full resolution scans) over Text PDF
+      const imageContainerPdf = pdfs.find(f => f.format === 'Image Container PDF');
+      const primaryPdf = pdfs.find(f => !f.name.endsWith('_text.pdf'));
+      const chosenPdf = imageContainerPdf || primaryPdf || pdfs[0];
+
+      return `https://archive.org/download/${iaId}/${encodeURIComponent(chosenPdf.name)}`;
+    } catch {
+      return null;
+    }
+  }
+
+  // e-rara — predictable URL pattern
+  const eraraId = book.erara_id || (provider === 'e-rara' ? book.image_source?.identifier : null);
+  if (eraraId) return `https://www.e-rara.ch/download/pdf/${eraraId}`;
+
+  return null;
+}
+
+/**
+ * Bulk download a book's PDF, split into page images with pdftoppm, upload to Vercel Blob.
+ *
+ * This is dramatically nicer to library servers:
+ * - 1 static file download instead of N dynamic IIIF image requests
+ * - PDFs are usually pre-rendered and CDN-cached
+ * - IIIF requests require real-time image processing on their end
+ *
+ * Returns { success, skipped }. If skipped=true, caller falls back to page-by-page.
+ */
+async function bulkArchiveBook(
+  book: any,
+  allBookPages: any[],
+  pagesToArchive: any[],
+  db: any,
+): Promise<{ success: number; skipped: boolean }> {
+  const pdfUrl = await resolveBulkPdfUrl(book);
+  if (!pdfUrl) return { success: 0, skipped: true };
+
+  const source = pdfUrl.includes('archive.org') ? 'ia' : 'erara';
+  if (!stats.bySource[source]) stats.bySource[source] = { ok: 0, fail: 0 };
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'sl-bulk-'));
+
+  try {
+    // Download PDF — single request
+    console.log(`  [BULK] Downloading PDF: ${pdfUrl}`);
+    await waitForRateLimit(source);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 600000); // 10 min for large PDFs
+    const res = await fetch(pdfUrl, {
+      signal: controller.signal,
+      headers: { 'User-Agent': USER_AGENT },
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      console.log(`  [BULK] PDF download failed: HTTP ${res.status} — falling back`);
+      return { success: 0, skipped: true };
+    }
+
+    const pdfBuffer = Buffer.from(await res.arrayBuffer());
+    const pdfPath = path.join(tmpDir, 'book.pdf');
+    fs.writeFileSync(pdfPath, pdfBuffer);
+    const sizeMb = (pdfBuffer.byteLength / (1024 * 1024)).toFixed(0);
+    console.log(`  [BULK] Downloaded ${sizeMb}MB PDF (1 request vs ${allBookPages.length} page-by-page)`);
+    stats.bytesDownloaded += pdfBuffer.byteLength;
+
+    // Split PDF into JPEG pages with pdftoppm (200 DPI ≈ same as IIIF at 50%)
+    const outPrefix = path.join(tmpDir, 'page');
+    console.log(`  [BULK] Splitting PDF with pdftoppm...`);
+    execSync(`pdftoppm -jpeg -r 200 "${pdfPath}" "${outPrefix}"`, {
+      timeout: 600000,
+      stdio: 'pipe',
+    });
+
+    // Delete PDF to free disk space
+    fs.unlinkSync(pdfPath);
+
+    // Find output files (page-01.jpg, page-02.jpg, etc.)
+    const outputFiles = fs.readdirSync(tmpDir)
+      .filter(f => f.startsWith('page-') && f.endsWith('.jpg'))
+      .sort();
+
+    console.log(`  [BULK] Split into ${outputFiles.length} PDF pages (book has ${allBookPages.length} pages)`);
+
+    // Map book pages to PDF pages using leaf numbers from IIIF URLs
+    // IA URLs contain /page/nN/ where N is the 0-based leaf number
+    // PDF page index = leaf number (pdftoppm output is 1-indexed: page-01.jpg = PDF page 1)
+    const pageToFileIndex: Map<string, number> = new Map();
+    const needsArchiveSet = new Set(pagesToArchive.map(p => (p.id || p._id.toString())));
+
+    for (const page of allBookPages) {
+      const pageId = page.id || page._id.toString();
+      if (!needsArchiveSet.has(pageId)) continue;
+
+      // Extract leaf number from IA IIIF URL: /page/nN/
+      const photoUrl = page.photo_original || page.photo || '';
+      const leafMatch = photoUrl.match(/\/page\/n(\d+)/);
+      if (leafMatch) {
+        const leafNum = parseInt(leafMatch[1]);
+        // leaf N = PDF page N+1 = output file index N
+        if (leafNum < outputFiles.length) {
+          pageToFileIndex.set(pageId, leafNum);
+        }
+      }
+    }
+
+    // If we can't map most pages, fall back — e-rara and others use 1:1 mapping
+    if (pageToFileIndex.size === 0 && source !== 'ia') {
+      // Non-IA: try 1:1 mapping if page counts match
+      if (outputFiles.length === allBookPages.length) {
+        for (let i = 0; i < allBookPages.length; i++) {
+          const pageId = allBookPages[i].id || allBookPages[i]._id.toString();
+          if (needsArchiveSet.has(pageId)) {
+            pageToFileIndex.set(pageId, i);
+          }
+        }
+      }
+    }
+
+    if (pageToFileIndex.size === 0) {
+      if (source === 'ia') {
+        console.log(`  [BULK] Could not map leaf numbers from page URLs — falling back`);
+      } else {
+        console.log(`  [BULK] Page count mismatch: PDF ${outputFiles.length} vs book ${allBookPages.length} — falling back`);
+      }
+      return { success: 0, skipped: true };
+    }
+
+    console.log(`  [BULK] Mapped ${pageToFileIndex.size}/${pagesToArchive.length} pages to PDF, uploading...`);
+
+    let success = 0;
+    for (const page of allBookPages) {
+      const pageId = page.id || page._id.toString();
+      const fileIndex = pageToFileIndex.get(pageId);
+      if (fileIndex === undefined) continue;
+
+      try {
+        const imgPath = path.join(tmpDir, outputFiles[fileIndex]);
+        const buffer = fs.readFileSync(imgPath);
+
+        // Upload to Vercel Blob
+        const filename = `archived/${page.book_id}/${page.page_number}.jpg`;
+        let blob;
+        for (let attempt = 0; attempt < 3; attempt++) {
+          try {
+            blob = await put(filename, buffer, {
+              access: 'public',
+              contentType: 'image/jpeg',
+              addRandomSuffix: false,
+              allowOverwrite: true,
+            });
+            break;
+          } catch (blobErr: any) {
+            if (blobErr.message?.includes('Too many requests') && attempt < 2) {
+              await new Promise(r => setTimeout(r, (attempt + 1) * 3000));
+              continue;
+            }
+            throw blobErr;
+          }
+        }
+
+        // Generate thumbnail
+        let thumbnailUrl: string | undefined;
+        if (!SKIP_THUMBNAILS && !page.thumbnail_blob) {
+          try {
+            let thumbInput: Buffer = buffer;
+            if (page.crop) {
+              const meta = await sharp(buffer).metadata();
+              const w = meta.width || 1000;
+              const h = meta.height || 1000;
+              const left = Math.round((page.crop.xStart / 1000) * w);
+              const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * w);
+              thumbInput = await sharp(buffer)
+                .extract({ left, top: 0, width: Math.min(cropWidth, w - left), height: h })
+                .toBuffer();
+            }
+            const thumbBuffer = await sharp(thumbInput)
+              .resize(150, null, { fit: 'inside', withoutEnlargement: true })
+              .jpeg({ quality: 60, progressive: true })
+              .toBuffer();
+            const thumbFilename = `thumbnails/${page.book_id}/${page.page_number}.jpg`;
+            const thumbBlob = await put(thumbFilename, thumbBuffer, {
+              access: 'public',
+              contentType: 'image/jpeg',
+              addRandomSuffix: false,
+              allowOverwrite: true,
+            });
+            thumbnailUrl = thumbBlob.url;
+            stats.thumbnailed++;
+          } catch {
+            // Non-fatal
+          }
+        }
+
+        // Update MongoDB
+        const sourceUrl = page.photo_original || page.photo || pdfUrl;
+        const updateFields: Record<string, unknown> = {
+          archived_photo: blob!.url,
+          'archive_metadata.archived_at': new Date(),
+          'archive_metadata.source_url': sourceUrl,
+          'archive_metadata.bytes': buffer.byteLength,
+          'archive_metadata.bulk_source': 'pdf',
+          updated_at: new Date(),
+        };
+        if (thumbnailUrl) updateFields.thumbnail_blob = thumbnailUrl;
+
+        await db.collection('pages').updateOne({ _id: page._id }, { $set: updateFields });
+
+        success++;
+        stats.downloaded++;
+        stats.bulkPages++;
+        stats.bytesUploaded += buffer.byteLength;
+
+        if (success % 50 === 0) {
+          console.log(`  [BULK] ${success}/${pagesToArchive.length} uploaded...`);
+        }
+
+        // Clean up page file to save disk space
+        fs.unlinkSync(imgPath);
+      } catch (err: any) {
+        process.stderr.write(`  [BULK] Failed page ${page.page_number}: ${err.message}\n`);
+        stats.bySource[source]!.fail++;
+        stats.failed++;
+      }
+    }
+
+    stats.bySource[source]!.ok += success;
+    console.log(`  [BULK] Done: ${success}/${pagesToArchive.length} archived from PDF`);
+    return { success, skipped: false };
+  } catch (err: any) {
+    console.log(`  [BULK] Error: ${err.message} — falling back to page-by-page`);
+    return { success: 0, skipped: true };
+  } finally {
+    try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
+  }
+}
 
 async function archivePage(page: any, db: any): Promise<boolean> {
   const sourceUrl = getSourceUrl(page);
@@ -391,6 +682,7 @@ async function runPool(pages: any[], db: any) {
 
 async function main() {
   console.log(`Image archiver — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, source: ${SOURCE_FILTER || 'all'}, timeout: ${DOWNLOAD_TIMEOUT}ms`);
+  console.log(`  Bulk PDF mode: ${NO_BULK ? 'disabled' : hasPdftoppm ? 'enabled (pdftoppm found)' : 'unavailable (install poppler-utils)'}`);
   console.log(`  User-Agent: ${USER_AGENT}`);
   console.log(`  Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).map(([k, v]) => `${k}:${v}/s`).join(', ')}`);
   if (BOOK_ID) console.log(`  Book: ${BOOK_ID}`);
@@ -452,6 +744,60 @@ async function main() {
     return;
   }
 
+  // === Bulk PDF download (nicer to library servers) ===
+  // Downloads 1 PDF instead of N individual IIIF image requests
+  let bulkSuccess = 0;
+  let bulkFailed = 0;
+
+  if (!NO_BULK && hasPdftoppm) {
+    const distinctBookIds = await db.collection('pages').distinct('book_id', query);
+
+    if (distinctBookIds.length > 0 && distinctBookIds.length <= 100) {
+      const books = await db.collection('books')
+        .find(
+          { id: { $in: distinctBookIds } },
+          { projection: { id: 1, title: 1, ia_identifier: 1, erara_id: 1, image_source: 1 } }
+        )
+        .toArray();
+
+      const booksWithPdf = books.filter(b => hasBulkPdfSource(b));
+
+      if (booksWithPdf.length > 0) {
+        console.log(`\nBulk PDF download available for ${booksWithPdf.length}/${distinctBookIds.length} book(s)`);
+
+        for (const book of booksWithPdf) {
+          const allBookPages = await db.collection('pages')
+            .find(
+              { book_id: book.id },
+              { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, crop: 1, thumbnail_blob: 1 } }
+            )
+            .sort({ page_number: 1 })
+            .toArray();
+
+          const pagesToArchive = allBookPages.filter((p: any) => !p.archived_photo);
+          if (pagesToArchive.length === 0) continue;
+
+          console.log(`\n  ${book.title?.slice(0, 60)} — ${pagesToArchive.length}/${allBookPages.length} pages`);
+
+          const result = await bulkArchiveBook(book, allBookPages, pagesToArchive, db);
+          if (!result.skipped) {
+            bulkSuccess += result.success;
+            bulkFailed += (pagesToArchive.length - result.success);
+          }
+        }
+
+        const remainingAfterBulk = await db.collection('pages').countDocuments(query);
+        if (remainingAfterBulk === 0) {
+          console.log(`\nAll pages archived via bulk PDF download!`);
+        } else {
+          console.log(`\n${remainingAfterBulk} pages remaining for page-by-page download`);
+        }
+      }
+    }
+  } else if (!NO_BULK && !hasPdftoppm) {
+    console.log('  Note: pdftoppm not found — bulk PDF mode disabled. Install poppler-utils to enable.');
+  }
+
   const CHUNK_SIZE = PAGE_LIMIT > 0 ? Math.min(5000, PAGE_LIMIT) : 5000;
   let totalSuccess = 0;
   let totalFailed = 0;
@@ -493,9 +839,16 @@ async function main() {
   const mbDown = (stats.bytesDownloaded / (1024 * 1024)).toFixed(0);
   const mbUp = (stats.bytesUploaded / (1024 * 1024)).toFixed(0);
 
+  const grandSuccess = bulkSuccess + totalSuccess;
+  const grandFailed = bulkFailed + totalFailed;
+
   console.log(`\n${'='.repeat(60)}`);
-  console.log(`Done in ${elapsed.toFixed(0)}s — ${totalSuccess} archived, ${totalFailed} failed`);
-  console.log(`Rate: ${(totalSuccess / elapsed).toFixed(1)} pages/sec`);
+  console.log(`Done in ${elapsed.toFixed(0)}s — ${grandSuccess} archived, ${grandFailed} failed`);
+  if (bulkSuccess > 0) {
+    console.log(`  Bulk PDF: ${bulkSuccess} pages (${bulkFailed} failed)`);
+    console.log(`  Page-by-page: ${totalSuccess} pages (${totalFailed} failed)`);
+  }
+  console.log(`Rate: ${(grandSuccess / elapsed).toFixed(1)} pages/sec`);
   console.log(`Blob fixups (already on Blob): ${stats.blobFixup}`);
   console.log(`Downloaded from external: ${stats.downloaded}`);
   console.log(`Thumbnails generated: ${stats.thumbnailed}`);
