@@ -11,6 +11,7 @@ import CapturePanel from './CapturePanel';
 import ScorePanel from './ScorePanel';
 import MoveHistory from './MoveHistory';
 import VictoryModal from './VictoryModal';
+import TutorialOverlay from './TutorialOverlay';
 
 // AI imports (lazy — only loaded when needed)
 import { getRandomMove, getRandomCaptureDecision } from '@/lib/rithmomachia/ai/random';
@@ -20,6 +21,7 @@ import { getMinimaxMove, getMinimaxCaptureDecision } from '@/lib/rithmomachia/ai
 export default function RithmomachiaGame() {
   const [state, dispatch] = useReducer(gameReducer, createInitialState('vs-ai', 'medium'));
   const [showVictory, setShowVictory] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
   const [aiThinking, setAiThinking] = useState(false);
   const aiPlayerRef = useRef<Player>('odd'); // AI plays odd (black) by default
 
@@ -103,11 +105,30 @@ export default function RithmomachiaGame() {
         <p className="text-muted text-sm">
           The Battle of Numbers &mdash; a mathematical board game played across Europe for six centuries
         </p>
+        <button
+          onClick={() => setShowTutorial(true)}
+          className="mt-2 text-sm text-accent-rust hover:underline"
+        >
+          How to play
+        </button>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_320px] gap-6">
+      <div className="grid lg:grid-cols-[1fr_300px] gap-6">
         {/* Board area */}
         <div>
+          {/* Turn indicator (mobile — above board) */}
+          <div className="lg:hidden mb-3">
+            <GameControls
+              mode={state.mode}
+              difficulty={state.difficulty}
+              currentPlayer={state.currentPlayer}
+              turnNumber={state.turnNumber}
+              phase={state.phase}
+              onNewGame={handleNewGame}
+              onResign={handleResign}
+            />
+          </div>
+
           {/* AI thinking indicator */}
           {aiThinking && (
             <div className="text-center text-sm text-muted mb-2 animate-pulse">
@@ -120,7 +141,7 @@ export default function RithmomachiaGame() {
             onCellClick={handleCellClick}
           />
 
-          {/* Capture panel (below board on mobile) */}
+          {/* Capture panel (below board) */}
           <CapturePanel
             options={state.captureOptions}
             onCapture={handleCapture}
@@ -142,15 +163,18 @@ export default function RithmomachiaGame() {
 
         {/* Sidebar */}
         <div className="space-y-4">
-          <GameControls
-            mode={state.mode}
-            difficulty={state.difficulty}
-            currentPlayer={state.currentPlayer}
-            turnNumber={state.turnNumber}
-            phase={state.phase}
-            onNewGame={handleNewGame}
-            onResign={handleResign}
-          />
+          {/* Turn indicator (desktop — in sidebar) */}
+          <div className="hidden lg:block">
+            <GameControls
+              mode={state.mode}
+              difficulty={state.difficulty}
+              currentPlayer={state.currentPlayer}
+              turnNumber={state.turnNumber}
+              phase={state.phase}
+              onNewGame={handleNewGame}
+              onResign={handleResign}
+            />
+          </div>
 
           <ScorePanel
             capturedPieces={state.capturedPieces}
@@ -187,9 +211,15 @@ export default function RithmomachiaGame() {
         <VictoryModal
           victory={state.victory}
           onNewGame={handleNewGame}
+          onClose={() => setShowVictory(false)}
           mode={state.mode}
           difficulty={state.difficulty}
         />
+      )}
+
+      {/* Tutorial overlay */}
+      {showTutorial && (
+        <TutorialOverlay onClose={() => setShowTutorial(false)} />
       )}
     </div>
   );

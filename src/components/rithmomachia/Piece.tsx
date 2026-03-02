@@ -7,13 +7,14 @@ interface PieceProps {
   piece: PieceType;
   isSelected: boolean;
   isCurrentPlayer: boolean;
+  isCaptured?: boolean;
   onClick: () => void;
 }
 
 const HALF = CELL_SIZE / 2;
 const PIECE_RADIUS = 38; // circle radius / triangle+square half-size
 
-export default function Piece({ piece, isSelected, isCurrentPlayer, onClick }: PieceProps) {
+export default function Piece({ piece, isSelected, isCurrentPlayer, isCaptured, onClick }: PieceProps) {
   const cx = piece.position.col * CELL_SIZE + HALF;
   const cy = piece.position.row * CELL_SIZE + HALF;
   const isEven = piece.owner === 'even';
@@ -31,23 +32,30 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, onClick }: P
   return (
     <g
       onClick={onClick}
-      style={{ cursor: isCurrentPlayer ? 'pointer' : 'default' }}
+      style={{
+        cursor: isCurrentPlayer ? 'pointer' : 'default',
+        transition: 'transform 250ms ease-out, opacity 200ms ease-out',
+        transform: `translate(${cx - HALF}px, ${cy - HALF}px)`,
+        opacity: isCaptured ? 0 : 1,
+      }}
       role="button"
       aria-label={`${piece.owner} ${piece.shape} ${piece.value}`}
     >
       {/* Selection ring */}
       {isSelected && (
-        <circle cx={cx} cy={cy} r={PIECE_RADIUS + 5} fill="none" stroke={selectRing} strokeWidth={3} />
+        <circle cx={HALF} cy={HALF} r={PIECE_RADIUS + 5} fill="none" stroke={selectRing} strokeWidth={3}>
+          <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite" />
+        </circle>
       )}
 
       {/* Piece shape */}
       {piece.shape === 'circle' && (
-        <circle cx={cx} cy={cy} r={PIECE_RADIUS - 2} fill={fill} stroke={stroke} strokeWidth={2.5} />
+        <circle cx={HALF} cy={HALF} r={PIECE_RADIUS - 2} fill={fill} stroke={stroke} strokeWidth={2.5} />
       )}
 
       {piece.shape === 'triangle' && (
         <polygon
-          points={trianglePoints(cx, cy, PIECE_RADIUS - 2)}
+          points={trianglePoints(HALF, HALF, PIECE_RADIUS - 2)}
           fill={fill}
           stroke={stroke}
           strokeWidth={2.5}
@@ -57,8 +65,8 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, onClick }: P
 
       {piece.shape === 'square' && (
         <rect
-          x={cx - PIECE_RADIUS + 4}
-          y={cy - PIECE_RADIUS + 4}
+          x={HALF - PIECE_RADIUS + 4}
+          y={HALF - PIECE_RADIUS + 4}
           width={(PIECE_RADIUS - 4) * 2}
           height={(PIECE_RADIUS - 4) * 2}
           rx={3}
@@ -69,13 +77,13 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, onClick }: P
       )}
 
       {piece.shape === 'pyramid' && (
-        <PyramidShape cx={cx} cy={cy} isEven={isEven} fill={fill} stroke={stroke} />
+        <PyramidShape cx={HALF} cy={HALF} isEven={isEven} fill={fill} stroke={stroke} />
       )}
 
       {/* Value label */}
       <text
-        x={cx}
-        y={cy + (piece.shape === 'triangle' ? 4 : 1)}
+        x={HALF}
+        y={HALF + (piece.shape === 'triangle' ? 4 : 1)}
         textAnchor="middle"
         dominantBaseline="central"
         fill={textColor}

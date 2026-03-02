@@ -5,11 +5,12 @@ import { VictoryCondition, GameMode, Difficulty } from '@/lib/rithmomachia/types
 interface VictoryModalProps {
   victory: VictoryCondition;
   onNewGame: (mode: GameMode, difficulty: Difficulty) => void;
+  onClose: () => void;
   mode: GameMode;
   difficulty: Difficulty;
 }
 
-export default function VictoryModal({ victory, onNewGame, mode, difficulty }: VictoryModalProps) {
+export default function VictoryModal({ victory, onNewGame, onClose, mode, difficulty }: VictoryModalProps) {
   const isPhilosophical = ['arithmetic', 'geometric', 'harmonic'].includes(victory.type);
 
   return (
@@ -40,10 +41,7 @@ export default function VictoryModal({ victory, onNewGame, mode, difficulty }: V
             Play Again
           </button>
           <button
-            onClick={() => {
-              // Close modal by starting new game in background
-              // The parent handles this
-            }}
+            onClick={onClose}
             className="px-5 py-2.5 border border-border-light rounded-lg hover:bg-warm transition-colors"
           >
             Review Board
