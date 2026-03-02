@@ -122,6 +122,10 @@ export default function RithmomachiaGame() {
           The Battle of Numbers &mdash; a mathematical board game played across Europe for six centuries
         </p>
         <div className="flex items-center justify-center gap-4 mt-2">
+          <Link href="/rithmomachia/guide" className="text-sm text-accent-rust hover:underline">
+            Visual guide
+          </Link>
+          <span className="text-border-medium">|</span>
           <button
             onClick={() => setShowTutorial(true)}
             className="text-sm text-accent-rust hover:underline"
@@ -260,6 +264,9 @@ export default function RithmomachiaGame() {
                 </div>
 
                 <div className="pt-1 border-t border-border-light flex flex-col gap-1 text-xs">
+                  <Link href="/rithmomachia/guide" className="text-accent-rust hover:underline">
+                    Visual guide with diagrams &rarr;
+                  </Link>
                   <button
                     onClick={() => setShowTutorial(true)}
                     className="text-accent-rust hover:underline text-left"
