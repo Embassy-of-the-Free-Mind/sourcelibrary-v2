@@ -38,6 +38,7 @@ if (process.env.RESEND_API_KEY) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   providers.push(Email({
+    server: { host: 'smtp.resend.com', port: 465, auth: { user: 'resend', pass: process.env.RESEND_API_KEY! } },
     from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
     sendVerificationRequest: async ({ identifier: email, url }) => {
       try {
