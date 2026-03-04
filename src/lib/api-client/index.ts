@@ -53,6 +53,7 @@ export * from './queues';
 export * from './research'; // Client-safe API wrappers only
 export * from './search';
 export * from './social';
+export * from './email';
 export * from './split-detection';
 export * from './timeline';
 export * from './upload';
