@@ -338,9 +338,11 @@ const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the 
 CRITICAL RULES:
 1. Preserve the line-by-line structure EXACTLY. Each line of output must correspond to the same line of input. Do not merge or split lines.
 2. Preserve paragraph breaks and blank lines exactly as they appear.
-3. Remove any XML/markup tags (<note>, <term>, <margin>, <column-break/>, <page-type>, <columns>, <language>, <detected-images>, etc.) from the output. Output clean Romanized text only.
-4. Include standard scholarly diacritics (macrons for long vowels, dots for emphatics, etc.).
-5. Do not translate — only transliterate. The output should be a phonetic representation in Latin script, not a translation.
+3. PRESERVE the <column-break/> tag exactly where it appears — this marks column boundaries for rendering.
+4. Remove all OTHER XML/markup tags (<note>, <term>, <margin>, <page-type>, <columns>, <language>, <detected-images>, etc.) from the output.
+5. Include standard scholarly diacritics (macrons for long vowels, dots for emphatics, etc.).
+6. Do not translate — only transliterate. The output should be a phonetic representation in Latin script, not a translation.
+7. If the text contains passages in Latin script already (e.g. Latin in a Greek manuscript), preserve them as-is.
 
 Romanization conventions by script:
 - **Greek:** Standard scholarly transliteration. α→a, β→b, γ→g, δ→d, ε→e, ζ→z, η→ē, θ→th, ι→i, κ→k, λ→l, μ→m, ν→n, ξ→x, ο→o, π→p, ρ→r, σ/ς→s, τ→t, υ→y/u, φ→ph, χ→ch, ψ→ps, ω→ō. Rough breathing→h, accents preserved where standard.

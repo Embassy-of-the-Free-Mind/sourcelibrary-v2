@@ -903,11 +903,11 @@ export default function TranslationEditor({
                     background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
                     color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
                   }}
-                  aria-label={`${showTransliterationPanel ? 'Hide' : 'Show'} documented text`}
+                  aria-label={`${showTransliterationPanel ? 'Hide' : 'Show'} romanized text`}
                   aria-pressed={showTransliterationPanel}
                 >
                   <Type className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">Documented</span>
+                  <span className="hidden sm:inline">Romanized</span>
                 </button>
               )}
               <button
@@ -1154,7 +1154,7 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        Documented {book.language || ''}
+                        Romanized {book.language || ''}
                       </span>
                       {transliterationText && (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
@@ -1567,10 +1567,10 @@ export default function TranslationEditor({
                   background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
                   color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
                 }}
-                title="Toggle documented text"
+                title="Toggle romanized text"
               >
                 <Type className="w-4 h-4" />
-                <span className="hidden sm:inline">Documented</span>
+                <span className="hidden sm:inline">Romanized</span>
               </button>
             )}
             <button
@@ -1718,7 +1718,7 @@ export default function TranslationEditor({
         {showTransliterationPanel && isNonLatin && (
           <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
             <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Documented {book.language || ''}</span>
+              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Romanized {book.language || ''}</span>
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>read-only</span>
             </div>
             <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
