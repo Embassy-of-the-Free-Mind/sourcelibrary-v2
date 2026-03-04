@@ -12,6 +12,7 @@ export interface Page {
   translation?: TranslationData;
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
+  transliteration?: TransliterationData;  // Romanized transliteration for non-Latin scripts
   created_at?: Date;
   updated_at?: Date;
 
@@ -159,6 +160,15 @@ export interface ModernizedData {
   updated_at?: Date;
   prompt_name?: string;
   source_translation_hash?: string;  // Hash of translation.data to detect changes
+}
+
+// Romanized transliteration for non-Latin scripts
+export interface TransliterationData {
+  data: string;
+  model: string;
+  updated_at?: Date;
+  source_ocr_hash?: string;    // Hash of ocr.data to detect changes
+  script?: string;             // Source script: 'greek', 'hebrew', 'arabic', 'cyrillic', etc.
 }
 
 // Crop coordinates for split pages (0-1000 scale)

@@ -111,6 +111,13 @@ export const pages = {
   },
 
   /**
+   * Transliterate page OCR text (non-Latin scripts to Latin characters)
+   */
+  transliterate: async (id: string): Promise<{ transliteration: string; cached?: boolean; script?: string }> => {
+    return await apiClient.post(`/api/pages/${id}/transliterate`);
+  },
+
+  /**
    * Batch split two-page spreads into separate pages
    */
   batchSplit: async (splits: Array<{

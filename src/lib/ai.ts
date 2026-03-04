@@ -332,6 +332,60 @@ export async function performModernization(
   };
 }
 
+// Prompt for scholarly transliteration of non-Latin scripts
+const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
+
+CRITICAL RULES:
+1. Preserve the line-by-line structure EXACTLY. Each line of output must correspond to the same line of input. Do not merge or split lines.
+2. Preserve paragraph breaks and blank lines exactly as they appear.
+3. Remove any XML/markup tags (<note>, <term>, <margin>, <column-break/>, <page-type>, <columns>, <language>, <detected-images>, etc.) from the output. Output clean Romanized text only.
+4. Include standard scholarly diacritics (macrons for long vowels, dots for emphatics, etc.).
+5. Do not translate — only transliterate. The output should be a phonetic representation in Latin script, not a translation.
+
+Romanization conventions by script:
+- **Greek:** Standard scholarly transliteration. α→a, β→b, γ→g, δ→d, ε→e, ζ→z, η→ē, θ→th, ι→i, κ→k, λ→l, μ→m, ν→n, ξ→x, ο→o, π→p, ρ→r, σ/ς→s, τ→t, υ→y/u, φ→ph, χ→ch, ψ→ps, ω→ō. Rough breathing→h, accents preserved where standard.
+- **Hebrew:** SBL academic style. א→ʾ, ב→b/v, ג→g, ד→d, ה→h, ו→w, ז→z, ח→ḥ, ט→ṭ, י→y, כ→k/kh, ל→l, מ→m, נ→n, ס→s, ע→ʿ, פ→p/f, צ→ṣ, ק→q, ר→r, שׁ→sh, שׂ→ś, ת→t/th. Vowels: qamets→ā, patach→a, tsere→ē, segol→e, hiriq→i, holem→ō, qibbuts→u, shureq→ū, shva→ə.
+- **Arabic:** DIN 31635 / Library of Congress. Include hamza (ʾ), ayn (ʿ), emphatics (ṭ, ḍ, ṣ, ẓ), long vowels (ā, ī, ū), tāʾ marbūṭa (a/at).
+- **Syriac:** Based on standard Semiticist conventions, similar to Hebrew/Arabic.
+- **Armenian:** Library of Congress romanization.
+- **Georgian:** National system or ISO 9984.
+- **Coptic/Ethiopic:** Standard scholarly conventions.
+- **Chinese:** Pinyin with tone marks.
+- **Japanese:** Modified Hepburn.
+- **Korean:** Revised Romanization.
+- **Sanskrit/Devanagari:** IAST (International Alphabet of Sanskrit Transliteration).`;
+
+export async function performTransliteration(
+  ocrText: string,
+  sourceScript: string,
+  modelId: string = DEFAULT_MODEL
+): Promise<AIResult> {
+  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+
+  let prompt = TRANSLITERATION_PROMPT;
+  prompt += `\n\nThe source script is: **${sourceScript}**`;
+  prompt += `\n\n**Text to transliterate:**\n${ocrText}`;
+
+  const result = await model.generateContent({
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    safetySettings: OCR_SAFETY_SETTINGS,
+  });
+
+  const usageMetadata = result.response.usageMetadata;
+  const inputTokens = usageMetadata?.promptTokenCount || 0;
+  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+  return {
+    text: result.response.text(),
+    usage: {
+      inputTokens,
+      outputTokens,
+      totalTokens: inputTokens + outputTokens,
+      costUsd: calculateCost(inputTokens, outputTokens, modelId),
+    },
+  };
+}
+
 export async function processPageComplete(
   imageUrl: string,
   ocrPromptText: string,
