@@ -895,6 +895,21 @@ export default function TranslationEditor({
                 <FileText className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">OCR</span>
               </button>
+              {isNonLatin && (
+                <button
+                  onClick={() => setShowTransliterationPanel(!showTransliterationPanel)}
+                  className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTransliterationPanel ? 'text-white' : ''}`}
+                  style={{
+                    background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
+                    color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
+                  }}
+                  aria-label={`${showTransliterationPanel ? 'Hide' : 'Show'} documented text`}
+                  aria-pressed={showTransliterationPanel}
+                >
+                  <Type className="w-4 h-4" aria-hidden="true" />
+                  <span className="hidden sm:inline">Documented</span>
+                </button>
+              )}
               <button
                 onClick={() => setShowTranslationPanel(!showTranslationPanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
@@ -908,21 +923,6 @@ export default function TranslationEditor({
                 <Languages className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">English</span>
               </button>
-              {isNonLatin && (
-                <button
-                  onClick={() => setShowTransliterationPanel(!showTransliterationPanel)}
-                  className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTransliterationPanel ? 'text-white' : ''}`}
-                  style={{
-                    background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
-                    color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
-                  }}
-                  aria-label={`${showTransliterationPanel ? 'Hide' : 'Show'} romanized text`}
-                  aria-pressed={showTransliterationPanel}
-                >
-                  <Type className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">Romanized</span>
-                </button>
-              )}
             </div>
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
@@ -1148,6 +1148,76 @@ export default function TranslationEditor({
                 </div>
               )}
 
+              {/* Transliteration Panel (non-Latin scripts only) */}
+              {showTransliterationPanel && isNonLatin && (
+                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
+                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                        Documented {book.language || ''}
+                      </span>
+                      {transliterationText && (
+                        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
+                          <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                    </div>
+                    {transliterationText && (
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(transliterationText);
+                          toast.success('Copied transliteration');
+                        }}
+                        className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        <Copy className="w-3 h-3" />
+                        Copy
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
+                    {transliterationLoading ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <Loader2 className="w-8 h-8 animate-spin mb-3" style={{ color: 'var(--accent-rust)' }} />
+                        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Generating transliteration...</p>
+                      </div>
+                    ) : transliterationText ? (
+                      <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
+                        <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} columns={page.columns} />
+                      </div>
+                    ) : page.ocr?.data ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
+                        <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>
+                          Generate a Latin-script rendering of the {book.language || 'original'} text.
+                        </p>
+                        <button
+                          onClick={() => {
+                            setTransliterationLoading(true);
+                            pagesApi.transliterate(page.id)
+                              .then((res) => setTransliterationText(res.transliteration || ''))
+                              .catch((err) => toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`))
+                              .finally(() => setTransliterationLoading(false));
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
+                          style={{ background: 'var(--accent-rust)' }}
+                        >
+                          <Type className="w-4 h-4" />
+                          Transliterate
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
+                          Complete OCR first to enable transliteration.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Translation Panel */}
               {showTranslationPanel && (
                 <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
@@ -1315,76 +1385,6 @@ export default function TranslationEditor({
                     )}
                   </div>
 
-                </div>
-              )}
-
-              {/* Transliteration Panel (non-Latin scripts only) */}
-              {showTransliterationPanel && isNonLatin && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
-                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        Romanized {book.language || ''}
-                      </span>
-                      {transliterationText && (
-                        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
-                          <Check className="w-3 h-3" />
-                        </span>
-                      )}
-                    </div>
-                    {transliterationText && (
-                      <button
-                        onClick={() => {
-                          navigator.clipboard.writeText(transliterationText);
-                          toast.success('Copied transliteration');
-                        }}
-                        className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
-                        style={{ color: 'var(--text-muted)' }}
-                      >
-                        <Copy className="w-3 h-3" />
-                        Copy
-                      </button>
-                    )}
-                  </div>
-                  <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
-                    {transliterationLoading ? (
-                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                        <Loader2 className="w-8 h-8 animate-spin mb-3" style={{ color: 'var(--accent-rust)' }} />
-                        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Generating transliteration...</p>
-                      </div>
-                    ) : transliterationText ? (
-                      <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
-                        <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} columns={page.columns} />
-                      </div>
-                    ) : page.ocr?.data ? (
-                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                        <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
-                        <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>
-                          Generate a Latin-script rendering of the {book.language || 'original'} text.
-                        </p>
-                        <button
-                          onClick={() => {
-                            setTransliterationLoading(true);
-                            pagesApi.transliterate(page.id)
-                              .then((res) => setTransliterationText(res.transliteration || ''))
-                              .catch((err) => toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`))
-                              .finally(() => setTransliterationLoading(false));
-                          }}
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
-                          style={{ background: 'var(--accent-rust)' }}
-                        >
-                          <Type className="w-4 h-4" />
-                          Transliterate
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                        <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
-                          Complete OCR first to enable transliteration.
-                        </p>
-                      </div>
-                    )}
-                  </div>
                 </div>
               )}
 
@@ -1559,6 +1559,20 @@ export default function TranslationEditor({
               <FileText className="w-4 h-4" />
               <span className="hidden sm:inline">OCR</span>
             </button>
+            {isNonLatin && (
+              <button
+                onClick={() => setShowTransliterationPanel(!showTransliterationPanel)}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTransliterationPanel ? 'text-white' : ''}`}
+                style={{
+                  background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
+                  color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
+                }}
+                title="Toggle documented text"
+              >
+                <Type className="w-4 h-4" />
+                <span className="hidden sm:inline">Documented</span>
+              </button>
+            )}
             <button
               onClick={() => setShowTranslationPanel(!showTranslationPanel)}
               className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? 'text-white' : ''}`}
@@ -1571,20 +1585,6 @@ export default function TranslationEditor({
               <Languages className="w-4 h-4" />
               <span className="hidden sm:inline">English</span>
             </button>
-            {isNonLatin && (
-              <button
-                onClick={() => setShowTransliterationPanel(!showTransliterationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTransliterationPanel ? 'text-white' : ''}`}
-                style={{
-                  background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
-                  color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
-                }}
-                title="Toggle romanized text"
-              >
-                <Type className="w-4 h-4" />
-                <span className="hidden sm:inline">Romanized</span>
-              </button>
-            )}
           </div>
 
           {/* Right side: Mode toggle + Like */}
@@ -1714,6 +1714,31 @@ export default function TranslationEditor({
           </div>
         )}
 
+        {/* Transliteration Panel (non-Latin scripts only, read-only in edit mode) */}
+        {showTransliterationPanel && isNonLatin && (
+          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
+            <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Documented {book.language || ''}</span>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>read-only</span>
+            </div>
+            <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
+              {transliterationLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--accent-rust)' }} />
+                </div>
+              ) : transliterationText ? (
+                <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }} lang="und-Latn">
+                  <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} columns={page.columns} />
+                </div>
+              ) : (
+                <p className="text-sm text-center mt-8" style={{ color: 'var(--text-muted)' }}>
+                  Switch to read mode to generate transliteration.
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Translation Panel */}
         {showTranslationPanel && (
           <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)' }}>
@@ -1766,30 +1791,6 @@ export default function TranslationEditor({
           </div>
         )}
 
-        {/* Transliteration Panel (non-Latin scripts only, read-only in edit mode) */}
-        {showTransliterationPanel && isNonLatin && (
-          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
-            <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Romanized {book.language || ''}</span>
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>read-only</span>
-            </div>
-            <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
-              {transliterationLoading ? (
-                <div className="flex items-center justify-center h-full">
-                  <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--accent-rust)' }} />
-                </div>
-              ) : transliterationText ? (
-                <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }} lang="und-Latn">
-                  <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} columns={page.columns} />
-                </div>
-              ) : (
-                <p className="text-sm text-center mt-8" style={{ color: 'var(--text-muted)' }}>
-                  Switch to read mode to generate transliteration.
-                </p>
-              )}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* CC0 Footer */}

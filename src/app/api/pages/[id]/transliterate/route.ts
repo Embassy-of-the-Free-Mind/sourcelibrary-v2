@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performTransliteration } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types';
+const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
 
 // Simple hash function to detect OCR changes
@@ -51,7 +51,7 @@ export async function POST(
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
-    const { regenerate = false, model = DEFAULT_MODEL } = body;
+    const { regenerate = false, model = TRANSLITERATION_MODEL } = body;
 
     // Fetch the page
     const page = await db.collection('pages').findOne({ id });
