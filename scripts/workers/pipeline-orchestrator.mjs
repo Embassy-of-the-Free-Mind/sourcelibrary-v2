@@ -872,9 +872,12 @@ async function run() {
       console.log(`  Metadata enriched: ${log.metadata_enriched}, skipped: ${log.metadata_skipped}`);
     }
 
-    // ── Phase 4: Submit translation (metadata_enriched -> translate_submitted) ──
+    // ── Phase 4: Submit translation via Lambda (metadata_enriched -> translate_submitted) ──
+    // NEVER use Gemini Batch API for translation — always Lambda/SQS FIFO for context continuity
     if (shouldRun(4)) {
-      console.log('\n--- Phase 4: Translation submission ---');
+      console.log('\n--- Phase 4: Translation submission (Lambda) ---');
+
+      const SKIP_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
 
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'metadata_enriched' })
@@ -889,14 +892,38 @@ async function run() {
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
           if (DRY_RUN) {
-            console.log(`  Would submit translation: ${book.title} (${book.language})`);
+            console.log(`  Would submit translation (Lambda): ${book.title} (${book.language})`);
             continue;
           }
 
-          const res = await fetch(`${BASE_URL}/api/books/${book.id}/batch-translate-async`, {
+          // Find pages with OCR but no translation (skip non-content page types)
+          const pages = await db.collection('pages')
+            .find({
+              book_id: book.id,
+              'ocr.data': { $exists: true, $nin: [null, ''] },
+              page_type: { $nin: SKIP_PAGE_TYPES },
+              $or: [
+                { 'translation.data': { $exists: false } },
+                { 'translation.data': null },
+                { 'translation.data': '' },
+              ],
+            })
+            .sort({ page_number: 1 })
+            .project({ id: 1 })
+            .toArray();
+
+          if (pages.length === 0) {
+            await setPipelineStatus(db, book.id, 'translate_complete');
+            log.translate_advanced++;
+            console.log(`  No pages need translation: ${book.title}`);
+            continue;
+          }
+
+          const pageIds = pages.map(p => p.id);
+          const res = await fetch(`${BASE_URL}/api/jobs/queue-books`, {
             method: 'POST',
             headers: headers(),
-            body: JSON.stringify({ limit: 500 }),
+            body: JSON.stringify({ bookId: book.id, pageIds, action: 'translation' }),
           });
 
           const text = await res.text();
@@ -907,28 +934,25 @@ async function run() {
 
           if (!res.ok) {
             if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Translate submit: HTTP ${res.status}`, retries);
+              await markFailed(db, book.id, `Translate Lambda: HTTP ${res.status} - ${data.error || ''}`, retries);
             } else {
               await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
             }
-            log.errors.push(`Translate submit ${book.id}: HTTP ${res.status}`);
-          } else if (data.jobName) {
+            log.errors.push(`Translate Lambda ${book.id}: HTTP ${res.status}`);
+          } else if (data.jobId) {
             await setPipelineStatus(db, book.id, 'translate_submitted', {
-              translate_job_name: data.jobName,
+              translate_job_id: data.jobId,
               retry_count: 0,
             });
             log.translate_submitted++;
-            console.log(`  Translate submitted: ${book.title} -> ${data.jobName}`);
-          } else if (data.processed === 0 || data.message?.includes('No pages need translation')) {
-            await setPipelineStatus(db, book.id, 'translate_complete');
-            log.translate_advanced++;
+            console.log(`  Translate submitted (Lambda): ${book.title} -> job ${data.jobId} (${pageIds.length} pages)`);
           } else {
             if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Translate unexpected: ${data.error || 'unknown'}`, retries);
+              await markFailed(db, book.id, `Translate unexpected: ${JSON.stringify(data).slice(0, 200)}`, retries);
             } else {
               await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
             }
-            log.errors.push(`Translate submit ${book.id}: ${data.error || 'unexpected'}`);
+            log.errors.push(`Translate Lambda ${book.id}: unexpected response`);
           }
 
           await sleep(API_DELAY_MS);
@@ -938,7 +962,7 @@ async function run() {
           } else {
             await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
           }
-          log.errors.push(`Translate submit ${book.id}: ${err.message}`);
+          log.errors.push(`Translate Lambda ${book.id}: ${err.message}`);
         }
       }
       console.log(`  Translate submitted: ${log.translate_submitted}, advanced: ${log.translate_advanced}`);
