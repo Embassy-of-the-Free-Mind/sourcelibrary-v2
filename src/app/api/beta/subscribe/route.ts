@@ -60,6 +60,8 @@ const WELCOME_HTML = `
 </div>
 `;
 
+const RESEND_AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
+
 async function sendWelcomeEmail(email: string) {
   if (!process.env.RESEND_API_KEY) return;
 
@@ -67,12 +69,18 @@ async function sendWelcomeEmail(email: string) {
     const { Resend } = await import('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
-      to: email,
-      subject: 'Welcome to Source Library',
-      html: WELCOME_HTML,
-    });
+    await Promise.allSettled([
+      resend.emails.send({
+        from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+        to: email,
+        subject: 'Welcome to Source Library',
+        html: WELCOME_HTML,
+      }),
+      resend.contacts.create({
+        audienceId: RESEND_AUDIENCE_ID,
+        email,
+      }),
+    ]);
   } catch (error) {
     console.error('[subscribe] Welcome email failed:', error);
   }
