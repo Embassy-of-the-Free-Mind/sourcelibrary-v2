@@ -57,6 +57,8 @@ const ENRICH_LIMIT = 30;
 const CHAPTER_LIMIT = 50;
 const IMAGE_SUBMIT_LIMIT = 10;
 const FINALIZE_LIMIT = 200;
+const TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
+const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
 const MAX_ACTIVE_IMAGE_JOBS = 15;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 14;
@@ -68,6 +70,131 @@ const API_DELAY_MS = 500;
 const SKIP_TRANSLATION_PAGE_TYPES = [
   'blank', 'illustration', 'map', 'frontispiece', 'diagram',
 ];
+
+// Non-Latin languages that need transliteration
+const NON_LATIN_LANGUAGES = new Set([
+  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
+  'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
+  'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
+  'russian', 'church slavonic',
+]);
+
+function isNonLatin(language) {
+  return language && NON_LATIN_LANGUAGES.has(language.toLowerCase());
+}
+
+function languageToScript(language) {
+  if (!language) return 'Unknown';
+  const map = {
+    'greek': 'Greek', 'hebrew': 'Hebrew', 'arabic': 'Arabic',
+    'persian': 'Arabic (Persian)', 'ottoman turkish': 'Arabic (Ottoman Turkish)',
+    'syriac': 'Syriac', 'chinese': 'Chinese', 'japanese': 'Japanese',
+    'korean': 'Korean', 'sanskrit': 'Sanskrit/Devanagari', 'armenian': 'Armenian',
+    'georgian': 'Georgian', 'ethiopic': 'Ethiopic', 'coptic': 'Coptic',
+    'tibetan': 'Tibetan', 'russian': 'Cyrillic', 'church slavonic': 'Cyrillic',
+  };
+  return map[language.toLowerCase()] || language;
+}
+
+function hashString(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  return hash.toString(16);
+}
+
+const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
+const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
+
+CRITICAL RULES:
+1. Preserve the line-by-line structure EXACTLY. Each line of output must correspond to the same line of input.
+2. Preserve paragraph breaks and blank lines exactly as they appear.
+3. PRESERVE the <column-break/> tag exactly where it appears.
+4. Remove all OTHER XML/markup tags from the output.
+5. Include standard scholarly diacritics.
+6. Do not translate — only transliterate.
+7. If the text contains passages in Latin script already, preserve them as-is.
+
+Romanization conventions by script:
+- Greek: Standard scholarly. α→a, β→b, γ→g, δ→d, ε→e, ζ→z, η→ē, θ→th, etc.
+- Hebrew: SBL academic style.
+- Arabic: DIN 31635 / Library of Congress.
+- Syriac: Standard Semiticist conventions.
+- Armenian: Library of Congress romanization.
+- Chinese: Pinyin with tone marks.
+- Japanese: Modified Hepburn.
+- Korean: Revised Romanization.
+- Sanskrit/Devanagari: IAST.`;
+
+async function transliteratePage(db, page, sourceScript) {
+  const apiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${TRANSLITERATION_MODEL}:generateContent?key=${apiKey}`;
+  const prompt = `${TRANSLITERATION_PROMPT}\n\nThe source script is: **${sourceScript}**\n\n**Text to transliterate:**\n${page.ocr.data}`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      safetySettings: [
+        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+      ],
+      generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Gemini ${response.status}: ${errText.substring(0, 200)}`);
+  }
+
+  const data = await response.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const usage = data.usageMetadata || {};
+  const inputTokens = usage.promptTokenCount || 0;
+  const outputTokens = usage.candidatesTokenCount || 0;
+
+  if (!text) return null;
+
+  const ocrHash = hashString(page.ocr.data);
+  await db.collection('pages').updateOne(
+    { id: page.id },
+    {
+      $set: {
+        'transliteration.data': text,
+        'transliteration.model': TRANSLITERATION_MODEL,
+        'transliteration.updated_at': new Date(),
+        'transliteration.source_ocr_hash': ocrHash,
+        'transliteration.script': sourceScript,
+        updated_at: new Date(),
+      },
+    }
+  );
+
+  // Log usage (fire-and-forget)
+  const costUsd = (inputTokens / 1_000_000) * 0.10 + (outputTokens / 1_000_000) * 0.40;
+  db.collection('gemini_usage').insertOne({
+    type: 'transliterate',
+    mode: 'realtime',
+    model: TRANSLITERATION_MODEL,
+    book_id: page.book_id,
+    page_ids: [page.id],
+    input_tokens: inputTokens,
+    output_tokens: outputTokens,
+    cost_usd: costUsd,
+    status: 'success',
+    endpoint: 'hetzner/pipeline-orchestrator',
+    timestamp: new Date(),
+  }).catch(() => {});
+
+  return { inputTokens, outputTokens, costUsd };
+}
 
 // Sources whose pages need archiving
 const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian/;
@@ -531,6 +658,8 @@ async function run() {
     ocr_advanced: 0,
     metadata_enriched: 0,
     metadata_skipped: 0,
+    transliterated: 0,
+    transliterate_pages: 0,
     translate_submitted: 0,
     translate_advanced: 0,
     enriched: 0,
@@ -870,6 +999,87 @@ async function run() {
         }
       }
       console.log(`  Metadata enriched: ${log.metadata_enriched}, skipped: ${log.metadata_skipped}`);
+    }
+
+    // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on metadata_enriched books) ──
+    // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
+    if (shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) {
+      console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
+
+      // Find metadata_enriched books with non-Latin languages
+      const nonLatinBooks = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'metadata_enriched',
+          language: { $regex: new RegExp(`^(${[...NON_LATIN_LANGUAGES].join('|')})$`, 'i') },
+        })
+        .sort({ hidden: 1 })
+        .project({ id: 1, title: 1, language: 1 })
+        .limit(TRANSLITERATE_LIMIT)
+        .toArray();
+
+      console.log(`  Non-Latin books ready for transliteration: ${nonLatinBooks.length}`);
+
+      for (const book of nonLatinBooks) {
+        try {
+          const sourceScript = languageToScript(book.language);
+          const pages = await db.collection('pages')
+            .find({
+              book_id: book.id,
+              'ocr.data': { $exists: true, $nin: [null, ''] },
+              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+              $or: [
+                { 'transliteration.data': { $exists: false } },
+                { 'transliteration.data': null },
+                { 'transliteration.data': '' },
+              ],
+            })
+            .sort({ page_number: 1 })
+            .project({ id: 1, book_id: 1, ocr: 1, transliteration: 1 })
+            .toArray();
+
+          if (pages.length === 0) {
+            console.log(`  Already transliterated: ${book.title}`);
+            continue;
+          }
+
+          const label = (book.title || '').substring(0, 50);
+          if (DRY_RUN) {
+            console.log(`  Would transliterate: ${label} (${book.language}) — ${pages.length} pages`);
+            continue;
+          }
+
+          console.log(`  Transliterating: ${label} (${book.language}) — ${pages.length} pages...`);
+          let pagesDone = 0;
+          let pagesErr = 0;
+
+          for (let i = 0; i < pages.length; i += TRANSLITERATE_CONCURRENCY) {
+            const chunk = pages.slice(i, i + TRANSLITERATE_CONCURRENCY);
+            const results = await Promise.allSettled(
+              chunk.map(page => transliteratePage(db, page, sourceScript))
+            );
+
+            for (const r of results) {
+              if (r.status === 'fulfilled' && r.value) {
+                pagesDone++;
+              } else if (r.status === 'rejected') {
+                pagesErr++;
+                const msg = r.reason?.message || '';
+                if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')) {
+                  console.log('    Rate limited — waiting 30s...');
+                  await sleep(30000);
+                }
+              }
+            }
+          }
+
+          log.transliterated++;
+          log.transliterate_pages += pagesDone;
+          console.log(`  Done: ${label} — ${pagesDone} ok, ${pagesErr} errors`);
+        } catch (err) {
+          log.errors.push(`Transliterate ${book.id}: ${err.message}`);
+        }
+      }
+      console.log(`  Transliterated: ${log.transliterated} books, ${log.transliterate_pages} pages`);
     }
 
     // ── Phase 4: Submit translation via Lambda (metadata_enriched -> translate_submitted) ──
@@ -1477,6 +1687,8 @@ async function run() {
             ocr_advanced: log.ocr_advanced,
             metadata_enriched: log.metadata_enriched,
             metadata_skipped: log.metadata_skipped,
+            transliterated: log.transliterated,
+            transliterate_pages: log.transliterate_pages,
             translate_submitted: log.translate_submitted,
             translate_advanced: log.translate_advanced,
             enriched: log.enriched,
@@ -1491,7 +1703,7 @@ async function run() {
           },
           errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: log.errors.length,
-          summary: `E:${log.enrolled} A:${log.archived} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
+          summary: `E:${log.enrolled} A:${log.archived} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
         }),
       ]);
     }
