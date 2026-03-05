@@ -1467,12 +1467,14 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      // Process all books concurrently
+      // Process all books concurrently with per-book timeout
       const enrichResults = await Promise.allSettled(
         readyForEnrich.map(async (book) => {
           // GET /api/books/{id}/index generates summary + index if stale
+          // 90s timeout per book — prevents slow books from blocking the whole cron
           const res = await fetch(`${baseUrl}/api/books/${book.id}/index`, {
             method: 'GET',
+            signal: AbortSignal.timeout(90_000),
           });
 
           if (!res.ok) {
