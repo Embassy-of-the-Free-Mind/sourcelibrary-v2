@@ -45,6 +45,23 @@ async function getCollections(): Promise<CollectionForGrid[]> {
         (img: Record<string, unknown>) => img.thumbnail_url || img.extracted_url || img.image_url
       );
       const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url || null;
+      const languageValues = Array.isArray(rest.languages)
+        ? rest.languages
+        : rest.languages && typeof rest.languages === 'object'
+          ? Object.values(rest.languages as Record<string, unknown>)
+          : typeof rest.languages === 'string'
+            ? [rest.languages]
+            : [];
+      const languages = languageValues
+        .map((language) => {
+          if (typeof language === 'string') return language;
+          if (language && typeof language === 'object' && typeof (language as { lang?: unknown }).lang === 'string') {
+            return (language as { lang: string }).lang;
+          }
+          return null;
+        })
+        .filter((language): language is string => Boolean(language))
+        .slice(0, 3);
       return {
         slug: rest.slug,
         name: rest.name,
@@ -52,7 +69,7 @@ async function getCollections(): Promise<CollectionForGrid[]> {
         description: rest.description || '',
         book_count: rest.book_count || 0,
         hero_image: heroUrl as string | null,
-        languages: (rest.languages || []).slice(0, 3).map((l: { lang: string }) => l.lang),
+        languages,
       };
     }) as CollectionForGrid[];
   } catch (error) {

@@ -33,6 +33,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'diglib.hab.de' },
       // Wellcome Collection
       { protocol: 'https', hostname: 'iiif.wellcomecollection.org' },
+      // Patrimonio Nacional (Spain)
+      { protocol: 'https', hostname: 'imagenes.patrimonionacional.es' },
       // Library of Congress
       { protocol: 'https', hostname: '**.loc.gov' },
       // HathiTrust
