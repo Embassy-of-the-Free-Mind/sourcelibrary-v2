@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
-import { generateKdpMetadata } from '@/lib/kdp-scoring';
+import { generateKdpMetadata, computeQualityFlags } from '@/lib/kdp-scoring';
 import crypto from 'crypto';
 
 /**
@@ -75,14 +75,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Generate metadata
+    // Generate metadata and quality flags
     const kdpMetadata = generateKdpMetadata(book as unknown as Parameters<typeof generateKdpMetadata>[0]);
+    const qualityFlags = await computeQualityFlags(db, book_id, book as Parameters<typeof computeQualityFlags>[2]);
 
     const publication = {
       id: crypto.randomUUID(),
       book_id,
       status: 'candidate' as const,
       kdp_metadata: kdpMetadata,
+      cover_image_url: (book.thumbnail_blob || book.thumbnail) as string | undefined,
+      quality_flags: qualityFlags,
       kdp_score_snapshot: book.kdp_score || 0,
       created_at: new Date(),
       updated_at: new Date(),

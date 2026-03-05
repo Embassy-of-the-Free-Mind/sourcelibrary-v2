@@ -23,7 +23,18 @@ export interface KdpMetadata {
   price: string;
 }
 
-export type KdpPublicationStatus = 'candidate' | 'packaging' | 'ready' | 'uploaded' | 'live' | 'rejected';
+export type KdpPublicationStatus = 'candidate' | 'review' | 'packaging' | 'ready' | 'uploaded' | 'live' | 'rejected';
+
+export interface KdpQualityFlags {
+  translation_percent: number;
+  has_summary: boolean;
+  has_index: boolean;
+  has_chapters: boolean;
+  has_cover: boolean;
+  flagged_pages: number;
+  low_quality: boolean;
+  computed_at: Date;
+}
 
 export interface KdpPublication {
   id: string;
@@ -31,6 +42,8 @@ export interface KdpPublication {
   edition_id?: string;
   status: KdpPublicationStatus;
   kdp_metadata: KdpMetadata;
+  cover_image_url?: string;
+  quality_flags?: KdpQualityFlags;
   asin?: string;
   kindle_url?: string;
   goodreads_url?: string;
@@ -250,6 +263,56 @@ export async function scoreBooksKdp(
   return {
     scored: scored.length,
     topBooks: scored.slice(0, 10),
+  };
+}
+
+// ─── Quality Flags ──────────────────────────────────────────────────────
+
+/**
+ * Compute quality flags for a KDP publication candidate.
+ * Queries pages collection for translation coverage and flagged pages.
+ */
+export async function computeQualityFlags(
+  db: Db,
+  bookId: string,
+  book: {
+    quality_score?: number;
+    pages_count?: number;
+    reading_summary?: unknown;
+    index?: { generatedAt?: Date };
+    chapters?: unknown[];
+    thumbnail?: string;
+    thumbnail_blob?: string;
+  },
+): Promise<KdpQualityFlags> {
+  const pagesCount = book.pages_count || 0;
+
+  // Count translated pages and flagged (short translation) pages
+  const [translatedCount, flaggedCount] = await Promise.all([
+    db.collection('pages').countDocuments({
+      book_id: bookId,
+      'translation.data': { $exists: true, $ne: '' },
+    }),
+    db.collection('pages').countDocuments({
+      book_id: bookId,
+      'translation.data': { $exists: true, $ne: '' },
+      $expr: { $lt: [{ $strLenCP: '$translation.data' }, 50] },
+    }),
+  ]);
+
+  const translationPercent = pagesCount > 0
+    ? Math.round((translatedCount / pagesCount) * 100)
+    : 0;
+
+  return {
+    translation_percent: translationPercent,
+    has_summary: !!book.reading_summary,
+    has_index: !!book.index?.generatedAt,
+    has_chapters: Array.isArray(book.chapters) && book.chapters.length > 0,
+    has_cover: !!(book.thumbnail || book.thumbnail_blob),
+    flagged_pages: flaggedCount,
+    low_quality: (book.quality_score || 0) < 50,
+    computed_at: new Date(),
   };
 }
 
