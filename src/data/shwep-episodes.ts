@@ -4,7 +4,8 @@
  * which are matched against our book collection to provide reading links.
  *
  * Episode data sourced from shwep.net — tags curated for collection matching.
- * Generated from crawled data at data/shwep-episodes.json (215 episodes, 0-214).
+ * Generated from crawled data at data/shwep-episodes.json (260 episodes, 0-320).
+ * Includes oddcasts, storytimes, and supplementary episodes beyond the main series.
  */
 
 export interface ShwepEpisode {
@@ -221,6 +222,21 @@ const lateMagicEpisodes: ShwepEpisode[] = [
   { number: 159, title: "Metals, Temples, and Living Statues: Shannon Grimes on Zosimus' Egyptian Context", url: "https://shwep.net/podcast/metals-temples-and-living-statues-shannon-grimes-on-zosimus-egyptian-context/", period: "late-magic", tags: ['Corpus Hermeticum', 'Enneads', 'Zosimus'] },
   { number: 160, title: "Kocku von Stuckrad on Monotheist Astrologies in (Late) Antiquity", url: "https://shwep.net/podcast/kocku-von-stuckrad-on-monotheist-astrologies-in-late-antiquity/", period: "late-magic", tags: ['Contra Celsum', 'Firmicus Maternus'] },
   { number: 161, title: "Claire Hall on Firmicus Maternus", url: "https://shwep.net/podcast/claire-hall-on-firmicus-maternus/", period: "late-magic", tags: ['Firmicus Maternus', 'dedicated to', 'under'] },
+  // Oddcasts, storytimes, and supplementary episodes (215+)
+  { number: 216, title: "Jesus the Magician? Interrogating Ancient and Modern Discourses of Ritual Power in the Gospels", url: "https://shwep.net/podcast/jesus-the-magician-interrogating-ancient-and-modern-discourses-of-ritual-power-in-the-gospels/", period: "late-magic", tags: ['New Testament'] },
+  { number: 217, title: "The Esoteric New Testament, Part I: The Gospel of Mark", url: "https://shwep.net/podcast/the-esoteric-new-testament-part-i-the-gospel-of-mark/", period: "late-magic", tags: ['Jewish Antiquities', 'Novum Testamentum'] },
+  { number: 218, title: "The Esoteric New Testament, Part II: Paul and the 'Mysteries'", url: "https://shwep.net/podcast/the-esoteric-new-testament-part-ii-paul-and-the-mysteries/", period: "late-magic", tags: ['Acts of the Apostles'] },
+  { number: 220, title: "The Esoteric New Testament, Part III: John and Apocalypse", url: "https://shwep.net/podcast/the-esoteric-new-testament-part-iii-john-and-apocalypse/", period: "late-magic", tags: ['Apocalypse of John', 'Gospel of John', 'Novum Testamentum'] },
+  { number: 221, title: "Into Coptic Magic with Korshi Dosoo", url: "https://shwep.net/podcast/into-coptic-magic-with-korshi-dosoo-2/", period: "late-magic", tags: [] },
+  { number: 223, title: "Into Syriac Spirituality in Theory and Practice with Paul Pasquesi", url: "https://shwep.net/podcast/into-syriac-spirituality-in-theory-and-practice-with-paul-pasquesi/", period: "late-magic", tags: ['Odes of Solomon'] },
+  { number: 225, title: "Into the Light-Worlds with Charles H\u00e4berl", url: "https://shwep.net/podcast/into-the-light-worlds-with-charles-haberl/", period: "late-magic", tags: [] },
+  { number: 226, title: "Approaches to the Question of Early Christian Esotericism", url: "https://shwep.net/podcast/approaches-to-the-question-of-early-christian-esotericism/", period: "late-magic", tags: [] },
+  { number: 229, title: "Matteo Martelli Perfects the Tincture", url: "https://shwep.net/podcast/matteo-martelli-perfects-the-tincture/", period: "late-magic", tags: [] },
+  { number: 233, title: "Bink Hallum on Zosimus Arabicus: The Final Quittance", url: "https://shwep.net/podcast/bink-hallum-on-zosimus-arabicus-the-final-quittance/", period: "late-magic", tags: [] },
+  { number: 237, title: "Storytime: Reading Zosimus of Panopolis\u2019 The Final Accounting", url: "https://shwep.net/podcast/storytime-reading-zosimus-of-panopolis-the-final-accounting/", period: "late-magic", tags: ['Corpus Hermeticum'] },
+  { number: 238, title: "Storytime: Reading Zosimus of Panopolis On the Letter Omega", url: "https://shwep.net/podcast/storytime-reading-zosimus-of-panopolis-on-the-letter-omega/", period: "late-magic", tags: ['Sibylline Oracles'] },
+  { number: 239, title: "Storytime: Reading \u2018The Visions of Zosimus\u2019", url: "https://shwep.net/podcast/storytime-reading-the-visions-of-zosimus/", period: "late-magic", tags: [] },
+  { number: 290, title: "Joseph Sanzo on Magic and Confessional Boundaries in Late Antiquity", url: "https://shwep.net/podcast/joseph-sanzo-on-magic-and-confessional-boundaries-in-late-antiquity/", period: "late-magic", tags: [] },
 ];
 
 const christianFathersEpisodes: ShwepEpisode[] = [
@@ -243,6 +259,18 @@ const christianFathersEpisodes: ShwepEpisode[] = [
   { number: 178, title: "Stephen A. Cooper on Marius Victorinus and Latinate Christian Platonism", url: "https://shwep.net/podcast/stephen-a-cooper-on-marius-victorinus-and-latinate-christian-platonism/", period: "christian-fathers", tags: ['Marius Victorinus', 'Sophist'] },
   { number: 179, title: "The Manichaean Catholic: Augustine of Hippo", url: "https://shwep.net/podcast/the-manichaean-catholic-augustine-of-hippo/", period: "christian-fathers", tags: ['Augustine', 'Mani', 'Manichaeism'] },
   { number: 180, title: "Augustine of Hippo: Saint of the Exoteric", url: "https://shwep.net/podcast/augustine-of-hippo-saint-of-the-exoteric/", period: "christian-fathers", tags: ['Augustine', 'De mensibus', 'Novum Testamentum'] },
+  // Oddcasts, storytimes, and supplementary episodes (215+)
+  { number: 242, title: "Into the Darkness with Michæl Motia", url: "https://shwep.net/podcast/into-the-darkness-with-michael-motia/", period: "christian-fathers", tags: [] },
+  { number: 248, title: "Storytime: Reading Eunapius Part II, The Emperor and the Thaumaturge", url: "https://shwep.net/podcast/storytime-reading-eunapius-part-ii-the-emperor-and-the-thaumaturge/", period: "christian-fathers", tags: ['Ammianus Marcellinus'] },
+  { number: 250, title: "Storytime: Reading Eunapius, Part III: The Diviners' Purge and the End of the Theurgic Revolution", url: "https://shwep.net/podcast/storytime-reading-eunapius-part-iii-the-diviners-purge-and-the-end-of-the-theurgic-revolution/", period: "christian-fathers", tags: [] },
+  { number: 255, title: "Storytime: Reading Synesius On Dreams", url: "https://shwep.net/podcast/storytime-reading-synesius-on-dreams/", period: "christian-fathers", tags: ['Golden Verses'] },
+  { number: 259, title: "David Hernández de la Fuente on Nonnus of Panopolis", url: "https://shwep.net/podcast/david-hernandez-de-la-fuente-on-nonnus-of-panopolis/", period: "christian-fathers", tags: ['Gospel of John'] },
+  { number: 260, title: "Stephen Cooper on Marius Victorinus, Philosophy, Panpsychism, and a Modern Religious Platonism", url: "https://shwep.net/podcast/stephen-cooper-on-marius-victorinus-philosophy-panpsychism-and-a-modern-religious-platonism/", period: "christian-fathers", tags: [] },
+  { number: 264, title: "Mateusz Stróżyński on Augustine and Platonism", url: "https://shwep.net/podcast/mateusz-strozynski-on-augustine-and-platonism/", period: "christian-fathers", tags: [] },
+  { number: 265, title: "Mateusz Stróżyński on Spiritual Practices in Augustine", url: "https://shwep.net/podcast/mateusz-strozynski-on-spiritual-practices-in-augustine/", period: "christian-fathers", tags: [] },
+  { number: 266, title: "Poseidonius of Rhodes, Weird Stoicism, and 'Cosmic Religion'", url: "https://shwep.net/podcast/poseidonius-of-rhodes-weird-stoicism-and-cosmic-religion/", period: "christian-fathers", tags: ['De trinitate'] },
+  { number: 270, title: "Storytime: Reading Macrobius' Commentary on the Dream of Scipio, Part I", url: "https://shwep.net/podcast/storytime-reading-macrobius-commentary-on-the-dream-of-scipio-part-i/", period: "christian-fathers", tags: ['Commentary on the Dream of Scipio'] },
+  { number: 271, title: "Storytime: Reading Macrobius' Commentary on the Dream of Scipio, Part II", url: "https://shwep.net/podcast/storytime-reading-macrobius-commentary-on-the-dream-of-scipio-part-ii/", period: "christian-fathers", tags: ['Commentary on the Dream of Scipio'] },
 ];
 
 const athenianAcademyEpisodes: ShwepEpisode[] = [
@@ -261,6 +289,22 @@ const athenianAcademyEpisodes: ShwepEpisode[] = [
   { number: 193, title: "All from Nothing: Sara Rappe on Damascius", url: "https://shwep.net/podcast/all-from-nothing-sara-rappe-on-damascius/", period: "athenian-academy", tags: ['Damascius', 'De anima', 'De mysteriis', 'Hermetica', 'Hermeticum', 'Iamblichus on The Mysteries', 'Letter', 'Oracles', 'Poimandres', 'Response', 'Symbola', 'Traditio', 'kosmos'] },
   { number: 194, title: "The Last Platonists? Philosophic Teaching, Christianity, and Polytheism in Late-Antique Alexandria", url: "https://shwep.net/podcast/the-last-platonists-philosophic-teaching-christianity-and-polytheism-in-late-antique-alexandria/", period: "athenian-academy", tags: ['De anima', 'De mysteriis', 'Horapollo', 'Olympiodorus'] },
   { number: 195, title: "Contested Esotericisms at the End of Antiquity: Simplicius, Philoponus, and Olympiodorus", url: "https://shwep.net/podcast/contested-esotericisms-at-the-end-of-antiquity-simplicius-philoponus-and-olympiodorus/", period: "athenian-academy", tags: ['De anima', 'John Philoponus', 'Olympiodorus', 'Simplicius'] },
+  // Oddcasts, storytimes, and supplementary episodes (215+)
+  { number: 267, title: "Storytime: Reading Cicero's Dream of Scipio", url: "https://shwep.net/podcast/storytime-reading-ciceros-dream-of-scipio/", period: "athenian-academy", tags: ['Dream of Scipio'] },
+  { number: 269, title: "Ↄ. Martiana Rises to the Occasion", url: "https://shwep.net/podcast/%e2%86%84-martiana-rises-to-the-occasion/", period: "athenian-academy", tags: ['Metamorphoses'] },
+  { number: 274, title: "Storytime: Reading Hierocles on the Golden Verses, Part I", url: "https://shwep.net/podcast/storytime-reading-hierocles-on-the-golden-verses-part-i/", period: "athenian-academy", tags: ['Golden Verses', 'Life of Proclus'] },
+  { number: 275, title: "Storytime: Reading Hierocles on the Golden Verses, Part II", url: "https://shwep.net/podcast/storytime-reading-hierocles-on-the-golden-verses-part-ii/", period: "athenian-academy", tags: ['Golden Verses'] },
+  { number: 280, title: "Dylan Burns with the Noetic Fire: On Proclus and Christianity", url: "https://shwep.net/podcast/dylan-burns-with-the-noetic-fire-on-proclus-and-christianity/", period: "athenian-academy", tags: ['Life of Proclus'] },
+  { number: 282, title: "Edward Butler on Proclus, Part I: 'Henadology'", url: "https://shwep.net/podcast/edward-butler-on-proclus-part-i-henadology/", period: "athenian-academy", tags: ['Platonic Theology'] },
+  { number: 283, title: "Edward Butler on Proclus, Part II: On (the Metaphysics of) Polytheism and Monotheism", url: "https://shwep.net/podcast/edward-butler-on-proclus-part-ii-on-the-metaphysics-of-polytheism-and-monotheism/", period: "athenian-academy", tags: ['Elements of Theology'] },
+  { number: 284, title: "Stephen Rego on the Nous in Proclus, Part I: Exegesis", url: "https://shwep.net/podcast/stephen-rego-on-the-nous-in-proclus-part-i-exegesis/", period: "athenian-academy", tags: ['Platonic Theology'] },
+  { number: 285, title: "Stephen Rego on the Nous in Proclus, Part II: Metaphysics and Myth", url: "https://shwep.net/podcast/stephen-rego-on-the-nous-in-proclus-part-ii-metaphysics-and-myth/", period: "athenian-academy", tags: ['Platonic Theology'] },
+  { number: 289, title: "Robbert van den Berg on Proclus' Hymns", url: "https://shwep.net/podcast/robbert-van-den-berg-on-proclus-hymns/", period: "athenian-academy", tags: ['Homeric Hymns'] },
+  { number: 296, title: "Storytime: Reading Damascius' Philosophic History, Part I: Text, Context, and Themes", url: "https://shwep.net/podcast/storytime-reading-damascius-philosophic-history-part-i-text-context-and-themes/", period: "athenian-academy", tags: [] },
+  { number: 297, title: "Michæl Griffin on the Higher Virtues in Late Platonism", url: "https://shwep.net/podcast/michael-griffin-on-the-higher-virtues-in-late-platonism/", period: "athenian-academy", tags: [] },
+  { number: 298, title: "Storytime: Reading Damascius' Philosophic History, Part II: Theurgy and Philosophy at Late-Antique Athens and Alexandria", url: "https://shwep.net/podcast/storytime-reading-damascius-philosophic-history-part-ii-theurgy-and-philosophy-at-late-antique-athens-and-alexandria/", period: "athenian-academy", tags: [] },
+  { number: 299, title: "Storytime: Reading Damascius' Philosophic History, Part III: The Breaking of the Golden Chain", url: "https://shwep.net/podcast/storytime-reading-damascius-philosophic-history-part-iii-the-breaking-of-the-golden-chain/", period: "athenian-academy", tags: [] },
+  { number: 300, title: "An Apollonian Man: Plato at the End of Antiquity in the Anonymous Prolegomena", url: "https://shwep.net/podcast/an-apollonian-man-plato-at-the-end-of-antiquity-in-the-anonymous-prolegomena/", period: "athenian-academy", tags: [] },
 ];
 
 const postAntiquityEpisodes: ShwepEpisode[] = [
@@ -283,6 +327,12 @@ const postAntiquityEpisodes: ShwepEpisode[] = [
   { number: 212, title: "Esoteric Orthodoxy in East Rome: Jonathan Greig on Maximus the Confessor", url: "https://shwep.net/podcast/esoteric-orthodoxy-in-east-rome-jonathan-greig-on-maximus-the-confessor/", period: "post-antiquity", tags: ['Maximus the Confessor'] },
   { number: 213, title: "Philosophy and Occult Sciences at Constantinople: Maria Papathanassiou on Stephanos of Alexandria, Part I", url: "https://shwep.net/podcast/philosophy-and-occult-sciences-at-constantinople-maria-papathanassiou-on-stephanos-of-alexandria-part-i/", period: "post-antiquity", tags: ['Berthelot', 'Jewish Antiquities', 'Josephus', 'Kings', 'Proverbs', 'Song of Songs', 'Stephanos of Alexandria', 'Testament of Solomon'] },
   { number: 214, title: "The Horoscope of Islam and The Alchemical Stone: Maria Papathanassiou on Stephanos of Alexandria, Part II", url: "https://shwep.net/podcast/the-horoscope-of-islam-and-the-alchemical-stone-maria-papathanassiou-on-stephanos-of-alexandria-part-ii/", period: "post-antiquity", tags: ['Berthelot', 'Corpus Hermeticum', 'Stephanos of Alexandria', 'Testament of Solomon', 'Theon of Alexandria'] },
+  // Oddcasts, storytimes, and supplementary episodes (215+)
+  { number: 302, title: "Unsaying the Divine Darkness: Exploring Dionysian Apophasis and Mysticism", url: "https://shwep.net/podcast/unsaying-the-divine-darkness-exploring-dionysian-apophasis-and-mysticism/", period: "post-antiquity", tags: ['Theologia Platonica'] },
+  { number: 303, title: "Fake Apostles and Real Christianity: Exploring the 'Pseudo-' in the Pseudo-Dionysios", url: "https://shwep.net/podcast/fake-apostles-and-real-christianity-exploring-the-pseudo-in-the-pseudo-dionysios/", period: "post-antiquity", tags: ['Corpus Dionysiacum'] },
+  { number: 307, title: "Westward Ho! with Matthew Melvin-Koushki", url: "https://shwep.net/podcast/westward-ho-with-matthew-melvin-koushki/", period: "post-antiquity", tags: [] },
+  { number: 309, title: "Fred Donner on the History of the History of Early Islām", url: "https://shwep.net/podcast/fred-donner-on-the-history-of-the-history-of-early-islam/", period: "post-antiquity", tags: [] },
+  { number: 320, title: "Jonathan Greig on the Question of Universal Salvation in Maximus", url: "https://shwep.net/podcast/jonathan-greig-on-the-question-of-universal-salvation-in-maximus/", period: "post-antiquity", tags: [] },
 ];
 
 // ---------------------------------------------------------------------------
