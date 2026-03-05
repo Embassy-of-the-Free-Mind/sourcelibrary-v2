@@ -4,6 +4,12 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import type { ShwepPageData, EnrichedEpisode, MatchedBook } from './page';
 
+type ViewMode = 'period' | 'recent' | 'storytime';
+
+function getEpisodeType(ep: EnrichedEpisode): 'storytime' | 'podcast' {
+  return ep.title.startsWith('Storytime:') ? 'storytime' : 'podcast';
+}
+
 interface Props {
   data: ShwepPageData;
 }
@@ -12,25 +18,50 @@ export default function ShwepClient({ data }: Props) {
   const [search, setSearch] = useState('');
   const [expandedPeriod, setExpandedPeriod] = useState<string | null>(null);
   const [showOnlyWithBooks, setShowOnlyWithBooks] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('recent');
+
+  // Flatten all episodes for non-period views
+  const allEpisodes = useMemo(() => {
+    return data.periods.flatMap(p => p.episodes);
+  }, [data.periods]);
+
+  // Filter episodes
+  const filterEpisode = (ep: EnrichedEpisode, q: string) => {
+    if (showOnlyWithBooks && ep.bookCount === 0) return false;
+    if (!q) return true;
+    return (
+      ep.title.toLowerCase().includes(q) ||
+      ep.tags.some(t => t.toLowerCase().includes(q)) ||
+      ep.description?.toLowerCase().includes(q) ||
+      ep.books.some(b => b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q))
+    );
+  };
 
   const filteredPeriods = useMemo(() => {
     const q = search.toLowerCase().trim();
     return data.periods.map(period => ({
       ...period,
-      episodes: period.episodes.filter(ep => {
-        if (showOnlyWithBooks && ep.bookCount === 0) return false;
-        if (!q) return true;
-        return (
-          ep.title.toLowerCase().includes(q) ||
-          ep.tags.some(t => t.toLowerCase().includes(q)) ||
-          ep.description?.toLowerCase().includes(q) ||
-          ep.books.some(b => b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q))
-        );
-      }),
+      episodes: period.episodes.filter(ep => filterEpisode(ep, q)),
     })).filter(p => p.episodes.length > 0);
   }, [data.periods, search, showOnlyWithBooks]);
 
-  const totalFiltered = filteredPeriods.reduce((s, p) => s + p.episodes.length, 0);
+  const filteredEpisodes = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    let eps = allEpisodes.filter(ep => filterEpisode(ep, q));
+    if (viewMode === 'storytime') {
+      eps = eps.filter(ep => getEpisodeType(ep) === 'storytime');
+    } else if (viewMode === 'recent') {
+      eps = eps.filter(ep => getEpisodeType(ep) === 'podcast');
+    }
+    // Sort by episode number descending (newest first)
+    return [...eps].sort((a, b) => b.number - a.number);
+  }, [allEpisodes, search, showOnlyWithBooks, viewMode]);
+
+  const totalFiltered = viewMode === 'period'
+    ? filteredPeriods.reduce((s, p) => s + p.episodes.length, 0)
+    : filteredEpisodes.length;
+
+  const storytimeCount = allEpisodes.filter(ep => getEpisodeType(ep) === 'storytime').length;
 
   return (
     <>
@@ -82,94 +113,130 @@ export default function ShwepClient({ data }: Props) {
         </div>
       </div>
 
-      {/* Search and Filters */}
+      {/* Search, Tabs, and Filters */}
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-stone-200 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex flex-wrap items-center gap-4">
-          <div className="relative flex-1 min-w-[200px]">
-            <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search episodes, authors, texts..."
-              className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent"
-            />
+        <div className="max-w-6xl mx-auto px-6 py-3 space-y-3">
+          {/* View mode tabs */}
+          <div className="flex items-center gap-1">
+            {([
+              { id: 'recent' as const, label: 'Podcast' },
+              { id: 'storytime' as const, label: `Storytime (${storytimeCount})` },
+              { id: 'period' as const, label: 'By Period' },
+            ]).map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setViewMode(tab.id)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  viewMode === tab.id
+                    ? 'bg-stone-800 text-white'
+                    : 'text-stone-500 hover:text-stone-700 hover:bg-stone-100'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
-          <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={showOnlyWithBooks}
-              onChange={e => setShowOnlyWithBooks(e.target.checked)}
-              className="rounded border-stone-300 text-accent-rust focus:ring-accent-gold"
-            />
-            Only episodes with source texts
-          </label>
-          <span className="text-sm text-stone-400">
-            {totalFiltered} episode{totalFiltered !== 1 ? 's' : ''}
-          </span>
+
+          {/* Search + filter */}
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="relative flex-1 min-w-[200px]">
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search episodes, authors, texts..."
+                className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent"
+              />
+            </div>
+            <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={showOnlyWithBooks}
+                onChange={e => setShowOnlyWithBooks(e.target.checked)}
+                className="rounded border-stone-300 text-accent-rust focus:ring-accent-gold"
+              />
+              Only episodes with source texts
+            </label>
+            <span className="text-sm text-stone-400">
+              {totalFiltered} episode{totalFiltered !== 1 ? 's' : ''}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Period Navigation */}
+      {/* Content */}
       <div className="max-w-6xl mx-auto px-6 py-6">
-        <div className="flex flex-wrap gap-2 mb-8">
-          {data.periods.map(period => {
-            const epCount = filteredPeriods.find(p => p.id === period.id)?.episodes.length || 0;
-            const bookCount = filteredPeriods
-              .find(p => p.id === period.id)
-              ?.episodes.reduce((s, e) => s + e.bookCount, 0) || 0;
-            return (
-              <button
-                key={period.id}
-                onClick={() => {
-                  const el = document.getElementById(`period-${period.id}`);
-                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }}
-                className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
-                  epCount > 0
-                    ? 'border-stone-300 text-stone-700 hover:bg-stone-100'
-                    : 'border-stone-200 text-stone-400'
-                }`}
-              >
-                {period.name}
-                {bookCount > 0 && (
-                  <span className="ml-1.5 text-xs text-accent-rust font-medium">{bookCount}</span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Episodes by Period */}
-        {filteredPeriods.map(period => (
-          <section key={period.id} id={`period-${period.id}`} className="mb-12 scroll-mt-20">
-            <div className="mb-6">
-              <h2 className="text-2xl md:text-3xl text-stone-800 mb-1">{period.name}</h2>
-              <p className="text-stone-500">{period.dateRange}</p>
-              <p className="text-stone-600 mt-2">{period.description}</p>
+        {viewMode === 'period' ? (
+          <>
+            {/* Period Navigation */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {data.periods.map(period => {
+                const epCount = filteredPeriods.find(p => p.id === period.id)?.episodes.length || 0;
+                const bookCount = filteredPeriods
+                  .find(p => p.id === period.id)
+                  ?.episodes.reduce((s, e) => s + e.bookCount, 0) || 0;
+                return (
+                  <button
+                    key={period.id}
+                    onClick={() => {
+                      const el = document.getElementById(`period-${period.id}`);
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
+                      epCount > 0
+                        ? 'border-stone-300 text-stone-700 hover:bg-stone-100'
+                        : 'border-stone-200 text-stone-400'
+                    }`}
+                  >
+                    {period.name}
+                    {bookCount > 0 && (
+                      <span className="ml-1.5 text-xs text-accent-rust font-medium">{bookCount}</span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="space-y-3">
-              {period.episodes.map(ep => (
-                <EpisodeCard key={ep.number} episode={ep} />
-              ))}
-            </div>
-          </section>
-        ))}
+            {/* Episodes by Period */}
+            {filteredPeriods.map(period => (
+              <section key={period.id} id={`period-${period.id}`} className="mb-12 scroll-mt-20">
+                <div className="mb-6">
+                  <h2 className="text-2xl md:text-3xl text-stone-800 mb-1">{period.name}</h2>
+                  <p className="text-stone-500">{period.dateRange}</p>
+                  <p className="text-stone-600 mt-2">{period.description}</p>
+                </div>
 
-        {filteredPeriods.length === 0 && (
+                <div className="space-y-3">
+                  {period.episodes.map(ep => (
+                    <EpisodeCard key={ep.number} episode={ep} />
+                  ))}
+                </div>
+              </section>
+            ))}
+          </>
+        ) : (
+          /* Flat list sorted by episode number (newest first) */
+          <div className="space-y-3">
+            {filteredEpisodes.map(ep => (
+              <EpisodeCard key={ep.number} episode={ep} />
+            ))}
+          </div>
+        )}
+
+        {totalFiltered === 0 && (
           <div className="text-center py-16 text-stone-500">
             <p className="text-lg mb-2">No episodes match your search.</p>
             <button
@@ -222,6 +289,7 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
   const hasBooks = episode.bookCount > 0;
   const translatedCount = episode.books.filter(b => (b.pages_translated || 0) > 0).length;
   const isRecent = episode.number >= 210;
+  const isStorytime = episode.title.startsWith('Storytime:');
   const thumbBooks = episode.books.filter(b => b.thumbnail).slice(0, 5);
 
   return (
@@ -267,7 +335,12 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
                 <h3 className={`text-lg font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
                   {episode.title}
                 </h3>
-                {isRecent && (
+                {isStorytime && (
+                  <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-medium bg-accent-violet/10 text-accent-violet">
+                    Storytime
+                  </span>
+                )}
+                {isRecent && !isStorytime && (
                   <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-medium bg-accent-rust/10 text-accent-rust">
                     New
                   </span>
