@@ -1,7 +1,8 @@
 import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
-import FeaturedCollectionHero from '@/components/prototype/FeaturedCollectionHero';
+import HeroSection from '@/components/layout/HeroSection';
+import FeaturedCollectionCard from '@/components/prototype/FeaturedCollectionHero';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
@@ -158,12 +159,14 @@ async function getCollectionShowcase() {
   const db = await getDb();
 
   // Sample high-quality gallery images with museum descriptions
+  // Only match images with valid extracted_url (cropped illustration, ~33% of images)
+  // thumbnail_url is unreliable (often null even when field exists)
   const rawImages = await db.collection('gallery_images').aggregate([
     {
       $match: {
         gallery_quality: { $gte: 0.85 },
         museum_description: { $exists: true, $ne: '' },
-        thumbnail_url: { $exists: true, $ne: '' },
+        extracted_url: { $regex: /^https?:\/\// },
         book_hidden: { $ne: true },
       },
     },
@@ -199,7 +202,7 @@ async function getCollectionShowcase() {
           book_id: img.book_id,
           page_number: img.page_number || 0,
           detection_index: img.detection_index || 0,
-          thumbnail_url: img.thumbnail_url,
+          thumbnail_url: img.thumbnail_url || img.extracted_url,
           type: img.type || '',
           museum_description: img.museum_description,
           book_title: img.book_title || '',
@@ -214,7 +217,7 @@ async function getCollectionShowcase() {
           book_id: img.book_id,
           page_number: img.page_number || 0,
           detection_index: img.detection_index || 0,
-          thumbnail_url: img.thumbnail_url,
+          thumbnail_url: img.thumbnail_url || img.extracted_url,
           type: img.type || '',
           museum_description: img.museum_description,
           book_title: img.book_title || '',
@@ -263,17 +266,15 @@ export default async function PrototypePage() {
   return (
     <SocietyGate>
       <div className="min-h-screen">
-        {/* Featured Collection Hero */}
-        {featured ? (
-          <FeaturedCollectionHero
+        {/* Video Hero — same as current homepage */}
+        <HeroSection />
+
+        {/* Featured Collection Card */}
+        {featured && (
+          <FeaturedCollectionCard
             collection={featured.collection}
             books={featured.books}
           />
-        ) : (
-          // Fallback if no collection found (shouldn't happen)
-          <div className="h-96 bg-dark flex items-center justify-center">
-            <p className="text-white/50">No collections available</p>
-          </div>
         )}
 
         {/* Collections Grid */}
