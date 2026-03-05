@@ -281,6 +281,8 @@ const postAntiquityEpisodes: ShwepEpisode[] = [
   { number: 210, title: "Jewish Apocalypse in the Seventh Century: Martha Himmelfarb on the Sefer Zerubbabel", url: "https://shwep.net/podcast/jewish-apocalypse-in-the-seventh-century-martha-himmelfarb-on-the-sefer-zerubbabel/", period: "post-antiquity", tags: [] },
   { number: 211, title: "Introducing the Apocalypse of the Pseudo-Methodios, with Christopher Bonura", url: "https://shwep.net/podcast/introducing-the-apocalypse-of-the-pseudo-methodios-with-christopher-bonura/", period: "post-antiquity", tags: ['Pseudo-Methodios', 'Cave of Treasures'] },
   { number: 212, title: "Esoteric Orthodoxy in East Rome: Jonathan Greig on Maximus the Confessor", url: "https://shwep.net/podcast/esoteric-orthodoxy-in-east-rome-jonathan-greig-on-maximus-the-confessor/", period: "post-antiquity", tags: ['Maximus the Confessor'] },
+  { number: 213, title: "Philosophy and Occult Sciences at Constantinople: Maria Papathanassiou on Stephanos of Alexandria, Part I", url: "https://shwep.net/podcast/philosophy-and-occult-sciences-at-constantinople-maria-papathanassiou-on-stephanos-of-alexandria-part-i/", period: "post-antiquity", tags: ['Stephanos of Alexandria', 'Berthelot'] },
+  { number: 214, title: "The Horoscope of Islam and The Alchemical Stone: Maria Papathanassiou on Stephanos of Alexandria, Part II", url: "https://shwep.net/podcast/the-horoscope-of-islam-and-the-alchemical-stone-maria-papathanassiou-on-stephanos-of-alexandria-part-ii/", period: "post-antiquity", tags: ['Stephanos of Alexandria', 'Berthelot'] },
 ];
 
 // ---------------------------------------------------------------------------
