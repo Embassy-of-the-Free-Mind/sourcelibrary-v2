@@ -34,15 +34,16 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          Today, you can{' '}
+          Today, for the first time, you can{' '}
           <a href="https://sourcelibrary.org/book/6836f8ee811c8ab472a49e36" className="text-accent-rust hover:underline">read every page in English</a>.
-          Processing cost: twenty-five cents.
+          No subscription, no paywall, no academic affiliation required. Just open it and read.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
           Drebbel&apos;s book is one of 4,500. Since the first commit on December 12, 2025, Source Library has become the world&apos;s largest
-          collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
-          library sources, and more than 1.7 million page images.
+          freely available collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
+          library sources, and more than 1.7 million page images. Texts that have never had an English translation
+          now have one. Texts that existed only behind institutional paywalls are now open to anyone with a browser.
         </p>
 
         {/* ── Why It Matters ── */}
@@ -66,8 +67,8 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          AI changes the unit economics. Source Library processed 4,500 books in three months for under $10,000
-          in total hard costs. The translations are first drafts, not critical editions &mdash; but they make texts
+          AI changes what&apos;s possible. Source Library has made 4,500 books readable in English &mdash; many
+          for the first time ever. The translations are first drafts, not critical editions, but they make texts
           <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
           This is the difference between having to read every book in a library to find what you need
           and having a searchable catalog in your language.
