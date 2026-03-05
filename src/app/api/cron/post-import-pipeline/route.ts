@@ -1145,7 +1145,7 @@ export async function GET(request: NextRequest) {
         type: 'translation',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_TRANSLATE = 30; // FIFO queue = sequential per job, so more jobs is fine
+      const MAX_ACTIVE_LAMBDA_TRANSLATE = 60; // Bumped from 30 — each FIFO job is 1 page in-flight, safe to parallelize
 
       if (activeLambdaTranslate >= MAX_ACTIVE_LAMBDA_TRANSLATE) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
@@ -1161,7 +1161,7 @@ export async function GET(request: NextRequest) {
       let translateQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let translateLambdaCount = 0;
       let consecutiveTranslateFailures = 0;
-      const TRANSLATE_LAMBDA_LIMIT = 30; // Aggressive — each FIFO job is sequential, so more jobs = more parallelism
+      const TRANSLATE_LAMBDA_LIMIT = 60; // Match MAX_ACTIVE — each FIFO job is 1 page in-flight
       const CONSECUTIVE_TRANSLATE_THRESHOLD = 3;
 
       for (const book of readyForTranslate) {
