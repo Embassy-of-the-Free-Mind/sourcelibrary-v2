@@ -1391,7 +1391,9 @@ export async function GET(request: NextRequest) {
               // Wait for collector to save results
             } else {
               const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
-              if (tLoopCount > MAX_RETRIES) {
+              // Big books need more loops — each Lambda job translates ~200-400 pages
+              const maxTranslateLoops = Math.max(6, Math.ceil((book.pages_count || 500) / 200));
+              if (tLoopCount > maxTranslateLoops) {
                 await setPipelineStatus(db, book.id, 'needs_attention', {
                   error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
                   translate_loop_count: tLoopCount,
