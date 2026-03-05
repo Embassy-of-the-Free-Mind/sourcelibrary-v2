@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { SHWEP_PERIODS, getAllTags } from '@/data/shwep-episodes';
 import { EPISODE_CITED_WORKS, getAllCitedWorks } from '@/data/shwep-cited-works';
+import { EPISODE_DESCRIPTIONS } from '@/data/shwep-descriptions';
 import ShwepClient from './ShwepClient';
 
 export const dynamic = 'force-dynamic';
@@ -157,6 +158,7 @@ async function getShwepData(): Promise<ShwepPageData> {
 
       return {
         ...ep,
+        description: EPISODE_DESCRIPTIONS[ep.number] || undefined,
         books: matchedBooks,
         bookCount: matchedBooks.length,
       };
