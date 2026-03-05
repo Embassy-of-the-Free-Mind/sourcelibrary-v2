@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { SHWEP_PERIODS, getAllTags } from '@/data/shwep-episodes';
 import { EPISODE_CITED_WORKS, getAllCitedWorks } from '@/data/shwep-cited-works';
 import { EPISODE_DESCRIPTIONS } from '@/data/shwep-descriptions';
+import { EPISODE_DATES } from '@/data/shwep-dates';
 import ShwepClient from './ShwepClient';
 
 export const dynamic = 'force-dynamic';
@@ -40,6 +41,7 @@ export interface EnrichedEpisode {
   period: string;
   tags: string[];
   description?: string;
+  publishDate?: string;
   books: MatchedBook[];
   bookCount: number;
 }
@@ -159,6 +161,7 @@ async function getShwepData(): Promise<ShwepPageData> {
       return {
         ...ep,
         description: EPISODE_DESCRIPTIONS[ep.number] || undefined,
+        publishDate: EPISODE_DATES[ep.number] || undefined,
         books: matchedBooks,
         bookCount: matchedBooks.length,
       };

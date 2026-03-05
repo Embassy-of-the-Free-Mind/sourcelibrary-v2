@@ -53,8 +53,13 @@ export default function ShwepClient({ data }: Props) {
     } else if (viewMode === 'recent') {
       eps = eps.filter(ep => getEpisodeType(ep) === 'podcast');
     }
-    // Sort by episode number descending (newest first)
-    return [...eps].sort((a, b) => b.number - a.number);
+    // Sort by publication date descending (newest first), fall back to episode number
+    return [...eps].sort((a, b) => {
+      if (a.publishDate && b.publishDate) return b.publishDate.localeCompare(a.publishDate);
+      if (a.publishDate) return -1;
+      if (b.publishDate) return 1;
+      return b.number - a.number;
+    });
   }, [allEpisodes, search, showOnlyWithBooks, viewMode]);
 
   const totalFiltered = viewMode === 'period'
@@ -288,7 +293,9 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
   const [expanded, setExpanded] = useState(false);
   const hasBooks = episode.bookCount > 0;
   const translatedCount = episode.books.filter(b => (b.pages_translated || 0) > 0).length;
-  const isRecent = episode.number >= 210;
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+  const isRecent = episode.publishDate ? new Date(episode.publishDate) >= sixMonthsAgo : false;
   const isStorytime = episode.title.startsWith('Storytime:');
   const thumbBooks = episode.books.filter(b => b.thumbnail).slice(0, 5);
 
@@ -332,6 +339,11 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
             <div className="flex-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-mono text-stone-400">{episode.number}</span>
+                {episode.publishDate && (
+                  <span className="text-xs text-stone-400">
+                    {new Date(episode.publishDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                  </span>
+                )}
                 <h3 className={`text-lg font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
                   {episode.title}
                 </h3>
