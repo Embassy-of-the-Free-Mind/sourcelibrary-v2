@@ -50,11 +50,21 @@ export default function LetterPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">Why This Matters</h2>
 
         <p className="text-secondary leading-relaxed mb-4">
-          The scientific revolution didn&apos;t emerge from nothing. Copernicus read Hermes Trismegistus.
+          The Renaissance began with a translation. In 1463, Cosimo de&apos; Medici acquired a Greek
+          manuscript of the <em>Corpus Hermeticum</em> &mdash; a collection of texts attributed to Hermes
+          Trismegistus, believed to contain the oldest theology in the world. He ordered Marsilio Ficino
+          to drop everything, including his work on Plato, and translate it immediately. Ficino did. Within
+          a generation, those ideas had reshaped European philosophy, inspired Botticelli&apos;s paintings,
+          and helped set the intellectual conditions for Copernicus and the scientific revolution.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          That pattern &mdash; recovering lost texts, translating them, and watching the ideas transform
+          a civilization &mdash; is the story of the Renaissance itself. Copernicus read Hermes Trismegistus.
           Kepler described himself as a &ldquo;priest of God in the book of nature&rdquo; and drew on
           Pythagorean harmonic theory. Newton devoted decades to alchemical research, filling over
-          a million words of laboratory notebooks on the subject.
-          Leibniz studied the Kabbalah. The intellectual context for the greatest acceleration of progress
+          a million words of laboratory notebooks on the subject. Leibniz studied the Kabbalah.
+          The intellectual context for the greatest acceleration of progress
           in Western history was a body of literature that is, today, mostly untranslated and unread.
         </p>
 
@@ -67,19 +77,19 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          AI changes what&apos;s possible. Source Library has made 4,500 books readable in English &mdash; many
-          for the first time ever. The translations are first drafts, not critical editions, but they make texts
-          <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
-          This is the difference between having to read every book in a library to find what you need
-          and having a searchable catalog in your language.
+          But consider what Cosimo accomplished with one translator and one manuscript. The texts that
+          launched the Renaissance &mdash; the Hermetic writings, the Neoplatonists, the alchemical
+          and Kabbalistic traditions &mdash; were a tiny fraction of what survives. Thousands of volumes
+          from the same intellectual world have never been translated at all. They sit in libraries across
+          Europe, waiting for the same act of recovery that Ficino performed for Cosimo. The difference
+          is that we no longer need to do it one book at a time.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The first Renaissance was, at its core, a translation project. When Ficino translated the{' '}
-          <em>Corpus Hermeticum</em> for Cosimo de&apos; Medici in 1463, he made an entire tradition of thought
-          accessible to a civilization that had lost touch with it. That act of recovery helped ignite a
-          transformation in art, science, and philosophy. The primary sources are still there. Most of
-          them have never been translated. Now we can.
+          Source Library has made 4,500 of these books readable in English &mdash; many
+          for the first time ever. The translations are first drafts, not critical editions, but they make texts
+          <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
+          Ficino&apos;s translation of the <em>Corpus Hermeticum</em> was also a first draft. It was enough.
         </p>
 
         {/* ── What you can do ── */}
@@ -378,9 +388,19 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          Cosimo de&apos; Medici funded one translator working on one manuscript, and it helped launch
-          the Renaissance. The opportunity before us is to do what Cosimo did &mdash; but for thousands
-          of texts at once, making them freely available to the entire world.
+          Cosimo spent the equivalent of millions funding Ficino&apos;s work on a single manuscript.
+          The entire tradition of Renaissance Neoplatonism &mdash; which shaped Botticelli, Michelangelo,
+          Copernicus, and the intellectual culture of early modern Europe &mdash; traces back to that
+          one act of patronage. The opportunity before us is the same act, but at a scale Cosimo couldn&apos;t
+          have imagined: thousands of texts, made freely available to the entire world, in the time it took
+          Ficino to translate one.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          The Renaissance happened because a handful of people decided that recovering lost knowledge
+          was worth investing in. The knowledge is still there. Most of it has never been recovered.
+          The tools to do it now exist. What&apos;s needed is the same thing that was needed in 1463:
+          someone who understands what&apos;s at stake.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
