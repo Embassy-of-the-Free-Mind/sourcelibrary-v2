@@ -1151,10 +1151,14 @@ export async function GET(request: NextRequest) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
       }
 
+      // TEMPORARY: Only translate books >=90% done to hit the 2,000 milestone
       const readyForTranslate = activeLambdaTranslate < MAX_ACTIVE_LAMBDA_TRANSLATE ? await db.collection('books')
-        .find({ 'pipeline_auto.status': 'metadata_enriched' })
-        .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
+        .find({
+          'pipeline_auto.status': 'metadata_enriched',
+          $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+        })
+        .sort({ pages_translated: -1, hidden: 1 }) // Nearly-done books first, then visible
+        .project({ id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray() : [];
 
