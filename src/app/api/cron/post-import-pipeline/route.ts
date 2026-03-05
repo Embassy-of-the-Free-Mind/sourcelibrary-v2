@@ -1372,6 +1372,25 @@ export async function GET(request: NextRequest) {
           if (batchJob || parentJob) isComplete = true;
         }
 
+        // Also check for cancelled/failed batch jobs — roll back to metadata_enriched for re-submission
+        if (!isComplete && jobName) {
+          const cancelledJob = await db.collection('batch_jobs').findOne({
+            book_id: book.id,
+            type: 'translation',
+            $or: [{ job_name: jobName }, { gemini_job_name: jobName }],
+            status: { $in: ['cancelled', 'failed', 'expired'] },
+          });
+          if (cancelledJob) {
+            await setPipelineStatus(db, book.id, 'metadata_enriched', {
+              translate_job_name: undefined,
+              translate_loop_count: (book.pipeline_auto?.translate_loop_count || 0) + 1,
+            });
+            log.translate_advanced++;
+            log.stale_retranslate = (log.stale_retranslate || 0) + 1;
+            continue;
+          }
+        }
+
         if (isComplete) {
           // Check if there are still un-translated pages — if so, loop back
           const remainingTranslate = await db.collection('pages').countDocuments({

@@ -1101,6 +1101,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Pages - translation.updated_at for recent translation queries
+    // Query: { 'translation.updated_at': { $gte } } — 916k pages, needs index
+    try {
+      await db.collection('pages').createIndex(
+        { 'translation.updated_at': -1 },
+        { name: 'pages_translation_updated_idx', background: true, sparse: true }
+      );
+      results['pages.pages_translation_updated_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_translation_updated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
