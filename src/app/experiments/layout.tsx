@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { requireAdmin } from '@/lib/auth-helpers';
 
 export default async function ExperimentsLayout({
@@ -8,5 +9,5 @@ export default async function ExperimentsLayout({
   // Server-side auth check - redirects if not admin
   await requireAdmin();
 
-  return <>{children}</>;
+  return <Suspense>{children}</Suspense>;
 }

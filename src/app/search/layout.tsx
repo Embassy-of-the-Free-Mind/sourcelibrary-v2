@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -26,5 +27,5 @@ export default function SearchLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <Suspense>{children}</Suspense>;
 }

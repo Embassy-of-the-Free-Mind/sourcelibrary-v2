@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import TimelineClient from './TimelineClient';
@@ -104,7 +105,9 @@ export default async function TimelinePage() {
       }
       maxWidth="wide"
     >
-      <TimelineClient initialData={data} />
+      <Suspense>
+        <TimelineClient initialData={data} />
+      </Suspense>
     </ContentPageLayout>
   );
 }
