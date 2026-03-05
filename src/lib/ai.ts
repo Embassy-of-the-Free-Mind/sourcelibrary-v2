@@ -339,7 +339,12 @@ const TRANSLITERATION_PROMPT_BASE = `You are a scholarly transliterator. Convert
 CRITICAL RULES:
 1. Preserve the line-by-line structure EXACTLY. Each line of output must correspond to the same line of input. Do not merge or split lines.
 2. Preserve paragraph breaks and blank lines exactly as they appear.
-3. Remove all XML/markup tags (<note>, <term>, <margin>, <page-type>, <columns>, <language>, <detected-images>, etc.) from the output.
+3. PRESERVE all XML formatting tags — transliterate the text inside them but keep the tags intact:
+   - <term>...</term> — transliterate the content, keep the tags
+   - <margin>...</margin> — transliterate the content, keep the tags
+   - <note>...</note> — keep as-is (these are usually already in Latin script)
+   - <header>...</header> — transliterate the content, keep the tags
+   - <page-num>...</page-num> — keep as-is (usually already Latin script)
 4. Include standard scholarly diacritics (macrons for long vowels, dots for emphatics, etc.).
 5. Do not translate — only transliterate. The output should be a phonetic representation in Latin script, not a translation.
 6. If the text contains passages in Latin script already (e.g. Latin in a Greek manuscript), preserve them as-is.
@@ -358,28 +363,24 @@ Romanization conventions by script:
 - **Sanskrit/Devanagari:** IAST (International Alphabet of Sanskrit Transliteration).`;
 
 /**
- * Preprocess OCR text for transliteration: strip metadata tags and content,
- * convert ## Column headers to <column-break/> markers, clean up inline tag wrappers.
+ * Preprocess OCR text for transliteration: strip pure metadata tags,
+ * convert ## Column headers to <column-break/> markers.
+ * Keeps formatting tags (<term>, <margin>, <note>, <header>, <page-num>)
+ * so the model can transliterate their content and NotesRenderer can style them.
  */
 function preprocessOcrForTransliteration(ocrText: string): string {
   let text = ocrText;
 
-  // Strip metadata tags AND their content (not part of the manuscript text body)
+  // Strip pure metadata tags AND their content (no display value)
   text = text.replace(/<lang(?:uage)?>[^<]*<\/lang(?:uage)?>/gi, '');
   text = text.replace(/<page-type>[^<]*<\/page-type>/gi, '');
-  text = text.replace(/<page-num>[^<]*<\/page-num>/gi, '');
-  text = text.replace(/<header>[^<]*<\/header>/gi, '');
   text = text.replace(/<meta>[\s\S]*?<\/meta>/gi, '');
   text = text.replace(/<detected-images>[\s\S]*?<\/detected-images>/gi, '');
   text = text.replace(/<columns>[^<]*<\/columns>/gi, '');
   text = text.replace(/<vocab>[\s\S]*?<\/vocab>/gi, '');
 
-  // Strip margin tags and content (Eusebian section numbers, marginal notes)
-  text = text.replace(/<margin>[^<]*<\/margin>\s*/gi, '');
-
-  // Strip tag wrappers but keep content for inline annotations
-  text = text.replace(/<\/?term>/gi, '');
-  text = text.replace(/<\/?note>/gi, '');
+  // Keep formatting tags: <term>, <margin>, <note>, <header>, <page-num>
+  // The model will transliterate their content while preserving the tags
 
   // Convert ## Column N headers to <column-break/> (first column stripped, rest become breaks)
   text = text.replace(/^---\s*$/gm, ''); // strip horizontal rules between columns
