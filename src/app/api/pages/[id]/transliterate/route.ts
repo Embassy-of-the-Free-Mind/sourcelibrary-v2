@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performTransliteration } from '@/lib/ai';
-const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
+const TRANSLITERATION_MODEL = 'gemini-3-flash-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
 
 // Simple hash function to detect OCR changes
