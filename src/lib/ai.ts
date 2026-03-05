@@ -357,6 +357,41 @@ Romanization conventions by script:
 - **Korean:** Revised Romanization.
 - **Sanskrit/Devanagari:** IAST (International Alphabet of Sanskrit Transliteration).`;
 
+/**
+ * Preprocess OCR text for transliteration: strip metadata tags and content,
+ * convert ## Column headers to <column-break/> markers, clean up inline tag wrappers.
+ */
+function preprocessOcrForTransliteration(ocrText: string): string {
+  let text = ocrText;
+
+  // Strip metadata tags AND their content (not part of the manuscript text body)
+  text = text.replace(/<lang(?:uage)?>[^<]*<\/lang(?:uage)?>/gi, '');
+  text = text.replace(/<page-type>[^<]*<\/page-type>/gi, '');
+  text = text.replace(/<page-num>[^<]*<\/page-num>/gi, '');
+  text = text.replace(/<header>[^<]*<\/header>/gi, '');
+  text = text.replace(/<meta>[\s\S]*?<\/meta>/gi, '');
+  text = text.replace(/<detected-images>[\s\S]*?<\/detected-images>/gi, '');
+  text = text.replace(/<columns>[^<]*<\/columns>/gi, '');
+  text = text.replace(/<vocab>[\s\S]*?<\/vocab>/gi, '');
+
+  // Strip margin tags and content (Eusebian section numbers, marginal notes)
+  text = text.replace(/<margin>[^<]*<\/margin>\s*/gi, '');
+
+  // Strip tag wrappers but keep content for inline annotations
+  text = text.replace(/<\/?term>/gi, '');
+  text = text.replace(/<\/?note>/gi, '');
+
+  // Convert ## Column N headers to <column-break/> (first column stripped, rest become breaks)
+  text = text.replace(/^---\s*$/gm, ''); // strip horizontal rules between columns
+  text = text.replace(/^\s*## Column 1\s*$/gm, '');
+  text = text.replace(/^\s*## Column \d+\s*$/gm, '<column-break/>');
+
+  // Clean up excessive blank lines
+  text = text.replace(/\n{3,}/g, '\n\n');
+
+  return text.trim();
+}
+
 export async function performTransliteration(
   ocrText: string,
   sourceScript: string,
@@ -364,13 +399,16 @@ export async function performTransliteration(
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
+  // Preprocess: strip metadata, convert column headers to <column-break/>
+  const cleanedOcr = preprocessOcrForTransliteration(ocrText);
+
   let prompt = TRANSLITERATION_PROMPT_BASE;
-  // Only tell the model to preserve <column-break/> if the OCR actually has one
-  if (ocrText.includes('<column-break/>')) {
-    prompt += `\n\nIMPORTANT: The text contains a <column-break/> tag marking a column boundary. PRESERVE it exactly where it appears.`;
+  // Only tell the model to preserve <column-break/> if the cleaned text has one
+  if (cleanedOcr.includes('<column-break/>')) {
+    prompt += `\n\nIMPORTANT: The text contains <column-break/> tags marking column boundaries. PRESERVE them exactly where they appear.`;
   }
   prompt += `\n\nThe source script is: **${sourceScript}**`;
-  prompt += `\n\n**Text to transliterate:**\n${ocrText}`;
+  prompt += `\n\n**Text to transliterate:**\n${cleanedOcr}`;
 
   const result = await model.generateContent({
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
