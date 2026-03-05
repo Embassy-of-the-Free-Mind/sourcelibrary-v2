@@ -15,6 +15,7 @@ import { syncBookToGitHub } from '@/lib/git-sync';
 export const maxDuration = 300;
 
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
+const EARLY_FLUSH_MS = 240_000; // 4 min — flush partial cron_runs record before budget expires
 const ENROLL_LIMIT = 50;
 const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archiving
 const OCR_SUBMIT_LIMIT = 20; // Re-enabled — pushing to 2,000 fully OCR'd books
@@ -349,6 +350,28 @@ export async function GET(request: NextRequest) {
     errors: [] as string[],
   };
 
+  // Early flush: write partial cron_runs record before time budget expires
+  // so that if Vercel kills the function at 300s, we still have observability.
+  let earlyFlushed = false;
+  async function earlyFlushIfNeeded() {
+    if (earlyFlushed || Date.now() - startTime < EARLY_FLUSH_MS) return;
+    earlyFlushed = true;
+    try {
+      logger.setPartial();
+      logger.setActions({
+        enrolled: log.enrolled, archived: log.archived, ocr_submitted: log.ocr_submitted,
+        ocr_advanced: log.ocr_advanced, metadata_enriched: log.metadata_enriched,
+        translate_submitted: log.translate_submitted, translate_advanced: log.translate_advanced,
+        enriched: log.enriched, chapters_extracted: log.chapters_extracted,
+        images_submitted: log.images_submitted, finalized: log.finalized,
+        needs_attention: log.needs_attention, stale_retried: log.stale_retried,
+      });
+      logger.addErrors(log.errors);
+      logger.decision('time_budget', `Early flush at ${Date.now() - startTime}ms — continuing work`);
+      await logger.flush();
+    } catch { /* non-critical */ }
+  }
+
   try {
     // Extract pause flags once — used by both submission AND completion phases
     const ocrPaused = control?.paused_phases?.includes('ocr');
@@ -575,6 +598,53 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // ── Priority: Zombie job detection — force-complete jobs stuck >24h ──
+    if (hasTimeBudget(startTime)) {
+      const zombieThreshold = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const zombieJobs = await db.collection('jobs').find({
+        status: 'processing',
+        updated_at: { $lt: zombieThreshold },
+      }).project({ id: 1, book_id: 1, type: 1, progress: 1, 'config.page_ids': 1 }).limit(10).toArray();
+
+      for (const job of zombieJobs) {
+        if (!hasTimeBudget(startTime)) break;
+        try {
+          const total = job.progress?.total || 0;
+          const completed = job.progress?.completed || 0;
+          const failed = job.progress?.failed || 0;
+          const remaining = total - completed - failed;
+
+          if (remaining <= 0) {
+            // All pages accounted for — force complete
+            const finalStatus = failed > 0 ? 'completed_with_errors' : 'completed';
+            await db.collection('jobs').updateOne(
+              { id: job.id },
+              { $set: { status: finalStatus, completed_at: new Date(), updated_at: new Date() } }
+            );
+            await db.collection('books').updateOne(
+              { id: job.book_id },
+              { $unset: { job: '' } }
+            );
+            logger.action('zombie_jobs_completed');
+          } else {
+            // Some pages still missing — mark failed with the missing ones
+            await db.collection('jobs').updateOne(
+              { id: job.id },
+              { $set: { status: 'completed_with_errors', completed_at: new Date(), updated_at: new Date() } }
+            );
+            await db.collection('books').updateOne(
+              { id: job.book_id },
+              { $unset: { job: '' } }
+            );
+            logger.action('zombie_jobs_completed');
+            logger.decision('rollback', `Zombie job ${job.id} (${job.type}): ${completed}/${total} done, ${remaining} lost`, { job_id: job.id, book_id: job.book_id });
+          }
+        } catch (e) {
+          logger.error(`Zombie job cleanup failed: ${e instanceof Error ? e.message : 'unknown'}`, { book_id: job.book_id });
+        }
+      }
+    }
+
     // ── Stale translation retranslation — DISABLED ──
     // This aggregation scans 1,338+ books' pages (full collection scan, ~186s)
     // and starves OCR submission for 1,523 books at archive_complete.
@@ -584,6 +654,8 @@ export async function GET(request: NextRequest) {
     // ════════════════════════════════════════════════════════════════════
     // MAIN PASS: Standard pipeline phases (enrollment through chapters)
     // ════════════════════════════════════════════════════════════════════
+
+    await earlyFlushIfNeeded();
 
     // ── Phase 0: Auto-enroll recently imported books ──
     if (hasTimeBudget(startTime)) {
@@ -1061,6 +1133,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    await earlyFlushIfNeeded();
+
     // ── Phase 4: Submit translation via Gemini Batch API (metadata_enriched -> translate_submitted) ──
     if (translatePaused) {
       logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
@@ -1336,6 +1410,8 @@ export async function GET(request: NextRequest) {
         }
       }
     }
+
+    await earlyFlushIfNeeded();
 
     // ── Phase 6: Enrich — generate summary + index (translate_complete -> enriched) ──
     // Also re-enriches books where enrichment_stale was set by OCR/translation workers.

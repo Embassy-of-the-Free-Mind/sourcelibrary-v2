@@ -1016,6 +1016,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Pages - transliteration queries (batch-transliterate script)
+    // Query: { book_id: { $in: [...] }, 'ocr.data': { $exists: true }, 'transliteration.data': { $exists: false } }
+    try {
+      await db.collection('pages').createIndex(
+        { book_id: 1, 'transliteration.data': 1 },
+        { name: 'pages_book_transliteration_idx', background: true, sparse: true }
+      );
+      results['pages.pages_book_transliteration_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_book_transliteration_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Cron runs - per-cron history (cron name + time desc)
     try {
       await db.collection('cron_runs').createIndex(
