@@ -524,13 +524,6 @@ header .subtitle {
         <span class="value" id="avgPages_v">300</span>
       </div>
     </div>
-    <div class="input-group">
-      <label>Monthly marketing spend</label>
-      <div class="slider-row">
-        <input type="range" id="marketingSpend" min="0" max="2000" step="50" value="200">
-        <span class="value" id="marketingSpend_v">$200</span>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -803,39 +796,140 @@ header .subtitle {
 <!-- Costs -->
 <section class="costs-section">
   <h2>Cost Structure</h2>
-  <div class="costs-grid">
-    <div>
-      <div class="cost-item">
-        <span class="cost-label">AI processing (~$1.20/book)</span>
-        <span class="cost-value" id="cost_ai">$1,199</span>
-      </div>
-      <div class="cost-item">
-        <span class="cost-label">Labor (30 min/day @ $25/hr)</span>
-        <span class="cost-value" id="cost_labor">$4,563</span>
-      </div>
-      <div class="cost-item">
-        <span class="cost-label">Cover design (AI-generated)</span>
-        <span class="cost-value">$0</span>
+
+  <!-- Operations -->
+  <h4 style="margin: 1rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">Operations</h4>
+  <div class="costs-grid" style="margin-bottom: 1.25rem;">
+    <div class="input-group">
+      <label>Weekly hours (QA, uploads, support)</label>
+      <div class="slider-row">
+        <input type="range" id="opsHours" min="0" max="40" step="1" value="10">
+        <span class="value" id="opsHours_v">10 hrs</span>
       </div>
     </div>
-    <div>
-      <div class="cost-item">
-        <span class="cost-label">ISBN costs (KDP provides free)</span>
-        <span class="cost-value">$0</span>
-      </div>
-      <div class="cost-item">
-        <span class="cost-label">Marketing (annual)</span>
-        <span class="cost-value" id="cost_marketing">$2,400</span>
-      </div>
-      <div class="cost-item">
-        <span class="cost-label">Vercel hosting</span>
-        <span class="cost-value">$240</span>
+    <div class="input-group">
+      <label>Hourly rate</label>
+      <div class="slider-row">
+        <input type="range" id="opsRate" min="15" max="75" step="5" value="25">
+        <span class="value" id="opsRate_v">$25/hr</span>
       </div>
     </div>
   </div>
-  <div class="cost-total">
-    <span>Total Year 1 Costs</span>
-    <span id="cost_total">$8,402</span>
+  <div class="cost-item">
+    <span class="cost-label">Annual labor cost</span>
+    <span class="cost-value" id="cost_labor">$13,000</span>
+  </div>
+
+  <!-- Marketing -->
+  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">Marketing &amp; Sales</h4>
+  <div class="costs-grid" style="margin-bottom: 0.5rem;">
+    <div class="input-group">
+      <label>Amazon PPC ads ($/month)</label>
+      <div class="slider-row">
+        <input type="range" id="amazonPpc" min="0" max="5000" step="50" value="500">
+        <span class="value" id="amazonPpc_v">$500</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Content / social marketing ($/month)</label>
+      <div class="slider-row">
+        <input type="range" id="contentMktg" min="0" max="2000" step="50" value="200">
+        <span class="value" id="contentMktg_v">$200</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Conferences &amp; events ($/year)</label>
+      <div class="slider-row">
+        <input type="range" id="conferences" min="0" max="10000" step="500" value="2000">
+        <span class="value" id="conferences_v">$2,000</span>
+      </div>
+    </div>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Annual marketing total</span>
+    <span class="cost-value" id="cost_marketing">$10,400</span>
+  </div>
+
+  <!-- ISBN Strategy -->
+  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">ISBN Strategy</h4>
+  <div style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+    <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer;">
+      <input type="radio" name="isbnStrategy" value="free" checked onchange="calculate()"> Free KDP ISBNs (Amazon-only imprint)
+    </label>
+    <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer;">
+      <input type="radio" name="isbnStrategy" value="own" onchange="calculate()"> Own ISBNs via Bowker ($1,750 for 1,000)
+    </label>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">ISBN cost <span id="isbn_note" style="color: var(--text-muted); font-size: 0.78rem;"></span></span>
+    <span class="cost-value" id="cost_isbn">$0</span>
+  </div>
+
+  <!-- Infrastructure -->
+  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">Infrastructure</h4>
+  <div class="costs-grid" style="margin-bottom: 0.5rem;">
+    <div class="input-group">
+      <label>Gemini API ongoing ($/month)</label>
+      <div class="slider-row">
+        <input type="range" id="geminiMonthly" min="0" max="500" step="25" value="100">
+        <span class="value" id="geminiMonthly_v">$100</span>
+      </div>
+    </div>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Vercel Pro + MongoDB Atlas + AWS Lambda</span>
+    <span class="cost-value">$1,800/yr</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Gemini API (new books, re-processing)</span>
+    <span class="cost-value" id="cost_gemini">$1,200/yr</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Domain + email</span>
+    <span class="cost-value">$50/yr</span>
+  </div>
+
+  <!-- One-time Setup -->
+  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">One-time Setup (Year 1)</h4>
+  <div class="cost-item">
+    <span class="cost-label">AI translation backlog (<span id="cost_ai_books">999</span> books &times; $1.20)</span>
+    <span class="cost-value" id="cost_ai">$1,199</span>
+  </div>
+  <div class="costs-grid" style="margin-bottom: 0.5rem;">
+    <div class="input-group">
+      <label>Legal / business setup</label>
+      <div class="slider-row">
+        <input type="range" id="legalSetup" min="0" max="10000" step="250" value="2000">
+        <span class="value" id="legalSetup_v">$2,000</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Computed Platform Fees -->
+  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">Platform Fees (computed from revenue)</h4>
+  <div class="cost-item">
+    <span class="cost-label">Patreon platform fee (8% of membership revenue)</span>
+    <span class="cost-value" id="cost_patreon_fee">$0</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Kindle delivery fee ($0.15/MB &times; ~2MB per sale, 70% tier)</span>
+    <span class="cost-value" id="cost_kindle_delivery">$0</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Payment processing (2.9% on institutional + bundle direct sales)</span>
+    <span class="cost-value" id="cost_payment_proc">$0</span>
+  </div>
+
+  <!-- Totals -->
+  <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 2px solid var(--border-medium);">
+    <div class="cost-total" style="margin: 0;">
+      <span>Year 1 Total Costs</span>
+      <span id="cost_total_y1" style="color: var(--accent-rust);">$0</span>
+    </div>
+    <div class="cost-total" style="margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">
+      <span>Year 2+ Annual Costs (no one-time)</span>
+      <span id="cost_total_recurring">$0</span>
+    </div>
   </div>
 </section>
 
@@ -850,31 +944,37 @@ header .subtitle {
 // ── Scenarios ──────────────────────────────────────────
 const scenarios = {
   conservative: {
-    totalTitles: 999, pubRate: 2, avgPages: 300, marketingSpend: 100,
+    totalTitles: 999, pubRate: 2, avgPages: 300,
     kindlePrice: 4.99, kindleSales: 5, kindleRoyalty: 0.70,
     podPrice: 45, podPrintCost: 4.60, podSales: 1,
     bundlePrice: 49, bundleSales: 2, bundleCount: 3,
     patronCount: 50, patronAvg: 10, patronRamp: 12,
     instCount: 5, instPrice: 500, instRamp: 18,
-    aiOneTime: 0, aiRecurring: 0, aiDealMonth: 24
+    aiOneTime: 0, aiRecurring: 0, aiDealMonth: 24,
+    opsHours: 5, opsRate: 20, amazonPpc: 100, contentMktg: 0, conferences: 0,
+    geminiMonthly: 50, legalSetup: 500,
   },
   base: {
-    totalTitles: 999, pubRate: 3, avgPages: 300, marketingSpend: 200,
+    totalTitles: 999, pubRate: 3, avgPages: 300,
     kindlePrice: 9.99, kindleSales: 20, kindleRoyalty: 0.70,
     podPrice: 65, podPrintCost: 4.60, podSales: 5,
     bundlePrice: 79, bundleSales: 8, bundleCount: 5,
     patronCount: 150, patronAvg: 15, patronRamp: 9,
     instCount: 15, instPrice: 1000, instRamp: 12,
-    aiOneTime: 100000, aiRecurring: 25000, aiDealMonth: 6
+    aiOneTime: 100000, aiRecurring: 25000, aiDealMonth: 6,
+    opsHours: 10, opsRate: 25, amazonPpc: 500, contentMktg: 200, conferences: 2000,
+    geminiMonthly: 100, legalSetup: 2000,
   },
   optimistic: {
-    totalTitles: 999, pubRate: 5, avgPages: 300, marketingSpend: 500,
+    totalTitles: 999, pubRate: 5, avgPages: 300,
     kindlePrice: 14.99, kindleSales: 50, kindleRoyalty: 0.70,
     podPrice: 95, podPrintCost: 4.60, podSales: 15,
     bundlePrice: 149, bundleSales: 20, bundleCount: 10,
     patronCount: 500, patronAvg: 25, patronRamp: 6,
     instCount: 40, instPrice: 2000, instRamp: 9,
-    aiOneTime: 500000, aiRecurring: 50000, aiDealMonth: 3
+    aiOneTime: 500000, aiRecurring: 50000, aiDealMonth: 3,
+    opsHours: 20, opsRate: 35, amazonPpc: 2000, contentMktg: 500, conferences: 5000,
+    geminiMonthly: 200, legalSetup: 5000,
   }
 };
 
@@ -902,7 +1002,6 @@ function readInputs() {
     totalTitles: +$('totalTitles').value,
     pubRate: +$('pubRate').value,
     avgPages: +$('avgPages').value,
-    marketingSpend: +$('marketingSpend').value,
     kindlePrice: +$('kindlePrice').value,
     kindleSales: +$('kindleSales').value,
     kindleRoyalty: +$('kindleRoyalty').value,
@@ -920,7 +1019,16 @@ function readInputs() {
     instRamp: +$('instRamp').value,
     aiOneTime: +$('aiOneTime').value,
     aiRecurring: +$('aiRecurring').value,
-    aiDealMonth: +$('aiDealMonth').value
+    aiDealMonth: +$('aiDealMonth').value,
+    // Cost inputs
+    opsHours: +$('opsHours').value,
+    opsRate: +$('opsRate').value,
+    amazonPpc: +$('amazonPpc').value,
+    contentMktg: +$('contentMktg').value,
+    conferences: +$('conferences').value,
+    geminiMonthly: +$('geminiMonthly').value,
+    legalSetup: +$('legalSetup').value,
+    ownIsbns: document.querySelector('input[name="isbnStrategy"]:checked').value === 'own',
   };
 }
 
@@ -929,7 +1037,6 @@ function updateDisplayValues(a) {
   $('totalTitles_v').textContent = a.totalTitles;
   $('pubRate_v').textContent = a.pubRate;
   $('avgPages_v').textContent = a.avgPages;
-  $('marketingSpend_v').textContent = '$' + a.marketingSpend;
   $('kindlePrice_v').textContent = '$' + a.kindlePrice.toFixed(2);
   $('kindleSales_v').textContent = a.kindleSales;
   $('kindleRoyalty_v').textContent = Math.round(a.kindleRoyalty * 100) + '%';
@@ -948,6 +1055,14 @@ function updateDisplayValues(a) {
   $('aiOneTime_v').textContent = fmtK(a.aiOneTime);
   $('aiRecurring_v').textContent = fmtK(a.aiRecurring);
   $('aiDealMonth_v').textContent = a.aiDealMonth;
+  // Cost display values
+  $('opsHours_v').textContent = a.opsHours + ' hrs';
+  $('opsRate_v').textContent = '$' + a.opsRate + '/hr';
+  $('amazonPpc_v').textContent = '$' + a.amazonPpc.toLocaleString();
+  $('contentMktg_v').textContent = '$' + a.contentMktg;
+  $('conferences_v').textContent = '$' + a.conferences.toLocaleString();
+  $('geminiMonthly_v').textContent = '$' + a.geminiMonthly;
+  $('legalSetup_v').textContent = '$' + a.legalSetup.toLocaleString();
 }
 
 // ── Core calculation ───────────────────────────────────
@@ -1073,24 +1188,68 @@ function calculate() {
   `;
   tbody.appendChild(totalRow);
 
-  // Costs
-  const costAi = a.totalTitles * 1.20;
-  const costLabor = (0.5 * 25) * 365; // 30min/day * $25/hr * 365 days
-  const costMarketing = a.marketingSpend * 12;
-  const costHosting = 240;
-  const totalCost = costAi + costLabor + costMarketing + costHosting;
+  // ── Costs ──────────────────────────────────────────────
 
-  $('cost_ai').textContent = '$' + Math.round(costAi).toLocaleString();
-  $('cost_labor').textContent = '$' + Math.round(costLabor).toLocaleString();
-  $('cost_marketing').textContent = '$' + Math.round(costMarketing).toLocaleString();
-  $('cost_total').textContent = '$' + Math.round(totalCost).toLocaleString();
+  // Operations: weekly hours × rate × 52 weeks
+  const costLabor = a.opsHours * a.opsRate * 52;
+  $('cost_labor').textContent = '$' + Math.round(costLabor).toLocaleString() + '/yr';
 
-  // Break-even
-  const monthlyCost = totalCost / 12;
+  // Marketing
+  const costAmazonPpc = a.amazonPpc * 12;
+  const costContentMktg = a.contentMktg * 12;
+  const costConferences = a.conferences;
+  const costMarketingTotal = costAmazonPpc + costContentMktg + costConferences;
+  $('cost_marketing').textContent = '$' + Math.round(costMarketingTotal).toLocaleString() + '/yr';
+
+  // ISBNs
+  const costIsbn = a.ownIsbns ? 1750 : 0;
+  $('cost_isbn').textContent = a.ownIsbns ? '$1,750' : '$0';
+  $('isbn_note').textContent = a.ownIsbns ? '(1,000-pack from Bowker)' : '(Amazon imprint only)';
+
+  // Infrastructure
+  const costInfra = 1800; // Vercel + Mongo + Lambda
+  const costGemini = a.geminiMonthly * 12;
+  const costDomain = 50;
+  $('cost_gemini').textContent = '$' + Math.round(costGemini).toLocaleString() + '/yr';
+
+  // One-time setup
+  const costAiBacklog = a.totalTitles * 1.20;
+  const costLegal = a.legalSetup;
+  $('cost_ai').textContent = '$' + Math.round(costAiBacklog).toLocaleString();
+  $('cost_ai_books').textContent = a.totalTitles;
+
+  // Computed platform fees (from Year 1 revenue)
+  const patreonFee = y1Membership * 0.08;
+  // Kindle delivery: $0.15/MB × ~2MB per sale (on 70% royalty tier only)
+  const kindleTotalSalesY1 = months.slice(0, 12).reduce((s, r) => s + r.titlesLive * a.kindleSales, 0);
+  const kindleDeliveryFee = a.kindleRoyalty >= 0.7 ? kindleTotalSalesY1 * 0.15 * 2 : 0;
+  // Payment processing on institutional + bundle revenue (direct, not via Amazon)
+  const paymentProcFee = (y1Institutional + y1Bundles) * 0.029;
+
+  $('cost_patreon_fee').textContent = '$' + Math.round(patreonFee).toLocaleString();
+  $('cost_kindle_delivery').textContent = '$' + Math.round(kindleDeliveryFee).toLocaleString();
+  $('cost_payment_proc').textContent = '$' + Math.round(paymentProcFee).toLocaleString();
+
+  // Totals
+  const oneTimeCosts = costAiBacklog + costLegal + costIsbn;
+  const recurringAnnual = costLabor + costMarketingTotal + costInfra + costGemini + costDomain;
+  const computedFees = patreonFee + kindleDeliveryFee + paymentProcFee;
+  const totalCostY1 = oneTimeCosts + recurringAnnual + computedFees;
+  const totalCostRecurring = recurringAnnual + computedFees; // Year 2+ (no one-time)
+
+  $('cost_total_y1').textContent = '$' + Math.round(totalCostY1).toLocaleString();
+  $('cost_total_recurring').textContent = '$' + Math.round(totalCostRecurring).toLocaleString();
+
+  // Break-even: cumulative revenue vs cumulative costs
+  // Year 1: one-time costs spread + monthly recurring + monthly fees
+  const monthlyRecurring = recurringAnnual / 12;
+  const monthlyFees = computedFees / 12;
   let breakMonth = null;
   let cumCost = 0;
   for (let i = 0; i < months.length; i++) {
-    cumCost += monthlyCost;
+    // One-time costs hit in month 1
+    if (i === 0) cumCost += oneTimeCosts;
+    cumCost += monthlyRecurring + monthlyFees;
     if (months[i].cumulative >= cumCost) {
       breakMonth = i + 1;
       break;
@@ -1103,8 +1262,12 @@ function calculate() {
     beEl.querySelector('.value').textContent = 'After 36 months';
   }
 
+  // Net profit Year 1
+  const netProfitY1 = y1 - totalCostY1;
+  beEl.querySelector('.value').textContent += '  |  Year 1 Net: ' + fmt(netProfitY1);
+
   // Store for CSV export
-  window._projectionData = { months, a, y1, y2, y3, totalCost };
+  window._projectionData = { months, a, y1, y2, y3, totalCostY1, totalCostRecurring };
 }
 
 // ── Sparkline renderer ─────────────────────────────────
@@ -1156,6 +1319,9 @@ function setScenario(name) {
     const el = $(key);
     if (el) el.value = s[key];
   });
+  // ISBN strategy: conservative/base = free, optimistic = own
+  const isbnValue = name === 'optimistic' ? 'own' : 'free';
+  document.querySelector(`input[name="isbnStrategy"][value="${isbnValue}"]`).checked = true;
   document.querySelectorAll('.scenarios button').forEach(b => b.classList.remove('active'));
   document.querySelector(`.scenarios button[onclick*="${name}"]`).classList.add('active');
   calculate();
@@ -1170,7 +1336,7 @@ function copyCSV() {
   d.months.slice(0, 12).forEach(r => {
     csv += `${r.m},${r.titlesLive},${Math.round(r.kindle)},${Math.round(r.pod)},${Math.round(r.bundles)},${Math.round(r.membership)},${Math.round(r.institutional)},${Math.round(r.aiLic)},${Math.round(r.total)},${Math.round(r.cumulative)}\n`;
   });
-  csv += `\nYear 1 Total,,,,,,,,,${Math.round(d.y1)}\nYear 2 Total,,,,,,,,,${Math.round(d.y2)}\nYear 3 Total,,,,,,,,,${Math.round(d.y3)}\nTotal Costs,,,,,,,,,${Math.round(d.totalCost)}\n`;
+  csv += `\nYear 1 Total,,,,,,,,,${Math.round(d.y1)}\nYear 2 Total,,,,,,,,,${Math.round(d.y2)}\nYear 3 Total,,,,,,,,,${Math.round(d.y3)}\nYear 1 Costs,,,,,,,,,${Math.round(d.totalCostY1)}\nYear 2+ Annual Costs,,,,,,,,,${Math.round(d.totalCostRecurring)}\nYear 1 Net Profit,,,,,,,,,${Math.round(d.y1 - d.totalCostY1)}\n`;
 
   navigator.clipboard.writeText(csv).then(() => {
     const btn = $('csvBtn');
