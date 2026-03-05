@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
 import type { Page } from '@/lib/types';
 
 function PageImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useCallback((img: HTMLImageElement | null) => {
+    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+  }, []);
   return (
     <>
       {!loaded && (
         <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
       )}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'} ${className || ''}`}
