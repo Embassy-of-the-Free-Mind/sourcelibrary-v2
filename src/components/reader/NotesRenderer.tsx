@@ -280,6 +280,15 @@ function preprocessLatexSuperscripts(text: string): string {
     .replace(/\$\\textit{([^}]*)}\$/g, '<em>$1</em>');  // $\textit{...}$ → <em>...</em>
 }
 
+// Convert markdown bold/italic inside XML annotation tags to HTML
+// CommonMark treats content inside HTML block elements as raw — *italic* won't render
+function preprocessAnnotationInlineMarkdown(text: string): string {
+  return text.replace(
+    /<(margin|note|gloss|insert|unclear)>([\s\S]*?)<\/\1>/gi,
+    (_, tag, content) => `<${tag}>${inlineMarkdownToHtml(content)}</${tag}>`
+  );
+}
+
 // Pre-process centering syntax (doesn't break tables)
 function preprocessCentering(text: string): string {
   let result = text;
@@ -670,7 +679,8 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
   const withLatex = useMemo(() => preprocessLatexSuperscripts(withBracketTags), [withBracketTags]);
-  const withCentering = useMemo(() => preprocessCentering(withLatex), [withLatex]);
+  const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withLatex), [withLatex]);
+  const withCentering = useMemo(() => preprocessCentering(withAnnotationMd), [withAnnotationMd]);
   // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
   // Without this, text like "</div>\n**bold**" is treated as one HTML block and ** renders literally.
   // CommonMark spec: HTML blocks (type 6) end only at a blank line.
