@@ -54,8 +54,18 @@ export interface EnrichedPeriod {
   episodes: EnrichedEpisode[];
 }
 
+export interface GalleryImage {
+  id: string;
+  thumbnailUrl: string;
+  description?: string;
+  type?: string;
+  bookTitle?: string;
+  bookId?: string;
+}
+
 export interface ShwepPageData {
   periods: EnrichedPeriod[];
+  galleryImages: GalleryImage[];
   stats: {
     totalEpisodes: number;
     episodesWithBooks: number;
@@ -183,8 +193,56 @@ async function getShwepData(): Promise<ShwepPageData> {
     episodes: [...p.episodes].reverse(),
   }));
 
+  // Fetch gallery images from books linked to SHWEP episodes
+  const allBookIds = new Set<string>();
+  for (const p of enrichedPeriods) {
+    for (const ep of p.episodes) {
+      for (const b of ep.books) {
+        allBookIds.add(b.id);
+      }
+    }
+  }
+
+  let galleryImages: GalleryImage[] = [];
+  try {
+    const rawImages = await db.collection('gallery_images').find(
+      {
+        book_id: { $in: [...allBookIds] },
+        gallery_quality: { $gte: 0.8 },
+        type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'ornament', 'border'] },
+      },
+      {
+        projection: { thumbnail_url: 1, extracted_url: 1, description: 1, type: 1, book_id: 1, book_title: 1 },
+        sort: { gallery_quality: -1 },
+        limit: 60,
+      }
+    ).toArray();
+
+    // Diversify: max 2 per book
+    const bookCounts: Record<string, number> = {};
+    for (const img of rawImages) {
+      const thumb = img.thumbnail_url || img.extracted_url;
+      if (!thumb) continue;
+      const bid = img.book_id?.toString() || '';
+      bookCounts[bid] = (bookCounts[bid] || 0) + 1;
+      if (bookCounts[bid] > 2) continue;
+      galleryImages.push({
+        id: img._id.toString(),
+        thumbnailUrl: thumb,
+        description: img.description,
+        type: img.type,
+        bookTitle: img.book_title,
+        bookId: bid,
+      });
+      if (galleryImages.length >= 12) break;
+    }
+  } catch {
+    // Gallery images are optional — don't block the page
+  }
+
   return {
     periods: reversedPeriods,
+    galleryImages,
     stats: {
       totalEpisodes,
       episodesWithBooks,
