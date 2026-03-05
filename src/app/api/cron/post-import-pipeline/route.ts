@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb, forceReconnect, isConnectionError } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 import { verifyCronAuth } from '@/lib/cron-auth';
-import { extractChaptersForBook } from '@/lib/chapter-extraction';
 import { enrichBookMetadata } from '@/lib/metadata-enrichment';
-import { scoreBookQuality } from '@/lib/quality-scoring';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
@@ -22,8 +20,6 @@ const OCR_SUBMIT_LIMIT = 20; // Re-enabled — pushing to 2,000 fully OCR'd book
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
 const TRANSLATE_SUBMIT_LIMIT = 50; // Increased — large backlog at metadata_enriched
-const ENRICH_LIMIT = 20; // Processed concurrently — all run in parallel via Promise.allSettled
-const CHAPTER_LIMIT = 15; // Fast (~5-10s each)
 const IMAGE_SUBMIT_LIMIT = 5;
 const FINALIZE_LIMIT = 50; // Just DB updates
 const MAX_ACTIVE_IMAGE_JOBS = 10;
@@ -377,8 +373,6 @@ export async function GET(request: NextRequest) {
     const ocrPaused = control?.paused_phases?.includes('ocr');
     const translatePaused = control?.paused_phases?.includes('translation');
     const imagesPaused = control?.paused_phases?.includes('images');
-    const enrichPaused = control?.paused_phases?.includes('enrichment');
-    const chaptersPaused = control?.paused_phases?.includes('chapters');
 
     // ════════════════════════════════════════════════════════════════════
     // PRIORITY PASS: Run fast, late-stage phases FIRST so they don't get
@@ -1440,134 +1434,8 @@ export async function GET(request: NextRequest) {
 
     await earlyFlushIfNeeded();
 
-    // ── Phase 6: Enrich — generate summary + index (translate_complete -> enriched) ──
-    // Also re-enriches books where enrichment_stale was set by OCR/translation workers.
-    // Picks up 'enriching' books too — they may have been orphaned if a previous cron run timed out.
-    if (enrichPaused) {
-      logger.decision('skip', 'Enrichment paused via processing_control.paused_phases');
-    }
-    if (hasTimeBudget(startTime) && !enrichPaused) {
-      const readyForEnrich = await db.collection('books')
-        .find({
-          $or: [
-            { 'pipeline_auto.status': 'translate_complete' },
-            { 'pipeline_auto.status': 'enriching' },
-            { enrichment_stale: true, 'index.generatedAt': { $exists: true } },
-          ]
-        })
-        .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, 'pipeline_auto.status': 1, 'pipeline_auto.retry_count': 1, enrichment_stale: 1 })
-        .limit(ENRICH_LIMIT)
-        .toArray();
-
-      // Mark all as enriching up front (skip books already in enriching state)
-      for (const book of readyForEnrich) {
-        if (book.pipeline_auto?.status === 'translate_complete') {
-          await setPipelineStatus(db, book.id, 'enriching');
-        }
-      }
-
-      // Process all books concurrently with per-book timeout
-      const enrichResults = await Promise.allSettled(
-        readyForEnrich.map(async (book) => {
-          // GET /api/books/{id}/index generates summary + index if stale
-          // 90s timeout per book — prevents slow books from blocking the whole cron
-          const res = await fetch(`${baseUrl}/api/books/${book.id}/index`, {
-            method: 'GET',
-            signal: AbortSignal.timeout(90_000),
-          });
-
-          if (!res.ok) {
-            throw new Error(`HTTP ${res.status}`);
-          }
-
-          // Quality scoring — non-blocking, fast (~2s)
-          try { await scoreBookQuality(db, book.id); } catch { /* non-critical */ }
-
-          return book;
-        })
-      );
-
-      // Process results
-      for (let i = 0; i < enrichResults.length; i++) {
-        const result = enrichResults[i];
-        const book = readyForEnrich[i];
-        const isStaleReenrich = book.enrichment_stale && book.pipeline_auto?.status !== 'translate_complete';
-
-        if (result.status === 'fulfilled') {
-          if (isStaleReenrich) {
-            // Stale re-enrich: just clear the flag, don't touch pipeline status
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $unset: { enrichment_stale: '' } }
-            );
-          } else {
-            await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
-          }
-          log.enriched++;
-        } else {
-          const retries = book.pipeline_auto?.retry_count || 0;
-          if (isStaleReenrich) {
-            // Stale re-enrich failure: clear the flag anyway — will retry next time OCR/translation runs
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $unset: { enrichment_stale: '' } }
-            );
-          } else if (retries >= MAX_RETRIES) {
-            // Enrichment is non-critical — skip on persistent failure
-            await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
-            log.enriched++;
-          } else {
-            await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
-          }
-          log.errors.push(`Enrich ${book.id}: ${result.reason instanceof Error ? result.reason.message : 'unknown'}`);
-        }
-      }
-    }
-
-    // ── Phase 7: Chapter extraction (enriched -> chapters_complete) ──
-    // AI extracts chapter structure from OCR headings. Fast & cheap (~$0.02/book).
-    // Books with <10 pages skip directly — no meaningful structure to extract.
-    if (chaptersPaused) {
-      logger.decision('skip', 'Chapter extraction paused via processing_control.paused_phases');
-    }
-    if (hasTimeBudget(startTime) && !chaptersPaused) {
-      const readyForChapters = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'enriched' })
-        .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(CHAPTER_LIMIT)
-        .toArray();
-
-      for (const book of readyForChapters) {
-        if (!hasTimeBudget(startTime)) break;
-        try {
-          // Skip very short books — no meaningful chapter structure
-          if ((book.pages_count || 0) < 10) {
-            await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
-            log.chapters_skipped++;
-            continue;
-          }
-
-          await setPipelineStatus(db, book.id, 'chapters');
-
-          await extractChaptersForBook(db, book.id);
-
-          await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
-          log.chapters_extracted++;
-        } catch (err) {
-          const retries = book.pipeline_auto?.retry_count || 0;
-          if (retries >= MAX_RETRIES) {
-            // Chapter extraction is non-critical — skip to next phase on persistent failure
-            await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
-            log.chapters_skipped++;
-          } else {
-            await setPipelineStatus(db, book.id, 'enriched', { retry_count: retries + 1 });
-          }
-          log.errors.push(`Chapters ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
-        }
-      }
-    }
+    // Phase 6 (enrichment) and Phase 7 (chapters) moved to dedicated /api/cron/enrich-books
+    // so they don't starve translation of time budget.
 
     // (Phases 8, 8.5, 9 now run in the priority pass above)
 

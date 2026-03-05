@@ -2,6 +2,7 @@ import { getDb } from '@/lib/mongodb';
 
 export type CronName =
   | 'post-import-pipeline'
+  | 'enrich-books'
   | 'process-batches'
   | 'sync-page-counts'
   | 'sync-gallery-images'
