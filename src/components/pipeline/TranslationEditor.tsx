@@ -1185,7 +1185,7 @@ export default function TranslationEditor({
                       </div>
                     ) : transliterationText ? (
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
-                        <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} columns={page.columns} />
+                        <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} />
                       </div>
                     ) : page.ocr?.data ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
@@ -1729,7 +1729,7 @@ export default function TranslationEditor({
                 </div>
               ) : transliterationText ? (
                 <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }} lang="und-Latn">
-                  <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} columns={page.columns} />
+                  <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} />
                 </div>
               ) : (
                 <p className="text-sm text-center mt-8" style={{ color: 'var(--text-muted)' }}>
