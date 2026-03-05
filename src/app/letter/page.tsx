@@ -12,18 +12,20 @@ export const metadata: Metadata = {
 /* ── Image constants ── */
 const BLOB = 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com';
 
+const T = `${BLOB}/thumbnails`; // thumbnail prefix
+
 const IMAGES = {
-  atalantaFrontispiece: `${BLOB}/archived/69520c46ab34727b1f044141/7.jpg`,
-  fluddIntegraNaturae: `${BLOB}/archived/6952dac677f38f6761bc683a/13.jpg`,
-  fluddSun: `${BLOB}/archived/6952dac677f38f6761bc683a/27.jpg`,
-  fluddCosmos: `${BLOB}/archived/6952dac677f38f6761bc683a/45.jpg`,
-  solomonPentacle: `${BLOB}/archived/695285cdab34727b1f04c25a/34.jpg`,
-  corpusHermeticum: `${BLOB}/archived/694f3d6cbe37f451a5324e10/2.jpg`,
-  agrippa: `${BLOB}/archived/694bf8d2343422769f237558/2.jpg`,
-  fluddCover: `${BLOB}/archived/6952dac677f38f6761bc683a/5.jpg`,
-  solomonCover: `${BLOB}/archived/695285cdab34727b1f04c25a/5.jpg`,
-  pico: `${BLOB}/archived/694f8d99efce46492e19fdad/7.jpg`,
-  drebbel: `${BLOB}/thumbnails/6836f8ee811c8ab472a49e36/1.jpg`,
+  atalantaFrontispiece: `${T}/69520c46ab34727b1f044141/7.jpg`,
+  fluddIntegraNaturae: `${T}/6952dac677f38f6761bc683a/13.jpg`,
+  fluddSun: `${T}/6952dac677f38f6761bc683a/27.jpg`,
+  fluddCosmos: `${T}/6952dac677f38f6761bc683a/45.jpg`,
+  solomonPentacle: `${T}/695285cdab34727b1f04c25a/34.jpg`,
+  corpusHermeticum: `${T}/694f3d6cbe37f451a5324e10/10.jpg`,
+  agrippa: `${T}/694bf8d2343422769f237558/2.jpg`,
+  fluddCover: `${T}/6952dac677f38f6761bc683a/5.jpg`,
+  solomonCover: `${T}/695285cdab34727b1f04c25a/5.jpg`,
+  pico: `${T}/694f8d99efce46492e19fdad/7.jpg`,
+  drebbel: `${T}/6836f8ee811c8ab472a49e36/1.jpg`,
 };
 
 export default function LetterPage() {
@@ -120,7 +122,7 @@ export default function LetterPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={IMAGES.corpusHermeticum}
-                alt="Corpus Hermeticum — Ficino's 1481 Venice edition"
+                alt="Corpus Hermeticum — Ficino's Argumentum, 1481 Venice edition"
                 className="w-full rounded-lg shadow-md"
                 loading="lazy"
               />
@@ -140,54 +142,37 @@ export default function LetterPage() {
         </blockquote>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          This is an institutional failure, not an intellectual one. A professional critical edition of
-          a 300-page Latin text takes 5&ndash;10 years and costs $30,000&ndash;$60,000. The entire
-          field of pre-modern intellectual history is bottlenecked by translation capacity. Across all
-          of academia, maybe a few hundred pre-modern texts get newly translated into English per year.
-          The backlog is tens of thousands of volumes. At the current rate, it would take centuries.
-        </p>
-
-        <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          But consider what Cosimo accomplished with one translator and one manuscript. The texts that
-          launched the Renaissance &mdash; the{' '}
+          A professional critical edition of a 300-page Latin text takes 5&ndash;10 years and
+          costs $30,000&ndash;$60,000. Across all of academia, maybe a few hundred pre-modern
+          texts get newly translated into English per year. The backlog is tens of thousands of
+          volumes. The{' '}
           <a href="https://sourcelibrary.org/search?q=hermetic" className="text-accent-rust hover:underline">Hermetic writings</a>,
           the <a href="https://sourcelibrary.org/search?q=neoplatonism" className="text-accent-rust hover:underline">Neoplatonists</a>,
           the <a href="https://sourcelibrary.org/search?q=alchemy" className="text-accent-rust hover:underline">alchemical</a> and{' '}
           <a href="https://sourcelibrary.org/search?q=kabbalah" className="text-accent-rust hover:underline">Kabbalistic</a> traditions
-          &mdash; were a tiny fraction of what survives. Thousands of volumes
-          from the same intellectual world have never been translated at all. They sit in libraries across
-          Europe, waiting for the same act of recovery that Ficino performed for Cosimo.
-        </p>
-
-        <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          The difference is that we no longer need to do it one book at a time.
+          &mdash; thousands of volumes from the same intellectual world that produced the Renaissance
+          have never been translated at all.
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-12">
           Source Library has made 4,500 of these books readable in English &mdash; many
-          for the first time ever. The translations are first drafts, not critical editions, but they make texts
-          <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
+          for the first time. The translations are first drafts, not critical editions, but they make texts
+          accessible to researchers who can then decide which ones merit deeper scholarly work.
           Ficino&apos;s translation of the <em>Corpus Hermeticum</em> was also a first draft. It was enough.
         </p>
 
         {/* ── What you can do ── */}
         <h2 className="font-serif text-3xl md:text-4xl text-primary mt-16 mb-8">Explore the Collection</h2>
 
-        <p className="font-body text-lg text-secondary leading-relaxed mb-4">
-          Go to{' '}
-          <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>{' '}
-          and try it. Pick a book &mdash; any book. You&apos;ll see the original scanned pages side by side with
-          an English translation. You can{' '}
-          <a href="https://sourcelibrary.org/search" className="text-accent-rust hover:underline">search across the full text</a>{' '}
-          of the entire collection. You can browse a{' '}
-          <a href="https://sourcelibrary.org/gallery" className="text-accent-rust hover:underline">gallery of 73,000+ extracted illustrations</a>.
-          You can explore an{' '}
-          <a href="https://sourcelibrary.org/encyclopedia" className="text-accent-rust hover:underline">encyclopedia</a>{' '}
-          that links people, places, and ideas across books and centuries.
-        </p>
-
         <p className="font-body text-lg text-secondary leading-relaxed mb-8">
-          Here are a few places to start:
+          Pick a book &mdash; any book. You&apos;ll see the original scanned pages side by side with
+          an English translation. You can{' '}
+          <a href="https://sourcelibrary.org/search" className="text-accent-rust hover:underline">search across the full text</a>,
+          browse a{' '}
+          <a href="https://sourcelibrary.org/gallery" className="text-accent-rust hover:underline">gallery of 73,000+ illustrations</a>,
+          or explore an{' '}
+          <a href="https://sourcelibrary.org/encyclopedia" className="text-accent-rust hover:underline">encyclopedia</a>{' '}
+          linking people, places, and ideas across books and centuries.
         </p>
 
         {/* Featured books with images */}
@@ -406,11 +391,10 @@ export default function LetterPage() {
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
-          The pipeline runs autonomously &mdash; a cron advances books through each stage every ten minutes.
-          Once a book is imported, no human intervention is needed until a scholar wants to review the output.
-          For the technically inclined, the{' '}
+          The pipeline runs autonomously. Once imported, no human intervention is needed until a
+          scholar wants to review the output. See the{' '}
           <Link href="/progress" className="text-accent-rust hover:underline">development timeline</Link>{' '}
-          shows how this was built over 1,400+ commits in three months.
+          for how this was built over 1,400+ commits in three months.
         </p>
 
         {/* ── What We Learned ── */}
@@ -421,12 +405,10 @@ export default function LetterPage() {
             <div>
               <p className="text-primary font-medium text-lg mb-3">AI translation quality is better than expected.</p>
               <p className="font-body text-secondary leading-relaxed">
-                We&apos;ve processed texts in Latin, German Fraktur, Arabic, Hebrew, Classical Chinese, Dutch,
-                Italian, French, Spanish, and more. The output isn&apos;t perfect &mdash; specialists will find
-                errors, and the AI sometimes misses period-specific idioms. But for making a 16th-century Latin
-                treatise comprehensible to a graduate student, or giving a researcher their first orientation in
-                an unfamiliar text, the quality is genuinely useful. The translations are first drafts, not final
-                products &mdash; but first drafts are what scholarship needs most.
+                We&apos;ve processed texts in Latin, German Fraktur, Arabic, Hebrew, Classical Chinese, and
+                more. The output isn&apos;t perfect, but for giving a researcher their first orientation in
+                an unfamiliar text, the quality is genuinely useful. First drafts are what scholarship
+                needs most.
               </p>
             </div>
             <div className="hidden md:block">
@@ -440,23 +422,19 @@ export default function LetterPage() {
           <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
             <p className="text-primary font-medium text-lg mb-3">The technology is not the hard part.</p>
             <p className="font-body text-secondary leading-relaxed">
-              Building the pipeline took three months and under $10,000. But technology without scholarship is a
-              curiosity. Someone has to decide which texts matter, validate the AI output, contextualize
-              the translations, and connect the work to living research communities. That requires people &mdash;
-              scholars, librarians, editors &mdash; and people require sustained funding. The technology is
-              ready. The institutional structure is what needs building.
+              Building the pipeline took three months and under $10,000. But someone has to decide
+              which texts matter, validate the output, and connect the work to living research
+              communities. The technology is ready. The institutional structure is what needs building.
             </p>
           </div>
 
           <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
-            <p className="text-primary font-medium text-lg mb-3">Scanning, not AI, is the bottleneck.</p>
+            <p className="text-primary font-medium text-lg mb-3">Scanning is the real bottleneck.</p>
             <p className="font-body text-secondary leading-relaxed">
               The <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> holds
-              approximately 25,000 volumes. Most are unscanned. AI can
-              translate a scan in minutes, but creating a high-quality scan of a 500-year-old binding
-              requires physical access, careful handling, and professional equipment. The books that need
-              translating most are the books that haven&apos;t been digitized yet. This is where funding
-              has the highest return.
+              approximately 25,000 volumes. Most are unscanned. AI can translate a scan in minutes, but
+              digitizing a 500-year-old binding requires physical access and professional equipment.
+              This is where funding has the highest return.
             </p>
           </div>
 
@@ -470,12 +448,11 @@ export default function LetterPage() {
             <div>
               <p className="text-primary font-medium text-lg mb-3">Open access changes who can participate.</p>
               <p className="font-body text-secondary leading-relaxed">
-                When a text like Pico della Mirandola&apos;s{' '}
+                When Pico&apos;s{' '}
                 <a href="https://sourcelibrary.org/book/694f8d99efce46492e19fdad" className="text-accent-rust hover:underline"><em>900 Theses</em></a>{' '}
-                exists only in specialist academic editions or behind university paywalls, the study of
-                Renaissance philosophy is limited to people at well-funded institutions. When it&apos;s freely
-                available with a readable English translation, a student in Lagos or Lima can engage with the
-                same primary sources as a professor at the Warburg Institute. That&apos;s the point.
+                exists only behind university paywalls, the study of Renaissance philosophy is limited
+                to well-funded institutions. When it&apos;s freely available, a student in Lagos or Lima
+                can engage with the same primary sources as a professor at the Warburg Institute.
               </p>
             </div>
           </div>
@@ -523,12 +500,10 @@ export default function LetterPage() {
           </div>
 
           <p className="font-body text-lg text-stone-300 leading-relaxed mb-5">
-            Cosimo spent the equivalent of millions funding Ficino&apos;s work on a single manuscript.
-            The entire tradition of Renaissance Neoplatonism &mdash; which shaped Botticelli, Michelangelo,
-            Copernicus, and the intellectual culture of early modern Europe &mdash; traces back to that
-            one act of patronage. The opportunity before us is the same act, but at a scale Cosimo couldn&apos;t
-            have imagined: thousands of texts, made freely available to the entire world, in the time it took
-            Ficino to translate one.
+            The entire tradition of Renaissance Neoplatonism &mdash; which shaped Botticelli, Copernicus,
+            and the intellectual culture of early modern Europe &mdash; traces back to Cosimo&apos;s
+            patronage of one translator working on one manuscript. The opportunity here is the same
+            impulse at a different scale: thousands of texts, freely available to the world.
           </p>
 
           {/* Closing pull quote */}
