@@ -170,17 +170,17 @@ async function getCollectionShowcase() {
         book_hidden: { $ne: true },
       },
     },
-    { $sample: { size: 20 } },
+    { $sample: { size: 40 } },
   ]).toArray();
 
-  // Diversify: max 1 per book, take 4
+  // Diversify: max 1 per book, take 8
   const seen = new Set<string>();
   const selected = [];
   for (const img of rawImages) {
     if (seen.has(img.book_id)) continue;
     seen.add(img.book_id);
     selected.push(img);
-    if (selected.length >= 4) break;
+    if (selected.length >= 8) break;
   }
 
   // For each selected image, try to find a quote from the book
@@ -269,14 +269,6 @@ export default async function PrototypePage() {
         {/* Video Hero — same as current homepage */}
         <HeroSection />
 
-        {/* Featured Collection Card */}
-        {featured && (
-          <FeaturedCollectionCard
-            collection={featured.collection}
-            books={featured.books}
-          />
-        )}
-
         {/* Collections Grid */}
         <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
@@ -307,6 +299,7 @@ export default async function PrototypePage() {
                   {/* Hero image */}
                   <div className="aspect-[16/9] relative bg-warm overflow-hidden">
                     {col.hero_image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={col.hero_image}
                         alt=""
@@ -341,6 +334,17 @@ export default async function PrototypePage() {
           </div>
         </section>
 
+        {/* Featured Collection Card — below the grid */}
+        {featured && (
+          <FeaturedCollectionCard
+            collection={featured.collection}
+            books={featured.books}
+          />
+        )}
+
+        {/* From the Collection — image-heavy gallery showcase */}
+        <FromTheCollection items={showcase} />
+
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
@@ -358,9 +362,6 @@ export default async function PrototypePage() {
             </div>
           </div>
         </section>
-
-        {/* From the Collection */}
-        <FromTheCollection items={showcase} />
 
         {/* About Section */}
         <section id="about" className="bg-white py-16 md:py-24">

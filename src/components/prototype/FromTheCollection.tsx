@@ -35,10 +35,10 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
           From the Collection
         </h2>
         <p className="text-muted mb-10 max-w-2xl">
-          Illustrations and translations from rare books in the library
+          Illustrations from rare books in the library &middot; Different every visit
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
           {items.map((item) => {
             const galleryId = `${item.page_id}-${item.detection_index}`;
             const bookHref = item.book_slug
@@ -46,68 +46,36 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
               : `/book/${item.book_id}`;
 
             return (
-              <div
-                key={galleryId}
-                className="bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg transition-shadow"
-              >
+              <div key={galleryId} className="group">
                 {/* Image */}
                 <Link href={`/gallery/image/${galleryId}`}>
-                  <div className="relative aspect-[4/3] bg-cream overflow-hidden">
+                  <div className="relative aspect-[3/4] bg-cream rounded-lg overflow-hidden border border-border-light group-hover:shadow-lg transition-all">
                     <Image
                       src={item.thumbnail_url}
                       alt={item.museum_description || 'Gallery image'}
                       fill
-                      className="object-contain hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                     {item.type && (
-                      <span className="absolute top-3 left-3 text-xs bg-dark/70 text-white px-2 py-1 rounded capitalize">
+                      <span className="absolute top-2 left-2 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
                         {item.type}
                       </span>
                     )}
                   </div>
                 </Link>
 
-                {/* Content */}
-                <div className="p-5 md:p-6">
-                  {/* Museum description */}
-                  <p className="text-base leading-relaxed text-secondary font-body mb-4">
-                    {item.museum_description}
-                  </p>
-
-                  {/* Quote */}
-                  {item.quote && (
-                    <blockquote className="border-l-2 border-accent-gold/40 pl-4 mb-4">
-                      <p className="text-base text-secondary/80 italic font-body leading-relaxed line-clamp-4">
-                        &ldquo;{item.quote.text}&rdquo;
-                      </p>
-                      <cite className="text-xs text-muted not-italic mt-1 block">
-                        Page {item.quote.page}
-                      </cite>
-                    </blockquote>
-                  )}
-
-                  {/* Book attribution */}
+                {/* Minimal caption */}
+                <div className="mt-2">
                   <Link
                     href={bookHref}
-                    className="group flex items-center gap-2 text-sm text-muted hover:text-accent-rust transition-colors"
+                    className="text-sm text-secondary hover:text-accent-rust transition-colors line-clamp-1 font-medium"
                   >
-                    <span className="font-medium group-hover:underline">
-                      {item.book_title}
-                    </span>
-                    {item.book_author && (
-                      <>
-                        <span className="text-border-medium">&middot;</span>
-                        <span>{item.book_author}</span>
-                      </>
-                    )}
-                    {item.book_year > 0 && (
-                      <>
-                        <span className="text-border-medium">&middot;</span>
-                        <span>{item.book_year}</span>
-                      </>
-                    )}
+                    {item.book_title}
                   </Link>
+                  <p className="text-xs text-muted line-clamp-1 mt-0.5">
+                    {item.book_author}{item.book_year > 0 ? ` (${item.book_year})` : ''}
+                  </p>
                 </div>
               </div>
             );
