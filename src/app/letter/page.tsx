@@ -66,8 +66,8 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          AI changes the unit economics. Source Library processed 4,500 books in 80 days for under $5,000.
-          The translations are first drafts, not critical editions &mdash; but they make texts
+          AI changes the unit economics. Source Library processed 4,500 books in 80 days for under $10,000
+          in total hard costs. The translations are first drafts, not critical editions &mdash; but they make texts
           <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
           This is the difference between having to read every book in a library to find what you need
           and having a searchable catalog in your language.
@@ -158,7 +158,7 @@ export default function LetterPage() {
             { value: '1,083', label: 'Fully processed books' },
             { value: '73K', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
-            { value: '<$5K', label: 'Total AI cost' },
+            { value: '<$10K', label: 'Total hard costs' },
             { value: '80 days', label: 'Since first commit' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-lg p-3 border border-border-light text-center">
@@ -169,17 +169,98 @@ export default function LetterPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-4">
-          The cost figure is worth lingering on. <strong>Under $5,000 in total AI processing costs</strong> to OCR,
-          translate, summarize, index, and extract illustrations from 4,500+ books. The average cost to fully
-          process a single book is about <strong>$2.40</strong>. Using batch processing, it drops
-          to <strong>$1.40</strong>.
+          The cost figure is worth lingering on. Here are the actual hard costs to build and run
+          Source Library for its first 80 days:
+        </p>
+
+        <div className="bg-white rounded-lg border border-border-light overflow-hidden mb-6">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-warm border-b border-border-light">
+                <th className="text-left py-2.5 px-4 font-medium text-primary">Cost</th>
+                <th className="text-right py-2.5 px-4 font-medium text-primary">Monthly</th>
+                <th className="text-right py-2.5 px-4 font-medium text-primary">To Date</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-light">
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>Gemini AI</strong>
+                  <span className="block text-muted text-xs">OCR, translation, summaries, image extraction</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">varies</td>
+                <td className="py-2 px-4 text-right text-accent-rust font-medium">$7,432</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>Claude</strong>
+                  <span className="block text-muted text-xs">2 Max accounts &mdash; development, curation, QA</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">$400</td>
+                <td className="py-2 px-4 text-right text-secondary">$1,200</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>Vercel</strong>
+                  <span className="block text-muted text-xs">Hosting, serverless functions, blob storage, CDN</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">$80&ndash;680</td>
+                <td className="py-2 px-4 text-right text-secondary">$848</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>AWS Lambda</strong>
+                  <span className="block text-muted text-xs">OCR, translation, and image extraction workers</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">~$20</td>
+                <td className="py-2 px-4 text-right text-secondary">~$60</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>Resend</strong>
+                  <span className="block text-muted text-xs">Transactional email</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">$20</td>
+                <td className="py-2 px-4 text-right text-secondary">$60</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>Hetzner</strong>
+                  <span className="block text-muted text-xs">Archive server for batch image processing</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">$2</td>
+                <td className="py-2 px-4 text-right text-secondary">$5</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 text-secondary">
+                  <strong>MongoDB Atlas</strong>
+                  <span className="block text-muted text-xs">Database (free tier)</span>
+                </td>
+                <td className="py-2 px-4 text-right text-secondary">$0</td>
+                <td className="py-2 px-4 text-right text-secondary">$0</td>
+              </tr>
+              <tr className="bg-warm/50 font-medium">
+                <td className="py-2.5 px-4 text-primary">Total hard costs</td>
+                <td className="py-2.5 px-4 text-right text-muted">&mdash;</td>
+                <td className="py-2.5 px-4 text-right text-accent-rust">~$9,600</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          That&apos;s <strong>under $10,000 in total hard costs</strong> to OCR, translate, summarize, index, and
+          extract illustrations from 4,500+ books. The largest line item &mdash; Gemini AI at $7,432 &mdash;
+          covers the entire backlog and drops to a few hundred dollars per month for steady-state processing
+          of new acquisitions. No employees. No office. No equipment purchases. Just API calls and cloud services.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          For context: a professional human translation of a 300-page Latin text costs $30,000&ndash;$60,000
-          and takes months. The AI does a credible first draft in minutes for $2.40. This doesn&apos;t
-          replace scholarly translation &mdash; it <em>enables</em> it, by giving scholars a working draft to
-          refine rather than asking them to start from a blank page.
+          For context: a professional human translation of a single 300-page Latin text costs $30,000&ndash;$60,000
+          and takes months. Source Library processed 4,500 books for less than the cost of translating one.
+          The AI translations are first drafts, not critical editions &mdash; but they make texts
+          <em> accessible</em>, giving scholars a working draft to refine rather than asking them to start
+          from a blank page.
         </p>
 
         {/* ── How It Works ── */}
@@ -226,7 +307,7 @@ export default function LetterPage() {
           <div className="border-l-4 border-accent-rust/30 pl-6">
             <p className="text-primary font-medium mb-2">The technology is not the hard part.</p>
             <p className="text-secondary text-sm leading-relaxed">
-              Building the pipeline took two months and under $5,000 in AI costs. But technology without scholarship is a
+              Building the pipeline took two months and under $10,000 in total hard costs. But technology without scholarship is a
               curiosity. Someone has to decide which texts matter, validate the AI output, contextualize
               the translations, and connect the work to living research communities. That requires people &mdash;
               scholars, librarians, editors &mdash; and people require sustained funding. The technology is
