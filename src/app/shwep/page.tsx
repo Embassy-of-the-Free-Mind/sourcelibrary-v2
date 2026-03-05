@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { SHWEP_PERIODS, getAllTags } from '@/data/shwep-episodes';
+import { EPISODE_CITED_WORKS, getAllCitedWorks } from '@/data/shwep-cited-works';
 import ShwepClient from './ShwepClient';
 
 export const dynamic = 'force-dynamic';
@@ -61,15 +62,14 @@ export interface ShwepPageData {
 
 async function getShwepData(): Promise<ShwepPageData> {
   const db = await getDb();
-  const allTags = getAllTags();
 
-  const tagPatterns = allTags.map(tag => ({
-    tag,
-    pattern: new RegExp(tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'),
-  }));
+  // Collect all unique search terms: curated tags + crawled cited works
+  const allTags = getAllTags();
+  const allCitedWorks = getAllCitedWorks();
+  const allTerms = new Set([...allTags, ...allCitedWorks]);
 
   const books = await db.collection('books').find(
-    {},
+    { deleted: { $ne: true } },
     {
       projection: {
         _id: 1,
@@ -86,16 +86,8 @@ async function getShwepData(): Promise<ShwepPageData> {
     }
   ).toArray();
 
-  const tagBooks: Record<string, MatchedBook[]> = {};
-
-  for (const { tag, pattern } of tagPatterns) {
-    const matches = books.filter(b => {
-      const authorMatch = pattern.test(b.author || '');
-      const titleMatch = pattern.test(b.title || '') || pattern.test(b.display_title || '');
-      return authorMatch || titleMatch;
-    });
-
-    tagBooks[tag] = matches.map(b => ({
+  function toMatchedBook(b: any): MatchedBook {
+    return {
       id: b._id.toString(),
       title: b.display_title || b.title,
       author: b.author,
@@ -105,7 +97,35 @@ async function getShwepData(): Promise<ShwepPageData> {
       pages_ocr: b.pages_ocr,
       pages_translated: b.pages_translated,
       url: `https://sourcelibrary.org/book/${b._id}`,
-    }));
+    };
+  }
+
+  // Build term → matched books lookup.
+  // Tags use substring matching (curated, precise).
+  // Cited works use word-boundary matching (broader, needs precision guard).
+  // Cap at 30 matches per term to prevent over-broad results.
+  const MAX_MATCHES_PER_TERM = 30;
+  const tagSet = new Set(allTags);
+  const termBooks: Record<string, MatchedBook[]> = {};
+
+  for (const term of allTerms) {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const isTag = tagSet.has(term);
+    // Tags: substring match (curated, precise). Cited works: word-boundary match.
+    const pattern = isTag
+      ? new RegExp(escaped, 'i')
+      : new RegExp('\\b' + escaped + '\\b', 'i');
+
+    const matches = books.filter(b =>
+      pattern.test(b.author || '') || pattern.test(b.title || '') || pattern.test(b.display_title || '')
+    );
+
+    // Skip overly broad cited works (tags are always kept)
+    if (!isTag && matches.length > MAX_MATCHES_PER_TERM) continue;
+
+    if (matches.length > 0) {
+      termBooks[term] = matches.map(toMatchedBook);
+    }
   }
 
   const enrichedPeriods = SHWEP_PERIODS.map(period => ({
@@ -114,8 +134,14 @@ async function getShwepData(): Promise<ShwepPageData> {
       const matchedBooks: MatchedBook[] = [];
       const seenIds = new Set<string>();
 
-      for (const tag of ep.tags) {
-        for (const book of (tagBooks[tag] || [])) {
+      // Combine curated tags + crawled cited works for this episode
+      const episodeTerms = new Set(ep.tags);
+      for (const work of (EPISODE_CITED_WORKS[ep.number] || [])) {
+        episodeTerms.add(work);
+      }
+
+      for (const term of episodeTerms) {
+        for (const book of (termBooks[term] || [])) {
           if (!seenIds.has(book.id)) {
             seenIds.add(book.id);
             matchedBooks.push(book);
