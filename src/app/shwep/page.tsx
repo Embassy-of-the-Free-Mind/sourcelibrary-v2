@@ -143,8 +143,14 @@ async function getShwepData(): Promise<ShwepPageData> {
     0
   );
 
+  // Reverse chronological: newest periods and episodes first
+  const reversedPeriods = [...enrichedPeriods].reverse().map(p => ({
+    ...p,
+    episodes: [...p.episodes].reverse(),
+  }));
+
   return {
-    periods: enrichedPeriods,
+    periods: reversedPeriods,
     stats: {
       totalEpisodes,
       episodesWithBooks,
