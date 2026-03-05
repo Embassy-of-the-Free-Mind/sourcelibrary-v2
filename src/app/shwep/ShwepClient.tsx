@@ -2,21 +2,17 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import type { ShwepPageData, EnrichedEpisode, MatchedBook, EnrichedPeriod, GalleryImage } from './page';
+import type { ShwepIndexData, EnrichedEpisode, EnrichedPeriod, GalleryImage } from './shwep-data';
 
 type ViewMode = 'recent' | 'storytime' | 'period';
 
 function formatDate(dateStr: string) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
-    month: 'short',
-    year: 'numeric',
-  });
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
-export default function ShwepClient({ data }: { data: ShwepPageData }) {
+export default function ShwepClient({ data }: { data: ShwepIndexData }) {
   const [search, setSearch] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('recent');
-  const [expandedEp, setExpandedEp] = useState<number | null>(null);
 
   const allEpisodes = useMemo(() => data.periods.flatMap(p => p.episodes), [data.periods]);
 
@@ -88,8 +84,6 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
               Secret History of Western Esotericism Podcast
             </a>
           </p>
-
-          {/* Search — central and prominent */}
           <div className="relative max-w-xl">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -102,7 +96,6 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
               className="w-full pl-12 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-stone-400 text-lg focus:outline-none focus:ring-2 focus:ring-accent-gold/50 focus:bg-white/15"
             />
           </div>
-
           <div className="flex flex-wrap gap-6 text-sm text-stone-400 mt-6">
             <span>{data.stats.totalEpisodes} episodes</span>
             <span>{data.stats.episodesWithBooks} with source texts</span>
@@ -126,12 +119,7 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
                   className="aspect-square rounded-lg overflow-hidden bg-stone-200 hover:opacity-80 transition-opacity"
                   title={img.description || img.bookTitle}
                 >
-                  <img
-                    src={img.thumbnailUrl}
-                    alt={img.description || ''}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                  <img src={img.thumbnailUrl} alt={img.description || ''} className="w-full h-full object-cover" loading="lazy" />
                 </a>
               ))}
             </div>
@@ -171,12 +159,12 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
       <div className="max-w-5xl mx-auto px-6 py-6">
         {viewMode === 'period' ? (
           filteredPeriods.map(period => (
-            <section key={period.id} id={`period-${period.id}`} className="mb-12 scroll-mt-16">
+            <section key={period.id} className="mb-12 scroll-mt-16">
               <h2 className="text-2xl md:text-3xl font-serif text-stone-800 mb-1">{period.name}</h2>
               <p className="text-sm text-stone-400 mb-4">{period.dateRange}</p>
               <div className="divide-y divide-stone-100">
                 {period.episodes.map(ep => (
-                  <EpisodeRow key={ep.number} episode={ep} expanded={expandedEp === ep.number} onToggle={() => setExpandedEp(expandedEp === ep.number ? null : ep.number)} />
+                  <EpisodeRow key={ep.number} episode={ep} />
                 ))}
               </div>
             </section>
@@ -184,7 +172,7 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
         ) : (
           <div className="divide-y divide-stone-100">
             {filteredEpisodes.map(ep => (
-              <EpisodeRow key={ep.number} episode={ep} expanded={expandedEp === ep.number} onToggle={() => setExpandedEp(expandedEp === ep.number ? null : ep.number)} />
+              <EpisodeRow key={ep.number} episode={ep} />
             ))}
           </div>
         )}
@@ -192,18 +180,14 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
         {(viewMode === 'period' ? filteredPeriods.length === 0 : filteredEpisodes.length === 0) && (
           <div className="text-center py-16 text-stone-500">
             <p className="text-lg mb-2">No episodes match your search.</p>
-            <button onClick={() => setSearch('')} className="text-accent-rust underline">
-              Clear search
-            </button>
+            <button onClick={() => setSearch('')} className="text-accent-rust underline">Clear search</button>
           </div>
         )}
 
         <footer className="mt-16 pt-8 border-t border-stone-200 pb-12 text-center text-stone-500 text-sm space-y-2">
           <p>
             SHWEP is created by{' '}
-            <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">
-              Earl Fontainelle
-            </a>
+            <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">Earl Fontainelle</a>
             . Source Library provides the primary texts — we are not affiliated with SHWEP.
           </p>
           <p>
@@ -218,7 +202,7 @@ export default function ShwepClient({ data }: { data: ShwepPageData }) {
   );
 }
 
-function EpisodeRow({ episode, expanded, onToggle }: { episode: EnrichedEpisode; expanded: boolean; onToggle: () => void }) {
+function EpisodeRow({ episode }: { episode: EnrichedEpisode }) {
   const hasBooks = episode.bookCount > 0;
   const translatedCount = episode.books.filter(b => (b.pages_translated || 0) > 0).length;
   const sixMonthsAgo = new Date();
@@ -227,103 +211,33 @@ function EpisodeRow({ episode, expanded, onToggle }: { episode: EnrichedEpisode;
 
   return (
     <div className="py-5 first:pt-0">
-      <div className="flex items-start gap-4">
-        {/* Main content */}
-        <div className="flex-1 min-w-0">
-          {/* Title */}
-          <h3
-            className={`text-xl md:text-2xl font-serif leading-snug ${
-              hasBooks ? 'text-stone-800' : 'text-stone-400'
-            }`}
-          >
-            {hasBooks ? (
-              <button onClick={onToggle} className="text-left hover:text-accent-rust transition-colors">
-                {episode.title}
-              </button>
-            ) : (
-              episode.title
-            )}
-            {isRecent && (
-              <span className="ml-2 align-middle px-2 py-0.5 rounded-full text-xs font-sans font-medium bg-accent-rust/10 text-accent-rust">
-                New
-              </span>
-            )}
-          </h3>
-
-          {/* Metadata line */}
-          <div className="flex items-center gap-3 mt-1 text-sm text-stone-400">
-            {episode.publishDate && <span>{formatDate(episode.publishDate)}</span>}
-            <span>#{episode.number}</span>
-            {hasBooks && (
-              <span className="text-accent-gold-dark">
-                {translatedCount > 0
-                  ? `${translatedCount}/${episode.bookCount} translated`
-                  : `${episode.bookCount} source${episode.bookCount !== 1 ? 's' : ''}`}
-              </span>
-            )}
-            <a
-              href={episode.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-stone-600 transition-colors"
-            >
-              Listen
-            </a>
-          </div>
-        </div>
-
-        {/* Expand chevron */}
-        {hasBooks && (
-          <button onClick={onToggle} className="mt-2 p-1 text-stone-300 hover:text-stone-500 transition-colors">
-            <svg className={`w-5 h-5 transition-transform ${expanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+      {/* Title — links to episode page */}
+      <h3 className={`text-xl md:text-2xl font-serif leading-snug ${hasBooks ? 'text-stone-800' : 'text-stone-400'}`}>
+        <Link href={`/shwep/${episode.number}`} className="hover:text-accent-rust transition-colors">
+          {episode.title}
+        </Link>
+        {isRecent && (
+          <span className="ml-2 align-middle px-2 py-0.5 rounded-full text-xs font-sans font-medium bg-accent-rust/10 text-accent-rust">
+            New
+          </span>
         )}
-      </div>
+      </h3>
 
-      {/* Expanded book list */}
-      {expanded && hasBooks && (
-        <div className="mt-3 ml-0 space-y-0.5">
-          {episode.books.map(book => (
-            <BookLink key={book.id} book={book} />
-          ))}
-        </div>
-      )}
+      {/* Metadata */}
+      <div className="flex items-center gap-3 mt-1 text-sm text-stone-400">
+        {episode.publishDate && <span>{formatDate(episode.publishDate)}</span>}
+        <span>#{episode.number}</span>
+        {hasBooks && (
+          <span className="text-accent-gold-dark">
+            {translatedCount > 0
+              ? `${translatedCount}/${episode.bookCount} translated`
+              : `${episode.bookCount} source${episode.bookCount !== 1 ? 's' : ''}`}
+          </span>
+        )}
+        <a href={episode.url} target="_blank" rel="noopener noreferrer" className="hover:text-stone-600 transition-colors">
+          Listen
+        </a>
+      </div>
     </div>
-  );
-}
-
-function BookLink({ book }: { book: MatchedBook }) {
-  const hasTranslation = (book.pages_translated || 0) > 0;
-  const hasOcr = (book.pages_ocr || 0) > 0;
-
-  return (
-    <a
-      href={book.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-stone-50 transition-colors group"
-    >
-      {book.thumbnail ? (
-        <img src={book.thumbnail} alt="" className="w-8 h-11 object-cover rounded shadow-sm shrink-0 bg-stone-100" loading="lazy" />
-      ) : (
-        <div className="w-8 h-11 rounded bg-stone-100 shrink-0" />
-      )}
-      <div className="flex-1 min-w-0">
-        <span className="text-stone-700 group-hover:text-stone-900 truncate block">{book.title}</span>
-        <span className="text-sm text-stone-400">{book.author}{book.year ? ` · ${book.year}` : ''} · {book.language}</span>
-      </div>
-      {hasTranslation && (
-        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200 shrink-0">
-          translated
-        </span>
-      )}
-      {hasOcr && !hasTranslation && (
-        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 shrink-0">
-          OCR&apos;d
-        </span>
-      )}
-    </a>
   );
 }
