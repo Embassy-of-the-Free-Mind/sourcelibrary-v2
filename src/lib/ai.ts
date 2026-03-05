@@ -334,16 +334,15 @@ export async function performModernization(
 }
 
 // Prompt for scholarly transliteration of non-Latin scripts
-const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
+const TRANSLITERATION_PROMPT_BASE = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
 
 CRITICAL RULES:
 1. Preserve the line-by-line structure EXACTLY. Each line of output must correspond to the same line of input. Do not merge or split lines.
 2. Preserve paragraph breaks and blank lines exactly as they appear.
-3. PRESERVE the <column-break/> tag exactly where it appears — this marks column boundaries for rendering.
-4. Remove all OTHER XML/markup tags (<note>, <term>, <margin>, <page-type>, <columns>, <language>, <detected-images>, etc.) from the output.
-5. Include standard scholarly diacritics (macrons for long vowels, dots for emphatics, etc.).
-6. Do not translate — only transliterate. The output should be a phonetic representation in Latin script, not a translation.
-7. If the text contains passages in Latin script already (e.g. Latin in a Greek manuscript), preserve them as-is.
+3. Remove all XML/markup tags (<note>, <term>, <margin>, <page-type>, <columns>, <language>, <detected-images>, etc.) from the output.
+4. Include standard scholarly diacritics (macrons for long vowels, dots for emphatics, etc.).
+5. Do not translate — only transliterate. The output should be a phonetic representation in Latin script, not a translation.
+6. If the text contains passages in Latin script already (e.g. Latin in a Greek manuscript), preserve them as-is.
 
 Romanization conventions by script:
 - **Greek:** Standard scholarly transliteration. α→a, β→b, γ→g, δ→d, ε→e, ζ→z, η→ē, θ→th, ι→i, κ→k, λ→l, μ→m, ν→n, ξ→x, ο→o, π→p, ρ→r, σ/ς→s, τ→t, υ→y/u, φ→ph, χ→ch, ψ→ps, ω→ō. Rough breathing→h, accents preserved where standard.
@@ -365,7 +364,11 @@ export async function performTransliteration(
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
-  let prompt = TRANSLITERATION_PROMPT;
+  let prompt = TRANSLITERATION_PROMPT_BASE;
+  // Only tell the model to preserve <column-break/> if the OCR actually has one
+  if (ocrText.includes('<column-break/>')) {
+    prompt += `\n\nIMPORTANT: The text contains a <column-break/> tag marking a column boundary. PRESERVE it exactly where it appears.`;
+  }
   prompt += `\n\nThe source script is: **${sourceScript}**`;
   prompt += `\n\n**Text to transliterate:**\n${ocrText}`;
 

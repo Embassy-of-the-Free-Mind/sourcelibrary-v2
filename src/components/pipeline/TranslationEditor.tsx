@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { toast } from 'sonner';
 import RevisionHistory from '@/components/reader/RevisionHistory';
 import {
@@ -650,6 +650,14 @@ export default function TranslationEditor({
     setTransliterationText(page.transliteration?.data || '');
   }, [page.id, page.transliteration?.data]);
 
+  // Strip hallucinated <column-break/> from transliteration when OCR doesn't have it
+  const ocrHasColumnBreak = useMemo(() => (page.ocr?.data || '').includes('<column-break/>'), [page.ocr?.data]);
+  const cleanTransliteration = useMemo(() => {
+    if (!transliterationText) return '';
+    if (ocrHasColumnBreak) return transliterationText;
+    return transliterationText.replace(/<column-break\s*\/?>/g, '');
+  }, [transliterationText, ocrHasColumnBreak]);
+
   // Track page view
   useEffect(() => {
     analytics.track(
@@ -1185,7 +1193,7 @@ export default function TranslationEditor({
                       </div>
                     ) : transliterationText ? (
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
-                        <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} />
+                        <NotesRenderer text={cleanTransliteration} showNotes={false} showMetadata={false} columns={page.columns} />
                       </div>
                     ) : page.ocr?.data ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
@@ -1729,7 +1737,7 @@ export default function TranslationEditor({
                 </div>
               ) : transliterationText ? (
                 <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }} lang="und-Latn">
-                  <NotesRenderer text={transliterationText} showNotes={false} showMetadata={false} />
+                  <NotesRenderer text={cleanTransliteration} showNotes={false} showMetadata={false} columns={page.columns} />
                 </div>
               ) : (
                 <p className="text-sm text-center mt-8" style={{ color: 'var(--text-muted)' }}>
