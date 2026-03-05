@@ -44,6 +44,19 @@ export interface KdpPublication {
   notes?: string;
 }
 
+// ─── EFM Collection Filter ──────────────────────────────────────────────
+// Only books from these collections are KDP candidates (Western esoteric tradition)
+export const EFM_COLLECTIONS = [
+  'alchemy', 'astrology', 'hermetica', 'kabbalah', 'magic', 'mysticism',
+  'natural-philosophy', 'renaissance-philosophy', 'secret-societies',
+  'demonology', 'herbalism', 'medicine', 'classical-philosophy',
+  'theology', 'literature', 'art-illustrated', 'leonardo-da-vinci',
+  'music-harmony', 'sacred-texts', 'shwep',
+];
+
+// Books in these collections are excluded even if they overlap with EFM
+export const EXCLUDED_COLLECTIONS = ['chinese-classics', 'indic-traditions'];
+
 // ─── BISAC Category Mapping ──────────────────────────────────────────────
 
 const BISAC_MAP: Record<string, string> = {
@@ -93,10 +106,9 @@ export function computeKdpScore(
   const translationPct = pagesCount > 0 ? pagesTranslated / pagesCount : 0;
   const translation = translationPct < 0.4 ? 0 : Math.round(translationPct * 25);
 
-  // 3. EFM relevance (0-20): entity centrality
-  // Sum of book_count for all entities referencing this book
-  // Scale: 0-5 = 0-4pts each, capped at 20
-  const efm_relevance = Math.min(20, Math.round(entityCentrality * 4));
+  // 3. EFM relevance (0-20): entity centrality (per-entity book_count capped at 10)
+  // With capped centrality, p50≈500, p90≈2000 — divide by 100 for good 0-20 spread
+  const efm_relevance = Math.min(20, Math.round(entityCentrality / 100));
 
   // 4. Engagement (0-10): log10(read_count + 1) * 4, capped
   const engagement = Math.min(10, Math.round(Math.log10((book.read_count || 0) + 1) * 4));
@@ -137,12 +149,13 @@ export async function scoreBookKdp(db: Db, bookId: string): Promise<{ score: num
   const book = await db.collection('books').findOne({ id: bookId }) as Record<string, unknown> | null;
   if (!book) return null;
 
-  // Entity centrality: sum book_count for entities referencing this book
+  // Entity centrality: count entities referencing this book, cap each at 10
+  // to prevent generic entities (e.g. "Egypt" at 611) from inflating scores
   const entities = await db.collection('entities').find(
     { 'books.book_id': bookId },
     { projection: { book_count: 1 } }
   ).toArray();
-  const entityCentrality = entities.reduce((sum, e) => sum + ((e.book_count as number) || 0), 0);
+  const entityCentrality = entities.reduce((sum, e) => sum + Math.min(10, (e.book_count as number) || 0), 0);
 
   // Gallery image count
   const galleryImageCount = await db.collection('gallery_images').countDocuments({ book_id: bookId });
@@ -169,9 +182,10 @@ export async function scoreBooksKdp(
   if (options?.bookIds?.length) {
     filter.id = { $in: options.bookIds };
   } else {
-    // Default: pipeline complete books with some translation
+    // Default: pipeline complete EFM books with some translation
     filter['pipeline_auto.status'] = 'complete';
     filter.pages_translated = { $gt: 0 };
+    filter.collections = { $in: EFM_COLLECTIONS, $nin: EXCLUDED_COLLECTIONS };
   }
 
   type BookDoc = Record<string, unknown> & { id: string; title: string; display_title?: string };
@@ -187,12 +201,14 @@ export async function scoreBooksKdp(
   if (books.length === 0) return { scored: 0, topBooks: [] };
 
   // Batch entity centrality: one aggregation instead of N+1 queries
+  // Cap each entity's book_count at 10 to prevent generic entities from inflating scores
   const bookIds = books.map(b => b.id);
   const centralityPipeline = [
     { $match: { 'books.book_id': { $in: bookIds } } },
+    { $addFields: { capped_count: { $min: ['$book_count', 10] } } },
     { $unwind: '$books' },
     { $match: { 'books.book_id': { $in: bookIds } } },
-    { $group: { _id: '$books.book_id', centrality: { $sum: '$book_count' } } },
+    { $group: { _id: '$books.book_id', centrality: { $sum: '$capped_count' } } },
   ];
   const centralityResults = await db.collection('entities').aggregate(centralityPipeline).toArray();
   const centralityMap = new Map(centralityResults.map(r => [r._id, r.centrality || 0]));

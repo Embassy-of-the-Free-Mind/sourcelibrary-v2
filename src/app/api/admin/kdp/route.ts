@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { EFM_COLLECTIONS, EXCLUDED_COLLECTIONS } from '@/lib/kdp-scoring';
 
 /**
  * GET /api/admin/kdp — Dashboard data: ranked candidates with scores + publication status
@@ -18,10 +19,11 @@ export const GET = withAuth(async (request: NextRequest) => {
     const offset = parseInt(url.searchParams.get('offset') || '0');
     const sort = url.searchParams.get('sort') || 'score';
 
-    // Build book filter: pipeline complete with translations
+    // Build book filter: pipeline complete with translations, EFM collections only
     const bookFilter: Record<string, unknown> = {
       'pipeline_auto.status': 'complete',
       pages_translated: { $gt: 0 },
+      collections: { $in: EFM_COLLECTIONS, $nin: EXCLUDED_COLLECTIONS },
     };
     if (minScore > 0) bookFilter.kdp_score = { $gte: minScore };
     if (category) bookFilter.categories = category;
