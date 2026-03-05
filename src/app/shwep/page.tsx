@@ -28,6 +28,7 @@ export interface MatchedBook {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  thumbnail?: string;
   url: string;
 }
 
@@ -82,6 +83,8 @@ async function getShwepData(): Promise<ShwepPageData> {
         pages_count: 1,
         pages_ocr: 1,
         pages_translated: 1,
+        thumbnail: 1,
+        thumbnail_blob: 1,
       },
     }
   ).toArray();
@@ -96,6 +99,7 @@ async function getShwepData(): Promise<ShwepPageData> {
       pages_count: b.pages_count,
       pages_ocr: b.pages_ocr,
       pages_translated: b.pages_translated,
+      thumbnail: b.thumbnail_blob || b.thumbnail || undefined,
       url: `https://sourcelibrary.org/book/${b._id}`,
     };
   }

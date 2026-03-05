@@ -222,6 +222,7 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
   const hasBooks = episode.bookCount > 0;
   const translatedCount = episode.books.filter(b => (b.pages_translated || 0) > 0).length;
   const isRecent = episode.number >= 210;
+  const thumbBooks = episode.books.filter(b => b.thumbnail).slice(0, 5);
 
   return (
     <div
@@ -237,16 +238,32 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
           hasBooks ? 'cursor-pointer hover:bg-stone-50/50' : 'cursor-default'
         }`}
       >
-        {/* Episode number */}
-        <span className="text-sm font-mono text-stone-400 mt-0.5 w-8 shrink-0 text-right">
-          {episode.number}
-        </span>
+        {/* Thumbnail strip OR episode number */}
+        {thumbBooks.length > 0 ? (
+          <div className="flex -space-x-1.5 shrink-0 mt-0.5">
+            {thumbBooks.map((b, i) => (
+              <img
+                key={b.id}
+                src={b.thumbnail}
+                alt=""
+                className="w-8 h-11 object-cover rounded shadow-sm border border-white"
+                style={{ zIndex: thumbBooks.length - i }}
+                loading="lazy"
+              />
+            ))}
+          </div>
+        ) : (
+          <span className="text-sm font-mono text-stone-400 mt-0.5 w-8 shrink-0 text-right">
+            {episode.number}
+          </span>
+        )}
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start gap-3">
             <div className="flex-1">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-mono text-stone-400">{episode.number}</span>
                 <h3 className={`font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
                   {episode.title}
                 </h3>
@@ -257,7 +274,7 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
                 )}
               </div>
               {episode.description && (
-                <p className="text-sm text-stone-500 mt-0.5 line-clamp-1">
+                <p className="text-sm text-stone-500 mt-0.5 line-clamp-2">
                   {episode.description}
                 </p>
               )}
@@ -306,20 +323,6 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
               </svg>
             )}
           </div>
-
-          {/* Tags */}
-          {episode.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {episode.tags.map(tag => (
-                <span
-                  key={tag}
-                  className="inline-block px-2 py-0.5 rounded text-xs bg-stone-100 text-stone-600"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       </button>
 
@@ -351,19 +354,20 @@ function BookLink({ book }: { book: MatchedBook }) {
       rel="noopener noreferrer"
       className="flex items-start gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors group"
     >
-      <svg
-        className="w-4 h-4 text-stone-400 group-hover:text-accent-rust mt-0.5 shrink-0"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+      {book.thumbnail ? (
+        <img
+          src={book.thumbnail}
+          alt=""
+          className="w-10 h-14 object-cover rounded shadow-sm shrink-0 bg-stone-100"
+          loading="lazy"
         />
-      </svg>
+      ) : (
+        <div className="w-10 h-14 rounded bg-stone-100 shrink-0 flex items-center justify-center">
+          <svg className="w-4 h-4 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+      )}
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium text-stone-700 group-hover:text-stone-900 truncate">
           {book.title}
