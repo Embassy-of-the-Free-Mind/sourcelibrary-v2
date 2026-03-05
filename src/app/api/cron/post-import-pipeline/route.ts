@@ -694,13 +694,23 @@ export async function GET(request: NextRequest) {
         status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
       });
 
+      // Lambda backpressure: check active realtime OCR jobs
+      const activeLambdaOcr = await db.collection('jobs').countDocuments({
+        type: 'ocr',
+        status: { $in: ['pending', 'processing'] },
+      });
+      const MAX_ACTIVE_LAMBDA_OCR = 50; // Cap Lambda jobs — each = hundreds of SQS messages
+
       const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
 
       if (activeBatchOcr >= MAX_ACTIVE_BATCH_OCR) {
         logger.backpressure('ocr_batch_limit', { active: activeBatchOcr, max: MAX_ACTIVE_BATCH_OCR });
       }
+      if (activeLambdaOcr >= MAX_ACTIVE_LAMBDA_OCR) {
+        logger.backpressure('ocr_lambda_limit', { active: activeLambdaOcr, max: MAX_ACTIVE_LAMBDA_OCR });
+      }
 
-      const readyForOcr = ocrLimit > 0 ? await db.collection('books')
+      const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < MAX_ACTIVE_LAMBDA_OCR) ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
         .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
@@ -1056,12 +1066,23 @@ export async function GET(request: NextRequest) {
       logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
     }
     if (hasTimeBudget(startTime) && !translatePaused) {
-      const readyForTranslate = await db.collection('books')
+      // Lambda backpressure: check active realtime translation jobs
+      const activeLambdaTranslate = await db.collection('jobs').countDocuments({
+        type: 'translation',
+        status: { $in: ['pending', 'processing'] },
+      });
+      const MAX_ACTIVE_LAMBDA_TRANSLATE = 30; // FIFO queue = sequential per job, so more jobs is fine
+
+      if (activeLambdaTranslate >= MAX_ACTIVE_LAMBDA_TRANSLATE) {
+        logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
+      }
+
+      const readyForTranslate = activeLambdaTranslate < MAX_ACTIVE_LAMBDA_TRANSLATE ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'metadata_enriched' })
         .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
-        .toArray();
+        .toArray() : [];
 
       let translateQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let translateLambdaCount = 0;
@@ -1318,11 +1339,13 @@ export async function GET(request: NextRequest) {
 
     // ── Phase 6: Enrich — generate summary + index (translate_complete -> enriched) ──
     // Also re-enriches books where enrichment_stale was set by OCR/translation workers.
+    // Picks up 'enriching' books too — they may have been orphaned if a previous cron run timed out.
     if (hasTimeBudget(startTime)) {
       const readyForEnrich = await db.collection('books')
         .find({
           $or: [
             { 'pipeline_auto.status': 'translate_complete' },
+            { 'pipeline_auto.status': 'enriching' },
             { enrichment_stale: true, 'index.generatedAt': { $exists: true } },
           ]
         })
@@ -1331,7 +1354,7 @@ export async function GET(request: NextRequest) {
         .limit(ENRICH_LIMIT)
         .toArray();
 
-      // Mark all as enriching up front
+      // Mark all as enriching up front (skip books already in enriching state)
       for (const book of readyForEnrich) {
         if (book.pipeline_auto?.status === 'translate_complete') {
           await setPipelineStatus(db, book.id, 'enriching');

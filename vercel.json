@@ -10,10 +10,6 @@
       "schedule": "0 */2 * * *"
     },
     {
-      "path": "/api/cron/submit-ocr",
-      "schedule": "*/10 * * * *"
-    },
-    {
       "path": "/api/cron/submit-batch-ocr",
       "schedule": "0 3 * * *"
     },
