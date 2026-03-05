@@ -269,6 +269,17 @@ function inlineMarkdownToHtml(text: string): string {
     .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
 }
 
+// Convert LaTeX-style superscript notation to HTML <sup> tags
+// The OCR model produces $^{19}$ (verse numbers) and $^h$ (marginal note markers)
+function preprocessLatexSuperscripts(text: string): string {
+  return text
+    .replace(/\$\^{([^}]*)}\$/g, '<sup>$1</sup>')    // $^{19}$ → <sup>19</sup>
+    .replace(/\$\^([a-zA-Z0-9])\$/g, '<sup>$1</sup>') // $^h$ → <sup>h</sup>
+    .replace(/\$\^{([^}]*)}/g, '<sup>$1</sup>')        // $^{19} (no closing $) → <sup>19</sup>
+    .replace(/\$\\textbf{([^}]*)}\$/g, '<strong>$1</strong>') // $\textbf{...}$ → <strong>...</strong>
+    .replace(/\$\\textit{([^}]*)}\$/g, '<em>$1</em>');  // $\textit{...}$ → <em>...</em>
+}
+
 // Pre-process centering syntax (doesn't break tables)
 function preprocessCentering(text: string): string {
   let result = text;
@@ -541,7 +552,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
         'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
         'table', 'thead', 'tbody', 'tr', 'th', 'td',
-        'span', 'div',
+        'span', 'div', 'sup',
         // XML annotation elements (new syntax)
         'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc'
       ]}
@@ -658,7 +669,8 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
-  const withCentering = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
+  const withLatex = useMemo(() => preprocessLatexSuperscripts(withBracketTags), [withBracketTags]);
+  const withCentering = useMemo(() => preprocessCentering(withLatex), [withLatex]);
   // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
   // Without this, text like "</div>\n**bold**" is treated as one HTML block and ** renders literally.
   // CommonMark spec: HTML blocks (type 6) end only at a blank line.
