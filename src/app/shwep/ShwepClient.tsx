@@ -157,7 +157,7 @@ export default function ShwepClient({ data }: Props) {
           <section key={period.id} id={`period-${period.id}`} className="mb-12 scroll-mt-20">
             <div className="mb-6">
               <h2 className="text-2xl md:text-3xl text-stone-800 mb-1">{period.name}</h2>
-              <p className="text-stone-500 text-sm">{period.dateRange}</p>
+              <p className="text-stone-500">{period.dateRange}</p>
               <p className="text-stone-600 mt-2">{period.description}</p>
             </div>
 
@@ -264,7 +264,7 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
             <div className="flex-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-mono text-stone-400">{episode.number}</span>
-                <h3 className={`font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
+                <h3 className={`text-lg font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
                   {episode.title}
                 </h3>
                 {isRecent && (
@@ -274,7 +274,7 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
                 )}
               </div>
               {episode.description && (
-                <p className="text-sm text-stone-500 mt-0.5 line-clamp-2">
+                <p className="text-base text-stone-500 mt-1 line-clamp-2">
                   {episode.description}
                 </p>
               )}
@@ -369,10 +369,10 @@ function BookLink({ book }: { book: MatchedBook }) {
         </div>
       )}
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-stone-700 group-hover:text-stone-900 truncate">
+        <div className="text-base font-medium text-stone-700 group-hover:text-stone-900 truncate">
           {book.title}
         </div>
-        <div className="text-xs text-stone-500 flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
+        <div className="text-sm text-stone-500 flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
           <span>{book.author}</span>
           {book.year && <span>{book.year}</span>}
           <span>{book.language}</span>
