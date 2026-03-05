@@ -865,24 +865,54 @@ header .subtitle {
     <span class="cost-value" id="cost_isbn">$0</span>
   </div>
 
-  <!-- Infrastructure -->
-  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">Infrastructure</h4>
+  <!-- Infrastructure (based on real billing data Jan-Mar 2026) -->
+  <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">Infrastructure <span style="font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.75rem; color: var(--text-muted);">(from real billing data)</span></h4>
   <div class="costs-grid" style="margin-bottom: 0.5rem;">
     <div class="input-group">
-      <label>Gemini API ongoing ($/month)</label>
+      <label>Vercel (hosting, blob, functions) $/mo</label>
       <div class="slider-row">
-        <input type="range" id="geminiMonthly" min="0" max="500" step="25" value="100">
+        <input type="range" id="vercelMonthly" min="20" max="800" step="10" value="150">
+        <span class="value" id="vercelMonthly_v">$150</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Gemini API ongoing $/mo</label>
+      <div class="slider-row">
+        <input type="range" id="geminiMonthly" min="0" max="1000" step="25" value="100">
         <span class="value" id="geminiMonthly_v">$100</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>AWS Lambda + SQS $/mo</label>
+      <div class="slider-row">
+        <input type="range" id="awsMonthly" min="0" max="500" step="10" value="20">
+        <span class="value" id="awsMonthly_v">$20</span>
       </div>
     </div>
   </div>
   <div class="cost-item">
-    <span class="cost-label">Vercel Pro + MongoDB Atlas + AWS Lambda</span>
-    <span class="cost-value">$1,800/yr</span>
+    <span class="cost-label">Vercel (Pro $20 + team seat $20 + v0 $80 + usage)</span>
+    <span class="cost-value" id="cost_vercel">$1,800/yr</span>
   </div>
   <div class="cost-item">
     <span class="cost-label">Gemini API (new books, re-processing)</span>
     <span class="cost-value" id="cost_gemini">$1,200/yr</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">AWS Lambda + SQS (OCR, translation, image workers)</span>
+    <span class="cost-value" id="cost_aws">$240/yr</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Claude (2 &times; $200/mo Max accounts)</span>
+    <span class="cost-value">$4,800/yr</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Resend (email)</span>
+    <span class="cost-value">$240/yr</span>
+  </div>
+  <div class="cost-item">
+    <span class="cost-label">Hetzner (archive server)</span>
+    <span class="cost-value">$24/yr</span>
   </div>
   <div class="cost-item">
     <span class="cost-label">Domain + email</span>
@@ -892,7 +922,7 @@ header .subtitle {
   <!-- One-time Setup -->
   <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: Inter, sans-serif;">One-time Setup (Year 1)</h4>
   <div class="cost-item">
-    <span class="cost-label">AI translation backlog (<span id="cost_ai_books">999</span> books &times; $1.20)</span>
+    <span class="cost-label">AI processing backlog (<span id="cost_ai_books">999</span> books &mdash; OCR + translation)</span>
     <span class="cost-value" id="cost_ai">$1,199</span>
   </div>
   <div class="costs-grid" style="margin-bottom: 0.5rem;">
@@ -952,7 +982,7 @@ const scenarios = {
     instCount: 5, instPrice: 500, instRamp: 18,
     aiOneTime: 0, aiRecurring: 0, aiDealMonth: 24,
     opsHours: 5, opsRate: 20, amazonPpc: 100, contentMktg: 0, conferences: 0,
-    geminiMonthly: 50, legalSetup: 500,
+    vercelMonthly: 80, geminiMonthly: 50, awsMonthly: 20, legalSetup: 500,
   },
   base: {
     totalTitles: 999, pubRate: 3, avgPages: 300,
@@ -963,7 +993,7 @@ const scenarios = {
     instCount: 15, instPrice: 1000, instRamp: 12,
     aiOneTime: 100000, aiRecurring: 25000, aiDealMonth: 6,
     opsHours: 10, opsRate: 25, amazonPpc: 500, contentMktg: 200, conferences: 2000,
-    geminiMonthly: 100, legalSetup: 2000,
+    vercelMonthly: 150, geminiMonthly: 100, awsMonthly: 20, legalSetup: 2000,
   },
   optimistic: {
     totalTitles: 999, pubRate: 5, avgPages: 300,
@@ -974,7 +1004,7 @@ const scenarios = {
     instCount: 40, instPrice: 2000, instRamp: 9,
     aiOneTime: 500000, aiRecurring: 50000, aiDealMonth: 3,
     opsHours: 20, opsRate: 35, amazonPpc: 2000, contentMktg: 500, conferences: 5000,
-    geminiMonthly: 200, legalSetup: 5000,
+    vercelMonthly: 400, geminiMonthly: 200, awsMonthly: 100, legalSetup: 5000,
   }
 };
 
@@ -1026,7 +1056,9 @@ function readInputs() {
     amazonPpc: +$('amazonPpc').value,
     contentMktg: +$('contentMktg').value,
     conferences: +$('conferences').value,
+    vercelMonthly: +$('vercelMonthly').value,
     geminiMonthly: +$('geminiMonthly').value,
+    awsMonthly: +$('awsMonthly').value,
     legalSetup: +$('legalSetup').value,
     ownIsbns: document.querySelector('input[name="isbnStrategy"]:checked').value === 'own',
   };
@@ -1061,7 +1093,9 @@ function updateDisplayValues(a) {
   $('amazonPpc_v').textContent = '$' + a.amazonPpc.toLocaleString();
   $('contentMktg_v').textContent = '$' + a.contentMktg;
   $('conferences_v').textContent = '$' + a.conferences.toLocaleString();
+  $('vercelMonthly_v').textContent = '$' + a.vercelMonthly;
   $('geminiMonthly_v').textContent = '$' + a.geminiMonthly;
+  $('awsMonthly_v').textContent = '$' + a.awsMonthly;
   $('legalSetup_v').textContent = '$' + a.legalSetup.toLocaleString();
 }
 
@@ -1206,14 +1240,21 @@ function calculate() {
   $('cost_isbn').textContent = a.ownIsbns ? '$1,750' : '$0';
   $('isbn_note').textContent = a.ownIsbns ? '(1,000-pack from Bowker)' : '(Amazon imprint only)';
 
-  // Infrastructure
-  const costInfra = 1800; // Vercel + Mongo + Lambda
+  // Infrastructure (itemized from real billing data)
+  const costVercel = a.vercelMonthly * 12;
   const costGemini = a.geminiMonthly * 12;
+  const costAws = a.awsMonthly * 12;
+  const costClaude = 4800;   // 2 × $200/mo Max accounts
+  const costResend = 240;    // $20/mo
+  const costHetzner = 24;    // ~$2/mo
   const costDomain = 50;
+  const costInfra = costVercel + costGemini + costAws + costClaude + costResend + costHetzner + costDomain;
+  $('cost_vercel').textContent = '$' + Math.round(costVercel).toLocaleString() + '/yr';
   $('cost_gemini').textContent = '$' + Math.round(costGemini).toLocaleString() + '/yr';
+  $('cost_aws').textContent = '$' + Math.round(costAws).toLocaleString() + '/yr';
 
   // One-time setup
-  const costAiBacklog = a.totalTitles * 1.20;
+  const costAiBacklog = a.totalTitles * 4.00; // ~$4/book avg (OCR+translate+enrich, batch API pricing)
   const costLegal = a.legalSetup;
   $('cost_ai').textContent = '$' + Math.round(costAiBacklog).toLocaleString();
   $('cost_ai_books').textContent = a.totalTitles;
@@ -1232,7 +1273,7 @@ function calculate() {
 
   // Totals
   const oneTimeCosts = costAiBacklog + costLegal + costIsbn;
-  const recurringAnnual = costLabor + costMarketingTotal + costInfra + costGemini + costDomain;
+  const recurringAnnual = costLabor + costMarketingTotal + costInfra;
   const computedFees = patreonFee + kindleDeliveryFee + paymentProcFee;
   const totalCostY1 = oneTimeCosts + recurringAnnual + computedFees;
   const totalCostRecurring = recurringAnnual + computedFees; // Year 2+ (no one-time)
