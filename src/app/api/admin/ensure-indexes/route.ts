@@ -1073,6 +1073,34 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // KDP publications - unique book lookup
+    try {
+      await db.collection('kdp_publications').createIndex(
+        { book_id: 1 },
+        { name: 'kdp_publications_book_id_idx', background: true, unique: true }
+      );
+      results['kdp_publications.kdp_publications_book_id_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['kdp_publications.kdp_publications_book_id_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // KDP publications - status + score sort (dashboard queries)
+    try {
+      await db.collection('kdp_publications').createIndex(
+        { status: 1, kdp_score_snapshot: -1 },
+        { name: 'kdp_publications_status_score_idx', background: true }
+      );
+      results['kdp_publications.kdp_publications_status_score_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['kdp_publications.kdp_publications_status_score_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
@@ -1093,7 +1121,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog', 'kdp_publications'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

@@ -133,6 +133,18 @@ export interface Book {
     reasoning?: string;
   };
 
+  // KDP publishing score
+  kdp_score?: number;
+  kdp_score_breakdown?: {
+    quality: number;
+    translation: number;
+    efm_relevance: number;
+    engagement: number;
+    apparatus: number;
+    first_translation_bonus: number;
+    scored_at: Date;
+  };
+
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
   split_check?: {
