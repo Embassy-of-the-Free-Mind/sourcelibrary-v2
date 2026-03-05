@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { FileText, Languages } from 'lucide-react';
 
 interface BookPagesStatsProps {
@@ -8,7 +11,6 @@ interface BookPagesStatsProps {
   lastTranslationDate?: Date | string;
 }
 
-// Format relative time
 function formatRelativeTime(date: Date | string | undefined): string {
   if (!date) return 'Never';
   const d = new Date(date);
@@ -32,6 +34,12 @@ export default function BookPagesStats({
   lastOcrDate,
   lastTranslationDate
 }: BookPagesStatsProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="flex flex-wrap items-center gap-6">
       {/* OCR stat */}
@@ -44,7 +52,7 @@ export default function BookPagesStats({
             <span className="text-xl font-semibold text-stone-900">{pagesWithOcr}</span>
             <span className="text-sm text-stone-400">/ {totalPages}</span>
           </div>
-          <div className="text-xs text-stone-500">OCR {lastOcrDate ? `· ${formatRelativeTime(lastOcrDate)}` : ''}</div>
+          <div className="text-xs text-stone-500">OCR{mounted && lastOcrDate ? ` · ${formatRelativeTime(lastOcrDate)}` : ''}</div>
         </div>
       </div>
 
@@ -58,7 +66,7 @@ export default function BookPagesStats({
             <span className="text-xl font-semibold text-stone-900">{pagesWithTranslation}</span>
             <span className="text-sm text-stone-400">/ {totalPages}</span>
           </div>
-          <div className="text-xs text-stone-500">Translated {lastTranslationDate ? `· ${formatRelativeTime(lastTranslationDate)}` : ''}</div>
+          <div className="text-xs text-stone-500">Translated{mounted && lastTranslationDate ? ` · ${formatRelativeTime(lastTranslationDate)}` : ''}</div>
         </div>
       </div>
     </div>
