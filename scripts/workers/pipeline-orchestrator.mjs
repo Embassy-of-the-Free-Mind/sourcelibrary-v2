@@ -106,6 +106,8 @@ function hashString(str) {
   return hash.toString(16);
 }
 
+const TRANSLATE_MODEL = 'gemini-3-flash-preview';
+const TRANSLATE_PROMPT_VERSION = 'v5.2026-02';
 const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
 const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
 
@@ -194,6 +196,230 @@ async function transliteratePage(db, page, sourceScript) {
   }).catch(() => {});
 
   return { inputTokens, outputTokens, costUsd };
+}
+
+// ── Direct translation (Gemini realtime, FIFO per book) ──
+
+const TRANSLATION_PROMPT = `You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (visible to readers):**
+- <note>X</note> — interpretive notes for readers
+- <margin>X</margin> — translate and keep marginal notes
+- <gloss>X</gloss> — translate interlinear annotations
+- <insert>X</insert> — translate later additions (inline only)
+- <unclear>X</unclear> — illegible readings
+- <term>X</term> — technical vocabulary with explanation
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Code blocks or backticks - this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek phrases → translate to English
+- Hebrew or Aramaic terms → translate to English
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Instructions:**
+1. Start with <meta>...</meta> if noting continuity with previous page (hidden from readers).
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. Add <note>...</note> inline to explain historical references or difficult phrases.
+6. Style: warm museum label - explain rather than assume knowledge.
+7. Preserve the voice and spirit of the original.
+8. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Source language:** {source_language}
+**Target language:** {target_language}
+
+**Final output format:**
+[translated text]
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English — for indexing</keywords>`;
+
+const ENGLISH_MODERNIZATION_PROMPT = `You are modernizing Early Modern English text into clear, accessible Modern English.
+
+**Context:** This is a historical text (1500s-1700s) written in Early Modern English. The OCR transcription preserves the original spelling, vocabulary, and syntax. Your job is to make it readable for a modern audience while preserving the author's meaning and the document's formatting.
+
+**Input:** The OCR transcription with markdown formatting and XML tags, plus (if available) the previous page's modernization for continuity.
+
+**Output:** Modern English text that preserves the markdown formatting and XML tags from the OCR.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them with modern text
+- Centered text (->text<-)
+- Line breaks and paragraph structure
+
+**Inline annotations (visible to readers):**
+- <note>X</note> — keep or add interpretive notes for readers
+- <margin>X</margin> — modernize and keep marginal notes
+- <gloss>X</gloss> — modernize interlinear annotations
+- <insert>X</insert> — modernize later additions (inline only)
+- <unclear>X</unclear> — illegible readings
+- <term>X</term> — explain archaic or technical vocabulary
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for notes about continuity with previous page
+
+**What to modernize:**
+1. **Spelling** — normalize archaic spelling
+2. **Vocabulary** — replace obsolete words with modern equivalents
+3. **Sentence structure** — break up very long periodic sentences while preserving meaning
+4. **Punctuation** — modernize capitalization, punctuation, and emphasis
+5. **Grammar** — update archaic forms ("hath" → "has", "doth" → "does")
+
+**What to keep:**
+- All substantive content (don't summarize or skip anything)
+- Key names, titles, and proper nouns
+- The author's arguments, reasoning, and rhetorical structure
+
+**IMPORTANT - Translate ALL embedded foreign languages to English:**
+Use <note>original: "..."</note> to preserve important original phrases.
+
+**Do NOT use:**
+- Code blocks or backticks — this is prose
+
+**Instructions:**
+1. Start with <meta>...</meta> if noting continuity with previous page.
+2. Mirror the source layout — headings, paragraphs, tables, centered text.
+3. Modernize ALL text including <margin>, <insert>, <gloss> — keep the XML tags.
+4. Translate any Latin/Greek/Hebrew phrases to English.
+5. Add <note>...</note> inline to explain historical references.
+6. Preserve the voice and spirit of the original.
+7. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Final output format:**
+[modernized text]
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes — for indexing</keywords>`;
+
+function extractTranslationMetadata(text) {
+  const result = {};
+  const summaryMatch = text.match(/<summary>([\s\S]*?)<\/summary>/i);
+  if (summaryMatch) {
+    const s = summaryMatch[1].trim();
+    if (s.length > 0) result.translation_summary = s;
+  }
+  const keywordsMatch = text.match(/<keywords>([\s\S]*?)<\/keywords>/i);
+  if (keywordsMatch) {
+    const raw = keywordsMatch[1].trim();
+    if (raw.length > 0) {
+      const kw = raw.split(/[,;]\s*|\s+-\s+/).map(k => k.trim()).filter(k => k.length > 0);
+      if (kw.length > 0) result.translation_keywords = [...new Set(kw)];
+    }
+  }
+  return result;
+}
+
+/**
+ * Translate a single page via direct Gemini realtime call.
+ * Returns the translation text (for use as context for the next page).
+ */
+async function translatePage(db, page, sourceLanguage, previousTranslation) {
+  const apiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+  const url = `${GEMINI_API_BASE}/models/${TRANSLATE_MODEL}:generateContent?key=${apiKey}`;
+
+  const isEnglish = sourceLanguage.toLowerCase() === 'english';
+  const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : TRANSLATION_PROMPT;
+  let prompt = basePrompt
+    .replace('{source_language}', sourceLanguage)
+    .replace('{target_language}', 'English');
+
+  prompt += isEnglish
+    ? `\n\n**Text to modernize:**\n${page.ocr.data}`
+    : `\n\n**Text to translate:**\n${page.ocr.data}`;
+
+  if (previousTranslation) {
+    prompt += isEnglish
+      ? `\n\n**Previous page (modernized) for continuity:**\n${previousTranslation.slice(0, 2000)}...`
+      : `\n\n**Previous page translation for continuity:**\n${previousTranslation.slice(0, 2000)}...`;
+  }
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      safetySettings: [
+        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Gemini ${response.status}: ${errText.substring(0, 300)}`);
+  }
+
+  const data = await response.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const usage = data.usageMetadata || {};
+  const inputTokens = usage.promptTokenCount || 0;
+  const outputTokens = usage.candidatesTokenCount || 0;
+
+  if (!text) throw new Error('Empty response from Gemini');
+
+  // Extract metadata from translation output
+  const meta = extractTranslationMetadata(text);
+
+  // Save translation to page
+  await db.collection('pages').updateOne(
+    { id: page.id },
+    {
+      $set: {
+        'translation.data': text,
+        'translation.language': 'English',
+        'translation.model': TRANSLATE_MODEL,
+        'translation.updated_at': new Date(),
+        'translation.source': 'ai',
+        'translation.prompt_version': TRANSLATE_PROMPT_VERSION,
+        ...meta,
+        updated_at: new Date(),
+      },
+    }
+  );
+
+  // Log usage (fire-and-forget)
+  const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
+  db.collection('gemini_usage').insertOne({
+    type: 'translation',
+    mode: 'realtime',
+    model: TRANSLATE_MODEL,
+    book_id: page.book_id,
+    page_ids: [page.id],
+    input_tokens: inputTokens,
+    output_tokens: outputTokens,
+    cost_usd: costUsd,
+    status: 'success',
+    endpoint: 'hetzner/pipeline-orchestrator',
+    timestamp: new Date(),
+  }).catch(() => {});
+
+  return { text, inputTokens, outputTokens, costUsd };
 }
 
 // Sources whose pages need archiving
@@ -1082,12 +1308,11 @@ async function run() {
       console.log(`  Transliterated: ${log.transliterated} books, ${log.transliterate_pages} pages`);
     }
 
-    // ── Phase 4: Submit translation via Lambda (metadata_enriched -> translate_submitted) ──
-    // NEVER use Gemini Batch API for translation — always Lambda/SQS FIFO for context continuity
+    // ── Phase 4: Direct translation (metadata_enriched -> translate_complete) ──
+    // Calls Gemini realtime directly, FIFO per book (sequential pages with context).
+    // No Lambda/SQS — Hetzner has no time budget so we translate inline.
     if (shouldRun(4)) {
-      console.log('\n--- Phase 4: Translation submission (Lambda) ---');
-
-      const SKIP_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
+      console.log('\n--- Phase 4: Direct translation (Gemini realtime) ---');
 
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'metadata_enriched' })
@@ -1101,17 +1326,12 @@ async function run() {
       for (const book of readyForTranslate) {
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
-          if (DRY_RUN) {
-            console.log(`  Would submit translation (Lambda): ${book.title} (${book.language})`);
-            continue;
-          }
-
           // Find pages with OCR but no translation (skip non-content page types)
           const pages = await db.collection('pages')
             .find({
               book_id: book.id,
               'ocr.data': { $exists: true, $nin: [null, ''] },
-              page_type: { $nin: SKIP_PAGE_TYPES },
+              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
               $or: [
                 { 'translation.data': { $exists: false } },
                 { 'translation.data': null },
@@ -1119,153 +1339,160 @@ async function run() {
               ],
             })
             .sort({ page_number: 1 })
-            .project({ id: 1 })
+            .project({ id: 1, book_id: 1, page_number: 1, ocr: 1 })
             .toArray();
 
           if (pages.length === 0) {
-            await setPipelineStatus(db, book.id, 'translate_complete');
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
             log.translate_advanced++;
             console.log(`  No pages need translation: ${book.title}`);
             continue;
           }
 
-          const pageIds = pages.map(p => p.id);
-          const res = await fetch(`${BASE_URL}/api/jobs/queue-books`, {
-            method: 'POST',
-            headers: headers(),
-            body: JSON.stringify({ bookId: book.id, pageIds, action: 'translation' }),
-          });
+          const label = (book.title || '').substring(0, 50);
+          const sourceLanguage = book.language || 'Unknown';
 
-          const text = await res.text();
-          let data;
-          try { data = JSON.parse(text); } catch {
-            data = { error: `invalid JSON (${text.length} chars)` };
+          if (DRY_RUN) {
+            console.log(`  Would translate: ${label} (${sourceLanguage}) — ${pages.length} pages`);
+            continue;
           }
 
-          if (!res.ok) {
-            if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Translate Lambda: HTTP ${res.status} - ${data.error || ''}`, retries);
-            } else {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+          console.log(`  Translating: ${label} (${sourceLanguage}) — ${pages.length} pages...`);
+          await setPipelineStatus(db, book.id, 'translate_submitted', { retry_count: 0 });
+          log.translate_submitted++;
+
+          // FIFO: translate pages sequentially, carrying previous translation for context
+          let previousTranslation = null;
+          let pagesDone = 0;
+          let pagesFailed = 0;
+          let totalCost = 0;
+          let consecutiveErrors = 0;
+
+          // Seed context: get the last translated page before this batch (for continuity)
+          const lastTranslatedPage = await db.collection('pages').findOne(
+            {
+              book_id: book.id,
+              'translation.data': { $exists: true, $nin: [null, ''] },
+              page_number: { $lt: pages[0].page_number },
+            },
+            { sort: { page_number: -1 }, projection: { 'translation.data': 1 } }
+          );
+          if (lastTranslatedPage?.translation?.data) {
+            previousTranslation = lastTranslatedPage.translation.data;
+          }
+
+          for (const page of pages) {
+            try {
+              const result = await translatePage(db, page, sourceLanguage, previousTranslation);
+              previousTranslation = result.text;
+              totalCost += result.costUsd;
+              pagesDone++;
+              consecutiveErrors = 0;
+
+              if (pagesDone % 25 === 0) {
+                console.log(`    ${label}: ${pagesDone}/${pages.length} ($${totalCost.toFixed(3)})`);
+              }
+            } catch (err) {
+              pagesFailed++;
+              consecutiveErrors++;
+              const msg = err.message || '';
+
+              if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')) {
+                console.log(`    Rate limited at page ${pagesDone + pagesFailed}/${pages.length} — waiting 60s...`);
+                await sleep(60000);
+                consecutiveErrors = 0; // Rate limit is recoverable
+              }
+
+              // Circuit breaker: 5 consecutive non-rate-limit errors = stop this book
+              if (consecutiveErrors >= 5) {
+                console.log(`    Stopping ${label}: ${consecutiveErrors} consecutive errors`);
+                log.errors.push(`Translate ${book.id}: stopped after ${consecutiveErrors} consecutive errors at page ${pagesDone + pagesFailed}`);
+                break;
+              }
             }
-            log.errors.push(`Translate Lambda ${book.id}: HTTP ${res.status}`);
-          } else if (data.jobId) {
-            await setPipelineStatus(db, book.id, 'translate_submitted', {
-              translate_job_id: data.jobId,
-              retry_count: 0,
+          }
+
+          // Determine outcome
+          if (pagesDone === pages.length) {
+            await setPipelineStatus(db, book.id, 'translate_complete');
+            log.translate_advanced++;
+          } else if (pagesDone > 0) {
+            // Partial success — send back to metadata_enriched for retry on next run
+            await setPipelineStatus(db, book.id, 'metadata_enriched', {
+              retry_count: retries + 1,
+              error: `Partial: ${pagesDone}/${pages.length} pages, ${pagesFailed} failed`,
             });
-            log.translate_submitted++;
-            console.log(`  Translate submitted (Lambda): ${book.title} -> job ${data.jobId} (${pageIds.length} pages)`);
           } else {
+            // Total failure
             if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Translate unexpected: ${JSON.stringify(data).slice(0, 200)}`, retries);
+              await markFailed(db, book.id, `Translation: 0/${pages.length} pages translated`, retries);
             } else {
               await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
             }
-            log.errors.push(`Translate Lambda ${book.id}: unexpected response`);
           }
 
-          await sleep(API_DELAY_MS);
+          console.log(`  Done: ${label} — ${pagesDone}/${pages.length} pages, $${totalCost.toFixed(3)}`);
         } catch (err) {
           if (retries >= MAX_RETRIES) {
             await markFailed(db, book.id, `Translate exception: ${err.message}`, retries);
           } else {
             await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
           }
-          log.errors.push(`Translate Lambda ${book.id}: ${err.message}`);
+          log.errors.push(`Translate ${book.id}: ${err.message}`);
         }
       }
       console.log(`  Translate submitted: ${log.translate_submitted}, advanced: ${log.translate_advanced}`);
     }
 
-    // ── Phase 5: Check translation completion (translate_submitted -> translate_complete) ──
+    // ── Phase 5: Legacy translation completion (translate_submitted -> translate_complete) ──
+    // Drains any books still in translate_submitted from old Lambda jobs.
+    // New Phase 4 translates inline and goes directly to translate_complete.
     if (shouldRun(5)) {
-      console.log('\n--- Phase 5: Translation completion check ---');
+      console.log('\n--- Phase 5: Legacy translation completion check ---');
 
       const translatePending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted' })
-        .project({ id: 1, title: 1, 'pipeline_auto.translate_job_name': 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_loop_count': 1 })
+        .project({ id: 1, title: 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_job_name': 1 })
         .toArray();
 
-      console.log(`  Books waiting for translation: ${translatePending.length}`);
+      console.log(`  Books in translate_submitted (legacy): ${translatePending.length}`);
 
       for (const book of translatePending) {
-        const jobName = book.pipeline_auto?.translate_job_name;
-        const jobId = book.pipeline_auto?.translate_job_id;
-        let isComplete = false;
+        // Check if translation is actually done by looking at pages
+        const remaining = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          'ocr.data': { $exists: true, $nin: [null, ''] },
+          page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+          $or: [
+            { 'translation.data': { $exists: false } },
+            { 'translation.data': null },
+            { 'translation.data': '' },
+          ],
+        });
 
-        if (jobId) {
-          const job = await db.collection('jobs').findOne({
-            id: jobId,
-            status: { $in: ['completed', 'completed_with_errors'] },
-          });
-          if (job) isComplete = true;
-        } else if (jobName) {
-          const batchJob = await db.collection('batch_jobs').findOne({
-            book_id: book.id,
-            type: 'translation',
-            $or: [{ job_name: jobName }, { gemini_job_name: jobName }],
-            status: { $in: ['completed', 'saved', 'completed_with_errors'] },
-          });
-          const parentJob = !batchJob
-            ? await db.collection('batch_jobs').findOne({
-                book_id: book.id,
-                type: 'translation',
-                child_job_ids: { $exists: true, $ne: [] },
-                status: { $in: ['completed', 'saved', 'completed_with_errors'] },
-              })
-            : null;
-          if (batchJob || parentJob) isComplete = true;
-        }
-
-        if (isComplete) {
-          const remainingTranslate = await db.collection('pages').countDocuments({
-            book_id: book.id,
-            'ocr.data': { $exists: true, $nin: [null, ''] },
-            page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
-            $or: [
-              { 'translation.data': { $exists: false } },
-              { 'translation.data': null },
-              { 'translation.data': '' },
-            ],
-          });
-
-          if (remainingTranslate > 0) {
-            // Check if there are uncollected batch_jobs — collector may not have saved results yet
-            const uncollectedTransBatch = await db.collection('batch_jobs').countDocuments({
-              book_id: book.id,
-              type: 'translation',
-              status: { $in: ['pending', 'processing', 'completed'] }, // NOT 'saved'
+        if (remaining === 0) {
+          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
+          log.translate_advanced++;
+          console.log(`  Translation complete: ${book.title}`);
+        } else {
+          // Check Lambda job completion
+          const jobId = book.pipeline_auto?.translate_job_id;
+          if (jobId) {
+            const job = await db.collection('jobs').findOne({
+              id: jobId,
+              status: { $in: ['completed', 'completed_with_errors', 'failed'] },
             });
-
-            if (uncollectedTransBatch > 0) {
-              console.log(`  Waiting for collector: ${book.title} — ${uncollectedTransBatch} uncollected translation batches, ${remainingTranslate} pages remaining`);
-              // Don't change state, don't increment loop count
-            } else {
-              const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
-              if (tLoopCount > MAX_RETRIES) {
-                if (!DRY_RUN) {
-                  await setPipelineStatus(db, book.id, 'needs_attention', {
-                    error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
-                    translate_loop_count: tLoopCount,
-                  });
-                }
-                log.needs_attention++;
-                log.errors.push(`Translate circuit breaker ${book.id}: looped ${tLoopCount}x, ${remainingTranslate} remaining`);
-              } else {
-                if (!DRY_RUN) {
-                  await setPipelineStatus(db, book.id, 'metadata_enriched', { translate_loop_count: tLoopCount });
-                }
-                console.log(`  Translate loop ${tLoopCount} for ${book.title}: ${remainingTranslate} pages remaining (all batches collected)`);
-              }
+            if (job) {
+              // Lambda job finished but pages remain — send back to Phase 4 for direct translation
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'metadata_enriched');
+              log.translate_advanced++;
+              console.log(`  Recycling to Phase 4: ${book.title} (${remaining} pages remain after Lambda job)`);
             }
-            log.translate_advanced++;
           } else {
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'translate_complete');
-            }
+            // No job ID — orphaned state, recycle
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'metadata_enriched');
             log.translate_advanced++;
-            console.log(`  Translation complete: ${book.title}`);
+            console.log(`  Recycling orphan: ${book.title} (${remaining} pages remain, no job ID)`);
           }
         }
       }
