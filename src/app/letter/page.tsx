@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'February 2026 Update — Source Library',
+  title: 'March 2026 Update — Source Library',
   description:
     '4,500+ books, 30+ languages, a full AI pipeline, and the plan to build a real institution.',
   alternates: { canonical: '/letter' },
@@ -14,14 +14,14 @@ export default function LetterPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Two Months of Source Library"
-          subtitle="February 2026 Update"
+          title="Three Months of Source Library"
+          subtitle="March 2026 Update"
         />
       }
       bg="bg-cream"
     >
       <div className="prose-content max-w-none">
-        <p className="text-muted text-sm mb-8">February 26, 2026 &middot; Derek Lomas, Program Director</p>
+        <p className="text-muted text-sm mb-8">March 2026 &middot; Derek Lomas, Program Director</p>
 
         {/* ── Opening: A specific book ── */}
         <p className="text-xl text-secondary leading-relaxed mb-6">
@@ -40,7 +40,7 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Drebbel&apos;s book is one of 4,500. In 80 days, Source Library has become the world&apos;s largest
+          Drebbel&apos;s book is one of 4,500. In three months, Source Library has become the world&apos;s largest
           collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
           library sources, and more than 1.7 million page images.
         </p>
@@ -66,7 +66,7 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          AI changes the unit economics. Source Library processed 4,500 books in 80 days for under $10,000
+          AI changes the unit economics. Source Library processed 4,500 books in three months for under $10,000
           in total hard costs. The translations are first drafts, not critical editions &mdash; but they make texts
           <em> accessible</em> to researchers who can then decide which ones merit deeper scholarly work.
           This is the difference between having to read every book in a library to find what you need
@@ -159,7 +159,7 @@ export default function LetterPage() {
             { value: '73K', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
             { value: '<$10K', label: 'Total hard costs' },
-            { value: '80 days', label: 'Since first commit' },
+            { value: '3 months', label: 'Since first commit' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-lg p-3 border border-border-light text-center">
               <div className="text-xl font-serif text-accent-rust">{s.value}</div>
@@ -170,7 +170,7 @@ export default function LetterPage() {
 
         <p className="text-secondary leading-relaxed mb-4">
           The cost figure is worth lingering on. Here are the actual hard costs to build and run
-          Source Library for its first 80 days:
+          Source Library for its first three months:
         </p>
 
         <div className="bg-white rounded-lg border border-border-light overflow-hidden mb-6">
@@ -285,7 +285,7 @@ export default function LetterPage() {
           Once a book is imported, no human intervention is needed until a scholar wants to review the output.
           For the technically inclined, the{' '}
           <Link href="/progress" className="text-accent-rust hover:underline">development timeline</Link>{' '}
-          shows how this was built over 1,140 commits in 80 days.
+          shows how this was built over 1,400+ commits in three months.
         </p>
 
         {/* ── What We Learned ── */}
@@ -307,7 +307,7 @@ export default function LetterPage() {
           <div className="border-l-4 border-accent-rust/30 pl-6">
             <p className="text-primary font-medium mb-2">The technology is not the hard part.</p>
             <p className="text-secondary text-sm leading-relaxed">
-              Building the pipeline took two months and under $10,000 in total hard costs. But technology without scholarship is a
+              Building the pipeline took three months and under $10,000 in total hard costs. But technology without scholarship is a
               curiosity. Someone has to decide which texts matter, validate the AI output, contextualize
               the translations, and connect the work to living research communities. That requires people &mdash;
               scholars, librarians, editors &mdash; and people require sustained funding. The technology is
