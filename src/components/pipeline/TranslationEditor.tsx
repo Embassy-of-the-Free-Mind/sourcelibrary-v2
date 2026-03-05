@@ -620,8 +620,9 @@ export default function TranslationEditor({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [showFontControls]);
 
-  // Fetch transliteration when panel is opened or page changes
+  // Transliteration: only show panel when page has transliteration data
   const isNonLatin = hasNonLatinScript(book.language);
+  const hasTransliteration = !!(page.transliteration?.data || transliterationText);
   useEffect(() => {
     if (!showTransliterationPanel || !isNonLatin || !page.ocr?.data) return;
     // Check for cached transliteration first
@@ -895,7 +896,7 @@ export default function TranslationEditor({
                 <FileText className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">OCR</span>
               </button>
-              {isNonLatin && (
+              {hasTransliteration && (
                 <button
                   onClick={() => setShowTransliterationPanel(!showTransliterationPanel)}
                   className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTransliterationPanel ? 'text-white' : ''}`}
@@ -1043,7 +1044,7 @@ export default function TranslationEditor({
 
         {/* Panel layout - dynamic based on visibility */}
         {(() => {
-          const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel, showTransliterationPanel && isNonLatin].filter(Boolean).length;
+          const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel, showTransliterationPanel && hasTransliteration].filter(Boolean).length;
           const panelWidth = visibleCount === 1 ? 'w-full' : visibleCount === 2 ? 'lg:w-1/2' : visibleCount === 3 ? 'lg:w-1/3' : 'lg:w-1/4';
 
           return (
@@ -1149,7 +1150,7 @@ export default function TranslationEditor({
               )}
 
               {/* Transliteration Panel (non-Latin scripts only) */}
-              {showTransliterationPanel && isNonLatin && (
+              {showTransliterationPanel && hasTransliteration && (
                 <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
@@ -1559,7 +1560,7 @@ export default function TranslationEditor({
               <FileText className="w-4 h-4" />
               <span className="hidden sm:inline">OCR</span>
             </button>
-            {isNonLatin && (
+            {hasTransliteration && (
               <button
                 onClick={() => setShowTransliterationPanel(!showTransliterationPanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTransliterationPanel ? 'text-white' : ''}`}
@@ -1715,7 +1716,7 @@ export default function TranslationEditor({
         )}
 
         {/* Transliteration Panel (non-Latin scripts only, read-only in edit mode) */}
-        {showTransliterationPanel && isNonLatin && (
+        {showTransliterationPanel && hasTransliteration && (
           <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
             <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Romanized {book.language || ''}</span>
