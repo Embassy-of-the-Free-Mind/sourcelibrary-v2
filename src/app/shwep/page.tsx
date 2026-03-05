@@ -175,8 +175,13 @@ async function getShwepData(): Promise<ShwepPageData> {
     0
   );
 
+  const reversedPeriods = [...enrichedPeriods].reverse().map(p => ({
+    ...p,
+    episodes: [...p.episodes].reverse(),
+  }));
+
   return {
-    periods: enrichedPeriods,
+    periods: reversedPeriods,
     stats: {
       totalEpisodes,
       episodesWithBooks,
