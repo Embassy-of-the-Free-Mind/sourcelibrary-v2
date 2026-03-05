@@ -69,6 +69,10 @@ export default function ShwepClient({ data }: Props) {
             </a>
             . Browse episodes and access original texts in Latin, Greek, Arabic, and more.
           </p>
+          <p className="text-sm text-stone-400 max-w-2xl mb-4">
+            Find the episode you just listened to, then read the original texts discussed.
+            Books marked &ldquo;translated&rdquo; have full English translations you can read alongside the original.
+          </p>
           <div className="flex flex-wrap gap-6 text-sm text-stone-400">
             <span>{data.stats.totalEpisodes} episodes</span>
             <span>{data.stats.episodesWithBooks} with source texts</span>
@@ -216,6 +220,8 @@ export default function ShwepClient({ data }: Props) {
 function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
   const [expanded, setExpanded] = useState(false);
   const hasBooks = episode.bookCount > 0;
+  const translatedCount = episode.books.filter(b => (b.pages_translated || 0) > 0).length;
+  const isRecent = episode.number >= 210;
 
   return (
     <div
@@ -240,9 +246,16 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-start gap-3">
             <div className="flex-1">
-              <h3 className={`font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
-                {episode.title}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className={`font-medium ${hasBooks ? 'text-stone-800' : 'text-stone-500'}`}>
+                  {episode.title}
+                </h3>
+                {isRecent && (
+                  <span className="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-medium bg-accent-rust/10 text-accent-rust">
+                    New
+                  </span>
+                )}
+              </div>
               {episode.description && (
                 <p className="text-sm text-stone-500 mt-0.5 line-clamp-1">
                   {episode.description}
@@ -250,28 +263,32 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
               )}
             </div>
 
-            {/* Book count badge */}
+            {/* Book count + translation readiness */}
             {hasBooks && (
               <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent-gold/8 text-accent-gold-dark text-xs font-medium border border-accent-gold/20">
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-                {episode.bookCount}
+                {translatedCount > 0
+                  ? `${translatedCount}/${episode.bookCount} translated`
+                  : `${episode.bookCount} source${episode.bookCount !== 1 ? 's' : ''}`
+                }
               </span>
             )}
 
-            {/* SHWEP link */}
+            {/* Listen on SHWEP */}
             <a
               href={episode.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 text-stone-400 hover:text-stone-600"
+              className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-stone-500 hover:text-stone-700 bg-stone-100 hover:bg-stone-200 transition-colors"
               onClick={e => e.stopPropagation()}
               title="Listen on SHWEP"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
               </svg>
+              <span className="hidden sm:inline">Listen</span>
             </a>
 
             {/* Expand chevron */}
