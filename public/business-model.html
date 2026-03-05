@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EFM Publishing Business Model — Source Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-cream: #fdfcf9;
+  --bg-warm: #f5f0e8;
+  --bg-dark: #1a1612;
+  --text-primary: #1a1612;
+  --text-secondary: #444;
+  --text-muted: #6b6560;
+  --accent-rust: #9e4a3a;
+  --accent-gold: #c9a86c;
+  --accent-sage: #8b9a7d;
+  --accent-violet: #7c5db5;
+  --accent-gold-dark: #9e7c3c;
+  --border-light: #e8e4dc;
+  --border-medium: #d4cfc4;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-cream);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--border-light);
+}
+header h1 {
+  font-size: 2.4rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+header .subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  color: var(--accent-rust);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Scenario buttons */
+.scenarios {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+.scenarios button {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border: 1.5px solid var(--border-medium);
+  border-radius: 6px;
+  background: white;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.scenarios button:hover {
+  border-color: var(--accent-rust);
+  color: var(--accent-rust);
+}
+.scenarios button.active {
+  background: var(--accent-rust);
+  border-color: var(--accent-rust);
+  color: white;
+}
+
+/* Global assumptions */
+.global-section {
+  background: var(--bg-warm);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+.global-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+.global-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* Input groups */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.input-group label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.input-group .slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.input-group input[type="range"] {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--border-medium);
+  border-radius: 3px;
+  outline: none;
+}
+.input-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-rust);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.input-group input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-rust);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.input-group .value {
+  min-width: 60px;
+  text-align: right;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Channel cards */
+.channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+.channel-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: relative;
+  transition: box-shadow 0.15s;
+}
+.channel-card:hover {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.channel-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.channel-card h3 {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+.channel-card .card-header .annual {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent-rust);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.channel-card .card-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.channel-card .sparkline {
+  margin-top: 0.5rem;
+}
+.channel-card .sparkline-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.3rem;
+}
+.sparkline svg {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+.sparkline rect { fill: var(--accent-rust); opacity: 0.7; rx: 2; }
+.sparkline rect.gold { fill: var(--accent-gold); }
+.sparkline rect.sage { fill: var(--accent-sage); }
+.sparkline rect.violet { fill: var(--accent-violet); }
+
+/* Channel color accents */
+.channel-card[data-channel="kindle"] { border-top: 3px solid var(--accent-rust); }
+.channel-card[data-channel="pod"] { border-top: 3px solid var(--accent-gold-dark); }
+.channel-card[data-channel="bundles"] { border-top: 3px solid var(--accent-sage); }
+.channel-card[data-channel="membership"] { border-top: 3px solid var(--accent-violet); }
+.channel-card[data-channel="institutional"] { border-top: 3px solid #4a7c8b; }
+.channel-card[data-channel="ai-licensing"] { border-top: 3px solid var(--bg-dark); }
+
+.channel-card[data-channel="kindle"] .annual { color: var(--accent-rust); }
+.channel-card[data-channel="pod"] .annual { color: var(--accent-gold-dark); }
+.channel-card[data-channel="bundles"] .annual { color: var(--accent-sage); }
+.channel-card[data-channel="membership"] .annual { color: var(--accent-violet); }
+.channel-card[data-channel="institutional"] .annual { color: #4a7c8b; }
+.channel-card[data-channel="ai-licensing"] .annual { color: var(--text-primary); }
+
+.channel-card[data-channel="pod"] .sparkline rect { fill: var(--accent-gold-dark); }
+.channel-card[data-channel="bundles"] .sparkline rect { fill: var(--accent-sage); }
+.channel-card[data-channel="membership"] .sparkline rect { fill: var(--accent-violet); }
+.channel-card[data-channel="institutional"] .sparkline rect { fill: #4a7c8b; }
+.channel-card[data-channel="ai-licensing"] .sparkline rect { fill: var(--text-muted); }
+
+/* Summary section */
+.summary-section {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.summary-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.summary-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.year-totals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.year-total {
+  text-align: center;
+  padding: 1rem;
+  background: var(--bg-warm);
+  border-radius: 8px;
+}
+.year-total .label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.year-total .amount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent-rust);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pie chart (CSS conic-gradient) */
+.pie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pie-chart {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+.pie-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: center;
+}
+.pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+.pie-legend-item .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Monthly projection table */
+.projection-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.projection-table th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0.5rem 0.6rem;
+  text-align: right;
+  border-bottom: 2px solid var(--border-light);
+  white-space: nowrap;
+}
+.projection-table th:first-child { text-align: left; }
+.projection-table td {
+  padding: 0.4rem 0.6rem;
+  text-align: right;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+.projection-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.projection-table tr:last-child td {
+  font-weight: 600;
+  color: var(--text-primary);
+  border-top: 2px solid var(--border-medium);
+  border-bottom: none;
+}
+.projection-table .total-col { font-weight: 600; color: var(--text-primary); }
+
+/* Break-even */
+.break-even {
+  text-align: center;
+  padding: 1.25rem;
+  background: var(--bg-warm);
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+.break-even .label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.break-even .value {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--accent-rust);
+}
+
+/* Costs section */
+.costs-section {
+  background: var(--bg-warm);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+.costs-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.costs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.cost-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.cost-item .cost-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.cost-item .cost-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.cost-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Export bar */
+.export-bar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.export-bar button {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border: 1.5px solid var(--border-medium);
+  border-radius: 6px;
+  background: white;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.export-bar button:hover {
+  border-color: var(--accent-rust);
+  color: var(--accent-rust);
+}
+.export-bar .copied {
+  background: var(--accent-sage);
+  border-color: var(--accent-sage);
+  color: white;
+}
+
+/* Print styles */
+@media print {
+  body { font-size: 11px; }
+  .container { padding: 0; max-width: 100%; }
+  .scenarios, .export-bar { display: none; }
+  .channel-card, .summary-section, .costs-section, .global-section {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+  input[type="range"] { display: none; }
+  .slider-row .value { font-size: 0.85rem; }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  header h1 { font-size: 1.8rem; }
+  .summary-top { grid-template-columns: 1fr; }
+  .year-totals { grid-template-columns: 1fr; }
+  .channels { grid-template-columns: 1fr; }
+  .projection-table { font-size: 0.72rem; }
+  .projection-table th, .projection-table td { padding: 0.3rem 0.35rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>EFM Publishing Business Model</h1>
+  <p class="subtitle">Embassy of the Free Mind &times; Source Library</p>
+  <div class="scenarios">
+    <button onclick="setScenario('conservative')">Conservative</button>
+    <button onclick="setScenario('base')" class="active">Base Case</button>
+    <button onclick="setScenario('optimistic')">Optimistic</button>
+  </div>
+</header>
+
+<!-- Global Assumptions -->
+<section class="global-section">
+  <h2>Global Assumptions</h2>
+  <div class="global-grid">
+    <div class="input-group">
+      <label>Total publishable titles</label>
+      <div class="slider-row">
+        <input type="range" id="totalTitles" min="100" max="2000" step="10" value="999">
+        <span class="value" id="totalTitles_v">999</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Publishing rate (titles/day)</label>
+      <div class="slider-row">
+        <input type="range" id="pubRate" min="1" max="10" step="1" value="3">
+        <span class="value" id="pubRate_v">3</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Avg pages per book</label>
+      <div class="slider-row">
+        <input type="range" id="avgPages" min="100" max="800" step="25" value="300">
+        <span class="value" id="avgPages_v">300</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Monthly marketing spend</label>
+      <div class="slider-row">
+        <input type="range" id="marketingSpend" min="0" max="2000" step="50" value="200">
+        <span class="value" id="marketingSpend_v">$200</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Channel Cards -->
+<div class="channels">
+
+  <!-- Kindle Ebooks -->
+  <div class="channel-card" data-channel="kindle">
+    <div class="card-header">
+      <h3>Kindle Ebooks</h3>
+      <span class="annual" id="kindle_annual">$0/yr</span>
+    </div>
+    <div class="card-inputs">
+      <div class="input-group">
+        <label>Price per ebook</label>
+        <div class="slider-row">
+          <input type="range" id="kindlePrice" min="2.99" max="19.99" step="1" value="9.99">
+          <span class="value" id="kindlePrice_v">$9.99</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Sales per title per month</label>
+        <div class="slider-row">
+          <input type="range" id="kindleSales" min="1" max="100" step="1" value="20">
+          <span class="value" id="kindleSales_v">20</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>KDP royalty rate</label>
+        <div class="slider-row">
+          <input type="range" id="kindleRoyalty" min="0.35" max="0.70" step="0.35" value="0.70">
+          <span class="value" id="kindleRoyalty_v">70%</span>
+        </div>
+      </div>
+    </div>
+    <div class="sparkline">
+      <div class="sparkline-label">Monthly revenue (Year 1)</div>
+      <svg id="spark_kindle" viewBox="0 0 240 40"></svg>
+    </div>
+  </div>
+
+  <!-- Premium POD -->
+  <div class="channel-card" data-channel="pod">
+    <div class="card-header">
+      <h3>Premium Print-on-Demand</h3>
+      <span class="annual" id="pod_annual">$0/yr</span>
+    </div>
+    <div class="card-inputs">
+      <div class="input-group">
+        <label>Average book price</label>
+        <div class="slider-row">
+          <input type="range" id="podPrice" min="25" max="125" step="5" value="65">
+          <span class="value" id="podPrice_v">$65</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Print cost per copy</label>
+        <div class="slider-row">
+          <input type="range" id="podPrintCost" min="2" max="15" step="0.5" value="4.60">
+          <span class="value" id="podPrintCost_v">$4.60</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Sales per title per month</label>
+        <div class="slider-row">
+          <input type="range" id="podSales" min="0" max="30" step="1" value="5">
+          <span class="value" id="podSales_v">5</span>
+        </div>
+      </div>
+    </div>
+    <div class="sparkline">
+      <div class="sparkline-label">Monthly revenue (Year 1)</div>
+      <svg id="spark_pod" viewBox="0 0 240 40"></svg>
+    </div>
+  </div>
+
+  <!-- Curated Bundles -->
+  <div class="channel-card" data-channel="bundles">
+    <div class="card-header">
+      <h3>Curated Collections</h3>
+      <span class="annual" id="bundles_annual">$0/yr</span>
+    </div>
+    <div class="card-inputs">
+      <div class="input-group">
+        <label>Avg bundle price (digital)</label>
+        <div class="slider-row">
+          <input type="range" id="bundlePrice" min="19" max="199" step="5" value="79">
+          <span class="value" id="bundlePrice_v">$79</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Bundle sales per month</label>
+        <div class="slider-row">
+          <input type="range" id="bundleSales" min="0" max="50" step="1" value="8">
+          <span class="value" id="bundleSales_v">8</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Number of bundles offered</label>
+        <div class="slider-row">
+          <input type="range" id="bundleCount" min="1" max="20" step="1" value="5">
+          <span class="value" id="bundleCount_v">5</span>
+        </div>
+      </div>
+    </div>
+    <div class="sparkline">
+      <div class="sparkline-label">Monthly revenue (Year 1)</div>
+      <svg id="spark_bundles" viewBox="0 0 240 40"></svg>
+    </div>
+  </div>
+
+  <!-- Membership -->
+  <div class="channel-card" data-channel="membership">
+    <div class="card-header">
+      <h3>Membership / Patreon</h3>
+      <span class="annual" id="membership_annual">$0/yr</span>
+    </div>
+    <div class="card-inputs">
+      <div class="input-group">
+        <label>Number of patrons</label>
+        <div class="slider-row">
+          <input type="range" id="patronCount" min="10" max="1000" step="10" value="150">
+          <span class="value" id="patronCount_v">150</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Avg patron $/month</label>
+        <div class="slider-row">
+          <input type="range" id="patronAvg" min="3" max="50" step="1" value="15">
+          <span class="value" id="patronAvg_v">$15</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Ramp-up months to full</label>
+        <div class="slider-row">
+          <input type="range" id="patronRamp" min="1" max="24" step="1" value="9">
+          <span class="value" id="patronRamp_v">9</span>
+        </div>
+      </div>
+    </div>
+    <div class="sparkline">
+      <div class="sparkline-label">Monthly revenue (Year 1)</div>
+      <svg id="spark_membership" viewBox="0 0 240 40"></svg>
+    </div>
+  </div>
+
+  <!-- Institutional -->
+  <div class="channel-card" data-channel="institutional">
+    <div class="card-header">
+      <h3>Library / Institutional</h3>
+      <span class="annual" id="institutional_annual">$0/yr</span>
+    </div>
+    <div class="card-inputs">
+      <div class="input-group">
+        <label>Institutions (Year 1)</label>
+        <div class="slider-row">
+          <input type="range" id="instCount" min="0" max="60" step="1" value="15">
+          <span class="value" id="instCount_v">15</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Annual license fee</label>
+        <div class="slider-row">
+          <input type="range" id="instPrice" min="200" max="5000" step="100" value="1000">
+          <span class="value" id="instPrice_v">$1,000</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Ramp-up months</label>
+        <div class="slider-row">
+          <input type="range" id="instRamp" min="1" max="24" step="1" value="12">
+          <span class="value" id="instRamp_v">12</span>
+        </div>
+      </div>
+    </div>
+    <div class="sparkline">
+      <div class="sparkline-label">Monthly revenue (Year 1)</div>
+      <svg id="spark_institutional" viewBox="0 0 240 40"></svg>
+    </div>
+  </div>
+
+  <!-- AI Corpus Licensing -->
+  <div class="channel-card" data-channel="ai-licensing">
+    <div class="card-header">
+      <h3>AI Corpus Licensing</h3>
+      <span class="annual" id="ai_annual">$0/yr</span>
+    </div>
+    <div class="card-inputs">
+      <div class="input-group">
+        <label>One-time licensing deal</label>
+        <div class="slider-row">
+          <input type="range" id="aiOneTime" min="0" max="1000000" step="10000" value="100000">
+          <span class="value" id="aiOneTime_v">$100k</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Annual recurring license</label>
+        <div class="slider-row">
+          <input type="range" id="aiRecurring" min="0" max="100000" step="5000" value="25000">
+          <span class="value" id="aiRecurring_v">$25k</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Deal closes in month</label>
+        <div class="slider-row">
+          <input type="range" id="aiDealMonth" min="1" max="24" step="1" value="6">
+          <span class="value" id="aiDealMonth_v">6</span>
+        </div>
+      </div>
+    </div>
+    <div class="sparkline">
+      <div class="sparkline-label">Monthly revenue (Year 1)</div>
+      <svg id="spark_ai" viewBox="0 0 240 40"></svg>
+    </div>
+  </div>
+
+</div>
+
+<!-- Summary P&L -->
+<section class="summary-section">
+  <h2>Projected Revenue Summary</h2>
+
+  <div class="summary-top">
+    <div class="pie-container">
+      <div class="pie-chart" id="pieChart"></div>
+      <div class="pie-legend" id="pieLegend"></div>
+    </div>
+    <div class="year-totals">
+      <div class="year-total">
+        <div class="label">Year 1</div>
+        <div class="amount" id="year1_total">$0</div>
+      </div>
+      <div class="year-total">
+        <div class="label">Year 2</div>
+        <div class="amount" id="year2_total">$0</div>
+      </div>
+      <div class="year-total">
+        <div class="label">Year 3</div>
+        <div class="amount" id="year3_total">$0</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table class="projection-table">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Titles Live</th>
+          <th>Kindle</th>
+          <th>POD</th>
+          <th>Bundles</th>
+          <th>Members</th>
+          <th>Institut.</th>
+          <th>AI Lic.</th>
+          <th class="total-col">Total</th>
+          <th class="total-col">Cumulative</th>
+        </tr>
+      </thead>
+      <tbody id="projectionBody"></tbody>
+    </table>
+  </div>
+
+  <div class="break-even" id="breakEven">
+    <div class="label">Estimated Break-Even</div>
+    <div class="value">Month 2</div>
+  </div>
+</section>
+
+<!-- Costs -->
+<section class="costs-section">
+  <h2>Cost Structure</h2>
+  <div class="costs-grid">
+    <div>
+      <div class="cost-item">
+        <span class="cost-label">AI processing (~$1.20/book)</span>
+        <span class="cost-value" id="cost_ai">$1,199</span>
+      </div>
+      <div class="cost-item">
+        <span class="cost-label">Labor (30 min/day @ $25/hr)</span>
+        <span class="cost-value" id="cost_labor">$4,563</span>
+      </div>
+      <div class="cost-item">
+        <span class="cost-label">Cover design (AI-generated)</span>
+        <span class="cost-value">$0</span>
+      </div>
+    </div>
+    <div>
+      <div class="cost-item">
+        <span class="cost-label">ISBN costs (KDP provides free)</span>
+        <span class="cost-value">$0</span>
+      </div>
+      <div class="cost-item">
+        <span class="cost-label">Marketing (annual)</span>
+        <span class="cost-value" id="cost_marketing">$2,400</span>
+      </div>
+      <div class="cost-item">
+        <span class="cost-label">Vercel hosting</span>
+        <span class="cost-value">$240</span>
+      </div>
+    </div>
+  </div>
+  <div class="cost-total">
+    <span>Total Year 1 Costs</span>
+    <span id="cost_total">$8,402</span>
+  </div>
+</section>
+
+<div class="export-bar">
+  <button onclick="copyCSV()" id="csvBtn">Copy as CSV</button>
+  <button onclick="window.print()">Print / PDF</button>
+</div>
+
+</div>
+
+<script>
+// ── Scenarios ──────────────────────────────────────────
+const scenarios = {
+  conservative: {
+    totalTitles: 999, pubRate: 2, avgPages: 300, marketingSpend: 100,
+    kindlePrice: 4.99, kindleSales: 5, kindleRoyalty: 0.70,
+    podPrice: 45, podPrintCost: 4.60, podSales: 1,
+    bundlePrice: 49, bundleSales: 2, bundleCount: 3,
+    patronCount: 50, patronAvg: 10, patronRamp: 12,
+    instCount: 5, instPrice: 500, instRamp: 18,
+    aiOneTime: 0, aiRecurring: 0, aiDealMonth: 24
+  },
+  base: {
+    totalTitles: 999, pubRate: 3, avgPages: 300, marketingSpend: 200,
+    kindlePrice: 9.99, kindleSales: 20, kindleRoyalty: 0.70,
+    podPrice: 65, podPrintCost: 4.60, podSales: 5,
+    bundlePrice: 79, bundleSales: 8, bundleCount: 5,
+    patronCount: 150, patronAvg: 15, patronRamp: 9,
+    instCount: 15, instPrice: 1000, instRamp: 12,
+    aiOneTime: 100000, aiRecurring: 25000, aiDealMonth: 6
+  },
+  optimistic: {
+    totalTitles: 999, pubRate: 5, avgPages: 300, marketingSpend: 500,
+    kindlePrice: 14.99, kindleSales: 50, kindleRoyalty: 0.70,
+    podPrice: 95, podPrintCost: 4.60, podSales: 15,
+    bundlePrice: 149, bundleSales: 20, bundleCount: 10,
+    patronCount: 500, patronAvg: 25, patronRamp: 6,
+    instCount: 40, instPrice: 2000, instRamp: 9,
+    aiOneTime: 500000, aiRecurring: 50000, aiDealMonth: 3
+  }
+};
+
+// ── Helpers ────────────────────────────────────────────
+function $(id) { return document.getElementById(id); }
+function fmt(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+  if (n >= 10000) return '$' + Math.round(n).toLocaleString();
+  return '$' + Math.round(n).toLocaleString();
+}
+function fmtShort(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(0) + 'k';
+  return '$' + Math.round(n);
+}
+function fmtK(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(0) + 'M';
+  if (n >= 1000) return '$' + Math.round(n / 1000) + 'k';
+  return '$' + Math.round(n);
+}
+
+// ── Read all inputs ────────────────────────────────────
+function readInputs() {
+  return {
+    totalTitles: +$('totalTitles').value,
+    pubRate: +$('pubRate').value,
+    avgPages: +$('avgPages').value,
+    marketingSpend: +$('marketingSpend').value,
+    kindlePrice: +$('kindlePrice').value,
+    kindleSales: +$('kindleSales').value,
+    kindleRoyalty: +$('kindleRoyalty').value,
+    podPrice: +$('podPrice').value,
+    podPrintCost: +$('podPrintCost').value,
+    podSales: +$('podSales').value,
+    bundlePrice: +$('bundlePrice').value,
+    bundleSales: +$('bundleSales').value,
+    bundleCount: +$('bundleCount').value,
+    patronCount: +$('patronCount').value,
+    patronAvg: +$('patronAvg').value,
+    patronRamp: +$('patronRamp').value,
+    instCount: +$('instCount').value,
+    instPrice: +$('instPrice').value,
+    instRamp: +$('instRamp').value,
+    aiOneTime: +$('aiOneTime').value,
+    aiRecurring: +$('aiRecurring').value,
+    aiDealMonth: +$('aiDealMonth').value
+  };
+}
+
+// ── Update displayed values ────────────────────────────
+function updateDisplayValues(a) {
+  $('totalTitles_v').textContent = a.totalTitles;
+  $('pubRate_v').textContent = a.pubRate;
+  $('avgPages_v').textContent = a.avgPages;
+  $('marketingSpend_v').textContent = '$' + a.marketingSpend;
+  $('kindlePrice_v').textContent = '$' + a.kindlePrice.toFixed(2);
+  $('kindleSales_v').textContent = a.kindleSales;
+  $('kindleRoyalty_v').textContent = Math.round(a.kindleRoyalty * 100) + '%';
+  $('podPrice_v').textContent = '$' + a.podPrice;
+  $('podPrintCost_v').textContent = '$' + a.podPrintCost.toFixed(2);
+  $('podSales_v').textContent = a.podSales;
+  $('bundlePrice_v').textContent = '$' + a.bundlePrice;
+  $('bundleSales_v').textContent = a.bundleSales;
+  $('bundleCount_v').textContent = a.bundleCount;
+  $('patronCount_v').textContent = a.patronCount;
+  $('patronAvg_v').textContent = '$' + a.patronAvg;
+  $('patronRamp_v').textContent = a.patronRamp;
+  $('instCount_v').textContent = a.instCount;
+  $('instPrice_v').textContent = '$' + a.instPrice.toLocaleString();
+  $('instRamp_v').textContent = a.instRamp;
+  $('aiOneTime_v').textContent = fmtK(a.aiOneTime);
+  $('aiRecurring_v').textContent = fmtK(a.aiRecurring);
+  $('aiDealMonth_v').textContent = a.aiDealMonth;
+}
+
+// ── Core calculation ───────────────────────────────────
+function calculate() {
+  const a = readInputs();
+  updateDisplayValues(a);
+
+  const titlesPerMonth = a.pubRate * 30;
+  const podRoyaltyRate = 0.60; // Amazon 60% for POD
+
+  // Monthly data for 36 months (3 years)
+  const months = [];
+  for (let m = 1; m <= 36; m++) {
+    const titlesLive = Math.min(Math.round(m * titlesPerMonth), a.totalTitles);
+
+    // Kindle: ramps with catalog
+    const kindle = titlesLive * a.kindleSales * a.kindlePrice * a.kindleRoyalty;
+
+    // POD: same ramp, net margin per copy
+    const podNet = (a.podPrice * podRoyaltyRate) - a.podPrintCost;
+    const pod = titlesLive * a.podSales * Math.max(0, podNet);
+
+    // Bundles: available after enough titles exist, ramps with bundleCount
+    const bundlesAvail = Math.min(a.bundleCount, Math.floor(titlesLive / 10));
+    const bundles = bundlesAvail * a.bundleSales * a.bundlePrice * 0.70; // 70% margin
+
+    // Membership: linear ramp to target
+    const patronFraction = Math.min(m / a.patronRamp, 1);
+    const membership = a.patronCount * patronFraction * a.patronAvg;
+
+    // Institutional: linear ramp, revenue is monthly portion of annual fee
+    const instFraction = Math.min(m / a.instRamp, 1);
+    const institutional = a.instCount * instFraction * (a.instPrice / 12);
+
+    // AI licensing: one-time in deal month, recurring after
+    let aiLic = 0;
+    if (m === a.aiDealMonth) aiLic += a.aiOneTime;
+    if (m >= a.aiDealMonth) aiLic += a.aiRecurring / 12;
+
+    const total = kindle + pod + bundles + membership + institutional + aiLic;
+    const cumulative = (months.length > 0 ? months[months.length - 1].cumulative : 0) + total;
+
+    months.push({ m, titlesLive, kindle, pod, bundles, membership, institutional, aiLic, total, cumulative });
+  }
+
+  // Year totals
+  const y1 = months.slice(0, 12).reduce((s, r) => s + r.total, 0);
+  const y2 = months.slice(12, 24).reduce((s, r) => s + r.total, 0);
+  const y3 = months.slice(24, 36).reduce((s, r) => s + r.total, 0);
+
+  // Annual channel totals (Year 1)
+  const y1Kindle = months.slice(0, 12).reduce((s, r) => s + r.kindle, 0);
+  const y1Pod = months.slice(0, 12).reduce((s, r) => s + r.pod, 0);
+  const y1Bundles = months.slice(0, 12).reduce((s, r) => s + r.bundles, 0);
+  const y1Membership = months.slice(0, 12).reduce((s, r) => s + r.membership, 0);
+  const y1Institutional = months.slice(0, 12).reduce((s, r) => s + r.institutional, 0);
+  const y1Ai = months.slice(0, 12).reduce((s, r) => s + r.aiLic, 0);
+
+  // Update channel annual labels
+  $('kindle_annual').textContent = fmt(y1Kindle) + '/yr';
+  $('pod_annual').textContent = fmt(y1Pod) + '/yr';
+  $('bundles_annual').textContent = fmt(y1Bundles) + '/yr';
+  $('membership_annual').textContent = fmt(y1Membership) + '/yr';
+  $('institutional_annual').textContent = fmt(y1Institutional) + '/yr';
+  $('ai_annual').textContent = fmt(y1Ai) + '/yr';
+
+  // Year totals
+  $('year1_total').textContent = fmt(y1);
+  $('year2_total').textContent = fmt(y2);
+  $('year3_total').textContent = fmt(y3);
+
+  // Sparklines (first 12 months)
+  renderSparkline('spark_kindle', months.slice(0, 12).map(r => r.kindle));
+  renderSparkline('spark_pod', months.slice(0, 12).map(r => r.pod));
+  renderSparkline('spark_bundles', months.slice(0, 12).map(r => r.bundles));
+  renderSparkline('spark_membership', months.slice(0, 12).map(r => r.membership));
+  renderSparkline('spark_institutional', months.slice(0, 12).map(r => r.institutional));
+  renderSparkline('spark_ai', months.slice(0, 12).map(r => r.aiLic));
+
+  // Pie chart (Year 1 revenue mix)
+  const channelColors = [
+    { label: 'Kindle', value: y1Kindle, color: '#9e4a3a' },
+    { label: 'POD', value: y1Pod, color: '#9e7c3c' },
+    { label: 'Bundles', value: y1Bundles, color: '#8b9a7d' },
+    { label: 'Membership', value: y1Membership, color: '#7c5db5' },
+    { label: 'Institutional', value: y1Institutional, color: '#4a7c8b' },
+    { label: 'AI Licensing', value: y1Ai, color: '#1a1612' },
+  ];
+  renderPie(channelColors);
+
+  // Projection table (first 12 months + Year 1 total)
+  const tbody = $('projectionBody');
+  tbody.innerHTML = '';
+  months.slice(0, 12).forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>Mo ${r.m}</td>
+      <td>${r.titlesLive}</td>
+      <td>${fmtShort(r.kindle)}</td>
+      <td>${fmtShort(r.pod)}</td>
+      <td>${fmtShort(r.bundles)}</td>
+      <td>${fmtShort(r.membership)}</td>
+      <td>${fmtShort(r.institutional)}</td>
+      <td>${fmtShort(r.aiLic)}</td>
+      <td class="total-col">${fmtShort(r.total)}</td>
+      <td class="total-col">${fmt(r.cumulative)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // Total row
+  const totalRow = document.createElement('tr');
+  totalRow.innerHTML = `
+    <td>Year 1</td>
+    <td></td>
+    <td>${fmt(y1Kindle)}</td>
+    <td>${fmt(y1Pod)}</td>
+    <td>${fmt(y1Bundles)}</td>
+    <td>${fmt(y1Membership)}</td>
+    <td>${fmt(y1Institutional)}</td>
+    <td>${fmt(y1Ai)}</td>
+    <td class="total-col">${fmt(y1)}</td>
+    <td class="total-col">${fmt(months[11].cumulative)}</td>
+  `;
+  tbody.appendChild(totalRow);
+
+  // Costs
+  const costAi = a.totalTitles * 1.20;
+  const costLabor = (0.5 * 25) * 365; // 30min/day * $25/hr * 365 days
+  const costMarketing = a.marketingSpend * 12;
+  const costHosting = 240;
+  const totalCost = costAi + costLabor + costMarketing + costHosting;
+
+  $('cost_ai').textContent = '$' + Math.round(costAi).toLocaleString();
+  $('cost_labor').textContent = '$' + Math.round(costLabor).toLocaleString();
+  $('cost_marketing').textContent = '$' + Math.round(costMarketing).toLocaleString();
+  $('cost_total').textContent = '$' + Math.round(totalCost).toLocaleString();
+
+  // Break-even
+  const monthlyCost = totalCost / 12;
+  let breakMonth = null;
+  let cumCost = 0;
+  for (let i = 0; i < months.length; i++) {
+    cumCost += monthlyCost;
+    if (months[i].cumulative >= cumCost) {
+      breakMonth = i + 1;
+      break;
+    }
+  }
+  const beEl = $('breakEven');
+  if (breakMonth) {
+    beEl.querySelector('.value').textContent = 'Month ' + breakMonth;
+  } else {
+    beEl.querySelector('.value').textContent = 'After 36 months';
+  }
+
+  // Store for CSV export
+  window._projectionData = { months, a, y1, y2, y3, totalCost };
+}
+
+// ── Sparkline renderer ─────────────────────────────────
+function renderSparkline(svgId, values) {
+  const svg = $(svgId);
+  const max = Math.max(...values, 1);
+  const barWidth = 17;
+  const gap = 3;
+  let bars = '';
+  values.forEach((v, i) => {
+    const h = Math.max(1, (v / max) * 36);
+    const x = i * (barWidth + gap);
+    const y = 40 - h;
+    bars += `<rect x="${x}" y="${y}" width="${barWidth}" height="${h}"/>`;
+  });
+  svg.innerHTML = bars;
+}
+
+// ── Pie chart renderer ─────────────────────────────────
+function renderPie(channels) {
+  const total = channels.reduce((s, c) => s + c.value, 0);
+  if (total === 0) {
+    $('pieChart').style.background = '#e8e4dc';
+    $('pieLegend').innerHTML = '';
+    return;
+  }
+
+  let cumPct = 0;
+  const stops = [];
+  channels.forEach(c => {
+    const pct = (c.value / total) * 100;
+    if (pct > 0) {
+      stops.push(`${c.color} ${cumPct}% ${cumPct + pct}%`);
+      cumPct += pct;
+    }
+  });
+  $('pieChart').style.background = `conic-gradient(${stops.join(', ')})`;
+
+  $('pieLegend').innerHTML = channels
+    .filter(c => c.value > 0)
+    .map(c => `<div class="pie-legend-item"><span class="dot" style="background:${c.color}"></span>${c.label} ${Math.round(c.value / total * 100)}%</div>`)
+    .join('');
+}
+
+// ── Scenario switcher ──────────────────────────────────
+function setScenario(name) {
+  const s = scenarios[name];
+  Object.keys(s).forEach(key => {
+    const el = $(key);
+    if (el) el.value = s[key];
+  });
+  document.querySelectorAll('.scenarios button').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.scenarios button[onclick*="${name}"]`).classList.add('active');
+  calculate();
+}
+
+// ── CSV export ─────────────────────────────────────────
+function copyCSV() {
+  const d = window._projectionData;
+  if (!d) return;
+
+  let csv = 'Month,Titles Live,Kindle,POD,Bundles,Membership,Institutional,AI Licensing,Total,Cumulative\n';
+  d.months.slice(0, 12).forEach(r => {
+    csv += `${r.m},${r.titlesLive},${Math.round(r.kindle)},${Math.round(r.pod)},${Math.round(r.bundles)},${Math.round(r.membership)},${Math.round(r.institutional)},${Math.round(r.aiLic)},${Math.round(r.total)},${Math.round(r.cumulative)}\n`;
+  });
+  csv += `\nYear 1 Total,,,,,,,,,${Math.round(d.y1)}\nYear 2 Total,,,,,,,,,${Math.round(d.y2)}\nYear 3 Total,,,,,,,,,${Math.round(d.y3)}\nTotal Costs,,,,,,,,,${Math.round(d.totalCost)}\n`;
+
+  navigator.clipboard.writeText(csv).then(() => {
+    const btn = $('csvBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy as CSV'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── Event listeners ────────────────────────────────────
+document.querySelectorAll('input[type="range"]').forEach(input => {
+  input.addEventListener('input', () => {
+    // Clear active scenario button
+    document.querySelectorAll('.scenarios button').forEach(b => b.classList.remove('active'));
+    calculate();
+  });
+});
+
+// Initial calculation
+calculate();
+</script>
+</body>
+</html>
