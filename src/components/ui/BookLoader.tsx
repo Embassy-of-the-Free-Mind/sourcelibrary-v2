@@ -111,7 +111,7 @@ export function BookLoader({ className, size = 'md', variant = 'light' }: BookLo
               {/* Concentric rings emanating outward */}
               {Array.from({ length: RINGS }).map((_, r) => {
                 const radius = (r + 1) * RING_SPACING;
-                const opacity = 0.75 - r * 0.06;
+                const opacity = Math.round((0.75 - r * 0.06) * 10000) / 10000;
                 return (
                   <circle
                     key={r}

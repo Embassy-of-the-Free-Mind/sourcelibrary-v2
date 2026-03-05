@@ -19,6 +19,7 @@ interface IndexResult {
   type: 'concept' | 'person' | 'place' | 'keyword';
   term: string;
   book_id: string;
+  book_slug?: string;
   book_title: string;
   pages?: number[];
 }
@@ -158,6 +159,7 @@ async function searchIndex(db: any, query: string, limit: number) {
     // Merge all index arrays with type labels
     { $project: {
         id: 1,
+        slug: 1,
         book_title: { $ifNull: ['$display_title', '$title'] },
         entries: { $concatArrays: [
           { $map: { input: { $ifNull: ['$index.concepts', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'concept' } } },
@@ -177,6 +179,7 @@ async function searchIndex(db: any, query: string, limit: number) {
         type: '$entries.type',
         term: '$entries.term',
         book_id: '$id',
+        book_slug: '$slug',
         book_title: 1,
         pages: '$entries.pages'
       }

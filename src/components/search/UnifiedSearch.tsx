@@ -119,9 +119,10 @@ export default function UnifiedSearch() {
     }
     for (let i = 0; i < results.index.results.length; i++) {
       const item = results.index.results[i];
+      const bookPath = item.book_slug || item.book_id;
       const href = item.pages?.[0]
-        ? `/book/${item.book_id}/guide?page=${item.pages[0]}`
-        : `/book/${item.book_id}`;
+        ? `/book/${bookPath}/guide?page=${item.pages[0]}`
+        : `/book/${bookPath}`;
       items.push({ type: 'index', href, id: `index-${item.book_id}-${item.type}-${i}` });
     }
     for (const img of galleryResults) {
@@ -321,8 +322,8 @@ export default function UnifiedSearch() {
                           key={`${item.book_id}-${item.type}-${idx}`}
                           id={`search-item-${itemIndex}`}
                           href={item.pages?.[0]
-                            ? `/book/${item.book_id}/guide?page=${item.pages[0]}`
-                            : `/book/${item.book_id}`
+                            ? `/book/${item.book_slug || item.book_id}/guide?page=${item.pages[0]}`
+                            : `/book/${item.book_slug || item.book_id}`
                           }
                           onClick={() => setIsOpen(false)}
                           role="option"

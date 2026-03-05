@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
 import { bookUrl } from '@/lib/slugify';
@@ -45,21 +45,11 @@ const API_PAGE_SIZE = 100;
 
 export default function BookLibrary({ initialBooks, totalBooks, languages, collections = [], recentlyTranslated = [], newArrivals = [] }: BookLibraryProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedCollection, setSelectedCollection] = useState(() => {
-    return searchParams.get('collection') || '';
-  });
-  const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(() => {
-    const col = searchParams.get('collection');
-    if (col) {
-      const match = collections.find(c => c.slug === col);
-      if (match) return { slug: match.slug, name: match.name, subtitle: match.subtitle, description: match.description, book_count: match.book_count };
-    }
-    return null;
-  });
+  const [selectedCollection, setSelectedCollection] = useState('');
+  const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(null);
   const [introExpanded, setIntroExpanded] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
@@ -71,6 +61,17 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
   const [apiTotal, setApiTotal] = useState(totalBooks);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+
+  // Read collection from URL on mount (avoids useSearchParams BAILOUT_TO_CLIENT_SIDE_RENDERING)
+  useEffect(() => {
+    const col = new URLSearchParams(window.location.search).get('collection') || '';
+    if (col) {
+      setSelectedCollection(col);
+      const match = collections.find(c => c.slug === col);
+      if (match) setCollectionInfo({ slug: match.slug, name: match.name, subtitle: match.subtitle, description: match.description, book_count: match.book_count });
+      else setCollectionInfo({ slug: col, name: col.replace(/-/g, ' ').replace(/\b\w/g, (ch: string) => ch.toUpperCase()), subtitle: '', description: '', book_count: 0 });
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sync collection from URL on back/forward navigation (popstate)
   useEffect(() => {
