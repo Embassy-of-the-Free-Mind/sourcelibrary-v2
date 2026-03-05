@@ -70,6 +70,7 @@ export async function GET(request: NextRequest) {
           },
           { $project: {
               id: 1,
+              slug: 1,
               book_title: { $ifNull: ['$display_title', '$title'] },
               book_author: { $ifNull: ['$author', 'Unknown'] },
               entries: { $concatArrays: concatInputs }
@@ -89,6 +90,7 @@ export async function GET(request: NextRequest) {
               type: '$entries.type',
               term: '$entries.term',
               book_id: '$id',
+              book_slug: '$slug',
               book_title: 1,
               book_author: 1,
               pages: '$entries.pages'
@@ -108,6 +110,7 @@ export async function GET(request: NextRequest) {
           },
           { $project: {
               id: 1,
+              slug: 1,
               book_title: { $ifNull: ['$display_title', '$title'] },
               book_author: { $ifNull: ['$author', 'Unknown'] },
               sections: { $ifNull: ['$index.sectionSummaries', []] }
@@ -122,6 +125,7 @@ export async function GET(request: NextRequest) {
               type: { $literal: 'quote' },
               term: { $substrCP: ['$sections.quotes.text', 0, 100] },
               book_id: '$id',
+              book_slug: '$slug',
               book_title: 1,
               book_author: 1,
               quote_text: '$sections.quotes.text',

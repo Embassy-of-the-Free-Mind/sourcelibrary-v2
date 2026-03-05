@@ -628,7 +628,7 @@ export default function SearchPage() {
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
   return (
     <Link
-      href={result.type === 'page' ? `/book/${result.book_id}/page/${result.page_number}` : `/book/${result.book_id}`}
+      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
       className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
@@ -677,10 +677,10 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
   return (
     <Link
       href={isQuote && result.quote_page
-        ? `/book/${result.book_id}/guide?page=${result.quote_page}`
+        ? `/book/${result.book_slug || result.book_id}/guide?page=${result.quote_page}`
         : result.pages && result.pages.length > 0
-        ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
-        : `/book/${result.book_id}`
+        ? `/book/${result.book_slug || result.book_id}/guide?page=${result.pages[0]}`
+        : `/book/${result.book_slug || result.book_id}`
       }
       className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >

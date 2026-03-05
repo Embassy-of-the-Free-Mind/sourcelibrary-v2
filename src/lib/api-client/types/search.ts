@@ -59,6 +59,7 @@ export interface IndexSearchResult {
   type: 'keyword' | 'concept' | 'person' | 'place' | 'vocabulary' | 'quote';
   term: string;
   book_id: string;
+  book_slug?: string;
   book_title: string;
   book_author: string;
   pages?: number[];
