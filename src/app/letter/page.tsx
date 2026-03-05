@@ -40,7 +40,7 @@ export default function LetterPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Drebbel&apos;s book is one of 4,500. In three months, Source Library has become the world&apos;s largest
+          Drebbel&apos;s book is one of 4,500. Since the first commit on December 12, 2025, Source Library has become the world&apos;s largest
           collection of translated historical primary sources &mdash; spanning 30+ languages, 13 digital
           library sources, and more than 1.7 million page images.
         </p>
@@ -159,7 +159,7 @@ export default function LetterPage() {
             { value: '73K', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
             { value: '<$10K', label: 'Total hard costs' },
-            { value: '3 months', label: 'Since first commit' },
+            { value: '83 days', label: 'Since Dec 12, 2025' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-lg p-3 border border-border-light text-center">
               <div className="text-xl font-serif text-accent-rust">{s.value}</div>
