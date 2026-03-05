@@ -377,6 +377,8 @@ export async function GET(request: NextRequest) {
     const ocrPaused = control?.paused_phases?.includes('ocr');
     const translatePaused = control?.paused_phases?.includes('translation');
     const imagesPaused = control?.paused_phases?.includes('images');
+    const enrichPaused = control?.paused_phases?.includes('enrichment');
+    const chaptersPaused = control?.paused_phases?.includes('chapters');
 
     // ════════════════════════════════════════════════════════════════════
     // PRIORITY PASS: Run fast, late-stage phases FIRST so they don't get
@@ -1145,7 +1147,7 @@ export async function GET(request: NextRequest) {
         type: 'translation',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_TRANSLATE = 60; // Bumped from 30 — each FIFO job is 1 page in-flight, safe to parallelize
+      const MAX_ACTIVE_LAMBDA_TRANSLATE = 100; // Bumped from 60 — nearly-done books have few pages each
 
       if (activeLambdaTranslate >= MAX_ACTIVE_LAMBDA_TRANSLATE) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
@@ -1165,7 +1167,7 @@ export async function GET(request: NextRequest) {
       let translateQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let translateLambdaCount = 0;
       let consecutiveTranslateFailures = 0;
-      const TRANSLATE_LAMBDA_LIMIT = 60; // Match MAX_ACTIVE — each FIFO job is 1 page in-flight
+      const TRANSLATE_LAMBDA_LIMIT = 100; // Match MAX_ACTIVE — nearly-done books have few pages each
       const CONSECUTIVE_TRANSLATE_THRESHOLD = 3;
 
       for (const book of readyForTranslate) {
@@ -1422,7 +1424,10 @@ export async function GET(request: NextRequest) {
     // ── Phase 6: Enrich — generate summary + index (translate_complete -> enriched) ──
     // Also re-enriches books where enrichment_stale was set by OCR/translation workers.
     // Picks up 'enriching' books too — they may have been orphaned if a previous cron run timed out.
-    if (hasTimeBudget(startTime)) {
+    if (enrichPaused) {
+      logger.decision('skip', 'Enrichment paused via processing_control.paused_phases');
+    }
+    if (hasTimeBudget(startTime) && !enrichPaused) {
       const readyForEnrich = await db.collection('books')
         .find({
           $or: [
@@ -1502,7 +1507,10 @@ export async function GET(request: NextRequest) {
     // ── Phase 7: Chapter extraction (enriched -> chapters_complete) ──
     // AI extracts chapter structure from OCR headings. Fast & cheap (~$0.02/book).
     // Books with <10 pages skip directly — no meaningful structure to extract.
-    if (hasTimeBudget(startTime)) {
+    if (chaptersPaused) {
+      logger.decision('skip', 'Chapter extraction paused via processing_control.paused_phases');
+    }
+    if (hasTimeBudget(startTime) && !chaptersPaused) {
       const readyForChapters = await db.collection('books')
         .find({ 'pipeline_auto.status': 'enriched' })
         .sort({ hidden: 1 }) // Visible books first
