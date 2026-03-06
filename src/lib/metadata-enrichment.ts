@@ -41,6 +41,17 @@ const SAFETY_SETTINGS = [
   { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
 ];
 
+interface SourceWorkDateLayer {
+  type: 'composition' | 'translation' | 'compilation' | 'commentary' | 'redaction' | 'edition' | 'abridgement' | 'adaptation';
+  date: string;
+  date_display: string;
+  date_precision: 'exact' | 'decade' | 'century' | 'millennium';
+  author?: string;
+  work_title?: string;
+  language?: string;
+  notes?: string;
+}
+
 interface EnrichmentResult {
   language?: string;
   secondary_languages?: string[];
@@ -59,6 +70,11 @@ interface EnrichmentResult {
     confidence?: string;
   };
   subject_keywords?: string[];
+  source_work_dates?: {
+    layers: SourceWorkDateLayer[];
+    confidence: 'high' | 'medium' | 'low';
+    reasoning: string;
+  };
 }
 
 interface EnrichmentOutcome {
@@ -106,6 +122,22 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
     "reasoning": "<1-2 sentences>",
     "known_translations": ["<any known English translations>"],
     "confidence": "<high, medium, or low>"
+  },
+  "source_work_dates": {
+    "layers": [
+      {
+        "type": "<composition|translation|compilation|commentary|redaction|edition|abridgement>",
+        "date": "<year as string, negative for BCE, e.g. '-360', '300', '1484'>",
+        "date_display": "<human readable, e.g. 'c. 360 BCE', '1484', '13th century'>",
+        "date_precision": "<exact|decade|century|millennium>",
+        "author": "<person responsible for this layer>",
+        "work_title": "<title of the work at this layer, if different>",
+        "language": "<language of the text at this layer>",
+        "notes": "<brief note on dating basis>"
+      }
+    ],
+    "confidence": "<high|medium|low>",
+    "reasoning": "<1-2 sentences about the compositional history>"
   }
 }
 
@@ -116,7 +148,15 @@ Rules:
 - Most pre-1800 Latin, German, and other non-English texts on alchemy, Hermeticism, Kabbalah, astrology, and natural philosophy were NEVER translated to English.
 - If the book IS already in English, set first_translation status to "not_applicable"
 - For author, look for author attributions on the title page (first 1-3 pages). Common patterns: "by [Name]", authorship in Latin ("auctore [Name]", "[Name] scripsit"). Return null if truly uncertain.
-- For display_title, provide a natural English translation of the title. Use well-known English names when they exist (e.g. "Discourse on the Method" not "Discours de la méthode"). For English books, return null. Keep it concise — translate the essential title, not the full baroque subtitle.`;
+- For display_title, provide a natural English translation of the title. Use well-known English names when they exist (e.g. "Discourse on the Method" not "Discours de la méthode"). For English books, return null. Keep it concise — translate the essential title, not the full baroque subtitle.
+- For source_work_dates: determine the chronological layers of this work's compositional history.
+  - Return empty layers [] if the book IS the original work by its stated author (the published date already captures it)
+  - Include a "composition" layer when this is a translation/edition of an older work (e.g. a 1550 printing of Plato = composition layer at c. 360 BCE)
+  - Include a "translation" layer when a specific translator adapted the work (e.g. Ficino's 1484 Latin translation)
+  - Do NOT include the printing/publication date as a layer
+  - For pseudepigraphical works (attributed to Hermes, Solomon, etc.), use scholarly consensus dates
+  - Use negative years for BCE (date: "-360", date_display: "c. 360 BCE")
+  - Use "c." prefix in date_display for approximate dates`;
 }
 
 /**
@@ -267,8 +307,9 @@ export async function enrichBookMetadata(
   }
 
   // Build updates
+  const now = new Date();
   const changes: Array<{ field: string; previous: unknown; new_value: unknown }> = [];
-  const updates: Record<string, unknown> = { updated_at: new Date() };
+  const updates: Record<string, unknown> = { updated_at: now };
 
   // Language: auto-update if Unknown. If the AI disagrees with an existing value,
   // store the AI detection but don't auto-overwrite — many "mismatches" are intentional
@@ -349,6 +390,37 @@ export async function enrichBookMetadata(
     changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
   }
 
+  // Source work dates: save compositional timeline
+  if (parsed.source_work_dates && Array.isArray(parsed.source_work_dates.layers)) {
+    const validTypes = ['composition', 'translation', 'compilation', 'commentary', 'redaction', 'edition', 'abridgement', 'adaptation'];
+    const validPrecisions = ['exact', 'decade', 'century', 'millennium'];
+
+    // Validate and clean layers
+    const validLayers = parsed.source_work_dates.layers.filter(layer => {
+      if (!layer.type || !layer.date || !layer.date_display || !layer.date_precision) return false;
+      // Fix pipe-separated types from model
+      if (layer.type.includes('|')) layer.type = layer.type.split('|')[0].trim() as SourceWorkDateLayer['type'];
+      return validTypes.includes(layer.type) && validPrecisions.includes(layer.date_precision);
+    });
+
+    // Only write if book doesn't already have source_work_dates
+    if (!book.source_work_dates) {
+      updates.source_work_dates = validLayers;
+      updates.source_work_dates_meta = {
+        enriched_at: now,
+        model: MODEL,
+        confidence: parsed.source_work_dates.confidence || 'medium',
+        source: 'ai_enrichment',
+        reasoning: parsed.source_work_dates.reasoning || '',
+      };
+      changes.push({
+        field: 'source_work_dates',
+        previous: null,
+        new_value: validLayers,
+      });
+    }
+  }
+
   // Save ai_metadata
   const enrichment = {
     ...parsed,
@@ -361,7 +433,6 @@ export async function enrichBookMetadata(
   updates.ai_metadata = enrichment;
 
   // Field provenance
-  const now = new Date();
   const aiSource = {
     source: 'ai_enrichment',
     model: MODEL,
