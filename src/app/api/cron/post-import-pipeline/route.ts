@@ -157,9 +157,12 @@ async function upgradeThumbnailFromPageType(
 ) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { thumbnail: 1 } }
+    { projection: { thumbnail: 1, thumbnail_source: 1 } }
   );
   if (!book?.thumbnail) return;
+
+  // Never override manually-picked thumbnails
+  if (book.thumbnail_source === 'manual') return;
 
   // Find which page the current thumbnail belongs to
   const currentPage = await db.collection('pages').findOne({
@@ -208,7 +211,7 @@ async function upgradeThumbnailFromPageType(
   const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo || bestPage.photo_original;
   if (!newUrl || newUrl === book.thumbnail) return;
 
-  const update: Record<string, string> = { thumbnail: newUrl };
+  const update: Record<string, string> = { thumbnail: newUrl, thumbnail_source: 'auto' };
   if (bestPage.thumbnail_blob) update.thumbnail_blob = bestPage.thumbnail_blob;
   await db.collection('books').updateOne({ id: bookId }, { $set: update });
 }
@@ -1220,13 +1223,11 @@ export async function GET(request: NextRequest) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
       }
 
-      // TEMPORARY: Only translate books >=90% done to hit the 2,000 milestone
       const readyForTranslate = activeLambdaTranslate < MAX_ACTIVE_LAMBDA_TRANSLATE ? await db.collection('books')
         .find({
           'pipeline_auto.status': 'metadata_enriched',
-          $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
         })
-        .sort({ pages_translated: -1, hidden: 1 }) // Nearly-done books first, then visible
+        .sort({ hidden: 1, pages_count: 1 }) // Visible books first, then smallest books (faster completions)
         .project({ id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray() : [];
