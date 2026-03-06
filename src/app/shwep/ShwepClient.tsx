@@ -74,6 +74,14 @@ export default function ShwepClient({ data }: { data: ShwepIndexData }) {
         </div>
       </header>
 
+      {/* Caveat */}
+      <div className="bg-stone-100 border-b border-stone-200">
+        <div className="max-w-5xl mx-auto px-6 py-2.5 text-sm text-stone-500">
+          Source Library provides the primary texts — we are not affiliated with{' '}
+          <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">SHWEP</a>.
+        </div>
+      </div>
+
       {/* Hero with search */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-6">
