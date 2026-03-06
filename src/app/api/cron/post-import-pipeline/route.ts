@@ -3,6 +3,7 @@ import { getDb, forceReconnect, isConnectionError } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { enrichBookMetadata } from '@/lib/metadata-enrichment';
+import { verifyFirstTranslation } from '@/lib/verify-first-translation';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES, IMAGE_CANDIDATE_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
@@ -19,6 +20,7 @@ const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archivi
 const OCR_SUBMIT_LIMIT = 20; // Re-enabled — pushing to 2,000 fully OCR'd books
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
+const FT_VERIFY_LIMIT = 10; // First-translation verification — 2-4 Gemini rounds per book
 const TRANSLATE_SUBMIT_LIMIT = 50; // Increased — large backlog at metadata_enriched
 const IMAGE_SUBMIT_LIMIT = 5;
 const FINALIZE_LIMIT = 50; // Just DB updates
@@ -405,6 +407,8 @@ export async function GET(request: NextRequest) {
     ocr_advanced: 0,
     metadata_enriched: 0,
     metadata_skipped: 0,
+    ft_verified: 0,
+    ft_skipped: 0,
     translate_submitted: 0,
     translate_advanced: 0,
     enriched: 0,
@@ -620,7 +624,7 @@ export async function GET(request: NextRequest) {
       const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
       const staleBooks = await db.collection('books')
         .find({
-          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
+          'pipeline_auto.status': { $in: ['ocr_submitted', 'ft_verifying', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
           'pipeline_auto.last_updated': { $lt: staleThreshold },
         })
         .project({ id: 1, title: 1, 'pipeline_auto': 1 })
@@ -662,7 +666,8 @@ export async function GET(request: NextRequest) {
         } else {
           const rollbackMap: Record<string, PipelineAutoStatus> = {
             'ocr_submitted': 'archive_complete',
-            'translate_submitted': 'metadata_enriched',
+            'ft_verifying': 'metadata_enriched',
+            'translate_submitted': 'ft_verified',
             'images_submitted': 'chapters_complete',
             'enriching': 'translate_complete',
             'chapters': 'enriched',
@@ -1213,9 +1218,60 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // ── Phase 3.7: First-translation verification (metadata_enriched -> ft_verified) ──
+    if (hasTimeBudget(startTime)) {
+      const ftCandidates = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'metadata_enriched',
+        })
+        .sort({ hidden: 1, pages_count: 1 })
+        .limit(FT_VERIFY_LIMIT)
+        .project({ id: 1, title: 1, language: 1, 'pipeline_auto.retry_count': 1, translation_verification: 1 })
+        .toArray();
+
+      for (const book of ftCandidates) {
+        if (!hasTimeBudget(startTime)) break;
+
+        const lang = (book.language || '').toLowerCase();
+        const alreadyVerified = !!book.translation_verification?.verified_at;
+
+        // English books and already-verified books skip straight to ft_verified
+        if (lang === 'english' || alreadyVerified) {
+          await setPipelineStatus(db, book.id, 'ft_verified');
+          log.ft_skipped++;
+          continue;
+        }
+
+        try {
+          await setPipelineStatus(db, book.id, 'ft_verifying');
+          const result = await verifyFirstTranslation(db, book.id);
+          if (result.success) {
+            await setPipelineStatus(db, book.id, 'ft_verified');
+            log.ft_verified++;
+          } else {
+            // Non-blocking: on persistent failure, skip ahead
+            const retries = book.pipeline_auto?.retry_count || 0;
+            if (retries >= MAX_RETRIES) {
+              await setPipelineStatus(db, book.id, 'ft_verified', { retry_count: 0 });
+              log.ft_skipped++;
+              logger.decision('skip', `FT verify ${book.id}: skipped after ${retries} retries`);
+            } else {
+              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+            }
+            log.errors.push(`FT verify ${book.id}: ${result.error}`);
+          }
+        } catch (err) {
+          // Non-blocking: skip on unexpected errors
+          await setPipelineStatus(db, book.id, 'ft_verified', { retry_count: 0 });
+          log.ft_skipped++;
+          log.errors.push(`FT verify ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+        }
+      }
+    }
+
     await earlyFlushIfNeeded();
 
-    // ── Phase 4: Submit translation via Gemini Batch API (metadata_enriched -> translate_submitted) ──
+    // ── Phase 4: Submit translation via Gemini Batch API (ft_verified -> translate_submitted) ──
     if (translatePaused) {
       logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
     }
@@ -1234,7 +1290,7 @@ export async function GET(request: NextRequest) {
       // Priority: finish 90%+ books first (close to done), then everything else by size
       const readyForTranslate = activeLambdaTranslate < MAX_ACTIVE_LAMBDA_TRANSLATE ? await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'metadata_enriched' } },
+          { $match: { 'pipeline_auto.status': 'ft_verified' } },
           { $addFields: {
             _nearlyDone: { $cond: [
               { $and: [{ $gt: ['$pages_count', 0] }, { $gte: [{ $divide: ['$pages_translated', '$pages_count'] }, 0.9] }] },

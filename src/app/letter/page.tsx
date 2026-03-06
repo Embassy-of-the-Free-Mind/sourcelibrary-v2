@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'March 2026 Update — Source Library',
   description:
-    '4,500+ books, 30+ languages, a full AI pipeline, and the plan to build a real institution.',
+    '4,500+ books translated across 30+ languages in 84 days. What AI-powered infrastructure for lost knowledge looks like.',
   alternates: { canonical: '/letter' },
 };
 
@@ -66,10 +66,10 @@ export default function LetterPage() {
         </p>
 
         <p className="font-body text-xl md:text-2xl text-secondary leading-relaxed mb-12">
-          Drebbel&apos;s book is one of <strong>4,500</strong>. Since the first commit on December&nbsp;12,&nbsp;2025,{' '}
+          Drebbel&apos;s book is one of <strong>4,800+</strong>. Since the first commit on December&nbsp;12,&nbsp;2025,{' '}
           <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">Source Library</a> has
           become the world&apos;s largest freely available collection of translated historical primary
-          sources &mdash; spanning 30+ languages, 13 digital library sources, and more than 1.7 million
+          sources &mdash; spanning 30+ languages, 13 digital library sources, and more than 1.8 million
           page images. Texts that have never had an English translation now have one. Texts that existed
           only behind institutional paywalls are now open to anyone with a browser.
         </p>
@@ -253,9 +253,12 @@ export default function LetterPage() {
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
-          For developers and researchers, the Source Library is also available as an{' '}
-          <a href="https://sourcelibrary.org/developers" className="text-accent-rust hover:underline">MCP server and CLI tool</a>{' '}
-          &mdash; any AI assistant can search and cite the full collection directly.
+          For developers and AI researchers, the full collection is also available as an{' '}
+          <a href="https://sourcelibrary.org/developers" className="text-accent-rust hover:underline">MCP server and CLI tool</a>.
+          Install with one command. Any AI assistant &mdash; Claude, GPT, or custom agents &mdash;
+          can search the full text of 4,800+ books, retrieve translations with per-page citation
+          URLs, and explore 73,000+ extracted illustrations. The entire corpus is machine-readable
+          by design.
         </p>
 
         {/* ── The Numbers ── */}
@@ -263,15 +266,15 @@ export default function LetterPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-10">
           {[
-            { value: '4,555', label: 'Books in collection' },
-            { value: '1.71M', label: 'Page images' },
-            { value: '992K', label: 'Pages with OCR' },
-            { value: '507K', label: 'Pages translated to English' },
-            { value: '1,083', label: 'Books translated or modernized' },
+            { value: '4,849', label: 'Books in collection' },
+            { value: '1.84M', label: 'Page images' },
+            { value: '1.12M', label: 'Pages with OCR' },
+            { value: '635K', label: 'Pages translated to English' },
+            { value: '3,708', label: 'Books with English translation' },
             { value: '73K+', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
             { value: '13', label: 'Digital library sources' },
-            { value: '83 days', label: 'Since Dec 12, 2025' },
+            { value: '84 days', label: 'Since first commit' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-xl p-5 border border-border-light text-center">
               <div className="text-3xl md:text-4xl font-serif text-accent-rust mb-1">{s.value}</div>
@@ -279,6 +282,14 @@ export default function LetterPage() {
             </div>
           ))}
         </div>
+
+        <p className="font-body text-lg text-secondary leading-relaxed mb-5">
+          The pipeline is currently translating roughly 50,000 pages per day. At that rate,
+          the full catalog should be translated within a few weeks. Readers from 40+ countries
+          have used the site. For developers and AI researchers, the entire collection is accessible via{' '}
+          <a href="https://sourcelibrary.org/developers" className="text-accent-rust hover:underline">MCP server and CLI</a> &mdash;
+          any AI assistant can search, cite, and retrieve full texts directly.
+        </p>
 
         {/* Second gallery strip — different images */}
         <div className="grid grid-cols-3 gap-2 mb-12 rounded-xl overflow-hidden">
@@ -344,14 +355,17 @@ export default function LetterPage() {
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          That&apos;s <strong>under $10,000 in total hard costs</strong> to OCR, translate, summarize, index, and
-          extract illustrations from 2,000+ books. Other costs include 3 part-time employees.
+          That&apos;s <strong>under $10,000 in infrastructure</strong> to process 3,700+ books through a full
+          AI pipeline. Labor is separate: I work on this full-time as Program Director,
+          with two part-time research assistants, funded by the Embassy of the Free Mind.
+          The infrastructure costs are what scales &mdash; and they&apos;re already dropping as
+          the one-time processing completes.
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
           For context: a professional human translation of a single 300-page Latin text costs
           $30,000&ndash;$60,000 and takes years.
-          The Source Library processed 2,000+ books for less than the cost of translating one.
+          The Source Library processed 3,700+ books for about $3 each.
         </p>
 
         {/* ── How It Works ── */}
@@ -498,6 +512,36 @@ export default function LetterPage() {
             </div>
           </div>
 
+          <div className="bg-white/10 rounded-xl p-6 md:p-8 mb-8 border border-white/10">
+            <p className="text-xl font-semibold text-white mb-4">
+              What $50,000 Enables
+            </p>
+            <p className="font-body text-stone-300 leading-relaxed mb-4">
+              At current costs (~$3/book for the full pipeline), $50K is enough to take the Source Library
+              from proof of concept to permanent infrastructure:
+            </p>
+            <ul className="text-stone-300 space-y-2 ml-5 list-disc font-body">
+              <li>Complete AI translation of the full 4,800-book catalog (~$5K remaining)</li>
+              <li>Two full years of hosting and infrastructure &mdash; Vercel, AWS, MongoDB, CDN (~$17K)</li>
+              <li>Scanning equipment and a part-time operator to digitize 1,000+ unscanned EFM volumes (~$23K)</li>
+              <li>Scholarly review and DOI minting for the most-cited texts (~$5K)</li>
+            </ul>
+          </div>
+
+          <div className="bg-white/10 rounded-xl p-6 md:p-8 mb-8 border border-white/10">
+            <p className="text-xl font-semibold text-white mb-4">
+              Path to Sustainability
+            </p>
+            <p className="font-body text-stone-300 leading-relaxed">
+              The 999 Embassy of the Free Mind books are being published as Kindle ebooks ($9.99)
+              and premium print-on-demand editions ($55&ndash;$95). At modest sales volumes, the catalog
+              generates ongoing revenue with near-zero marginal cost. Institutional licensing
+              ($500&ndash;$2,000/year for university library access) provides a second channel. The $50K
+              ask is bridge funding while these revenue streams develop &mdash; not an ongoing
+              dependency.
+            </p>
+          </div>
+
           <p className="font-body text-lg text-stone-300 leading-relaxed mb-5">
             The entire tradition of Renaissance Neoplatonism &mdash; which shaped Botticelli, Copernicus,
             and the intellectual culture of early modern Europe &mdash; traces back to Cosimo&apos;s
@@ -521,6 +565,43 @@ export default function LetterPage() {
             If you are interested in this work &mdash; as a funder, scholar, or partner institution &mdash;
             we would welcome the conversation.
           </p>
+        </div>
+
+        {/* ── FAQ ── */}
+        <h2 className="font-serif text-3xl md:text-4xl text-primary mt-16 mb-8">Questions You Might Have</h2>
+
+        <div className="space-y-6 mb-16">
+          {[
+            {
+              q: 'How good are the translations?',
+              a: 'They are AI first drafts, not critical scholarly editions. For well-structured Latin or German texts, the output is genuinely useful \u2014 comparable to a competent graduate student\u2019s first pass. For fragmentary manuscripts or highly technical alchemical terminology, quality varies. The key insight is that a usable first draft is what scholarship needs most: it lets researchers quickly identify which texts merit deeper work. Every translation is paired with the original page image so scholars can always check the source.',
+            },
+            {
+              q: 'How does this compare to existing projects?',
+              a: 'Perseus Digital Library covers ~400 Classical texts. EEBO (Early English Books Online) has scans but no translations and costs $100K+/year for institutional access. The Loeb Classical Library covers ~520 volumes at $30 each. None of these projects translate from manuscript scans in 30+ languages at this pace or cost. The closest comparison might be Google Books, which scans but does not OCR historical scripts or translate.',
+            },
+            {
+              q: 'What happens if you stop working on it?',
+              a: 'The site runs on standard infrastructure (Vercel, MongoDB Atlas, AWS) with no proprietary dependencies. All source code is version-controlled. The collection data could be exported and rehosted by any competent developer. The processing pipeline is fully documented. We\u2019re also minting DOIs for scholarly editions through Zenodo, giving translated texts permanent, citable identifiers independent of any hosting platform.',
+            },
+            {
+              q: 'Why not just use Google Translate?',
+              a: 'Three reasons. First, you need high-quality OCR before you can translate \u2014 most of these texts are in historical typefaces (Fraktur, Renaissance Latin ligatures, Hebrew manuscripts) that standard OCR cannot read. Second, the translation uses full-page context, not sentence-by-sentence, which is critical for texts with complex syntax and domain-specific terminology. Third, the pipeline extracts structural metadata (chapters, illustrations, indexes, cross-references) that transforms a raw scan into a navigable digital edition.',
+            },
+            {
+              q: 'What\u2019s the right balance between speed and quality?',
+              a: 'We don\u2019t fully know yet. Processing 4,800 books in 84 days prioritized breadth over depth. Some texts would benefit enormously from human editorial review. Others are perfectly served by AI output. We\u2019re developing a triage system: the most-read and most-cited texts get human scholarly attention first. But the question of how to allocate scarce scholarly time across thousands of newly accessible texts is genuinely new territory.',
+            },
+            {
+              q: 'Should AI translations carry a warning label?',
+              a: 'Yes, and they do \u2014 every page shows the AI model and processing source. But the broader question of how AI-generated scholarship should be received by academic communities is genuinely open. Some scholars welcome the access; others are skeptical of any AI output in humanities research. We think the right answer is radical transparency: show the original, show the translation, let scholars evaluate both.',
+            },
+          ].map(item => (
+            <div key={item.q} className="bg-white rounded-xl border border-border-light p-6">
+              <p className="text-primary font-medium text-lg mb-3">{item.q}</p>
+              <p className="font-body text-secondary leading-relaxed">{item.a}</p>
+            </div>
+          ))}
         </div>
 
         {/* Sign-off */}

@@ -403,6 +403,7 @@ Important: Be precise about matching. A translation of a different work by the s
 export async function verifyFirstTranslation(
   db: Db,
   bookId: string,
+  options?: { dryRun?: boolean },
 ): Promise<VerificationResult> {
   const startTime = Date.now();
 
@@ -553,58 +554,60 @@ export async function verifyFirstTranslation(
 
     const isFirstTranslation = disposition === 'first_translation' || disposition === 'first_full_translation';
 
-    // Persist to database
-    const previousVerification = book.translation_verification;
-    const previousIsFirst = book.is_first_translation;
+    // Persist to database (skip in dry-run mode)
+    if (!options?.dryRun) {
+      const previousVerification = book.translation_verification;
+      const previousIsFirst = book.is_first_translation;
 
-    await db.collection('books').updateOne(
-      { id: bookId },
-      {
-        $set: {
-          translation_verification: verification,
-          is_first_translation: isFirstTranslation,
+      await db.collection('books').updateOne(
+        { id: bookId },
+        {
+          $set: {
+            translation_verification: verification,
+            is_first_translation: isFirstTranslation,
+          },
         },
-      },
-    );
+      );
 
-    // Log to gemini_usage
-    await logGeminiCall({
-      type: 'ft_verification',
-      mode: 'realtime',
-      model: MODEL,
-      book_id: bookId,
-      book_title: (book.display_title || book.title) as string,
-      input_tokens: totalInputTokens,
-      output_tokens: totalOutputTokens,
-      status: 'success',
-      duration_ms: durationMs,
-      endpoint: 'lib/verify-first-translation',
-    });
-
-    // Log metadata change
-    const changes: Array<{ field: string; previous: unknown; new_value: unknown }> = [];
-    if (JSON.stringify(previousVerification) !== JSON.stringify(verification)) {
-      changes.push({
-        field: 'translation_verification',
-        previous: previousVerification ?? null,
-        new_value: { disposition, confidence, translations_found: translations.length },
-      });
-    }
-    if (previousIsFirst !== isFirstTranslation) {
-      changes.push({
-        field: 'is_first_translation',
-        previous: previousIsFirst ?? null,
-        new_value: isFirstTranslation,
-      });
-    }
-    if (changes.length > 0) {
-      await logMetadataChange(db, {
-        book_id: bookId,
-        source: 'ai_enrichment',
+      // Log to gemini_usage
+      await logGeminiCall({
+        type: 'ft_verification',
+        mode: 'realtime',
         model: MODEL,
-        changes,
-        note: `FT verification: ${disposition} (${confidence}) — ${toolsCalled.length} tools called`,
+        book_id: bookId,
+        book_title: (book.display_title || book.title) as string,
+        input_tokens: totalInputTokens,
+        output_tokens: totalOutputTokens,
+        status: 'success',
+        duration_ms: durationMs,
+        endpoint: 'lib/verify-first-translation',
       });
+
+      // Log metadata change
+      const changes: Array<{ field: string; previous: unknown; new_value: unknown }> = [];
+      if (JSON.stringify(previousVerification) !== JSON.stringify(verification)) {
+        changes.push({
+          field: 'translation_verification',
+          previous: previousVerification ?? null,
+          new_value: { disposition, confidence, translations_found: translations.length },
+        });
+      }
+      if (previousIsFirst !== isFirstTranslation) {
+        changes.push({
+          field: 'is_first_translation',
+          previous: previousIsFirst ?? null,
+          new_value: isFirstTranslation,
+        });
+      }
+      if (changes.length > 0) {
+        await logMetadataChange(db, {
+          book_id: bookId,
+          source: 'ai_enrichment',
+          model: MODEL,
+          changes,
+          note: `FT verification: ${disposition} (${confidence}) — ${toolsCalled.length} tools called`,
+        });
+      }
     }
 
     return { success: true, verification, is_first_translation: isFirstTranslation };
