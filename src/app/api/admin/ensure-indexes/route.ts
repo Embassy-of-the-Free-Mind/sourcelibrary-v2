@@ -544,6 +544,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // gemini_usage_daily - pre-aggregated daily usage summaries
+    // Query: { date: { $gte: "2026-01-01" } }
+    try {
+      await db.collection('gemini_usage_daily').createIndex(
+        { date: -1 },
+        { name: 'gemini_usage_daily_date_idx', unique: true, background: true }
+      );
+      results['gemini_usage_daily.gemini_usage_daily_date_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gemini_usage_daily.gemini_usage_daily_date_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Batch jobs - filter out child jobs in processing overview
     // Query: { parent_job_id: { $exists: false } }
     try {
@@ -1136,7 +1151,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog', 'kdp_publications'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'gemini_usage_daily', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog', 'kdp_publications'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

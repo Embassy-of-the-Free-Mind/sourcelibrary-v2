@@ -158,9 +158,107 @@ export async function GET(request: NextRequest) {
       collectionsUpdated = colResult.modifiedCount;
     }
 
-    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches), ${collectionsUpdated} collections updated, ${thumbnailsFixed} thumbnails fixed in ${logger.durationMs}ms`);
+    // --- Refresh gemini_usage_daily for today + yesterday ---
+    let usageDaysRefreshed = 0;
+    try {
+      const now = new Date();
+      const todayStr = now.toISOString().slice(0, 10);
+      const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      const yesterdayStr = yesterday.toISOString().slice(0, 10);
 
-    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated, collections_checked: collections.length, collections_updated: collectionsUpdated, thumbnails_fixed: thumbnailsFixed });
+      for (const dateStr of [yesterdayStr, todayStr]) {
+        const dayStart = new Date(dateStr + 'T00:00:00Z');
+        const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
+
+        const [agg] = await db.collection('gemini_usage').aggregate([
+          { $match: { timestamp: { $gte: dayStart, $lt: dayEnd } } },
+          { $facet: {
+            totals: [{ $group: {
+              _id: null,
+              totalCost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+              totalInputTokens: { $sum: { $ifNull: ['$input_tokens', 0] } },
+              totalOutputTokens: { $sum: { $ifNull: ['$output_tokens', 0] } },
+              totalRecords: { $sum: 1 },
+            }}],
+            byType: [{ $group: {
+              _id: '$type',
+              count: { $sum: 1 },
+              cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+              inputTokens: { $sum: { $ifNull: ['$input_tokens', 0] } },
+              outputTokens: { $sum: { $ifNull: ['$output_tokens', 0] } },
+              successCount: { $sum: { $cond: [{ $eq: ['$status', 'success'] }, 1, 0] } },
+              failedCount: { $sum: { $cond: [{ $eq: ['$status', 'failed'] }, 1, 0] } },
+              pageCount: { $sum: { $ifNull: ['$page_count', 0] } },
+            }}],
+            byModel: [{ $group: {
+              _id: '$model',
+              count: { $sum: 1 },
+              cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+            }}],
+            byEndpoint: [
+              { $match: { endpoint: { $exists: true, $ne: null } } },
+              { $group: { _id: '$endpoint', count: { $sum: 1 } } },
+            ],
+            byErrorCategory: [
+              { $match: { status: 'failed', error_category: { $exists: true } } },
+              { $group: {
+                _id: '$error_category',
+                count: { $sum: 1 },
+                lastMessage: { $last: '$error_message' },
+              }},
+            ],
+          }},
+        ]).toArray();
+
+        const totals = agg?.totals?.[0];
+        if (!totals || totals.totalRecords === 0) continue;
+
+        const byType: Record<string, any> = {};
+        for (const t of (agg.byType || [])) {
+          byType[t._id || 'unknown'] = {
+            count: t.count, cost: t.cost, inputTokens: t.inputTokens,
+            outputTokens: t.outputTokens, successCount: t.successCount,
+            failedCount: t.failedCount, pageCount: t.pageCount,
+          };
+        }
+        const byModel: Record<string, any> = {};
+        for (const m of (agg.byModel || [])) {
+          byModel[m._id || 'unknown'] = { count: m.count, cost: m.cost };
+        }
+        const byEndpoint: Record<string, number> = {};
+        for (const e of (agg.byEndpoint || [])) {
+          byEndpoint[e._id] = e.count;
+        }
+        const byErrorCategory: Record<string, any> = {};
+        for (const e of (agg.byErrorCategory || [])) {
+          byErrorCategory[e._id || 'unknown'] = {
+            count: e.count,
+            lastMessage: (e.lastMessage || '').substring(0, 200),
+          };
+        }
+
+        await db.collection('gemini_usage_daily').updateOne(
+          { date: dateStr },
+          { $set: {
+            date: dateStr,
+            totalCost: totals.totalCost,
+            totalInputTokens: totals.totalInputTokens,
+            totalOutputTokens: totals.totalOutputTokens,
+            totalRecords: totals.totalRecords,
+            byType, byModel, byEndpoint, byErrorCategory,
+            updatedAt: new Date(),
+          }},
+          { upsert: true },
+        );
+        usageDaysRefreshed++;
+      }
+    } catch (e) {
+      console.warn('[sync-page-counts] gemini_usage_daily refresh failed:', (e as Error).message?.substring(0, 100));
+    }
+
+    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches), ${collectionsUpdated} collections updated, ${thumbnailsFixed} thumbnails fixed, ${usageDaysRefreshed} usage days refreshed in ${logger.durationMs}ms`);
+
+    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated, collections_checked: collections.length, collections_updated: collectionsUpdated, thumbnails_fixed: thumbnailsFixed, usage_days_refreshed: usageDaysRefreshed });
 
     await logger.flush();
 

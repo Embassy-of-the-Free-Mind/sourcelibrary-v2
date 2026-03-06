@@ -94,54 +94,136 @@ export const GET = withAuth(async (request, session) => {
         .project({ title: 1, author: 1, created_at: 1, pages_count: 1 })
         .toArray().catch(() => []),
 
-      // 3. SINGLE gemini_usage $facet — one scan with timestamp filter for all cost/model/prompt stats
-      // maxTimeMS prevents 504 on missing timestamp index (1.4M+ docs); returns empty on timeout
-      db.collection('gemini_usage').aggregate([
-        { $match: { timestamp: { $gte: cutoffDate } } },
-        { $facet: {
-          costTotal: [
-            { $group: {
-              _id: null,
-              totalCost: { $sum: { $ifNull: ['$cost_usd', 0] } },
-              totalTokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
-            }},
-          ],
-          costByDay: [
-            { $group: {
-              _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-              cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
-              tokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
-            }},
-            { $sort: { _id: 1 } },
-          ],
-          costByAction: [
-            { $group: { _id: '$type', cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, count: { $sum: 1 } } },
-            { $sort: { cost: -1 } },
-          ],
-          modelUsage: [
-            { $match: { type: 'ocr', model: { $exists: true, $ne: null } } },
-            { $group: { _id: '$model', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-          ],
-          promptUsage: [
-            { $match: { type: 'ocr', endpoint: { $exists: true, $ne: null } } },
-            { $group: { _id: '$endpoint', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-          ],
-          imageStats: [
-            { $match: { type: 'extract_images', status: 'success' } },
-            { $group: { _id: null, totalPages: { $sum: 1 } } },
-          ],
-          failuresByCategory: [
-            { $match: { status: 'failed' } },
-            { $group: { _id: '$error_category', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-          ],
-        }}
-      ], { maxTimeMS: 45000 }).toArray().catch((err) => {
-        console.warn('gemini_usage aggregate timed out or failed:', err.message?.substring(0, 100));
-        return [{}];
-      }),
+      // 3. Pre-aggregated daily usage from gemini_usage_daily (fast: ~30 docs instead of 1.4M)
+      // Falls back to raw gemini_usage scan if daily collection is empty
+      (async () => {
+        const cutoffStr = cutoffDate.toISOString().slice(0, 10);
+        const todayStr = new Date().toISOString().slice(0, 10);
+
+        // Read pre-aggregated daily docs
+        const dailyDocs = await db.collection('gemini_usage_daily')
+          .find({ date: { $gte: cutoffStr } })
+          .sort({ date: 1 })
+          .toArray();
+
+        // If no daily docs, fall back to raw scan (before backfill runs)
+        if (dailyDocs.length === 0) {
+          return db.collection('gemini_usage').aggregate([
+            { $match: { timestamp: { $gte: cutoffDate } } },
+            { $facet: {
+              costTotal: [{ $group: {
+                _id: null,
+                totalCost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+                totalTokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
+              }}],
+              costByDay: [
+                { $group: {
+                  _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
+                  cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+                  tokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
+                }},
+                { $sort: { _id: 1 } },
+              ],
+              costByAction: [
+                { $group: { _id: '$type', cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, count: { $sum: 1 } } },
+                { $sort: { cost: -1 } },
+              ],
+              modelUsage: [
+                { $match: { type: 'ocr', model: { $exists: true, $ne: null } } },
+                { $group: { _id: '$model', count: { $sum: 1 } } },
+                { $sort: { count: -1 } },
+              ],
+              promptUsage: [
+                { $match: { type: 'ocr', endpoint: { $exists: true, $ne: null } } },
+                { $group: { _id: '$endpoint', count: { $sum: 1 } } },
+                { $sort: { count: -1 } },
+              ],
+              imageStats: [
+                { $match: { type: 'extract_images', status: 'success' } },
+                { $group: { _id: null, totalPages: { $sum: 1 } } },
+              ],
+              failuresByCategory: [
+                { $match: { status: 'failed' } },
+                { $group: { _id: '$error_category', count: { $sum: 1 } } },
+                { $sort: { count: -1 } },
+              ],
+            }}
+          ], { maxTimeMS: 45000 }).toArray().catch((err: Error) => {
+            console.warn('gemini_usage aggregate timed out or failed:', err.message?.substring(0, 100));
+            return [{}];
+          });
+        }
+
+        // Merge daily docs into the same shape the old $facet returned
+        let totalCost = 0, totalTokens = 0;
+        const costByDayMap = new Map<string, { cost: number; tokens: number }>();
+        const costByActionMap = new Map<string, { cost: number; count: number }>();
+        const modelUsageMap = new Map<string, number>();
+        const promptUsageMap = new Map<string, number>();
+        let imagePages = 0;
+        const failuresMap = new Map<string, number>();
+
+        for (const doc of dailyDocs) {
+          totalCost += doc.totalCost || 0;
+          totalTokens += (doc.totalInputTokens || 0) + (doc.totalOutputTokens || 0);
+
+          costByDayMap.set(doc.date, {
+            cost: doc.totalCost || 0,
+            tokens: (doc.totalInputTokens || 0) + (doc.totalOutputTokens || 0),
+          });
+
+          // byType → costByAction + imageStats
+          for (const [type, stats] of Object.entries(doc.byType || {})) {
+            const s = stats as any;
+            const existing = costByActionMap.get(type) || { cost: 0, count: 0 };
+            existing.cost += s.cost || 0;
+            existing.count += s.count || 0;
+            costByActionMap.set(type, existing);
+
+            if (type === 'extract_images') {
+              imagePages += s.successCount || 0;
+            }
+          }
+
+          // byModel → modelUsage (OCR-only approximation: use all models since daily doesn't split by type+model)
+          for (const [model, stats] of Object.entries(doc.byModel || {})) {
+            const s = stats as any;
+            modelUsageMap.set(model, (modelUsageMap.get(model) || 0) + (s.count || 0));
+          }
+
+          // byEndpoint → promptUsage
+          for (const [endpoint, count] of Object.entries(doc.byEndpoint || {})) {
+            promptUsageMap.set(endpoint, (promptUsageMap.get(endpoint) || 0) + (count as number));
+          }
+
+          // byErrorCategory → failuresByCategory
+          for (const [cat, stats] of Object.entries(doc.byErrorCategory || {})) {
+            const s = stats as any;
+            failuresMap.set(cat, (failuresMap.get(cat) || 0) + (s.count || 0));
+          }
+        }
+
+        // Return in the same shape as the old $facet
+        return [{
+          costTotal: [{ totalCost, totalTokens }],
+          costByDay: Array.from(costByDayMap.entries())
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([date, v]) => ({ _id: date, cost: v.cost, tokens: v.tokens })),
+          costByAction: Array.from(costByActionMap.entries())
+            .sort(([, a], [, b]) => b.cost - a.cost)
+            .map(([type, v]) => ({ _id: type, cost: v.cost, count: v.count })),
+          modelUsage: Array.from(modelUsageMap.entries())
+            .sort(([, a], [, b]) => b - a)
+            .map(([model, count]) => ({ _id: model, count })),
+          promptUsage: Array.from(promptUsageMap.entries())
+            .sort(([, a], [, b]) => b - a)
+            .map(([endpoint, count]) => ({ _id: endpoint, count })),
+          imageStats: imagePages > 0 ? [{ totalPages: imagePages }] : [],
+          failuresByCategory: Array.from(failuresMap.entries())
+            .sort(([, a], [, b]) => b - a)
+            .map(([cat, count]) => ({ _id: cat, count })),
+        }];
+      })(),
 
       // 4. Active batch jobs (small collection, fast)
       db.collection('batch_jobs').aggregate([
