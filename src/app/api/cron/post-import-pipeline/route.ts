@@ -78,6 +78,11 @@ async function setPipelineStatus(
     fixStaleThumbnail(db, bookId).catch(() => {}); // fire-and-forget, non-blocking
   }
 
+  // When OCR completes, page_type data is available — upgrade thumbnail to best visual page
+  if (status === 'ocr_complete' && prevStatus !== 'ocr_complete') {
+    upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget
+  }
+
   // Log transition to audit trail (fire-and-forget)
   if (prevStatus !== status) {
     logAuditEvent({
@@ -138,6 +143,74 @@ async function fixStaleThumbnail(
     if (bestPage.thumbnail_blob) update.thumbnail_blob = bestPage.thumbnail_blob;
     await db.collection('books').updateOne({ id: bookId }, { $set: update });
   }
+}
+
+/**
+ * Upgrade a book's thumbnail using OCR page_type metadata.
+ * Runs after OCR completes when page_type data first becomes available.
+ * Picks: frontispiece > title-page > first illustration (early pages).
+ * Only upgrades if current thumbnail is a boring page type (blank, text, etc).
+ */
+async function upgradeThumbnailFromPageType(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+) {
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { thumbnail: 1 } }
+  );
+  if (!book?.thumbnail) return;
+
+  // Find which page the current thumbnail belongs to
+  const currentPage = await db.collection('pages').findOne({
+    book_id: bookId,
+    $or: [
+      { cropped_photo: book.thumbnail },
+      { archived_photo: book.thumbnail },
+      { photo: book.thumbnail },
+      { photo_original: book.thumbnail },
+      { thumbnail_blob: book.thumbnail },
+    ]
+  }, { projection: { page_type: 1 } });
+
+  // If current thumbnail is already a frontispiece, nothing to do
+  if (currentPage?.page_type === 'frontispiece') return;
+
+  const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1 };
+
+  // Priority 1: frontispiece (within first 50 pages)
+  let bestPage = await db.collection('pages').findOne(
+    { book_id: bookId, page_type: 'frontispiece', page_number: { $lte: 50 } },
+    { projection: proj, sort: { page_number: 1 } }
+  );
+
+  // If current is title-page and no frontispiece found, keep it
+  if (!bestPage && currentPage?.page_type === 'title-page') return;
+
+  // Priority 2: title-page (within first 30 pages)
+  if (!bestPage) {
+    bestPage = await db.collection('pages').findOne(
+      { book_id: bookId, page_type: 'title-page', page_number: { $lte: 30 } },
+      { projection: proj, sort: { page_number: 1 } }
+    );
+  }
+
+  // Priority 3: first illustration within first 20 pages
+  if (!bestPage) {
+    bestPage = await db.collection('pages').findOne(
+      { book_id: bookId, page_type: 'illustration', page_number: { $lte: 20 } },
+      { projection: proj, sort: { page_number: 1 } }
+    );
+  }
+
+  if (!bestPage) return;
+
+  const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo || bestPage.photo_original;
+  if (!newUrl || newUrl === book.thumbnail) return;
+
+  const update: Record<string, string> = { thumbnail: newUrl };
+  if (bestPage.thumbnail_blob) update.thumbnail_blob = bestPage.thumbnail_blob;
+  await db.collection('books').updateOne({ id: bookId }, { $set: update });
 }
 
 async function markFailed(
