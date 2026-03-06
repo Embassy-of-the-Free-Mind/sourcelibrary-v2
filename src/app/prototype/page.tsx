@@ -398,7 +398,7 @@ export default async function PrototypePage() {
               Discover
             </h2>
             <p className="text-muted mb-10 max-w-2xl">
-              Translated primary sources from the Western esoteric tradition. Different every time you visit.
+              Translated primary sources from the collection.
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
@@ -472,6 +472,21 @@ export default async function PrototypePage() {
               <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
                 <div className="flex-1">
                   <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
+                    Marsilio Ficino
+                  </h3>
+                  <p className="text-stone-500 text-sm mb-3">
+                    1433&ndash;1499 &middot; Philosopher &amp; Translator
+                  </p>
+                  <p className="text-stone-600 text-base leading-relaxed">
+                    Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the
+                    Hermetic writings into Latin&mdash;making them accessible to all of Europe for the first
+                    time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and
+                    the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all
+                    seekers of truth.
+                  </p>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
                     Cosimo de&apos; Medici
                   </h3>
                   <p className="text-stone-500 text-sm mb-3">
@@ -485,21 +500,6 @@ export default async function PrototypePage() {
                     Macedonia by a monk named Leonardo of Pistoia. The dying Cosimo asked Ficino to pause
                     his translation of Plato so that he could read it&mdash;sensing that Hermes held
                     the key to the most ancient wisdom.
-                  </p>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
-                    Marsilio Ficino
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-3">
-                    1433&ndash;1499 &middot; Philosopher &amp; Translator
-                  </p>
-                  <p className="text-stone-600 text-base leading-relaxed">
-                    Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the
-                    Hermetic writings into Latin&mdash;making them accessible to all of Europe for the first
-                    time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and
-                    the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all
-                    seekers of truth.
                   </p>
                 </div>
               </div>
