@@ -1,8 +1,9 @@
 import { getDb } from '@/lib/mongodb';
-import { SHWEP_PERIODS, getAllTags } from '@/data/shwep-episodes';
-import { EPISODE_CITED_WORKS, getAllCitedWorks } from '@/data/shwep-cited-works';
+import { ObjectId } from 'mongodb';
+import { SHWEP_PERIODS } from '@/data/shwep-episodes';
 import { EPISODE_DESCRIPTIONS } from '@/data/shwep-descriptions';
 import { EPISODE_DATES } from '@/data/shwep-dates';
+import { SHWEP_BOOK_MATCHES } from '@/data/shwep-book-matches';
 
 export interface MatchedBook {
   id: string;
@@ -79,13 +80,24 @@ function toMatchedBook(b: any): MatchedBook {
   };
 }
 
-async function fetchBooksAndMatch(db: any) {
-  const allTags = getAllTags();
-  const allCitedWorks = getAllCitedWorks();
-  const allTerms = new Set([...allTags, ...allCitedWorks]);
+// Collect all unique book IDs from the LLM match table
+function getAllMatchedBookIds(): string[] {
+  const ids = new Set<string>();
+  for (const bookIds of Object.values(SHWEP_BOOK_MATCHES)) {
+    for (const id of bookIds) ids.add(id);
+  }
+  return [...ids];
+}
+
+// Fetch only the books that appear in matches (much faster than loading all 4,800+)
+async function fetchMatchedBooks(db: any): Promise<Map<string, MatchedBook>> {
+  const allIds = getAllMatchedBookIds();
+  const objectIds = allIds.map(id => {
+    try { return new ObjectId(id); } catch { return null; }
+  }).filter(Boolean);
 
   const books = await db.collection('books').find(
-    { deleted: { $ne: true } },
+    { _id: { $in: objectIds }, deleted: { $ne: true } },
     {
       projection: {
         _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
@@ -96,60 +108,29 @@ async function fetchBooksAndMatch(db: any) {
     }
   ).toArray();
 
-  const MAX_MATCHES_PER_TERM = 30;
-  const tagSet = new Set(allTags);
-  const termBooks: Record<string, MatchedBook[]> = {};
-
-  for (const term of allTerms) {
-    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const isTag = tagSet.has(term);
-    const pattern = isTag
-      ? new RegExp(escaped, 'i')
-      : new RegExp('\\b' + escaped + '\\b', 'i');
-
-    const matches = books.filter((b: any) =>
-      pattern.test(b.author || '') || pattern.test(b.title || '') || pattern.test(b.display_title || '')
-    );
-
-    if (!isTag && matches.length > MAX_MATCHES_PER_TERM) continue;
-
-    if (matches.length > 0) {
-      termBooks[term] = matches.map(toMatchedBook);
-    }
+  const bookMap = new Map<string, MatchedBook>();
+  for (const b of books) {
+    bookMap.set(b._id.toString(), toMatchedBook(b));
   }
-
-  return { books, termBooks };
+  return bookMap;
 }
 
-function enrichEpisodes(termBooks: Record<string, MatchedBook[]>) {
+function enrichEpisodes(bookMap: Map<string, MatchedBook>) {
   return SHWEP_PERIODS.map(period => ({
     ...period,
     episodes: period.episodes.map(ep => {
-      const matchedBooks: MatchedBook[] = [];
-      const seenIds = new Set<string>();
-
-      const episodeTerms = new Set(ep.tags);
-      for (const work of (EPISODE_CITED_WORKS[ep.number] || [])) {
-        episodeTerms.add(work);
-      }
-
-      for (const term of episodeTerms) {
-        for (const book of (termBooks[term] || [])) {
-          if (!seenIds.has(book.id)) {
-            seenIds.add(book.id);
-            matchedBooks.push(book);
-          }
-        }
-      }
-
-      matchedBooks.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+      const bookIds = SHWEP_BOOK_MATCHES[ep.number] || [];
+      const books = bookIds
+        .map(id => bookMap.get(id))
+        .filter((b): b is MatchedBook => !!b)
+        .sort((a, b) => (a.year || 9999) - (b.year || 9999));
 
       return {
         ...ep,
         description: EPISODE_DESCRIPTIONS[ep.number] || undefined,
         publishDate: EPISODE_DATES[ep.number] || undefined,
-        books: matchedBooks,
-        bookCount: matchedBooks.length,
+        books,
+        bookCount: books.length,
       };
     }),
   }));
@@ -157,8 +138,8 @@ function enrichEpisodes(termBooks: Record<string, MatchedBook[]>) {
 
 export async function getShwepIndexData(): Promise<ShwepIndexData> {
   const db = await getDb();
-  const { books, termBooks } = await fetchBooksAndMatch(db);
-  const enrichedPeriods = enrichEpisodes(termBooks);
+  const bookMap = await fetchMatchedBooks(db);
+  const enrichedPeriods = enrichEpisodes(bookMap);
 
   const totalEpisodes = enrichedPeriods.reduce((sum, p) => sum + p.episodes.length, 0);
   const episodesWithBooks = enrichedPeriods.reduce(
@@ -174,18 +155,13 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
   }));
 
   // Gallery images from linked books
-  const allBookIds = new Set<string>();
-  for (const p of enrichedPeriods) {
-    for (const ep of p.episodes) {
-      for (const b of ep.books) allBookIds.add(b.id);
-    }
-  }
+  const allBookIds = [...bookMap.keys()];
 
   let galleryImages: GalleryImage[] = [];
   try {
     const rawImages = await db.collection('gallery_images').find(
       {
-        book_id: { $in: [...allBookIds] },
+        book_id: { $in: allBookIds },
         gallery_quality: { $gte: 0.8 },
         type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'ornament', 'border'] },
       },
@@ -217,24 +193,56 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
     // Gallery images are optional
   }
 
+  // Get total books count efficiently
+  const totalBooks = await db.collection('books').countDocuments({ deleted: { $ne: true } });
+
   return {
     periods: reversedPeriods,
     galleryImages,
-    stats: { totalEpisodes, episodesWithBooks, totalMatches, totalBooksInCollection: books.length },
+    stats: { totalEpisodes, episodesWithBooks, totalMatches, totalBooksInCollection: totalBooks },
   };
 }
 
 export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpisode | null> {
-  const db = await getDb();
-  const { termBooks } = await fetchBooksAndMatch(db);
-  const enrichedPeriods = enrichEpisodes(termBooks);
+  // For single episode, only fetch the books matched to this episode
+  const bookIds = SHWEP_BOOK_MATCHES[episodeNumber];
 
-  for (const p of enrichedPeriods) {
-    for (const ep of p.episodes) {
-      if (ep.number === episodeNumber) return ep;
-    }
+  const episode = SHWEP_PERIODS
+    .flatMap(p => p.episodes)
+    .find(ep => ep.number === episodeNumber);
+  if (!episode) return null;
+
+  let books: MatchedBook[] = [];
+  if (bookIds && bookIds.length > 0) {
+    const db = await getDb();
+    const objectIds = bookIds.map(id => {
+      try { return new ObjectId(id); } catch { return null; }
+    }).filter((id): id is ObjectId => id !== null);
+
+    const rawBooks = await db.collection('books').find(
+      { _id: { $in: objectIds }, deleted: { $ne: true } },
+      {
+        projection: {
+          _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
+          language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+          thumbnail: 1, thumbnail_blob: 1,
+          'reading_summary.overview': 1, 'index.bookSummary.brief': 1, summary: 1,
+        },
+      }
+    ).toArray();
+
+    books = rawBooks
+      .map(toMatchedBook)
+      .sort((a, b) => (a.year || 9999) - (b.year || 9999));
   }
-  return null;
+
+  return {
+    ...episode,
+    description: EPISODE_DESCRIPTIONS[episodeNumber] || undefined,
+    publishDate: EPISODE_DATES[episodeNumber] || undefined,
+    books,
+    bookCount: books.length,
+  };
 }
 
 export function getAllEpisodeNumbers(): number[] {
