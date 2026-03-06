@@ -130,7 +130,7 @@ export const STAGE_DETAILS: StageDetail[] = [
     model: 'gemini-3-flash-preview',
     notes: [
       'Gallery images require quality >= 0.5 and a bounding box',
-      'OCR-aware extraction passes page type + text density context when available',
+      'Rich metadata per detection: subjects, figures, symbols, style, technique, museum-style label',
       'Backpressure: max 10 active image extraction jobs',
       'Results flow through write-results SQS queue to Writer Lambda',
     ],

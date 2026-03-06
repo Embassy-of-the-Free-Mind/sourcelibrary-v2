@@ -55,17 +55,21 @@ export default function PipelineDiagram({ stages }: { stages: StageData[] }) {
   const totalW = startX + stages.length * (nodeW + gap);
 
   // Cron ownership bands
+  // post-import-pipeline owns: Import(0)→Translate(5) + Images(8)→Complete(9)
+  // enrich-books owns: Enrich(6)→Chapters(7)
   const cronBands = [
-    { label: 'post-import-pipeline', subtitle: 'every 10 min', startIdx: 0, endIdx: 6, color: '#e8e4dc' },
-    { label: 'enrich-books', subtitle: 'every 10 min', startIdx: 7, endIdx: 8, color: '#ede9fe' },
+    { label: 'post-import-pipeline', subtitle: 'every 10 min', startIdx: 0, endIdx: 5, color: '#e8e4dc' },
+    { label: 'enrich-books', subtitle: 'every 10 min', startIdx: 6, endIdx: 7, color: '#ede9fe' },
+    { label: 'post-import-pipeline', subtitle: 'priority pass', startIdx: 8, endIdx: 9, color: '#e8e4dc' },
   ];
 
   // Infrastructure connections
+  // Stages: Import(0) Archive(1) OCR(2) Metadata(3) FT-Check(4) Translate(5) Enrich(6) Chapters(7) Images(8) Complete(9)
   const infraItems = [
-    { label: 'Lambda Workers', subtitle: 'OCR + Translation + Images', connectTo: [2, 5, 9], color: '#f59e0b' },
+    { label: 'Lambda Workers', subtitle: 'OCR + Translation + Images', connectTo: [2, 5, 8], color: '#f59e0b' },
     { label: 'Gemini Batch API', subtitle: '50% cheaper OCR', connectTo: [2], color: '#10b981', dashed: true },
     { label: 'FIFO Queue', subtitle: 'Sequential pages', connectTo: [5], color: '#ef4444' },
-    { label: 'Writer Lambda', subtitle: '50 concurrency cap', connectTo: [2, 5, 9], color: '#8b5cf6' },
+    { label: 'Writer Lambda', subtitle: '50 concurrency cap', connectTo: [2, 5, 8], color: '#8b5cf6' },
   ];
 
   return (
