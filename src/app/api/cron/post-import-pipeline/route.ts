@@ -4,7 +4,7 @@ import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { enrichBookMetadata } from '@/lib/metadata-enrichment';
 import { nanoid } from 'nanoid';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
+import { SKIP_TRANSLATION_PAGE_TYPES, IMAGE_CANDIDATE_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
@@ -535,9 +535,17 @@ export async function GET(request: NextRequest) {
         for (const book of readyForImages) {
           if (!hasTimeBudget(startTime)) break;
           try {
+            // Only extract images from pages OCR flagged as having visual content
             const bookPages = await db.collection('pages')
               .find(
-                { book_id: book.id },
+                {
+                  book_id: book.id,
+                  $or: [
+                    { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+                    // Include pages without page_type (old OCR) that have detected-images tags
+                    { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>' } },
+                  ],
+                },
                 { projection: { id: 1 } }
               )
               .toArray();

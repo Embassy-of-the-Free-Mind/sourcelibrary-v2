@@ -56,6 +56,8 @@ export type PipelineAutoStatus =
   | 'ocr_submitted'
   | 'ocr_complete'
   | 'metadata_enriched'
+  | 'ft_verifying'
+  | 'ft_verified'
   | 'translate_submitted'
   | 'translate_complete'
   | 'enriching'

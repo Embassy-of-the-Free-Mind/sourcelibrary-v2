@@ -14,6 +14,11 @@ export const SKIP_TRANSLATION_PAGE_TYPES = [
   'blank', 'illustration', 'map', 'frontispiece', 'diagram',
 ];
 
+// Page types likely to contain images worth extracting
+export const IMAGE_CANDIDATE_PAGE_TYPES = [
+  'illustration', 'diagram', 'map', 'frontispiece', 'mixed',
+];
+
 /** Extract <page-type> from OCR text. Returns undefined if not found or invalid. */
 export function extractPageType(ocrText: string): string | undefined {
   const match = ocrText.match(/<page-type>([\s\S]*?)<\/page-type>/i);
