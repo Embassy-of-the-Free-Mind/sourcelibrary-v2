@@ -42,6 +42,7 @@ export interface TranslationVerification {
     publisher?: string;
     completeness: 'complete' | 'partial' | 'excerpts' | 'unknown';
     evidence_source: string;
+    url?: string;
   }>;
   tools_called: string[];
   verified_at: Date;
@@ -155,6 +156,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
                 enum: ['complete', 'partial', 'excerpts', 'unknown'],
               },
               evidence_source: { type: Type.STRING, description: 'Where this was found (e.g., "unesco_master", "open_library", "google_books")' },
+              url: { type: Type.STRING, description: 'URL link to the catalog entry or book page (from the search results)' },
             },
             required: ['english_title', 'completeness', 'evidence_source'],
           },
@@ -244,6 +246,7 @@ async function executeSearchOpenLibrary(
       edition_count: doc.edition_count,
       language: doc.language,
       isbn: Array.isArray(doc.isbn) ? (doc.isbn as string[])[0] : undefined,
+      url: doc.key ? `https://openlibrary.org${doc.key}` : undefined,
     }));
 
     return { total: data.numFound || 0, results };
@@ -271,6 +274,7 @@ async function executeSearchGoogleBooks(
         publishedDate: vol.publishedDate,
         description: typeof vol.description === 'string' ? vol.description.slice(0, 300) : undefined,
         language: vol.language,
+        url: (vol.infoLink as string) || (item.selfLink as string) || undefined,
       };
     });
 
@@ -308,6 +312,7 @@ async function executeSearchUstc(
         language: row.detected_language,
         work_type: row.work_type,
         subject_tags: row.subject_tags,
+        url: row.id ? `https://www.ustc.ac.uk/editions/${row.id}` : undefined,
       })),
     };
   } catch (error) {
@@ -530,6 +535,7 @@ export async function verifyFirstTranslation(
       publisher: t.publisher as string | undefined,
       completeness: (t.completeness as 'complete' | 'partial' | 'excerpts' | 'unknown') || 'unknown',
       evidence_source: (t.evidence_source as string) || 'unknown',
+      url: t.url as string | undefined,
     }));
 
     const disposition = determination.disposition as TranslationVerification['disposition'];
