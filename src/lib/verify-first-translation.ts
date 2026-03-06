@@ -389,16 +389,24 @@ ${ocrSamples.map((s, i) => `Page ${i + 1}: ${s.slice(0, 500)}`).join('\n\n')}
 2. If the local catalog search finds matches, evaluate whether they are translations of THIS SPECIFIC WORK (not just any work by the same author).
 3. If no local matches (or matches are for different works), call \`search_open_library\` and/or \`search_google_books\` to check for translations not in our catalogs.
 4. You may optionally call \`search_ustc\` to verify the identity of the original work.
-5. After gathering evidence, call \`make_determination\` with your verdict.
+5. After gathering evidence, call \`make_determination\` with your verdict. Do NOT do more than 3-4 searches — make your determination based on what you have found.
+
+## CRITICAL: Source Text Matters
+
+We are verifying whether THIS SPECIFIC TEXT (in ${lang}) has been translated to English. This is NOT about whether the underlying work has ever appeared in English from any source.
+
+Many books in this library are Latin translations of Greek works (e.g. Ficino's Latin Iamblichus, Ficino's Latin Plato). If the original Greek has been translated directly to English by others, that does NOT count — we are asking whether the LATIN TEXT ITSELF has been translated. Different source languages produce different translations with different scholarly value.
+
+Example: Iamblichus' "De Mysteriis" in Ficino's Latin — even though Taylor (1821) and Clarke (2003) translated the Greek original to English, Ficino's Latin rendering has never been translated to English. This is a FIRST TRANSLATION.
 
 ## Determination Guidelines
 
-- **first_translation**: No complete English translation of this specific work has been published. Strong evidence = no matches across multiple sources.
-- **translation_exists**: A complete English translation already exists. Cite the specific translation found.
-- **first_full_translation**: Only partial translations, excerpts, or anthologized selections exist. A full/complete translation has not been published.
+- **first_translation**: No complete English translation of this specific ${lang} text has been published. Strong evidence = no matches across multiple sources, OR only translations from a different source language exist.
+- **translation_exists**: A complete English translation of THIS SPECIFIC ${lang} text already exists. Cite the specific translation found. The translation must be FROM THIS LANGUAGE, not from the original language of the work.
+- **first_full_translation**: Only partial translations, excerpts, or anthologized selections of this ${lang} text exist. A full/complete translation has not been published.
 - **needs_review**: Evidence is conflicting or inconclusive. Use sparingly — prefer a determination when possible.
 
-Important: Be precise about matching. A translation of a different work by the same author does NOT count. "Selected works" or "excerpts" are partial, not complete translations.`;
+Important: Be precise about matching. A translation of a different work by the same author does NOT count. A translation from a different source language (e.g. Greek→English when we have the Latin text) does NOT count. "Selected works" or "excerpts" are partial, not complete translations.`;
 
   return prompt;
 }
@@ -518,6 +526,14 @@ export async function verifyFirstTranslation(
 
       // If determination was made, we're done
       if (determination) break;
+
+      // After 3 rounds of searching, nudge the model to make a determination
+      if (round >= 2 && !determination) {
+        contents.push({
+          role: 'user',
+          parts: [{ text: 'You have done enough searching. Now call make_determination with your verdict based on the evidence gathered so far.' }],
+        });
+      }
     }
 
     const durationMs = Date.now() - startTime;

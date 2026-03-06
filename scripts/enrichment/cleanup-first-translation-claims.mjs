@@ -70,8 +70,10 @@ async function main() {
         $or: [
           // Claimed first translation but never verified with catalogs
           { is_first_translation: true, 'translation_verification.verified_at': { $exists: false } },
-          // Verified but low confidence
-          { is_first_translation: true, 'translation_verification.confidence': { $lt: 0.6 } },
+          // Old-style verification (no tools_called = pre-catalog weak check)
+          { is_first_translation: true, 'translation_verification.tools_called': { $exists: false } },
+          // Verified but low confidence (string comparison)
+          { is_first_translation: true, 'translation_verification.confidence': 'low' },
         ],
         // Skip English books
         language: { $nin: ['English', 'english'] },
