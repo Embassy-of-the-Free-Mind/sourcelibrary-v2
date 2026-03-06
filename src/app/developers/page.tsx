@@ -407,6 +407,27 @@ source-library search "alchemy" --json | jq .results`}
         </a>
       </section>
 
+      {/* Pipeline Architecture */}
+      <section className="mb-16">
+        <Link
+          href="/developers/pipeline"
+          className="block bg-white rounded-xl border border-border-light p-6 hover:border-accent-rust/30 hover:shadow-sm transition-all group"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 bg-accent-rust/10 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-accent-rust" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-semibold text-primary group-hover:text-accent-rust transition-colors">Pipeline Architecture</h2>
+          </div>
+          <p className="text-secondary max-w-2xl">
+            How 4,800+ books flow through 10 processing stages — Lambda workers, SQS queues, Gemini AI,
+            backpressure controls, and safety mechanisms. Live pipeline counts, infrastructure diagrams, and cost breakdowns.
+          </p>
+        </Link>
+      </section>
+
       {/* Links */}
       <section className="border-t border-border-light pt-8">
         <div className="flex flex-wrap gap-4">
