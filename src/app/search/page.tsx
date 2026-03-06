@@ -15,16 +15,19 @@ import {
   search as searchApi,
   gallery as galleryApi,
   categories as categoriesApi,
+  collections as collectionsApi,
   utils,
   type SearchResult,
   type IndexSearchResult,
   type GalleryItem,
+  type Collection,
 } from '@/lib/api-client';
 import { sendGAEvent } from '@/lib/ga';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
+import BookCard from '@/components/book/BookCard';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -72,10 +75,11 @@ export default function SearchPage() {
   );
 
   // Filters
-  const hasInitialFilters = !!(searchParams.get('language') || searchParams.get('category') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
+  const hasInitialFilters = !!(searchParams.get('language') || searchParams.get('category') || searchParams.get('collection') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
   const [showFilters, setShowFilters] = useState(hasInitialFilters);
   const [language, setLanguage] = useState(searchParams.get('language') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
+  const [collection, setCollection] = useState(searchParams.get('collection') || '');
   const [dateFrom, setDateFrom] = useState(searchParams.get('date_from') || '');
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
@@ -84,15 +88,28 @@ export default function SearchPage() {
   const [library, setLibrary] = useState(searchParams.get('library') || '');
   const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
   const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
+  const [collectionsList, setCollectionsList] = useState<Collection[]>([]);
+
+  // Browse mode state
+  const [browseBooks, setBrowseBooks] = useState<any[]>([]);
+  const [browseTotal, setBrowseTotal] = useState(0);
+  const [browseLoading, setBrowseLoading] = useState(false);
+  const [browseSortBy, setBrowseSortBy] = useState<string>(
+    searchParams.get('sort') || 'recent-translation'
+  );
 
   // Suggestions
   const [suggestion, setSuggestion] = useState<string | null>(null);
 
-  // Load filter options
+  // Load filter options + collections
   useEffect(() => {
     (async () => {
       try {
-        const [langData, catData] = await Promise.all([utils.languages(), categoriesApi.list()]);
+        const [langData, catData, colData] = await Promise.all([
+          utils.languages(),
+          categoriesApi.list(),
+          collectionsApi.list(),
+        ]);
         if (langData.languages) {
           setLanguages([
             { value: '', label: 'All Languages' },
@@ -106,6 +123,9 @@ export default function SearchPage() {
               .filter((c: any) => c.book_count > 0)
               .map((c: any) => ({ value: c.id, label: `${c.icon ? c.icon + ' ' : ''}${c.name} (${c.book_count})`, icon: c.icon })),
           ]);
+        }
+        if (colData.collections) {
+          setCollectionsList(colData.collections);
         }
       } catch {}
     })();
@@ -188,16 +208,18 @@ export default function SearchPage() {
     // Persist filters in URL for all modes
     if (language) params.set('language', language);
     if (category) params.set('category', category);
+    if (collection) params.set('collection', collection);
     if (dateFrom) params.set('date_from', dateFrom);
     if (dateTo) params.set('date_to', dateTo);
     if (hasDoi) params.set('has_doi', 'true');
     if (hasTranslation) params.set('has_translation', 'true');
     if (firstTranslation) params.set('first_translation', 'true');
     if (library) params.set('library', library);
-    if (mode === 'books' && sortBy !== 'relevance') params.set('sort', sortBy);
+    if (q && mode === 'books' && sortBy !== 'relevance') params.set('sort', sortBy);
+    if (!q && browseSortBy !== 'recent-translation') params.set('sort', browseSortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
-  }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
+  }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setOffset(0);
@@ -214,6 +236,38 @@ export default function SearchPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, offset, performSearch, updateUrl]);
 
+  // Browse mode: fetch books when no query
+  const isBrowseMode = !query || query.length < 2;
+  const performBrowse = useCallback(async () => {
+    setBrowseLoading(true);
+    try {
+      const data = await searchApi.browse({
+        language: language || undefined,
+        category: category || undefined,
+        collection: collection || undefined,
+        library: library || undefined,
+        sort: browseSortBy,
+        limit: RESULTS_PER_PAGE,
+        skip: offset,
+      });
+      setBrowseBooks(data.books || []);
+      setBrowseTotal(data.total || 0);
+    } catch {
+      setBrowseBooks([]);
+      setBrowseTotal(0);
+    } finally {
+      setBrowseLoading(false);
+    }
+  }, [language, category, collection, library, browseSortBy, offset]);
+
+  useEffect(() => {
+    if (isBrowseMode) {
+      performBrowse();
+      updateUrl('', 'unified', offset);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset]);
+
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
   const noResults = query.length >= 2 && !loading && totalResults === 0;
@@ -228,6 +282,9 @@ export default function SearchPage() {
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
+    if (value.length >= 2) {
+      setOffset(0);
+    }
     debouncedSearch(value);
   };
 
@@ -243,10 +300,10 @@ export default function SearchPage() {
   };
 
   const clearFilters = () => {
-    setLanguage(''); setCategory(''); setDateFrom(''); setDateTo('');
-    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(''); setSortBy('relevance'); setOffset(0);
+    setLanguage(''); setCategory(''); setCollection(''); setDateFrom(''); setDateTo('');
+    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(''); setSortBy('relevance'); setBrowseSortBy('recent-translation'); setOffset(0);
   };
-  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || library || sortBy !== 'relevance';
+  const hasActiveFilters = language || category || collection || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || library || sortBy !== 'relevance';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -289,7 +346,7 @@ export default function SearchPage() {
                 <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted animate-spin" />
               )}
             </div>
-            {viewMode === 'books' && (
+            {viewMode === 'books' && !isBrowseMode && (
               <div className="relative flex-shrink-0">
                 <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                 <select
@@ -304,39 +361,56 @@ export default function SearchPage() {
                 </select>
               </div>
             )}
+            {isBrowseMode && (
+              <div className="relative flex-shrink-0">
+                <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
+                <select
+                  value={browseSortBy}
+                  onChange={(e) => { setBrowseSortBy(e.target.value); setOffset(0); }}
+                  className="w-full sm:w-auto pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
+                >
+                  <option value="recent-translation">Recently translated</option>
+                  <option value="recent">Recently added</option>
+                  <option value="title-asc">Title A-Z</option>
+                  <option value="title-desc">Title Z-A</option>
+                </select>
+              </div>
+            )}
           </div>
 
-          {/* Mode tabs */}
-          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
-            {([
-              { mode: 'unified' as ViewMode, label: 'All', icon: Search },
-              { mode: 'books' as ViewMode, label: 'Books', icon: Book },
-              { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
-              { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
-            ] as const).map(({ mode, label, icon: Icon }) => (
-              <button
-                key={mode}
-                onClick={() => { setViewMode(mode); setOffset(0); }}
-                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-                  viewMode === mode
-                    ? 'border-accent-rust text-accent-rust'
-                    : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {label}
-                {mode === 'books' && bookTotal > 0 && viewMode !== 'unified' && (
-                  <span className="text-xs text-muted">({bookTotal})</span>
-                )}
-                {mode === 'index' && indexTotal > 0 && viewMode !== 'unified' && (
-                  <span className="text-xs text-muted">({indexTotal})</span>
-                )}
-                {mode === 'images' && imageTotal > 0 && viewMode !== 'unified' && (
-                  <span className="text-xs text-muted">({imageTotal})</span>
-                )}
-              </button>
-            ))}
-          </div>
+          {/* Mode tabs — hidden in browse mode */}
+          {!isBrowseMode && (
+            <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
+              {([
+                { mode: 'unified' as ViewMode, label: 'All', icon: Search },
+                { mode: 'books' as ViewMode, label: 'Books', icon: Book },
+                { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
+                { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
+              ] as const).map(({ mode, label, icon: Icon }) => (
+                <button
+                  key={mode}
+                  onClick={() => { setViewMode(mode); setOffset(0); }}
+                  className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                    viewMode === mode
+                      ? 'border-accent-rust text-accent-rust'
+                      : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {label}
+                  {mode === 'books' && bookTotal > 0 && viewMode !== 'unified' && (
+                    <span className="text-xs text-muted">({bookTotal})</span>
+                  )}
+                  {mode === 'index' && indexTotal > 0 && viewMode !== 'unified' && (
+                    <span className="text-xs text-muted">({indexTotal})</span>
+                  )}
+                  {mode === 'images' && imageTotal > 0 && viewMode !== 'unified' && (
+                    <span className="text-xs text-muted">({imageTotal})</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Index type filter pills (index drill-down mode) */}
           {viewMode === 'index' && (
@@ -369,7 +443,7 @@ export default function SearchPage() {
             >
               <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? '' : '-rotate-90'}`} />
               <Filter className="w-3.5 h-3.5" />
-              Search options
+              Filters
               {hasActiveFilters && <span className="w-1.5 h-1.5 bg-accent-rust rounded-full" />}
             </button>
             {showFilters && (
@@ -394,6 +468,16 @@ export default function SearchPage() {
                     <select value={category} onChange={(e) => setCategory(e.target.value)}
                       className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
                       {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Collection</label>
+                    <select value={collection} onChange={(e) => { setCollection(e.target.value); setOffset(0); }}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      <option value="">All Collections</option>
+                      {collectionsList.map((c) => (
+                        <option key={c.slug} value={c.slug}>{c.name} ({c.book_count})</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -439,14 +523,79 @@ export default function SearchPage() {
 
       {/* Results */}
       <main className="max-w-5xl mx-auto px-4 py-8">
-        {/* Empty state */}
-        {!query && (
-          <div className="text-center py-16">
-            <Book className="w-16 h-16 text-border-medium mx-auto mb-4" />
-            <h2 className="text-2xl font-serif font-medium text-primary mb-2">Search the Library</h2>
-            <p className="text-base text-muted max-w-md mx-auto">
-              Search across translated historical texts, concepts, people, and illustrations.
-            </p>
+        {/* Browse mode — shown when no query */}
+        {isBrowseMode && (
+          <div>
+            {/* Collection pills */}
+            {collectionsList.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                <button
+                  onClick={() => { setCollection(''); setOffset(0); }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    !collection
+                      ? 'bg-accent-rust text-white'
+                      : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
+                  }`}
+                >
+                  All books
+                  {!collection && browseTotal > 0 && (
+                    <span className="ml-1.5 text-white/80">({browseTotal})</span>
+                  )}
+                </button>
+                {collectionsList.map((col) => (
+                  <button
+                    key={col.slug}
+                    onClick={() => { setCollection(col.slug); setOffset(0); }}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      collection === col.slug
+                        ? 'bg-accent-rust text-white'
+                        : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
+                    }`}
+                  >
+                    {col.name}
+                    <span className={`ml-1.5 ${collection === col.slug ? 'text-white/80' : 'text-muted'}`}>
+                      ({col.book_count})
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Results count */}
+            {!browseLoading && browseTotal > 0 && (
+              <div className="mb-4 text-muted">
+                <span className="font-medium text-primary">{browseTotal}</span> books
+                {collection && collectionsList.find(c => c.slug === collection) && (
+                  <span> in <span className="font-medium text-primary">{collectionsList.find(c => c.slug === collection)!.name}</span></span>
+                )}
+                {browseTotal > RESULTS_PER_PAGE && (
+                  <span className="ml-2 text-faint">
+                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, browseTotal)})
+                  </span>
+                )}
+              </div>
+            )}
+
+            {browseLoading && <div className="py-8"><BookLoader size="xs" /></div>}
+
+            {/* Book grid */}
+            {!browseLoading && browseBooks.length > 0 && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {browseBooks.map((book, idx) => (
+                  <BookCard key={book.id} book={book} priority={idx < 5} />
+                ))}
+              </div>
+            )}
+
+            {!browseLoading && browseBooks.length === 0 && browseTotal === 0 && (
+              <div className="text-center py-16">
+                <Book className="w-16 h-16 text-border-medium mx-auto mb-4" />
+                <h2 className="text-2xl font-serif font-medium text-primary mb-2">No books found</h2>
+                <p className="text-base text-muted">Try adjusting your filters.</p>
+              </div>
+            )}
+
+            <Pagination total={browseTotal} offset={offset} setOffset={setOffset} loading={browseLoading} />
           </div>
         )}
 
@@ -482,12 +631,12 @@ export default function SearchPage() {
                   {term}
                 </button>
               ))}
-              <Link
-                href="/library"
+              <button
+                onClick={() => { setQuery(''); setOffset(0); }}
                 className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
               >
                 Browse all books
-              </Link>
+              </button>
             </div>
           </div>
         )}

@@ -60,4 +60,29 @@ export const search = {
   suggest: async (query: string): Promise<{ suggestions: string[] }> => {
     return await apiClient.get(`/api/search/suggest?q=${encodeURIComponent(query)}`);
   },
+
+  /**
+   * Browse books (no query required) via /api/books/library
+   */
+  browse: async (params?: {
+    language?: string;
+    category?: string;
+    collection?: string;
+    sort?: string;
+    limit?: number;
+    skip?: number;
+    search?: string;
+    library?: string;
+  }): Promise<{ books: any[]; total: number }> => {
+    const qs = new URLSearchParams();
+    if (params?.language) qs.set('language', params.language);
+    if (params?.category) qs.set('category', params.category);
+    if (params?.collection) qs.set('collection', params.collection);
+    if (params?.sort) qs.set('sort', params.sort);
+    if (params?.limit) qs.set('limit', String(params.limit));
+    if (params?.skip) qs.set('skip', String(params.skip));
+    if (params?.search) qs.set('search', params.search);
+    if (params?.library) qs.set('library', params.library);
+    return await apiClient.get(`/api/books/library?${qs}`);
+  },
 };

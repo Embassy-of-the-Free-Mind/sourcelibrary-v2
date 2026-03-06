@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
         destination: '/book/:bookId',
         permanent: true,
       },
+      {
+        source: '/library',
+        destination: '/search',
+        permanent: true,
+      },
     ];
   },
 };

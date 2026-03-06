@@ -142,7 +142,7 @@ export default function SocietyLandingPage() {
 
           <div className="text-center">
             <Link
-              href="/library"
+              href="/search"
               className="inline-flex items-center gap-2 text-accent-rust hover:text-accent-gold-dark font-medium font-sans"
             >
               Browse the full catalog
