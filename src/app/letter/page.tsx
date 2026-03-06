@@ -42,6 +42,8 @@ export default function LetterPage() {
         <ContentHeader
           title="Three Months of Source Library"
           subtitle="March 2026 Update"
+          image={IMAGES.fluddIntegraNaturae}
+          imageAlt="Robert Fludd, Integra Naturae — the mirror of all nature and the image of art"
         />
       }
       bg="bg-cream"
