@@ -1223,14 +1223,20 @@ export async function GET(request: NextRequest) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
       }
 
+      // Priority: finish 90%+ books first (close to done), then everything else by size
       const readyForTranslate = activeLambdaTranslate < MAX_ACTIVE_LAMBDA_TRANSLATE ? await db.collection('books')
-        .find({
-          'pipeline_auto.status': 'metadata_enriched',
-        })
-        .sort({ hidden: 1, pages_count: 1 }) // Visible books first, then smallest books (faster completions)
-        .project({ id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(TRANSLATE_SUBMIT_LIMIT)
-        .toArray() : [];
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'metadata_enriched' } },
+          { $addFields: {
+            _nearlyDone: { $cond: [
+              { $and: [{ $gt: ['$pages_count', 0] }, { $gte: [{ $divide: ['$pages_translated', '$pages_count'] }, 0.9] }] },
+              0, 1 // 0 = nearly done (sorts first), 1 = rest
+            ]}
+          }},
+          { $sort: { _nearlyDone: 1, hidden: 1, pages_count: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 } },
+          { $limit: TRANSLATE_SUBMIT_LIMIT },
+        ]).toArray() : [];
 
       let translateQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let translateLambdaCount = 0;
