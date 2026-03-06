@@ -46,6 +46,7 @@ export interface GalleryImage {
   type?: string;
   bookTitle?: string;
   bookId?: string;
+  pageNumber?: number;
 }
 
 export interface ShwepIndexData {
@@ -166,7 +167,7 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
         type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'ornament', 'border'] },
       },
       {
-        projection: { thumbnail_url: 1, extracted_url: 1, description: 1, type: 1, book_id: 1, book_title: 1 },
+        projection: { thumbnail_url: 1, extracted_url: 1, description: 1, type: 1, book_id: 1, book_title: 1, page_number: 1 },
         sort: { gallery_quality: -1 },
         limit: 60,
       }
@@ -186,6 +187,7 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
         type: img.type,
         bookTitle: img.book_title,
         bookId: bid,
+        pageNumber: img.page_number,
       });
       if (galleryImages.length >= 12) break;
     }

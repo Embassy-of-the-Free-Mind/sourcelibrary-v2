@@ -121,7 +121,7 @@ export default function ShwepClient({ data }: { data: ShwepIndexData }) {
               {data.galleryImages.map(img => (
                 <a
                   key={img.id}
-                  href={img.bookId ? `https://sourcelibrary.org/book/${img.bookId}` : '#'}
+                  href={img.bookId ? `https://sourcelibrary.org/book/${img.bookId}${img.pageNumber ? `?page=${img.pageNumber}` : ''}` : '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="aspect-square rounded-lg overflow-hidden bg-stone-200 hover:opacity-80 transition-opacity"
