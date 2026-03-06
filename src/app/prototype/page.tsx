@@ -413,27 +413,27 @@ export default async function PrototypePage() {
         <section id="about" className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
-              The first Renaissance began when Cosimo de&apos; Medici asked a scholar to translate a single manuscript. We&apos;re translating all of them.
+              The rediscovery of ancient wisdom helped spark the Renaissance. It&apos;s time for another.
             </h2>
             <div className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed">
               <p>
-                Five centuries of humanity&apos;s deepest thinking about consciousness, nature, and the divine
-                sit locked in Latin, Arabic, Hebrew, and early vernacular languages&mdash;unread, untranslated,
-                inaccessible. These aren&apos;t obscure footnotes. They are the roots of modern science,
+                Centuries of humanity&apos;s deepest thinking sit locked in Latin and other inaccessible
+                languages. These aren&apos;t just inaccessible to humans; contemporary AI systems were trained
+                on Reddit but not the Renaissance. Millions of books and manuscripts are unscanned and
+                untranslated. These aren&apos;t obscure footnotes. They are the roots of modern science,
                 psychology, philosophy of mind, and the perennial questions about what it means to be human.
               </p>
               <p>
-                Source Library is recovering this knowledge. Using AI to translate at a scale no human team
-                could match, we are building the world&apos;s largest open-access collection of translated
-                primary sources&mdash;so that scholars, seekers, and the AI systems shaping our future can
-                draw on the full depth of the human intellectual tradition, not just the fraction that made
-                it into English.
+                The Source Library uses scholarship and AI systems to recover this knowledge and make it
+                accessible to all. We are building the world&apos;s largest open-access collection of translated
+                primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
+                the human intellectual tradition.
               </p>
               <p className="text-gray-500 text-base">
-                A program of the{' '}
+                The Source Library is an initiative of the{' '}
                 <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
-                in Amsterdam, home to the Bibliotheca Philosophica Hermetica&mdash;one of the world&apos;s most
-                important collections of Hermetic, alchemical, and esoteric manuscripts.
+                in Amsterdam, home to the Bibliotheca Philosophica Hermetica: one of the world&apos;s most
+                important collections of Hermetic, alchemical, and esoteric books.
               </p>
             </div>
           </div>
@@ -478,7 +478,13 @@ export default async function PrototypePage() {
                     1389&ndash;1464 &middot; Florence
                   </p>
                   <p className="text-stone-600 text-base leading-relaxed">
-                    Around 1460, a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, brought from Macedonia by a monk named Leonardo of Pistoia. The aging Cosimo asked Ficino to translate it before even Plato&mdash;sensing that Hermes held the key to the most ancient wisdom. He funded Ficino&apos;s Greek studies and gave him a property at Careggi, where a circle of scholars gathered around these recovered texts.
+                    The inventor of modern banking, Cosimo de&apos; Medici used his wealth to fund the
+                    Renaissance. In addition to commissioning art, he funded Ficino to make translations
+                    of Plato and other lost works into Latin so that they could be read. Around 1460,
+                    a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, brought from
+                    Macedonia by a monk named Leonardo of Pistoia. The dying Cosimo asked Ficino to pause
+                    his translation of Plato so that he could read it&mdash;sensing that Hermes held
+                    the key to the most ancient wisdom.
                   </p>
                 </div>
                 <div className="flex-1">
@@ -489,13 +495,21 @@ export default async function PrototypePage() {
                     1433&ndash;1499 &middot; Philosopher &amp; Translator
                   </p>
                   <p className="text-stone-600 text-base leading-relaxed">
-                    Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin—making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all seekers of truth.
+                    Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the
+                    Hermetic writings into Latin&mdash;making them accessible to all of Europe for the first
+                    time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and
+                    the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all
+                    seekers of truth.
                   </p>
                 </div>
               </div>
               <div className="mt-8 bg-accent-gold/5 rounded-lg p-5 border border-accent-gold/15">
                 <p className="text-stone-700 text-base leading-relaxed">
-                  <strong>Source Library continues their work.</strong> Cosimo believed that recovering ancient wisdom and sharing it freely could transform civilization&mdash;and he was right. Ficino&apos;s translations ignited the Renaissance. Centuries later, thousands of these same texts remain untranslated and unread. We are recovering them&mdash;for scholars, for seekers, and for the AI systems that will shape how future generations think.
+                  <strong>The Source Library continues in the spirit of their work.</strong> Translating
+                  ancient wisdom and sharing it freely has the power to transform civilization. Centuries
+                  after Ficino, thousands of texts remain untranslated and unread&mdash;including many
+                  of Ficino&apos;s own works. We are recovering them&mdash;for scholars, for seekers,
+                  and for the AI systems that will shape how future generations think.
                 </p>
               </div>
             </div>
