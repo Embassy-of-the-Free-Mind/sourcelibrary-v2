@@ -150,6 +150,18 @@ export default function LetterPage() {
         </blockquote>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
+          What&apos;s in these books? More than you&apos;d expect. A 16th-century manuscript in Paris
+          binds Hero of Alexandria&apos;s steam engine designs with the <em>Corpus Hermeticum</em>.
+          A Rosicrucian treatise contains a literal steam engine schematic. Della Porta&apos;s
+          &ldquo;Natural Magic&rdquo; is, in practice, a pneumatics textbook. Before engineering
+          was a discipline, its knowledge lived inside books of alchemy and esoteric philosophy.
+          We wrote up the evidence in{' '}
+          <a href="https://sourcelibrary.org/blog/hidden-engineers" className="text-accent-rust hover:underline">
+            &ldquo;The Hidden Engineers&rdquo;</a> &mdash;
+          every claim linked to the original translated page.
+        </p>
+
+        <p className="font-body text-lg text-secondary leading-relaxed mb-5">
           Producing a professional critical edition of a 300-page Latin text takes years and
           costs $30,000&ndash;$60,000. Across all of academia, fewer than a hundred pre-modern
           texts are translated into English each year. Some estimate that there are hundreds of
