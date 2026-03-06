@@ -12,19 +12,26 @@ export const metadata: Metadata = {
 /* ── Image constants ── */
 const BLOB = 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com';
 
-const T = `${BLOB}/thumbnails`; // thumbnail prefix
+const T = `${BLOB}/thumbnails`; // thumbnail prefix (150px — for small book cards)
+const A = `${BLOB}/archived`;   // archived prefix (full-res — for gallery strips & sidebar images)
 
 const IMAGES = {
-  atalantaFrontispiece: `${T}/69520c46ab34727b1f044141/7.jpg`,
-  fluddIntegraNaturae: `${T}/6952dac677f38f6761bc683a/13.jpg`,
-  fluddSun: `${T}/6952dac677f38f6761bc683a/27.jpg`,
-  fluddCosmos: `${T}/6952dac677f38f6761bc683a/45.jpg`,
-  solomonPentacle: `${T}/695285cdab34727b1f04c25a/34.jpg`,
-  corpusHermeticum: `${T}/694f3d6cbe37f451a5324e10/10.jpg`,
-  agrippa: `${T}/694bf8d2343422769f237558/2.jpg`,
-  fluddCover: `${T}/6952dac677f38f6761bc683a/5.jpg`,
-  solomonCover: `${T}/695285cdab34727b1f04c25a/5.jpg`,
-  pico: `${T}/694f8d99efce46492e19fdad/7.jpg`,
+  // Full-res for gallery strips and sidebar display
+  atalantaFrontispiece: `${A}/69520c46ab34727b1f044141/7.jpg`,
+  fluddIntegraNaturae: `${A}/6952dac677f38f6761bc683a/13.jpg`,
+  fluddSun: `${A}/6952dac677f38f6761bc683a/27.jpg`,
+  fluddCosmos: `${A}/6952dac677f38f6761bc683a/45.jpg`,
+  solomonPentacle: `${A}/695285cdab34727b1f04c25a/34.jpg`,
+  corpusHermeticum: `${A}/694f3d6cbe37f451a5324e10/10.jpg`,
+  agrippa: `${A}/694bf8d2343422769f237558/2.jpg`,
+  pico: `${A}/694f8d99efce46492e19fdad/7.jpg`,
+  // Thumbnails for small book card images (80px wide)
+  fluddCoverThumb: `${T}/6952dac677f38f6761bc683a/5.jpg`,
+  solomonCoverThumb: `${T}/695285cdab34727b1f04c25a/5.jpg`,
+  atalantaThumb: `${T}/69520c46ab34727b1f044141/7.jpg`,
+  corpusThumb: `${T}/694f3d6cbe37f451a5324e10/10.jpg`,
+  agrippaThumb: `${T}/694bf8d2343422769f237558/2.jpg`,
+  picoThumb: `${T}/694f8d99efce46492e19fdad/7.jpg`,
   drebbel: `${T}/6836f8ee811c8ab472a49e36/1.jpg`,
 };
 
@@ -106,9 +113,8 @@ export default function LetterPage() {
               a civilization &mdash; is the story of the Renaissance itself.{' '}
               <a href="https://sourcelibrary.org/encyclopedia/Copernicus" className="text-accent-rust hover:underline">Copernicus</a> read{' '}
               <a href="https://sourcelibrary.org/encyclopedia/Hermes%20Trismegistus" className="text-accent-rust hover:underline">Hermes Trismegistus</a>.{' '}
-              <a href="https://sourcelibrary.org/encyclopedia/Kepler" className="text-accent-rust hover:underline">Kepler</a> described
-              himself as a &ldquo;priest of God in the book of nature&rdquo; and drew on
-              Pythagorean harmonic theory.{' '}
+              <a href="https://sourcelibrary.org/encyclopedia/Kepler" className="text-accent-rust hover:underline">Kepler</a> drew
+              on Pythagorean harmonic theory to develop his laws of planetary motion.{' '}
               <a href="https://sourcelibrary.org/encyclopedia/Newton" className="text-accent-rust hover:underline">Newton</a> devoted
               decades to alchemical research, filling over a million words of laboratory notebooks.{' '}
               <a href="https://sourcelibrary.org/encyclopedia/Leibniz" className="text-accent-rust hover:underline">Leibniz</a> studied
@@ -142,31 +148,25 @@ export default function LetterPage() {
         </blockquote>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          A professional critical edition of a 300-page Latin text takes 5&ndash;10 years and
-          costs $30,000&ndash;$60,000. Across all of academia, maybe a few hundred pre-modern
-          texts get newly translated into English per year. The backlog is tens of thousands of
-          volumes. The{' '}
-          <a href="https://sourcelibrary.org/search?q=hermetic" className="text-accent-rust hover:underline">Hermetic writings</a>,
-          the <a href="https://sourcelibrary.org/search?q=neoplatonism" className="text-accent-rust hover:underline">Neoplatonists</a>,
-          the <a href="https://sourcelibrary.org/search?q=alchemy" className="text-accent-rust hover:underline">alchemical</a> and{' '}
-          <a href="https://sourcelibrary.org/search?q=kabbalah" className="text-accent-rust hover:underline">Kabbalistic</a> traditions
-          &mdash; thousands of volumes from the same intellectual world that produced the Renaissance
-          have never been translated at all.
+          Producing a professional critical edition of a 300-page Latin text takes years and
+          costs $30,000&ndash;$60,000. Across all of academia, fewer than a hundred pre-modern
+          texts are translated into English each year. Some estimate that there are hundreds of
+          thousands of unscanned and untranslated Latin books &mdash; and perhaps 30 million
+          Sanskrit manuscripts. Are these all worth translating? How to know without translating them?
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-12">
-          Source Library has made 4,500 of these books readable in English &mdash; many
-          for the first time. The translations are first drafts, not critical editions, but they make texts
+          The Source Library has made thousands of books available in English for the first time.
+          The translations are first drafts, not critical editions, but they make texts
           accessible to researchers who can then decide which ones merit deeper scholarly work.
-          Ficino&apos;s translation of the <em>Corpus Hermeticum</em> was also a first draft. It was enough.
         </p>
 
         {/* ── What you can do ── */}
         <h2 className="font-serif text-3xl md:text-4xl text-primary mt-16 mb-8">Explore the Collection</h2>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-8">
-          Pick a book &mdash; any book. You&apos;ll see the original scanned pages side by side with
-          an English translation. You can{' '}
+          When you open a book in the Source Library, you&apos;ll see the original scanned pages
+          side by side with an English translation. You can{' '}
           <a href="https://sourcelibrary.org/search" className="text-accent-rust hover:underline">search across the full text</a>,
           browse a{' '}
           <a href="https://sourcelibrary.org/gallery" className="text-accent-rust hover:underline">gallery of 73,000+ illustrations</a>,
@@ -183,42 +183,42 @@ export default function LetterPage() {
               author: 'Michael Maier, 1618',
               detail: 'Fifty alchemical emblems with Latin verse, musical fugues, and allegorical commentary. 229 pages, fully translated from Latin.',
               href: 'https://sourcelibrary.org/book/69520c46ab34727b1f044141',
-              image: IMAGES.atalantaFrontispiece,
+              image: IMAGES.atalantaThumb,
             },
             {
               title: 'Corpus Hermeticum: Pimander',
               author: 'Hermes Trismegistus (trans. Ficino), 1481',
               detail: 'Ficino\u2019s Latin translation of the Hermetic texts that launched the Renaissance revival of ancient theology. 96 pages.',
               href: 'https://sourcelibrary.org/book/694f3d6cbe37f451a5324e10',
-              image: IMAGES.corpusHermeticum,
+              image: IMAGES.corpusThumb,
             },
             {
               title: 'Three Books of Occult Philosophy',
               author: 'Heinrich Cornelius Agrippa, 1550',
               detail: 'The foundational encyclopedia of Renaissance magic and natural philosophy. 626 pages, fully translated from Latin.',
               href: 'https://sourcelibrary.org/book/694bf8d2343422769f237558',
-              image: IMAGES.agrippa,
+              image: IMAGES.agrippaThumb,
             },
             {
               title: 'Utriusque Cosmi Historia',
               author: 'Robert Fludd, 1617',
-              detail: 'Fludd\u2019s illustrated history of the macrocosm and microcosm \u2014 one of the most ambitious cosmological works of the early modern period. 1,036 pages.',
+              detail: 'Fludd\u2019s illustrated history of the macrocosm and microcosm \u2014 fully translated for the first time. 1,036 pages.',
               href: 'https://sourcelibrary.org/book/6952dac677f38f6761bc683a',
-              image: IMAGES.fluddCover,
+              image: IMAGES.fluddCoverThumb,
             },
             {
               title: 'Key of Solomon',
               author: 'Anonymous, 17th century',
               detail: 'A Hebrew manuscript of ceremonial magic with diagrams and incantations. 192 pages, fully translated from Hebrew.',
               href: 'https://sourcelibrary.org/book/695285cdab34727b1f04c25a',
-              image: IMAGES.solomonCover,
+              image: IMAGES.solomonCoverThumb,
             },
             {
               title: '900 Theses',
               author: 'Giovanni Pico della Mirandola, 1486',
               detail: 'The 900 conclusions from all branches of knowledge that Pico offered to debate publicly in Rome. Condemned by the Pope. Fully translated from Latin.',
               href: 'https://sourcelibrary.org/book/694f8d99efce46492e19fdad',
-              image: IMAGES.pico,
+              image: IMAGES.picoThumb,
             },
           ].map(b => (
             <a key={b.title} href={b.href} className="group flex gap-4 bg-white rounded-xl p-4 border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
@@ -253,7 +253,7 @@ export default function LetterPage() {
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
-          For developers and researchers, Source Library is also available as an{' '}
+          For developers and researchers, the Source Library is also available as an{' '}
           <a href="https://sourcelibrary.org/developers" className="text-accent-rust hover:underline">MCP server and CLI tool</a>{' '}
           &mdash; any AI assistant can search and cite the full collection directly.
         </p>
@@ -267,7 +267,7 @@ export default function LetterPage() {
             { value: '1.71M', label: 'Page images' },
             { value: '992K', label: 'Pages with OCR' },
             { value: '507K', label: 'Pages translated to English' },
-            { value: '1,083', label: 'Fully processed books' },
+            { value: '1,083', label: 'Books translated or modernized' },
             { value: '73K+', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
             { value: '13', label: 'Digital library sources' },
@@ -303,7 +303,7 @@ export default function LetterPage() {
         <h3 className="font-serif text-2xl md:text-3xl text-primary mt-12 mb-6">What It Cost</h3>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-6">
-          Here are the actual hard costs to build and run Source Library for its first three months:
+          Here are the actual hard costs to build and run the Source Library for its first three months:
         </p>
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
@@ -319,11 +319,11 @@ export default function LetterPage() {
               {[
                 { name: 'Gemini AI', desc: 'OCR, translation, summaries, image extraction', monthly: 'varies', total: '$7,432', highlight: true },
                 { name: 'Claude', desc: '2 Max accounts \u2014 development, curation, QA', monthly: '$400', total: '$1,200' },
-                { name: 'Vercel', desc: 'Hosting, serverless functions, blob storage, CDN', monthly: '$80\u2013680', total: '$848' },
-                { name: 'AWS Lambda', desc: 'OCR, translation, and image extraction workers', monthly: '~$20', total: '~$60' },
+                { name: 'Vercel', desc: 'Hosting, serverless functions, blob storage, CDN', monthly: 'varies', total: '$848' },
+                { name: 'AWS Lambda', desc: 'OCR, translation, and image extraction workers', monthly: 'varies', total: '~$460' },
                 { name: 'Resend', desc: 'Transactional email', monthly: '$20', total: '$60' },
-                { name: 'Hetzner', desc: 'Archive server for batch image processing', monthly: '$2', total: '$5' },
-                { name: 'MongoDB Atlas', desc: 'Database (free tier)', monthly: '$0', total: '$0' },
+                { name: 'Hetzner', desc: 'Archive server for batch image processing', monthly: '~$15', total: '~$45' },
+                { name: 'MongoDB Atlas', desc: 'Database', monthly: '~$50', total: '~$150' },
               ].map(row => (
                 <tr key={row.name}>
                   <td className="py-3 px-5 text-secondary">
@@ -337,7 +337,7 @@ export default function LetterPage() {
               <tr className="bg-warm/50 font-semibold">
                 <td className="py-3.5 px-5 text-primary">Total hard costs</td>
                 <td className="py-3.5 px-5 text-right text-muted">&mdash;</td>
-                <td className="py-3.5 px-5 text-right text-accent-rust text-lg">~$9,600</td>
+                <td className="py-3.5 px-5 text-right text-accent-rust text-lg">~$10,200</td>
               </tr>
             </tbody>
           </table>
@@ -345,21 +345,20 @@ export default function LetterPage() {
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
           That&apos;s <strong>under $10,000 in total hard costs</strong> to OCR, translate, summarize, index, and
-          extract illustrations from 4,500+ books. No employees. No office. No equipment purchases.
-          Just API calls and cloud services.
+          extract illustrations from 2,000+ books. Other costs include 3 part-time employees.
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
           For context: a professional human translation of a single 300-page Latin text costs
-          $30,000&ndash;$60,000 and takes months.
-          Source Library processed 4,500 books for less than the cost of translating one.
+          $30,000&ndash;$60,000 and takes years.
+          The Source Library processed 2,000+ books for less than the cost of translating one.
         </p>
 
         {/* ── How It Works ── */}
         <h2 className="font-serif text-3xl md:text-4xl text-primary mt-16 mb-8">How It Works</h2>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-6">
-          Source Library connects to{' '}
+          The Source Library connects to{' '}
           <a href="https://sourcelibrary.org/fulldata" className="text-accent-rust hover:underline">13 digital library sources</a>{' '}
           worldwide &mdash;{' '}
           <a href="https://archive.org" className="text-accent-rust hover:underline">Internet Archive</a>,{' '}
@@ -432,9 +431,9 @@ export default function LetterPage() {
             <p className="text-primary font-medium text-lg mb-3">Scanning is the real bottleneck.</p>
             <p className="font-body text-secondary leading-relaxed">
               The <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> holds
-              approximately 25,000 volumes. Most are unscanned. AI can translate a scan in minutes, but
-              digitizing a 500-year-old binding requires physical access and professional equipment.
-              This is where funding has the highest return.
+              approximately 25,000 volumes, mostly unscanned. AI can translate a scan in minutes, but
+              digitizing a 500-year-old binding requires physical access, professional equipment and
+              human labor. A professional can scan approximately 6&ndash;8 books per day.
             </p>
           </div>
 
@@ -463,11 +462,11 @@ export default function LetterPage() {
           <h2 className="font-serif text-3xl md:text-4xl mb-8">What Comes Next</h2>
 
           <p className="font-body text-lg text-stone-300 leading-relaxed mb-5">
-            Source Library is a program of the{' '}
+            The Source Library is a program of the{' '}
             <a href="https://embassyofthefreemind.com" className="text-accent-gold hover:underline">Embassy of the Free Mind</a>{' '}
             in Amsterdam, which holds one of the world&apos;s great collections of Hermetic, alchemical, and
-            esoteric manuscripts. The technology works. The collection exists. What&apos;s needed now is the
-            institutional structure to sustain it.
+            esoteric manuscripts. By aligning ourselves with one of the greatest collections of
+            Renaissance wisdom, we hope to create a longstanding institution for digital access.
           </p>
 
           <p className="font-body text-lg text-stone-300 leading-relaxed mb-6">
