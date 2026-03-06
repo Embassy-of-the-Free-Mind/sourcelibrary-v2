@@ -173,6 +173,8 @@ Tracks every field-level change to book metadata with before/after values. Hooke
 | Catalog verification (USTC/EFM) | `catalog_verification` | `src/app/api/books/[id]/verify-metadata/route.ts` |
 | Admin PATCH edits | `admin_edit` | `src/app/api/books/[id]/route.ts` |
 
+Fields tracked include: `language`, `author`, `year`, `categories`, `description`, `display_title`, `subject_keywords`, `is_first_translation`, `source_work_dates`.
+
 Each entry stores: `book_id`, `source`, `model` (for AI), `changes[]` (field + previous + new_value), `note`, `timestamp`.
 
 Query: `getBookChangelog(db, bookId, limit?)` — returns entries newest first.

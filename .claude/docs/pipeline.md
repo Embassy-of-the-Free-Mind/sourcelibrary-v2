@@ -48,7 +48,7 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | `archive_complete` | All pages archived or no archivable sources | Pipeline cron Phase 1 |
 | `ocr_submitted` | Lambda OCR jobs enqueued (or Batch API submitted) | Pipeline cron Phase 2 |
 | `ocr_complete` | OCR finished, results saved | Pipeline cron Phase 3 + process-batches cron |
-| `metadata_enriched` | AI metadata enrichment complete (language, categories, description) | Pipeline cron Phase 3.5 |
+| `metadata_enriched` | AI metadata enrichment complete (language, categories, description, source_work_dates) | Pipeline cron Phase 3.5 |
 | `translate_submitted` | Lambda translation jobs enqueued | Pipeline cron Phase 4 |
 | `translate_complete` | Translation finished | Pipeline cron Phase 5 |
 | `enriching` | Summary + index generation in progress | enrich-books cron Phase 1 |
@@ -166,7 +166,7 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 | 7 | Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner does archiving. 24h timeout. Fixes stale thumbnails. |
 | 8 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Primary: Lambda workers. Fallback: Batch API. See "OCR Routing" below. |
 | 9 | Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks both Lambda jobs and batch_jobs. Loops if un-OCR'd pages remain (up to MAX_RETRIES). Blocked by `ocrPaused`. |
-| 10 | Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls `enrichBookMetadata()`. Non-blocking: failures skip ahead. |
+| 10 | Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls `enrichBookMetadata()`. Detects language, categories, year, description, display_title, source_work_dates. Non-blocking: failures skip ahead. |
 | 11 | Phase 4: Submit translation | `metadata_enriched` → `translate_submitted` | Lambda FIFO queue only. See "Translation Routing" below. |
 | 12 | Phase 5: Translation completion | `translate_submitted` → `translate_complete` | Checks Lambda jobs. Loop limit: `max(6, ceil(pages_count/200))`. Blocked by `translatePaused`. |
 
@@ -445,6 +445,8 @@ Before marking a book `complete`, the pipeline checks:
 | `pages[].archived_photo` | If images were archived to Vercel Blob |
 | `pages[].page_type` | If OCR was done with v4+ prompt |
 | `pages[].columns` | If page has 2+ text columns |
+| `source_work_dates` | Compositional timeline layers (set by Phase 3.5 metadata enrichment) |
+| `source_work_dates_meta` | Enrichment metadata (model, confidence, reasoning) |
 
 ---
 

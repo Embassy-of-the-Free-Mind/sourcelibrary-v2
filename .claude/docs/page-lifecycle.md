@@ -75,6 +75,31 @@ Extracts text from page images using Gemini vision models.
 
 **Column detection:** OCR prompts include `<columns>N</columns>` metadata tag and `<column-break/>` marker between columns. Extracted by `extractColumns()` and stored as `page.columns` (number, only set for 2+). All 7 OCR save paths persist this field. See "Multi-Column Rendering" section below.
 
+## 4.5. Metadata Enrichment
+
+AI analysis of OCR text to classify and enrich book metadata. Runs automatically at pipeline Phase 3.5, after OCR completes.
+
+**Module:** `src/lib/metadata-enrichment.ts` → `enrichBookMetadata()`
+
+Reads first 25 OCR pages, calls Gemini to determine:
+- `language`, `secondary_languages`, `script`
+- `author` (from title page attribution)
+- `categories` (1-4 subject tags)
+- `estimated_year`, `estimated_century`
+- `description` (1-2 sentence scholarly description)
+- `display_title` (English translation of non-English titles)
+- `subject_keywords` (3-5 discovery keywords)
+- `is_first_translation` (whether this is the first English translation)
+- `source_work_dates` — compositional timeline layers (see below)
+
+Only applies changes at **medium+ confidence**. Low-confidence results are saved to `book.ai_metadata` but don't overwrite top-level fields. Existing values are preserved (won't overwrite manually-set fields).
+
+**Source Work Dates:** Determines the chronological layers of a work's compositional history. For example, a 1550 Latin printing of Plato's *Timaeus* gets two layers: composition (c. 360 BCE, Plato, Greek) and translation (1484, Ficino, Latin). Original works by their stated author get empty layers (the publication date already captures it).
+
+**Result:** `book.source_work_dates` (array of `SourceWorkDateLayer`), `book.source_work_dates_meta` (model, confidence, reasoning, enriched_at).
+
+**Layer schema:** `{ type, date, date_display, date_precision, author?, work_title?, language?, notes? }`. Types: `composition`, `translation`, `compilation`, `commentary`, `redaction`, `edition`, `abridgement`, `adaptation`.
+
 ## 5. Translation
 
 Translates OCR text to English. Requires pages to have `ocr.data` first.
