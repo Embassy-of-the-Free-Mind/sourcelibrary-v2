@@ -12,6 +12,27 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
+// ---------- Collection ordering (user-specified) ----------
+
+const COLLECTION_ORDER = [
+  'Natural Philosophy',
+  'Theology',
+  'Classical Philosophy',
+  'Alchemy',
+  'Indic',
+  'Chinese',
+  'Magic',
+  'Medicine',
+  'Art',
+  'Secret Societies',
+  'Leonardo',
+];
+
+function collectionSortIndex(name: string): number {
+  const idx = COLLECTION_ORDER.findIndex(prefix => name.includes(prefix));
+  return idx === -1 ? COLLECTION_ORDER.length : idx;
+}
+
 // ---------- Book projection shared across queries ----------
 
 const BOOK_PROJECTION = {
@@ -58,7 +79,7 @@ async function getFeaturedCollection() {
   );
   const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url || null;
 
-  // Fetch top 5 translated books from this collection
+  // Fetch top 10 translated books from this collection (for carousel)
   const books = await db.collection('books').aggregate([
     {
       $match: {
@@ -69,7 +90,7 @@ async function getFeaturedCollection() {
       },
     },
     { $sort: { read_count: -1 } },
-    { $limit: 5 },
+    { $limit: 10 },
     { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1 } },
   ]).toArray();
 
@@ -89,9 +110,9 @@ async function getFeaturedCollection() {
 async function getRemainingCollections(featuredSlug: string | null): Promise<CollectionForGrid[]> {
   const db = await getDb();
   const filter = featuredSlug ? { slug: { $ne: featuredSlug } } : {};
-  const docs = await db.collection('collections').find(filter).sort({ order: 1 }).toArray();
+  const docs = await db.collection('collections').find(filter).toArray();
 
-  return docs.map(({ _id, ...rest }) => {
+  const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
     const hero = images.find(
       (img: Record<string, unknown>) => img.thumbnail_url || img.extracted_url || img.image_url
@@ -120,6 +141,36 @@ async function getRemainingCollections(featuredSlug: string | null): Promise<Col
       languages,
     };
   }) as CollectionForGrid[];
+
+  // Fill in missing hero images from book thumbnails
+  const missingHero = result.filter(c => !c.hero_image);
+  if (missingHero.length > 0) {
+    for (const col of missingHero) {
+      try {
+        const book = await db.collection('books').findOne(
+          {
+            collections: col.slug,
+            hidden: { $ne: true },
+            $or: [
+              { thumbnail_blob: { $exists: true, $nin: [null, ''] } },
+              { thumbnail: { $exists: true, $nin: [null, ''] } },
+            ],
+          },
+          { projection: { thumbnail_blob: 1, thumbnail: 1 } },
+        );
+        if (book) {
+          col.hero_image = (book.thumbnail_blob || book.thumbnail) as string;
+        }
+      } catch {
+        // Skip — gradient fallback will show
+      }
+    }
+  }
+
+  // Sort by user-specified order
+  result.sort((a, b) => collectionSortIndex(a.name) - collectionSortIndex(b.name));
+
+  return result;
 }
 
 async function getDiscoverBooks(): Promise<Book[]> {
@@ -159,8 +210,6 @@ async function getCollectionShowcase() {
   const db = await getDb();
 
   // Sample high-quality gallery images with museum descriptions
-  // Only match images with valid extracted_url (cropped illustration, ~33% of images)
-  // thumbnail_url is unreliable (often null even when field exists)
   const rawImages = await db.collection('gallery_images').aggregate([
     {
       $match: {
@@ -194,7 +243,6 @@ async function getCollectionShowcase() {
         );
         const quotes = book?.reading_summary?.quotes;
         if (quotes && quotes.length > 0) {
-          // Pick a random quote
           quote = quotes[Math.floor(Math.random() * quotes.length)];
         }
         return {
