@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
@@ -16,7 +16,7 @@ interface FeaturedBook {
   thumbnail_blob?: string;
 }
 
-interface FeaturedCollectionCardProps {
+interface FeaturedCollectionItem {
   collection: {
     slug: string;
     name: string;
@@ -28,48 +28,53 @@ interface FeaturedCollectionCardProps {
   books: FeaturedBook[];
 }
 
+interface FeaturedCollectionCarouselProps {
+  items: FeaturedCollectionItem[];
+}
+
 function bookTitle(book: { display_title?: string; title: string }): string {
   const dt = book.display_title;
   return (dt && dt !== 'None') ? dt : book.title;
 }
 
-export default function FeaturedCollectionCard({ collection, books }: FeaturedCollectionCardProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+export default function FeaturedCollectionCarousel({ items }: FeaturedCollectionCarouselProps) {
+  const [index, setIndex] = useState(0);
 
-  const updateScrollState = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
-  };
+  if (items.length === 0) return null;
 
-  useEffect(() => {
-    updateScrollState();
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener('scroll', updateScrollState, { passive: true });
-    window.addEventListener('resize', updateScrollState);
-    return () => {
-      el.removeEventListener('scroll', updateScrollState);
-      window.removeEventListener('resize', updateScrollState);
-    };
-  }, []);
+  const current = items[index];
+  const { collection, books } = current;
 
-  const scroll = (direction: 'left' | 'right') => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: direction === 'left' ? -280 : 280, behavior: 'smooth' });
-  };
+  const prev = () => setIndex(i => i > 0 ? i - 1 : items.length - 1);
+  const next = () => setIndex(i => i < items.length - 1 ? i + 1 : 0);
 
   return (
-    <section className="bg-dark py-12 md:py-16">
+    <section className="bg-dark py-12 md:py-16 relative">
       <div className="px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="text-xs uppercase tracking-[0.2em] text-white/40">Featured Collection</span>
-          <span className="text-white/20">&middot;</span>
-          <span className="text-xs text-white/40">Different every visit</span>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-[0.2em] text-white/40">Featured Collection</span>
+            <span className="text-white/20">&middot;</span>
+            <span className="text-xs text-white/40">{index + 1} of {items.length}</span>
+          </div>
+
+          {/* Navigation arrows */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={prev}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              aria-label="Previous collection"
+            >
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </button>
+            <button
+              onClick={next}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              aria-label="Next collection"
+            >
+              <ChevronRight className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
@@ -104,71 +109,52 @@ export default function FeaturedCollectionCard({ collection, books }: FeaturedCo
             </div>
           </div>
 
-          {/* Right: book carousel with arrows */}
+          {/* Right: book thumbnails grid */}
           {books.length > 0 && (
-            <div className="lg:col-span-3 relative flex items-center">
-              {/* Left arrow */}
-              {canScrollLeft && (
-                <button
-                  onClick={() => scroll('left')}
-                  className="absolute -left-2 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="w-5 h-5 text-white" />
-                </button>
-              )}
-
-              {/* Scrollable book row */}
-              <div
-                ref={scrollRef}
-                className="flex gap-4 overflow-x-auto scroll-smooth px-1 py-1"
-                style={{ scrollbarWidth: 'none' }}
-              >
-                {books.map((book) => {
-                  const thumb = book.thumbnail_blob || book.thumbnail;
-                  return (
-                    <Link
-                      key={book.id}
-                      href={bookUrl(book)}
-                      className="group flex-none"
-                    >
-                      <div className="w-[120px] md:w-[140px]">
-                        <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-white/30 transition-all">
-                          {thumb ? (
-                            <Image
-                              src={thumb}
-                              alt={bookTitle(book)}
-                              fill
-                              className="object-cover group-hover:scale-105 transition-transform duration-300"
-                              sizes="140px"
-                            />
-                          ) : (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <BookOpen className="w-8 h-8 text-white/20" />
-                            </div>
-                          )}
+            <div className="lg:col-span-3 grid grid-cols-4 sm:grid-cols-5 gap-3">
+              {books.map((book) => {
+                const thumb = book.thumbnail_blob || book.thumbnail;
+                return (
+                  <Link
+                    key={book.id}
+                    href={bookUrl(book)}
+                    className="group"
+                  >
+                    <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-white/30 transition-all">
+                      {thumb ? (
+                        <Image
+                          src={thumb}
+                          alt={bookTitle(book)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 22vw, 12vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <BookOpen className="w-8 h-8 text-white/20" />
                         </div>
-                        <p className="text-xs text-white/50 mt-2 line-clamp-2 group-hover:text-white/70 transition-colors leading-tight">
-                          {bookTitle(book)}
-                        </p>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-
-              {/* Right arrow */}
-              {canScrollRight && (
-                <button
-                  onClick={() => scroll('right')}
-                  className="absolute -right-2 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors backdrop-blur-sm"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="w-5 h-5 text-white" />
-                </button>
-              )}
+                      )}
+                    </div>
+                    <p className="text-xs text-white/50 mt-1.5 line-clamp-2 group-hover:text-white/70 transition-colors leading-tight">
+                      {bookTitle(book)}
+                    </p>
+                  </Link>
+                );
+              })}
             </div>
           )}
+        </div>
+
+        {/* Dots */}
+        <div className="flex justify-center gap-2 mt-8">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`w-2 h-2 rounded-full transition-colors ${i === index ? 'bg-accent-gold' : 'bg-white/20 hover:bg-white/40'}`}
+              aria-label={`Go to collection ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>

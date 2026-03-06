@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import HeroSection from '@/components/layout/HeroSection';
-import FeaturedCollectionCard from '@/components/prototype/FeaturedCollectionHero';
+import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectionHero';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
@@ -61,56 +61,59 @@ const BOOK_PROJECTION = {
 
 // ---------- Data fetching ----------
 
-async function getFeaturedCollection() {
+async function getFeaturedCollections() {
   const db = await getDb();
 
-  // Pick one random collection that has enough books
-  const [collection] = await db.collection('collections').aggregate([
+  // Pick 5 random collections that have enough books
+  const collections = await db.collection('collections').aggregate([
     { $match: { book_count: { $gte: 5 } } },
-    { $sample: { size: 1 } },
+    { $sample: { size: 5 } },
   ]).toArray();
 
-  if (!collection) return null;
+  if (collections.length === 0) return [];
 
-  // Extract hero image URL
-  const images = collection.featured_images || [];
-  const hero = images.find(
-    (img: Record<string, unknown>) => img.thumbnail_url || img.extracted_url || img.image_url
-  );
-  const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url || null;
+  // Fetch top 10 translated books for each collection in parallel
+  const results = await Promise.all(collections.map(async (collection) => {
+    const images = collection.featured_images || [];
+    const hero = images.find(
+      (img: Record<string, unknown>) => img.thumbnail_url || img.extracted_url || img.image_url
+    );
+    const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url || null;
 
-  // Fetch top 10 translated books from this collection (for carousel)
-  const books = await db.collection('books').aggregate([
-    {
-      $match: {
-        collections: collection.slug,
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
+    const books = await db.collection('books').aggregate([
+      {
+        $match: {
+          collections: collection.slug,
+          hidden: { $ne: true },
+          pages_count: { $gt: 0 },
+          pages_translated: { $gt: 0 },
+        },
       },
-    },
-    { $sort: { read_count: -1 } },
-    { $limit: 10 },
-    { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1 } },
-  ]).toArray();
+      { $sort: { read_count: -1 } },
+      { $limit: 10 },
+      { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1 } },
+    ]).toArray();
 
-  return {
-    collection: {
-      slug: collection.slug as string,
-      name: collection.name as string,
-      subtitle: (collection.subtitle || '') as string,
-      description: (collection.description || '') as string,
-      book_count: (collection.book_count || 0) as number,
-      hero_image: heroUrl as string | null,
-    },
-    books: JSON.parse(JSON.stringify(books)),
-  };
+    return {
+      collection: {
+        slug: collection.slug as string,
+        name: collection.name as string,
+        subtitle: (collection.subtitle || '') as string,
+        description: (collection.description || '') as string,
+        book_count: (collection.book_count || 0) as number,
+        hero_image: heroUrl as string | null,
+      },
+      books: JSON.parse(JSON.stringify(books)),
+    };
+  }));
+
+  // Only return collections that have translated books to show
+  return results.filter(r => r.books.length > 0);
 }
 
-async function getRemainingCollections(featuredSlug: string | null): Promise<CollectionForGrid[]> {
+async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const db = await getDb();
-  const filter = featuredSlug ? { slug: { $ne: featuredSlug } } : {};
-  const docs = await db.collection('collections').find(filter).toArray();
+  const docs = await db.collection('collections').find({}).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
@@ -301,15 +304,13 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: n
 // ---------- Page ----------
 
 export default async function PrototypePage() {
-  const [featured, discoverBooks, showcase, counts] = await Promise.all([
-    getFeaturedCollection(),
+  const [featuredItems, discoverBooks, showcase, counts, collections] = await Promise.all([
+    getFeaturedCollections(),
     getDiscoverBooks(),
     getCollectionShowcase(),
     getBookCounts(),
+    getRemainingCollections(),
   ]);
-
-  // Fetch remaining collections after we know which one is featured
-  const collections = await getRemainingCollections(featured?.collection.slug || null);
 
   return (
     <SocietyGate>
@@ -382,12 +383,9 @@ export default async function PrototypePage() {
           </div>
         </section>
 
-        {/* Featured Collection Card — below the grid */}
-        {featured && (
-          <FeaturedCollectionCard
-            collection={featured.collection}
-            books={featured.books}
-          />
+        {/* Featured Collection Carousel — flip through collections */}
+        {featuredItems.length > 0 && (
+          <FeaturedCollectionCarousel items={featuredItems} />
         )}
 
         {/* From the Collection — image-heavy gallery showcase */}
