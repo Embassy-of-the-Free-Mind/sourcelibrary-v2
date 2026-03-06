@@ -12,7 +12,7 @@ interface ProvidersProps {
 
 export default function Providers({ children, siteMode }: ProvidersProps) {
   return (
-    <SessionProvider>
+    <SessionProvider refetchOnWindowFocus={false} refetchInterval={0}>
       <SiteModeProvider initialMode={siteMode}>
         <ErrorReporter>
           {children}

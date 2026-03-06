@@ -4,8 +4,8 @@ import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
-// Simple in-memory cache (persists for serverless function lifetime)
-let cachedResult: { data: any; timestamp: number } | null = null;
+// Simple in-memory cache keyed by days param (persists for serverless function lifetime)
+const cache = new Map<number, { data: any; timestamp: number }>();
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 export const GET = withAuth(async (request, session) => {
@@ -14,8 +14,9 @@ export const GET = withAuth(async (request, session) => {
     const days = parseInt(searchParams.get('days') || '30', 10);
 
     // Return cached result if fresh
-    if (cachedResult && days === 30 && (Date.now() - cachedResult.timestamp) < CACHE_TTL_MS) {
-      return NextResponse.json(cachedResult.data);
+    const cached = cache.get(days);
+    if (cached && (Date.now() - cached.timestamp) < CACHE_TTL_MS) {
+      return NextResponse.json(cached.data);
     }
 
     const db = await getDb();
@@ -289,10 +290,8 @@ export const GET = withAuth(async (request, session) => {
       query: { days },
     };
 
-    // Cache the result for 5 minutes (default 30-day query only)
-    if (days === 30) {
-      cachedResult = { data: responseData, timestamp: Date.now() };
-    }
+    // Cache the result for 5 minutes (all time ranges)
+    cache.set(days, { data: responseData, timestamp: Date.now() });
 
     return NextResponse.json(responseData);
   } catch (error) {
