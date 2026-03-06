@@ -10,8 +10,8 @@ import SocietyGate from '@/components/layout/SocietyGate';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// Truly different every load — no caching
-export const dynamic = 'force-dynamic';
+// Rebuild every 30 seconds — fresh enough for variety, fast for repeat visits
+export const revalidate = 30;
 export const maxDuration = 30;
 
 // ---------- Collection ordering (user-specified) ----------
@@ -181,29 +181,13 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
 async function getDiscoverBooks(): Promise<Book[]> {
   const db = await getDb();
 
-  // Weighted random: multiply read_count by random, so popular books appear more often
-  // but there's always variety
+  // Top books by read_count with a random offset for variety.
+  // Much faster than $rand sort (~600ms vs 4s) because it uses the index.
+  const randomSkip = Math.floor(Math.random() * 50);
   const books = await db.collection('books').aggregate([
-    {
-      $match: {
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-        // At least 50% translated
-        $expr: {
-          $gte: [
-            { $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 1] }] },
-            0.5,
-          ],
-        },
-      },
-    },
-    {
-      $addFields: {
-        _score: { $multiply: [{ $add: [{ $ifNull: ['$read_count', 1] }, 1] }, { $rand: {} }] },
-      },
-    },
-    { $sort: { _score: -1 } },
+    { $match: { hidden: { $ne: true }, pages_translated: { $gte: 10 } } },
+    { $sort: { read_count: -1 } },
+    { $skip: randomSkip },
     { $limit: 10 },
     { $project: BOOK_PROJECTION },
   ]).toArray();
