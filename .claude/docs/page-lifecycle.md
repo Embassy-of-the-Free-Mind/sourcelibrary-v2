@@ -87,7 +87,7 @@ Reads first 25 OCR pages, calls Gemini to determine:
 - `categories` (1-4 subject tags)
 - `estimated_year`, `estimated_century`
 - `description` (1-2 sentence scholarly description)
-- `display_title` (English translation of non-English titles)
+- `display_title` (English translation of non-English titles — must be entirely in English, no shelfmarks/catalog IDs, no parenthetical originals, transliterated titles must be translated)
 - `subject_keywords` (3-5 discovery keywords)
 - `is_first_translation` (whether this is the first English translation)
 - `source_work_dates` — compositional timeline layers (see below)
@@ -99,6 +99,17 @@ Only applies changes at **medium+ confidence**. Low-confidence results are saved
 **Result:** `book.source_work_dates` (array of `SourceWorkDateLayer`), `book.source_work_dates_meta` (model, confidence, reasoning, enriched_at).
 
 **Layer schema:** `{ type, date, date_display, date_precision, author?, work_title?, language?, notes? }`. Types: `composition`, `translation`, `compilation`, `commentary`, `redaction`, `edition`, `abridgement`, `adaptation`.
+
+**Display Title Quality Rules:** The `display_title` field must be entirely in English. The prompt enforces:
+- Use conventional English names when established ("The Chemical Wedding" not "Chymische Hochzeit")
+- Translate literally when no conventional name exists ("De Triplici Minimo" → "On the Threefold Minimum")
+- No manuscript shelfmarks ("MS. Bodl. 130"), library names, edition dates/publishers
+- No parenthetical original-language titles
+- Transliterated titles (Sanskrit, Arabic, Hebrew) must be translated to English meaning
+- "Opera" alone → "Collected Works" or "Complete Works of [Author]"
+- English books get `null` (no display_title needed)
+
+**Backfill script:** `scripts/enrichment/improve-display-titles.mjs` regenerates display_titles for all non-English books. Supports `--skip-good` to only process likely-bad titles (detected via heuristics: shelfmarks, untranslated Latin, parenthetical originals, etc.).
 
 ## 5. Translation
 

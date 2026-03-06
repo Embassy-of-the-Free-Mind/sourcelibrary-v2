@@ -114,7 +114,7 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
   "estimated_year": "<best estimate of publication year as a number, e.g. 1617. null if truly impossible to determine>",
   "estimated_century": "<e.g. '17th century' or '15th-16th century' — fallback if exact year unclear>",
   "description": "<1-2 sentence scholarly description of what this book appears to be about>",
-  "display_title": "<English translation of the book title. For non-English books, provide a clear, natural English rendering. For English books, return null. Use the conventional English name if one is well-established (e.g. 'The Chemical Wedding' for 'Chymische Hochzeit'). Otherwise translate literally.>",
+  "display_title": "<A clear, natural English title for this book. Must be ENTIRELY in English — no foreign words. See display_title rules below.>",
   "confidence": "<high, medium, or low — how confident are you in this classification>",
   "subject_keywords": ["<3-5 subject keywords for discovery>"],
   "first_translation": {
@@ -148,7 +148,17 @@ Rules:
 - Most pre-1800 Latin, German, and other non-English texts on alchemy, Hermeticism, Kabbalah, astrology, and natural philosophy were NEVER translated to English.
 - If the book IS already in English, set first_translation status to "not_applicable"
 - For author, look for author attributions on the title page (first 1-3 pages). Common patterns: "by [Name]", authorship in Latin ("auctore [Name]", "[Name] scripsit"). Return null if truly uncertain.
-- For display_title, provide a natural English translation of the title. Use well-known English names when they exist (e.g. "Discourse on the Method" not "Discours de la méthode"). For English books, return null. Keep it concise — translate the essential title, not the full baroque subtitle.
+- For display_title, provide a clear English title. It must be ENTIRELY in English — no Latin, German, French, Arabic, Sanskrit, or any other foreign words. Rules:
+  - Use conventional English names when they exist (e.g. "The Chemical Wedding" not "Chymische Hochzeit", "Discourse on the Method" not "Discours de la méthode")
+  - If no conventional English name exists, translate the title literally into English
+  - Do NOT include manuscript shelfmarks or catalog identifiers (no "MS. Bodl. 130", "Reg.lat.1278", "Harley MS 3667")
+  - Do NOT include library names (no "Bodleian Library...", "Vatican Library...")
+  - Do NOT include edition dates, publishers, or printing info (no "1645 Elzevier", "Basel edition")
+  - Do NOT include the original-language title in parentheses (no "Origin of Medicine (Ortus Medicinae)")
+  - For Sanskrit/Arabic/Hebrew transliterated titles, translate the MEANING into English (e.g. "Yuddha Jayarnava" → "Ocean of Victory in Battle", "Bhasha Svarodaya" → "Discourse on the Rising of Sounds")
+  - Simple Latin titles that are well-known in Latin may keep the Latin form ONLY if universally recognized (e.g. "De Rerum Natura" is acceptable, but "De Triplici Minimo" should be "On the Threefold Minimum")
+  - For English books, return null
+  - Keep it concise — translate the essential title, not the full baroque subtitle
 - For source_work_dates: determine the chronological layers of this work's compositional history.
   - Return empty layers [] if the book IS the original work by its stated author (the published date already captures it)
   - Include a "composition" layer when this is a translation/edition of an older work (e.g. a 1550 printing of Plato = composition layer at c. 360 BCE)
