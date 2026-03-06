@@ -2,10 +2,12 @@ import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import HeroSection from '@/components/layout/HeroSection';
+import HomePageSchema from '@/components/seo/HomePageSchema';
 import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectionHero';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
+import Image from 'next/image';
 import Link from 'next/link';
 
 // Truly different every load — no caching
@@ -301,6 +303,51 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: n
   };
 }
 
+// ---------- Blog posts (curated subset for homepage) ----------
+
+const BLOG_POSTS = [
+  {
+    slug: 'hidden-engineers',
+    title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
+    subtitle: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy.',
+    date: '27 February 2026',
+    readTime: '22 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg',
+  },
+  {
+    slug: 'philosophers-stone',
+    title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
+    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
+    date: '27 February 2026',
+    readTime: '20 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
+  },
+  {
+    slug: 'rithmomachia',
+    title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
+    subtitle: 'Five treatises in five languages document a mathematical board game played across Europe for six centuries.',
+    date: '2 March 2026',
+    readTime: '18 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+  },
+  {
+    slug: 'first-translations',
+    title: 'Over 500 First English Translations',
+    subtitle: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts — all previously inaccessible in English.',
+    date: '20 February 2026',
+    readTime: '14 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
+  },
+];
+
 // ---------- Page ----------
 
 export default async function PrototypePage() {
@@ -315,6 +362,8 @@ export default async function PrototypePage() {
   return (
     <SocietyGate>
       <div className="min-h-screen">
+        <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedCount} />
+
         {/* Video Hero — same as current homepage */}
         <HeroSection />
 
@@ -404,6 +453,66 @@ export default async function PrototypePage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
               {discoverBooks.map((book, i) => (
                 <BookCard key={book.id} book={book} priority={i < 2} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Blog Section */}
+        <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+            <div className="flex items-baseline justify-between mb-10">
+              <div>
+                <h2 className="text-3xl md:text-4xl text-primary font-display">
+                  From the Blog
+                </h2>
+                <p className="text-muted mt-2">
+                  Essays on the history behind the collection
+                </p>
+              </div>
+              <Link
+                href="/blog"
+                className="text-sm text-accent-rust hover:underline hidden md:block"
+              >
+                All posts
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {BLOG_POSTS.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-all"
+                >
+                  {post.image && (
+                    <div className="aspect-[16/10] relative bg-warm overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt=""
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    {post.tag && (
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${post.tagColor}`}>
+                        {post.tag}
+                      </span>
+                    )}
+                    <h3 className="font-display text-lg text-primary mt-2 group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-muted mt-1.5 line-clamp-2">
+                      {post.subtitle}
+                    </p>
+                    <p className="text-xs text-faint mt-3">
+                      {post.date} &middot; {post.readTime}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -25,15 +25,6 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
-    slug: 'why-terminals-cant-edit',
-    title: 'Why You Can\'t Click to Place Your Cursor in a Terminal',
-    subtitle: 'The 1978 architecture decision that still shapes how 50 million developers work. Terminal emulators don\'t know what\'s on screen — they draw characters on a grid and forward keystrokes.',
-    date: '2 March 2026',
-    readTime: '10 min read',
-    tag: 'Technical',
-    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-  },
-  {
     slug: 'rithmomachia',
     title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
     subtitle: 'Five treatises in five languages document a mathematical board game played across Europe for six centuries — where you capture by arithmetic and win by creating harmony.',
