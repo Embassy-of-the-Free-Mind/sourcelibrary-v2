@@ -7041,3 +7041,171 @@ Rejected: Ephrem Prose Refutations vols 1-2 (already existed)
 | Tovma Artsruni (Grabar) | MEDIUM | IA edition is "dark" |
 
 ---
+
+# Session: 2026-03-03 — Early Science & Engineering Gap-Fill
+
+## Rationale
+
+Systematic gap analysis identified that early science and engineering was dramatically underrepresented in the collection. While esoteric, alchemical, and philosophical texts were deep, foundational works in mechanics, hydraulics, fortification, optics, artillery, surveying, navigation, mining/metallurgy, and applied natural philosophy were largely absent. This session filled those gaps with ~50 books spanning the entire tradition from Valturio (1483) to Leupold (1725).
+
+## Summary
+- **Books acquired:** 48 (across 2 context windows)
+- **Total pages:** ~14,500+
+- **Languages:** Latin, Italian, French, German, English
+- **Date range:** 1483–1753
+- **Sources:** Internet Archive, Gallica (BnF), MDZ (BSB Munich)
+- **All enrolled in auto pipeline** — archiving, OCR, translation will proceed automatically
+
+## Acquired — Context Window 1 (10 books from previous session)
+
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 1 | Theatrum machinarum novum | Georg Andreas Böckler | 1661 | 372 | IA | 69a5f6b11cf742c360413d42 |
+| 2 | Opera Omnia (editio princeps Basel) | Archimedes | 1544 | 238 | IA | 69a5f6b51cf742c360413eb8 |
+| 3 | Della trasportatione dell'obelisco vaticano | Domenico Fontana | 1590 | 254 | IA | 69a5f6b71cf742c360413fa8 |
+| 4 | Le machine | Giovanni Branca | 1629 | 172 | IA | 69a5f6ba1cf742c3604140a8 |
+| 5 | Artis Magnae Artilleriae pars prima | Kazimierz Siemienowicz | 1650 | 349 | IA | 69a5f6bd1cf742c360414156 |
+| 6 | Spiritali (1589 Aleotti trans.) | Hero of Alexandria | 1589 | 51 | IA | 69a5f6bf1cf742c3604142b5 |
+| 7 | Mechanica hydraulico-pneumatica | Gaspar Schott | 1657 | 626 | IA | 69a5f6cd1cf742c3604142ea |
+| 8 | De l'attaque et de la deffense des places | Sébastien Le Prestre de Vauban | 1737 | 276 | IA | 69a5f6d21cf742c36041455e |
+| 9 | A Geometrical Practical Treatize Named Pantometria | Leonard Digges | 1591 | 205 | IA | 69a5f6d51cf742c360414674 |
+| 10 | Gli artifitiosi et curiosi moti spiritali (1647) | Hero of Alexandria (Aleotti) | 1647 | 138 | IA | 69a5f6d81cf742c360414743 |
+
+## Acquired — Context Window 2 (38 books this session)
+
+### Theatre of Machines / Mechanics
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 11 | Kunstliche Abriss allerhand Mühlen (Strada) | Jacobus Strada | 1618 | 208 | MDZ | 69a68258d5bf106c72bb87bb |
+| 12 | Theatrum machinarum, Tomus I | Heinrich Zeising | 1614 | 276 | MDZ | 69a6825ad5bf106c72bb888d |
+| 13 | Theatrum machinarum, Tomus II | Heinrich Zeising | 1614 | 138 | MDZ | 69a683f2256d25f466059ad0 |
+| 14 | Theatrum machinarum, Tomus III | Heinrich Zeising | 1614 | 158 | MDZ | 69a683f3256d25f466059b5c |
+| 15 | Theatrum Machinarum Generale | Jacob Leupold | 1724 | 662 | MDZ | 69a683b0256d25f4660595df |
+| 16 | Theatri Machinarum Hydraulicarum, Tomus II | Jacob Leupold | 1725 | 294 | MDZ | 69a683b1256d25f466059877 |
+| 17 | Theatrum Machinarium — Schau-Platz der Heb-Zeuge | Jacob Leupold | 1725 | 302 | MDZ | 69a683b1256d25f46605999f |
+
+### Pneumatics / Hero of Alexandria
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 18 | Heronis Spiritalium liber (Commandino 1575) | Hero of Alexandria | 1575 | ~169 | IA | 69a6821ab3d8052782b3c454 |
+| 19 | Spiritali (Giorgi 1592 Italian) | Hero of Alexandria | 1592 | 174 | IA | 69a683ab7ab725b59be40e31 |
+
+### Fortification
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 20 | Le fortificationi | Bonaiuto Lorini | 1609 | 320 | IA | 69a68211b3d8052782b3c204 |
+| 21 | Architectura von Vestungen | Daniel Specklin | 1589 | 102 | MDZ | 69a6825bd5bf106c72bb89a3 |
+| 22 | Discorsi delle fortificationi | Carlo Theti | 1569 | 272 | MDZ | 69a6825cd5bf106c72bb8a0b |
+| 23 | Les Fortifications | Blaise François de Pagan | 1645 | 357 | Gallica | 69a68282b3d8052782b3c788 |
+| 24 | La Nouvelle Fortification | Nicolas Goldman | 1645 | 257 | Gallica | 69a683b0256d25f4660594dc |
+| 25 | L'architecture militaire moderne | Matthias Dögen | 1648 | 860 | IA | 69a683a47ab725b59be40a3b |
+| 26 | Dvo libri del modo di fare le fortificationi | Giacomo Lanteri | 1559 | 150 | IA | 69a683a87ab725b59be40d99 |
+| 27 | De re militari libris XII | Roberto Valturio | 1483 | 511 | IA | 69a684dab3d8052782b3cd68 |
+
+### Artillery / Ballistics
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 28 | Quesiti et inventioni diverse | Niccolò Tartaglia | 1554 | 268 | IA | 69a68215b3d8052782b3c346 |
+| 29 | Pratica manuale dell'artiglieria (1586) | Luis Collado | 1586 | 206 | IA | 69a682a3b3d8052782b3c8ef |
+| 30 | Prattica manuale dell'artiglieria (expanded 1606) | Luis Collado | 1606 | 450 | IA | 69a683fe256d25f466059bfc |
+
+### Hydraulics
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 31 | Della misura dell'acque correnti | Benedetto Castelli | 1639 | 46 | IA | 69a68228d5bf106c72bb878b |
+| 32 | Architecture hydraulique, tome I, part 1 | Bernard Forest de Bélidor | 1737 | 494 | Gallica | 69a683ac5eea60b6ef1d2c7a |
+| 33 | Architecture hydraulique, tome I, part 2 | Bernard Forest de Bélidor | 1737 | 540 | Gallica | 69a683ad256d25f466058ed4 |
+| 34 | Architecture hydraulique, tome II, part 1 | Bernard Forest de Bélidor | 1739 | 389 | Gallica | 69a683ae256d25f4660590f2 |
+| 35 | Architecture hydraulique, tome II, part 2 | Bernard Forest de Bélidor | 1753 | 609 | Gallica | 69a683af256d25f466059279 |
+
+### Mining / Metallurgy / Ceramics
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 36 | De Re Metallica (1556 first ed.) | Georgius Agricola | 1556 | 592 | MDZ | 69a6825dd5bf106c72bb8b1d |
+| 37 | Discours admirables | Bernard Palissy | 1580 | 400 | Gallica | 69a6827ed5bf106c72bb8d6f |
+| 38 | Recepte veritable | Bernard Palissy | 1563 | 132 | Gallica | 69a683fe256d25f466059dc0 |
+
+### Optics
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 39 | Perspectiva (De natura radiorum) | Witelo | 1551 | 610 | IA | 69a68457256d25f466059e53 |
+| 40 | Opticae thesaurus (first Latin ed.) | Alhazen (Ibn al-Haytham) | 1572 | 792 | IA | 69a6845e7ab725b59be40ee1 |
+| 41 | La Perspective, avec la raison des ombres | Salomon de Caus | 1612 | 133 | Gallica | 69a684dfb3d8052782b3d10d |
+| 42 | Micrographia | Robert Hooke | 1667 | 374 | IA | 69a68512b3d8052782b3d2b1 |
+
+### Architecture
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 43 | L'Architecture (Premier Tome) | Philibert de l'Orme | 1567 | 585 | Gallica | 69a6827ed5bf106c72bb8f01 |
+| 44 | Nouvelles inventions pour bien bastir | Philibert de l'Orme | 1561 | 145 | Gallica | 69a6827fb3d8052782b3c4ff |
+| 45 | Les dix livres d'architecture (Perrault trans.) | Vitruvius (trans. Perrault) | 1684 | 367 | Gallica | 69a68281b3d8052782b3c617 |
+| 46 | De re aedificatoria (1485 editio princeps) | Leon Battista Alberti | 1485 | 418 | IA | 69a684deb3d8052782b3cf69 |
+
+### Surveying / Navigation
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 47 | The Surveyor | Aaron Rathborne | 1616 | 252 | IA | 69a682a6b3d8052782b3c9bf |
+| 48 | Cosmographia (Gemma Frisius ed.) | Peter Apian | 1540 | 136 | IA | 69a682b2b3d8052782b3ccd3 |
+
+### Mechanics / Natural Philosophy
+| # | Title | Author | Year | Pages | Source | Book ID |
+|---|-------|--------|------|-------|--------|---------|
+| 49 | Operations del compasso geometrico et militare | Galileo Galilei | 1606 | 100 | IA | 69a68221d5bf106c72bb8725 |
+| 50 | Les nouvelles pensées (Discorsi, French 1639) | Galileo Galilei | 1639 | 284 | IA | 69a684647ab725b59be411fb |
+| 51 | Discorsi e dimostrazioni matematiche (Italian original) | Galileo Galilei | 1638 | 336 | IA | 69a6849d7ab725b59be41319 |
+| 52 | De Magnete | William Gilbert | 1600 | 276 | IA | 69a6850db3d8052782b3d19b |
+| 53 | Diversarum speculationum liber | Giovanni Battista Benedetti | 1585 | 219 | IA | 69a68516b3d8052782b3d429 |
+| 54 | Architectura curiosa nova | Georg Andreas Böckler | 1664 | 532 | IA | 69a682adb3d8052782b3cabd |
+| 55 | Le Gouvernail | Ambroise Bachot | 1598 | 131 | Gallica | 69a68280b3d8052782b3c592 |
+
+## Already Existed (not imported)
+- De Caus, Les raisons des forces mouvantes (69a5b99dd76b98f272fcec6d)
+- Ercker, Beschreibung allerhand Prussierischer Bergarten (69a5b9f0d76b98f272fcfa68)
+- Besson, Théâtre des instrumens (2 editions)
+- Ramelli, Le diverse et artificiose machine (2 editions)
+- Zonca, Novo teatro di machine
+- Marolois, Fortification ou Architecture militaire
+- Biringuccio, De la pirotechnia (2 editions)
+- Stevin, Fortification par escluses + De beghinselen des waterwichts + Castrametatio
+- Medina, L'art de naviguer
+- Alberti, De re aedificatoria
+- Palladio, I Quattro Libri
+- Vitruvius, De architectura (multiple editions)
+- Tartaglia, Nova Scientia
+
+## Coverage Assessment
+
+### Strong Coverage Now
+| Area | Books | Key Authors |
+|------|-------|------------|
+| **Theatrum machinarum tradition** | 9 | Böckler (2), Zeising (3), Strada, Leupold (3), Branca |
+| **Pneumatics / Hero of Alexandria** | 4 | Aleotti 1589 & 1647, Commandino 1575, Giorgi 1592 |
+| **Fortification** | 9 | Lorini, Specklin, Theti, Pagan, Goldman, Dögen, Lanteri, Valturio, Vauban |
+| **Artillery / Ballistics** | 4 | Tartaglia (Quesiti + Nova Scientia), Collado (2 editions), Siemienowicz |
+| **Optics** | 5 | Witelo, Alhazen, Kepler (existing), De Caus Perspective, Hooke Micrographia |
+| **Architecture** | 6+ | Alberti (2 ed.), Philibert de l'Orme (2), Vitruvius/Perrault, Palladio (existing) |
+| **Mining / Metallurgy** | 4+ | Agricola (MDZ first ed.), Ercker (existing), Biringuccio (2 existing), Palissy (2) |
+| **Mechanics / Physics** | 5 | Galileo (3 works), Gilbert De Magnete, Benedetti |
+| **Hydraulics** | 6 | Belidor (4 vols), Castelli, Schott, De Caus (existing) |
+| **Surveying / Navigation** | 3+ | Digges, Rathborne, Apian/Gemma Frisius |
+
+### Remaining Gaps (Future Work)
+| Gap | Priority | Notes |
+|-----|----------|-------|
+| **Galileo Dialogo sopra i due massimi sistemi** | HIGH | 1632 original Italian not in collection |
+| **More Leupold volumes** (9 total in series) | MEDIUM | Have 3 of 9 |
+| **More Zeising volumes** (6 total) | LOW | Have 3 of 6 |
+| **Clockwork / Automata texts** | MEDIUM | Pre-1700 texts on this topic very rare |
+| **Robert Boyle** New Experiments (1660) | HIGH | Pneumatics, air pump |
+| **Georgius Agricola** De Natura Fossilium | MEDIUM | Mineralogy companion to De Re Metallica |
+| **Torricelli** Opera geometrica (1644) | HIGH | Vacuum, barometer |
+| **Otto von Guericke** Experimenta (1672) | HIGH | Air pump, vacuum |
+| **Hevelius** Selenographia (1647) | HIGH | Moon maps, telescope engineering |
+| **Tycho Brahe** Astronomiae instauratae mechanica | HIGH | Astronomical instruments |
+| **Navigation**: Waghenaer, Mercator, Nunes | MEDIUM | Maritime engineering |
+| **Chinese engineering**: Tiangong Kaiwu | MEDIUM | Already identified for East Asian collection |
+
+## Session Total: 45 new books imported, ~14,500 pages
+(Plus 10 from previous context window = 55 total in this campaign)
+
+---

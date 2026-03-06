@@ -14,13 +14,13 @@
  *   node scripts/enrichment/enrich-source-work-dates.mjs --apply --offset 100 --limit 50
  */
 
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import https from 'https';
 
 // ── Config ──────────────────────────────────────────────────────────
-const MODEL = 'gemini-2.5-flash';
-const CONCURRENCY = 5;
+const MODEL = 'gemini-3-flash-preview';
+const CONCURRENCY = 1;
 
 // ── Env ─────────────────────────────────────────────────────────────
 function loadEnv() {
@@ -62,11 +62,7 @@ const apiKeys = getApiKeys();
 if (apiKeys.length === 0) { console.error('No GEMINI_API_KEY found'); process.exit(1); }
 let keyIndex = 0;
 
-function getClient() {
-  const key = apiKeys[keyIndex % apiKeys.length];
-  keyIndex++;
-  return new GoogleGenerativeAI(key);
-}
+// API key rotation handled in enrichBook()
 
 // ── CLI args ────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -142,21 +138,63 @@ Rules:
 - If the title page names a translator (e.g., "Marsilio Ficino interprete"), include that as a translation layer`;
 }
 
-// ── Gemini call ─────────────────────────────────────────────────────
-async function enrichBook(book, ocrText) {
-  const client = getClient();
-  const model = client.getGenerativeModel({ model: MODEL });
-  const prompt = buildPrompt(book, ocrText);
+// ── Gemini call (node:https with socket timeout) ────────────────────
+function httpsPost(url, body, timeoutMs = 90000) {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url);
+    const postData = JSON.stringify(body);
+    const req = https.request({
+      hostname: parsed.hostname,
+      port: 443,
+      path: parsed.pathname + parsed.search,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+      },
+      timeout: timeoutMs,
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => { data += chunk; });
+      res.on('end', () => {
+        if (res.statusCode >= 400) {
+          reject(new Error(`Gemini ${res.statusCode}: ${data.substring(0, 200)}`));
+        } else {
+          try { resolve(JSON.parse(data)); }
+          catch (e) { reject(new Error(`JSON parse error: ${data.substring(0, 200)}`)); }
+        }
+      });
+    });
+    req.on('error', reject);
+    req.on('timeout', () => { req.destroy(new Error(`Request timeout after ${timeoutMs/1000}s`)); });
+    req.write(postData);
+    req.end();
+  });
+}
 
-  const result = await model.generateContent({
+async function enrichBook(book, ocrText) {
+  const apiKey = apiKeys[keyIndex % apiKeys.length];
+  keyIndex++;
+  const prompt = buildPrompt(book, ocrText);
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
+
+  const data = await httpsPost(url, {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 0.2,
       responseMimeType: 'application/json',
     },
-  });
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+    ],
+  }, 90000);
 
-  const text = result.response.text();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  if (!text) throw new Error('Empty response from Gemini');
+
   const parsed = JSON.parse(text);
 
   // Validate structure
@@ -169,7 +207,6 @@ async function enrichBook(book, ocrText) {
       throw new Error(`Invalid layer: missing required fields: ${JSON.stringify(layer)}`);
     }
     const validTypes = ['composition', 'translation', 'compilation', 'commentary', 'redaction', 'edition', 'abridgement', 'adaptation'];
-    // Sanitize combined types like "compilation|translation" — take the first
     if (layer.type.includes('|')) {
       layer.type = layer.type.split('|')[0].trim();
     }
@@ -182,32 +219,47 @@ async function enrichBook(book, ocrText) {
     }
   }
 
-  const usage = result.response.usageMetadata;
+  const usage = data.usageMetadata || {};
   return {
     layers: parsed.layers,
     confidence: parsed.confidence || 'medium',
     reasoning: parsed.reasoning || '',
     tokens: {
-      input: usage?.promptTokenCount || 0,
-      output: usage?.candidatesTokenCount || 0,
+      input: usage.promptTokenCount || 0,
+      output: usage.candidatesTokenCount || 0,
     },
   };
 }
 
 // ── Process with concurrency ────────────────────────────────────────
-async function processInBatches(items, fn, concurrency) {
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${ms/1000}s: ${label}`)), ms)),
+  ]);
+}
+
+async function processSequentially(items, fn) {
   const results = [];
-  for (let i = 0; i < items.length; i += concurrency) {
-    const batch = items.slice(i, i + concurrency);
-    const batchResults = await Promise.allSettled(batch.map(fn));
-    results.push(...batchResults);
+  for (let i = 0; i < items.length; i++) {
+    try {
+      const result = await withTimeout(fn(items[i]), 120000, `item ${i+1}`);
+      results.push({ status: 'fulfilled', value: result });
+    } catch (err) {
+      results.push({ status: 'rejected', reason: err });
+    }
   }
   return results;
 }
 
 // ── Main ────────────────────────────────────────────────────────────
 async function main() {
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI, {
+    connectTimeoutMS: 10000,
+    socketTimeoutMS: 30000,
+    serverSelectionTimeoutMS: 10000,
+    maxPoolSize: 5,
+  });
   await client.connect();
   const db = client.db(MONGODB_DB);
 
@@ -250,17 +302,16 @@ async function main() {
   let totalTokensIn = 0;
   let totalTokensOut = 0;
 
-  const results = await processInBatches(books, async (book) => {
+  const results = await processSequentially(books, async (book) => {
     const bookId = book.id || book._id?.toString();
     const title = book.display_title || book.title;
     processed++;
+    process.stderr.write(`  → [${processed}/${books.length}] Starting: ${title.substring(0, 60)}...\n`);
 
     try {
       // Fetch title page + early pages for context.
-      // Strategy: title_page by page_type > first 15 pages with OCR (title page
-      // is often 5-12 pages in after flyleaves, stamps, plates)
+      const pageQueryStart = Date.now();
       const [titlePages, earlyPages] = await Promise.all([
-        // 1. Pages explicitly tagged as title pages by OCR prompt
         db.collection('pages')
           .find(
             { book_id: bookId, page_type: 'title_page', 'ocr.data': { $exists: true, $ne: '' } },
@@ -269,7 +320,6 @@ async function main() {
           .sort({ page_number: 1 })
           .limit(2)
           .toArray(),
-        // 2. First 15 pages with OCR (many books have 5-10 blank/plate pages before title)
         db.collection('pages')
           .find(
             { book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } },
@@ -279,6 +329,7 @@ async function main() {
           .limit(15)
           .toArray(),
       ]);
+      process.stderr.write(`    DB query: ${Date.now() - pageQueryStart}ms\n`);
 
       // Deduplicate and prioritize: title pages first, then early pages with
       // substantial text (skip near-blank pages like "[Blank Page]")
@@ -307,7 +358,9 @@ async function main() {
         .join('\n\n')
         .slice(0, 6000); // cap total context
 
+      const geminiStart = Date.now();
       const result = await enrichBook(book, ocrText);
+      process.stderr.write(`    Gemini: ${Date.now() - geminiStart}ms\n`);
       totalTokensIn += result.tokens.input;
       totalTokensOut += result.tokens.output;
 
@@ -365,7 +418,7 @@ async function main() {
       console.error(`  [${processed}/${books.length}] ${title} — ERROR: ${err.message}`);
       return { bookId, title, error: err.message };
     }
-  }, CONCURRENCY);
+  });
 
   // Summary
   const costIn = (totalTokensIn / 1_000_000) * 0.15;   // Gemini 2.5 Flash input

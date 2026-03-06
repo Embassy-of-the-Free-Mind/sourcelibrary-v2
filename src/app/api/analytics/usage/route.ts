@@ -98,7 +98,6 @@ export const GET = withAuth(async (request, session) => {
       // Falls back to raw gemini_usage scan if daily collection is empty
       (async () => {
         const cutoffStr = cutoffDate.toISOString().slice(0, 10);
-        const todayStr = new Date().toISOString().slice(0, 10);
 
         // Read pre-aggregated daily docs
         const dailyDocs = await db.collection('gemini_usage_daily')

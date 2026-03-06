@@ -478,6 +478,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         updates.thumbnail = directUrl;
       }
 
+      updates.thumbnail_source = 'manual';
       await books.update(bookId, updates);
     } catch (error) {
       console.error('Error setting cover:', error);
