@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 /**
- * Re-verify all books currently marked as first translations using the
- * new catalog-backed verification pipeline.
+ * Verify first-translation status for non-English books using the
+ * catalog-backed verification pipeline (Gemini function calling).
  *
- * Finds books where `is_first_translation: true` but either:
- *   - No `translation_verification` record exists (old classification), OR
- *   - Existing verification has low confidence
+ * Modes:
+ *   --apply           Persist results to MongoDB (default is dry-run)
+ *   --all             Verify ALL non-English books without new-style verification
+ *   --book-id=ID      Verify a single book
+ *   (no flags)        Re-verify books currently marked is_first_translation=true
+ *                     that lack new-style verification
  *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/enrichment/cleanup-first-translation-claims.mjs
- *   node scripts/enrichment/cleanup-first-translation-claims.mjs --dry-run
- *   node scripts/enrichment/cleanup-first-translation-claims.mjs --apply
- *   node scripts/enrichment/cleanup-first-translation-claims.mjs --book-id=SOME_ID
+ *   set -a; source .env.production.local; set +a
+ *   npx tsx scripts/enrichment/cleanup-first-translation-claims.mjs --apply --all
+ *   npx tsx scripts/enrichment/cleanup-first-translation-claims.mjs --book-id=SOME_ID
  */
 
 import { MongoClient } from 'mongodb';
@@ -42,6 +44,7 @@ const env = loadEnv();
 const MONGODB_URI = env.MONGODB_URI;
 const MONGODB_DB = env.MONGODB_DB || 'bookstore';
 const DRY_RUN = !process.argv.includes('--apply');
+const ALL_MODE = process.argv.includes('--all');
 const SINGLE_BOOK = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 
 // ── Dynamic import of verification function ─────────────────────────
@@ -63,21 +66,27 @@ async function main() {
 
   console.log(`Mode: ${DRY_RUN ? 'DRY RUN (use --apply to make changes)' : 'APPLY'}`);
 
-  // Find misclassified candidates
-  const query = SINGLE_BOOK
-    ? { id: SINGLE_BOOK }
-    : {
-        $or: [
-          // Claimed first translation but never verified with catalogs
-          { is_first_translation: true, 'translation_verification.verified_at': { $exists: false } },
-          // Old-style verification (no tools_called = pre-catalog weak check)
-          { is_first_translation: true, 'translation_verification.tools_called': { $exists: false } },
-          // Verified but low confidence (string comparison)
-          { is_first_translation: true, 'translation_verification.confidence': 'low' },
-        ],
-        // Skip English books
-        language: { $nin: ['English', 'english'] },
-      };
+  // Find candidates
+  let query;
+  if (SINGLE_BOOK) {
+    query = { id: SINGLE_BOOK };
+  } else if (ALL_MODE) {
+    // All non-English books that don't yet have new-style verification
+    query = {
+      language: { $nin: ['English', 'english', null, ''] },
+      'translation_verification.tools_called': { $exists: false },
+    };
+  } else {
+    // Default: only re-verify books already marked as first translations
+    query = {
+      $or: [
+        { is_first_translation: true, 'translation_verification.verified_at': { $exists: false } },
+        { is_first_translation: true, 'translation_verification.tools_called': { $exists: false } },
+        { is_first_translation: true, 'translation_verification.confidence': 'low' },
+      ],
+      language: { $nin: ['English', 'english'] },
+    };
+  }
 
   const candidates = await db.collection('books')
     .find(query)
@@ -99,6 +108,7 @@ async function main() {
   // Show what we found
   const stats = { first: 0, exists: 0, first_full: 0, needs_review: 0, errors: 0 };
   const mismatches = [];
+  const newFirstTranslations = [];
 
   // Import verification function dynamically
   let verifyFirstTranslation;
@@ -132,7 +142,7 @@ async function main() {
 
           const wouldChange = book.is_first_translation && v.disposition === 'translation_exists';
           const marker = wouldChange ? ' ** MISMATCH **' : '';
-          console.log(`${v.disposition} (${(v.confidence * 100).toFixed(0)}%)${marker}`);
+          console.log(`${v.disposition} (${${v.confidence || 'n/a'})${marker}`);
 
           if (wouldChange) {
             mismatches.push({
@@ -162,7 +172,17 @@ async function main() {
           stats[v.disposition === 'translation_exists' ? 'exists' :
                 v.disposition === 'first_full_translation' ? 'first_full' :
                 v.disposition === 'needs_review' ? 'needs_review' : 'first']++;
-          console.log(`${v.disposition} (${(v.confidence * 100).toFixed(0)}%)`);
+
+          const wasFirst = book.is_first_translation;
+          const isNowFirst = v.disposition === 'first_translation' || v.disposition === 'first_full_translation';
+          const newDiscovery = !wasFirst && isNowFirst;
+          const lostStatus = wasFirst && v.disposition === 'translation_exists';
+          const marker = newDiscovery ? ' ** NEW **' : lostStatus ? ' ** MISMATCH **' : '';
+          console.log(`${v.disposition} (${v.confidence || 'n/a'})${marker}`);
+
+          if (newDiscovery) {
+            newFirstTranslations.push({ id: book.id, title, author: book.author });
+          }
         } else {
           stats.errors++;
           console.log(`ERROR: ${result.error}`);
@@ -184,12 +204,19 @@ async function main() {
   console.log(`  Needs manual review: ${stats.needs_review}`);
   console.log(`  Errors: ${stats.errors}`);
 
+  if (newFirstTranslations.length > 0) {
+    console.log(`\n── ${newFirstTranslations.length} Newly Discovered First Translations ──\n`);
+    for (const b of newFirstTranslations) {
+      console.log(`  ${b.title} (${b.author}) — ${b.id}`);
+    }
+  }
+
   if (DRY_RUN && mismatches.length > 0) {
     console.log(`\n── ${mismatches.length} Mismatches (would change is_first_translation to false) ──\n`);
     for (const m of mismatches) {
       console.log(`  ${m.title} (${m.author})`);
       console.log(`    ID: ${m.id}`);
-      console.log(`    Disposition: ${m.disposition} (${(m.confidence * 100).toFixed(0)}%)`);
+      console.log(`    Disposition: ${m.disposition} (${m.confidence || 'n/a'})`);
       console.log(`    Reasoning: ${m.reasoning}`);
       if (m.translations_found?.length > 0) {
         console.log(`    Known translations:`);
