@@ -78,9 +78,9 @@ async function getFeaturedCollections() {
   const results = await Promise.all(collections.map(async (collection) => {
     const images = collection.featured_images || [];
     const hero = images.find(
-      (img: Record<string, unknown>) => img.extracted_url || img.image_url || img.thumbnail_url
+      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
     );
-    const heroUrl = hero?.extracted_url || hero?.image_url || hero?.thumbnail_url || null;
+    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
 
     const books = await db.collection('books').aggregate([
       {
@@ -120,9 +120,9 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
     const hero = images.find(
-      (img: Record<string, unknown>) => img.extracted_url || img.image_url || img.thumbnail_url
+      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
     );
-    const heroUrl = hero?.extracted_url || hero?.image_url || hero?.thumbnail_url || null;
+    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
     const languageValues = Array.isArray(rest.languages)
       ? rest.languages
       : [];
