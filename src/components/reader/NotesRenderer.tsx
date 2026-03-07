@@ -9,6 +9,9 @@ import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 
+// Page types where the entire "translation" is AI-generated description (no original text)
+const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'illustration', 'map', 'frontispiece', 'diagram']);
+
 interface NotesRendererProps {
   text: string;
   className?: string;
@@ -16,6 +19,7 @@ interface NotesRendererProps {
   showNotes?: boolean; // Default true - show inline notes (margin, gloss, etc.)
   language?: string; // Optional language for RTL detection
   columns?: number; // Number of text columns (from page.columns metadata). Used as fallback when no <column-break/> marker exists.
+  pageType?: string; // Page type from OCR (frontispiece, illustration, etc.). When non-text type, all content is treated as notes.
 }
 
 /**
@@ -679,8 +683,12 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
   );
 }
 
-export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns }: NotesRendererProps) {
+export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
+
+  // For non-text page types (frontispiece, illustration, etc.), all content is AI description
+  const isDescriptionOnly = pageType ? DESCRIPTION_ONLY_PAGE_TYPES.has(pageType) : false;
+
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
   const withLatex = useMemo(() => preprocessLatexSuperscripts(withBracketTags), [withBracketTags]);
   const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withLatex), [withLatex]);
@@ -727,6 +735,15 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
     return (
       <div className={`text-[var(--text-muted)] italic ${className}`}>
         No content yet...
+      </div>
+    );
+  }
+
+  // For non-text pages, all content is AI description — hide when notes are off
+  if (isDescriptionOnly && !showNotes) {
+    return (
+      <div className={`text-[var(--text-muted)] italic text-sm ${className}`}>
+        {(metadata.pageType || pageType || 'Image').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} page — toggle Notes to see description
       </div>
     );
   }
