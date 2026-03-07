@@ -50,3 +50,5 @@ Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page
 - Schema.org structured data: @.claude/docs/structured-data.md
 - Style system (colors, tokens, shared constants): @.claude/docs/style-system.md
 - Full processing pipeline (states, crons, prompts, costs): @.claude/docs/pipeline.md
+- First translation identification system: @.claude/docs/first-translation-system.md
+- Thumbnails & cover selection: @.claude/docs/thumbnails.md
