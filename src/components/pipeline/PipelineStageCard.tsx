@@ -30,7 +30,7 @@ export const STAGE_DETAILS: StageDetail[] = [
     description: 'Page images are archived from external sources to Vercel Blob, ensuring long-term availability. Original URLs are always preserved for provenance.',
     backend: 'Hetzner server (external script) + cron check',
     notes: [
-      'Also generates thumbnails and handles split detection for two-page spreads',
+      'Generates thumbnails; split detection uses aspect ratio analysis to identify two-page spreads',
       '24h timeout — OCR works on original IIIF URLs if archiving stalls',
     ],
   },

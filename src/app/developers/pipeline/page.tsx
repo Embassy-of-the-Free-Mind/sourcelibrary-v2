@@ -237,7 +237,7 @@ export default async function PipelineArchitecturePage() {
           />
           <BehaviorCard
             title="Split Detection"
-            description="Digitized books often have two-page spreads. A cascade of heuristic, ML, and Gemini vision detection identifies spreads and computes crop coordinates (0-1000 scale) for each half."
+            description="Digitized books often have two-page spreads scanned as a single image. On import, the system samples pages and uses aspect ratio analysis (< 0.9 = single, > 1.3 = spread) to flag books that need splitting. Crop coordinates (0-1000 scale) are computed for each half. Heuristic, ML, and Gemini vision methods exist for per-page refinement."
           />
           <BehaviorCard
             title="FIFO Context Chain"
@@ -375,6 +375,38 @@ export default async function PipelineArchitecturePage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* ── Beyond the pipeline ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Beyond the Pipeline</h2>
+        <p className="text-secondary mb-4">
+          Once books reach &ldquo;complete,&rdquo; several downstream systems build on the processed data.
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 mb-16">
+          <MechCard
+            title="Scholarly Editions & DOI"
+            description="Completed translations can be published as citable scholarly editions with DOIs via Zenodo. Each edition is an immutable snapshot with content hash, AI-generated introduction and methodology, contributor tracking (AI + human), and citations in APA and BibTeX formats. Versioning is supported — republishing creates a new version."
+          />
+          <MechCard
+            title="Gallery"
+            description="Extracted illustrations, emblems, diagrams, and engravings from all books form a browsable gallery with AI-generated museum-style descriptions, subject tags, bounding boxes, and quality scores. Gallery images feed the social media system for automated tweet generation."
+          />
+          <MechCard
+            title="Encyclopedia"
+            description="AI-generated book indexes (people, places, concepts) are aggregated into an encyclopedia with cross-references across the entire library. Entity pages show every book that mentions a person or concept, with page-level links."
+          />
+          <MechCard
+            title="First Translation Identification"
+            description="A two-stage verification system identifies books that are the first known English translation of a historical text. Stage 1 (AI metadata enrichment) classifies during processing. Stage 2 (LLM deep knowledge check) verifies against known translations, academic publishers, and dissertations."
+          />
+          <MechCard
+            title="GitHub Sync"
+            description="On completion, full book text (OCR + translations) is synced to a public GitHub repository as plain text files — a permanent, version-controlled archive independent of the web application and database."
+          />
+          <MechCard
+            title="MCP Server & API"
+            description="The full library is accessible via a Model Context Protocol server (for AI assistants) and a REST API. Seven tools let AI models search books, read translations, and find illustrations across 4,800+ historical texts."
+          />
         </div>
 
         {/* ── Links ── */}
