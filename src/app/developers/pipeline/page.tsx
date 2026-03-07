@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import PipelineDiagram, { type StageData } from '@/components/pipeline/PipelineDiagram';
-import PipelineStageCard, { STAGE_DETAILS } from '@/components/pipeline/PipelineStageCard';
 import { getDb } from '@/lib/mongodb';
 
 export const metadata: Metadata = {
@@ -175,7 +174,7 @@ export default async function PipelineArchitecturePage() {
         <h2 className="text-2xl md:text-3xl text-primary mb-2">Processing Flow</h2>
         <p className="text-secondary mb-6">
           Each book passes through 10 stages. Two crons orchestrate the pipeline every 10 minutes.
-          Hover over a stage to see sub-status counts. Click to jump to details below.
+          Click any stage to expand its details.
         </p>
 
         <div className="bg-white rounded-xl border border-border-light p-4 md:p-6 mb-12">
@@ -199,14 +198,6 @@ export default async function PipelineArchitecturePage() {
             )}
           </div>
         )}
-
-        {/* ── Stage details ── */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Stage Details</h2>
-        <div className="space-y-4 mb-16">
-          {STAGE_DETAILS.map((stage) => (
-            <PipelineStageCard key={stage.id} stage={stage} />
-          ))}
-        </div>
 
         {/* ── Safety mechanisms ── */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Safety Mechanisms</h2>
