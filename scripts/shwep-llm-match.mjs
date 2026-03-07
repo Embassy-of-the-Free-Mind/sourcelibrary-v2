@@ -22,13 +22,17 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;
 const MODEL = 'gemini-2.5-flash';
 const EPISODES_PER_BATCH = 15;
 
 const args = process.argv.slice(2);
+const GEMINI_API_KEY = args.includes('--key=default')
+  ? process.env.GEMINI_API_KEY
+  : (process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY);
 const dryRun = args.includes('--dry-run');
+const relatedMode = args.includes('--related');
+const forceMode = args.includes('--force');
 const singleBatch = args.find(a => a.startsWith('--batch='));
 const singleBatchNum = singleBatch ? parseInt(singleBatch.split('=')[1]) : null;
 
@@ -126,19 +130,33 @@ function buildCatalogText(books) {
 
 // ── Build episode batch text ─────────────────────────────────────────────────
 
-function buildEpisodeBatchText(episodes) {
+function loadReadingLists() {
+  const rlPath = path.join(__dirname, '..', 'src', 'data', 'shwep-reading-lists.json');
+  if (fs.existsSync(rlPath)) {
+    return JSON.parse(fs.readFileSync(rlPath, 'utf-8'));
+  }
+  return {};
+}
+
+function buildEpisodeBatchText(episodes, readingLists = {}) {
   return episodes.map(ep => {
     let text = `EPISODE ${ep.number}: "${ep.title}" [Period: ${ep.period}]`;
     if (ep.description) text += `\nDescription: ${ep.description}`;
     if (ep.tags.length > 0) text += `\nTopics: ${ep.tags.join(', ')}`;
+    const rl = readingLists[String(ep.number)];
+    if (rl) {
+      // Truncate reading list to ~2000 chars to stay within context budget
+      const truncated = rl.length > 2000 ? rl.slice(0, 2000) + '\n[truncated]' : rl;
+      text += `\nReading List from episode page:\n${truncated}`;
+    }
     return text;
   }).join('\n\n---\n\n');
 }
 
 // ── Call Gemini ──────────────────────────────────────────────────────────────
 
-async function callGemini(catalogText, episodeBatchText, batchIndex) {
-  const prompt = `You are matching podcast episodes to a library of primary source books.
+async function callGemini(catalogText, episodeBatchText, batchIndex, useRelatedPrompt = false) {
+  const standardPrompt = `You are matching podcast episodes to a library of primary source books.
 
 The podcast is SHWEP (Secret History of Western Esotericism Podcast), which covers the history of western esotericism from ancient Near East through the Renaissance and beyond. Each episode discusses specific ancient/historical texts, authors, and traditions.
 
@@ -156,7 +174,29 @@ RULES:
 - When multiple editions of the same work exist (e.g. 5 editions of the Corpus Hermeticum), include ALL of them — readers benefit from seeing different editions
 - Pay attention to the episode's period/era — an episode about ancient Egypt shouldn't match Renaissance texts unless those Renaissance texts are translations/commentaries of the ancient sources
 - The "Topics" field lists author/text names from the episode — use these as strong hints but verify against the catalog
-- MAXIMUM 40 books per episode. Most episodes should have 0-15.
+- The "Reading List" (if present) is scraped from the episode's webpage and lists works cited or recommended — use these to identify which primary texts the episode discusses. Match the PRIMARY SOURCES mentioned in the reading list against the catalog. Do NOT match secondary scholarship (modern academic books ABOUT the primary sources).
+- MAXIMUM 40 books per episode. Most episodes should have 0-15.`;
+
+  const relatedPrompt = `You are matching podcast episodes to a library of primary source books.
+
+The podcast is SHWEP (Secret History of Western Esotericism Podcast), which covers the history of western esotericism from ancient Near East through the Renaissance and beyond.
+
+Below is a CATALOG of ~4,800 books in the Source Library — mostly primary sources from antiquity through the early modern period (ancient philosophy, Hermetica, alchemy, astrology, Neoplatonism, Kabbalah, Renaissance magic, etc.).
+
+These episodes are interviews, overviews, or introductory episodes that don't focus on specific primary texts. Your task: identify **primary sources from the catalog that are most relevant to the topic, tradition, or scholar's area of expertise discussed**.
+
+RULES:
+- Match the KEY primary sources that a listener would want to read to go deeper on the episode's topic
+- For interviews with scholars: match the primary sources that the scholar's work focuses on
+- For overview/intro episodes: match the most important primary sources for that tradition or period
+- For episodes about a specific tradition (e.g. Mithraism, Manichaeism, early Islam): include the major surviving primary texts
+- Include multiple editions of the same work if available
+- Aim for 5-20 relevant books per episode — these should be genuinely relevant, not tangentially related
+- Quality over quantity: better to have 5 excellent matches than 20 mediocre ones`;
+
+  const chosenPrompt = useRelatedPrompt ? relatedPrompt : standardPrompt;
+
+  const prompt = `${chosenPrompt}
 
 Return a JSON object mapping episode numbers to arrays of book IDs:
 {
@@ -182,7 +222,7 @@ Return ONLY the JSON object, no other text.`;
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 300000); // 5 min timeout
+      const timeout = setTimeout(() => controller.abort(), 600000); // 10 min timeout
 
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}`,
@@ -282,28 +322,25 @@ async function main() {
   const catalogText = buildCatalogText(books);
   console.log(`  Catalog text: ${(catalogText.length / 1024).toFixed(0)}KB (~${Math.round(catalogText.length / 4000)}K tokens)`);
 
+  const readingLists = loadReadingLists();
+  const rlCount = Object.keys(readingLists).length;
+  console.log(`  ${rlCount} episode reading lists loaded`);
+
   if (dryRun) {
     console.log('\n=== DRY RUN ===');
     console.log(`Batches needed: ${Math.ceil(episodes.length / EPISODES_PER_BATCH)}`);
     console.log(`Episodes per batch: ${EPISODES_PER_BATCH}`);
     console.log(`\nSample episode batch text (first 3):`);
-    console.log(buildEpisodeBatchText(episodes.slice(0, 3)));
+    console.log(buildEpisodeBatchText(episodes.slice(0, 3), readingLists));
     console.log(`\nSample catalog (first 5 books):`);
     console.log(books.slice(0, 5).map(b => `[${b.id}] "${b.title}" by ${b.author} (${b.year}) [${b.language}] — ${b.brief}`).join('\n'));
     return;
   }
 
-  // Split into batches
-  const batches = [];
-  for (let i = 0; i < episodes.length; i += EPISODES_PER_BATCH) {
-    batches.push(episodes.slice(i, i + EPISODES_PER_BATCH));
-  }
-  console.log(`\n${batches.length} batches of ~${EPISODES_PER_BATCH} episodes each`);
-
-  // Load existing matches if resuming
+  // Load existing matches if resuming (skip if --force)
   const allMatches = {};
   const outputPath = path.join(__dirname, '..', 'src', 'data', 'shwep-book-matches.ts');
-  if (fs.existsSync(outputPath)) {
+  if (!forceMode && fs.existsSync(outputPath)) {
     const existing = fs.readFileSync(outputPath, 'utf-8');
     const idRegex = /(\d+):\s*\[([^\]]+)\]/g;
     let m;
@@ -313,6 +350,20 @@ async function main() {
     }
     console.log(`Loaded ${Object.keys(allMatches).length} existing episode matches from previous run`);
   }
+
+  // In --related mode, only process episodes with no existing matches
+  let episodesToProcess = episodes;
+  if (relatedMode) {
+    episodesToProcess = episodes.filter(ep => !allMatches[String(ep.number)]);
+    console.log(`\n--related mode: ${episodesToProcess.length} unmatched episodes to process`);
+  }
+
+  // Split into batches
+  const batches = [];
+  for (let i = 0; i < episodesToProcess.length; i += EPISODES_PER_BATCH) {
+    batches.push(episodesToProcess.slice(i, i + EPISODES_PER_BATCH));
+  }
+  console.log(`${batches.length} batches of ~${EPISODES_PER_BATCH} episodes each`);
 
   // Process batches
   const batchesToRun = singleBatchNum !== null ? [singleBatchNum] : Array.from({ length: batches.length }, (_, i) => i);
@@ -335,7 +386,7 @@ async function main() {
     console.log(`\nProcessing batch ${batchIdx}/${batches.length - 1} (episodes: ${epNums})...`);
 
     try {
-      const result = await callGemini(catalogText, buildEpisodeBatchText(batch), batchIdx);
+      const result = await callGemini(catalogText, buildEpisodeBatchText(batch, readingLists), batchIdx, relatedMode);
 
       let totalBooks = 0;
       for (const [epNum, bookIds] of Object.entries(result)) {
