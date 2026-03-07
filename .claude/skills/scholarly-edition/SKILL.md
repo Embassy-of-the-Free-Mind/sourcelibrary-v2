@@ -14,6 +14,8 @@ Before starting, verify the book has:
 - Completed translations for all pages
 - Book metadata (title, author, language, publication date)
 
+**Authentication:** Steps 2, 3, and 5 require admin authentication. When running as a Claude Code agent, requests go through the local dev server or use session cookies automatically. For manual curl commands, you need an authenticated session.
+
 ## Workflow Steps
 
 ### Step 1: Gather Book Information

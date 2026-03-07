@@ -270,7 +270,7 @@ curl -s "https://sourcelibrary.org/api/search?q=QUERY&limit=20"
 # Supports: language, category, year_from, year_to, sort, first_translation filters
 ```
 
-### Get Pipeline Stats
+### Get Pipeline Stats (requires admin auth)
 ```bash
 curl -s "https://sourcelibrary.org/api/admin/processing-dashboard"
 # Returns: progress bins, costs, error categories, velocity
@@ -355,7 +355,7 @@ When verifying OCR pipeline:
 
 ### Check Batch Job Status
 ```bash
-# List batch jobs
+# List batch jobs (requires admin auth)
 curl -s "https://sourcelibrary.org/api/batch-jobs/list?limit=20" | jq '.jobs | group_by(.status) | map({status: .[0].status, count: length})'
 
 # Check specific book OCR coverage (uses cached counts — accurate enough for auditing)
