@@ -25,6 +25,28 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'ocr-consistency',
+    title: 'How Consistent Is AI OCR?',
+    subtitle: 'A digitization error gave us 1,448 natural experiments — two photographs of the same page, OCR\'d independently by Gemini. Character-level comparison reveals a 1.8% median disagreement rate across six languages.',
+    date: '7 March 2026',
+    readTime: '12 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg',
+    imageAlt: 'Page spread from Einleitung zum wahren und gründlichen Erkänntnis des grossen Geheimnisses der Gottseligkeit, an early modern German alchemical text',
+  },
+  {
+    slug: 'cuneiform-ocr',
+    title: 'Can AI Read Cuneiform?',
+    subtitle: 'We tested Gemini 3 Flash on cuneiform tablets from the oldest writing system on Earth. It correctly identified Law 196 of the Code of Hammurabi and detected a 2,500-year-old forgery — but also hallucinated an entire document.',
+    date: '7 March 2026',
+    readTime: '20 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg',
+    imageAlt: 'Code of Hammurabi stele detail showing cuneiform inscription, ca. 1750 BCE',
+  },
+  {
     slug: 'rithmomachia',
     title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
     subtitle: 'Five treatises in five languages document a mathematical board game played across Europe for six centuries — where you capture by arithmetic and win by creating harmony.',
