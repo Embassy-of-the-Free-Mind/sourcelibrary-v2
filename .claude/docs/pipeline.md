@@ -533,6 +533,18 @@ curl -X POST https://sourcelibrary.org/api/admin/enroll-pipeline \
   -d '{"reEnrollFailed": true}'
 ```
 
+### Claude Code Skills
+
+Three skills wrap common pipeline operations:
+
+| Skill | Stages | What it does |
+|-------|--------|-------------|
+| `/curator` or `/library-curator` | Import | Discovers books from digital archives (IA, Gallica, MDZ, etc.), evaluates relevance, calls import APIs. Entry point to the pipeline. |
+| `/batch-translate` | OCR → Translate | Orchestrates Lambda OCR and translation jobs for specific books. Handles crop generation for split pages. |
+| `/extract-images` | Image Extraction | Queues image extraction Lambda jobs, evaluates results, runs quality checks. |
+
+Skills call the same API routes documented above — they're convenience wrappers, not separate systems.
+
 ---
 
 ## Cost Estimates
