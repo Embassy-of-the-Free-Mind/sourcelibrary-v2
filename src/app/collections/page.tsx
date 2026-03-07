@@ -54,10 +54,9 @@ export default async function CollectionsPage() {
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
         {collections.map((col) => {
           const hero = col.featured_images?.find(
-            img => img.thumbnail_url || img.extracted_url || img.image_url
+            img => img.extracted_url || img.image_url || img.thumbnail_url
           );
-          // Prefer thumbnail (smaller) for card display — extracted_url can be 2MB+
-          const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+          const heroUrl = hero?.extracted_url || hero?.image_url || hero?.thumbnail_url;
           const topLangs = (col.languages || []).slice(0, 3).map(l => l.lang).join(', ');
 
           return (

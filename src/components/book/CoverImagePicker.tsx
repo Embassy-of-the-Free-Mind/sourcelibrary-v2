@@ -79,6 +79,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         updates.thumbnail = directUrl;
       }
 
+      updates.thumbnail_source = 'manual';
       await books.update(bookId, updates);
       setDisplayThumbnail((updates.thumbnail || updates.thumbnail_blob) as string);
       setIsOpen(false);

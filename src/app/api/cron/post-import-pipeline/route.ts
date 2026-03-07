@@ -106,8 +106,9 @@ async function fixStaleThumbnail(
 ) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { thumbnail: 1 } }
+    { projection: { thumbnail: 1, thumbnail_source: 1 } }
   );
+  if (book?.thumbnail_source === 'manual') return;
   if (!book?.thumbnail?.includes('/uploads/')) return;
 
   const hasCroppedPages = await db.collection('pages').countDocuments({
