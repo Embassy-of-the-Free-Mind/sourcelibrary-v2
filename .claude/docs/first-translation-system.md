@@ -181,6 +181,56 @@ Stage 2 is currently a standalone backfill script. Future work (GitHub issue #12
 
 ---
 
+## Data Quality Fix (March 7, 2026)
+
+Three pre-March-2026 scripts wrote `translation_verification` records with buggy disposition logic, non-standard field names, and no `stage` marker. These were cleared and re-verified.
+
+### Old Scripts and Their Bugs
+
+**1. `scripts/enrichment/search-translation-evidence.mjs`** (872 records, `source: 'catalog_search'`, no stage)
+- Searched Open Library, Google Books, and Internet Archive catalogs
+- When all 3 APIs returned 0 results, wrote `has_english_translation: false` — a negative claim based solely on catalog absence
+- Disposition was set later by `validate-translation-evidence.mjs`
+
+**2. `scripts/enrichment/validate-translation-evidence.mjs`** (set dispositions on the 872 above)
+- **Path B bug:** When catalog AND LLM both found nothing, set `disposition: 'confirmed_first'` without checking Stage 1's assessment. Books where Stage 1 said `has_translation` could still get `confirmed_first`.
+- This caused 123 Type B disagreements (Stage 1 = HAS, Stage 2 = FIRST)
+
+**3. `scripts/enrichment/verify-first-translations.mjs`** (458 records, `source: 'gemini_knowledge_lookup'`, no stage)
+- Latin-only LLM check using `gemini-2.5-flash`
+- Stored raw LLM results without computing disposition
+- Some records had no disposition at all
+
+**4. Unknown old script** (826 records, `source: null`)
+- Used non-standard disposition values: `first_translation` (744), `translation_exists` (41), `first_full_translation` (31), `translation_found` (16)
+
+### Key Insight
+
+Stage 2 can verify that a translation **exists** (by citing a specific translator, publisher, year) but cannot prove one **doesn't exist**. The old scripts' `confirmed_first` disposition was logically invalid — absence of evidence in catalogs or LLM knowledge is not evidence of absence.
+
+Current Stage 2 dispositions:
+- `translation_found` — verified, trustworthy (cites specific translations)
+- `confirmed_first` — LLM's best guess, NOT actually confirmed
+- `needs_review` — low confidence
+
+### Fix Applied
+
+Script: `_tmp-fix-old-verification.mjs`
+
+1. Identified old records: any `translation_verification` without `stage: 2` (2,156 records)
+2. Cleared all old records using `$unset`
+3. Reset `is_first_translation` from Stage 1 (`ai_metadata.first_translation.status`):
+   - 52 books flipped to `true` (old verification incorrectly set false)
+   - 220 books flipped to `false` (old verification incorrectly set true)
+   - 1,797 unchanged, 87 had no Stage 1 data
+4. Re-ran `_tmp-verify-ft-stage2.mjs` on the 2,156 affected books with fresh Stage 2 data
+
+### Good Records Preserved
+
+923 records with `source: 'gemini_knowledge_lookup'` AND `stage: 2` were kept — these were created by the current `_tmp-verify-ft-stage2.mjs` script with correct disposition logic.
+
+---
+
 ## Known Limitations
 
 1. **LLM hallucination risk:** Stage 2 uses Gemini's knowledge — it may claim translations exist that don't, or miss obscure translations. The `needs_review` disposition catches low-confidence cases.

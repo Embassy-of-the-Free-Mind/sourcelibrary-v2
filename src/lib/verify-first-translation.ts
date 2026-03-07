@@ -32,7 +32,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // ── Types ─────────────────────────────────────────────────────────────
 
 export interface TranslationVerification {
-  disposition: 'first_translation' | 'translation_exists' | 'first_full_translation' | 'needs_review';
+  disposition: 'confirmed_first' | 'translation_found' | 'needs_review';
   confidence: 'high' | 'medium' | 'low';
   reasoning: string;
   translations_found: Array<{
@@ -48,6 +48,8 @@ export interface TranslationVerification {
   verified_at: Date;
   model: string;
   cost_usd: number;
+  source: string;
+  stage: number;
 }
 
 export interface VerificationResult {
@@ -128,8 +130,8 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
       properties: {
         disposition: {
           type: Type.STRING,
-          description: 'The verdict: "first_translation" (no complete English translation exists), "translation_exists" (complete English translation already published), "first_full_translation" (only partial/excerpt translations exist), "needs_review" (evidence is inconclusive)',
-          enum: ['first_translation', 'translation_exists', 'first_full_translation', 'needs_review'],
+          description: 'The verdict: "confirmed_first" (no complete English translation exists — this is a first translation), "translation_found" (complete English translation already published), "needs_review" (evidence is inconclusive or only partial/excerpt translations exist)',
+          enum: ['confirmed_first', 'translation_found', 'needs_review'],
         },
         confidence: {
           type: Type.STRING,
@@ -572,9 +574,11 @@ export async function verifyFirstTranslation(
       verified_at: new Date(),
       model: MODEL,
       cost_usd: costUsd,
+      source: 'catalog_and_llm',
+      stage: 2,
     };
 
-    const isFirstTranslation = disposition === 'first_translation' || disposition === 'first_full_translation';
+    const isFirstTranslation = disposition === 'confirmed_first';
 
     // Persist to database (skip in dry-run mode)
     if (!options?.dryRun) {
