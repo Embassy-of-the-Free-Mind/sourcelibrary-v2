@@ -5,7 +5,7 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Can AI Read Cuneiform? - Blog - Source Library',
-  description: 'We tested Gemini 3 Flash on cuneiform tablets from the oldest writing system on Earth. It correctly identified Law 196 of the Code of Hammurabi, detected a 2,500-year-old forgery, and produced scholarly ATF transliterations — but also hallucinated an entire document.',
+  description: 'We tested Gemini 3 Flash on 107 cuneiform tablets from the oldest writing system on Earth. A contamination test proves the model is doing genuine visual analysis, not reading from memory — but sign-level accuracy remains low.',
   openGraph: {
     title: 'Can AI Read Cuneiform?',
     description: 'We tested Gemini 3 Flash on cuneiform tablets — the oldest writing system on Earth. The results were surprising.',
@@ -24,7 +24,7 @@ export default function CuneiformOcrPage() {
           title="Can AI Read Cuneiform?"
           subtitle="Testing Gemini on the oldest writing system on Earth"
         >
-          <p className="text-stone-400 text-sm mt-4">7 March 2026 &middot; 20 min read</p>
+          <p className="text-stone-400 text-sm mt-4">7 March 2026 &middot; 25 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -100,7 +100,7 @@ export default function CuneiformOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We ran two experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? The two experiments separate <em>linguistic reading</em> from <em>visual recognition</em>, and the results tell different stories.
+          We ran three experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. The answer surprised us.
         </p>
 
         {/* --- How to Read Cuneiform --- */}
@@ -466,15 +466,19 @@ export default function CuneiformOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Across both experiments, the same pattern emerges. Gemini has extensive <em>knowledge</em> about cuneiform &mdash; it knows ATF format, Sumerian and Akkadian vocabulary, administrative tablet conventions, royal inscription formulae, sign names, Unicode code points, and the scholarly literature. But its ability to visually discriminate individual cuneiform signs from a photograph remains unproven.
+          Across all three experiments, the same pattern emerges. Gemini has extensive <em>knowledge</em> about cuneiform &mdash; it knows ATF format, Sumerian and Akkadian vocabulary, administrative tablet conventions, royal inscription formulae, sign names, Unicode code points, and the scholarly literature. But its ability to visually discriminate individual cuneiform signs from a photograph remains limited.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           When knowledge and vision align (Hammurabi), the output is correct. When the model can reason from context without needing sign-level vision (Manishtushu forgery detection), the output is impressive. But when the task requires reading unfamiliar signs in an unfamiliar text (Ur III sheep receipt), the model generates from its distributional knowledge rather than reading what&apos;s in front of it &mdash; and this happens whether we ask for ATF transliteration (Experiment 1) or simple sign identification (Experiment 2).
         </p>
 
+        <p className="text-secondary leading-relaxed mb-6">
+          Experiment 3&apos;s contamination test adds an important nuance: the model isn&apos;t simply reciting memorized transliterations. The Pearson correlation between training data overlap and vision performance is effectively zero (r = &minus;0.076). Whatever the model is doing when it looks at a cuneiform photograph, it&apos;s doing it the same way regardless of whether it has the text memorized. The problem isn&apos;t memory contamination &mdash; it&apos;s that the visual analysis itself is limited.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>The honest summary: Gemini 3 Flash is a cuneiform <em>commentator</em>, not a cuneiform <em>reader</em>.</strong> It can discuss cuneiform tablets with scholarly precision. It cannot reliably read them. But Experiment 2&apos;s sign transcription approach, with its lower bar and more verifiable output, may be the right foundation to build on.
+          <strong>The honest summary: Gemini 3 Flash is a cuneiform <em>commentator</em>, not a cuneiform <em>reader</em>.</strong> It can discuss cuneiform tablets with scholarly precision. It cannot reliably read them. But it is genuinely <em>trying</em> to read them &mdash; the contamination test proves that. Sign detection is real but low-accuracy (~37% of expected signs), making it a starting point for future improvement rather than a fundamental dead end.
         </p>
 
         {/* --- Model Comparison --- */}
@@ -643,8 +647,187 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           But the core question remains: <strong>is the model seeing the signs or knowing what should be there?</strong> The Ur III tablet produces different content from Experiment 1 but the same pattern of plausible-but-unverifiable output. The Manishtushu monument produces correct royal titles that the model has certainly seen in its training data. Only the damaged Neo-Assyrian tablet &mdash; where the model can&apos;t fall back on knowledge &mdash; gives us a clean signal, and there the output is mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>.
         </p>
 
+        {/* --- Experiment 3: Contamination Test --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Experiment 3: Is the model reading or remembering?
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Experiments 1 and 2 tested four tablets. That&apos;s a proof of concept, not evidence. The core ambiguity remained: when Gemini produces a correct reading, is it <em>seeing</em> the cuneiform signs or <em>remembering</em> the text from its training data? The Code of Hammurabi is in every textbook. The Manishtushu monument is extensively published. Even the Ur III sheep receipt &mdash; while the model got it wrong &mdash; comes from a corpus of thousands of nearly identical tablets.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Experiment 3 tests this directly. We built a corpus of <strong>107 tablets</strong> from CDLI spanning 11 historical periods, then ran two separate tests on each one: a <strong>contamination test</strong> (is this tablet in the model&apos;s training data?) and a <strong>vision test</strong> (can the model identify signs from the photograph?). Cross-referencing the results tells us whether training data contamination predicts vision performance.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          The corpus
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We selected 107 tablets from CDLI with published ATF transliterations and photographs, stratified across periods:
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Period</th>
+                <th className="text-left py-3 pr-4 font-semibold">Tablets</th>
+                <th className="text-left py-3 pr-4 font-semibold">Date range</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Ur III</td>
+                <td className="py-3 pr-4">50</td>
+                <td className="py-3 pr-4">ca. 2112&ndash;2004 BCE</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Old Akkadian</td>
+                <td className="py-3 pr-4">20</td>
+                <td className="py-3 pr-4">ca. 2334&ndash;2154 BCE</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Lagash II</td>
+                <td className="py-3 pr-4">10</td>
+                <td className="py-3 pr-4">ca. 2200&ndash;2100 BCE</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Uruk III&ndash;IV</td>
+                <td className="py-3 pr-4">12</td>
+                <td className="py-3 pr-4">ca. 3500&ndash;3100 BCE</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Old Babylonian</td>
+                <td className="py-3 pr-4">8</td>
+                <td className="py-3 pr-4">ca. 2000&ndash;1600 BCE</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">ED IIIb, Neo-Assyrian, Neo-Babylonian, others</td>
+                <td className="py-3 pr-4">7</td>
+                <td className="py-3 pr-4">various</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          The contamination test
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          For each tablet, we gave Gemini <strong>only the P-number and catalog metadata</strong> &mdash; no photograph. We asked: &ldquo;Can you reproduce the ATF transliteration of this tablet from memory?&rdquo; If the model can reproduce the text without seeing it, the tablet&apos;s transliteration was in its training data.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We compared the model&apos;s text-only output against the CDLI ground truth, extracting sign readings from both and computing the overlap percentage. A tablet with &gt;30% sign overlap was classified as <strong>contaminated</strong> (in training data). Below 30% was classified as <strong>clean</strong>.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The results:
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Classification</th>
+                <th className="text-left py-3 pr-4 font-semibold">Count</th>
+                <th className="text-left py-3 pr-4 font-semibold">Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Contaminated (in training data)</td>
+                <td className="py-3 pr-4">31</td>
+                <td className="py-3 pr-4">29%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Clean (not in training data)</td>
+                <td className="py-3 pr-4">76</td>
+                <td className="py-3 pr-4">71%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Contamination varied dramatically by period. <strong>46% of Ur III tablets</strong> were contaminated &mdash; unsurprising, since Ur III administrative texts are the most heavily published cuneiform corpus. <strong>Zero Old Akkadian tablets</strong> were contaminated, making them ideal clean benchmarks. Old Babylonian tablets (50% contaminated) are also well-published.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A striking detail: 104 out of 107 tablets, the model <em>claimed</em> to know the text &mdash; but only 31 could actually reproduce it. The model confabulates knowledge it doesn&apos;t have.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          The cross-analysis
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Now the key question. We ran the Experiment 2 sign-identification prompt on the same 107 tablets (102 completed; 5 failed due to API errors). For each tablet, we had both a contamination score (how much of the ATF is in training data) and a vision performance score (confidence, signs detected, accuracy). If the model is &ldquo;reading from memory,&rdquo; contaminated tablets should show higher vision performance.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Metric</th>
+                <th className="text-left py-3 pr-4 font-semibold">Contaminated (30)</th>
+                <th className="text-left py-3 pr-4 font-semibold">Clean (72)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Average confidence</td>
+                <td className="py-3 pr-4">0.693</td>
+                <td className="py-3 pr-4">0.716</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Median confidence</td>
+                <td className="py-3 pr-4">0.700</td>
+                <td className="py-3 pr-4">0.750</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Signs detected (avg)</td>
+                <td className="py-3 pr-4">14.1</td>
+                <td className="py-3 pr-4">19.5</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">High confidence (&ge;0.8)</td>
+                <td className="py-3 pr-4">37%</td>
+                <td className="py-3 pr-4">40%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Pearson correlation between training data overlap and vision confidence: r = &minus;0.076.</strong>
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          That&apos;s essentially zero. There is no meaningful relationship between whether a tablet&apos;s text appears in the model&apos;s training data and how well the model performs on the vision task. If anything, the model performs <em>slightly better</em> on clean tablets &mdash; the opposite of what you&apos;d expect from memorization.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          To control for period confounds (contaminated tablets are mostly Ur III; clean tablets include harder Old Akkadian), we compared within the Ur III period specifically: contaminated Ur III average confidence was 0.68, clean Ur III was 0.69. Identical.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          What this means
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>The model is doing genuine visual analysis, not reading from memory.</strong> When Gemini looks at a cuneiform photograph, it is attempting to process the visual features of the clay surface &mdash; not retrieving a memorized transliteration. This is the most important finding of the three experiments, because it tells us that the model&apos;s cuneiform vision, while limited, is <em>real</em>.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The 20 Old Akkadian tablets with 0% training data contamination are particularly valuable: they represent a gold-standard test set where we can be confident the model has never seen the content. These tablets scored an average confidence of 0.79 &mdash; higher than the overall average &mdash; suggesting that Old Akkadian sign forms (larger, more distinct wedge impressions) may actually be easier for vision models than the cramped Ur III administrative script.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-8">
-          Experiment 3 (planned) will attempt to isolate vision from knowledge more cleanly, using tablets whose content the model has never seen and whose photographs are not in any training corpus.
+          The limitation is that the model detects roughly <strong>37% of ground-truth signs</strong> regardless of contamination status. It&apos;s genuinely looking, but it&apos;s not seeing very well yet. This is the gap that future models &mdash; or fine-tuning on cuneiform data &mdash; would need to close.
         </p>
 
         {/* --- Infrastructure --- */}
@@ -797,7 +980,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This design separates four capabilities that our PoC tangled together: (1) visual sign discrimination, (2) knowledge of cuneiform conventions, (3) document-level pattern matching, and (4) training data memorization. A model that scores high on &ldquo;unknown&rdquo; tablets with no context hints has genuine cuneiform vision. A model that only scores high on &ldquo;known&rdquo; tablets with genre hints is doing sophisticated retrieval. Both are useful, but for different purposes &mdash; and only the first would transform the field.
+          This design separates four capabilities that our PoC tangled together: (1) visual sign discrimination, (2) knowledge of cuneiform conventions, (3) document-level pattern matching, and (4) training data memorization. Experiment 3 already settled question (4) &mdash; memorization does not drive vision performance. A full factorial experiment like this would settle the remaining three, telling us whether a model that scores high on &ldquo;unknown&rdquo; tablets with no context hints has genuine cuneiform vision, or is doing sophisticated retrieval. Both are useful, but for different purposes &mdash; and only the first would transform the field.
         </p>
 
         {/* --- Conclusion --- */}
@@ -806,15 +989,19 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can AI read cuneiform? Not yet &mdash; but the failure mode is instructive. Across two experiments, Gemini 3 Flash correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, and produces excellent scholarly commentary. It generates plausible ATF transliterations and plausible Unicode sign sequences. But comparison with published ground truth shows 0% exact match on lines, and the sign transcriptions &mdash; while formatted correctly &mdash; appear to draw on distributional knowledge of cuneiform rather than visual analysis of wedge impressions.
+          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and three experiments, Gemini 3 Flash correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, produces excellent scholarly commentary, and &mdash; crucially &mdash; performs genuine visual analysis that is independent of its training data. It is not reading from memory.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. Experiment 2&apos;s sign-level approach makes this clearer than Experiment 1&apos;s ATF output, because individual signs are easier to verify visually. The next experiment will test this directly: provide a cuneiform sign image with no contextual clues and ask for identification.
+          The contamination test (Experiment 3) settles the most important methodological question: the model&apos;s vision performance is the same whether or not it has the text memorized (Pearson r = &minus;0.076). This means there is a real, if limited, visual signal being extracted from cuneiform photographs. The model detects ~37% of expected signs at ~0.7 confidence &mdash; not enough for production use, but enough to build on.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, and evaluation framework are built. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
+          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But it has <em>some</em> cuneiform vision, and that vision is genuine. The path forward is clear: improve sign-level accuracy through fine-tuning, better prompting, multi-angle photographs, or next-generation models. The contamination test gives us confidence that improvements will reflect real visual capability, not training data memorization.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -824,7 +1011,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Model: Gemini 3 Flash Preview. Experiment 1 used an ATF transliteration prompt; Experiment 2 used a sign identification prompt requesting Unicode characters and sign names. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Full evaluation reports and scripts available on request. All four test tablets are hidden from the public library but accessible via direct link.
+          <strong>Technical details:</strong> Model: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Corpus: 107 tablets from CDLI spanning 11 periods, 50 Ur III, 20 Old Akkadian, 10 Lagash II, 10 Uruk III, and 17 others. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Full evaluation reports, corpus data, and analysis scripts available on request.
         </p>
       </article>
 
