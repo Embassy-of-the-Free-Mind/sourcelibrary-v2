@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Can AI Read Cuneiform?',
     description: 'We tested Gemini 3 Flash on cuneiform tablets — the oldest writing system on Earth. The results were surprising.',
-    images: [{ url: 'https://cdli.earth/dl/photo/P464358_d.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
   },
   alternates: {
     canonical: '/blog/cuneiform-ocr',
@@ -48,7 +48,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdli.earth/dl/photo/P102318.jpg"
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg"
               alt="Ur III administrative tablet from Drehem, ca. 2100 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -59,7 +59,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdli.earth/dl/photo/P213189.jpg"
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P213189-w8UjEixlGUhd3n1Ko2sTlXgFQzDFkl.jpg"
               alt="Cruciform Monument of Manishtushu, ca. 2270 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -70,7 +70,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdli.earth/dl/photo/P464358.jpg"
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
               alt="Code of Hammurabi stele detail, ca. 1792-1750 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -81,7 +81,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdli.earth/dl/photo/P394421.jpg"
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P394421-zaEjwIliiQ1tieTAKP05Cve64ZgMak.jpg"
               alt="Neo-Assyrian medical tablet K.2421+, ca. 668-631 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -228,7 +228,7 @@ export default function CuneiformOcrPage() {
         <figure className="my-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://cdli.earth/dl/photo/P102318.jpg"
+            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg"
             alt="Ur III administrative tablet P102318 from Drehem, showing both obverse and reverse faces"
             className="w-full max-w-lg mx-auto rounded-lg shadow-md"
           />
@@ -364,7 +364,7 @@ export default function CuneiformOcrPage() {
         <figure className="my-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://cdli.earth/dl/photo/P464358.jpg"
+            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
             alt="Code of Hammurabi stele, showing relief sculpture and cuneiform text"
             className="w-full max-w-lg mx-auto rounded-lg shadow-md"
           />
@@ -406,7 +406,7 @@ export default function CuneiformOcrPage() {
         <figure className="my-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://cdli.earth/dl/photo/P213189_d.jpg"
+            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P213189_d-MshZ02KE9TpgRclT4CiGWdAPqSHCQM.jpg"
             alt="Detail of the Cruciform Monument of Manishtushu showing cuneiform inscription"
             className="w-full max-w-lg mx-auto rounded-lg shadow-md"
           />
