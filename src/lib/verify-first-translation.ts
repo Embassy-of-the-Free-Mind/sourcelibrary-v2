@@ -403,9 +403,8 @@ Example: Iamblichus' "De Mysteriis" in Ficino's Latin — even though Taylor (18
 
 ## Determination Guidelines
 
-- **first_translation**: No complete English translation of this specific ${lang} text has been published. Strong evidence = no matches across multiple sources, OR only translations from a different source language exist.
-- **translation_exists**: A complete English translation of THIS SPECIFIC ${lang} text already exists. Cite the specific translation found. The translation must be FROM THIS LANGUAGE, not from the original language of the work.
-- **first_full_translation**: Only partial translations, excerpts, or anthologized selections of this ${lang} text exist. A full/complete translation has not been published.
+- **confirmed_first**: No complete English translation of this specific ${lang} text has been published. Strong evidence = no matches across multiple sources, OR only translations from a different source language exist. Also use this when only partial translations, excerpts, or anthologized selections exist — a full/complete translation has not been published.
+- **translation_found**: A complete English translation of THIS SPECIFIC ${lang} text already exists. Cite the specific translation found. The translation must be FROM THIS LANGUAGE, not from the original language of the work.
 - **needs_review**: Evidence is conflicting or inconclusive. Use sparingly — prefer a determination when possible.
 
 Important: Be precise about matching. A translation of a different work by the same author does NOT count. A translation from a different source language (e.g. Greek→English when we have the Latin text) does NOT count. "Selected works" or "excerpts" are partial, not complete translations.`;
