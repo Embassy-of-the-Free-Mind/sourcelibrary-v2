@@ -564,8 +564,17 @@ export async function verifyFirstTranslation(
     const outputCost = (totalOutputTokens / 1_000_000) * 3.00;
     const costUsd = Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
 
+    // Normalize disposition to standard values (model may return old names)
+    const normalizedDisposition = (() => {
+      const d = (disposition as string) || '';
+      if (d === 'first_translation' || d === 'first_full_translation') return 'confirmed_first' as const;
+      if (d === 'translation_exists') return 'translation_found' as const;
+      if (['confirmed_first', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
+      return 'needs_review' as const;
+    })();
+
     const verification: TranslationVerification = {
-      disposition,
+      disposition: normalizedDisposition,
       confidence,
       reasoning,
       translations_found: translations,
@@ -577,7 +586,7 @@ export async function verifyFirstTranslation(
       stage: 2,
     };
 
-    const isFirstTranslation = disposition === 'confirmed_first';
+    const isFirstTranslation = normalizedDisposition === 'confirmed_first';
 
     // Persist to database (skip in dry-run mode)
     if (!options?.dryRun) {
