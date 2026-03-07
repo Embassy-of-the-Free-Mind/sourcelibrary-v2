@@ -288,6 +288,65 @@ export default async function PipelineArchitecturePage() {
           </table>
         </div>
 
+        {/* ── Processing history ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Processing History</h2>
+        <p className="text-secondary mb-4">
+          The pipeline above describes the current architecture. Books processed earlier went through
+          different models, prompts, and workflows. Most books are being gradually reprocessed
+          to current standards as capacity allows.
+        </p>
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-16">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light bg-stone-50">
+                <th className="text-left px-4 py-3 font-medium text-muted">Period</th>
+                <th className="text-left px-4 py-3 font-medium text-muted">What changed</th>
+                <th className="text-left px-4 py-3 font-medium text-muted">Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {
+                  period: 'Dec 2025 – Jan 2026',
+                  change: 'Initial pipeline: gemini-2.0/2.5-flash, basic OCR prompt (no page-type, columns, or image detection tags)',
+                  impact: '~75k pages with older OCR quality',
+                },
+                {
+                  period: 'Early Feb 2026',
+                  change: 'Upgraded to gemini-3-flash-preview, OCR prompt v5-v6 with XML tags (<page-type>, <columns>, <detected-images>, <language>)',
+                  impact: '~250k+ pages with current OCR quality',
+                },
+                {
+                  period: 'Feb 2026',
+                  change: 'Write Queue architecture: AI workers no longer write directly to MongoDB. Results flow through SQS → Writer Lambda',
+                  impact: 'Eliminated connection storms during large batches',
+                },
+                {
+                  period: 'Feb 2026',
+                  change: 'Translation switched to Lambda FIFO only (Batch API retired for translation). Each page gets previous page\'s translation as context',
+                  impact: 'Better terminology consistency, ~30k stale translations need redo',
+                },
+                {
+                  period: 'Feb 2026',
+                  change: 'Added Metadata Enrichment and First Translation Check stages to the pipeline',
+                  impact: '~280 confirmed first English translations identified',
+                },
+                {
+                  period: 'Mar 2026',
+                  change: 'Image extraction filters by page type — only visual pages scanned instead of every page',
+                  impact: '~80-90% cost reduction for image extraction',
+                },
+              ].map((row) => (
+                <tr key={row.period + row.change.slice(0, 20)} className="border-b border-stone-100 last:border-0">
+                  <td className="px-4 py-2.5 text-secondary whitespace-nowrap align-top font-medium">{row.period}</td>
+                  <td className="px-4 py-2.5 text-secondary">{row.change}</td>
+                  <td className="px-4 py-2.5 text-muted">{row.impact}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         {/* ── Links ── */}
         <div className="border-t border-border-light pt-8">
           <div className="flex flex-wrap gap-4">
