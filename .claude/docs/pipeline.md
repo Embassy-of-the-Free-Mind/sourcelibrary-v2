@@ -533,17 +533,11 @@ curl -X POST https://sourcelibrary.org/api/admin/enroll-pipeline \
   -d '{"reEnrollFailed": true}'
 ```
 
-### Claude Code Skills
+### Agent Curator (`/curator`)
 
-Three skills wrap common pipeline operations:
+The curator skill is the primary entry point for adding books to the pipeline. It autonomously searches digital archives (Internet Archive, Gallica, MDZ, Wellcome, e-rara, Bodleian, Cambridge, HAB, Vatican, Google Books, Europeana, Library of Congress), evaluates scholarly relevance, and calls import API routes. Usage: "agent curator search for Paracelsus works" or `/curator alchemy`. Each imported book is automatically enrolled in the auto pipeline by the Phase 0 cron.
 
-| Skill | Stages | What it does |
-|-------|--------|-------------|
-| `/curator` or `/library-curator` | Import | Discovers books from digital archives (IA, Gallica, MDZ, etc.), evaluates relevance, calls import APIs. Entry point to the pipeline. |
-| `/batch-translate` | OCR → Translate | Orchestrates Lambda OCR and translation jobs for specific books. Handles crop generation for split pages. |
-| `/extract-images` | Image Extraction | Queues image extraction Lambda jobs, evaluates results, runs quality checks. |
-
-Skills call the same API routes documented above — they're convenience wrappers, not separate systems.
+Skill definition: `.claude/skills/curator/SKILL.md`
 
 ---
 
