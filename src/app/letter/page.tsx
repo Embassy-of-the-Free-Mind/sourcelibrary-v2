@@ -449,9 +449,13 @@ export default function LetterPage() {
           <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
             <p className="text-primary font-medium text-lg mb-3">The technology is not the hard part.</p>
             <p className="font-body text-secondary leading-relaxed">
-              Building the pipeline took three months and under $10,000. But someone has to decide
-              which texts matter, validate the output, and connect the work to living research
-              communities. The technology is ready. The institutional structure is what needs building.
+              Advances in AI will keep driving digital costs toward zero. Processing a book that
+              cost $3 today will cost pennies next year. But the things that make a library more
+              than a database &mdash; curators who know which texts matter, scholars who can validate
+              translations, a physical collection that needs to be scanned, stored, and preserved,
+              a community of readers and researchers &mdash; those costs don&apos;t follow
+              Moore&apos;s Law. The technology is ready. What needs funding is the human and
+              physical infrastructure around it.
             </p>
           </div>
 
@@ -531,14 +535,18 @@ export default function LetterPage() {
               What $50,000 Enables
             </p>
             <p className="font-body text-stone-300 leading-relaxed mb-4">
-              At current costs (~$3/book for the full pipeline), $50K is enough to take the Source Library
-              from proof of concept to permanent infrastructure:
+              The digital side is nearly free. What costs money is the physical and human work
+              that no AI can replace:
             </p>
             <ul className="text-stone-300 space-y-2 ml-5 list-disc font-body">
-              <li>Complete AI translation of the full 4,800-book catalog (~$5K remaining)</li>
-              <li>Two full years of hosting and infrastructure &mdash; Vercel, AWS, MongoDB, CDN (~$17K)</li>
-              <li>Scanning equipment and a part-time operator to digitize 1,000+ unscanned EFM volumes (~$23K)</li>
-              <li>Scholarly review and DOI minting for the most-cited texts (~$5K)</li>
+              <li><strong className="text-white">Scanning equipment and operator</strong> &mdash; digitize 1,000+ unscanned EFM volumes.
+                A 500-year-old binding requires physical access, professional equipment, and a trained hand. (~$25K)</li>
+              <li><strong className="text-white">Scholarly review</strong> &mdash; fund domain experts to validate AI translations
+                of the most important texts and publish citable editions with DOIs. (~$10K)</li>
+              <li><strong className="text-white">Community building</strong> &mdash; visiting scholar program, workshops with partner
+                institutions, outreach to researchers who can use these sources. (~$10K)</li>
+              <li><strong className="text-white">Infrastructure runway</strong> &mdash; hosting, compute, and remaining AI processing
+                are modest (~$5K) and trending cheaper every quarter.</li>
             </ul>
           </div>
 
@@ -546,13 +554,16 @@ export default function LetterPage() {
             <p className="text-xl font-semibold text-white mb-4">
               Path to Sustainability
             </p>
+            <p className="font-body text-stone-300 leading-relaxed mb-4">
+              The digital platform will largely sustain itself: Kindle ebooks ($9.99), premium
+              print-on-demand editions ($55&ndash;$95), and institutional licensing ($500&ndash;$2,000/year)
+              can cover hosting and AI costs as those costs continue to fall.
+            </p>
             <p className="font-body text-stone-300 leading-relaxed">
-              The 999 Embassy of the Free Mind books are being published as Kindle ebooks ($9.99)
-              and premium print-on-demand editions ($55&ndash;$95). At modest sales volumes, the catalog
-              generates ongoing revenue with near-zero marginal cost. Institutional licensing
-              ($500&ndash;$2,000/year for university library access) provides a second channel. The $50K
-              ask is bridge funding while these revenue streams develop &mdash; not an ongoing
-              dependency.
+              What revenue can&apos;t easily cover is the community: a scanning lab, visiting scholars,
+              editorial oversight, and the institutional partnerships that make this a living
+              research program rather than a static archive. That&apos;s where philanthropic support matters
+              most &mdash; funding the people and physical infrastructure that technology alone won&apos;t provide.
             </p>
           </div>
 
