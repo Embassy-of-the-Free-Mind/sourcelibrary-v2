@@ -409,6 +409,84 @@ export default async function PipelineArchitecturePage() {
           />
         </div>
 
+        {/* ── Automation & human review ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-2">Automation & Human Review</h2>
+        <p className="text-secondary mb-6">
+          The pipeline is a stigmergic system — each safety mechanism, backpressure limit, and
+          error handler is a trace left by a past failure that shapes future processing. The
+          environment itself encodes intelligence: books flow through paths carved by previous
+          experience, with human judgment required only at the boundaries.
+        </p>
+
+        <div className="space-y-6 mb-16">
+          {/* Fully automated */}
+          <div>
+            <h3 className="font-semibold text-primary mb-3 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-status-success shrink-0" />
+              Fully Automated
+            </h3>
+            <div className="grid md:grid-cols-2 gap-3">
+              {[
+                { title: 'Pipeline orchestration', desc: 'Two crons advance books through all 10 stages every 10 minutes — no human trigger needed after import.' },
+                { title: 'OCR, translation, image extraction', desc: 'Lambda workers process pages via SQS queues. Backpressure, retries, and failure recovery are all automatic.' },
+                { title: 'Metadata enrichment', desc: 'AI classifies language, categories, description, display title, source work dates, and first-translation status.' },
+                { title: 'Staleness & zombie detection', desc: 'Books stuck for 48h get rolled back. Jobs stuck for 24h are force-completed. No alert fatigue — the system self-heals.' },
+                { title: 'Gallery, search index, encyclopedia', desc: 'Image extraction results flow into the gallery. Book indexes aggregate into encyclopedia entries. All automatic.' },
+                { title: 'Page count sync & data integrity', desc: 'Crons refresh cached counts, sync gallery metadata, and archive images on a fixed schedule.' },
+              ].map((item) => (
+                <div key={item.title} className="bg-status-success/5 border border-status-success/15 rounded-lg p-4">
+                  <div className="font-medium text-primary text-sm mb-1">{item.title}</div>
+                  <div className="text-muted text-sm leading-relaxed">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Human-initiated */}
+          <div>
+            <h3 className="font-semibold text-primary mb-3 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-status-info shrink-0" />
+              Human-Initiated, Then Automated
+            </h3>
+            <div className="grid md:grid-cols-2 gap-3">
+              {[
+                { title: 'Book imports', desc: 'A human decides which book to import and from which source. Everything after — page creation, archiving, OCR, translation — is automatic.' },
+                { title: 'Re-enrollment', desc: 'Failed or completed books can be re-enrolled in the pipeline. One API call, then the cron takes over.' },
+                { title: 'Emergency stop / resume', desc: 'Selective phase pausing is a human decision. The system respects it at both submission and completion boundaries.' },
+                { title: 'Edition publishing', desc: 'A human initiates publication and chooses the license. Front matter generation, content hashing, and DOI minting are automated.' },
+              ].map((item) => (
+                <div key={item.title} className="bg-status-info/5 border border-status-info/15 rounded-lg p-4">
+                  <div className="font-medium text-primary text-sm mb-1">{item.title}</div>
+                  <div className="text-muted text-sm leading-relaxed">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Requires human judgment */}
+          <div>
+            <h3 className="font-semibold text-primary mb-3 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-status-warning shrink-0" />
+              Requires Human Judgment
+            </h3>
+            <div className="grid md:grid-cols-2 gap-3">
+              {[
+                { title: 'Curation & acquisition', desc: 'Which books belong in the library? What sources to prioritize? These are scholarly decisions no AI makes.' },
+                { title: 'QA audit', desc: 'Comparing OCR against page images, verifying metadata against title pages, checking translation quality — still requires expert eyes.' },
+                { title: 'Failed book triage', desc: 'Books in "needs attention" state require a human to diagnose the problem: bad source images, corrupt metadata, import failures.' },
+                { title: 'First translation review', desc: 'When the AI is uncertain whether a translation exists, the "needs review" disposition flags it for a human scholar to verify.' },
+                { title: 'Page corrections', desc: 'Manual OCR and translation edits — fixing names, dates, or passages the AI got wrong. Revisions are preserved and protected from re-processing.' },
+                { title: 'Pipeline tuning', desc: 'Backpressure limits, model selection, prompt updates, cost/quality tradeoffs — the meta-decisions that shape the environment the pipeline runs in.' },
+              ].map((item) => (
+                <div key={item.title} className="bg-status-warning/5 border border-status-warning/15 rounded-lg p-4">
+                  <div className="font-medium text-primary text-sm mb-1">{item.title}</div>
+                  <div className="text-muted text-sm leading-relaxed">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* ── Links ── */}
         <div className="border-t border-border-light pt-8">
           <div className="flex flex-wrap gap-4">
