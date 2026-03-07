@@ -142,7 +142,7 @@ async function main() {
 
           const wouldChange = book.is_first_translation && v.disposition === 'translation_exists';
           const marker = wouldChange ? ' ** MISMATCH **' : '';
-          console.log(`${v.disposition} (${${v.confidence || 'n/a'})${marker}`);
+          console.log(`${v.disposition} (${v.confidence || 'n/a'})${marker}`);
 
           if (wouldChange) {
             mismatches.push({
