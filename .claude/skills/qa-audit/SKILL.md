@@ -47,11 +47,16 @@ Task(subagent_type="qa-audit", prompt="Continuous audit: work through unaudited 
 ### Phase 1: Book Selection
 
 ```bash
-# Get all books
-curl -s "https://sourcelibrary.org/api/books" | jq '[.[] | {id, title, author, year, page_count: .pages_count}]'
+# Search for books to audit (by topic, author, or language)
+curl -s "https://sourcelibrary.org/api/search?q=QUERY&limit=20" | jq '.results[] | {id, title, author, year: .published, pages_count}'
+
+# Or browse recent imports
+curl -s "https://sourcelibrary.org/api/search?sort=date_desc&limit=20" | jq '.results[] | {id, title, author, year: .published}'
 
 # Check what's already audited (search QAreport.md for book IDs)
 ```
+
+Note: Do NOT call `/api/books` without a query — it returns all 1,200+ books and will time out. Always use `/api/search` with filters.
 
 ### Phase 2: Metadata Audit
 
@@ -59,10 +64,18 @@ For each book:
 
 1. **Fetch book data**
 ```bash
+# Book metadata (excludes page text by default)
 curl -s "https://sourcelibrary.org/api/books/BOOK_ID" > /tmp/book.json
+
+# Get full text for analysis (OCR + translations)
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/text?content=both&format=json" > /tmp/book-text.json
+
+# Or get specific pages (first 5 for title page analysis)
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/text?content=both&to=5&format=json"
 ```
 
 2. **Read title page** (typically pages 1-5)
+   - Use the `/text` endpoint above or read individual pages via the page IDs from the book response
    - Extract: Title, Author, Year, Place, Publisher
    - Note printer's marks, dedications, privileges
 
@@ -74,9 +87,10 @@ curl -s "https://sourcelibrary.org/api/books/BOOK_ID" > /tmp/book.json
    - Publisher: full name, "widow of", "heirs of", etc.
 
 4. **Check USTC alignment** (when applicable)
-   - Search: https://www.ustc.ac.uk/
-   - Record USTC ID if found
-   - Note any discrepancies
+   - USTC (https://www.ustc.ac.uk/) is a JavaScript SPA — no public API for programmatic access
+   - Manual check: search the website in a browser and record the USTC ID
+   - Or use web search to find USTC entries: search "site:ustc.ac.uk [author] [title]"
+   - Record USTC ID if found, note any discrepancies
 
 ### Phase 3: Translation Quality Audit
 
@@ -224,25 +238,42 @@ Use these flags to categorize issues:
 
 ## API Reference
 
-### Get Book with Pages
+### Get Book Metadata
 ```bash
 curl -s "https://sourcelibrary.org/api/books/BOOK_ID"
+# Returns metadata + page list (without OCR/translation text)
+# Key fields: pages_count, pages_ocr, pages_translated
+```
+
+### Get Book Text (for auditing)
+```bash
+# Full text (OCR + translations)
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/text?content=both&format=json"
+
+# Just OCR text
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/text?content=ocr&format=plain"
+
+# Specific page range
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/text?content=both&from=1&to=5"
 ```
 
 ### Get Page Image
 ```bash
 # From book response, page.photo contains image URL
 # For cropped pages, use page.cropped_photo if available
+# Fallback chain: cropped_photo → archived_photo → photo → photo_original
 ```
 
 ### Search Books
 ```bash
 curl -s "https://sourcelibrary.org/api/search?q=QUERY&limit=20"
+# Supports: language, category, year_from, year_to, sort, first_translation filters
 ```
 
-### Get Collection Stats
+### Get Pipeline Stats
 ```bash
-curl -s "https://sourcelibrary.org/api/admin/stats"
+curl -s "https://sourcelibrary.org/api/admin/processing-dashboard"
+# Returns: progress bins, costs, error categories, velocity
 ```
 
 ---
@@ -324,15 +355,17 @@ When verifying OCR pipeline:
 
 ### Check Batch Job Status
 ```bash
-# Get all batch jobs
-curl -s "https://sourcelibrary.org/api/batch-jobs" | jq '.jobs | group_by(.status) | map({status: .[0].status, count: length})'
+# List batch jobs
+curl -s "https://sourcelibrary.org/api/batch-jobs/list?limit=20" | jq '.jobs | group_by(.status) | map({status: .[0].status, count: length})'
 
-# Check specific book OCR coverage
+# Check specific book OCR coverage (uses cached counts — accurate enough for auditing)
 curl -s "https://sourcelibrary.org/api/books/BOOK_ID" | jq '{
   title: .title,
-  total: (.pages | length),
-  with_ocr: [.pages[] | select((.ocr.data // "") | length > 0)] | length,
-  with_translation: [.pages[] | select((.translation.data // "") | length > 0)] | length
+  pages_count: .pages_count,
+  pages_ocr: .pages_ocr,
+  pages_translated: .pages_translated,
+  ocr_pct: (if .pages_count > 0 then (.pages_ocr * 100 / .pages_count | floor) else 0 end),
+  trans_pct: (if .pages_count > 0 then (.pages_translated * 100 / .pages_count | floor) else 0 end)
 }'
 ```
 

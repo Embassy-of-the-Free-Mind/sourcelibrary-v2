@@ -28,22 +28,19 @@ curl -s "https://sourcelibrary.org/api/books/BOOK_ID" | jq '{
   author: .author,
   language: .language,
   published: .published,
-  page_count: .page_count
+  pages_count: .pages_count,
+  pages_translated: .pages_translated
 }'
-
-# Check translation progress
-curl -s "https://sourcelibrary.org/api/books/BOOK_ID/pages?limit=500" | \
-  jq '[.pages[] | select(.translation.data != null)] | length'
 ```
 
-Confirm ALL pages have translations before proceeding.
+The book API returns `pages_count` and `pages_translated` as cached counts. Confirm `pages_translated` equals `pages_count` before proceeding. For detailed page-level text, use `/api/books/BOOK_ID/text?content=translation`.
 
 ### Step 2: Generate Front Matter
 
 Generate the scholarly Introduction and Methodology sections:
 
 ```bash
-curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/front-matter" \
+curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/editions/front-matter" \
   -H "Content-Type: application/json" \
   -d '{}'
 ```
@@ -73,7 +70,7 @@ curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/editions" \
       "introduction": "INTRODUCTION_TEXT",
       "methodology": "METHODOLOGY_TEXT",
       "generated_at": "ISO_DATE",
-      "generated_by": "gemini-2.0-flash"
+      "generated_by": "gemini-3-flash-preview"
     }
   }'
 ```
@@ -85,7 +82,7 @@ Note the returned `edition_id` for the next step.
 Test the scholarly EPUB download:
 
 ```bash
-curl -sL "https://sourcelibrary.org/api/books/BOOK_ID/download?format=scholarly" \
+curl -sL "https://sourcelibrary.org/api/books/BOOK_ID/download?format=epub-scholarly" \
   -o /tmp/scholarly-test.epub
 
 # Check file size
