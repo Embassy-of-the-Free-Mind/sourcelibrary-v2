@@ -857,7 +857,7 @@ export async function GET(request: NextRequest) {
         type: 'ocr',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_OCR = 50; // Cap Lambda jobs — each = hundreds of SQS messages
+      const MAX_ACTIVE_LAMBDA_OCR = 20; // Cap Lambda jobs — 10 reserved Lambdas, 2x buffer for pending
 
       const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
 
