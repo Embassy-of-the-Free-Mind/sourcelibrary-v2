@@ -257,7 +257,7 @@ export default async function PipelineArchitecturePage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Cost per Book</h2>
         <p className="text-secondary mb-4">
           Based on <code className="text-accent-rust text-sm">gemini-3-flash-preview</code> pricing.
-          A typical 300-page book costs roughly $1.90 to fully process through all stages.
+          A typical 300-page book costs roughly $1.50 to fully process through all stages.
         </p>
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-16">
           <table className="w-full text-sm">
@@ -275,7 +275,7 @@ export default async function PipelineArchitecturePage() {
                 { step: 'Translation', cost: '$0.0022', book: '$0.66' },
                 { step: 'Summary + Index', cost: '—', book: '$0.04' },
                 { step: 'Chapter Extraction', cost: '—', book: '$0.01' },
-                { step: 'Image Extraction', cost: '$0.0016', book: '$0.49' },
+                { step: 'Image Extraction', cost: '$0.0016', book: '~$0.05' },
                 { step: 'Metadata + FT Check', cost: '—', book: '$0.008' },
               ].map((row) => (
                 <tr key={row.step} className="border-b border-stone-100 last:border-0">
