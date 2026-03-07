@@ -7,7 +7,6 @@ import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectio
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
-import InputWidget from '@/components/InputWidget';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -373,7 +372,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {collections.map((col) => (
+              {collections.map((col, i) => (
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
@@ -387,6 +386,9 @@ export default async function HomePage() {
                         src={col.hero_image}
                         alt=""
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading={i < 8 ? 'eager' : 'lazy'}
+                        // eslint-disable-next-line react/no-unknown-property
+                        fetchPriority={i < 4 ? 'high' : 'auto'}
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
@@ -610,7 +612,6 @@ export default async function HomePage() {
           </div>
         </footer>
       </div>
-      <InputWidget allowedHosts={["localhost", "vercel.app", "sourcelibrary.org"]} />
     </SocietyGate>
   );
 }
