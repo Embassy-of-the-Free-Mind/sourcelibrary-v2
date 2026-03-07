@@ -307,33 +307,63 @@ export default async function PipelineArchitecturePage() {
             <tbody>
               {[
                 {
-                  period: 'Dec 2025 – Jan 2026',
-                  change: 'Initial pipeline: gemini-2.0/2.5-flash, basic OCR prompt (no page-type, columns, or image detection tags)',
-                  impact: '~75k pages with older OCR quality',
+                  period: 'Dec 2025',
+                  change: 'Initial pipeline: manual imports, basic OCR with gemini-2.0-flash, no automated orchestration',
+                  impact: 'First ~500 books processed manually',
                 },
                 {
-                  period: 'Early Feb 2026',
-                  change: 'Upgraded to gemini-3-flash-preview, OCR prompt v5-v6 with XML tags (<page-type>, <columns>, <detected-images>, <language>)',
-                  impact: '~250k+ pages with current OCR quality',
+                  period: 'Jan 2026',
+                  change: 'Split detection for two-page spreads: cascade of heuristic pixel analysis → ML model → Gemini vision. Computes crop coordinates (0-1000 scale) for each half',
+                  impact: 'Digitized books with facing pages render correctly',
+                },
+                {
+                  period: 'Jan 2026',
+                  change: 'Image archiving moved to dedicated Hetzner server. Pages archived from external sources (IA, Gallica, MDZ) to Vercel Blob with thumbnail generation',
+                  impact: 'Long-term image availability, faster page loads',
+                },
+                {
+                  period: 'Jan 2026',
+                  change: 'Auto pipeline cron introduced: books flow through stages automatically every 10 minutes instead of manual triggering',
+                  impact: 'Fully automated processing for new imports',
+                },
+                {
+                  period: 'Jan – Feb 2026',
+                  change: 'Upgraded OCR from gemini-2.0/2.5-flash to gemini-3-flash-preview. Prompt evolved through v1-v6, adding page-type classification, multi-column detection, image bounding boxes',
+                  impact: '~250k+ pages on current quality, ~75k older pages being reprocessed',
                 },
                 {
                   period: 'Feb 2026',
-                  change: 'Write Queue architecture: AI workers no longer write directly to MongoDB. Results flow through SQS → Writer Lambda',
+                  change: 'English modernization: pre-1700 English books get Early Modern → Modern English instead of translation. Output stored in same field, so all downstream processing works identically',
+                  impact: '~200 English books modernized automatically',
+                },
+                {
+                  period: 'Feb 2026',
+                  change: 'Multi-column rendering: OCR detects column layouts (<columns>N</columns> + <column-break/> markers), reader renders as CSS grid',
+                  impact: 'Two-column Renaissance books display correctly',
+                },
+                {
+                  period: 'Feb 2026',
+                  change: 'Write Queue architecture: AI workers (600+ concurrent) no longer write directly to MongoDB. Results flow through SQS → Writer Lambda (50 max concurrency)',
                   impact: 'Eliminated connection storms during large batches',
                 },
                 {
                   period: 'Feb 2026',
-                  change: 'Translation switched to Lambda FIFO only (Batch API retired for translation). Each page gets previous page\'s translation as context',
-                  impact: 'Better terminology consistency, ~30k stale translations need redo',
+                  change: 'Translation switched to Lambda FIFO queue only (Batch API retired for translation). Each page receives the previous page\'s translation as context for terminology consistency',
+                  impact: 'Better translation quality, ~30k stale translations being redone',
                 },
                 {
                   period: 'Feb 2026',
-                  change: 'Added Metadata Enrichment and First Translation Check stages to the pipeline',
+                  change: 'Added Metadata Enrichment (language, categories, display title, source work dates) and First Translation Check stages to the pipeline',
                   impact: '~280 confirmed first English translations identified',
                 },
                 {
+                  period: 'Feb 2026',
+                  change: 'Chapter extraction and enrichment (summary + index) split into dedicated cron so they don\'t starve translation of time budget',
+                  impact: 'More reliable enrichment, no pipeline stalls',
+                },
+                {
                   period: 'Mar 2026',
-                  change: 'Image extraction filters by page type — only visual pages scanned instead of every page',
+                  change: 'Image extraction filters by page type — only pages classified as illustration, diagram, map, frontispiece, or mixed are scanned',
                   impact: '~80-90% cost reduction for image extraction',
                 },
               ].map((row) => (
