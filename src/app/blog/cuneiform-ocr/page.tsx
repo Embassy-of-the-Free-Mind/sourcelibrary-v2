@@ -24,7 +24,7 @@ export default function CuneiformOcrPage() {
           title="Can AI Read Cuneiform?"
           subtitle="Testing Gemini on the oldest writing system on Earth"
         >
-          <p className="text-stone-400 text-sm mt-4">6 March 2026 &middot; 15 min read</p>
+          <p className="text-stone-400 text-sm mt-4">7 March 2026 &middot; 20 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -100,7 +100,7 @@ export default function CuneiformOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This post explains what cuneiform is, how scholars read it, what we asked the AI to do, and what happened when we compared the output against published scholarship. It ends with a formal experimental design for a larger-scale evaluation.
+          We ran two experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? The two experiments separate <em>linguistic reading</em> from <em>visual recognition</em>, and the results tell different stories.
         </p>
 
         {/* --- How to Read Cuneiform --- */}
@@ -156,9 +156,9 @@ export default function CuneiformOcrPage() {
           (CDLI), the central repository for cuneiform tablet data.
         </p>
 
-        {/* --- The Experiment --- */}
+        {/* --- The Test Tablets --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The experiment
+          The test tablets
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -212,14 +212,26 @@ export default function CuneiformOcrPage() {
           </table>
         </div>
 
-        <p className="text-secondary leading-relaxed mb-6">
-          Each tablet was imported into Source Library as a &ldquo;book&rdquo; with one page per photograph. We wrote a custom &ldquo;Cuneiform OCR&rdquo; prompt instructing Gemini to produce ATF transliteration with structured metadata (script type, period, genre, condition, confidence score). We ran the prompt using <strong>Gemini 3 Flash Preview</strong>, then compared each output line-by-line against CDLI&apos;s published ATF.
+        <p className="text-secondary leading-relaxed mb-8">
+          Each tablet was imported into Source Library as a &ldquo;book&rdquo; with one page per photograph. All experiments used <strong>Gemini 3 Flash Preview</strong>.
         </p>
 
-        {/* --- Detailed Walkthrough: Ur III tablet --- */}
+        {/* --- Experiment 1: ATF Transliteration --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Walkthrough: the sheep receipt
+          Experiment 1: ATF transliteration
         </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Our first experiment asked Gemini to do what Assyriologists do: produce a full ATF transliteration from a tablet photograph. This is the hardest possible ask &mdash; it requires reading individual wedge impressions, knowing which signs they form, determining the correct reading in context, and encoding the result in a precise scholarly format.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We wrote a custom &ldquo;Cuneiform OCR&rdquo; prompt with structured metadata output (script type, period, genre, condition, confidence score) and compared each output line-by-line against CDLI&apos;s published ATF.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          The sheep receipt (Ur III tablet)
+        </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
           The Ur III administrative tablet (P102318) was our &ldquo;easy&rdquo; test case &mdash; the kind of tablet we need AI to handle if cuneiform OCR is going to matter. It&apos;s a small, well-preserved clay tablet from Drehem (ancient Puzrish-Dagan), a livestock management center near Nippur, dating to the Third Dynasty of Ur (ca. 2100 BCE). Thousands of nearly identical tablets survive from this period, recording the daily flow of animals, grain, and other commodities through the Ur III state bureaucracy.
@@ -454,15 +466,15 @@ export default function CuneiformOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The four results reveal a consistent pattern. Gemini has extensive <em>knowledge</em> about cuneiform &mdash; it knows ATF format, Sumerian and Akkadian vocabulary, administrative tablet conventions, royal inscription formulae, and the scholarly literature on the Cruciform Monument. But its ability to visually discriminate individual cuneiform signs from a photograph appears limited.
+          Across both experiments, the same pattern emerges. Gemini has extensive <em>knowledge</em> about cuneiform &mdash; it knows ATF format, Sumerian and Akkadian vocabulary, administrative tablet conventions, royal inscription formulae, sign names, Unicode code points, and the scholarly literature. But its ability to visually discriminate individual cuneiform signs from a photograph remains unproven.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          When knowledge and vision align (Hammurabi), the output is correct. When the model can reason from context without needing sign-level vision (Manishtushu forgery detection), the output is impressive. But when the task requires reading unfamiliar signs in an unfamiliar text (Ur III sheep receipt), the model generates from its distributional knowledge rather than reading what&apos;s in front of it.
+          When knowledge and vision align (Hammurabi), the output is correct. When the model can reason from context without needing sign-level vision (Manishtushu forgery detection), the output is impressive. But when the task requires reading unfamiliar signs in an unfamiliar text (Ur III sheep receipt), the model generates from its distributional knowledge rather than reading what&apos;s in front of it &mdash; and this happens whether we ask for ATF transliteration (Experiment 1) or simple sign identification (Experiment 2).
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>The honest summary: Gemini 3 Flash is a cuneiform <em>commentator</em>, not a cuneiform <em>reader</em>.</strong> It can discuss cuneiform tablets with scholarly precision. It cannot reliably read them.
+          <strong>The honest summary: Gemini 3 Flash is a cuneiform <em>commentator</em>, not a cuneiform <em>reader</em>.</strong> It can discuss cuneiform tablets with scholarly precision. It cannot reliably read them. But Experiment 2&apos;s sign transcription approach, with its lower bar and more verifiable output, may be the right foundation to build on.
         </p>
 
         {/* --- Model Comparison --- */}
@@ -515,6 +527,124 @@ export default function CuneiformOcrPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           Gemini 2.5 Flash produced more text (34 lines for the Ur III tablet vs. 11) but with lower accuracy, suggesting it was generating more freely from its training distribution. The 3 Flash model was more constrained and closer to the right structure, even when the sign readings were wrong.
+        </p>
+
+        {/* --- Experiment 2: Sign Transcription --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Experiment 2: Sign transcription
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Experiment 1 asked the model to do everything at once: see the signs, read the language, produce correct ATF. We decided to decompose the problem. <strong>Experiment 2 asks only: what cuneiform signs do you see?</strong>
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Instead of ATF transliteration, we asked Gemini to identify individual signs and give three things for each: the <strong>Unicode cuneiform character</strong> (from the Unicode block U+12000&ndash;U+1236E), the <strong>standard sign name</strong>, and a <strong>wedge count</strong> (horizontal, vertical, diagonal). No language reading. No transliteration. Just: what shapes are on this clay?
+        </p>
+
+        <pre className="bg-warm rounded-lg p-6 mb-8 overflow-x-auto text-sm font-mono text-secondary leading-relaxed"><code>{`Example output format:
+Line 1: 𒀭 DINGIR (1 vertical + 3 diagonal) | 𒈾 NA (2 horizontal + 1 vertical)
+Line 2: 𒈗 LUGAL (1 horizontal + 3 vertical) | 𒆧 KIS (5 horizontal + 3 vertical)`}</code></pre>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The rationale: wedge counts are the most objective visual measure. You can look at a photo, count wedges, and compare to the model&apos;s claim without knowing Sumerian. If the model says a sign has &ldquo;3 horizontal + 1 vertical&rdquo; and you can see 3 horizontal + 1 vertical in the photo, it&apos;s actually reading. If the wedge counts don&apos;t match, it&apos;s generating from knowledge.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Results
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We ran the sign transcription prompt on the same four tablets. The outputs now contain Unicode cuneiform characters &mdash; actual glyphs you can compare visually against the photographs.
+        </p>
+
+        <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
+          Ur III tablet: plausible structure, unverifiable content
+        </h4>
+
+        <pre className="bg-warm rounded-lg p-6 mb-6 overflow-x-auto text-sm font-mono text-secondary leading-relaxed"><code>{`Line 1: 𒐏 4(u) | 𒈠 MA | 𒈾 NA | 𒊺 ŠE
+Line 2: 𒂆 GIN2 | 𒈠 MA | 𒈾 NA | 𒊺 ŠE
+Line 3: 𒍪 ZU  | 𒈠 MA | 𒈾 NA | 𒊺 ŠE
+Line 4: 𒇲 LA2 | 𒈠 MA | 𒈾 NA | 𒊺 ŠE
+--- REVERSE ---
+Line 5: 𒋗 ŠU  | 𒁀 BA | 𒋾 TI
+Line 6: 𒈬 MU  | 𒂗 EN | 𒀭 DINGIR
+Line 7: 𒆠 KI  | 𒉘 AG2 | 𒂗 EN`}</code></pre>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The model found 7 lines with 25 signs, confidence 0.85. It correctly identifies a repeating pattern on the obverse (MA-NA-ŠE, which could refer to a <em>mana</em> weight of grain) and the standard Ur III receipt formula on the reverse (<em>šu ba-ti</em>, &ldquo;received&rdquo;). The structure is plausible. But the ground truth is sheep (<em>udu niga</em>), not grain &mdash; the same content mismatch as Experiment 1, expressed through different signs.
+        </p>
+
+        <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
+          Code of Hammurabi: reading a modern rendering
+        </h4>
+
+        <pre className="bg-warm rounded-lg p-6 mb-6 overflow-x-auto text-sm font-mono text-secondary leading-relaxed"><code>{`Line 1: 𒋳 ŠUM | 𒈠 MA | 𒀀 A | 𒉿 PI | 𒈝 LUM | 𒄿 I | 𒈾 NA
+   →  šum-ma a-wi-lum i-na  →  "If a citizen..."
+Confidence: 0.98`}</code></pre>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The model correctly identified the signs spelling <em>šumma awīlum ina</em> &mdash; the opening of the &ldquo;eye for an eye&rdquo; law. It also noted that the bottom portion of the image is a &ldquo;modern artistic graphic&rdquo; rather than the actual stele surface. Confidence: 0.98. But this is a modern digital rendering with vector-sharp signs, not ancient clay. The test doesn&apos;t tell us about vision on real tablets.
+        </p>
+
+        <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
+          Neo-Assyrian tablet: honest about damage
+        </h4>
+
+        <pre className="bg-warm rounded-lg p-6 mb-6 overflow-x-auto text-sm font-mono text-secondary leading-relaxed"><code>{`Line 1: [DAMAGED]
+Line 2: [DAMAGED] | 𒀸 AŠ | 𒀸 AŠ | [DAMAGED]
+Line 3: [DAMAGED] | 𒀀 A  | 𒀸 AŠ | [DAMAGED]
+Line 4: [DAMAGED] | 𒀸 AŠ | 𒀭 DINGIR | [DAMAGED]
+...
+40 lines total, 52 signs identified
+Confidence: 0.65`}</code></pre>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A notable improvement over Experiment 1. Where the ATF prompt produced 8 lines of confident (but wrong) Enūma Eliš, the sign transcription prompt produced 40 lines that are mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>. The model defaulted to AŠ (the simplest cuneiform sign &mdash; a single horizontal wedge) for most readable positions, which is honest if not useful. The lower confidence (0.65 vs. 0.9) is better calibrated to the actual difficulty.
+        </p>
+
+        <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
+          Manishtushu monument: formulaic patterns
+        </h4>
+
+        <pre className="bg-warm rounded-lg p-6 mb-6 overflow-x-auto text-sm font-mono text-secondary leading-relaxed"><code>{`Line 1: 𒈠 MA | 𒉌 NI | 𒅖 ISH | 𒌅 TU | 𒋢 SU
+Line 2: 𒈗 LUGAL | 𒆧 KIS
+Line 3: 𒀀 A  | 𒈾 NA
+Line 4: 𒌷 URU | 𒀭 DINGIR | 𒂗 EN | 𒆤 KID/LIL
+...
+Detail view (Side D, Column I):
+Line 1: 𒀭 DINGIR | 𒂗 EN | 𒆤 LIL2
+Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
+...62 signs total, 0.9 confidence`}</code></pre>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The model correctly identified <em>Manishtushu, LUGAL KIŠ</em> (&ldquo;King of Kish&rdquo;) using individual Unicode signs. The detail view identified repetitive formulaic patterns: <em>DINGIR EN-LIL</em> (the god Enlil), <em>LUGAL KISH</em> (King of Kish). The repetition is consistent with what we know about this monument &mdash; it lists land purchases in formulaic blocks.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But the detail view repeats the same block of signs (lines 1&ndash;10 and 11&ndash;20 are nearly identical), which could mean either: (a) the text genuinely repeats its formulaic header, or (b) the model generated one plausible block and repeated it. We can&apos;t distinguish these without expert sign-by-sign verification against the actual stone.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          What Experiment 2 reveals
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The sign transcription approach has three advantages over ATF transliteration:
+        </p>
+
+        <ol className="list-decimal pl-6 mb-6 space-y-3 text-secondary leading-relaxed">
+          <li><strong>Visual verifiability.</strong> Unicode cuneiform characters are rendered as actual glyphs. A non-specialist can compare the glyph shape to what they see in the photograph. This doesn&apos;t require knowing Sumerian.</li>
+          <li><strong>Better calibration.</strong> The Neo-Assyrian tablet went from 0.9 confidence (Experiment 1, wrong text) to 0.65 confidence (Experiment 2, honestly marking damage). The model produces more calibrated confidence when it&apos;s not trying to read language.</li>
+          <li><strong>Separation of concerns.</strong> If sign identification is reasonably accurate, translation can be handled as a separate downstream step &mdash; potentially by a specialized model or rule-based system, rather than asking one model to do everything.</li>
+        </ol>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But the core question remains: <strong>is the model seeing the signs or knowing what should be there?</strong> The Ur III tablet produces different content from Experiment 1 but the same pattern of plausible-but-unverifiable output. The Manishtushu monument produces correct royal titles that the model has certainly seen in its training data. Only the damaged Neo-Assyrian tablet &mdash; where the model can&apos;t fall back on knowledge &mdash; gives us a clean signal, and there the output is mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Experiment 3 (planned) will attempt to isolate vision from knowledge more cleanly, using tablets whose content the model has never seen and whose photographs are not in any training corpus.
         </p>
 
         {/* --- Infrastructure --- */}
@@ -676,7 +806,11 @@ export default function CuneiformOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can AI read cuneiform? Sometimes. Gemini 3 Flash correctly reads the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, and produces excellent scholarly commentary. But it also fabricates an entire Sumerian document with 0.95 confidence. The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>.
+          Can AI read cuneiform? Not yet &mdash; but the failure mode is instructive. Across two experiments, Gemini 3 Flash correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, and produces excellent scholarly commentary. It generates plausible ATF transliterations and plausible Unicode sign sequences. But comparison with published ground truth shows 0% exact match on lines, and the sign transcriptions &mdash; while formatted correctly &mdash; appear to draw on distributional knowledge of cuneiform rather than visual analysis of wedge impressions.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. Experiment 2&apos;s sign-level approach makes this clearer than Experiment 1&apos;s ATF output, because individual signs are easier to verify visually. The next experiment will test this directly: provide a cuneiform sign image with no contextual clues and ask for identification.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -690,7 +824,7 @@ export default function CuneiformOcrPage() {
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Model: Gemini 3 Flash Preview. Prompts stored as &ldquo;Cuneiform OCR&rdquo; and &ldquo;Cuneiform Translation&rdquo; in the Source Library prompts collection. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Full evaluation report and import scripts available on request. All four test tablets are hidden from the public library but accessible via direct link.
+          <strong>Technical details:</strong> Model: Gemini 3 Flash Preview. Experiment 1 used an ATF transliteration prompt; Experiment 2 used a sign identification prompt requesting Unicode characters and sign names. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Full evaluation reports and scripts available on request. All four test tablets are hidden from the public library but accessible via direct link.
         </p>
       </article>
 
