@@ -1,12 +1,83 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil } from 'lucide-react';
-import type { Book, ImageSource } from '@/lib/types';
+import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
+import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
 import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+
+const FIELD_LABELS: Record<string, string> = {
+  display_title: 'Display Title',
+  language: 'Language',
+  author: 'Author',
+  year: 'Year',
+  published: 'Published',
+  categories: 'Categories',
+  description: 'Description',
+  subject_keywords: 'Keywords',
+  is_first_translation: 'First Translation',
+  first_translation: 'First Translation',
+  title: 'Title',
+  place_published: 'Place Published',
+  publisher: 'Publisher',
+  publication_place: 'Place Published',
+  printer: 'Printer',
+  english_title: 'English Title',
+  place_of_publication: 'Place Published',
+  dublin_core: 'Dublin Core',
+  translation_census: 'Translation Census',
+  index: 'Index',
+};
+
+const SOURCE_LABELS: Record<string, string> = {
+  ai_enrichment: 'AI',
+  import: 'Import',
+  metadata_verification: 'Catalog',
+  admin_edit: 'Manual',
+  manual: 'Manual',
+  ustc_catalog: 'USTC',
+  bph_catalogue: 'BPH',
+  cross_reference: 'Cross-ref',
+  ai_generation: 'AI',
+  ustc_enrichments: 'USTC',
+};
+
+const SOURCE_COLORS: Record<string, string> = {
+  ai_enrichment: 'bg-accent-violet/15 text-accent-violet',
+  ai_generation: 'bg-accent-violet/15 text-accent-violet',
+  import: 'bg-accent-sage/15 text-accent-sage',
+  metadata_verification: 'bg-accent-gold/15 text-accent-gold-dark',
+  ustc_catalog: 'bg-accent-gold/15 text-accent-gold-dark',
+  ustc_enrichments: 'bg-accent-gold/15 text-accent-gold-dark',
+  bph_catalogue: 'bg-accent-gold/15 text-accent-gold-dark',
+  cross_reference: 'bg-accent-gold/15 text-accent-gold-dark',
+  admin_edit: 'bg-accent-rust/15 text-accent-rust',
+  manual: 'bg-accent-rust/15 text-accent-rust',
+};
+
+const CONFIDENCE_COLORS: Record<string, string> = {
+  high: 'text-status-success',
+  medium: 'text-status-warning',
+  low: 'text-status-error',
+};
+
+function formatProvenanceDate(date: string | Date | undefined): string | null {
+  if (!date) return null;
+  try {
+    return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  } catch {
+    return null;
+  }
+}
+
+function formatPreviousValue(value: unknown): string | null {
+  if (value === undefined || value === null) return null;
+  if (Array.isArray(value)) return value.join(', ');
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  return String(value);
+}
 
 function getCatalogUrl(source: string, catalogId: string): string {
   // Some catalog_ids have comma-separated values — take the first
@@ -44,6 +115,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [provenanceExpanded, setProvenanceExpanded] = useState(false);
 
   // Format a bibliographic citation
   const formatCitation = () => {
@@ -330,6 +402,73 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
               </div>
             </div>
           ) : null}
+
+          {/* Data Provenance */}
+          {book.field_provenance && Object.keys(book.field_provenance).length > 0 && (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <button
+                onClick={() => setProvenanceExpanded(!provenanceExpanded)}
+                className="flex items-center gap-2 w-full"
+              >
+                <ShieldCheck className="w-4 h-4 text-stone-400" />
+                <span className="text-sm font-medium text-stone-300">Data Provenance</span>
+                <span className="text-xs text-stone-500 ml-1">({Object.keys(book.field_provenance).length} fields)</span>
+                <span className="ml-auto">
+                  {provenanceExpanded
+                    ? <ChevronUp className="w-3.5 h-3.5 text-stone-500" />
+                    : <ChevronDown className="w-3.5 h-3.5 text-stone-500" />}
+                </span>
+              </button>
+              {provenanceExpanded && (
+                <div className="mt-3 space-y-2">
+                  {Object.entries(book.field_provenance).map(([field, entry]) => {
+                    const prov = entry as FieldProvenanceEntry;
+                    const label = FIELD_LABELS[field] || field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                    const sourceLabel = SOURCE_LABELS[prov.source] || prov.source;
+                    const sourceColor = SOURCE_COLORS[prov.source] || 'bg-stone-700 text-stone-300';
+                    const dateStr = formatProvenanceDate(prov.date);
+                    const prevVal = formatPreviousValue(prov.previous_value);
+
+                    return (
+                      <div key={field} className="flex flex-col gap-1 py-1.5 border-b border-stone-700/30 last:border-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-stone-300 text-sm min-w-[100px]">{label}</span>
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${sourceColor}`}>
+                            {sourceLabel}
+                          </span>
+                          {prov.confidence && (
+                            <span className={`text-xs ${CONFIDENCE_COLORS[prov.confidence] || 'text-stone-500'}`}>
+                              {prov.confidence}
+                            </span>
+                          )}
+                          {dateStr && (
+                            <span className="text-xs text-stone-500">{dateStr}</span>
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-0.5 pl-0.5">
+                          {prov.model && (
+                            <span className="text-xs text-stone-500 font-mono">{prov.model}</span>
+                          )}
+                          {prov.provider_name && (
+                            <span className="text-xs text-stone-500">{prov.provider_name}</span>
+                          )}
+                          {prov.pages_checked && (
+                            <span className="text-xs text-stone-500">{prov.pages_checked} pages checked</span>
+                          )}
+                          {prevVal && (
+                            <span className="text-xs text-stone-500 italic">was: {prevVal.length > 80 ? prevVal.slice(0, 80) + '...' : prevVal}</span>
+                          )}
+                          {prov.note && (
+                            <span className="text-xs text-stone-500">{prov.note}</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Copy citation button */}
           <div className="mt-4 pt-3 border-t border-stone-700">

@@ -145,6 +145,10 @@ export interface Book {
     scored_at: Date;
   };
 
+  // Data provenance — tracks who set each metadata field
+  field_provenance?: Record<string, FieldProvenanceEntry>;
+  ai_metadata?: Record<string, unknown>;
+
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
   split_check?: {
@@ -199,6 +203,21 @@ export interface SourceWorkDateLayer {
   work_title?: string;
   language?: string;
   notes?: string;
+}
+
+// Provenance entry for a single metadata field
+export interface FieldProvenanceEntry {
+  source: string;  // 'ai_enrichment' | 'import' | 'metadata_verification' | 'admin_edit' | 'manual' | 'ustc_catalog' | 'bph_catalogue' | 'cross_reference' | 'ai_generation' | 'ustc_enrichments'
+  model?: string;
+  date?: string | Date;
+  confidence?: 'high' | 'medium' | 'low';
+  pages_checked?: number;
+  previous_value?: unknown;
+  note?: string;
+  provider?: string;
+  provider_name?: string;
+  script?: string;
+  [key: string]: unknown;  // Allow additional fields from various enrichment scripts
 }
 
 // Chapter/heading extracted from OCR for table of contents
