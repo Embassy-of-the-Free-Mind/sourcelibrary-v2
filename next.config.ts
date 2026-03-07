@@ -53,6 +53,11 @@ const nextConfig: NextConfig = {
         destination: '/search',
         permanent: true,
       },
+      {
+        source: '/prototype',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };
