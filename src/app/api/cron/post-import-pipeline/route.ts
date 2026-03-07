@@ -85,6 +85,11 @@ async function setPipelineStatus(
     upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget
   }
 
+  // When images complete, gallery quality data is available — try gallery fallback for covers
+  if (status === 'images_complete' && prevStatus !== 'images_complete') {
+    upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget — includes gallery fallback
+  }
+
   // Log transition to audit trail (fire-and-forget)
   if (prevStatus !== status) {
     logAuditEvent({
@@ -207,6 +212,24 @@ async function upgradeThumbnailFromPageType(
       { book_id: bookId, page_type: 'illustration', page_number: { $lte: 20 } },
       { projection: proj, sort: { page_number: 1 } }
     );
+  }
+
+  // Priority 4: best gallery image by quality score (fallback for books without frontispiece/title-page)
+  if (!bestPage) {
+    const galleryImage = await db.collection('gallery_images').findOne(
+      { book_id: bookId, gallery_quality: { $gte: 0.7 } },
+      { projection: { extracted_url: 1, image_url: 1, page_number: 1 }, sort: { gallery_quality: -1, page_number: 1 } }
+    );
+    if (galleryImage) {
+      const galleryUrl = galleryImage.extracted_url || galleryImage.image_url;
+      if (galleryUrl && galleryUrl !== book.thumbnail) {
+        await db.collection('books').updateOne(
+          { id: bookId },
+          { $set: { thumbnail: galleryUrl, thumbnail_source: 'auto' } }
+        );
+      }
+      return; // gallery path handles its own update
+    }
   }
 
   if (!bestPage) return;
