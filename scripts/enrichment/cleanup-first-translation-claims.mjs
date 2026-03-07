@@ -6,6 +6,7 @@
  * Modes:
  *   --apply           Persist results to MongoDB (default is dry-run)
  *   --all             Verify ALL non-English books without new-style verification
+ *   --force           Re-verify even if tools_called already exists
  *   --book-id=ID      Verify a single book
  *   (no flags)        Re-verify books currently marked is_first_translation=true
  *                     that lack new-style verification
@@ -45,6 +46,7 @@ const MONGODB_URI = env.MONGODB_URI;
 const MONGODB_DB = env.MONGODB_DB || 'bookstore';
 const DRY_RUN = !process.argv.includes('--apply');
 const ALL_MODE = process.argv.includes('--all');
+const FORCE = process.argv.includes('--force');
 const SINGLE_BOOK = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 
 // ── Dynamic import of verification function ─────────────────────────
@@ -106,7 +108,7 @@ async function main() {
   }
 
   // Show what we found
-  const stats = { first: 0, exists: 0, first_full: 0, needs_review: 0, errors: 0 };
+  const stats = { first: 0, first_complete: 0, first_modern: 0, exists: 0, needs_review: 0, errors: 0 };
   const mismatches = [];
   const newFirstTranslations = [];
 
@@ -133,14 +135,16 @@ async function main() {
     if (DRY_RUN) {
       // In dry-run, still run verification but don't persist
       try {
-        const result = await verifyFirstTranslation(db, book.id, { dryRun: true });
+        const result = await verifyFirstTranslation(db, book.id, { dryRun: true, force: FORCE });
         if (result.success && result.verification) {
           const v = result.verification;
-          stats[v.disposition === 'translation_exists' ? 'exists' :
-                v.disposition === 'first_full_translation' ? 'first_full' :
-                v.disposition === 'needs_review' ? 'needs_review' : 'first']++;
+          const dispKey = v.disposition === 'translation_found' || v.disposition === 'translation_exists' ? 'exists' :
+                v.disposition === 'first_complete_translation' ? 'first_complete' :
+                v.disposition === 'first_modern_translation' ? 'first_modern' :
+                v.disposition === 'needs_review' ? 'needs_review' : 'first';
+          stats[dispKey]++;
 
-          const wouldChange = book.is_first_translation && v.disposition === 'translation_exists';
+          const wouldChange = book.is_first_translation && v.disposition === 'translation_found';
           const marker = wouldChange ? ' ** MISMATCH **' : '';
           console.log(`${v.disposition} (${v.confidence || 'n/a'})${marker}`);
 
@@ -166,12 +170,14 @@ async function main() {
     } else {
       // Apply mode — verification function persists results
       try {
-        const result = await verifyFirstTranslation(db, book.id);
+        const result = await verifyFirstTranslation(db, book.id, { force: FORCE });
         if (result.success && result.verification) {
           const v = result.verification;
-          stats[v.disposition === 'translation_exists' ? 'exists' :
-                v.disposition === 'first_full_translation' ? 'first_full' :
-                v.disposition === 'needs_review' ? 'needs_review' : 'first']++;
+          const dispKey = v.disposition === 'translation_found' || v.disposition === 'translation_exists' ? 'exists' :
+                v.disposition === 'first_complete_translation' ? 'first_complete' :
+                v.disposition === 'first_modern_translation' ? 'first_modern' :
+                v.disposition === 'needs_review' ? 'needs_review' : 'first';
+          stats[dispKey]++;
 
           const wasFirst = book.is_first_translation;
           const isNowFirst = v.disposition === 'first_translation' || v.disposition === 'first_full_translation';
@@ -199,8 +205,9 @@ async function main() {
 
   console.log('\n── Summary ──');
   console.log(`  Confirmed first translation: ${stats.first}`);
-  console.log(`  First FULL translation (partial existed): ${stats.first_full}`);
-  console.log(`  Translation exists (was misclassified): ${stats.exists}`);
+  console.log(`  First COMPLETE translation (partial existed): ${stats.first_complete}`);
+  console.log(`  First MODERN translation (old trans existed): ${stats.first_modern}`);
+  console.log(`  Translation exists: ${stats.exists}`);
   console.log(`  Needs manual review: ${stats.needs_review}`);
   console.log(`  Errors: ${stats.errors}`);
 

@@ -20,7 +20,7 @@ import https from 'https';
 
 // ── Config ──────────────────────────────────────────────────────────
 const MODEL = 'gemini-3-flash-preview';
-const CONCURRENCY = 1;
+const CONCURRENCY = 5;
 
 // ── Env ─────────────────────────────────────────────────────────────
 function loadEnv() {
@@ -232,22 +232,13 @@ async function enrichBook(book, ocrText) {
 }
 
 // ── Process with concurrency ────────────────────────────────────────
-function withTimeout(promise, ms, label) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${ms/1000}s: ${label}`)), ms)),
-  ]);
-}
-
-async function processSequentially(items, fn) {
+async function processInBatches(items, fn, concurrency) {
   const results = [];
-  for (let i = 0; i < items.length; i++) {
-    try {
-      const result = await withTimeout(fn(items[i]), 120000, `item ${i+1}`);
-      results.push({ status: 'fulfilled', value: result });
-    } catch (err) {
-      results.push({ status: 'rejected', reason: err });
-    }
+  for (let i = 0; i < items.length; i += concurrency) {
+    const batch = items.slice(i, i + concurrency);
+    process.stderr.write(`\n── Batch ${Math.floor(i/concurrency)+1}/${Math.ceil(items.length/concurrency)} (items ${i+1}-${Math.min(i+concurrency, items.length)}) ──\n`);
+    const batchResults = await Promise.allSettled(batch.map(fn));
+    results.push(...batchResults);
   }
   return results;
 }
@@ -302,7 +293,7 @@ async function main() {
   let totalTokensIn = 0;
   let totalTokensOut = 0;
 
-  const results = await processSequentially(books, async (book) => {
+  const results = await processInBatches(books, async (book) => {
     const bookId = book.id || book._id?.toString();
     const title = book.display_title || book.title;
     processed++;
@@ -418,7 +409,7 @@ async function main() {
       console.error(`  [${processed}/${books.length}] ${title} — ERROR: ${err.message}`);
       return { bookId, title, error: err.message };
     }
-  });
+  }, CONCURRENCY);
 
   // Summary
   const costIn = (totalTokensIn / 1_000_000) * 0.15;   // Gemini 2.5 Flash input

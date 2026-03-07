@@ -32,7 +32,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // ── Types ─────────────────────────────────────────────────────────────
 
 export interface TranslationVerification {
-  disposition: 'confirmed_first' | 'translation_found' | 'needs_review';
+  disposition: 'confirmed_first' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
   confidence: 'high' | 'medium' | 'low';
   reasoning: string;
   translations_found: Array<{
@@ -130,8 +130,8 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
       properties: {
         disposition: {
           type: Type.STRING,
-          description: 'The verdict: "confirmed_first" (no complete English translation exists — this is a first translation), "translation_found" (complete English translation already published), "needs_review" (evidence is inconclusive or only partial/excerpt translations exist)',
-          enum: ['confirmed_first', 'translation_found', 'needs_review'],
+          description: 'The verdict: "confirmed_first" (no English translation of any kind exists), "first_complete_translation" (only partial translations, excerpts, or anthologized selections exist — no complete translation has been published), "first_modern_translation" (only old/antiquated translations exist, e.g. pre-1900, and no modern scholarly translation has been published), "translation_found" (a complete, modern English translation already exists), "needs_review" (evidence is conflicting or inconclusive)',
+          enum: ['confirmed_first', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'],
         },
         confidence: {
           type: Type.STRING,
@@ -377,6 +377,38 @@ function buildPrompt(book: Record<string, unknown>, ocrSamples: string[]): strin
 `;
   }
 
+  // Include existing weak verification data as search hints
+  const existingVerification = book.translation_verification as Record<string, unknown> | undefined;
+  if (existingVerification?.source === 'gemini_knowledge_lookup') {
+    const translations = existingVerification.translations as Array<Record<string, unknown>> | undefined;
+    prompt += `## Previous AI Assessment (unverified — use as search hints)
+`;
+    if (existingVerification.reasoning) {
+      prompt += `- Assessment: ${existingVerification.reasoning}
+`;
+    }
+    if (translations && translations.length > 0) {
+      prompt += `- Claimed translations to search for:
+`;
+      for (const t of translations.slice(0, 5)) {
+        const parts = [t.english_title, t.translator, t.publisher, t.pub_year].filter(Boolean);
+        if (parts.length > 0) {
+          prompt += `  - ${parts.join(' / ')} (${t.completeness || 'unknown completeness'})
+`;
+        }
+      }
+    }
+    if (existingVerification.has_english_translation) {
+      prompt += `- Previous AI claimed a translation EXISTS — verify this with catalog searches
+`;
+    } else {
+      prompt += `- Previous AI claimed NO translation exists — verify this with catalog searches
+`;
+    }
+    prompt += `
+`;
+  }
+
   // Include OCR samples for context
   if (ocrSamples.length > 0) {
     prompt += `## Sample OCR Text (first pages)
@@ -403,8 +435,10 @@ Example: Iamblichus' "De Mysteriis" in Ficino's Latin — even though Taylor (18
 
 ## Determination Guidelines
 
-- **confirmed_first**: No complete English translation of this specific ${lang} text has been published. Strong evidence = no matches across multiple sources, OR only translations from a different source language exist. Also use this when only partial translations, excerpts, or anthologized selections exist — a full/complete translation has not been published.
-- **translation_found**: A complete English translation of THIS SPECIFIC ${lang} text already exists. Cite the specific translation found. The translation must be FROM THIS LANGUAGE, not from the original language of the work.
+- **confirmed_first**: No English translation of any kind exists for this specific ${lang} text. No complete, partial, or excerpt translations found across any source. Strong evidence = no matches across multiple catalog searches, OR only translations from a different source language exist.
+- **first_complete_translation**: Partial translations, excerpts, or anthologized selections exist, but NO complete/full English translation has been published. This is still a significant "first" — the first COMPLETE translation. List the partial translations found.
+- **first_modern_translation**: Old or antiquated English translations exist (typically pre-1900), but no modern scholarly translation has been published. The existing translation(s) may be unreliable, archaic, or lack critical apparatus. List the old translations found.
+- **translation_found**: A complete, modern English translation of THIS SPECIFIC ${lang} text already exists. Cite the specific translation found. The translation must be FROM THIS LANGUAGE, not from the original language of the work.
 - **needs_review**: Evidence is conflicting or inconclusive. Use sparingly — prefer a determination when possible.
 
 Important: Be precise about matching. A translation of a different work by the same author does NOT count. A translation from a different source language (e.g. Greek→English when we have the Latin text) does NOT count. "Selected works" or "excerpts" are partial, not complete translations.`;
@@ -417,7 +451,7 @@ Important: Be precise about matching. A translation of a different work by the s
 export async function verifyFirstTranslation(
   db: Db,
   bookId: string,
-  options?: { dryRun?: boolean },
+  options?: { dryRun?: boolean; force?: boolean },
 ): Promise<VerificationResult> {
   const startTime = Date.now();
 
@@ -437,6 +471,16 @@ export async function verifyFirstTranslation(
   const lang = ((book.language || book.original_language || '') as string).toLowerCase();
   if (lang === 'english') {
     return { success: true, is_first_translation: false, verification: undefined };
+  }
+
+  // Skip if already verified with tool-calling (prevents concurrent run overwrites)
+  const existingVerification = book.translation_verification as Record<string, unknown> | undefined;
+  if (existingVerification?.tools_called && !options?.force) {
+    return {
+      success: true,
+      verification: existingVerification as unknown as TranslationVerification,
+      is_first_translation: book.is_first_translation as boolean,
+    };
   }
 
   // Fetch first 3 pages of OCR for context
@@ -567,9 +611,10 @@ export async function verifyFirstTranslation(
     // Normalize disposition to standard values (model may return old names)
     const normalizedDisposition = (() => {
       const d = (disposition as string) || '';
-      if (d === 'first_translation' || d === 'first_full_translation') return 'confirmed_first' as const;
+      if (d === 'first_translation') return 'confirmed_first' as const;
+      if (d === 'first_full_translation') return 'first_complete_translation' as const;
       if (d === 'translation_exists') return 'translation_found' as const;
-      if (['confirmed_first', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
+      if (['confirmed_first', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
       return 'needs_review' as const;
     })();
 
@@ -586,7 +631,7 @@ export async function verifyFirstTranslation(
       stage: 2,
     };
 
-    const isFirstTranslation = normalizedDisposition === 'confirmed_first';
+    const isFirstTranslation = ['confirmed_first', 'first_complete_translation', 'first_modern_translation'].includes(normalizedDisposition);
 
     // Persist to database (skip in dry-run mode)
     if (!options?.dryRun) {
