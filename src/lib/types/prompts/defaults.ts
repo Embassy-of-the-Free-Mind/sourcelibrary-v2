@@ -226,6 +226,11 @@ The source text may contain phrases in multiple languages (Latin, Greek, Hebrew,
 - ANY non-English text → translate to English
 Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
 
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
 **Instructions:**
 1. Start with <meta>...</meta> if noting continuity with previous page (hidden from readers).
 2. Mirror the source layout - headings, paragraphs, tables, centered text.
@@ -234,7 +239,8 @@ Use <note>original: "..."</note> to preserve important original phrases for scho
 5. Add <note>...</note> inline to explain historical references or difficult phrases.
 6. Style: warm museum label - explain rather than assume knowledge.
 7. Preserve the voice and spirit of the original.
-8. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
 
 **Source language:** {source_language}
 **Target language:** {target_language}

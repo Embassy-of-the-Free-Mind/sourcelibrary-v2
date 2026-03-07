@@ -667,7 +667,11 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
             <em>{children}</em>
           </span>
         ),
-        'image-desc': () => null,
+        'image-desc': ({ children }: any) => showNotes ? (
+          <span className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded mx-0.5 italic" title="Image description">
+            {children}
+          </span>
+        ) : null,
       } as any}
     >
       {text}
