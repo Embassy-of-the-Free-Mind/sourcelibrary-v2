@@ -65,10 +65,11 @@ export async function GET(request: NextRequest) {
     const language = searchParams.get('language') || '';
     const category = searchParams.get('category') || '';
     const collection = searchParams.get('collection') || '';
+    const firstTranslation = searchParams.get('first_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
 
     // Serve cached response for the default (unfiltered, first page) request
-    const isDefaultView = !search.trim() && !language && !category && !collection && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
+    const isDefaultView = !search.trim() && !language && !category && !collection && !firstTranslation && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
     if (isDefaultView && defaultViewCache && (Date.now() - defaultViewCache.timestamp) < DEFAULT_CACHE_TTL) {
       return new NextResponse(defaultViewCache.data, {
         headers: {
@@ -109,6 +110,10 @@ export async function GET(request: NextRequest) {
 
     if (collection) {
       matchConditions.push({ collections: collection });
+    }
+
+    if (firstTranslation) {
+      matchConditions.push({ is_first_translation: true });
     }
 
     const matchStage = matchConditions.length > 0

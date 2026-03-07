@@ -249,6 +249,7 @@ export default function SearchPage() {
         sort: browseSortBy,
         limit: RESULTS_PER_PAGE,
         skip: offset,
+        first_translation: firstTranslation || undefined,
       });
       setBrowseBooks(data.books || []);
       setBrowseTotal(data.total || 0);
@@ -258,7 +259,7 @@ export default function SearchPage() {
     } finally {
       setBrowseLoading(false);
     }
-  }, [language, category, collection, library, browseSortBy, offset]);
+  }, [language, category, collection, library, browseSortBy, offset, firstTranslation]);
 
   useEffect(() => {
     if (isBrowseMode) {
@@ -266,7 +267,7 @@ export default function SearchPage() {
       updateUrl('', 'unified', offset);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset]);
+  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation]);
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;

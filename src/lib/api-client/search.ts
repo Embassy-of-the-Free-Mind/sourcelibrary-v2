@@ -73,6 +73,7 @@ export const search = {
     skip?: number;
     search?: string;
     library?: string;
+    first_translation?: boolean;
   }): Promise<{ books: any[]; total: number }> => {
     const qs = new URLSearchParams();
     if (params?.language) qs.set('language', params.language);
@@ -83,6 +84,7 @@ export const search = {
     if (params?.skip) qs.set('skip', String(params.skip));
     if (params?.search) qs.set('search', params.search);
     if (params?.library) qs.set('library', params.library);
+    if (params?.first_translation) qs.set('first_translation', 'true');
     return await apiClient.get(`/api/books/library?${qs}`);
   },
 };
