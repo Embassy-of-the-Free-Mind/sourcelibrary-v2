@@ -10,6 +10,7 @@ import {
   listBooks,
   getBook,
   getBookText,
+  getQuote,
   searchImages,
 } from "./api.js";
 
@@ -231,6 +232,7 @@ ${bold("COMMANDS")}
 
   ${bold("Reading")}
     book <book_id>              Detailed book info (summary, chapters, stats)
+    quote <book_id> <page>      Get exact text of a single page for quoting
     text <book_id> [--from=N] [--to=N] [--content=translation|ocr|both]
                                 Read a book — returns 50+ pages in one call
 
@@ -296,7 +298,7 @@ async function run() {
       case "version":
       case "--version":
       case "-v":
-        console.log("source-library 4.0.0");
+        console.log("source-library 4.1.0");
         return;
 
       case "search": {
@@ -360,6 +362,33 @@ async function run() {
         if (!bookId) { console.error("Usage: source-library book <book_id>"); process.exit(1); }
         result = await getBook({ book_id: bookId });
         if (!jsonMode) { formatBook(result as AnyRecord); return; }
+        break;
+      }
+
+      case "quote": {
+        const bookId = pos[0];
+        const pageNum = pos[1] ? Number(pos[1]) : flagNum(flags, "page");
+        if (!bookId || !pageNum) { console.error("Usage: source-library quote <book_id> <page>"); process.exit(1); }
+        result = await getQuote({ book_id: bookId, page: pageNum });
+        if (!jsonMode) {
+          const q = result as AnyRecord;
+          if (q.citation) {
+            const cit = q.citation as AnyRecord;
+            console.log(bold(cit.title as string || ""));
+            console.log(dim(`${cit.author || "Unknown"} · p.${q.page || pageNum}`));
+            if (cit.inline) console.log(dim(`Citation: ${cit.inline}`));
+          }
+          if (q.translation) {
+            console.log(`\n${bold("Translation")}`);
+            console.log(wrap(q.translation as string, 80, 2));
+          }
+          if (q.original) {
+            console.log(`\n${bold("Original")}`);
+            console.log(wrap(q.original as string, 80, 2));
+          }
+          if (q.url) console.log(`\n${cyan(q.url as string)}`);
+          return;
+        }
         break;
       }
 

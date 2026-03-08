@@ -246,7 +246,24 @@ export async function getBookText(args: {
     }
   }
 
+  // Add quoting guidance when returning page text
+  (result as Record<string, unknown>).tip =
+    "When quoting from these pages, copy text verbatim from the translation field. Do not paraphrase or reconstruct from memory.";
+
   return result;
+}
+
+export async function getQuote(args: {
+  book_id: string;
+  page: number;
+}) {
+  const params = new URLSearchParams({ page: String(args.page) });
+  const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
+
+  return {
+    ...result,
+    tip: "Copy the translation text exactly when quoting. Do not paraphrase or reconstruct from memory, even if you know this text from other sources.",
+  };
 }
 
 export async function searchImages(args: {

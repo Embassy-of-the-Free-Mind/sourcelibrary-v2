@@ -15,6 +15,7 @@ import {
   listBooks,
   getBook,
   getBookText,
+  getQuote,
   searchImages,
 } from "./api.js";
 
@@ -216,6 +217,27 @@ const TOOLS: Tool[] = [
     },
   },
 
+  // ── Quoting ──
+  {
+    name: "get_quote",
+    description:
+      "Get the exact translated text of a single page for quoting. Returns the full translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response. Do not paraphrase or reconstruct from memory.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID or slug",
+        },
+        page: {
+          type: "number",
+          description: "Page number to quote from",
+        },
+      },
+      required: ["book_id", "page"],
+    },
+  },
+
   // ── Gallery ──
   {
     name: "search_images",
@@ -274,7 +296,7 @@ const TOOLS: Tool[] = [
 const server = new Server(
   {
     name: "source-library",
-    version: "4.0.0",
+    version: "4.1.0",
   },
   {
     capabilities: {
@@ -315,6 +337,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "get_book_text":
         result = await getBookText(args as Parameters<typeof getBookText>[0]);
         break;
+      case "get_quote":
+        result = await getQuote(args as Parameters<typeof getQuote>[0]);
+        break;
       case "search_images":
         result = await searchImages(args as Parameters<typeof searchImages>[0]);
         break;
@@ -350,7 +375,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v4.0.0 running (7 tools)");
+  console.error("Source Library MCP server v4.1.0 running (8 tools)");
 }
 
 main().catch((error) => {
