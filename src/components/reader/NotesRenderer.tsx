@@ -293,6 +293,7 @@ function preprocessLatexSuperscripts(text: string): string {
     .replace(/\$\^{([^}]*)}\$/g, '<sup>$1</sup>')    // $^{19}$ → <sup>19</sup>
     .replace(/\$\^([a-zA-Z0-9])\$/g, '<sup>$1</sup>') // $^h$ → <sup>h</sup>
     .replace(/\$\^{([^}]*)}/g, '<sup>$1</sup>')        // $^{19} (no closing $) → <sup>19</sup>
+    .replace(/\$\\overline{([^}]*)}\$/g, '<span style="text-decoration:overline">$1</span>') // $\overline{αβγδ}$ → overlined text
     .replace(/\$\\textbf{([^}]*)}\$/g, '<strong>$1</strong>') // $\textbf{...}$ → <strong>...</strong>
     .replace(/\$\\textit{([^}]*)}\$/g, '<em>$1</em>');  // $\textit{...}$ → <em>...</em>
 }
