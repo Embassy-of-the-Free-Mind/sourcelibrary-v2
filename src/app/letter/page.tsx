@@ -72,7 +72,8 @@ export default function LetterPage() {
           <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">Source Library</a> has
           become the world&apos;s largest freely available collection of translated historical primary
           sources &mdash; spanning 30+ languages, 13 digital library sources, and nearly two million
-          page images. Texts that have never had an English translation now have one. Texts that existed
+          page images. Nearly 1,900 of these are{' '}
+          <a href="https://sourcelibrary.org/blog/first-translations" className="text-accent-rust hover:underline">first-ever English translations</a>. Texts that existed
           only behind institutional paywalls are now open to anyone with a browser.
         </p>
 
@@ -285,6 +286,7 @@ export default function LetterPage() {
             { value: '1.15M', label: 'Pages with OCR' },
             { value: '744K', label: 'Pages translated to English' },
             { value: '3,878', label: 'Books with English translation' },
+            { value: '1,873', label: 'First-ever English translations' },
             { value: '74K+', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
             { value: '13', label: 'Digital library sources' },
