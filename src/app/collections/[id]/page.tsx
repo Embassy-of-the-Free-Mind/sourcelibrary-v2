@@ -7,6 +7,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
+import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 
 // ISR: rebuild at most every 10 minutes
@@ -566,6 +567,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           languages={languages}
         />
       </div>
+      <SignUpCTA />
     </div>
   );
 }

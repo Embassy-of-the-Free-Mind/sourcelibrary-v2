@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, User, MapPin, Lightbulb, ExternalLink } from 'lucide-react';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
+import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getEntity, getSharedBooks } from './layout';
 
 const TYPE_ICONS = {
@@ -230,6 +231,7 @@ export default async function EntityDetailPage({
           </div>
         </div>
       </main>
+      <SignUpCTA />
     </div>
   );
 }

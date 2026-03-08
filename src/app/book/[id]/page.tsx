@@ -22,6 +22,7 @@ import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 
 // ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
@@ -974,6 +975,7 @@ export default async function BookDetailPage({ params }: PageProps) {
       }>
         <BookInfo id={id} />
       </Suspense>
+      <SignUpCTA />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import GalleryClient from '@/components/gallery/GalleryClient';
+import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
 
 export const dynamic = 'force-dynamic';
@@ -23,6 +24,7 @@ export default async function GalleryPage() {
           initialCollections={initialCollections}
         />
       </Suspense>
+      <SignUpCTA />
     </div>
   );
 }
