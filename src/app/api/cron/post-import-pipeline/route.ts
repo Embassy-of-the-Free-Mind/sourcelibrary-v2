@@ -1316,12 +1316,13 @@ export async function GET(request: NextRequest) {
         .aggregate([
           { $match: { 'pipeline_auto.status': 'ft_verified' } },
           { $addFields: {
+            _isEfm: { $cond: [{ $eq: ['$image_source.provider', 'efm'] }, 0, 1] }, // 0 = EFM first
             _nearlyDone: { $cond: [
               { $and: [{ $gt: ['$pages_count', 0] }, { $gte: [{ $divide: ['$pages_translated', '$pages_count'] }, 0.9] }] },
               0, 1 // 0 = nearly done (sorts first), 1 = rest
             ]}
           }},
-          { $sort: { _nearlyDone: 1, hidden: 1, pages_count: 1 } },
+          { $sort: { _isEfm: 1, _nearlyDone: 1, hidden: 1, pages_count: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 } },
           { $limit: TRANSLATE_SUBMIT_LIMIT },
         ]).toArray() : [];
