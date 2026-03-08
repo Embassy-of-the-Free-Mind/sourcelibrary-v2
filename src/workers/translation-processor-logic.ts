@@ -34,7 +34,7 @@ function buildUsagePayload(
     errorMessage?: string; errorCategory?: string }
 ): GeminiUsagePayload {
   return {
-    type: 'translate',
+    type: 'translation',
     mode: 'realtime',
     model: opts.model,
     book_id: opts.bookId,

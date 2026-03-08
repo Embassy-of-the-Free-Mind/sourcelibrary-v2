@@ -210,7 +210,7 @@ export const POST = withAuth(async (request, session, context) => {
     // Log AI usage to gemini_usage (single source of truth)
     if (!dryRun) {
       logGeminiCall({
-        type: 'translate',
+        type: 'translation',
         mode: 'realtime',
         model: modelId,
         book_id: bookId,

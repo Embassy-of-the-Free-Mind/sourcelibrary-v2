@@ -411,8 +411,8 @@ export const POST = withAuth(async (request: NextRequest) => {
     // Log AI usage to gemini_usage (single source of truth)
     if (totalUsage.costUsd > 0) {
       const page = pageId ? await db.collection('pages').findOne({ id: pageId }) : null;
-      const typeMap: Record<string, 'ocr' | 'translate' | 'summarize'> = {
-        ocr: 'ocr', translation: 'translate', summary: 'summarize', all: 'ocr',
+      const typeMap: Record<string, 'ocr' | 'translation' | 'summary'> = {
+        ocr: 'ocr', translation: 'translation', summary: 'summary', all: 'ocr',
       };
       logGeminiCall({
         type: typeMap[action] || 'ocr',

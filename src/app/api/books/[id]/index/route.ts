@@ -701,7 +701,7 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
   // Log the Gemini call
   const usageMetadata = result.response.usageMetadata;
   logGeminiCall({
-    type: 'summarize',
+    type: 'summary',
     mode: 'realtime',
     model: 'gemini-3-flash-preview',
     page_count: batchExtractions.length, // Number of batch sections processed

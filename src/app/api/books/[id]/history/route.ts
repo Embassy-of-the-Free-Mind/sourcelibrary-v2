@@ -270,7 +270,7 @@ export async function GET(
     const summaryGenAt = book.reading_summary?.generated_at;
     if (summaryGenAt) {
       // Only add if not already covered by gemini_usage
-      const hasSummaryUsage = [...usageGroups.values()].some(g => g.type === 'summarize');
+      const hasSummaryUsage = [...usageGroups.values()].some(g => g.type === 'summary' || g.type === 'summarize');
       const hasSummaryJob = jobRecords.some(j => j.type === 'summary' || j.type === 'batch_summary');
       if (!hasSummaryUsage && !hasSummaryJob) {
         events.push({

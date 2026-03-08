@@ -307,7 +307,7 @@ Return each translation clearly separated with the exact format:
 
     // Log AI usage to gemini_usage (single source of truth)
     logGeminiCall({
-      type: 'translate',
+      type: 'translation',
       mode: 'realtime',
       model: modelId,
       book_id: firstPage?.book_id,

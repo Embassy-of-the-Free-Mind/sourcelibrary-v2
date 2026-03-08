@@ -97,7 +97,7 @@ export async function POST(
     // Log AI usage to gemini_usage (single source of truth)
     const duration = Date.now() - startTime;
     logGeminiCall({
-      type: 'translate',
+      type: 'translation',
       mode: 'realtime',
       model,
       book_id: page.book_id,

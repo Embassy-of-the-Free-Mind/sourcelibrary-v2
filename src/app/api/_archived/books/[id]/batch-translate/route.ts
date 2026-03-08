@@ -194,7 +194,7 @@ export async function POST(
     // Log to gemini_usage for auditing
     const successfulPageIds = results.filter(r => r.success).map(r => r.pageId);
     await logGeminiCall({
-      type: 'translate',
+      type: 'translation',
       mode: 'realtime',
       model: modelId,
       book_id: bookId,

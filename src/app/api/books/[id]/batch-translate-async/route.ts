@@ -197,7 +197,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     // Log batch job submission
     await logGeminiCall({
-      type: 'translate',
+      type: 'translation',
       mode: 'batch',
       model,
       book_id: bookId,
@@ -365,7 +365,7 @@ export const GET = withAuth(async (request, session, context) => {
 
         // Log batch job completion
         await logGeminiCall({
-          type: 'translate',
+          type: 'translation',
           mode: 'batch',
           model: jobDoc.model,
           book_id: bookId,

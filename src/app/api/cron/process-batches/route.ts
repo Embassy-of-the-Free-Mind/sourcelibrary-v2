@@ -380,7 +380,7 @@ export async function GET(request: NextRequest) {
 
           // Log batch job completion
           await logGeminiCall({
-            type: job.type === 'ocr' ? 'ocr' : 'translate',
+            type: job.type === 'ocr' ? 'ocr' : 'translation',
             mode: 'batch',
             model: job.model,
             book_id: job.book_id,
