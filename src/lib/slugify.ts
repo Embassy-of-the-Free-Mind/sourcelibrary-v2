@@ -126,3 +126,12 @@ export async function generateUniqueBookSlug(
 export function bookUrl(book: { slug?: string; id: string }): string {
   return `/book/${book.slug || book.id}`;
 }
+
+/**
+ * Generate a URL for an author page.
+ * Returns null for unknown/anonymous authors.
+ */
+export function authorUrl(author: string): string | null {
+  if (!author || author === 'Unknown' || author === 'Anonymous') return null;
+  return `/author/${encodeURIComponent(author)}`;
+}

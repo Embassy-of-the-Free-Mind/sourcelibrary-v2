@@ -22,6 +22,7 @@ import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import { authorUrl } from '@/lib/slugify';
 
 // ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
 export const revalidate = 120;
@@ -331,9 +332,9 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
 
           {/* Search pills */}
           <div className="flex flex-wrap gap-2">
-            {authorCount > 0 && (
+            {authorCount > 0 && authorUrl(bookAuthor) && (
               <Link
-                href={`/search?q=${encodeURIComponent('"' + bookAuthor + '"')}`}
+                href={authorUrl(bookAuthor)!}
                 className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
               >
                 More by {bookAuthor} ({authorCount})
@@ -604,7 +605,13 @@ async function BookInfo({ id }: { id: string }) {
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
               )}
-              <p className="text-lg sm:text-xl text-stone-300 mt-2">{book.author}</p>
+              <p className="text-lg sm:text-xl text-stone-300 mt-2">
+                {authorUrl(book.author) ? (
+                  <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
+                    {book.author}
+                  </Link>
+                ) : book.author}
+              </p>
 
               {/* Book metadata */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 mt-4 sm:mt-6 text-sm text-stone-400">
