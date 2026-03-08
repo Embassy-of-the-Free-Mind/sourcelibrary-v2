@@ -72,6 +72,11 @@ async function main() {
   let query;
   if (SINGLE_BOOK) {
     query = { id: SINGLE_BOOK };
+  } else if (ALL_MODE && FORCE) {
+    // All non-English books — re-verify everything
+    query = {
+      language: { $nin: ['English', 'english', null, ''] },
+    };
   } else if (ALL_MODE) {
     // All non-English books that don't yet have new-style verification
     query = {
