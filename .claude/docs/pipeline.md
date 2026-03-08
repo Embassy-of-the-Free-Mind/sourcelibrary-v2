@@ -1,6 +1,6 @@
 # Processing Pipeline
 
-Single source of truth for the full processing pipeline — from import to complete. Last updated: March 6, 2026.
+Single source of truth for the full processing pipeline — from import to complete. Last updated: March 8, 2026.
 
 ## End-to-End Overview
 
@@ -19,6 +19,7 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 | Translate | Lambda workers (SQS FIFO) | ~$0.10-0.50 | Minutes-hours | Yes |
 | Enrich | Gemini realtime (summary + index) | ~$0.05-0.15 | Seconds | Yes |
 | Chapters | Gemini realtime | ~$0.02 | Seconds | Yes |
+| Transliteration | Gemini realtime (non-Latin books) | ~$0.02-0.10 | Minutes | Yes |
 | Images | Lambda workers (SQS) | ~$0.10-0.25 | Minutes-hours | Yes |
 
 ---
@@ -27,7 +28,7 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 
 Two crons orchestrate the pipeline:
 - **`post-import-pipeline`** (every 10 min) — main orchestrator: import → archive → OCR → metadata → translate. Also handles image extraction, finalization, staleness detection, and zombie cleanup.
-- **`enrich-books`** (every 10 min) — dedicated cron for enrichment (summary + index) and chapter extraction. Split out so enrichment doesn't starve translation of time budget.
+- **`enrich-books`** (every 10 min) — dedicated cron for enrichment (summary + index), chapter extraction, and transliteration of non-Latin scripts. Split out so enrichment doesn't starve translation of time budget.
 
 Each book has a `pipeline_auto` object tracking its state.
 
@@ -82,6 +83,9 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | Metadata enrichment per run | 20 | `METADATA_ENRICH_LIMIT` |
 | Enrichment per run | 30 | `ENRICH_LIMIT` (enrich-books cron) |
 | Chapter extraction per run | 20 | `CHAPTER_LIMIT` (enrich-books cron) |
+| Transliteration books per run | 10 | `TRANSLIT_LIMIT` (enrich-books cron) |
+| Transliteration pages per run | 200 | `TRANSLIT_PAGES_PER_RUN` (enrich-books cron) |
+| Transliteration concurrency | 10 | `TRANSLIT_CONCURRENCY` (enrich-books cron) |
 | Image extraction per run | 5 | `IMAGE_SUBMIT_LIMIT` |
 | Finalization per run | 50 | `FINALIZE_LIMIT` |
 | Auto-enroll per run | 50 | `ENROLL_LIMIT` |
@@ -100,6 +104,7 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | `'images'` | Image extraction submission AND finalization (books can't reach `complete`) |
 | `'enrichment'` | Summary + index generation (enrich-books cron Phase 1) |
 | `'chapters'` | Chapter extraction (enrich-books cron Phase 2) |
+| `'transliteration'` | Transliteration/romanization of non-Latin scripts (enrich-books cron Phase 3) |
 
 **Both submission AND completion are guarded.** This prevents in-flight work from cascading through paused phases — a hard-learned lesson from the Mar 2 bypass incident.
 
@@ -181,9 +186,9 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 
 ## Enrich-Books Cron
 
-**Route:** `/api/cron/enrich-books` (230 lines, `maxDuration = 300`)
+**Route:** `/api/cron/enrich-books` (~410 lines, `maxDuration = 300`)
 
-Split out from the pipeline cron so enrichment doesn't starve translation of time budget. Runs every 10 min.
+Split out from the pipeline cron so enrichment doesn't starve translation of time budget. Runs every 10 min. Three phases: enrichment → chapters → transliteration.
 
 ### Phase 1: Enrichment (`translate_complete`/`enriching` → `enriched`)
 
@@ -201,6 +206,22 @@ Split out from the pipeline cron so enrichment doesn't starve translation of tim
 - Skips books with <10 pages
 - Calls `extractChaptersForBook()` directly (not via HTTP)
 - On persistent failure: skips to `chapters_complete` (non-critical)
+
+### Phase 3: Transliteration (non-Latin books)
+
+Romanizes OCR text for non-Latin scripts (Greek, Hebrew, Arabic, etc.). **Not tied to pipeline state** — runs on any book with OCR'd pages missing transliteration, regardless of pipeline stage. Non-critical: failures don't block anything.
+
+- **Languages:** Greek, Hebrew, Arabic, Persian, Ottoman Turkish, Syriac, Chinese, Japanese, Korean, Sanskrit, Armenian, Georgian, Ethiopic, Coptic, Tibetan, Russian, Church Slavonic
+- **Discovery:** `$lookup` aggregation finds books with non-Latin `language` field that have pages with `ocr.data` but no `transliteration.data`
+- **Skips page types:** blank, illustration, map, frontispiece, diagram
+- **Processing:** Concurrent chunks of 10 Gemini calls per batch
+- **Model:** `gemini-3-flash-preview`
+- **Limits:** 10 books/run, 200 pages/run total
+- **Storage:** `page.transliteration.data` (romanized text), `.model`, `.updated_at`, `.source_ocr_hash` (cache invalidation), `.script` (source script name)
+- **Logging:** Each call logged to `gemini_usage` with `type: 'transliterate'`
+- **Pause:** `paused_phases: ['transliteration']`
+- **Manual trigger:** `POST /api/pages/{pageId}/transliterate`
+- **Batch script:** `scripts/batch/batch-transliterate.mjs` (uses cheaper `gemini-3.1-flash-lite-preview`)
 
 ---
 
@@ -400,7 +421,7 @@ Nine crons, all defined in `vercel.json`:
 
 ```
 post-import-pipeline: submit jobs → check jobs/batch_jobs → advance books
-enrich-books:         enrichment (summary+index) → chapter extraction
+enrich-books:         enrichment (summary+index) → chapter extraction → transliteration
 process-batches:      poll Gemini → save page results → update batch_jobs
 ```
 
@@ -447,6 +468,7 @@ Before marking a book `complete`, the pipeline checks:
 | `pages[].columns` | If page has 2+ text columns |
 | `source_work_dates` | Compositional timeline layers (set by Phase 3.5 metadata enrichment) |
 | `source_work_dates_meta` | Enrichment metadata (model, confidence, reasoning) |
+| `pages[].transliteration.data` | Romanized text for non-Latin script pages (Greek, Hebrew, Arabic, etc.) |
 
 ---
 
