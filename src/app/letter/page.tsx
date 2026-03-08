@@ -159,7 +159,10 @@ export default function LetterPage() {
           We wrote up the evidence in{' '}
           <a href="https://sourcelibrary.org/blog/hidden-engineers" className="text-accent-rust hover:underline">
             &ldquo;The Hidden Engineers&rdquo;</a> &mdash;
-          every claim linked to the original translated page.
+          every claim linked to the original translated page. For the broader argument
+          about what this means for understanding the origins of modern innovation, see{' '}
+          <a href="https://sourcelibrary.org/blog/progress-studies" className="text-accent-rust hover:underline">
+            &ldquo;The Missing Library&rdquo;</a>.
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
@@ -669,6 +672,12 @@ export default function LetterPage() {
             className="px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
             Development Timeline
+          </Link>
+          <Link
+            href="/blog/progress-studies"
+            className="px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+          >
+            Progress Studies Essay
           </Link>
           <Link
             href="/developers"
