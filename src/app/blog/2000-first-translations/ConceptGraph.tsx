@@ -219,8 +219,8 @@ export default function ConceptGraph() {
 
   // Initialize nodes with random positions
   useEffect(() => {
-    const w = Math.min(800, window.innerWidth - 32);
-    const h = Math.min(600, w * 0.75);
+    const w = Math.min(960, window.innerWidth - 32);
+    const h = Math.min(720, w * 0.75);
     setDimensions({ w, h });
 
     nodesRef.current = RAW_NODES.map((n) => ({
@@ -276,7 +276,7 @@ export default function ConceptGraph() {
     // Draw nodes
     const maxCount = 80;
     for (const node of nodes) {
-      const r = 3 + (node.count / maxCount) * 14;
+      const r = 4 + (node.count / maxCount) * 18;
       const isHov = hovered === node.id;
       const isConnected =
         hovered &&
@@ -302,7 +302,7 @@ export default function ConceptGraph() {
 
       // Labels for large nodes or hovered
       if (node.count >= 25 || isHov || isConnected) {
-        ctx.font = `${isHov ? 'bold ' : ''}${isHov ? 12 : 10}px Inter, system-ui, sans-serif`;
+        ctx.font = `${isHov ? 'bold ' : ''}${isHov ? 14 : 12}px Inter, system-ui, sans-serif`;
         ctx.textAlign = 'center';
         ctx.fillStyle = dimmed ? '#1a161240' : '#1a1612';
         ctx.fillText(node.id, node.x, node.y - r - 4);
@@ -369,7 +369,7 @@ export default function ConceptGraph() {
           node.x += node.vx;
           node.y += node.vy;
           // Keep in bounds
-          const r = 3 + (node.count / 80) * 14;
+          const r = 4 + (node.count / 80) * 18;
           node.x = Math.max(r + 20, Math.min(w - r - 20, node.x));
           node.y = Math.max(r + 20, Math.min(h - r - 20, node.y));
         }
@@ -406,7 +406,7 @@ export default function ConceptGraph() {
       let closest: string | null = null;
       let closestDist = 30;
       for (const node of nodesRef.current) {
-        const r = 3 + (node.count / 80) * 14;
+        const r = 4 + (node.count / 80) * 18;
         const dist = Math.sqrt((mx - node.x) ** 2 + (my - node.y) ** 2);
         if (dist < r + 8 && dist < closestDist) {
           closest = node.id;
@@ -451,7 +451,7 @@ export default function ConceptGraph() {
           </div>
         ))}
       </div>
-      <p className="text-center text-stone-400 text-xs mt-2">
+      <p className="text-center text-stone-500 text-sm mt-2">
         Concept co-occurrence across 1,509 indexed first translations. Node size = frequency. Hover to explore connections.
       </p>
     </div>

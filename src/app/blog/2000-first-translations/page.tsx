@@ -204,7 +204,7 @@ export default function TwoThousandFirstTranslations() {
       }
       bg="bg-cream"
     >
-      <div className="max-w-3xl mx-auto px-4 pb-16">
+      <div className="max-w-4xl mx-auto px-4 pb-16">
         {/* Intro */}
         <div className="prose prose-stone max-w-none text-base leading-relaxed">
           <p className="text-lg leading-relaxed">
@@ -233,18 +233,18 @@ export default function TwoThousandFirstTranslations() {
           ].map((s) => (
             <div
               key={s.label}
-              className="bg-white border border-[#e8e4dc] rounded-lg p-4 text-center"
+              className="bg-white border border-[#e8e4dc] rounded-lg p-5 text-center"
             >
-              <div className="text-2xl font-serif font-semibold text-[#1a1612]">
+              <div className="text-3xl font-serif font-semibold text-[#1a1612]">
                 {s.value}
               </div>
-              <div className="text-xs text-stone-500 mt-1">{s.label}</div>
+              <div className="text-sm text-stone-500 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
 
         {/* Concept graph */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-12 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-14 mb-3">
           The Shape of Hidden Knowledge
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-4">
@@ -271,7 +271,7 @@ export default function TwoThousandFirstTranslations() {
         <ConceptGraph />
 
         {/* Decade histogram */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-14 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           When Were They Written?
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
@@ -286,15 +286,15 @@ export default function TwoThousandFirstTranslations() {
           </p>
         </div>
 
-        <div className="bg-white border border-[#e8e4dc] rounded-lg p-4 sm:p-6 overflow-x-auto">
-          <div className="flex items-end gap-[2px] min-w-[600px]" style={{ height: 200 }}>
+        <div className="bg-white border border-[#e8e4dc] rounded-lg p-5 sm:p-8 overflow-x-auto">
+          <div className="flex items-end gap-[2px] min-w-[600px]" style={{ height: 320 }}>
             {DECADES.map((d) => {
-              const h = (d.n / PEAK) * 180;
+              const h = (d.n / PEAK) * 280;
               return (
                 <div
                   key={d.d}
                   className="flex-1 relative group"
-                  style={{ height: 180 }}
+                  style={{ height: 280 }}
                 >
                   <div
                     className="absolute bottom-0 left-0 right-0 rounded-t-sm transition-opacity"
@@ -304,14 +304,14 @@ export default function TwoThousandFirstTranslations() {
                       opacity: 0.85,
                     }}
                   />
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 hidden group-hover:block bg-[#1a1612] text-white text-xs rounded px-1.5 py-0.5 whitespace-nowrap z-10">
+                  <div className="absolute -top-7 left-1/2 -translate-x-1/2 hidden group-hover:block bg-[#1a1612] text-white text-sm rounded px-2 py-1 whitespace-nowrap z-10">
                     {d.d}: {d.n}
                   </div>
                 </div>
               );
             })}
           </div>
-          <div className="flex justify-between min-w-[600px] mt-2 text-xs text-stone-400">
+          <div className="flex justify-between min-w-[600px] mt-3 text-sm text-stone-500">
             <span>1400</span>
             <span>1500</span>
             <span>1600</span>
@@ -319,7 +319,7 @@ export default function TwoThousandFirstTranslations() {
             <span>1800</span>
             <span>1900</span>
           </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 justify-center text-xs">
+          <div className="flex flex-wrap gap-x-6 gap-y-1.5 mt-4 justify-center text-sm">
             {[
               { label: '15th c.', color: '#8b9a7d' },
               { label: '16th c.', color: '#7c5db5' },
@@ -327,29 +327,29 @@ export default function TwoThousandFirstTranslations() {
               { label: '18th c.', color: '#c9a86c' },
               { label: '19th c.', color: '#6b6560' },
             ].map((c) => (
-              <div key={c.label} className="flex items-center gap-1">
+              <div key={c.label} className="flex items-center gap-1.5">
                 <span
-                  className="inline-block w-2 h-2 rounded-full"
+                  className="inline-block w-3 h-3 rounded-full"
                   style={{ backgroundColor: c.color }}
                 />
-                <span className="text-stone-500">{c.label}</span>
+                <span className="text-stone-600">{c.label}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Century breakdown */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mt-6">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 mt-8">
           {CENTURIES.map((c) => (
             <div key={c.c} className="text-center">
-              <div className="text-lg font-semibold text-[#1a1612]">{c.n}</div>
-              <div className="text-xs text-stone-500">{c.c} century</div>
+              <div className="text-2xl font-semibold text-[#1a1612]">{c.n}</div>
+              <div className="text-sm text-stone-500">{c.c} century</div>
             </div>
           ))}
         </div>
 
         {/* Languages */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-14 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           What Languages?
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
@@ -363,13 +363,13 @@ export default function TwoThousandFirstTranslations() {
           </p>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {LANGUAGES.map((l) => (
             <div key={l.lang} className="flex items-center gap-3">
-              <div className="w-20 text-sm text-stone-600 text-right shrink-0">
+              <div className="w-24 text-base text-stone-600 text-right shrink-0">
                 {l.lang}
               </div>
-              <div className="flex-1 h-7 bg-[#f5f0e8] rounded overflow-hidden">
+              <div className="flex-1 h-9 bg-[#f5f0e8] rounded overflow-hidden">
                 <div
                   className="h-full rounded transition-all"
                   style={{
@@ -379,13 +379,13 @@ export default function TwoThousandFirstTranslations() {
                   }}
                 />
               </div>
-              <div className="w-10 text-sm text-stone-500 tabular-nums">{l.n}</div>
+              <div className="w-12 text-base text-stone-500 tabular-nums">{l.n}</div>
             </div>
           ))}
         </div>
 
         {/* Categories */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-14 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           What Subjects?
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
@@ -400,13 +400,13 @@ export default function TwoThousandFirstTranslations() {
           </p>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {CATEGORIES.map((c) => (
             <div key={c.cat} className="flex items-center gap-3">
-              <div className="w-32 text-sm text-stone-600 text-right shrink-0">
+              <div className="w-36 text-base text-stone-600 text-right shrink-0">
                 {c.cat}
               </div>
-              <div className="flex-1 h-6 bg-[#f5f0e8] rounded overflow-hidden">
+              <div className="flex-1 h-9 bg-[#f5f0e8] rounded overflow-hidden">
                 <div
                   className="h-full rounded"
                   style={{
@@ -416,13 +416,13 @@ export default function TwoThousandFirstTranslations() {
                   }}
                 />
               </div>
-              <div className="w-10 text-sm text-stone-500 tabular-nums">{c.n}</div>
+              <div className="w-12 text-base text-stone-500 tabular-nums">{c.n}</div>
             </div>
           ))}
         </div>
 
         {/* Gallery */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-14 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           What Do They Look Like?
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
@@ -434,7 +434,7 @@ export default function TwoThousandFirstTranslations() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {GALLERY_IMAGES.map((img) => (
             <Link
               key={img.slug}
@@ -450,11 +450,11 @@ export default function TwoThousandFirstTranslations() {
                   sizes="(max-width: 640px) 50vw, 33vw"
                 />
               </div>
-              <div className="mt-2">
-                <div className="text-sm font-medium text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors leading-tight">
+              <div className="mt-2.5">
+                <div className="text-base font-medium text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors leading-tight">
                   {img.title}
                 </div>
-                <div className="text-xs text-stone-500">
+                <div className="text-sm text-stone-500 mt-0.5">
                   {img.author}, {img.year}
                 </div>
               </div>
@@ -463,7 +463,7 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Featured books */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-14 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           Start Reading
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
@@ -474,31 +474,31 @@ export default function TwoThousandFirstTranslations() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {FEATURED_BOOKS.map((book) => (
             <Link
               key={book.slug}
               href={`https://sourcelibrary.org/book/${book.slug}`}
-              className="group flex gap-3 bg-white border border-[#e8e4dc] rounded-lg p-3 hover:border-[#9e4a3a]/30 transition-colors"
+              className="group flex gap-4 bg-white border border-[#e8e4dc] rounded-lg p-4 hover:border-[#9e4a3a]/30 transition-colors"
             >
-              <div className="w-16 h-20 relative rounded overflow-hidden shrink-0 bg-[#f5f0e8]">
+              <div className="w-24 h-32 relative rounded overflow-hidden shrink-0 bg-[#f5f0e8]">
                 <Image
                   src={book.thumb}
                   alt={book.title}
                   fill
                   className="object-cover"
-                  sizes="64px"
+                  sizes="96px"
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-semibold text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors leading-tight">
+                <div className="text-base font-semibold text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors leading-tight">
                   {book.title}
                 </div>
-                <div className="text-xs text-stone-500 mt-0.5">
+                <div className="text-sm text-stone-500 mt-1">
                   {book.author}, {book.year} &middot; {book.lang} &middot;{' '}
                   {book.pages} pages
                 </div>
-                <p className="text-xs text-stone-600 mt-1.5 line-clamp-3 leading-relaxed">
+                <p className="text-sm text-stone-600 mt-2 line-clamp-3 leading-relaxed">
                   {book.summary}
                 </p>
               </div>
@@ -507,7 +507,7 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Page size distribution */}
-        <h2 className="text-2xl font-serif font-semibold text-[#1a1612] mt-14 mb-2">
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           How Long Are They?
         </h2>
         <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
@@ -520,8 +520,8 @@ export default function TwoThousandFirstTranslations() {
           </p>
         </div>
 
-        <div className="bg-white border border-[#e8e4dc] rounded-lg p-4">
-          <div className="flex items-end gap-2 justify-center" style={{ height: 140 }}>
+        <div className="bg-white border border-[#e8e4dc] rounded-lg p-5 sm:p-8">
+          <div className="flex items-end gap-2 sm:gap-3 justify-center" style={{ height: 240 }}>
             {[
               { label: '<50', n: 137 },
               { label: '50-100', n: 259 },
@@ -533,10 +533,10 @@ export default function TwoThousandFirstTranslations() {
               { label: '750-1K', n: 193 },
               { label: '1K+', n: 119 },
             ].map((b) => {
-              const h = (b.n / 376) * 120;
+              const h = (b.n / 376) * 200;
               return (
                 <div key={b.label} className="flex flex-col items-center flex-1">
-                  <div className="text-xs text-stone-400 mb-1">{b.n}</div>
+                  <div className="text-sm text-stone-500 mb-1">{b.n}</div>
                   <div
                     className="w-full rounded-t-sm"
                     style={{
@@ -545,22 +545,22 @@ export default function TwoThousandFirstTranslations() {
                       opacity: 0.7,
                     }}
                   />
-                  <div className="text-[10px] text-stone-500 mt-1 whitespace-nowrap">
+                  <div className="text-xs sm:text-sm text-stone-500 mt-1.5 whitespace-nowrap">
                     {b.label}
                   </div>
                 </div>
               );
             })}
           </div>
-          <div className="text-center text-xs text-stone-400 mt-2">Pages per book</div>
+          <div className="text-center text-sm text-stone-500 mt-3">Pages per book</div>
         </div>
 
         {/* Methodology link */}
-        <div className="mt-14 bg-[#f5f0e8] border border-[#e8e4dc] rounded-lg p-6">
-          <h3 className="text-lg font-serif font-semibold text-[#1a1612] mb-2">
+        <div className="mt-16 bg-[#f5f0e8] border border-[#e8e4dc] rounded-lg p-6 sm:p-8">
+          <h3 className="text-xl font-serif font-semibold text-[#1a1612] mb-3">
             How do we know these are first translations?
           </h3>
-          <p className="text-sm text-stone-600 leading-relaxed mb-3">
+          <p className="text-base text-stone-600 leading-relaxed mb-4">
             Each book goes through a multi-stage AI verification pipeline: OCR-based
             language classification, LLM deep knowledge checks against known
             translation catalogs, and manual review for edge cases. The system
@@ -569,7 +569,7 @@ export default function TwoThousandFirstTranslations() {
           </p>
           <Link
             href="https://sourcelibrary.org/blog/first-translation-methodology"
-            className="text-sm font-medium text-[#9e4a3a] hover:underline"
+            className="text-base font-medium text-[#9e4a3a] hover:underline"
           >
             Read the full methodology
           </Link>
@@ -579,11 +579,11 @@ export default function TwoThousandFirstTranslations() {
         <div className="mt-10 text-center">
           <Link
             href="https://sourcelibrary.org/blog/first-translations"
-            className="inline-block bg-[#9e4a3a] text-white font-medium text-sm px-6 py-2.5 rounded-lg hover:bg-[#8a3f31] transition-colors"
+            className="inline-block bg-[#9e4a3a] text-white font-medium text-base px-8 py-3 rounded-lg hover:bg-[#8a3f31] transition-colors"
           >
             Browse all first translations
           </Link>
-          <p className="text-xs text-stone-400 mt-3">
+          <p className="text-sm text-stone-400 mt-4">
             All translations are{' '}
             <Link
               href="https://sourcelibrary.org/data"
