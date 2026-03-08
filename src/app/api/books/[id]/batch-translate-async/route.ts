@@ -281,15 +281,25 @@ export const GET = withAuth(async (request, session, context) => {
 
       if (jobDoc && !jobDoc.results_collected && batchJob.dest?.inlinedResponses) {
         const pageIds = jobDoc.page_ids || [];
+        const validPageIdSet = new Set(pageIds as string[]);
         const responses = batchJob.dest.inlinedResponses;
 
         let successCount = 0;
         let failCount = 0;
         const now = new Date().toISOString();
 
-        for (let i = 0; i < responses.length && i < pageIds.length; i++) {
-          const pageId = pageIds[i];
+        for (let i = 0; i < responses.length; i++) {
           const response = responses[i];
+
+          // Use metadata.key for page matching (NEVER positional —
+          // Gemini Batch API returns results in arbitrary order.
+          // See Feb 18 2026 scrambling incident.)
+          const pageId = (response as unknown as { metadata?: { key?: string } }).metadata?.key || (pageIds[i]);
+          if (!pageId || !validPageIdSet.has(pageId)) {
+            console.warn(`[batch-translate] Result idx ${i} has invalid pageId: ${pageId}`);
+            failCount++;
+            continue;
+          }
 
           // Extract text from nested response structure
           const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
