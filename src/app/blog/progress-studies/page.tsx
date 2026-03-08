@@ -6,10 +6,10 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base - Source Library',
   description:
-    'Progress studies predicted that useful knowledge drove innovation long before the Industrial Revolution. 5,000 newly translated books in Latin, German, Arabic, and Hebrew confirm it — with steam engines, laboratory equipment, and experimental science embedded in alchemy and natural magic.',
+    'Progress studies predicted that useful knowledge drove innovation long before the Industrial Revolution. 2,500 newly translated books in Latin, German, Arabic, and Hebrew confirm it — with steam engines, laboratory equipment, and experimental science embedded in alchemy and natural magic.',
   openGraph: {
     title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base',
-    description: 'Mokyr\'s "useful knowledge," Howes\'s "improving mentality," and Crawford\'s techno-humanism all predicted what 5,000 newly translated pre-industrial books confirm: innovation has deeper roots than anyone could read.',
+    description: 'Mokyr\'s "useful knowledge," Howes\'s "improving mentality," and Crawford\'s techno-humanism all predicted what 2,500 newly translated pre-industrial books confirm: innovation has deeper roots than anyone could read.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
   },
   alternates: {
@@ -23,7 +23,7 @@ export default function ProgressStudiesPage() {
       header={
         <ContentHeader
           title="The Deeper Roots"
-          subtitle="How 5,000 newly translated books confirm what progress studies predicted &mdash; innovation didn&rsquo;t begin with the Industrial Revolution"
+          subtitle="How 2,500 newly translated books confirm what progress studies predicted &mdash; innovation didn&rsquo;t begin with the Industrial Revolution"
         >
           <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 15 min read</p>
         </ContentHeader>
@@ -71,9 +71,9 @@ export default function ProgressStudiesPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          That gap is now closing. Source Library has translated over 5,000 books from
-          the 2nd to 19th centuries, drawn from fourteen digital library collections. Over 700,000
-          pages have been translated into English, and nearly 2,000 of these books are{' '}
+          That gap is now closing. Source Library holds over 2,500 books from
+          the 2nd to 19th centuries, drawn from fourteen digital library collections. Over
+          500,000 pages have been translated into English, and over 1,200 of these books are{' '}
           <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
             first-ever English translations</Link>{' '}
           &mdash; texts that have existed for centuries but had no prior English version. What
@@ -143,12 +143,12 @@ export default function ProgressStudiesPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Source Library holds over 5,000 books from the{' '}
+            Source Library holds over 2,500 books from the{' '}
             <a href="https://www.embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               Embassy of the Free Mind</a>{' '}
             and thirteen other digital library collections, spanning the 2nd to 19th centuries.
             Most are in Latin, German, Dutch, French, Italian, Arabic, and Hebrew.
-            Nearly two million pages have been digitized, and over 700,000 have been translated
+            Over 500,000 pages have been translated
             into English.
           </p>
 
@@ -484,8 +484,8 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             AI removes this bottleneck. The full pipeline &mdash; digitization, OCR, translation,
             indexing &mdash; costs approximately $1.90 per book and takes minutes. Source
-            Library processed its first thousand books in December 2025. It passed 5,000 in
-            March 2026. Of these, nearly 2,000 are{' '}
+            Library processed its first thousand books in December 2025. It passed 2,500 in
+            March 2026. Of these, over 1,200 are{' '}
             <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
               first-ever English translations</Link>{' '}
             &mdash; texts that have existed for centuries but have never been accessible to
@@ -587,7 +587,7 @@ export default function ProgressStudiesPage() {
               {
                 href: '/blog/first-translations',
                 title: 'First English Translations',
-                detail: 'Nearly 2,000 texts translated into English for the first time',
+                detail: 'Over 1,200 texts translated into English for the first time',
                 internal: true,
               },
               {
