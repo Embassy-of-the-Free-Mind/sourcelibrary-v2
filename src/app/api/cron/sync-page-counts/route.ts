@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { createCronLogger } from '@/lib/cron-logger';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 
 export const maxDuration = 120;
 
@@ -42,7 +43,10 @@ export async function GET(request: NextRequest) {
           pages_translated: {
             $sum: {
               $cond: [
-                { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                { $or: [
+                  { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                  { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+                ] },
                 1, 0
               ]
             }

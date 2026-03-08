@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 
 export const maxDuration = 300;
 
@@ -50,7 +51,10 @@ export const POST = withAuth(async (request, session) => {
             withTranslation: {
               $sum: {
                 $cond: [
-                  { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                  { $or: [
+                    { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                    { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+                  ] },
                   1, 0
                 ]
               }
@@ -96,7 +100,10 @@ export const POST = withAuth(async (request, session) => {
             $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, 1, 0] }
           },
           withTranslation: {
-            $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, 1, 0] }
+            $sum: { $cond: [{ $or: [
+              { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+              { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+            ] }, 1, 0] }
           }
         }
       }
@@ -133,7 +140,10 @@ export const GET = withAuth(async () => {
             $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, 1, 0] }
           },
           withTranslation: {
-            $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, 1, 0] }
+            $sum: { $cond: [{ $or: [
+              { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+              { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+            ] }, 1, 0] }
           }
         }
       }
