@@ -22,9 +22,9 @@ const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jo
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
 const FT_VERIFY_LIMIT = 10; // First-translation verification — 2-4 Gemini rounds per book
 const TRANSLATE_SUBMIT_LIMIT = 50; // Increased — large backlog at metadata_enriched
-const IMAGE_SUBMIT_LIMIT = 5;
+const IMAGE_SUBMIT_LIMIT = 20;
 const FINALIZE_LIMIT = 50; // Just DB updates
-const MAX_ACTIVE_IMAGE_JOBS = 10;
+const MAX_ACTIVE_IMAGE_JOBS = 50;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
