@@ -1,34 +1,26 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
 import { Heart } from 'lucide-react';
 import { LikeTargetType } from '@/lib/types';
 import { likes } from '@/lib/api-client';
+import { useIdentity } from '@/hooks/useIdentity';
+import AuthPrompt from '@/components/auth/AuthPrompt';
 
-const VISITOR_ID_KEY = 'sl_visitor_id';
 const LIKES_CACHE_KEY = 'sl_likes_cache';
+const ANON_LIKE_COUNT_KEY = 'sl_anon_like_count';
+const NUDGE_THRESHOLD = 3;
+const NUDGE_DISMISSED_KEY = 'sl_auth_nudge_dismissed';
 
 interface LikeButtonProps {
   targetType: LikeTargetType;
   targetId: string;
-  bookId?: string; // For page likes: cascade updates the book like cache
+  bookId?: string;
   initialCount?: number;
   initialLiked?: boolean;
   size?: 'sm' | 'md' | 'lg';
   showCount?: boolean;
   className?: string;
-}
-
-function getVisitorId(): string {
-  if (typeof window === 'undefined') return '';
-
-  let visitorId = localStorage.getItem(VISITOR_ID_KEY);
-  if (!visitorId) {
-    // Generate a random ID
-    visitorId = 'v_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
-    localStorage.setItem(VISITOR_ID_KEY, visitorId);
-  }
-  return visitorId;
 }
 
 function getLikesCache(): Record<string, boolean> {
@@ -66,12 +58,27 @@ export default memo(function LikeButton({
   showCount = true,
   className = '',
 }: LikeButtonProps) {
+  const identity = useIdentity();
   const [liked, setLiked] = useState(initialLiked);
   const [count, setCount] = useState(initialCount);
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const promptRef = useRef<HTMLDivElement>(null);
 
   const cacheKey = `${targetType}:${targetId}`;
+
+  // Close auth prompt on outside click
+  useEffect(() => {
+    if (!showAuthPrompt) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (promptRef.current && !promptRef.current.contains(event.target as Node)) {
+        setShowAuthPrompt(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showAuthPrompt]);
 
   // Check localStorage on mount and when target changes
   useEffect(() => {
@@ -83,13 +90,12 @@ export default memo(function LikeButton({
 
   // Fetch real like status from API on mount/target change
   useEffect(() => {
-    const visitorId = getVisitorId();
-    if (!visitorId || !targetId) return;
+    if (!identity.id || !targetId || identity.loading) return;
     let cancelled = false;
 
     likes.getStatus(
       JSON.stringify([{ type: targetType, id: targetId }]),
-      visitorId
+      identity.id
     ).then(data => {
       if (cancelled) return;
       const key = `${targetType}:${targetId}`;
@@ -101,16 +107,13 @@ export default memo(function LikeButton({
     }).catch(() => {});
 
     return () => { cancelled = true; };
-  }, [targetType, targetId]);
+  }, [targetType, targetId, identity.id, identity.loading]);
 
   const handleClick = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (loading) return;
-
-    const visitorId = getVisitorId();
-    if (!visitorId) return;
 
     setLoading(true);
 
@@ -121,7 +124,7 @@ export default memo(function LikeButton({
     setLikeInCache(cacheKey, newLiked);
 
     try {
-      const data = await likes.toggle(targetType, targetId, visitorId);
+      const data = await likes.toggle(targetType, targetId, identity.id);
       setLiked(data.liked);
       setCount(data.count);
       setLikeInCache(cacheKey, data.liked);
@@ -129,6 +132,20 @@ export default memo(function LikeButton({
       // Cascade: when liking a page, server also likes the book — sync cache
       if (data.cascade?.book_id) {
         setLikeInCache(`book:${data.cascade.book_id}`, data.cascade.book_liked);
+      }
+
+      // Soft nudge: after Nth anonymous like, suggest sign-in (non-blocking)
+      if (identity.type === 'anonymous' && newLiked) {
+        try {
+          const dismissed = localStorage.getItem(NUDGE_DISMISSED_KEY);
+          if (!dismissed) {
+            const anonCount = parseInt(localStorage.getItem(ANON_LIKE_COUNT_KEY) || '0', 10) + 1;
+            localStorage.setItem(ANON_LIKE_COUNT_KEY, String(anonCount));
+            if (anonCount >= NUDGE_THRESHOLD) {
+              setShowAuthPrompt(true);
+            }
+          }
+        } catch { /* ignore storage errors */ }
       }
     } catch {
       // Revert optimistic update on error
@@ -138,7 +155,7 @@ export default memo(function LikeButton({
     } finally {
       setLoading(false);
     }
-  }, [liked, loading, targetType, targetId, cacheKey]);
+  }, [liked, loading, targetType, targetId, cacheKey, identity]);
 
   const sizeClasses = {
     sm: 'w-4 h-4',
@@ -173,46 +190,60 @@ export default memo(function LikeButton({
   }
 
   return (
-    <button
-      onClick={handleClick}
-      disabled={loading}
-      className={`
-        inline-flex items-center gap-1 group
-        transition-all duration-200
-        ${loading ? 'opacity-50 cursor-wait' : 'cursor-pointer'}
-        ${className}
-      `}
-      title={liked ? 'Unlike' : 'Like'}
-      aria-label={liked ? 'Unlike' : 'Like'}
-    >
-      <div
+    <div className="relative inline-flex">
+      <button
+        onClick={handleClick}
+        disabled={loading}
         className={`
-          ${buttonSizes[size]} rounded-full
+          inline-flex items-center gap-1 group
           transition-all duration-200
-          ${liked
-            ? 'text-status-error'
-            : 'text-gray-400 hover:text-red-400 group-hover:scale-110'
-          }
+          ${loading ? 'opacity-50 cursor-wait' : 'cursor-pointer'}
+          ${className}
         `}
+        title={liked ? 'Unlike' : 'Like'}
+        aria-label={liked ? 'Unlike' : 'Like'}
       >
-        <Heart
-          className={`${sizeClasses[size]} transition-all duration-200`}
-          fill={liked ? 'currentColor' : 'none'}
-          strokeWidth={liked ? 0 : 2}
-        />
-      </div>
-      {showCount && count > 0 && (
-        <span
+        <div
           className={`
-            ${textSizes[size]} font-medium
-            transition-colors duration-200
-            ${liked ? 'text-status-error' : 'text-gray-500'}
+            ${buttonSizes[size]} rounded-full
+            transition-all duration-200
+            ${liked
+              ? 'text-status-error'
+              : 'text-gray-400 hover:text-red-400 group-hover:scale-110'
+            }
           `}
         >
-          {count}
-        </span>
+          <Heart
+            className={`${sizeClasses[size]} transition-all duration-200`}
+            fill={liked ? 'currentColor' : 'none'}
+            strokeWidth={liked ? 0 : 2}
+          />
+        </div>
+        {showCount && count > 0 && (
+          <span
+            className={`
+              ${textSizes[size]} font-medium
+              transition-colors duration-200
+              ${liked ? 'text-status-error' : 'text-gray-500'}
+            `}
+          >
+            {count}
+          </span>
+        )}
+      </button>
+
+      {showAuthPrompt && (
+        <div ref={promptRef} className="absolute top-full right-0 mt-2 z-50">
+          <AuthPrompt
+            message="Sign in to save your likes across devices"
+            onClose={() => {
+              setShowAuthPrompt(false);
+              try { localStorage.setItem(NUDGE_DISMISSED_KEY, '1'); } catch {}
+            }}
+          />
+        </div>
       )}
-    </button>
+    </div>
   );
 });
 
@@ -220,6 +251,7 @@ export default memo(function LikeButton({
 export function useLikeStatus(
   targets: Array<{ type: LikeTargetType; id: string }>
 ): Record<string, { count: number; liked: boolean }> {
+  const identity = useIdentity();
   const targetsKey = JSON.stringify(targets);
 
   // Build initial status from cache (memoized)
@@ -236,23 +268,15 @@ export function useLikeStatus(
 
   const [status, setStatus] = useState(initialStatus);
 
-  // Re-initialize when targets change
-  const prevTargetsKey = useMemo(() => targetsKey, [targetsKey]);
-  if (prevTargetsKey !== targetsKey) {
-    // This is safe because we're in render phase, not effect
-    // React will batch this with the current render
-  }
-
   useEffect(() => {
     if (targets.length === 0) return;
 
     let cancelled = false;
-    const visitorId = getVisitorId();
 
     // Fetch from API
     const fetchStatus = async () => {
       try {
-        const data = await likes.getStatus(targetsKey, visitorId);
+        const data = await likes.getStatus(targetsKey, identity.id || undefined);
         if (!cancelled) {
           setStatus(data.results);
 
@@ -276,7 +300,7 @@ export function useLikeStatus(
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetsKey]);
+  }, [targetsKey, identity.id]);
 
   return status;
 }

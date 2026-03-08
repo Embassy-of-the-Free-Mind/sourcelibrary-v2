@@ -27,10 +27,24 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     return null;
   }
 
+  // Anonymous user: show sign-in link
   if (!session) {
-    return null;
+    const textColor = variant === 'hero' ? 'text-white/80 hover:text-white' : '';
+    const textStyle = variant === 'hero' ? {} : { color: 'var(--text-muted)' };
+
+    return (
+      <Link
+        href="/auth/signin"
+        className={`text-sm font-medium transition-colors hover:opacity-80 ${textColor}`}
+        style={textStyle}
+      >
+        Sign in
+      </Link>
+    );
   }
 
+  // Authenticated user: show avatar + dropdown
+  const isAdmin = (session.user as any)?.role === 'admin';
   const initials = session.user?.name
     ?.split(' ')
     .map(n => n[0])
@@ -73,13 +87,31 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
           </div>
           <div className="py-1">
             <Link
-              href="/analytics"
+              href="/account"
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
               onClick={() => setIsOpen(false)}
             >
-              Analytics
+              Account
             </Link>
+            <Link
+              href="/bookshelf"
+              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-primary)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              Bookshelf
+            </Link>
+            {isAdmin && (
+              <Link
+                href="/analytics"
+                className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                style={{ color: 'var(--text-primary)' }}
+                onClick={() => setIsOpen(false)}
+              >
+                Analytics
+              </Link>
+            )}
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
               className="w-full text-left px-4 py-2 text-sm hover:opacity-70 transition-opacity"

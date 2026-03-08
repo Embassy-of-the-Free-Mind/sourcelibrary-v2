@@ -1,15 +1,6 @@
 import { apiClient } from './client';
 import type { BookshelfStatus } from '@/lib/types/bookshelf';
-
-function getVisitorId(): string {
-  if (typeof window === 'undefined') return '';
-  let id = localStorage.getItem('sl_visitor_id');
-  if (!id) {
-    id = 'v_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
-    localStorage.setItem('sl_visitor_id', id);
-  }
-  return id;
-}
+import { getVisitorId } from '@/hooks/useIdentity';
 
 export interface BookshelfEntryWithBook {
   book_id: string;

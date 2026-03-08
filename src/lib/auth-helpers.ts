@@ -78,6 +78,46 @@ export function withAuth(
   };
 }
 
+// --- Dual-mode identity resolution for engagement APIs ---
+
+export interface ResolvedIdentity {
+  id: string;
+  type: 'authenticated' | 'anonymous';
+  email?: string | null;
+}
+
+/**
+ * Resolve the identity of the request sender.
+ * Checks NextAuth session first, falls back to X-Visitor-ID header.
+ * Used by engagement APIs (likes, bookshelf) that accept both auth modes.
+ */
+export async function resolveIdentity(request: NextRequest): Promise<ResolvedIdentity | null> {
+  // Try NextAuth session first
+  try {
+    const session = await auth();
+    if (session?.user?.id) {
+      return {
+        id: session.user.id,
+        type: 'authenticated',
+        email: session.user.email,
+      };
+    }
+  } catch {
+    // Session check failed — fall through to visitor_id
+  }
+
+  // Fall back to X-Visitor-ID header
+  const visitorId = request.headers.get('x-visitor-id');
+  if (visitorId) {
+    return {
+      id: visitorId,
+      type: 'anonymous',
+    };
+  }
+
+  return null;
+}
+
 /**
  * Wrapper for API routes requiring admin role
  * Returns 401 if not authenticated, 403 if not admin

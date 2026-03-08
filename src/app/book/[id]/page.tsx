@@ -22,8 +22,6 @@ import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
-// RegistrationWall removed — gating handled client-side by BetaGateModal in BookPagesSection
-// auth import removed — gating handled client-side by useBetaGate
 
 // ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
 export const revalidate = 120;
@@ -930,7 +928,7 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} bookFeatured={!!book.featured} totalBooks={totalBooks} />
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
         <AuthCheck>
           <BookHistory bookId={book.id} />
         </AuthCheck>

@@ -4,8 +4,11 @@ import { useState, useEffect, useRef } from 'react';
 import { BookOpen, ChevronDown, Check, X, Loader2 } from 'lucide-react';
 import { bookshelf } from '@/lib/api-client';
 import type { BookshelfStatus } from '@/lib/types/bookshelf';
+import { useIdentity } from '@/hooks/useIdentity';
+import AuthPrompt from '@/components/auth/AuthPrompt';
 
 const CACHE_KEY = 'sl_bookshelf_cache';
+const BOOKSHELF_NUDGE_DISMISSED_KEY = 'sl_bookshelf_nudge_dismissed';
 
 function getCache(): Record<string, BookshelfStatus> {
   if (typeof window === 'undefined') return {};
@@ -33,10 +36,13 @@ interface AddToBookshelfButtonProps {
 }
 
 export default function AddToBookshelfButton({ bookId, className = '' }: AddToBookshelfButtonProps) {
+  const identity = useIdentity();
   const [status, setStatus] = useState<BookshelfStatus | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const promptRef = useRef<HTMLDivElement>(null);
 
   // Check cache on mount
   useEffect(() => {
@@ -46,11 +52,14 @@ export default function AddToBookshelfButton({ bookId, className = '' }: AddToBo
     }
   }, [bookId]);
 
-  // Close dropdown on outside click
+  // Close dropdown and auth prompt on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setShowDropdown(false);
+      }
+      if (promptRef.current && !promptRef.current.contains(e.target as Node)) {
+        setShowAuthPrompt(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -70,6 +79,15 @@ export default function AddToBookshelfButton({ bookId, className = '' }: AddToBo
 
     try {
       await bookshelf.add(bookId, newStatus);
+
+      // Soft nudge: suggest sign-in on first anonymous bookshelf add
+      if (identity.type === 'anonymous') {
+        try {
+          if (!localStorage.getItem(BOOKSHELF_NUDGE_DISMISSED_KEY)) {
+            setShowAuthPrompt(true);
+          }
+        } catch { /* ignore storage errors */ }
+      }
     } catch {
       // Revert on failure
       setStatus(previousStatus);
@@ -157,6 +175,18 @@ export default function AddToBookshelfButton({ bookId, className = '' }: AddToBo
               </button>
             </>
           )}
+        </div>
+      )}
+
+      {showAuthPrompt && (
+        <div ref={promptRef} className="absolute top-full left-0 mt-2 z-50">
+          <AuthPrompt
+            message="Sign in to sync your bookshelf across devices"
+            onClose={() => {
+              setShowAuthPrompt(false);
+              try { localStorage.setItem(BOOKSHELF_NUDGE_DISMISSED_KEY, '1'); } catch {}
+            }}
+          />
         </div>
       )}
     </div>

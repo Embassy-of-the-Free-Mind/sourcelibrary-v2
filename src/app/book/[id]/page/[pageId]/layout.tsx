@@ -99,7 +99,5 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 }
 
 export default async function PageLayout({ children }: LayoutProps) {
-  // Content gating is handled client-side by useBetaGate (lead generation, not security).
-  // No server-side redirect — localStorage email grants access via the beta gate modal.
   return children;
 }
