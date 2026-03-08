@@ -1,10 +1,8 @@
 /**
  * Zenodo API integration for DOI minting.
  *
- * Zenodo is a free, open research repository operated by CERN.
- * It provides DOIs for any research output.
- *
- * API Docs: https://developers.zenodo.org/
+ * Uses the InvenioRDM REST API (Zenodo migrated from legacy deposit API).
+ * Docs: https://inveniordm.docs.cern.ch/reference/rest_api_drafts_records/
  *
  * Environment variables:
  *   ZENODO_ACCESS_TOKEN - Personal access token from zenodo.org/account/settings/applications/
@@ -21,42 +19,44 @@ const ZENODO_URL = process.env.ZENODO_SANDBOX === 'true'
   ? 'https://sandbox.zenodo.org'
   : 'https://zenodo.org';
 
-interface ZenodoDeposit {
+/* ── Types ── */
+
+interface ZenodoRecord {
   id: number;
-  conceptrecid: number;
-  doi: string;
-  doi_url: string;
+  parent: { id: number };
+  pids: { doi: { identifier: string } };
   metadata: {
     title: string;
-    upload_type: string;
+    description?: string;
     publication_date: string;
-    description: string;
-    access_right: string;
-    license: string;
-    creators: { name: string; orcid?: string; affiliation?: string }[];
+    resource_type: { id: string };
+    creators: { person_or_org: { name: string; type: string; given_name?: string; family_name?: string } }[];
+    rights?: { id: string }[];
     version?: string;
-    language?: string;
-    related_identifiers?: { identifier: string; relation: string; scheme: string }[];
-    keywords?: string[];
+    languages?: { id: string }[];
+    subjects?: { subject: string }[];
+    related_identifiers?: { identifier: string; relation_type: { id: string }; scheme: string }[];
   };
   links: {
     self: string;
-    html: string;
-    bucket: string;
-    publish: string;
-    edit: string;
+    self_html: string;
     files: string;
-    latest_draft: string;
+    draft?: string;
+    publish?: string;
+    versions?: string;
+    latest?: string;
   };
-  state: 'unsubmitted' | 'done' | 'error';
-  submitted: boolean;
+  is_published: boolean;
+  files?: { enabled: boolean };
 }
 
 interface ZenodoError {
   status: number;
   message: string;
-  errors?: { field: string; message: string }[];
+  errors?: { field: string; messages: string[] }[];
 }
+
+/* ── Auth ── */
 
 function getAccessToken(): string {
   const token = process.env.ZENODO_ACCESS_TOKEN;
@@ -66,58 +66,194 @@ function getAccessToken(): string {
   return token;
 }
 
-/**
- * Helper to handle Zenodo API errors (may return HTML on auth failure)
- */
+function authHeaders(extra?: Record<string, string>): Record<string, string> {
+  return { 'Authorization': `Bearer ${getAccessToken()}`, ...extra };
+}
+
+/* ── Error handling ── */
+
 async function handleZenodoError(response: Response, context: string): Promise<never> {
   const contentType = response.headers.get('content-type') || '';
 
   if (contentType.includes('application/json')) {
     const error: ZenodoError = await response.json();
-    // Include full field-level error details
-    const fieldErrors = error.errors?.map(e => `${e.field}: ${e.message}`).join('; ');
-    throw new Error(`Zenodo ${context}: ${error.message}${fieldErrors ? ` - Fields: ${fieldErrors}` : ''}`);
+    const fieldErrors = error.errors?.map(e => `${e.field}: ${e.messages.join(', ')}`).join('; ');
+    throw new Error(`Zenodo ${context}: ${error.message}${fieldErrors ? ` — ${fieldErrors}` : ''}`);
   } else {
-    // HTML error page (likely auth failure or server error)
     const text = await response.text();
     if (response.status === 401) {
-      throw new Error(`Zenodo ${context}: Unauthorized - check your access token`);
+      throw new Error(`Zenodo ${context}: Unauthorized — check your access token`);
     } else if (response.status === 403) {
-      throw new Error(`Zenodo ${context}: Forbidden - token may lack required permissions`);
+      throw new Error(`Zenodo ${context}: Forbidden — token may lack deposit:write + deposit:actions scopes`);
     }
-    throw new Error(`Zenodo ${context}: HTTP ${response.status} - ${text.substring(0, 200)}`);
+    throw new Error(`Zenodo ${context}: HTTP ${response.status} — ${text.substring(0, 300)}`);
   }
 }
 
+/* ── Record operations (InvenioRDM API) ── */
+
 /**
- * Create a new Zenodo deposit (draft)
+ * Create a new blank draft record.
  */
-export async function createDeposit(): Promise<ZenodoDeposit> {
-  const response = await fetch(`${ZENODO_API}/deposit/depositions`, {
+export async function createDraft(book: Book, edition: TranslationEdition): Promise<ZenodoRecord> {
+  const body = {
+    access: { record: 'public', files: 'public' },
+    files: { enabled: true },
+    metadata: buildMetadata(book, edition),
+  };
+
+  console.log('Zenodo create draft metadata:', JSON.stringify(body.metadata, null, 2));
+
+  const response = await fetch(`${ZENODO_API}/records`, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) await handleZenodoError(response, 'create draft');
+  return response.json();
+}
+
+/**
+ * Create a new version of a published record. Returns the new draft.
+ * Automatically deletes inherited files so fresh ones can be uploaded.
+ */
+export async function createNewVersion(recordId: number): Promise<ZenodoRecord> {
+  // POST /api/records/{id}/versions creates a new version draft
+  const response = await fetch(`${ZENODO_API}/records/${recordId}/versions`, {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({}),
   });
 
+  if (!response.ok) await handleZenodoError(response, 'new version');
+  const draft: ZenodoRecord = await response.json();
+
+  // Delete inherited files from the previous version
+  const filesResp = await fetch(`${ZENODO_API}/records/${draft.id}/draft/files`, {
+    headers: authHeaders(),
+  });
+  if (filesResp.ok) {
+    const filesData = await filesResp.json();
+    const entries = filesData.entries || [];
+    for (const f of entries) {
+      await fetch(`${ZENODO_API}/records/${draft.id}/draft/files/${f.key}`, {
+        method: 'DELETE',
+        headers: authHeaders(),
+      });
+    }
+  }
+
+  return draft;
+}
+
+/**
+ * Update metadata on a draft record.
+ */
+export async function updateDraftMetadata(
+  draftId: number,
+  book: Book,
+  edition: TranslationEdition
+): Promise<ZenodoRecord> {
+  const body = {
+    metadata: buildMetadata(book, edition),
+  };
+
+  const response = await fetch(`${ZENODO_API}/records/${draftId}/draft`, {
+    method: 'PUT',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(body),
+  });
+
   if (!response.ok) {
-    await handleZenodoError(response, 'create deposit');
+    const text = await response.text();
+    console.error('Zenodo metadata error:', text);
+    try {
+      const error = JSON.parse(text);
+      const fieldErrors = error.errors?.map((e: { field: string; messages: string[] }) =>
+        `${e.field}: ${e.messages.join(', ')}`).join('; ');
+      throw new Error(`Zenodo update metadata: ${error.message}${fieldErrors ? ` — ${fieldErrors}` : ''}`);
+    } catch (e) {
+      if (e instanceof Error && e.message.startsWith('Zenodo')) throw e;
+      throw new Error(`Zenodo update metadata: HTTP ${response.status} — ${text.substring(0, 500)}`);
+    }
   }
 
   return response.json();
 }
 
 /**
- * Update deposit metadata
+ * Upload a file to a draft record (InvenioRDM 3-step: init → upload → commit).
  */
-export async function updateDepositMetadata(
-  depositId: number,
-  book: Book,
-  edition: TranslationEdition
-): Promise<ZenodoDeposit> {
-  // Map our license to Zenodo license IDs
+export async function uploadFile(
+  draftId: number,
+  filename: string,
+  content: Buffer | string
+): Promise<{ key: string; size: number }> {
+  const token = getAccessToken();
+
+  // Step 1: Initialize file upload
+  const initResp = await fetch(`${ZENODO_API}/records/${draftId}/draft/files`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify([{ key: filename }]),
+  });
+  if (!initResp.ok) await handleZenodoError(initResp, `file init (${filename})`);
+
+  // Step 2: Upload content
+  const body = typeof content === 'string' ? new TextEncoder().encode(content) : new Uint8Array(content);
+  const uploadResp = await fetch(
+    `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/content`,
+    {
+      method: 'PUT',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/octet-stream' },
+      body,
+    }
+  );
+  if (!uploadResp.ok) await handleZenodoError(uploadResp, `file upload (${filename})`);
+
+  // Step 3: Commit
+  const commitResp = await fetch(
+    `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/commit`,
+    {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` },
+    }
+  );
+  if (!commitResp.ok) await handleZenodoError(commitResp, `file commit (${filename})`);
+
+  const result = await commitResp.json();
+  return { key: result.key, size: result.size };
+}
+
+/**
+ * Publish a draft record (mints DOI).
+ */
+export async function publishDraft(draftId: number): Promise<ZenodoRecord> {
+  const response = await fetch(`${ZENODO_API}/records/${draftId}/draft/actions/publish`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
+
+  if (!response.ok) await handleZenodoError(response, 'publish');
+  return response.json();
+}
+
+/**
+ * Get a record by ID.
+ */
+export async function getRecord(recordId: number): Promise<ZenodoRecord> {
+  const response = await fetch(`${ZENODO_API}/records/${recordId}`, {
+    headers: authHeaders(),
+  });
+
+  if (!response.ok) await handleZenodoError(response, 'get record');
+  return response.json();
+}
+
+/* ── Metadata builder ── */
+
+function buildMetadata(book: Book, edition: TranslationEdition) {
   const licenseMap: Record<string, string> = {
     'CC0-1.0': 'cc-zero',
     'CC-BY-4.0': 'cc-by-4.0',
@@ -126,189 +262,57 @@ export async function updateDepositMetadata(
     'CC-BY-NC-SA-4.0': 'cc-by-nc-sa-4.0',
   };
 
-  // Build creators list
-  const creators = edition.contributors.map(c => ({
-    name: c.type === 'ai' ? `${c.name} (AI)` : c.name,
-    ...(c.orcid && { orcid: c.orcid }),
-    ...(c.affiliation && { affiliation: c.affiliation }),
-  }));
+  // Build InvenioRDM creators
+  const creators = edition.contributors.map(c => {
+    const displayName = c.type === 'ai' ? `${c.name} (AI)` : c.name;
+    // InvenioRDM wants person_or_org with type
+    return {
+      person_or_org: {
+        name: displayName,
+        type: 'organizational' as const,
+      },
+    };
+  });
 
-  // Add Source Library as organization if no human contributors
-  if (!creators.some(c => !c.name.includes('(AI)'))) {
-    creators.unshift({ name: 'Source Library', affiliation: 'https://sourcelibrary.org' });
+  // Ensure at least one creator
+  if (creators.length === 0) {
+    creators.push({
+      person_or_org: { name: 'Source Library', type: 'organizational' as const },
+    });
   }
 
-  // Build description with content hash included
   const description = buildDescription(book, edition) +
     `\n\n<p><strong>Content hash:</strong> <code>${edition.content_hash}</code></p>`;
 
-  // Build related identifiers (only include if using valid schemes)
-  const related_identifiers: { identifier: string; relation: string; scheme: string }[] = [];
-
-  // Link to previous version if exists
+  // Build related identifiers for version linking
+  const related_identifiers: { identifier: string; relation_type: { id: string }; scheme: string; resource_type?: { id: string } }[] = [];
   if (edition.previous_version_doi) {
     related_identifiers.push({
       identifier: edition.previous_version_doi,
-      relation: 'isNewVersionOf',
+      relation_type: { id: 'isnewversionof' },
       scheme: 'doi',
     });
   }
 
-  const metadata = {
+  return {
     title: edition.citation.title,
-    upload_type: 'publication',
-    publication_type: 'book',
+    resource_type: { id: 'publication-book' },
     publication_date: edition.published_at
       ? new Date(edition.published_at).toISOString().split('T')[0]
       : new Date().toISOString().split('T')[0],
     description,
-    access_right: 'open',
-    license: licenseMap[edition.license] || 'cc-by-4.0',
+    rights: [{ id: licenseMap[edition.license] || 'cc-by-4.0' }],
     creators,
     version: edition.version,
-    language: 'eng',
-    keywords: [
+    languages: [{ id: 'eng' }],
+    subjects: [
       'translation',
       'historical text',
       book.language,
       ...(book.categories || []),
-    ].filter(Boolean),
+    ].filter(Boolean).map(s => ({ subject: s as string })),
     ...(related_identifiers.length > 0 && { related_identifiers }),
   };
-
-  console.log('Zenodo metadata:', JSON.stringify(metadata, null, 2));
-
-  const response = await fetch(`${ZENODO_API}/deposit/depositions/${depositId}`, {
-    method: 'PUT',
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ metadata }),
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    console.error('Zenodo error response:', text);
-    // Re-parse to get structured error
-    try {
-      const error = JSON.parse(text);
-      const fieldErrors = error.errors?.map((e: { field: string; message: string }) => `${e.field}: ${e.message}`).join('; ');
-      throw new Error(`Zenodo update metadata: ${error.message}${fieldErrors ? ` - Fields: ${fieldErrors}` : ''}`);
-    } catch {
-      throw new Error(`Zenodo update metadata: HTTP ${response.status} - ${text.substring(0, 500)}`);
-    }
-  }
-
-  return response.json();
-}
-
-/**
- * Upload a file to the deposit
- */
-export async function uploadFile(
-  bucketUrl: string,
-  filename: string,
-  content: Buffer | string
-): Promise<{ key: string; size: number; checksum: string }> {
-  // Convert Buffer to Uint8Array for fetch compatibility
-  const body = typeof content === 'string' ? content : new Uint8Array(content);
-  const response = await fetch(`${bucketUrl}/${filename}`, {
-    method: 'PUT',
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-      'Content-Type': 'application/octet-stream',
-    },
-    body,
-  });
-
-  if (!response.ok) {
-    await handleZenodoError(response, 'file upload');
-  }
-
-  return response.json();
-}
-
-/**
- * Publish the deposit (mints DOI)
- */
-export async function publishDeposit(depositId: number): Promise<ZenodoDeposit> {
-  const response = await fetch(`${ZENODO_API}/deposit/depositions/${depositId}/actions/publish`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-    },
-  });
-
-  if (!response.ok) {
-    await handleZenodoError(response, 'publish');
-  }
-
-  return response.json();
-}
-
-/**
- * Get a deposit by ID
- */
-export async function getDeposit(depositId: number): Promise<ZenodoDeposit> {
-  const response = await fetch(`${ZENODO_API}/deposit/depositions/${depositId}`, {
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-    },
-  });
-
-  if (!response.ok) {
-    await handleZenodoError(response, 'get deposit');
-  }
-
-  return response.json();
-}
-
-/**
- * Create a new version of an existing deposit.
- * Fetches the new draft and deletes any inherited files from the previous version.
- */
-export async function createNewVersion(depositId: number): Promise<ZenodoDeposit> {
-  const response = await fetch(`${ZENODO_API}/deposit/depositions/${depositId}/actions/newversion`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-    },
-  });
-
-  if (!response.ok) {
-    await handleZenodoError(response, 'new version');
-  }
-
-  const result = await response.json();
-
-  // The response contains a link to the new draft
-  const latestDraftUrl = result.links.latest_draft;
-  const latestDraftResponse = await fetch(latestDraftUrl, {
-    headers: {
-      'Authorization': `Bearer ${getAccessToken()}`,
-    },
-  });
-
-  const draft: ZenodoDeposit = await latestDraftResponse.json();
-
-  // Delete inherited files from the previous version so we upload fresh
-  if (draft.links.files) {
-    const filesResp = await fetch(draft.links.files, {
-      headers: { 'Authorization': `Bearer ${getAccessToken()}` },
-    });
-    if (filesResp.ok) {
-      const files = await filesResp.json();
-      for (const f of files) {
-        await fetch(`${ZENODO_API}/deposit/depositions/${draft.id}/files/${f.id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${getAccessToken()}` },
-        });
-      }
-    }
-  }
-
-  return draft;
 }
 
 function buildDescription(book: Book, edition: TranslationEdition): string {
@@ -340,6 +344,8 @@ function buildDescription(book: Book, edition: TranslationEdition): string {
   return parts.filter(Boolean).join('\n');
 }
 
+/* ── Full workflow ── */
+
 /**
  * Full workflow: Create deposit, upload files, publish, return DOI.
  * Optionally uploads a scholarly EPUB alongside the .txt translation.
@@ -352,40 +358,44 @@ export async function mintDoi(
 ): Promise<{ doi: string; doi_url: string; zenodo_id: number; zenodo_url: string }> {
   const { previousZenodoId, epubBuffer, epubFilename } = options || {};
 
-  // Create deposit (or new version)
-  let deposit: ZenodoDeposit;
+  // Create draft (or new version)
+  let draft: ZenodoRecord;
   if (previousZenodoId) {
-    deposit = await createNewVersion(previousZenodoId);
+    draft = await createNewVersion(previousZenodoId);
+    // Update metadata on the new version draft
+    draft = await updateDraftMetadata(draft.id, book, edition);
   } else {
-    deposit = await createDeposit();
+    draft = await createDraft(book, edition);
   }
 
-  // Update metadata
-  deposit = await updateDepositMetadata(deposit.id, book, edition);
+  console.log(`Zenodo draft created: ${draft.id}`);
 
   // Upload translation text file
   const txtFilename = `${book.id}-translation-v${edition.version}.txt`;
-  await uploadFile(deposit.links.bucket, txtFilename, translationText);
+  await uploadFile(draft.id, txtFilename, translationText);
+  console.log(`Uploaded: ${txtFilename}`);
 
   // Upload scholarly EPUB if provided
   if (epubBuffer) {
     const epubName = epubFilename || `${(book as any).slug || book.id}-scholarly-v${edition.version}.epub`;
-    await uploadFile(deposit.links.bucket, epubName, epubBuffer);
+    await uploadFile(draft.id, epubName, epubBuffer);
+    console.log(`Uploaded: ${epubName} (${(epubBuffer.length / 1024 / 1024).toFixed(1)}MB)`);
   }
 
   // Publish (mints DOI)
-  deposit = await publishDeposit(deposit.id);
+  const published = await publishDraft(draft.id);
+  const doi = published.pids?.doi?.identifier;
 
   return {
-    doi: deposit.doi,
-    doi_url: deposit.doi_url || `https://doi.org/${deposit.doi}`,
-    zenodo_id: deposit.id,
-    zenodo_url: `${ZENODO_URL}/record/${deposit.id}`,
+    doi: doi || '',
+    doi_url: doi ? `https://doi.org/${doi}` : '',
+    zenodo_id: published.id,
+    zenodo_url: `${ZENODO_URL}/records/${published.id}`,
   };
 }
 
 /**
- * Check if Zenodo is configured
+ * Check if Zenodo is configured.
  */
 export function isZenodoConfigured(): boolean {
   return !!process.env.ZENODO_ACCESS_TOKEN;
