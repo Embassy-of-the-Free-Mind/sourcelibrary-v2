@@ -53,10 +53,13 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
               input: '$pages_array',
               as: 'page',
               cond: {
-                $and: [
-                  { $ne: ['$$page.translation', null] },
-                  { $ne: ['$$page.translation.data', null] },
-                  { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
+                $or: [
+                  { $and: [
+                    { $ne: ['$$page.translation', null] },
+                    { $ne: ['$$page.translation.data', null] },
+                    { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
+                  ]},
+                  { $in: [{ $ifNull: ['$$page.page_type', ''] }, ['blank', 'illustration', 'map', 'frontispiece', 'diagram']] }
                 ]
               }
             }

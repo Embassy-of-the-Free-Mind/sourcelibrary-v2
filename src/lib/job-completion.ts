@@ -10,6 +10,7 @@
 
 import { getDb } from '@/lib/mongodb';
 import type { PageJobType } from '@/lib/types/job';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 
 /** Type alias for the Db returned by getDb() */
 type Db = Awaited<ReturnType<typeof getDb>>;
@@ -153,11 +154,23 @@ async function handleJobCompletion(
     }
 
     case 'translation': {
-      // Update book's pages_translated count
-      const totalPagesWithTranslation = await pages.countDocuments({
-        book_id: bookId,
-        'translation.data': { $exists: true, $ne: '' }
-      });
+      // Update book's pages_translated count (includes skip types like blank/illustration)
+      const [translationAgg] = await pages.aggregate([
+        { $match: { book_id: bookId } },
+        { $group: {
+          _id: null,
+          count: { $sum: {
+            $cond: [
+              { $or: [
+                { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+              ] },
+              1, 0
+            ]
+          }}
+        }}
+      ]).toArray();
+      const totalPagesWithTranslation = translationAgg?.count || 0;
 
       // Mark enrichment stale if this book already has an index
       const bookDoc = await books.findOne(
