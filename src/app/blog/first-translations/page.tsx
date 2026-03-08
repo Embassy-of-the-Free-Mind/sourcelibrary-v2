@@ -117,12 +117,12 @@ export default function FirstTranslationsPage() {
 
           {/* Featured book card: Walchin */}
           <div className="bg-white rounded-xl border border-border-light p-5 md:p-6 mb-8 flex flex-col md:flex-row gap-5">
-            <div className="md:w-24 shrink-0">
+            <div className="md:w-32 shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/698255f12f8186e7ada0c92c/698255f82cf8a3ab2e0b44d2.avif"
-                alt="Title page of Das mineralische Gluten by Dorothea Juliana Walchin"
-                className="w-full md:w-24 h-32 md:h-auto object-cover rounded-lg"
+                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/698255f12f8186e7ada0c92c/698256b4d09a5f3b90400721.jpg"
+                alt="Frontispiece of Das mineralische Gluten by Dorothea Juliana Walchin"
+                className="w-full md:w-32 h-40 md:h-auto object-cover rounded-lg"
               />
             </div>
             <div className="flex-1">
@@ -252,7 +252,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952898bab34727b1f04d709/3.jpg"
+                  src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952898bab34727b1f04d709/1.jpg"
                   alt="Title page of La chymie charitable et facile en faveur des dames by Marie Meurdrac, 1666"
                   className="w-full h-48 md:h-full object-cover"
                 />
@@ -262,7 +262,7 @@ export default function FirstTranslationsPage() {
                   Marie Meurdrac, <em>La chymie charitable et facile en faveur des dames</em>
                 </Link>
                 <p className="text-sm text-muted mt-1 mb-3">Paris, 1666</p>
-                <p className="text-secondary text-sm leading-relaxed font-body">
+                <p className="text-secondary leading-relaxed font-body">
                   One of the earliest chemistry books written by a woman, offering practical chemical recipes and pharmaceutical preparations explicitly addressed to a female audience. Never fully translated into English.
                 </p>
               </div>
@@ -271,24 +271,48 @@ export default function FirstTranslationsPage() {
 
           {/* Other women authors */}
           <div className="space-y-4 mb-8">
-            <div className="bg-white rounded-xl border border-border-light p-5">
-              <Link href="https://sourcelibrary.org/book/6984e84d875ef560e34aef4e" className="text-accent-rust hover:text-accent-rust underline font-medium">
-                Anna Maria van Schurman, <em>Opuscula</em>
-              </Link>
-              <p className="text-sm text-muted mt-1">Leiden, 1648</p>
-              <p className="text-secondary text-sm leading-relaxed mt-2 font-body">
-                The collected works of &ldquo;the most learned woman in the world,&rdquo; as her contemporaries called her. Schurman was a polymath who corresponded with Descartes and wrote in Latin, Greek, Hebrew, and several modern languages. Her <em>Opuscula</em> has never been published in English.
-              </p>
+            <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+              <div className="md:flex">
+                <div className="md:w-40 shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/6984e84d875ef560e34aef4e/6984e9808ab59930765fe050.jpg"
+                    alt="Frontispiece portrait of Anna Maria van Schurman from her Opuscula, 1648"
+                    className="w-full h-48 md:h-full object-cover"
+                  />
+                </div>
+                <div className="p-5 md:p-6">
+                  <Link href="https://sourcelibrary.org/book/6984e84d875ef560e34aef4e" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                    Anna Maria van Schurman, <em>Opuscula</em>
+                  </Link>
+                  <p className="text-sm text-muted mt-1 mb-3">Leiden, 1648</p>
+                  <p className="text-secondary leading-relaxed font-body">
+                    The collected works of &ldquo;the most learned woman in the world,&rdquo; as her contemporaries called her. Schurman was a polymath who corresponded with Descartes and wrote in Latin, Greek, Hebrew, and several modern languages. Her <em>Opuscula</em> has never been published in English.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-border-light p-5">
-              <Link href="https://sourcelibrary.org/book/69529036b184004c526a17f8" className="text-accent-rust hover:text-accent-rust underline font-medium">
-                Jacopo Filippo Foresti, <em>De claris selectisque mulieribus</em>
-              </Link>
-              <p className="text-sm text-muted mt-1">Ferrara, 1497</p>
-              <p className="text-secondary text-sm leading-relaxed mt-2 font-body">
-                A Renaissance catalogue of famous women, from antiquity to Foresti&apos;s own time. Written in Latin and never translated into English, it offers a 15th-century perspective on women&apos;s intellectual and political achievements.
-              </p>
+            <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+              <div className="md:flex">
+                <div className="md:w-40 shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69529036b184004c526a17f8/6.jpg"
+                    alt="Page from De claris selectisque mulieribus by Jacopo Filippo Foresti, 1497"
+                    className="w-full h-48 md:h-full object-cover"
+                  />
+                </div>
+                <div className="p-5 md:p-6">
+                  <Link href="https://sourcelibrary.org/book/69529036b184004c526a17f8" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                    Jacopo Filippo Foresti, <em>De claris selectisque mulieribus</em>
+                  </Link>
+                  <p className="text-sm text-muted mt-1 mb-3">Ferrara, 1497</p>
+                  <p className="text-secondary leading-relaxed font-body">
+                    A Renaissance catalogue of famous women, from antiquity to Foresti&apos;s own time. Written in Latin and never translated into English, it offers a 15th-century perspective on women&apos;s intellectual and political achievements.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -325,21 +349,33 @@ export default function FirstTranslationsPage() {
                   Athanasius Kircher, <em>Oedipus Aegyptiacus</em>
                 </Link>
                 <p className="text-sm text-muted mt-1 mb-3">Rome, 1652&ndash;1654 &middot; 581 pages</p>
-                <p className="text-secondary text-sm leading-relaxed font-body">
+                <p className="text-secondary leading-relaxed font-body">
                   One of the most ambitious works of 17th-century scholarship: a 581-page attempt to decode Egyptian hieroglyphics, drawing on Coptic, Hebrew, Arabic, Chinese, and virtually every other written tradition Kircher could access. Cited in every history of Egyptology, every study of Baroque intellectual culture. No complete English translation had ever been published. The Latin original is now fully translated and readable.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-border-light p-5 md:p-6">
-            <Link href="https://sourcelibrary.org/book/697d9c9c810ed7ecc13c1e5a" className="text-accent-rust hover:text-accent-rust underline font-medium">
-              Hermann Conring, <em>De Hermetica Medicina</em>
-            </Link>
-            <p className="text-sm text-muted mt-1 mb-3">Helmstedt, 1649 &middot; 433 pages</p>
-            <p className="text-secondary text-sm leading-relaxed font-body">
-              A critical history of ancient Hermetic medicine &mdash; one of the earliest attempts to sort myth from evidence in the history of alchemy and early chemistry. Conring is a significant figure in the history of science, but this work has remained locked in Latin for nearly four centuries.
-            </p>
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-48 shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/6909a2e7cf28baa1b4caec93/694d21a6ef5ebd3ae6429684.jpg"
+                  alt="Title page of Hermann Conring's De Hermetica Medicina, 1649"
+                  className="w-full h-48 md:h-full object-cover"
+                />
+              </div>
+              <div className="p-5 md:p-6">
+                <Link href="https://sourcelibrary.org/book/6909a2e7cf28baa1b4caec93" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                  Hermann Conring, <em>De Hermetica Medicina</em>
+                </Link>
+                <p className="text-sm text-muted mt-1 mb-3">Helmstedt, 1649 &middot; 433 pages</p>
+                <p className="text-secondary leading-relaxed font-body">
+                  A critical history of ancient Hermetic medicine &mdash; one of the earliest attempts to sort myth from evidence in the history of alchemy and early chemistry. Conring is a significant figure in the history of science, but this work has remained locked in Latin for nearly four centuries.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
