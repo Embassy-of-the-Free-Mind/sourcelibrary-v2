@@ -5,7 +5,7 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Can AI Read Cuneiform? - Blog - Source Library',
-  description: 'We tested Gemini 3 Flash on 107 cuneiform tablets from the oldest writing system on Earth. A contamination test proves the model is doing genuine visual analysis, not reading from memory — but sign-level accuracy remains low.',
+  description: 'We ran five experiments testing Gemini on 107 cuneiform tablets — the oldest writing system on Earth. A contamination test proves genuine visual analysis, model comparison shows 2.5 Pro doubles accuracy, and image preprocessing can rescue low-resolution photographs.',
   openGraph: {
     title: 'Can AI Read Cuneiform?',
     description: 'We tested Gemini 3 Flash on cuneiform tablets — the oldest writing system on Earth. The results were surprising.',
@@ -24,7 +24,7 @@ export default function CuneiformOcrPage() {
           title="Can AI Read Cuneiform?"
           subtitle="Testing Gemini on the oldest writing system on Earth"
         >
-          <p className="text-stone-400 text-sm mt-4">7 March 2026 &middot; 25 min read</p>
+          <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 30 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -100,7 +100,7 @@ export default function CuneiformOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We ran three experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. The answer surprised us.
+          We ran five experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better.
         </p>
 
         {/* --- How to Read Cuneiform --- */}
@@ -983,13 +983,402 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           This design separates four capabilities that our PoC tangled together: (1) visual sign discrimination, (2) knowledge of cuneiform conventions, (3) document-level pattern matching, and (4) training data memorization. Experiment 3 already settled question (4) &mdash; memorization does not drive vision performance. A full factorial experiment like this would settle the remaining three, telling us whether a model that scores high on &ldquo;unknown&rdquo; tablets with no context hints has genuine cuneiform vision, or is doing sophisticated retrieval. Both are useful, but for different purposes &mdash; and only the first would transform the field.
         </p>
 
+        {/* --- Experiment 5: Cropping and Image Preprocessing --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Experiment 5: Can we help the model see better?
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          If the model is genuinely trying to read cuneiform but struggling, maybe the problem is the input image. CDLI composite photographs pack six views of a tablet &mdash; obverse, reverse, top edge, bottom edge, left edge, right edge &mdash; into a single image on a black background. That&apos;s a lot of visual noise. What if we cropped the image to show just the inscribed face? Or enhanced the contrast to make wedge impressions more visible?
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested two strategies: <strong>spatial cropping</strong> (reducing what the model sees) and <strong>image preprocessing</strong> (changing how it looks). Both were tested with <strong>Gemini 2.5 Pro</strong>, our best-performing model from Experiment 4.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Strategy 1: Cropping
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested three levels of cropping on tablet <strong>P250675</strong> (Ur III, 1949&times;3053px &mdash; a high-resolution image):
+        </p>
+
+        <ul className="list-disc pl-6 mb-8 space-y-2 text-secondary leading-relaxed">
+          <li><strong>Full composite:</strong> The original CDLI image with all six views</li>
+          <li><strong>Face crop:</strong> Just the obverse or reverse face, black background removed</li>
+          <li><strong>Line strips:</strong> Individual horizontal strips, one per text line</li>
+        </ul>
+
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P250675-y3DQ1O3o1o7YC2uXIvAZ4z5d4m1AAR.jpg"
+              alt="P250675 full CDLI composite photograph"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Full composite (6 views)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p250675_obverse.jpg"
+              alt="P250675 obverse face crop"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Obverse face crop
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p250675_linestrip.jpg"
+              alt="P250675 individual line strip"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Individual line strip
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Condition</th>
+                <th className="text-left py-3 pr-4 font-semibold">Signs found</th>
+                <th className="text-left py-3 pr-4 font-semibold">F1</th>
+                <th className="text-left py-3 pr-4 font-semibold">Precision</th>
+                <th className="text-left py-3 pr-4 font-semibold">Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Full composite</td>
+                <td className="py-3 pr-4">0</td>
+                <td className="py-3 pr-4">0.0%</td>
+                <td className="py-3 pr-4">0.0%</td>
+                <td className="py-3 pr-4">0.0%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Obverse face crop</td>
+                <td className="py-3 pr-4">8</td>
+                <td className="py-3 pr-4">7.4%</td>
+                <td className="py-3 pr-4 font-semibold">100.0%</td>
+                <td className="py-3 pr-4">3.8%</td>
+              </tr>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Line strips (10 strips, aggregated)</td>
+                <td className="py-3 pr-4 font-semibold">74</td>
+                <td className="py-3 pr-4 font-semibold">16.3%</td>
+                <td className="py-3 pr-4">31.1%</td>
+                <td className="py-3 pr-4">11.1%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          On this high-resolution tablet, <strong>line strips won decisively</strong>. The full composite produced zero parseable signs. The face crop produced only 8 signs, but with 100% precision &mdash; every sign it identified was correct. The line strips produced 74 signs with 20 correct sign types (KU, MA, NA, SAG, KI, DU, GA, DA, LUGAL, KA, AN, UD, DUB, GI, DUG, MU, and others). Narrowing the visual field helped the model focus.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But does this pattern hold? We ran the same experiment on <strong>P100500</strong> (also Ur III, but only 1039&times;1487px &mdash; roughly half the resolution):
+        </p>
+
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_full.jpg"
+              alt="P100500 full CDLI composite photograph"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Full composite (1039&times;1487px)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_obverse.jpg"
+              alt="P100500 obverse face crop"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Obverse crop (470&times;440px)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_reverse.jpg"
+              alt="P100500 reverse face crop"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Reverse crop (660&times;400px)
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Condition</th>
+                <th className="text-left py-3 pr-4 font-semibold">Signs found</th>
+                <th className="text-left py-3 pr-4 font-semibold">F1</th>
+                <th className="text-left py-3 pr-4 font-semibold">Precision</th>
+                <th className="text-left py-3 pr-4 font-semibold">Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Full composite</td>
+                <td className="py-3 pr-4 font-semibold">41</td>
+                <td className="py-3 pr-4 font-semibold">28.3%</td>
+                <td className="py-3 pr-4">34.1%</td>
+                <td className="py-3 pr-4">24.1%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Obverse face crop</td>
+                <td className="py-3 pr-4">11</td>
+                <td className="py-3 pr-4">0.0%</td>
+                <td className="py-3 pr-4">0.0%</td>
+                <td className="py-3 pr-4">0.0%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Line strips (9 strips, aggregated)</td>
+                <td className="py-3 pr-4">63</td>
+                <td className="py-3 pr-4">14.9%</td>
+                <td className="py-3 pr-4">14.3%</td>
+                <td className="py-3 pr-4">15.5%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>The opposite pattern.</strong> On this lower-resolution image, the full composite won with 28.3% F1, while the obverse crop produced zero correct signs and line strips scored only 14.9%. The reason: cropping a 1039px-wide image to a 470px-wide face crop leaves too few pixels per cuneiform sign for the model to work with. Each wedge impression is only a handful of pixels across.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          <strong>The key variable is image resolution, not visual complexity.</strong> High-resolution photos benefit from cropping (less visual noise, enough pixels per sign). Low-resolution photos are hurt by it (too few pixels survive the crop). This means the optimal preprocessing strategy depends on the input image.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Strategy 2: Image preprocessing
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Can we enhance the image to make wedge impressions more visible? We tested seven preprocessing techniques on the P100500 obverse crop &mdash; the condition that scored 0.0% F1 with no preprocessing:
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_obverse.jpg"
+              alt="Raw obverse crop — baseline"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Raw (F1=0.0%)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_sharpen.jpg"
+              alt="Sharpened — unsharp mask"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Sharpen (F1=2.8%)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_graynorm.jpg"
+              alt="Grayscale with histogram normalization"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Grayscale + normalize (F1=2.6%)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_clahe.jpg"
+              alt="CLAHE local contrast enhancement"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              CLAHE (F1=4.7%)
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_invert.jpg"
+              alt="Inverted — dark background reveals wedge impressions"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Invert (F1=4.9%)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_upscale2x.jpg"
+              alt="2x bicubic upscale"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Upscale 2x (F1=2.9%)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_combined.jpg"
+              alt="Combined grayscale + CLAHE + sharpen + normalize"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Combined (F1=0.0%)
+            </figcaption>
+          </figure>
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_upscale_clahe.jpg"
+              alt="Upscale 2x + CLAHE + sharpen — best performing technique"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              Upscale + CLAHE (F1=16.7%)
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Technique</th>
+                <th className="text-left py-3 pr-4 font-semibold">Description</th>
+                <th className="text-left py-3 pr-4 font-semibold">Signs</th>
+                <th className="text-left py-3 pr-4 font-semibold">F1</th>
+                <th className="text-left py-3 pr-4 font-semibold">Precision</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4 italic">Raw (baseline)</td>
+                <td className="py-3 pr-4 text-sm">No processing</td>
+                <td className="py-3 pr-4">11</td>
+                <td className="py-3 pr-4">0.0%</td>
+                <td className="py-3 pr-4">0.0%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Sharpen</td>
+                <td className="py-3 pr-4 text-sm">Unsharp mask (&sigma;=2)</td>
+                <td className="py-3 pr-4">14</td>
+                <td className="py-3 pr-4">2.8%</td>
+                <td className="py-3 pr-4">7.1%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Grayscale + normalize</td>
+                <td className="py-3 pr-4 text-sm">Remove color, stretch histogram</td>
+                <td className="py-3 pr-4">18</td>
+                <td className="py-3 pr-4">2.6%</td>
+                <td className="py-3 pr-4">5.6%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">CLAHE</td>
+                <td className="py-3 pr-4 text-sm">Local contrast (3&times;3 tiles)</td>
+                <td className="py-3 pr-4">28</td>
+                <td className="py-3 pr-4">4.7%</td>
+                <td className="py-3 pr-4">7.1%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Invert</td>
+                <td className="py-3 pr-4 text-sm">Negative image</td>
+                <td className="py-3 pr-4">24</td>
+                <td className="py-3 pr-4">4.9%</td>
+                <td className="py-3 pr-4">8.3%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Upscale 2x</td>
+                <td className="py-3 pr-4 text-sm">Lanczos3 interpolation</td>
+                <td className="py-3 pr-4">11</td>
+                <td className="py-3 pr-4">2.9%</td>
+                <td className="py-3 pr-4">9.1%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Combined</td>
+                <td className="py-3 pr-4 text-sm">Gray + CLAHE + sharpen + normalize</td>
+                <td className="py-3 pr-4">8</td>
+                <td className="py-3 pr-4">0.0%</td>
+                <td className="py-3 pr-4">0.0%</td>
+              </tr>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Upscale + CLAHE</td>
+                <td className="py-3 pr-4 text-sm">2x upscale &rarr; CLAHE &rarr; sharpen</td>
+                <td className="py-3 pr-4 font-semibold">14</td>
+                <td className="py-3 pr-4 font-semibold">16.7%</td>
+                <td className="py-3 pr-4 font-semibold">42.9%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Upscale + CLAHE was the clear winner</strong>, rescuing a completely dead crop (0.0% F1) to 16.7% F1 with 42.9% precision. It correctly identified six sign types: MA, LA, DA, BA, MU, and BI. The technique works by first adding pixel density (2x Lanczos3 upscale), then enhancing local contrast (CLAHE) so wedge impressions stand out from the clay surface. To human eyes the result looks like a stippled mess, but the model can apparently extract useful signal from the enhanced micro-texture.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The other techniques offered marginal improvements at best. CLAHE alone (4.7%) and inversion (4.9%) showed some promise, but without the upscaling step the pixel density was too low for meaningful enhancement. The combined pipeline (grayscale + CLAHE + sharpen + normalize) performed worst of all &mdash; too many transformations degraded the image rather than enhancing it.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          What Experiment 5 tells us
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Image preprocessing helps &mdash; but modestly and conditionally. The optimal strategy depends on the input image:
+        </p>
+
+        <ul className="list-disc pl-6 mb-8 space-y-3 text-secondary leading-relaxed">
+          <li><strong>High-resolution photos (&gt;1500px wide):</strong> Crop to individual line strips. On P250675, line strips achieved 16.3% F1 vs. 0% for the full composite.</li>
+          <li><strong>Low-resolution photos (&lt;1500px wide):</strong> Keep the full composite. On P100500, the uncropped image achieved 28.3% F1 vs. 0% for the face crop.</li>
+          <li><strong>Upscale + CLAHE as a rescue technique:</strong> When a crop is necessary but resolution is low, 2x upscaling with CLAHE can partially compensate, though it cannot match a naturally high-resolution source.</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The fundamental ceiling remains. Even with optimal cropping and preprocessing, accuracy stays in the 15&ndash;30% F1 range. The bottleneck is the model&apos;s cuneiform sign recognition capability, not image quality. Better photographs would help, but the real breakthrough will require models trained or fine-tuned on cuneiform data.
+        </p>
+
         {/* --- Conclusion --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Conclusion
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and three experiments, Gemini 3 Flash correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, produces excellent scholarly commentary, and &mdash; crucially &mdash; performs genuine visual analysis that is independent of its training data. It is not reading from memory.
+          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and five experiments, Gemini correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, produces excellent scholarly commentary, and &mdash; crucially &mdash; performs genuine visual analysis that is independent of its training data. It is not reading from memory.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -997,7 +1386,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But it has <em>some</em> cuneiform vision, and that vision is genuine. The path forward is clear: improve sign-level accuracy through fine-tuning, better prompting, multi-angle photographs, or next-generation models. The contamination test gives us confidence that improvements will reflect real visual capability, not training data memorization.
+          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But it has <em>some</em> cuneiform vision, and that vision is genuine. Experiments 4 and 5 explored the obvious next questions: does a more powerful model help? Does image preprocessing help? Gemini 2.5 Pro roughly doubles accuracy over Flash on some tablets, and upscaling low-resolution images with CLAHE contrast enhancement can rescue otherwise-unreadable crops. But accuracy remains in the 15&ndash;30% F1 range &mdash; the ceiling is the model&apos;s visual capability, not image quality or model size alone. The contamination test gives us confidence that improvements will reflect real visual capability, not training data memorization.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1011,7 +1400,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Model: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Corpus: 107 tablets from CDLI spanning 11 periods, 50 Ur III, 20 Old Akkadian, 10 Lagash II, 10 Uruk III, and 17 others. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Full evaluation reports, corpus data, and analysis scripts available on request.
+          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
         </p>
       </article>
 
