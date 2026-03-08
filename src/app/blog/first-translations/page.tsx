@@ -5,10 +5,10 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'First English Translations - Blog - Source Library',
-  description: 'Nearly 2,000 books in Source Library appear to be first-ever English translations — alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
+  description: 'Nearly 2,000 books in Source Library are first-ever English translations — over 900 now fully translated. Alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
   openGraph: {
-    title: 'Nearly 2,000 First English Translations',
-    description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — all previously inaccessible in English.',
+    title: 'Nearly 2,000 First English Translations — Over 900 Now Complete',
+    description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — over 900 now fully translated into English for the first time.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
   },
   alternates: {
@@ -22,9 +22,9 @@ export default function FirstTranslationsPage() {
       header={
         <ContentHeader
           title="First English Translations"
-          subtitle="Nearly 2,000 books in Source Library have never been read in English before"
+          subtitle="Nearly 2,000 books in Source Library have never been read in English before — over 900 are now fully translated"
         >
-          <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 8 March 2026 &middot; 14 min read</p>
+          <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 8 March 2026 &middot; 15 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -48,16 +48,16 @@ export default function FirstTranslationsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          As the library has grown to over 5,000 books, systematic AI classification and bibliographic verification have identified nearly 2,000 that appear to be first-ever English translations, with another 385 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts.
+          As the library has grown to over 5,100 books, systematic AI classification and bibliographic verification have identified nearly 2,000 that appear to be first-ever English translations, with another 388 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts. Over 900 of these are now fully translated &mdash; readable from the first page to the last.
         </p>
 
         {/* === Stat block === */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-12">
           {[
-            { number: '1,962', label: 'First English translations' },
-            { number: '287', label: 'Alchemy & chemistry' },
-            { number: '305', label: 'Mysticism & theology' },
-            { number: '215', label: 'Astrology & divination' },
+            { number: '1,971', label: 'First English translations' },
+            { number: '912', label: 'Fully translated' },
+            { number: '288', label: 'Alchemy & chemistry' },
+            { number: '217', label: 'Astrology & divination' },
           ].map((stat) => (
             <div key={stat.label} className="text-center py-5 px-3 bg-warm rounded-lg border border-border-light">
               <div className="font-serif text-3xl md:text-4xl text-accent-rust mb-1">{stat.number}</div>
@@ -230,7 +230,7 @@ export default function FirstTranslationsPage() {
           </div>
 
           <p className="text-secondary leading-relaxed font-body">
-            Of the library&apos;s nearly 2,000 first translations, over 1,000 are already 80% or more complete, with 392 fully translated. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
+            Of the library&apos;s nearly 2,000 first translations, over 1,000 are already 80% or more complete, with 912 fully translated. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
           </p>
         </section>
 
@@ -352,7 +352,7 @@ export default function FirstTranslationsPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate nearly 5,000 non-English books, you discover that a large fraction of them simply fell through the cracks.
+            The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate over 4,200 non-English books, you discover that a large fraction of them simply fell through the cracks.
           </p>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -371,7 +371,7 @@ export default function FirstTranslationsPage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            Classification uses a multi-stage verification pipeline: an initial AI assessment from OCR text, followed by a deep LLM knowledge check that searches for known English translations across academic publishers, specialist presses, PhD dissertations, and journal translations. Of the 1,962 first translations, 1,451 have been verified at the highest confidence level. The{' '}
+            Classification uses a multi-stage verification pipeline: an initial AI assessment from OCR text, followed by a deep verification step that searches real bibliographic databases &mdash; UNESCO&apos;s Index Translationum, Open Library, Google Books, and the Universal Short Title Catalogue &mdash; using Gemini function calling. The verification pipeline has now processed virtually all non-English books in the collection. Of the 1,971 first translations, 1,466 are confirmed with no English translation found in any catalog searched, 388 are first <em>complete</em> translations where only excerpts existed, and 109 are first modern translations of texts last rendered into English before 1800. The{' '}
             <Link href="https://sourcelibrary.org/blog/first-translation-methodology" className="text-accent-rust hover:text-accent-rust underline">full methodology</Link>{' '}
             is documented separately. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
           </p>
@@ -383,15 +383,15 @@ export default function FirstTranslationsPage() {
           <div className="grid md:grid-cols-3 gap-3">
             <Link href="https://sourcelibrary.org/collections/astrology" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
               <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Astrology &amp; Divination</p>
-              <p className="text-xs text-muted mt-1">215 first translations</p>
+              <p className="text-xs text-muted mt-1">217 first translations</p>
             </Link>
             <Link href="https://sourcelibrary.org/collections/alchemy" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
               <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Alchemy &amp; Chemistry</p>
-              <p className="text-xs text-muted mt-1">287 first translations</p>
+              <p className="text-xs text-muted mt-1">288 first translations</p>
             </Link>
             <Link href="https://sourcelibrary.org/search?first_translation=true" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
               <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Browse all first translations</p>
-              <p className="text-xs text-muted mt-1">1,962 books across 15+ languages</p>
+              <p className="text-xs text-muted mt-1">1,971 books &middot; 912 fully translated</p>
             </Link>
           </div>
           <p className="text-sm text-muted mt-4 font-body">
