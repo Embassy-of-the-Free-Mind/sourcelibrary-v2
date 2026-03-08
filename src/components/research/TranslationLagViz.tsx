@@ -167,7 +167,7 @@ export default function TranslationLagViz({ data }: { data: DataPoint[] }) {
       </div>
 
       {/* SVG chart */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto relative">
         <svg
           ref={svgRef}
           viewBox={`0 0 ${width} ${height}`}
@@ -268,15 +268,14 @@ export default function TranslationLagViz({ data }: { data: DataPoint[] }) {
             </text>
           </g>
         </svg>
-      </div>
 
-      {/* Tooltip */}
-      {tooltip && (
+        {/* Tooltip — positioned relative to the chart container */}
+        {tooltip && (
         <div
-          className="pointer-events-none fixed z-50 bg-white border border-[var(--border-medium)] rounded-lg shadow-lg px-3 py-2 max-w-xs"
+          className="pointer-events-none absolute z-50 bg-white border border-[var(--border-medium)] rounded-lg shadow-lg px-3 py-2 max-w-xs"
           style={{
-            left: tooltip.x + (svgRef.current?.getBoundingClientRect().left || 0),
-            top: tooltip.y + (svgRef.current?.getBoundingClientRect().top || 0) - 80,
+            left: Math.min(tooltip.x, (svgRef.current?.clientWidth || 900) - 200),
+            top: Math.max(0, tooltip.y - 90),
           }}
         >
           <div className="font-serif text-sm font-medium">{tooltip.point.title}</div>
