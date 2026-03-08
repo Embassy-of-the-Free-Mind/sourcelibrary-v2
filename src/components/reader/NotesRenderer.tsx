@@ -286,6 +286,27 @@ function inlineMarkdownToHtml(text: string): string {
     .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
 }
 
+// Convert LaTeX Greek letter commands to Unicode characters
+// OCR model sometimes outputs \alpha instead of α for geometric/math labels
+const LATEX_GREEK: Record<string, string> = {
+  alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε',
+  zeta: 'ζ', eta: 'η', theta: 'θ', iota: 'ι', kappa: 'κ',
+  lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', omicron: 'ο',
+  pi: 'π', rho: 'ρ', sigma: 'σ', tau: 'τ', upsilon: 'υ',
+  phi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω',
+  Alpha: 'Α', Beta: 'Β', Gamma: 'Γ', Delta: 'Δ', Epsilon: 'Ε',
+  Zeta: 'Ζ', Eta: 'Η', Theta: 'Θ', Iota: 'Ι', Kappa: 'Κ',
+  Lambda: 'Λ', Mu: 'Μ', Nu: 'Ν', Xi: 'Ξ', Omicron: 'Ο',
+  Pi: 'Π', Rho: 'Ρ', Sigma: 'Σ', Tau: 'Τ', Upsilon: 'Υ',
+  Phi: 'Φ', Chi: 'Χ', Psi: 'Ψ', Omega: 'Ω',
+};
+const LATEX_GREEK_RE = new RegExp(
+  '\\\\(' + Object.keys(LATEX_GREEK).join('|') + ')(?![a-zA-Z])', 'g'
+);
+function preprocessLatexGreek(text: string): string {
+  return text.replace(LATEX_GREEK_RE, (_, name) => LATEX_GREEK[name] || _);
+}
+
 // Convert LaTeX-style superscript notation to HTML <sup> tags
 // The OCR model produces $^{19}$ (verse numbers) and $^h$ (marginal note markers)
 function preprocessLatexSuperscripts(text: string): string {
@@ -704,7 +725,8 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   const isDescriptionOnly = pageType ? DESCRIPTION_ONLY_PAGE_TYPES.has(pageType) : false;
 
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
-  const withLatex = useMemo(() => preprocessLatexSuperscripts(withBracketTags), [withBracketTags]);
+  const withGreek = useMemo(() => preprocessLatexGreek(withBracketTags), [withBracketTags]);
+  const withLatex = useMemo(() => preprocessLatexSuperscripts(withGreek), [withGreek]);
   const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withLatex), [withLatex]);
   const withCentering = useMemo(() => preprocessCentering(withAnnotationMd), [withAnnotationMd]);
   // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
