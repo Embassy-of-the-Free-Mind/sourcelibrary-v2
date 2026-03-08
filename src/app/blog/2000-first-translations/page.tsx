@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogComments from '@/components/blog/BlogComments';
 import ConceptGraph from './ConceptGraph';
+import InputWidget from '@/components/InputWidget';
 
 export const metadata: Metadata = {
   title: '2,000 Books Never Read in English — Source Library',
@@ -929,6 +930,7 @@ export default function TwoThousandFirstTranslations() {
           <BlogComments slug="2000-first-translations" />
         </div>
       </div>
+      <InputWidget allowedHosts={["localhost", "vercel.app"]} />
     </ContentPageLayout>
   );
 }

@@ -7,7 +7,7 @@ import Script from "next/script";
 import PageTracker from "@/components/reader/PageTracker";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
-import InputWidget from "@/components/InputWidget";
+
 
 export const metadata: Metadata = {
   title: "Source Library",
@@ -105,7 +105,7 @@ export default async function RootLayout({
           <SiteModeIndicator />
         </Providers>
         <ClientToaster />
-        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
+
         <GoogleAnalytics gaId="G-C1QJNTSZT2" />
         <PageTracker />
       </body>
