@@ -72,8 +72,8 @@ export default function ProgressStudiesPage() {
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
           That gap is now closing. Source Library has translated over 5,000 books from
-          the 2nd to 19th centuries, drawn from thirteen digital library collections. Over 700,000
-          pages have been translated into English, and 1,873 of these books are{' '}
+          the 2nd to 19th centuries, drawn from fourteen digital library collections. Over 700,000
+          pages have been translated into English, and nearly 2,000 of these books are{' '}
           <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
             first-ever English translations</Link>{' '}
           &mdash; texts that have existed for centuries but had no prior English version. What
@@ -146,7 +146,7 @@ export default function ProgressStudiesPage() {
             Source Library holds over 5,000 books from the{' '}
             <a href="https://www.embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               Embassy of the Free Mind</a>{' '}
-            and twelve other digital library collections, spanning the 2nd to 19th centuries.
+            and thirteen other digital library collections, spanning the 2nd to 19th centuries.
             Most are in Latin, German, Dutch, French, Italian, Arabic, and Hebrew.
             Nearly two million pages have been digitized, and over 700,000 have been translated
             into English.
@@ -485,7 +485,7 @@ export default function ProgressStudiesPage() {
             AI removes this bottleneck. The full pipeline &mdash; digitization, OCR, translation,
             indexing &mdash; costs approximately $1.90 per book and takes minutes. Source
             Library processed its first thousand books in December 2025. It passed 5,000 in
-            March 2026. Of these, 1,873 are{' '}
+            March 2026. Of these, nearly 2,000 are{' '}
             <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
               first-ever English translations</Link>{' '}
             &mdash; texts that have existed for centuries but have never been accessible to
@@ -587,7 +587,7 @@ export default function ProgressStudiesPage() {
               {
                 href: '/blog/first-translations',
                 title: 'First English Translations',
-                detail: '1,873 texts translated into English for the first time',
+                detail: 'Nearly 2,000 texts translated into English for the first time',
                 internal: true,
               },
               {
