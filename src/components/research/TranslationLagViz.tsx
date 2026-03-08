@@ -295,7 +295,8 @@ export default function TranslationLagViz({ data }: { data: DataPoint[] }) {
             <div className="text-xs text-[var(--accent-gold-dark)] mt-0.5">First English translation</div>
           )}
         </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

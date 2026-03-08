@@ -130,15 +130,23 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     const db = await getDb();
 
-    // Get book
-    const book = await db.collection('books').findOne({ id: bookId }) as unknown as Book | null;
+    // Get book by id, slug, or _id
+    let book = await db.collection('books').findOne({ id: bookId }) as unknown as Book | null;
+    if (!book) {
+      book = await db.collection('books').findOne({ slug: bookId }) as unknown as Book | null;
+    }
+    if (!book && /^[a-f0-9]{24}$/i.test(bookId)) {
+      const { ObjectId } = await import('mongodb');
+      book = await db.collection('books').findOne({ _id: new ObjectId(bookId) }) as unknown as Book | null;
+    }
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get the requested page
+    // Get the requested page (use book.id, not URL param, in case slug was used)
+    const resolvedBookId = book.id;
     const page = await db.collection('pages').findOne({
-      book_id: bookId,
+      book_id: resolvedBookId,
       page_number: pageNumber,
     }) as unknown as Page | null;
 
@@ -169,7 +177,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
         published: book.published,
         language: book.language,
       },
-      citation: generateCitations(book, pageNumber, bookId, page.id, currentEdition),
+      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, currentEdition),
       license: {
         spdx: 'CC-BY-SA-4.0',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/',
@@ -187,11 +195,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
     if (includeContext) {
       const [prevPage, nextPage] = await Promise.all([
         db.collection('pages').findOne({
-          book_id: bookId,
+          book_id: resolvedBookId,
           page_number: pageNumber - 1,
         }),
         db.collection('pages').findOne({
-          book_id: bookId,
+          book_id: resolvedBookId,
           page_number: pageNumber + 1,
         }),
       ]);
