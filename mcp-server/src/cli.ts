@@ -372,21 +372,24 @@ async function run() {
         result = await getQuote({ book_id: bookId, page: pageNum });
         if (!jsonMode) {
           const q = result as AnyRecord;
-          if (q.citation) {
-            const cit = q.citation as AnyRecord;
-            console.log(bold(cit.title as string || ""));
-            console.log(dim(`${cit.author || "Unknown"} · p.${q.page || pageNum}`));
-            if (cit.inline) console.log(dim(`Citation: ${cit.inline}`));
+          const quote = q.quote as AnyRecord | undefined;
+          const cit = q.citation as AnyRecord | undefined;
+          if (quote || cit) {
+            console.log(bold((quote?.display_title || quote?.book_title || cit?.title || "") as string));
+            console.log(dim(`${quote?.author || "Unknown"} · p.${quote?.page || pageNum}`));
+            if (cit?.inline) console.log(dim(`Citation: ${cit.inline}`));
           }
-          if (q.translation) {
+          const translation = quote?.translation || q.translation;
+          if (translation) {
             console.log(`\n${bold("Translation")}`);
-            console.log(wrap(q.translation as string, 80, 2));
+            console.log(wrap(translation as string, 80, 2));
           }
-          if (q.original) {
+          const original = quote?.original || q.original;
+          if (original) {
             console.log(`\n${bold("Original")}`);
-            console.log(wrap(q.original as string, 80, 2));
+            console.log(wrap(original as string, 80, 2));
           }
-          if (q.url) console.log(`\n${cyan(q.url as string)}`);
+          if (cit?.url) console.log(`\n${cyan(cit.url as string)}`);
           return;
         }
         break;
