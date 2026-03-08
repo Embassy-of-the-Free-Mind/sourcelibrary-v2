@@ -2,11 +2,14 @@
 
 import { useRef } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { ArrowRight } from 'lucide-react';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import UserMenu from '@/components/layout/UserMenu';
 
 export default function HeroSection() {
+  const { status } = useSession();
   const hasRecorded = useRef(false);
 
   const handleVideoLoad = () => {
@@ -79,6 +82,16 @@ export default function HeroSection() {
           <div className="max-w-xl">
             <UnifiedSearch />
           </div>
+
+          {status === 'unauthenticated' && (
+            <Link
+              href="/auth/signin"
+              className="inline-flex items-center gap-2 mt-6 text-sm text-white/70 hover:text-white transition-colors"
+            >
+              Create a free account
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          )}
         </div>
       </div>
 
