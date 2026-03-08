@@ -5,9 +5,9 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'First English Translations - Blog - Source Library',
-  description: 'Hundreds of books in Source Library appear to be first-ever English translations — alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
+  description: 'Nearly 2,000 books in Source Library appear to be first-ever English translations — alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
   openGraph: {
-    title: 'Over 500 First English Translations',
+    title: 'Nearly 2,000 First English Translations',
     description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — all previously inaccessible in English.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
   },
@@ -22,9 +22,9 @@ export default function FirstTranslationsPage() {
       header={
         <ContentHeader
           title="First English Translations"
-          subtitle="Hundreds of books in Source Library have never been read in English before"
+          subtitle="Nearly 2,000 books in Source Library have never been read in English before"
         >
-          <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 23 February 2026 &middot; 14 min read</p>
+          <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 8 March 2026 &middot; 14 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -48,16 +48,16 @@ export default function FirstTranslationsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          As the library has grown, systematic classification has identified over 500 books that appear to be first-ever English translations, with another 26 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts.
+          As the library has grown to over 5,000 books, systematic AI classification and bibliographic verification have identified nearly 2,000 that appear to be first-ever English translations, with another 385 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts.
         </p>
 
         {/* === Stat block === */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-12">
           {[
-            { number: '500+', label: 'First English translations' },
-            { number: '95', label: 'Astrology & divination' },
-            { number: '166', label: 'Christian mysticism' },
-            { number: '123', label: 'Alchemy & chemistry' },
+            { number: '1,962', label: 'First English translations' },
+            { number: '287', label: 'Alchemy & chemistry' },
+            { number: '305', label: 'Mysticism & theology' },
+            { number: '215', label: 'Astrology & divination' },
           ].map((stat) => (
             <div key={stat.label} className="text-center py-5 px-3 bg-warm rounded-lg border border-border-light">
               <div className="font-serif text-3xl md:text-4xl text-accent-rust mb-1">{stat.number}</div>
@@ -67,7 +67,7 @@ export default function FirstTranslationsPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          These are not obscure marginalia. They include founding texts of biblical criticism, alchemical laboratory manuals, the writings of women philosophers, radical theological treatises that reshaped Protestantism, one of the earliest attempts to decode Egyptian hieroglyphics, and &mdash; as a recent deep classification revealed &mdash; 95 works of astrology and divination, mostly Sanskrit jyotish manuscripts that have never existed in any European language.
+          These are not obscure marginalia. They include founding texts of biblical criticism, alchemical laboratory manuals, the writings of women philosophers, radical theological treatises that reshaped Protestantism, one of the earliest attempts to decode Egyptian hieroglyphics, and over 200 works of astrology and divination, mostly Sanskrit jyotish manuscripts that have never existed in any European language.
         </p>
 
         {/* === Pull quote === */}
@@ -112,7 +112,7 @@ export default function FirstTranslationsPage() {
           </h3>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Roughly 123 of the first translations are alchemical texts &mdash; practical laboratory manuals, transmutation treatises, commentaries on Basilius Valentinus, and the Paracelsian medical chemistry that formed the bridge between medieval alchemy and modern chemistry. English-language history of science has long relied on a handful of translated alchemical works (the <em>Turba Philosophorum</em>, the Emerald Tablet, selections from Paracelsus). The vast German-language alchemical literature &mdash; hundreds of books published between 1600 and 1750 &mdash; has remained almost entirely untouched.
+            Nearly 290 of the first translations are alchemical texts &mdash; practical laboratory manuals, transmutation treatises, commentaries on Basilius Valentinus, and the Paracelsian medical chemistry that formed the bridge between medieval alchemy and modern chemistry. English-language history of science has long relied on a handful of translated alchemical works (the <em>Turba Philosophorum</em>, the Emerald Tablet, selections from Paracelsus). The vast German-language alchemical literature &mdash; hundreds of books published between 1600 and 1750 &mdash; has remained almost entirely untouched.
           </p>
 
           {/* Featured book card: Walchin */}
@@ -143,7 +143,7 @@ export default function FirstTranslationsPage() {
           </h3>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The largest cluster &mdash; about 166 books &mdash; falls under Christian mysticism and heterodox Protestant theology. This includes the sermons of Valentin Weigel, Pietist devotional works by Philipp Jakob Spener, Gottfried Arnold&apos;s massive church history, and the writings of radical reformers, spiritualists, and Schwenckfelders. These texts shaped the religious landscape of Early Modern Europe, but because they were written in German and aimed at German-speaking congregations, they were never translated for an English audience.
+            Over 300 books fall under Christian mysticism, heterodox Protestant theology, and related spiritual traditions. This includes the sermons of Valentin Weigel, Pietist devotional works by Philipp Jakob Spener, Gottfried Arnold&apos;s massive church history, and the writings of radical reformers, spiritualists, and Schwenckfelders. These texts shaped the religious landscape of Early Modern Europe, but because they were written in German and aimed at German-speaking congregations, they were never translated for an English audience.
           </p>
 
           {/* Pull quote: Semler */}
@@ -165,7 +165,7 @@ export default function FirstTranslationsPage() {
           </h3>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            About 84 books relate to Rosicrucianism, Freemasonry, and the Illuminati-era pamphlet wars. The Rosicrucian manifestos themselves have been translated many times, but the vast literature of responses, defences, attacks, and elaborations that they provoked has not. Source Library holds dozens of these pamphlets from the 1610s and 1620s, now readable in English for the first time.
+            Over 115 books relate to Rosicrucianism, Freemasonry, and the Illuminati-era pamphlet wars. The Rosicrucian manifestos themselves have been translated many times, but the vast literature of responses, defences, attacks, and elaborations that they provoked has not. Source Library holds dozens of these pamphlets from the 1610s and 1620s, now readable in English for the first time.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -180,7 +180,7 @@ export default function FirstTranslationsPage() {
           </h3>
 
           <p className="text-secondary leading-relaxed font-body">
-            The remaining clusters include about 30 books on Christian Cabala and Jewish mysticism (including Postel&apos;s <em>Sefer Yetzirah</em> commentary and Gaffarel&apos;s catalogue of Pico&apos;s Kabbalistic manuscripts), 89 on natural philosophy and early science, 65 on law, politics, and history, and 46 on Paracelsian medicine and alchemical pharmacy. Each cluster represents a body of primary sources that English-language scholarship has discussed at second hand for centuries.
+            The remaining clusters include over 350 books on natural philosophy and early science, more than 400 on law, politics, and history, and 183 on Paracelsian medicine and alchemical pharmacy. Christian Cabala and Jewish mysticism texts (including Postel&apos;s <em>Sefer Yetzirah</em> commentary and Gaffarel&apos;s catalogue of Pico&apos;s Kabbalistic manuscripts) also appear in the collection. Each cluster represents a body of primary sources that English-language scholarship has discussed at second hand for centuries.
           </p>
         </section>
 
@@ -189,13 +189,13 @@ export default function FirstTranslationsPage() {
         {/* === Section 3: Astrology === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            Astrology and divination: 95 first translations
+            Astrology and divination: 215 first translations
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             A deep classification of the library&apos;s{' '}
             <Link href="https://sourcelibrary.org/collections/astrology" className="text-accent-rust hover:text-accent-rust underline">Astrology &amp; Divination</Link>{' '}
-            collection revealed 95 works that have never been translated into English &mdash; the largest single-subject cluster identified so far.
+            collection revealed 215 works that have never been translated into English &mdash; one of the largest single-subject clusters in the library.
           </p>
 
           {/* Sanskrit astrology manuscript image */}
@@ -213,24 +213,24 @@ export default function FirstTranslationsPage() {
           </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The majority are Sanskrit jyotish manuscripts: 59 texts on electional astrology (<em>muhurta</em>), horary astrology (<em>prasna</em>), planetary remediation (<em>graha shanti</em>), nakshatras, nadi divination, and geomancy (<em>ramala shastra</em>). These are texts from an Indian astrological tradition that is enormous in its own right but has been almost entirely inaccessible to English-speaking readers.
+            The majority are Sanskrit jyotish manuscripts: 86 texts on electional astrology (<em>muhurta</em>), horary astrology (<em>prasna</em>), planetary remediation (<em>graha shanti</em>), nakshatras, nadi divination, and geomancy (<em>ramala shastra</em>). These are texts from an Indian astrological tradition that is enormous in its own right but has been almost entirely inaccessible to English-speaking readers.
           </p>
 
           {/* Language breakdown card */}
           <div className="bg-warm rounded-xl p-5 border border-border-light my-8">
             <p className="text-sm font-medium text-stone-800 mb-3">Beyond Sanskrit, the astrology first translations include:</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1 text-sm text-secondary font-body">
-              <span>14 German texts</span>
-              <span>11 Latin works</span>
-              <span>3 French treatises</span>
-              <span>2 Arabic manuscripts</span>
-              <span>2 Tamil nadi texts</span>
-              <span>1 Chinese manual (1657)</span>
+              <span>64 Latin works</span>
+              <span>22 German texts</span>
+              <span>14 Chinese manuals</span>
+              <span>10 French treatises</span>
+              <span>5 Tamil nadi texts</span>
+              <span>3 Arabic manuscripts</span>
             </div>
           </div>
 
           <p className="text-secondary leading-relaxed font-body">
-            Of these first translations, over 200 are already 80% or more complete. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
+            Of the library&apos;s nearly 2,000 first translations, over 1,000 are already 80% or more complete, with 392 fully translated. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
           </p>
         </section>
 
@@ -293,9 +293,7 @@ export default function FirstTranslationsPage() {
           </div>
 
           <p className="text-secondary leading-relaxed font-body">
-            Source Library has recently launched a{' '}
-            <Link href="https://sourcelibrary.org/collections/women-esoteric-voices" className="text-accent-rust hover:text-accent-rust underline">Women&apos;s Voices</Link>{' '}
-            collection gathering 35 books by and about women &mdash; from Madame Guyon and Antoinette Bourignon to Jane Lead, Catherine of Siena, Teresa of &Aacute;vila, and Marguerite Porete. Many of these are among the first translations in the library.
+            The library holds dozens of books by and about women &mdash; from Madame Guyon and Antoinette Bourignon to Jane Lead, Catherine of Siena, Teresa of &Aacute;vila, and Marguerite Porete. Many of these are among the first translations in the library.
           </p>
         </section>
 
@@ -354,7 +352,7 @@ export default function FirstTranslationsPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate thousands of non-English books, you discover that a large fraction of them simply fell through the cracks.
+            The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate nearly 5,000 non-English books, you discover that a large fraction of them simply fell through the cracks.
           </p>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -364,7 +362,7 @@ export default function FirstTranslationsPage() {
           {/* Pull quote */}
           <div className="border-l-4 border-accent-gold pl-6 my-12">
             <p className="text-lg text-secondary italic font-body leading-relaxed">
-              AI translation does not replace scholarly editing. It cannot produce a critical apparatus, identify textual variants, or situate a passage in its full intellectual context. But it can do something that no human translator could do at this scale: it can make hundreds of previously unreadable books readable, all at once, and let readers decide for themselves what is important.
+              AI translation does not replace scholarly editing. It cannot produce a critical apparatus, identify textual variants, or situate a passage in its full intellectual context. But it can do something that no human translator could do at this scale: it can make thousands of previously unreadable books readable, all at once, and let readers decide for themselves what is important.
             </p>
           </div>
 
@@ -373,7 +371,9 @@ export default function FirstTranslationsPage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            Classification is ongoing. Where deep bibliographic verification has been performed &mdash; as with the 95 astrology first translations &mdash; confidence is high: 85 of those 95 were identified with 80%+ confidence that no prior English translation exists. For the broader library, many identifications are based on the AI&apos;s initial assessment and await deeper review. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
+            Classification uses a multi-stage verification pipeline: an initial AI assessment from OCR text, followed by a deep LLM knowledge check that searches for known English translations across academic publishers, specialist presses, PhD dissertations, and journal translations. Of the 1,962 first translations, 1,451 have been verified at the highest confidence level. The{' '}
+            <Link href="https://sourcelibrary.org/blog/first-translation-methodology" className="text-accent-rust hover:text-accent-rust underline">full methodology</Link>{' '}
+            is documented separately. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
           </p>
         </section>
 
@@ -383,15 +383,15 @@ export default function FirstTranslationsPage() {
           <div className="grid md:grid-cols-3 gap-3">
             <Link href="https://sourcelibrary.org/collections/astrology" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
               <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Astrology &amp; Divination</p>
-              <p className="text-xs text-muted mt-1">95 first translations</p>
+              <p className="text-xs text-muted mt-1">215 first translations</p>
             </Link>
-            <Link href="https://sourcelibrary.org/collections/women-esoteric-voices" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
-              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Women&apos;s Voices</p>
-              <p className="text-xs text-muted mt-1">35 books by and about women</p>
+            <Link href="https://sourcelibrary.org/collections/alchemy" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
+              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Alchemy &amp; Chemistry</p>
+              <p className="text-xs text-muted mt-1">287 first translations</p>
             </Link>
-            <Link href="https://sourcelibrary.org/search" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
-              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Search the library</p>
-              <p className="text-xs text-muted mt-1">By language, date, or keyword</p>
+            <Link href="https://sourcelibrary.org/search?first_translation=true" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
+              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Browse all first translations</p>
+              <p className="text-xs text-muted mt-1">1,962 books across 15+ languages</p>
             </Link>
           </div>
           <p className="text-sm text-muted mt-4 font-body">
