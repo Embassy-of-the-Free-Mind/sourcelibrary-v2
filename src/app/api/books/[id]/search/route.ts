@@ -84,50 +84,30 @@ export async function GET(
     const trimmedQuery = query.trim();
     const db = await getDb();
 
-    // Try text search first (requires index), fall back to regex
-    let pages;
-    try {
-      // Text search with MongoDB $text (if index exists)
-      pages = await db.collection('pages')
-        .find({
-          book_id: bookId,
-          $text: { $search: trimmedQuery }
-        }, {
-          projection: {
-            id: 1,
-            page_number: 1,
-            'ocr.data': 1,
-            'translation.data': 1,
-            score: { $meta: 'textScore' }
-          }
-        })
-        .sort({ score: { $meta: 'textScore' } })
-        .limit(50)
-        .toArray();
-    } catch {
-      // Fall back to regex search if no text index
-      const regexPattern = trimmedQuery.split(/\s+/).map(escapeRegex).join('|');
-      const regex = new RegExp(regexPattern, 'i');
+    // Use regex search with book_id filter — fast because book_id index narrows
+    // to just this book's pages (~300 docs) before regex runs.
+    // $text search is NOT used here because the pages text index lacks a book_id
+    // prefix, so $text + book_id filter scans the entire 420k+ page index.
+    const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
 
-      pages = await db.collection('pages')
-        .find({
-          book_id: bookId,
-          $or: [
-            { 'ocr.data': { $regex: regex } },
-            { 'translation.data': { $regex: regex } }
-          ]
-        }, {
-          projection: {
-            id: 1,
-            page_number: 1,
-            'ocr.data': 1,
-            'translation.data': 1
-          }
-        })
-        .sort({ page_number: 1 })
-        .limit(50)
-        .toArray();
-    }
+    const pages = await db.collection('pages')
+      .find({
+        book_id: bookId,
+        $or: [
+          { 'ocr.data': { $regex: regex } },
+          { 'translation.data': { $regex: regex } }
+        ]
+      }, {
+        projection: {
+          id: 1,
+          page_number: 1,
+          'ocr.data': 1,
+          'translation.data': 1
+        }
+      })
+      .sort({ page_number: 1 })
+      .limit(50)
+      .toArray();
 
     // Generate results with snippets
     const results: SearchResult[] = [];
