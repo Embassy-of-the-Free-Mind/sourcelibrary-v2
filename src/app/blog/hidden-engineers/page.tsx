@@ -123,17 +123,18 @@ export default function HiddenEngineersPage() {
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
             <p className="text-secondary italic font-body leading-relaxed mb-3">
-              &ldquo;Let there be a small altar, transparent, through which a tube passes&hellip;
-              the heated air, driven down through the siphon into the globe, pushes out the
-              liquid contained within&hellip; and the sphere, becoming heavy, descends and,
-              through the chains wound around the pivots, causes the doors to open.&rdquo;
+              &ldquo;Let there be a circular shrine upon a base, upon which a small altar is placed.
+              Through this small altar, we shall pass a tube&hellip; the air inside the small altar,
+              being heated, will expand into a larger space. Passing through the tube into the sphere,
+              it will force out the liquid within it, through the siphon, into the hanging vessel.
+              This vessel, becoming heavy as it fills, will pull the small chains and open the doors.&rdquo;
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=67"
+                href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=68"
                 className="text-accent-rust hover:underline"
               >
-                Hero, <em>Pneumatica</em>, Theorem 37
+                Hero, <em>Pneumatica</em>, &ldquo;The construction of a mechanism so that when a fire is lit, the doors open automatically&rdquo;
               </Link>
             </p>
           </div>
