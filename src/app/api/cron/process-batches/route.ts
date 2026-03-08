@@ -168,13 +168,24 @@ export async function GET(request: NextRequest) {
               }
             }
           } else {
-            // Single-page mode: match by metadata key or positional
+            // Single-page mode: match by metadata key (NEVER use positional fallback —
+            // Gemini Batch API returns results in arbitrary order, so positional
+            // matching scrambles results. See Feb 18 2026 incident.)
+            const validPageIdSet = new Set(pageIds as string[]);
             for (let idx = 0; idx < batchResults.length; idx++) {
               const result = batchResults[idx];
-              const pageId = result.metadata?.key || (pageIds[idx]);
+              const pageId = result.metadata?.key;
 
               if (!pageId) {
-                console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id || String(job._id)})`);
+                console.warn(`[cron] Result idx ${idx} missing metadata.key — skipping to prevent scrambling (job ${job.id || String(job._id)})`);
+                logger.decision('skip', `Result idx ${idx} missing metadata.key`, { job_id: job.id || String(job._id), idx });
+                failCount++;
+                continue;
+              }
+
+              if (!validPageIdSet.has(pageId)) {
+                console.warn(`[cron] Result metadata.key ${pageId} not in job's page_ids — skipping (job ${job.id || String(job._id)})`);
+                logger.decision('skip', `Result key ${pageId} not in page_ids`, { job_id: job.id || String(job._id), page_id: pageId });
                 failCount++;
                 continue;
               }

@@ -620,11 +620,29 @@ export const GET = withAuth(async (request, session, context) => {
             }
           }
         } else {
-          // Single-page mode: positional matching
+          // Single-page mode: match by metadata key (NEVER positional —
+          // Gemini Batch API returns results in arbitrary order.
+          // See Feb 18 2026 scrambling incident.)
+          const validPageIdSet = new Set(pageIds as string[]);
           for (let i = 0; i < responses.length; i++) {
-            const text = responses[i].response?.candidates?.[0]?.content?.parts?.[0]?.text;
+            const response = responses[i];
+            const pageId = (response as unknown as { metadata?: { key?: string } }).metadata?.key;
+
+            if (!pageId) {
+              console.warn(`[batch-ocr] Result idx ${i} missing metadata.key — skipping to prevent scrambling (job ${jobName})`);
+              failCount++;
+              continue;
+            }
+
+            if (!validPageIdSet.has(pageId)) {
+              console.warn(`[batch-ocr] Result metadata.key ${pageId} not in job's page_ids — skipping (job ${jobName})`);
+              failCount++;
+              continue;
+            }
+
+            const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (text) {
-              pageResults.push({ pageId: pageIds[i], text });
+              pageResults.push({ pageId, text });
             } else {
               failCount++;
             }
