@@ -654,8 +654,8 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                     );
                   })()}
                   {book.translation_percent !== undefined && (
-                    <span className={book.translation_percent === 100 ? 'text-accent-rust' : 'text-accent-rust'}>
-                      {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent}% translated`}
+                    <span className={(book.translation_percent ?? 0) >= 95 ? 'text-accent-rust' : 'text-accent-rust'}>
+                      {(book.translation_percent ?? 0) >= 95 ? '✓ Translated' : `${book.translation_percent}% translated`}
                     </span>
                   )}
                 </div>

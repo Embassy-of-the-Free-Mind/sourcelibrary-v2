@@ -187,22 +187,22 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               {/* Translation Progress */}
               <div>
                 <div className="flex items-center justify-between text-xs mb-1">
-                  <span className={book.translation_percent === 100 ? 'text-status-success font-medium' : 'text-stone-500'}>
-                    {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent || 0}% Translated`}
+                  <span className={(book.translation_percent ?? 0) >= 95 ? 'text-status-success font-medium' : 'text-stone-500'}>
+                    {(book.translation_percent ?? 0) >= 95 ? '✓ Translated' : `${book.translation_percent || 0}% Translated`}
                   </span>
-                  {book.pages_translated !== undefined && book.translation_percent !== 100 && (
+                  {book.pages_translated !== undefined && (book.translation_percent ?? 0) < 95 && (
                     <span className="text-stone-400">{book.pages_translated}/{book.pages_count}</span>
                   )}
                 </div>
                 <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
                   <div
-                    className={`h-full transition-all duration-300 ${book.translation_percent === 100
+                    className={`h-full transition-all duration-300 ${(book.translation_percent ?? 0) >= 95
                       ? 'bg-status-success'
                       : book.translation_percent && book.translation_percent > 0
                         ? 'bg-accent-gold/80'
                         : 'bg-stone-200'
                       }`}
-                    style={{ width: `${book.translation_percent || 0}%` }}
+                    style={{ width: `${Math.min(book.translation_percent || 0, 100)}%` }}
                   />
                 </div>
               </div>
