@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source Library — Claude Code Activity</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; max-width: 1100px; }
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; color: #e6edf3; }
+  .subtitle { color: #8b949e; margin-bottom: 32px; font-size: 14px; }
+  .stats-row { display: flex; gap: 32px; margin-bottom: 40px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-value { font-size: 36px; font-weight: 700; color: #e6edf3; }
+  .stat-label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 16px; font-weight: 600; color: #e6edf3; margin-bottom: 12px; }
+
+  /* Calendar */
+  .calendar-grid { display: inline-grid; grid-template-rows: repeat(7, 15px); grid-auto-flow: column; gap: 3px; }
+  .cal-cell { width: 15px; height: 15px; border-radius: 2px; position: relative; }
+  .cal-cell:hover { outline: 1px solid #e6edf3; outline-offset: -1px; }
+  .cal-cell .tooltip {
+    display: none; position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    background: #1c2128; border: 1px solid #30363d; border-radius: 6px; padding: 6px 10px;
+    font-size: 12px; white-space: nowrap; z-index: 10; pointer-events: none;
+  }
+  .cal-cell:hover .tooltip { display: block; }
+  .level-0 { background: #161b22; }
+  .level-1 { background: #0e4429; }
+  .level-2 { background: #006d32; }
+  .level-3 { background: #26a641; }
+  .level-4 { background: #39d353; }
+  .calendar-wrapper { display: flex; }
+  .day-labels { display: inline-flex; flex-direction: column; gap: 3px; margin-right: 6px; font-size: 11px; color: #8b949e; }
+  .day-labels span { height: 15px; line-height: 15px; }
+  .month-labels { margin-bottom: 4px; font-size: 11px; color: #8b949e; margin-left: 46px; }
+  .legend { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 11px; color: #8b949e; margin-left: 46px; }
+  .legend-cell { width: 12px; height: 12px; border-radius: 2px; }
+
+  /* Stacked bar chart */
+  .bar-chart { position: relative; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 3px; }
+  .bar-label { width: 52px; font-size: 11px; color: #8b949e; text-align: right; padding-right: 8px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 18px; display: flex; gap: 1px; position: relative; }
+  .bar-segment { height: 100%; border-radius: 2px; position: relative; min-width: 3px; }
+  .bar-segment:hover { opacity: 0.85; }
+  .bar-segment .tooltip {
+    display: none; position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    background: #1c2128; border: 1px solid #30363d; border-radius: 6px; padding: 4px 8px;
+    font-size: 11px; white-space: nowrap; z-index: 10;
+  }
+  .bar-segment:hover .tooltip { display: block; }
+  .bar-value { font-size: 11px; color: #8b949e; margin-left: 6px; flex-shrink: 0; }
+
+  /* Hourly heatmap */
+  .heatmap-grid { display: grid; grid-template-columns: 40px repeat(24, 1fr); gap: 2px; max-width: 700px; }
+  .heatmap-cell { aspect-ratio: 1; border-radius: 2px; position: relative; min-width: 18px; }
+  .heatmap-cell:hover { outline: 1px solid #e6edf3; }
+  .heatmap-cell .tooltip {
+    display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    background: #1c2128; border: 1px solid #30363d; border-radius: 6px; padding: 4px 8px;
+    font-size: 11px; white-space: nowrap; z-index: 10;
+  }
+  .heatmap-cell:hover .tooltip { display: block; }
+  .heatmap-label { font-size: 11px; color: #8b949e; display: flex; align-items: center; }
+  .heatmap-hour { font-size: 10px; color: #8b949e; text-align: center; }
+
+  .cols { display: flex; gap: 48px; flex-wrap: wrap; }
+  .cols > div { flex: 1; min-width: 300px; }
+
+  .color-key { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; }
+  .color-key span { display: flex; align-items: center; gap: 4px; }
+  .color-swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+  .time-note { color: #8b949e; font-size: 13px; font-style: italic; margin-top: 8px; line-height: 1.5; }
+
+  .divider { border: none; border-top: 1px solid #21262d; margin: 32px 0; }
+</style>
+</head>
+<body>
+
+<h1>Source Library — Development Activity</h1>
+<p class="subtitle">Dec 1, 2025 – Mar 8, 2026 (89 days)</p>
+
+<div class="stats-row">
+  <div class="stat"><div class="stat-value">1,334</div><div class="stat-label">Commits</div></div>
+  <div class="stat"><div class="stat-value">6,889</div><div class="stat-label">Claude Messages</div></div>
+  <div class="stat"><div class="stat-value">416</div><div class="stat-label">Sessions</div></div>
+  <div class="stat"><div class="stat-value">~172h</div><div class="stat-label">Est. Human Hours</div></div>
+  <div class="stat"><div class="stat-value">3</div><div class="stat-label">Contributors</div></div>
+  <div class="stat"><div class="stat-value">3.69M</div><div class="stat-label">Gemini API Calls</div></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Claude Code messages (Derek)</div>
+  <div id="month-labels" class="month-labels"></div>
+  <div class="calendar-wrapper">
+    <div class="day-labels">
+      <span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span>
+    </div>
+    <div id="calendar" class="calendar-grid"></div>
+  </div>
+  <div class="legend">
+    <span>Less</span>
+    <div class="legend-cell level-0"></div>
+    <div class="legend-cell level-1"></div>
+    <div class="legend-cell level-2"></div>
+    <div class="legend-cell level-3"></div>
+    <div class="legend-cell level-4"></div>
+    <span>More</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">Weekly activity — commits vs Claude messages</div>
+  <div class="color-key">
+    <span><div class="color-swatch" style="background:#39d353"></div> Derek commits</span>
+    <span><div class="color-swatch" style="background:#f0883e"></div> Mayank commits</span>
+    <span><div class="color-swatch" style="background:#58a6ff55;border:1px solid #58a6ff88"></div> Claude messages (scaled 5:1)</span>
+  </div>
+  <div id="weekly-bars"></div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">Gemini API usage by week</div>
+  <div class="color-key">
+    <span><div class="color-swatch" style="background:#39d353"></div> OCR (2.04M)</span>
+    <span><div class="color-swatch" style="background:#da3633"></div> Translation (721K)</span>
+    <span><div class="color-swatch" style="background:#f0883e"></div> Image extraction (637K)</span>
+    <span><div class="color-swatch" style="background:#bc8cff"></div> Summary/Index (234K)</span>
+    <span><div class="color-swatch" style="background:#8b949e"></div> Other (61K)</span>
+  </div>
+  <div id="gemini-bars"></div>
+  <p class="time-note">Other includes transliteration, chapter extraction, entity enrichment, and first-translation verification. Sqrt-scaled so smaller categories remain visible.</p>
+</div>
+
+<hr class="divider">
+
+<div class="cols">
+  <div class="section">
+    <div class="section-title">When do you work? (messages by hour x day)</div>
+    <div id="hourly-heatmap" class="heatmap-grid"></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Contributors</div>
+    <table style="font-size:13px; border-collapse:collapse; width:100%;">
+      <tr style="border-bottom:1px solid #21262d;">
+        <td style="padding:8px 12px; color:#e6edf3; font-weight:600;">Derek (via Claude Code)</td>
+        <td style="padding:8px 12px; color:#8b949e;">1,281 commits</td>
+        <td style="padding:8px 12px; color:#8b949e;">6,889 messages</td>
+        <td style="padding:8px 12px; color:#8b949e;">54 days</td>
+      </tr>
+      <tr style="border-bottom:1px solid #21262d;">
+        <td style="padding:8px 12px; color:#e6edf3; font-weight:600;">Mayank</td>
+        <td style="padding:8px 12px; color:#8b949e;">49 commits</td>
+        <td style="padding:8px 12px; color:#8b949e;">—</td>
+        <td style="padding:8px 12px; color:#8b949e;">26 days</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px; color:#e6edf3; font-weight:600;">Claude (direct author)</td>
+        <td style="padding:8px 12px; color:#8b949e;">4 commits</td>
+        <td style="padding:8px 12px; color:#8b949e;">—</td>
+        <td style="padding:8px 12px; color:#8b949e;">—</td>
+      </tr>
+    </table>
+    <p class="time-note" style="margin-top:16px;">
+      Human time estimated at ~1.5 min per Claude message (reading output + typing prompt).
+      Lower bound — doesn't count browser testing, code review, or thinking between sessions.
+      Mayank worked Jan 6 – Mar 5 on the reader UI, admin panel, and data exports.
+    </p>
+  </div>
+</div>
+
+<script>
+const calendarData = [{"date":"2025-12-01","messages":0,"sessions":0,"totalMessages":21},{"date":"2025-12-02","messages":0,"sessions":0,"totalMessages":13},{"date":"2025-12-03","messages":0,"sessions":0,"totalMessages":4},{"date":"2025-12-04","messages":0,"sessions":0,"totalMessages":14},{"date":"2025-12-05","messages":0,"sessions":0,"totalMessages":143},{"date":"2025-12-06","messages":0,"sessions":0,"totalMessages":120},{"date":"2025-12-07","messages":0,"sessions":0,"totalMessages":84},{"date":"2025-12-08","messages":0,"sessions":0,"totalMessages":104},{"date":"2025-12-09","messages":0,"sessions":0,"totalMessages":283},{"date":"2025-12-10","messages":11,"sessions":1,"totalMessages":63},{"date":"2025-12-11","messages":4,"sessions":2,"totalMessages":70},{"date":"2025-12-12","messages":10,"sessions":2,"totalMessages":46},{"date":"2025-12-13","messages":0,"sessions":0,"totalMessages":1},{"date":"2025-12-14","messages":16,"sessions":1,"totalMessages":38},{"date":"2025-12-15","messages":73,"sessions":4,"totalMessages":132},{"date":"2025-12-16","messages":22,"sessions":6,"totalMessages":58},{"date":"2025-12-17","messages":71,"sessions":3,"totalMessages":308},{"date":"2025-12-18","messages":82,"sessions":1,"totalMessages":169},{"date":"2025-12-19","messages":12,"sessions":2,"totalMessages":25},{"date":"2025-12-20","messages":35,"sessions":6,"totalMessages":92},{"date":"2025-12-21","messages":135,"sessions":7,"totalMessages":242},{"date":"2025-12-22","messages":40,"sessions":5,"totalMessages":66},{"date":"2025-12-23","messages":46,"sessions":5,"totalMessages":79},{"date":"2025-12-24","messages":77,"sessions":7,"totalMessages":99},{"date":"2025-12-25","messages":258,"sessions":12,"totalMessages":372},{"date":"2025-12-26","messages":136,"sessions":12,"totalMessages":246},{"date":"2025-12-27","messages":301,"sessions":17,"totalMessages":392},{"date":"2025-12-28","messages":124,"sessions":8,"totalMessages":126},{"date":"2025-12-29","messages":249,"sessions":13,"totalMessages":287},{"date":"2025-12-30","messages":188,"sessions":16,"totalMessages":266},{"date":"2025-12-31","messages":157,"sessions":13,"totalMessages":172},{"date":"2026-01-01","messages":166,"sessions":14,"totalMessages":377},{"date":"2026-01-02","messages":55,"sessions":8,"totalMessages":107},{"date":"2026-01-03","messages":61,"sessions":8,"totalMessages":128},{"date":"2026-01-04","messages":137,"sessions":12,"totalMessages":260},{"date":"2026-01-05","messages":61,"sessions":9,"totalMessages":115},{"date":"2026-01-06","messages":54,"sessions":18,"totalMessages":281},{"date":"2026-01-07","messages":4,"sessions":1,"totalMessages":4},{"date":"2026-01-08","messages":0,"sessions":0,"totalMessages":397},{"date":"2026-01-09","messages":0,"sessions":0,"totalMessages":249},{"date":"2026-01-10","messages":1,"sessions":1,"totalMessages":303},{"date":"2026-01-11","messages":26,"sessions":1,"totalMessages":150},{"date":"2026-01-12","messages":18,"sessions":6,"totalMessages":533},{"date":"2026-01-13","messages":8,"sessions":1,"totalMessages":302},{"date":"2026-01-14","messages":0,"sessions":0,"totalMessages":279},{"date":"2026-01-15","messages":22,"sessions":1,"totalMessages":169},{"date":"2026-01-16","messages":1,"sessions":1,"totalMessages":72},{"date":"2026-01-17","messages":0,"sessions":0,"totalMessages":81},{"date":"2026-01-18","messages":0,"sessions":0,"totalMessages":347},{"date":"2026-01-19","messages":0,"sessions":0,"totalMessages":46},{"date":"2026-01-20","messages":0,"sessions":0,"totalMessages":349},{"date":"2026-01-21","messages":0,"sessions":0,"totalMessages":172},{"date":"2026-01-22","messages":0,"sessions":0,"totalMessages":254},{"date":"2026-01-23","messages":0,"sessions":0,"totalMessages":5},{"date":"2026-01-24","messages":0,"sessions":0,"totalMessages":0},{"date":"2026-01-25","messages":0,"sessions":0,"totalMessages":105},{"date":"2026-01-26","messages":0,"sessions":0,"totalMessages":413},{"date":"2026-01-27","messages":0,"sessions":0,"totalMessages":16},{"date":"2026-01-28","messages":0,"sessions":0,"totalMessages":1},{"date":"2026-01-29","messages":0,"sessions":0,"totalMessages":6},{"date":"2026-01-30","messages":0,"sessions":0,"totalMessages":124},{"date":"2026-01-31","messages":0,"sessions":0,"totalMessages":3},{"date":"2026-02-01","messages":0,"sessions":0,"totalMessages":210},{"date":"2026-02-02","messages":0,"sessions":0,"totalMessages":851},{"date":"2026-02-03","messages":0,"sessions":0,"totalMessages":522},{"date":"2026-02-04","messages":0,"sessions":0,"totalMessages":367},{"date":"2026-02-05","messages":0,"sessions":0,"totalMessages":282},{"date":"2026-02-06","messages":0,"sessions":0,"totalMessages":48},{"date":"2026-02-07","messages":0,"sessions":0,"totalMessages":4},{"date":"2026-02-08","messages":93,"sessions":5,"totalMessages":240},{"date":"2026-02-09","messages":14,"sessions":3,"totalMessages":141},{"date":"2026-02-10","messages":56,"sessions":3,"totalMessages":594},{"date":"2026-02-11","messages":24,"sessions":4,"totalMessages":372},{"date":"2026-02-12","messages":88,"sessions":9,"totalMessages":297},{"date":"2026-02-13","messages":244,"sessions":30,"totalMessages":337},{"date":"2026-02-14","messages":177,"sessions":26,"totalMessages":265},{"date":"2026-02-15","messages":206,"sessions":24,"totalMessages":265},{"date":"2026-02-16","messages":221,"sessions":22,"totalMessages":280},{"date":"2026-02-17","messages":190,"sessions":21,"totalMessages":222},{"date":"2026-02-18","messages":261,"sessions":23,"totalMessages":291},{"date":"2026-02-19","messages":302,"sessions":22,"totalMessages":310},{"date":"2026-02-20","messages":349,"sessions":31,"totalMessages":349},{"date":"2026-02-21","messages":191,"sessions":36,"totalMessages":191},{"date":"2026-02-22","messages":0,"sessions":0,"totalMessages":0},{"date":"2026-02-23","messages":219,"sessions":29,"totalMessages":219},{"date":"2026-02-24","messages":120,"sessions":23,"totalMessages":128},{"date":"2026-02-25","messages":166,"sessions":30,"totalMessages":174},{"date":"2026-02-26","messages":181,"sessions":18,"totalMessages":364},{"date":"2026-02-27","messages":161,"sessions":19,"totalMessages":195},{"date":"2026-02-28","messages":38,"sessions":4,"totalMessages":255},{"date":"2026-03-01","messages":0,"sessions":0,"totalMessages":29},{"date":"2026-03-02","messages":170,"sessions":17,"totalMessages":370},{"date":"2026-03-03","messages":28,"sessions":4,"totalMessages":235},{"date":"2026-03-04","messages":43,"sessions":8,"totalMessages":296},{"date":"2026-03-05","messages":246,"sessions":12,"totalMessages":269},{"date":"2026-03-06","messages":187,"sessions":16,"totalMessages":190},{"date":"2026-03-07","messages":196,"sessions":16,"totalMessages":265},{"date":"2026-03-08","messages":57,"sessions":10,"totalMessages":57}];
+const hourlyData = {"3-15":87,"3-16":59,"3-20":38,"3-21":36,"4-23":115,"5-0":45,"5-12":145,"5-13":90,"5-14":80,"5-23":19,"0-23":73,"1-0":70,"1-10":73,"1-14":63,"1-15":89,"1-17":36,"1-18":23,"1-19":49,"1-21":70,"1-22":70,"1-23":47,"2-0":37,"2-10":35,"2-11":57,"2-12":42,"2-13":72,"2-14":42,"2-16":21,"2-22":41,"3-0":36,"3-1":46,"3-9":35,"3-10":43,"3-11":67,"3-12":56,"3-13":71,"3-14":57,"3-17":14,"3-18":23,"3-22":39,"3-23":15,"4-0":45,"4-1":29,"4-2":12,"4-10":24,"4-11":70,"4-12":115,"4-13":107,"4-14":71,"4-15":29,"4-16":115,"4-17":125,"5-1":64,"5-2":59,"5-3":1,"6-15":33,"6-18":20,"6-19":16,"6-22":42,"6-23":40,"0-0":81,"0-1":46,"0-8":15,"0-9":15,"0-11":61,"0-12":74,"0-17":36,"0-18":67,"0-19":23,"0-20":14,"0-21":7,"0-22":12,"1-1":17,"1-8":112,"1-9":73,"1-11":69,"2-2":4,"2-3":3,"2-15":49,"2-17":30,"2-18":36,"2-19":43,"3-2":23,"3-19":27,"4-7":39,"4-8":12,"4-18":71,"4-19":59,"4-20":18,"4-22":56,"5-7":36,"5-8":81,"5-9":76,"5-10":65,"5-11":84,"5-15":50,"5-16":50,"5-18":96,"5-20":3,"6-1":40,"6-2":60,"6-3":42,"6-4":3,"6-8":18,"6-9":6,"6-11":112,"6-12":101,"6-13":85,"6-14":83,"6-17":25,"6-21":29,"0-10":33,"0-14":30,"0-15":59,"0-16":76,"1-4":20,"1-5":30,"1-12":33,"1-13":29,"1-16":18,"1-20":69,"2-1":15,"2-4":7,"2-5":30,"2-6":32,"2-20":15,"2-21":40,"2-23":6,"4-3":53,"4-9":22,"5-17":80,"6-10":28,"6-16":15,"6-20":58,"0-2":16,"0-13":61,"2-7":15,"0-3":6,"2-9":29,"3-3":11,"3-4":5,"4-21":23,"5-19":34,"6-0":18,"1-7":38,"5-21":14,"5-22":9,"2-8":12,"3-6":5,"3-7":3,"4-4":47,"4-5":48,"4-6":44,"5-6":1,"6-6":27,"3-5":2,"3-8":7,"6-7":36};
+const weeklyData = [{"start":"2025-12-01","derek":0,"mayank":0,"msgs":0,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":0,"gemini_images":0,"gemini_other":0},{"start":"2025-12-07","derek":4,"mayank":0,"msgs":25,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":0,"gemini_images":0,"gemini_other":0},{"start":"2025-12-14","derek":49,"mayank":0,"msgs":311,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":0,"gemini_images":0,"gemini_other":0},{"start":"2025-12-21","derek":288,"mayank":0,"msgs":993,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":0,"gemini_images":0,"gemini_other":0},{"start":"2025-12-28","derek":182,"mayank":0,"msgs":1000,"gemini_ocr":792,"gemini_translate":5,"gemini_summary":38,"gemini_images":0,"gemini_other":0},{"start":"2026-01-04","derek":75,"mayank":4,"msgs":257,"gemini_ocr":634,"gemini_translate":0,"gemini_summary":115,"gemini_images":0,"gemini_other":0},{"start":"2026-01-11","derek":14,"mayank":6,"msgs":75,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":0,"gemini_images":1,"gemini_other":0},{"start":"2026-01-18","derek":0,"mayank":9,"msgs":0,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":0,"gemini_images":0,"gemini_other":0},{"start":"2026-01-25","derek":0,"mayank":5,"msgs":0,"gemini_ocr":10,"gemini_translate":57,"gemini_summary":4,"gemini_images":0,"gemini_other":0},{"start":"2026-02-01","derek":0,"mayank":11,"msgs":0,"gemini_ocr":0,"gemini_translate":0,"gemini_summary":4,"gemini_images":0,"gemini_other":0},{"start":"2026-02-08","derek":61,"mayank":6,"msgs":696,"gemini_ocr":157337,"gemini_translate":40779,"gemini_summary":51,"gemini_images":1484,"gemini_other":981},{"start":"2026-02-15","derek":186,"mayank":6,"msgs":1720,"gemini_ocr":1096419,"gemini_translate":207934,"gemini_summary":17622,"gemini_images":114904,"gemini_other":9944},{"start":"2026-02-22","derek":228,"mayank":1,"msgs":885,"gemini_ocr":551086,"gemini_translate":221041,"gemini_summary":30509,"gemini_images":357199,"gemini_other":5066},{"start":"2026-03-01","derek":185,"mayank":1,"msgs":870,"gemini_ocr":220250,"gemini_translate":230473,"gemini_summary":172668,"gemini_images":161797,"gemini_other":38684},{"start":"2026-03-08","derek":9,"mayank":0,"msgs":59,"gemini_ocr":16639,"gemini_translate":20683,"gemini_summary":12511,"gemini_images":1571,"gemini_other":5923}];
+
+// Calendar heatmap
+const maxMsgs = Math.max(...calendarData.map(d => d.messages));
+const thresholds = [0, Math.ceil(maxMsgs * 0.12), Math.ceil(maxMsgs * 0.3), Math.ceil(maxMsgs * 0.55)];
+const calGrid = document.getElementById('calendar');
+
+const firstDate = new Date(calendarData[0].date + 'T12:00:00');
+const startDow = firstDate.getDay();
+for (let i = 0; i < startDow; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'cal-cell level-0';
+  cell.style.visibility = 'hidden';
+  calGrid.appendChild(cell);
+}
+
+calendarData.forEach(d => {
+  const cell = document.createElement('div');
+  const level = d.messages === 0 ? 0 : d.messages <= thresholds[1] ? 1 : d.messages <= thresholds[2] ? 2 : d.messages <= thresholds[3] ? 3 : 4;
+  cell.className = `cal-cell level-${level}`;
+  const dt = new Date(d.date + 'T12:00:00');
+  const dayName = dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const tip = document.createElement('div');
+  tip.className = 'tooltip';
+  tip.textContent = d.messages > 0 ? `${d.messages} msgs, ${d.sessions} sessions — ${dayName}` : `No activity — ${dayName}`;
+  cell.appendChild(tip);
+  calGrid.appendChild(cell);
+});
+
+// Month labels
+const monthLabels = document.getElementById('month-labels');
+['Dec', 'Jan', 'Feb', 'Mar'].forEach((m, i) => {
+  const span = document.createElement('span');
+  span.textContent = m;
+  span.style.width = ([31, 31, 28, 8][i] / 7 * 18) + 'px';
+  span.style.display = 'inline-block';
+  monthLabels.appendChild(span);
+});
+
+// Weekly stacked bars
+const barsContainer = document.getElementById('weekly-bars');
+const maxWeekTotal = Math.max(...weeklyData.map(w => w.derek + w.mayank + w.msgs / 5));
+
+weeklyData.forEach(w => {
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+
+  const label = document.createElement('div');
+  label.className = 'bar-label';
+  const ws = new Date(w.start + 'T12:00:00');
+  label.textContent = ws.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  row.appendChild(label);
+
+  const track = document.createElement('div');
+  track.className = 'bar-track';
+
+  const total = w.derek + w.mayank + w.msgs / 5;
+  const scale = 100 / maxWeekTotal;
+
+  if (w.derek > 0) {
+    const seg = document.createElement('div');
+    seg.className = 'bar-segment';
+    seg.style.width = (w.derek * scale) + '%';
+    seg.style.background = '#39d353';
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    tip.textContent = `Derek: ${w.derek} commits`;
+    seg.appendChild(tip);
+    track.appendChild(seg);
+  }
+  if (w.mayank > 0) {
+    const seg = document.createElement('div');
+    seg.className = 'bar-segment';
+    seg.style.width = (w.mayank * scale) + '%';
+    seg.style.background = '#f0883e';
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    tip.textContent = `Mayank: ${w.mayank} commits`;
+    seg.appendChild(tip);
+    track.appendChild(seg);
+  }
+  if (w.msgs > 0) {
+    const seg = document.createElement('div');
+    seg.className = 'bar-segment';
+    seg.style.width = (w.msgs / 5 * scale) + '%';
+    seg.style.background = 'rgba(88, 166, 255, 0.3)';
+    seg.style.border = '1px solid rgba(88, 166, 255, 0.5)';
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    tip.textContent = `${w.msgs} Claude messages`;
+    seg.appendChild(tip);
+    track.appendChild(seg);
+  }
+
+  row.appendChild(track);
+
+  const val = document.createElement('div');
+  val.className = 'bar-value';
+  val.textContent = (w.derek + w.mayank) + ' / ' + w.msgs;
+  row.appendChild(val);
+
+  barsContainer.appendChild(row);
+});
+
+// Hourly heatmap
+const heatmapGrid = document.getElementById('hourly-heatmap');
+const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const maxHour = Math.max(...Object.values(hourlyData));
+const hThresholds = [0, maxHour * 0.15, maxHour * 0.35, maxHour * 0.6];
+
+const corner = document.createElement('div');
+corner.className = 'heatmap-label';
+heatmapGrid.appendChild(corner);
+for (let h = 0; h < 24; h++) {
+  const label = document.createElement('div');
+  label.className = 'heatmap-hour';
+  label.textContent = h % 3 === 0 ? h + '' : '';
+  heatmapGrid.appendChild(label);
+}
+
+dayNames.forEach((name, dow) => {
+  const label = document.createElement('div');
+  label.className = 'heatmap-label';
+  label.textContent = name;
+  heatmapGrid.appendChild(label);
+
+  for (let h = 0; h < 24; h++) {
+    const val = hourlyData[dow + '-' + h] || 0;
+    const cell = document.createElement('div');
+    const level = val === 0 ? 0 : val <= hThresholds[1] ? 1 : val <= hThresholds[2] ? 2 : val <= hThresholds[3] ? 3 : 4;
+    cell.className = `heatmap-cell level-${level}`;
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    tip.textContent = `${val} msgs — ${name} ${h}:00`;
+    cell.appendChild(tip);
+    heatmapGrid.appendChild(cell);
+  }
+});
+
+// Gemini API usage bars (sqrt scale so smaller categories remain visible)
+const geminiContainer = document.getElementById('gemini-bars');
+const geminiColors = { ocr: '#39d353', translate: '#da3633', images: '#f0883e', summary: '#bc8cff', other: '#8b949e' };
+const sqrtScale = v => Math.sqrt(v);
+const maxGeminiSqrt = Math.max(...weeklyData.map(w =>
+  sqrtScale(w.gemini_ocr) + sqrtScale(w.gemini_translate) + sqrtScale(w.gemini_images) + sqrtScale(w.gemini_summary) + sqrtScale(w.gemini_other)
+));
+
+weeklyData.forEach(w => {
+  const gTotal = w.gemini_ocr + w.gemini_translate + w.gemini_images + w.gemini_summary + w.gemini_other;
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+
+  const label = document.createElement('div');
+  label.className = 'bar-label';
+  const ws = new Date(w.start + 'T12:00:00');
+  label.textContent = ws.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  row.appendChild(label);
+
+  const track = document.createElement('div');
+  track.className = 'bar-track';
+  const scale = 100 / maxGeminiSqrt;
+
+  const segments = [
+    { val: w.gemini_ocr, color: geminiColors.ocr, label: 'OCR' },
+    { val: w.gemini_translate, color: geminiColors.translate, label: 'Translation' },
+    { val: w.gemini_images, color: geminiColors.images, label: 'Image extraction' },
+    { val: w.gemini_summary, color: geminiColors.summary, label: 'Summary/Index' },
+    { val: w.gemini_other, color: geminiColors.other, label: 'Other' },
+  ];
+
+  segments.forEach(s => {
+    if (s.val > 0) {
+      const seg = document.createElement('div');
+      seg.className = 'bar-segment';
+      seg.style.width = (sqrtScale(s.val) * scale) + '%';
+      seg.style.background = s.color;
+      const tip = document.createElement('div');
+      tip.className = 'tooltip';
+      tip.textContent = `${s.label}: ${s.val.toLocaleString()} calls`;
+      seg.appendChild(tip);
+      track.appendChild(seg);
+    }
+  });
+
+  row.appendChild(track);
+
+  const val = document.createElement('div');
+  val.className = 'bar-value';
+  val.style.width = '60px';
+  val.textContent = gTotal > 0 ? (gTotal >= 1000000 ? (gTotal / 1000000).toFixed(1) + 'M' : gTotal >= 1000 ? Math.round(gTotal / 1000) + 'K' : gTotal) : '';
+  row.appendChild(val);
+
+  geminiContainer.appendChild(row);
+});
+</script>
+</body>
+</html>

@@ -374,17 +374,61 @@ export default function LetterPage() {
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          That&apos;s <strong>under $10,000 in infrastructure</strong> to process 3,900+ books through a full
-          AI pipeline. Labor is separate: I work on this full-time as Program Director,
-          with two part-time research assistants, funded by the Embassy of the Free Mind.
-          The infrastructure costs are what scales &mdash; and they&apos;re already dropping as
-          the one-time processing completes.
+          That&apos;s the infrastructure. But infrastructure didn&apos;t build this &mdash; people did.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-warm border-b border-border-light">
+                <th className="text-left py-3 px-5 font-medium text-primary">Role</th>
+                <th className="text-right py-3 px-5 font-medium text-primary">Effort</th>
+                <th className="text-right py-3 px-5 font-medium text-primary">Market Value</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-light text-[15px]">
+              {[
+                { name: 'Program director', desc: '~250 hours over 89 days — architecture, curation, research, editorial', effort: '3 months', total: '$37,500', highlight: true },
+                { name: 'Full-stack developer', desc: 'Half-time — 1,300+ commits across pipeline, workers, UI', effort: '0.5 FTE', total: '$45,000' },
+                { name: 'Senior engineer', desc: '0.2 FTE — code review, architecture, infrastructure', effort: '0.2 FTE', total: '$24,000' },
+                { name: 'Web design', desc: 'Frond Studio — brand identity, visual design, UX', effort: 'Contract', total: '$10,000' },
+                { name: 'AI pair programming', desc: '416 sessions, 6,889 human\u2013AI exchanges — development, QA, curation', effort: '3 months', total: '$1,200' },
+              ].map(row => (
+                <tr key={row.name}>
+                  <td className="py-3 px-5 text-secondary">
+                    <strong>{row.name}</strong>
+                    <span className="block text-muted text-xs mt-0.5">{row.desc}</span>
+                  </td>
+                  <td className="py-3 px-5 text-right text-secondary">{row.effort}</td>
+                  <td className={`py-3 px-5 text-right ${row.highlight ? 'text-accent-rust font-semibold' : 'text-secondary'}`}>{row.total}</td>
+                </tr>
+              ))}
+              <tr className="bg-warm/50 font-semibold">
+                <td className="py-3.5 px-5 text-primary">Total human investment</td>
+                <td className="py-3.5 px-5 text-right text-muted">&mdash;</td>
+                <td className="py-3.5 px-5 text-right text-accent-rust text-lg">~$117,700</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="font-body text-lg text-secondary leading-relaxed mb-5">
+          The real cost of the first three months was <strong>~$128,000</strong> &mdash; $10K in
+          infrastructure and $118K in human labor. The infrastructure is remarkably cheap.
+          The people are not. And the people are what made it work: every architectural decision,
+          every curatorial judgment, every edge case in a 500-year-old Latin typeface required
+          a human who understood what they were looking at.
+        </p>
+
+        <p className="font-body text-secondary leading-relaxed mb-5">
+          <a href="/activity.html" className="text-accent-rust hover:underline">See the full development activity dashboard &rarr;</a>
         </p>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
           For context: a professional human translation of a single 300-page Latin text costs
           $30,000&ndash;$60,000 and takes years.
-          The Source Library processed 3,900+ books for about $3 each.
+          The Source Library processed 3,900+ books for about $3 each &mdash; but only because
+          skilled people built and operated the system that made it possible.
         </p>
 
         {/* ── How It Works ── */}
@@ -537,22 +581,33 @@ export default function LetterPage() {
 
           <div className="bg-white/10 rounded-xl p-6 md:p-8 mb-8 border border-white/10">
             <p className="text-xl font-semibold text-white mb-4">
-              What $50,000 Enables
+              What We Need
             </p>
             <p className="font-body text-stone-300 leading-relaxed mb-4">
-              The digital side is nearly free. What costs money is the physical and human work
-              that no AI can replace:
+              AI made the impossible affordable. But &ldquo;affordable&rdquo; is not &ldquo;free,&rdquo; and software
+              without people behind it is just a demo. The first three months cost ~$128,000 in
+              human labor and $10,000 in infrastructure &mdash; largely funded by sweat equity and
+              the Embassy of the Free Mind. To sustain and scale this, we need a real team:
             </p>
-            <ul className="text-stone-300 space-y-2 ml-5 list-disc font-body">
-              <li><strong className="text-white">Scanning equipment and operator</strong> &mdash; digitize 1,000+ unscanned EFM volumes.
-                A 500-year-old binding requires physical access, professional equipment, and a trained hand. (~$25K)</li>
+            <ul className="text-stone-300 space-y-3 ml-5 list-disc font-body">
+              <li><strong className="text-white">A full-time developer</strong> &mdash; the platform needs continuous
+                engineering: new import sources, pipeline reliability, reader improvements, scholarly
+                tools. This can&apos;t remain a side project. (~$90K)</li>
+              <li><strong className="text-white">Scanning equipment and operator</strong> &mdash; digitize 1,000+ unscanned
+                EFM volumes. A 500-year-old binding requires physical access, professional equipment,
+                and a trained hand. (~$50K)</li>
               <li><strong className="text-white">Scholarly review</strong> &mdash; fund domain experts to validate AI translations
-                of the most important texts and publish citable editions with DOIs. (~$10K)</li>
-              <li><strong className="text-white">Community building</strong> &mdash; visiting scholar program, workshops with partner
-                institutions, outreach to researchers who can use these sources. (~$10K)</li>
-              <li><strong className="text-white">Infrastructure runway</strong> &mdash; hosting, compute, and remaining AI processing
-                are modest (~$5K) and trending cheaper every quarter.</li>
+                of the most important texts and publish citable editions with DOIs. (~$25K)</li>
+              <li><strong className="text-white">Community and outreach</strong> &mdash; visiting scholar program, workshops
+                with partner institutions, conference presentations, outreach to researchers who
+                can use these sources. (~$25K)</li>
+              <li><strong className="text-white">Infrastructure</strong> &mdash; hosting, compute, AI processing, and
+                long-term digital preservation. Costs are falling but not zero. (~$20K/year)</li>
             </ul>
+            <p className="font-body text-stone-400 text-sm mt-5 leading-relaxed">
+              Minimum viable annual budget: ~$210K. The $1.2M/year plan above is the full vision;
+              $210K keeps the core running and growing.
+            </p>
           </div>
 
           <div className="bg-white/10 rounded-xl p-6 md:p-8 mb-8 border border-white/10">
