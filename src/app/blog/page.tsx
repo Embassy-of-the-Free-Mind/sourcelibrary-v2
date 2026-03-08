@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'progress-studies',
+    title: 'The Missing Library: What Progress Studies Can\'t Read',
+    subtitle: 'Progress studies asks why innovation happens — but the primary sources from before 1750 have never been in English. 5,000 books contain the pre-industrial origins of experimental science, hidden inside alchemy, natural magic, and mystical philosophy.',
+    date: '8 March 2026',
+    readTime: '15 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+    imageAlt: 'Page from a 16th-century Greek manuscript of Hero of Alexandria\'s Pneumatica, showing mechanical diagrams',
+  },
+  {
     slug: 'ocr-consistency',
     title: 'How Consistent Is AI OCR?',
     subtitle: 'A digitization error gave us 1,448 natural experiments — two photographs of the same page, OCR\'d independently by Gemini. Character-level comparison reveals a 1.8% median disagreement rate across six languages.',
