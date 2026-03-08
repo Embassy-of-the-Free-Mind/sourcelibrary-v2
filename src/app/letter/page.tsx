@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'March 2026 Update — Source Library',
   description:
-    '4,500+ books translated across 30+ languages in 84 days. What AI-powered infrastructure for lost knowledge looks like.',
+    '5,000+ books translated across 30+ languages in 87 days. What AI-powered infrastructure for lost knowledge looks like.',
   alternates: { canonical: '/letter' },
 };
 
@@ -68,10 +68,10 @@ export default function LetterPage() {
         </p>
 
         <p className="font-body text-xl md:text-2xl text-secondary leading-relaxed mb-12">
-          Drebbel&apos;s book is one of <strong>4,800+</strong>. Since the first commit on December&nbsp;12,&nbsp;2025,{' '}
+          Drebbel&apos;s book is one of <strong>5,000+</strong>. Since the first commit on December&nbsp;12,&nbsp;2025,{' '}
           <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">Source Library</a> has
           become the world&apos;s largest freely available collection of translated historical primary
-          sources &mdash; spanning 30+ languages, 13 digital library sources, and more than 1.8 million
+          sources &mdash; spanning 30+ languages, 13 digital library sources, and nearly two million
           page images. Texts that have never had an English translation now have one. Texts that existed
           only behind institutional paywalls are now open to anyone with a browser.
         </p>
@@ -183,7 +183,7 @@ export default function LetterPage() {
           side by side with an English translation. You can{' '}
           <a href="https://sourcelibrary.org/search" className="text-accent-rust hover:underline">search across the full text</a>,
           browse a{' '}
-          <a href="https://sourcelibrary.org/gallery" className="text-accent-rust hover:underline">gallery of 73,000+ illustrations</a>,
+          <a href="https://sourcelibrary.org/gallery" className="text-accent-rust hover:underline">gallery of 74,000+ illustrations</a>,
           or explore an{' '}
           <a href="https://sourcelibrary.org/encyclopedia" className="text-accent-rust hover:underline">encyclopedia</a>{' '}
           linking people, places, and ideas across books and centuries.
@@ -270,8 +270,8 @@ export default function LetterPage() {
           For developers and AI researchers, the full collection is also available as an{' '}
           <a href="https://sourcelibrary.org/developers" className="text-accent-rust hover:underline">MCP server and CLI tool</a>.
           Install with one command. Any AI assistant &mdash; Claude, GPT, or custom agents &mdash;
-          can search the full text of 4,800+ books, retrieve translations with per-page citation
-          URLs, and explore 73,000+ extracted illustrations. The entire corpus is machine-readable
+          can search the full text of 5,000+ books, retrieve translations with per-page citation
+          URLs, and explore 74,000+ extracted illustrations. The entire corpus is machine-readable
           by design.
         </p>
 
@@ -280,15 +280,15 @@ export default function LetterPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-10">
           {[
-            { value: '4,849', label: 'Books in collection' },
-            { value: '1.84M', label: 'Page images' },
-            { value: '1.12M', label: 'Pages with OCR' },
-            { value: '635K', label: 'Pages translated to English' },
-            { value: '3,708', label: 'Books with English translation' },
-            { value: '73K+', label: 'Illustrations extracted' },
+            { value: '5,001', label: 'Books in collection' },
+            { value: '1.91M', label: 'Page images' },
+            { value: '1.15M', label: 'Pages with OCR' },
+            { value: '744K', label: 'Pages translated to English' },
+            { value: '3,878', label: 'Books with English translation' },
+            { value: '74K+', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
             { value: '13', label: 'Digital library sources' },
-            { value: '84 days', label: 'Since first commit' },
+            { value: '87 days', label: 'Since first commit' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-xl p-5 border border-border-light text-center">
               <div className="text-3xl md:text-4xl font-serif text-accent-rust mb-1">{s.value}</div>
@@ -369,7 +369,7 @@ export default function LetterPage() {
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-5">
-          That&apos;s <strong>under $10,000 in infrastructure</strong> to process 3,700+ books through a full
+          That&apos;s <strong>under $10,000 in infrastructure</strong> to process 3,900+ books through a full
           AI pipeline. Labor is separate: I work on this full-time as Program Director,
           with two part-time research assistants, funded by the Embassy of the Free Mind.
           The infrastructure costs are what scales &mdash; and they&apos;re already dropping as
@@ -379,7 +379,7 @@ export default function LetterPage() {
         <p className="font-body text-lg text-secondary leading-relaxed mb-16">
           For context: a professional human translation of a single 300-page Latin text costs
           $30,000&ndash;$60,000 and takes years.
-          The Source Library processed 3,700+ books for about $3 each.
+          The Source Library processed 3,900+ books for about $3 each.
         </p>
 
         {/* ── How It Works ── */}
@@ -615,7 +615,7 @@ export default function LetterPage() {
             },
             {
               q: 'What\u2019s the right balance between speed and quality?',
-              a: 'We don\u2019t fully know yet. Processing 4,800 books in 84 days prioritized breadth over depth. Some texts would benefit enormously from human editorial review. Others are perfectly served by AI output. We\u2019re developing a triage system: the most-read and most-cited texts get human scholarly attention first. But the question of how to allocate scarce scholarly time across thousands of newly accessible texts is genuinely new territory.',
+              a: 'We don\u2019t fully know yet. Processing 5,000 books in 87 days prioritized breadth over depth. Some texts would benefit enormously from human editorial review. Others are perfectly served by AI output. We\u2019re developing a triage system: the most-read and most-cited texts get human scholarly attention first. But the question of how to allocate scarce scholarly time across thousands of newly accessible texts is genuinely new territory.',
             },
             {
               q: 'Should AI translations carry a warning label?',
@@ -654,7 +654,7 @@ export default function LetterPage() {
             href="/gallery"
             className="px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
-            Gallery (73K+ Images)
+            Gallery (74K+ Images)
           </Link>
           <Link
             href="/encyclopedia"
