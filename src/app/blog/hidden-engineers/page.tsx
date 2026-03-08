@@ -74,7 +74,7 @@ export default function HiddenEngineersPage() {
         </p>
 
         <figure className="my-12">
-          <Link href="/book/695230c6ab34727b1f044784?page=93">
+          <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=93">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg"
@@ -86,7 +86,7 @@ export default function HiddenEngineersPage() {
             Hero&rsquo;s Aeolipile &mdash; a steam-powered rotating sphere &mdash; from the same
             manuscript that contains the <em>Corpus Hermeticum</em>. Page 93 of a royal Greek
             manuscript, c. 1545.{' '}
-            <Link href="/book/695230c6ab34727b1f044784?page=93" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+            <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=93" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
           </figcaption>
         </figure>
 
@@ -130,7 +130,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/695230c6ab34727b1f044784?page=67"
+                href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=67"
                 className="text-accent-rust hover:underline"
               >
                 Hero, <em>Pneumatica</em>, Theorem 37
@@ -153,7 +153,7 @@ export default function HiddenEngineersPage() {
           </p>
 
           <figure className="my-10">
-            <Link href="/book/695230c6ab34727b1f044784?page=153">
+            <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=153">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/153.jpg"
@@ -164,7 +164,7 @@ export default function HiddenEngineersPage() {
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Page 153 of the same manuscript: the <em>Poimandres</em> of Hermes Trismegistus
               begins, with red ink headpiece. Sixty pages after the steam engine.{' '}
-              <Link href="/book/695230c6ab34727b1f044784?page=153" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=153" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -183,7 +183,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/695230c6ab34727b1f044784?page=153"
+                href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=153"
                 className="text-accent-rust hover:underline"
               >
                 Hermes Trismegistus, <em>Poimandres</em>, opening
@@ -225,14 +225,16 @@ export default function HiddenEngineersPage() {
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
             <p className="text-secondary italic font-body leading-relaxed mb-3">
-              &ldquo;Hero of Ctesibius, his fire-throwing Tubes&rdquo;
+              &ldquo;How fire-throwing tubes are constructed&hellip; Hero advises soldiers
+              about to scale city walls to use portable, hand-held engines that throw
+              fire from a distance.&rdquo;
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe5f9f844de8615417df4?page=542"
+                href="/book/magia-naturalis-libri-xx-1607-porta?page=504"
                 className="text-accent-rust hover:underline"
               >
-                Della Porta, <em>Magia Naturalis</em>, Book XVII
+                Della Porta, <em>Magia Naturalis</em>, Book XII, Ch. 4
               </Link>
               {' '}&mdash; citing Hero&rsquo;s military applications of pneumatics
             </p>
@@ -256,7 +258,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe5f9f844de8615417df4?page=706"
+                href="/book/magia-naturalis-libri-xx-1607-porta?page=706"
                 className="text-accent-rust hover:underline"
               >
                 Della Porta, <em>Magia Naturalis</em>, Book XX, Ch. 10
@@ -279,7 +281,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe5f9f844de8615417df4?page=706"
+                href="/book/magia-naturalis-libri-xx-1607-porta?page=706"
                 className="text-accent-rust hover:underline"
               >
                 Della Porta, <em>Magia Naturalis</em>, Book XX, Ch. 10
@@ -321,7 +323,7 @@ export default function HiddenEngineersPage() {
           </p>
 
           <figure className="my-10">
-            <Link href="/book/6949af986ef4a68b726b7fa9?page=40">
+            <Link href="/book/ten-books-on-architecture-pollio?page=40">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`/api/crop-image?url=${encodeURIComponent('https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6949af986ef4a68b726b7fa9/40.jpg')}&x=0.118&y=0.052&w=0.77&h=0.456`}
@@ -332,7 +334,7 @@ export default function HiddenEngineersPage() {
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Woodcut of an aeolipile from Vitruvius, <em>De architectura</em> (1521 Cesare
               Cesariano edition). An ornamental rendering of a scientific instrument.{' '}
-              <Link href="/book/6949af986ef4a68b726b7fa9?page=40" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/ten-books-on-architecture-pollio?page=40" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -385,7 +387,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe601f844de8615417e21?page=2"
+                href="/book/theatrum-chemicum-vol-iii-1602-zetzner?page=303"
                 className="text-accent-rust hover:underline"
               >
                 <em>Theatrum Chemicum</em>, Vol. I
@@ -415,7 +417,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69751588a88d83c830d99e17?page=6"
+                href="/book/the-art-of-gold-making-artis-auriferae-morienus?page=6"
                 className="text-accent-rust hover:underline"
               >
                 <em>Artis Auriferae</em>, Basel, 1572
@@ -462,7 +464,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6952310fab34727b1f0448a1?page=105"
+                href="/book/the-discovery-of-witchcraft-scot?page=105"
                 className="text-accent-rust hover:underline"
               >
                 Scot, <em>Discoverie of Witchcraft</em>, p. 105
@@ -506,13 +508,14 @@ export default function HiddenEngineersPage() {
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
             <p className="text-secondary italic font-body leading-relaxed mb-3">
-              &ldquo;A.B. Clear hole [exhaust flue], W. Saline Projectile chamber,
-              Y. Water or Steam Chamber (C)&hellip; Scale: &frac34; inch to the foot.
-              Angle iron bands&hellip; Red brick&hellip; Iron plate specifications.&rdquo;
+              &ldquo;Elijah&rsquo;s Chariot. Showing how propelling force is obtained.
+              A.A. View hole. B.B. Valves to regulate the admission of outside air
+              to the Smoke Chamber (C)&hellip; Scale: &frac12; inch to the foot.
+              Angle iron bands all around&hellip; fire box&hellip; ashes pit.&rdquo;
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/690c27e6e0787282ad593282?page=58"
+                href="/book/the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous?page=58"
                 className="text-accent-rust hover:underline"
               >
                 <em>Die Lehren der Rosenkreuzer</em>, p. 58&ndash;59
@@ -548,12 +551,12 @@ export default function HiddenEngineersPage() {
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
             <p className="text-secondary italic font-body leading-relaxed mb-3">
-              &ldquo;The fire and the air do indeed move the water and the earth&hellip;
-              from the fire and the air all motion comes.&rdquo;
+              &ldquo;The fire works in the air, the air in the water, the water works
+              moisture into the earth.&rdquo;
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/697d9c9b72d515cb07bb3841?page=10"
+                href="/book/a-thorough-explanation-of-the-nature-and-properties-of-the-drebbel?page=12"
                 className="text-accent-rust hover:underline"
               >
                 Drebbel, <em>On the Nature of the Elements</em>
@@ -587,7 +590,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/695294d8b184004c526a23f1?page=51"
+                href="/book/the-advancement-of-learning-1605-first-edition-bacon?page=51"
                 className="text-accent-rust hover:underline"
               >
                 Bacon, <em>The Advancement of Learning</em>, 1605
@@ -616,7 +619,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/695294d8b184004c526a23f1?page=104"
+                href="/book/the-advancement-of-learning-1605-first-edition-bacon?page=104"
                 className="text-accent-rust hover:underline"
               >
                 Bacon, <em>Advancement</em>, on the mythological patrons of the mechanical arts
@@ -657,7 +660,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6991e93135ed50020acc1458?page=33"
+                href="/book/the-notebooks-of-leonardo-da-vinci-richter?page=33"
                 className="text-accent-rust hover:underline"
               >
                 Leonardo da Vinci, <em>Notebooks</em>
@@ -674,7 +677,7 @@ export default function HiddenEngineersPage() {
           </p>
 
           <figure className="my-10">
-            <Link href="/book/6991e93135ed50020acc1458?page=37">
+            <Link href="/book/the-notebooks-of-leonardo-da-vinci-richter?page=37">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`/api/crop-image?url=${encodeURIComponent('https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991e93135ed50020acc1458/37.jpg')}&x=0.012&y=0.074&w=0.824&h=0.851`}
@@ -685,7 +688,7 @@ export default function HiddenEngineersPage() {
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Studies from Leonardo&rsquo;s <em>Notebooks</em> &mdash; 1,272 pages of
               mechanical observation, stripped of any magical or alchemical framing.{' '}
-              <Link href="/book/6991e93135ed50020acc1458?page=37" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/the-notebooks-of-leonardo-da-vinci-richter?page=37" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -743,52 +746,52 @@ export default function HiddenEngineersPage() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                href: '/book/695230c6ab34727b1f044784',
+                href: '/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria',
                 title: 'Hero of Alexandria, Pneumatica + Corpus Hermeticum',
                 detail: 'Greek MS, c. 1545 — steam engines bound with mystical philosophy',
               },
               {
-                href: '/book/694fe5f9f844de8615417df4',
+                href: '/book/magia-naturalis-libri-xx-1607-porta',
                 title: 'Della Porta, Magia Naturalis',
                 detail: 'Naples, 1589 — pneumatics, optics, and kites as "natural magic"',
               },
               {
-                href: '/book/6949af986ef4a68b726b7fa9',
+                href: '/book/ten-books-on-architecture-pollio',
                 title: 'Vitruvius, De architectura',
                 detail: '1521 — aeolipile woodcut, architecture as total knowledge',
               },
               {
-                href: '/book/694fe601f844de8615417e21',
+                href: '/book/theatrum-chemicum-vol-iii-1602-zetzner',
                 title: 'Theatrum Chemicum',
                 detail: 'Strasbourg, 1659 — furnace design inside alchemical compilations',
               },
               {
-                href: '/book/69751588a88d83c830d99e17',
+                href: '/book/the-art-of-gold-making-artis-auriferae-morienus',
                 title: 'Artis Auriferae',
                 detail: 'Basel, 1572 — Mary the Prophetess and the bain-marie',
               },
               {
-                href: '/book/690c27e6e0787282ad593282',
+                href: '/book/the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous',
                 title: 'Die Lehren der Rosenkreuzer',
                 detail: 'MS — steam engine schematic as "Elijah\'s Chariot"',
               },
               {
-                href: '/book/6952310fab34727b1f0448a1',
+                href: '/book/the-discovery-of-witchcraft-scot',
                 title: 'Scot, The Discoverie of Witchcraft',
                 detail: 'London, 1584 — mechanical crucifixes exposed',
               },
               {
-                href: '/book/695294d8b184004c526a23f1',
+                href: '/book/the-advancement-of-learning-1605-first-edition-bacon',
                 title: 'Bacon, The Advancement of Learning',
                 detail: 'London, 1605 — the dignity of the mechanical arts',
               },
               {
-                href: '/book/697d9c9b72d515cb07bb3841',
+                href: '/book/a-thorough-explanation-of-the-nature-and-properties-of-the-drebbel',
                 title: 'Drebbel, On the Nature of the Elements',
                 detail: 'c. 1608 — submarines framed as elemental philosophy',
               },
               {
-                href: '/book/6991e93135ed50020acc1458',
+                href: '/book/the-notebooks-of-leonardo-da-vinci-richter',
                 title: 'Leonardo da Vinci, Notebooks',
                 detail: '1,272 pages of pure mechanical investigation',
               },
