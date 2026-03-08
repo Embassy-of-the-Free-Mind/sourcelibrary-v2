@@ -4,12 +4,12 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'The Missing Library: What Progress Studies Can\'t Read - Source Library',
+  title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base - Source Library',
   description:
-    'Progress studies asks why innovation happens — but most primary sources from before 1750 have never been in English. 5,000 books in Latin, German, Arabic, and Hebrew contain the pre-industrial origins of experimental science, and AI just made them readable.',
+    'Progress studies predicted that useful knowledge drove innovation long before the Industrial Revolution. 5,000 newly translated books in Latin, German, Arabic, and Hebrew confirm it — with steam engines, laboratory equipment, and experimental science embedded in alchemy and natural magic.',
   openGraph: {
-    title: 'The Missing Library: What Progress Studies Can\'t Read',
-    description: 'Most primary sources for pre-industrial innovation have never been in English. 5,000 books — largely untranslated — contain steam engines, laboratory equipment, and experimental science hidden inside alchemy, natural magic, and mystical philosophy.',
+    title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base',
+    description: 'Mokyr\'s "useful knowledge," Howes\'s "improving mentality," and Crawford\'s techno-humanism all predicted what 5,000 newly translated pre-industrial books confirm: innovation has deeper roots than anyone could read.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
   },
   alternates: {
@@ -22,8 +22,8 @@ export default function ProgressStudiesPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="The Missing Library"
-          subtitle="What progress studies hasn&rsquo;t read &mdash; and why 5,000 largely untranslated books matter for understanding how innovation begins"
+          title="The Deeper Roots"
+          subtitle="How 5,000 newly translated books confirm what progress studies predicted &mdash; innovation didn&rsquo;t begin with the Industrial Revolution"
         >
           <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 15 min read</p>
         </ContentHeader>
@@ -50,91 +50,80 @@ export default function ProgressStudiesPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          In July 2019, Patrick Collison and Tyler Cowen published an essay in <em>The Atlantic</em>{' '}
-          calling for a &ldquo;new science of progress.&rdquo; Their question was straightforward:
-          we know that material living standards have improved dramatically since the Industrial
-          Revolution, but we don&rsquo;t really understand why. What combination of institutions,
-          culture, incentives, and knowledge produced the acceleration? And can we produce more of it?
+          In October 2025, Joel Mokyr shared the Nobel Prize in Economics with Philippe Aghion
+          and Peter Howitt for work on the &ldquo;prerequisites for sustained growth through
+          technological progress.&rdquo; The committee cited Mokyr&rsquo;s insight that the
+          Industrial Revolution depended not just on incentives or institutions, but on a culture
+          that valued &ldquo;useful knowledge&rdquo; &mdash; propositional knowledge about nature
+          that could be turned into prescriptive knowledge about technique.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          The essay launched a movement. Jason Crawford founded the{' '}
-          <a href="https://rootsofprogress.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
-            Roots of Progress Institute</a>.
-          Anton Howes began tracing the spread of an &ldquo;improving mentality&rdquo; through
-          British inventor networks. Matt Clancy built a{' '}
-          <a href="https://www.newthingsunderthesun.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
-            living literature review</a>{' '}
-          of innovation economics. Stripe Press started publishing books on the history of efficiency,
-          maintenance, and scientific institutions. The Institute for Progress opened in Washington.
+          Mokyr&rsquo;s framework raises an obvious question: how far back does that culture go?
+          He traces it from the Enlightenment forward, through the Republic of Letters and the
+          Industrial Enlightenment. But he has always acknowledged that the evidence gets thin
+          before 1700, not because the knowledge didn&rsquo;t exist, but because most pre-modern
+          texts on natural philosophy, alchemy, mechanics, and experimental method were written
+          in Latin, German, Arabic, and Hebrew &mdash; and have never been translated into English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          The research program has been productive. But it has a blind spot &mdash; not in its
-          methods or its framing, but in its source material. Most of the primary sources from
-          before 1750 have never been translated into English, and progress studies has largely
-          built its account of early innovation without them.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8 font-body">
-          The texts exist. There are thousands of them &mdash; in Latin,
-          German, Arabic, Hebrew, Greek, Dutch, Italian &mdash; sitting in digital library
-          collections, fully scanned. A handful of the most famous have English translations:
-          Agricola&rsquo;s <em>De re metallica</em>, parts of the Hermetic corpus, some
-          of Paracelsus. But the vast majority &mdash; thousands of books on natural philosophy,
-          alchemy, mechanics, and experimental method &mdash; have never been translated. They
-          are the evidence base for understanding how innovation worked before the categories
-          of &ldquo;science&rdquo; and &ldquo;engineering&rdquo; existed.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8 font-body">
-          Nobody has been able to read them at scale &mdash; a few famous
-          texts translated per decade, while thousands sat unread &mdash; until now.
+          That gap is now closing. Source Library has translated over 5,000 books from
+          the 2nd to 19th centuries, drawn from thirteen digital library collections. Over 700,000
+          pages have been translated into English, and 1,873 of these books are{' '}
+          <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
+            first-ever English translations</Link>{' '}
+          &mdash; texts that have existed for centuries but had no prior English version. What
+          they contain confirms and extends the central insights of progress studies: the
+          culture of useful knowledge has deeper roots than anyone could previously read.
         </p>
 
         <hr className="border-border-light my-12" />
 
-        {/* I. The Temporal Blind Spot */}
+        {/* I. What the Frameworks Predicted */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            I. The Temporal Blind Spot
+            I. What the Frameworks Predicted
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Progress studies has a center of gravity. Tyler Cowen&rsquo;s <em>The Great
-            Stagnation</em> diagnoses the post-1970 slowdown. Joel Mokyr&rsquo;s <em>A Culture
-            of Growth</em> traces the &ldquo;Great Enrichment&rdquo; from 1750 to 1914. Jason
-            Crawford&rsquo;s work centers on the Industrial Revolution forward. Even Anton Howes,
-            who pushes earliest, starts his study of the &ldquo;improving mentality&rdquo; in
-            1547 &mdash; and stays firmly within early modern Britain.
+            The remarkable thing about progress studies is how well its frameworks predict what
+            we found in the pre-1750 sources &mdash; sources that were unavailable when the
+            frameworks were built.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The deeper you go in time, the thinner the accessible evidence base becomes. Not
-            because the texts don&rsquo;t exist, but because most have never been translated.
-            A Latin alchemical treatise from 1572 that describes the invention of the water
-            bath. A German manuscript from 1430 that catalogs siege engines, firearms, and
-            diving equipment. An Arabic commentary on Aristotle&rsquo;s <em>Meteorology</em>
-            that laid the groundwork for early modern chemistry. Hero of Alexandria&rsquo;s
-            descriptions of automatic temple doors using steam pressure, bound alongside
-            mystical philosophy.
+            Mokyr argued that sustained growth requires a culture that produces &ldquo;useful
+            knowledge&rdquo; &mdash; systematic understanding of natural phenomena that practitioners
+            can turn into working techniques. He built this case from Enlightenment-era evidence.
+            But the pre-1750 texts show exactly this dynamic: alchemists systematically studying
+            the properties of matter, natural philosophers developing theories of pneumatics and
+            hydraulics, instrument-makers accumulating practical knowledge about furnaces,
+            distillation, and metallurgy &mdash; all producing propositional knowledge and
+            turning it into prescriptive technique.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            These are not obscure marginalia. They are central texts in the history of
-            technology and experimental method. A few of the most famous have been translated
-            &mdash; but for every Agricola or Paracelsus that made it into English, there are
-            hundreds of treatises that didn&rsquo;t. A field that studies how progress happens
-            has built its pre-1750 account from a thin sample of the available sources.
+            Anton Howes argued that innovation is driven by the spread of an &ldquo;improving
+            mentality&rdquo; &mdash; a learned cultural disposition, spreading person to person,
+            characterized by &ldquo;a belief in the acceptability of contesting tradition&rdquo;
+            and &ldquo;a vision of the benefits of progress.&rdquo; He traced it through British
+            inventor networks starting in the 1540s. The translated texts show that this mentality
+            existed centuries earlier &mdash; it just lived under different names and in different
+            languages. Howes was right about the mechanism. The timeline goes back further than
+            he could see.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Mokyr himself acknowledges the importance of this earlier period. His concept of
-            &ldquo;useful knowledge&rdquo; &mdash; propositional knowledge about nature that
-            can be turned into prescriptive knowledge about technique &mdash; describes exactly
-            what these pre-1750 texts contain. But his account starts at the point where English
-            and French sources become abundant. What came before that, in Latin and German and
-            Arabic, is largely a blank.
+            Jason Crawford has been building the case for a{' '}
+            <a href="https://rootsofprogress.org/techno-humanist-manifesto" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              &ldquo;techno-humanist&rdquo;</a>{' '}
+            philosophy &mdash; the view that technological progress and human flourishing are
+            connected, not opposed. The pre-industrial texts are full of this conviction.
+            Renaissance natural philosophers believed that understanding nature&rsquo;s secrets
+            was a path to human improvement. The alchemist&rsquo;s project was explicitly
+            about perfecting nature through knowledge. They were techno-humanists before the
+            term existed.
           </p>
         </section>
 
@@ -153,10 +142,7 @@ export default function ProgressStudiesPage() {
             and twelve other digital library collections, spanning the 2nd to 19th centuries.
             Most are in Latin, German, Dutch, French, Italian, Arabic, and Hebrew.
             Nearly two million pages have been digitized, and over 700,000 have been translated
-            into English. Of the 5,000 books, 1,873 are{' '}
-            <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
-              first-ever English translations</Link>{' '}
-            &mdash; texts that had no prior English version.
+            into English.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -250,24 +236,18 @@ export default function ProgressStudiesPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* III. The Improving Mentality Before 1547 */}
+        {/* III. The Improving Mentality Goes Back Further */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            III. The Improving Mentality Before 1547
+            III. The Improving Mentality Goes Back Further
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Anton Howes&rsquo;s central thesis is that the Industrial Revolution was driven by
-            the spread of an &ldquo;improving mentality&rdquo; &mdash; a learned cultural
-            disposition, spreading person to person, characterized by &ldquo;a belief in the
-            acceptability of contesting tradition&rdquo; and &ldquo;a vision of the benefits
-            of progress.&rdquo; He traces it through British inventor networks starting in the
-            1540s.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            But the texts in Source Library show that this mentality existed centuries earlier
-            &mdash; it just lived under different names.
+            Howes&rsquo;s thesis is elegant: innovation spreads like a cultural disposition,
+            person to person, through networks of people who believe that things can be made
+            better and that making them better is worthwhile. His evidence starts in 1547.
+            But the mechanism he describes is visible centuries earlier in the translated texts
+            &mdash; it just hadn&rsquo;t been readable in English before.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -291,12 +271,10 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The difference is that their improving mentality was embedded in a framework
-            that modern categories reject. When an alchemist describes how to build a
-            self-regulating furnace, he is doing engineering. When he frames it as part
-            of the Great Work of transmutation, modern historians classify it as
-            superstition. The technical knowledge is invisible because of the frame
-            around it.
+            The reason this wasn&rsquo;t visible is the language barrier. The improving mentality
+            before 1547 lived in Latin, German, and Arabic texts that had never been translated.
+            You cannot trace person-to-person diffusion of a cultural disposition through texts
+            you cannot read. Now you can.
           </p>
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
@@ -322,85 +300,22 @@ export default function ProgressStudiesPage() {
             improves while the philosopher declines. Bacon was not inventing this observation.
             He was naming something that alchemists, instrument-makers, and natural
             philosophers had been doing for generations &mdash; in Latin, German, and Arabic
-            texts that progress studies has mostly not engaged with.
+            texts that are now, for the first time, readable in English.
           </p>
         </section>
 
         <hr className="border-border-light my-12" />
 
-        {/* IV. Translation as Innovation Infrastructure */}
+        {/* IV. Newton, Boyle, and the Source Code */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            IV. Translation as Innovation Infrastructure
+            IV. Newton, Boyle, and the Source Code
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Progress studies already knows that translation is infrastructure. The most
-            frequently cited example is the 12th-century Toledo School of Translators, where
-            scholars translated Arabic texts on mathematics, astronomy, medicine, and philosophy
-            into Latin. This transfer &mdash; from Arabic to Latin, from Islamic civilization
-            to medieval Europe &mdash; provided the foundation for the European scientific
-            tradition. Euclid, Ptolemy, Aristotle, Galen &mdash; much of the Greek corpus
-            reached Europe through Arabic intermediaries and Latin translation.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            Mokyr&rsquo;s &ldquo;Republic of Letters&rdquo; is another translation story:
-            a network of scholars sharing knowledge across national boundaries, made possible
-            by a common language (Latin, then French and English) and a culture of open
-            correspondence. The diffusion of useful knowledge depended on people being able
-            to read it.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The same bottleneck exists today, in reverse. Thousands of pre-1800 texts in
-            Latin, German, Arabic, and Hebrew have been digitized and sit in open-access
-            library collections. They are &ldquo;available&rdquo; in the sense that anyone
-            can view the page images. They are unavailable in the sense that almost no one
-            alive can read them.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            Latin literacy among scholars has collapsed since the 19th century. Neo-Latin
-            specialists are rare and expensive. A human translator producing one scholarly
-            translation per year would take five thousand years to work through Source
-            Library&rsquo;s collection. The texts are locked behind a language barrier as
-            effective as if they had never been digitized at all.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            This is the bottleneck that AI translation removes. Source Library has translated
-            over 700,000 pages across 3,900 books in under three months &mdash; at an average
-            cost of $1.90 per book. Of these, 1,873 are{' '}
-            <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
-              first-ever English translations</Link>{' '}
-            &mdash; texts that have existed for centuries but have never been accessible to
-            anglophone researchers. The{' '}
-            <Link href="/blog/first-translation-methodology" className="text-accent-rust hover:underline">
-              methodology</Link>{' '}
-            is documented and verifiable.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            This is not a metaphor for progress. It is the same kind of work that the Toledo
-            translators did in the 12th century and that the Republic of Letters did in the
-            17th &mdash; removing a language barrier between a body of knowledge and the people
-            who would use it. The only difference is scale. What once required generations of
-            scholars now takes months of compute.
-          </p>
-        </section>
-
-        <hr className="border-border-light my-12" />
-
-        {/* V. Newton, Boyle, and What They Were Reading */}
-        <section className="mb-16">
-          <h2 className="font-serif text-3xl text-primary mb-6">
-            V. Newton, Boyle, and What They Were Reading
-          </h2>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The relationship between early modern science and the esoteric tradition is not
-            speculative. It is documented.
+            Progress studies has long grappled with the question of why the Scientific Revolution
+            happened where and when it did. The answer, increasingly, involves what the
+            revolutionaries were reading &mdash; and most of it was in the esoteric tradition.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -432,39 +347,33 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The point is not that these scientists were &ldquo;really&rdquo; occultists, or
-            that alchemy was &ldquo;really&rdquo; chemistry. The point is that the intellectual
-            tradition out of which modern science emerged is preserved in the texts that
-            Source Library holds. The{' '}
+            The intellectual tradition out of which modern science emerged is preserved in the
+            texts that Source Library holds. The{' '}
             <Link href="/book/694fe601f844de8615417e21" className="text-accent-rust hover:underline">
               <em>Theatrum Chemicum</em></Link>,
             the{' '}
             <Link href="/book/69751588a88d83c830d99e17" className="text-accent-rust hover:underline">
               <em>Artis Auriferae</em></Link>,
             the Hermetic and Neoplatonic texts that Ficino translated, the Kabbalistic works
-            that shaped Renaissance natural philosophy &mdash; these are not curiosities. They
-            are the source code.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            If you want to understand why the Scientific Revolution happened, you need to read
-            what the scientific revolutionaries were reading. Most of it has never been
-            available in English &mdash; until now.
+            that shaped Renaissance natural philosophy &mdash; these are the source code of the
+            Scientific Revolution. Understanding why progress happened means reading what the
+            people who made it happen were reading.
           </p>
         </section>
 
         <hr className="border-border-light my-12" />
 
-        {/* VI. The Theatre of Machines */}
+        {/* V. The Theatre of Machines */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            VI. The Theatre of Machines
+            V. The Theatre of Machines
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Beyond the esoteric tradition, Source Library holds a growing collection of
             explicitly technical works &mdash; the &ldquo;theatre of machines&rdquo; genre
-            that flourished from the 15th to 17th centuries.
+            that flourished from the 15th to 17th centuries. These are the handbooks that
+            Howes&rsquo;s improvers were learning from.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -488,40 +397,60 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            These are the texts that Howes&rsquo;s &ldquo;improving mentality&rdquo; was
-            reading. They are the handbooks of Renaissance engineering practice. Some have
-            partial English translations from the 19th or 20th century; many have never been
-            fully translated. All are now searchable and readable in Source Library.
+            Brian Potter&rsquo;s <em>The Origins of Efficiency</em> (2025) traces how modern
+            engineering emerged from accumulated craft knowledge. These machine theatres are the
+            missing early chapters of that story. Some have partial English translations from
+            the 19th or 20th century; many have never been fully translated. All are now
+            searchable and readable in Source Library.
           </p>
         </section>
 
         <hr className="border-border-light my-12" />
 
-        {/* VII. The AI Translation Angle */}
+        {/* VI. Translation as Innovation Infrastructure */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            VII. The Scale Problem, Solved
+            VI. Translation as Innovation Infrastructure
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The reason these texts have remained untranslated is not indifference. It is
-            economics.
+            Progress studies already knows that translation is infrastructure. The most
+            frequently cited example is the 12th-century Toledo School of Translators, where
+            scholars translated Arabic texts on mathematics, astronomy, medicine, and philosophy
+            into Latin. This transfer &mdash; from Arabic to Latin, from Islamic civilization
+            to medieval Europe &mdash; provided the foundation for the European scientific
+            tradition. Euclid, Ptolemy, Aristotle, Galen &mdash; much of the Greek corpus
+            reached Europe through Arabic intermediaries and Latin translation.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            A skilled Latin translator working full-time produces roughly one scholarly
-            translation per year. At that rate, the 5,000 books in Source Library would take
-            five millennia. Fund ten translators and it takes five centuries. Fund a hundred
-            and it takes fifty years &mdash; at a cost of tens of millions of dollars, with
-            no guarantee of institutional continuity.
+            Mokyr&rsquo;s &ldquo;Republic of Letters&rdquo; is another translation story:
+            a network of scholars sharing knowledge across national boundaries, made possible
+            by a common language (Latin, then French and English) and a culture of open
+            correspondence. The diffusion of useful knowledge depended on people being able
+            to read it.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            AI changes the equation. The full pipeline &mdash; digitization, OCR, translation,
+            The same bottleneck exists today, in reverse. Thousands of pre-1800 texts in
+            Latin, German, Arabic, and Hebrew have been digitized and sit in open-access
+            library collections. They are &ldquo;available&rdquo; in the sense that anyone
+            can view the page images. They are unavailable in the sense that almost no one
+            alive can read them.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            AI removes this bottleneck. The full pipeline &mdash; digitization, OCR, translation,
             indexing &mdash; costs approximately $1.90 per book and takes minutes. Source
             Library processed its first thousand books in December 2025. It passed 5,000 in
-            March 2026. The technology is improving fast enough that what costs $1.90 today
-            will cost pennies next year.
+            March 2026. Of these, 1,873 are{' '}
+            <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
+              first-ever English translations</Link>{' '}
+            &mdash; texts that have existed for centuries but have never been accessible to
+            anglophone researchers. The{' '}
+            <Link href="/blog/first-translation-methodology" className="text-accent-rust hover:underline">
+              methodology</Link>{' '}
+            is documented and verifiable.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -547,43 +476,30 @@ export default function ProgressStudiesPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* VIII. What Happens Next */}
+        {/* VII. The Corpus Is Open */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            VIII. What Happens Next
+            VII. The Corpus Is Open
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The texts are readable now. The question is who will read them.
+            The scale of the translated corpus changes what questions are possible. With a
+            handful of translated texts, you can write a case study. With thousands, you can
+            do statistical analysis. How often do alchemical treatises include technical
+            specifications for laboratory equipment? How does the vocabulary of
+            &ldquo;experiment&rdquo; evolve across centuries and languages? Where do mechanical
+            and mystical descriptions co-occur, and where do they separate? These are questions
+            that require a corpus, not a monograph &mdash; and the corpus now exists.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Historians of science already know that alchemy and early modern science are
-            connected &mdash; Lawrence Principe, William Newman, and Pamela Smith have been
-            making this case for decades. But their work has been limited by the same
-            translation bottleneck. Smith&rsquo;s{' '}
-            <a href="https://www.makingandknowing.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
-              Making and Knowing Project</a>{' '}
-            at Columbia has spent years reconstructing a single 16th-century French artisanal
-            manuscript. Source Library has translated thousands.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The scale changes what questions are possible. With a handful of translated
-            texts, you can write a case study. With thousands, you can do statistical analysis.
-            How often do alchemical treatises include technical specifications for laboratory
-            equipment? How does the vocabulary of &ldquo;experiment&rdquo; evolve across
-            centuries and languages? Where do mechanical and mystical descriptions co-occur,
-            and where do they separate? These are questions that require a corpus, not a
-            monograph &mdash; and the corpus now exists.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            For progress studies specifically, the opportunity is to push the evidence base
-            backward. Howes&rsquo;s &ldquo;improving mentality&rdquo; did not appear from
-            nowhere in the 1540s. It had precursors in the alchemical tradition, in the
-            theatre of machines, in the natural magic that was really experimental physics.
-            Source Library makes those precursors legible.
+            For progress studies specifically, the opportunity is to extend the evidence base
+            backward. Howes&rsquo;s improving mentality did not appear from nowhere in the
+            1540s. It had precursors in the alchemical tradition, in the theatre of machines,
+            in the natural magic that was really experimental physics. Mokyr&rsquo;s useful
+            knowledge circulated in Latin and Arabic centuries before the Republic of Letters
+            made it available in vernacular languages. Source Library makes those precursors
+            legible.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -603,9 +519,12 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Collison and Cowen ended their 2019 essay by asking: &ldquo;How do we improve
-            our ability to generate useful progress?&rdquo; One answer, at least, is
-            straightforward: read what the improvers were reading.
+            Collison and Cowen ended their{' '}
+            <a href="https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594946/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              2019 essay</a>{' '}
+            by asking: &ldquo;How do we improve our ability to generate useful progress?&rdquo;
+            One answer, at least, is straightforward: read what the improvers were reading.
+            The books are open.
           </p>
         </section>
 
@@ -648,6 +567,12 @@ export default function ProgressStudiesPage() {
                 href: 'https://www.ageofinvention.xyz/',
                 title: 'Age of Invention',
                 detail: 'Anton Howes\'s newsletter on the history of innovation',
+                internal: false,
+              },
+              {
+                href: 'https://rootsofprogress.org/techno-humanist-manifesto',
+                title: 'The Techno-Humanist Manifesto',
+                detail: 'Jason Crawford\'s vision for progress and human flourishing',
                 internal: false,
               },
             ].map((source) => (
