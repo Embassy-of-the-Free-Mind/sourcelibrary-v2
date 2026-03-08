@@ -219,8 +219,8 @@ export default function ConceptGraph() {
 
   // Initialize nodes with random positions
   useEffect(() => {
-    const w = Math.min(960, window.innerWidth - 32);
-    const h = Math.min(720, w * 0.75);
+    const w = Math.min(1100, window.innerWidth - 32);
+    const h = Math.min(820, w * 0.75);
     setDimensions({ w, h });
 
     nodesRef.current = RAW_NODES.map((n) => ({
@@ -302,7 +302,7 @@ export default function ConceptGraph() {
 
       // Labels for large nodes or hovered
       if (node.count >= 25 || isHov || isConnected) {
-        ctx.font = `${isHov ? 'bold ' : ''}${isHov ? 14 : 12}px Inter, system-ui, sans-serif`;
+        ctx.font = `${isHov ? 'bold ' : ''}${isHov ? 16 : 14}px Inter, system-ui, sans-serif`;
         ctx.textAlign = 'center';
         ctx.fillStyle = dimmed ? '#1a161240' : '#1a1612';
         ctx.fillText(node.id, node.x, node.y - r - 4);
@@ -331,7 +331,7 @@ export default function ConceptGraph() {
             let dx = b.x - a.x;
             let dy = b.y - a.y;
             const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
-            const force = (800 * alpha) / (dist * dist);
+            const force = (2500 * alpha) / (dist * dist);
             dx = (dx / dist) * force;
             dy = (dy / dist) * force;
             a.vx -= dx; a.vy -= dy;
@@ -347,8 +347,8 @@ export default function ConceptGraph() {
           const dx = t.x - s.x;
           const dy = t.y - s.y;
           const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
-          const strength = (link.weight / MAX_WEIGHT) * 0.15 * alpha;
-          const target = 40 + (1 - link.weight / MAX_WEIGHT) * 80;
+          const strength = (link.weight / MAX_WEIGHT) * 0.12 * alpha;
+          const target = 80 + (1 - link.weight / MAX_WEIGHT) * 160;
           const f = (dist - target) * strength;
           const fx = (dx / dist) * f;
           const fy = (dy / dist) * f;
@@ -358,8 +358,8 @@ export default function ConceptGraph() {
 
         // Centering
         for (const node of nodes) {
-          node.vx += (w / 2 - node.x) * 0.005 * alpha;
-          node.vy += (h / 2 - node.y) * 0.005 * alpha;
+          node.vx += (w / 2 - node.x) * 0.003 * alpha;
+          node.vy += (h / 2 - node.y) * 0.003 * alpha;
         }
 
         // Apply velocity with damping
@@ -378,7 +378,7 @@ export default function ConceptGraph() {
       frameRef.current++;
       draw();
 
-      if (frame < 150) {
+      if (frame < 200) {
         raf = requestAnimationFrame(simulate);
       } else {
         animDone.current = true;
