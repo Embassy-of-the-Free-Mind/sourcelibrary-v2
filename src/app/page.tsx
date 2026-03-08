@@ -7,6 +7,7 @@ import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectio
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
+import SignUpCTA from '@/components/auth/SignUpCTA';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -534,6 +535,9 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Sign Up CTA — only shows for anonymous users */}
+        <SignUpCTA />
 
         {/* Search Section */}
         <section className="bg-gradient-to-b from-white to-[#f6f3ee] py-16 md:py-20">
