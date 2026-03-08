@@ -144,21 +144,25 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         },
         translations_found: {
           type: Type.ARRAY,
-          description: 'List of English translations found (empty if none). Include ALL translations found, even partial ones.',
+          description: 'List of English translations found IN YOUR TOOL SEARCH RESULTS (empty if none found via tools). ONLY include translations that appeared in results from search_local_catalogs, search_open_library, search_google_books, or search_ustc. Do NOT include translations from your own knowledge — only what the tools returned.',
           items: {
             type: Type.OBJECT,
             properties: {
-              english_title: { type: Type.STRING, description: 'Title of the English translation' },
-              translator: { type: Type.STRING, description: 'Translator name(s)' },
-              pub_year: { type: Type.STRING, description: 'Publication year' },
-              publisher: { type: Type.STRING, description: 'Publisher' },
+              english_title: { type: Type.STRING, description: 'Title of the English translation as it appeared in search results' },
+              translator: { type: Type.STRING, description: 'Translator name(s) from search results' },
+              pub_year: { type: Type.STRING, description: 'Publication year from search results' },
+              publisher: { type: Type.STRING, description: 'Publisher from search results' },
               completeness: {
                 type: Type.STRING,
                 description: 'Is this a complete or partial translation?',
                 enum: ['complete', 'partial', 'excerpts', 'unknown'],
               },
-              evidence_source: { type: Type.STRING, description: 'Where this was found (e.g., "unesco_master", "open_library", "google_books")' },
-              url: { type: Type.STRING, description: 'URL link to the catalog entry or book page (from the search results)' },
+              evidence_source: {
+                type: Type.STRING,
+                description: 'Which tool found this translation. MUST be one of: "local_catalogs", "open_library", "google_books", "ustc"',
+                enum: ['local_catalogs', 'open_library', 'google_books', 'ustc'],
+              },
+              url: { type: Type.STRING, description: 'URL from the search results (e.g., Open Library or Google Books link). Required when available.' },
             },
             required: ['english_title', 'completeness', 'evidence_source'],
           },
@@ -424,6 +428,14 @@ ${ocrSamples.map((s, i) => `Page ${i + 1}: ${s.slice(0, 500)}`).join('\n\n')}
 3. If no local matches (or matches are for different works), call \`search_open_library\` and/or \`search_google_books\` to check for translations not in our catalogs.
 4. You may optionally call \`search_ustc\` to verify the identity of the original work.
 5. After gathering evidence, call \`make_determination\` with your verdict. Do NOT do more than 3-4 searches — make your determination based on what you have found.
+
+## CRITICAL: Evidence Must Come From Tool Results
+
+When calling \`make_determination\`, the \`translations_found\` array must ONLY contain translations that appeared in your tool search results. Do NOT add translations from your own knowledge, training data, or general awareness. If you know a translation exists but it did not appear in any search results, mention it in your \`reasoning\` text instead — but do NOT add it to \`translations_found\`.
+
+This rule exists because we need verifiable evidence. Each entry in \`translations_found\` should be traceable back to a specific tool call result. Include the URL from the search results when available.
+
+If your tools found nothing but you believe a translation exists from your own knowledge, set disposition to \`needs_review\` with your reasoning explaining what you think exists but couldn't verify.
 
 ## CRITICAL: Source Text Matters
 
