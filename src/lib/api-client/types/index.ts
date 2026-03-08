@@ -18,7 +18,6 @@ export * from './detections';
 export * from './entities';
 export * from './experiments';
 export * from './gallery';
-export * from './highlights';
 export * from './import';
 export * from './jobs'; // Exports JobLog (primary definition)
 export * from './pages';

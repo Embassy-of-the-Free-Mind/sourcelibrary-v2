@@ -8,7 +8,6 @@ export type CronName =
   | 'sync-gallery-images'
   | 'archive-ocr'
   | 'submit-batch-ocr'
-  | 'submit-ocr'
   | 'social-post'
   | 'social-reset';
 
