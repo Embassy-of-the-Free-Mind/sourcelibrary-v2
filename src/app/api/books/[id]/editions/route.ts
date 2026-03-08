@@ -220,10 +220,11 @@ export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json();
-    const { edition_id, doi, doi_url } = body as {
+    const { edition_id, doi, doi_url, license } = body as {
       edition_id: string;
       doi?: string;
       doi_url?: string;
+      license?: string;
     };
 
     if (!edition_id) {
@@ -247,6 +248,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     // Update the edition
     if (doi) editions[editionIndex].doi = doi;
     if (doi_url) editions[editionIndex].doi_url = doi_url;
+    if (license) editions[editionIndex].license = license;
 
     await db.collection('books').updateOne(
       { id: bookId },

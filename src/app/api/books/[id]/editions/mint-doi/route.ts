@@ -86,8 +86,27 @@ export const POST = withAuth(async (request, session, context) => {
         : previousEdition?.zenodo_id ? parseInt(previousEdition.zenodo_id) : undefined;
     }
 
+    // Fetch scholarly EPUB for Zenodo upload
+    let epubBuffer: Buffer | undefined;
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+      const epubResp = await fetch(`${baseUrl}/api/books/${bookId}/download?format=epub-scholarly`);
+      if (epubResp.ok) {
+        epubBuffer = Buffer.from(await epubResp.arrayBuffer());
+        console.log(`Scholarly EPUB fetched: ${(epubBuffer.length / 1024 / 1024).toFixed(1)}MB`);
+      } else {
+        console.warn('Could not fetch scholarly EPUB, uploading text only:', epubResp.status);
+      }
+    } catch (e) {
+      console.warn('EPUB fetch failed, uploading text only:', e);
+    }
+
     // Mint DOI via Zenodo
-    const result = await mintDoi(book, edition, translationText, previousZenodoId);
+    const result = await mintDoi(book, edition, translationText, {
+      previousZenodoId,
+      epubBuffer,
+      epubFilename: `${(book as any).slug || book.id}-scholarly-v${edition.version}.epub`,
+    });
 
     // Update edition with DOI info
     editions[editionIndex] = {
