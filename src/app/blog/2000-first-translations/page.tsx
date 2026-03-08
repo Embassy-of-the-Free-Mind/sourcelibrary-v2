@@ -135,6 +135,86 @@ const GALLERY_IMAGES = [
   },
 ];
 
+// Source work dates — ideas that waited millennia for English translation
+const TIME_TRAVELERS = [
+  { title: 'Bible (Latin Vulgate)', composition: -1200, printed: 1726, gap: 2926, author: 'Various', lang: 'Latin', slug: 'biblia-sacra-vulgatae-editionis-sixti-v-pontificis-maximi-anonymous' },
+  { title: 'Armenian Bible', composition: -1200, printed: 1605, gap: 2805, author: 'Various', lang: 'Armenian', slug: 'armenian-bible-anonymous' },
+  { title: "Plato's Timaeus (Ficino)", composition: -360, printed: 1484, gap: 1844, author: 'Plato / Ficino', lang: 'Latin', slug: 'complete-works-of-plato-plato' },
+  { title: "Euclid's Elements", composition: -300, printed: 1482, gap: 1782, author: 'Euclid', lang: 'Latin', slug: 'elements-of-geometry-euclid' },
+  { title: 'Demotic Magical Papyrus', composition: -200, printed: 1629, gap: 1829, author: 'Anonymous', lang: 'Greek', slug: 'demotic-magical-papyrus-anonymous' },
+  { title: "Aristotle's De Anima", composition: -350, printed: 1496, gap: 1846, author: 'Aristotle', lang: 'Latin', slug: 'on-the-soul-aristotle' },
+  { title: 'Corpus Hermeticum', composition: 200, printed: 1471, gap: 1271, author: 'Hermes Trismegistus', lang: 'Latin', slug: 'pimander-hermes-trismegistus' },
+  { title: 'Plotinus Enneads', composition: 270, printed: 1492, gap: 1222, author: 'Plotinus / Ficino', lang: 'Latin', slug: 'complete-works-of-plotinus-plotinus' },
+  { title: 'Sepher Yetzirah', composition: 300, printed: 1552, gap: 1252, author: 'Anonymous', lang: 'Hebrew', slug: 'book-of-creation-anonymous' },
+  { title: 'Book of the Dead (Egyptian)', composition: -1500, printed: 1842, gap: 3342, author: 'Anonymous', lang: 'Egyptian', slug: '' },
+];
+
+const GAP_DISTRIBUTION = [
+  { label: 'Same era (<100 years)', count: 1207, color: '#8b9a7d' },
+  { label: '100–500 years', count: 169, color: '#c9a86c' },
+  { label: '500–1,000 years', count: 50, color: '#7c5db5' },
+  { label: '1,000–2,000 years', count: 155, color: '#9e4a3a' },
+  { label: '2,000+ years', count: 24, color: '#1a1612' },
+];
+
+// Top authors by book count (excluding Chinese compilations and anonymous)
+const TOP_AUTHORS = [
+  { name: 'Athanasius Kircher', n: 23, desc: 'Jesuit polymath — Egypt, music, magnetism, geology', color: '#9e4a3a' },
+  { name: 'Christiaan Huygens', n: 23, desc: 'Optics, astronomy, mechanics, probability', color: '#8b9a7d' },
+  { name: 'Roger Bacon', n: 17, desc: 'Franciscan friar — optics, alchemy, natural philosophy', color: '#7c5db5' },
+  { name: 'Karl von Eckartshausen', n: 17, desc: 'Bavarian mystic — magic, theosophy, inner light', color: '#c9a86c' },
+  { name: 'Pierre Gassendi', n: 14, desc: 'Epicurean revival — astronomy, atomism', color: '#8b9a7d' },
+  { name: 'Robert Fludd', n: 13, desc: 'Hermetic cosmology — macrocosm, microcosm, music', color: '#7c5db5' },
+  { name: 'Gustav Fechner', n: 12, desc: 'Psychophysics — consciousness, panpsychism', color: '#c9a86c' },
+  { name: 'Leonardo da Vinci', n: 9, desc: 'Notebooks — anatomy, mechanics, observation', color: '#9e4a3a' },
+  { name: 'Giambattista della Porta', n: 8, desc: 'Natural magic — optics, cryptography, botany', color: '#8b9a7d' },
+  { name: 'Aristotle', n: 8, desc: 'Commentaries & translations — 2,300 years of influence', color: '#7c5db5' },
+];
+const MAX_AUTHOR = 23;
+
+// Category co-occurrence — subjects that appear together
+const COOCCURRENCES = [
+  { a: 'Alchemy', b: 'Hermeticism', n: 211 },
+  { a: 'Philosophy', b: 'Theology', n: 165 },
+  { a: 'Mysticism', b: 'Theology', n: 164 },
+  { a: 'Hermeticism', b: 'Natural Philosophy', n: 162 },
+  { a: 'Alchemy', b: 'Natural Philosophy', n: 152 },
+  { a: 'Hermeticism', b: 'Philosophy', n: 139 },
+  { a: 'Alchemy', b: 'Philosophy', n: 134 },
+  { a: 'Hermeticism', b: 'Theology', n: 130 },
+  { a: 'Alchemy', b: 'Medicine', n: 128 },
+  { a: 'Hermeticism', b: 'Mysticism', n: 117 },
+];
+const MAX_COOC = 211;
+
+// Most read first translations
+const MOST_READ = [
+  { title: 'Introduction to Primitive Cabalistic Science', reads: 47, author: 'M.C. de Grinaud', year: 1868, slug: 'introduction-to-primitive-cabalistic-science-grinaud' },
+  { title: 'Two Treatises on the Nature of the Elements', reads: 46, author: 'Cornelius Drebbel', year: 1628, slug: 'two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel' },
+  { title: 'Key to the Secrets of Nature', reads: 43, author: 'Karl von Eckartshausen', year: 1804, slug: 'key-to-the-secrets-of-nature-eckartshausen' },
+  { title: 'Great Art of Light and Shadow', reads: 32, author: 'Athanasius Kircher', year: 1646, slug: 'great-art-of-light-and-shadow-kircher' },
+  { title: 'Lives of the Eminent Philosophers', reads: 27, author: 'Diogenes Laertius', year: 1692, slug: 'lives-of-eminent-philosophers-diogenes-laertius' },
+  { title: 'Universal Music-Making', reads: 25, author: 'Athanasius Kircher', year: 1650, slug: 'universal-music-making-kircher' },
+  { title: 'On the Mysteries', reads: 24, author: 'Marsilio Ficino', year: 1497, slug: 'on-the-mysteries-ficino' },
+  { title: 'Pimander (Corpus Hermeticum)', reads: 23, author: 'Hermes Trismegistus', year: 1471, slug: 'pimander-hermes-trismegistus' },
+];
+const MAX_READS = 47;
+
+// Source providers
+const PROVIDERS = [
+  { name: 'Internet Archive', n: 1252, color: '#9e4a3a' },
+  { name: 'Embassy of the Free Mind', n: 788, color: '#7c5db5' },
+  { name: 'Bibliothèque nationale de France', n: 91, color: '#c9a86c' },
+  { name: 'Bavarian State Library', n: 58, color: '#8b9a7d' },
+  { name: 'Vatican Library', n: 42, color: '#9e4a3a' },
+  { name: 'Cambridge University Library', n: 36, color: '#7c5db5' },
+  { name: 'Google Books', n: 29, color: '#c9a86c' },
+  { name: 'Bodleian Library (Oxford)', n: 18, color: '#8b9a7d' },
+  { name: 'Library of Congress', n: 13, color: '#9e4a3a' },
+  { name: 'Swiss e-rara', n: 9, color: '#7c5db5' },
+];
+const MAX_PROVIDER = 1252;
+
 const FEATURED_BOOKS = [
   {
     title: 'Two Treatises on the Nature of the Elements',
@@ -198,16 +278,16 @@ export default function TwoThousandFirstTranslations() {
       header={
         <ContentHeader title="2,000 Books Never Read in English" subtitle="Source Library">
           <p className="text-stone-400 text-sm mt-4">
-            March 2026 &middot; 8 min read
+            March 2026 &middot; 12 min read
           </p>
         </ContentHeader>
       }
       bg="bg-cream"
     >
-      <div className="max-w-4xl mx-auto px-4 pb-16">
+      <div className="max-w-5xl mx-auto px-4 pb-16">
         {/* Intro */}
-        <div className="prose prose-stone max-w-none text-base leading-relaxed">
-          <p className="text-lg leading-relaxed">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed">
+          <p className="text-xl leading-relaxed">
             Source Library has now produced the first English translations of over 2,000
             historical texts — works that have waited centuries for an audience beyond
             the small circle of scholars who could read them in their original languages.
@@ -235,10 +315,10 @@ export default function TwoThousandFirstTranslations() {
               key={s.label}
               className="bg-white border border-[#e8e4dc] rounded-lg p-5 text-center"
             >
-              <div className="text-3xl font-serif font-semibold text-[#1a1612]">
+              <div className="text-4xl font-serif font-semibold text-[#1a1612]">
                 {s.value}
               </div>
-              <div className="text-sm text-stone-500 mt-1">{s.label}</div>
+              <div className="text-base text-stone-500 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
@@ -247,7 +327,7 @@ export default function TwoThousandFirstTranslations() {
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-14 mb-3">
           The Shape of Hidden Knowledge
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-4">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-4">
           <p>
             What do 2,000 untranslated books talk about? We indexed every concept
             mentioned across 1,509 of these works and mapped how often they appear
@@ -274,7 +354,7 @@ export default function TwoThousandFirstTranslations() {
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           When Were They Written?
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
             The spike at 1600 is unmistakable. The turn of the 17th century was the
             golden age of esoteric publishing — Paracelsian medicine, Rosicrucian
@@ -348,11 +428,122 @@ export default function TwoThousandFirstTranslations() {
           ))}
         </div>
 
+        {/* Time Travelers — the WOW section */}
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+          Ideas That Waited Millennia
+        </h2>
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+          <p className="text-xl leading-relaxed">
+            Some of these books carry ideas far older than the books themselves.
+            A 1726 Latin Bible contains texts composed around 1200 BCE — a gap of
+            nearly <strong>3,000 years</strong> between the thought and the printed page.
+            Plato&apos;s <em>Timaeus</em>, written in 360 BCE, didn&apos;t reach print
+            until Ficino&apos;s Latin translation in 1484. These are not just old
+            books — they are vessels for ideas that have traveled across millennia,
+            and are now being read in English for the first time.
+          </p>
+        </div>
+
+        {/* Timeline visualization */}
+        <div className="bg-white border border-[#e8e4dc] rounded-lg p-6 sm:p-8 overflow-x-auto">
+          <div className="min-w-[700px]">
+            {/* Header row */}
+            <div className="flex items-center gap-2 mb-6 text-base text-stone-500">
+              <span className="w-[200px] shrink-0 text-right">Composed</span>
+              <div className="flex-1 text-center font-medium text-stone-400">Gap (years)</div>
+              <span className="w-[100px] shrink-0">Printed</span>
+            </div>
+            {TIME_TRAVELERS.filter(t => t.slug).map((t) => {
+              const maxGap = 3342;
+              const barWidth = (t.gap / maxGap) * 100;
+              return (
+                <div key={t.title} className="flex items-center gap-2 mb-3 group">
+                  <div className="w-[200px] shrink-0 text-right">
+                    <div className="text-base font-medium text-[#1a1612] leading-tight">{t.title}</div>
+                    <div className="text-sm text-stone-400">{t.composition < 0 ? `${Math.abs(t.composition)} BCE` : `${t.composition} CE`}</div>
+                  </div>
+                  <div className="flex-1 h-8 bg-[#f5f0e8] rounded relative">
+                    <div
+                      className="h-full rounded flex items-center justify-end pr-3"
+                      style={{
+                        width: `${barWidth}%`,
+                        background: t.gap > 2000
+                          ? 'linear-gradient(90deg, #9e4a3a 0%, #7c5db5 100%)'
+                          : t.gap > 1000
+                          ? 'linear-gradient(90deg, #c9a86c 0%, #9e4a3a 100%)'
+                          : '#8b9a7d',
+                        opacity: 0.85,
+                      }}
+                    >
+                      <span className="text-white text-sm font-semibold drop-shadow-sm whitespace-nowrap">
+                        {t.gap.toLocaleString()} years
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-[100px] shrink-0 text-base text-stone-500 tabular-nums">{t.printed}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Gap distribution */}
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3">
+          {GAP_DISTRIBUTION.map((g) => (
+            <div key={g.label} className="bg-white border border-[#e8e4dc] rounded-lg p-4 text-center">
+              <div className="text-2xl font-semibold" style={{ color: g.color }}>{g.count}</div>
+              <div className="text-sm text-stone-500 mt-1 leading-tight">{g.label}</div>
+            </div>
+          ))}
+        </div>
+        <p className="text-base text-stone-500 text-center mt-3">
+          Of 1,605 books with compositional dating, nearly 400 contain ideas composed
+          more than a century before they were printed.
+        </p>
+
+        {/* Top Authors */}
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+          Who Wrote Them?
+        </h2>
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+          <p>
+            The most-represented authors are polymaths who resisted disciplinary
+            boundaries. Athanasius Kircher alone published on Egypt, music, geology,
+            magnetism, optics, and China — all in Latin, all untranslated until now.
+            Huygens and Gassendi represent the mathematical-experimental tradition.
+            Roger Bacon bridges medieval alchemy and proto-science. Together they form
+            a portrait of curiosity unbounded by specialization.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {TOP_AUTHORS.map((a) => (
+            <div key={a.name} className="flex items-center gap-3">
+              <div className="w-48 text-right shrink-0">
+                <div className="text-base font-medium text-[#1a1612]">{a.name}</div>
+                <div className="text-xs text-stone-400 leading-tight">{a.desc}</div>
+              </div>
+              <div className="flex-1 h-9 bg-[#f5f0e8] rounded overflow-hidden">
+                <div
+                  className="h-full rounded flex items-center pl-3"
+                  style={{
+                    width: `${(a.n / MAX_AUTHOR) * 100}%`,
+                    backgroundColor: a.color,
+                    opacity: 0.8,
+                  }}
+                >
+                  <span className="text-white text-sm font-semibold drop-shadow-sm">{a.n} books</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* Languages */}
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           What Languages?
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
             Latin dominates — the lingua franca of European scholarship until the
             18th century. But the collection reaches far beyond Europe: 198 Chinese
@@ -388,7 +579,7 @@ export default function TwoThousandFirstTranslations() {
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           What Subjects?
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
             Categories overlap — a single book can be theology, alchemy, and
             natural philosophy simultaneously. That&apos;s the point. The modern
@@ -421,11 +612,149 @@ export default function TwoThousandFirstTranslations() {
           ))}
         </div>
 
+        {/* Cross-tradition connections */}
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+          Where Traditions Collide
+        </h2>
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+          <p>
+            The most striking pattern in the data is how often these supposedly
+            separate disciplines appear in the same book. Alchemy and Hermeticism
+            co-occur in 211 books — nearly half the alchemical corpus. Philosophy
+            and Theology appear together in 165 works. These aren&apos;t genre
+            labels — they&apos;re a map of how pre-modern thinkers actually organized
+            knowledge. The borders we draw between science, religion, and magic
+            simply didn&apos;t exist.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {COOCCURRENCES.map((c) => {
+            const barWidth = (c.n / MAX_COOC) * 100;
+            return (
+              <div key={`${c.a}-${c.b}`} className="flex items-center gap-3">
+                <div className="w-60 text-right shrink-0">
+                  <span className="text-base text-[#1a1612]">{c.a}</span>
+                  <span className="text-stone-400 mx-1.5">&amp;</span>
+                  <span className="text-base text-[#1a1612]">{c.b}</span>
+                </div>
+                <div className="flex-1 h-8 bg-[#f5f0e8] rounded overflow-hidden">
+                  <div
+                    className="h-full rounded"
+                    style={{
+                      width: `${barWidth}%`,
+                      background: 'linear-gradient(90deg, #9e4a3a, #7c5db5)',
+                      opacity: 0.75,
+                    }}
+                  />
+                </div>
+                <div className="w-12 text-base text-stone-500 tabular-nums">{c.n}</div>
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-base text-stone-500 text-center mt-3">
+          Number of books sharing both subject tags
+        </p>
+
+        {/* Most Read */}
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+          What Are People Reading?
+        </h2>
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+          <p>
+            Not academic citations — actual readers who found these books
+            and stayed. The Cabalistic Science introduction leads with 47 readers,
+            followed by Drebbel&apos;s treatise on alchemy and Eckartshausen&apos;s
+            mystical manual. The Corpus Hermeticum and Ficino&apos;s <em>On the
+            Mysteries</em> show that foundational Hermetic texts still command
+            attention after two millennia.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          {MOST_READ.map((book, i) => (
+            <Link
+              key={book.slug}
+              href={`https://sourcelibrary.org/book/${book.slug}`}
+              className="flex items-center gap-3 group hover:bg-[#f5f0e8] rounded-lg px-3 py-2 -mx-3 transition-colors"
+            >
+              <div className="w-8 text-2xl font-serif font-semibold text-stone-300 text-right shrink-0">
+                {i + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-base font-medium text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors truncate">
+                  {book.title}
+                </div>
+                <div className="text-sm text-stone-500">
+                  {book.author}, {book.year}
+                </div>
+              </div>
+              <div className="w-32 shrink-0">
+                <div className="h-6 bg-[#f5f0e8] rounded overflow-hidden">
+                  <div
+                    className="h-full rounded"
+                    style={{
+                      width: `${(book.reads / MAX_READS) * 100}%`,
+                      backgroundColor: '#9e4a3a',
+                      opacity: 0.7,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="w-10 text-base text-stone-500 tabular-nums text-right shrink-0">
+                {book.reads}
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Source Providers */}
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+          Where Do They Come From?
+        </h2>
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+          <p>
+            Every book traces back to a physical object in a real institution.
+            The Internet Archive&apos;s open access scanning project provides the
+            largest share, but the{' '}
+            <Link href="https://embassyofthefreemind.com" className="text-[#9e4a3a] hover:underline">
+              Embassy of the Free Mind
+            </Link>{' '}
+            in Amsterdam — a museum and library dedicated to the Western esoteric
+            tradition — is the single most important specialized source, contributing
+            788 books from their Bibliotheca Philosophica Hermetica. The Bibliothèque
+            nationale de France, Bavarian State Library, and Vatican Library round out
+            a truly global network of preservation.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {PROVIDERS.map((p) => (
+            <div key={p.name} className="flex items-center gap-3">
+              <div className="w-56 text-base text-stone-600 text-right shrink-0 leading-tight">
+                {p.name}
+              </div>
+              <div className="flex-1 h-9 bg-[#f5f0e8] rounded overflow-hidden">
+                <div
+                  className="h-full rounded"
+                  style={{
+                    width: `${(p.n / MAX_PROVIDER) * 100}%`,
+                    backgroundColor: p.color,
+                    opacity: 0.8,
+                  }}
+                />
+              </div>
+              <div className="w-14 text-base text-stone-500 tabular-nums">{p.n}</div>
+            </div>
+          ))}
+        </div>
+
         {/* Gallery */}
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           What Do They Look Like?
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
             These books are visual objects — hand-engraved illustrations, emblematic
             frontispieces, cosmological diagrams, alchemical symbols. Our AI image
@@ -466,7 +795,7 @@ export default function TwoThousandFirstTranslations() {
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           Start Reading
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
             These are fully translated and ready to read — first English translations
             of works that have shaped intellectual history but remained inaccessible
@@ -510,7 +839,7 @@ export default function TwoThousandFirstTranslations() {
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           How Long Are They?
         </h2>
-        <div className="prose prose-stone max-w-none text-base leading-relaxed mb-6">
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
             These aren&apos;t pamphlets. The median book is 220 pages, and 113 books
             exceed 1,000 pages — massive compendia like Fludd&apos;s 1,036-page
