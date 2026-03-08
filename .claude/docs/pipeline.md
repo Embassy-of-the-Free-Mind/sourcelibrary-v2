@@ -1,11 +1,11 @@
 # Processing Pipeline
 
-Single source of truth for the full processing pipeline — from import to complete. Last updated: March 8, 2026.
+Single source of truth for the full processing pipeline — from import to complete. Last updated: March 9, 2026.
 
 ## End-to-End Overview
 
 ```
-IMPORT → ARCHIVE → OCR → METADATA → TRANSLATE → ENRICH (summary+index) → CHAPTERS → IMAGES → COMPLETE
+IMPORT → ARCHIVE → OCR → METADATA → FT VERIFY → TRANSLATE → ENRICH (summary+index) → CHAPTERS → IMAGES → COMPLETE
 ```
 
 Every step is independent and idempotent. Books can enter at any stage and be re-processed safely. Two crons orchestrate the auto pipeline; each step can also be triggered manually.
@@ -16,6 +16,7 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 | Archive | Hetzner script + cron check | Free (bandwidth) | Minutes-hours | Yes |
 | OCR | Lambda workers (SQS) or Gemini Batch API | ~$0.10-0.50 | Minutes-hours | Yes |
 | Metadata enrich | Gemini realtime (text analysis) | ~$0.005 | Seconds | Yes |
+| FT verify | Gemini realtime (LLM knowledge check) | ~$0.0003 | Seconds | Yes |
 | Translate | Lambda workers (SQS FIFO) | ~$0.10-0.50 | Minutes-hours | Yes |
 | Enrich | Gemini realtime (summary + index) | ~$0.05-0.15 | Seconds | Yes |
 | Chapters | Gemini realtime | ~$0.02 | Seconds | Yes |
@@ -36,8 +37,8 @@ Each book has a `pipeline_auto` object tracking its state.
 
 ```
 queued → archiving → archive_complete → ocr_submitted → ocr_complete
-  → metadata_enriched → translate_submitted → translate_complete → enriching → enriched
-  → chapters → chapters_complete → images_submitted → images_complete → complete
+  → metadata_enriched → ft_verifying → ft_verified → translate_submitted → translate_complete
+  → enriching → enriched → chapters → chapters_complete → images_submitted → images_complete → complete
 ```
 
 Any state can transition to `failed` on persistent errors (after 3 retries). Special states: `empty_shell` (0-page failed imports), `needs_attention` (requires manual intervention), `paused` (manually halted).
@@ -50,6 +51,8 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | `ocr_submitted` | Lambda OCR jobs enqueued (or Batch API submitted) | Pipeline cron Phase 2 |
 | `ocr_complete` | OCR finished, results saved | Pipeline cron Phase 3 + process-batches cron |
 | `metadata_enriched` | AI metadata enrichment complete (language, categories, description, source_work_dates) | Pipeline cron Phase 3.5 |
+| `ft_verifying` | First-translation verification in progress (LLM knowledge check) | Pipeline cron Phase 3.7 |
+| `ft_verified` | First-translation verification complete (or skipped for English books) | Pipeline cron Phase 3.7 |
 | `translate_submitted` | Lambda translation jobs enqueued | Pipeline cron Phase 4 |
 | `translate_complete` | Translation finished | Pipeline cron Phase 5 |
 | `enriching` | Summary + index generation in progress | enrich-books cron Phase 1 |
@@ -68,25 +71,26 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 - Each phase retries up to 3 times before marking `failed`
 - Enrichment and chapter extraction are **non-critical**: on persistent failure, the book skips ahead (won't block the rest of the pipeline)
 - Failed books can be re-enrolled: `POST /api/admin/enroll-pipeline { reEnrollFailed: true }`
-- Staleness detector rolls back books stuck in `*_submitted`/`enriching`/`chapters` states after 48h
+- Staleness detector rolls back books stuck in `*_submitted`/`ft_verifying`/`enriching`/`chapters` states after 48h
 
 ### Backpressure Limits
 
 | Resource | Limit | Constant |
 |----------|-------|----------|
-| Lambda OCR jobs | 50 active | `MAX_ACTIVE_LAMBDA_OCR` |
+| Lambda OCR jobs | 20 active | `MAX_ACTIVE_LAMBDA_OCR` |
 | Lambda translation jobs | 100 active | `MAX_ACTIVE_LAMBDA_TRANSLATE` |
 | Gemini Batch OCR jobs | 200 active | `MAX_ACTIVE_BATCH_OCR` |
-| Image extraction jobs | 10 active | `MAX_ACTIVE_IMAGE_JOBS` |
+| Image extraction jobs | 50 active | `MAX_ACTIVE_IMAGE_JOBS` |
 | OCR books per run | 20 | `OCR_SUBMIT_LIMIT` |
 | Translation books per run | 50 | `TRANSLATE_SUBMIT_LIMIT` |
 | Metadata enrichment per run | 20 | `METADATA_ENRICH_LIMIT` |
+| FT verification per run | 10 | `FT_VERIFY_LIMIT` |
 | Enrichment per run | 30 | `ENRICH_LIMIT` (enrich-books cron) |
 | Chapter extraction per run | 20 | `CHAPTER_LIMIT` (enrich-books cron) |
 | Transliteration books per run | 10 | `TRANSLIT_LIMIT` (enrich-books cron) |
 | Transliteration pages per run | 200 | `TRANSLIT_PAGES_PER_RUN` (enrich-books cron) |
 | Transliteration concurrency | 10 | `TRANSLIT_CONCURRENCY` (enrich-books cron) |
-| Image extraction per run | 5 | `IMAGE_SUBMIT_LIMIT` |
+| Image extraction per run | 20 | `IMAGE_SUBMIT_LIMIT` |
 | Finalization per run | 50 | `FINALIZE_LIMIT` |
 | Auto-enroll per run | 50 | `ENROLL_LIMIT` |
 | Lambda OCR fallback per run | 10 | `LAMBDA_FALLBACK_LIMIT` |
@@ -153,12 +157,13 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 | 1 | Finalize | `images_complete` → `complete` | Validates OCR coverage (>10%), syncs to GitHub. Blocked by `imagesPaused`. |
 | 2 | Image submission | `chapters_complete` → `images_submitted` | Creates Lambda jobs. Blocked by `imagesPaused`. |
 | 3 | Image completion | `images_submitted` → `images_complete` | Checks jobs collection. |
-| 4 | Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
+| 4 | Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `ft_verifying`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
 | 5 | Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >24h. |
 
 **Staleness rollback map:**
 - `ocr_submitted` → `archive_complete`
-- `translate_submitted` → `metadata_enriched`
+- `ft_verifying` → `metadata_enriched`
+- `translate_submitted` → `ft_verified`
 - `images_submitted` → `chapters_complete`
 - `enriching` → `translate_complete`
 - `chapters` → `enriched`
@@ -169,10 +174,11 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 |-------|-------|-----------|-------|
 | 6 | Phase 0: Auto-enroll | new → `queued` | Books imported within 7 days without `pipeline_auto`. |
 | 7 | Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner does archiving. 24h timeout. Fixes stale thumbnails. |
-| 8 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Primary: Lambda workers. Fallback: Batch API. See "OCR Routing" below. |
+| 8 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Lambda workers (Batch API available but not default). See "OCR Routing" below. |
 | 9 | Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks both Lambda jobs and batch_jobs. Loops if un-OCR'd pages remain (up to MAX_RETRIES). Blocked by `ocrPaused`. |
 | 10 | Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls `enrichBookMetadata()`. Detects language, categories, year, description, display_title, source_work_dates. Non-blocking: failures skip ahead. |
-| 11 | Phase 4: Submit translation | `metadata_enriched` → `translate_submitted` | Lambda FIFO queue only. See "Translation Routing" below. |
+| 10.5 | Phase 3.7: FT verification | `metadata_enriched` → `ft_verifying` → `ft_verified` | Calls `verifyFirstTranslation()` for non-English books. English/already-verified books skip straight to `ft_verified`. Non-blocking: failures skip ahead after 3 retries. |
+| 11 | Phase 4: Submit translation | `ft_verified` → `translate_submitted` | Lambda FIFO queue only. See "Translation Routing" below. |
 | 12 | Phase 5: Translation completion | `translate_submitted` → `translate_complete` | Checks Lambda jobs. Loop limit: `max(6, ceil(pages_count/200))`. Blocked by `translatePaused`. |
 
 ### Safety Mechanisms

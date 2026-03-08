@@ -131,11 +131,11 @@ Planned but not yet implemented in the backfill pipeline. Would use Google Searc
 
 Stage 1 runs automatically as part of the post-import pipeline cron (Phase 3.5, `metadata_enriched` state). The `enrichBookMetadata()` function handles it — no separate step needed.
 
-Stage 2 is currently a standalone backfill script. Future work (GitHub issue #126, Phase 3) will integrate it into the pipeline.
+Stage 2 runs automatically as Phase 3.7 of the pipeline cron. After metadata enrichment, non-English books go through `verifyFirstTranslation()` before proceeding to translation. English books and already-verified books skip straight through. Non-blocking: failures skip ahead after 3 retries.
 
 **Pipeline flow:**
 ```
-... → ocr_complete → metadata_enriched (Stage 1 runs here) → translate_submitted → ...
+... → ocr_complete → metadata_enriched (Stage 1 runs here) → ft_verifying → ft_verified (Stage 2 runs here) → translate_submitted → ...
 ```
 
 ---
