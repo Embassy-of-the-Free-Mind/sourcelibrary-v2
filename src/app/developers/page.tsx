@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 7 research tools, CLI + MCP server, no API key needed.',
+  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 8 research tools, CLI + MCP server, no API key needed.',
   alternates: {
     canonical: '/developers',
   },
@@ -25,6 +25,7 @@ const tools = [
     items: [
       { name: 'get_book', desc: 'Detailed book metadata: summary, index stats, chapters, edition info, DOI.' },
       { name: 'get_book_text', desc: 'Read a book. Returns 50+ pages of text in one call, each with a citation URL. OCR, translation, or both.' },
+      { name: 'get_quote', desc: 'Get exact text of a single page for quoting. Returns translation, OCR, and citation. Always use before putting text in quotation marks.' },
     ],
   },
   {
@@ -64,7 +65,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Search, read, and cite 1,200+ rare historical texts. CLI + MCP server, 7 research tools, no API key needed."
+          subtitle="Search, read, and cite 1,200+ rare historical texts. CLI + MCP server, 8 research tools, no API key needed."
         />
       }
     >
@@ -77,7 +78,7 @@ export default function DevelopersPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-semibold text-primary">MCP Server</h2>
-          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v4.0</span>
+          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">v4.1</span>
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
@@ -141,7 +142,7 @@ export default function DevelopersPage() {
         </div>
 
         {/* Tools grid */}
-        <h3 className="text-lg font-semibold text-primary mb-4">7 Tools</h3>
+        <h3 className="text-lg font-semibold text-primary mb-4">8 Tools</h3>
         <div className="space-y-6 mb-10">
           {tools.map((group) => (
             <div key={group.category}>
@@ -182,7 +183,7 @@ export default function DevelopersPage() {
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
-          Same 7 tools as the MCP server, but as a standalone CLI with human-friendly colored output.
+          Same 8 tools as the MCP server, but as a standalone CLI with human-friendly colored output.
           Pipe with <code className="text-accent-rust">--json</code> for scripts.
         </p>
 
@@ -217,7 +218,10 @@ source-library search "Paracelsus" --language=German
 source-library translations "harmony of the spheres"
 
 # Read a book
-source-library text 694f49d3... --from=1 --to=50
+source-library text fludd-utriusque --from=1 --to=50
+
+# Get exact text for quoting
+source-library quote fludd-utriusque 57
 
 # Browse the gallery
 source-library images --subject=alchemy --type=emblem
@@ -353,6 +357,15 @@ source-library search "alchemy" --json | jq .results`}
                   <code className="text-primary">/books/:id/search</code>
                 </div>
                 <p className="text-secondary text-sm mt-1">Search within a specific book&apos;s pages</p>
+              </div>
+            </div>
+            <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+              <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                  <code className="text-primary">/books/:id/quote</code>
+                </div>
+                <p className="text-secondary text-sm mt-1">Single-page text for verbatim quoting with citation</p>
               </div>
             </div>
             <div className="bg-white rounded-xl border border-border-light overflow-hidden">
