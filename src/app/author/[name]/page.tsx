@@ -47,6 +47,21 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
     {
       $addFields: {
         pages_count: { $size: '$pages_array' },
+        pages_with_ocr: {
+          $size: {
+            $filter: {
+              input: '$pages_array',
+              as: 'page',
+              cond: {
+                $and: [
+                  { $ne: ['$$page.ocr', null] },
+                  { $ne: ['$$page.ocr.data', null] },
+                  { $gt: [{ $strLenCP: { $ifNull: ['$$page.ocr.data', ''] } }, 50] }
+                ]
+              }
+            }
+          }
+        },
         pages_translated: {
           $size: {
             $filter: {
@@ -68,8 +83,13 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
       $addFields: {
         translation_percent: {
           $cond: {
-            if: { $gt: ['$pages_count', 0] },
-            then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+            if: { $gt: ['$pages_with_ocr', 0] },
+            then: {
+              $min: [
+                100,
+                { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_with_ocr'] }, 100] }] }
+              ]
+            },
             else: 0
           }
         }
