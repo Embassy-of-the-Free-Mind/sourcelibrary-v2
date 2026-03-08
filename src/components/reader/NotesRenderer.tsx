@@ -141,6 +141,19 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
     return '';
   });
 
+  // Extract free-text vocabulary sections (AI sometimes generates these at the end of translations)
+  // Pattern: "**Vocabulary used in this passage:**" or "**Key terms:**" followed by term definitions
+  // Strip the heading and extract terms to metadata panel
+  result = result.replace(/\n*\*{0,2}(?:Vocabulary(?:\s+used)?(?:\s+in\s+this\s+passage)?|Key\s+(?:vocabulary|terms|words))(?:\s+(?:used\s+)?(?:in|on|from)\s+this\s+page)?:?\*{0,2}\s*\n([\s\S]*?)(?=\n<summary>|\n<keywords>|\n<image-desc>|$)/gi, (_, content) => {
+    // Extract term names from <term>word</term> tags in the vocabulary list
+    const termMatches = content.match(/<term>(.*?)<\/term>/gi);
+    if (termMatches) {
+      const terms = termMatches.map((m: string) => m.replace(/<\/?term>/gi, '').trim()).filter(Boolean);
+      metadata.vocabulary.push(...terms);
+    }
+    return '';
+  });
+
   // Extract headers (running headers) - hidden from display
   result = result.replace(/<header>([\s\S]*?)<\/header>/gi, () => '');
 
