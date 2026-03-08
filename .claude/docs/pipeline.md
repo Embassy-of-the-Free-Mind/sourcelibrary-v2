@@ -316,6 +316,80 @@ Image extraction was implemented incrementally across multiple sessions. Key ref
 
 ---
 
+## Post-Processing Side Effects
+
+Several automated features run as side effects during the main pipeline, writing additional data that enriches the book but doesn't gate pipeline progress. All are non-blocking — failures are silently caught.
+
+### Quality Scoring
+
+**Module:** `src/lib/quality-scoring.ts` → `scoreBookQuality(db, bookId)`
+**Trigger:** enrich-books cron Phase 1 (after summary + index generation)
+**Manual:** `POST /api/books/{id}/quality-score`
+
+Rates each book on a 0–100 scale combining AI assessment and mechanical bonuses.
+
+**AI dimensions** (0–25 each, via Gemini):
+- Historical significance
+- Visual appeal
+- Accessibility
+- Scholarly value
+
+**Mechanical adjustments:**
+- Completeness bonus (+0–8): based on OCR/translation coverage
+- Incomplete penalty (−5 to 0): for very low OCR coverage
+- Engagement bonus (+0–5): based on `read_count`
+- Gallery bonus (+0–5): based on number of gallery images
+- Edition/DOI bonus (+0–2): if a scholarly edition or DOI exists
+
+**Database writes:** `book.quality_score` (number), `book.quality_assessment` (full breakdown with AI reasoning)
+
+### Entity/Encyclopedia Sync
+
+**Module:** `src/app/api/books/[id]/index/route.ts` → `syncBookEntities()`
+**Trigger:** Non-blocking, runs at the end of index generation (`GET /api/books/{id}/index`)
+
+Syncs people, places, and concepts from a book's index to the cross-book `entities` collection, enabling the encyclopedia at `/encyclopedia`.
+
+- Resolves variant names to canonical forms via `entity_aliases` collection (e.g., "St. Augustine" → "Saint Augustine")
+- Upserts entities with `$addToSet` for books and aliases
+- Updates aggregate counts: `book_count`, `total_mentions`
+- Entity types: `person`, `place`, `concept`
+
+**Database writes:** `entities` collection (upserts per entity)
+
+### GitHub Text Sync
+
+**Module:** `src/lib/git-sync.ts` → `syncBookToGitHub(bookId)`
+**Trigger:** Pipeline cron Phase 9 (finalization), after book marked `complete`
+**Manual:** `POST /api/books/{id}/sync-git`
+**Target repo:** `JDerekLomas/source-library-texts`
+
+Creates version-controlled plaintext exports of every completed book on GitHub. Idempotent via blob SHA comparison — skips if content unchanged.
+
+**Files per book:**
+- `books/{bookId}/metadata.json` — title, author, language, year, page counts, processing info, content hashes
+- `books/{bookId}/ocr.txt` — all OCR text with `--- Page N ---` separators
+- `books/{bookId}/translation.txt` — all translation text with page separators
+
+**Commit message:** `sync: {display_title} ({language}, {pages_ocr} OCR, {pages_translated} translated)`
+
+Uses GitHub REST API for commits (no git binary required). Requires `GITHUB_TOKEN` env var.
+
+### Translation Metadata Extraction
+
+**Module:** `src/lib/translation-metadata.ts` → `extractTranslationMetadata(translationText)`
+**Trigger:** All 4 translation save paths (Lambda worker, realtime route, batch cron, contributor route)
+
+Parses `<summary>` and `<keywords>` XML tags from translation output (appended by the translation prompt).
+
+**Database writes:**
+- `page.translation_summary` — 1-2 sentence summary of page content
+- `page.translation_keywords` — array of extracted keywords (split on comma/semicolon/dash)
+
+**Known issue:** These fields are written but **never read** by any UI, search, or API route. The data exists on pages but is currently unused. Potential future use: page-level search faceting, automatic TOC generation, or book-level keyword clouds.
+
+---
+
 ## Prompt Selection
 
 ### OCR Prompts
@@ -448,7 +522,7 @@ A fully processed book has all of these:
 
 Before marking a book `complete`, the pipeline checks:
 - OCR coverage >10% (pages with `ocr.data` / total pages)
-- Syncs book to GitHub (non-blocking)
+- Syncs book to GitHub via `syncBookToGitHub()` (non-blocking, see "Post-Processing Side Effects")
 
 ### Cached Fields (derived, refreshed by cron)
 
@@ -469,6 +543,10 @@ Before marking a book `complete`, the pipeline checks:
 | `source_work_dates` | Compositional timeline layers (set by Phase 3.5 metadata enrichment) |
 | `source_work_dates_meta` | Enrichment metadata (model, confidence, reasoning) |
 | `pages[].transliteration.data` | Romanized text for non-Latin script pages (Greek, Hebrew, Arabic, etc.) |
+| `quality_score` | AI + mechanical quality rating (0–100), set after enrichment |
+| `quality_assessment` | Full scoring breakdown with AI reasoning |
+| `pages[].translation_summary` | Per-page summary extracted from translation output (currently unused by UI) |
+| `pages[].translation_keywords` | Per-page keywords extracted from translation output (currently unused by UI) |
 
 ---
 
@@ -597,6 +675,8 @@ Based on `gemini-3-flash-preview` pricing ($0.50/1M input, $3.00/1M output):
 | Prompt versions | `prompts` | name, type, version, is_default, text |
 | Cron execution | `cron_runs` | cron, duration_ms, status, actions, decisions, errors |
 | Pipeline snapshots | `pipeline_snapshots` | timestamp, funnel counts, page totals |
+| Entity sync | `entities` | name, type, books[], aliases, book_count, total_mentions |
+| GitHub text sync | `source-library-texts` repo | metadata.json, ocr.txt, translation.txt per book |
 
 ### Page Revisions (CRITICAL)
 
