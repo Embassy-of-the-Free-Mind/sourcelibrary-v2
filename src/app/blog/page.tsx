@@ -27,7 +27,7 @@ const posts: BlogPost[] = [
   {
     slug: 'progress-studies',
     title: 'The Missing Library: What Progress Studies Can\'t Read',
-    subtitle: 'Progress studies asks why innovation happens — but the primary sources from before 1750 have never been in English. 5,000 books contain the pre-industrial origins of experimental science, hidden inside alchemy, natural magic, and mystical philosophy.',
+    subtitle: 'Progress studies asks why innovation happens — but most primary sources from before 1750 have never been in English. 5,000 books contain the pre-industrial origins of experimental science, hidden inside alchemy, natural magic, and mystical philosophy.',
     date: '8 March 2026',
     readTime: '15 min read',
     tag: 'Deep dive',

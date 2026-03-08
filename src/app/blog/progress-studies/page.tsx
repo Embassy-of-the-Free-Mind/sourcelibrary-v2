@@ -6,10 +6,10 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'The Missing Library: What Progress Studies Can\'t Read - Source Library',
   description:
-    'Progress studies asks why innovation happens — but the primary sources from before 1750 have never been in English. 5,000 books in Latin, German, Arabic, and Hebrew contain the pre-industrial origins of experimental science, and AI just made them readable.',
+    'Progress studies asks why innovation happens — but most primary sources from before 1750 have never been in English. 5,000 books in Latin, German, Arabic, and Hebrew contain the pre-industrial origins of experimental science, and AI just made them readable.',
   openGraph: {
     title: 'The Missing Library: What Progress Studies Can\'t Read',
-    description: 'The primary sources for pre-industrial innovation have never been in English. 5,000 untranslated books contain steam engines, laboratory equipment, and experimental science — hidden inside alchemy, natural magic, and mystical philosophy.',
+    description: 'Most primary sources for pre-industrial innovation have never been in English. 5,000 books — largely untranslated — contain steam engines, laboratory equipment, and experimental science hidden inside alchemy, natural magic, and mystical philosophy.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
   },
   alternates: {
@@ -23,7 +23,7 @@ export default function ProgressStudiesPage() {
       header={
         <ContentHeader
           title="The Missing Library"
-          subtitle="What progress studies can&rsquo;t read &mdash; and why 5,000 untranslated books matter for understanding how innovation begins"
+          subtitle="What progress studies hasn&rsquo;t read &mdash; and why 5,000 largely untranslated books matter for understanding how innovation begins"
         >
           <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 15 min read</p>
         </ContentHeader>
@@ -71,22 +71,25 @@ export default function ProgressStudiesPage() {
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
           The research program has been productive. But it has a blind spot &mdash; not in its
-          methods or its framing, but in its source material. Progress studies cannot read the
-          primary sources from before 1750.
+          methods or its framing, but in its source material. Most of the primary sources from
+          before 1750 have never been translated into English, and progress studies has largely
+          built its account of early innovation without them.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          This is not a metaphor. The texts exist. There are thousands of them &mdash; in Latin,
+          The texts exist. There are thousands of them &mdash; in Latin,
           German, Arabic, Hebrew, Greek, Dutch, Italian &mdash; sitting in digital library
-          collections, fully scanned, and almost entirely untranslated into English. They contain
-          the pre-industrial origins of experimental science, laboratory engineering, mechanical
-          invention, and systematic investigation of nature. They are the evidence base for
-          understanding how innovation worked before the categories of &ldquo;science&rdquo;
-          and &ldquo;engineering&rdquo; existed.
+          collections, fully scanned. A handful of the most famous have English translations:
+          Agricola&rsquo;s <em>De re metallica</em>, parts of the Hermetic corpus, some
+          of Paracelsus. But the vast majority &mdash; thousands of books on natural philosophy,
+          alchemy, mechanics, and experimental method &mdash; have never been translated. They
+          are the evidence base for understanding how innovation worked before the categories
+          of &ldquo;science&rdquo; and &ldquo;engineering&rdquo; existed.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          Nobody has been able to read them at scale &mdash; until now.
+          Nobody has been able to read them at scale &mdash; a few famous
+          texts translated per decade, while thousands sat unread &mdash; until now.
         </p>
 
         <hr className="border-border-light my-12" />
@@ -107,20 +110,22 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The deeper you go in time, the thinner the evidence base becomes. Not because the
-            texts don&rsquo;t exist, but because anglophone scholars can&rsquo;t access them.
+            The deeper you go in time, the thinner the accessible evidence base becomes. Not
+            because the texts don&rsquo;t exist, but because most have never been translated.
             A Latin alchemical treatise from 1572 that describes the invention of the water
             bath. A German manuscript from 1430 that catalogs siege engines, firearms, and
             diving equipment. An Arabic commentary on Aristotle&rsquo;s <em>Meteorology</em>
-            that laid the groundwork for early modern chemistry. A Hermetic text that describes
-            how to build automatic temple doors using steam pressure.
+            that laid the groundwork for early modern chemistry. Hero of Alexandria&rsquo;s
+            descriptions of automatic temple doors using steam pressure, bound alongside
+            mystical philosophy.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             These are not obscure marginalia. They are central texts in the history of
-            technology and experimental method. But they have never been translated into English.
-            A field that studies how progress happens has been unable to read the primary
-            sources from the period when its preconditions were being assembled.
+            technology and experimental method. A few of the most famous have been translated
+            &mdash; but for every Agricola or Paracelsus that made it into English, there are
+            hundreds of treatises that didn&rsquo;t. A field that studies how progress happens
+            has built its pre-1750 account from a thin sample of the available sources.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -148,15 +153,22 @@ export default function ProgressStudiesPage() {
             and twelve other digital library collections, spanning the 2nd to 19th centuries.
             Most are in Latin, German, Dutch, French, Italian, Arabic, and Hebrew.
             Nearly two million pages have been digitized, and over 700,000 have been translated
-            into English &mdash; 1,873 of them for the first time in history.
+            into English. Of the 5,000 books, 1,873 are{' '}
+            <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
+              first-ever English translations</Link>{' '}
+            &mdash; texts that had no prior English version.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The collection was assembled for the study of Western esotericism &mdash; alchemy,
             Hermeticism, Kabbalah, astrology, natural magic. But when you actually read these
             texts, the boundary between &ldquo;esotericism&rdquo; and &ldquo;proto-science&rdquo;
-            dissolves. The same books that describe the philosopher&rsquo;s stone also describe
-            how to build furnaces. The same author who writes about divine illumination also
+            dissolves. The same books that describe the{' '}
+            <Link href="/book/theatrum-chemicum-volumen-primum-ed?page=14" className="text-accent-rust hover:underline">
+              philosopher&rsquo;s stone</Link>{' '}
+            also describe how to{' '}
+            <Link href="/book/theatrum-chemicum-volumen-primum-ed?page=213" className="text-accent-rust hover:underline">
+              build furnaces</Link>. The same author who writes about divine illumination also
             gives specifications for a kite. The same manuscript that contains Hermes
             Trismegistus also contains Hero of Alexandria&rsquo;s steam engines.
           </p>
@@ -310,7 +322,7 @@ export default function ProgressStudiesPage() {
             improves while the philosopher declines. Bacon was not inventing this observation.
             He was naming something that alchemists, instrument-makers, and natural
             philosophers had been doing for generations &mdash; in Latin, German, and Arabic
-            texts that no one in the progress studies community has been able to read.
+            texts that progress studies has mostly not engaged with.
           </p>
         </section>
 
@@ -436,8 +448,8 @@ export default function ProgressStudiesPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             If you want to understand why the Scientific Revolution happened, you need to read
-            what the scientific revolutionaries were reading. Most of it has never been in
-            English.
+            what the scientific revolutionaries were reading. Most of it has never been
+            available in English &mdash; until now.
           </p>
         </section>
 
