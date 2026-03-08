@@ -50,7 +50,10 @@ export default function ProgressStudiesPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          In October 2025, Joel Mokyr shared the Nobel Prize in Economics with Philippe Aghion
+          In October 2025, Joel Mokyr shared the{' '}
+          <a href="https://www.nobelprize.org/prizes/economic-sciences/2025/mokyr/facts/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+            Nobel Prize in Economics</a>{' '}
+          with Philippe Aghion
           and Peter Howitt for work on the &ldquo;prerequisites for sustained growth through
           technological progress.&rdquo; The committee cited Mokyr&rsquo;s insight that the
           Industrial Revolution depended not just on incentives or institutions, but on a culture
@@ -104,7 +107,9 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Anton Howes argued that innovation is driven by the spread of an &ldquo;improving
+            <a href="https://press.princeton.edu/books/hardcover/9780691222875/arts-and-minds" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Anton Howes</a>{' '}
+            argued that innovation is driven by the spread of an &ldquo;improving
             mentality&rdquo; &mdash; a learned cultural disposition, spreading person to person,
             characterized by &ldquo;a belief in the acceptability of contesting tradition&rdquo;
             and &ldquo;a vision of the benefits of progress.&rdquo; He traced it through British
@@ -115,7 +120,9 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Jason Crawford has been building the case for a{' '}
+            <a href="https://rootsofprogress.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Jason Crawford</a>{' '}
+            has been building the case for a{' '}
             <a href="https://rootsofprogress.org/techno-humanist-manifesto" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               &ldquo;techno-humanist&rdquo;</a>{' '}
             philosophy &mdash; the view that technological progress and human flourishing are
@@ -156,7 +163,10 @@ export default function ProgressStudiesPage() {
             <Link href="/book/theatrum-chemicum-volumen-primum-ed?page=213" className="text-accent-rust hover:underline">
               build furnaces</Link>. The same author who writes about divine illumination also
             gives specifications for a kite. The same manuscript that contains Hermes
-            Trismegistus also contains Hero of Alexandria&rsquo;s steam engines.
+            Trismegistus also contains{' '}
+            <Link href="/book/heronis-alexandrini-spiritalium-liber-commandino-1575-trans" className="text-accent-rust hover:underline">
+              Hero of Alexandria&rsquo;s</Link>{' '}
+            steam engines.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -186,7 +196,9 @@ export default function ProgressStudiesPage() {
           </h3>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Giambattista della Porta&rsquo;s <em>Magia Naturalis</em> (1589) promises
+            <Link href="/book/magia-naturalis-libri-xx-1607-porta" className="text-accent-rust hover:underline">
+              Giambattista della Porta&rsquo;s <em>Magia Naturalis</em></Link>{' '}
+            (1589) promises
             &ldquo;natural magic&rdquo; and delivers a pneumatics textbook. Book XIX is a
             systematic treatment of hydraulics and air-pressure devices, citing Hero by name.
             Book XX gives{' '}
@@ -260,10 +272,18 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            This is not a retrospective interpretation. The texts say so explicitly. Roger
-            Bacon (13th century) argued that &ldquo;experimental science&rdquo; was the
-            highest form of knowledge. Ramon Llull developed a combinatorial logic machine
-            in the 1270s. The Arabic alchemist J&#x101;bir ibn Hayy&#x101;n (8th century)
+            This is not a retrospective interpretation. The texts say so explicitly.{' '}
+            <Link href="/book/opus-majus-bacon" className="text-accent-rust hover:underline">
+              Roger Bacon</Link>{' '}
+            (13th century) argued that &ldquo;experimental science&rdquo; was the
+            highest form of knowledge.{' '}
+            <Link href="/book/llull-ars-magna-generalis-1517-vinheta" className="text-accent-rust hover:underline">
+              Ramon Llull</Link>{' '}
+            developed a combinatorial logic machine
+            in the 1270s. The Arabic alchemist{' '}
+            <Link href="/book/the-works-of-geber-1678-hayyan" className="text-accent-rust hover:underline">
+              J&#x101;bir ibn Hayy&#x101;n</Link>{' '}
+            (8th century)
             described a systematic program for understanding and manipulating the properties
             of matter. These figures had Howes&rsquo;s two characteristics &mdash; they
             contested tradition and they envisioned benefits from doing so &mdash; centuries
@@ -321,15 +341,19 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Isaac Newton spent more time on alchemy than on physics. His alchemical manuscripts
             &mdash; over a million words &mdash; were hidden for centuries, dismissed as an
-            embarrassment. They are now recognized by historians (William Newman, Lawrence
-            Principe) as central to his intellectual development. Newton&rsquo;s concept of
+            embarrassment. They are now recognized by historians (<a href="https://press.princeton.edu/books/hardcover/9780691174877/newton-the-alchemist" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">William Newman</a>,{' '}
+            <a href="https://krieger.jhu.edu/chemistry/directory/lawrence-m-principe/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">Lawrence
+            Principe</a>) as central to his intellectual development. Newton&rsquo;s concept of
             gravity as action at a distance &mdash; the idea that Leibniz mocked as &ldquo;occult
             qualities&rdquo; &mdash; drew on traditions of sympathetic action that were
             commonplace in alchemical and Hermetic texts.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Robert Boyle, whose <em>The Sceptical Chymist</em> (1661) is often treated as the
+            Robert Boyle, whose{' '}
+            <Link href="/book/the-sceptical-chymist-1661-first-edition-boyle" className="text-accent-rust hover:underline">
+              <em>The Sceptical Chymist</em></Link>{' '}
+            (1661) is often treated as the
             founding document of modern chemistry, was an active alchemist. His experimental
             method grew directly from alchemical practice. Boyle believed that laboratory
             experiments &ldquo;in search of a way to transform base metals into gold&hellip;
@@ -337,7 +361,10 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Johannes Kepler believed that planets were alive. His <em>Astronomia Nova</em> (1609)
+            Johannes Kepler believed that planets were alive. His{' '}
+            <Link href="/book/kepler-astronomia-nova-1609-prague-kepler" className="text-accent-rust hover:underline">
+              <em>Astronomia Nova</em></Link>{' '}
+            (1609)
             &mdash; in which he discovered that planetary orbits are elliptical, not circular
             &mdash; was driven by a conviction that the cosmos had a harmonic structure. He
             described gravity as a &ldquo;mutual material tendency between related bodies&rdquo;
@@ -377,27 +404,42 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Agostino Ramelli&rsquo;s <em>Le diverse et artificiose machine</em> (1588) is
+            Agostino Ramelli&rsquo;s{' '}
+            <Link href="/book/le-diverse-et-artificiose-machine-ramelli" className="text-accent-rust hover:underline">
+              <em>Le diverse et artificiose machine</em></Link>{' '}
+            (1588) is
             the most famous: 195 copperplate engravings of water-lifting devices, mills,
-            bridges, and military machines, each with detailed technical descriptions. Georgius
-            Agricola&rsquo;s <em>De re metallica</em> (1556) is a 600-page treatise on mining
-            and metallurgy &mdash; the most comprehensive technical manual of the 16th century.
-            Vannoccio Biringuccio&rsquo;s <em>De la pirotechnia</em> (1540) is the first
+            bridges, and military machines, each with detailed technical descriptions.{' '}
+            <Link href="/book/de-re-metallica-libri-xii-agricola" className="text-accent-rust hover:underline">
+              Georgius Agricola&rsquo;s <em>De re metallica</em></Link>{' '}
+            (1556) is a 600-page treatise on mining
+            and metallurgy &mdash; the most comprehensive technical manual of the 16th century.{' '}
+            <Link href="/book/la-pyrotechnie-ou-art-du-feu-biringuccio" className="text-accent-rust hover:underline">
+              Vannoccio Biringuccio&rsquo;s <em>De la pirotechnia</em></Link>{' '}
+            (1540) is the first
             systematic treatment of metallurgy, pyrotechnics, smelting, and gunpowder.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Konrad Kyeser&rsquo;s <em>Bellifortis</em> (c. 1430) &mdash; the most important
+            <Link href="/book/bellifortis-kyeser" className="text-accent-rust hover:underline">
+              Konrad Kyeser&rsquo;s <em>Bellifortis</em></Link>{' '}
+            (c. 1430) &mdash; the most important
             medieval military technology manuscript &mdash; catalogs siege engines, early
-            firearms, diving equipment, and incendiary devices. Niccol&ograve; Tartaglia&rsquo;s
-            <em>Nova scientia</em> (1537) founded the science of ballistics by applying
-            mathematics to projectile trajectories. Simon Stevin&rsquo;s <em>Geometrie</em>
+            firearms, diving equipment, and incendiary devices.{' '}
+            <Link href="/book/nova-scientia-tartaglia" className="text-accent-rust hover:underline">
+              Niccol&ograve; Tartaglia&rsquo;s <em>Nova scientia</em></Link>{' '}
+            (1537) founded the science of ballistics by applying
+            mathematics to projectile trajectories.{' '}
+            <Link href="/book/de-beghinselen-des-waterwichts-stevin" className="text-accent-rust hover:underline">
+              Simon Stevin</Link>&rsquo;s <em>Geometrie</em>
             (1586) introduced decimal fractions to Europe and laid the foundations of statics
             and hydrostatics.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Brian Potter&rsquo;s <em>The Origins of Efficiency</em> (2025) traces how modern
+            <a href="https://press.stripe.com/origins-of-efficiency" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Brian Potter&rsquo;s <em>The Origins of Efficiency</em></a>{' '}
+            (2025) traces how modern
             engineering emerged from accumulated craft knowledge. These machine theatres are the
             missing early chapters of that story. Some have partial English translations from
             the 19th or 20th century; many have never been fully translated. All are now
@@ -465,7 +507,10 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The parallel to Collison and Cowen&rsquo;s framework is direct. They argue that
+            The parallel to{' '}
+            <a href="https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594946/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Collison and Cowen&rsquo;s</a>{' '}
+            framework is direct. They argue that
             we need to understand the mechanisms of progress well enough to produce more of
             it. One mechanism &mdash; perhaps the oldest one &mdash; is making existing
             knowledge readable. The Toledo translators did it in the 12th century by moving
@@ -561,6 +606,18 @@ export default function ProgressStudiesPage() {
                 href: 'https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594946/',
                 title: 'We Need a New Science of Progress',
                 detail: 'Patrick Collison and Tyler Cowen, The Atlantic (2019)',
+                internal: false,
+              },
+              {
+                href: 'https://press.stripe.com/origins-of-efficiency',
+                title: 'The Origins of Efficiency',
+                detail: 'Brian Potter on how engineering emerged from craft knowledge (Stripe Press, 2025)',
+                internal: false,
+              },
+              {
+                href: 'https://press.princeton.edu/books/hardcover/9780691174877/newton-the-alchemist',
+                title: 'Newton the Alchemist',
+                detail: 'William Newman on Newton\'s alchemical manuscripts (Princeton UP)',
                 internal: false,
               },
               {
