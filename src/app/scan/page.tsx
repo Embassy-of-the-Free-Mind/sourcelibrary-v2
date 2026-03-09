@@ -2,9 +2,8 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { perspectiveCorrect, needsCorrection } from '@/lib/perspective-correct';
-import { generateThumbnail, processFiles, sortByTimestamp } from '@/lib/scan/image-utils';
+import { generateThumbnail, processFiles } from '@/lib/scan/image-utils';
 import type { ProcessedFile } from '@/lib/scan/image-utils';
-import ReviewGrid from '@/components/scan/ReviewGrid';
 
 type Step =
   | 'onboarding-1'
@@ -14,8 +13,6 @@ type Step =
   | 'analyzing'
   | 'confirm'
   | 'capture'
-  | 'review'
-  | 'adding-pages'
   | 'uploading'
   | 'done';
 
@@ -60,8 +57,8 @@ export default function ScanPage() {
   const [capturePreview, setCapturePreview] = useState<{ file: File; thumbnailUrl: string } | null>(null);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
-  const pageInputRef = useRef<HTMLInputElement>(null);
   const captureInputRef = useRef<HTMLInputElement>(null);
+  const rollInputRef = useRef<HTMLInputElement>(null);
   const thumbnailStripRef = useRef<HTMLDivElement>(null);
 
   // Warn before leaving with unuploaded files
@@ -212,8 +209,53 @@ export default function ScanPage() {
     }
   }, [metadata, titlePageFile, correctedBlob]);
 
-  // Step 3: Add photos from camera roll
-  const handleAddPhotos = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Capture: single page captured via camera
+  const handlePageCapture = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setError(null);
+    try {
+      const thumbnailUrl = await generateThumbnail(file, 400);
+      setCapturePreview({ file, thumbnailUrl });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to process photo');
+    }
+    if (captureInputRef.current) captureInputRef.current.value = '';
+  }, []);
+
+  // Keep the captured page
+  const handleKeepPage = useCallback(() => {
+    if (!capturePreview) return;
+    const newPage: ProcessedFile = {
+      id: crypto.randomUUID(),
+      file: capturePreview.file,
+      thumbnailUrl: capturePreview.thumbnailUrl,
+      timestamp: new Date(),
+      quality: { blurScore: 100, brightnessScore: 128 },
+    };
+    setPages(prev => [...prev, newPage]);
+    setCapturePreview(null);
+
+    // Scroll thumbnail strip to the end
+    setTimeout(() => {
+      thumbnailStripRef.current?.scrollTo({
+        left: thumbnailStripRef.current.scrollWidth,
+        behavior: 'smooth',
+      });
+    }, 50);
+  }, [capturePreview]);
+
+  // Retake — discard the preview
+  const handleRetakePage = useCallback(() => {
+    if (capturePreview) {
+      URL.revokeObjectURL(capturePreview.thumbnailUrl);
+      setCapturePreview(null);
+    }
+  }, [capturePreview]);
+
+  // Add multiple photos from camera roll
+  const handleAddFromRoll = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (!fileList || fileList.length === 0) return;
 
@@ -224,21 +266,14 @@ export default function ScanPage() {
     try {
       const newFiles = Array.from(fileList);
       const processed = await processFiles(newFiles);
-
-      setPages(prev => sortByTimestamp([...prev, ...processed]));
-      setStep('review');
+      setPages(prev => [...prev, ...processed]);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to process photos');
     } finally {
       setProcessing(false);
       setProcessingCount(0);
-      if (pageInputRef.current) pageInputRef.current.value = '';
+      if (rollInputRef.current) rollInputRef.current.value = '';
     }
-  }, []);
-
-  // Reorder pages
-  const handleReorder = useCallback((reordered: ProcessedFile[]) => {
-    setPages(reordered);
   }, []);
 
   // Delete a page
@@ -250,7 +285,7 @@ export default function ScanPage() {
     });
   }, []);
 
-  // Step 5: Upload all pages
+  // Upload all pages
   const handleUploadAll = useCallback(async () => {
     if (!bookId || pages.length === 0) return;
 
@@ -295,6 +330,7 @@ export default function ScanPage() {
   const handleReset = useCallback(() => {
     pages.forEach(p => URL.revokeObjectURL(p.thumbnailUrl));
     if (correctedPreview) URL.revokeObjectURL(correctedPreview);
+    if (capturePreview) URL.revokeObjectURL(capturePreview.thumbnailUrl);
 
     setStep('onboarding-1');
     setTitlePageFile(null);
@@ -304,12 +340,11 @@ export default function ScanPage() {
     setBookId(null);
     setBookSlug(null);
     setPages([]);
+    setCapturePreview(null);
     setUploadProgress({ done: 0, total: 0 });
     setError(null);
     if (titleInputRef.current) titleInputRef.current.value = '';
-  }, [pages, correctedPreview]);
-
-  const totalPageCount = pages.length + (titlePageFile ? 1 : 0);
+  }, [pages, correctedPreview, capturePreview]);
 
   return (
     <div className="min-h-[100dvh] bg-cream flex flex-col">
@@ -365,13 +400,13 @@ export default function ScanPage() {
                       />
                       <StepPreview
                         number="2"
-                        title="Photograph each page"
-                        description="Use your camera app, then select all photos at once"
+                        title="Capture each page"
+                        description="Take one photo at a time, review as you go"
                       />
                       <StepPreview
                         number="3"
-                        title="Review and upload"
-                        description="Check order, remove bad shots, then upload"
+                        title="Upload"
+                        description="Send all pages to Source Library for OCR and translation"
                       />
                     </div>
                   </div>
@@ -628,51 +663,88 @@ export default function ScanPage() {
             </div>
           )}
 
-          {/* Step 3: Add remaining pages */}
-          {(step === 'adding-pages' || (step === 'review' && !processing)) && (
-            <div className="space-y-6">
+          {/* Step 3: Sequential page capture */}
+          {step === 'capture' && (
+            <div className="space-y-5">
+              {/* Book title */}
               <div className="text-center">
                 <h1 className="font-serif text-xl text-primary mb-1">
                   {metadata.title}
                 </h1>
                 <p className="text-muted text-sm">
-                  {pages.length === 0
-                    ? 'Now add the remaining pages'
-                    : `${totalPageCount} pages total (1 title + ${pages.length} added)`
-                  }
+                  {pages.length} {pages.length === 1 ? 'page' : 'pages'} captured
                 </p>
               </div>
 
-              {/* Instructions (only shown before first photos added) */}
-              {pages.length === 0 && (
-                <div className="bg-warm rounded-xl p-4 space-y-3 text-sm">
-                  <div className="flex gap-3 items-start">
-                    <span className="flex-none w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs flex items-center justify-center font-medium">1</span>
-                    <p className="text-secondary">Photograph all pages with your phone&apos;s camera app first. Work through the book page by page.</p>
+              {/* Horizontal thumbnail strip */}
+              {pages.length > 0 && (
+                <div
+                  ref={thumbnailStripRef}
+                  className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scroll-smooth"
+                  style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+                >
+                  {pages.map((page, i) => (
+                    <div key={page.id} className="flex-none relative group">
+                      <div className="w-16 h-[88px] rounded-md overflow-hidden border border-border-light bg-warm">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={page.thumbnailUrl}
+                          alt={`Page ${i + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      {/* Page number */}
+                      <div className="absolute top-0.5 left-0.5 bg-dark/60 text-white text-[10px] px-1 rounded">
+                        {i + 1}
+                      </div>
+                      {/* Delete button */}
+                      <button
+                        onClick={() => handleDelete(page.id)}
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-status-error text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ opacity: undefined }}
+                        onPointerDown={(e) => {
+                          // Make delete always visible on touch
+                          e.currentTarget.style.opacity = '1';
+                        }}
+                      >
+                        x
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Capture preview (keep/retake) */}
+              {capturePreview && (
+                <div className="space-y-3">
+                  <div className="rounded-lg overflow-hidden border border-border-light max-h-64">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={capturePreview.thumbnailUrl}
+                      alt="Preview"
+                      className="w-full max-h-64 object-contain bg-warm"
+                    />
                   </div>
-                  <div className="flex gap-3 items-start">
-                    <span className="flex-none w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs flex items-center justify-center font-medium">2</span>
-                    <p className="text-secondary">Then come back here and tap <strong>Add Photos</strong> to select them all at once from your camera roll.</p>
-                  </div>
-                  <div className="flex gap-3 items-start">
-                    <span className="flex-none w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs flex items-center justify-center font-medium">3</span>
-                    <p className="text-secondary">Photos are automatically sorted by capture time. You can reorder or delete before uploading.</p>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleRetakePage}
+                      className="flex-1 py-3 border border-border-medium rounded-lg text-secondary text-sm font-medium"
+                    >
+                      Retake
+                    </button>
+                    <button
+                      onClick={handleKeepPage}
+                      className="flex-1 py-3 bg-accent-sage text-white rounded-lg text-sm font-medium"
+                    >
+                      Keep (Page {pages.length + 1})
+                    </button>
                   </div>
                 </div>
               )}
 
-              {/* Review grid */}
-              {pages.length > 0 && (
-                <ReviewGrid
-                  files={pages}
-                  onReorder={handleReorder}
-                  onDelete={handleDelete}
-                />
-              )}
-
-              {/* Processing indicator */}
+              {/* Processing indicator (for batch add from roll) */}
               {processing && (
-                <div className="text-center py-6 space-y-3">
+                <div className="text-center py-4 space-y-2">
                   <div className="w-8 h-8 border-2 border-accent-rust border-t-transparent rounded-full animate-spin mx-auto" />
                   <p className="text-muted text-sm">
                     Processing {processingCount} {processingCount === 1 ? 'photo' : 'photos'}...
@@ -680,44 +752,61 @@ export default function ScanPage() {
                 </div>
               )}
 
-              {/* Action buttons */}
-              <div className="space-y-3">
-                <label className="block cursor-pointer">
-                  <div className="border-2 border-dashed border-border-medium rounded-xl p-6 hover:border-accent-rust/40 transition-colors text-center">
-                    <div className="space-y-2">
-                      <svg className="w-8 h-8 mx-auto text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              {/* Camera and action buttons */}
+              {!capturePreview && !processing && (
+                <div className="space-y-3">
+                  {/* Primary: take a photo with the camera */}
+                  <label className="block cursor-pointer">
+                    <div className="w-full py-4 bg-accent-rust text-white rounded-lg font-medium text-sm text-center flex items-center justify-center gap-2">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
                       </svg>
-                      <p className="text-secondary font-medium text-sm">
-                        {pages.length === 0 ? 'Add Photos from Camera Roll' : 'Add More Photos'}
-                      </p>
-                      <p className="text-muted text-xs">Select multiple photos at once</p>
+                      Take Page {pages.length + 1}
                     </div>
-                  </div>
-                  <input
-                    ref={pageInputRef}
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    className="hidden"
-                    onChange={handleAddPhotos}
-                    disabled={processing}
-                  />
-                </label>
+                    <input
+                      ref={captureInputRef}
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      className="hidden"
+                      onChange={handlePageCapture}
+                    />
+                  </label>
 
-                {pages.length > 0 && (
-                  <button
-                    onClick={handleUploadAll}
-                    className="w-full py-3 bg-accent-rust text-white rounded-lg font-medium text-sm"
-                  >
-                    Upload All ({totalPageCount} pages)
-                  </button>
-                )}
-              </div>
+                  {/* Secondary: add from camera roll */}
+                  <label className="block cursor-pointer">
+                    <div className="w-full py-3 border border-border-medium rounded-lg text-secondary font-medium text-sm text-center hover:border-accent-rust/40 transition-colors flex items-center justify-center gap-2">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+                      </svg>
+                      Add from Camera Roll
+                    </div>
+                    <input
+                      ref={rollInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      onChange={handleAddFromRoll}
+                    />
+                  </label>
+
+                  {/* Upload button */}
+                  {pages.length > 0 && (
+                    <button
+                      onClick={handleUploadAll}
+                      className="w-full py-3 bg-accent-sage-dark text-white rounded-lg font-medium text-sm mt-2"
+                    >
+                      Upload All ({pages.length} {pages.length === 1 ? 'page' : 'pages'})
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
-          {/* Step 5: Uploading */}
+          {/* Uploading */}
           {step === 'uploading' && (
             <div className="text-center space-y-6 max-w-md mx-auto py-8">
               <div>
@@ -743,7 +832,7 @@ export default function ScanPage() {
             </div>
           )}
 
-          {/* Step 6: Done */}
+          {/* Done */}
           {step === 'done' && (
             <div className="text-center space-y-6 max-w-md mx-auto py-8">
               <div className="space-y-2">
@@ -756,7 +845,7 @@ export default function ScanPage() {
                 <p className="text-secondary">
                   <span className="font-medium">{metadata.title}</span>
                   {' — '}
-                  {totalPageCount} {totalPageCount === 1 ? 'page' : 'pages'}
+                  {pages.length} {pages.length === 1 ? 'page' : 'pages'}
                 </p>
                 <p className="text-muted text-sm">
                   The AI will OCR and translate your book automatically.
