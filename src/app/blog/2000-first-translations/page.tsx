@@ -282,7 +282,7 @@ export default function TwoThousandFirstTranslations() {
       <div className="max-w-5xl mx-auto px-4 pb-16">
         {/* Intro */}
         <div className="prose prose-stone prose-lg max-w-none leading-relaxed">
-          <p className="text-xl leading-relaxed">
+          <p>
             Source Library has now produced the first English translations of over 2,000
             historical texts — works that have waited centuries for an audience beyond
             the small circle of scholars who could read them in their original languages.
@@ -404,7 +404,7 @@ export default function TwoThousandFirstTranslations() {
           Ideas That Waited Millennia
         </h2>
         <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
-          <p className="text-xl leading-relaxed">
+          <p>
             Some of these books carry ideas far older than the books themselves.
             Plato&apos;s <em>Timaeus</em>, written in 360 BCE, didn&apos;t reach print
             until Ficino&apos;s Latin translation in 1484 — a gap of over 1,800 years.
