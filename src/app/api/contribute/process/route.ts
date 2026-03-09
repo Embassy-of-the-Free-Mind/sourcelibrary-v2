@@ -234,12 +234,14 @@ export async function POST(request: NextRequest) {
                 { _id: page._id },
                 {
                   $set: {
-                    'translation.data': result.text,
-                    'translation.model': DEFAULT_MODEL,
-                    'translation.prompt_version': PROMPT_VERSION,
-                    'translation.processed_at': new Date(),
-                    'translation.source': 'contributor',
-                    'translation.contributed_by': contributorName || 'Anonymous',
+                    translation: {
+                      data: result.text,
+                      model: DEFAULT_MODEL,
+                      prompt_version: PROMPT_VERSION,
+                      processed_at: new Date(),
+                      source: 'contributor',
+                      contributed_by: contributorName || 'Anonymous',
+                    },
                     ...translationMeta,
                   },
                 }
