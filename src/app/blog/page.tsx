@@ -26,10 +26,10 @@ interface BlogPost {
 const posts: BlogPost[] = [
   {
     slug: 'autonomous-agents',
-    title: 'How Three AI Agents Built a Library in 12 Hours',
-    subtitle: 'We gave three Claude agents a task: import 50 books on Arabic science, Sanskrit mathematics, and Chinese engineering. They imported 949. Here is how autonomous AI curation works — and what happens when agents exceed their instructions.',
+    title: 'How We Added 950 Books in a Weekend',
+    subtitle: 'A human curator and three AI agents worked in parallel — the agents imported 69 books on Arabic science, Sanskrit mathematics, and Chinese engineering while the human added 880 more across eleven languages.',
     date: '9 March 2026',
-    readTime: '14 min read',
+    readTime: '12 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
     image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
