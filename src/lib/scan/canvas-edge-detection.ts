@@ -11,10 +11,10 @@ import type { EdgeDetector, DetectionResult } from './edge-detection-types';
 
 // Processing constants
 const TARGET_WIDTH = 320;
-const MIN_AREA_RATIO = 0.20;
-const MIN_ANGLE_DEG = 60;
-const MAX_ANGLE_DEG = 120;
-const SOBEL_THRESHOLD = 80;
+const MIN_AREA_RATIO = 0.10;
+const MIN_ANGLE_DEG = 50;
+const MAX_ANGLE_DEG = 130;
+const SOBEL_THRESHOLD = 40;
 const BLUR_KERNEL_SIZE = 3;
 
 type Point = [number, number];
@@ -42,11 +42,16 @@ export function createCanvasEdgeDetector(): EdgeDetector {
       const { magnitude, maxMag } = sobelEdges(blurred, w, h);
 
       // 4. Threshold to binary edge map
-      const threshold = Math.max(SOBEL_THRESHOLD, maxMag * 0.3);
+      // Use a low adaptive ratio so strong text edges don't drown out
+      // subtle page-to-surface boundary edges.
+      const threshold = Math.max(SOBEL_THRESHOLD, maxMag * 0.12);
       const edges = new Uint8Array(w * h);
       for (let i = 0; i < magnitude.length; i++) {
         edges[i] = magnitude[i] >= threshold ? 1 : 0;
       }
+
+      // 4b. Dilate edges to bridge small gaps in page boundary contours
+      dilateEdges(edges, w, h);
 
       // 5. Find contours
       const contours = findContours(edges, w, h);
@@ -182,6 +187,24 @@ function sobelEdges(gray: Float32Array, w: number, h: number): { magnitude: Floa
   }
 
   return { magnitude, maxMag };
+}
+
+/** 3x3 dilation — if any neighbour is an edge, the pixel becomes an edge. */
+function dilateEdges(edges: Uint8Array, w: number, h: number): void {
+  const copy = new Uint8Array(edges);
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      if (copy[y * w + x]) continue; // already edge
+      const idx = y * w + x;
+      if (
+        copy[idx - w - 1] || copy[idx - w] || copy[idx - w + 1] ||
+        copy[idx - 1]     ||                   copy[idx + 1] ||
+        copy[idx + w - 1] || copy[idx + w] || copy[idx + w + 1]
+      ) {
+        edges[idx] = 1;
+      }
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
