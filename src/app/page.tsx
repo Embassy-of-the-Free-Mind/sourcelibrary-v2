@@ -11,8 +11,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// Rebuild every 30 seconds — fresh enough for variety, fast for repeat visits
-export const revalidate = 30;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
 // ---------- Collection ordering (user-specified) ----------

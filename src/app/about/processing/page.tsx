@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about/processing' },
 };
 
-export const revalidate = 3600; // refresh stats hourly
+export const dynamic = 'force-dynamic';
 
 /* ── Data fetching ── */
 

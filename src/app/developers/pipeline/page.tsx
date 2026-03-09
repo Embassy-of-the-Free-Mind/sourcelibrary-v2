@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/developers/pipeline' },
 };
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 /* ── Data fetching ── */
 

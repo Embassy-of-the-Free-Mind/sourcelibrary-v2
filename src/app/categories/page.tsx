@@ -5,7 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
 // ISR: rebuild at most every 10 minutes
-export const revalidate = 600;
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',

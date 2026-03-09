@@ -73,8 +73,7 @@ export default function ImageDetailPage({
   const [contrast, setContrast] = useState(100);
 
   useEffect(() => {
-    // Normalize separator: URLs use - but internal IDs use :
-    params.then(p => setImageId(p.id.replace(/-(\d+)$/, ':$1')));
+    params.then(p => setImageId(p.id));
   }, [params]);
 
   useEffect(() => {
