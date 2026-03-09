@@ -110,10 +110,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'fire-horse',
     'first-translation-methodology',
     'first-translations',
+    'hidden-engineers',
     'history-of-astrology',
     'indigenous-traditions',
     'invisible-hand',
     'mcp-server',
+    'autonomous-agents',
+    'ocr-consistency',
+    'cuneiform-ocr',
+    'rithmomachia',
+    'progress-studies',
   ].map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,
     lastModified: new Date(),
@@ -151,9 +157,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
-  // Dynamic pages from DB
+  // Dynamic pages from DB — with timeout to prevent build hangs
   try {
-    const db = await getDb();
+    const dbPromise = getDb();
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('DB connection timeout (15s)')), 15000)
+    );
+    const db = await Promise.race([dbPromise, timeoutPromise]);
 
     // Books
     const books = await db.collection('books').find(
