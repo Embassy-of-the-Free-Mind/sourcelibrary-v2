@@ -24,17 +24,18 @@ interface BlogPost {
 }
 
 const posts: BlogPost[] = [
-  {
-    slug: 'autonomous-agents',
-    title: 'How We Added 950 Books in a Weekend',
-    subtitle: 'A human curator and three AI agents worked in parallel — the agents imported 69 books on Arabic science, Sanskrit mathematics, and Chinese engineering while the human added 880 more across eleven languages.',
-    date: '9 March 2026',
-    readTime: '12 min read',
-    tag: 'Methodology',
-    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
-    imageAlt: 'Page from a 16th-century manuscript showing mechanical diagrams',
-  },
+  // Hidden: needs rewrite with proper import session data
+  // {
+  //   slug: 'autonomous-agents',
+  //   title: 'How We Added 950 Books in a Weekend',
+  //   subtitle: 'A human curator and three AI agents worked in parallel...',
+  //   date: '9 March 2026',
+  //   readTime: '12 min read',
+  //   tag: 'Methodology',
+  //   tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+  //   image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+  //   imageAlt: 'Page from a 16th-century manuscript showing mechanical diagrams',
+  // },
   {
     slug: 'progress-studies',
     title: 'The Missing Library: What Progress Studies Can\'t Read',

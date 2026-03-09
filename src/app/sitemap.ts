@@ -115,7 +115,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'indigenous-traditions',
     'invisible-hand',
     'mcp-server',
-    'autonomous-agents',
+    // 'autonomous-agents', // hidden pending rewrite
     'ocr-consistency',
     'cuneiform-ocr',
     'rithmomachia',
