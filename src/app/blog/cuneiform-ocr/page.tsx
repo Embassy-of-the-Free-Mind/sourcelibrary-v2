@@ -5,7 +5,7 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Can AI Read Cuneiform? - Blog - Source Library',
-  description: 'We ran five experiments testing Gemini on 107 cuneiform tablets — the oldest writing system on Earth. A contamination test proves genuine visual analysis, model comparison shows 2.5 Pro doubles accuracy, and image preprocessing can rescue low-resolution photographs.',
+  description: 'We ran six experiments testing Gemini on 107 cuneiform tablets — the oldest writing system on Earth. A contamination test proves genuine visual analysis, model comparison shows 2.5 Pro doubles accuracy, and edge detection can rescue unreadable photographs.',
   openGraph: {
     title: 'Can AI Read Cuneiform?',
     description: 'We tested Gemini 3 Flash on cuneiform tablets — the oldest writing system on Earth. The results were surprising.',
@@ -100,7 +100,7 @@ export default function CuneiformOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We ran five experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better.
+          We ran six experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better. <strong>Experiment 6</strong> tested edge detection, raking light simulation, multi-pass prompting, and thinking models.
         </p>
 
         {/* --- How to Read Cuneiform --- */}
@@ -1372,13 +1372,290 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           The fundamental ceiling remains. Even with optimal cropping and preprocessing, accuracy stays in the 15&ndash;30% F1 range. The bottleneck is the model&apos;s cuneiform sign recognition capability, not image quality. Better photographs would help, but the real breakthrough will require models trained or fine-tuned on cuneiform data.
         </p>
 
+        {/* --- Experiment 6: Advanced Image Processing and Multi-Pass Prompting --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Experiment 6: Edge detection, raking light, and multi-pass prompting
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Experiments 4 and 5 established that model choice and cropping both matter, but accuracy stayed in the 15&ndash;30% F1 range. Experiment 6 explored two remaining ideas: could image processing techniques borrowed from archaeology and epigraphy help the model see wedge impressions more clearly? And could a multi-pass prompting strategy &mdash; surveying the tablet first, then identifying signs, then reviewing against the image &mdash; improve accuracy over a single-pass approach?
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested 21 conditions across two sub-experiments on the P250675 obverse crop &mdash; the same Ur III tablet from Experiment 5 (208 ground truth signs). All image processing used the <a href="https://sharp.pixelplumbing.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">sharp</a> library in Node.js. All conditions were evaluated using the same bag-of-signs F1 metric.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Part A: image processing techniques (13 conditions)
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Archaeologists use <strong>raking light</strong> &mdash; a low-angle light source that casts shadows along surface relief &mdash; to make wedge impressions visible on clay tablets. We simulated this digitally, along with several other image processing techniques:
+        </p>
+
+        <ul className="list-disc pl-6 mb-6 space-y-2 text-secondary leading-relaxed">
+          <li><strong>Sobel edge detection:</strong> Highlights gradients (the borders of wedge impressions)</li>
+          <li><strong>Pseudo-heightmap:</strong> Inverts brightness to approximate depth, then simulates directional lighting</li>
+          <li><strong>Edge overlay:</strong> Darkens the original image where edges are strong, emphasizing wedge boundaries</li>
+          <li><strong>Raking light:</strong> Simulates a low-angle light source from the left or from above, casting directional shadows along the horizontal or vertical gradient</li>
+          <li><strong>Multi-image input:</strong> Sending two or three image variants together so the model can cross-reference</li>
+          <li><strong>Sign reference chart:</strong> A lookup table of 50 common signs (Unicode glyph + name) sent alongside the photograph</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          All conditions used Gemini 2.5 Pro, which had the best accuracy in Experiment 4.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Technique</th>
+                <th className="text-right py-3 pr-4 font-semibold">Signs</th>
+                <th className="text-right py-3 pr-4 font-semibold">F1</th>
+                <th className="text-right py-3 pr-4 font-semibold">Precision</th>
+                <th className="text-right py-3 pr-4 font-semibold">Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raw obverse crop (baseline)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+              </tr>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Sobel edge detection</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">44</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">15.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">43.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">9.1%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Pseudo-heightmap</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">71</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">9.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">18.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">6.3%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Edge overlay on original</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">36</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">9.8%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">33.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">5.8%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raking light (left)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">15</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">7.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">53.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">3.8%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raking light (top)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Upscaled 2x + Sobel</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Upscaled 2x + raking light</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">41</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">9.6%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">29.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">5.8%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raw + Sobel (two images)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">59</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">4.5%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">10.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">2.9%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raw + Raking (two images)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">13</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">2.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">23.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">1.4%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raw + Raking + Sobel (three images)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Raw + sign reference chart</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The most striking result: the raw photograph &mdash; which Experiment 5 had already shown was unreadable as a face crop &mdash; produced zero signs. But <strong>Sobel edge detection on the same image matched the best results from Experiment 5</strong> (15.1% F1, 43.2% precision). Edge detection converts the photograph into a map of brightness gradients, which corresponds directly to the physical wedge impressions on clay.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Raking light from the left &mdash; the digital simulation of the technique archaeologists use in the field &mdash; achieved the highest precision of any condition (53.3%), though with very few signs. This makes sense: the technique is highly selective, emphasizing only the strongest wedge impressions while losing fainter signs.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Multi-image input consistently performed <em>worse</em> than single processed images. Sending the model three image variants (raw + raking + sobel) produced zero signs. The sign reference chart &mdash; a lookup table of 50 common cuneiform signs &mdash; was also useless. More information confused the model rather than helping it.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Part B: multi-pass prompting and model comparison (8 conditions)
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The second sub-experiment tested whether asking the model to make <strong>multiple passes</strong> over the same image could improve accuracy. The multi-pass strategy mimicked how a human epigrapher works:
+        </p>
+
+        <ol className="list-decimal pl-6 mb-6 space-y-2 text-secondary leading-relaxed">
+          <li><strong>Survey pass:</strong> Count the lines, describe the tablet&apos;s physical condition, note the script style</li>
+          <li><strong>Identification pass:</strong> Using the survey as context, go line by line and identify each sign</li>
+          <li><strong>Review pass:</strong> Look at the image again, check each identification against what you see, correct any errors</li>
+        </ol>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We compared this against single-pass identification across three models: Gemini 2.0 Flash (non-thinking), Gemini 2.5 Pro (thinking), and Gemini 3 Flash Preview (thinking).
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Condition</th>
+                <th className="text-left py-3 pr-4 font-semibold">Model</th>
+                <th className="text-right py-3 pr-4 font-semibold">Signs</th>
+                <th className="text-right py-3 pr-4 font-semibold">F1</th>
+                <th className="text-right py-3 pr-4 font-semibold">Prec.</th>
+                <th className="text-right py-3 pr-4 font-semibold">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Single-pass, raw photo</td>
+                <td className="py-3 pr-4">2.0 Flash</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">21</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">3.5%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">19.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">3.8s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Single-pass, Sobel</td>
+                <td className="py-3 pr-4">2.0 Flash</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">7.0s</td>
+              </tr>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Single-pass, raw photo</td>
+                <td className="py-3 pr-4 font-semibold">2.5 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">42</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">15.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">45.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">76s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Multi-pass, raw photo</td>
+                <td className="py-3 pr-4">2.0 Flash</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">24</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">1.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">8.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">9.5s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Multi-pass, Sobel</td>
+                <td className="py-3 pr-4">2.0 Flash</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">35</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">5.8%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">20.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">12.8s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Multi-pass, raw photo</td>
+                <td className="py-3 pr-4">2.5 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">28</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">11.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">46.4%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">144s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Multi-pass, raw + Sobel</td>
+                <td className="py-3 pr-4">2.5 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">26</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">12.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">53.8%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">111s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Single-pass, raw photo</td>
+                <td className="py-3 pr-4">3 Flash (thinking)</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">74</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">6.4%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">12.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">102s</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Three clear findings:
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>1. Model choice dominates everything else.</strong> Gemini 2.5 Pro single-pass with the raw photograph (F1 = 15.2%) beat every Flash condition regardless of technique. The cheapest Pro run outperformed the most elaborate Flash pipeline by 3&ndash;10x.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>2. Multi-pass hurt accuracy.</strong> For both Flash and Pro, the single-pass approach outperformed multi-pass. Pro single-pass achieved 15.2% F1 vs. 11.0&ndash;12.0% for multi-pass. The review step introduced new errors while losing some correct identifications &mdash; the model second-guessed itself into worse performance. The only multi-pass advantage was precision: Pro multi-pass with dual images achieved 53.8% precision (highest of any condition), but at the cost of fewer total signs and lower F1.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>3. Thinking tokens don&apos;t help for cuneiform.</strong> Gemini 3 Flash Preview is a &ldquo;thinking&rdquo; model that spends tokens on internal deliberation before responding. On the P250675 photograph, it burned 15,587 thinking tokens (compared to zero for 2.0 Flash), took 102 seconds instead of 4 seconds, and produced 74 signs &mdash; but at only 12.2% precision and 6.4% F1. It confidently hallucinated a repeating field survey pattern (&ldquo;GAN SHA LA KU MU&rdquo;), reported 0.95 confidence, and performed worse than the non-thinking 2.5 Pro. Extended reasoning doesn&apos;t compensate for limited visual capability.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          What Experiment 6 tells us
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The strongest single finding is that <strong>Sobel edge detection on an otherwise-unreadable face crop matches the best accuracy of any technique we tested</strong> (15.1% F1). This is practically useful: many CDLI photographs are composite views (obverse + reverse in one image) that produce zero results when cropped to a single face. Running a 3&times;3 Sobel kernel on the crop &mdash; a few milliseconds of computation &mdash; can rescue these images entirely.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But the ceiling remains. Across all 21 conditions, no technique exceeded 15.2% F1. More compute (multi-pass), more images (dual/triple input), more deliberation (thinking tokens), and specialized image processing all failed to break through the ~15% barrier established in Experiments 4&ndash;5. The bottleneck is neither image quality nor prompting strategy nor compute &mdash; it is the model&apos;s ability to visually discriminate cuneiform signs.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The optimal pipeline is now clear: <strong>crop to face, apply Sobel edge detection if the raw crop fails, use the best available model (Gemini 2.5 Pro), single-pass prompt.</strong> Everything else is wasted effort until models improve their cuneiform sign recognition.
+        </p>
+
         {/* --- Conclusion --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Conclusion
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and five experiments, Gemini correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, produces excellent scholarly commentary, and &mdash; crucially &mdash; performs genuine visual analysis that is independent of its training data. It is not reading from memory.
+          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and six experiments, Gemini correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, produces excellent scholarly commentary, and &mdash; crucially &mdash; performs genuine visual analysis that is independent of its training data. It is not reading from memory.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1386,11 +1663,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But it has <em>some</em> cuneiform vision, and that vision is genuine. Experiments 4 and 5 explored the obvious next questions: does a more powerful model help? Does image preprocessing help? Gemini 2.5 Pro roughly doubles accuracy over Flash on some tablets, and upscaling low-resolution images with CLAHE contrast enhancement can rescue otherwise-unreadable crops. But accuracy remains in the 15&ndash;30% F1 range &mdash; the ceiling is the model&apos;s visual capability, not image quality or model size alone. The contamination test gives us confidence that improvements will reflect real visual capability, not training data memorization.
+          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But it has <em>some</em> cuneiform vision, and that vision is genuine. Experiments 4&ndash;6 systematically tested what helps: better models double accuracy (Experiment 4), image cropping matters for high-resolution photographs (Experiment 5), and Sobel edge detection can rescue otherwise-unreadable crops (Experiment 6). Multi-pass prompting, thinking tokens, multi-image input, sign reference charts, and raking light simulations all failed to move the needle. The ~15% F1 ceiling is consistent across all approaches &mdash; the bottleneck is the model&apos;s cuneiform sign recognition capability, not image quality, prompting, or compute.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
+          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. The optimal processing pipeline is established: crop to face, apply Sobel edge detection as a fallback, use the most capable available model, single pass. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -1400,7 +1677,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
+          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Experiment 6: 13 image processing conditions (Sobel edge detection, pseudo-heightmap, raking light simulation, edge overlay, multi-image input, sign reference chart) using Gemini 2.5 Pro on P250675 obverse crop; 8 multi-pass prompting conditions (single-pass vs. 3-pass survey/identify/review) across Gemini 2.0 Flash, 2.5 Pro, and 3 Flash Preview (thinking model). Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
         </p>
       </article>
 
