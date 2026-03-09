@@ -461,6 +461,15 @@ mark {
   animation: emanate 2.1s ease-out infinite;
 }
 
+@keyframes flash {
+  0% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+.animate-flash {
+  animation: flash 150ms ease-out forwards;
+}
+
 /* ================================================
    RTL (Right-to-Left) Language Support
    For Arabic, Hebrew, Aramaic, Syriac, Persian, Urdu

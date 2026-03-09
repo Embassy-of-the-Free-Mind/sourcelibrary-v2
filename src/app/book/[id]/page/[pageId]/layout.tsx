@@ -11,7 +11,7 @@ interface LayoutProps {
 
 // Only fetch the fields needed for metadata — skip index, reading_summary, etc.
 const BOOK_META_PROJECTION = {
-  _id: 0, id: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
+  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
 };
 const PAGE_META_PROJECTION = {
   _id: 0, id: 1, page_number: 1, photo: 1,
@@ -72,7 +72,9 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     ? `Page ${pageNum} of "${bookTitle}" by ${book.author}. ${excerpt}`
     : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
-  const pageUrl = `/book/${id}/page/${pageId}`;
+  // Always use slug for canonical URL, even if accessed via hex ObjectId
+  const bookPath = (book as unknown as { slug?: string }).slug || id;
+  const pageUrl = `/book/${bookPath}/page/${pageId}`;
 
   return {
     title: `${title} - Source Library`,
