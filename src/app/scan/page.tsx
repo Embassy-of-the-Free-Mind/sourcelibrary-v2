@@ -348,46 +348,58 @@ export default function ScanPage() {
 
                 {step === 'onboarding-2' && (
                   <div className="text-center space-y-6">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-accent-sage/15 flex items-center justify-center">
-                      <svg className="w-10 h-10 text-accent-sage-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
                     <div>
                       <h1 className="font-serif text-3xl text-primary mb-3">Getting Good Scans</h1>
                       <p className="text-secondary text-base leading-relaxed">
                         A few simple habits make a big difference in OCR quality.
                       </p>
                     </div>
-                    <div className="bg-warm rounded-xl p-5 text-left space-y-4">
-                      <Tip icon="sun" text="Good, even lighting — natural daylight is best" />
-                      <Tip icon="check" text="Shoot straight down, parallel to the page" />
-                      <Tip icon="check" text="Flatten the book and hold the spine open" />
-                      <Tip icon="check" text="Keep all text in frame with a small margin" />
-                      <Tip icon="check" text="One page per photo — not two-page spreads" />
+                    <div className="grid grid-cols-2 gap-3">
+                      <IllustratedTip
+                        diagram={<DiagramEvenLighting />}
+                        text="Good, even lighting"
+                      />
+                      <IllustratedTip
+                        diagram={<DiagramStraightDown />}
+                        text="Shoot straight down"
+                      />
+                      <IllustratedTip
+                        diagram={<DiagramFlattenBook />}
+                        text="Flatten the spine"
+                      />
+                      <IllustratedTip
+                        diagram={<DiagramOnePage />}
+                        text="One page per photo"
+                      />
                     </div>
                   </div>
                 )}
 
                 {step === 'onboarding-3' && (
                   <div className="text-center space-y-6">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-status-error/10 flex items-center justify-center">
-                      <svg className="w-10 h-10 text-status-error" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                      </svg>
-                    </div>
                     <div>
                       <h1 className="font-serif text-3xl text-primary mb-3">Common Mistakes</h1>
                       <p className="text-secondary text-base leading-relaxed">
                         These will cause the AI to misread or skip text.
                       </p>
                     </div>
-                    <div className="bg-status-error/5 border border-status-error/15 rounded-xl p-5 text-left space-y-4">
-                      <Mistake text="Shadows across the page — blocks of text become unreadable" />
-                      <Mistake text="Angled photos — perspective warps the text" />
-                      <Mistake text="Curved pages near the spine — text bends and blurs" />
-                      <Mistake text="Fingers covering text — hold from the very edges" />
-                      <Mistake text="Blurry photos — tap to focus before each shot" />
+                    <div className="grid grid-cols-2 gap-3">
+                      <IllustratedMistake
+                        diagram={<DiagramShadow />}
+                        text="Shadows across text"
+                      />
+                      <IllustratedMistake
+                        diagram={<DiagramAngled />}
+                        text="Angled photos"
+                      />
+                      <IllustratedMistake
+                        diagram={<DiagramCurved />}
+                        text="Curved near spine"
+                      />
+                      <IllustratedMistake
+                        diagram={<DiagramFingers />}
+                        text="Fingers covering text"
+                      />
                     </div>
                   </div>
                 )}
@@ -723,31 +735,183 @@ function StepPreview({ number, title, description }: {
   );
 }
 
-function Tip({ text, icon }: { text: string; icon?: 'check' | 'sun' }) {
+
+// --- Illustrated onboarding components ---
+
+function IllustratedTip({ diagram, text }: { diagram: React.ReactNode; text: string }) {
   return (
-    <div className="flex gap-2.5 items-start">
-      {icon === 'sun' ? (
-        <svg className="w-4 h-4 text-accent-gold-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-        </svg>
-      ) : (
-        <svg className="w-4 h-4 text-accent-sage-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-        </svg>
-      )}
-      <p>{text}</p>
+    <div className="bg-accent-sage/8 border border-accent-sage/20 rounded-xl p-3 flex flex-col items-center gap-2">
+      <div className="w-full aspect-[4/3] flex items-center justify-center">{diagram}</div>
+      <p className="text-xs text-secondary font-medium leading-snug">{text}</p>
     </div>
   );
 }
 
-function Mistake({ text }: { text: string }) {
+function IllustratedMistake({ diagram, text }: { diagram: React.ReactNode; text: string }) {
   return (
-    <div className="flex gap-2.5 items-start">
-      <svg className="w-4 h-4 text-status-error shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      <p>{text}</p>
+    <div className="bg-status-error/6 border border-status-error/15 rounded-xl p-3 flex flex-col items-center gap-2">
+      <div className="w-full aspect-[4/3] flex items-center justify-center">{diagram}</div>
+      <p className="text-xs text-secondary font-medium leading-snug">{text}</p>
     </div>
+  );
+}
+
+// Tip diagrams — simple line illustrations of good scanning practices
+
+function DiagramEvenLighting() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Page */}
+      <rect x="20" y="20" width="40" height="32" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Text lines */}
+      <line x1="26" y1="28" x2="54" y2="28" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="26" y1="33" x2="54" y2="33" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="26" y1="38" x2="54" y2="38" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="26" y1="43" x2="42" y2="43" strokeWidth="1" className="stroke-border-medium" />
+      {/* Light rays from above */}
+      <line x1="30" y1="4" x2="30" y2="16" strokeWidth="1" className="stroke-accent-gold" strokeDasharray="2 2" />
+      <line x1="40" y1="2" x2="40" y2="16" strokeWidth="1" className="stroke-accent-gold" strokeDasharray="2 2" />
+      <line x1="50" y1="4" x2="50" y2="16" strokeWidth="1" className="stroke-accent-gold" strokeDasharray="2 2" />
+      {/* Sun icon */}
+      <circle cx="40" cy="6" r="3" strokeWidth="1" className="stroke-accent-gold" />
+    </svg>
+  );
+}
+
+function DiagramStraightDown() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Page */}
+      <rect x="20" y="32" width="40" height="24" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Text lines on page */}
+      <line x1="26" y1="39" x2="54" y2="39" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="26" y1="43" x2="54" y2="43" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="26" y1="47" x2="54" y2="47" strokeWidth="1" className="stroke-border-medium" />
+      {/* Phone */}
+      <rect x="32" y="2" width="16" height="10" rx="2" strokeWidth="1.5" className="stroke-accent-sage-dark" />
+      <circle cx="40" cy="7" r="2" strokeWidth="1" className="stroke-accent-sage-dark" />
+      {/* Arrow straight down */}
+      <line x1="40" y1="14" x2="40" y2="28" strokeWidth="1.5" className="stroke-accent-sage-dark" />
+      <polyline points="36,24 40,30 44,24" strokeWidth="1.5" className="stroke-accent-sage-dark" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DiagramFlattenBook() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Left page — flat */}
+      <rect x="8" y="16" width="28" height="36" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Right page — flat */}
+      <rect x="44" y="16" width="28" height="36" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Spine line */}
+      <line x1="40" y1="14" x2="40" y2="54" strokeWidth="1.5" className="stroke-border-medium" strokeDasharray="3 2" />
+      {/* Hands pressing down */}
+      <path d="M16 12 L16 8 Q16 6 18 6 L24 6 Q26 6 26 8 L26 12" strokeWidth="1.2" className="stroke-accent-sage-dark" />
+      <path d="M54 12 L54 8 Q54 6 56 6 L62 6 Q64 6 64 8 L64 12" strokeWidth="1.2" className="stroke-accent-sage-dark" />
+      {/* Down arrows on hands */}
+      <polyline points="19,8 21,12 23,8" strokeWidth="1" className="stroke-accent-sage-dark" strokeLinejoin="round" />
+      <polyline points="57,8 59,12 61,8" strokeWidth="1" className="stroke-accent-sage-dark" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DiagramOnePage() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Single page — centered, emphasized */}
+      <rect x="22" y="6" width="36" height="48" rx="1" strokeWidth="1.5" className="stroke-accent-sage-dark" fill="white" />
+      {/* Text lines */}
+      <line x1="28" y1="14" x2="52" y2="14" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="28" y1="20" x2="52" y2="20" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="28" y1="26" x2="52" y2="26" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="28" y1="32" x2="42" y2="32" strokeWidth="1" className="stroke-border-medium" />
+      {/* Check mark */}
+      <polyline points="36,40 40,44 48,36" strokeWidth="1.5" className="stroke-accent-sage-dark" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// Mistake diagrams — illustrations of common scanning errors
+
+function DiagramShadow() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Page */}
+      <rect x="16" y="8" width="48" height="44" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Text lines */}
+      <line x1="22" y1="16" x2="58" y2="16" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="22" x2="58" y2="22" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="28" x2="58" y2="28" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="34" x2="58" y2="34" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="40" x2="46" y2="40" strokeWidth="1" className="stroke-border-medium" />
+      {/* Shadow diagonal band */}
+      <path d="M16 8 L48 8 L16 44 Z" className="fill-text-secondary/15" strokeWidth="0" />
+      {/* X mark */}
+      <line x1="54" y1="44" x2="60" y2="50" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="60" y1="44" x2="54" y2="50" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DiagramAngled() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Skewed page — trapezoid perspective */}
+      <path d="M24 10 L62 6 L58 54 L20 50 Z" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Skewed text lines */}
+      <line x1="28" y1="17" x2="58" y2="14" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="27" y1="23" x2="58" y2="20" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="26" y1="29" x2="58" y2="26" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="25" y1="35" x2="58" y2="32" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="24" y1="41" x2="44" y2="39" strokeWidth="1" className="stroke-border-medium" />
+      {/* X mark */}
+      <line x1="8" y1="48" x2="14" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="14" y1="48" x2="8" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DiagramCurved() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Page with curved left edge (near spine) */}
+      <path d="M24 6 L60 6 L60 54 L24 54 Q16 30 24 6 Z" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Curved text lines — bending near spine */}
+      <path d="M30 16 Q26 16 28 14" strokeWidth="1" className="stroke-border-medium" fill="none" />
+      <line x1="30" y1="16" x2="54" y2="16" strokeWidth="1" className="stroke-border-medium" />
+      <path d="M30 24 Q26 24 27 22" strokeWidth="1" className="stroke-border-medium" fill="none" />
+      <line x1="30" y1="24" x2="54" y2="24" strokeWidth="1" className="stroke-border-medium" />
+      <path d="M30 32 Q26 32 27 30" strokeWidth="1" className="stroke-border-medium" fill="none" />
+      <line x1="30" y1="32" x2="54" y2="32" strokeWidth="1" className="stroke-border-medium" />
+      <path d="M30 40 Q26 40 27 38" strokeWidth="1" className="stroke-border-medium" fill="none" />
+      <line x1="30" y1="40" x2="44" y2="40" strokeWidth="1" className="stroke-border-medium" />
+      {/* Spine indicator */}
+      <line x1="18" y1="8" x2="18" y2="52" strokeWidth="2" className="stroke-border-medium" strokeDasharray="3 2" />
+      {/* X mark */}
+      <line x1="62" y1="46" x2="68" y2="52" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="68" y1="46" x2="62" y2="52" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DiagramFingers() {
+  return (
+    <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
+      {/* Page */}
+      <rect x="16" y="6" width="48" height="48" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Text lines */}
+      <line x1="22" y1="14" x2="58" y2="14" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="20" x2="58" y2="20" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="26" x2="58" y2="26" strokeWidth="1" className="stroke-border-medium" />
+      <line x1="22" y1="32" x2="58" y2="32" strokeWidth="1" className="stroke-border-medium" />
+      {/* Finger shapes on bottom-right corner */}
+      <path d="M52 54 Q52 42 56 38 Q58 36 60 38 Q62 40 62 46 L62 54" strokeWidth="1.5" className="stroke-status-error/60" fill="var(--bg-warm)" />
+      <path d="M58 54 Q58 44 62 40 Q64 38 66 40 Q68 42 68 48 L68 54" strokeWidth="1.5" className="stroke-status-error/60" fill="var(--bg-warm)" />
+      {/* X mark */}
+      <line x1="6" y1="48" x2="12" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="12" y1="48" x2="6" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+    </svg>
   );
 }
 
