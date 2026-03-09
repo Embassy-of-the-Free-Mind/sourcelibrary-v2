@@ -32,7 +32,7 @@ const DECADES = [
   { d: '1490s', n: 13 }, { d: '1500s', n: 37 }, { d: '1510s', n: 25 },
   { d: '1520s', n: 19 }, { d: '1530s', n: 23 }, { d: '1540s', n: 28 },
   { d: '1550s', n: 68 }, { d: '1560s', n: 42 }, { d: '1570s', n: 37 },
-  { d: '1580s', n: 49 }, { d: '1590s', n: 40 }, { d: '1600s', n: 74 },
+  { d: '1580s', n: 49 }, { d: '1590s', n: 40 }, { d: '1600s', n: 167 },
   { d: '1610s', n: 89 }, { d: '1620s', n: 89 }, { d: '1630s', n: 54 },
   { d: '1640s', n: 42 }, { d: '1650s', n: 62 }, { d: '1660s', n: 49 },
   { d: '1670s', n: 46 }, { d: '1680s', n: 32 }, { d: '1690s', n: 59 },
@@ -46,7 +46,7 @@ const DECADES = [
   { d: '1910s', n: 22 }, { d: '1920s', n: 7 },
 ];
 
-const PEAK = 91;
+const PEAK = 167;
 
 const LANGUAGES = [
   { lang: 'Latin', n: 673, color: '#9e4a3a' },
@@ -78,7 +78,7 @@ const MAX_CAT = 626;
 const CENTURIES = [
   { c: '15th', n: 98 },
   { c: '16th', n: 338 },
-  { c: '17th', n: 574 },
+  { c: '17th', n: 667 },
   { c: '18th', n: 446 },
   { c: '19th', n: 263 },
   { c: '20th', n: 131 },
@@ -324,13 +324,16 @@ export default function TwoThousandFirstTranslations() {
         </h2>
         <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
-            The 17th century dominates. The decades from 1600 to 1630 mark the
+            The 17th century dominates. The 1600s spike is the tallest bar on
+            the chart — and 93 of those 167 volumes come from a single work: the{' '}
+            <em>Sancai Tuhui</em> (三才圖會), a Chinese illustrated encyclopedia
+            published in 1609 that covers heaven, earth, and humanity across dozens
+            of volumes. Even without it, the decades from 1600 to 1630 mark the
             golden age of esoteric publishing — Paracelsian medicine, Rosicrucian
-            manifestos, Hermetic philosophy, alchemical compendia all surged
+            manifestos, Hermetic philosophy, and alchemical compendia all surged
             simultaneously. A second peak in the 1780s reflects Enlightenment-era
-            natural philosophy and the revival of interest in ancient texts. What
-            survived in library vaults but never crossed the language barrier is
-            overwhelmingly concentrated in these two periods.
+            natural philosophy. What survived in library vaults but never crossed the
+            language barrier is overwhelmingly concentrated in these two periods.
           </p>
         </div>
 
