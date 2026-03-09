@@ -213,6 +213,54 @@ export default function TabletsPage() {
                 </div>
               </div>
 
+              {/* Detection map: full photo with blue/red bounding boxes */}
+              {tablet.photoBounds && tablet.photoBounds.surfaces.length > 0 && (
+                <div
+                  className="p-4 border-b flex justify-center"
+                  style={{ backgroundColor: '#f0ece3', borderColor: 'var(--border-light)' }}
+                >
+                  <a
+                    href={tablet.cdliUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative inline-block"
+                    style={{ maxWidth: '280px' }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={tablet.photoUrl}
+                      alt={`${tablet.designation} with detected surfaces`}
+                      loading="lazy"
+                      className="block w-full rounded shadow-sm"
+                    />
+                    {tablet.photoBounds.surfaces.map((surface, si) => (
+                      <div
+                        key={si}
+                        className="absolute border-2 pointer-events-none"
+                        style={{
+                          left: `${surface.bbox.x * 100}%`,
+                          top: `${surface.bbox.y * 100}%`,
+                          width: `${surface.bbox.w * 100}%`,
+                          height: `${surface.bbox.h * 100}%`,
+                          borderColor: surface.label === 'obverse' ? '#3b82f6' : '#ef4444',
+                          backgroundColor: surface.label === 'obverse' ? 'rgba(59, 130, 246, 0.08)' : 'rgba(239, 68, 68, 0.08)',
+                        }}
+                      >
+                        <span
+                          className="absolute top-1 left-1 text-[10px] font-mono px-1.5 py-0.5 rounded leading-none"
+                          style={{
+                            backgroundColor: surface.label === 'obverse' ? '#3b82f6' : '#ef4444',
+                            color: 'white',
+                          }}
+                        >
+                          @{surface.label}
+                        </span>
+                      </div>
+                    ))}
+                  </a>
+                </div>
+              )}
+
               {/* Each surface gets its own cropped photo section */}
               {sections.length > 0 ? (
                 <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
