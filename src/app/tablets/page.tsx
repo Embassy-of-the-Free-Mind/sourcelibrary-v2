@@ -202,37 +202,39 @@ export default function TabletsPage() {
 
               {/* Photo + cuneiform signs side by side */}
               <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] min-h-[300px]">
-                {/* Photo */}
+                {/* Photo — sticky so it follows while scrolling through signs */}
                 <div
-                  className="p-5 flex items-start justify-center border-b md:border-b-0 md:border-r"
+                  className="p-4 border-b md:border-b-0 md:border-r"
                   style={{
                     backgroundColor: '#f0ece3',
                     borderColor: 'var(--border-light)',
                   }}
                 >
-                  <a
-                    href={tablet.cdliUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={`View ${tablet.designation} on CDLI`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={tablet.photoUrl}
-                      alt={`Photo of ${tablet.designation}`}
-                      className="rounded max-h-72 object-contain shadow-sm"
-                      loading="lazy"
-                    />
-                  </a>
+                  <div className="md:sticky md:top-4">
+                    <a
+                      href={tablet.cdliUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`View ${tablet.designation} on CDLI`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={tablet.photoUrl}
+                        alt={`Photo of ${tablet.designation}`}
+                        className="rounded w-full object-contain shadow-sm"
+                        loading="lazy"
+                      />
+                    </a>
+                  </div>
                 </div>
 
                 {/* Cuneiform signs + transliteration */}
-                <div className="p-5 overflow-x-auto">
-                  <div className="space-y-4">
+                <div className="p-4 overflow-x-auto">
+                  <div className="space-y-3">
                     {sections.map((section, si) => (
                       <div key={si}>
                         <div
-                          className="text-xs font-semibold uppercase tracking-wider mb-2 pb-1 border-b"
+                          className="text-xs font-semibold uppercase tracking-wider mb-1.5 pb-1 border-b"
                           style={{
                             color: 'var(--accent-gold-dark)',
                             borderColor: 'var(--border-light)',
@@ -240,12 +242,12 @@ export default function TabletsPage() {
                         >
                           @{section.surface}
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                           {section.lines.map((line, li) => (
-                            <div key={li} className="flex gap-3">
+                            <div key={li} className="flex gap-2">
                               {/* Line number */}
                               <span
-                                className="text-xs font-mono w-5 shrink-0 pt-1 text-right"
+                                className="text-xs font-mono w-5 shrink-0 pt-1.5 text-right"
                                 style={{ color: 'var(--text-faint)' }}
                               >
                                 {line.lineNum}
@@ -254,7 +256,7 @@ export default function TabletsPage() {
                               <div className="min-w-0">
                                 {/* Cuneiform signs - large */}
                                 {line.tokens.length > 0 ? (
-                                  <div className="flex flex-wrap gap-x-1 items-baseline leading-tight mb-0.5">
+                                  <div className="flex flex-wrap gap-x-0.5 items-baseline leading-tight">
                                     {line.tokens.map((token, ti) => (
                                       <CuneiformToken key={ti} token={token} />
                                     ))}
@@ -263,7 +265,7 @@ export default function TabletsPage() {
 
                                 {/* ATF transliteration - small below */}
                                 <div
-                                  className="text-xs font-mono leading-relaxed"
+                                  className="text-[10px] font-mono leading-tight"
                                   style={{ color: 'var(--text-faint)' }}
                                 >
                                   {line.text}
