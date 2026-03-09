@@ -146,7 +146,7 @@ async function main() {
   const archivedOnly = !process.argv.includes('--include-remote');
   console.log(`Thumbnail generator — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, archived only: ${archivedOnly}, split only: ${SPLIT_ONLY}`);
 
-  const client = new MongoClient(MONGODB_URI!, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
+  const client = new MongoClient(MONGODB_URI!, { maxPoolSize: 5, serverSelectionTimeoutMS: 30000 });
   await client.connect();
   const db = client.db('bookstore');
 
@@ -156,8 +156,8 @@ async function main() {
   const query: any = SPLIT_ONLY
     ? {
         crop: { $exists: true },
-        cropped_photo: { $exists: true, $regex: /^https:\/\// },
-        thumbnail_blob: { $exists: true, $not: /^failed:/ },
+        cropped_photo: { $regex: /^https:\/\// },
+        thumbnail_blob: { $regex: /^https:\/\// },
       }
     : {
         thumbnail_blob: { $exists: false },
@@ -168,8 +168,12 @@ async function main() {
   }
   if (BOOK_ID) query.book_id = BOOK_ID;
 
-  const totalNeeding = await db.collection('pages').countDocuments(query);
-  console.log(`Pages needing thumbnails: ${totalNeeding}`);
+  if (!SPLIT_ONLY) {
+    const totalNeeding = await db.collection('pages').countDocuments(query);
+    console.log(`Pages needing thumbnails: ${totalNeeding}`);
+  } else {
+    console.log('Split-only mode — skipping count, processing in chunks...');
+  }
 
   const CHUNK_SIZE = 5000;
   let totalSuccess = 0;
@@ -179,25 +183,31 @@ async function main() {
 
   if (SPLIT_ONLY) {
     // In split-only mode, the query matches pages even after regeneration
-    // (thumbnail_blob still exists), so fetch all IDs upfront and process in chunks
-    const allPages = await db.collection('pages')
-      .find(query, {
-        projection: {
-          _id: 1, book_id: 1, page_number: 1,
-          photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1,
-        }
-      })
-      .sort({ book_id: 1, page_number: 1 })
-      .limit(PAGE_LIMIT > 0 ? PAGE_LIMIT : 0)
-      .toArray();
+    // (thumbnail_blob still exists), so paginate by _id to avoid loading all into memory
+    let lastId: any = null;
+    while (true) {
+      const chunkQuery = lastId ? { ...query, _id: { $gt: lastId } } : query;
+      const pages = await db.collection('pages')
+        .find(chunkQuery, {
+          projection: {
+            _id: 1, book_id: 1, page_number: 1,
+            photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1,
+          }
+        })
+        .sort({ _id: 1 })
+        .limit(CHUNK_SIZE)
+        .toArray();
 
-    for (let i = 0; i < allPages.length; i += CHUNK_SIZE) {
-      const chunk = allPages.slice(i, i + CHUNK_SIZE);
-      console.log(`\nChunk: ${chunk.length} pages (${processed} done so far)`);
-      const { success, failed } = await runPool(chunk, db);
+      if (pages.length === 0) break;
+      lastId = pages[pages.length - 1]._id;
+
+      console.log(`\nChunk: ${pages.length} pages (${processed} done so far)`);
+      const { success, failed } = await runPool(pages, db);
       totalSuccess += success;
       totalFailed += failed;
-      processed += chunk.length;
+      processed += pages.length;
+
+      if (PAGE_LIMIT > 0 && processed >= PAGE_LIMIT) break;
     }
   } else {
     while (true) {
