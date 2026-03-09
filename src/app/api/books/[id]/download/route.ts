@@ -1763,14 +1763,13 @@ async function generateScholarlyEpubDownload(
     // Use gallery image's page (full page scan gives best fill), or extracted illustration
     let coverSourceBuffer: Buffer | null = null;
     if (coverGalleryImage) {
-      // Prefer extracted_url (cropped illustration) for tighter framing,
-      // fall back to full page scan if no extracted URL exists
-      const extractedUrl = coverGalleryImage.extracted_url;
+      // Prefer cropped_photo (properly split single page) over extracted_url
+      // (gallery extractions may come from unsplit two-page spreads)
       const coverPage = pages.find(p => p.page_number === coverGalleryImage.page_number);
       const pageUrl = coverPage
         ? ((coverPage as any).cropped_photo || (coverPage as any).archived_photo || coverPage.photo)
         : null;
-      const sourceUrl = extractedUrl || pageUrl || coverGalleryImage.image_url;
+      const sourceUrl = pageUrl || coverGalleryImage.extracted_url || coverGalleryImage.image_url;
       if (sourceUrl) {
         try {
           coverSourceBuffer = await images.fetchBuffer(sourceUrl, { timeout: 60000 });
