@@ -578,38 +578,77 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
       {/* Cluster pills (below viz) */}
       {Object.keys(data.clusters).length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-3">
+        <ClusterPills
+          clusters={data.clusters}
+          selectedCluster={selectedCluster}
+          onSelect={(id) => setSelectedCluster(selectedCluster === id ? null : id)}
+          onClear={() => setSelectedCluster(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+const INITIAL_PILLS = 30;
+
+function ClusterPills({
+  clusters,
+  selectedCluster,
+  onSelect,
+  onClear,
+}: {
+  clusters: Record<string, ClusterInfo>;
+  selectedCluster: number | null;
+  onSelect: (id: number) => void;
+  onClear: () => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const sorted = useMemo(
+    () => Object.values(clusters).sort((a, b) => b.size - a.size),
+    [clusters],
+  );
+  const visible = expanded ? sorted : sorted.slice(0, INITIAL_PILLS);
+  const hasMore = sorted.length > INITIAL_PILLS;
+
+  return (
+    <div className="flex flex-wrap gap-1.5 mt-3">
+      <button
+        onClick={onClear}
+        className={`px-2 py-0.5 rounded text-xs transition-colors ${
+          selectedCluster === null
+            ? 'bg-[var(--text-primary)] text-white'
+            : 'bg-[var(--bg-warm)] text-[var(--text-muted)] hover:bg-[var(--border-light)]'
+        }`}
+      >
+        All
+      </button>
+      {visible.map((cluster) => {
+        const label =
+          cluster.label ||
+          cluster.label_keywords.slice(0, 2).join(', ') ||
+          `Cluster ${cluster.id}`;
+        return (
           <button
-            onClick={() => setSelectedCluster(null)}
+            key={cluster.id}
+            onClick={() => onSelect(cluster.id)}
             className={`px-2 py-0.5 rounded text-xs transition-colors ${
-              selectedCluster === null
-                ? 'bg-[var(--text-primary)] text-white'
+              selectedCluster === cluster.id
+                ? 'bg-[var(--accent-violet)] text-white'
                 : 'bg-[var(--bg-warm)] text-[var(--text-muted)] hover:bg-[var(--border-light)]'
             }`}
           >
-            All
+            {label}
+            <span className="ml-1 opacity-60">{cluster.size}</span>
           </button>
-          {Object.values(data.clusters)
-            .sort((a, b) => b.size - a.size)
-            .slice(0, 18)
-            .map((cluster) => {
-              const label = cluster.label || cluster.label_keywords.slice(0, 2).join(', ') || `Cluster ${cluster.id}`;
-              return (
-                <button
-                  key={cluster.id}
-                  onClick={() => setSelectedCluster(selectedCluster === cluster.id ? null : cluster.id)}
-                  className={`px-2 py-0.5 rounded text-xs transition-colors ${
-                    selectedCluster === cluster.id
-                      ? 'bg-[var(--accent-violet)] text-white'
-                      : 'bg-[var(--bg-warm)] text-[var(--text-muted)] hover:bg-[var(--border-light)]'
-                  }`}
-                >
-                  {label}
-                  <span className="ml-1 opacity-60">{cluster.size}</span>
-                </button>
-              );
-            })}
-        </div>
+        );
+      })}
+      {hasMore && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="px-2 py-0.5 rounded text-xs bg-[var(--bg-warm)] text-[var(--accent-violet)] hover:bg-[var(--border-light)] transition-colors"
+        >
+          {expanded ? 'Show fewer' : `+${sorted.length - INITIAL_PILLS} more`}
+        </button>
       )}
     </div>
   );

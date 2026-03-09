@@ -16,7 +16,7 @@ export default function BookAtlasPage() {
 
   const topClusters = Object.values(data.clusters as Record<string, { label: string; size: number }>)
     .sort((a, b) => b.size - a.size)
-    .slice(0, 10);
+    .slice(0, 20);
 
   const topLanguages = Object.entries(
     data.books.reduce(
