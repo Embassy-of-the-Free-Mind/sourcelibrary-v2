@@ -368,8 +368,8 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                 thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
                 language: book.language,
                 published: book.published,
-                translation_percent: book.pages_count && book.pages_translated
-                  ? Math.round((book.pages_translated / book.pages_count) * 100)
+                translation_percent: book.pages_ocr && book.pages_translated
+                  ? Math.round((book.pages_translated / book.pages_ocr) * 100)
                   : 0,
               }}
               priority={i < 10}

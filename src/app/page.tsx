@@ -55,8 +55,8 @@ const BOOK_PROJECTION = {
   pages_ocr: { $ifNull: ['$pages_ocr', 0] },
   translation_percent: {
     $cond: {
-      if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
-      then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
+      if: { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
+      then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_ocr', 0] }] }, 100] }] },
       else: 0,
     },
   },

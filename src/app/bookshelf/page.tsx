@@ -137,8 +137,8 @@ function BookshelfCard({ entry }: { entry: BookshelfEntryWithBook }) {
     ? Math.round(((entry.last_read_page_number || 0) / entry.book.pages_count) * 100)
     : 0;
 
-  const translationPercent = entry.book.pages_count && entry.book.pages_count > 0
-    ? Math.round((entry.book.pages_translated || 0) / entry.book.pages_count * 100)
+  const translationPercent = entry.book.pages_ocr && entry.book.pages_ocr > 0
+    ? Math.round((entry.book.pages_translated || 0) / entry.book.pages_ocr * 100)
     : 0;
 
   const continueUrl = entry.last_read_page_id

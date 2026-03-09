@@ -50,9 +50,9 @@ export const GET = withAuth(async (request, session) => {
               { $gt: [{ $size: { $ifNull: ['$editions', []] } }, 0] }, 1, 0,
             ] } },
             fullyTranslated: { $sum: { $cond: [{ $and: [
-              { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+              { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
               { $gte: [
-                { $divide: [{ $ifNull: ['$pages_translated', 0] }, { $max: [{ $ifNull: ['$pages_count', 0] }, 1] }] },
+                { $divide: [{ $ifNull: ['$pages_translated', 0] }, { $max: [{ $ifNull: ['$pages_ocr', 0] }, 1] }] },
                 0.95,
               ] },
             ]}, 1, 0] } },

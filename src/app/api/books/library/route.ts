@@ -146,8 +146,8 @@ export async function GET(request: NextRequest) {
               },
               else: {
                 $cond: {
-                  if: { $gt: ['$pages_count', 0] },
-                  then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+                  if: { $gt: ['$pages_ocr', 0] },
+                  then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_ocr'] }, 100] }] },
                   else: 0,
                 },
               },

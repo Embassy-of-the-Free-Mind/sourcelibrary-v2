@@ -99,6 +99,7 @@ export function computeKdpScore(
     quality_score?: number;
     pages_translated?: number;
     pages_count?: number;
+    pages_ocr?: number;
     read_count?: number;
     is_first_translation?: boolean;
     reading_summary?: unknown;
@@ -114,9 +115,9 @@ export function computeKdpScore(
   const quality = Math.round(((book.quality_score || 0) / 100) * 30);
 
   // 2. Translation completeness (0-25): below 40% = 0
-  const pagesCount = book.pages_count || 0;
+  const pagesOcr = book.pages_ocr || 0;
   const pagesTranslated = book.pages_translated || 0;
-  const translationPct = pagesCount > 0 ? pagesTranslated / pagesCount : 0;
+  const translationPct = pagesOcr > 0 ? pagesTranslated / pagesOcr : 0;
   const translation = translationPct < 0.4 ? 0 : Math.round(translationPct * 25);
 
   // 3. EFM relevance (0-20): entity centrality (per-entity book_count capped at 10)

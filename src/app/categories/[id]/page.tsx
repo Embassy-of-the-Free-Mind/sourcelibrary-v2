@@ -77,8 +77,8 @@ async function getCategoryBooks(id: string): Promise<Book[]> {
       $addFields: {
         translation_percent: {
           $cond: {
-            if: { $gt: ['$pages_count', 0] },
-            then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+            if: { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
+            then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_ocr', 0] }] }, 100] }] },
             else: 0
           }
         }

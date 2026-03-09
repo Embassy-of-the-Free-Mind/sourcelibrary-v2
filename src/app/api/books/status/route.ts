@@ -81,9 +81,10 @@ export async function GET() {
     // Transform to status objects
     const statuses: BookStatus[] = books.map(book => {
       const totalPages = book.total_pages || 0;
+      const pagesWithOcr = book.pages_with_ocr || 0;
       const translatedPages = book.pages_with_translation || 0;
-      const translationPercent = totalPages > 0
-        ? Math.round((translatedPages / totalPages) * 100)
+      const translationPercent = pagesWithOcr > 0
+        ? Math.round((translatedPages / pagesWithOcr) * 100)
         : 0;
 
       // Can generate summary if at least 1 page is translated
