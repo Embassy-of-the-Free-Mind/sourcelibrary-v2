@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
+import { buildBookSearchStage, buildPageSearchStage, type BookSearchFilters } from '@/lib/atlas-search';
 
 export const preferredRegion = 'fra1';
 
@@ -145,20 +146,44 @@ export async function GET(request: NextRequest) {
     const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
     const [bookDocs, pageDocs] = await Promise.all([
-      // --- Book text search (skip when searching within a specific book or pages_only mode) ---
+      // --- Book search via Atlas Search (skip when searching within a specific book or pages_only mode) ---
       (async () => {
         if (bookId || pagesOnly) return [];
-        const bookFilters = buildBookFilters();
         try {
-          return await db.collection('books')
-            .find(
-              { $text: { $search: query }, ...bookFilters },
-              { projection: { score: { $meta: 'textScore' } } }
-            )
-            .sort({ score: { $meta: 'textScore' } })
-            .limit(limit)
-            .toArray();
+          const searchFilters: BookSearchFilters = {};
+          if (language) searchFilters.language = language;
+          if (category) searchFilters.category = category;
+          if (firstTranslation === 'true') searchFilters.isFirstTranslation = true;
+          if (hasTranslation === 'true') searchFilters.hasTranslation = true;
+          if (year) {
+            const yearNum = parseInt(year);
+            if (!isNaN(yearNum)) searchFilters.yearExact = yearNum;
+          } else {
+            if (yearFrom) { const n = parseInt(yearFrom); if (!isNaN(n)) searchFilters.yearFrom = n; }
+            if (yearTo) { const n = parseInt(yearTo); if (!isNaN(n)) searchFilters.yearTo = n; }
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const pipeline: any[] = [buildBookSearchStage(query, searchFilters)];
+
+          // Post-filters for fields not in the Atlas Search index
+          const postMatch: Record<string, unknown> = {};
+          if (hasDoi === 'true') postMatch.doi = { $exists: true, $ne: null };
+          if (library) postMatch['image_source.provider'] = library;
+          if (dateFrom || dateTo) {
+            postMatch.published = {};
+            if (dateFrom) (postMatch.published as Record<string, string>).$gte = dateFrom;
+            if (dateTo) (postMatch.published as Record<string, string>).$lte = dateTo;
+          }
+          if (Object.keys(postMatch).length > 0) {
+            pipeline.push({ $limit: Math.max(limit * 3, 60) });
+            pipeline.push({ $match: postMatch });
+          }
+          pipeline.push({ $limit: limit });
+
+          return await db.collection('books').aggregate(pipeline).toArray();
         } catch {
+          const bookFilters = buildBookFilters();
           return await db.collection('books')
             .find({
               $or: [
@@ -205,17 +230,23 @@ export async function GET(request: NextRequest) {
         const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;
 
         try {
-          return await db.collection('pages')
-            .find(
-              { $text: { $search: query }, ...pageFilter },
-              { projection: { score: { $meta: 'textScore' }, id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } }
-            )
-            .sort({ score: { $meta: 'textScore' } })
-            .limit(pageLimit)
-            .maxTimeMS(5000)
-            .toArray();
+          // Extract book IDs for Atlas Search filter
+          let searchBookIds: string | string[] | undefined;
+          if (pageFilter.book_id) {
+            if (typeof pageFilter.book_id === 'string') {
+              searchBookIds = pageFilter.book_id;
+            } else if (typeof pageFilter.book_id === 'object' && '$in' in (pageFilter.book_id as Record<string, unknown>)) {
+              searchBookIds = (pageFilter.book_id as { $in: string[] }).$in;
+            }
+          }
+
+          return await db.collection('pages').aggregate([
+            buildPageSearchStage(query, searchBookIds),
+            { $limit: pageLimit },
+            { $project: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } },
+          ]).toArray();
         } catch {
-          // Fallback: skip page search if text index unavailable or query timed out
+          // Fallback: skip page search if Atlas Search index unavailable
           return [];
         }
       })(),
@@ -326,22 +357,28 @@ export async function GET(request: NextRequest) {
 
         const nearbyPattern = new RegExp(`\\b(${nearbyYears.join('|')})\\b`);
 
-        // Use $text for nearby search too, with year range filter
+        // Use Atlas Search for nearby books with year range filter
         let nearbyBooks;
         try {
-          const nearbyFilter: Record<string, unknown> = {
-            $text: { $search: query },
-            published: { $regex: nearbyPattern },
+          const nearbyFilters: BookSearchFilters = {
+            yearFrom: yearNum - 5,
+            yearTo: yearNum + 5,
           };
-          if (seenBooks.size > 0) nearbyFilter.id = { $nin: Array.from(seenBooks) };
-          if (language) nearbyFilter.language = language;
-          if (category) nearbyFilter.categories = category;
+          if (language) nearbyFilters.language = language;
+          if (category) nearbyFilters.category = category;
 
-          nearbyBooks = await db.collection('books')
-            .find(nearbyFilter, { projection: { score: { $meta: 'textScore' } } })
-            .sort({ score: { $meta: 'textScore' } })
-            .limit(10)
-            .toArray();
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const nearbyPipeline: any[] = [
+            buildBookSearchStage(query, nearbyFilters),
+            { $limit: 20 },
+          ];
+          // Exclude exact year and already-seen books
+          const nearbyExclude: Record<string, unknown> = { year: { $ne: yearNum } };
+          if (seenBooks.size > 0) nearbyExclude.id = { $nin: Array.from(seenBooks) };
+          nearbyPipeline.push({ $match: nearbyExclude });
+          nearbyPipeline.push({ $limit: 10 });
+
+          nearbyBooks = await db.collection('books').aggregate(nearbyPipeline).toArray();
         } catch {
           // Fallback: regex
           const nearbyFilter: Record<string, unknown> = {

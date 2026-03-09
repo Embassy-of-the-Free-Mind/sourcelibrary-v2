@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { buildBookSearchStage } from '@/lib/atlas-search';
 
 export const preferredRegion = 'fra1';
 
@@ -93,20 +94,14 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
   let books;
 
   try {
-    // Use $text index for fast, relevance-ranked search
-    const projection = {
-      id: 1, title: 1, display_title: 1, author: 1,
-      language: 1, published: 1, pages_count: 1, pages_translated: 1,
-      thumbnail: 1, thumbnail_blob: 1,
-      score: { $meta: 'textScore' },
-    };
-    books = await db.collection('books')
-      .find({ $text: { $search: query }, hidden: { $ne: true } }, { projection })
-      .sort({ score: { $meta: 'textScore' } })
-      .limit(limit)
-      .toArray();
+    // Use Atlas Search for fast, relevance-ranked search
+    books = await db.collection('books').aggregate([
+      buildBookSearchStage(query),
+      { $limit: limit },
+      { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 } },
+    ]).toArray();
   } catch {
-    // Fallback to regex
+    // Fallback to regex if Atlas Search index not available
     books = await db.collection('books')
       .find({
         $or: [
@@ -117,7 +112,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
         ],
         hidden: { $ne: true },
       })
-      .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, thumbnail: 1, thumbnail_blob: 1 })
+      .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
       .limit(limit)
       .toArray();
   }
