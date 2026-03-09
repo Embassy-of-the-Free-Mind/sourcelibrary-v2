@@ -13,6 +13,7 @@
  *   npx tsx scripts/generate-thumbnails-fast.ts --concurrency=50    # more parallel
  *   npx tsx scripts/generate-thumbnails-fast.ts --limit=10000       # page limit
  *   npx tsx scripts/generate-thumbnails-fast.ts --book-id=abc123    # single book
+ *   npx tsx scripts/generate-thumbnails-fast.ts --split-only       # regenerate split page thumbnails
  */
 
 import { MongoClient } from 'mongodb';
@@ -22,6 +23,7 @@ import { put } from '@vercel/blob';
 const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '20', 10);
 const PAGE_LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 const BOOK_ID = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
+const SPLIT_ONLY = process.argv.includes('--split-only');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
@@ -142,20 +144,26 @@ async function runPool(pages: any[], db: any) {
 
 async function main() {
   const archivedOnly = !process.argv.includes('--include-remote');
-  console.log(`Thumbnail generator — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, archived only: ${archivedOnly}`);
+  console.log(`Thumbnail generator — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, archived only: ${archivedOnly}, split only: ${SPLIT_ONLY}`);
 
   const client = new MongoClient(MONGODB_URI!, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 
-  // Prioritize pages with archived_photo (Vercel Blob — guaranteed accessible)
-  // Pages with only remote URLs may 403 and are handled in a second pass
+  // --split-only: regenerate thumbnail_blob for split pages that have wrong (unsplit) thumbnails
+  // Normal mode: generate thumbnail_blob for pages that don't have one yet
   const ARCHIVED_ONLY = !process.argv.includes('--include-remote');
-  const query: any = {
-    thumbnail_blob: { $exists: false },
-    photo: { $exists: true, $nin: [null, ''] },
-  };
-  if (ARCHIVED_ONLY) {
+  const query: any = SPLIT_ONLY
+    ? {
+        crop: { $exists: true },
+        cropped_photo: { $exists: true, $regex: /^https:\/\// },
+        thumbnail_blob: { $exists: true, $not: /^failed:/ },
+      }
+    : {
+        thumbnail_blob: { $exists: false },
+        photo: { $exists: true, $nin: [null, ''] },
+      };
+  if (!SPLIT_ONLY && ARCHIVED_ONLY) {
     query.archived_photo = { $regex: /^https:\/\// };
   }
   if (BOOK_ID) query.book_id = BOOK_ID;
@@ -169,9 +177,10 @@ async function main() {
   let processed = 0;
   const startTime = Date.now();
 
-  while (true) {
-    // Re-query each chunk to skip pages completed by other workers
-    const pages = await db.collection('pages')
+  if (SPLIT_ONLY) {
+    // In split-only mode, the query matches pages even after regeneration
+    // (thumbnail_blob still exists), so fetch all IDs upfront and process in chunks
+    const allPages = await db.collection('pages')
       .find(query, {
         projection: {
           _id: 1, book_id: 1, page_number: 1,
@@ -179,18 +188,41 @@ async function main() {
         }
       })
       .sort({ book_id: 1, page_number: 1 })
-      .limit(CHUNK_SIZE)
+      .limit(PAGE_LIMIT > 0 ? PAGE_LIMIT : 0)
       .toArray();
 
-    if (pages.length === 0) break;
+    for (let i = 0; i < allPages.length; i += CHUNK_SIZE) {
+      const chunk = allPages.slice(i, i + CHUNK_SIZE);
+      console.log(`\nChunk: ${chunk.length} pages (${processed} done so far)`);
+      const { success, failed } = await runPool(chunk, db);
+      totalSuccess += success;
+      totalFailed += failed;
+      processed += chunk.length;
+    }
+  } else {
+    while (true) {
+      // Re-query each chunk to skip pages completed by other workers
+      const pages = await db.collection('pages')
+        .find(query, {
+          projection: {
+            _id: 1, book_id: 1, page_number: 1,
+            photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1,
+          }
+        })
+        .sort({ book_id: 1, page_number: 1 })
+        .limit(CHUNK_SIZE)
+        .toArray();
 
-    console.log(`\nChunk: ${pages.length} pages (${processed} done so far)`);
-    const { success, failed } = await runPool(pages, db);
-    totalSuccess += success;
-    totalFailed += failed;
-    processed += pages.length;
+      if (pages.length === 0) break;
 
-    if (PAGE_LIMIT > 0 && processed >= PAGE_LIMIT) break;
+      console.log(`\nChunk: ${pages.length} pages (${processed} done so far)`);
+      const { success, failed } = await runPool(pages, db);
+      totalSuccess += success;
+      totalFailed += failed;
+      processed += pages.length;
+
+      if (PAGE_LIMIT > 0 && processed >= PAGE_LIMIT) break;
+    }
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
