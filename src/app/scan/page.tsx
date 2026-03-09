@@ -26,6 +26,15 @@ interface Metadata {
   ocr_text: string;
 }
 
+interface CatalogMatch {
+  source: 'open_library' | 'google_books' | 'ustc';
+  title: string;
+  author?: string;
+  year?: string | number;
+  language?: string;
+  url?: string;
+}
+
 type Corners = [number, number][];
 
 const BATCH_SIZE = 5;
@@ -46,6 +55,7 @@ export default function ScanPage() {
   const [creating, setCreating] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0 });
   const [error, setError] = useState<string | null>(null);
+  const [catalogMatches, setCatalogMatches] = useState<CatalogMatch[]>([]);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const pageInputRef = useRef<HTMLInputElement>(null);
@@ -126,6 +136,7 @@ export default function ScanPage() {
         year: data.year?.toString() || '',
         ocr_text: data.ocr_text || '',
       });
+      setCatalogMatches(data.catalog_matches || []);
 
       if (data.corners && data.corners.length === 4) {
         const { blob, previewUrl } = await correctImage(file, data.corners);
@@ -509,6 +520,38 @@ export default function ScanPage() {
                 </div>
               )}
 
+              {/* Catalog matches */}
+              {catalogMatches.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs text-muted font-medium uppercase tracking-wide">Catalog matches</p>
+                  <div className="space-y-2">
+                    {catalogMatches.map((match, i) => (
+                      <button
+                        key={i}
+                        onClick={() => {
+                          setMetadata(m => ({
+                            ...m,
+                            title: match.title || m.title,
+                            author: match.author || m.author,
+                            language: match.language || m.language,
+                            year: match.year?.toString() || m.year,
+                          }));
+                        }}
+                        className="w-full text-left p-3 border border-border-light rounded-lg hover:border-accent-rust/40 hover:bg-warm/50 transition-colors"
+                      >
+                        <p className="text-sm font-medium text-primary leading-snug">{match.title}</p>
+                        <p className="text-xs text-muted mt-0.5">
+                          {[match.author, match.year, match.language].filter(Boolean).join(' · ')}
+                          <span className="ml-1 opacity-60">
+                            ({match.source === 'open_library' ? 'Open Library' : match.source === 'google_books' ? 'Google Books' : 'USTC'})
+                          </span>
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-3">
                 <Field
                   label="Title"
@@ -544,6 +587,7 @@ export default function ScanPage() {
                     if (correctedPreview) URL.revokeObjectURL(correctedPreview);
                     setCorrectedPreview(null);
                     setMetadata({ title: '', author: '', language: '', year: '', ocr_text: '' });
+                    setCatalogMatches([]);
                     if (titleInputRef.current) titleInputRef.current.value = '';
                   }}
                   className="flex-1 py-3 border border-border-medium rounded-lg text-secondary text-sm font-medium"
