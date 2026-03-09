@@ -129,10 +129,12 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
   const animFrameRef = useRef<number>(0);
 
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [selectedBookIdx, setSelectedBookIdx] = useState<number | null>(null);
   const [colorMode, setColorMode] = useState<ColorMode>('cluster');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCluster, setSelectedCluster] = useState<number | null>(null);
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
+  const [selectedBookPos, setSelectedBookPos] = useState<{ x: number; y: number } | null>(null);
 
   // Search filter
   const searchMatches = useMemo(() => {
@@ -337,13 +339,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       const isClusterMatch = hasCluster ? b.cluster === selectedCluster : true;
       const isHighlighted = isSearchMatch && isClusterMatch;
       const isHovered = i === hoveredIdx;
+      const isSelected = i === selectedBookIdx;
 
       const hex = getBookColor(b, colorMode);
       const [r, g, bb] = hexToRgb(hex);
 
-      if (isHighlighted || isHovered) {
+      if (isHighlighted || isHovered || isSelected) {
         colorAttr.setXYZ(i, r, g, bb);
-        sizeAttr.setX(i, isHovered ? POINT_SIZE * 3 : POINT_SIZE);
+        sizeAttr.setX(i, isHovered || isSelected ? POINT_SIZE * 3 : POINT_SIZE);
       } else {
         // Dim non-matches
         colorAttr.setXYZ(i, r * 0.2, g * 0.2, bb * 0.2);
@@ -353,7 +356,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
     colorAttr.needsUpdate = true;
     sizeAttr.needsUpdate = true;
-  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, data.books]);
+  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, selectedBookIdx, data.books]);
 
   // ── Mouse move → raycasting ──
   const handlePointerMove = useCallback(
@@ -387,10 +390,13 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
   const handleClick = useCallback(() => {
     if (hoveredIdx !== null) {
-      const book = data.books[hoveredIdx];
-      window.open(`/book/${book.slug}`, '_blank');
+      setSelectedBookIdx(hoveredIdx);
+      if (tooltipPos) setSelectedBookPos(tooltipPos);
+    } else {
+      setSelectedBookIdx(null);
+      setSelectedBookPos(null);
     }
-  }, [hoveredIdx, data.books]);
+  }, [hoveredIdx, tooltipPos]);
 
   // Reset
   const resetView = useCallback(() => {
@@ -513,8 +519,8 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         onPointerMove={handlePointerMove}
         onClick={handleClick}
       >
-        {/* Tooltip */}
-        {hoveredBook && tooltipPos && (
+        {/* Hover tooltip (brief, follows cursor) */}
+        {hoveredBook && tooltipPos && selectedBookIdx !== hoveredIdx && (
           <div
             className="absolute pointer-events-none bg-white border border-[var(--border-medium)] rounded-lg shadow-lg p-3 max-w-[280px] z-10"
             style={{
@@ -525,32 +531,74 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             <div className="font-serif text-sm font-medium text-[var(--text-primary)] leading-tight mb-1">
               {hoveredBook.title}
             </div>
-            <div className="text-xs text-[var(--text-muted)] mb-1.5">
+            <div className="text-xs text-[var(--text-muted)]">
               {hoveredBook.author !== 'Unknown' ? hoveredBook.author : ''}
               {hoveredBook.author !== 'Unknown' && hoveredBook.year ? ' · ' : ''}
               {hoveredBook.year || ''}
             </div>
-            <div className="flex flex-wrap gap-1">
-              {hoveredBook.categories.slice(0, 3).map((cat) => (
-                <span
-                  key={cat}
-                  className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-secondary)]"
-                >
-                  {cat.replace(/-/g, ' ')}
-                </span>
-              ))}
-              <span className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-muted)]">
-                {hoveredBook.language}
-              </span>
-            </div>
-            {hoveredBook.first_translation && (
-              <div className="text-[10px] text-[var(--accent-rust)] mt-1 font-medium">
-                First English Translation
-              </div>
-            )}
-            <div className="text-[10px] text-[var(--text-faint)] mt-1">Click to open</div>
           </div>
         )}
+
+        {/* Selected book panel (persistent, clickable title) */}
+        {selectedBookIdx !== null && selectedBookPos && (() => {
+          const book = data.books[selectedBookIdx];
+          if (!book) return null;
+          const clusterInfo = data.clusters[String(book.cluster)];
+          return (
+            <div
+              className="absolute bg-white border border-[var(--border-medium)] rounded-lg shadow-lg p-3 max-w-[280px] z-20"
+              style={{
+                left: Math.min(selectedBookPos.x + 12, (containerRef.current?.clientWidth ?? 600) - 290),
+                top: Math.max(selectedBookPos.y - 100, 10),
+              }}
+            >
+              <button
+                onClick={(e) => { e.stopPropagation(); setSelectedBookIdx(null); setSelectedBookPos(null); }}
+                className="absolute top-1.5 right-2 text-[var(--text-faint)] hover:text-[var(--text-secondary)] text-sm leading-none"
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <a
+                href={`/book/${book.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-serif text-sm font-medium text-[var(--accent-violet)] hover:underline leading-tight block mb-1 pr-4"
+              >
+                {book.title}
+              </a>
+              <div className="text-xs text-[var(--text-muted)] mb-1.5">
+                {book.author !== 'Unknown' ? book.author : ''}
+                {book.author !== 'Unknown' && book.year ? ' · ' : ''}
+                {book.year || ''}
+                {book.pages > 0 ? ` · ${book.pages} pp.` : ''}
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {book.categories.slice(0, 3).map((cat) => (
+                  <span
+                    key={cat}
+                    className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-secondary)]"
+                  >
+                    {cat.replace(/-/g, ' ')}
+                  </span>
+                ))}
+                <span className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-muted)]">
+                  {book.language}
+                </span>
+              </div>
+              {book.first_translation && (
+                <div className="text-[10px] text-[var(--accent-rust)] mt-1 font-medium">
+                  First English Translation
+                </div>
+              )}
+              {clusterInfo && (
+                <div className="text-[10px] text-[var(--text-faint)] mt-1.5">
+                  Cluster: {clusterInfo.label} ({clusterInfo.size} books)
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Legend (overlay) */}
         <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm rounded-lg p-2.5 border border-white/10 max-w-[220px]">
@@ -572,7 +620,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
         {/* Controls hint */}
         <div className="absolute bottom-3 right-3 text-[10px] text-white/40 bg-black/40 px-2 py-1 rounded">
-          Drag to rotate · Scroll to zoom · Right-drag to pan
+          Click a point to inspect · Drag to rotate · Scroll to zoom
         </div>
       </div>
 
