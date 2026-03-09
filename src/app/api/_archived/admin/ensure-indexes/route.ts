@@ -1131,6 +1131,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Pages - ocr.updated_at for recent OCR throughput queries
+    // Query: { 'ocr.updated_at': { $gte } } — 1.84M pages, needs index
+    try {
+      await db.collection('pages').createIndex(
+        { 'ocr.updated_at': -1 },
+        { name: 'pages_ocr_updated_idx', background: true, sparse: true }
+      );
+      results['pages.pages_ocr_updated_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_ocr_updated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
