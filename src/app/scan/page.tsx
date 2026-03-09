@@ -7,6 +7,7 @@ import type { ProcessedFile } from '@/lib/scan/image-utils';
 import ReviewGrid from '@/components/scan/ReviewGrid';
 
 type Step =
+  | 'onboarding'
   | 'title-page'
   | 'analyzing'
   | 'confirm'
@@ -28,7 +29,7 @@ type Corners = [number, number][];
 const BATCH_SIZE = 5;
 
 export default function ScanPage() {
-  const [step, setStep] = useState<Step>('title-page');
+  const [step, setStep] = useState<Step>('onboarding');
   const [titlePageFile, setTitlePageFile] = useState<File | null>(null);
   const [correctedBlob, setCorrectedBlob] = useState<Blob | null>(null);
   const [correctedPreview, setCorrectedPreview] = useState<string | null>(null);
@@ -260,7 +261,7 @@ export default function ScanPage() {
     pages.forEach(p => URL.revokeObjectURL(p.thumbnailUrl));
     if (correctedPreview) URL.revokeObjectURL(correctedPreview);
 
-    setStep('title-page');
+    setStep('onboarding');
     setTitlePageFile(null);
     setCorrectedBlob(null);
     setCorrectedPreview(null);
@@ -293,13 +294,66 @@ export default function ScanPage() {
             </div>
           )}
 
+          {/* Step 0: Onboarding */}
+          {step === 'onboarding' && (
+            <div className="space-y-8 max-w-md mx-auto">
+              <div className="text-center">
+                <h1 className="font-serif text-2xl text-primary mb-2">Scan a Book</h1>
+                <p className="text-muted text-sm">
+                  Digitize a rare book using your phone&apos;s camera
+                </p>
+              </div>
+
+              {/* How it works */}
+              <div className="space-y-4">
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wider">How it works</h2>
+                <div className="space-y-3">
+                  <StepPreview
+                    number="1"
+                    title="Photograph the title page"
+                    description="AI extracts the title, author, and language"
+                  />
+                  <StepPreview
+                    number="2"
+                    title="Photograph each page"
+                    description="Use your native camera app, then select all photos at once"
+                  />
+                  <StepPreview
+                    number="3"
+                    title="Review and upload"
+                    description="Reorder if needed, then upload. AI handles OCR and translation."
+                  />
+                </div>
+              </div>
+
+              {/* Tips */}
+              <div className="space-y-3">
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wider">Tips for best results</h2>
+                <div className="bg-warm rounded-xl p-4 space-y-3 text-sm text-secondary">
+                  <Tip text="Use good, even lighting — avoid harsh shadows across the page" />
+                  <Tip text="Shoot straight down, keeping the camera parallel to the page" />
+                  <Tip text="Flatten the book as much as possible — hold the spine open" />
+                  <Tip text="Make sure all text is in frame, with a small margin around edges" />
+                  <Tip text="One page per photo — avoid capturing two-page spreads" />
+                </div>
+              </div>
+
+              <button
+                onClick={() => setStep('title-page')}
+                className="w-full py-3.5 bg-accent-rust text-white rounded-lg font-medium text-sm"
+              >
+                Start Scanning
+              </button>
+            </div>
+          )}
+
           {/* Step 1: Capture title page */}
           {step === 'title-page' && (
             <div className="text-center space-y-6 max-w-md mx-auto">
               <div>
-                <h1 className="font-serif text-2xl text-primary mb-2">Scan a Book</h1>
+                <h1 className="font-serif text-2xl text-primary mb-2">Title Page</h1>
                 <p className="text-muted text-sm">
-                  Start by photographing the title page
+                  Photograph the title page — the AI will extract the book&apos;s metadata
                 </p>
               </div>
 
@@ -313,7 +367,7 @@ export default function ScanPage() {
                       </svg>
                     </div>
                     <p className="text-secondary font-medium">Tap to photograph title page</p>
-                    <p className="text-muted text-xs">The AI will extract title, author, and language</p>
+                    <p className="text-muted text-xs">Or choose from camera roll</p>
                   </div>
                 </div>
                 <input
@@ -561,6 +615,35 @@ function Field({ label, value, onChange, required }: {
         required={required}
         className="w-full px-3 py-2.5 border border-border-medium rounded-lg text-primary bg-white text-sm focus:outline-none focus:border-accent-rust/40"
       />
+    </div>
+  );
+}
+
+function StepPreview({ number, title, description }: {
+  number: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex gap-3 items-start">
+      <div className="w-7 h-7 shrink-0 rounded-full bg-accent-rust/10 text-accent-rust text-xs font-semibold flex items-center justify-center mt-0.5">
+        {number}
+      </div>
+      <div>
+        <p className="text-secondary font-medium text-sm">{title}</p>
+        <p className="text-muted text-xs">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+function Tip({ text }: { text: string }) {
+  return (
+    <div className="flex gap-2.5 items-start">
+      <svg className="w-4 h-4 text-accent-sage-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+      </svg>
+      <p>{text}</p>
     </div>
   );
 }
