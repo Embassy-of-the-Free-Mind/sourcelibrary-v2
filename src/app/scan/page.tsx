@@ -365,7 +365,7 @@ export default function ScanPage() {
                       />
                       <IllustratedTip
                         diagram={<DiagramFlattenBook />}
-                        text="Flatten the spine"
+                        text="Hold pages flat"
                       />
                       <IllustratedTip
                         diagram={<DiagramOnePage />}
