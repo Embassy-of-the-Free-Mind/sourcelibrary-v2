@@ -79,6 +79,17 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
   const targetPageIds = job.config?.page_ids || [];
 
+  // Fetch book metadata for translation context (title, author, year)
+  const bookDoc = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1 } }
+  );
+  const bookContext = bookDoc ? {
+    title: bookDoc.display_title || bookDoc.title,
+    author: bookDoc.author,
+    year: bookDoc.year || bookDoc.published,
+  } : undefined;
+
   // Update job status to processing (if still pending)
   if (job.status === 'pending') {
     await jobs.updateOne(
@@ -175,7 +186,8 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       'English',
       context ?? undefined,
       customPrompt,
-      modelId
+      modelId,
+      bookContext
     );
 
     const durationMs = Date.now() - startTime;

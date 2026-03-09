@@ -251,6 +251,16 @@ export const POST = withAuth(async (request: NextRequest) => {
       if (!textToTranslate) {
         return NextResponse.json({ error: 'ocrText required for translation' }, { status: 400 });
       }
+      // Fetch book metadata for translation context
+      const pageDoc = await db.collection('pages').findOne({ id: pageId }, { projection: { book_id: 1 } });
+      let bookCtx: { title?: string; author?: string; year?: number | string } | undefined;
+      if (pageDoc?.book_id) {
+        const bookDoc = await db.collection('books').findOne(
+          { $or: [{ _id: pageDoc.book_id }, { id: pageDoc.book_id }] },
+          { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1 } }
+        );
+        if (bookDoc) bookCtx = { title: bookDoc.display_title || bookDoc.title, author: bookDoc.author, year: bookDoc.year || bookDoc.published };
+      }
       const translationStart = performance.now();
       const translationResult = await performTranslation(
         textToTranslate,
@@ -258,7 +268,8 @@ export const POST = withAuth(async (request: NextRequest) => {
         targetLanguage,
         previousPage?.translation,
         promptRefs.translation?.text,
-        model
+        model,
+        bookCtx
       );
       results.translation = translationResult.text;
       totalUsage.inputTokens += translationResult.usage.inputTokens;

@@ -196,7 +196,8 @@ export async function performTranslation(
   targetLanguage: string,
   previousPageTranslation?: string,
   customPrompt?: string,
-  modelId: string = DEFAULT_MODEL
+  modelId: string = DEFAULT_MODEL,
+  bookContext?: { title?: string; author?: string; year?: number | string }
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
@@ -206,6 +207,15 @@ export async function performTranslation(
   let prompt = basePrompt
     .replace('{source_language}', sourceLanguage)
     .replace('{target_language}', targetLanguage);
+
+  // Inject book metadata context so the model knows what work it's translating
+  if (bookContext && (bookContext.title || bookContext.author || bookContext.year)) {
+    const parts = [];
+    if (bookContext.title) parts.push(`Title: ${bookContext.title}`);
+    if (bookContext.author) parts.push(`Author: ${bookContext.author}`);
+    if (bookContext.year) parts.push(`Date: ${bookContext.year}`);
+    prompt += `\n\n**Source work:** ${parts.join(' | ')}`;
+  }
 
   prompt += isEnglish
     ? `\n\n**Text to modernize:**\n${ocrText}`
