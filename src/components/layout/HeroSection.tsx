@@ -52,7 +52,7 @@ function HeroSignUp() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Your email address"
           required
-          className="flex-1 px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white placeholder-white/40 text-sm outline-none border border-white/20 focus:border-white/50 transition-colors"
+          className="flex-1 px-4 py-3 rounded-lg bg-white text-stone-900 placeholder-stone-400 text-sm outline-none border border-white focus:ring-2 focus:ring-white/50 transition-colors"
         />
         <button
           type="submit"
