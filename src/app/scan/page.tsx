@@ -505,7 +505,15 @@ export default function ScanPage() {
           )}
 
           {/* Step 2: Confirm metadata */}
-          {step === 'confirm' && (
+          {step === 'confirm' && creating && (
+            <div className="text-center space-y-4 max-w-md mx-auto py-12">
+              <div className="w-10 h-10 border-2 border-accent-rust border-t-transparent rounded-full animate-spin mx-auto" />
+              <p className="text-secondary font-medium">Creating book...</p>
+              <p className="text-muted text-xs">Setting up {metadata.title || 'your book'}</p>
+            </div>
+          )}
+
+          {step === 'confirm' && !creating && (
             <div className="space-y-5 max-w-md mx-auto">
               <h1 className="font-serif text-xl text-primary">Confirm Book Details</h1>
 
@@ -596,10 +604,10 @@ export default function ScanPage() {
                 </button>
                 <button
                   onClick={handleConfirmAndCreate}
-                  disabled={!metadata.title || creating}
+                  disabled={!metadata.title}
                   className="flex-1 py-3 bg-accent-rust text-white rounded-lg text-sm font-medium disabled:opacity-50"
                 >
-                  {creating ? 'Creating...' : 'Continue'}
+                  Continue
                 </button>
               </div>
             </div>
@@ -614,11 +622,29 @@ export default function ScanPage() {
                 </h1>
                 <p className="text-muted text-sm">
                   {pages.length === 0
-                    ? 'Add remaining pages from your camera roll'
+                    ? 'Now add the remaining pages'
                     : `${totalPageCount} pages total (1 title + ${pages.length} added)`
                   }
                 </p>
               </div>
+
+              {/* Instructions (only shown before first photos added) */}
+              {pages.length === 0 && (
+                <div className="bg-warm rounded-xl p-4 space-y-3 text-sm">
+                  <div className="flex gap-3 items-start">
+                    <span className="flex-none w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs flex items-center justify-center font-medium">1</span>
+                    <p className="text-secondary">Photograph all pages with your phone&apos;s camera app first. Work through the book page by page.</p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="flex-none w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs flex items-center justify-center font-medium">2</span>
+                    <p className="text-secondary">Then come back here and tap <strong>Add Photos</strong> to select them all at once from your camera roll.</p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="flex-none w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs flex items-center justify-center font-medium">3</span>
+                    <p className="text-secondary">Photos are automatically sorted by capture time. You can reorder or delete before uploading.</p>
+                  </div>
+                </div>
+              )}
 
               {/* Review grid */}
               {pages.length > 0 && (
@@ -648,9 +674,9 @@ export default function ScanPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                       </svg>
                       <p className="text-secondary font-medium text-sm">
-                        {pages.length === 0 ? 'Add Photos' : 'Add More Photos'}
+                        {pages.length === 0 ? 'Add Photos from Camera Roll' : 'Add More Photos'}
                       </p>
-                      <p className="text-muted text-xs">Select multiple photos from your camera roll</p>
+                      <p className="text-muted text-xs">Select multiple photos at once</p>
                     </div>
                   </div>
                   <input
