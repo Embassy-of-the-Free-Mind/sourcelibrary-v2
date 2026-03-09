@@ -146,12 +146,20 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
 }
 
 // Convert markdown-like text to basic HTML for EPUB
-function markdownToHtml(text: string): string {
+function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
   // First, remove image markdown syntax (can't embed in simple EPUB)
   let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
 
   // Remove any standalone URLs
   html = html.replace(/https?:\/\/[^\s\)]+/g, '');
+
+  // Strip notes/margin/gloss entirely when requested (scholarly EPUB — they clutter the reading flow)
+  if (opts?.stripNotes) {
+    html = html.replace(/<note>[\s\S]*?<\/note>/gi, '');
+    html = html.replace(/<margin>[\s\S]*?<\/margin>/gi, '');
+    html = html.replace(/<gloss>[\s\S]*?<\/gloss>/gi, '');
+    html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
+  }
 
   // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
   // These are our custom tags that should become actual HTML elements
@@ -1363,11 +1371,16 @@ p { margin: 0.8em 0; text-align: justify; }
   font-size: 0.85em;
   margin: 0.5em 0;
 }
-.illustration { text-align: center; margin: 1.5em 0; page-break-inside: avoid; }
-.illustration img { max-width: 100%; border: 1px solid #d4c4a8; }
+.illustration {
+  text-align: center; margin: 0; padding: 1em 0;
+  page-break-before: always; page-break-after: always; page-break-inside: avoid;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 90vh;
+}
+.illustration img { max-width: 100%; max-height: 80vh; object-fit: contain; border: 1px solid #d4c4a8; }
 .illustration figcaption {
   font-size: 0.85em; color: #666; font-style: italic;
-  margin-top: 0.5em; text-align: center;
+  margin-top: 0.8em; text-align: center; max-width: 85%;
 }
 .illustration .page-link { font-style: normal; font-size: 0.85em; color: #8b0000; text-decoration: none; }
 .title-page-scan { text-align: center; margin: 1em 0 2em; }
@@ -2032,7 +2045,7 @@ async function generateScholarlyEpubDownload(
     for (const page of validPages) {
       if(!page) continue;
 
-      const translationHtml = markdownToHtml(page.translation ? page.translation.data : '');
+      const translationHtml = markdownToHtml(page.translation ? page.translation.data : '', { stripNotes: true });
       const pageIllustrations = illustrationsByPage.get(page.page_number) || [];
       const pageUrl = `${bookPageUrl}?page=${page.page_number}`;
 
