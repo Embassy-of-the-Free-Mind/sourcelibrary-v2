@@ -1573,16 +1573,16 @@ async function generateScholarlyEpubDownload(
     <p><strong>${escapeXml(bookTitle)}</strong></p>
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
     <p>English translation prepared by Source Library</p>
-    <p>&nbsp;</p>
+    <p>&#160;</p>
     <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
     <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit and distribute under the same license.</p>
-    ${edition?.doi ? `<p>&nbsp;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
-    <p>&nbsp;</p>
+    ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
+    <p>&#160;</p>
     <p><strong>Contributors:</strong></p>
     ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
-    <p>&nbsp;</p>
+    <p>&#160;</p>
     <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
-    <p>&nbsp;</p>
+    <p>&#160;</p>
     <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
   </div>
 </body>
@@ -1765,7 +1765,7 @@ async function generateScholarlyEpubDownload(
     ${edition?.doi ? `<p><strong>Permanent Citation:</strong> ${edition.doi_url || `https://doi.org/${edition.doi}`}</p>` : ''}
     <p><strong>Online Version:</strong> ${BASE_URL}/book/${book.id}</p>
     <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'}</p>
-    <p>&nbsp;</p>
+    <p>&#160;</p>
     <p style="font-size:0.85em;color:#888;">Generated: ${now}</p>
   </div>
 </body>

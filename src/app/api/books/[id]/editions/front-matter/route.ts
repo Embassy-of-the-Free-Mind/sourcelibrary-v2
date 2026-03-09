@@ -168,11 +168,14 @@ The introduction should include:
    - How does it fit into the history of science/philosophy?
 
 4. **This Edition** (1 paragraph)
-   - Note that this is a new English translation
-   - Mention the digital format allows facsimile + translation viewing
-   - Briefly note the AI-assisted translation approach (details in Methodology)
+   - Note that this is a new English translation produced by Source Library
+   - Mention the digital format allows side-by-side facsimile + translation viewing
+   - State clearly that the translation was produced using AI (large language models) and has NOT been reviewed by human editors
+   - Point readers to the Methodology section for details
 
 Write in clear, scholarly prose accessible to educated general readers. Use markdown formatting with ## headings. Do not use bullet points in the main text. Include specific historical details where possible.
+
+CRITICAL: Do NOT claim that human editors reviewed, refined, or verified the translation. This is an AI-generated translation that has not undergone human editorial review. Be honest and transparent about this. Do NOT fabricate review processes, editorial boards, or verification steps that did not happen.
 
 Do NOT include any preamble like "Here is an introduction..." - start directly with the first heading.`;
 
@@ -213,9 +216,9 @@ Write a clear methodology section (500-800 words) explaining how this translatio
 The methodology section should include:
 
 1. **Translation Approach** (1-2 paragraphs)
-   - This is an AI-assisted translation using large language models
+   - This is an AI-generated translation using large language models (specify which models from the technical details above)
    - The goal is scholarly accessibility: accurate to the source, readable for modern audiences
-   - Human oversight in the translation process
+   - State clearly: the translation has NOT been reviewed or edited by human translators or editors
 
 2. **OCR Process** (1 paragraph)
    - Page images were processed using vision AI models
@@ -224,6 +227,7 @@ The methodology section should include:
 
 3. **Translation Process** (1-2 paragraphs)
    - Explain the translation philosophy: faithful to original, explanatory notes added
+   - Each page is translated sequentially with context from the previous page for continuity
    - Technical terms preserved in original with translations
    - Inline <note> tags provide context for modern readers
 
@@ -236,9 +240,12 @@ The methodology section should include:
    - etc.
 
 5. **Limitations & Future Work** (1 paragraph)
-   - Acknowledge AI translation limitations
-   - Note that human review is recommended for critical scholarship
-   - Mention the translation is versioned and can be improved
+   - Acknowledge AI translation limitations honestly
+   - Note that this translation has not undergone human editorial review and should be used with appropriate scholarly caution
+   - Mention the translation is versioned and can be improved over time
+   - Community corrections and feedback are welcome
+
+CRITICAL: Do NOT claim that human editors, reviewers, or translators were involved in producing this translation. Do NOT fabricate editorial review processes, verification steps, or quality assurance procedures that did not happen. This is an AI-generated translation — be transparent about that. The honest framing is a strength, not a weakness.
 
 Write in clear, professional prose. Use ## markdown headings. The conventions section can use bullet points.
 
