@@ -277,16 +277,8 @@ export const POST = withAuth(async (request, session) => {
         photo: selectedPages[i].photo,
         thumbnail: selectedPages[i].thumbnail,
         photo_original: selectedPages[i].photo,
-        ocr: {
-          language: bookLanguage,
-          model: null,
-          data: '',
-        },
-        translation: {
-          language: 'English',
-          model: null,
-          data: '',
-        },
+        // Don't initialize ocr/translation with empty strings -- they cause
+        // false completion in job-completion.ts (see: translation loop bug fix)
         created_at: new Date(),
         updated_at: new Date(),
       });

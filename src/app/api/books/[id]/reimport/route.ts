@@ -30,18 +30,26 @@ export const POST = withAuth(async (request, session, context) => {
     }
 
     if (mode === 'soft') {
-      // Soft reset: Clear OCR, translation, and summary from all pages
+      // Soft reset: Remove OCR, translation, and summary from all pages.
+      // Use $unset instead of setting empty strings -- empty strings cause
+      // false completion in job-completion.ts (see: translation loop bug fix)
       const result = await db.collection('pages').updateMany(
         { book_id: bookId },
         {
           $set: {
-            'ocr.data': '',
-            'ocr.model': null,
-            'translation.data': '',
-            'translation.model': null,
-            'summary': null,
-            'modernized': null,
             updated_at: new Date()
+          },
+          $unset: {
+            ocr: '',
+            translation: '',
+            summary: '',
+            modernized: '',
+            page_type: '',
+            columns: '',
+            detected_images: '',
+            translation_summary: '',
+            translation_keywords: '',
+            transliteration: '',
           }
         }
       );
@@ -158,16 +166,8 @@ export const POST = withAuth(async (request, session, context) => {
           photo: getPageImageUrl(i),
           thumbnail: getThumbnailUrl(i),
           photo_original: getPageImageUrl(i),
-          ocr: {
-            language: book.language || 'Unknown',
-            model: null,
-            data: ''
-          },
-          translation: {
-            language: 'English',
-            model: null,
-            data: ''
-          },
+          // Don't initialize ocr/translation with empty strings -- they cause
+          // false completion in job-completion.ts (see: translation loop bug fix)
           created_at: new Date(),
           updated_at: new Date()
         });
