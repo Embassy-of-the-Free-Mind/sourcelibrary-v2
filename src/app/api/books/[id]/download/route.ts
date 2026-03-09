@@ -1947,7 +1947,13 @@ async function generateScholarlyEpubDownload(
     console.log(`Fetching ${galleryImages.length} illustrations for scholarly EPUB...`);
     for (const img of galleryImages) {
       const illusId = `illus-${img.page_number}-${img.detection_index}`;
-      const illusUrl = img.extracted_url || img.image_url;
+      // Prefer cropped_photo (properly split single page) over extracted_url
+      // (gallery extractions may come from unsplit two-page spreads)
+      const illusPage = pages.find(p => p.page_number === img.page_number);
+      const illusPageUrl = illusPage
+        ? ((illusPage as any).cropped_photo || (illusPage as any).archived_photo || illusPage.photo)
+        : null;
+      const illusUrl = illusPageUrl || img.extracted_url || img.image_url;
       if (illusUrl) {
         const illusBuffer = await fetchIllustrationImage(illusUrl);
         if (illusBuffer) {
