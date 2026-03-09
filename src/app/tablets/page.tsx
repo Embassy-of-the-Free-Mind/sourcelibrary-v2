@@ -261,67 +261,14 @@ export default function TabletsPage() {
                 </div>
               )}
 
-              {/* Each surface gets its own cropped photo section */}
+              {/* Surface transliterations */}
               {sections.length > 0 ? (
                 <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
-                  {sections.map((section, si) => {
-                    // Find matching bounding box from ImageMagick detection
-                    const bounds = tablet.photoBounds?.surfaces?.find(
-                      (s) => s.label === section.surface
-                    );
-                    const hasCroppedPhoto = !!bounds;
-
-                    return hasCroppedPhoto ? (
-                    // Primary surfaces (obverse/reverse) — show cropped photo + transliteration
-                    <div
-                      key={si}
-                      className="grid grid-cols-1 md:grid-cols-[280px_1fr]"
-                    >
-                      <div
-                        className="p-3 flex items-center justify-center border-b md:border-b-0 md:border-r"
-                        style={{
-                          backgroundColor: '#f0ece3',
-                          borderColor: 'var(--border-light)',
-                        }}
-                      >
-                          <a
-                            href={tablet.cdliUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={`${section.surface} of ${tablet.designation}`}
-                            className="block overflow-hidden rounded shadow-sm"
-                            style={{
-                              width: '100%',
-                              aspectRatio: `${bounds.bbox.w} / ${bounds.bbox.h}`,
-                            }}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={tablet.photoUrl}
-                              alt={`${section.surface} of ${tablet.designation}`}
-                              loading="lazy"
-                              style={{
-                                display: 'block',
-                                width: `${(1 / bounds.bbox.w) * 100}%`,
-                                height: `${(1 / bounds.bbox.h) * 100}%`,
-                                maxWidth: 'none',
-                                objectFit: 'cover',
-                                marginLeft: `${-(bounds.bbox.x / bounds.bbox.w) * 100}%`,
-                                marginTop: `${-(bounds.bbox.y / bounds.bbox.h) * 100}%`,
-                              }}
-                            />
-                          </a>
-                      </div>
-
-                      <SurfaceLines section={section} />
-                    </div>
-                    ) : (
-                    // Secondary surfaces (seal, column, left, etc.) — text only, no photo
+                  {sections.map((section, si) => (
                     <div key={si} className="px-5 py-3">
                       <SurfaceLines section={section} />
                     </div>
-                    );
-                  })}
+                  ))}
                 </div>
               ) : (
                 <div className="p-4">
