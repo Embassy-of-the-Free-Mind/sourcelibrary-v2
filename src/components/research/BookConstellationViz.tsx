@@ -330,7 +330,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         map: texture,
         transparent: true,
         depthWrite: false,
-        opacity: 0.25,
+        opacity: 0.55,
       });
       const sprite = new THREE.Sprite(spriteMat);
       sprite.position.set(
@@ -459,9 +459,9 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         if (labelIntersects.length > 0) {
           const sprite = labelIntersects[0].object as THREE.Sprite;
           if (prevLabel && prevLabel !== sprite) {
-            (prevLabel.material as THREE.SpriteMaterial).opacity = 0.25;
+            (prevLabel.material as THREE.SpriteMaterial).opacity = 0.55;
           }
-          (sprite.material as THREE.SpriteMaterial).opacity = 0.65;
+          (sprite.material as THREE.SpriteMaterial).opacity = 0.85;
           hoveredLabelRef.current = sprite;
           setCursorStyle('pointer');
           setHoveredIdx(null);
@@ -469,7 +469,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           return;
         }
         if (prevLabel) {
-          (prevLabel.material as THREE.SpriteMaterial).opacity = 0.25;
+          (prevLabel.material as THREE.SpriteMaterial).opacity = 0.55;
           hoveredLabelRef.current = null;
         }
       }
@@ -619,33 +619,33 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       {/* ── Info panel ── */}
       {showInfo && (
         <div
-          className="absolute top-14 right-5 w-[300px] bg-black/80 backdrop-blur-md border border-white/10 rounded p-4 z-20 max-h-[85vh] overflow-y-auto"
+          className="absolute top-14 right-5 w-[300px] bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-4 z-20 max-h-[85vh] overflow-y-auto shadow-lg"
           onPointerMove={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div><div className="text-white/80 font-mono text-xl">{stats.totalBooks.toLocaleString()}</div><div className="text-white/30 text-xs uppercase tracking-wider">Books</div></div>
-            <div><div className="text-white/80 font-mono text-xl">{stats.nClusters}</div><div className="text-white/30 text-xs uppercase tracking-wider">Clusters</div></div>
-            <div><div className="text-white/80 font-mono text-xl">{stats.nLanguages}</div><div className="text-white/30 text-xs uppercase tracking-wider">Languages</div></div>
-            <div><div className="text-white/80 font-mono text-xl">{stats.firstTranslations.toLocaleString()}</div><div className="text-white/30 text-xs uppercase tracking-wider">First Trans.</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.totalBooks.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.nClusters}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Clusters</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.nLanguages}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Languages</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.firstTranslations.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">First Trans.</div></div>
           </div>
-          <div className="border-t border-white/10 pt-3 text-white/40 text-xs leading-relaxed space-y-2">
+          <div className="border-t border-gray-200 pt-3 text-gray-500 text-sm leading-relaxed space-y-2">
             <p>
               Each rectangle is a book. Position reflects content similarity — AI
               embeddings of summaries, themes, and index terms are projected with UMAP.
               Height represents date of composition.
             </p>
             <p>
-              <strong className="text-white/50">Embeddings:</strong>{' '}
+              <strong className="text-gray-600">Embeddings:</strong>{' '}
               <span className="font-mono text-xs">paraphrase-multilingual-MiniLM-L12-v2</span>{' '}
-              (384-dim). UMAP with cosine distance, n_neighbors=15, min_dist=0.1.
+              (384-dim). UMAP with cosine distance, n_neighbors=25, min_dist=0.03.
             </p>
             <p>
-              <strong className="text-white/50">Clustering:</strong>{' '}
-              K-Means (k={stats.nClusters}) on original embeddings. Labels from TF-IDF on categories.
+              <strong className="text-gray-600">Clustering:</strong>{' '}
+              K-Means (k={stats.nClusters}) on original embeddings. Labels from category + keyword analysis.
             </p>
             <p>
-              <strong className="text-white/50">Z-axis:</strong>{' '}
+              <strong className="text-gray-600">Z-axis:</strong>{' '}
               Piecewise linear normalization — pre-1400 compressed, 1400-1970 expanded.
             </p>
           </div>
@@ -655,16 +655,16 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       {/* ── Hover tooltip ── */}
       {hoveredBook && tooltipPos && selectedBookIdx !== hoveredIdx && (
         <div
-          className="absolute pointer-events-none bg-black/80 backdrop-blur-md border border-white/10 rounded p-2.5 max-w-[260px] z-20"
+          className="absolute pointer-events-none bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-3 max-w-[280px] z-20 shadow-lg"
           style={{
-            left: Math.min(tooltipPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 270),
+            left: Math.min(tooltipPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 290),
             top: Math.max(tooltipPos.y - 70, 10),
           }}
         >
-          <div className="font-serif text-sm text-white/90 leading-tight mb-0.5">
+          <div className="font-serif text-base text-gray-900 leading-tight mb-0.5">
             {hoveredBook.title}
           </div>
-          <div className="text-xs text-white/40">
+          <div className="text-sm text-gray-500">
             {hoveredBook.author !== 'Unknown' ? hoveredBook.author : ''}
             {hoveredBook.author !== 'Unknown' && hoveredBook.year ? ' · ' : ''}
             {hoveredBook.year || ''}
@@ -679,9 +679,9 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         const ci = data.clusters[String(book.cluster)];
         return (
           <div
-            className="absolute bg-black/80 backdrop-blur-md border border-white/10 rounded p-3 max-w-[280px] z-20"
+            className="absolute bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-4 max-w-[300px] z-20 shadow-lg"
             style={{
-              left: Math.min(selectedBookPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 290),
+              left: Math.min(selectedBookPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 310),
               top: Math.max(selectedBookPos.y - 100, 10),
             }}
             onPointerMove={(e) => e.stopPropagation()}
@@ -689,7 +689,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           >
             <button
               onClick={() => { setSelectedBookIdx(null); setSelectedBookPos(null); }}
-              className="absolute top-1.5 right-2 text-white/30 hover:text-white/60 text-sm leading-none"
+              className="absolute top-2 right-2.5 text-gray-400 hover:text-gray-600 text-sm leading-none"
               aria-label="Close"
             >
               &times;
@@ -698,11 +698,11 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
               href={`/book/${book.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-serif text-sm text-white/90 hover:text-white leading-tight block mb-1 pr-4"
+              className="font-serif text-base text-gray-900 hover:text-black leading-tight block mb-1 pr-4"
             >
               {book.title}
             </a>
-            <div className="text-xs text-white/40 mb-1.5">
+            <div className="text-sm text-gray-500 mb-2">
               {book.author !== 'Unknown' ? book.author : ''}
               {book.author !== 'Unknown' && book.year ? ' · ' : ''}
               {book.year || ''}
@@ -710,28 +710,28 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             </div>
             <div className="flex flex-wrap gap-1">
               {book.categories.slice(0, 3).map((cat) => (
-                <span key={cat} className="px-1.5 py-0.5 text-[11px] rounded bg-white/8 text-white/50">
+                <span key={cat} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-600">
                   {cat.replace(/-/g, ' ')}
                 </span>
               ))}
-              <span className="px-1.5 py-0.5 text-[11px] rounded bg-white/8 text-white/35">
+              <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-500">
                 {book.language}
               </span>
             </div>
             {book.keywords.length > 0 && (
-              <div className="text-[11px] text-white/35 mt-1.5 leading-relaxed">
+              <div className="text-xs text-gray-400 mt-2 leading-relaxed">
                 {book.keywords.join(' · ')}
               </div>
             )}
             {book.first_translation && (
-              <div className="text-[11px] text-[#9e4a3a] mt-1 font-medium">
+              <div className="text-xs text-[#9e4a3a] mt-1.5 font-medium">
                 First English Translation
               </div>
             )}
             {ci && (
               <button
                 onClick={() => setSelectedCluster(ci.id)}
-                className="text-[11px] text-white/25 mt-1.5 hover:text-white/50 transition-colors"
+                className="text-xs text-gray-400 mt-2 hover:text-gray-600 transition-colors"
               >
                 Cluster: {ci.label} ({ci.size} books) &rarr;
               </button>
@@ -775,18 +775,18 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       {/* ── Cluster detail panel ── */}
       {selectedCluster !== null && selectedClusterInfo && (
         <div
-          className="absolute top-0 right-0 w-[360px] h-full bg-black/70 backdrop-blur-md border-l border-white/10 z-30 flex flex-col"
+          className="absolute top-0 right-0 w-[360px] h-full bg-white/95 backdrop-blur-md border-l border-black/10 z-30 flex flex-col shadow-2xl"
           onPointerMove={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0">
+          <div className="p-4 border-b border-gray-200 flex items-center justify-between shrink-0">
             <div>
-              <h3 className="text-white/90 font-serif text-base leading-tight">{selectedClusterInfo.label}</h3>
-              <p className="text-white/30 text-xs mt-0.5 font-mono">{clusterBooks.length} books</p>
+              <h3 className="text-gray-900 font-serif text-lg leading-tight">{selectedClusterInfo.label}</h3>
+              <p className="text-gray-400 text-sm mt-0.5 font-mono">{clusterBooks.length} books</p>
             </div>
             <button
               onClick={() => setSelectedCluster(null)}
-              className="text-white/30 hover:text-white/60 text-lg leading-none transition-colors"
+              className="text-gray-400 hover:text-gray-600 text-lg leading-none transition-colors"
               aria-label="Close cluster panel"
             >
               &times;
@@ -799,32 +799,32 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
                 href={`/book/${book.slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-2 rounded border border-white/5 hover:border-white/15 hover:bg-white/5 transition-colors"
+                className="block p-2.5 rounded-md border border-gray-100 hover:border-gray-300 hover:bg-gray-50 transition-colors"
               >
-                <div className="text-white/80 text-sm font-serif leading-tight">{book.title}</div>
-                <div className="text-white/30 text-xs mt-0.5">
+                <div className="text-gray-800 text-sm font-serif leading-tight">{book.title}</div>
+                <div className="text-gray-400 text-sm mt-0.5">
                   {book.author !== 'Unknown' && book.author}
                   {book.author !== 'Unknown' && book.year ? ' · ' : ''}
                   {book.year || ''}
                 </div>
-                <div className="flex gap-1 mt-1">
-                  <span className="px-1 py-0.5 text-[11px] rounded bg-white/5 text-white/30">{book.language}</span>
+                <div className="flex gap-1 mt-1.5">
+                  <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-500">{book.language}</span>
                   {book.keywords.slice(0, 2).map((kw) => (
-                    <span key={kw} className="px-1 py-0.5 text-[11px] rounded bg-white/5 text-white/25">{kw}</span>
+                    <span key={kw} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-400">{kw}</span>
                   ))}
                   {book.first_translation && (
-                    <span className="px-1 py-0.5 text-[11px] rounded bg-[#9e4a3a]/20 text-[#9e4a3a]">1st trans.</span>
+                    <span className="px-1.5 py-0.5 text-xs rounded bg-[#9e4a3a]/10 text-[#9e4a3a]">1st trans.</span>
                   )}
                 </div>
               </a>
             ))}
           </div>
-          <div className="p-3 border-t border-white/10 shrink-0">
+          <div className="p-3 border-t border-gray-200 shrink-0">
             <a
               href={`/search?q=${encodeURIComponent(selectedClusterInfo.label)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/30 text-xs hover:text-white/50 transition-colors"
+              className="text-gray-400 text-sm hover:text-gray-600 transition-colors"
             >
               Search in library &rarr;
             </a>
