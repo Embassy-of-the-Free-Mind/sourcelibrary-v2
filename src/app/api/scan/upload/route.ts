@@ -52,10 +52,11 @@ export async function POST(request: NextRequest) {
 
     if (
       book.image_source?.provider !== 'user_upload' ||
-      book.image_source?.provider_name !== 'Mobile Scan'
+      book.image_source?.provider_name !== 'Mobile Scan' ||
+      (book.status && book.status !== 'draft')
     ) {
       return NextResponse.json(
-        { error: 'Upload only allowed for Mobile Scan books' },
+        { error: 'Upload only allowed for Mobile Scan books in draft status' },
         { status: 403 }
       );
     }

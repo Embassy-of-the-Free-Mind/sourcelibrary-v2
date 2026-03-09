@@ -133,6 +133,32 @@ function readDateTimeFromIFD(
 }
 
 /**
+ * Check if a file is a non-JPEG format that needs conversion (e.g. HEIC from iPhones).
+ * Vercel's Sharp doesn't support HEIC, so we convert on the client via Canvas.
+ */
+function needsConversion(file: File): boolean {
+  const type = file.type.toLowerCase();
+  return type === 'image/heic' || type === 'image/heif' ||
+    file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
+}
+
+/**
+ * Convert a non-JPEG file to JPEG via Canvas API.
+ * Returns a new File object with image/jpeg MIME type.
+ */
+export async function convertToJpeg(file: File): Promise<File> {
+  const bitmap = await createImageBitmap(file);
+  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+  const ctx = canvas.getContext('2d')!;
+  ctx.drawImage(bitmap, 0, 0);
+  bitmap.close();
+
+  const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.92 });
+  const baseName = file.name.replace(/\.[^.]+$/, '');
+  return new File([blob], `${baseName}.jpg`, { type: 'image/jpeg', lastModified: file.lastModified });
+}
+
+/**
  * Generate a thumbnail as an object URL using Canvas API.
  */
 export async function generateThumbnail(file: File, maxSize = 300): Promise<string> {
@@ -236,26 +262,41 @@ export function sortByTimestamp(files: ProcessedFile[]): ProcessedFile[] {
 
 /**
  * Process a batch of raw files into ProcessedFile objects.
- * Runs thumbnail generation, EXIF extraction, and quality assessment in parallel.
+ * Runs in chunks of CHUNK_SIZE to avoid overwhelming mobile devices.
+ * Within each chunk, thumbnail/EXIF/quality run in parallel per file.
  */
-export async function processFiles(files: File[]): Promise<ProcessedFile[]> {
-  const results = await Promise.all(
-    files.map(async (file) => {
-      const [thumbnailUrl, timestamp, quality] = await Promise.all([
-        generateThumbnail(file),
-        getExifTimestamp(file),
-        assessQuality(file),
-      ]);
+const PROCESS_CHUNK_SIZE = 10;
 
-      return {
-        id: crypto.randomUUID(),
-        file,
-        thumbnailUrl,
-        timestamp,
-        quality,
-      };
-    })
-  );
+export async function processFiles(files: File[]): Promise<ProcessedFile[]> {
+  const results: ProcessedFile[] = [];
+
+  for (let i = 0; i < files.length; i += PROCESS_CHUNK_SIZE) {
+    const chunk = files.slice(i, i + PROCESS_CHUNK_SIZE);
+    const chunkResults = await Promise.all(
+      chunk.map(async (rawFile) => {
+        // Extract EXIF before conversion (HEIC files have EXIF too, but
+        // convertToJpeg strips it — grab timestamp from original)
+        const timestamp = await getExifTimestamp(rawFile);
+
+        // Convert HEIC/HEIF to JPEG on the client (Sharp on Vercel doesn't support HEIC)
+        const file = needsConversion(rawFile) ? await convertToJpeg(rawFile) : rawFile;
+
+        const [thumbnailUrl, quality] = await Promise.all([
+          generateThumbnail(file),
+          assessQuality(file),
+        ]);
+
+        return {
+          id: crypto.randomUUID(),
+          file,
+          thumbnailUrl,
+          timestamp,
+          quality,
+        };
+      })
+    );
+    results.push(...chunkResults);
+  }
 
   return sortByTimestamp(results);
 }
