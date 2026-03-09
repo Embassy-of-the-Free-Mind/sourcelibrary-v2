@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ConceptDiffusionViz from '@/components/research/ConceptDiffusionViz';
-
-export const dynamic = 'force-dynamic';
+import dataRaw from '@/data/concept-diffusion.json';
 
 export const metadata: Metadata = {
   title: 'Concept Diffusion — Source Library Research',
@@ -12,228 +10,116 @@ export const metadata: Metadata = {
   alternates: { canonical: '/research/concept-diffusion' },
 };
 
+interface Keyword {
+  term: string;
+  n: number;
+  cat: string;
+  cv: number;
+  peak: number;
+  periods: Record<string, number>;
+}
+
+interface ConceptData {
+  corpus: {
+    totalBooks: number;
+    periodTotals: Record<string, number>;
+    periods: number[];
+    categories: Record<string, number>;
+  };
+  keywords: Keyword[];
+}
+
 const CATEGORY_LABELS: Record<string, string> = {
-  'alchemy': 'Alchemy',
-  'theology': 'Theology',
-  'philosophy': 'Philosophy',
+  alchemy: 'Alchemy',
+  theology: 'Theology',
+  philosophy: 'Philosophy',
   'natural-philosophy': 'Natural Philosophy',
-  'hermeticism': 'Hermeticism',
-  'history': 'History',
-  'mysticism': 'Mysticism',
-  'astrology': 'Astrology',
-  'medicine': 'Medicine',
-  'kabbalah': 'Kabbalah',
-  'magic': 'Magic',
-  'mathematics': 'Mathematics',
-  'rosicrucianism': 'Rosicrucianism',
-  'freemasonry': 'Freemasonry',
-  'science': 'Science',
-  'occultism': 'Occultism',
+  hermeticism: 'Hermeticism',
+  history: 'History',
+  mysticism: 'Mysticism',
+  astrology: 'Astrology',
+  medicine: 'Medicine',
+  kabbalah: 'Kabbalah',
+  magic: 'Magic',
+  mathematics: 'Mathematics',
+  rosicrucianism: 'Rosicrucianism',
+  freemasonry: 'Freemasonry',
+  science: 'Science',
+  occultism: 'Occultism',
+  astronomy: 'Astronomy',
+  literature: 'Literature',
+  'ritual-magic': 'Ritual Magic',
+  music: 'Music',
+  'christian-mysticism': 'Christian Mysticism',
+  'jewish-kabbalah': 'Jewish Kabbalah',
+  art: 'Art',
+  botany: 'Botany',
+  military: 'Military',
 };
 
 function formatCategory(cat: string): string {
-  return CATEGORY_LABELS[cat] || cat.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
-}
-
-interface ConceptPeriod {
-  concept: string;
-  period: number;
-  count: number;
-  normalized: number;
-  languages: string[];
-}
-
-interface PeriodTotal {
-  period: number;
-  count: number;
-}
-
-interface ConceptInfo {
-  concept: string;
-  total: number;
-  category: string;
-  earliest: number;
-  latest: number;
-  langCount: number;
-}
-
-async function fetchConceptData() {
-  const db = await getDb();
-  const baseFilter = {
-    'index.generatedAt': { $exists: true },
-    hidden: { $ne: true },
-    deleted: { $ne: true },
-    year: { $gte: 1200, $lte: 1930 },
-  };
-
-  // Step 1: Get top 500 keywords by frequency (from translation <keywords> tags)
-  // Case-normalized to merge "Elements" and "elements", preserving best display form
-  const topKeywordsRaw = await db.collection('books').aggregate([
-    { $match: baseFilter },
-    { $unwind: '$index.keywords' },
-    {
-      $group: {
-        _id: { $toLower: '$index.keywords.term' },
-        display: { $first: '$index.keywords.term' },
-        total: { $sum: 1 },
-        earliest: { $min: '$year' },
-        latest: { $max: '$year' },
-        languages: { $addToSet: '$language' },
-      },
-    },
-    { $sort: { total: -1 } },
-    { $limit: 500 },
-  ]).toArray();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const topTermsLower = topKeywordsRaw.map((c: any) => c._id as string);
-
-  // Step 2-4: Run remaining queries in parallel
-  const [rawData, totalsRaw, categoryRaw] = await Promise.all([
-    // Time series for top keywords by 50-year period (case-normalized)
-    db.collection('books').aggregate([
-      { $match: baseFilter },
-      { $unwind: '$index.keywords' },
-      { $addFields: { _kwLower: { $toLower: '$index.keywords.term' } } },
-      { $match: { _kwLower: { $in: topTermsLower } } },
-      {
-        $group: {
-          _id: {
-            concept: '$_kwLower',
-            period: { $multiply: [{ $floor: { $divide: ['$year', 50] } }, 50] },
-          },
-          count: { $sum: 1 },
-          languages: { $addToSet: '$language' },
-        },
-      },
-      { $sort: { '_id.period': 1 } },
-    ]).toArray(),
-
-    // Total books per period (for normalization)
-    db.collection('books').aggregate([
-      { $match: baseFilter },
-      {
-        $group: {
-          _id: { $multiply: [{ $floor: { $divide: ['$year', 50] } }, 50] },
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]).toArray(),
-
-    // Category mapping: primary category for each top keyword (case-normalized)
-    db.collection('books').aggregate([
-      { $match: baseFilter },
-      { $unwind: '$index.keywords' },
-      { $addFields: { _kwLower: { $toLower: '$index.keywords.term' } } },
-      { $match: { _kwLower: { $in: topTermsLower } } },
-      { $unwind: '$categories' },
-      {
-        $group: {
-          _id: { concept: '$_kwLower', category: '$categories' },
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { count: -1 } },
-      {
-        $group: {
-          _id: '$_id.concept',
-          primaryCategory: { $first: '$_id.category' },
-        },
-      },
-    ]).toArray(),
-  ]);
-
-  // Build display name map (lowercase -> best display form)
-  const displayMap = new Map<string, string>();
-  for (const c of topKeywordsRaw) {
-    displayMap.set(c._id, c.display);
-  }
-
-  // Build category map
-  const categoryMap = new Map<string, string>();
-  for (const c of categoryRaw) {
-    categoryMap.set(c._id, c.primaryCategory);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const totals: PeriodTotal[] = totalsRaw.map((t: any) => ({
-    period: t._id as number,
-    count: t.count as number,
-  }));
-  const totalMap = new Map(totals.map((t) => [t.period, t.count]));
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: ConceptPeriod[] = rawData.map((d: any) => ({
-    concept: (displayMap.get(d._id.concept as string) || d._id.concept) as string,
-    period: d._id.period as number,
-    count: d.count as number,
-    normalized: (d.count as number) / (totalMap.get(d._id.period as number) || 1),
-    languages: d.languages as string[],
-  }));
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const concepts: ConceptInfo[] = topKeywordsRaw.map((c: any) => ({
-    concept: (c.display || c._id) as string,
-    total: c.total as number,
-    category: formatCategory(categoryMap.get(c._id as string) || 'other'),
-    earliest: c.earliest as number,
-    latest: c.latest as number,
-    langCount: (c.languages as string[]).length,
-  }));
-
-  // Build groups from data: category -> concepts (sorted by total)
-  const groupMap = new Map<string, ConceptInfo[]>();
-  for (const c of concepts) {
-    if (!groupMap.has(c.category)) groupMap.set(c.category, []);
-    groupMap.get(c.category)!.push(c);
-  }
-
-  // Sort groups by total mentions, take top 10
-  const sortedGroups = [...groupMap.entries()]
-    .sort((a, b) => {
-      const sumA = a[1].reduce((s, ci) => s + ci.total, 0);
-      const sumB = b[1].reduce((s, ci) => s + ci.total, 0);
-      return sumB - sumA;
-    })
-    .slice(0, 10);
-
-  const groups: Record<string, string[]> = {};
-  for (const [cat, conceptInfos] of sortedGroups) {
-    groups[cat] = conceptInfos.map((c) => c.concept);
-  }
-
-  // Default: top concept from each of the top 4 categories
-  const defaultConcepts = sortedGroups.slice(0, 4).map(([, infos]) => infos[0].concept);
-
-  // Build peak data from time series
-  const conceptPeriodMap = new Map<string, ConceptPeriod[]>();
-  for (const d of data) {
-    if (!conceptPeriodMap.has(d.concept)) conceptPeriodMap.set(d.concept, []);
-    conceptPeriodMap.get(d.concept)!.push(d);
-  }
-
-  const peakData = concepts.slice(0, 30).map((c) => {
-    const periods = conceptPeriodMap.get(c.concept) || [];
-    const peak = periods.reduce(
-      (best, p) => (p.normalized > best.value ? { period: p.period, value: p.normalized } : best),
-      { period: 0, value: 0 },
-    );
-    return { concept: c.concept, category: c.category, peak: peak.period, peakValue: peak.value };
-  });
-
-  return { data, totals, concepts, groups, defaultConcepts, peakData };
-}
-
-export default async function ConceptDiffusionPage() {
-  const { data, totals, concepts, groups, defaultConcepts, peakData } = await fetchConceptData();
-
-  const totalBooks = totals.reduce((s, t) => s + t.count, 0);
-  const categoryCount = Object.keys(groups).length;
-  const avgLanguages = Math.round(
-    concepts.reduce((s, c) => s + c.langCount, 0) / concepts.length,
+  return (
+    CATEGORY_LABELS[cat] ||
+    cat
+      .split('-')
+      .map((w) => w[0].toUpperCase() + w.slice(1))
+      .join(' ')
   );
-  const dateRange = `${Math.min(...totals.map((t) => t.period))}–${Math.max(...totals.map((t) => t.period)) + 50}`;
+}
+
+// Top categories for grouping keywords (those with 10+ keywords)
+const TOP_CATEGORIES = [
+  'theology',
+  'hermeticism',
+  'alchemy',
+  'philosophy',
+  'natural-philosophy',
+  'history',
+  'medicine',
+  'astrology',
+  'mysticism',
+  'astronomy',
+];
+
+export default function ConceptDiffusionPage() {
+  const data = dataRaw as ConceptData;
+  const { corpus, keywords } = data;
+
+  // Build category groups: top N keywords per category
+  const groups: Record<string, string[]> = {};
+  for (const cat of TOP_CATEGORIES) {
+    const catKeywords = keywords
+      .filter((k) => k.cat === cat)
+      .slice(0, 15)
+      .map((k) => k.term);
+    if (catKeywords.length > 0) {
+      groups[formatCategory(cat)] = catKeywords;
+    }
+  }
+
+  // Suggestions: temporally interesting keywords
+  const rising = keywords
+    .filter((k) => k.peak >= 1750 && k.cv > 0.8 && k.n >= 80)
+    .slice(0, 8)
+    .map((k) => k.term);
+
+  const earlyPeakers = keywords
+    .filter((k) => k.peak <= 1400 && k.cv > 0.6 && k.n >= 80)
+    .slice(0, 8)
+    .map((k) => k.term);
+
+  const persistent = keywords
+    .filter((k) => k.cv < 0.4 && k.n >= 200)
+    .sort((a, b) => a.cv - b.cv)
+    .slice(0, 8)
+    .map((k) => k.term);
+
+  // Default selection: keywords with interesting temporal stories
+  const defaultSelected = ['alchemy', 'Astrology', 'Soul', 'natural philosophy'];
+
+  // Stats
+  const dateRange = `${corpus.periods[0]}–${corpus.periods[corpus.periods.length - 1] + 50}`;
+  const highCV = keywords.filter((k) => k.cv > 0.5).length;
 
   return (
     <ContentPageLayout
@@ -247,9 +133,9 @@ export default async function ConceptDiffusionPage() {
     >
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Books indexed" value={totalBooks.toLocaleString()} />
-        <StatCard label="Keywords tracked" value={String(concepts.length)} />
-        <StatCard label="Subject categories" value={String(categoryCount)} />
+        <StatCard label="Books indexed" value={corpus.totalBooks.toLocaleString()} />
+        <StatCard label="Keywords tracked" value={keywords.length.toLocaleString()} />
+        <StatCard label="Temporally variable" value={highCV.toLocaleString()} />
         <StatCard label="Date range" value={dateRange} />
       </div>
 
@@ -257,15 +143,16 @@ export default async function ConceptDiffusionPage() {
       <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6 mb-8">
         <h2 className="font-serif text-xl mb-1">Keyword Frequency Over Time</h2>
         <p className="text-[var(--text-muted)] text-sm mb-4">
-          Each line shows how often a keyword appears in books from that period. Keywords are extracted
-          from each page&apos;s translated text and grouped by their primary subject category. Select up to
-          10 to compare. Toggle between raw counts and normalized frequency.
+          Search 5,000+ keywords extracted from translated page text. Each line shows how often a
+          keyword appears across 50-year periods. Toggle normalized frequency to control for uneven
+          corpus distribution. Select up to 10 to compare.
         </p>
         <ConceptDiffusionViz
-          data={data}
-          totals={totals}
+          keywords={keywords}
+          corpus={corpus}
           groups={groups}
-          defaultSelected={defaultConcepts}
+          defaultSelected={defaultSelected}
+          suggestions={{ rising, earlyPeakers, persistent }}
         />
       </div>
 
@@ -274,39 +161,45 @@ export default async function ConceptDiffusionPage() {
         <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6">
           <h2 className="font-serif text-xl mb-4">Most Frequent Keywords</h2>
           <p className="text-[var(--text-muted)] text-sm mb-4">
-            Top keywords by number of books in which they appear, extracted from translated page text.
+            Top keywords by number of books in which they appear.
           </p>
           <div className="space-y-2">
-            {concepts.slice(0, 15).map((c) => (
+            {keywords.slice(0, 15).map((k) => (
               <ConceptBar
-                key={c.concept}
-                label={c.concept}
-                value={c.total}
-                max={concepts[0].total}
-                detail={`${c.earliest}–${c.latest}, ${c.langCount} lang, ${c.category}`}
+                key={k.term}
+                label={k.term}
+                value={k.n}
+                max={keywords[0].n}
+                detail={`cv=${k.cv.toFixed(2)}, peak ${k.peak}–${k.peak + 50}, ${formatCategory(k.cat)}`}
               />
             ))}
           </div>
         </div>
 
         <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6">
-          <h2 className="font-serif text-xl mb-4">Peak Periods</h2>
+          <h2 className="font-serif text-xl mb-4">Most Temporally Variable</h2>
           <p className="text-[var(--text-muted)] text-sm mb-4">
-            When did each concept reach its highest relative frequency?
+            Keywords with the highest coefficient of variation — concentrated in specific eras rather
+            than evenly distributed.
           </p>
           <div className="space-y-2">
-            {peakData
-              .sort((a, b) => a.peak - b.peak)
-              .map((c) => (
-                <div key={c.concept} className="flex items-center gap-3 text-sm">
-                  <div className="w-40 text-[var(--text-secondary)] truncate" title={c.concept}>
-                    {c.concept}
+            {keywords
+              .filter((k) => k.n >= 80)
+              .sort((a, b) => b.cv - a.cv)
+              .slice(0, 15)
+              .map((k) => (
+                <div key={k.term} className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-40 text-[var(--text-secondary)] truncate"
+                    title={k.term}
+                  >
+                    {k.term}
                   </div>
                   <div className="flex-1 text-[var(--text-muted)]">
-                    {c.peak}–{c.peak + 50}
+                    peak {k.peak}–{k.peak + 50}
                   </div>
                   <div className="text-right text-[var(--text-muted)] text-xs">
-                    {Math.round(c.peakValue * 100)}% · {c.category}
+                    cv={k.cv.toFixed(2)} · {k.n} books · {formatCategory(k.cat)}
                   </div>
                 </div>
               ))}
@@ -318,27 +211,29 @@ export default async function ConceptDiffusionPage() {
       <div className="bg-[var(--bg-warm)] rounded-lg p-4 sm:p-6 text-sm text-[var(--text-secondary)]">
         <h3 className="font-serif text-lg mb-2">Methodology</h3>
         <p className="mb-2">
-          Keywords are extracted by AI (Gemini) from each page&apos;s translated text during processing.
-          Every page produces a set of &lt;keywords&gt; tags identifying the key terms discussed on that
-          page. This analysis aggregates keyword presence across 50-year periods from 1200 to 1930.
+          Keywords are extracted by AI (Gemini) from each page&apos;s translated text during
+          processing. Every page produces a set of &lt;keywords&gt; tags identifying the key terms
+          discussed on that page. This analysis aggregates keyword presence across 50-year periods
+          from {corpus.periods[0]} to {corpus.periods[corpus.periods.length - 1] + 50}, covering{' '}
+          {corpus.totalBooks.toLocaleString()} indexed books.
         </p>
         <p className="mb-2">
           Keywords are grouped by subject category based on which category of books most frequently
-          uses each keyword. For example, &ldquo;transmutation&rdquo; appears primarily in alchemy books,
-          while &ldquo;divine providence&rdquo; appears primarily in theology books. The top {concepts.length} keywords
-          are selected purely by frequency — no editorial curation. Case variants (e.g. &ldquo;Mercury&rdquo;
-          and &ldquo;mercury&rdquo;) are merged.
+          uses each keyword. Case variants (e.g. &ldquo;Mercury&rdquo; and &ldquo;mercury&rdquo;)
+          are merged. The {keywords.length.toLocaleString()} keywords shown here each appear in 50
+          or more books.
         </p>
         <p className="mb-2">
-          &ldquo;Normalized frequency&rdquo; divides the number of books containing a keyword by the total
-          number of indexed books in that period, controlling for the uneven distribution of the corpus
-          (which is densest in the 1600s). Raw counts show absolute presence.
+          &ldquo;Normalized frequency&rdquo; divides the number of books containing a keyword by the
+          total number of indexed books in that period, controlling for the uneven distribution of
+          the corpus (which is densest in the 1600s). The coefficient of variation (CV) measures how
+          concentrated a keyword is in specific time periods — higher values indicate terms that
+          surge and decline, while low values indicate persistent, omnipresent concepts.
         </p>
         <p>
           This is analogous to Google Ngrams but for specialist pre-modern literature — covering
           alchemical, Hermetic, Kabbalistic, theological, philosophical, and natural philosophical
-          texts that are underrepresented in general book corpora. {totalBooks.toLocaleString()} of
-          the corpus&apos;s ~2,400 visible books have AI-generated indexes with keyword data.
+          texts that are underrepresented in general book corpora.
         </p>
       </div>
     </ContentPageLayout>

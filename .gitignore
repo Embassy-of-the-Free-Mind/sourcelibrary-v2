@@ -48,6 +48,9 @@ next-env.d.ts
 # Catalog data files (too large for git)
 data/
 !src/app/data/
+!src/data/
+src/data/*
+!src/data/concept-diffusion.json
 
 # User uploads and test files
 public/uploads/
