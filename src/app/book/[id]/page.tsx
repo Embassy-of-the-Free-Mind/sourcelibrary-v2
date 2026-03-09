@@ -441,7 +441,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; matchedBySlug: boolean } | null> {
+async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImageCount: number; matchedBySlug: boolean } | null> {
   const db = await getDb();
 
   // Exclude heavy fields not used on the book detail page.
@@ -470,7 +470,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
 
   // Inclusion projection — only fetch fields the book detail UI actually uses
   // Status dots need .updated_at; image count needs array length via .type
-  const [pagesRaw, totalBooks] = await Promise.all([
+  const [pagesRaw, totalBooks, galleryImageCount] = await Promise.all([
     db.collection('pages')
       .find({ book_id: bookId }, {
         projection: {
@@ -487,20 +487,24 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           'ocr.updated_at': 1,
           'translation.updated_at': 1,
           'summary.updated_at': 1,
-          'detected_images.type': 1,
           display_brightness: 1,
         }
       })
       .sort({ page_number: 1 })
       .toArray(),
     db.collection('books').estimatedDocumentCount(),
+    db.collection('gallery_images').countDocuments({
+      book_id: bookId,
+      gallery_quality: { $gte: 0.7 },
+      book_hidden: { $ne: true },
+    }),
   ]);
 
   // Serialize MongoDB objects to plain JavaScript objects
   const serializedBook = JSON.parse(JSON.stringify(book));
   const serializedPages = JSON.parse(JSON.stringify(pagesRaw));
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, matchedBySlug };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImageCount, matchedBySlug };
 }
 
 // Skeleton for book info while loading
@@ -548,7 +552,7 @@ async function BookInfo({ id }: { id: string }) {
     notFound();
   }
 
-  const { book, pages, totalBooks } = data;
+  const { book, pages, totalBooks, galleryImageCount } = data;
 
   // Content gating handled client-side by useBetaGate hook in BookPagesSection
   // Featured books bypass the gate; others show email modal on page click
@@ -560,7 +564,7 @@ async function BookInfo({ id }: { id: string }) {
   // Note: projection excludes .data fields, so check for object existence instead
   const ocrCount = pages.filter(p => p.ocr).length;
   const translatedCount = pages.filter(p => p.translation).length;
-  const imageCount = pages.reduce((sum, p) => sum + ((p.detected_images as any[])?.length || 0), 0);
+  const imageCount = galleryImageCount;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
