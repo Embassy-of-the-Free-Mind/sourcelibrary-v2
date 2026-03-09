@@ -161,7 +161,7 @@ export async function convertToJpeg(file: File): Promise<File> {
 /**
  * Generate a thumbnail as an object URL using Canvas API.
  */
-export async function generateThumbnail(file: File, maxSize = 300): Promise<string> {
+export async function generateThumbnail(file: File, maxSize = 600): Promise<string> {
   const bitmap = await createImageBitmap(file);
   const scale = Math.min(maxSize / bitmap.width, maxSize / bitmap.height, 1);
   const w = Math.round(bitmap.width * scale);
@@ -172,7 +172,7 @@ export async function generateThumbnail(file: File, maxSize = 300): Promise<stri
   ctx.drawImage(bitmap, 0, 0, w, h);
   bitmap.close();
 
-  const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.7 });
+  const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.85 });
   return URL.createObjectURL(blob);
 }
 
