@@ -91,8 +91,10 @@ function HeroSignUp() {
 export default function HeroSection() {
   const { status } = useSession();
   const hasRecorded = useRef(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   const handleVideoLoad = () => {
+    setVideoReady(true);
     if (!hasRecorded.current && typeof window !== 'undefined') {
       const navStart = performance.timeOrigin;
       const loadTime = Date.now() - navStart;
@@ -103,12 +105,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Poster image */}
+      {/* Poster fallback — fades out once video is playing */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/hero-poster.jpg"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000"
+        style={{ opacity: videoReady ? 0 : 1 }}
         fetchPriority="high"
       />
 

@@ -5,7 +5,7 @@ export default function AuthErrorPage() {
     <div className="min-h-screen relative flex items-center justify-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/hero-poster.jpg"
+        src="/auth-bg.jpg"
         alt=""
         className="absolute inset-0 w-full h-full object-cover"
       />
