@@ -586,6 +586,11 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
                   {book.language}
                 </span>
               </div>
+              {book.keywords.length > 0 && (
+                <div className="text-[10px] text-[var(--text-secondary)] mt-1.5 leading-relaxed">
+                  {book.keywords.join(' · ')}
+                </div>
+              )}
               {book.first_translation && (
                 <div className="text-[10px] text-[var(--accent-rust)] mt-1 font-medium">
                   First English Translation
