@@ -2,7 +2,7 @@
 
 ## Summary
 
-Multi-session import campaign targeting ancient manuscript collections, papyri, scholarly reference works, complete classical author corpora, and early modern music/natural philosophy sources. ~210+ books, ~96,700+ pages imported across 4+ conversation sessions.
+Multi-session import campaign targeting ancient manuscript collections, papyri, scholarly reference works, complete classical author corpora, and early modern music/natural philosophy sources. ~230+ books, ~101,600+ pages imported across 4+ conversation sessions.
 
 ## Collections Imported
 
@@ -90,7 +90,7 @@ Complete scholarly editions of four major classical authors, plus Hermetic suppl
 - **La Révélation d'Hermès Trismégiste, Vol. IV** (467pp)
 - **Corpus Hermeticum, Tome III** (Nock/Festugière, 390pp)
 
-### Penelope Gouk's Cited Sources (Session 4, ~3,500+ pages)
+### Penelope Gouk's Cited Sources (Session 4-5, ~6,900+ pages)
 
 Primary sources from Gouk's work on music and natural philosophy. All found on IA with IIIF manifests.
 
@@ -112,10 +112,42 @@ Primary sources from Gouk's work on music and natural philosophy. All found on I
 13. John Playford, *Briefe Introduction to the Skill of Musick* (1654, 89pp) — `bim_..._playford-john_1654`
 14. Euclid/Billingsley/Dee, *Elements of Geometrie* with Dee's Praeface (1570) — `elementsgeometr00eucl`
 
-**Already in library:**
-- Robert Hooke, *Micrographia* (1665) — `6953e56577f38f6761bf0b7b`
-- Robert Hooke, *Posthumous Works* (1705) — `695595e17bd6d2cd1d61f4fb`
-- John Dee, *Monas Hieroglyphica* (1564) — `6952d04f77f38f6761bc4ee2`
+**Tier 3 — Broader Gouk bibliography (imported Session 5):**
+15. Joseph Glanvill, *Scepsis Scientifica* (1665, 302pp) — `scepsisscientifi00glaniala`
+16. Joseph Glanvill, *Plus Ultra* (1668, 204pp) — `b30325080`
+17. Thomas Sprat, *The History of the Royal Society of London* (1667, 480pp) — `b3032760x`
+18. John Wilkins, *An Essay towards a Real Character and a Philosophical Language* (1668, 670pp) — `AnEssayTowardsARealCharacterAndAPhilosophicalLanguage`
+19. William Holder, *Elements of Speech* (1669, 190pp) — `holderspeech`
+20. Robert Plot, *The Natural History of Oxfordshire* (1677, 434pp) — `naturalhistoryof00plot`
+
+### Robert Hooke Corpus (Session 5, ~1,970+ pages)
+
+Complete importable Hooke works beyond the 2 already in library:
+
+21. Robert Hooke, *The Diary of Robert Hooke, 1672-1680* (Robinson/Adams 1935 transcription, 582pp) — `diaryofroberthoo0000robe`
+22. Robert Hooke, *An Attempt for the Explication of the Phaenomena* (1661, 46pp) — `attemptforexplic00hook`
+23. Robert Hooke, *Animadversions on the first part of the Machina Coelestis* (1674, 124pp) — `animadversionson00hook`
+24. Robert Hooke, *Lectures and Collections* (1678, 172pp) — `lecturesandcolle00hook`
+25. Robert Hooke, *Micrographia Restaurata* (1745, 260pp) — `micrographiaresta00hook`
+
+**Already in library (Hooke):**
+- *Micrographia* (1665) — `6953e56577f38f6761bf0b7b`
+- *Posthumous Works* (1705) — `695595e17bd6d2cd1d61f4fb`
+- *Lectures de Potentia Restitutiva* — existing
+- *Lampas* — existing
+- *An Attempt to Prove the Motion of the Earth* — existing
+- *A Description of Helioscopes* — existing
+- *Lectiones Cutlerianae* — existing
+- *Philosophical Experiments and Observations* — existing
+
+**Note:** Hooke's actual laboratory notebooks are in the Royal Society and British Library archives, not digitized on IA. The Diary (Robinson/Adams 1935) is the key published primary source.
+
+**Already in library (other Gouk authors — extensive coverage):**
+- Francis Bacon: 79 books
+- Athanasius Kircher: 24 books
+- Robert Fludd: 27 books
+- Giambattista della Porta: 18 books
+- John Dee: *Monas Hieroglyphica* (1564) — `6952d04f77f38f6761bc4ee2`
 - Robert Burton, *Anatomy of Melancholy* (1621) — `6990656f3dc2ed39a49f101f`
 
 **Not importable:** Dee's *Mathematicall Praeface* standalone (only Gutenberg plaintext on IA; imported as part of Billingsley Euclid instead)
