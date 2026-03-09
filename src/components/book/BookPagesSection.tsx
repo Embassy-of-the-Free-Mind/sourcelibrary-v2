@@ -483,18 +483,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   };
 
   const getImageUrl = (page: Page) => {
-    // Prefer pre-generated Vercel Blob thumbnail (fast CDN)
+    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
+
+    // For split pages, prefer pre-cropped Blob image — thumbnail_blob may be from unsplit original
+    if (page.crop && typedPage.cropped_photo) {
+      return typedPage.cropped_photo;
+    }
+
+    // Pre-generated Vercel Blob thumbnail (fast CDN) — only for non-split pages
     if (page.thumbnail_blob) {
       return page.thumbnail_blob;
     }
     if (page.thumbnail) {
       return page.thumbnail;
-    }
-
-    // For split pages, prefer pre-cropped Blob image (avoids proxy overhead)
-    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
-    if (page.crop && typedPage.cropped_photo) {
-      return typedPage.cropped_photo;
     }
 
     const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;

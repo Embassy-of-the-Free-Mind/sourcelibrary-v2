@@ -56,7 +56,12 @@ export default memo(function PageThumbnail({ page, bookId, index }: PageThumbnai
 
   // Build image URL with crop if available
   const getImageUrl = () => {
-    // Pre-generated thumbnail — serve directly, no proxy needed
+    // For split pages, prefer pre-cropped Blob image — thumbnail_blob may be from unsplit original
+    if (page.crop && page.cropped_photo) {
+      return page.cropped_photo;
+    }
+
+    // Pre-generated thumbnail — serve directly, no proxy needed (only for non-split pages)
     if (page.thumbnail_blob) {
       return page.thumbnail_blob;
     }
@@ -64,11 +69,6 @@ export default memo(function PageThumbnail({ page, bookId, index }: PageThumbnai
     // Use utility to get best available image (archived > original)
     const baseUrl = getPageImageUrl(page);
     if (!baseUrl) return null;
-
-    // If we already have a cropped photo or archived photo, use directly with resize
-    if (page.crop && page.cropped_photo) {
-      return page.cropped_photo;
-    }
 
     // If we have an archived photo (no crop needed), use it with resize
     if (page.archived_photo && !page.crop) {
