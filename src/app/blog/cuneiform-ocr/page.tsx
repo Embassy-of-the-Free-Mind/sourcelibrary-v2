@@ -1933,6 +1933,67 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           Claude Opus 4.6 at t=0.3 is the new overall best at 18.8% F1 &mdash; breaking through the ~15% ceiling that had held across all six Gemini-only experiments. The top 5 all cluster between 13&ndash;19% F1, with precision consistently between 41&ndash;56%. The highest-precision condition remains Opus with Sobel (55.9%), meaning more than half of identified signs are correct, but recall stays stubbornly low.
         </p>
 
+        {/* --- What the model actually produces --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          What 18.8% F1 Looks Like
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Statistics only go so far. Here is the actual output from our best condition &mdash; Claude Opus 4.6 at t=0.3 &mdash; alongside the tablet photograph it was reading. You can compare each cuneiform sign the model produced against the clay surface yourself.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* Tablet photograph */}
+          <figure className="m-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P250675_raw.jpg"
+              alt="Cuneiform tablet P250675 (CUSAS 35, 426) — obverse face, Old Akkadian period"
+              className="w-full rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-xs text-muted mt-2 italic">
+              P250675 (CUSAS 35, 426) &mdash; Old Akkadian, ca. 2340&ndash;2200 BCE. Three columns on the obverse face. 208 signs in the published ground truth.
+            </figcaption>
+          </figure>
+
+          {/* Model output */}
+          <div className="bg-warm rounded-lg p-4 sm:p-5 overflow-x-auto">
+            <p className="text-xs text-muted mb-3 font-semibold uppercase tracking-wide">Claude Opus 4.6 output (t=0.3, 22 seconds)</p>
+            <div className="space-y-2 font-mono text-sm leading-relaxed">
+              <p><span className="text-muted">1:</span> <span className="text-3xl align-middle">𒌋</span> <span className="text-muted">[UNCLEAR]</span> <span className="text-3xl align-middle">𒂠</span> <span className="text-xs text-secondary">SHE₃</span> <span className="text-3xl align-middle">𒄀</span> <span className="text-xs text-secondary">GI</span> <span className="text-3xl align-middle">𒈬</span> <span className="text-xs text-secondary">MU</span> <span className="text-muted">[UNCLEAR]</span></p>
+              <p><span className="text-muted">2:</span> <span className="text-3xl align-middle">𒋗</span> <span className="text-xs text-secondary">SHU</span> <span className="text-3xl align-middle">𒃻</span> <span className="text-xs text-secondary">GAR</span> <span className="text-3xl align-middle">𒊏</span> <span className="text-xs text-secondary">RA</span> <span className="text-3xl align-middle">𒈾</span> <span className="text-xs text-secondary">NA</span> <span className="text-3xl align-middle">𒀀</span> <span className="text-xs text-secondary">A</span></p>
+              <p><span className="text-muted">3:</span> <span className="text-3xl align-middle">𒆳</span> <span className="text-xs text-secondary">KUR</span> <span className="text-3xl align-middle">𒁀</span> <span className="text-xs text-secondary">BA</span> <span className="text-3xl align-middle">𒀭</span> <span className="text-xs text-secondary">AN</span> <span className="text-3xl align-middle">𒂗</span> <span className="text-xs text-secondary">EN</span> <span className="text-3xl align-middle">𒆤</span> <span className="text-xs text-secondary">LIL₂</span></p>
+              <p><span className="text-muted">4:</span> <span className="text-3xl align-middle">𒇷</span> <span className="text-xs text-secondary">LI</span> <span className="text-3xl align-middle">𒆷</span> <span className="text-xs text-secondary">LA</span> <span className="text-3xl align-middle">𒊑</span> <span className="text-xs text-secondary">RI</span> <span className="text-3xl align-middle">𒅎</span> <span className="text-xs text-secondary">IM</span> <span className="text-3xl align-middle">𒄀</span> <span className="text-xs text-secondary">GI</span></p>
+              <p><span className="text-muted">5:</span> <span className="text-3xl align-middle">𒈬</span> <span className="text-xs text-secondary">MU</span> <span className="text-3xl align-middle">𒌓</span> <span className="text-xs text-secondary">UD</span> <span className="text-3xl align-middle">𒁲</span> <span className="text-xs text-secondary">DU₃</span> <span className="text-3xl align-middle">𒀀</span> <span className="text-xs text-secondary">A</span> <span className="text-3xl align-middle">𒁀</span> <span className="text-xs text-secondary">BA</span></p>
+              <p><span className="text-muted">6:</span> <span className="text-3xl align-middle">𒊮</span> <span className="text-xs text-secondary">SHA₃</span> <span className="text-3xl align-middle">𒂍</span> <span className="text-xs text-secondary">E₂</span> <span className="text-3xl align-middle">𒀭</span> <span className="text-xs text-secondary">AN</span> <span className="text-3xl align-middle">𒈾</span> <span className="text-xs text-secondary">NA</span> <span className="text-3xl align-middle">𒋗</span> <span className="text-xs text-secondary">SHU</span></p>
+              <p><span className="text-muted">7:</span> <span className="text-3xl align-middle">𒅆</span> <span className="text-xs text-secondary">IGI</span> <span className="text-3xl align-middle">𒃲</span> <span className="text-xs text-secondary">GAL</span> <span className="text-3xl align-middle">𒈗</span> <span className="text-xs text-secondary">LUGAL</span> <span className="text-3xl align-middle">𒌷</span> <span className="text-xs text-secondary">URU</span> <span className="text-3xl align-middle">𒆠</span> <span className="text-xs text-secondary">KI</span></p>
+              <p><span className="text-muted">8:</span> <span className="text-3xl align-middle">𒄿</span> <span className="text-xs text-secondary">I</span> <span className="text-3xl align-middle">𒋾</span> <span className="text-xs text-secondary">TI</span> <span className="text-3xl align-middle">𒅗</span> <span className="text-xs text-secondary">KA</span> <span className="text-3xl align-middle">𒊏</span> <span className="text-xs text-secondary">RA</span> <span className="text-3xl align-middle">𒁀</span> <span className="text-xs text-secondary">BA</span></p>
+              <p><span className="text-muted">9:</span> <span className="text-3xl align-middle">𒈬</span> <span className="text-xs text-secondary">MU</span> <span className="text-3xl align-middle">𒌑</span> <span className="text-xs text-secondary">U₂</span> <span className="text-3xl align-middle">𒊕</span> <span className="text-xs text-secondary">SAG</span> <span className="text-3xl align-middle">𒂠</span> <span className="text-xs text-secondary">SHE₃</span> <span className="text-muted">[UNCLEAR]</span></p>
+              <p><span className="text-muted">10:</span> <span className="text-3xl align-middle">𒋛</span> <span className="text-xs text-secondary">SI</span> <span className="text-3xl align-middle">𒀀</span> <span className="text-xs text-secondary">A</span> <span className="text-3xl align-middle">𒈾</span> <span className="text-xs text-secondary">NA</span> <span className="text-3xl align-middle">𒆕</span> <span className="text-muted">[UNCLEAR]</span> <span className="text-3xl align-middle">𒋃</span> <span className="text-muted">[UNCLEAR]</span></p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-medium/30 text-xs text-muted space-y-1">
+              <p>58 signs extracted &middot; 25 matched ground truth &middot; 43% precision &middot; 12% recall</p>
+              <p>Self-reported confidence: 0.28 &mdash; &ldquo;low due to the photographic angle, surface damage, and the difficulty of resolving individual wedge impressions from photographs rather than direct examination.&rdquo;</p>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Some observations from reading the output against the photograph:
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The model correctly reads the tablet as multi-column and identifies many real sign shapes &mdash; <span className="font-mono text-lg">𒀭</span> AN, <span className="font-mono text-lg">𒈗</span> LUGAL, <span className="font-mono text-lg">𒂍</span> E₂, <span className="font-mono text-lg">𒆠</span> KI are all signs that appear in the ground truth ATF. Line 7&apos;s <span className="font-mono text-lg">𒅆</span> IGI <span className="font-mono text-lg">𒃲</span> GAL <span className="font-mono text-lg">𒈗</span> LUGAL reads as &ldquo;before the king&rdquo; &mdash; a witness formula common in Old Akkadian legal texts, which is exactly what this tablet is (a real estate sale). The model inferred the document genre correctly.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But the errors are equally visible. The model reads 10 lines where the ground truth has three columns of 10+ lines each. It is reading one column (or parts of multiple columns) while missing most of the tablet. Many of the cuneiform characters it outputs are valid Unicode codepoints that <em>look plausible</em> but don&apos;t match the actual wedge patterns on the clay surface. This is the fundamental challenge: the model has learned what cuneiform signs look like in general, but cannot reliably match specific wedge impressions in a photograph to specific signs.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The 0.28 self-reported confidence is refreshingly honest. The model knows it is struggling.
+        </p>
+
         {/* --- Conclusion --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Conclusion
