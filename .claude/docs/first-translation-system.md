@@ -4,26 +4,61 @@
 
 Source Library identifies books that represent the **first known English translation** of a historical text. This is a key scholarly claim — many pre-1800 Latin, German, Arabic, Hebrew, and other non-English texts on alchemy, Hermeticism, Kabbalah, astrology, and natural philosophy have never been translated into English.
 
-The system uses a **multi-stage AI verification pipeline** that progressively increases confidence: lightweight OCR-based classification → LLM deep knowledge check → (future) web search grounding.
+The system uses a **two-stage AI verification pipeline**:
+1. **Stage 1 (lightweight):** OCR-based classification during metadata enrichment — fast, uses existing page text
+2. **Stage 2 (deep):** Gemini function-calling verification with real catalog searches — the model actively searches 4 databases, evaluates results semantically, and makes an evidence-based determination
+
+As of March 9, 2026: **2,446 verified first translations** across 4,041 verified non-English books.
 
 **Blog post:** https://sourcelibrary.org/blog/first-translation-methodology
 
 ---
 
-## Classification Statuses
+## How "First Translation" Is Defined
 
-The `ai_metadata.first_translation.status` field uses one of six values:
+### Source Language Matters
 
-| Status | Meaning | `is_first_translation` |
-|--------|---------|----------------------|
-| `confirmed_first` | No English translation found, high confidence | `true` |
-| `likely_first` | Probably no English translation, but uncertain | `true` |
-| `uncertain` | Insufficient evidence to determine | `false` |
-| `has_partial` | Partial/excerpt translations exist | `false` |
-| `has_translation` | Complete English translation exists | `false` |
-| `not_applicable` | Book is already in English | `false` |
+A first translation claim is specific to the **source text in our library**, not the underlying work. Many books are Latin translations of Greek originals. If the Greek has been translated to English but the Latin text hasn't, our Latin text is still a first translation.
 
-The top-level boolean `book.is_first_translation` is derived: `true` for `confirmed_first` or `likely_first`, `false` otherwise.
+**Example:** Iamblichus' *De Mysteriis* in Ficino's Latin rendering. Taylor (1821) and Clarke (2003) translated the Greek original to English, but Ficino's Latin version — which has its own scholarly value as a Renaissance interpretation — has never been translated. This counts as a **first translation**.
+
+The prompt explicitly instructs the model: *"A translation from a different source language (e.g. Greek→English when we have the Latin text) does NOT count."*
+
+### Five Disposition Categories
+
+The system recognizes that "first translation" isn't binary. A book can be:
+
+| Disposition | Meaning | `is_first_translation` | Example |
+|-------------|---------|----------------------|---------|
+| `confirmed_first` | No English translation of any kind exists | `true` | A Latin alchemical text never translated |
+| `first_complete_translation` | Partial translations or excerpts exist, but no complete translation | `true` | Paracelsus work where only excerpts appear in anthologies |
+| `first_modern_translation` | Old/antiquated translations exist (typically pre-1900), but no modern scholarly translation | `true` | Text with a 1649 English version but no modern critical translation |
+| `translation_found` | A complete, modern English translation already exists | `false` | Text with a Penguin Classics edition |
+| `needs_review` | Evidence is conflicting or inconclusive | `false` | Tool searches failed (API errors) or evidence is ambiguous |
+
+All three "first" categories set `is_first_translation: true` because each represents genuine scholarly value — being the first complete translation, or the first modern translation, is still significant.
+
+### Partial and Related Translations
+
+The `first_complete_translation` disposition handles the most common nuanced case:
+
+- **Anthologized excerpts:** Individual sections translated in collected volumes (e.g., excerpts from Theatrum Chemicum appearing in Waite's *Hermetic and Alchemical Writings*)
+- **Selected passages:** Academic articles quoting/translating key passages but not the full work
+- **Partial translations:** A translator started but never finished (common with long Latin texts)
+
+The model lists these partial translations in `translations_found` with `completeness: 'partial'` or `'excerpts'`, then sets `first_complete_translation` because no full version exists.
+
+**Real example from the DB:** *"On Presages, Divination, and Astrological Fragments"* (Latin, 1569) — partial translations exist in *The Hermetic and Alchemical Writings of Paracelsus* (local_catalogs) but no complete translation of this specific compilation by Gerhard Dorn.
+
+### Old vs. Modern Translations
+
+The `first_modern_translation` disposition handles cases where:
+
+- A 17th-century English translation exists but is archaic and unreliable
+- An old translation was made from a different recension or intermediate language
+- The existing translation lacks critical apparatus, notes, or scholarly context
+
+**Real example:** *"Know Thyself: Astrology Theologized"* (German) — Robert Turner translated from Latin in 1649, and Anna Kingsford reprinted in 1886, but both are from the Latin version, not the German original. Our translation from the original German is the first modern direct translation.
 
 ---
 
@@ -34,8 +69,8 @@ The top-level boolean `book.is_first_translation` is derived: `true` for `confir
 | Field | Type | Set By | Description |
 |-------|------|--------|-------------|
 | `ai_metadata.first_translation` | Object | Stage 1 (enrichment) | `{ status, reasoning, known_translations[], confidence }` |
-| `is_first_translation` | boolean | Stage 1 (enrichment) | Derived from status — `true` for confirmed/likely first |
-| `translation_verification` | Object | Stage 2 (verification) | Deep verification with `disposition`, `translations[]`, `confidence` |
+| `is_first_translation` | boolean | Stage 2 (overrides Stage 1) | Derived from disposition — `true` for confirmed/first_complete/first_modern |
+| `translation_verification` | Object | Stage 2 (verification) | Full evidence chain with disposition, translations found, tools called, reasoning |
 | `field_provenance.is_first_translation` | Object | Stage 1 | AI source info (model, date, confidence, pages_checked) |
 
 ### Stage 1 Object (`ai_metadata.first_translation`)
@@ -43,8 +78,8 @@ The top-level boolean `book.is_first_translation` is derived: `true` for `confir
 ```typescript
 {
   status: 'confirmed_first' | 'likely_first' | 'uncertain' | 'has_partial' | 'has_translation' | 'not_applicable';
-  reasoning: string;        // 1-2 sentences
-  known_translations: string[];  // Any known English translations
+  reasoning: string;
+  known_translations: string[];
   confidence: 'high' | 'medium' | 'low';
 }
 ```
@@ -53,90 +88,162 @@ The top-level boolean `book.is_first_translation` is derived: `true` for `confir
 
 ```typescript
 interface TranslationVerification {
-  source: 'catalog_search';
-  searched_at: Date;
-  has_english_translation: boolean;
-  translations?: TranslationEvidence[];
-  confidence?: 'high' | 'medium' | 'low';
-  reasoning?: string;
-  search_evidence?: {
-    apis_queried: string[];
-    total_results: number;
-    evidence_strength: 'none' | 'weak' | 'moderate' | 'strong';
-  };
-  disposition?: 'confirmed_first' | 'translation_found' | 'needs_review';
-  disposition_reasoning?: string;
-  disposition_at?: Date;
-  validated_translations?: TranslationEvidence[];
-  llm_knowledge_translations?: TranslationEvidence[];
+  disposition: 'confirmed_first' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
+  confidence: 'high' | 'medium' | 'low';
+  reasoning: string;
+  translations_found: Array<{
+    english_title: string;
+    translator?: string;
+    pub_year?: string;
+    publisher?: string;
+    completeness: 'complete' | 'partial' | 'excerpts' | 'unknown';
+    evidence_source: 'local_catalogs' | 'open_library' | 'google_books' | 'ustc';
+    url?: string;
+  }>;
+  tools_called: string[];   // e.g. ['search_local_catalogs', 'search_open_library', 'make_determination']
+  verified_at: Date;
+  model: string;            // 'gemini-3-flash-preview'
+  cost_usd: number;         // ~$0.01/book
+  source: 'catalog_and_llm';
+  stage: 2;
 }
 ```
-
-Type definitions: `src/lib/types/book.ts` (lines 215-247).
 
 ---
 
 ## Stage 1: AI Metadata Enrichment
 
-**When:** Pipeline Phase 3.5 (`metadata_enriched` state) or backfill script.
+**When:** Pipeline Phase 3.5 (`metadata_enriched` state), runs automatically.
 
-**How:** Reads first 25 OCR pages of a book + metadata, asks Gemini to classify `first_translation` alongside other metadata (language, categories, description, display_title).
+**How:** Reads first 25 OCR pages + metadata, asks Gemini to classify `first_translation` alongside other metadata (language, categories, description, display_title). This is a lightweight text-only check — no catalog searches.
 
 **Implementation:** `enrichBookMetadata()` in `src/lib/metadata-enrichment.ts`
-- Lines 104-109: Prompt includes `first_translation` JSON schema
-- Lines 346-350: Derives `is_first_translation` boolean from status
-- Lines 385: Stores field provenance
 
-**Cost:** ~$0.002/book (text-only, ~25 OCR pages as context).
+**Cost:** ~$0.002/book (included in metadata enrichment cost).
 
 **What it writes:**
-- `ai_metadata.first_translation` — the classification object
-- `is_first_translation` — derived boolean
+- `ai_metadata.first_translation` — classification object
+- `is_first_translation` — derived boolean (overridden by Stage 2 when it runs)
 - `field_provenance.is_first_translation` — AI source tracking
 
-**Backfill script:** `_tmp-backfill-ft-stage1.mjs` — standalone script for books enriched before the `first_translation` field was added to the prompt (Feb 17, 2026). Queries `{ 'ai_metadata.enriched_at': { $exists: true }, 'ai_metadata.first_translation': { $exists: false } }`.
+Stage 1 is a preliminary screen. It catches obvious cases (English books → `not_applicable`, well-known translated works → `has_translation`) but has no access to catalogs. Stage 2 provides the authoritative determination.
 
 ---
 
-## Stage 2: LLM Deep Knowledge Check
+## Stage 2: Gemini Function-Calling Verification
 
-**When:** After Stage 1, as a separate verification pass.
+**When:** Pipeline Phase 3.7 (`ft_verifying` → `ft_verified` state), or via backfill script.
 
-**How:** Text-only Gemini call (no OCR/images) asking: "Has this work EVER been translated into English?" Includes Stage 1 assessment as a hint. Checks academic publishers, specialist presses, older translations, PhD dissertations, journal translations.
+**How:** Multi-turn Gemini conversation where the model calls tools to search real catalogs, evaluates results semantically, then makes an evidence-based determination. This is the first use of Gemini function calling in the codebase.
 
-**Implementation:** `_tmp-verify-ft-stage2.mjs` (backfill) and `scripts/enrichment/verify-first-translations.mjs` (original Latin-only version).
+**Implementation:** `verifyFirstTranslation()` in `src/lib/verify-first-translation.ts`
 
-**Cost:** ~$0.0003/book (text-only, no page content).
+**Model:** `gemini-3-flash-preview`, temperature 0.1, max 6 rounds.
 
-**Disposition logic:**
-- `found && conf !== 'low'` → `translation_found` (sets `is_first_translation = false`)
-- `!found && (conf === 'high' || 'medium')` → `confirmed_first` (sets `is_first_translation = true`)
-- Otherwise → `needs_review`
+**Cost:** ~$0.01/book (2-4 Gemini rounds with tool calls).
 
-**What it writes:**
-- `translation_verification` — full verification object with disposition, translations found, reasoning
-- `is_first_translation` — updated if disposition changes the assessment
+### Five Tools Available to the Model
 
-**API key rotation:** Stage 2 scripts rotate across multiple Gemini API keys for throughput.
+| Tool | Source | What it searches | URL in results? |
+|------|--------|-----------------|----------------|
+| `search_local_catalogs` | MongoDB `translation_catalogs` (~12k records) | UNESCO Index Translationum, Loeb, Brill, Penguin, CUA/Paulist, Godwin, HathiTrust catalogs | No (catalog records) |
+| `search_open_library` | Open Library API | Modern editions with ISBNs, publishers, dates | Yes (openlibrary.org links) |
+| `search_google_books` | Google Books API | Academic press translations, older editions | Yes (books.google.com links) |
+| `search_ustc` | USTC via Supabase | Verifies the original work exists, finds variant titles | No (catalog records) |
+| `make_determination` | Terminal tool | Final verdict — model must call this to end | N/A |
 
----
+### How It Works
 
-## Stage 3: Web Search Grounding (Future)
+1. Model receives book metadata (title, author, language, year) + first 3 pages of OCR + Stage 1 assessment
+2. Model calls `search_local_catalogs` first (instant, free, high signal from 12k+ scholarly catalog records)
+3. If inconclusive, model calls `search_open_library` and/or `search_google_books`
+4. Model may call `search_ustc` to verify the original work or find alternate titles
+5. Model calls `make_determination` with disposition + reasoning + list of translations found
+6. If model doesn't call `make_determination` after 6 rounds, a nudge message is injected
 
-Planned but not yet implemented in the backfill pipeline. Would use Google Search Grounding to verify claims with real web results. Estimated ~$0.014/book.
+### Key Design: LLM Evaluates, Doesn't Regex
+
+The model evaluates search results for **semantic relevance**, not string matching. When Open Library returns "Ficino: Platonic Theology," it's the model that decides whether that's a translation of *this specific work* or a different one by the same author. This solves the false-positive problem that plagued earlier regex-based approaches.
+
+### Evidence Grounding (March 9, 2026)
+
+The prompt constrains `translations_found` entries to only include translations actually found via tool calls. Evidence sources are an enum (`local_catalogs`, `open_library`, `google_books`, `ustc`), not free text. URLs from Open Library and Google Books are included when the tools return them. If the model believes a translation exists but couldn't find it via tools, it sets `needs_review` with reasoning instead of fabricating evidence.
+
+### What It Writes
+
+- `translation_verification` — full evidence chain (tools called, translations found with URLs, confidence, reasoning)
+- `is_first_translation` — updated boolean (overrides Stage 1)
+- Logged to `gemini_usage` with type `ft_verification`
+- Metadata changelog entry for audit trail
+
+### The `translation_catalogs` Collection
+
+~12,000 records imported from scholarly translation catalogs via `scripts/enrichment/import-translation-catalogs.mjs`:
+
+| Source | Records | Coverage |
+|--------|---------|----------|
+| UNESCO Index Translationum | ~7,500 | Most comprehensive — translations across all languages |
+| Loeb Classical Library | varies | Greek and Latin classics |
+| Brill | varies | Academic translations |
+| Penguin Classics | varies | Major trade translations |
+| CUA/Paulist Press | varies | Patristic texts |
+| Godwin | varies | Specialist esoteric texts |
+| HathiTrust | varies | Historical translations pre-1979 |
+
+Schema: `source`, `author`, `author_normalized`, `english_title`, `original_title`, `translator`, `pub_year`, `publisher`, `series`. Text-indexed on author + titles.
 
 ---
 
 ## Pipeline Integration
 
-Stage 1 runs automatically as part of the post-import pipeline cron (Phase 3.5, `metadata_enriched` state). The `enrichBookMetadata()` function handles it — no separate step needed.
+Both stages run automatically in the post-import pipeline:
 
-Stage 2 runs automatically as Phase 3.7 of the pipeline cron. After metadata enrichment, non-English books go through `verifyFirstTranslation()` before proceeding to translation. English books and already-verified books skip straight through. Non-blocking: failures skip ahead after 3 retries.
+```
+... → ocr_complete → metadata_enriched (Stage 1) → ft_verifying → ft_verified (Stage 2) → translate_submitted → ...
+```
 
-**Pipeline flow:**
-```
-... → ocr_complete → metadata_enriched (Stage 1 runs here) → ft_verifying → ft_verified (Stage 2 runs here) → translate_submitted → ...
-```
+- **English books** skip Stage 2 entirely (already `not_applicable`)
+- **Already-verified books** (with `tools_called` field) skip unless `--force` is used
+- **Non-blocking:** On persistent failure after 3 retries, books skip ahead to `ft_verified` — verification doesn't block translation
+
+Phase 3.7 processes up to 10 books per cron run, at ~$0.01/book.
+
+**Backfill script:** `scripts/enrichment/cleanup-first-translation-claims.mjs`
+- `--all` — verify all non-English books without tool-calling verification
+- `--all --force` — re-verify ALL non-English books (even already verified)
+- `--apply` — persist results (default is dry-run)
+- `--book-id=ID` — verify a single book
+
+---
+
+## Current Numbers (March 9, 2026)
+
+| Metric | Count |
+|--------|-------|
+| Total `is_first_translation: true` | **2,446** |
+| Total non-English books | 4,288 |
+| Verified with tool-calling | 4,041 |
+
+### Disposition Breakdown
+
+| Disposition | Count | % of verified |
+|-------------|-------|--------------|
+| `confirmed_first` | 1,727 | 43% |
+| `first_complete_translation` | 609 | 15% |
+| `first_modern_translation` | 119 | 3% |
+| `translation_found` | 1,527 | 38% |
+| `needs_review` | 106 | 3% |
+
+### Stage 1 Breakdown (for reference)
+
+| Status | Count |
+|--------|-------|
+| `has_translation` | 1,510 |
+| `not_applicable` | 823 |
+| `likely_first` | 707 |
+| `has_partial` | 384 |
+| `uncertain` | 282 |
+| `confirmed_first` | 38 |
 
 ---
 
@@ -168,103 +275,77 @@ Stage 2 runs automatically as Phase 3.7 of the pipeline cron. After metadata enr
 
 ---
 
-## Operational Scripts
+## Key Files
 
-| Script | Purpose |
-|--------|---------|
-| `_tmp-backfill-ft-stage1.mjs` | Backfill Stage 1 for books missing `ai_metadata.first_translation` |
-| `_tmp-verify-ft-stage2.mjs` | Backfill Stage 2 verification for all non-English books |
-| `scripts/enrichment/verify-first-translations.mjs` | Original Stage 2 (Latin-only) |
-| `scripts/enrichment/search-translation-evidence.mjs` | Catalog search for translation evidence |
-| `scripts/enrichment/validate-translation-evidence.mjs` | Evidence validation |
-| `scripts/maintenance/backfill-first-translation.mjs` | Bulk enrichment runner |
-
----
-
-## Data Quality Fix (March 7, 2026)
-
-Three pre-March-2026 scripts wrote `translation_verification` records with buggy disposition logic, non-standard field names, and no `stage` marker. These were cleared and re-verified.
-
-### Old Scripts and Their Bugs
-
-**1. `scripts/enrichment/search-translation-evidence.mjs`** (872 records, `source: 'catalog_search'`, no stage)
-- Searched Open Library, Google Books, and Internet Archive catalogs
-- When all 3 APIs returned 0 results, wrote `has_english_translation: false` — a negative claim based solely on catalog absence
-- Disposition was set later by `validate-translation-evidence.mjs`
-
-**2. `scripts/enrichment/validate-translation-evidence.mjs`** (set dispositions on the 872 above)
-- **Path B bug:** When catalog AND LLM both found nothing, set `disposition: 'confirmed_first'` without checking Stage 1's assessment. Books where Stage 1 said `has_translation` could still get `confirmed_first`.
-- This caused 123 Type B disagreements (Stage 1 = HAS, Stage 2 = FIRST)
-
-**3. `scripts/enrichment/verify-first-translations.mjs`** (458 records, `source: 'gemini_knowledge_lookup'`, no stage)
-- Latin-only LLM check using `gemini-2.5-flash`
-- Stored raw LLM results without computing disposition
-- Some records had no disposition at all
-
-**4. Unknown old script** (826 records, `source: null`)
-- Used non-standard disposition values: `first_translation` (744), `translation_exists` (41), `first_full_translation` (31), `translation_found` (16)
-
-### Key Insight
-
-Stage 2 can verify that a translation **exists** (by citing a specific translator, publisher, year) but cannot prove one **doesn't exist**. The old scripts' `confirmed_first` disposition was logically invalid — absence of evidence in catalogs or LLM knowledge is not evidence of absence.
-
-Current Stage 2 dispositions:
-- `translation_found` — verified, trustworthy (cites specific translations)
-- `confirmed_first` — LLM's best guess, NOT actually confirmed
-- `needs_review` — low confidence
-
-### Fix Applied
-
-Script: `_tmp-fix-old-verification.mjs`
-
-1. Identified old records: any `translation_verification` without `stage: 2` (2,156 records)
-2. Cleared all old records using `$unset`
-3. Reset `is_first_translation` from Stage 1 (`ai_metadata.first_translation.status`):
-   - 52 books flipped to `true` (old verification incorrectly set false)
-   - 220 books flipped to `false` (old verification incorrectly set true)
-   - 1,797 unchanged, 87 had no Stage 1 data
-4. Re-ran `_tmp-verify-ft-stage2.mjs` on the 2,156 affected books with fresh Stage 2 data
-
-### Good Records Preserved
-
-923 records with `source: 'gemini_knowledge_lookup'` AND `stage: 2` were kept — these were created by the current `_tmp-verify-ft-stage2.mjs` script with correct disposition logic.
+| File | Purpose |
+|------|---------|
+| `src/lib/verify-first-translation.ts` | Core Stage 2 verification (Gemini function calling, 5 tools) |
+| `src/lib/metadata-enrichment.ts` | Stage 1 classification (part of metadata enrichment) |
+| `scripts/enrichment/cleanup-first-translation-claims.mjs` | Backfill script (--all, --apply, --force, --book-id flags) |
+| `scripts/enrichment/import-translation-catalogs.mjs` | Imports CSV catalogs into MongoDB `translation_catalogs` collection |
+| `src/lib/types/pipeline.ts` | Pipeline states including `ft_verifying`, `ft_verified` |
+| `src/app/api/cron/post-import-pipeline/route.ts` | Phase 3.7 integration |
 
 ---
 
 ## Known Limitations
 
-1. **LLM hallucination risk:** Stage 2 uses Gemini's knowledge — it may claim translations exist that don't, or miss obscure translations. The `needs_review` disposition catches low-confidence cases.
-2. **No web search grounding yet:** Stage 3 (Google Search Grounding) would provide real-time verification but isn't implemented in the pipeline.
-3. **Partial translations are complex:** A book may have excerpts translated in an anthology but no standalone translation. The `has_partial` status captures this but the boundary is fuzzy.
-4. **English books:** Books already in English get `not_applicable` — but some are English translations of non-English works (e.g., Sacred Books of the East). These are correctly classified as `not_applicable` since the book itself is already in English.
-5. **Multi-volume works:** Each volume is assessed independently. Volume 1 of Theatrum Chemicum might be `confirmed_first` while Volume 5 is `has_partial` because individual treatises within it have been translated.
+1. **Absence ≠ evidence:** Stage 2 can verify that a translation **exists** (by citing specific translator, publisher, year) but cannot prove one **doesn't exist**. `confirmed_first` means "no translation found in our catalogs" — a strong signal but not absolute proof.
+
+2. **Catalog coverage gaps:** The `translation_catalogs` collection has ~12k records from major scholarly catalogs, but doesn't cover every publisher. Obscure translations from small presses or dissertations may be missed. Open Library and Google Books partially fill this gap.
+
+3. **Partial translation boundaries:** The line between "excerpt" and "partial translation" is fuzzy. A 10-page excerpt in an anthology is clearly partial, but what about a 100-page selection from a 200-page work? The model uses judgment.
+
+4. **Multi-volume works:** Each volume is assessed independently. Volume 1 of Theatrum Chemicum might be `confirmed_first` while individual treatises within Volume 5 have been translated in anthologies.
+
+5. **English books:** Books already in English get `not_applicable` from Stage 1 and skip Stage 2 entirely.
+
+6. **`needs_review` from API failures:** Some books get `needs_review` because Google Books returned HTTP 429 (rate limit), not because the evidence is genuinely ambiguous. These can be re-verified later.
+
+7. **LLM knowledge leakage:** Despite prompt guardrails, the model may occasionally use its training knowledge to inform dispositions rather than relying solely on tool results. The evidence_source enum constraint (added March 9, 2026) mitigates but doesn't eliminate this.
+
+---
+
+## Historical Context
+
+### Evolution of the System
+
+1. **Pre-Feb 2026:** Single weak Gemini prompt during metadata enrichment. No catalog lookups, no evidence. ~180 books misclassified.
+2. **Feb 2026:** Stage 1 added to metadata enrichment. Lightweight but no catalog access.
+3. **March 7-8, 2026:** Stage 2 built — Gemini function calling with 5 real tools. First use of function calling in the codebase. UNESCO + other catalogs imported to MongoDB.
+4. **March 7-9, 2026:** Full backfill of 4,041 non-English books. Discovered ~1,450 new first translations (up from ~994 flagged).
+5. **March 9, 2026:** Prompt tightened to constrain evidence to tool results only (evidence_source enum, no LLM knowledge in translations_found). Remaining 1,277 unverified books processed.
+
+### Data Quality Fix (March 7-9, 2026)
+
+Three pre-March-2026 scripts wrote `translation_verification` records with buggy disposition logic, non-standard field names, and no `stage` marker. All 2,156 old records were cleared and re-verified with the new pipeline. See `.claude/handoffs/2026-03-07-first-translation-verification-backfill.md` for details.
 
 ---
 
 ## Querying
 
 ```javascript
-// All confirmed first translations
+// All first translations (includes confirmed, first_complete, first_modern)
 db.books.find({ is_first_translation: true })
 
-// Books needing Stage 1 assessment
-db.books.find({
-  language: { $nin: ['English', 'english', null, ''] },
-  'ai_metadata.enriched_at': { $exists: true },
-  'ai_metadata.first_translation': { $exists: false },
-})
-
-// Books needing Stage 2 verification
-db.books.find({
-  language: { $nin: ['English', 'english', null, ''] },
-  'ai_metadata.first_translation': { $exists: true },
-  'translation_verification': { $exists: false },
-  pages_translated: { $gt: 0 },
-})
-
-// Stage 2 disposition breakdown
+// Disposition breakdown
 db.books.aggregate([
   { $match: { 'translation_verification.disposition': { $exists: true } } },
   { $group: { _id: '$translation_verification.disposition', count: { $sum: 1 } } },
 ])
+
+// Books still unverified (no tool-calling verification)
+db.books.find({
+  language: { $nin: ['English', 'english', null, ''] },
+  'translation_verification.tools_called': { $exists: false },
+})
+
+// First-complete translations with their partial evidence
+db.books.find(
+  { 'translation_verification.disposition': 'first_complete_translation' },
+  { title: 1, display_title: 1, 'translation_verification.translations_found': 1, 'translation_verification.reasoning': 1 }
+)
+
+// Books needing review (API failures, ambiguous evidence)
+db.books.find({ 'translation_verification.disposition': 'needs_review' })
 ```
