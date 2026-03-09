@@ -388,7 +388,7 @@ const Viewfinder = forwardRef<ViewfinderHandle, ViewfinderProps>(function Viewfi
     };
   }, [cameraStatus, edgeDetector, autoCaptureController, quickQuality]);
 
-  // -- Cleanup --
+  // -- Cleanup (camera only — autoCaptureController lifecycle is owned by parent) --
 
   useEffect(() => {
     return () => {
@@ -397,9 +397,8 @@ const Viewfinder = forwardRef<ViewfinderHandle, ViewfinderProps>(function Viewfi
         streamRef.current.getTracks().forEach((t) => t.stop());
         streamRef.current = null;
       }
-      autoCaptureController.stop();
     };
-  }, [autoCaptureController]);
+  }, []);
 
   // -- Render --
 

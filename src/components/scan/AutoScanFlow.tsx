@@ -81,6 +81,7 @@ export default function AutoScanFlow({ edgeDetector }: AutoScanFlowProps) {
   // Refs
   const viewfinderRef = useRef<ViewfinderHandle>(null);
   const uploadQueueRef = useRef<UploadQueue | null>(null);
+  const analyzeAbortRef = useRef<AbortController | null>(null);
   const autoCaptureController = useMemo(() => new AutoCaptureController(), []);
 
   // -- Init edge detector --
@@ -164,35 +165,49 @@ export default function AutoScanFlow({ edgeDetector }: AutoScanFlowProps) {
       setState('title-analyzing');
 
       try {
-        // Analyze title page
+        // Analyze title page with 20s timeout
         const formData = new FormData();
         formData.append('file', blob, 'title-page.jpg');
         if (corners) {
           formData.append('corners', JSON.stringify(corners));
         }
 
-        const res = await fetch('/api/scan/analyze-title', {
-          method: 'POST',
-          body: formData,
-        });
+        const controller = new AbortController();
+        analyzeAbortRef.current = controller;
+        const timeout = setTimeout(() => controller.abort(), 20_000);
 
-        if (!res.ok) {
-          throw new Error(`Analysis failed: ${res.status}`);
+        try {
+          const res = await fetch('/api/scan/analyze-title', {
+            method: 'POST',
+            body: formData,
+            signal: controller.signal,
+          });
+
+          clearTimeout(timeout);
+
+          if (!res.ok) {
+            throw new Error(`Analysis failed: ${res.status}`);
+          }
+
+          const data = await res.json();
+          setExtractedMetadata({
+            title: data.title ?? null,
+            author: data.author ?? null,
+            language: data.language ?? null,
+            year: data.year ?? null,
+            ocr_text: data.ocr_text,
+          });
+        } catch (fetchErr) {
+          clearTimeout(timeout);
+          if (controller.signal.aborted) {
+            setAnalyzeError('Analysis timed out or was skipped');
+          } else {
+            setAnalyzeError(fetchErr instanceof Error ? fetchErr.message : 'Analysis failed');
+          }
+          setExtractedMetadata({ title: null, author: null, language: null, year: null });
+        } finally {
+          analyzeAbortRef.current = null;
         }
-
-        const data = await res.json();
-        setExtractedMetadata({
-          title: data.title ?? null,
-          author: data.author ?? null,
-          language: data.language ?? null,
-          year: data.year ?? null,
-          ocr_text: data.ocr_text,
-        });
-        setState('confirm');
-      } catch (err) {
-        setAnalyzeError(err instanceof Error ? err.message : 'Analysis failed');
-        // Still go to confirm -- user can fill in manually
-        setExtractedMetadata({ title: null, author: null, language: null, year: null });
         setState('confirm');
       } finally {
         setIsCapturing(false);
@@ -279,6 +294,16 @@ export default function AutoScanFlow({ edgeDetector }: AutoScanFlowProps) {
       setIsCreating(false);
     }
   }, [titleBlob, extractedMetadata]);
+
+  const handleSkipAnalysis = useCallback(() => {
+    if (analyzeAbortRef.current) {
+      analyzeAbortRef.current.abort();
+    }
+    setAnalyzeError('Analysis skipped');
+    setExtractedMetadata({ title: null, author: null, language: null, year: null });
+    setIsCapturing(false);
+    setState('confirm');
+  }, []);
 
   const handleRetake = useCallback(() => {
     if (titlePreview) URL.revokeObjectURL(titlePreview);
@@ -622,6 +647,12 @@ export default function AutoScanFlow({ edgeDetector }: AutoScanFlowProps) {
             <span className="w-5 h-5 border-2 border-accent-rust border-t-transparent rounded-full animate-spin" />
             <span className="text-secondary text-sm">Analyzing title page...</span>
           </div>
+          <button
+            onClick={handleSkipAnalysis}
+            className="text-muted text-sm hover:text-secondary underline"
+          >
+            Skip — enter details manually
+          </button>
         </div>
       </div>
     );
