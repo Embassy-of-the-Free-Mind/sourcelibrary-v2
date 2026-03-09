@@ -86,7 +86,7 @@ function getCompletionQuery(bookId: string, targetPageIds: string[], jobType: Pa
     case 'ocr':
       return { ...baseFilter, 'ocr.data': { $exists: true, $nin: [null, ''] } };
     case 'translation':
-      return { ...baseFilter, 'translation.data': { $exists: true, $ne: null } };
+      return { ...baseFilter, 'translation.data': { $exists: true, $nin: [null, ''] } };
     case 'image_extraction':
       return { ...baseFilter, detected_images: { $exists: true } };
   }
