@@ -3,7 +3,6 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
-import { ArrowRight } from 'lucide-react';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import UserMenu from '@/components/layout/UserMenu';
@@ -105,25 +104,16 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Poster fallback — fades out once video is playing */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/hero-poster.jpg"
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000"
-        style={{ opacity: videoReady ? 0 : 1 }}
-        fetchPriority="high"
-      />
-
-      {/* Video */}
+      {/* Video — fades in once ready */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         onCanPlay={handleVideoLoad}
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000"
+        style={{ opacity: videoReady ? 1 : 0 }}
       >
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm#t=3" type="video/webm" />
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4#t=3" type="video/mp4" />
@@ -163,9 +153,9 @@ export default function HeroSection() {
             <div className="max-w-xl">
               <UnifiedSearch />
             </div>
-          ) : status === 'unauthenticated' ? (
+          ) : (
             <HeroSignUp />
-          ) : null}
+          )}
         </div>
       </div>
 
