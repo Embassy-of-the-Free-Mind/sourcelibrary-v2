@@ -279,9 +279,9 @@ export default function TwoThousandFirstTranslations() {
       }
       bg="bg-cream"
     >
-      <div className="max-w-5xl mx-auto px-4 pb-16">
+      <div className="max-w-5xl mx-auto px-4 pb-16 prose-content">
         {/* Intro */}
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed">
+        <div>
           <p>
             Source Library has now produced the first English translations of over 2,000
             historical texts — works that have waited centuries for an audience beyond
@@ -319,10 +319,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Decade histogram */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           When Were They Written?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             The 17th century dominates. The 1600s spike is the tallest bar on
             the chart — and 93 of those 167 volumes come from a single work: the{' '}
@@ -400,10 +400,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Time Travelers — the WOW section */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Ideas That Waited Millennia
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             Some of these books carry ideas far older than the books themselves.
             Plato&apos;s <em>Timaeus</em>, written in 360 BCE, didn&apos;t reach print
@@ -473,10 +473,10 @@ export default function TwoThousandFirstTranslations() {
         </p>
 
         {/* Top Authors */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Who Wrote Them?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             The most-represented authors are polymaths who resisted disciplinary
             boundaries. Athanasius Kircher alone published on Egypt, music, geology,
@@ -511,10 +511,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Languages */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           What Languages?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             Latin dominates — the lingua franca of European scholarship until the
             18th century. But the collection reaches far beyond Europe: 198 Chinese
@@ -547,10 +547,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Categories */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           What Subjects?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             Categories overlap — a single book can be theology, alchemy, and
             natural philosophy simultaneously. That&apos;s the point. The modern
@@ -592,10 +592,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Cross-tradition connections */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Where Traditions Collide
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             The most striking pattern in the data is how often these supposedly
             separate disciplines appear in the same book. Alchemy and Hermeticism
@@ -637,10 +637,10 @@ export default function TwoThousandFirstTranslations() {
         </p>
 
         {/* Most Read */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           What Are People Reading?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             Not academic citations — actual readers who found these books
             and stayed. The Cabalistic Science introduction leads with 47 readers,
@@ -689,10 +689,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Source Providers */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Where Do They Come From?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             Every book traces back to a physical object in a real institution.
             The Internet Archive&apos;s open access scanning project provides the
@@ -730,10 +730,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Gallery */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           What Do They Look Like?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             These books are visual objects — hand-engraved illustrations, emblematic
             frontispieces, cosmological diagrams, alchemical symbols. Our AI image
@@ -771,10 +771,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Featured books */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Start Reading
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             These are fully translated and ready to read — first English translations
             of works that have shaped intellectual history but remained inaccessible
@@ -815,10 +815,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Page size distribution */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           How Long Are They?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             These aren&apos;t pamphlets. The median book is 220 pages, and 113 books
             exceed 1,000 pages — massive compendia like Fludd&apos;s 1,036-page
@@ -864,10 +864,10 @@ export default function TwoThousandFirstTranslations() {
         </div>
 
         {/* Methodology */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           How Do We Know These Are First Translations?
         </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+        <div className="mb-6">
           <p>
             Claiming &quot;first English translation&quot; is a serious scholarly assertion.
             We use a two-stage AI verification pipeline that progressively increases
