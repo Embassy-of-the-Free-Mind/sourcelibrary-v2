@@ -1392,6 +1392,142 @@ async function fetchIllustrationImage(url: string): Promise<Buffer | null> {
   }
 }
 
+/**
+ * Word-wrap text into lines of approximately maxChars characters,
+ * breaking at word boundaries.
+ */
+function wrapText(text: string, maxChars: number): string[] {
+  const words = text.split(/\s+/);
+  const lines: string[] = [];
+  let currentLine = '';
+  for (const word of words) {
+    if (currentLine && (currentLine + ' ' + word).length > maxChars) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = currentLine ? currentLine + ' ' + word : word;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines;
+}
+
+/**
+ * Generate a designed book cover with illustration background, gradient overlays,
+ * and typographic title treatment. Inspired by Penguin Classics / NYRB Classics.
+ *
+ * With illustration: full-bleed background + dark gradients top/bottom + gold/cream text
+ * Without illustration: dark background (#1a1612) + decorative border + centered typography
+ */
+async function generateDesignedCover(
+  sourceImage: Buffer | null,
+  bookTitle: string,
+  author: string,
+  year?: string | null,
+): Promise<Buffer> {
+  const W = 1200;
+  const H = 1800;
+
+  // Word-wrap title (~26 chars per line for large serif at this width)
+  const titleLines = wrapText(bookTitle, 26);
+  const titleFontSize = titleLines.length > 3 ? 46 : titleLines.length > 2 ? 52 : 58;
+  const lineHeight = titleFontSize + 16;
+
+  // Escape for SVG
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  if (sourceImage) {
+    // === WITH ILLUSTRATION BACKGROUND ===
+    // Calculate vertical positions from the bottom up
+    const bottomPad = 110;
+    const yearY = year ? H - bottomPad : 0;
+    const authorY = year ? yearY - 50 : H - bottomPad;
+    const titleBlockHeight = titleLines.length * lineHeight;
+    const titleStartY = authorY - 50 - titleBlockHeight;
+    const bottomGradStart = Math.min(titleStartY - 250, H * 0.45);
+
+    const titleTextEls = titleLines.map((line, i) =>
+      `<text x="${W / 2}" y="${titleStartY + i * lineHeight}" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="${titleFontSize}"
+        fill="#fdfcf9" font-weight="bold">${esc(line)}</text>`
+    ).join('\n');
+
+    const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0.25" stop-color="#000" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.88"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="${W}" height="480" fill="url(#tg)"/>
+  <rect x="0" y="${bottomGradStart}" width="${W}" height="${H - bottomGradStart}" fill="url(#bg)"/>
+  <text x="${W / 2}" y="90" text-anchor="middle"
+    font-family="Georgia, serif" font-size="24" fill="#c9a86c"
+    letter-spacing="8">SOURCE LIBRARY</text>
+  <line x1="${W / 2 - 70}" y1="110" x2="${W / 2 + 70}" y2="110"
+    stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.5"/>
+  ${titleTextEls}
+  <line x1="${W / 2 - 100}" y1="${authorY - 25}" x2="${W / 2 + 100}" y2="${authorY - 25}"
+    stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="${W / 2}" y="${authorY}" text-anchor="middle"
+    font-family="Georgia, serif" font-size="28" fill="#c9a86c">${esc(author)}</text>
+  ${year ? `<text x="${W / 2}" y="${yearY}" text-anchor="middle"
+    font-family="Georgia, serif" font-size="20" fill="#c9a86c"
+    font-style="italic">${esc(String(year))}</text>` : ''}
+</svg>`;
+
+    const base = await sharp(sourceImage)
+      .resize(W, H, { fit: 'cover', position: 'centre' })
+      .toBuffer();
+
+    return sharp(base)
+      .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
+      .jpeg({ quality: 90, mozjpeg: true })
+      .toBuffer();
+  } else {
+    // === TEXT-ONLY COVER (no illustration) ===
+    const titleStartY = 700;
+    const authorY = titleStartY + titleLines.length * lineHeight + 60;
+    const yearY = authorY + 55;
+
+    const titleTextEls = titleLines.map((line, i) =>
+      `<text x="${W / 2}" y="${titleStartY + i * lineHeight}" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="${titleFontSize}"
+        fill="#fdfcf9" font-weight="bold">${esc(line)}</text>`
+    ).join('\n');
+
+    const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+  <rect width="${W}" height="${H}" fill="#1a1612"/>
+  <rect x="40" y="40" width="${W - 80}" height="${H - 80}"
+    fill="none" stroke="#c9a86c" stroke-width="1" stroke-opacity="0.35"/>
+  <rect x="48" y="48" width="${W - 96}" height="${H - 96}"
+    fill="none" stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.2"/>
+  <text x="${W / 2}" y="180" text-anchor="middle"
+    font-family="Georgia, serif" font-size="24" fill="#c9a86c"
+    letter-spacing="8">SOURCE LIBRARY</text>
+  <line x1="${W / 2 - 70}" y1="200" x2="${W / 2 + 70}" y2="200"
+    stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.5"/>
+  ${titleTextEls}
+  <line x1="${W / 2 - 100}" y1="${authorY - 30}" x2="${W / 2 + 100}" y2="${authorY - 30}"
+    stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="${W / 2}" y="${authorY}" text-anchor="middle"
+    font-family="Georgia, serif" font-size="28" fill="#c9a86c">${esc(author)}</text>
+  ${year ? `<text x="${W / 2}" y="${yearY}" text-anchor="middle"
+    font-family="Georgia, serif" font-size="20" fill="#c9a86c"
+    font-style="italic">${esc(String(year))}</text>` : ''}
+</svg>`;
+
+    return sharp(Buffer.from(svg))
+      .jpeg({ quality: 90, mozjpeg: true })
+      .toBuffer();
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function generateScholarlyEpubDownload(
   book: Book,
@@ -1425,17 +1561,17 @@ async function generateScholarlyEpubDownload(
     illustrationsByPage.set(img.page_number, arr);
   }
 
-  // Find original title page scan and frontispiece page
+  // Find original title page scan
   const titlePageScan = pages.find(p => (p as any).page_type === 'title-page');
-  const frontispiecePage = pages.find(p => (p as any).page_type === 'frontispiece');
 
-  // Pick cover image: frontispiece page > frontispiece gallery image > highest quality gallery image > book thumbnail
-  // Prefer the actual page's cropped_photo over gallery extracted regions (which may be partial crops)
+  // Pick cover source image for the designed cover background.
+  // Use gallery images (AI-vetted illustrations) rather than page_type which can misclassify ex libris stamps.
+  // Priority: gallery frontispiece > best gallery engraving/emblem > best gallery image > illustration page > thumbnail
   const sortedGallery = [...galleryImages].sort((a: any, b: any) => (b.gallery_quality || 0) - (a.gallery_quality || 0));
-  const coverGalleryImage = galleryImages.find((i: any) => i.type === 'frontispiece') || sortedGallery[0] || null;
-  const coverPageUrl = frontispiecePage
-    ? ((frontispiecePage as any).cropped_photo || (frontispiecePage as any).archived_photo || frontispiecePage.photo)
-    : null;
+  const coverGalleryImage = galleryImages.find((i: any) => i.type === 'frontispiece')
+    || galleryImages.find((i: any) => ['engraving', 'emblem', 'woodcut'].includes(i.type))
+    || sortedGallery[0]
+    || null;
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1463,10 +1599,8 @@ async function generateScholarlyEpubDownload(
 
     // ========== FRONT MATTER ==========
 
-    // Cover image
-    if (coverGalleryImage || (book as any).thumbnail) {
-      manifestItems.push(`<item id="cover-image" href="images/cover.jpg" media-type="image/jpeg" properties="cover-image"/>`);
-    }
+    // Cover image (always generated — designed cover with gradients/typography)
+    manifestItems.push(`<item id="cover-image" href="images/cover.jpg" media-type="image/jpeg" properties="cover-image"/>`);
 
     // Title page scan (original historical page)
     if (titlePageScan) {
@@ -1579,7 +1713,7 @@ async function generateScholarlyEpubDownload(
     <dc:rights>${edition?.license || 'CC-BY-SA-4.0'}</dc:rights>
     ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
-    ${(coverGalleryImage || (book as any).thumbnail) ? '<meta name="cover" content="cover-image"/>' : ''}
+    <meta name="cover" content="cover-image"/>
   </metadata>
   <manifest>
     ${manifestItems.join('\n    ')}
@@ -1617,18 +1751,47 @@ async function generateScholarlyEpubDownload(
 
     // ========== FETCH COVER & TITLE PAGE IMAGES ==========
 
-    // Cover image: frontispiece page > gallery frontispiece > top gallery image > book thumbnail
-    let coverImageBuffer: Buffer | null = null;
-    if (coverPageUrl) {
-      coverImageBuffer = await fetchIllustrationImage(coverPageUrl);
-    } else if (coverGalleryImage?.extracted_url) {
-      coverImageBuffer = await fetchIllustrationImage(coverGalleryImage.extracted_url);
-    } else if ((book as any).thumbnail) {
-      coverImageBuffer = await fetchIllustrationImage((book as any).thumbnail);
+    // Fetch source image for designed cover background
+    // Use gallery image's page (full page scan gives best fill), or extracted illustration
+    let coverSourceBuffer: Buffer | null = null;
+    if (coverGalleryImage) {
+      // Find the page this gallery image came from — use full page for background
+      const coverPage = pages.find(p => p.page_number === coverGalleryImage.page_number);
+      const pageUrl = coverPage
+        ? ((coverPage as any).cropped_photo || (coverPage as any).archived_photo || coverPage.photo)
+        : null;
+      const sourceUrl = pageUrl || coverGalleryImage.extracted_url || coverGalleryImage.image_url;
+      if (sourceUrl) {
+        try {
+          coverSourceBuffer = await images.fetchBuffer(sourceUrl, { timeout: 60000 });
+        } catch { /* fallback below */ }
+      }
     }
-    if (coverImageBuffer) {
-      archive.append(coverImageBuffer, { name: 'OEBPS/images/cover.jpg' });
+    if (!coverSourceBuffer) {
+      // Fallback: illustration page or thumbnail
+      const fallbackPage = pages.find(p =>
+        (p as any).page_type === 'frontispiece' && p.page_number > 3
+      ) || pages.find(p =>
+        (p as any).page_type === 'illustration' && p.page_number <= 30
+      );
+      const fallbackUrl = fallbackPage
+        ? ((fallbackPage as any).cropped_photo || (fallbackPage as any).archived_photo || fallbackPage.photo)
+        : (book as any).thumbnail;
+      if (fallbackUrl) {
+        try {
+          coverSourceBuffer = await images.fetchBuffer(fallbackUrl, { timeout: 60000 });
+        } catch { /* text-only cover */ }
+      }
     }
+
+    // Generate designed cover with gradients and typography
+    const coverImageBuffer = await generateDesignedCover(
+      coverSourceBuffer,
+      bookTitle,
+      book.author,
+      book.published || (book as any).year?.toString(),
+    );
+    archive.append(coverImageBuffer, { name: 'OEBPS/images/cover.jpg' });
 
     // Title page scan
     let titlePageScanBuffer: Buffer | null = null;
