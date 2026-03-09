@@ -217,16 +217,18 @@ export default function TabletsPage() {
               {sections.length > 0 ? (
                 <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
                   {sections.map((section, si) => {
-                    // Find matching bounding box from Gemini detection
+                    // Find matching bounding box from ImageMagick detection
                     const bounds = tablet.photoBounds?.surfaces?.find(
                       (s) => s.label === section.surface
                     );
-                    return (
+                    const hasCroppedPhoto = !!bounds;
+
+                    return hasCroppedPhoto ? (
+                    // Primary surfaces (obverse/reverse) — show cropped photo + transliteration
                     <div
                       key={si}
                       className="grid grid-cols-1 md:grid-cols-[280px_1fr]"
                     >
-                      {/* Cropped photo for this surface — uses bbox to show only this part */}
                       <div
                         className="p-3 flex items-center justify-center border-b md:border-b-0 md:border-r"
                         style={{
@@ -234,7 +236,6 @@ export default function TabletsPage() {
                           borderColor: 'var(--border-light)',
                         }}
                       >
-                        {bounds ? (
                           <a
                             href={tablet.cdliUrl}
                             target="_blank"
@@ -262,64 +263,14 @@ export default function TabletsPage() {
                               }}
                             />
                           </a>
-                        ) : (
-                          <a
-                            href={tablet.cdliUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={`View ${tablet.designation} on CDLI`}
-                            className="block w-full overflow-hidden rounded"
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={tablet.photoUrl}
-                              alt={`${section.surface} of ${tablet.designation}`}
-                              className="w-full shadow-sm"
-                              loading="lazy"
-                            />
-                          </a>
-                        )}
                       </div>
 
-                      {/* Cuneiform signs for this surface */}
-                      <div className="p-4 overflow-x-auto">
-                        <div
-                          className="text-xs font-semibold uppercase tracking-wider mb-1.5 pb-1 border-b"
-                          style={{
-                            color: 'var(--accent-gold-dark)',
-                            borderColor: 'var(--border-light)',
-                          }}
-                        >
-                          @{section.surface}
-                        </div>
-                        <div className="space-y-1">
-                          {section.lines.map((line, li) => (
-                            <div key={li} className="flex gap-2">
-                              <span
-                                className="text-xs font-mono w-5 shrink-0 pt-1.5 text-right"
-                                style={{ color: 'var(--text-faint)' }}
-                              >
-                                {line.lineNum}
-                              </span>
-                              <div className="min-w-0">
-                                {line.tokens.length > 0 ? (
-                                  <div className="flex flex-wrap gap-x-0.5 items-baseline leading-tight">
-                                    {line.tokens.map((token, ti) => (
-                                      <CuneiformToken key={ti} token={token} />
-                                    ))}
-                                  </div>
-                                ) : null}
-                                <div
-                                  className="text-[10px] font-mono leading-tight"
-                                  style={{ color: 'var(--text-faint)' }}
-                                >
-                                  {line.text}
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      <SurfaceLines section={section} />
+                    </div>
+                    ) : (
+                    // Secondary surfaces (seal, column, left, etc.) — text only, no photo
+                    <div key={si} className="px-5 py-3">
+                      <SurfaceLines section={section} />
                     </div>
                     );
                   })}
@@ -352,6 +303,46 @@ export default function TabletsPage() {
           );
         })}
       </main>
+    </div>
+  );
+}
+
+function SurfaceLines({ section }: { section: ParsedSection }) {
+  return (
+    <div className="p-4 overflow-x-auto">
+      <div
+        className="text-xs font-semibold uppercase tracking-wider mb-1.5 pb-1 border-b"
+        style={{ color: 'var(--accent-gold-dark)', borderColor: 'var(--border-light)' }}
+      >
+        @{section.surface}
+      </div>
+      <div className="space-y-1">
+        {section.lines.map((line, li) => (
+          <div key={li} className="flex gap-2">
+            <span
+              className="text-xs font-mono w-5 shrink-0 pt-1.5 text-right"
+              style={{ color: 'var(--text-faint)' }}
+            >
+              {line.lineNum}
+            </span>
+            <div className="min-w-0">
+              {line.tokens.length > 0 ? (
+                <div className="flex flex-wrap gap-x-0.5 items-baseline leading-tight">
+                  {line.tokens.map((token, ti) => (
+                    <CuneiformToken key={ti} token={token} />
+                  ))}
+                </div>
+              ) : null}
+              <div
+                className="text-[10px] font-mono leading-tight"
+                style={{ color: 'var(--text-faint)' }}
+              >
+                {line.text}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
