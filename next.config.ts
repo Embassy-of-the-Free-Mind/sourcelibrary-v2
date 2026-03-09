@@ -39,6 +39,26 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '**.loc.gov' },
       // HathiTrust
       { protocol: 'https', hostname: 'babel.hathitrust.org' },
+      // British Library (IIIF via Digirati)
+      { protocol: 'https', hostname: 'bl.digirati.io' },
+      // Cambridge University Library
+      { protocol: 'https', hostname: 'images.lib.cam.ac.uk' },
+      // e-codices (Swiss manuscripts)
+      { protocol: 'https', hostname: 'www.e-codices.unifr.ch' },
+      // Laurentian Library / Florence (OCLC ContentDM)
+      { protocol: 'https', hostname: 'cdm21059.contentdm.oclc.org' },
+      // Leiden University
+      { protocol: 'https', hostname: 'iiif.universiteitleiden.nl' },
+      // Manchester University
+      { protocol: 'https', hostname: 'image.digitalcollections.manchester.ac.uk' },
+      // Heidelberg University
+      { protocol: 'https', hostname: 'digi.ub.uni-heidelberg.de' },
+      // Qatar Digital Library
+      { protocol: 'https', hostname: 'iiif.qdl.qa' },
+      // Portugal National Library
+      { protocol: 'https', hostname: 'permalinkbnd.bnportugal.gov.pt' },
+      // CDLI (Cuneiform Digital Library)
+      { protocol: 'https', hostname: 'cdli.earth' },
     ],
   },
   async redirects() {
