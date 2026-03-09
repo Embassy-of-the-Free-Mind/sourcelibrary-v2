@@ -211,38 +211,43 @@ Write a clear methodology section (500-800 words) explaining how this translatio
 
 **Technical Details:**
 - AI Models used: ${Array.from(models).join(', ')}
-- Processing approach: OCR of page images, then translation
+- Processing pipeline: Import → Image archiving → OCR → Translation → Enrichment (summary, index, chapters) → Scholarly EPUB
 
 The methodology section should include:
 
-1. **Translation Approach** (1-2 paragraphs)
-   - This is an AI-generated translation using large language models (specify which models from the technical details above)
-   - The goal is scholarly accessibility: accurate to the source, readable for modern audiences
-   - State clearly: the translation has NOT been reviewed or edited by human translators or editors
+1. **Pipeline Overview** (1 paragraph)
+   - Briefly describe the full processing pipeline: digitized page images are imported from digital library sources (Internet Archive, Gallica, Bavarian State Library, etc.), archived for preservation, then processed through sequential AI stages
+   - Each stage is automated and runs independently
 
 2. **OCR Process** (1 paragraph)
-   - Page images were processed using vision AI models
-   - Source language preserved with original spelling
+   - Page images were processed using vision AI models (specify models from technical details)
+   - Source language text preserved with original spelling and abbreviations
+   - Multi-column layouts detected and preserved
    - Annotations capture marginalia, abbreviations, unclear readings
 
 3. **Translation Process** (1-2 paragraphs)
-   - Explain the translation philosophy: faithful to original, explanatory notes added
-   - Each page is translated sequentially with context from the previous page for continuity
-   - Technical terms preserved in original with translations
+   - This is an AI-generated translation — state clearly it has NOT been reviewed by human translators or editors
+   - Pages translated sequentially, each with context from the previous page for continuity
+   - Translation philosophy: faithful to original meaning, readable for modern audiences
+   - Technical terms preserved in original language with English translations
    - Inline <note> tags provide context for modern readers
 
-4. **Editorial Conventions** (as a formatted list)
+4. **Enrichment** (1 paragraph)
+   - After translation, AI generates a reading summary, subject index (people, places, concepts), and chapter structure
+   - Illustrations are detected and cataloged with metadata
+   - These are assembled into the scholarly EPUB with facsimile page images
+
+5. **Editorial Conventions** (as a formatted list)
    - <note> = translator's explanatory additions
    - <margin> = marginalia from the original
    - <unclear> = uncertain readings
    - <term> = technical vocabulary with definitions
    - Original paragraph structure preserved
-   - etc.
 
-5. **Limitations & Future Work** (1 paragraph)
+6. **Limitations & Future Work** (1 paragraph)
    - Acknowledge AI translation limitations honestly
-   - Note that this translation has not undergone human editorial review and should be used with appropriate scholarly caution
-   - Mention the translation is versioned and can be improved over time
+   - This translation has not undergone human editorial review — use with appropriate scholarly caution
+   - The translation is versioned (with DOI) and can be improved over time
    - Community corrections and feedback are welcome
 
 CRITICAL: Do NOT claim that human editors, reviewers, or translators were involved in producing this translation. Do NOT fabricate editorial review processes, verification steps, or quality assurance procedures that did not happen. This is an AI-generated translation — be transparent about that. The honest framing is a strength, not a weakness.
