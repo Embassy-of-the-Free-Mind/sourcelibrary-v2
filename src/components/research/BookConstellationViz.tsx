@@ -110,8 +110,7 @@ function seededRandom(seed: number): number {
 // ────────────────────────────────────────────────────────────
 
 const SPREAD = 40;
-const BOOK_W = 0.55;
-const BOOK_H = 0.8;
+const BOOK_SIZE = 0.45;
 const HOVER_SCALE = 2.8;
 const PICK_THRESHOLD_PX = 18;
 
@@ -264,12 +263,11 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
     // ── InstancedMesh ──
     const n = data.books.length;
-    const geometry = new THREE.PlaneGeometry(BOOK_W, BOOK_H);
+    const geometry = new THREE.BoxGeometry(BOOK_SIZE, BOOK_SIZE, BOOK_SIZE);
     const material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
       opacity: 0.88,
-      side: THREE.DoubleSide,
       depthWrite: false,
     });
     const mesh = new THREE.InstancedMesh(geometry, material, n);
@@ -427,7 +425,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       const scale = isHovered || isSelected ? HOVER_SCALE : 1;
       dummy.position.set(px, py, pz);
       dummy.rotation.set(0, 0, rotations[i]);
-      dummy.scale.set(scale, scale, 1);
+      dummy.scale.set(scale, scale, scale);
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
     }
@@ -569,11 +567,11 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       <div className="absolute top-4 left-5 z-10">
         <a
           href="/"
-          className="text-white/30 hover:text-white/60 text-[10px] font-mono tracking-[0.2em] uppercase transition-colors"
+          className="text-white/30 hover:text-white/60 text-xs font-mono tracking-[0.2em] uppercase transition-colors"
         >
           Source Library
         </a>
-        <div className="text-white/70 font-serif text-lg leading-tight">Book Atlas</div>
+        <div className="text-white/70 font-serif text-xl leading-tight">Book Atlas</div>
       </div>
 
       {/* ── Top-right: controls ── */}
@@ -585,7 +583,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search..."
-            className="w-44 pl-7 pr-2 py-1 text-xs bg-white/5 border border-white/10 rounded text-white/80 placeholder:text-white/25 placeholder:font-mono focus:outline-none focus:border-white/25 transition-colors"
+            className="w-48 pl-7 pr-2 py-1.5 text-sm bg-white/5 border border-white/10 rounded text-white/80 placeholder:text-white/25 placeholder:font-mono focus:outline-none focus:border-white/25 transition-colors"
           />
           <svg
             className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-white/25"
@@ -594,7 +592,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             <path strokeLinecap="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           {searchMatches && (
-            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-white/30 font-mono">
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-white/30 font-mono">
               {searchMatches.size}
             </span>
           )}
@@ -605,7 +603,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           <button
             key={mode}
             onClick={() => setColorMode(mode)}
-            className={`px-2 py-1 text-[11px] rounded border transition-colors ${
+            className={`px-2.5 py-1 text-xs rounded border transition-colors ${
               colorMode === mode
                 ? 'bg-white/10 border-white/20 text-white/80'
                 : 'bg-transparent border-white/8 text-white/30 hover:text-white/50 hover:border-white/15'
@@ -618,7 +616,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         {/* Info toggle */}
         <button
           onClick={() => setShowInfo(!showInfo)}
-          className={`w-6 h-6 flex items-center justify-center rounded border text-[11px] font-serif italic transition-colors ${
+          className={`w-7 h-7 flex items-center justify-center rounded border text-sm font-serif italic transition-colors ${
             showInfo
               ? 'bg-white/10 border-white/20 text-white/70'
               : 'bg-transparent border-white/8 text-white/30 hover:text-white/50'
@@ -630,7 +628,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         {/* Reset */}
         <button
           onClick={resetView}
-          className="px-2 py-1 text-[11px] rounded border border-white/8 text-white/30 hover:text-white/50 hover:border-white/15 transition-colors"
+          className="px-2.5 py-1 text-xs rounded border border-white/8 text-white/30 hover:text-white/50 hover:border-white/15 transition-colors"
         >
           Reset
         </button>
@@ -644,12 +642,12 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           onClick={(e) => e.stopPropagation()}
         >
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div><div className="text-white/80 font-mono text-lg">{stats.totalBooks.toLocaleString()}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">Books</div></div>
-            <div><div className="text-white/80 font-mono text-lg">{stats.nClusters}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">Clusters</div></div>
-            <div><div className="text-white/80 font-mono text-lg">{stats.nLanguages}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">Languages</div></div>
-            <div><div className="text-white/80 font-mono text-lg">{stats.firstTranslations.toLocaleString()}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">First Trans.</div></div>
+            <div><div className="text-white/80 font-mono text-xl">{stats.totalBooks.toLocaleString()}</div><div className="text-white/30 text-xs uppercase tracking-wider">Books</div></div>
+            <div><div className="text-white/80 font-mono text-xl">{stats.nClusters}</div><div className="text-white/30 text-xs uppercase tracking-wider">Clusters</div></div>
+            <div><div className="text-white/80 font-mono text-xl">{stats.nLanguages}</div><div className="text-white/30 text-xs uppercase tracking-wider">Languages</div></div>
+            <div><div className="text-white/80 font-mono text-xl">{stats.firstTranslations.toLocaleString()}</div><div className="text-white/30 text-xs uppercase tracking-wider">First Trans.</div></div>
           </div>
-          <div className="border-t border-white/10 pt-3 text-white/40 text-[11px] leading-relaxed space-y-2">
+          <div className="border-t border-white/10 pt-3 text-white/40 text-xs leading-relaxed space-y-2">
             <p>
               Each rectangle is a book. Position reflects content similarity — AI
               embeddings of summaries, themes, and index terms are projected with UMAP.
@@ -657,7 +655,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             </p>
             <p>
               <strong className="text-white/50">Embeddings:</strong>{' '}
-              <span className="font-mono text-[10px]">paraphrase-multilingual-MiniLM-L12-v2</span>{' '}
+              <span className="font-mono text-xs">paraphrase-multilingual-MiniLM-L12-v2</span>{' '}
               (384-dim). UMAP with cosine distance, n_neighbors=15, min_dist=0.1.
             </p>
             <p>
@@ -681,10 +679,10 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             top: Math.max(tooltipPos.y - 70, 10),
           }}
         >
-          <div className="font-serif text-[13px] text-white/90 leading-tight mb-0.5">
+          <div className="font-serif text-sm text-white/90 leading-tight mb-0.5">
             {hoveredBook.title}
           </div>
-          <div className="text-[11px] text-white/40">
+          <div className="text-xs text-white/40">
             {hoveredBook.author !== 'Unknown' ? hoveredBook.author : ''}
             {hoveredBook.author !== 'Unknown' && hoveredBook.year ? ' · ' : ''}
             {hoveredBook.year || ''}
@@ -718,11 +716,11 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
               href={`/book/${book.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-serif text-[13px] text-white/90 hover:text-white leading-tight block mb-1 pr-4"
+              className="font-serif text-sm text-white/90 hover:text-white leading-tight block mb-1 pr-4"
             >
               {book.title}
             </a>
-            <div className="text-[11px] text-white/40 mb-1.5">
+            <div className="text-xs text-white/40 mb-1.5">
               {book.author !== 'Unknown' ? book.author : ''}
               {book.author !== 'Unknown' && book.year ? ' · ' : ''}
               {book.year || ''}
@@ -730,28 +728,28 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             </div>
             <div className="flex flex-wrap gap-1">
               {book.categories.slice(0, 3).map((cat) => (
-                <span key={cat} className="px-1.5 py-0.5 text-[10px] rounded bg-white/8 text-white/50">
+                <span key={cat} className="px-1.5 py-0.5 text-[11px] rounded bg-white/8 text-white/50">
                   {cat.replace(/-/g, ' ')}
                 </span>
               ))}
-              <span className="px-1.5 py-0.5 text-[10px] rounded bg-white/8 text-white/35">
+              <span className="px-1.5 py-0.5 text-[11px] rounded bg-white/8 text-white/35">
                 {book.language}
               </span>
             </div>
             {book.keywords.length > 0 && (
-              <div className="text-[10px] text-white/35 mt-1.5 leading-relaxed">
+              <div className="text-[11px] text-white/35 mt-1.5 leading-relaxed">
                 {book.keywords.join(' · ')}
               </div>
             )}
             {book.first_translation && (
-              <div className="text-[10px] text-[#9e4a3a] mt-1 font-medium">
+              <div className="text-[11px] text-[#9e4a3a] mt-1 font-medium">
                 First English Translation
               </div>
             )}
             {ci && (
               <button
                 onClick={() => setSelectedCluster(ci.id)}
-                className="text-[10px] text-white/25 mt-1.5 hover:text-white/50 transition-colors"
+                className="text-[11px] text-white/25 mt-1.5 hover:text-white/50 transition-colors"
               >
                 Cluster: {ci.label} ({ci.size} books) &rarr;
               </button>
@@ -764,7 +762,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       <div className="absolute bottom-12 left-5 z-10 bg-black/50 backdrop-blur-sm border border-white/8 rounded p-2.5 max-w-[200px]">
         <div className="grid grid-cols-1 gap-y-0.5">
           {legendItems.map((item) => (
-            <div key={item.label} className="flex items-center gap-1.5 text-[10px] text-white/50">
+            <div key={item.label} className="flex items-center gap-1.5 text-xs text-white/50">
               <span className="w-2 h-2 rounded-sm shrink-0" style={{ backgroundColor: item.color }} />
               <span className="truncate">{item.label}</span>
               {item.count > 0 && <span className="ml-auto text-white/25 font-mono">{item.count}</span>}
@@ -788,7 +786,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       </div>
 
       {/* ── Bottom-right: hint ── */}
-      <div className="absolute bottom-12 right-5 z-10 text-[10px] text-white/20 font-mono">
+      <div className="absolute bottom-12 right-5 z-10 text-xs text-white/20 font-mono">
         Click to inspect · Drag to rotate · Scroll to zoom
       </div>
 
@@ -802,7 +800,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0">
             <div>
               <h3 className="text-white/90 font-serif text-base leading-tight">{selectedClusterInfo.label}</h3>
-              <p className="text-white/30 text-[11px] mt-0.5 font-mono">{clusterBooks.length} books</p>
+              <p className="text-white/30 text-xs mt-0.5 font-mono">{clusterBooks.length} books</p>
             </div>
             <button
               onClick={() => setSelectedCluster(null)}
@@ -821,19 +819,19 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
                 rel="noopener noreferrer"
                 className="block p-2 rounded border border-white/5 hover:border-white/15 hover:bg-white/5 transition-colors"
               >
-                <div className="text-white/80 text-[12px] font-serif leading-tight">{book.title}</div>
-                <div className="text-white/30 text-[11px] mt-0.5">
+                <div className="text-white/80 text-sm font-serif leading-tight">{book.title}</div>
+                <div className="text-white/30 text-xs mt-0.5">
                   {book.author !== 'Unknown' && book.author}
                   {book.author !== 'Unknown' && book.year ? ' · ' : ''}
                   {book.year || ''}
                 </div>
                 <div className="flex gap-1 mt-1">
-                  <span className="px-1 py-0.5 text-[9px] rounded bg-white/5 text-white/30">{book.language}</span>
+                  <span className="px-1 py-0.5 text-[11px] rounded bg-white/5 text-white/30">{book.language}</span>
                   {book.keywords.slice(0, 2).map((kw) => (
-                    <span key={kw} className="px-1 py-0.5 text-[9px] rounded bg-white/5 text-white/25">{kw}</span>
+                    <span key={kw} className="px-1 py-0.5 text-[11px] rounded bg-white/5 text-white/25">{kw}</span>
                   ))}
                   {book.first_translation && (
-                    <span className="px-1 py-0.5 text-[9px] rounded bg-[#9e4a3a]/20 text-[#9e4a3a]">1st trans.</span>
+                    <span className="px-1 py-0.5 text-[11px] rounded bg-[#9e4a3a]/20 text-[#9e4a3a]">1st trans.</span>
                   )}
                 </div>
               </a>
@@ -844,7 +842,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
               href={`/search?q=${encodeURIComponent(selectedClusterInfo.label)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/30 text-[11px] hover:text-white/50 transition-colors"
+              className="text-white/30 text-xs hover:text-white/50 transition-colors"
             >
               Search in library &rarr;
             </a>
@@ -884,7 +882,7 @@ function ClusterPills({
     <div className="flex flex-wrap gap-1">
       <button
         onClick={onClear}
-        className={`px-2 py-0.5 rounded text-[10px] border transition-colors ${
+        className={`px-2 py-0.5 rounded text-xs border transition-colors ${
           selectedCluster === null
             ? 'bg-white/10 border-white/20 text-white/70'
             : 'bg-transparent border-white/8 text-white/25 hover:text-white/40'
@@ -899,7 +897,7 @@ function ClusterPills({
           <button
             key={cluster.id}
             onClick={() => onSelect(cluster.id)}
-            className={`px-2 py-0.5 rounded text-[10px] border transition-colors ${
+            className={`px-2 py-0.5 rounded text-xs border transition-colors ${
               selectedCluster === cluster.id
                 ? 'bg-white/10 border-white/20 text-white/70'
                 : 'bg-transparent border-white/8 text-white/25 hover:text-white/40'
