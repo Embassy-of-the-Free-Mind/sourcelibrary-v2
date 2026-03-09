@@ -52,12 +52,12 @@ function HeroSignUp() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Your email address"
           required
-          className="flex-1 px-4 py-3 rounded-lg bg-white text-stone-900 placeholder-stone-400 text-sm outline-none border border-white focus:ring-2 focus:ring-white/50 transition-colors"
+          className="flex-1 px-5 py-3.5 rounded-lg bg-white text-stone-900 placeholder-stone-400 text-base outline-none border border-white focus:ring-2 focus:ring-white/50 transition-colors"
         />
         <button
           type="submit"
           disabled={loading || !email}
-          className="px-6 py-3 rounded-lg text-sm font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
+          className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
           style={{ background: 'var(--accent-rust)', color: '#fff' }}
         >
           {loading ? 'Sending...' : 'Join free'}
