@@ -1365,12 +1365,43 @@ p { margin: 0.8em 0; text-align: justify; }
   font-size: 0.85em;
   margin: 0.5em 0;
 }
+.illustration { text-align: center; margin: 1.5em 0; page-break-inside: avoid; }
+.illustration img { max-width: 100%; border: 1px solid #d4c4a8; }
+.illustration figcaption {
+  font-size: 0.85em; color: #666; font-style: italic;
+  margin-top: 0.5em; text-align: center;
+}
+.illustration .page-link { font-style: normal; font-size: 0.85em; color: #8b0000; text-decoration: none; }
+.title-page-scan { text-align: center; margin: 1em 0 2em; }
+.title-page-scan img { max-width: 80%; border: 1px solid #d4c4a8; }
+.illustration-entry { margin: 0.6em 0; padding-left: 1em; border-left: 2px solid #d4c4a8; }
+.illustration-entry .illus-page { font-weight: bold; margin-right: 0.5em; }
+.illustration-entry .illus-page a { color: #8b0000; text-decoration: none; }
+.illustration-entry .illus-type { font-variant: small-caps; color: #666; margin-right: 0.5em; }
+.illustration-entry .illus-desc { font-style: italic; color: #555; }
+.page-header a { color: #8b0000; text-decoration: none; }
 `;
 
 // Generate scholarly EPUB with full front and back matter
+// Fetch illustration image in color (not grayscale like facsimile scans)
+async function fetchIllustrationImage(url: string): Promise<Buffer | null> {
+  try {
+    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
+    return sharp(buffer)
+      .resize(800, 1200, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toBuffer();
+  } catch (error) {
+    console.error(`Failed to fetch illustration: ${url}`, error);
+    return null;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function generateScholarlyEpubDownload(
   book: Book,
   pages: Page[],
+  db: any,
   edition?: TranslationEdition | null,
   bookIndex?: BookIndex | null,
   bookSummary?: BookSummaryData | null
@@ -1378,9 +1409,33 @@ async function generateScholarlyEpubDownload(
   const now = new Date().toISOString().split('T')[0];
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
+  const bookSlug = (book as any).slug || book.id;
+  const bookPageUrl = `${BASE_URL}/book/${bookSlug}`;
 
-  // Collect pages with translation and photo
-  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
+  // Collect pages with translation (no longer require photo)
+  const validPages = pages.filter(p => p.translation?.data);
+
+  // Query gallery illustrations for inline embedding
+  const galleryImages = await db.collection('gallery_images')
+    .find({ book_id: book.id, gallery_quality: { $gte: 0.5 } })
+    .sort({ page_number: 1, detection_index: 1 })
+    .toArray();
+
+  // Build page→illustrations lookup
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const illustrationsByPage = new Map<number, any[]>();
+  for (const img of galleryImages) {
+    const arr = illustrationsByPage.get(img.page_number) || [];
+    arr.push(img);
+    illustrationsByPage.set(img.page_number, arr);
+  }
+
+  // Find original title page scan
+  const titlePageScan = pages.find(p => (p as any).page_type === 'title-page');
+
+  // Pick cover image: frontispiece > highest quality gallery image > book thumbnail
+  const sortedGallery = [...galleryImages].sort((a: any, b: any) => (b.gallery_quality || 0) - (a.gallery_quality || 0));
+  const coverGalleryImage = galleryImages.find((i: any) => i.type === 'frontispiece') || sortedGallery[0] || null;
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1406,10 +1461,17 @@ async function generateScholarlyEpubDownload(
     const manifestItems: string[] = [];
     const navItems: string[] = [];
 
-    // Track chapter order
-    let chapterNum = 0;
-
     // ========== FRONT MATTER ==========
+
+    // Cover image
+    if (coverGalleryImage || (book as any).thumbnail) {
+      manifestItems.push(`<item id="cover-image" href="images/cover.jpg" media-type="image/jpeg" properties="cover-image"/>`);
+    }
+
+    // Title page scan (original historical page)
+    if (titlePageScan) {
+      manifestItems.push(`<item id="title-page-scan" href="images/title-page-scan.jpg" media-type="image/jpeg"/>`);
+    }
 
     // Title Page
     manifestItems.push(`<item id="title-page" href="title-page.xhtml" media-type="application/xhtml+xml"/>`);
@@ -1435,6 +1497,13 @@ async function generateScholarlyEpubDownload(
       navItems.push(`<li><a href="methodology.xhtml">Translation Methodology</a></li>`);
     }
 
+    // List of Illustrations (if gallery images exist)
+    if (galleryImages.length > 0) {
+      manifestItems.push(`<item id="illustrations-list" href="illustrations.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="illustrations-list"/>`);
+      navItems.push(`<li><a href="illustrations.xhtml">List of Illustrations</a></li>`);
+    }
+
     // ========== MAIN CONTENT ==========
     navItems.push(`<li><a href="content-start.xhtml">Translation</a><ol>`);
 
@@ -1442,11 +1511,15 @@ async function generateScholarlyEpubDownload(
     manifestItems.push(`<item id="content-start" href="content-start.xhtml" media-type="application/xhtml+xml"/>`);
     spineItems.push(`<itemref idref="content-start"/>`);
 
-    // Content pages with images
+    // Add illustration image entries to manifest
+    for (const img of galleryImages) {
+      const illusId = `illus-${img.page_number}-${img.detection_index}`;
+      manifestItems.push(`<item id="${illusId}" href="images/${illusId}.jpg" media-type="image/jpeg"/>`);
+    }
+
+    // Content pages (translation text + inline illustrations)
     for (const page of validPages) {
-      const imgId = `img-${page.page_number}`;
       const pageId = `page-${page.page_number}`;
-      manifestItems.push(`<item id="${imgId}" href="images/${imgId}.jpg" media-type="image/jpeg"/>`);
       manifestItems.push(`<item id="${pageId}" href="${pageId}.xhtml" media-type="application/xhtml+xml"/>`);
       spineItems.push(`<itemref idref="${pageId}"/>`);
       navItems.push(`<li><a href="${pageId}.xhtml">Page ${page.page_number}</a></li>`);
@@ -1506,6 +1579,7 @@ async function generateScholarlyEpubDownload(
     <dc:rights>${edition?.license || 'CC-BY-SA-4.0'}</dc:rights>
     ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
+    ${(coverGalleryImage || (book as any).thumbnail) ? '<meta name="cover" content="cover-image"/>' : ''}
   </metadata>
   <manifest>
     ${manifestItems.join('\n    ')}
@@ -1541,6 +1615,31 @@ async function generateScholarlyEpubDownload(
 
     // ========== CREATE PAGES ==========
 
+    // ========== FETCH COVER & TITLE PAGE IMAGES ==========
+
+    // Cover image
+    let coverImageBuffer: Buffer | null = null;
+    if (coverGalleryImage?.extracted_url) {
+      coverImageBuffer = await fetchIllustrationImage(coverGalleryImage.extracted_url);
+    } else if ((book as any).thumbnail) {
+      coverImageBuffer = await fetchIllustrationImage((book as any).thumbnail);
+    }
+    if (coverImageBuffer) {
+      archive.append(coverImageBuffer, { name: 'OEBPS/images/cover.jpg' });
+    }
+
+    // Title page scan
+    let titlePageScanBuffer: Buffer | null = null;
+    if (titlePageScan) {
+      const scanUrl = (titlePageScan as any).cropped_photo || (titlePageScan as any).archived_photo || titlePageScan.photo;
+      if (scanUrl) {
+        titlePageScanBuffer = await fetchIllustrationImage(scanUrl);
+        if (titlePageScanBuffer) {
+          archive.append(titlePageScanBuffer, { name: 'OEBPS/images/title-page-scan.jpg' });
+        }
+      }
+    }
+
     // Title Page
     const titlePageHtml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -1548,6 +1647,7 @@ async function generateScholarlyEpubDownload(
 <head><meta charset="UTF-8"/><title>Title Page</title><link rel="stylesheet" href="styles.css"/></head>
 <body>
   <div class="title-page">
+    ${titlePageScanBuffer ? `<div class="title-page-scan"><img src="images/title-page-scan.jpg" alt="Original title page"/></div>` : ''}
     <h1>${escapeXml(bookTitle)}</h1>
     <p class="subtitle">English Translation</p>
     <p class="author">by ${escapeXml(book.author)}</p>
@@ -1621,6 +1721,35 @@ async function generateScholarlyEpubDownload(
       archive.append(methodHtml, { name: 'OEBPS/methodology.xhtml' });
     }
 
+    // List of Illustrations (if gallery images exist)
+    if (galleryImages.length > 0) {
+      const illustrationEntries = galleryImages.map((img: any) => {
+        const desc = img.museum_description
+          ? escapeXml(img.museum_description.slice(0, 120) + (img.museum_description.length > 120 ? '...' : ''))
+          : escapeXml(img.description || 'Illustration');
+        const typeLabel = img.type ? escapeXml(img.type.replace(/_/g, ' ')) : 'illustration';
+        return `<div class="illustration-entry">
+          <span class="illus-page"><a href="${bookPageUrl}?page=${img.page_number}">p. ${img.page_number}</a></span>
+          <span class="illus-type">${typeLabel}</span>
+          <span class="illus-desc">${desc}</span>
+        </div>`;
+      }).join('\n');
+
+      const illustrationsHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>List of Illustrations</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="front-matter">
+    <h1>List of Illustrations</h1>
+    <p>${galleryImages.length} illustration${galleryImages.length !== 1 ? 's' : ''} from the original ${escapeXml(book.language)} edition.</p>
+    ${illustrationEntries}
+  </div>
+</body>
+</html>`;
+      archive.append(illustrationsHtml, { name: 'OEBPS/illustrations.xhtml' });
+    }
+
     // Content start marker
     const contentStartHtml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -1630,25 +1759,46 @@ async function generateScholarlyEpubDownload(
   <div class="page-content">
     <h1>${escapeXml(bookTitle)}</h1>
     <h2>English Translation</h2>
-    <p style="text-align:center;font-style:italic;">The following pages present the original manuscript images alongside English translations.</p>
+    <p style="text-align:center;font-style:italic;">The following pages present English translations with select illustrations from the original edition.</p>
   </div>
 </body>
 </html>`;
     archive.append(contentStartHtml, { name: 'OEBPS/content-start.xhtml' });
 
-    // Fetch and add images, create content pages
-    console.log(`Fetching ${validPages.length} images for scholarly EPUB...`);
+    // ========== FETCH ILLUSTRATION IMAGES ==========
+    console.log(`Fetching ${galleryImages.length} illustrations for scholarly EPUB...`);
+    for (const img of galleryImages) {
+      const illusId = `illus-${img.page_number}-${img.detection_index}`;
+      const illusUrl = img.extracted_url || img.image_url;
+      if (illusUrl) {
+        const illusBuffer = await fetchIllustrationImage(illusUrl);
+        if (illusBuffer) {
+          archive.append(illusBuffer, { name: `OEBPS/images/${illusId}.jpg` });
+        }
+      }
+    }
+
+    // ========== CREATE CONTENT PAGES ==========
+    console.log(`Building ${validPages.length} pages for scholarly EPUB...`);
     for (const page of validPages) {
       if(!page) continue;
 
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-
-      if (imageBuffer) {
-        archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
-      }
-
       const translationHtml = markdownToHtml(page.translation ? page.translation.data : '');
+      const pageIllustrations = illustrationsByPage.get(page.page_number) || [];
+      const pageUrl = `${bookPageUrl}?page=${page.page_number}`;
+
+      // Build inline illustration HTML for this page
+      const illustrationHtml = pageIllustrations.map((img: any, idx: number) => {
+        const illusId = `illus-${img.page_number}-${img.detection_index}`;
+        const caption = img.museum_description || img.description || '';
+        return `<figure class="illustration">
+      <a href="${pageUrl}"><img src="images/${illusId}.jpg" alt="${escapeXml(caption.slice(0, 200))}"/></a>
+      <figcaption>
+        ${caption ? `${escapeXml(caption)}` : ''}
+        <br/><a href="${pageUrl}" class="page-link">View original page ${page.page_number} &#x2192;</a>
+      </figcaption>
+    </figure>`;
+      }).join('\n    ');
 
       const pageHtml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -1656,8 +1806,8 @@ async function generateScholarlyEpubDownload(
 <head><meta charset="UTF-8"/><title>Page ${page.page_number}</title><link rel="stylesheet" href="styles.css"/></head>
 <body>
   <div class="page-content">
-    <div class="page-header">Page ${page.page_number}</div>
-    ${imageBuffer ? `<div class="image-container"><img src="images/img-${page.page_number}.jpg" alt="Original manuscript page ${page.page_number}"/></div>` : ''}
+    <div class="page-header"><a href="${pageUrl}">Page ${page.page_number}</a></div>
+    ${illustrationHtml}
     <h3>Translation</h3>
     ${translationHtml}
   </div>
@@ -1925,6 +2075,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         epubBuffer = await generateScholarlyEpubDownload(
           book as unknown as Book,
           pages as unknown as Page[],
+          db,
           edition,
           bookIndex,
           bookSummary
