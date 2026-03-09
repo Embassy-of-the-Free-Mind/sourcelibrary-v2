@@ -11,6 +11,18 @@ export const metadata: Metadata = {
     '107 cuneiform tablets from CDLI with photos, metadata, and scholarly ATF transliterations.',
 };
 
+interface BBox {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface PhotoBounds {
+  layout: string;
+  surfaces: { label: string; bbox: BBox }[];
+}
+
 interface Tablet {
   pId: string;
   designation: string;
@@ -28,6 +40,7 @@ interface Tablet {
   hasDamage: boolean;
   hasTranslation: boolean;
   difficulty: string;
+  photoBounds?: PhotoBounds;
 }
 
 interface ParsedLine {
@@ -203,39 +216,69 @@ export default function TabletsPage() {
               {/* Each surface gets its own cropped photo section */}
               {sections.length > 0 ? (
                 <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
-                  {sections.map((section, si) => (
+                  {sections.map((section, si) => {
+                    // Find matching bounding box from Gemini detection
+                    const bounds = tablet.photoBounds?.surfaces?.find(
+                      (s) => s.label === section.surface
+                    );
+                    return (
                     <div
                       key={si}
-                      className="grid grid-cols-1 md:grid-cols-[240px_1fr]"
+                      className="grid grid-cols-1 md:grid-cols-[280px_1fr]"
                     >
-                      {/* Cropped photo for this surface */}
+                      {/* Cropped photo for this surface — uses bbox to show only this part */}
                       <div
-                        className="p-3 flex items-center justify-center border-b md:border-b-0 md:border-r overflow-hidden"
+                        className="p-3 flex items-center justify-center border-b md:border-b-0 md:border-r"
                         style={{
                           backgroundColor: '#f0ece3',
                           borderColor: 'var(--border-light)',
                         }}
                       >
-                        <a
-                          href={tablet.cdliUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title={`View ${tablet.designation} on CDLI — ${section.surface}`}
-                          className="block w-full overflow-hidden rounded"
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={tablet.photoUrl}
-                            alt={`${section.surface} of ${tablet.designation}`}
-                            className="w-full shadow-sm"
-                            loading="lazy"
+                        {bounds ? (
+                          <a
+                            href={tablet.cdliUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={`${section.surface} of ${tablet.designation}`}
+                            className="block overflow-hidden rounded shadow-sm"
                             style={{
-                              objectFit: 'cover',
-                              objectPosition: `center ${(si / sections.length) * 100}%`,
-                              height: `${Math.max(120, section.lines.length * 40)}px`,
+                              width: '100%',
+                              aspectRatio: `${bounds.bbox.w} / ${bounds.bbox.h}`,
                             }}
-                          />
-                        </a>
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={tablet.photoUrl}
+                              alt={`${section.surface} of ${tablet.designation}`}
+                              loading="lazy"
+                              style={{
+                                display: 'block',
+                                width: `${(1 / bounds.bbox.w) * 100}%`,
+                                height: `${(1 / bounds.bbox.h) * 100}%`,
+                                maxWidth: 'none',
+                                objectFit: 'cover',
+                                marginLeft: `${-(bounds.bbox.x / bounds.bbox.w) * 100}%`,
+                                marginTop: `${-(bounds.bbox.y / bounds.bbox.h) * 100}%`,
+                              }}
+                            />
+                          </a>
+                        ) : (
+                          <a
+                            href={tablet.cdliUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={`View ${tablet.designation} on CDLI`}
+                            className="block w-full overflow-hidden rounded"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={tablet.photoUrl}
+                              alt={`${section.surface} of ${tablet.designation}`}
+                              className="w-full shadow-sm"
+                              loading="lazy"
+                            />
+                          </a>
+                        )}
                       </div>
 
                       {/* Cuneiform signs for this surface */}
@@ -278,7 +321,8 @@ export default function TabletsPage() {
                         </div>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="p-4">
