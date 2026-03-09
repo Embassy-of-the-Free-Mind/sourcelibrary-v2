@@ -50,10 +50,9 @@ interface ConstellationData {
 }
 
 // ────────────────────────────────────────────────────────────
-// Color Maps
+// Colors
 // ────────────────────────────────────────────────────────────
 
-// 25 distinct cluster colors — perceptually spread
 const CLUSTER_COLORS = [
   '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6',
   '#1abc9c', '#e91e63', '#00bcd4', '#ff9800', '#673ab7',
@@ -63,23 +62,16 @@ const CLUSTER_COLORS = [
 ];
 
 const LANGUAGE_COLORS: Record<string, string> = {
-  Latin: '#9e4a3a',
-  English: '#5d8fb5',
-  German: '#8b9a7d',
-  French: '#7c5db5',
-  Chinese: '#c9a86c',
-  Sanskrit: '#d4924a',
-  Italian: '#4a9e7c',
-  Dutch: '#5e6d52',
-  Hebrew: '#b5835d',
-  Arabic: '#a067a0',
-  Greek: '#5d7ab5',
+  Latin: '#9e4a3a', English: '#5d8fb5', German: '#8b9a7d',
+  French: '#7c5db5', Chinese: '#c9a86c', Sanskrit: '#d4924a',
+  Italian: '#4a9e7c', Dutch: '#5e6d52', Hebrew: '#b5835d',
+  Arabic: '#a067a0', Greek: '#5d7ab5',
 };
 
 type ColorMode = 'cluster' | 'language' | 'century';
 
 function getCenturyColor(year: number | null): string {
-  if (!year) return '#aaa';
+  if (!year) return '#666';
   if (year < 0) return '#d4924a';
   if (year < 500) return '#c9a86c';
   if (year < 1000) return '#9e4a3a';
@@ -94,12 +86,9 @@ function getCenturyColor(year: number | null): string {
 
 function getBookColor(book: Book, mode: ColorMode): string {
   switch (mode) {
-    case 'cluster':
-      return CLUSTER_COLORS[book.cluster % CLUSTER_COLORS.length];
-    case 'language':
-      return LANGUAGE_COLORS[book.language] || '#888';
-    case 'century':
-      return getCenturyColor(book.year);
+    case 'cluster': return CLUSTER_COLORS[book.cluster % CLUSTER_COLORS.length];
+    case 'language': return LANGUAGE_COLORS[book.language] || '#666';
+    case 'century': return getCenturyColor(book.year);
   }
 }
 
@@ -107,27 +96,49 @@ function hexToRgb(hex: string): [number, number, number] {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? [parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255]
-    : [0.5, 0.5, 0.5];
+    : [0.4, 0.4, 0.4];
 }
+
+// Deterministic pseudo-random per index
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+// ────────────────────────────────────────────────────────────
+// Constants
+// ────────────────────────────────────────────────────────────
+
+const SPREAD = 40;
+const BOOK_W = 0.55;
+const BOOK_H = 0.8;
+const HOVER_SCALE = 2.8;
+const PICK_THRESHOLD_PX = 18;
 
 // ────────────────────────────────────────────────────────────
 // Component
 // ────────────────────────────────────────────────────────────
 
-const SPREAD = 40; // World-space spread of the constellation
-const POINT_SIZE = 1.5;
-
 export default function BookConstellationViz({ data }: { data: ConstellationData }) {
+  // Three.js refs
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
-  const pointsRef = useRef<THREE.Points | null>(null);
-  const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
-  const mouseRef = useRef<THREE.Vector2>(new THREE.Vector2());
+  const meshRef = useRef<THREE.InstancedMesh | null>(null);
+  const labelGroupRef = useRef<THREE.Group | null>(null);
   const animFrameRef = useRef<number>(0);
 
+  // Cached per-instance data
+  const bookPosRef = useRef<Float32Array>(new Float32Array(0));
+  const bookRotRef = useRef<Float32Array>(new Float32Array(0));
+
+  // Interaction refs
+  const hoveredLabelRef = useRef<THREE.Sprite | null>(null);
+  const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
+
+  // State
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [selectedBookIdx, setSelectedBookIdx] = useState<number | null>(null);
   const [colorMode, setColorMode] = useState<ColorMode>('cluster');
@@ -135,8 +146,10 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
   const [selectedCluster, setSelectedCluster] = useState<number | null>(null);
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
   const [selectedBookPos, setSelectedBookPos] = useState<{ x: number; y: number } | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
+  const [cursorStyle, setCursorStyle] = useState('grab');
 
-  // Search filter
+  // Computed
   const searchMatches = useMemo(() => {
     if (!searchQuery || searchQuery.length < 2) return null;
     const q = searchQuery.toLowerCase();
@@ -154,272 +167,27 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     return matches;
   }, [searchQuery, data.books]);
 
-  // ── Initialize Three.js scene ──
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  const clusterBooks = useMemo(() => {
+    if (selectedCluster === null) return [];
+    return data.books
+      .filter((b) => b.cluster === selectedCluster)
+      .sort((a, b) => (a.year || 9999) - (b.year || 9999));
+  }, [selectedCluster, data.books]);
 
-    // Scene
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color('#0d0d14');
-    scene.fog = new THREE.FogExp2('#0d0d14', 0.003);
-    sceneRef.current = scene;
+  const selectedClusterInfo = selectedCluster !== null ? data.clusters[String(selectedCluster)] : null;
 
-    // Camera
-    const w = container.clientWidth;
-    const h = Math.max(500, Math.min(w * 0.65, 700));
-    const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 500);
-    camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
-    cameraRef.current = camera;
+  const stats = useMemo(() => ({
+    totalBooks: data.meta.total_books,
+    nClusters: data.meta.n_clusters,
+    nLanguages: new Set(data.books.map((b) => b.language)).size,
+    firstTranslations: data.books.filter((b) => b.first_translation).length,
+  }), [data]);
 
-    // Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(w, h);
-    container.appendChild(renderer.domElement);
-    rendererRef.current = renderer;
-
-    // Controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.rotateSpeed = 0.5;
-    controls.zoomSpeed = 0.8;
-    controls.minDistance = 5;
-    controls.maxDistance = SPREAD * 3;
-    controls.target.set(0, 0, 0);
-    controlsRef.current = controls;
-
-    // Raycaster threshold
-    raycasterRef.current.params.Points = { threshold: 0.4 };
-
-    // Points geometry
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(data.books.length * 3);
-    const colors = new Float32Array(data.books.length * 3);
-    const sizes = new Float32Array(data.books.length);
-
-    for (let i = 0; i < data.books.length; i++) {
-      const b = data.books[i];
-      positions[i * 3] = (b.x - 0.5) * SPREAD;
-      positions[i * 3 + 1] = (b.y - 0.5) * SPREAD;
-      positions[i * 3 + 2] = (b.z - 0.5) * SPREAD;
-
-      const color = hexToRgb(getBookColor(b, 'cluster'));
-      colors[i * 3] = color[0];
-      colors[i * 3 + 1] = color[1];
-      colors[i * 3 + 2] = color[2];
-
-      sizes[i] = POINT_SIZE;
-    }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-    // Custom shader for size attenuation + round points
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        pointMultiplier: { value: h * 0.5 },
-      },
-      vertexShader: `
-        attribute float size;
-        varying vec3 vColor;
-        varying float vAlpha;
-        uniform float pointMultiplier;
-        void main() {
-          vColor = color;
-          vAlpha = size > 0.1 ? 1.0 : 0.0;
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size * pointMultiplier / -mvPosition.z;
-          gl_PointSize = clamp(gl_PointSize, 1.0, 12.0);
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vColor;
-        varying float vAlpha;
-        void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
-          if (d > 0.5) discard;
-          float alpha = smoothstep(0.5, 0.35, d) * vAlpha;
-          gl_FragColor = vec4(vColor, alpha * 0.92);
-        }
-      `,
-      vertexColors: true,
-      transparent: true,
-      depthWrite: false,
-    });
-
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
-    pointsRef.current = points;
-
-    // Cluster labels as sprites
-    const labelGroup = new THREE.Group();
-    labelGroup.name = 'clusterLabels';
-    for (const [, cluster] of Object.entries(data.clusters)) {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      if (!ctx) continue;
-
-      const text = cluster.label || cluster.label_keywords.slice(0, 2).join(', ');
-      if (!text) continue;
-
-      canvas.width = 512;
-      canvas.height = 64;
-      ctx.font = '28px Inter, system-ui, sans-serif';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(text, 256, 32);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.minFilter = THREE.LinearFilter;
-      const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
-      const sprite = new THREE.Sprite(spriteMat);
-      sprite.position.set(
-        (cluster.cx - 0.5) * SPREAD,
-        (cluster.cy - 0.5) * SPREAD,
-        (cluster.cz - 0.5) * SPREAD,
-      );
-      sprite.scale.set(12, 1.5, 1);
-      labelGroup.add(sprite);
-    }
-    scene.add(labelGroup);
-
-    // Animation loop
-    function animate() {
-      animFrameRef.current = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Resize handler
-    const onResize = () => {
-      const w = container.clientWidth;
-      const h = Math.max(500, Math.min(w * 0.65, 700));
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-      (material.uniforms.pointMultiplier as { value: number }).value = h * 0.5;
-    };
-    const observer = new ResizeObserver(onResize);
-    observer.observe(container);
-
-    return () => {
-      cancelAnimationFrame(animFrameRef.current);
-      observer.disconnect();
-      controls.dispose();
-      renderer.dispose();
-      geometry.dispose();
-      material.dispose();
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
-  // ── Update colors/sizes when mode, search, or cluster filter changes ──
-  useEffect(() => {
-    const points = pointsRef.current;
-    if (!points) return;
-    const geometry = points.geometry;
-    const colorAttr = geometry.getAttribute('color') as THREE.BufferAttribute;
-    const sizeAttr = geometry.getAttribute('size') as THREE.BufferAttribute;
-
-    const hasSearch = searchMatches && searchMatches.size > 0;
-    const hasCluster = selectedCluster !== null;
-
-    for (let i = 0; i < data.books.length; i++) {
-      const b = data.books[i];
-      const isSearchMatch = hasSearch ? searchMatches!.has(i) : true;
-      const isClusterMatch = hasCluster ? b.cluster === selectedCluster : true;
-      const isHighlighted = isSearchMatch && isClusterMatch;
-      const isHovered = i === hoveredIdx;
-      const isSelected = i === selectedBookIdx;
-
-      const hex = getBookColor(b, colorMode);
-      const [r, g, bb] = hexToRgb(hex);
-
-      if (isHighlighted || isHovered || isSelected) {
-        colorAttr.setXYZ(i, r, g, bb);
-        sizeAttr.setX(i, isHovered || isSelected ? POINT_SIZE * 3 : POINT_SIZE);
-      } else {
-        // Dim non-matches
-        colorAttr.setXYZ(i, r * 0.2, g * 0.2, bb * 0.2);
-        sizeAttr.setX(i, hasSearch || hasCluster ? POINT_SIZE * 0.5 : POINT_SIZE);
-      }
-    }
-
-    colorAttr.needsUpdate = true;
-    sizeAttr.needsUpdate = true;
-  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, selectedBookIdx, data.books]);
-
-  // ── Mouse move → raycasting ──
-  const handlePointerMove = useCallback(
-    (e: React.PointerEvent) => {
-      const container = containerRef.current;
-      const camera = cameraRef.current;
-      const points = pointsRef.current;
-      if (!container || !camera || !points) return;
-
-      const rect = container.getBoundingClientRect();
-      const rendererEl = rendererRef.current?.domElement;
-      if (!rendererEl) return;
-
-      mouseRef.current.x = ((e.clientX - rect.left) / rendererEl.clientWidth) * 2 - 1;
-      mouseRef.current.y = -((e.clientY - rect.top) / rendererEl.clientHeight) * 2 + 1;
-
-      raycasterRef.current.setFromCamera(mouseRef.current, camera);
-      const intersects = raycasterRef.current.intersectObject(points);
-
-      if (intersects.length > 0 && intersects[0].index !== undefined) {
-        const idx = intersects[0].index;
-        setHoveredIdx(idx);
-        setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      } else {
-        setHoveredIdx(null);
-        setTooltipPos(null);
-      }
-    },
-    [],
-  );
-
-  const handleClick = useCallback(() => {
-    if (hoveredIdx !== null) {
-      setSelectedBookIdx(hoveredIdx);
-      if (tooltipPos) setSelectedBookPos(tooltipPos);
-    } else {
-      setSelectedBookIdx(null);
-      setSelectedBookPos(null);
-    }
-  }, [hoveredIdx, tooltipPos]);
-
-  // Reset
-  const resetView = useCallback(() => {
-    setSearchQuery('');
-    setSelectedCluster(null);
-    const camera = cameraRef.current;
-    const controls = controlsRef.current;
-    if (camera && controls) {
-      camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
-      controls.target.set(0, 0, 0);
-      controls.update();
-    }
-  }, []);
-
-  // Tooltip book
-  const hoveredBook = hoveredIdx !== null ? data.books[hoveredIdx] : null;
-
-  // Legend items
   const legendItems = useMemo(() => {
     if (colorMode === 'cluster') {
       return Object.values(data.clusters)
         .sort((a, b) => b.size - a.size)
-        .slice(0, 12)
+        .slice(0, 10)
         .map((c) => ({
           label: c.label || c.label_keywords.slice(0, 2).join(', '),
           color: CLUSTER_COLORS[c.id % CLUSTER_COLORS.length],
@@ -428,19 +196,12 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     }
     if (colorMode === 'language') {
       const counts: Record<string, number> = {};
-      data.books.forEach((b) => {
-        counts[b.language] = (counts[b.language] || 0) + 1;
-      });
+      data.books.forEach((b) => { counts[b.language] = (counts[b.language] || 0) + 1; });
       return Object.entries(counts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 12)
-        .map(([lang, count]) => ({
-          label: lang,
-          color: LANGUAGE_COLORS[lang] || '#888',
-          count,
-        }));
+        .slice(0, 10)
+        .map(([lang, count]) => ({ label: lang, color: LANGUAGE_COLORS[lang] || '#666', count }));
     }
-    // century
     return [
       { label: 'Before 500', color: getCenturyColor(100), count: 0 },
       { label: '500-999', color: getCenturyColor(700), count: 0 },
@@ -452,197 +213,653 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     ];
   }, [colorMode, data]);
 
+  // ── Initialize Three.js ──────────────────────────────────
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#000000');
+    scene.fog = new THREE.FogExp2('#000000', 0.003);
+    sceneRef.current = scene;
+
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 500);
+    camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
+    cameraRef.current = camera;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h);
+    container.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.rotateSpeed = 0.5;
+    controls.zoomSpeed = 0.8;
+    controls.minDistance = 5;
+    controls.maxDistance = SPREAD * 3;
+    controls.target.set(0, 0, 0);
+    controlsRef.current = controls;
+
+    // Auto-rotation
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.3;
+    }
+    let rotationTimeout: ReturnType<typeof setTimeout>;
+    controls.addEventListener('start', () => {
+      controls.autoRotate = false;
+      clearTimeout(rotationTimeout);
+    });
+    controls.addEventListener('end', () => {
+      if (!prefersReducedMotion) {
+        rotationTimeout = setTimeout(() => { controls.autoRotate = true; }, 5000);
+      }
+    });
+
+    // ── InstancedMesh ──
+    const n = data.books.length;
+    const geometry = new THREE.PlaneGeometry(BOOK_W, BOOK_H);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.88,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+    const mesh = new THREE.InstancedMesh(geometry, material, n);
+
+    const positions = new Float32Array(n * 3);
+    const rotations = new Float32Array(n);
+    const dummy = new THREE.Object3D();
+    const tempColor = new THREE.Color();
+
+    for (let i = 0; i < n; i++) {
+      const b = data.books[i];
+      const px = (b.x - 0.5) * SPREAD;
+      const py = (b.y - 0.5) * SPREAD;
+      const pz = (b.z - 0.5) * SPREAD;
+      positions[i * 3] = px;
+      positions[i * 3 + 1] = py;
+      positions[i * 3 + 2] = pz;
+
+      const rot = (seededRandom(i) - 0.5) * 0.3;
+      rotations[i] = rot;
+
+      dummy.position.set(px, py, pz);
+      dummy.rotation.set(0, 0, rot);
+      dummy.scale.set(1, 1, 1);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+
+      const [r, g, b2] = hexToRgb(getBookColor(b, 'cluster'));
+      tempColor.setRGB(r, g, b2);
+      mesh.setColorAt(i, tempColor);
+    }
+
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    scene.add(mesh);
+    meshRef.current = mesh;
+    bookPosRef.current = positions;
+    bookRotRef.current = rotations;
+
+    // ── Cluster label sprites ──
+    const labelGroup = new THREE.Group();
+    labelGroup.name = 'clusterLabels';
+    for (const [, cluster] of Object.entries(data.clusters)) {
+      const text = cluster.label || cluster.label_keywords.slice(0, 2).join(', ');
+      if (!text) continue;
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) continue;
+      canvas.width = 512;
+      canvas.height = 64;
+      ctx.font = '26px Inter, system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, 256, 32);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.minFilter = THREE.LinearFilter;
+      const spriteMat = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.25,
+      });
+      const sprite = new THREE.Sprite(spriteMat);
+      sprite.position.set(
+        (cluster.cx - 0.5) * SPREAD,
+        (cluster.cy - 0.5) * SPREAD,
+        (cluster.cz - 0.5) * SPREAD,
+      );
+      sprite.scale.set(12, 1.5, 1);
+      sprite.userData.clusterId = cluster.id;
+      labelGroup.add(sprite);
+    }
+    scene.add(labelGroup);
+    labelGroupRef.current = labelGroup;
+
+    // ── Animation loop ──
+    function animate() {
+      animFrameRef.current = requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // ── Resize ──
+    const onResize = () => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    const observer = new ResizeObserver(onResize);
+    observer.observe(container);
+
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      clearTimeout(rotationTimeout);
+      observer.disconnect();
+      controls.dispose();
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+      labelGroup.children.forEach((child) => {
+        const sprite = child as THREE.Sprite;
+        sprite.material.map?.dispose();
+        sprite.material.dispose();
+      });
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  // ── Update instance visuals (colors + scales) ──
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh) return;
+
+    const n = data.books.length;
+    const positions = bookPosRef.current;
+    const rotations = bookRotRef.current;
+    const dummy = new THREE.Object3D();
+    const tempColor = new THREE.Color();
+
+    const hasSearch = searchMatches && searchMatches.size > 0;
+    const hasCluster = selectedCluster !== null;
+
+    for (let i = 0; i < n; i++) {
+      const b = data.books[i];
+      const isSearchMatch = hasSearch ? searchMatches!.has(i) : true;
+      const isClusterMatch = hasCluster ? b.cluster === selectedCluster : true;
+      const isHighlighted = isSearchMatch && isClusterMatch;
+      const isHovered = i === hoveredIdx;
+      const isSelected = i === selectedBookIdx;
+
+      // Color
+      const hex = getBookColor(b, colorMode);
+      const [r, g, bl] = hexToRgb(hex);
+      if (isHighlighted || isHovered || isSelected) {
+        tempColor.setRGB(r, g, bl);
+      } else {
+        tempColor.setRGB(r * 0.12, g * 0.12, bl * 0.12);
+      }
+      mesh.setColorAt(i, tempColor);
+
+      // Matrix
+      const px = positions[i * 3];
+      const py = positions[i * 3 + 1];
+      const pz = positions[i * 3 + 2];
+      const scale = isHovered || isSelected ? HOVER_SCALE : 1;
+      dummy.position.set(px, py, pz);
+      dummy.rotation.set(0, 0, rotations[i]);
+      dummy.scale.set(scale, scale, 1);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+    }
+
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, selectedBookIdx, data.books]);
+
+  // ── Pointer move: screen-space proximity picking + label hover ──
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      const container = containerRef.current;
+      const camera = cameraRef.current;
+      const labelGroup = labelGroupRef.current;
+      if (!container || !camera) return;
+
+      const rect = container.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const w = rect.width;
+      const h = rect.height;
+
+      // NDC for raycaster (used for label sprites)
+      const ndcX = (mx / w) * 2 - 1;
+      const ndcY = -(my / h) * 2 + 1;
+      raycasterRef.current.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
+
+      // Check cluster labels first
+      if (labelGroup) {
+        const prevLabel = hoveredLabelRef.current;
+        const labelIntersects = raycasterRef.current.intersectObjects(labelGroup.children);
+        if (labelIntersects.length > 0) {
+          const sprite = labelIntersects[0].object as THREE.Sprite;
+          if (prevLabel && prevLabel !== sprite) {
+            (prevLabel.material as THREE.SpriteMaterial).opacity = 0.25;
+          }
+          (sprite.material as THREE.SpriteMaterial).opacity = 0.65;
+          hoveredLabelRef.current = sprite;
+          setCursorStyle('pointer');
+          setHoveredIdx(null);
+          setTooltipPos(null);
+          return;
+        }
+        if (prevLabel) {
+          (prevLabel.material as THREE.SpriteMaterial).opacity = 0.25;
+          hoveredLabelRef.current = null;
+        }
+      }
+
+      // Screen-space proximity for books
+      const positions = bookPosRef.current;
+      const n = data.books.length;
+      const tempVec = new THREE.Vector3();
+      let nearestIdx = -1;
+      let nearestDist = PICK_THRESHOLD_PX;
+
+      for (let i = 0; i < n; i++) {
+        tempVec.set(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+        tempVec.project(camera);
+        if (tempVec.z > 1) continue; // behind camera
+        const sx = (tempVec.x * 0.5 + 0.5) * w;
+        const sy = (-tempVec.y * 0.5 + 0.5) * h;
+        const dx = sx - mx;
+        const dy = sy - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          nearestIdx = i;
+        }
+      }
+
+      if (nearestIdx >= 0) {
+        setHoveredIdx(nearestIdx);
+        setTooltipPos({ x: mx, y: my });
+        setCursorStyle('pointer');
+      } else {
+        setHoveredIdx(null);
+        setTooltipPos(null);
+        setCursorStyle('grab');
+      }
+    },
+    [data.books.length],
+  );
+
+  // ── Click handler ──
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
+      // Check if a label sprite is hovered
+      const label = hoveredLabelRef.current;
+      if (label && label.userData.clusterId !== undefined) {
+        const cId = label.userData.clusterId as number;
+        setSelectedCluster((prev) => (prev === cId ? null : cId));
+        setSelectedBookIdx(null);
+        setSelectedBookPos(null);
+        return;
+      }
+
+      // Check books
+      if (hoveredIdx !== null) {
+        setSelectedBookIdx(hoveredIdx);
+        if (tooltipPos) setSelectedBookPos(tooltipPos);
+      } else {
+        setSelectedBookIdx(null);
+        setSelectedBookPos(null);
+      }
+    },
+    [hoveredIdx, tooltipPos],
+  );
+
+  const resetView = useCallback(() => {
+    setSearchQuery('');
+    setSelectedCluster(null);
+    setSelectedBookIdx(null);
+    setSelectedBookPos(null);
+    const camera = cameraRef.current;
+    const controls = controlsRef.current;
+    if (camera && controls) {
+      camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
+  }, []);
+
+  const hoveredBook = hoveredIdx !== null ? data.books[hoveredIdx] : null;
+
+  // ── Render ──────────────────────────────────────────────
   return (
-    <div>
-      {/* Controls */}
-      <div className="flex flex-wrap items-center gap-3 mb-4">
+    <div className="relative w-full h-full select-none">
+      {/* Three.js canvas mount */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0"
+        style={{ cursor: cursorStyle }}
+        onPointerMove={handlePointerMove}
+        onClick={handleClick}
+      />
+
+      {/* ── Top-left: branding ── */}
+      <div className="absolute top-4 left-5 z-10">
+        <a
+          href="/"
+          className="text-white/30 hover:text-white/60 text-[10px] font-mono tracking-[0.2em] uppercase transition-colors"
+        >
+          Source Library
+        </a>
+        <div className="text-white/70 font-serif text-lg leading-tight">Book Atlas</div>
+      </div>
+
+      {/* ── Top-right: controls ── */}
+      <div className="absolute top-4 right-5 z-10 flex items-center gap-2">
         {/* Search */}
-        <div className="relative flex-1 min-w-[200px] max-w-[320px]">
+        <div className="relative">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search books, authors, keywords..."
-            className="w-full pl-8 pr-3 py-1.5 text-sm border border-[var(--border-light)] rounded-lg bg-white focus:outline-none focus:border-[var(--accent-violet)]"
+            placeholder="Search..."
+            className="w-44 pl-7 pr-2 py-1 text-xs bg-white/5 border border-white/10 rounded text-white/80 placeholder:text-white/25 placeholder:font-mono focus:outline-none focus:border-white/25 transition-colors"
           />
           <svg
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-faint)]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-white/25"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
+            <path strokeLinecap="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           {searchMatches && (
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-faint)]">
-              {searchMatches.size} found
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-white/30 font-mono">
+              {searchMatches.size}
             </span>
           )}
         </div>
 
         {/* Color mode */}
-        <div className="flex items-center gap-1 text-sm">
-          <span className="text-[var(--text-muted)] mr-1">Color:</span>
-          {(['cluster', 'language', 'century'] as ColorMode[]).map((mode) => (
-            <button
-              key={mode}
-              onClick={() => setColorMode(mode)}
-              className={`px-2.5 py-1 rounded text-xs transition-colors ${
-                colorMode === mode
-                  ? 'bg-[var(--accent-violet)] text-white'
-                  : 'bg-[var(--bg-warm)] text-[var(--text-secondary)] hover:bg-[var(--border-light)]'
-              }`}
-            >
-              {mode === 'cluster' ? 'Topic' : mode.charAt(0).toUpperCase() + mode.slice(1)}
-            </button>
-          ))}
-        </div>
+        {(['cluster', 'language', 'century'] as ColorMode[]).map((mode) => (
+          <button
+            key={mode}
+            onClick={() => setColorMode(mode)}
+            className={`px-2 py-1 text-[11px] rounded border transition-colors ${
+              colorMode === mode
+                ? 'bg-white/10 border-white/20 text-white/80'
+                : 'bg-transparent border-white/8 text-white/30 hover:text-white/50 hover:border-white/15'
+            }`}
+          >
+            {mode === 'cluster' ? 'Topic' : mode.charAt(0).toUpperCase() + mode.slice(1)}
+          </button>
+        ))}
+
+        {/* Info toggle */}
+        <button
+          onClick={() => setShowInfo(!showInfo)}
+          className={`w-6 h-6 flex items-center justify-center rounded border text-[11px] font-serif italic transition-colors ${
+            showInfo
+              ? 'bg-white/10 border-white/20 text-white/70'
+              : 'bg-transparent border-white/8 text-white/30 hover:text-white/50'
+          }`}
+        >
+          i
+        </button>
 
         {/* Reset */}
         <button
           onClick={resetView}
-          className="px-2.5 py-1 rounded text-xs bg-[var(--bg-warm)] text-[var(--text-secondary)] hover:bg-[var(--border-light)] transition-colors"
+          className="px-2 py-1 text-[11px] rounded border border-white/8 text-white/30 hover:text-white/50 hover:border-white/15 transition-colors"
         >
           Reset
         </button>
       </div>
 
-      {/* Three.js container */}
-      <div
-        ref={containerRef}
-        className="relative w-full rounded-lg overflow-hidden"
-        style={{ cursor: hoveredIdx !== null ? 'pointer' : 'grab' }}
-        onPointerMove={handlePointerMove}
-        onClick={handleClick}
-      >
-        {/* Hover tooltip (brief, follows cursor) */}
-        {hoveredBook && tooltipPos && selectedBookIdx !== hoveredIdx && (
-          <div
-            className="absolute pointer-events-none bg-white border border-[var(--border-medium)] rounded-lg shadow-lg p-3 max-w-[280px] z-10"
-            style={{
-              left: Math.min(tooltipPos.x + 12, (containerRef.current?.clientWidth ?? 600) - 290),
-              top: Math.max(tooltipPos.y - 80, 10),
-            }}
-          >
-            <div className="font-serif text-sm font-medium text-[var(--text-primary)] leading-tight mb-1">
-              {hoveredBook.title}
-            </div>
-            <div className="text-xs text-[var(--text-muted)]">
-              {hoveredBook.author !== 'Unknown' ? hoveredBook.author : ''}
-              {hoveredBook.author !== 'Unknown' && hoveredBook.year ? ' · ' : ''}
-              {hoveredBook.year || ''}
-            </div>
+      {/* ── Info panel ── */}
+      {showInfo && (
+        <div
+          className="absolute top-14 right-5 w-[300px] bg-black/80 backdrop-blur-md border border-white/10 rounded p-4 z-20 max-h-[85vh] overflow-y-auto"
+          onPointerMove={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div><div className="text-white/80 font-mono text-lg">{stats.totalBooks.toLocaleString()}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">Books</div></div>
+            <div><div className="text-white/80 font-mono text-lg">{stats.nClusters}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">Clusters</div></div>
+            <div><div className="text-white/80 font-mono text-lg">{stats.nLanguages}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">Languages</div></div>
+            <div><div className="text-white/80 font-mono text-lg">{stats.firstTranslations.toLocaleString()}</div><div className="text-white/30 text-[10px] uppercase tracking-wider">First Trans.</div></div>
           </div>
-        )}
-
-        {/* Selected book panel (persistent, clickable title) */}
-        {selectedBookIdx !== null && selectedBookPos && (() => {
-          const book = data.books[selectedBookIdx];
-          if (!book) return null;
-          const clusterInfo = data.clusters[String(book.cluster)];
-          return (
-            <div
-              className="absolute bg-white border border-[var(--border-medium)] rounded-lg shadow-lg p-3 max-w-[280px] z-20"
-              style={{
-                left: Math.min(selectedBookPos.x + 12, (containerRef.current?.clientWidth ?? 600) - 290),
-                top: Math.max(selectedBookPos.y - 100, 10),
-              }}
-            >
-              <button
-                onClick={(e) => { e.stopPropagation(); setSelectedBookIdx(null); setSelectedBookPos(null); }}
-                className="absolute top-1.5 right-2 text-[var(--text-faint)] hover:text-[var(--text-secondary)] text-sm leading-none"
-                aria-label="Close"
-              >
-                &times;
-              </button>
-              <a
-                href={`/book/${book.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-serif text-sm font-medium text-[var(--accent-violet)] hover:underline leading-tight block mb-1 pr-4"
-              >
-                {book.title}
-              </a>
-              <div className="text-xs text-[var(--text-muted)] mb-1.5">
-                {book.author !== 'Unknown' ? book.author : ''}
-                {book.author !== 'Unknown' && book.year ? ' · ' : ''}
-                {book.year || ''}
-                {book.pages > 0 ? ` · ${book.pages} pp.` : ''}
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {book.categories.slice(0, 3).map((cat) => (
-                  <span
-                    key={cat}
-                    className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-secondary)]"
-                  >
-                    {cat.replace(/-/g, ' ')}
-                  </span>
-                ))}
-                <span className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-muted)]">
-                  {book.language}
-                </span>
-              </div>
-              {book.keywords.length > 0 && (
-                <div className="text-[10px] text-[var(--text-secondary)] mt-1.5 leading-relaxed">
-                  {book.keywords.join(' · ')}
-                </div>
-              )}
-              {book.first_translation && (
-                <div className="text-[10px] text-[var(--accent-rust)] mt-1 font-medium">
-                  First English Translation
-                </div>
-              )}
-              {clusterInfo && (
-                <div className="text-[10px] text-[var(--text-faint)] mt-1.5">
-                  Cluster: {clusterInfo.label} ({clusterInfo.size} books)
-                </div>
-              )}
-            </div>
-          );
-        })()}
-
-        {/* Legend (overlay) */}
-        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm rounded-lg p-2.5 border border-white/10 max-w-[220px]">
-          <div className="grid grid-cols-1 gap-y-0.5">
-            {legendItems.slice(0, 8).map((item) => (
-              <div key={item.label} className="flex items-center gap-1.5 text-[10px] text-white/70">
-                <span
-                  className="w-2 h-2 rounded-full shrink-0"
-                  style={{ backgroundColor: item.color }}
-                />
-                <span className="truncate">{item.label}</span>
-                {item.count > 0 && (
-                  <span className="ml-auto text-white/40">{item.count}</span>
-                )}
-              </div>
-            ))}
+          <div className="border-t border-white/10 pt-3 text-white/40 text-[11px] leading-relaxed space-y-2">
+            <p>
+              Each rectangle is a book. Position reflects content similarity — AI
+              embeddings of summaries, themes, and index terms are projected with UMAP.
+              Height represents date of composition.
+            </p>
+            <p>
+              <strong className="text-white/50">Embeddings:</strong>{' '}
+              <span className="font-mono text-[10px]">paraphrase-multilingual-MiniLM-L12-v2</span>{' '}
+              (384-dim). UMAP with cosine distance, n_neighbors=15, min_dist=0.1.
+            </p>
+            <p>
+              <strong className="text-white/50">Clustering:</strong>{' '}
+              K-Means (k={stats.nClusters}) on original embeddings. Labels from TF-IDF on categories.
+            </p>
+            <p>
+              <strong className="text-white/50">Z-axis:</strong>{' '}
+              Piecewise linear normalization — pre-1400 compressed, 1400-1970 expanded.
+            </p>
           </div>
         </div>
+      )}
 
-        {/* Controls hint */}
-        <div className="absolute bottom-3 right-3 text-[10px] text-white/40 bg-black/40 px-2 py-1 rounded">
-          Click a point to inspect · Drag to rotate · Scroll to zoom
+      {/* ── Hover tooltip ── */}
+      {hoveredBook && tooltipPos && selectedBookIdx !== hoveredIdx && (
+        <div
+          className="absolute pointer-events-none bg-black/80 backdrop-blur-md border border-white/10 rounded p-2.5 max-w-[260px] z-20"
+          style={{
+            left: Math.min(tooltipPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 270),
+            top: Math.max(tooltipPos.y - 70, 10),
+          }}
+        >
+          <div className="font-serif text-[13px] text-white/90 leading-tight mb-0.5">
+            {hoveredBook.title}
+          </div>
+          <div className="text-[11px] text-white/40">
+            {hoveredBook.author !== 'Unknown' ? hoveredBook.author : ''}
+            {hoveredBook.author !== 'Unknown' && hoveredBook.year ? ' · ' : ''}
+            {hoveredBook.year || ''}
+          </div>
+        </div>
+      )}
+
+      {/* ── Selected book panel ── */}
+      {selectedBookIdx !== null && selectedBookPos && (() => {
+        const book = data.books[selectedBookIdx];
+        if (!book) return null;
+        const ci = data.clusters[String(book.cluster)];
+        return (
+          <div
+            className="absolute bg-black/80 backdrop-blur-md border border-white/10 rounded p-3 max-w-[280px] z-20"
+            style={{
+              left: Math.min(selectedBookPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 290),
+              top: Math.max(selectedBookPos.y - 100, 10),
+            }}
+            onPointerMove={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => { setSelectedBookIdx(null); setSelectedBookPos(null); }}
+              className="absolute top-1.5 right-2 text-white/30 hover:text-white/60 text-sm leading-none"
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <a
+              href={`/book/${book.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-serif text-[13px] text-white/90 hover:text-white leading-tight block mb-1 pr-4"
+            >
+              {book.title}
+            </a>
+            <div className="text-[11px] text-white/40 mb-1.5">
+              {book.author !== 'Unknown' ? book.author : ''}
+              {book.author !== 'Unknown' && book.year ? ' · ' : ''}
+              {book.year || ''}
+              {book.pages > 0 ? ` · ${book.pages} pp.` : ''}
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {book.categories.slice(0, 3).map((cat) => (
+                <span key={cat} className="px-1.5 py-0.5 text-[10px] rounded bg-white/8 text-white/50">
+                  {cat.replace(/-/g, ' ')}
+                </span>
+              ))}
+              <span className="px-1.5 py-0.5 text-[10px] rounded bg-white/8 text-white/35">
+                {book.language}
+              </span>
+            </div>
+            {book.keywords.length > 0 && (
+              <div className="text-[10px] text-white/35 mt-1.5 leading-relaxed">
+                {book.keywords.join(' · ')}
+              </div>
+            )}
+            {book.first_translation && (
+              <div className="text-[10px] text-[#9e4a3a] mt-1 font-medium">
+                First English Translation
+              </div>
+            )}
+            {ci && (
+              <button
+                onClick={() => setSelectedCluster(ci.id)}
+                className="text-[10px] text-white/25 mt-1.5 hover:text-white/50 transition-colors"
+              >
+                Cluster: {ci.label} ({ci.size} books) &rarr;
+              </button>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* ── Bottom-left: legend ── */}
+      <div className="absolute bottom-12 left-5 z-10 bg-black/50 backdrop-blur-sm border border-white/8 rounded p-2.5 max-w-[200px]">
+        <div className="grid grid-cols-1 gap-y-0.5">
+          {legendItems.map((item) => (
+            <div key={item.label} className="flex items-center gap-1.5 text-[10px] text-white/50">
+              <span className="w-2 h-2 rounded-sm shrink-0" style={{ backgroundColor: item.color }} />
+              <span className="truncate">{item.label}</span>
+              {item.count > 0 && <span className="ml-auto text-white/25 font-mono">{item.count}</span>}
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Cluster pills (below viz) */}
-      {Object.keys(data.clusters).length > 0 && (
+      {/* ── Bottom: cluster pills ── */}
+      <div className={`absolute bottom-3 left-5 z-10 ${selectedCluster !== null ? 'right-[370px]' : 'right-5'}`}>
         <ClusterPills
           clusters={data.clusters}
           selectedCluster={selectedCluster}
-          onSelect={(id) => setSelectedCluster(selectedCluster === id ? null : id)}
-          onClear={() => setSelectedCluster(null)}
+          onSelect={(id) => {
+            setSelectedCluster(selectedCluster === id ? null : id);
+            setSelectedBookIdx(null);
+            setSelectedBookPos(null);
+          }}
+          onClear={() => { setSelectedCluster(null); }}
         />
+      </div>
+
+      {/* ── Bottom-right: hint ── */}
+      <div className="absolute bottom-12 right-5 z-10 text-[10px] text-white/20 font-mono">
+        Click to inspect · Drag to rotate · Scroll to zoom
+      </div>
+
+      {/* ── Cluster detail panel ── */}
+      {selectedCluster !== null && selectedClusterInfo && (
+        <div
+          className="absolute top-0 right-0 w-[360px] h-full bg-black/70 backdrop-blur-md border-l border-white/10 z-30 flex flex-col"
+          onPointerMove={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0">
+            <div>
+              <h3 className="text-white/90 font-serif text-base leading-tight">{selectedClusterInfo.label}</h3>
+              <p className="text-white/30 text-[11px] mt-0.5 font-mono">{clusterBooks.length} books</p>
+            </div>
+            <button
+              onClick={() => setSelectedCluster(null)}
+              className="text-white/30 hover:text-white/60 text-lg leading-none transition-colors"
+              aria-label="Close cluster panel"
+            >
+              &times;
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-3 space-y-1.5 min-h-0">
+            {clusterBooks.map((book) => (
+              <a
+                key={book.id}
+                href={`/book/${book.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-2 rounded border border-white/5 hover:border-white/15 hover:bg-white/5 transition-colors"
+              >
+                <div className="text-white/80 text-[12px] font-serif leading-tight">{book.title}</div>
+                <div className="text-white/30 text-[11px] mt-0.5">
+                  {book.author !== 'Unknown' && book.author}
+                  {book.author !== 'Unknown' && book.year ? ' · ' : ''}
+                  {book.year || ''}
+                </div>
+                <div className="flex gap-1 mt-1">
+                  <span className="px-1 py-0.5 text-[9px] rounded bg-white/5 text-white/30">{book.language}</span>
+                  {book.keywords.slice(0, 2).map((kw) => (
+                    <span key={kw} className="px-1 py-0.5 text-[9px] rounded bg-white/5 text-white/25">{kw}</span>
+                  ))}
+                  {book.first_translation && (
+                    <span className="px-1 py-0.5 text-[9px] rounded bg-[#9e4a3a]/20 text-[#9e4a3a]">1st trans.</span>
+                  )}
+                </div>
+              </a>
+            ))}
+          </div>
+          <div className="p-3 border-t border-white/10 shrink-0">
+            <a
+              href={`/search?q=${encodeURIComponent(selectedClusterInfo.label)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/30 text-[11px] hover:text-white/50 transition-colors"
+            >
+              Search in library &rarr;
+            </a>
+          </div>
+        </div>
       )}
     </div>
   );
 }
 
-const INITIAL_PILLS = 30;
+// ────────────────────────────────────────────────────────────
+// Cluster Pills
+// ────────────────────────────────────────────────────────────
+
+const INITIAL_PILLS = 20;
 
 function ClusterPills({
   clusters,
@@ -664,43 +881,41 @@ function ClusterPills({
   const hasMore = sorted.length > INITIAL_PILLS;
 
   return (
-    <div className="flex flex-wrap gap-1.5 mt-3">
+    <div className="flex flex-wrap gap-1">
       <button
         onClick={onClear}
-        className={`px-2 py-0.5 rounded text-xs transition-colors ${
+        className={`px-2 py-0.5 rounded text-[10px] border transition-colors ${
           selectedCluster === null
-            ? 'bg-[var(--text-primary)] text-white'
-            : 'bg-[var(--bg-warm)] text-[var(--text-muted)] hover:bg-[var(--border-light)]'
+            ? 'bg-white/10 border-white/20 text-white/70'
+            : 'bg-transparent border-white/8 text-white/25 hover:text-white/40'
         }`}
       >
         All
       </button>
       {visible.map((cluster) => {
         const label =
-          cluster.label ||
-          cluster.label_keywords.slice(0, 2).join(', ') ||
-          `Cluster ${cluster.id}`;
+          cluster.label || cluster.label_keywords.slice(0, 2).join(', ') || `Cluster ${cluster.id}`;
         return (
           <button
             key={cluster.id}
             onClick={() => onSelect(cluster.id)}
-            className={`px-2 py-0.5 rounded text-xs transition-colors ${
+            className={`px-2 py-0.5 rounded text-[10px] border transition-colors ${
               selectedCluster === cluster.id
-                ? 'bg-[var(--accent-violet)] text-white'
-                : 'bg-[var(--bg-warm)] text-[var(--text-muted)] hover:bg-[var(--border-light)]'
+                ? 'bg-white/10 border-white/20 text-white/70'
+                : 'bg-transparent border-white/8 text-white/25 hover:text-white/40'
             }`}
           >
             {label}
-            <span className="ml-1 opacity-60">{cluster.size}</span>
+            <span className="ml-1 text-white/15 font-mono">{cluster.size}</span>
           </button>
         );
       })}
       {hasMore && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="px-2 py-0.5 rounded text-xs bg-[var(--bg-warm)] text-[var(--accent-violet)] hover:bg-[var(--border-light)] transition-colors"
+          className="px-2 py-0.5 rounded text-[10px] border border-white/8 text-white/25 hover:text-white/40 transition-colors"
         >
-          {expanded ? 'Show fewer' : `+${sorted.length - INITIAL_PILLS} more`}
+          {expanded ? 'fewer' : `+${sorted.length - INITIAL_PILLS}`}
         </button>
       )}
     </div>
