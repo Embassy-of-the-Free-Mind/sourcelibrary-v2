@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { perspectiveCorrect, needsCorrection } from '@/lib/perspective-correct';
-import { processFiles, sortByTimestamp } from '@/lib/scan/image-utils';
+import { generateThumbnail, processFiles, sortByTimestamp } from '@/lib/scan/image-utils';
 import type { ProcessedFile } from '@/lib/scan/image-utils';
 import ReviewGrid from '@/components/scan/ReviewGrid';
 
@@ -13,8 +13,9 @@ type Step =
   | 'title-page'
   | 'analyzing'
   | 'confirm'
-  | 'adding-pages'
+  | 'capture'
   | 'review'
+  | 'adding-pages'
   | 'uploading'
   | 'done';
 
@@ -56,9 +57,12 @@ export default function ScanPage() {
   const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0 });
   const [error, setError] = useState<string | null>(null);
   const [catalogMatches, setCatalogMatches] = useState<CatalogMatch[]>([]);
+  const [capturePreview, setCapturePreview] = useState<{ file: File; thumbnailUrl: string } | null>(null);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const pageInputRef = useRef<HTMLInputElement>(null);
+  const captureInputRef = useRef<HTMLInputElement>(null);
+  const thumbnailStripRef = useRef<HTMLDivElement>(null);
 
   // Warn before leaving with unuploaded files
   useEffect(() => {
@@ -76,6 +80,7 @@ export default function ScanPage() {
     return () => {
       pages.forEach(p => URL.revokeObjectURL(p.thumbnailUrl));
       if (correctedPreview) URL.revokeObjectURL(correctedPreview);
+      if (capturePreview) URL.revokeObjectURL(capturePreview.thumbnailUrl);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -154,7 +159,7 @@ export default function ScanPage() {
     }
   }, [correctImage]);
 
-  // Step 2: Confirm metadata and create book
+  // Step 2: Confirm metadata and create book (metadata only — no image upload)
   const handleConfirmAndCreate = useCallback(async () => {
     if (!metadata.title) return;
 
@@ -167,13 +172,7 @@ export default function ScanPage() {
       formData.append('author', metadata.author || 'Unknown');
       formData.append('language', metadata.language || 'Unknown');
       formData.append('published', metadata.year || 'Unknown');
-
-      if (titlePageFile) {
-        const imageToUpload = correctedBlob
-          ? new File([correctedBlob], 'title-page.jpg', { type: 'image/jpeg' })
-          : titlePageFile;
-        formData.append('titlePage', imageToUpload);
-      }
+      // No titlePage attachment — just metadata for fast create
 
       // Retry once on transient errors (cold-start MongoDB timeouts)
       let res = await fetch('/api/scan/create', { method: 'POST', body: formData });
@@ -189,7 +188,23 @@ export default function ScanPage() {
       const data = await res.json();
       setBookId(data.id);
       setBookSlug(data.slug);
-      setStep('adding-pages');
+
+      // Add title page as page 1 (will upload in batch later)
+      if (titlePageFile) {
+        const imageToUse = correctedBlob
+          ? new File([correctedBlob], 'title-page.jpg', { type: 'image/jpeg' })
+          : titlePageFile;
+        const thumbnailUrl = await generateThumbnail(imageToUse, 400);
+        setPages([{
+          id: crypto.randomUUID(),
+          file: imageToUse,
+          thumbnailUrl,
+          timestamp: new Date(),
+          quality: { blurScore: 100, brightnessScore: 128 },
+        }]);
+      }
+
+      setStep('capture');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create book');
     } finally {
