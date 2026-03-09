@@ -59,11 +59,16 @@ function SignInContent() {
     <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
       <div className="w-full max-w-md p-8 rounded-2xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
-            Source Library
+          <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
+            <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
+            <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
+          </svg>
+          <h1 className="text-2xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+            <span className="font-semibold">Source</span><span className="font-light">Library</span>
           </h1>
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Sign in for free to access the full collection
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            Five centuries of lost knowledge in alchemy, Hermetica, and natural philosophy — translated and freely accessible.
           </p>
         </div>
 
@@ -89,7 +94,7 @@ function SignInContent() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             required
-            className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-all"
+            className="w-full px-4 py-3 rounded-lg text-base outline-none transition-all"
             style={{
               background: 'var(--bg-warm)',
               color: 'var(--text-primary)',
