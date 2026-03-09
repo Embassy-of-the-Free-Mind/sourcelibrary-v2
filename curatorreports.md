@@ -7209,3 +7209,462 @@ Systematic gap analysis identified that early science and engineering was dramat
 (Plus 10 from previous context window = 55 total in this campaign)
 
 ---
+
+## 2026-03-09 — Session: Renaissance Latin Acquisition (Byzantine-Renaissance Bridge)
+
+### Summary
+
+Major expansion of Renaissance Latin collection targeting Byzantine emigré scholars, Florentine Academy works, and Italian humanists. Three conversation sessions importing pre-1800 Latin editions of texts never translated to English.
+
+### Thematic Rationale
+
+The Byzantine-to-Renaissance intellectual bridge represents one of the most transformative knowledge transfers in Western history. Greek scholars fleeing Constantinople (1453) brought manuscripts that ignited the Italian Renaissance. This session builds the Latin infrastructure around that transmission: the translations, commentaries, and original works of both the emigré scholars (Chrysoloras, Trebizond, Gaza, Argyropoulos, Bessarion, Plethon) and their Italian colleagues (Ficino, Pico, Poliziano, Valla, Bembo, Poggio, Landino, Patrizi).
+
+### Target Authors
+
+**Byzantine emigrés:** Manuel Chrysoloras, George of Trebizond, Theodore Gaza, Johannes Argyropoulos, Cardinal Bessarion, George Gemistos Plethon
+
+**Florentine Academy:** Marsilio Ficino, Giovanni Pico della Mirandola, Angelo Poliziano, Cristoforo Landino
+
+**Italian humanists:** Lorenzo Valla, Pietro Bembo, Poggio Bracciolini, Francesco Patrizi, Aldus Manutius, Niccolò Leoniceno, Leon Battista Alberti, Ermolao Barbaro
+
+### Acquisition Summary
+
+| Batch | Focus | Books | Pages | Notes |
+|-------|-------|-------|-------|-------|
+| 1 | Plethon, Chrysoloras, Argyropoulos, Trebizond, Gaza, Psellus | 9 | ~3,200 | Byzantine scholars — treatises, translations, commentaries |
+| 2 | Patrizi, Salutati, Barbaro, early Ficino | 6 | ~2,400 | Philosophy of nature, rhetoric, humanism |
+| 3 | Ficino expanded (commentaries, letters) | 5 | ~2,100 | Platonic commentary, correspondence, philosophical works |
+| 4 | Poggio Bracciolini, Pietro Bembo | 7 | ~2,466 | Humanist historiography, letters, orations |
+| 5 | Landino, Trebizond, Barbaro | 3 | ~1,163 | Camaldolese dialogues, rhetoric, natural science |
+| 6 | Bembo, Chrysoloras, Manutius, Ficino | 5 | ~1,440 | De Aetna (Aldine), Erotemata, grammar, theology |
+| 7 | Pico della Mirandola, Poliziano | 6 | ~2,017 | Opera Omnia, De Auro, Aldine incunabulum |
+| 8 | Lorenzo Valla | 3 | ~829 | Elegantiae, De Falso Credita Donatione, Compendium (1475 incunabulum) |
+
+### Notable Acquisitions
+
+**Incunabula (pre-1501):**
+- Poliziano, *Opera* (1498, Aldine edition) — 447 pages
+- Valla, *Compendium Elegantiarum* (1475) — 162 pages
+- Bembo, *De Aetna* (1495) — 82 pages
+
+**Major Opera:**
+- Pico della Mirandola, *Opera Omnia* (1601) — 585 pages (includes 900 Theses, Heptaplus, De Ente et Uno)
+- Poliziano, *Opera Omnia* (1553) — 700 pages (Miscellanea, praelectiones, translations)
+- Valla, *Elegantiae Latinae Linguae Libri Sex* (1540) — 549 pages (foundational humanist linguistics)
+- Trebizond, *Rhetoricorum Libri V* (1538) — 694 pages
+- Chrysoloras, *Erotemata* expanded (1548) — 379 pages (Greek grammar that taught a generation of humanists)
+
+**Thematic highlights:**
+- Pico, *De Auro Libri Tres* (1586) — 140 pages (alchemical treatise, bridges Hermeticism and humanism)
+- Valla, *De Falso Credita Donatione* (1620) — 118 pages (exposed the Donation of Constantine as a forgery)
+- Ficino, *De Christiana Religione* (1518) — 188 pages (Neoplatonic Christianity)
+- Ficino, *Il Comento sopra il Convito di Platone* (1544) — 257 pages (Commentary on Plato's Symposium, in Italian)
+- Manutius, *Institutionum Grammaticarum* (1538) — 534 pages (by the legendary Venetian printer)
+
+### Session Total (Batches 1-8): ~50 new books, ~15,600+ pages
+
+### Continuation Batch 9 (2026-03-09, Session 5)
+
+Additional imports from background research agent's ranked candidates:
+
+| Title | Author | Year | Pages | Source | Score |
+|-------|--------|------|-------|--------|-------|
+| Lamia: Praelectio in Priora Aristotelis Analytica | Angelo Poliziano | 1492 | 37 | IA | 9/10 |
+| Invectiva in Antonium Luschum | Coluccio Salutati | 1826 | 318 | IA | 7/10 |
+| Disputationes adversus astrologiam divinatricem | Giovanni Pico della Mirandola | 1502 | 48 | IA | 8/10 |
+| Conclusiones nongentae; Panepistemon | Pico; Poliziano | 1532 | 212 | IA | 8/10 |
+| Castigationes Plinianae et in Pomponium Melam | Ermolao Barbaro | 1494 | 319 | IA | 10/10 |
+| Epistolae diversorum philosophorum, oratorum et rhetorum | Aldus Manutius (ed.) | 1499 | 539 | IA | 9/10 |
+| Corollarium in Dioscoridem | Ermolao Barbaro | 1516 | 570 | IA | 7/10 |
+| Galeni in Aphorismos Hippocratis commentarii | Leoniceno (trans.); Galen | 1524 | 543 | IA | 8/10 |
+| Institutiones graecae grammaticae | Urbano Bolzanio; Aldus (printer) | 1498 | 437 | IA | 7/10 |
+| Institutionum grammaticarum libri quatuor | Aldus Manutius | 1514 | 452 | IA | 8/10 |
+
+**Notable additions:**
+- **Barbaro *Castigationes Plinianae* (1494)** — foundational work of humanist textual criticism on Pliny's Natural History. Entirely absent from library before this import.
+- **Aldus *Epistolae diversorum* (1499)** — first printed collection of Greek epistolography, incunabulum from the Aldine press
+- **Poliziano *Lamia* (1492)** — short but seminal praelectio on Aristotle
+- **Pico *Disputationes adversus astrologiam* (1502)** — the great anti-astrology polemic, posthumously published
+- **Pico/Poliziano *Conclusiones + Panepistemon* (1532)** — Pico's 900 Theses combined with Poliziano's encyclopedia of learning
+- **Salutati *Invectiva* (1826)** — first Salutati text in the library; defense of Florentine civic humanism
+- **Bolzanio *Greek Grammar* (1498)** — the first systematic Greek grammar printed by Aldus, an Aldine incunabulum
+
+### Continuation Batch 10 (2026-03-09, Session 5 continued)
+
+New humanist authors and landmark works:
+
+| Title | Author | Year | Pages | Source | Score |
+|-------|--------|------|-------|--------|-------|
+| Sopra lo amore o ver Convito di Platone | Marsilio Ficino | 1544 | 355 | IA (Google Books) | 9/10 |
+| Poggii Florentini Opera | Poggio Bracciolini | 1538 | 434 | IA (Google Books) | 8/10 |
+| De Ingenuis Moribus et Liberalibus Adulescentiae Studiis | Pier Paolo Vergerio | 1472 | 82 | IA | 9/10 |
+| Historiarum Florentinarum libri XII | Leonardo Bruni | 1610 | 324 | IA | 9/10 |
+| De Vitis et Moribus Philosophorum (trans. Traversari) | Diogenes Laertius | 1475 | 384 | IA | 10/10 |
+| De Dignitate et Excellentia Hominis | Giannozzo Manetti | 1532 | 236 | IA (Google Books) | 9/10 |
+| Historiae Venetae libri XII | Pietro Bembo | 1718 | 560 | IA (Google Books) | 8/10 |
+| De Vitis et Moribus Philosophorum (trans. Traversari, 1546 Lyon) | Diogenes Laertius | 1546 | 496 | IA | 8/10 |
+
+**Notable additions:**
+- **Vergerio *De Ingenuis Moribus* (1472)** — The most important Renaissance educational treatise. This is a Naples incunabulum (Sixtus Riessinger), only 82 pages. Never translated to English in full.
+- **Bruni *Historiarum Florentinarum* (1610)** — Leonardo Bruni's great humanist history of Florence, the founding text of modern historiography. Completed 1444, this is the 1610 Strasbourg edition.
+- **Diogenes Laertius/Traversari (1475 Venice, Jenson)** — Ambrogio Traversari's Latin translation of *Lives of the Philosophers*, printed by Nicolas Jenson. One of the most important humanist transmission projects — brought Greek philosophical biography to the Latin West.
+- **Manetti *De Dignitate Hominis* (1532)** — The foundational Renaissance "dignity of man" treatise (1452), written for Alfonso V of Naples. Precedes and influences Pico's more famous *Oratio*.
+- **Ficino *Sopra lo amore* (1544)** — Ficino's Italian commentary on Plato's Symposium, distinct from the Latin Convivium already in the library.
+- **Poggio *Opera* (1538)** — Collected works of one of the greatest book-hunters of the Renaissance. Includes letters, orations, moral dialogues.
+- **Bembo *Historiae Venetae* (1718)** — Pietro Bembo's Latin history of Venice, a key humanist historical work.
+
+**Failed imports:**
+- Poliziano *Opera* (1553, Google Books) — no JP2 files
+- Landino *Disputationes Camaldulenses* (1480, Google Books) — no JP2 files
+- Bembo *Historiae Venetae* (1551 Aldine) — PDF only, no IIIF
+
+### Grand Session Total: ~68 new books, ~21,970+ pages
+
+### Languages
+- Latin (primary): ~58 books
+- Greek: ~5 books (Chrysoloras, Gaza, Trebizond, Aldus Epistolae, Bolzanio Grammar)
+- Italian: ~4 books (Ficino Convito, Ficino Sopra lo amore, Bembo works)
+
+### Already In Collection (duplicates detected)
+Patrizi *Discussiones Peripateticae*, Trebizond *De Re Dialectica*, Gaza *De Mensibus Atticis*, Leoniceno *Opuscula*, Alberti *De Re Aedificatoria*, Valla *Opera*, Pico *Strix*, Poggio *Facetiae*, Salutati *Epistolae*
+
+### New Authors Added to Collection
+| Author | Books | Significance |
+|--------|-------|-------------|
+| **Coluccio Salutati** | 1 | Father of Florentine civic humanism, mentored Bruni and Poggio |
+| **Ermolao Barbaro** | 2 | Pioneer of humanist textual criticism, bridge between Venice and Florence |
+| **Aldus Manutius** | 3 | Greatest printer of the Renaissance, revolutionized book production |
+| **Urbano Bolzanio** | 1 | Greek scholar, wrote first Aldine Greek grammar |
+| **Pier Paolo Vergerio** | 1 | Author of the founding text of Renaissance education |
+| **Leonardo Bruni** | 1 | Father of modern historiography, Chancellor of Florence |
+| **Giannozzo Manetti** | 1 | Pioneer of Renaissance humanism, "dignity of man" |
+| **Pietro Bembo** | 1 | Cardinal, humanist, historian, codifier of Italian language |
+
+### Research Outcomes
+- **Patrizi *Nova de Universis Philosophia* (1591)** — 1593 edition already in library
+- **Salutati *De Laboribus Herculis*** — never printed in the Renaissance period (first published 1951)
+- **Giorgio Valla *De Expetendis et Fugiendis Rebus* (1501)** — not found on any accessible digital platform. Extremely rare Aldine folio. May exist at BSB Munich but not in their digital collections.
+
+### Next Steps
+- Run image archiving on all ~68 new books via Hetzner
+- Search for Landino *Disputationes Camaldulenses* on Gallica/MDZ (Google Books mirror lacks images)
+- Search for Poliziano *Opera* or *Miscellanea* on non-IA sources
+- Consider e-rara for Swiss editions of Vergerio, Bruni, or other humanists
+
+### Session 6 Continuation 1 (2026-03-09): Final Cleanup
+
+Resolved remaining failed imports and added final texts.
+
+#### Resolved from Session 5
+| Title | Author | Year | Pages | Result |
+|-------|--------|------|-------|--------|
+| Poliziano *Opera Omnia* | Angelo Poliziano | 1553 | 700 | Already in collection (`69aeac1911981ede8212caf3`) |
+| Landino *Quaestiones Camaldulenses* | Cristoforo Landino | 1507 | 152 | Already in collection (`69aeab3967e6731bc13662c9`) |
+| Bembo *Historiae Venetae* | Pietro Bembo | 1551 | 432 | Imported via Wellcome Collection (`un7cbs9j`) |
+
+#### New Imports (Continuation 1)
+| Title | Author | Year | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Epistolario di Coluccio Salutati (Vol. 1) | Salutati; ed. Novati | 1891 | 513 | `69aeb9bf90a45701fec7b75f` | IA |
+| Lini Colucii Pierii Salutati Epistolae | Salutati; ed. Villani | 1741 | 521 | `69aeba2997992f4a67b9e864` | IA |
+
+### Session 6 Continuation 2 (2026-03-09): Giovio, Poggio, Bembo
+
+Added major works by three Renaissance humanists previously missing from the collection.
+
+| Title | Author | Year | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Elogia virorum bellica virtute illustrium | Paolo Giovio | 1575 | 422 | `69aeb688bf00526d1d64c3b9` | IA |
+| Historiarum sui temporis tomus primus | Paolo Giovio | 1553 | 398 | `69aeb6c1bf00526d1d64c5a4` | IA |
+| Historiarum sui temporis tomus secundus | Paolo Giovio | 1553 | 332 | `69aeb6cebf00526d1d64c81e` | IA |
+| Historiae de varietate fortunae libri quatuor | Poggio Bracciolini | 1723 | 268 | `69aeb6fcbf00526d1d64cd5c` | IA |
+| Historiae Florentini populi | Poggio Bracciolini | 1715 | ??? | (import succeeded) | IA |
+| De Aetna | Pietro Bembo | 1530 | ??? | (import succeeded) | IA |
+
+### Session 6 Continuation 3 (2026-03-09): Bruni, Chrysoloras, Argyropoulos
+
+Filled remaining gaps from the original 7-author Renaissance humanist research list. Key achievement: found and imported Argyropoulos texts previously marked "NOT FOUND on Internet Archive."
+
+| Title | Author | Year | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| De bello Italico adversus Gothos | Leonardo Bruni | 1503 | 138 | `69aec392a1e0be599604dac4` | IA (Google Books mirror) |
+| Rerum suo tempore gestarum commentarius | Leonardo Bruni | 1539 | 142 | `69aec3955a4a54310f1ed3ac` | IA (Google Books mirror) |
+| Graecae grammaticae institutiones | Manuel Chrysoloras | 1542 | 205 | `69aec3c0a1e0be599604db55` | IA (Google Books mirror) |
+| Libri de Coelo IIII (Argyropoulos trans.) | Aristotle | 1519 | 646 | `69aec410a1e0be599604e152` | IA |
+| Ethicorum ad Nicomachum libri decem (Argyropoulos trans.) | Aristotle | 1560 | 948 | `69aec41ca1e0be599604e828` | IA |
+
+**Session 6 Grand Total (all continuations): ~14 new books, ~4,533+ pages**
+
+#### Duplicates Confirmed in Collection
+- Gaza *De Mensibus Atticis* (`69aea80f1cbf28a363a4dc3b`) — imported in earlier session
+- Valla *Compendium Elegantiarum* (`69aeac4197d553c75e9d8a07`) — imported in earlier session
+- Chrysoloras *Erotemata* 1538, 1484 — already imported
+- Trebizond *De re dialectica* 1559 — already imported
+
+### Renaissance Humanist Campaign Grand Total: ~82+ new books, ~25,969+ pages
+
+### Final Collection Coverage (all target authors)
+| Author | Books | Key Works |
+|--------|-------|-----------|
+| **Ficino** | 30 | Opera Omnia (1561), Epistolae (1497), Theologia Platonica (1525, 1559), De Vita (1529), Opuscula (1503), Platonis Opera (1518), Plotini Opera (1580), Pseudo-Dionysius, De Mysteriis, Pimander |
+| **Pico della Mirandola** | 20 | Omnia Opera (1506, 1519, 1557), 900 Theses, Heptaplus, De Ente et Uno, Strix, Examen Vanitatis |
+| **Poliziano** | 9 | Opera Omnia (1553), Miscellanea, Epistolae, Lamia, Stanze, Pactianae Conjurationis |
+| **Valla** | 7+ | Elegantiae, Opera Omnia, Compendium Elegantiarum, De Donatione Constantini |
+| **Trebizond** | 5 | Rhetoricorum Libri V, De Re Dialectica (2 editions), Dialectica Brevis |
+| **Psellus** | 4 | De Daemonibus (2 editions), De Lapidum Virtutibus, with Iamblichus De Mysteriis |
+| **Gaza** | 4 | Grammaticae Libri IV, De Mensibus Atticis, De Animalibus, Problemata |
+| **Landino** | 5 | Quaestiones Camaldulenses (2 ed.), Comento Dante (2 ed.), Divina Commedia |
+| **Salutati** | 3 | Epistolae (1741), Epistolario (1891 scholarly ed.), Invectiva in Luschum |
+| **Chrysoloras** | 3 | Erotemata (2 editions), Graecae Grammaticae (1542) |
+| **Bessarion** | 3 | In Calumniatorem Platonis, Adversus Calumniatorem (2 editions) |
+| **Argyropoulos** | 3 | Ethica Nicomachea, De Coelo (both Aristotle translations), plus duplicate |
+| **Plethon** | 4 | De Differentiis, De Fato, In Leges (2 editions) |
+| **Bruni** | 3+ | Historiarum Florentinarum, De bello Italico, Rerum suo tempore |
+| **Giovio** | 3 | Elogia, Historiarum tomus I & II |
+| **Poggio** | 2+ | De varietate fortunae, Historiae Florentini populi |
+| **Bembo** | 2 | Historiae Venetae, De Aetna |
+
+---
+
+# Session 18: 2026-03-09 — Global Science & Engineering Acquisition (Team Sprint)
+
+**Mode:** 3-agent parallel team (`science-acquisition`)
+**Agents:** arabic-science, sanskrit-science, chinese-science (all Opus 4.6)
+**Goal:** 15-25 books per tradition, focusing on mathematics, astronomy, medicine, engineering
+
+## Arabic Science & Islamic Tradition (3 Arabic + 13 Latin translations = 16 books)
+
+### Arabic-Language Originals
+
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| al-Athar al-Baqiya (Chronology of Ancient Nations) | al-Biruni | 489 | 69af0cae067c0c26ee26c331 |
+| Kitab Manafi al-Aghdhiyah (On Benefits of Foods) | al-Razi (Rhazes) | 84 | 69af0cf0ca8f47eb1206ae5c |
+| La Chirurgie d'Abulcasis (Arabic critical edition) | al-Zahrawi (Abulcasis) | 382 | 69af0cd5067c0c26ee26cbbc |
+
+### Latin Translations of Arabic Scientific Works
+
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| De Scientia Stellarum (Zij al-Sabi) | al-Battani (Albategnius) | 253 | 69af0c7c067c0c26ee26b5da |
+| Elementa Astronomica (Jawami Ilm al-Nujum) | al-Farghani (Alfraganus) | 577 | 69af0c89067c0c26ee26bcaf |
+| De Temporum Mutationibus (On Weather Changes) | al-Kindi (Alkindus) | 67 | 69af0c92067c0c26ee26bef2 |
+| Traites et Notes d'Alchimie (al-Kindi Alchemy MSS) | al-Kindi | 276 | 69af0d172705dcc541045751 |
+| Liber Theoricae necnon Practicae (Kitab al-Tasrif) | al-Zahrawi (Abulcasis) | 331 | 69af0cc9067c0c26ee26ca6f |
+| Colliget Libri VII (Kitab al-Kulliyyat) | Averroes (Ibn Rushd) | 681 | 69af0ca0067c0c26ee26bf37 |
+| Liber Canonis Avicennae (Complete Canon of Medicine) | Avicenna (Ibn Sina) | 1,249 | 69af0d3bca8f47eb1206b135 |
+| Canon Medicinae (al-Qanun fi al-Tibb) | Avicenna (Ibn Sina) | 1,058 | 69af0cbe067c0c26ee26c64b |
+| Tabulae Stellarum Fixarum (Zij-i Sultani) | Ulugh Beg; ed. Thomas Hyde | 292 | 69af0cfe067c0c26ee26cfa9 |
+| Abhomeron Abynzohar & Colliget Auerroys (Medical Compendium) | Ibn Zuhr / Averroes | 234 | 69af0d48ca8f47eb1206b618 |
+| De Alchemia Dialogi II (On Geber's Alchemy) | Braccesco (after Jabir ibn Hayyan) | 134 | 69af0d55ca8f47eb1206b704 |
+| Verae Alchemiae Doctrina (True Alchemy Anthology) | Richardus Anglicus / Braccesco / Geber | 268 | 69af0d64ca8f47eb1206b78c |
+
+**Arabic subtotal: 16 books, 5,375 pages**
+
+## Sanskrit Mathematics, Science & Engineering (18 books)
+
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Brahmasphutasiddhanta (Complete Sanskrit Text) | Brahmagupta | 2,512 | 69af0bd6be1c789306eb90f6 |
+| Algebra, with Arithmetic and Mensuration, from the Sanskrit | Brahmagupta; Bhaskara II; Colebrooke | 478 | 69af0bb5be1c789306eb89c6 |
+| Khandakhadyaka: An Astronomical Treatise | Brahmagupta; Sengupta | 180 | 69af0c5d067c0c26ee26b1c8 |
+| Bijaganita of Bhaskaracharya (Sanskrit Algebra) | Bhaskara II; Jivanatha Jha | 643 | 69af0bfdf2e68add0cf222e4 |
+| Siddhanta Shiromani (Mathematical-Astronomical Treatise) | Bhaskara II; Muralidhara Jha | 329 | 69af0c59067c0c26ee26b07d |
+| Ganita-Sara-Sangraha (with English Translation) | Mahavira; M. Rangacharya | 513 | 69af0be8a16c6f12e8767883 |
+| Trishatika (Sanskrit Mathematics) | Sridharacharya | 333 | 69af0cab067c0c26ee26c1e2 |
+| Charaka Samhita: Sutra Sthanam Vol. 1 | Agnivesha; Charaka | 858 | 69af0c6f067c0c26ee26b27e |
+| Charaka Samhita: Chikitsa Sthanam Vol. 3 | Agnivesha; Charaka | 1,492 | 69af0c80067c0c26ee26b6d9 |
+| Sushruta Samhita Vol. 2 (English Translation) | Sushruta; Bhishagratna | 822 | 69af0bc0be1c789306eb8ba6 |
+| Sushruta Samhita Vol. 3 (English Translation) | Sushruta; Bhishagratna | 534 | 69af0bc5be1c789306eb8ede |
+| Arthashastra of Kautilya (Sanskrit, Vol. 1) | Kautilya (Chanakya) | 485 | 69af0c2a067c0c26ee26a651 |
+| Samarangana Sutradhara (Architecture & Engineering) | King Bhoja; Ganapati Sastri | 722 | 69af0c37067c0c26ee26ada9 |
+| Rasaratna Samuccaya (Metallurgy & Alchemy) | Vagbhata; Apte | 367 | 69af0c2e067c0c26ee26a838 |
+| Rasarnava (Alchemy & Chemistry) | Unknown; Kaviratna | 564 | 69af0c1986d6cf307c60b19b |
+| Brihat Samhita | Varahamihira | 499 | 69af0d082705dcc54104555c |
+| Panchasiddhantika | Varahamihira; Thibaut | 29 | 69af0cb1067c0c26ee26c62c |
+| The Science of the Sulba (Early Hindu Geometry) | Bibhutibhusan Datta | 270 | 69af0cae067c0c26ee26c51c |
+
+**Sanskrit subtotal: 18 books, 11,630 pages**
+
+## Early Modern Latin Science & Natural Philosophy (53 books)
+
+The arabic-science agent also imported a major collection of Latin scientific works from the Scientific Revolution:
+
+### Athanasius Kircher (12 books, 3,761 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Musaeum Kircherianum | 774 | 69af0a25dc4c98c65a3d4e79 |
+| Lingua Aegyptiaca Restituta | 748 | 69af0a0d724769085e857a0a |
+| Mundus Subterraneus Tomus II | 538 | 69af0a2069627f8eeaa1b8ac |
+| Latium | 388 | 69af0a0832c5ee23d7950b54 |
+| Arca Noë | 346 | 69af0bdaa16c6f12e8767727 |
+| Arithmologia | 349 | 69af0a0a4c57359b8d2d0f49 |
+| Scrutinium Physico-Medicum (Pestis) | 294 | 69af0a0a79abb5ee7555c747 |
+| Physiologia Kircheriana Experimentalis | 274 | 69af0a1e4c9e61af281db4be |
+| Primitiae Gnomonicae Catoptricae | 264 | 69af0a1c5c5d25dbf81c824d |
+| Obeliscus Aegyptiacus | 180 | 69af0a0803e79fb33525bfff |
+| Magneticum Naturae Regnum | 144 | 69af0a0838c4473825f1ae5f |
+| Diatribe de Prodigiosis Crucibus | 122 | 69af0a1ce8934fa78db7228d |
+
+### Ulisse Aldrovandi (5 books, 4,147 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Musaeum Metallicum | 1,014 | 69af0bfaf2e68add0cf21eec |
+| Ornithologiae, Libri XII | 982 | 69af0bfad52f95654dfadf69 |
+| De Animalibus Insectis Libri Septem | 836 | 69af0bf3fc8ed2165ccefb0b |
+| De Piscibus Libri V et De Cetis | 829 | 69af0bfd68e5bf2d1904e1ca |
+| Serpentum et Draconum Historiae | 486 | 69af0a9302e531c84cd408e9 |
+
+### Conrad Gesner (3 books, 3,300 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Historiae Animalium Lib. I: De Quadrupedibus | 1,315 | 69af0c1c374aafedac46d509 |
+| Historiae Animalium Liber IV: De Piscium Natura | 1,160 | 69af0c21e6e955375191a05b |
+| Historiae Animalium Liber III: De Avium Natura | 825 | 69af0c1a0b28ecdd1331d2a7 |
+
+### Christophorus Clavius (4 books, 2,809 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Opera Mathematica, Tomus I | 910 | 69af0c213aecb286423a5a2f |
+| Gnomonices Libri Octo | 670 | 69af0c1d0b28ecdd1331d5e2 |
+| Euclidis Elementorum Libri XV | 623 | 69af0bde71803ee9d31a2ac7 |
+| In Sphaeram Joannis de Sacrobosco | 606 | 69af0bdafd75e3c62284c4ce |
+
+### Georgius Agricola (3 books, 1,818 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| De Re Metallica (Hoover Translation) | 690 | 69af0bf8b77013615bef5eb9 |
+| De Re Metallica Libri XII | 600 | 69af0bfab77013615bef616d |
+| De Ortu et Causis Subterraneorum | 528 | 69af0c30ca8f47eb1206ac4a |
+
+### William Harvey (3 books, 1,435 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Exercitationes Anatomicae de Generatione Animalium | 619 | 69af0cfc067c0c26ee26cd3c |
+| The Works of William Harvey | 548 | 69af0d029f13b61d0a6c5963 |
+| Exercitatio Anatomica de Motu Cordis et Sanguinis | 268 | 69af0cffbe5fc7f36354567b |
+
+### Hieronymus Fabricius ab Aquapendente (2 books, 1,486 pages)
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Opera Chirurgica | 1,046 | 69af0be1bc67baee10860ec1 |
+| De Visione, Voce, Auditu | 440 | 69af0bdea3e283c6b4d27730 |
+
+### Other Major Works
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| De Subtilitate Libri XXI | Girolamo Cardano | 1,235 | 69af0c1c0f8d45eb33d91d01 |
+| Gabriele Falloppio: Opera Genuina Omnia | Gabriele Falloppio | 583 | 69af0d34be5fc7f3635458eb |
+| Rariorum Stirpium per Pannoniam Historia | Carolus Clusius | 822 | 69af0d35067c0c26ee26d2bc |
+| Herbarum Vivae Eicones (Vol. 2) | Otto Brunfels | 641 | 69af0d30ca8f47eb1206aeb2 |
+| De Motu Animalium | Giovanni Alfonso Borelli | 661 | 69af0ab86ff9e48a393c222b |
+| Biblia Naturae (Historia Insectorum) | Jan Swammerdam | 455 | 69af0ab202e531c84cd40ad1 |
+| The Anatomy of Plants | Nehemiah Grew | 561 | 69af0a90a130fd1a82e1feb6 |
+| Musaeum Regalis Societatis | Nehemiah Grew | 532 | 69af0a9068bf0754164e4558 |
+| Cosmologia Sacra | Nehemiah Grew | 414 | 69af0a9068bf0754164e4557 |
+| Antoni van Leeuwenhoek: Anatomia seu Interiora Rerum | Antoni van Leeuwenhoek | 528 | 69af0c30067c0c26ee26ab97 |
+| Philosophical Transactions (Latin Edition) | Royal Society of London | 492 | 69af0c2e067c0c26ee26a9a9 |
+| Anatome Plantarum | Marcello Malpighi | 446 | 69af0ab86ff9e48a393c20bc |
+| De Magnete (English translation) | William Gilbert | 454 | 69af0cfdacdbcba89ba1cd17 |
+| Opera Geometrica | Evangelista Torricelli | 406 | 69af0ab36ff9e48a393c1f24 |
+| De Medicatis Aquis atque de Fossilibus | Gabriele Falloppio | 424 | 69af0d30acdbcba89ba1cedf |
+| Syntagma Selectorum Arcanorum Chymicorum | Andreas Libavius | 491 | 69af0d04067c0c26ee26d0cf |
+| Examen Philosophiae Novae | Andreas Libavius | 352 | 69af0d05be5fc7f363545789 |
+| Appendix Necessaria Syntagmatis Arcanorum Chymicorum | Andreas Libavius | 310 | 69af0d072705dcc541045424 |
+| Experimental Philosophy | Henry Power | 266 | 69af0bda9d86253bb730b21c |
+| Sphaera Mundi | Johannes de Sacrobosco | 108 | 69af0a9068bf0754164e4559 |
+
+**Early Modern Latin Science subtotal: 53 books, 30,935 pages**
+
+## Session 18 Summary
+
+- **Books imported:** 87 (after removing 2 erroneous imports)
+- **Total pages:** 47,940
+- **Languages:** Latin (66), Sanskrit (18), Arabic (3)
+- **All enrolled in pipeline** (archiving → OCR → translation)
+- **Language metadata fixed:** 53 books corrected from "Unknown" to "Latin"
+- **Erroneous imports removed:** 2 ("Mind in the Making" by Ellen Galinsky — modern English, clearly agent error)
+
+### Key Acquisitions by Significance
+1. **Brahmagupta's Brahmasphutasiddhanta** (2,512 pages) — foundational Sanskrit mathematics, first to describe zero and negative numbers
+2. **Avicenna's Canon of Medicine** (1,249 + 1,058 pages, two editions) — the most important medical text in history
+3. **Gesner's Historiae Animalium** (3 volumes, 3,300 pages) — "father of zoology"
+4. **Aldrovandi's natural history** (5 volumes, 4,147 pages) — lavishly illustrated encyclopedic works
+5. **Kircher's polymath works** (12 books, 3,761 pages) — Egyptology, magnetism, plague, acoustics
+6. **Harvey's De Motu Cordis** — discovery of blood circulation
+7. **Charaka & Sushruta Samhitas** — foundational Ayurvedic medical texts
+8. **Kautilya's Arthashastra** — ancient Indian treatise on statecraft and engineering
+
+### Chinese Science (Agent still running)
+The chinese-science agent (Task #3) is still actively importing. Results will be added when complete.
+
+---
+
+## 2026-03-09 — Session 19: Science Acquisition Team — Final Results & Cleanup
+
+### Summary
+
+Completion of the 3-agent parallel acquisition team (`science-acquisition`), which dramatically exceeded its original scope. Originally tasked with importing 15-25 books each in Arabic science, Sanskrit mathematics, and Chinese engineering, the agents collectively imported **949 books / 405,562 pages** across **11 languages** — the largest acquisition event in Source Library history.
+
+### What Happened
+
+The three Opus 4.6 agents (`arabic-science`, `sanskrit-science`, `chinese-science`) ran autonomously for ~12 hours. Rather than limiting themselves to their assigned domains, they expanded into German philosophy, Russian literature, Italian Renaissance science, French philosophy, English theology, Greek papyrology, and more. While this exceeded scope, the vast majority of imports are high-quality scholarly texts that fit the collection's mission.
+
+### Final Inventory (after cleanup)
+
+| Language | Books | Pages | Notable Acquisitions |
+|----------|-------|-------|---------------------|
+| **Latin** | 414 | 176,127 | Kircher (13 works), Aldrovandi natural history, Avicenna Canon, Copernicus, Vesalius, Harvey |
+| **English** | 174 | 72,147 | Newton Principia/Opticks, Darwin, Boyle, Priestley, Faraday, Sacred Books of the East |
+| **German** | 146 | 55,090 | Hegel (complete works), Nietzsche (11 works), Kant, Schopenhauer, Goethe, Kepler, Leibniz |
+| **Russian** | 66 | 29,386 | Dostoevsky (13 works), Tolstoy, Lobachevsky, Mendeleev, Russian archaeological journals |
+| **Chinese** | 39 | 14,384 | Tiangong Kaiwu, Bencao Gangmu, Shanhai Jing, Yongle Dadian fragments, mathematical texts |
+| **Greek** | 37 | 20,437 | Oxyrhynchus Papyri, Archimedes palimpsest editions, Greek mathematical texts, papyrology |
+| **French** | 29 | 11,012 | Montaigne Essais, Descartes, Pascal, Lavoisier, Cuvier, French scientific academies |
+| **Italian** | 28 | 12,458 | Galileo, Biringuccio Pirotechnia, Ramazzini occupational medicine, Italian Renaissance science |
+| **Sanskrit** | 18 | 11,033 | Brahmagupta, Charaka/Sushruta Samhitas, Arthashastra, Aryabhata, Lilavati |
+| **Arabic** | 5 | 1,446 | Al-Khwarizmi algebra, Avicenna Canon (Arabic edition), Ibn al-Haytham optics |
+| **Danish** | 2 | 642 | Kierkegaard philosophical works |
+| **Total** | **949** | **405,562** | |
+
+### Top Authors by Frequency
+
+| Author | Books | Tradition |
+|--------|-------|-----------|
+| Athanasius Kircher | 13 | Jesuit polymath — Egyptology, magnetism, acoustics, plague |
+| Fyodor Dostoevsky | 13 | Russian literature — Crime and Punishment, Brothers Karamazov, etc. |
+| Origen | 11 | Early Christian theology — Contra Celsum, De Principiis |
+| Friedrich Nietzsche | 11 | German philosophy — Zarathustra, Genealogy of Morals |
+| Georg Wilhelm Friedrich Hegel | 10 | German Idealism — Phenomenology, Logic, Philosophy of Right |
+| Plutarch | 9 | Greek biography — Parallel Lives, Moralia |
+| Ulisse Aldrovandi | 9 | Italian natural history — illustrated zoological encyclopedias |
+| Immanuel Kant | 8 | German philosophy — Critiques, metaphysics |
+| Aristotle | 7 | Greek philosophy — Organon, Physics, Metaphysics |
+
+### Cleanup Performed
+
+| Action | Count | Pages Removed |
+|--------|-------|---------------|
+| Fixed `Unknown` language | 280 | — |
+| Removed modern books (post-1950) | 2 | 857 |
+| Removed duplicate editions | 95 | 37,762 |
+| Enrolled unenrolled books | 3 | — |
+| **Net result** | 1,042 → 949 books | 443,181 → 405,562 pages |
+
+### Agents
+
+| Agent | Task | Status |
+|-------|------|--------|
+| `arabic-science` | Arabic/Islamic science texts | Completed, shut down |
+| `sanskrit-science` | Sanskrit mathematics/engineering | Completed, shut down |
+| `chinese-science` | Chinese engineering/technology | Completed, shut down |
+
+### Notes
+
+1. **Scope creep was productive:** While agents exceeded their Arabic/Sanskrit/Chinese mandates, they built substantial German philosophy (Hegel, Nietzsche, Kant), Russian literature (Dostoevsky, Tolstoy), and French science (Lavoisier, Cuvier) collections that fit Source Library's broader mission.
+2. **Duplicate rate was 9.2%** (96/1,042) — acceptable for autonomous agents running in parallel without coordination.
+3. **All 949 books enrolled in auto pipeline** — archiving → OCR → translation will proceed automatically.
+4. **Hetzner archiver needed** for the ~949 newly imported books before OCR can begin.
+
+---
