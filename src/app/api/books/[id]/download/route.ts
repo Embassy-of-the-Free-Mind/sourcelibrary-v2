@@ -1438,13 +1438,19 @@ async function generateDesignedCover(
 
   if (sourceImage) {
     // === WITH ILLUSTRATION BACKGROUND ===
-    // Calculate vertical positions from the bottom up
-    const bottomPad = 110;
-    const yearY = year ? H - bottomPad : 0;
-    const authorY = year ? yearY - 50 : H - bottomPad;
-    const titleBlockHeight = titleLines.length * lineHeight;
-    const titleStartY = authorY - 50 - titleBlockHeight;
-    const bottomGradStart = Math.min(titleStartY - 250, H * 0.45);
+    // Solid dark panel at bottom for text, illustration fills the top.
+    // Gradient transition between illustration and panel.
+    const textBlockHeight = titleLines.length * lineHeight + 130;
+    const panelHeight = textBlockHeight + 100;
+    const gradientHeight = 150;
+    const panelTop = H - panelHeight;
+    const gradientTop = panelTop - gradientHeight;
+
+    // Text positions within the panel
+    const accentLineY = panelTop + 40;
+    const titleStartY = accentLineY + 50;
+    const authorY = titleStartY + titleLines.length * lineHeight + 20;
+    const yearY = authorY + 45;
 
     const titleTextEls = titleLines.map((line, i) =>
       `<text x="${W / 2}" y="${titleStartY + i * lineHeight}" text-anchor="middle"
@@ -1455,25 +1461,23 @@ async function generateDesignedCover(
     const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#000" stop-opacity="0.6"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0" stop-color="#1a1612" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#1a1612" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#000" stop-opacity="0"/>
-      <stop offset="0.25" stop-color="#000" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.88"/>
+      <stop offset="0" stop-color="#1a1612" stop-opacity="0"/>
+      <stop offset="1" stop-color="#1a1612" stop-opacity="1"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="${W}" height="480" fill="url(#tg)"/>
-  <rect x="0" y="${bottomGradStart}" width="${W}" height="${H - bottomGradStart}" fill="url(#bg)"/>
-  <text x="${W / 2}" y="90" text-anchor="middle"
+  <rect x="0" y="0" width="${W}" height="360" fill="url(#tg)"/>
+  <rect x="0" y="${gradientTop}" width="${W}" height="${gradientHeight}" fill="url(#bg)"/>
+  <rect x="0" y="${panelTop}" width="${W}" height="${panelHeight}" fill="#1a1612"/>
+  <text x="${W / 2}" y="70" text-anchor="middle"
     font-family="Georgia, serif" font-size="24" fill="#c9a86c"
-    letter-spacing="8">SOURCE LIBRARY</text>
-  <line x1="${W / 2 - 70}" y1="110" x2="${W / 2 + 70}" y2="110"
-    stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.5"/>
+    letter-spacing="8" opacity="0.9">SOURCE LIBRARY</text>
+  <line x1="${W / 2 - 60}" y1="${accentLineY}" x2="${W / 2 + 60}" y2="${accentLineY}"
+    stroke="#c9a86c" stroke-width="1" stroke-opacity="0.5"/>
   ${titleTextEls}
-  <line x1="${W / 2 - 100}" y1="${authorY - 25}" x2="${W / 2 + 100}" y2="${authorY - 25}"
-    stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.4"/>
   <text x="${W / 2}" y="${authorY}" text-anchor="middle"
     font-family="Georgia, serif" font-size="28" fill="#c9a86c">${esc(author)}</text>
   ${year ? `<text x="${W / 2}" y="${yearY}" text-anchor="middle"
@@ -1482,7 +1486,7 @@ async function generateDesignedCover(
 </svg>`;
 
     const base = await sharp(sourceImage)
-      .resize(W, H, { fit: 'cover', position: 'centre' })
+      .resize(W, H, { fit: 'cover', position: 'north' })
       .toBuffer();
 
     return sharp(base)
