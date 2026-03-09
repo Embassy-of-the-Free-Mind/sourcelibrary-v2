@@ -5,10 +5,10 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Can AI Read Cuneiform? - Blog - Source Library',
-  description: 'We ran six experiments testing Gemini on 107 cuneiform tablets — the oldest writing system on Earth. A contamination test proves genuine visual analysis, model comparison shows 2.5 Pro doubles accuracy, and edge detection can rescue unreadable photographs.',
+  description: 'We ran eight experiments testing Gemini and Claude on 107 cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling, a contamination test proves genuine visual analysis, and temperature tuning reveals opposite preferences across model families.',
   openGraph: {
     title: 'Can AI Read Cuneiform?',
-    description: 'We tested Gemini 3 Flash on cuneiform tablets — the oldest writing system on Earth. The results were surprising.',
+    description: 'Eight experiments testing Gemini and Claude on cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
   },
   alternates: {
@@ -22,9 +22,9 @@ export default function CuneiformOcrPage() {
       header={
         <ContentHeader
           title="Can AI Read Cuneiform?"
-          subtitle="Testing Gemini on the oldest writing system on Earth"
+          subtitle="Testing Gemini and Claude on the oldest writing system on Earth"
         >
-          <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 30 min read</p>
+          <p className="text-stone-400 text-sm mt-4">9 March 2026 &middot; 35 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -100,7 +100,7 @@ export default function CuneiformOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We ran six experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better. <strong>Experiment 6</strong> tested edge detection, raking light simulation, multi-pass prompting, and thinking models.
+          We ran eight experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better. <strong>Experiment 6</strong> tested edge detection, raking light simulation, multi-pass prompting, and thinking models. <strong>Experiment 7</strong> brought in Claude to test whether the ~15% F1 ceiling was Gemini-specific. <strong>Experiment 8</strong> discovered that temperature settings were confounding all prior results.
         </p>
 
         {/* --- How to Read Cuneiform --- */}
@@ -1649,13 +1649,297 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           The optimal pipeline is now clear: <strong>crop to face, apply Sobel edge detection if the raw crop fails, use the best available model (Gemini 2.5 Pro), single-pass prompt.</strong> Everything else is wasted effort until models improve their cuneiform sign recognition.
         </p>
 
+        <p className="text-secondary leading-relaxed mb-8">
+          But we had only tested Gemini models. What about Claude?
+        </p>
+
+        {/* --- Experiment 7: Cross-Vendor --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Experiment 7: Claude vs. Gemini
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Experiments 1&ndash;6 used only Gemini models. To test whether the ~15% F1 ceiling was Gemini-specific or a general limitation of current vision models, we tested Anthropic&apos;s Claude Opus 4.6 and Claude Sonnet 4.6 on the same P250675 tablet photograph. Each condition was run 3 times to measure variance.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Condition</th>
+                <th className="text-right py-3 pr-4 font-semibold">Signs</th>
+                <th className="text-right py-3 pr-4 font-semibold">F1</th>
+                <th className="text-right py-3 pr-4 font-semibold">Prec.</th>
+                <th className="text-right py-3 pr-4 font-semibold">Std Dev</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Claude Opus 4.6, raw photo</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">52</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">16.4%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">41.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">&plusmn;2.1%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Claude Opus 4.6, Sobel</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">29</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">13.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">55.9%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">&plusmn;1.8%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Claude Sonnet 4.6, raw photo</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">18</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">5.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">32.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">&plusmn;1.8%</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 2.5 Pro, raw photo</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">&mdash;</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Pro, raw photo</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">&mdash;</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Flash, Sobel</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">25</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">4.6%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">21.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">&plusmn;2.7%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Claude Opus matched the best Gemini result</strong> at 16.4% F1 on the raw photograph &mdash; the same level as Gemini 2.5 Pro in Experiment 4. But the Gemini models showed unexpected failures: Pro 2.5 produced <em>empty output</em> despite spending 8,000 thinking tokens, and Pro 3 entered an infinite repetition loop, outputting the same sign 400+ times. Only Flash 3 with Sobel edge detection produced usable output among the Gemini models.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Opus also identified 17 of 27 unique sign types in the ground truth (MA, NA, E, LA, BA, UR, KI, GA, DA, LUGAL, AN, UD, UM, LIL, GI, RA, MU) and correctly inferred the tablet&apos;s genre (administrative), period (Ur III), and institutional context (real estate sale with witnesses). It reported 0.25 confidence &mdash; a realistic self-assessment compared to Gemini 3 Flash&apos;s 0.95 confidence on worse results.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The precision pattern was particularly striking. Opus with Sobel edge detection achieved <strong>55.9% precision</strong> &mdash; the highest of any condition across all experiments. More than half of the signs it identified were correct. But like every other condition, recall remained low (6.3%) because the model identified far fewer signs than exist on the tablet.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Gemini failures were puzzling. Pro 2.5 had been our best performer in Experiment 4, and Pro 3 had produced results (if hallucinated) in Experiment 6. Both were now failing completely. This suggested a parameter issue rather than a model capability problem.
+        </p>
+
+        {/* --- Experiment 8: Temperature --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Experiment 8: Temperature
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Gemini failures in Experiment 7 led us to check the temperature parameter. We discovered that all Gemini experiments (1&ndash;7) had been run at <code className="text-sm bg-warm px-1.5 py-0.5 rounded">temperature: 0.1</code> &mdash; very low, pushing the model toward deterministic output. Claude, meanwhile, had been using its API default of <code className="text-sm bg-warm px-1.5 py-0.5 rounded">temperature: 1.0</code> (no explicit setting).
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Low temperature makes sense for tasks with clear right answers (code, math, factual recall). But cuneiform sign identification from photographs is inherently uncertain &mdash; the model needs room to explore multiple possible readings. At t=0.1, thinking models may get locked into repetition loops or exhaust their output budget on deliberation.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We re-ran each model at t=0.5 and t=1.0 on the same P250675 raw photograph.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Condition</th>
+                <th className="text-right py-3 pr-4 font-semibold">Temp</th>
+                <th className="text-right py-3 pr-4 font-semibold">Signs</th>
+                <th className="text-right py-3 pr-4 font-semibold">F1</th>
+                <th className="text-right py-3 pr-4 font-semibold">Prec.</th>
+                <th className="text-right py-3 pr-4 font-semibold">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">Claude Opus 4.6</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">0.3</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">58</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">18.8%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">43.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">22s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Claude Opus 4.6</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">1.0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">49</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">15.6%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">40.8%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">19s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 2.5 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.1</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">&mdash;</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">&mdash;</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 2.5 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.5</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">&mdash;</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">69s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 2.5 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">1.0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">17</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">7.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">47.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">53s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.1</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">&mdash;</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm text-muted">&mdash;</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.5</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">22</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">4.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">22.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">60s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Pro</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">1.0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">43</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">3.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">9.3%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">71s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Flash</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.5</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">40</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">0.0%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">84s</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">Gemini 3 Flash</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">1.0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">28</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">8.5%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">35.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">45s</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Temperature had a dramatic effect:
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>1. Claude Opus at t=0.3 set a new high-water mark: 18.8% F1.</strong> Lower temperature improved accuracy for Claude, likely because the task benefits from more deterministic sign identification once the model has genuine visual signal. The 43.1% precision means nearly half of all identified signs were correct.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>2. Higher temperature rescued the Gemini thinking models.</strong> Pro 2.5, which produced empty output at t=0.1 and t=0.5, finally generated 17 signs at t=1.0 &mdash; with 47.1% precision, its highest ever. Pro 3 broke out of its repetition loop and produced usable (if inaccurate) output. Flash 3 went from 0% F1 at t=0.5 to 8.5% at t=1.0.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>3. The Gemini failures in earlier experiments were partly a temperature artifact.</strong> When Gemini 2.5 Pro achieved 15.2% F1 in Experiment 4, it was likely a different API version or deployment &mdash; the same model ID at t=0.1 now produces nothing. This suggests that the Experiment 4 results, while real, may not be reproducible with the current API. Temperature sensitivity is a confound that affects all historical comparisons.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>4. Claude and Gemini have opposite temperature preferences.</strong> Claude improved from 15.6% to 18.8% as temperature dropped from 1.0 to 0.3. Gemini improved from 0% to 7&ndash;8% as temperature rose from 0.1 to 1.0. This may reflect architectural differences: Claude is a non-thinking model that benefits from deterministic output on tasks where it has signal, while Gemini&apos;s thinking models need randomness to escape deliberation traps on uncertain tasks.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Updated leaderboard
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Combining results across all eight experiments:
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-secondary text-base">
+            <thead>
+              <tr className="border-b border-medium">
+                <th className="text-left py-3 pr-4 font-semibold">Rank</th>
+                <th className="text-left py-3 pr-4 font-semibold">Condition</th>
+                <th className="text-right py-3 pr-4 font-semibold">F1</th>
+                <th className="text-right py-3 pr-4 font-semibold">Prec.</th>
+                <th className="text-left py-3 pr-4 font-semibold">Experiment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light bg-accent-sage/5">
+                <td className="py-3 pr-4 font-semibold">1</td>
+                <td className="py-3 pr-4 font-semibold">Claude Opus 4.6, raw, t=0.3</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm font-semibold">18.8%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">43.1%</td>
+                <td className="py-3 pr-4">Exp 8</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">2</td>
+                <td className="py-3 pr-4">Claude Opus 4.6, raw, t=1.0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">16.4%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">41.2%</td>
+                <td className="py-3 pr-4">Exp 7</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">3</td>
+                <td className="py-3 pr-4">Gemini 2.5 Pro, raw, t=0.1</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">15.2%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">45.2%</td>
+                <td className="py-3 pr-4">Exp 6</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">4</td>
+                <td className="py-3 pr-4">Gemini 2.5 Pro, Sobel, t=0.1</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">15.1%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">43.2%</td>
+                <td className="py-3 pr-4">Exp 6</td>
+              </tr>
+              <tr className="border-b border-light">
+                <td className="py-3 pr-4">5</td>
+                <td className="py-3 pr-4">Claude Opus 4.6, Sobel, t=1.0</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">13.7%</td>
+                <td className="py-3 pr-4 text-right font-mono text-sm">55.9%</td>
+                <td className="py-3 pr-4">Exp 7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Claude Opus 4.6 at t=0.3 is the new overall best at 18.8% F1 &mdash; breaking through the ~15% ceiling that had held across all six Gemini-only experiments. The top 5 all cluster between 13&ndash;19% F1, with precision consistently between 41&ndash;56%. The highest-precision condition remains Opus with Sobel (55.9%), meaning more than half of identified signs are correct, but recall stays stubbornly low.
+        </p>
+
         {/* --- Conclusion --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Conclusion
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and six experiments, Gemini correctly identifies the Code of Hammurabi, detects a Neo-Babylonian forgery from its script style, produces excellent scholarly commentary, and &mdash; crucially &mdash; performs genuine visual analysis that is independent of its training data. It is not reading from memory.
+          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and eight experiments spanning two model families, these models correctly identify the Code of Hammurabi, detect a Neo-Babylonian forgery from its script style, produce excellent scholarly commentary, and &mdash; crucially &mdash; perform genuine visual analysis that is independent of their training data. They are not reading from memory.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1663,11 +1947,15 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model has cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But it has <em>some</em> cuneiform vision, and that vision is genuine. Experiments 4&ndash;6 systematically tested what helps: better models double accuracy (Experiment 4), image cropping matters for high-resolution photographs (Experiment 5), and Sobel edge detection can rescue otherwise-unreadable crops (Experiment 6). Multi-pass prompting, thinking tokens, multi-image input, sign reference charts, and raking light simulations all failed to move the needle. The ~15% F1 ceiling is consistent across all approaches &mdash; the bottleneck is the model&apos;s cuneiform sign recognition capability, not image quality, prompting, or compute.
+          The models have cuneiform <em>knowledge</em> without reliable cuneiform <em>vision</em>. But they have <em>some</em> cuneiform vision, and that vision is genuine. Experiments 4&ndash;6 systematically tested what helps: better models double accuracy (Experiment 4), image cropping matters for high-resolution photographs (Experiment 5), and Sobel edge detection can rescue otherwise-unreadable crops (Experiment 6). Multi-pass prompting, thinking tokens, multi-image input, sign reference charts, and raking light simulations all failed to move the needle. Experiments 7&ndash;8 brought in Claude Opus and discovered that temperature settings are a critical confound: Claude Opus at t=0.3 broke through the ~15% F1 ceiling to reach 18.8%, while Gemini thinking models need higher temperature (t=1.0) to avoid repetition loops and empty output.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. The optimal processing pipeline is established: crop to face, apply Sobel edge detection as a fallback, use the most capable available model, single pass. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
+          The best result so far &mdash; 18.8% F1 with 43% precision &mdash; means that when the model identifies a sign, it is correct nearly half the time. But it only identifies a small fraction of the signs on the tablet. The bottleneck is not image quality, prompting, or compute: it is the model&apos;s ability to reliably distinguish individual cuneiform wedge patterns.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. The optimal processing pipeline is established: crop to face, apply Sobel edge detection as a fallback, use the most capable available model (currently Claude Opus 4.6 at t=0.3), single pass. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -1677,7 +1965,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Experiment 6: 13 image processing conditions (Sobel edge detection, pseudo-heightmap, raking light simulation, edge overlay, multi-image input, sign reference chart) using Gemini 2.5 Pro on P250675 obverse crop; 8 multi-pass prompting conditions (single-pass vs. 3-pass survey/identify/review) across Gemini 2.0 Flash, 2.5 Pro, and 3 Flash Preview (thinking model). Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
+          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Experiment 6: 13 image processing conditions (Sobel edge detection, pseudo-heightmap, raking light simulation, edge overlay, multi-image input, sign reference chart) using Gemini 2.5 Pro on P250675 obverse crop; 8 multi-pass prompting conditions (single-pass vs. 3-pass survey/identify/review) across Gemini 2.0 Flash, 2.5 Pro, and 3 Flash Preview (thinking model). Experiment 7: cross-vendor comparison using Claude Opus 4.6, Claude Sonnet 4.6 (Anthropic Messages API, anthropic-version 2023-06-01) and Gemini 2.5 Pro, 3 Pro, 3 Flash (Gemini REST API) on P250675 obverse raw photograph; 3 trials per condition, standard deviation reported; Opus additionally tested with Sobel edge detection. Experiment 8: temperature sweep &mdash; Claude Opus at t=0.3 and t=1.0; Gemini 2.5 Pro, 3 Pro, and 3 Flash each at t=0.1, t=0.5, and t=1.0; single trial per condition on P250675 raw photograph. Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
         </p>
       </article>
 
