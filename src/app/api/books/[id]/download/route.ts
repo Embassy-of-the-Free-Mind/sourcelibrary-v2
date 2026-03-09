@@ -157,8 +157,14 @@ function markdownToHtml(text: string): string {
   html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
   html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
   html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
+  // Strip <insert> tags (keep content) and <column-break/> markers
+  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
+  html = html.replace(/<column-break\s*\/?>/gi, '');
+  // Strip ->...<- centering markers (OCR convention for centered text)
+  html = html.replace(/->/g, '').replace(/<-/g, '');
   // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|page-num|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords)>[\s\S]*?<\/(?:lang|page-num|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords)>/gi, '');
+  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
+  html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
 
   // Escape HTML entities
   html = html
@@ -1417,7 +1423,7 @@ async function generateScholarlyEpubDownload(
 
   // Query gallery illustrations for inline embedding
   const galleryImages = await db.collection('gallery_images')
-    .find({ book_id: book.id, gallery_quality: { $gte: 0.5 } })
+    .find({ book_id: book.id, gallery_quality: { $gte: 0.7 }, type: { $nin: ['decorative'] } })
     .sort({ page_number: 1, detection_index: 1 })
     .toArray();
 
