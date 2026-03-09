@@ -158,25 +158,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Books
     const books = await db.collection('books').find(
       { hidden: { $ne: true } },
-      { projection: { id: 1, slug: 1, updated_at: 1, pages_count: 1, pages_translated: 1 } }
+      { projection: { id: 1, slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 } }
     ).toArray();
 
-    const bookPages: MetadataRoute.Sitemap = books.map((book) => {
-      let lastModified: Date;
-      try {
-        lastModified = book.updated_at ? new Date(book.updated_at) : new Date();
-        if (isNaN(lastModified.getTime())) lastModified = new Date();
-      } catch {
-        lastModified = new Date();
-      }
+    const bookPages: MetadataRoute.Sitemap = books
+      // Exclude books with no OCR — no meaningful content for search engines
+      .filter((book) => book.pages_ocr > 0)
+      .map((book) => {
+        let lastModified: Date;
+        try {
+          lastModified = book.updated_at ? new Date(book.updated_at) : new Date();
+          if (isNaN(lastModified.getTime())) lastModified = new Date();
+        } catch {
+          lastModified = new Date();
+        }
 
-      return {
-        url: `${baseUrl}/book/${book.slug || book.id}`,
-        lastModified,
-        changeFrequency: 'weekly' as const,
-        priority: book.pages_translated > 0 ? 0.9 : 0.6,
-      };
-    });
+        // Tiered priority based on content completeness and value
+        let priority = 0.5;
+        if (book.pages_translated > 0) priority = 0.7;
+        if (book.is_first_translation) priority = 0.85;
+        if (book.read_count >= 10) priority = Math.max(priority, 0.85);
+        if (book.is_first_translation && book.pages_translated > 0) priority = 0.9;
+
+        return {
+          url: `${baseUrl}/book/${book.slug || book.id}`,
+          lastModified,
+          changeFrequency: 'weekly' as const,
+          priority,
+        };
+      });
 
     // Encyclopedia entities — only substantial entries to focus crawl budget
     const entities = await db.collection('entities').find(
