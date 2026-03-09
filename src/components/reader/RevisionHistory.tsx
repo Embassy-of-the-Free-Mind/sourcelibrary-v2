@@ -1,13 +1,16 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { History, RotateCcw, X, ChevronDown } from 'lucide-react';
+import { History, RotateCcw, X, ChevronDown, Pencil } from 'lucide-react';
 import type { PageRevision } from '@/lib/page-revisions';
 
 interface RevisionHistoryProps {
   pageId: string;
   field: 'ocr' | 'translation';
   currentSource?: string;
+  editedBy?: string;
+  editedAt?: Date | string;
+  model?: string;
 }
 
 function formatDate(date: string | Date) {
@@ -46,7 +49,7 @@ function SourceBadge({ source }: { source: string }) {
   );
 }
 
-export default function RevisionHistory({ pageId, field, currentSource }: RevisionHistoryProps) {
+export default function RevisionHistory({ pageId, field, currentSource, editedBy, editedAt, model }: RevisionHistoryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [revisions, setRevisions] = useState<PageRevision[]>([]);
   const [total, setTotal] = useState(0);
@@ -103,12 +106,31 @@ export default function RevisionHistory({ pageId, field, currentSource }: Revisi
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors hover:bg-stone-100"
+        className="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-medium transition-colors hover:bg-stone-100"
         style={{ color: 'var(--text-muted)' }}
-        title={`${field === 'ocr' ? 'OCR' : 'Translation'} revision history`}
+        title={`${field === 'ocr' ? 'OCR' : 'Translation'} source & revision history`}
       >
-        <History className="w-3 h-3" />
-        History
+        {currentSource === 'manual' || currentSource === 'contributor' ? (
+          <>
+            <Pencil className="w-3 h-3" style={{ color: currentSource === 'contributor' ? 'var(--accent-gold-dark)' : 'var(--accent-sage)' }} />
+            <span style={{ color: currentSource === 'contributor' ? 'var(--accent-gold-dark)' : 'var(--accent-sage)' }}>
+              {editedBy || (currentSource === 'contributor' ? 'Contrib' : 'Edited')}
+            </span>
+            {editedAt && (
+              <span style={{ color: 'var(--text-faint)' }}>{formatDate(editedAt)}</span>
+            )}
+          </>
+        ) : (
+          <>
+            <SourceBadge source={currentSource || 'ai'} />
+            {model && (
+              <span style={{ color: 'var(--text-faint)' }}>
+                {model.replace('gemini-', '').replace('-preview', '')}
+              </span>
+            )}
+          </>
+        )}
+        <History className="w-3 h-3" style={{ color: 'var(--text-faint)' }} />
       </button>
 
       {isOpen && (

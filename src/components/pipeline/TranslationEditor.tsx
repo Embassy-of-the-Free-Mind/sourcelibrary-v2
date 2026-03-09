@@ -52,39 +52,7 @@ function hasNonLatinScript(language?: string): boolean {
 }
 
 // Helper to format edit source info
-function EditSourceBadge({ source, editedBy, editedAt }: {
-  source?: ContentSource;
-  editedBy?: string;
-  editedAt?: Date | string;
-}) {
-  if (!source) return null;
-
-  const isManual = source === 'manual';
-  const dateStr = editedAt ? new Date(editedAt).toLocaleDateString() : '';
-
-  if (isManual) {
-    return (
-      <span
-        className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium"
-        style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}
-        title={`Edited by ${editedBy || 'unknown'}${dateStr ? ` on ${dateStr}` : ''}`}
-      >
-        <Pencil className="w-2.5 h-2.5" />
-        Edited{editedBy ? ` by ${editedBy}` : ''}
-      </span>
-    );
-  }
-
-  return (
-    <span
-      className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium"
-      style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}
-      title="AI-generated content"
-    >
-      AI
-    </span>
-  );
-}
+// EditSourceBadge removed — source info folded into RevisionHistory trigger
 
 // Inline book search bar for the page reader footer
 function BookSearchBar({ bookId }: { bookId: string }) {
@@ -1117,14 +1085,14 @@ export default function TranslationEditor({
                       )}
                     </div>
                     {ocrText && (
-                      <>
-                        <EditSourceBadge
-                          source={page.ocr?.source}
-                          editedBy={page.ocr?.edited_by}
-                          editedAt={page.ocr?.edited_at}
-                        />
-                        <RevisionHistory pageId={page.id} field="ocr" currentSource={page.ocr?.source} />
-                      </>
+                      <RevisionHistory
+                        pageId={page.id}
+                        field="ocr"
+                        currentSource={page.ocr?.source}
+                        editedBy={page.ocr?.edited_by}
+                        editedAt={page.ocr?.edited_at}
+                        model={page.ocr?.model}
+                      />
                     )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
@@ -1255,14 +1223,14 @@ export default function TranslationEditor({
                         </span>
                       )}
                       {translationText && (
-                        <>
-                          <EditSourceBadge
-                            source={page.translation?.source}
-                            editedBy={page.translation?.edited_by}
-                            editedAt={page.translation?.edited_at}
-                          />
-                          <RevisionHistory pageId={page.id} field="translation" currentSource={page.translation?.source} />
-                        </>
+                        <RevisionHistory
+                          pageId={page.id}
+                          field="translation"
+                          currentSource={page.translation?.source}
+                          editedBy={page.translation?.edited_by}
+                          editedAt={page.translation?.edited_at}
+                          model={page.translation?.model}
+                        />
                       )}
                     </div>
                     {translationText && (
