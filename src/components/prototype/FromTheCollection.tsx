@@ -35,7 +35,7 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
           From the Collection
         </h2>
         <p className="text-muted mb-10 max-w-2xl">
-          Illustrations from rare books in the library &middot; Different every visit
+          Illustrations from rare books in the library
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
