@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogComments from '@/components/blog/BlogComments';
-import ConceptGraph from './ConceptGraph';
 import InputWidget from '@/components/InputWidget';
+import ConceptGraph from './ConceptGraph';
 
 export const metadata: Metadata = {
   title: '2,000 Books Never Read in English — Source Library',
