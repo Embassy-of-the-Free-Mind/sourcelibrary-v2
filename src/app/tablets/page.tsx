@@ -21,6 +21,7 @@ interface BBox {
 interface PhotoBounds {
   layout: string;
   surfaces: { label: string; bbox: BBox }[];
+  imageAspect: number; // width / height of the original photo
 }
 
 interface Tablet {
@@ -261,14 +262,44 @@ export default function TabletsPage() {
                 </div>
               )}
 
-              {/* Surface transliterations */}
+              {/* Surface transliterations with cropped photos */}
               {sections.length > 0 ? (
                 <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
-                  {sections.map((section, si) => (
-                    <div key={si} className="px-5 py-3">
-                      <SurfaceLines section={section} />
-                    </div>
-                  ))}
+                  {sections.map((section, si) => {
+                    const bounds = tablet.photoBounds?.surfaces.find(
+                      (s) => s.label.toLowerCase() === section.surface.toLowerCase()
+                    );
+                    const aspect = tablet.photoBounds?.imageAspect;
+                    return (
+                      <div key={si} className="flex gap-4 px-5 py-3">
+                        {bounds && aspect ? (
+                          <div
+                            className="shrink-0 overflow-hidden rounded shadow-sm"
+                            style={{
+                              width: '120px',
+                              aspectRatio: `${bounds.bbox.w * aspect} / ${bounds.bbox.h}`,
+                            }}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={tablet.photoUrl}
+                              alt={`${tablet.designation} ${section.surface}`}
+                              loading="lazy"
+                              style={{
+                                display: 'block',
+                                width: `${(1 / bounds.bbox.w) * 100}%`,
+                                maxWidth: 'none',
+                                transform: `translate(${-bounds.bbox.x * 100}%, ${-bounds.bbox.y * 100}%)`,
+                              }}
+                            />
+                          </div>
+                        ) : null}
+                        <div className="min-w-0 flex-1">
+                          <SurfaceLines section={section} />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="p-4">
