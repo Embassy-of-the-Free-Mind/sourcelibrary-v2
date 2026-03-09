@@ -24,12 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!titlePageFile || !titlePageFile.type.startsWith('image/')) {
-      return NextResponse.json(
-        { error: 'Title page image required' },
-        { status: 400 }
-      );
-    }
+    const hasTitlePage = titlePageFile && titlePageFile.type?.startsWith('image/');
 
     const db = await getDb();
     const bookId = new ObjectId();
@@ -59,29 +54,34 @@ export async function POST(request: NextRequest) {
 
     await db.collection('books').insertOne(bookDoc);
 
-    // Upload title page as page 1
-    const bytes = await titlePageFile.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const filename = `${new ObjectId().toHexString()}.jpg`;
+    let pagesAffected = 0;
 
-    const result = await processImageUpload({
-      buffer,
-      filename,
-      contentType: titlePageFile.type,
-      bookId: bookIdStr,
-      nextPageNumber: 1,
-      db,
-    });
+    // Upload title page as page 1 (if provided)
+    if (hasTitlePage) {
+      const bytes = await titlePageFile.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const filename = `${new ObjectId().toHexString()}.jpg`;
 
-    await db.collection('pages').insertMany(result.pages);
-    await updateBookAfterUpload(db, bookIdStr);
+      const result = await processImageUpload({
+        buffer,
+        filename,
+        contentType: titlePageFile.type,
+        bookId: bookIdStr,
+        nextPageNumber: 1,
+        db,
+      });
+
+      await db.collection('pages').insertMany(result.pages);
+      await updateBookAfterUpload(db, bookIdStr);
+      pagesAffected = result.pages.length;
+    }
 
     // Audit log (non-blocking)
     logAuditEvent({
       action: 'book_imported',
       book_id: bookIdStr,
       book_title: title,
-      pages_affected: result.pages.length,
+      pages_affected: pagesAffected,
       metadata: { source: 'mobile_scan' },
     });
 

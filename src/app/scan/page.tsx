@@ -7,7 +7,9 @@ import type { ProcessedFile } from '@/lib/scan/image-utils';
 import ReviewGrid from '@/components/scan/ReviewGrid';
 
 type Step =
-  | 'onboarding'
+  | 'onboarding-1'
+  | 'onboarding-2'
+  | 'onboarding-3'
   | 'title-page'
   | 'analyzing'
   | 'confirm'
@@ -29,7 +31,7 @@ type Corners = [number, number][];
 const BATCH_SIZE = 5;
 
 export default function ScanPage() {
-  const [step, setStep] = useState<Step>('onboarding');
+  const [step, setStep] = useState<Step>('onboarding-1');
   const [titlePageFile, setTitlePageFile] = useState<File | null>(null);
   const [correctedBlob, setCorrectedBlob] = useState<Blob | null>(null);
   const [correctedPreview, setCorrectedPreview] = useState<string | null>(null);
@@ -143,7 +145,7 @@ export default function ScanPage() {
 
   // Step 2: Confirm metadata and create book
   const handleConfirmAndCreate = useCallback(async () => {
-    if (!metadata.title || !titlePageFile) return;
+    if (!metadata.title) return;
 
     setCreating(true);
     setError(null);
@@ -155,10 +157,12 @@ export default function ScanPage() {
       formData.append('language', metadata.language || 'Unknown');
       formData.append('published', metadata.year || 'Unknown');
 
-      const imageToUpload = correctedBlob
-        ? new File([correctedBlob], 'title-page.jpg', { type: 'image/jpeg' })
-        : titlePageFile;
-      formData.append('titlePage', imageToUpload);
+      if (titlePageFile) {
+        const imageToUpload = correctedBlob
+          ? new File([correctedBlob], 'title-page.jpg', { type: 'image/jpeg' })
+          : titlePageFile;
+        formData.append('titlePage', imageToUpload);
+      }
 
       const res = await fetch('/api/scan/create', { method: 'POST', body: formData });
       if (!res.ok) {
@@ -261,7 +265,7 @@ export default function ScanPage() {
     pages.forEach(p => URL.revokeObjectURL(p.thumbnailUrl));
     if (correctedPreview) URL.revokeObjectURL(correctedPreview);
 
-    setStep('onboarding');
+    setStep('onboarding-1');
     setTitlePageFile(null);
     setCorrectedBlob(null);
     setCorrectedPreview(null);
@@ -274,7 +278,7 @@ export default function ScanPage() {
     if (titleInputRef.current) titleInputRef.current.value = '';
   }, [pages, correctedPreview]);
 
-  const totalPageCount = pages.length + 1; // +1 for title page
+  const totalPageCount = pages.length + (titlePageFile ? 1 : 0);
 
   return (
     <div className="min-h-[100dvh] bg-cream flex flex-col">
@@ -294,66 +298,134 @@ export default function ScanPage() {
             </div>
           )}
 
-          {/* Step 0: Onboarding */}
-          {step === 'onboarding' && (
-            <div className="space-y-8 max-w-md mx-auto">
-              <div className="text-center">
-                <h1 className="font-serif text-2xl text-primary mb-2">Scan a Book</h1>
-                <p className="text-muted text-sm">
-                  Digitize a rare book using your phone&apos;s camera
-                </p>
+          {/* Onboarding walkthrough (3 pages) */}
+          {(step === 'onboarding-1' || step === 'onboarding-2' || step === 'onboarding-3') && (
+            <div className="max-w-md mx-auto flex flex-col min-h-[70dvh]">
+              {/* Skip link */}
+              <div className="text-right mb-4">
+                <button
+                  onClick={() => setStep('title-page')}
+                  className="text-muted text-sm hover:text-secondary"
+                >
+                  Skip
+                </button>
               </div>
 
-              {/* How it works */}
-              <div className="space-y-4">
-                <h2 className="text-xs font-medium text-muted uppercase tracking-wider">How it works</h2>
-                <div className="space-y-3">
-                  <StepPreview
-                    number="1"
-                    title="Photograph the title page"
-                    description="AI extracts the title, author, and language"
-                  />
-                  <StepPreview
-                    number="2"
-                    title="Photograph each page"
-                    description="Use your native camera app, then select all photos at once"
-                  />
-                  <StepPreview
-                    number="3"
-                    title="Review and upload"
-                    description="Reorder if needed, then upload. AI handles OCR and translation."
-                  />
+              <div className="flex-1 flex flex-col justify-center">
+                {step === 'onboarding-1' && (
+                  <div className="text-center space-y-6">
+                    <div className="w-20 h-20 mx-auto rounded-2xl bg-accent-rust/10 flex items-center justify-center">
+                      <svg className="w-10 h-10 text-accent-rust" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h1 className="font-serif text-3xl text-primary mb-3">Scan a Book</h1>
+                      <p className="text-secondary text-base leading-relaxed">
+                        Digitize a rare book using your phone&apos;s camera.
+                        AI will handle the OCR and translation automatically.
+                      </p>
+                    </div>
+                    <div className="bg-warm rounded-xl p-5 text-left space-y-4">
+                      <StepPreview
+                        number="1"
+                        title="Photograph the title page"
+                        description="AI extracts the title, author, and language"
+                      />
+                      <StepPreview
+                        number="2"
+                        title="Photograph each page"
+                        description="Use your camera app, then select all photos at once"
+                      />
+                      <StepPreview
+                        number="3"
+                        title="Review and upload"
+                        description="Check order, remove bad shots, then upload"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {step === 'onboarding-2' && (
+                  <div className="text-center space-y-6">
+                    <div className="w-20 h-20 mx-auto rounded-2xl bg-accent-sage/15 flex items-center justify-center">
+                      <svg className="w-10 h-10 text-accent-sage-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h1 className="font-serif text-3xl text-primary mb-3">Getting Good Scans</h1>
+                      <p className="text-secondary text-base leading-relaxed">
+                        A few simple habits make a big difference in OCR quality.
+                      </p>
+                    </div>
+                    <div className="bg-warm rounded-xl p-5 text-left space-y-4">
+                      <Tip icon="sun" text="Good, even lighting — natural daylight is best" />
+                      <Tip icon="check" text="Shoot straight down, parallel to the page" />
+                      <Tip icon="check" text="Flatten the book and hold the spine open" />
+                      <Tip icon="check" text="Keep all text in frame with a small margin" />
+                      <Tip icon="check" text="One page per photo — not two-page spreads" />
+                    </div>
+                  </div>
+                )}
+
+                {step === 'onboarding-3' && (
+                  <div className="text-center space-y-6">
+                    <div className="w-20 h-20 mx-auto rounded-2xl bg-status-error/10 flex items-center justify-center">
+                      <svg className="w-10 h-10 text-status-error" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h1 className="font-serif text-3xl text-primary mb-3">Common Mistakes</h1>
+                      <p className="text-secondary text-base leading-relaxed">
+                        These will cause the AI to misread or skip text.
+                      </p>
+                    </div>
+                    <div className="bg-status-error/5 border border-status-error/15 rounded-xl p-5 text-left space-y-4">
+                      <Mistake text="Shadows across the page — blocks of text become unreadable" />
+                      <Mistake text="Angled photos — perspective warps the text" />
+                      <Mistake text="Curved pages near the spine — text bends and blurs" />
+                      <Mistake text="Fingers covering text — hold from the very edges" />
+                      <Mistake text="Blurry photos — tap to focus before each shot" />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Navigation */}
+              <div className="pt-8 space-y-3">
+                {/* Dots */}
+                <div className="flex justify-center gap-2">
+                  {(['onboarding-1', 'onboarding-2', 'onboarding-3'] as const).map(s => (
+                    <div
+                      key={s}
+                      className={`w-2 h-2 rounded-full transition-colors ${step === s ? 'bg-accent-rust' : 'bg-border-medium'}`}
+                    />
+                  ))}
                 </div>
-              </div>
 
-              {/* Tips */}
-              <div className="space-y-3">
-                <h2 className="text-xs font-medium text-muted uppercase tracking-wider">Tips for best results</h2>
-                <div className="bg-warm rounded-xl p-4 space-y-3 text-sm text-secondary">
-                  <Tip text="Use good, even lighting — avoid harsh shadows across the page" />
-                  <Tip text="Shoot straight down, keeping the camera parallel to the page" />
-                  <Tip text="Flatten the book as much as possible — hold the spine open" />
-                  <Tip text="Make sure all text is in frame, with a small margin around edges" />
-                  <Tip text="One page per photo — avoid capturing two-page spreads" />
-                </div>
+                <button
+                  onClick={() => {
+                    if (step === 'onboarding-1') setStep('onboarding-2');
+                    else if (step === 'onboarding-2') setStep('onboarding-3');
+                    else setStep('title-page');
+                  }}
+                  className="w-full py-3.5 bg-accent-rust text-white rounded-lg font-medium text-base"
+                >
+                  {step === 'onboarding-3' ? 'Start Scanning' : 'Next'}
+                </button>
               </div>
-
-              <button
-                onClick={() => setStep('title-page')}
-                className="w-full py-3.5 bg-accent-rust text-white rounded-lg font-medium text-sm"
-              >
-                Start Scanning
-              </button>
             </div>
           )}
 
-          {/* Step 1: Capture title page */}
+          {/* Step 1: Capture title page or enter manually */}
           {step === 'title-page' && (
             <div className="text-center space-y-6 max-w-md mx-auto">
               <div>
                 <h1 className="font-serif text-2xl text-primary mb-2">Title Page</h1>
                 <p className="text-muted text-sm">
-                  Photograph the title page — the AI will extract the book&apos;s metadata
+                  Photograph the title page for AI metadata extraction, or enter details manually
                 </p>
               </div>
 
@@ -367,7 +439,7 @@ export default function ScanPage() {
                       </svg>
                     </div>
                     <p className="text-secondary font-medium">Tap to photograph title page</p>
-                    <p className="text-muted text-xs">Or choose from camera roll</p>
+                    <p className="text-muted text-xs">AI will extract title, author, and language</p>
                   </div>
                 </div>
                 <input
@@ -379,6 +451,19 @@ export default function ScanPage() {
                   onChange={handleTitleCapture}
                 />
               </label>
+
+              <div className="flex items-center gap-3">
+                <div className="flex-1 border-t border-border-light" />
+                <span className="text-muted text-xs">or</span>
+                <div className="flex-1 border-t border-border-light" />
+              </div>
+
+              <button
+                onClick={() => setStep('confirm')}
+                className="w-full py-3 border border-border-medium rounded-lg text-secondary font-medium text-sm hover:border-accent-rust/40 transition-colors"
+              >
+                Enter details manually
+              </button>
             </div>
           )}
 
@@ -441,11 +526,12 @@ export default function ScanPage() {
                     setCorrectedBlob(null);
                     if (correctedPreview) URL.revokeObjectURL(correctedPreview);
                     setCorrectedPreview(null);
+                    setMetadata({ title: '', author: '', language: '', year: '', ocr_text: '' });
                     if (titleInputRef.current) titleInputRef.current.value = '';
                   }}
                   className="flex-1 py-3 border border-border-medium rounded-lg text-secondary text-sm font-medium"
                 >
-                  Retake
+                  {titlePageFile ? 'Retake' : 'Back'}
                 </button>
                 <button
                   onClick={handleConfirmAndCreate}
@@ -637,11 +723,28 @@ function StepPreview({ number, title, description }: {
   );
 }
 
-function Tip({ text }: { text: string }) {
+function Tip({ text, icon }: { text: string; icon?: 'check' | 'sun' }) {
   return (
     <div className="flex gap-2.5 items-start">
-      <svg className="w-4 h-4 text-accent-sage-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+      {icon === 'sun' ? (
+        <svg className="w-4 h-4 text-accent-gold-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+      ) : (
+        <svg className="w-4 h-4 text-accent-sage-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      )}
+      <p>{text}</p>
+    </div>
+  );
+}
+
+function Mistake({ text }: { text: string }) {
+  return (
+    <div className="flex gap-2.5 items-start">
+      <svg className="w-4 h-4 text-status-error shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
       <p>{text}</p>
     </div>
