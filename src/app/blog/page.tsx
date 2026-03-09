@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'autonomous-agents',
+    title: 'How Three AI Agents Built a Library in 12 Hours',
+    subtitle: 'We gave three Claude agents a task: import 50 books on Arabic science, Sanskrit mathematics, and Chinese engineering. They imported 949. Here is how autonomous AI curation works — and what happens when agents exceed their instructions.',
+    date: '9 March 2026',
+    readTime: '14 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+    imageAlt: 'Page from a 16th-century manuscript showing mechanical diagrams',
+  },
+  {
     slug: 'progress-studies',
     title: 'The Missing Library: What Progress Studies Can\'t Read',
     subtitle: 'Progress studies asks why innovation happens — but most primary sources from before 1750 have never been in English. 5,000 books contain the pre-industrial origins of experimental science, hidden inside alchemy, natural magic, and mystical philosophy.',
