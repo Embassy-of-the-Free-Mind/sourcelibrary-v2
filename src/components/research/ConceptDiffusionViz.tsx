@@ -30,13 +30,19 @@ const LINE_COLORS = [
   '#5a8e8b',
 ];
 
-// Group colors
-const GROUP_COLORS: Record<string, string> = {
-  'Alchemical Processes': 'var(--accent-rust)',
-  'Alchemical Goals': 'var(--accent-gold-dark)',
-  'Esoteric Traditions': 'var(--accent-violet)',
-  'Natural Philosophy': 'var(--accent-sage)',
-};
+// Auto-assigned category colors (cycling palette for dynamic groups)
+const CATEGORY_COLORS = [
+  'var(--accent-rust)',
+  'var(--accent-violet)',
+  'var(--accent-sage)',
+  '#4a90d9',
+  'var(--accent-gold-dark)',
+  '#c4564c',
+  '#6b8e5a',
+  '#8b6db5',
+  '#b5856d',
+  '#5a8e8b',
+];
 
 interface TooltipData {
   x: number;
@@ -50,18 +56,44 @@ export default function ConceptDiffusionViz({
   data,
   totals,
   groups,
+  defaultSelected,
 }: {
   data: ConceptPeriod[];
   totals: PeriodTotal[];
   groups: Record<string, string[]>;
+  defaultSelected?: string[];
 }) {
-  const [selected, setSelected] = useState<string[]>(["Philosopher's Stone", 'Transmutation', 'Distillation', 'Natural Magic']);
+  const [selected, setSelected] = useState<string[]>(defaultSelected || []);
   const [normalized, setNormalized] = useState(true);
   const [filled, setFilled] = useState(false);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
+  const [search, setSearch] = useState('');
   const svgRef = useRef<SVGSVGElement>(null);
 
   const allConcepts = useMemo(() => Object.values(groups).flat(), [groups]);
+
+  // Auto-assign colors to category groups
+  const groupColorMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    Object.keys(groups).forEach((name, i) => {
+      map[name] = CATEGORY_COLORS[i % CATEGORY_COLORS.length];
+    });
+    return map;
+  }, [groups]);
+
+  // Filter groups by search query
+  const filteredGroups = useMemo(() => {
+    if (!search) return groups;
+    const q = search.toLowerCase();
+    const result: Record<string, string[]> = {};
+    for (const [name, concepts] of Object.entries(groups)) {
+      const matches = concepts.filter((c) => c.toLowerCase().includes(q));
+      if (matches.length > 0 || name.toLowerCase().includes(q)) {
+        result[name] = matches.length > 0 ? matches : concepts;
+      }
+    }
+    return result;
+  }, [groups, search]);
 
   // Toggle a concept
   const toggle = useCallback(
@@ -186,6 +218,13 @@ export default function ConceptDiffusionViz({
     <div>
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-4 mb-4">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Filter concepts..."
+          className="px-3 py-1 text-sm border border-[var(--border-light)] rounded-lg bg-white w-48"
+        />
         <label className="flex items-center gap-2 text-sm cursor-pointer">
           <input
             type="checkbox"
@@ -216,12 +255,12 @@ export default function ConceptDiffusionViz({
 
       {/* Concept groups */}
       <div className="space-y-2 mb-4">
-        {Object.entries(groups).map(([groupName, concepts]) => (
+        {Object.entries(filteredGroups).map(([groupName, concepts]) => (
           <div key={groupName} className="flex flex-wrap items-center gap-1.5">
             <button
               onClick={() => selectGroup(concepts)}
               className="text-xs font-medium px-2 py-0.5 rounded"
-              style={{ color: GROUP_COLORS[groupName] || 'var(--text-secondary)' }}
+              style={{ color: groupColorMap[groupName] || 'var(--text-secondary)' }}
             >
               {groupName}:
             </button>
