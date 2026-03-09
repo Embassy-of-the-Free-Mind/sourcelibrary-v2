@@ -78,6 +78,9 @@ export default function SchemaOrgMetadata({
       genre: book.categories,
       about: book.categories.map(c => ({ '@type': 'Thing', name: c })),
     }),
+    copyrightNotice: `Public domain. Original published ${book.published || 'before 1900'}.`,
+    acquireLicensePage: `${baseUrl}/book/${bookPath}`,
+    creditText: book.image_source?.attribution || `Digitized by ${book.image_source?.provider_name || 'Internet Archive'}`,
   };
 
   // Extract translator info from edition contributors or default to AI

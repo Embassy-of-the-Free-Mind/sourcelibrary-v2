@@ -554,6 +554,11 @@ async function BookInfo({ id }: { id: string }) {
 
   const { book, pages, totalBooks, galleryImageCount } = data;
 
+  // Empty shell books (0 pages from failed imports) should 404
+  if (!book.pages_count || book.pages_count === 0) {
+    notFound();
+  }
+
   // Content gating handled client-side by useBetaGate hook in BookPagesSection
   // Featured books bypass the gate; others show email modal on page click
 

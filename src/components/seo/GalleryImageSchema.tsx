@@ -81,9 +81,9 @@ export default function GalleryImageSchema({
     }),
     ...(book?.published && { dateCreated: book.published }),
     ...(license && { license: getLicenseUrl(license) }),
-    ...(book?.image_source?.attribution && {
-      creditText: book.image_source.attribution,
-    }),
+    creditText: book?.image_source?.attribution || `Digitized by ${book?.image_source?.provider || 'Internet Archive'}`,
+    copyrightNotice: `Public domain. Original published ${book?.published || 'before 1900'}.`,
+    acquireLicensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
     isPartOf: {
       '@type': 'Book',
       '@id': book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
