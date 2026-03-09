@@ -1570,13 +1570,14 @@ async function generateScholarlyEpubDownload(
   const titlePageNumbers = new Set(
     pages.filter(p => (p as any).page_type === 'title-page').map(p => p.page_number)
   );
-  // Filter to substantive illustrations (not decorative initials, not on title pages)
+  // Filter to substantive illustrations (not decorative initials/headpieces, not on title pages)
   const coverCandidates = galleryImages.filter((i: any) =>
-    !['decorative', 'diagram'].includes(i.type) && !titlePageNumbers.has(i.page_number)
+    !['decorative', 'diagram', 'woodcut'].includes(i.type) && !titlePageNumbers.has(i.page_number)
+      && (i.gallery_quality || 0) >= 0.7
   );
   const sortedCandidates = [...coverCandidates].sort((a: any, b: any) => (b.gallery_quality || 0) - (a.gallery_quality || 0));
   const coverGalleryImage = coverCandidates.find((i: any) => i.type === 'frontispiece')
-    || coverCandidates.find((i: any) => ['engraving', 'emblem', 'woodcut', 'portrait'].includes(i.type))
+    || sortedCandidates.find((i: any) => ['engraving', 'emblem', 'portrait'].includes(i.type))
     || sortedCandidates[0]
     || null;
 
