@@ -24,7 +24,7 @@ export default function FirstTranslationMethodologyPage() {
           title="How We Identify First Translations"
           subtitle="The methodology behind Source Library's classification system"
         >
-          <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 8 March 2026 &middot; 18 min read</p>
+          <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 9 March 2026 &middot; 18 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -43,7 +43,7 @@ export default function FirstTranslationMethodologyPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library has identified nearly 2,000 books that appear to be first-ever English translations &mdash; over 900 of which are now fully translated. This is a strong claim, and it deserves a transparent explanation of how we arrive at it. This post describes the methodology &mdash; the AI classification system, the multi-stage verification pipeline, the confidence levels, and the known limitations.
+          Source Library has identified nearly 2,500 books that appear to be first-ever English translations &mdash; over 1,200 of which are now fully translated. This is a strong claim, and it deserves a transparent explanation of how we arrive at it. This post describes the methodology &mdash; the AI classification system, the multi-stage verification pipeline, the confidence levels, and the known limitations.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -188,7 +188,7 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For each of the 4,229 non-English books in the library, the verification model searches multiple catalog APIs and databases for English-language editions of the same work:
+          For each of the 4,300 non-English books in the library, the verification model searches multiple catalog APIs and databases for English-language editions of the same work:
         </p>
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
@@ -374,7 +374,7 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          As of March 2026, the enrichment system has classified every non-English book in the collection, and the tool-calling verification pipeline has processed virtually all 4,229 non-English books. The initial AI classification identified roughly 1,000 first translations. The tool-calling verification significantly refined the picture in both directions:
+          As of March 2026, the enrichment system has classified every non-English book in the collection, and the tool-calling verification pipeline has processed virtually all 4,300 non-English books. The initial AI classification identified roughly 1,000 first translations. The tool-calling verification significantly refined the picture in both directions:
         </p>
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
@@ -389,27 +389,27 @@ export default function FirstTranslationMethodologyPage() {
             <tbody>
               <tr className="border-b border-border-light">
                 <td className="px-4 py-3 text-secondary font-medium">Confirmed first translation</td>
-                <td className="px-4 py-3 text-secondary text-right font-medium">1,466</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">1,727</td>
                 <td className="px-4 py-3 text-secondary">No English translation found in any catalog or database searched</td>
               </tr>
               <tr className="border-b border-border-light">
                 <td className="px-4 py-3 text-secondary font-medium">First complete translation</td>
-                <td className="px-4 py-3 text-secondary text-right font-medium">388</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">609</td>
                 <td className="px-4 py-3 text-secondary">Partial translations exist, but no complete English rendering published</td>
               </tr>
               <tr className="border-b border-border-light">
                 <td className="px-4 py-3 text-secondary font-medium">First modern translation</td>
-                <td className="px-4 py-3 text-secondary text-right font-medium">109</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">119</td>
                 <td className="px-4 py-3 text-secondary">Only pre-1800 English translations exist</td>
               </tr>
               <tr className="border-b border-border-light">
                 <td className="px-4 py-3 text-secondary font-medium">Existing translation found</td>
-                <td className="px-4 py-3 text-secondary text-right font-medium">1,793</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">1,527</td>
                 <td className="px-4 py-3 text-secondary">At least one verified English translation exists</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 text-secondary font-medium">Needs review</td>
-                <td className="px-4 py-3 text-secondary text-right font-medium">30</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">106</td>
                 <td className="px-4 py-3 text-secondary">Insufficient evidence for a confident determination</td>
               </tr>
             </tbody>
@@ -417,15 +417,15 @@ export default function FirstTranslationMethodologyPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          1,971 books &mdash; roughly 47% of the non-English collection &mdash; are classified as first translations of some kind. This is significantly higher than the initial AI classification alone (which flagged ~1,000 books) because the tool-calling verification discovered hundreds of new first translations: books where the initial AI enrichment was too conservative, marking them as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> when a thorough catalog search would have revealed no prior translation.
+          2,455 books &mdash; roughly 57% of the non-English collection &mdash; are classified as first translations of some kind. This is significantly higher than the initial AI classification alone (which flagged ~1,000 books) because the tool-calling verification discovered hundreds of new first translations: books where the initial AI enrichment was too conservative, marking them as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> when a thorough catalog search would have revealed no prior translation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The verification also works in the opposite direction: 1,793 books were found to have existing translations that the initial classification had not identified. Several of these were recent publications (2020s) that postdate the training data of any AI model, demonstrating why catalog search is essential &mdash; no amount of parametric knowledge can catch translations published after training cutoff.
+          The verification also works in the opposite direction: 1,527 books were found to have existing translations that the initial classification had not identified. Several of these were recent publications (2020s) that postdate the training data of any AI model, demonstrating why catalog search is essential &mdash; no amount of parametric knowledge can catch translations published after training cutoff.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Of the 1,971 first translations, 912 are now fully translated &mdash; readable from the first page to the last. Another 184 are 80% or more complete. The translations span 648 Latin works, 412 German, 176 French, 138 Greek, 118 Sanskrit, and dozens of other languages including Chinese, Syriac, Dutch, Italian, Armenian, Hebrew, and Arabic.
+          Of the 2,455 first translations, 1,276 are now fully translated &mdash; readable from the first page to the last. Another 223 are 80% or more complete. The translations span 670 Latin works, 430 German, 420 Chinese, 182 French, 144 Greek, 135 Sanskrit, and dozens of other languages including Syriac, Dutch, Italian, Armenian, Hebrew, and Arabic.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
