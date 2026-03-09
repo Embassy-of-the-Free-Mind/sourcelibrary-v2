@@ -43,9 +43,9 @@ export default function FeedbackWidget({ className }: { className?: string }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4" onClick={() => setOpen(false)}>
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 pt-16 sm:pt-4" onClick={() => setOpen(false)}>
       <div
-        className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6"
+        className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 max-h-[80dvh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {status === 'sent' ? (
