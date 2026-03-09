@@ -378,27 +378,27 @@ export default function ScanPage() {
                 {step === 'onboarding-3' && (
                   <div className="text-center space-y-6">
                     <div>
-                      <h1 className="font-serif text-3xl text-primary mb-3">Common Mistakes</h1>
+                      <h1 className="font-serif text-3xl text-primary mb-3">Watch Out For</h1>
                       <p className="text-secondary text-base leading-relaxed">
-                        These will cause the AI to misread or skip text.
+                        Common issues when photographing a book.
                       </p>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <IllustratedMistake
-                        diagram={<DiagramShadow />}
-                        text="Shadows across text"
+                        diagram={<DiagramDuplicate />}
+                        text="Retakes without deleting the first"
                       />
                       <IllustratedMistake
-                        diagram={<DiagramAngled />}
-                        text="Angled photos"
+                        diagram={<DiagramMixedOrientation />}
+                        text="Mixing portrait and landscape"
                       />
                       <IllustratedMistake
-                        diagram={<DiagramCurved />}
-                        text="Curved near spine"
+                        diagram={<DiagramSkippedPage />}
+                        text="Accidentally skipping pages"
                       />
                       <IllustratedMistake
-                        diagram={<DiagramFingers />}
-                        text="Fingers covering text"
+                        diagram={<DiagramTwoPageSpread />}
+                        text="Two pages in one photo"
                       />
                     </div>
                   </div>
@@ -832,85 +832,88 @@ function DiagramOnePage() {
   );
 }
 
-// Mistake diagrams — illustrations of common scanning errors
+// Mistake diagrams — workflow issues when photographing books
 
-function DiagramShadow() {
+function DiagramDuplicate() {
   return (
     <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
-      {/* Page */}
-      <rect x="16" y="8" width="48" height="44" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
-      {/* Text lines */}
-      <line x1="22" y1="16" x2="58" y2="16" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="22" x2="58" y2="22" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="28" x2="58" y2="28" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="34" x2="58" y2="34" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="40" x2="46" y2="40" strokeWidth="1" className="stroke-border-medium" />
-      {/* Shadow diagonal band */}
-      <path d="M16 8 L48 8 L16 44 Z" className="fill-text-secondary/15" strokeWidth="0" />
-      {/* X mark */}
-      <line x1="54" y1="44" x2="60" y2="50" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
-      <line x1="60" y1="44" x2="54" y2="50" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      {/* First page (behind) */}
+      <rect x="12" y="6" width="30" height="40" rx="1" strokeWidth="1.2" className="stroke-border-medium" fill="white" />
+      <line x1="16" y1="14" x2="38" y2="14" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="16" y1="19" x2="38" y2="19" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="16" y1="24" x2="38" y2="24" strokeWidth="0.8" className="stroke-border-medium" />
+      {/* Second page (in front, same content = duplicate) */}
+      <rect x="22" y="12" width="30" height="40" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      <line x1="26" y1="20" x2="48" y2="20" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="26" y1="25" x2="48" y2="25" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="26" y1="30" x2="48" y2="30" strokeWidth="0.8" className="stroke-border-medium" />
+      {/* Equals sign between them */}
+      <line x1="56" y1="27" x2="64" y2="27" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="56" y1="32" x2="64" y2="32" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      {/* Question mark */}
+      <text x="68" y="34" className="fill-status-error" fontSize="14" fontWeight="bold">?</text>
     </svg>
   );
 }
 
-function DiagramAngled() {
+function DiagramMixedOrientation() {
   return (
     <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
-      {/* Skewed page — trapezoid perspective */}
-      <path d="M24 10 L62 6 L58 54 L20 50 Z" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
-      {/* Skewed text lines */}
-      <line x1="28" y1="17" x2="58" y2="14" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="27" y1="23" x2="58" y2="20" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="26" y1="29" x2="58" y2="26" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="25" y1="35" x2="58" y2="32" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="24" y1="41" x2="44" y2="39" strokeWidth="1" className="stroke-border-medium" />
-      {/* X mark */}
-      <line x1="8" y1="48" x2="14" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
-      <line x1="14" y1="48" x2="8" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      {/* Portrait page */}
+      <rect x="6" y="10" width="22" height="32" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      <line x1="10" y1="16" x2="24" y2="16" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="10" y1="20" x2="24" y2="20" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="10" y1="24" x2="24" y2="24" strokeWidth="0.8" className="stroke-border-medium" />
+      {/* Landscape page (rotated) */}
+      <rect x="34" y="16" width="38" height="24" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      <line x1="38" y1="22" x2="68" y2="22" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="38" y1="26" x2="68" y2="26" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="38" y1="30" x2="68" y2="30" strokeWidth="0.8" className="stroke-border-medium" />
+      {/* Rotation arrow on the landscape one */}
+      <path d="M60 44 Q68 44 68 38" strokeWidth="1.2" className="stroke-status-error" fill="none" />
+      <polyline points="66,40 68,37 71,39" strokeWidth="1.2" className="stroke-status-error" strokeLinejoin="round" />
     </svg>
   );
 }
 
-function DiagramCurved() {
+function DiagramSkippedPage() {
   return (
     <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
-      {/* Page with curved left edge (near spine) */}
-      <path d="M24 6 L60 6 L60 54 L24 54 Q16 30 24 6 Z" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
-      {/* Curved text lines — bending near spine */}
-      <path d="M30 16 Q26 16 28 14" strokeWidth="1" className="stroke-border-medium" fill="none" />
-      <line x1="30" y1="16" x2="54" y2="16" strokeWidth="1" className="stroke-border-medium" />
-      <path d="M30 24 Q26 24 27 22" strokeWidth="1" className="stroke-border-medium" fill="none" />
-      <line x1="30" y1="24" x2="54" y2="24" strokeWidth="1" className="stroke-border-medium" />
-      <path d="M30 32 Q26 32 27 30" strokeWidth="1" className="stroke-border-medium" fill="none" />
-      <line x1="30" y1="32" x2="54" y2="32" strokeWidth="1" className="stroke-border-medium" />
-      <path d="M30 40 Q26 40 27 38" strokeWidth="1" className="stroke-border-medium" fill="none" />
-      <line x1="30" y1="40" x2="44" y2="40" strokeWidth="1" className="stroke-border-medium" />
-      {/* Spine indicator */}
-      <line x1="18" y1="8" x2="18" y2="52" strokeWidth="2" className="stroke-border-medium" strokeDasharray="3 2" />
-      {/* X mark */}
-      <line x1="62" y1="46" x2="68" y2="52" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
-      <line x1="68" y1="46" x2="62" y2="52" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      {/* Page 5 */}
+      <rect x="4" y="10" width="20" height="30" rx="1" strokeWidth="1.2" className="stroke-text-secondary" fill="white" />
+      <text x="14" y="28" className="fill-text-secondary" fontSize="9" textAnchor="middle" fontWeight="500">5</text>
+      {/* Gap — dashed outline for missing page 6 */}
+      <rect x="30" y="10" width="20" height="30" rx="1" strokeWidth="1.5" className="stroke-status-error" strokeDasharray="3 2" fill="none" />
+      <text x="40" y="28" className="fill-status-error" fontSize="9" textAnchor="middle" fontWeight="500">6?</text>
+      {/* Page 7 */}
+      <rect x="56" y="10" width="20" height="30" rx="1" strokeWidth="1.2" className="stroke-text-secondary" fill="white" />
+      <text x="66" y="28" className="fill-text-secondary" fontSize="9" textAnchor="middle" fontWeight="500">7</text>
+      {/* Arrow showing the gap */}
+      <line x1="26" y1="48" x2="54" y2="48" strokeWidth="1" className="stroke-status-error" strokeDasharray="2 2" />
     </svg>
   );
 }
 
-function DiagramFingers() {
+function DiagramTwoPageSpread() {
   return (
     <svg viewBox="0 0 80 60" className="w-full h-full" fill="none" stroke="currentColor">
-      {/* Page */}
-      <rect x="16" y="6" width="48" height="48" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
-      {/* Text lines */}
-      <line x1="22" y1="14" x2="58" y2="14" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="20" x2="58" y2="20" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="26" x2="58" y2="26" strokeWidth="1" className="stroke-border-medium" />
-      <line x1="22" y1="32" x2="58" y2="32" strokeWidth="1" className="stroke-border-medium" />
-      {/* Finger shapes on bottom-right corner */}
-      <path d="M52 54 Q52 42 56 38 Q58 36 60 38 Q62 40 62 46 L62 54" strokeWidth="1.5" className="stroke-status-error/60" fill="var(--bg-warm)" />
-      <path d="M58 54 Q58 44 62 40 Q64 38 66 40 Q68 42 68 48 L68 54" strokeWidth="1.5" className="stroke-status-error/60" fill="var(--bg-warm)" />
+      {/* Wide rectangle showing two-page spread in one photo */}
+      <rect x="6" y="10" width="68" height="38" rx="1" strokeWidth="1.5" className="stroke-text-secondary" fill="white" />
+      {/* Spine line down center */}
+      <line x1="40" y1="10" x2="40" y2="48" strokeWidth="1.5" className="stroke-border-medium" />
+      {/* Left page text */}
+      <line x1="12" y1="18" x2="34" y2="18" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="12" y1="23" x2="34" y2="23" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="12" y1="28" x2="34" y2="28" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="12" y1="33" x2="28" y2="33" strokeWidth="0.8" className="stroke-border-medium" />
+      {/* Right page text */}
+      <line x1="46" y1="18" x2="68" y2="18" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="46" y1="23" x2="68" y2="23" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="46" y1="28" x2="68" y2="28" strokeWidth="0.8" className="stroke-border-medium" />
+      <line x1="46" y1="33" x2="60" y2="33" strokeWidth="0.8" className="stroke-border-medium" />
       {/* X mark */}
-      <line x1="6" y1="48" x2="12" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
-      <line x1="12" y1="48" x2="6" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="64" y1="48" x2="70" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
+      <line x1="70" y1="48" x2="64" y2="54" strokeWidth="1.5" className="stroke-status-error" strokeLinecap="round" />
     </svg>
   );
 }
