@@ -112,7 +112,6 @@ function seededRandom(seed: number): number {
 const SPREAD = 40;
 const BOOK_SIZE = 0.45;
 const HOVER_SCALE = 2.8;
-const PICK_THRESHOLD_PX = 18;
 
 // ────────────────────────────────────────────────────────────
 // Component
@@ -475,36 +474,19 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         }
       }
 
-      // Screen-space proximity for books
-      const positions = bookPosRef.current;
-      const n = data.books.length;
-      const tempVec = new THREE.Vector3();
-      let nearestIdx = -1;
-      let nearestDist = PICK_THRESHOLD_PX;
-
-      for (let i = 0; i < n; i++) {
-        tempVec.set(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-        tempVec.project(camera);
-        if (tempVec.z > 1) continue; // behind camera
-        const sx = (tempVec.x * 0.5 + 0.5) * w;
-        const sy = (-tempVec.y * 0.5 + 0.5) * h;
-        const dx = sx - mx;
-        const dy = sy - my;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < nearestDist) {
-          nearestDist = dist;
-          nearestIdx = i;
+      // Raycast against InstancedMesh for accurate picking
+      const mesh = meshRef.current;
+      if (mesh) {
+        const intersects = raycasterRef.current.intersectObject(mesh);
+        if (intersects.length > 0 && intersects[0].instanceId !== undefined) {
+          setHoveredIdx(intersects[0].instanceId);
+          setTooltipPos({ x: mx, y: my });
+          setCursorStyle('pointer');
+        } else {
+          setHoveredIdx(null);
+          setTooltipPos(null);
+          setCursorStyle('grab');
         }
-      }
-
-      if (nearestIdx >= 0) {
-        setHoveredIdx(nearestIdx);
-        setTooltipPos({ x: mx, y: my });
-        setCursorStyle('pointer');
-      } else {
-        setHoveredIdx(null);
-        setTooltipPos(null);
-        setCursorStyle('grab');
       }
     },
     [data.books.length],
