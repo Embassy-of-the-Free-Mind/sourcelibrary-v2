@@ -251,6 +251,265 @@ The OpenCV.js detector is at `/scan/opencv` and exists as a comparison baseline.
 
 ---
 
+## Real-World Usage Scenarios
+
+The pipeline was designed and tested in a narrow context: a well-lit desk, a flat book, a modern phone. Real users will scan in wildly different conditions. This section maps specific scenarios to pipeline behavior, identifying what works, what's risky, and what will fail.
+
+### Scenario Matrix
+
+The four independent axes that define a scanning session:
+1. **Lighting** — type, intensity, direction, consistency
+2. **Book** — age, size, binding, page color, flatness
+3. **Surface** — color, texture, material
+4. **Phone** — camera quality, processing power, screen size
+
+Each combination creates a different challenge profile.
+
+---
+
+### Lighting Scenarios
+
+#### L1: Library reading room (overhead fluorescent)
+**Conditions:** Even, diffuse light from above. No shadows. Color temperature ~4000-5000K (slightly blue-white).
+**Pipeline impact:** **Best case.** Even illumination means consistent edge contrast across all four sides of the page. No shadows crossing the page. Mean luminance will sit comfortably in the 50-230 exposure range. Sharpness should be good (fluorescent flicker is faster than camera shutter).
+**Risks:** Overhead fluorescent can create a slight glare/specular reflection on glossy pages. This is a sharpness problem, not an edge detection problem.
+**Auto-capture:** Should work well. Stability (desk surface), sharpness (good light), exposure (ideal range), page detection (consistent edges) — all four conditions met easily.
+
+#### L2: Home desk with warm lamp
+**Conditions:** Single-source directional light (desk lamp), warm color temperature (~2700-3000K). Creates one bright side and one shadow side.
+**Pipeline impact:** **Moderate risk.** The shadowed side of the book will have lower edge contrast. Multi-channel Sobel helps here — warm light means the blue channel has lower intensity overall, but the *difference* between page-blue and desk-blue may still be detectable. The shadow edge (where the desk lamp shadow crosses the page boundary) could confuse the edge detector — it's a strong gradient that isn't a page edge.
+**Key parameters stressed:** `CANNY_HIGH_RATIO` and `CANNY_LOW_RATIO`. The shadowed side may produce weak edges that only survive at the low threshold. If the lamp shadow crosses the page, it produces a spurious strong edge. The ratio-based thresholds will scale to the lamp shadow (the brightest gradient in the frame), potentially making the page edge too faint to pass even the low threshold.
+**Mitigation:** The quad scoring should help — a lamp shadow creates a single strong edge, not four sides of a quad. But if the shadow falls along one page edge, the scorer might mistake the shadow line for one side of the quad.
+
+#### L3: Natural window light (daytime, indirect)
+**Conditions:** Diffuse, color-neutral light from a window. Intensity varies with weather and time of day. Usually directional (one bright side).
+**Pipeline impact:** **Generally good.** Natural daylight provides strong chrominance differentiation. The directionality is usually less harsh than a desk lamp. Mean luminance is typically in a good range (80-180).
+**Risks:** On overcast days, light can be quite flat and dim. Very bright days with direct sun hitting the desk fall into scenario L5 below.
+
+#### L4: Dim conditions (evening, poor ambient light)
+**Conditions:** Mean luminance < 50. Phone camera may auto-gain (introducing noise) or extend exposure time (introducing motion blur).
+**Pipeline impact:** **High risk.** Two problems compound:
+1. **Noise from camera auto-gain.** ISO cranked up means pixel-level noise, which produces false edge pixels everywhere. The Sobel operator amplifies noise (it's a derivative filter). Multi-channel Sobel on noisy RGB channels means noisy edges in every channel.
+2. **Motion blur from long exposure.** If the camera uses 1/15s or 1/8s shutter speed, hand tremor blurs the page edge. The edge gradient is spread across multiple pixels, reducing peak magnitude. The Canny thresholds may not adapt low enough.
+**Auto-capture impact:** `exposed` condition will fail (luminance < 50). The user will see "Too dark" status text. Auto-capture won't fire, which is correct — images captured in this condition would be low quality anyway.
+**Parameters stressed:** `CANNY_LOW_RATIO` minimum floor of 8. In very low-light scenes, even this may be too high for the faint edges that survive noise. But lowering it further would accept noise as edges.
+**Recommendation:** The status text "Too dark" is the correct response. We shouldn't try to make edge detection work in conditions where the captured image would be unusable anyway.
+
+#### L5: Direct sunlight / harsh shadows
+**Conditions:** Mean luminance > 200. Hard shadows with extreme contrast. Specular reflections on glossy pages. Color may wash out.
+**Pipeline impact:** **High risk from shadows, not from brightness.** The page itself will have strong edges (brightness contrast with desk is high). But:
+1. **Hard shadow lines** from the phone, user's hand, or nearby objects create strong spurious edges *on the page*. These are straight, high-contrast gradients that look like page edges to the Hough detector.
+2. **Specular reflections** on glossy pages create bright spots that saturate the camera sensor, destroying edge information in that region.
+3. **Washed-out color** reduces chrominance differences (everything trends toward white at high luminance), weakening the multi-channel Sobel advantage.
+**Auto-capture impact:** `exposed` condition may fail if mean luminance > 230. Status text: "Too bright."
+**Parameters stressed:** The shadow lines are the real problem. Perimeter edge response scoring should help — a shadow line across the middle of the page won't form a complete quad with edge response on all four sides. But a shadow falling exactly along one page edge is indistinguishable from the actual edge.
+
+#### L6: Mixed lighting (window + overhead + lamp)
+**Conditions:** Multiple light sources with different color temperatures. Common in cafes, living rooms. Creates complex shadow patterns.
+**Pipeline impact:** **Moderate risk.** Each light source creates a separate shadow, potentially multiple spurious edge lines. But the chrominance advantage of RGB Sobel actually helps here — color temperature differences between lights mean different channels dominate in different regions of the image, so the multi-channel approach picks up the page edge from whichever channel has the best signal in each region.
+**Key insight:** This scenario may actually be *better* for multi-channel Sobel than single-source lighting, because the spectral diversity ensures at least one channel has good edge contrast at every point around the page boundary.
+
+---
+
+### Book Scenarios
+
+#### B1: Modern paperback (white pages, crisp edges)
+**Conditions:** Clean white pages, machine-cut edges, flat when open. Standard aspect ratio (~0.65-0.7).
+**Pipeline impact:** **Easy case.** Strong edges on all four sides, consistent color contrast with any non-white surface.
+**Assumption validated:** Ideal aspect ratio of 0.75 is close.
+
+#### B2: Old book (yellowed/foxed pages, irregular trim)
+**Conditions:** Pages range from cream to dark brown. Edge may be ragged or uneven. Spine binding may pull pages into a curve.
+**Pipeline impact:** **Moderate risk.** Yellowed pages have *lower* luminance contrast with warm-colored surfaces (wood desk, beige tablecloth). But the chrominance difference (yellow-brown vs desk color) is usually present in the blue channel. Foxing spots and stains create internal texture that adds noise edges.
+**Key parameter:** `MIN_AREA_RATIO = 0.08`. An old book with ragged edges might produce a detected quad smaller than the actual page, since the ragged edge doesn't vote consistently for a single Hough line. The area scoring would penalize a "correct but slightly too small" quad less than a clearly wrong one.
+**Spine curvature:** See "Curved pages" failure mode. Many old books can only be opened flat with significant spine pressure, which most users won't apply when scanning 200 pages.
+
+#### B3: Large folio / oversized book
+**Conditions:** Page is significantly larger than the phone's field of view at normal scanning distance. User must hold phone further away.
+**Pipeline impact:** **Moderate risk.** When the page fills the entire frame edge-to-edge, there may be no visible page-desk boundary on one or more sides. The Hough detector can only find edges that are *in the frame*. If two sides of the page are cropped by the camera, only 2 edges are visible — not enough for a quad.
+**Auto-capture impact:** `pageDetected` may oscillate between true/false as the user tries to frame the page. The status text will alternate between "Looking for page..." and "Hold steady..."
+**Recommendation:** For folios, the user should hold the phone farther back. The status text could suggest this, but we don't currently distinguish "some edges found but not enough" from "no edges at all."
+**Parameters stressed:** `MIN_AREA_RATIO = 0.08`. A folio that fills the frame would have an area ratio of ~1.0. Not a problem. But if the user holds the phone too close and only captures 2/3 of the page, the detected quad might only cover part of the page.
+
+#### B4: Small pamphlet / octavo
+**Conditions:** Page is small relative to the phone's field of view. Page fills maybe 30-40% of the frame. More desk visible than book.
+**Pipeline impact:** **Should work well.** The page produces a smaller quad, but area scoring prefers the page over noise rectangles because it's the largest coherent rectangle in the frame. `MIN_AREA_RATIO = 0.08` is permissive enough for a 30% fill.
+**Risk:** More desk visible means more desk texture edges (wood grain, scratches). The quad scorer must correctly prefer the page quad over desk-texture quads. Edge response scoring is key here — the page quad has real gradient on all four edges; desk texture patterns usually don't form complete quadrilaterals.
+
+#### B5: Thick bound book (can't lay flat)
+**Conditions:** When opened, the page near the spine curves upward. The visible "rectangle" is actually a trapezoid with a curved spine edge. Pages near the spine may be foreshortened.
+**Pipeline impact:** **High risk for the spine edge.** The spine-side edge curves, so it doesn't produce a clean Hough line. Votes spread across multiple angle bins. The detector may find only 3 clean edges (top, bottom, outer), not 4.
+**With only 3 clean edges:** The quad enumeration requires 2 horizontal + 2 vertical lines. If one horizontal or one vertical is missing/weak, no quads are formed. Detection fails.
+**Partial mitigation:** The Hough detector might pick up the *chord* of the curved edge (a straight line approximating the curve). This would give a less accurate quad, but might still trigger detection and auto-capture.
+**Trade-off:** Perspective correction using an inaccurate quad near the spine will distort the captured image. But any correction is probably better than no correction, and the server-side Gemini OCR handles moderate distortion well.
+
+#### B6: Dark/colored pages (woodcut backgrounds, printed on colored paper)
+**Conditions:** Some historical books have dark backgrounds (black letter on dark cream), heavily inked woodcut pages, or colored paper.
+**Pipeline impact:** **Variable.** Dark pages on a dark surface = no edge. Dark pages on a light surface = inverted contrast (dark on light instead of light on dark). The edge detector doesn't care about polarity — Sobel gradient magnitude is the absolute value of the derivative. A dark-to-light transition produces the same magnitude as a light-to-dark transition.
+**Assumption:** The Sobel operator is sign-agnostic. This means a dark page on a light desk works as well as a light page on a dark desk.
+
+#### B7: Glossy/coated pages (art books, modern reprints)
+**Conditions:** Specular reflections from smooth page surface. Reflections move as user shifts angle.
+**Pipeline impact:** **Risk from reflections.** A specular highlight creates a bright blob that:
+1. May saturate the camera sensor, creating a flat white region with no edge information
+2. Produces strong gradient at the highlight boundary, which could be detected as an edge
+3. Moves with the user's angle, causing the detected edges to shift between frames
+**Temporal smoothing impact:** The moving reflection causes detected corners to shift frame-to-frame, potentially exceeding the `MAX_CORNER_JUMP = 0.15` threshold and resetting the EMA. This would cause the overlay to jump around.
+**Auto-capture impact:** Moving reflections → shifting quad → stability detection may never converge. The "Hold steady..." status text may persist indefinitely.
+
+---
+
+### Surface Scenarios
+
+#### S1: Dark wood desk
+**Conditions:** High luminance contrast (white page, dark desk). Visible wood grain texture running in one direction.
+**Pipeline impact:** **Best case for edge detection.** Strong gradient at every page boundary. The grayscale Sobel would work fine here; RGB Sobel provides no additional benefit but doesn't hurt.
+**Wood grain risk:** Parallel grain lines produce Hough votes in a narrow theta band. If the grain runs horizontally, it produces spurious horizontal lines. The quad enumeration would try to form quads using grain-line + page edges, but perimeter edge response scoring should reject these — the grain-line "edge" would only have strong response along one side.
+
+#### S2: White or very light desk
+**Conditions:** Low luminance contrast. The scenario that motivated the RGB Sobel rewrite.
+**Pipeline impact:** **The critical test case.** If the page is white/cream and the desk is white/light gray, luminance contrast is near zero. The multi-channel Sobel must find the edge in whichever RGB channel has the most chrominance difference.
+**Real-world chrominance:** "White" desks are usually slightly blue-gray, yellow-gray, or pink-gray. "White" pages are usually slightly yellow (new paper) or cream (old paper). The blue channel typically shows the most difference (paper yellow vs desk blue-gray), on the order of 15-40 units at 8-bit depth.
+**Will this work?** At 15-40 units of difference in one channel, after 3x3 blur and Sobel, the gradient magnitude might be ~20-50. The `CANNY_HIGH_RATIO = 0.15` threshold adapts to the max gradient in the frame. If the max gradient is from the page edge (50), the high threshold is 7.5, and the edge survives. If the max gradient is from something else in the scene (a laptop with 200+ contrast), the high threshold becomes 30, and the faint page edge (magnitude 20) falls below it.
+**Key insight:** The threshold *ratio* is the vulnerability. In a scene with a faint page edge AND a high-contrast object (laptop, phone), the ratio-based thresholds are set by the high-contrast object, potentially drowning the faint page edge.
+
+#### S3: Patterned fabric (tablecloth, blanket, bedspread)
+**Conditions:** Regular or irregular patterns creating many edge-like features. Variable texture density.
+**Pipeline impact:** **High risk.** A plaid tablecloth produces multiple strong parallel lines in two perpendicular directions — exactly the pattern that the quad enumeration is looking for. The detector might find the tablecloth grid instead of (or in addition to) the page.
+**Mitigation:** The perimeter edge response should distinguish page edges from tablecloth edges. A page edge has consistent gradient along its entire length; a tablecloth edge has periodic gaps between the pattern. But if the tablecloth has a solid border region near the page, this distinction may not hold.
+**Recommendation:** This is a scenario where user guidance ("use a plain surface") is more practical than algorithmic fixes.
+
+#### S4: User's lap (scanning while seated)
+**Conditions:** Uneven surface (thighs create a valley). Book may tilt or slide. Fabric texture from clothing. Moving surface (breathing, fidgeting).
+**Pipeline impact:** **Multiple problems:**
+1. **Book not flat:** Tilted book means perspective distortion is more extreme. The detected quad may still work, but the page edge closest to the user is foreshortened and may be partially occluded by the page curling up.
+2. **Fabric texture:** Clothing creates noise edges, similar to S3.
+3. **Movement:** User breathing and fidgeting creates constant low-level motion. The `stabilityThreshold = 0.5 m/s²` may never be sustained for the required `stabilityDuration = 300ms`.
+**Auto-capture impact:** `stable` condition may rarely be met. Users would need to use the manual shutter button.
+
+#### S5: Floor / carpet
+**Conditions:** User stands above the book looking down. Greater camera-to-book distance. Carpet texture if not hardwood.
+**Pipeline impact:** **Greater distance** means the page fills less of the frame, but edge detection should still work (similar to B4 small pamphlet scenario). **Viewing angle** is more oblique than desk scanning, which means more extreme perspective distortion.
+**Stability:** Standing is less stable than seated at a desk. Phone held at arm's length wobbles more. The `stabilityThreshold = 0.5 m/s²` may be harder to achieve.
+**Carpet:** Dense pile creates diffuse texture that doesn't produce strong Hough lines (unlike striped tablecloths). Low-pile carpet should be fine. Patterned carpet (geometric patterns) is a problem similar to S3.
+
+#### S6: Book held in hand (no surface)
+**Conditions:** User holds the book in one hand, phone in the other. No background surface — the background is whatever is behind the book (room, furniture, etc.).
+**Pipeline impact:** **Unpredictable background.** The background changes as the user moves. Could contain other rectangles (doors, windows, screens). The page edge contrast depends entirely on what's behind the book.
+**Stability:** Both hands are occupied. No support surface. Stability is very poor.
+**Auto-capture impact:** `stable` will almost never be met. Manual capture only.
+**Recommendation:** This is a valid use case (scanning in a library where you can't put the book down) but the worst case for auto-capture. The manual shutter button is essential.
+
+---
+
+### Phone Scenarios
+
+#### P1: Modern iPhone (14+)
+**Conditions:** High-quality camera (12-48MP), fast processor (A16+), good low-light performance. iOS may aggressively auto-expose and auto-focus.
+**Pipeline impact:** **Best case for quality.** Camera provides clean, well-exposed frames. Processing at 320px should run well above 30fps. The auto-focus is fast and reliable.
+**iOS-specific:** `DeviceMotionEvent.requestPermission()` is required (iOS 13+). The auto-capture controller handles this, falling back to `stable = true` if permission is denied.
+**Frame delivery:** iOS Safari delivers camera frames at up to 30fps via `requestAnimationFrame`. At 320px processing resolution, each frame takes ~5-15ms to process (Sobel + Hough). Well within budget.
+
+#### P2: Modern Android flagship (Pixel, Samsung S series)
+**Conditions:** Similar hardware capability to iPhone. May have multiple cameras (wide, ultrawide, telephoto).
+**Pipeline impact:** **Generally good.** Chrome's `getUserMedia` with `facingMode: 'environment'` picks the main back camera. Processing performance is comparable to iPhone for flagships.
+**Camera selection:** The `ideal: 1920, ideal: 1080` constraints should select the appropriate resolution. Some Android phones may have quirks with camera selection — Samsung's default might be the wide-angle lens, which has more barrel distortion.
+**Android-specific:** `DeviceMotionEvent` doesn't require permission on most Android versions. The accelerometer data is available immediately. However, some budget Android phones have noisy accelerometers, which would affect stability detection.
+
+#### P3: Budget Android phone (2-3 years old)
+**Conditions:** Lower camera quality (noisy sensor, slower auto-focus), slower processor (Snapdragon 400-600 series), smaller RAM.
+**Pipeline impact:** **Performance is the primary concern.** At 320px, the Sobel pass involves ~3 × 77K operations (3 channels × 320×240). The Hough pass depends on edge pixel count but typically ~200K accumulator writes. Total CPU per frame: ~500K-1M operations.
+**Frame rate:** On a budget Snapdragon 600-series, JS execution is 3-5× slower than iPhone 14. A frame that takes 10ms on iPhone might take 30-50ms on a budget Android. At 33ms/frame (30fps) this is borderline. The `requestAnimationFrame` loop will naturally throttle — if processing takes 50ms, it runs at 20fps instead of 30fps. Edge detection at 20fps should still work, but the viewfinder overlay will feel less fluid.
+**Allocation pressure:** Each frame allocates several `Float32Array` buffers (r, g, b, blurred, sobel × 3 channels). On a phone with 3-4GB RAM, this is fine. On a 2GB phone, GC pauses could cause frame drops.
+**Mitigation:** Could reduce `TARGET_WIDTH` to 240 for low-power devices. This roughly halves the work (~56K pixels vs 77K). Detection quality would decrease for faint edges but should still work for high-contrast edges.
+**Camera quality:** Noisy sensors produce grainy images. At 320px downscale, noise is somewhat averaged out (each processing pixel represents ~6×6 camera pixels at 1920×1080). This natural anti-aliasing helps, but won't fully compensate for very noisy sensors.
+
+#### P4: Older iPhone (SE, 8, X)
+**Conditions:** Still capable processors (A11+), decent cameras, but smaller screens and less RAM.
+**Pipeline impact:** **Should work fine.** A11 chip (iPhone 8/X, 2017) is still faster than mid-range 2024 Android chips for JS execution. The smaller screen means the viewfinder canvases are smaller, which is actually slightly cheaper to render.
+**RAM constraint:** iPhone SE (2016) has 2GB RAM, iPhone 8 has 2GB, iPhone X has 3GB. The Float32Array allocations are ~77K × 4 bytes × ~10 arrays = ~3MB per frame. This is fine even on 2GB devices.
+
+#### P5: iPad / tablet
+**Conditions:** Larger screen, potentially better camera, more processing power. Awkward to hold over a book.
+**Pipeline impact:** **Edge detection works fine.** The canvases are larger (more pixels to render for the viewfinder display), but processing is still at 320px.
+**Ergonomic concern:** Holding a 10" tablet over a desk is more unwieldy than a phone. Stability is harder to achieve. The tablet's weight causes more arm fatigue during a 200-page scanning session.
+**Auto-capture impact:** `stable` condition is harder to sustain. Heavier device = more inertia, but also more arm wobble.
+
+---
+
+### Compound Scenarios (Real-World Sessions)
+
+These are specific realistic scanning sessions that combine multiple axes:
+
+#### C1: Scholar in a library reading room
+**Profile:** L1 (fluorescent) + B2 (old book) + S1 (dark wood table) + P1 (iPhone 14)
+**Expected:** **Should work well.** Good lighting, high contrast (old book on dark desk), powerful phone. Biggest risk is spine curvature on thick old books. The scholar will need to press the book flat or use a book cradle.
+**Session length:** 200-400 pages. Battery and storage concerns over a 1-2 hour session. OPFS persistence protects against mid-session crashes.
+
+#### C2: Student at home desk
+**Profile:** L2 (desk lamp) + B1 (modern paperback) + S2 (white IKEA desk) + P2 (Pixel 7)
+**Expected:** **The critical white-on-white test.** The desk lamp provides some shadow-based contrast. The multi-channel Sobel should detect the page. The desk lamp shadow might create a spurious edge across the desk surface.
+**Worst sub-case:** If the paperback is white and the desk is white, in the zone NOT illuminated by the desk lamp (shadow side), the edge contrast may be extremely low. The illuminated side should be fine.
+
+#### C3: Researcher in a cafe
+**Profile:** L6 (mixed) + B2 (old book) + S3 (tablecloth) + P3 (budget Android)
+**Expected:** **Difficult.** Patterned tablecloth generates spurious edges. Budget phone may struggle with processing speed. Mixed lighting creates complex shadow patterns. The researcher would be better off using the manual shutter button.
+
+#### C4: Scanning in bed / on couch
+**Profile:** L4 (dim) + B1 (paperback) + S3 (fabric) + P1 (iPhone)
+**Expected:** **Auto-capture won't fire** (too dark + unstable surface). The user sees "Too dark" status. They could still use manual capture, but image quality will be poor (noisy, potentially blurry). This is a scenario where the system correctly refuses to auto-capture.
+
+#### C5: Outdoor scanning (garden, patio)
+**Profile:** L5 (direct sun) + B2 (old book) + S1 (outdoor table) + P2 (Android)
+**Expected:** **Shadow problems.** Direct sunlight creates hard shadows from the user's hand and the phone itself. The phone shadow falls directly on the page (since the user is between the sun and the book). This shadow creates a strong edge on the page that isn't a page boundary.
+**Specular reflections** on coated pages are worse outdoors (bright sun + smooth page = intense glare).
+
+#### C6: Standing at a bookshelf
+**Profile:** L1/L3 (indoor light) + B5 (thick book from shelf) + S6 (held in hand) + P1/P2
+**Expected:** **Manual capture only.** No surface, poor stability, can't press book flat. Edge detection may work intermittently if the book is held against a contrasting wall. The user would take one photo of each page spread, then split later.
+
+---
+
+### Critical Assumptions Summary
+
+| Assumption | Where it matters | Scenarios that stress it |
+|------------|-----------------|------------------------|
+| Page has 4 straight edges | Hough lines + quad enumeration | B5 (curved spine), B2 (ragged old books) |
+| At least one RGB channel has page-desk edge | Multi-channel Sobel | S2 (white on white), B6 (dark on dark) |
+| Page edge is the strongest gradient in the frame | Canny ratio-based thresholds | L5 (shadow lines), S3 (tablecloth), multiple rectangles |
+| User is holding phone steady | Stability detection + EMA | S4 (lap), S6 (handheld), C4 (bed), P5 (tablet) |
+| 320px resolution is sufficient | Downscale | Very faint chrominance edges at S2 |
+| Processing completes in ~15-30ms | requestAnimationFrame budget | P3 (budget Android) |
+| Consistent lighting across all 4 page edges | Edge detection on all sides | L2 (directional lamp), L5 (shadows) |
+
+---
+
+### Design Implications
+
+**Things we should NOT try to fix algorithmically:**
+- Scanning in the dark (L4) — correctly refuse
+- Scanning on complex patterns (S3) — suggest plain surface
+- Scanning while walking/moving (S6 handheld) — manual shutter exists
+- Scanning in direct sunlight with hard shadows (L5) — suggest shade
+
+**Things that could improve with parameter tuning:**
+- White page on white desk (S2) — consider *absolute* Canny thresholds alongside ratio-based ones, or limit the "max gradient" computation to exclude the top 1% (outlier shadows)
+- Budget Android performance (P3) — adaptive `TARGET_WIDTH` based on frame timing
+- Thick books with spine curve (B5) — relax the quad enumeration to allow 3-line detection with one inferred edge
+
+**Things to test first (highest impact):**
+1. White page on white desk (S2) — the core RGB Sobel hypothesis
+2. Desk lamp shadow crossing the page (L2) — the ratio threshold problem
+3. Patterned tablecloth (S3) — quad scorer robustness
+4. Budget Android at 320px (P3) — frame timing
+
+**UX mitigations that help more than algorithm changes:**
+- "Use a dark surface" prompt when detection repeatedly fails
+- "Move to a brighter spot" when luminance is borderline (40-60 range)
+- "Hold phone further back" when detected quad hits frame boundaries
+- Manual shutter button always visible (never hidden behind auto-capture)
+- Session persistence (OPFS) so users can stop/resume across different locations
+
 ## File Reference
 
 | File | Role |
