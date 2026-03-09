@@ -495,26 +495,49 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
   // ── Click handler ──
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
-      // Check if a label sprite is hovered
-      const label = hoveredLabelRef.current;
-      if (label && label.userData.clusterId !== undefined) {
-        const cId = label.userData.clusterId as number;
-        setSelectedCluster((prev) => (prev === cId ? null : cId));
-        setSelectedBookIdx(null);
-        setSelectedBookPos(null);
-        return;
+      const container = containerRef.current;
+      const camera = cameraRef.current;
+      if (!container || !camera) return;
+
+      const rect = container.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const ndcX = (mx / rect.width) * 2 - 1;
+      const ndcY = -(my / rect.height) * 2 + 1;
+      raycasterRef.current.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
+
+      // Check cluster labels first
+      const labelGroup = labelGroupRef.current;
+      if (labelGroup) {
+        const labelIntersects = raycasterRef.current.intersectObjects(labelGroup.children);
+        if (labelIntersects.length > 0) {
+          const sprite = labelIntersects[0].object as THREE.Sprite;
+          const cId = sprite.userData.clusterId as number;
+          if (cId !== undefined) {
+            setSelectedCluster((prev) => (prev === cId ? null : cId));
+            setSelectedBookIdx(null);
+            setSelectedBookPos(null);
+            return;
+          }
+        }
       }
 
-      // Check books
-      if (hoveredIdx !== null) {
-        setSelectedBookIdx(hoveredIdx);
-        if (tooltipPos) setSelectedBookPos(tooltipPos);
-      } else {
-        setSelectedBookIdx(null);
-        setSelectedBookPos(null);
+      // Raycast against books directly at click time
+      const mesh = meshRef.current;
+      if (mesh) {
+        const intersects = raycasterRef.current.intersectObject(mesh);
+        if (intersects.length > 0 && intersects[0].instanceId !== undefined) {
+          setSelectedBookIdx(intersects[0].instanceId);
+          setSelectedBookPos({ x: mx, y: my });
+          return;
+        }
       }
+
+      // Clicked empty space
+      setSelectedBookIdx(null);
+      setSelectedBookPos(null);
     },
-    [hoveredIdx, tooltipPos],
+    [],
   );
 
   const resetView = useCallback(() => {
