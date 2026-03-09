@@ -200,39 +200,46 @@ export default function TabletsPage() {
                 </div>
               </div>
 
-              {/* Photo + cuneiform signs side by side */}
-              <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] min-h-[300px]">
-                {/* Photo — sticky so it follows while scrolling through signs */}
-                <div
-                  className="p-4 border-b md:border-b-0 md:border-r"
-                  style={{
-                    backgroundColor: '#f0ece3',
-                    borderColor: 'var(--border-light)',
-                  }}
-                >
-                  <div className="md:sticky md:top-4">
-                    <a
-                      href={tablet.cdliUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={`View ${tablet.designation} on CDLI`}
+              {/* Each surface gets its own cropped photo section */}
+              {sections.length > 0 ? (
+                <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
+                  {sections.map((section, si) => (
+                    <div
+                      key={si}
+                      className="grid grid-cols-1 md:grid-cols-[240px_1fr]"
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={tablet.photoUrl}
-                        alt={`Photo of ${tablet.designation}`}
-                        className="rounded w-full object-contain shadow-sm"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                </div>
+                      {/* Cropped photo for this surface */}
+                      <div
+                        className="p-3 flex items-center justify-center border-b md:border-b-0 md:border-r overflow-hidden"
+                        style={{
+                          backgroundColor: '#f0ece3',
+                          borderColor: 'var(--border-light)',
+                        }}
+                      >
+                        <a
+                          href={tablet.cdliUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={`View ${tablet.designation} on CDLI — ${section.surface}`}
+                          className="block w-full overflow-hidden rounded"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={tablet.photoUrl}
+                            alt={`${section.surface} of ${tablet.designation}`}
+                            className="w-full shadow-sm"
+                            loading="lazy"
+                            style={{
+                              objectFit: 'cover',
+                              objectPosition: `center ${(si / sections.length) * 100}%`,
+                              height: `${Math.max(120, section.lines.length * 40)}px`,
+                            }}
+                          />
+                        </a>
+                      </div>
 
-                {/* Cuneiform signs + transliteration */}
-                <div className="p-4 overflow-x-auto">
-                  <div className="space-y-3">
-                    {sections.map((section, si) => (
-                      <div key={si}>
+                      {/* Cuneiform signs for this surface */}
+                      <div className="p-4 overflow-x-auto">
                         <div
                           className="text-xs font-semibold uppercase tracking-wider mb-1.5 pb-1 border-b"
                           style={{
@@ -245,16 +252,13 @@ export default function TabletsPage() {
                         <div className="space-y-1">
                           {section.lines.map((line, li) => (
                             <div key={li} className="flex gap-2">
-                              {/* Line number */}
                               <span
                                 className="text-xs font-mono w-5 shrink-0 pt-1.5 text-right"
                                 style={{ color: 'var(--text-faint)' }}
                               >
                                 {line.lineNum}
                               </span>
-
                               <div className="min-w-0">
-                                {/* Cuneiform signs - large */}
                                 {line.tokens.length > 0 ? (
                                   <div className="flex flex-wrap gap-x-0.5 items-baseline leading-tight">
                                     {line.tokens.map((token, ti) => (
@@ -262,8 +266,6 @@ export default function TabletsPage() {
                                     ))}
                                   </div>
                                 ) : null}
-
-                                {/* ATF transliteration - small below */}
                                 <div
                                   className="text-[10px] font-mono leading-tight"
                                   style={{ color: 'var(--text-faint)' }}
@@ -275,31 +277,32 @@ export default function TabletsPage() {
                           ))}
                         </div>
                       </div>
-                    ))}
-                    {sections.length === 0 && (
-                      <p
-                        className="text-sm italic"
-                        style={{ color: 'var(--text-faint)' }}
-                      >
-                        No transliteration data available.
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Compact metadata footer */}
-                  <div
-                    className="mt-4 pt-3 border-t text-xs flex flex-wrap gap-x-4 gap-y-1"
-                    style={{
-                      borderColor: 'var(--border-light)',
-                      color: 'var(--text-muted)',
-                    }}
-                  >
-                    <span>{tablet.museum}</span>
-                    <span>{tablet.museumNo}</span>
-                    <span>{tablet.lineCount} lines</span>
-                    <span>{tablet.surfaces.join(', ')}</span>
-                  </div>
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <div className="p-4">
+                  <p
+                    className="text-sm italic"
+                    style={{ color: 'var(--text-faint)' }}
+                  >
+                    No transliteration data available.
+                  </p>
+                </div>
+              )}
+
+              {/* Compact metadata footer */}
+              <div
+                className="px-5 py-3 border-t text-xs flex flex-wrap gap-x-4 gap-y-1"
+                style={{
+                  borderColor: 'var(--border-light)',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                <span>{tablet.museum}</span>
+                <span>{tablet.museumNo}</span>
+                <span>{tablet.lineCount} lines</span>
+                <span>{tablet.surfaces.join(', ')}</span>
               </div>
             </article>
           );
