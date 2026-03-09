@@ -8,13 +8,14 @@ import {
   areaPath,
 } from '@/components/analytics/charts/chart-utils';
 
-interface Keyword {
+interface Term {
   term: string;
   n: number;
   cat: string;
   cv: number;
   peak: number;
   periods: Record<string, number>;
+  lang?: string;
 }
 
 interface Corpus {
@@ -56,6 +57,20 @@ const CATEGORY_COLORS: Record<string, string> = {
   Astronomy: '#6b8e5a',
 };
 
+const LANGUAGE_COLORS: Record<string, string> = {
+  Latin: 'var(--accent-rust)',
+  German: '#4a90d9',
+  Greek: 'var(--accent-violet)',
+  French: '#d4873c',
+  Sanskrit: 'var(--accent-sage)',
+  Italian: '#c4564c',
+  Dutch: '#5a8e8b',
+  Hebrew: 'var(--accent-gold-dark)',
+  Chinese: '#8b6db5',
+  Arabic: '#6b8e5a',
+  Syriac: '#b5856d',
+};
+
 interface TooltipData {
   x: number;
   y: number;
@@ -64,19 +79,26 @@ interface TooltipData {
   totalBooks: number;
 }
 
+type Mode = 'keywords' | 'vocab';
+
 export default function ConceptDiffusionViz({
   keywords,
+  vocab,
   corpus,
   groups,
+  vocabGroups,
   defaultSelected,
   suggestions,
 }: {
-  keywords: Keyword[];
+  keywords: Term[];
+  vocab: Term[];
   corpus: Corpus;
   groups: Record<string, string[]>;
+  vocabGroups: Record<string, string[]>;
   defaultSelected: string[];
   suggestions: Suggestions;
 }) {
+  const [mode, setMode] = useState<Mode>('keywords');
   const [selected, setSelected] = useState<string[]>(defaultSelected);
   const [normalized, setNormalized] = useState(true);
   const [filled, setFilled] = useState(false);
@@ -87,21 +109,24 @@ export default function ConceptDiffusionViz({
   const svgRef = useRef<SVGSVGElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // Index keywords by term for fast lookup
-  const keywordMap = useMemo(() => {
-    const map = new Map<string, Keyword>();
-    for (const k of keywords) map.set(k.term, k);
+  const terms = mode === 'keywords' ? keywords : vocab;
+  const activeGroups = mode === 'keywords' ? groups : vocabGroups;
+
+  // Index terms by name for fast lookup
+  const termMap = useMemo(() => {
+    const map = new Map<string, Term>();
+    for (const t of terms) map.set(t.term, t);
     return map;
-  }, [keywords]);
+  }, [terms]);
 
   // Search results (autocomplete)
   const searchResults = useMemo(() => {
     if (!search || search.length < 2) return [];
     const q = search.toLowerCase();
-    return keywords
+    return terms
       .filter((k) => k.term.toLowerCase().includes(q))
       .slice(0, 20);
-  }, [keywords, search]);
+  }, [terms, search]);
 
   // Toggle a concept
   const toggle = useCallback((term: string) => {
@@ -113,17 +138,25 @@ export default function ConceptDiffusionViz({
   }, []);
 
   // Select a group
-  const selectGroup = useCallback((terms: string[]) => {
-    setSelected(terms.slice(0, 10));
+  const selectGroup = useCallback((groupTerms: string[]) => {
+    setSelected(groupTerms.slice(0, 10));
   }, []);
 
-  // Build time series for selected keywords
+  // Handle mode switch
+  const switchMode = useCallback((newMode: Mode) => {
+    setMode(newMode);
+    setSelected([]);
+    setActiveGroup(null);
+    setSearch('');
+  }, []);
+
+  // Build time series for selected terms
   const { periods } = corpus;
 
   const series = useMemo(() => {
     return selected
       .map((term, i) => {
-        const kw = keywordMap.get(term);
+        const kw = termMap.get(term);
         if (!kw) return null;
         const points = periods.map((p) => {
           const count = kw.periods[String(p)] || 0;
@@ -138,7 +171,7 @@ export default function ConceptDiffusionViz({
         return { term, color: LINE_COLORS[i % LINE_COLORS.length], points };
       })
       .filter(Boolean) as { term: string; color: string; points: { period: number; value: number; count: number; normalized: number }[] }[];
-  }, [selected, keywordMap, periods, corpus.periodTotals, normalized]);
+  }, [selected, termMap, periods, corpus.periodTotals, normalized]);
 
   // Chart dimensions
   const width = 900;
@@ -219,13 +252,37 @@ export default function ConceptDiffusionViz({
 
   // Filter groups by active group
   const visibleGroups = activeGroup
-    ? { [activeGroup]: groups[activeGroup] || [] }
-    : groups;
+    ? { [activeGroup]: activeGroups[activeGroup] || [] }
+    : activeGroups;
+
+  const groupColorMap = mode === 'keywords' ? CATEGORY_COLORS : LANGUAGE_COLORS;
 
   return (
     <div>
-      {/* Search + controls */}
+      {/* Mode toggle + Search + controls */}
       <div className="flex flex-wrap items-center gap-4 mb-4">
+        <div className="flex bg-[var(--bg-warm)] rounded-lg p-0.5">
+          <button
+            onClick={() => switchMode('keywords')}
+            className={`px-3 py-1 text-sm rounded-md transition-all ${
+              mode === 'keywords'
+                ? 'bg-white text-[var(--text-primary)] shadow-sm'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+            }`}
+          >
+            English Keywords
+          </button>
+          <button
+            onClick={() => switchMode('vocab')}
+            className={`px-3 py-1 text-sm rounded-md transition-all ${
+              mode === 'vocab'
+                ? 'bg-white text-[var(--text-primary)] shadow-sm'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+            }`}
+          >
+            Original Vocabulary
+          </button>
+        </div>
         <div className="relative" ref={searchRef}>
           <input
             type="text"
@@ -238,11 +295,15 @@ export default function ConceptDiffusionViz({
               if (search.length >= 2) setShowDropdown(true);
             }}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-            placeholder="Search 5,362 keywords..."
+            placeholder={
+              mode === 'keywords'
+                ? `Search ${terms.length.toLocaleString()} keywords...`
+                : `Search ${terms.length.toLocaleString()} terms...`
+            }
             className="px-3 py-1.5 text-sm border border-[var(--border-light)] rounded-lg bg-white w-56"
           />
           {showDropdown && searchResults.length > 0 && (
-            <div className="absolute z-50 top-full left-0 mt-1 w-72 bg-white border border-[var(--border-medium)] rounded-lg shadow-lg max-h-64 overflow-y-auto">
+            <div className="absolute z-50 top-full left-0 mt-1 w-80 bg-white border border-[var(--border-medium)] rounded-lg shadow-lg max-h-64 overflow-y-auto">
               {searchResults.map((k) => (
                 <button
                   key={k.term}
@@ -254,7 +315,7 @@ export default function ConceptDiffusionViz({
                     {k.term}
                   </span>
                   <span className="text-xs text-[var(--text-faint)]">
-                    {k.n} books · cv {k.cv.toFixed(1)}
+                    {k.n} books{k.lang ? ` · ${k.lang}` : ''} · cv {k.cv.toFixed(1)}
                   </span>
                 </button>
               ))}
@@ -289,35 +350,37 @@ export default function ConceptDiffusionViz({
         )}
       </div>
 
-      {/* Suggestion pills */}
-      <div className="space-y-1.5 mb-4">
-        {suggestions.rising.length > 0 && (
-          <SuggestionRow
-            label="Late risers"
-            terms={suggestions.rising}
-            selected={selected}
-            toggle={toggle}
-          />
-        )}
-        {suggestions.earlyPeakers.length > 0 && (
-          <SuggestionRow
-            label="Early peakers"
-            terms={suggestions.earlyPeakers}
-            selected={selected}
-            toggle={toggle}
-          />
-        )}
-        {suggestions.persistent.length > 0 && (
-          <SuggestionRow
-            label="Persistent"
-            terms={suggestions.persistent}
-            selected={selected}
-            toggle={toggle}
-          />
-        )}
-      </div>
+      {/* Suggestion pills (keywords mode only) */}
+      {mode === 'keywords' && (
+        <div className="space-y-1.5 mb-4">
+          {suggestions.rising.length > 0 && (
+            <SuggestionRow
+              label="Late risers"
+              terms={suggestions.rising}
+              selected={selected}
+              toggle={toggle}
+            />
+          )}
+          {suggestions.earlyPeakers.length > 0 && (
+            <SuggestionRow
+              label="Early peakers"
+              terms={suggestions.earlyPeakers}
+              selected={selected}
+              toggle={toggle}
+            />
+          )}
+          {suggestions.persistent.length > 0 && (
+            <SuggestionRow
+              label="Persistent"
+              terms={suggestions.persistent}
+              selected={selected}
+              toggle={toggle}
+            />
+          )}
+        </div>
+      )}
 
-      {/* Category tabs */}
+      {/* Group tabs */}
       <div className="flex flex-wrap gap-1.5 mb-2">
         <button
           onClick={() => setActiveGroup(null)}
@@ -329,7 +392,7 @@ export default function ConceptDiffusionViz({
         >
           All
         </button>
-        {Object.keys(groups).map((name) => (
+        {Object.keys(activeGroups).map((name) => (
           <button
             key={name}
             onClick={() => setActiveGroup(activeGroup === name ? null : name)}
@@ -339,8 +402,8 @@ export default function ConceptDiffusionViz({
                 : 'hover:opacity-100 opacity-70'
             }`}
             style={{
-              color: activeGroup === name ? 'white' : CATEGORY_COLORS[name] || 'var(--text-muted)',
-              backgroundColor: activeGroup === name ? (CATEGORY_COLORS[name] || 'var(--text-secondary)') : 'transparent',
+              color: activeGroup === name ? 'white' : groupColorMap[name] || 'var(--text-muted)',
+              backgroundColor: activeGroup === name ? (groupColorMap[name] || 'var(--text-secondary)') : 'transparent',
             }}
           >
             {name}
@@ -348,18 +411,18 @@ export default function ConceptDiffusionViz({
         ))}
       </div>
 
-      {/* Category keywords */}
+      {/* Group terms */}
       <div className="space-y-1.5 mb-4">
-        {Object.entries(visibleGroups).map(([groupName, terms]) => (
+        {Object.entries(visibleGroups).map(([groupName, groupTerms]) => (
           <div key={groupName} className="flex flex-wrap items-center gap-1.5">
             <button
-              onClick={() => selectGroup(terms)}
+              onClick={() => selectGroup(groupTerms)}
               className="text-xs font-medium px-2 py-0.5 rounded"
-              style={{ color: CATEGORY_COLORS[groupName] || 'var(--text-secondary)' }}
+              style={{ color: groupColorMap[groupName] || 'var(--text-secondary)' }}
             >
               {groupName}:
             </button>
-            {terms.map((term) => {
+            {groupTerms.map((term) => {
               const isSelected = selected.includes(term);
               const idx = selected.indexOf(term);
               const color = isSelected
@@ -499,7 +562,7 @@ export default function ConceptDiffusionViz({
               fontSize={12} fill="var(--text-secondary)" textAnchor="middle"
               transform={`rotate(-90, -45, ${plotH / 2})`}
             >
-              {normalized ? 'Frequency (% of books)' : 'Books mentioning keyword'}
+              {normalized ? 'Frequency (% of books)' : 'Books containing term'}
             </text>
 
             {/* Corpus size label */}
