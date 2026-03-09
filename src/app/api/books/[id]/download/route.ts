@@ -4,6 +4,9 @@ import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
 import sharp from 'sharp';
+import { writeFileSync, existsSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 import { images } from '@/lib/api-client';
 
 // Base URL for source links - update when we have a custom domain
@@ -1412,12 +1415,62 @@ function wrapText(text: string, maxChars: number): string[] {
   return lines;
 }
 
+// === Cover Font Management ===
+// Cached in /tmp across Lambda warm starts
+const COVER_FONT_PATH = join(tmpdir(), 'sl-cover-font.ttf');
+
+/** Download Cormorant Garamond from Google Fonts, cache in /tmp */
+async function ensureCoverFont(): Promise<string | null> {
+  if (existsSync(COVER_FONT_PATH)) return COVER_FONT_PATH;
+  try {
+    // Old User-Agent triggers TTF format from Google Fonts CSS API
+    const cssRes = await fetch(
+      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700',
+      { headers: { 'User-Agent': 'Mozilla/4.0' } }
+    );
+    const css = await cssRes.text();
+    const urlMatch = css.match(/url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/);
+    if (!urlMatch) return null;
+    const fontRes = await fetch(urlMatch[1]);
+    writeFileSync(COVER_FONT_PATH, Buffer.from(await fontRes.arrayBuffer()));
+    return COVER_FONT_PATH;
+  } catch (e) {
+    console.error('[EPUB] Failed to download cover font:', e);
+    return null;
+  }
+}
+
+/** Render text as transparent PNG via sharp's Pango text API (no system fonts needed) */
+async function renderCoverText(
+  text: string, fontSize: number, color: string, maxWidth: number,
+  fontfile: string | null,
+  opts?: { bold?: boolean; italic?: boolean; letterSpacing?: number }
+): Promise<{ buffer: Buffer; width: number; height: number }> {
+  const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let content = escaped;
+  if (opts?.bold) content = `<b>${content}</b>`;
+  if (opts?.italic) content = `<i>${content}</i>`;
+  const attrs = [`foreground="${color}"`];
+  if (opts?.letterSpacing) attrs.push(`letter_spacing="${Math.round(opts.letterSpacing * 1024)}"`);
+  const markup = `<span ${attrs.join(' ')}>${content}</span>`;
+
+  const textInput: sharp.CreateText = {
+    text: markup, width: maxWidth, align: 'centre' as sharp.TextAlign, rgba: true, dpi: 72,
+    font: fontfile ? `Cormorant Garamond ${fontSize}` : `serif ${fontSize}`,
+    ...(fontfile ? { fontfile } : {}),
+  };
+
+  const buf = await sharp({ text: textInput }).png().toBuffer();
+  const meta = await sharp(buf).metadata();
+  return { buffer: buf, width: meta.width || 0, height: meta.height || 0 };
+}
+
 /**
- * Generate a designed book cover with illustration background, gradient overlays,
- * and typographic title treatment. Inspired by Penguin Classics / NYRB Classics.
+ * Generate a designed book cover. Uses sharp Pango text rendering (not SVG text)
+ * so it works on Vercel Lambda which has no system fonts for librsvg.
  *
- * With illustration: full-bleed background + dark gradients top/bottom + gold/cream text
- * Without illustration: dark background (#1a1612) + decorative border + centered typography
+ * With illustration: full-bleed background + gradients + solid dark panel + text
+ * Without illustration: dark background + decorative border + centered typography
  */
 async function generateDesignedCover(
   sourceImage: Buffer | null,
@@ -1428,37 +1481,36 @@ async function generateDesignedCover(
   const W = 1200;
   const H = 1800;
 
-  // Word-wrap title (~26 chars per line for large serif at this width)
+  const fontPath = await ensureCoverFont();
   const titleLines = wrapText(bookTitle, 26);
   const titleFontSize = titleLines.length > 3 ? 46 : titleLines.length > 2 ? 52 : 58;
-  const lineHeight = titleFontSize + 16;
 
-  // Escape for SVG
-  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  try {
+    // Render all text elements as transparent PNGs via Pango
+    const brandText = await renderCoverText('SOURCE LIBRARY', 24, '#c9a86c', W - 200, fontPath, { letterSpacing: 8 });
+    const titleText = await renderCoverText(titleLines.join('\n'), titleFontSize, '#fdfcf9', W - 200, fontPath, { bold: true });
+    const authorText = await renderCoverText(author, 28, '#c9a86c', W - 200, fontPath);
+    const yearText = year ? await renderCoverText(String(year), 20, '#c9a86c', W - 200, fontPath, { italic: true }) : null;
 
-  if (sourceImage) {
-    // === WITH ILLUSTRATION BACKGROUND ===
-    // Solid dark panel at bottom for text, illustration fills the top.
-    // Gradient transition between illustration and panel.
-    const textBlockHeight = titleLines.length * lineHeight + 130;
-    const panelHeight = textBlockHeight + 100;
-    const gradientHeight = 150;
-    const panelTop = H - panelHeight;
-    const gradientTop = panelTop - gradientHeight;
+    if (sourceImage) {
+      // === WITH ILLUSTRATION BACKGROUND ===
+      const panelContentH = titleText.height + authorText.height + (yearText ? yearText.height + 15 : 0) + 80;
+      const panelHeight = panelContentH + 120;
+      const gradientHeight = 150;
+      const panelTop = H - panelHeight;
+      const gradientTop = panelTop - gradientHeight;
+      const accentLineY = panelTop + 40;
 
-    // Text positions within the panel
-    const accentLineY = panelTop + 40;
-    const titleStartY = accentLineY + 50;
-    const authorY = titleStartY + titleLines.length * lineHeight + 20;
-    const yearY = authorY + 45;
+      // Layout text within the panel
+      let cursor = accentLineY + 30;
+      const titleTop = cursor;
+      cursor += titleText.height + 20;
+      const authorTop = cursor;
+      cursor += authorText.height + 15;
+      const yearTop = cursor;
 
-    const titleTextEls = titleLines.map((line, i) =>
-      `<text x="${W / 2}" y="${titleStartY + i * lineHeight}" text-anchor="middle"
-        font-family="Georgia, 'Times New Roman', serif" font-size="${titleFontSize}"
-        fill="#fdfcf9" font-weight="bold">${esc(line)}</text>`
-    ).join('\n');
-
-    const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+      // SVG: gradients + accent line ONLY (no text — rendered via Pango)
+      const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#1a1612" stop-opacity="0.75"/>
@@ -1472,61 +1524,74 @@ async function generateDesignedCover(
   <rect x="0" y="0" width="${W}" height="360" fill="url(#tg)"/>
   <rect x="0" y="${gradientTop}" width="${W}" height="${gradientHeight}" fill="url(#bg)"/>
   <rect x="0" y="${panelTop}" width="${W}" height="${panelHeight}" fill="#1a1612"/>
-  <text x="${W / 2}" y="70" text-anchor="middle"
-    font-family="Georgia, serif" font-size="24" fill="#c9a86c"
-    letter-spacing="8" opacity="0.9">SOURCE LIBRARY</text>
   <line x1="${W / 2 - 60}" y1="${accentLineY}" x2="${W / 2 + 60}" y2="${accentLineY}"
     stroke="#c9a86c" stroke-width="1" stroke-opacity="0.5"/>
-  ${titleTextEls}
-  <text x="${W / 2}" y="${authorY}" text-anchor="middle"
-    font-family="Georgia, serif" font-size="28" fill="#c9a86c">${esc(author)}</text>
-  ${year ? `<text x="${W / 2}" y="${yearY}" text-anchor="middle"
-    font-family="Georgia, serif" font-size="20" fill="#c9a86c"
-    font-style="italic">${esc(String(year))}</text>` : ''}
 </svg>`;
 
-    const base = await sharp(sourceImage)
-      .resize(W, H, { fit: 'cover', position: 'north' })
-      .toBuffer();
+      const base = await sharp(sourceImage)
+        .resize(W, H, { fit: 'cover', position: 'north' })
+        .toBuffer();
 
-    return sharp(base)
-      .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
-      .jpeg({ quality: 90, mozjpeg: true })
-      .toBuffer();
-  } else {
-    // === TEXT-ONLY COVER (no illustration) ===
-    const titleStartY = 700;
-    const authorY = titleStartY + titleLines.length * lineHeight + 60;
-    const yearY = authorY + 55;
+      const composites: Array<{ input: Buffer; top: number; left: number }> = [
+        { input: Buffer.from(svg), top: 0, left: 0 },
+        { input: brandText.buffer, top: Math.max(0, Math.round(50 - brandText.height / 2)), left: Math.round((W - brandText.width) / 2) },
+        { input: titleText.buffer, top: titleTop, left: Math.round((W - titleText.width) / 2) },
+        { input: authorText.buffer, top: authorTop, left: Math.round((W - authorText.width) / 2) },
+      ];
+      if (yearText) {
+        composites.push({ input: yearText.buffer, top: yearTop, left: Math.round((W - yearText.width) / 2) });
+      }
 
-    const titleTextEls = titleLines.map((line, i) =>
-      `<text x="${W / 2}" y="${titleStartY + i * lineHeight}" text-anchor="middle"
-        font-family="Georgia, 'Times New Roman', serif" font-size="${titleFontSize}"
-        fill="#fdfcf9" font-weight="bold">${esc(line)}</text>`
-    ).join('\n');
+      return sharp(base)
+        .composite(composites)
+        .jpeg({ quality: 90, mozjpeg: true })
+        .toBuffer();
+    } else {
+      // === TEXT-ONLY COVER ===
+      const totalH = titleText.height + authorText.height + (yearText ? yearText.height + 15 : 0) + 50;
+      const titleTop = Math.round((H - totalH) / 2);
+      const authorTop = titleTop + titleText.height + 50;
+      const yearTop = authorTop + authorText.height + 15;
 
-    const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+      // SVG: background + decorative borders + accent lines (no text)
+      const svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <rect width="${W}" height="${H}" fill="#1a1612"/>
   <rect x="40" y="40" width="${W - 80}" height="${H - 80}"
     fill="none" stroke="#c9a86c" stroke-width="1" stroke-opacity="0.35"/>
   <rect x="48" y="48" width="${W - 96}" height="${H - 96}"
     fill="none" stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.2"/>
-  <text x="${W / 2}" y="180" text-anchor="middle"
-    font-family="Georgia, serif" font-size="24" fill="#c9a86c"
-    letter-spacing="8">SOURCE LIBRARY</text>
   <line x1="${W / 2 - 70}" y1="200" x2="${W / 2 + 70}" y2="200"
     stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.5"/>
-  ${titleTextEls}
-  <line x1="${W / 2 - 100}" y1="${authorY - 30}" x2="${W / 2 + 100}" y2="${authorY - 30}"
+  <line x1="${W / 2 - 100}" y1="${authorTop - 20}" x2="${W / 2 + 100}" y2="${authorTop - 20}"
     stroke="#c9a86c" stroke-width="0.5" stroke-opacity="0.4"/>
-  <text x="${W / 2}" y="${authorY}" text-anchor="middle"
-    font-family="Georgia, serif" font-size="28" fill="#c9a86c">${esc(author)}</text>
-  ${year ? `<text x="${W / 2}" y="${yearY}" text-anchor="middle"
-    font-family="Georgia, serif" font-size="20" fill="#c9a86c"
-    font-style="italic">${esc(String(year))}</text>` : ''}
 </svg>`;
 
-    return sharp(Buffer.from(svg))
+      const baseBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+
+      const composites: Array<{ input: Buffer; top: number; left: number }> = [
+        { input: brandText.buffer, top: Math.max(0, Math.round(165 - brandText.height / 2)), left: Math.round((W - brandText.width) / 2) },
+        { input: titleText.buffer, top: titleTop, left: Math.round((W - titleText.width) / 2) },
+        { input: authorText.buffer, top: authorTop, left: Math.round((W - authorText.width) / 2) },
+      ];
+      if (yearText) {
+        composites.push({ input: yearText.buffer, top: yearTop, left: Math.round((W - yearText.width) / 2) });
+      }
+
+      return sharp(baseBuffer)
+        .composite(composites)
+        .jpeg({ quality: 90, mozjpeg: true })
+        .toBuffer();
+    }
+  } catch (e) {
+    console.error('[EPUB] Cover text rendering failed, generating text-free cover:', e);
+    // Graceful fallback: cover without text
+    if (sourceImage) {
+      return sharp(sourceImage)
+        .resize(W, H, { fit: 'cover', position: 'north' })
+        .jpeg({ quality: 90, mozjpeg: true })
+        .toBuffer();
+    }
+    return sharp({ create: { width: W, height: H, channels: 3, background: { r: 26, g: 22, b: 18 } } })
       .jpeg({ quality: 90, mozjpeg: true })
       .toBuffer();
   }
