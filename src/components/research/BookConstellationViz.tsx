@@ -115,7 +115,7 @@ function hexToRgb(hex: string): [number, number, number] {
 // ────────────────────────────────────────────────────────────
 
 const SPREAD = 40; // World-space spread of the constellation
-const POINT_SIZE = 3.0;
+const POINT_SIZE = 1.5;
 
 export default function BookConstellationViz({ data }: { data: ConstellationData }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -160,14 +160,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     // Scene
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#0d0d14');
-    scene.fog = new THREE.FogExp2('#0d0d14', 0.008);
+    scene.fog = new THREE.FogExp2('#0d0d14', 0.003);
     sceneRef.current = scene;
 
     // Camera
     const w = container.clientWidth;
     const h = Math.max(500, Math.min(w * 0.65, 700));
     const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 500);
-    camera.position.set(0, 0, SPREAD * 1.6);
+    camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
     cameraRef.current = camera;
 
     // Renderer
@@ -189,7 +189,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     controlsRef.current = controls;
 
     // Raycaster threshold
-    raycasterRef.current.params.Points = { threshold: 0.6 };
+    raycasterRef.current.params.Points = { threshold: 0.4 };
 
     // Points geometry
     const geometry = new THREE.BufferGeometry();
@@ -230,7 +230,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           vAlpha = size > 0.1 ? 1.0 : 0.0;
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
           gl_PointSize = size * pointMultiplier / -mvPosition.z;
-          gl_PointSize = clamp(gl_PointSize, 1.0, 20.0);
+          gl_PointSize = clamp(gl_PointSize, 1.0, 12.0);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
@@ -241,7 +241,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           float d = length(gl_PointCoord - vec2(0.5));
           if (d > 0.5) discard;
           float alpha = smoothstep(0.5, 0.35, d) * vAlpha;
-          gl_FragColor = vec4(vColor, alpha * 0.85);
+          gl_FragColor = vec4(vColor, alpha * 0.92);
         }
       `,
       vertexColors: true,
@@ -399,7 +399,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     const camera = cameraRef.current;
     const controls = controlsRef.current;
     if (camera && controls) {
-      camera.position.set(0, 0, SPREAD * 1.6);
+      camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
       controls.target.set(0, 0, 0);
       controls.update();
     }

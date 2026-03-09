@@ -59,10 +59,10 @@ export default function BookAtlasPage() {
       <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6 mb-8">
         <h2 className="font-serif text-xl mb-1">Content Constellation</h2>
         <p className="text-[var(--text-muted)] text-sm mb-4">
-          Each point is a book. Position is determined by AI analysis of each book&apos;s
-          content — summaries, themes, index terms, and subject keywords are embedded into
-          a 384-dimensional vector space, then projected to 3D using UMAP. Hover for
-          details, click to read.
+          Each point is a book. Horizontal position reflects content similarity — AI
+          embeddings of summaries, themes, and index terms are projected to 2D with UMAP.
+          Vertical position represents the date of composition. Hover for details, click to
+          read.
         </p>
         <BookConstellationViz data={data} />
       </div>
@@ -110,18 +110,23 @@ export default function BookAtlasPage() {
           sentence-transformer model, producing a 384-dimensional vector for each book.
         </p>
         <p className="mb-2">
-          The 384-dimensional embeddings are projected to 3D using{' '}
+          The 384-dimensional embeddings are projected to 2D using{' '}
           <strong>UMAP</strong> (Uniform Manifold Approximation and Projection) with cosine
           distance, n_neighbors=15, and min_dist=0.1. UMAP preserves both local and global
           structure — books that are semantically similar in the high-dimensional space
-          remain close in the 3D projection. The scene is rendered with Three.js and
-          supports rotation, zoom, and pan.
+          remain close in the x-y plane. The <strong>z-axis represents time</strong>: each
+          book&apos;s vertical position is determined by its date of composition (using the
+          earliest known date for translations of ancient works). A piecewise linear
+          normalization compresses the sparse pre-1400 range and expands the dense
+          1400–1970 period. The scene is rendered with Three.js and supports rotation, zoom,
+          and pan.
         </p>
         <p className="mb-2">
           <strong>K-Means clustering</strong> (k={data.meta.n_clusters}) is applied to the
-          original 384-dimensional embeddings (not the 3D projection) to identify coherent
-          topic groups. Cluster labels are derived from the most common category and
-          keywords within each cluster.
+          original 384-dimensional embeddings (not the projection) to identify coherent
+          topic groups. Cluster labels use <strong>TF-IDF weighting</strong> on book
+          categories — categories that are frequent within a cluster but rare across all
+          clusters score highest, producing more distinctive labels than raw frequency.
         </p>
         <p>
           The multilingual model handles the corpus&apos;s language diversity — Latin,
