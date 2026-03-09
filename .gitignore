@@ -52,6 +52,7 @@ data/
 src/data/*
 !src/data/concept-diffusion.json
 !src/data/concept-diffusion-research.json
+!src/data/book-constellation.json
 
 # User uploads and test files
 public/uploads/
