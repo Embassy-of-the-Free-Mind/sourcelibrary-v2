@@ -30,17 +30,26 @@ function SignInContent() {
 
   if (emailSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
-        <div className="w-full max-w-md p-8 rounded-2xl text-center" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-          <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style={{ background: 'var(--bg-warm)' }}>
-            <svg className="w-8 h-8" style={{ color: 'var(--text-primary)' }} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-            </svg>
-          </div>
+      <div className="min-h-screen relative flex items-center justify-center">
+        {/* Background image */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero-poster.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+
+        <div className="relative z-10 w-full max-w-md p-8 rounded-2xl text-center bg-white/95 backdrop-blur-sm border border-white/20 mx-4">
+          <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
+            <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
+            <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
+          </svg>
           <h1 className="text-2xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
             Check your email
           </h1>
-          <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-base mb-6" style={{ color: 'var(--text-muted)' }}>
             We sent a sign-in link to <strong>{email}</strong>. Click the link in the email to access the library.
           </p>
           <button
@@ -56,19 +65,34 @@ function SignInContent() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
-      <div className="w-full max-w-md p-8 rounded-2xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+    <div className="min-h-screen relative flex items-center justify-center">
+      {/* Background image */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/hero-poster.jpg"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black/50" />
+
+      <div className="relative z-10 w-full max-w-md p-8 rounded-2xl bg-white/95 backdrop-blur-sm border border-white/20 mx-4">
         <div className="text-center mb-8">
-          <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
-            <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
-            <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
-          </svg>
+          <Link href="/" className="inline-flex items-center gap-3 mb-4" aria-label="Source Library home">
+            <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
+              <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
+              <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
+            </svg>
+            <span className="text-xl uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
+              <span className="font-semibold">Source</span>
+              <span className="font-light">Library</span>
+            </span>
+          </Link>
           <h1 className="text-2xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
-            <span className="font-semibold">Source</span><span className="font-light">Library</span>
+            Sign In
           </h1>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-            Five centuries of lost knowledge in alchemy, Hermetica, and natural philosophy — translated and freely accessible.
+            Access the full collection of rare texts in alchemy, Hermetica, and natural philosophy.
           </p>
         </div>
 
@@ -104,8 +128,8 @@ function SignInContent() {
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full mt-3 px-4 py-3 rounded-lg font-medium transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: 'var(--text-primary, #1c1917)', color: '#ffffff' }}
+            className="w-full mt-3 px-4 py-3 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50"
+            style={{ background: 'var(--accent-rust)', color: '#ffffff' }}
           >
             {loading ? 'Sending link...' : 'Continue with email'}
           </button>
@@ -133,7 +157,16 @@ function SignInContent() {
           </button>
         </div>
 
-        <p className="mt-8 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
+        <div className="mt-8 pt-6 text-center" style={{ borderTop: '1px solid var(--border-light)' }}>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+            Don&apos;t have an account?{' '}
+            <Link href="/" className="font-medium underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
+              Join free
+            </Link>
+          </p>
+        </div>
+
+        <p className="mt-4 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
           By signing in, you agree to our{' '}
           <Link href="/terms" className="underline hover:opacity-80">terms of service</Link>
           {' '}and{' '}
