@@ -86,20 +86,20 @@ const CENTURIES = [
 
 const GALLERY_IMAGES = [
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d08677f38f6761bc5477/695906c895a91542b28bf73f-0.jpg',
+    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d08677f38f6761bc5477/695906c895a91542b28bf73e-0.jpg',
     title: 'Amphitheatre of Eternal Wisdom',
     author: 'Heinrich Khunrath',
     year: 1609,
     slug: 'amphitheatre-of-eternal-wisdom-1609-khunrath',
-    desc: 'Alchemical laboratory and oratory',
+    desc: 'Porta Amphitheatri — Gate of the Amphitheatre of Wisdom',
   },
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69593413b282844d7b277aaf/69593413b282844d7b277acb-0.jpg?v=1771877347670',
+    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69593413b282844d7b277aaf/69593413b282844d7b277ab0-0.jpg?v=1771877346999',
     title: 'Utriusque Cosmi Historia',
     author: 'Robert Fludd',
     year: 1617,
     slug: 'utriusque-cosmi-historia-tomus-primus-de-macrocosmi-fludd',
-    desc: 'The Great Void — Et sic in infinitum',
+    desc: 'Cosmological frontispiece — macrocosm and microcosm',
   },
   {
     url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0.jpg?v=1771876133767',
