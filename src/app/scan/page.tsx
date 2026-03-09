@@ -164,7 +164,12 @@ export default function ScanPage() {
         formData.append('titlePage', imageToUpload);
       }
 
-      const res = await fetch('/api/scan/create', { method: 'POST', body: formData });
+      // Retry once on transient errors (cold-start MongoDB timeouts)
+      let res = await fetch('/api/scan/create', { method: 'POST', body: formData });
+      if (!res.ok && res.status >= 500) {
+        await new Promise(r => setTimeout(r, 2000));
+        res = await fetch('/api/scan/create', { method: 'POST', body: formData });
+      }
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || 'Failed to create book');
