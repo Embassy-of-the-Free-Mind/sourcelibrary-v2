@@ -331,16 +331,21 @@ async function submitTranslationViaLambda(
   bookId: string,
 ): Promise<{ success: boolean; jobId?: string; error?: string }> {
   try {
-    // Find pages with OCR but no translation (skip non-content page types)
+    // Find pages that need translation: either no translation yet, OR translation is stale (older than OCR).
+    // The translation worker already checks `transTime >= ocrTime` and skips current translations,
+    // so including stale-translation pages here is safe — it won't re-translate already-current pages.
     const pages = await db.collection('pages')
       .find({
         book_id: bookId,
         'ocr.data': { $exists: true, $nin: [null, ''] },
         page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
         $or: [
+          // No translation yet
           { 'translation.data': { $exists: false } },
           { 'translation.data': null },
           { 'translation.data': '' },
+          // Stale translation: translation predates OCR (re-OCR'd without re-translating)
+          { $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] } },
         ],
       })
       .sort({ page_number: 1 })
@@ -1294,6 +1299,52 @@ export async function GET(request: NextRequest) {
     }
 
     await earlyFlushIfNeeded();
+
+    // ── Stale translation rollback ──
+    // Scan late-pipeline books for pages where translation.updated_at < ocr.updated_at.
+    // This happens when a book is re-OCR'd with a newer prompt without being re-translated.
+    // Reset stale books to ft_verified so Phase 4 picks them up this same run.
+    // Checks up to 30 books per run; each book re-checked at most once per 7 days.
+    if (hasTimeBudget(startTime) && !translatePaused) {
+      const STALE_CHECK_LIMIT = 30;
+      const staleCheckCutoff = new Date(Date.now() - 7 * 24 * 3600 * 1000); // 7 days
+      const lateStates = [
+        'translate_complete', 'enriching', 'enriched', 'chapters', 'chapters_complete',
+        'images_submitted', 'images_complete', 'complete',
+      ];
+      const staleCandidates = await db.collection('books')
+        .find({
+          'pipeline_auto.status': { $in: lateStates },
+          $or: [
+            { 'pipeline_auto.last_stale_check': { $exists: false } },
+            { 'pipeline_auto.last_stale_check': { $lt: staleCheckCutoff } },
+          ],
+        })
+        .sort({ 'pipeline_auto.last_stale_check': 1 }) // least-recently-checked first
+        .limit(STALE_CHECK_LIMIT)
+        .project({ id: 1, title: 1, 'pipeline_auto.status': 1 })
+        .toArray();
+
+      for (const book of staleCandidates) {
+        if (!hasTimeBudget(startTime)) break;
+        // Always stamp check time to avoid re-scanning every run
+        await db.collection('books').updateOne(
+          { id: book.id },
+          { $set: { 'pipeline_auto.last_stale_check': new Date() } },
+        );
+        const staleCount = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          'translation.data': { $exists: true, $ne: '' },
+          $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] },
+        });
+        if (staleCount > 0) {
+          await setPipelineStatus(db, book.id, 'ft_verified');
+          log.stale_retranslate++;
+          console.log(`[pipeline] Stale translations: reset ${book.id} (${staleCount} pages, was ${book.pipeline_auto?.status})`);
+          logger.action('stale_translation_reset', log.stale_retranslate);
+        }
+      }
+    }
 
     // ── Phase 4: Submit translation via Gemini Batch API (ft_verified -> translate_submitted) ──
     if (translatePaused) {
