@@ -82,8 +82,10 @@ export async function GET(request: NextRequest) {
       // Parse gallery image IDs to extract page IDs
       const parsedItems = popularItems.map(item => {
         const galleryImageId = item._id as string;
-        const [pageId, indexStr] = galleryImageId.split(':');
-        return { galleryImageId, pageId, detectionIndex: parseInt(indexStr) || 0, count: item.count };
+        const match = galleryImageId.match(/^(.+)[:\-](\d+)$/);
+        const pageId = match?.[1] ?? galleryImageId;
+        const detectionIndex = match ? parseInt(match[2]) : 0;
+        return { galleryImageId, pageId, detectionIndex, count: item.count };
       });
 
       // Batch fetch all pages

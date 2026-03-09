@@ -146,8 +146,10 @@ export async function GET(request: NextRequest) {
 
     if (targetType === 'image') {
       const parsedItems = targetIds.map(id => {
-        const [pageId, indexStr] = id.split(':');
-        return { galleryImageId: id, pageId, detectionIndex: parseInt(indexStr) || 0 };
+        const match = id.match(/^(.+)[:\-](\d+)$/);
+        const pageId = match?.[1] ?? id;
+        const detectionIndex = match ? parseInt(match[2]) : 0;
+        return { galleryImageId: id, pageId, detectionIndex };
       });
 
       const pageIds = [...new Set(parsedItems.map(p => p.pageId))];

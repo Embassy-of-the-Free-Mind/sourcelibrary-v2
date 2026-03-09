@@ -266,8 +266,10 @@ export async function getImageCandidate(
   db: Db,
   galleryImageId: string
 ): Promise<SocialImageCandidate | null> {
-  const [pageId, indexStr] = galleryImageId.split(':');
-  const detectionIndex = parseInt(indexStr, 10);
+  const match = galleryImageId.match(/^(.+)[:\-](\d+)$/);
+  if (!match) return null;
+  const pageId = match[1];
+  const detectionIndex = parseInt(match[2], 10);
 
   if (!pageId || isNaN(detectionIndex)) {
     return null;
