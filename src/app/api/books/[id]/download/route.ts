@@ -172,15 +172,15 @@ function markdownToHtml(text: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // Convert placeholders to styled HTML elements
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<aside class="note">$1</aside>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<aside class="margin">$1</aside>');
+  // Convert placeholders to inline styled elements (no line breaks)
+  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
+  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
   html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
   html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
   html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
 
-  // Convert legacy [[notes: ...]] to styled aside blocks
-  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<aside class="note">$1</aside>');
+  // Convert legacy [[notes: ...]] to inline
+  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
 
   // Convert headers (must be done before paragraph wrapping)
   html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
@@ -199,8 +199,8 @@ function markdownToHtml(text: string): string {
   html = blocks.map(block => {
     block = block.trim();
     if (!block) return '';
-    // Don't wrap headers or asides in paragraphs
-    if (block.startsWith('<h') || block.startsWith('<aside')) {
+    // Don't wrap headers in paragraphs
+    if (block.startsWith('<h')) {
       return block;
     }
     // Replace single newlines with breaks within paragraphs
@@ -236,12 +236,8 @@ p {
   margin: 0.8em 0;
   text-align: justify;
 }
-.note {
-  background: #f9f5e9;
-  border-left: 3px solid #d4a656;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-  font-size: 0.9em;
+.note, .margin {
+  font-size: 0.85em;
   font-style: italic;
   color: #666;
 }
@@ -283,11 +279,7 @@ p {
   margin: 0.5em 0;
   text-align: justify;
 }
-.note {
-  background: #f9f5e9;
-  border-left: 3px solid #d4a656;
-  padding: 0.3em 0.8em;
-  margin: 0.5em 0;
+.note, .margin {
   font-size: 0.85em;
   font-style: italic;
   color: #666;
@@ -1334,13 +1326,10 @@ p { margin: 0.8em 0; text-align: justify; }
   max-height: 80vh;
   border: 1px solid #ddd;
 }
-.note {
-  background: #f9f5e9;
-  border-left: 3px solid #d4a656;
-  padding: 0.5em 1em;
-  margin: 1em 0;
-  font-size: 0.9em;
+.note, .margin {
+  font-size: 0.85em;
   font-style: italic;
+  color: #666;
 }
 .summary-section { padding: 1em; }
 .glossary { padding: 1em; }
@@ -1436,12 +1425,17 @@ async function generateScholarlyEpubDownload(
     illustrationsByPage.set(img.page_number, arr);
   }
 
-  // Find original title page scan
+  // Find original title page scan and frontispiece page
   const titlePageScan = pages.find(p => (p as any).page_type === 'title-page');
+  const frontispiecePage = pages.find(p => (p as any).page_type === 'frontispiece');
 
-  // Pick cover image: frontispiece > highest quality gallery image > book thumbnail
+  // Pick cover image: frontispiece page > frontispiece gallery image > highest quality gallery image > book thumbnail
+  // Prefer the actual page's cropped_photo over gallery extracted regions (which may be partial crops)
   const sortedGallery = [...galleryImages].sort((a: any, b: any) => (b.gallery_quality || 0) - (a.gallery_quality || 0));
   const coverGalleryImage = galleryImages.find((i: any) => i.type === 'frontispiece') || sortedGallery[0] || null;
+  const coverPageUrl = frontispiecePage
+    ? ((frontispiecePage as any).cropped_photo || (frontispiecePage as any).archived_photo || frontispiecePage.photo)
+    : null;
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1623,9 +1617,11 @@ async function generateScholarlyEpubDownload(
 
     // ========== FETCH COVER & TITLE PAGE IMAGES ==========
 
-    // Cover image
+    // Cover image: frontispiece page > gallery frontispiece > top gallery image > book thumbnail
     let coverImageBuffer: Buffer | null = null;
-    if (coverGalleryImage?.extracted_url) {
+    if (coverPageUrl) {
+      coverImageBuffer = await fetchIllustrationImage(coverPageUrl);
+    } else if (coverGalleryImage?.extracted_url) {
       coverImageBuffer = await fetchIllustrationImage(coverGalleryImage.extracted_url);
     } else if ((book as any).thumbnail) {
       coverImageBuffer = await fetchIllustrationImage((book as any).thumbnail);
