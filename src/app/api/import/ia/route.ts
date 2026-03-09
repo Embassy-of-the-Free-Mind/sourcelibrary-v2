@@ -32,7 +32,8 @@ export const POST = withAuth(async (request, session) => {
       published,
       categories,
       work_id,
-      dublin_core
+      dublin_core,
+      pages_count: manualPageCount
     } = body;
 
     if (!ia_identifier || !title || !author) {
@@ -60,9 +61,15 @@ export const POST = withAuth(async (request, session) => {
     const files = metadata.files || [];
     const iaMetadataRaw = metadata.metadata || {};
 
-    // Determine page count — prefer IIIF manifest (authoritative), fall back to metadata
+    // Determine page count — prefer manual override, then IIIF manifest, then metadata
     let pageCount = 0;
     let pageCountSource = '';
+
+    // 0. Manual override — for items without IIIF manifests (e.g. BNC Florence incunabula)
+    if (manualPageCount && Number.isInteger(manualPageCount) && manualPageCount > 0) {
+      pageCount = manualPageCount;
+      pageCountSource = 'manual';
+    }
 
     // 1. IIIF manifest — most reliable, counts actual canvases
     try {
