@@ -1565,12 +1565,19 @@ async function generateScholarlyEpubDownload(
   const titlePageScan = pages.find(p => (p as any).page_type === 'title-page');
 
   // Pick cover source image for the designed cover background.
-  // Use gallery images (AI-vetted illustrations) rather than page_type which can misclassify ex libris stamps.
-  // Priority: gallery frontispiece > best gallery engraving/emblem > best gallery image > illustration page > thumbnail
-  const sortedGallery = [...galleryImages].sort((a: any, b: any) => (b.gallery_quality || 0) - (a.gallery_quality || 0));
-  const coverGalleryImage = galleryImages.find((i: any) => i.type === 'frontispiece')
-    || galleryImages.find((i: any) => ['engraving', 'emblem', 'woodcut'].includes(i.type))
-    || sortedGallery[0]
+  // Build a set of title-page page numbers so we can exclude them from cover picks
+  // (title pages have dense text that conflicts with our overlay typography).
+  const titlePageNumbers = new Set(
+    pages.filter(p => (p as any).page_type === 'title-page').map(p => p.page_number)
+  );
+  // Filter to substantive illustrations (not decorative initials, not on title pages)
+  const coverCandidates = galleryImages.filter((i: any) =>
+    !['decorative', 'diagram'].includes(i.type) && !titlePageNumbers.has(i.page_number)
+  );
+  const sortedCandidates = [...coverCandidates].sort((a: any, b: any) => (b.gallery_quality || 0) - (a.gallery_quality || 0));
+  const coverGalleryImage = coverCandidates.find((i: any) => i.type === 'frontispiece')
+    || coverCandidates.find((i: any) => ['engraving', 'emblem', 'woodcut', 'portrait'].includes(i.type))
+    || sortedCandidates[0]
     || null;
 
   return new Promise(async (resolve, reject) => {
@@ -1755,12 +1762,14 @@ async function generateScholarlyEpubDownload(
     // Use gallery image's page (full page scan gives best fill), or extracted illustration
     let coverSourceBuffer: Buffer | null = null;
     if (coverGalleryImage) {
-      // Find the page this gallery image came from — use full page for background
+      // Prefer extracted_url (cropped illustration) for tighter framing,
+      // fall back to full page scan if no extracted URL exists
+      const extractedUrl = coverGalleryImage.extracted_url;
       const coverPage = pages.find(p => p.page_number === coverGalleryImage.page_number);
       const pageUrl = coverPage
         ? ((coverPage as any).cropped_photo || (coverPage as any).archived_photo || coverPage.photo)
         : null;
-      const sourceUrl = pageUrl || coverGalleryImage.extracted_url || coverGalleryImage.image_url;
+      const sourceUrl = extractedUrl || pageUrl || coverGalleryImage.image_url;
       if (sourceUrl) {
         try {
           coverSourceBuffer = await images.fetchBuffer(sourceUrl, { timeout: 60000 });
