@@ -296,6 +296,7 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
 
   return {
     title: edition.citation.title,
+    publisher: 'Source Library',
     resource_type: { id: 'publication-book' },
     publication_date: edition.published_at
       ? new Date(edition.published_at).toISOString().split('T')[0]
