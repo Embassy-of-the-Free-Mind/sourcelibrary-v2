@@ -14,17 +14,9 @@ export default function BookAtlasPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data = dataRaw as any;
 
-  const topCategories = Object.entries(
-    data.books.reduce(
-      (acc: Record<string, number>, b: { category: string }) => {
-        acc[b.category] = (acc[b.category] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>,
-    ),
-  )
-    .sort((a, b) => (b[1] as number) - (a[1] as number))
-    .slice(0, 8);
+  const topClusters = Object.values(data.clusters as Record<string, { label: string; size: number }>)
+    .sort((a, b) => b.size - a.size)
+    .slice(0, 10);
 
   const topLanguages = Object.entries(
     data.books.reduce(
@@ -69,7 +61,7 @@ export default function BookAtlasPage() {
         <p className="text-[var(--text-muted)] text-sm mb-4">
           Each point is a book. Position is determined by AI analysis of each book&apos;s
           content — summaries, themes, index terms, and subject keywords are embedded into
-          a 384-dimensional vector space, then projected to 2D using UMAP. Hover for
+          a 384-dimensional vector space, then projected to 3D using UMAP. Hover for
           details, click to read.
         </p>
         <BookConstellationViz data={data} />
@@ -78,14 +70,14 @@ export default function BookAtlasPage() {
       {/* Two-column breakdown */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6">
-          <h2 className="font-serif text-xl mb-4">By Subject</h2>
+          <h2 className="font-serif text-xl mb-4">Topic Clusters</h2>
           <div className="space-y-2">
-            {topCategories.map(([cat, count]) => (
+            {topClusters.map((cluster) => (
               <CategoryBar
-                key={cat}
-                label={formatCategory(cat as string)}
-                value={count as number}
-                max={topCategories[0][1] as number}
+                key={cluster.label}
+                label={cluster.label}
+                value={cluster.size}
+                max={topClusters[0].size}
               />
             ))}
           </div>
@@ -118,17 +110,18 @@ export default function BookAtlasPage() {
           sentence-transformer model, producing a 384-dimensional vector for each book.
         </p>
         <p className="mb-2">
-          The 384-dimensional embeddings are projected to 2D using{' '}
+          The 384-dimensional embeddings are projected to 3D using{' '}
           <strong>UMAP</strong> (Uniform Manifold Approximation and Projection) with cosine
           distance, n_neighbors=15, and min_dist=0.1. UMAP preserves both local and global
           structure — books that are semantically similar in the high-dimensional space
-          remain close in the 2D projection.
+          remain close in the 3D projection. The scene is rendered with Three.js and
+          supports rotation, zoom, and pan.
         </p>
         <p className="mb-2">
           <strong>K-Means clustering</strong> (k={data.meta.n_clusters}) is applied to the
-          original 384-dimensional embeddings (not the 2D projection) to identify coherent
-          topic groups. Cluster labels are derived from the most common keywords within
-          each cluster.
+          original 384-dimensional embeddings (not the 3D projection) to identify coherent
+          topic groups. Cluster labels are derived from the most common category and
+          keywords within each cluster.
         </p>
         <p>
           The multilingual model handles the corpus&apos;s language diversity — Latin,
@@ -151,13 +144,6 @@ function StatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-function formatCategory(cat: string): string {
-  return cat
-    .split('-')
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(' ');
-}
-
 function CategoryBar({
   label,
   value,
@@ -171,7 +157,7 @@ function CategoryBar({
   return (
     <div className="flex items-center gap-3">
       <div
-        className="w-32 text-sm text-[var(--text-secondary)] truncate"
+        className="w-48 text-sm text-[var(--text-secondary)] truncate"
         title={label}
       >
         {label}

@@ -28,6 +28,7 @@
     "@next/third-parties": "^16.1.6",
     "@octokit/rest": "^22.0.1",
     "@types/archiver": "^7.0.0",
+    "@types/three": "^0.183.1",
     "@vercel/blob": "^2.0.0",
     "archiver": "^7.0.1",
     "axios": "^1.13.2",
@@ -54,6 +55,7 @@
     "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
+    "three": "^0.183.2",
     "use-debounce": "^10.0.6",
     "zod": "^4.2.1"
   },

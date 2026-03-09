@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // ────────────────────────────────────────────────────────────
 // Types
@@ -21,16 +23,19 @@ interface Book {
   first_translation: boolean;
   x: number;
   y: number;
+  z: number;
   cluster: number;
 }
 
 interface ClusterInfo {
   id: number;
   size: number;
+  label: string;
   top_category: string;
   label_keywords: string[];
   cx: number;
   cy: number;
+  cz: number;
 }
 
 interface ConstellationData {
@@ -48,28 +53,14 @@ interface ConstellationData {
 // Color Maps
 // ────────────────────────────────────────────────────────────
 
-const CATEGORY_COLORS: Record<string, string> = {
-  alchemy: '#c9a86c',
-  theology: '#7c5db5',
-  philosophy: '#5d8fb5',
-  hermeticism: '#9e4a3a',
-  history: '#8b9a7d',
-  'natural-philosophy': '#5e6d52',
-  mysticism: '#a067a0',
-  astrology: '#d4924a',
-  medicine: '#4a9e7c',
-  kabbalah: '#b5835d',
-  magic: '#8a4a6a',
-  mathematics: '#5d7ab5',
-  science: '#4a8a8a',
-  literature: '#7a6a5a',
-  astronomy: '#4a6a9e',
-  freemasonry: '#6a7a4a',
-  rosicrucianism: '#9a5a5a',
-  occultism: '#6a4a8a',
-  art: '#b56a5d',
-  music: '#5a8a6a',
-};
+// 25 distinct cluster colors — perceptually spread
+const CLUSTER_COLORS = [
+  '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6',
+  '#1abc9c', '#e91e63', '#00bcd4', '#ff9800', '#673ab7',
+  '#4caf50', '#795548', '#607d8b', '#ff5722', '#009688',
+  '#8bc34a', '#c9a86c', '#5d8fb5', '#d4924a', '#a067a0',
+  '#5e6d52', '#b5835d', '#7c5db5', '#9e4a3a', '#4a9e7c',
+];
 
 const LANGUAGE_COLORS: Record<string, string> = {
   Latin: '#9e4a3a',
@@ -85,7 +76,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
   Greek: '#5d7ab5',
 };
 
-type ColorMode = 'category' | 'language' | 'century';
+type ColorMode = 'cluster' | 'language' | 'century';
 
 function getCenturyColor(year: number | null): string {
   if (!year) return '#aaa';
@@ -103,8 +94,8 @@ function getCenturyColor(year: number | null): string {
 
 function getBookColor(book: Book, mode: ColorMode): string {
   switch (mode) {
-    case 'category':
-      return CATEGORY_COLORS[book.category] || '#888';
+    case 'cluster':
+      return CLUSTER_COLORS[book.cluster % CLUSTER_COLORS.length];
     case 'language':
       return LANGUAGE_COLORS[book.language] || '#888';
     case 'century':
@@ -112,89 +103,38 @@ function getBookColor(book: Book, mode: ColorMode): string {
   }
 }
 
-// ────────────────────────────────────────────────────────────
-// Spatial index for fast hover lookup
-// ────────────────────────────────────────────────────────────
-
-class GridIndex {
-  private cells: Map<string, number[]> = new Map();
-  private cellSize: number;
-
-  constructor(
-    private books: Book[],
-    cellSize = 0.02,
-  ) {
-    this.cellSize = cellSize;
-    for (let i = 0; i < books.length; i++) {
-      const key = this.key(books[i].x, books[i].y);
-      const cell = this.cells.get(key);
-      if (cell) cell.push(i);
-      else this.cells.set(key, [i]);
-    }
-  }
-
-  private key(x: number, y: number): string {
-    return `${Math.floor(x / this.cellSize)},${Math.floor(y / this.cellSize)}`;
-  }
-
-  findNearest(x: number, y: number, maxDist: number): number | null {
-    const cx = Math.floor(x / this.cellSize);
-    const cy = Math.floor(y / this.cellSize);
-    let bestIdx: number | null = null;
-    let bestDist = maxDist * maxDist;
-
-    for (let dx = -1; dx <= 1; dx++) {
-      for (let dy = -1; dy <= 1; dy++) {
-        const cell = this.cells.get(`${cx + dx},${cy + dy}`);
-        if (!cell) continue;
-        for (const idx of cell) {
-          const bx = this.books[idx].x - x;
-          const by = this.books[idx].y - y;
-          const d2 = bx * bx + by * by;
-          if (d2 < bestDist) {
-            bestDist = d2;
-            bestIdx = idx;
-          }
-        }
-      }
-    }
-    return bestIdx;
-  }
+function hexToRgb(hex: string): [number, number, number] {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? [parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255]
+    : [0.5, 0.5, 0.5];
 }
 
 // ────────────────────────────────────────────────────────────
 // Component
 // ────────────────────────────────────────────────────────────
 
-const POINT_RADIUS = 3;
-const HOVER_RADIUS = 6;
+const SPREAD = 40; // World-space spread of the constellation
+const POINT_SIZE = 3.0;
 
 export default function BookConstellationViz({ data }: { data: ConstellationData }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const controlsRef = useRef<OrbitControls | null>(null);
+  const pointsRef = useRef<THREE.Points | null>(null);
+  const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
+  const mouseRef = useRef<THREE.Vector2>(new THREE.Vector2());
+  const animFrameRef = useRef<number>(0);
 
-  // View state — pan/zoom
-  const [viewState, setViewState] = useState({
-    cx: 0.5,
-    cy: 0.5,
-    scale: 1,
-  });
-
-  // Interaction state
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const [colorMode, setColorMode] = useState<ColorMode>('category');
+  const [colorMode, setColorMode] = useState<ColorMode>('cluster');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCluster, setSelectedCluster] = useState<number | null>(null);
-  const [canvasSize, setCanvasSize] = useState({ w: 900, h: 600 });
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
 
-  // Dragging state (refs to avoid re-renders)
-  const isDragging = useRef(false);
-  const lastMouse = useRef({ x: 0, y: 0 });
-
-  // Spatial index
-  const gridIndex = useMemo(() => new GridIndex(data.books), [data.books]);
-
-  // Filter books by search
+  // Search filter
   const searchMatches = useMemo(() => {
     if (!searchQuery || searchQuery.length < 2) return null;
     const q = searchQuery.toLowerCase();
@@ -212,177 +152,235 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     return matches;
   }, [searchQuery, data.books]);
 
-  // ── Canvas size tracking ──
+  // ── Initialize Three.js scene ──
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const w = Math.round(entry.contentRect.width);
-        const h = Math.max(400, Math.min(w * 0.67, 700));
-        setCanvasSize({ w, h });
-      }
-    });
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
+    // Scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#0d0d14');
+    scene.fog = new THREE.FogExp2('#0d0d14', 0.008);
+    sceneRef.current = scene;
 
-  // ── Coordinate transforms ──
-  const dataToCanvas = useCallback(
-    (dx: number, dy: number) => {
-      const { cx, cy, scale } = viewState;
-      const s = Math.min(canvasSize.w, canvasSize.h) * scale;
-      return {
-        x: canvasSize.w / 2 + (dx - cx) * s,
-        y: canvasSize.h / 2 + (dy - cy) * s,
-      };
-    },
-    [viewState, canvasSize],
-  );
+    // Camera
+    const w = container.clientWidth;
+    const h = Math.max(500, Math.min(w * 0.65, 700));
+    const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 500);
+    camera.position.set(0, 0, SPREAD * 1.6);
+    cameraRef.current = camera;
 
-  const canvasToData = useCallback(
-    (px: number, py: number) => {
-      const { cx, cy, scale } = viewState;
-      const s = Math.min(canvasSize.w, canvasSize.h) * scale;
-      return {
-        x: cx + (px - canvasSize.w / 2) / s,
-        y: cy + (py - canvasSize.h / 2) / s,
-      };
-    },
-    [viewState, canvasSize],
-  );
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h);
+    container.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
 
-  // ── Render ──
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.rotateSpeed = 0.5;
+    controls.zoomSpeed = 0.8;
+    controls.minDistance = 5;
+    controls.maxDistance = SPREAD * 3;
+    controls.target.set(0, 0, 0);
+    controlsRef.current = controls;
 
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = canvasSize.w * dpr;
-    canvas.height = canvasSize.h * dpr;
-    ctx.scale(dpr, dpr);
+    // Raycaster threshold
+    raycasterRef.current.params.Points = { threshold: 0.6 };
 
-    // Clear
-    ctx.fillStyle = '#fdfcf9';
-    ctx.fillRect(0, 0, canvasSize.w, canvasSize.h);
+    // Points geometry
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(data.books.length * 3);
+    const colors = new Float32Array(data.books.length * 3);
+    const sizes = new Float32Array(data.books.length);
 
-    const hasSearch = searchMatches && searchMatches.size > 0;
-    const hasClusterFilter = selectedCluster !== null;
-
-    // Draw points
     for (let i = 0; i < data.books.length; i++) {
-      const book = data.books[i];
-      const pos = dataToCanvas(book.x, book.y);
+      const b = data.books[i];
+      positions[i * 3] = (b.x - 0.5) * SPREAD;
+      positions[i * 3 + 1] = (b.y - 0.5) * SPREAD;
+      positions[i * 3 + 2] = (b.z - 0.5) * SPREAD;
 
-      // Skip offscreen
-      if (pos.x < -10 || pos.x > canvasSize.w + 10 || pos.y < -10 || pos.y > canvasSize.h + 10)
-        continue;
+      const color = hexToRgb(getBookColor(b, 'cluster'));
+      colors[i * 3] = color[0];
+      colors[i * 3 + 1] = color[1];
+      colors[i * 3 + 2] = color[2];
 
-      const isMatch = hasSearch ? searchMatches!.has(i) : true;
-      const isClusterMatch = hasClusterFilter ? book.cluster === selectedCluster : true;
-      const isHighlighted = isMatch && isClusterMatch;
-      const isHovered = i === hoveredIdx;
-
-      const color = getBookColor(book, colorMode);
-      const r = isHovered ? HOVER_RADIUS : isHighlighted ? POINT_RADIUS : 2;
-      const alpha = isHighlighted ? (hasSearch || hasClusterFilter ? 1 : 0.7) : 0.08;
-
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
-      ctx.fill();
-
-      if (isHovered) {
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = '#1a1612';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
+      sizes[i] = POINT_SIZE;
     }
 
-    ctx.globalAlpha = 1;
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Draw cluster labels when zoomed out
-    if (viewState.scale < 2.5) {
-      ctx.font = '11px Inter, system-ui, sans-serif';
+    // Custom shader for size attenuation + round points
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        pointMultiplier: { value: h * 0.5 },
+      },
+      vertexShader: `
+        attribute float size;
+        varying vec3 vColor;
+        varying float vAlpha;
+        uniform float pointMultiplier;
+        void main() {
+          vColor = color;
+          vAlpha = size > 0.1 ? 1.0 : 0.0;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = size * pointMultiplier / -mvPosition.z;
+          gl_PointSize = clamp(gl_PointSize, 1.0, 20.0);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+        varying float vAlpha;
+        void main() {
+          float d = length(gl_PointCoord - vec2(0.5));
+          if (d > 0.5) discard;
+          float alpha = smoothstep(0.5, 0.35, d) * vAlpha;
+          gl_FragColor = vec4(vColor, alpha * 0.85);
+        }
+      `,
+      vertexColors: true,
+      transparent: true,
+      depthWrite: false,
+    });
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+    pointsRef.current = points;
+
+    // Cluster labels as sprites
+    const labelGroup = new THREE.Group();
+    labelGroup.name = 'clusterLabels';
+    for (const [, cluster] of Object.entries(data.clusters)) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) continue;
+
+      const text = cluster.label || cluster.label_keywords.slice(0, 2).join(', ');
+      if (!text) continue;
+
+      canvas.width = 512;
+      canvas.height = 64;
+      ctx.font = '28px Inter, system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+      ctx.fillText(text, 256, 32);
 
-      for (const [, cluster] of Object.entries(data.clusters)) {
-        const pos = dataToCanvas(cluster.cx, cluster.cy);
-        if (pos.x < -50 || pos.x > canvasSize.w + 50 || pos.y < -50 || pos.y > canvasSize.h + 50)
-          continue;
-
-        const label = cluster.label_keywords.slice(0, 2).join(', ');
-        if (!label) continue;
-
-        ctx.globalAlpha = 0.5;
-        ctx.fillStyle = '#6b6560';
-        ctx.fillText(label, pos.x, pos.y);
-      }
-      ctx.globalAlpha = 1;
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.minFilter = THREE.LinearFilter;
+      const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+      const sprite = new THREE.Sprite(spriteMat);
+      sprite.position.set(
+        (cluster.cx - 0.5) * SPREAD,
+        (cluster.cy - 0.5) * SPREAD,
+        (cluster.cz - 0.5) * SPREAD,
+      );
+      sprite.scale.set(12, 1.5, 1);
+      labelGroup.add(sprite);
     }
-  }, [data, viewState, canvasSize, colorMode, hoveredIdx, searchMatches, selectedCluster, dataToCanvas]);
+    scene.add(labelGroup);
 
-  // ── Mouse handlers ──
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    isDragging.current = true;
-    lastMouse.current = { x: e.clientX, y: e.clientY };
-  }, []);
+    // Animation loop
+    function animate() {
+      animFrameRef.current = requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
+    // Resize handler
+    const onResize = () => {
+      const w = container.clientWidth;
+      const h = Math.max(500, Math.min(w * 0.65, 700));
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      (material.uniforms.pointMultiplier as { value: number }).value = h * 0.5;
+    };
+    const observer = new ResizeObserver(onResize);
+    observer.observe(container);
 
-      if (isDragging.current) {
-        const dx = e.clientX - lastMouse.current.x;
-        const dy = e.clientY - lastMouse.current.y;
-        lastMouse.current = { x: e.clientX, y: e.clientY };
-
-        const s = Math.min(canvasSize.w, canvasSize.h) * viewState.scale;
-        setViewState((prev) => ({
-          ...prev,
-          cx: prev.cx - dx / s,
-          cy: prev.cy - dy / s,
-        }));
-        return;
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      observer.disconnect();
+      controls.dispose();
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
       }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
-      // Hover detection
-      const rect = canvas.getBoundingClientRect();
-      const px = e.clientX - rect.left;
-      const py = e.clientY - rect.top;
-      const dataPos = canvasToData(px, py);
+  // ── Update colors/sizes when mode, search, or cluster filter changes ──
+  useEffect(() => {
+    const points = pointsRef.current;
+    if (!points) return;
+    const geometry = points.geometry;
+    const colorAttr = geometry.getAttribute('color') as THREE.BufferAttribute;
+    const sizeAttr = geometry.getAttribute('size') as THREE.BufferAttribute;
 
-      const hitRadius = 0.015 / viewState.scale;
-      const idx = gridIndex.findNearest(dataPos.x, dataPos.y, hitRadius);
-      setHoveredIdx(idx);
-    },
-    [canvasSize, viewState, canvasToData, gridIndex],
-  );
+    const hasSearch = searchMatches && searchMatches.size > 0;
+    const hasCluster = selectedCluster !== null;
 
-  const handleMouseUp = useCallback(() => {
-    isDragging.current = false;
-  }, []);
+    for (let i = 0; i < data.books.length; i++) {
+      const b = data.books[i];
+      const isSearchMatch = hasSearch ? searchMatches!.has(i) : true;
+      const isClusterMatch = hasCluster ? b.cluster === selectedCluster : true;
+      const isHighlighted = isSearchMatch && isClusterMatch;
+      const isHovered = i === hoveredIdx;
 
-  const handleMouseLeave = useCallback(() => {
-    isDragging.current = false;
-    setHoveredIdx(null);
-  }, []);
+      const hex = getBookColor(b, colorMode);
+      const [r, g, bb] = hexToRgb(hex);
 
-  const handleWheel = useCallback(
-    (e: React.WheelEvent) => {
-      e.preventDefault();
-      const factor = e.deltaY > 0 ? 0.9 : 1.1;
-      setViewState((prev) => ({
-        ...prev,
-        scale: Math.max(0.5, Math.min(20, prev.scale * factor)),
-      }));
+      if (isHighlighted || isHovered) {
+        colorAttr.setXYZ(i, r, g, bb);
+        sizeAttr.setX(i, isHovered ? POINT_SIZE * 3 : POINT_SIZE);
+      } else {
+        // Dim non-matches
+        colorAttr.setXYZ(i, r * 0.2, g * 0.2, bb * 0.2);
+        sizeAttr.setX(i, hasSearch || hasCluster ? POINT_SIZE * 0.5 : POINT_SIZE);
+      }
+    }
+
+    colorAttr.needsUpdate = true;
+    sizeAttr.needsUpdate = true;
+  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, data.books]);
+
+  // ── Mouse move → raycasting ──
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      const container = containerRef.current;
+      const camera = cameraRef.current;
+      const points = pointsRef.current;
+      if (!container || !camera || !points) return;
+
+      const rect = container.getBoundingClientRect();
+      const rendererEl = rendererRef.current?.domElement;
+      if (!rendererEl) return;
+
+      mouseRef.current.x = ((e.clientX - rect.left) / rendererEl.clientWidth) * 2 - 1;
+      mouseRef.current.y = -((e.clientY - rect.top) / rendererEl.clientHeight) * 2 + 1;
+
+      raycasterRef.current.setFromCamera(mouseRef.current, camera);
+      const intersects = raycasterRef.current.intersectObject(points);
+
+      if (intersects.length > 0 && intersects[0].index !== undefined) {
+        const idx = intersects[0].index;
+        setHoveredIdx(idx);
+        setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      } else {
+        setHoveredIdx(null);
+        setTooltipPos(null);
+      }
     },
     [],
   );
@@ -394,31 +392,32 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     }
   }, [hoveredIdx, data.books]);
 
-  // ── Reset view ──
+  // Reset
   const resetView = useCallback(() => {
-    setViewState({ cx: 0.5, cy: 0.5, scale: 1 });
     setSearchQuery('');
     setSelectedCluster(null);
+    const camera = cameraRef.current;
+    const controls = controlsRef.current;
+    if (camera && controls) {
+      camera.position.set(0, 0, SPREAD * 1.6);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
   }, []);
 
-  // ── Tooltip data ──
+  // Tooltip book
   const hoveredBook = hoveredIdx !== null ? data.books[hoveredIdx] : null;
-  const tooltipPos = hoveredBook ? dataToCanvas(hoveredBook.x, hoveredBook.y) : null;
 
-  // ── Legend items ──
+  // Legend items
   const legendItems = useMemo(() => {
-    if (colorMode === 'category') {
-      const counts: Record<string, number> = {};
-      data.books.forEach((b) => {
-        counts[b.category] = (counts[b.category] || 0) + 1;
-      });
-      return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
+    if (colorMode === 'cluster') {
+      return Object.values(data.clusters)
+        .sort((a, b) => b.size - a.size)
         .slice(0, 12)
-        .map(([cat, count]) => ({
-          label: cat.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-          color: CATEGORY_COLORS[cat] || '#888',
-          count,
+        .map((c) => ({
+          label: c.label || c.label_keywords.slice(0, 2).join(', '),
+          color: CLUSTER_COLORS[c.id % CLUSTER_COLORS.length],
+          count: c.size,
         }));
     }
     if (colorMode === 'language') {
@@ -438,15 +437,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     // century
     return [
       { label: 'Before 500', color: getCenturyColor(100), count: 0 },
-      { label: '500–999', color: getCenturyColor(700), count: 0 },
-      { label: '1000–1199', color: getCenturyColor(1100), count: 0 },
-      { label: '1200–1399', color: getCenturyColor(1300), count: 0 },
-      { label: '1400–1499', color: getCenturyColor(1450), count: 0 },
-      { label: '1500–1599', color: getCenturyColor(1550), count: 0 },
-      { label: '1600–1699', color: getCenturyColor(1650), count: 0 },
+      { label: '500-999', color: getCenturyColor(700), count: 0 },
+      { label: '1000-1399', color: getCenturyColor(1200), count: 0 },
+      { label: '1400-1499', color: getCenturyColor(1450), count: 0 },
+      { label: '1500-1599', color: getCenturyColor(1550), count: 0 },
+      { label: '1600-1699', color: getCenturyColor(1650), count: 0 },
       { label: '1700+', color: getCenturyColor(1750), count: 0 },
     ];
-  }, [colorMode, data.books]);
+  }, [colorMode, data]);
 
   return (
     <div>
@@ -483,7 +481,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         {/* Color mode */}
         <div className="flex items-center gap-1 text-sm">
           <span className="text-[var(--text-muted)] mr-1">Color:</span>
-          {(['category', 'language', 'century'] as ColorMode[]).map((mode) => (
+          {(['cluster', 'language', 'century'] as ColorMode[]).map((mode) => (
             <button
               key={mode}
               onClick={() => setColorMode(mode)}
@@ -493,7 +491,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
                   : 'bg-[var(--bg-warm)] text-[var(--text-secondary)] hover:bg-[var(--border-light)]'
               }`}
             >
-              {mode.charAt(0).toUpperCase() + mode.slice(1)}
+              {mode === 'cluster' ? 'Topic' : mode.charAt(0).toUpperCase() + mode.slice(1)}
             </button>
           ))}
         </div>
@@ -507,26 +505,21 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         </button>
       </div>
 
-      {/* Canvas container */}
-      <div ref={containerRef} className="relative w-full rounded-lg overflow-hidden border border-[var(--border-light)]">
-        <canvas
-          ref={canvasRef}
-          style={{ width: canvasSize.w, height: canvasSize.h, cursor: hoveredIdx !== null ? 'pointer' : 'grab' }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          onWheel={handleWheel}
-          onClick={handleClick}
-        />
-
+      {/* Three.js container */}
+      <div
+        ref={containerRef}
+        className="relative w-full rounded-lg overflow-hidden"
+        style={{ cursor: hoveredIdx !== null ? 'pointer' : 'grab' }}
+        onPointerMove={handlePointerMove}
+        onClick={handleClick}
+      >
         {/* Tooltip */}
         {hoveredBook && tooltipPos && (
           <div
             className="absolute pointer-events-none bg-white border border-[var(--border-medium)] rounded-lg shadow-lg p-3 max-w-[280px] z-10"
             style={{
-              left: Math.min(tooltipPos.x + 12, canvasSize.w - 290),
-              top: Math.min(tooltipPos.y - 10, canvasSize.h - 100),
+              left: Math.min(tooltipPos.x + 12, (containerRef.current?.clientWidth ?? 600) - 290),
+              top: Math.max(tooltipPos.y - 80, 10),
             }}
           >
             <div className="font-serif text-sm font-medium text-[var(--text-primary)] leading-tight mb-1">
@@ -541,11 +534,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
               {hoveredBook.categories.slice(0, 3).map((cat) => (
                 <span
                   key={cat}
-                  className="px-1.5 py-0.5 text-[10px] rounded"
-                  style={{
-                    backgroundColor: (CATEGORY_COLORS[cat] || '#888') + '20',
-                    color: CATEGORY_COLORS[cat] || '#888',
-                  }}
+                  className="px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-warm)] text-[var(--text-secondary)]"
                 >
                   {cat.replace(/-/g, ' ')}
                 </span>
@@ -563,28 +552,31 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           </div>
         )}
 
-        {/* Legend (inside canvas area) */}
-        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg p-2 border border-[var(--border-light)] max-w-[200px]">
-          <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
-            {legendItems.map((item) => (
-              <div key={item.label} className="flex items-center gap-1.5 text-[10px] text-[var(--text-muted)]">
+        {/* Legend (overlay) */}
+        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm rounded-lg p-2.5 border border-white/10 max-w-[220px]">
+          <div className="grid grid-cols-1 gap-y-0.5">
+            {legendItems.slice(0, 8).map((item) => (
+              <div key={item.label} className="flex items-center gap-1.5 text-[10px] text-white/70">
                 <span
                   className="w-2 h-2 rounded-full shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
                 <span className="truncate">{item.label}</span>
+                {item.count > 0 && (
+                  <span className="ml-auto text-white/40">{item.count}</span>
+                )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Zoom hint */}
-        <div className="absolute bottom-3 right-3 text-[10px] text-[var(--text-faint)] bg-white/80 px-2 py-1 rounded">
-          Scroll to zoom · Drag to pan
+        {/* Controls hint */}
+        <div className="absolute bottom-3 right-3 text-[10px] text-white/40 bg-black/40 px-2 py-1 rounded">
+          Drag to rotate · Scroll to zoom · Right-drag to pan
         </div>
       </div>
 
-      {/* Cluster pills (below canvas) */}
+      {/* Cluster pills (below viz) */}
       {Object.keys(data.clusters).length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-3">
           <button
@@ -599,9 +591,9 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           </button>
           {Object.values(data.clusters)
             .sort((a, b) => b.size - a.size)
-            .slice(0, 15)
+            .slice(0, 18)
             .map((cluster) => {
-              const label = cluster.label_keywords.slice(0, 2).join(', ') || `Cluster ${cluster.id}`;
+              const label = cluster.label || cluster.label_keywords.slice(0, 2).join(', ') || `Cluster ${cluster.id}`;
               return (
                 <button
                   key={cluster.id}
