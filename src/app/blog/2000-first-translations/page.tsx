@@ -4,7 +4,6 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogComments from '@/components/blog/BlogComments';
 import InputWidget from '@/components/InputWidget';
-import ConceptGraph from './ConceptGraph';
 
 export const metadata: Metadata = {
   title: '2,000 Books Never Read in English — Source Library',
@@ -33,7 +32,7 @@ const DECADES = [
   { d: '1490s', n: 13 }, { d: '1500s', n: 37 }, { d: '1510s', n: 25 },
   { d: '1520s', n: 19 }, { d: '1530s', n: 23 }, { d: '1540s', n: 28 },
   { d: '1550s', n: 68 }, { d: '1560s', n: 42 }, { d: '1570s', n: 37 },
-  { d: '1580s', n: 49 }, { d: '1590s', n: 40 }, { d: '1600s', n: 167 },
+  { d: '1580s', n: 49 }, { d: '1590s', n: 40 }, { d: '1600s', n: 74 },
   { d: '1610s', n: 89 }, { d: '1620s', n: 89 }, { d: '1630s', n: 54 },
   { d: '1640s', n: 42 }, { d: '1650s', n: 62 }, { d: '1660s', n: 49 },
   { d: '1670s', n: 46 }, { d: '1680s', n: 32 }, { d: '1690s', n: 59 },
@@ -47,7 +46,7 @@ const DECADES = [
   { d: '1910s', n: 22 }, { d: '1920s', n: 7 },
 ];
 
-const PEAK = 167;
+const PEAK = 91;
 
 const LANGUAGES = [
   { lang: 'Latin', n: 673, color: '#9e4a3a' },
@@ -79,7 +78,7 @@ const MAX_CAT = 626;
 const CENTURIES = [
   { c: '15th', n: 98 },
   { c: '16th', n: 338 },
-  { c: '17th', n: 667 },
+  { c: '17th', n: 574 },
   { c: '18th', n: 446 },
   { c: '19th', n: 263 },
   { c: '20th', n: 131 },
@@ -138,12 +137,9 @@ const GALLERY_IMAGES = [
 
 // Source work dates — ideas that waited millennia for English translation
 const TIME_TRAVELERS = [
-  { title: 'Bible (Latin Vulgate)', composition: -1200, printed: 1726, gap: 2926, author: 'Various', lang: 'Latin', slug: 'biblia-sacra-vulgatae-editionis-sixti-v-pontificis-maximi-anonymous' },
-  { title: 'Armenian Bible', composition: -1200, printed: 1605, gap: 2805, author: 'Various', lang: 'Armenian', slug: 'armenian-bible-anonymous' },
   { title: "Plato's Timaeus (Ficino)", composition: -360, printed: 1484, gap: 1844, author: 'Plato / Ficino', lang: 'Latin', slug: 'complete-works-of-plato-plato' },
   { title: "Euclid's Elements", composition: -300, printed: 1482, gap: 1782, author: 'Euclid', lang: 'Latin', slug: 'elements-of-geometry-euclid' },
   { title: 'Demotic Magical Papyrus', composition: -200, printed: 1629, gap: 1829, author: 'Anonymous', lang: 'Greek', slug: 'demotic-magical-papyrus-anonymous' },
-  { title: "Aristotle's De Anima", composition: -350, printed: 1496, gap: 1846, author: 'Aristotle', lang: 'Latin', slug: 'on-the-soul-aristotle' },
   { title: 'Corpus Hermeticum', composition: 200, printed: 1471, gap: 1271, author: 'Hermes Trismegistus', lang: 'Latin', slug: 'pimander-hermes-trismegistus' },
   { title: 'Plotinus Enneads', composition: 270, printed: 1492, gap: 1222, author: 'Plotinus / Ficino', lang: 'Latin', slug: 'complete-works-of-plotinus-plotinus' },
   { title: 'Sepher Yetzirah', composition: 300, printed: 1552, gap: 1252, author: 'Anonymous', lang: 'Hebrew', slug: 'book-of-creation-anonymous' },
@@ -168,8 +164,6 @@ const TOP_AUTHORS = [
   { name: 'Robert Fludd', n: 13, desc: 'Hermetic cosmology — macrocosm, microcosm, music', color: '#7c5db5' },
   { name: 'Gustav Fechner', n: 12, desc: 'Psychophysics — consciousness, panpsychism', color: '#c9a86c' },
   { name: 'Leonardo da Vinci', n: 9, desc: 'Notebooks — anatomy, mechanics, observation', color: '#9e4a3a' },
-  { name: 'Giambattista della Porta', n: 8, desc: 'Natural magic — optics, cryptography, botany', color: '#8b9a7d' },
-  { name: 'Aristotle', n: 8, desc: 'Commentaries & translations — 2,300 years of influence', color: '#7c5db5' },
 ];
 const MAX_AUTHOR = 23;
 
@@ -224,7 +218,7 @@ const FEATURED_BOOKS = [
     lang: 'Latin',
     pages: 69,
     slug: 'two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/page-0-nQy7d5HUu3LGHA1xQY1RTMBYq0HGDH-2.jpg',
+    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6836f8ee811c8ab472a49e36/1.jpg',
     summary:
       'Cornelius Drebbel presents a mesmerizing synthesis of natural philosophy and spiritual alchemy, arguing that all matter is animated by a single vital force — the "fifth essence" of perpetual motion.',
   },
@@ -235,7 +229,7 @@ const FEATURED_BOOKS = [
     lang: 'Russian',
     pages: 401,
     slug: 'key-to-the-secrets-of-nature-eckartshausen',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/page-0-2DDGT0exDzEMzXPUVPrQTxM2o5b7J8.jpg',
+    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/69099634cf28baa1b4cae779/69099653cf28baa1b4cae787.jpg',
     summary:
       'Karl von Eckartshausen challenges the "proud scholar" to step beyond the library and encounter nature directly through inner illumination and spiritual experiment.',
   },
@@ -246,7 +240,7 @@ const FEATURED_BOOKS = [
     lang: 'Latin',
     pages: 40,
     slug: 'on-the-mysteries-ficino',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/page-1-FDGVpTjSH5HFnHw0ONHK2WyMRNvuwL-2.jpg',
+    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/912cf0da-035c-425b-8975-e5a195a47767/6959afa11dfc1806c080bc8c-0.jpg',
     summary:
       'In this profound exploration, Marsilio Ficino navigates the tension between earthly desire and divine contemplation — a philosophical meditation on beauty, love, and the soul\'s ascent.',
   },
@@ -257,7 +251,7 @@ const FEATURED_BOOKS = [
     lang: 'Latin',
     pages: 1036,
     slug: 'history-of-both-worlds-macrocosm-fludd',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/page-0-IbplQCRs2ZghXqZCxqSaotSvnvLZK0-2.jpg',
+    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69593413b282844d7b277aaf/1.jpg',
     summary:
       'The pinnacle of Paracelsian cosmology — Fludd\'s encyclopedic vision of the universe as a living organism, illustrated with 60+ engravings mapping the correspondences between macrocosm and microcosm.',
   },
@@ -307,7 +301,7 @@ export default function TwoThousandFirstTranslations() {
         {/* Stat grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 my-10">
           {[
-            { label: 'First Translations', value: '2,229' },
+            { label: 'First Translations', value: '2,446' },
             { label: 'Fully Translated', value: '457' },
             { label: 'Total Pages', value: '889K' },
             { label: 'Languages', value: '30+' },
@@ -324,43 +318,16 @@ export default function TwoThousandFirstTranslations() {
           ))}
         </div>
 
-        {/* Concept graph */}
-        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-14 mb-3">
-          The Shape of Hidden Knowledge
-        </h2>
-        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-4">
-          <p>
-            What do 2,000 untranslated books talk about? We indexed every concept
-            mentioned across 1,509 of these works and mapped how often they appear
-            together. The result is a network of ideas — a map of intellectual
-            territory that has been largely invisible to English-speaking scholarship.
-          </p>
-          <p>
-            The dense cluster at center is the alchemical operations:{' '}
-            <em>calcination</em>, <em>sublimation</em>, <em>putrefaction</em>,{' '}
-            <em>tincture</em> — the procedural vocabulary of transformation that
-            connected hundreds of authors across three centuries. Orbiting this core
-            are the Hermetic concepts that gave alchemy its philosophical framework:{' '}
-            the <em>Philosopher&apos;s Stone</em>, the <em>Microcosm</em>,{' '}
-            <em>Kabbalah</em>. Further out, a distinct theological cluster emerges —{' '}
-            <em>Providence</em>, <em>Idolatry</em>, <em>Martyrdom</em> — reminding
-            us that many of these "occult" texts were written by deeply religious
-            authors wrestling with orthodoxy.
-          </p>
-        </div>
-
-        <ConceptGraph />
-
         {/* Decade histogram */}
         <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
           When Were They Written?
         </h2>
         <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p>
-            The spike at 1600 is unmistakable. The turn of the 17th century was the
+            The 17th century dominates. The decades from 1600 to 1630 mark the
             golden age of esoteric publishing — Paracelsian medicine, Rosicrucian
             manifestos, Hermetic philosophy, alchemical compendia all surged
-            simultaneously. The secondary peak in the 1780s reflects Enlightenment-era
+            simultaneously. A second peak in the 1780s reflects Enlightenment-era
             natural philosophy and the revival of interest in ancient texts. What
             survived in library vaults but never crossed the language barrier is
             overwhelmingly concentrated in these two periods.
@@ -436,12 +403,12 @@ export default function TwoThousandFirstTranslations() {
         <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
           <p className="text-xl leading-relaxed">
             Some of these books carry ideas far older than the books themselves.
-            A 1726 Latin Bible contains texts composed around 1200 BCE — a gap of
-            nearly <strong>3,000 years</strong> between the thought and the printed page.
             Plato&apos;s <em>Timaeus</em>, written in 360 BCE, didn&apos;t reach print
-            until Ficino&apos;s Latin translation in 1484. These are not just old
-            books — they are vessels for ideas that have traveled across millennia,
-            and are now being read in English for the first time.
+            until Ficino&apos;s Latin translation in 1484 — a gap of over 1,800 years.
+            The <em>Demotic Magical Papyrus</em>, composed around 200 BCE, waited until
+            1629 to appear in a printed edition. These are not just old books — they are
+            vessels for ideas that have traveled across millennia, and are now being read
+            in English for the first time.
           </p>
         </div>
 
@@ -522,7 +489,7 @@ export default function TwoThousandFirstTranslations() {
             <div key={a.name} className="flex items-center gap-3">
               <div className="w-48 text-right shrink-0">
                 <div className="text-base font-medium text-[#1a1612]">{a.name}</div>
-                <div className="text-xs text-stone-400 leading-tight">{a.desc}</div>
+                <div className="text-sm text-stone-400 leading-tight">{a.desc}</div>
               </div>
               <div className="flex-1 h-9 bg-[#f5f0e8] rounded overflow-hidden">
                 <div
@@ -589,6 +556,14 @@ export default function TwoThousandFirstTranslations() {
             Egyptian hieroglyphics, Chinese characters, and magnetic forces as
             aspects of one universal system. These books resist neat classification
             because their authors saw the world as fundamentally interconnected.
+          </p>
+          <p>
+            A note on &quot;Theology&quot;: this category is inflated. Our AI classifier
+            tends to label anything that mentions God, providence, or the soul as
+            theology — even when the book is primarily about alchemy, natural
+            philosophy, or medicine. A more accurate reading would redistribute
+            many of these 626 books into other categories. We&apos;re working on
+            improving the classification.
           </p>
         </div>
 
@@ -885,23 +860,96 @@ export default function TwoThousandFirstTranslations() {
           <div className="text-center text-sm text-stone-500 mt-3">Pages per book</div>
         </div>
 
-        {/* Methodology link */}
-        <div className="mt-16 bg-[#f5f0e8] border border-[#e8e4dc] rounded-lg p-6 sm:p-8">
-          <h3 className="text-xl font-serif font-semibold text-[#1a1612] mb-3">
-            How do we know these are first translations?
-          </h3>
-          <p className="text-base text-stone-600 leading-relaxed mb-4">
-            Each book goes through a multi-stage AI verification pipeline: OCR-based
-            language classification, LLM deep knowledge checks against known
-            translation catalogs, and manual review for edge cases. The system
-            identifies six confidence levels from &quot;confirmed first&quot; to
-            &quot;has existing translation.&quot;
+        {/* Methodology */}
+        <h2 className="text-3xl font-serif font-semibold text-[#1a1612] mt-16 mb-3">
+          How Do We Know These Are First Translations?
+        </h2>
+        <div className="prose prose-stone prose-lg max-w-none leading-relaxed mb-6">
+          <p>
+            Claiming &quot;first English translation&quot; is a serious scholarly assertion.
+            We use a two-stage AI verification pipeline that progressively increases
+            confidence, and we categorize results into five dispositions rather than
+            a simple yes/no.
           </p>
+        </div>
+
+        <div className="bg-[#f5f0e8] border border-[#e8e4dc] rounded-lg p-6 sm:p-8 space-y-6">
+          <div>
+            <h3 className="text-lg font-serif font-semibold text-[#1a1612] mb-2">
+              Stage 1: OCR-Based Classification
+            </h3>
+            <p className="text-base text-stone-600 leading-relaxed">
+              During metadata enrichment, our AI reads the first 25 pages of OCR text
+              from each book and classifies whether the work has ever been translated
+              into English. This lightweight check uses the book&apos;s own content —
+              title page, preface, colophon — alongside its metadata (author, language,
+              year, subject) to make an initial assessment. Cost: ~$0.002 per book.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-serif font-semibold text-[#1a1612] mb-2">
+              Stage 2: Tool-Calling Verification
+            </h3>
+            <p className="text-base text-stone-600 leading-relaxed">
+              Books flagged as potential first translations go through a deeper
+              verification using Gemini with function-calling. The model is given
+              five real tools — <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_local_catalogs</code> (our
+              own 1,200+ book database), <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_open_library</code>,{' '}
+              <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_google_books</code>,{' '}
+              <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_ustc</code> (the Universal Short Title
+              Catalogue), and <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">make_determination</code> — and
+              autonomously searches for existing English translations. It checks
+              academic publishers, specialist presses, PhD dissertations, journal
+              translations, and anthologies.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-serif font-semibold text-[#1a1612] mb-2">
+              Five Dispositions
+            </h3>
+            <p className="text-base text-stone-600 leading-relaxed mb-3">
+              Rather than a binary yes/no, each book receives one of five dispositions:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { label: 'Confirmed First', desc: 'No English translation found — high confidence', n: '1,727' },
+                { label: 'First Complete Translation', desc: 'Partial excerpts exist, but no full translation', n: '609' },
+                { label: 'First Modern Translation', desc: 'Only outdated or archaic translations exist', n: '119' },
+                { label: 'Translation Found', desc: 'Verified English translation exists', n: '1,527' },
+                { label: 'Needs Review', desc: 'Insufficient evidence — flagged for manual check', n: '106' },
+              ].map((d) => (
+                <div key={d.label} className="bg-white rounded-lg p-3 border border-[#e8e4dc]">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-base font-medium text-[#1a1612]">{d.label}</span>
+                    <span className="text-base font-semibold text-stone-500 tabular-nums">{d.n}</span>
+                  </div>
+                  <div className="text-sm text-stone-500 mt-0.5">{d.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-serif font-semibold text-[#1a1612] mb-2">
+              Limitations
+            </h3>
+            <p className="text-base text-stone-600 leading-relaxed">
+              Stage 2 can verify that a translation <em>exists</em> (by citing a specific
+              translator, publisher, and year) but cannot prove one <em>doesn&apos;t</em> exist.
+              Absence of evidence in catalogs or LLM knowledge is not evidence of absence.
+              Some translations may exist in unpublished dissertations, obscure anthologies,
+              or private collections that no catalog indexes. The &quot;confirmed first&quot;
+              disposition is our best assessment, not an absolute claim.
+            </p>
+          </div>
+
           <Link
             href="https://sourcelibrary.org/blog/first-translation-methodology"
-            className="text-base font-medium text-[#9e4a3a] hover:underline"
+            className="inline-block text-base font-medium text-[#9e4a3a] hover:underline"
           >
-            Read the full methodology
+            Read the full methodology documentation
           </Link>
         </div>
 
