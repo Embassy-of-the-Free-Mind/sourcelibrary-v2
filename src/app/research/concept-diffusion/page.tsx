@@ -66,13 +66,15 @@ async function fetchConceptData() {
     year: { $gte: 1200, $lte: 1930 },
   };
 
-  // Step 1: Get top 150 concepts by frequency — no hardcoded filter
-  const topConceptsRaw = await db.collection('books').aggregate([
+  // Step 1: Get top 500 keywords by frequency (from translation <keywords> tags)
+  // Case-normalized to merge "Elements" and "elements", preserving best display form
+  const topKeywordsRaw = await db.collection('books').aggregate([
     { $match: baseFilter },
-    { $unwind: '$index.concepts' },
+    { $unwind: '$index.keywords' },
     {
       $group: {
-        _id: '$index.concepts.term',
+        _id: { $toLower: '$index.keywords.term' },
+        display: { $first: '$index.keywords.term' },
         total: { $sum: 1 },
         earliest: { $min: '$year' },
         latest: { $max: '$year' },
@@ -80,23 +82,24 @@ async function fetchConceptData() {
       },
     },
     { $sort: { total: -1 } },
-    { $limit: 150 },
+    { $limit: 500 },
   ]).toArray();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const topTerms = topConceptsRaw.map((c: any) => c._id as string);
+  const topTermsLower = topKeywordsRaw.map((c: any) => c._id as string);
 
   // Step 2-4: Run remaining queries in parallel
   const [rawData, totalsRaw, categoryRaw] = await Promise.all([
-    // Time series for top concepts by 50-year period
+    // Time series for top keywords by 50-year period (case-normalized)
     db.collection('books').aggregate([
       { $match: baseFilter },
-      { $unwind: '$index.concepts' },
-      { $match: { 'index.concepts.term': { $in: topTerms } } },
+      { $unwind: '$index.keywords' },
+      { $addFields: { _kwLower: { $toLower: '$index.keywords.term' } } },
+      { $match: { _kwLower: { $in: topTermsLower } } },
       {
         $group: {
           _id: {
-            concept: '$index.concepts.term',
+            concept: '$_kwLower',
             period: { $multiply: [{ $floor: { $divide: ['$year', 50] } }, 50] },
           },
           count: { $sum: 1 },
@@ -118,15 +121,16 @@ async function fetchConceptData() {
       { $sort: { _id: 1 } },
     ]).toArray(),
 
-    // Category mapping: primary category for each top concept
+    // Category mapping: primary category for each top keyword (case-normalized)
     db.collection('books').aggregate([
       { $match: baseFilter },
-      { $unwind: '$index.concepts' },
-      { $match: { 'index.concepts.term': { $in: topTerms } } },
+      { $unwind: '$index.keywords' },
+      { $addFields: { _kwLower: { $toLower: '$index.keywords.term' } } },
+      { $match: { _kwLower: { $in: topTermsLower } } },
       { $unwind: '$categories' },
       {
         $group: {
-          _id: { concept: '$index.concepts.term', category: '$categories' },
+          _id: { concept: '$_kwLower', category: '$categories' },
           count: { $sum: 1 },
         },
       },
@@ -139,6 +143,12 @@ async function fetchConceptData() {
       },
     ]).toArray(),
   ]);
+
+  // Build display name map (lowercase -> best display form)
+  const displayMap = new Map<string, string>();
+  for (const c of topKeywordsRaw) {
+    displayMap.set(c._id, c.display);
+  }
 
   // Build category map
   const categoryMap = new Map<string, string>();
@@ -155,7 +165,7 @@ async function fetchConceptData() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: ConceptPeriod[] = rawData.map((d: any) => ({
-    concept: d._id.concept as string,
+    concept: (displayMap.get(d._id.concept as string) || d._id.concept) as string,
     period: d._id.period as number,
     count: d.count as number,
     normalized: (d.count as number) / (totalMap.get(d._id.period as number) || 1),
@@ -163,8 +173,8 @@ async function fetchConceptData() {
   }));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const concepts: ConceptInfo[] = topConceptsRaw.map((c: any) => ({
-    concept: c._id as string,
+  const concepts: ConceptInfo[] = topKeywordsRaw.map((c: any) => ({
+    concept: (c.display || c._id) as string,
     total: c.total as number,
     category: formatCategory(categoryMap.get(c._id as string) || 'other'),
     earliest: c.earliest as number,
@@ -238,18 +248,18 @@ export default async function ConceptDiffusionPage() {
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Books indexed" value={totalBooks.toLocaleString()} />
-        <StatCard label="Top concepts tracked" value={String(concepts.length)} />
+        <StatCard label="Keywords tracked" value={String(concepts.length)} />
         <StatCard label="Subject categories" value={String(categoryCount)} />
         <StatCard label="Date range" value={dateRange} />
       </div>
 
       {/* Main visualization */}
       <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6 mb-8">
-        <h2 className="font-serif text-xl mb-1">Concept Frequency Over Time</h2>
+        <h2 className="font-serif text-xl mb-1">Keyword Frequency Over Time</h2>
         <p className="text-[var(--text-muted)] text-sm mb-4">
-          Each line shows how often a concept appears in books from that period. Concepts are grouped
-          by their primary subject category, derived from the corpus. Select up to 10 concepts to
-          compare. Toggle between raw counts and normalized frequency.
+          Each line shows how often a keyword appears in books from that period. Keywords are extracted
+          from each page&apos;s translated text and grouped by their primary subject category. Select up to
+          10 to compare. Toggle between raw counts and normalized frequency.
         </p>
         <ConceptDiffusionViz
           data={data}
@@ -262,9 +272,9 @@ export default async function ConceptDiffusionPage() {
       {/* Two-column breakdown */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6">
-          <h2 className="font-serif text-xl mb-4">Most Discussed Concepts</h2>
+          <h2 className="font-serif text-xl mb-4">Most Frequent Keywords</h2>
           <p className="text-[var(--text-muted)] text-sm mb-4">
-            Top concepts by number of books in which they appear, from the full corpus across all subjects.
+            Top keywords by number of books in which they appear, extracted from translated page text.
           </p>
           <div className="space-y-2">
             {concepts.slice(0, 15).map((c) => (
@@ -308,18 +318,19 @@ export default async function ConceptDiffusionPage() {
       <div className="bg-[var(--bg-warm)] rounded-lg p-4 sm:p-6 text-sm text-[var(--text-secondary)]">
         <h3 className="font-serif text-lg mb-2">Methodology</h3>
         <p className="mb-2">
-          Concept terms are extracted by AI (Gemini) from each book&apos;s full translated text during
-          the indexing phase. Each book receives a list of key concepts with page references. This
-          analysis aggregates concept presence across 50-year periods from 1200 to 1930.
+          Keywords are extracted by AI (Gemini) from each page&apos;s translated text during processing.
+          Every page produces a set of &lt;keywords&gt; tags identifying the key terms discussed on that
+          page. This analysis aggregates keyword presence across 50-year periods from 1200 to 1930.
         </p>
         <p className="mb-2">
-          Concepts are grouped by subject category based on which category of books most frequently
-          mentions each concept. For example, &ldquo;Transmutation&rdquo; appears primarily in alchemy books,
-          while &ldquo;Divine Providence&rdquo; appears primarily in theology books. The top 150 concepts
-          are selected purely by frequency — no editorial curation.
+          Keywords are grouped by subject category based on which category of books most frequently
+          uses each keyword. For example, &ldquo;transmutation&rdquo; appears primarily in alchemy books,
+          while &ldquo;divine providence&rdquo; appears primarily in theology books. The top {concepts.length} keywords
+          are selected purely by frequency — no editorial curation. Case variants (e.g. &ldquo;Mercury&rdquo;
+          and &ldquo;mercury&rdquo;) are merged.
         </p>
         <p className="mb-2">
-          &ldquo;Normalized frequency&rdquo; divides the number of books mentioning a concept by the total
+          &ldquo;Normalized frequency&rdquo; divides the number of books containing a keyword by the total
           number of indexed books in that period, controlling for the uneven distribution of the corpus
           (which is densest in the 1600s). Raw counts show absolute presence.
         </p>
@@ -327,7 +338,7 @@ export default async function ConceptDiffusionPage() {
           This is analogous to Google Ngrams but for specialist pre-modern literature — covering
           alchemical, Hermetic, Kabbalistic, theological, philosophical, and natural philosophical
           texts that are underrepresented in general book corpora. {totalBooks.toLocaleString()} of
-          the corpus&apos;s ~2,400 visible books have AI-generated indexes with concept terms.
+          the corpus&apos;s ~2,400 visible books have AI-generated indexes with keyword data.
         </p>
       </div>
     </ContentPageLayout>
