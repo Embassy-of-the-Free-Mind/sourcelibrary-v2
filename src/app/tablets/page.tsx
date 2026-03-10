@@ -270,14 +270,18 @@ export default function TabletsPage() {
                       (s) => s.label.toLowerCase() === section.surface.toLowerCase()
                     );
                     const aspect = tablet.photoBounds?.imageAspect;
+                    // Pixel-based crop: eliminates CSS percentage reference frame ambiguity
+                    const containerW = 120;
+                    const imgW = bounds ? containerW / bounds.bbox.w : 0;
+                    const imgH = bounds && aspect ? imgW / aspect : 0;
                     return (
                       <div key={si} className="flex gap-4 px-5 py-3">
                         {bounds && aspect ? (
                           <div
-                            className="shrink-0 overflow-hidden rounded shadow-sm"
+                            className="shrink-0 relative overflow-hidden rounded shadow-sm"
                             style={{
-                              width: '120px',
-                              aspectRatio: `${bounds.bbox.w * aspect} / ${bounds.bbox.h}`,
+                              width: `${containerW}px`,
+                              height: `${bounds.bbox.h * imgH}px`,
                             }}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -286,10 +290,11 @@ export default function TabletsPage() {
                               alt={`${tablet.designation} ${section.surface}`}
                               loading="lazy"
                               style={{
-                                display: 'block',
-                                width: `${(1 / bounds.bbox.w) * 100}%`,
+                                position: 'absolute',
+                                width: `${imgW}px`,
                                 maxWidth: 'none',
-                                transform: `translate(${-bounds.bbox.x * 100}%, ${-bounds.bbox.y * 100}%)`,
+                                left: `${-bounds.bbox.x * imgW}px`,
+                                top: `${-bounds.bbox.y * imgH}px`,
                               }}
                             />
                           </div>
