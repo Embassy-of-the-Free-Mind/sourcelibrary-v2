@@ -7,6 +7,9 @@ interface AnalyticsPayload {
   metrics: LoadingMetric[];
 }
 
+// Loading metrics are fire-and-forget — don't hold serverless slots during DB degradation
+const DB_TIMEOUT_MS = 3000;
+
 export async function POST(request: NextRequest) {
   try {
     const payload: AnalyticsPayload = await request.json();
@@ -26,17 +29,24 @@ export async function POST(request: NextRequest) {
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
     }));
 
-    // Store in MongoDB
-    const db = await getDb();
-    await db.collection('loading_metrics').insertMany(enrichedMetrics);
+    const dbWrite = (async () => {
+      const db = await getDb();
+      await db.collection('loading_metrics').insertMany(enrichedMetrics);
+    })();
+
+    const timeout = new Promise<'timeout'>((resolve) =>
+      setTimeout(() => resolve('timeout'), DB_TIMEOUT_MS)
+    );
+
+    const result = await Promise.race([dbWrite, timeout]);
+    if (result === 'timeout') {
+      return NextResponse.json({ success: true, count: 0 });
+    }
 
     return NextResponse.json({ success: true, count: enrichedMetrics.length });
-  } catch (error) {
-    console.error('Error storing analytics:', error);
-    return NextResponse.json(
-      { error: 'Failed to store analytics' },
-      { status: 500 }
-    );
+  } catch {
+    // Silently succeed — metrics must never error to the client
+    return NextResponse.json({ success: true, count: 0 });
   }
 }
 

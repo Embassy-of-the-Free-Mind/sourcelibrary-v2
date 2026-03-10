@@ -36,6 +36,9 @@ function isDuplicate(ip: string, path: string): boolean {
   return false;
 }
 
+// DB write timeout — analytics is fire-and-forget, don't hold a serverless slot for 30s+
+const DB_TIMEOUT_MS = 3000;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -58,8 +61,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    const db = await getDb();
-
     // Parse referrer — filter out self-referrals
     let referrerDomain = 'direct';
     if (referrer) {
@@ -77,22 +78,33 @@ export async function POST(request: NextRequest) {
     // Detect country (basic - from IP via headers)
     const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
 
-    // Insert analytics record
-    await db.collection('analytics_pageviews').insertOne({
-      path,
-      referrer: referrerDomain,
-      country,
-      userAgent: (effectiveUA || userAgent)?.substring(0, 200),
-      timestamp: new Date(),
-      ip,
-    });
+    // Race DB write against a short timeout — analytics is non-critical,
+    // don't hold a serverless function slot during DB degradation
+    const dbWrite = (async () => {
+      const db = await getDb();
+      await db.collection('analytics_pageviews').insertOne({
+        path,
+        referrer: referrerDomain,
+        country,
+        userAgent: (effectiveUA || userAgent)?.substring(0, 200),
+        timestamp: new Date(),
+        ip,
+      });
+    })();
+
+    const timeout = new Promise<'timeout'>((resolve) =>
+      setTimeout(() => resolve('timeout'), DB_TIMEOUT_MS)
+    );
+
+    const result = await Promise.race([dbWrite, timeout]);
+    if (result === 'timeout') {
+      // DB is slow — return 200 anyway, drop the pageview
+      return NextResponse.json({ success: true });
+    }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Track error:', error);
-    return NextResponse.json(
-      { error: 'Failed to track pageview' },
-      { status: 500 }
-    );
+  } catch {
+    // Silently succeed — analytics must never error to the client
+    return NextResponse.json({ success: true });
   }
 }
