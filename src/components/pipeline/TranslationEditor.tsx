@@ -543,6 +543,17 @@ export default function TranslationEditor({
   const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
   const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
 
+  // Text-only books (e.g. ETCSL corpus): show OCR panel instead of empty image panel
+  const hasPageImage = !!pageDisplayUrl;
+  const textOnlyInitialized = useRef(false);
+  useEffect(() => {
+    if (!hasPageImage && !textOnlyInitialized.current) {
+      textOnlyInitialized.current = true;
+      setShowImagePanel(false);
+      setShowOcrPanel(true);
+    }
+  }, [hasPageImage]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

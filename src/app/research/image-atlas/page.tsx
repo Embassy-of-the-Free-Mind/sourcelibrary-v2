@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import ImageConstellationViz from '@/components/research/ImageConstellationViz';
 import dataRaw from '@/data/image-constellation.json';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Image Atlas — Source Library',
   description:
