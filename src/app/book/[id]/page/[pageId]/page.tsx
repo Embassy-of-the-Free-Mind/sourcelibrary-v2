@@ -22,27 +22,33 @@ export default async function PageEditorPage({ params }: PageProps) {
   const { id, pageId } = await params;
   const db = await getDb();
 
-  // Parallel: book lookup + current page full data
-  const [bookResult, currentPage] = await Promise.all([
+  // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav)
+  const currentPage = await db.collection('pages').findOne(
+    { id: pageId },
+    { projection: { detected_images: 0 } }
+  );
+
+  if (!currentPage) {
+    notFound();
+  }
+
+  // Step 2: Book lookup + nav pages in parallel (both can start now)
+  const [bookResult, navPages] = await Promise.all([
     findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION),
-    db.collection('pages').findOne(
-      { id: pageId },
-      { projection: { detected_images: 0 } }
-    ),
+    db.collection('pages')
+      .find({ book_id: currentPage.book_id as string })
+      .project({ _id: 0, id: 1, page_number: 1, split_from: 1 })
+      .sort({ page_number: 1 })
+      .maxTimeMS(8000)
+      .toArray()
+      .catch(() => [{ id: pageId, page_number: currentPage.page_number }]),
   ]);
 
-  if (!bookResult || !currentPage) {
+  if (!bookResult) {
     notFound();
   }
 
   const book = bookResult.book as unknown as Book;
-
-  // Nav page list (lightweight — id + page_number only)
-  const navPages = await db.collection('pages')
-    .find({ book_id: book.id })
-    .project({ _id: 0, id: 1, page_number: 1, split_from: 1 })
-    .sort({ page_number: 1 })
-    .toArray();
 
   return (
     <PageEditorClient
