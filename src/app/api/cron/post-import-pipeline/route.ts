@@ -28,7 +28,7 @@ const FINALIZE_LIMIT = 50; // Just DB updates
 const MAX_ACTIVE_IMAGE_JOBS = 50;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
-const GLOBAL_ACTIVE_JOB_LIMIT = 150; // Total active jobs across all types — skip submissions when exceeded
+const GLOBAL_ACTIVE_JOB_LIMIT = 40; // Total active jobs across all types — skip submissions when exceeded
 
 function getBaseUrl(): string {
   // Always use the production URL for all HTTP calls.
@@ -1420,7 +1420,7 @@ export async function GET(request: NextRequest) {
         type: 'translation',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_TRANSLATE = 100; // Bumped from 60 — nearly-done books have few pages each
+      const MAX_ACTIVE_LAMBDA_TRANSLATE = 30; // Lowered from 100 — 68 jobs saturated MongoDB Atlas (Mar 10 outage)
 
       if (activeLambdaTranslate >= MAX_ACTIVE_LAMBDA_TRANSLATE) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
