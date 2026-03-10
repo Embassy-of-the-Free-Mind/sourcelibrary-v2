@@ -10,6 +10,7 @@ import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { syncBookToGitHub } from '@/lib/git-sync';
+import { deduplicateOverlappingPages } from '@/lib/page-split/dedup-overlapping-pages';
 
 export const maxDuration = 300;
 
@@ -452,6 +453,7 @@ export async function GET(request: NextRequest) {
     stale_failed: 0,
     stale_retranslate: 0,
     thumbnails_fixed: 0,
+    dedup_removed: 0,
     errors: [] as string[],
   };
 
@@ -1194,6 +1196,20 @@ export async function GET(request: NextRequest) {
           } else {
             await setPipelineStatus(db, book.id, 'ocr_complete');
             log.ocr_advanced++;
+
+            // Dedup overlapping BPH spread pages (non-blocking)
+            // BPH books photograph overlapping openings → duplicate pages after split.
+            // Uses OCR fingerprinting (first 400 chars) to detect and archive duplicates.
+            try {
+              const dedupResult = await deduplicateOverlappingPages(db, book.id);
+              if (dedupResult && dedupResult.pagesRemoved > 0) {
+                log.dedup_removed = (log.dedup_removed || 0) + dedupResult.pagesRemoved;
+                logger.action('dedup_pages_removed', dedupResult.pagesRemoved);
+              }
+            } catch (dedupErr) {
+              // Non-blocking — don't fail the pipeline for dedup errors
+              console.error(`[pipeline] Dedup failed for ${book.id}:`, dedupErr);
+            }
           }
         }
         // Otherwise keep waiting — process-batches cron will collect results
@@ -1203,45 +1219,71 @@ export async function GET(request: NextRequest) {
     // ── Phase 3.5: Metadata enrichment (ocr_complete -> metadata_enriched) ──
     // AI reads OCR text to verify/fill language, year, categories, description.
     // Non-blocking: failure skips to metadata_enriched (don't block translation).
+    // Also picks up books with preview OCR (early enrichment before full pipeline).
     if (hasTimeBudget(startTime)) {
+      // Fast-track: books at ocr_complete already enriched by preview OCR — advance without re-enriching
+      const alreadyEnriched = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'ocr_complete', 'ai_metadata.enriched_at': { $exists: true } })
+        .project({ id: 1 })
+        .limit(METADATA_ENRICH_LIMIT)
+        .toArray();
+      for (const book of alreadyEnriched) {
+        await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+        log.metadata_skipped++;
+      }
+
+      const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
+      const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
       const readyForMetadata = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'ocr_complete' })
-        .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .find({
+          'ai_metadata.enriched_at': { $exists: false },
+          $or: [
+            // Normal pipeline flow
+            { 'pipeline_auto.status': 'ocr_complete' },
+            // Preview OCR: early enrichment for recently imported books
+            // Wait 5 min for OCR to complete, stop trying after 2 hours
+            {
+              preview_ocr_queued_at: { $gte: twoHoursAgo, $lte: fiveMinAgo },
+              'pipeline_auto.status': { $in: ['queued', 'archiving', 'archive_complete', 'ocr_submitted'] },
+            },
+          ],
+        })
+        .sort({ 'pipeline_auto.status': -1, hidden: 1 }) // ocr_complete first, then preview
+        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.status': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
 
       for (const book of readyForMetadata) {
         if (!hasTimeBudget(startTime)) break;
+        const isNormalPipeline = book.pipeline_auto?.status === 'ocr_complete';
         try {
-          // Skip if already enriched (e.g. by manual script)
-          if (book.ai_metadata?.enriched_at) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            log.metadata_skipped++;
-            continue;
-          }
-
           const result = await enrichBookMetadata(db, book.id);
 
           if (result.success) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+            if (isNormalPipeline) {
+              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+            }
+            // Preview OCR: enrichment done, pipeline will skip Phase 3.5 later
             log.metadata_enriched++;
           } else {
-            // Non-blocking: skip to metadata_enriched on failure
-            const retries = book.pipeline_auto?.retry_count || 0;
-            if (retries >= MAX_RETRIES || result.error?.includes('Only')) {
-              // Too few pages or persistent failure — skip
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-              log.metadata_skipped++;
-            } else {
-              await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
+            if (isNormalPipeline) {
+              // Normal pipeline: retry or skip
+              const retries = book.pipeline_auto?.retry_count || 0;
+              if (retries >= MAX_RETRIES || result.error?.includes('Only')) {
+                await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+                log.metadata_skipped++;
+              } else {
+                await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
+              }
             }
+            // Preview OCR: silently skip — will retry next cron run or catch up in normal pipeline
             log.errors.push(`Metadata ${book.id}: ${result.error}`);
           }
         } catch (err) {
-          // Non-blocking: skip on unexpected errors
-          await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-          log.metadata_skipped++;
+          if (isNormalPipeline) {
+            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+            log.metadata_skipped++;
+          }
           log.errors.push(`Metadata ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
         }
       }

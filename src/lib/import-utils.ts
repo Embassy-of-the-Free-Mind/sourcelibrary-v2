@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
+import { queuePreviewOcr } from '@/lib/preview-ocr';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -349,6 +350,9 @@ export async function importBookFromIIIF(
     pages_affected: pageDocs.length,
     metadata: { provider: config.provider, identifier: config.identifier },
   });
+
+  // Queue preview OCR for early metadata enrichment (non-blocking)
+  queuePreviewOcr(bookIdStr, config.title).catch(() => {});
 
   // Queue split detection check (non-blocking)
   const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL

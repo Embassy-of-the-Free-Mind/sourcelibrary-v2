@@ -5,6 +5,7 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
+import { queuePreviewOcr } from '@/lib/preview-ocr';
 
 interface WellcomeWork {
   id: string;
@@ -261,6 +262,9 @@ export const POST = withAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
+
+    // Queue preview OCR for early metadata enrichment (non-blocking)
+    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Audit log (non-blocking)
     logAuditEvent({
