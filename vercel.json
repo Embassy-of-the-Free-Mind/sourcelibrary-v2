@@ -36,6 +36,10 @@
     {
       "path": "/api/cron/social-reset",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/health-check",
+      "schedule": "*/5 * * * *"
     }
   ]
 }
