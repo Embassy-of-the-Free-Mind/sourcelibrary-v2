@@ -112,6 +112,8 @@ async function getFeaturedCollections() {
 
     const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
 
+    // Fall back to hardcoded hero image if DB doesn't have featured_images
+    const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
     return {
       collection: {
         slug: collection.slug as string,
@@ -119,7 +121,7 @@ async function getFeaturedCollections() {
         subtitle: (collection.subtitle || '') as string,
         description: (collection.description || '') as string,
         book_count: (collection.book_count || 0) as number,
-        hero_image: heroUrl as string | null,
+        hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
     };
@@ -191,6 +193,15 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       }
     } catch {
       // Skip — gradient fallback will show
+    }
+  }
+
+  // Fill in missing hero images from hardcoded fallback (DB may return collections
+  // without featured_images during degraded performance or sparse data)
+  const fallbackBySlug = new Map(FALLBACK_COLLECTIONS.map(c => [c.slug, c.hero_image]));
+  for (const col of result) {
+    if (!col.hero_image && fallbackBySlug.has(col.slug)) {
+      col.hero_image = fallbackBySlug.get(col.slug) || null;
     }
   }
 
