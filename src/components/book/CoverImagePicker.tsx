@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
 import { books } from '@/lib/api-client';
@@ -16,6 +17,7 @@ interface CoverImagePickerProps {
 }
 
 export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, pages }: CoverImagePickerProps) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
   const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
@@ -83,6 +85,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
       await books.update(bookId, updates);
       setDisplayThumbnail((updates.thumbnail || updates.thumbnail_blob) as string);
       setIsOpen(false);
+      router.refresh();
     } catch (error) {
       console.error('Error setting cover:', error);
     } finally {

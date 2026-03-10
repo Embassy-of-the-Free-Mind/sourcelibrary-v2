@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
@@ -258,6 +259,12 @@ export const PATCH = withAuth(async (request, session, context) => {
           changes,
         });
       }
+    }
+
+    // Revalidate book page cache when thumbnail or visible metadata changes
+    const bookSlug = book.slug || bookId;
+    if (changedFields.some(f => ['thumbnail', 'thumbnail_blob', 'title', 'display_title', 'author'].includes(f))) {
+      revalidatePath(`/book/${bookSlug}`);
     }
 
     return NextResponse.json({ success: true, updated: Object.keys(updates) });
