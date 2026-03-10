@@ -8,10 +8,11 @@ import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import Image from 'next/image';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
+// ISR: serve cached HTML, revalidate in background every 5 minutes.
+// force-dynamic was causing every visitor to wait for 5 MongoDB queries.
+export const revalidate = 300;
 export const maxDuration = 60;
 
 // ---------- Collection ordering (user-specified) ----------
@@ -529,12 +530,12 @@ export default async function HomePage() {
                 >
                   {post.image && (
                     <div className="aspect-[16/10] relative bg-warm overflow-hidden">
-                      <Image
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
                         src={post.image}
                         alt=""
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                       />
                     </div>
                   )}
