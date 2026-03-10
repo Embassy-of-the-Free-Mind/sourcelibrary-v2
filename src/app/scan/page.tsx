@@ -2,8 +2,8 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { perspectiveCorrect, needsCorrection } from '@/lib/perspective-correct';
-import { generateThumbnail, processFiles } from '@/lib/scan/image-utils';
-import type { ProcessedFile } from '@/lib/scan/image-utils';
+import { generateThumbnail, processFiles, assessQuality, resizeForUpload } from '@/lib/scan/image-utils';
+import type { ProcessedFile, QualityMetrics } from '@/lib/scan/image-utils';
 
 type Step =
   | 'onboarding-1'
@@ -54,7 +54,7 @@ export default function ScanPage() {
   const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0 });
   const [error, setError] = useState<string | null>(null);
   const [catalogMatches, setCatalogMatches] = useState<CatalogMatch[]>([]);
-  const [capturePreview, setCapturePreview] = useState<{ file: File; thumbnailUrl: string } | null>(null);
+  const [capturePreview, setCapturePreview] = useState<{ file: File; thumbnailUrl: string; quality: QualityMetrics } | null>(null);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const captureInputRef = useRef<HTMLInputElement>(null);
@@ -191,13 +191,16 @@ export default function ScanPage() {
         const imageToUse = correctedBlob
           ? new File([correctedBlob], 'title-page.jpg', { type: 'image/jpeg' })
           : titlePageFile;
-        const thumbnailUrl = await generateThumbnail(imageToUse, 400);
+        const [thumbnailUrl, quality] = await Promise.all([
+          generateThumbnail(imageToUse, 400),
+          assessQuality(imageToUse),
+        ]);
         setPages([{
           id: crypto.randomUUID(),
           file: imageToUse,
           thumbnailUrl,
           timestamp: new Date(),
-          quality: { blurScore: 100, brightnessScore: 128 },
+          quality,
         }]);
       }
 
@@ -216,8 +219,11 @@ export default function ScanPage() {
 
     setError(null);
     try {
-      const thumbnailUrl = await generateThumbnail(file, 400);
-      setCapturePreview({ file, thumbnailUrl });
+      const [thumbnailUrl, quality] = await Promise.all([
+        generateThumbnail(file, 400),
+        assessQuality(file),
+      ]);
+      setCapturePreview({ file, thumbnailUrl, quality });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to process photo');
     }
@@ -232,7 +238,7 @@ export default function ScanPage() {
       file: capturePreview.file,
       thumbnailUrl: capturePreview.thumbnailUrl,
       timestamp: new Date(),
-      quality: { blurScore: 100, brightnessScore: 128 },
+      quality: capturePreview.quality,
     };
     setPages(prev => [...prev, newPage]);
     setCapturePreview(null);
@@ -285,6 +291,19 @@ export default function ScanPage() {
     });
   }, []);
 
+  // Move a page left or right in the order
+  const handleMove = useCallback((id: string, direction: -1 | 1) => {
+    setPages(prev => {
+      const idx = prev.findIndex(p => p.id === id);
+      if (idx < 0) return prev;
+      const newIdx = idx + direction;
+      if (newIdx < 0 || newIdx >= prev.length) return prev;
+      const next = [...prev];
+      [next[idx], next[newIdx]] = [next[newIdx], next[idx]];
+      return next;
+    });
+  }, []);
+
   // Upload all pages
   const handleUploadAll = useCallback(async () => {
     if (!bookId || pages.length === 0) return;
@@ -302,7 +321,8 @@ export default function ScanPage() {
       formData.append('bookId', bookId);
 
       for (const pf of batch) {
-        formData.append('files', pf.file);
+        const resized = await resizeForUpload(pf.file);
+        formData.append('files', resized);
       }
 
       try {
@@ -697,18 +717,42 @@ export default function ScanPage() {
                       <div className="absolute top-0.5 left-0.5 bg-dark/60 text-white text-[10px] px-1 rounded">
                         {i + 1}
                       </div>
-                      {/* Delete button */}
-                      <button
-                        onClick={() => handleDelete(page.id)}
-                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-status-error text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ opacity: undefined }}
-                        onPointerDown={(e) => {
-                          // Make delete always visible on touch
-                          e.currentTarget.style.opacity = '1';
-                        }}
-                      >
-                        x
-                      </button>
+                      {/* Quality badge */}
+                      {page.quality.blurScore < 0.3 && (
+                        <div className="absolute bottom-0.5 left-0.5 right-0.5 bg-status-warning/90 text-white text-[8px] text-center rounded px-0.5">
+                          Blurry
+                        </div>
+                      )}
+                      {page.quality.brightnessScore < 0.3 && page.quality.blurScore >= 0.3 && (
+                        <div className="absolute bottom-0.5 left-0.5 right-0.5 bg-status-warning/90 text-white text-[8px] text-center rounded px-0.5">
+                          Dark
+                        </div>
+                      )}
+                      {/* Reorder + delete buttons (visible on hover/touch) */}
+                      <div className="absolute -top-2 left-0 right-0 flex justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {i > 0 && (
+                          <button
+                            onClick={() => handleMove(page.id, -1)}
+                            className="w-4 h-4 bg-dark/70 text-white rounded-full flex items-center justify-center text-[9px]"
+                          >
+                            &lsaquo;
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleDelete(page.id)}
+                          className="w-4 h-4 bg-status-error text-white rounded-full flex items-center justify-center text-[9px]"
+                        >
+                          x
+                        </button>
+                        {i < pages.length - 1 && (
+                          <button
+                            onClick={() => handleMove(page.id, 1)}
+                            className="w-4 h-4 bg-dark/70 text-white rounded-full flex items-center justify-center text-[9px]"
+                          >
+                            &rsaquo;
+                          </button>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -717,14 +761,30 @@ export default function ScanPage() {
               {/* Capture preview (keep/retake) */}
               {capturePreview && (
                 <div className="space-y-3">
-                  <div className="rounded-lg overflow-hidden border border-border-light max-h-64">
+                  <div className="rounded-lg overflow-hidden border border-border-light">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={capturePreview.thumbnailUrl}
                       alt="Preview"
-                      className="w-full max-h-64 object-contain bg-warm"
+                      className="w-full object-contain bg-warm"
+                      style={{ maxHeight: '60dvh' }}
                     />
                   </div>
+                  {/* Quality warnings */}
+                  {(capturePreview.quality.blurScore < 0.3 || capturePreview.quality.brightnessScore < 0.3) && (
+                    <div className="flex gap-2 justify-center">
+                      {capturePreview.quality.blurScore < 0.3 && (
+                        <span className="bg-status-warning/15 text-status-warning text-xs px-2 py-1 rounded-full font-medium">
+                          Blurry — consider retaking
+                        </span>
+                      )}
+                      {capturePreview.quality.brightnessScore < 0.3 && (
+                        <span className="bg-status-warning/15 text-status-warning text-xs px-2 py-1 rounded-full font-medium">
+                          Too dark — try better lighting
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="flex gap-3">
                     <button
                       onClick={handleRetakePage}
