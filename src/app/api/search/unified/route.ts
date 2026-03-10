@@ -99,7 +99,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       buildBookSearchStage(query),
       { $limit: limit },
       { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 } },
-    ]).toArray();
+    ], { maxTimeMS: 5000 }).toArray();
   } catch {
     // Fallback to regex if Atlas Search index not available
     books = await db.collection('books')

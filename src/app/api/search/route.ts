@@ -181,7 +181,7 @@ export async function GET(request: NextRequest) {
           }
           pipeline.push({ $limit: limit });
 
-          return await db.collection('books').aggregate(pipeline).toArray();
+          return await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
         } catch {
           const bookFilters = buildBookFilters();
           return await db.collection('books')
@@ -244,7 +244,7 @@ export async function GET(request: NextRequest) {
             buildPageSearchStage(query, searchBookIds),
             { $limit: pageLimit },
             { $project: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } },
-          ]).toArray();
+          ], { maxTimeMS: 10000 }).toArray();
         } catch {
           // Fallback: skip page search if Atlas Search index unavailable
           return [];
@@ -378,7 +378,7 @@ export async function GET(request: NextRequest) {
           nearbyPipeline.push({ $match: nearbyExclude });
           nearbyPipeline.push({ $limit: 10 });
 
-          nearbyBooks = await db.collection('books').aggregate(nearbyPipeline).toArray();
+          nearbyBooks = await db.collection('books').aggregate(nearbyPipeline, { maxTimeMS: 5000 }).toArray();
         } catch {
           // Fallback: regex
           const nearbyFilter: Record<string, unknown> = {
