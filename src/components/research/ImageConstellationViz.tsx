@@ -8,19 +8,17 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // Types
 // ────────────────────────────────────────────────────────────
 
-interface Book {
+interface ImageItem {
   id: string;
-  title: string;
-  author: string;
-  year: number | null;
-  language: string;
-  category: string;
-  categories: string[];
-  keywords: string[];
-  thumbnail: string | null;
-  slug: string;
-  pages: number;
-  first_translation: boolean;
+  type: string;
+  quality: number;
+  thumbnail: string;
+  book_title: string;
+  book_author: string;
+  book_year: number | null;
+  book_id: string;
+  book_slug: string;
+  subjects: string[];
   x: number;
   y: number;
   z: number;
@@ -31,8 +29,8 @@ interface ClusterInfo {
   id: number;
   size: number;
   label: string;
-  top_category: string;
-  label_keywords: string[];
+  top_type: string;
+  top_subjects: string[];
   cx: number;
   cy: number;
   cz: number;
@@ -40,18 +38,36 @@ interface ClusterInfo {
 
 interface ConstellationData {
   meta: {
-    total_books: number;
+    total_images: number;
     n_clusters: number;
-    model: string;
+    quality_threshold: number;
     generated_at: string;
   };
   clusters: Record<string, ClusterInfo>;
-  books: Book[];
+  images: ImageItem[];
 }
 
 // ────────────────────────────────────────────────────────────
-// Colors
+// Colors — by image type
 // ────────────────────────────────────────────────────────────
+
+const TYPE_COLORS: Record<string, string> = {
+  emblem: '#c9a86c',
+  woodcut: '#8b9a7d',
+  engraving: '#607d8b',
+  portrait: '#9e4a3a',
+  frontispiece: '#d4924a',
+  diagram: '#7c5db5',
+  map: '#1abc9c',
+  symbol: '#e91e63',
+  decorative: '#795548',
+  musical_score: '#5d8fb5',
+  illustration: '#4a9e7c',
+  chart: '#00bcd4',
+  botanical: '#4caf50',
+  anatomical: '#e74c3c',
+  coat_of_arms: '#673ab7',
+};
 
 const CLUSTER_COLORS = [
   '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6',
@@ -61,14 +77,7 @@ const CLUSTER_COLORS = [
   '#5e6d52', '#b5835d', '#7c5db5', '#9e4a3a', '#4a9e7c',
 ];
 
-const LANGUAGE_COLORS: Record<string, string> = {
-  Latin: '#9e4a3a', English: '#5d8fb5', German: '#8b9a7d',
-  French: '#7c5db5', Chinese: '#c9a86c', Sanskrit: '#d4924a',
-  Italian: '#4a9e7c', Dutch: '#5e6d52', Hebrew: '#b5835d',
-  Arabic: '#a067a0', Greek: '#5d7ab5',
-};
-
-type ColorMode = 'cluster' | 'language' | 'century';
+type ColorMode = 'type' | 'cluster' | 'century';
 
 function getCenturyColor(year: number | null): string {
   if (!year) return '#666';
@@ -84,11 +93,11 @@ function getCenturyColor(year: number | null): string {
   return '#6a7a5a';
 }
 
-function getBookColor(book: Book, mode: ColorMode): string {
+function getImageColor(img: ImageItem, mode: ColorMode): string {
   switch (mode) {
-    case 'cluster': return CLUSTER_COLORS[book.cluster % CLUSTER_COLORS.length];
-    case 'language': return LANGUAGE_COLORS[book.language] || '#666';
-    case 'century': return getCenturyColor(book.year);
+    case 'type': return TYPE_COLORS[img.type] || '#666';
+    case 'cluster': return CLUSTER_COLORS[img.cluster % CLUSTER_COLORS.length];
+    case 'century': return getCenturyColor(img.book_year);
   }
 }
 
@@ -99,7 +108,6 @@ function hexToRgb(hex: string): [number, number, number] {
     : [0.4, 0.4, 0.4];
 }
 
-// Deterministic pseudo-random per index
 function seededRandom(seed: number): number {
   const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
   return x - Math.floor(x);
@@ -110,15 +118,14 @@ function seededRandom(seed: number): number {
 // ────────────────────────────────────────────────────────────
 
 const SPREAD = 40;
-const BOOK_SIZE = 0.45;
-const HOVER_SCALE = 2.8;
+const POINT_SIZE = 0.35;
+const HOVER_SCALE = 3.0;
 
 // ────────────────────────────────────────────────────────────
 // Component
 // ────────────────────────────────────────────────────────────
 
-export default function BookConstellationViz({ data }: { data: ConstellationData }) {
-  // Three.js refs
+export default function ImageConstellationViz({ data }: { data: ConstellationData }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -128,77 +135,77 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
   const labelGroupRef = useRef<THREE.Group | null>(null);
   const animFrameRef = useRef<number>(0);
 
-  // Cached per-instance data
-  const bookPosRef = useRef<Float32Array>(new Float32Array(0));
-  const bookRotRef = useRef<Float32Array>(new Float32Array(0));
+  const imgPosRef = useRef<Float32Array>(new Float32Array(0));
+  const imgRotRef = useRef<Float32Array>(new Float32Array(0));
 
-  // Interaction refs
   const hoveredLabelRef = useRef<THREE.Sprite | null>(null);
   const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
 
-  // State
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const [selectedBookIdx, setSelectedBookIdx] = useState<number | null>(null);
-  const [colorMode, setColorMode] = useState<ColorMode>('cluster');
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const [colorMode, setColorMode] = useState<ColorMode>('type');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCluster, setSelectedCluster] = useState<number | null>(null);
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
-  const [selectedBookPos, setSelectedBookPos] = useState<{ x: number; y: number } | null>(null);
+  const [selectedPos, setSelectedPos] = useState<{ x: number; y: number } | null>(null);
   const [showInfo, setShowInfo] = useState(false);
   const [cursorStyle, setCursorStyle] = useState('grab');
 
-  // Computed
   const searchMatches = useMemo(() => {
     if (!searchQuery || searchQuery.length < 2) return null;
     const q = searchQuery.toLowerCase();
     const matches = new Set<number>();
-    data.books.forEach((b, i) => {
+    data.images.forEach((img, i) => {
       if (
-        b.title.toLowerCase().includes(q) ||
-        b.author.toLowerCase().includes(q) ||
-        b.keywords.some((k) => k.toLowerCase().includes(q)) ||
-        b.categories.some((c) => c.toLowerCase().includes(q))
+        img.book_title.toLowerCase().includes(q) ||
+        img.book_author.toLowerCase().includes(q) ||
+        img.type.toLowerCase().includes(q) ||
+        img.subjects.some((s) => s.toLowerCase().includes(q))
       ) {
         matches.add(i);
       }
     });
     return matches;
-  }, [searchQuery, data.books]);
+  }, [searchQuery, data.images]);
 
-  const clusterBooks = useMemo(() => {
+  const clusterImages = useMemo(() => {
     if (selectedCluster === null) return [];
-    return data.books
-      .filter((b) => b.cluster === selectedCluster)
-      .sort((a, b) => (a.year || 9999) - (b.year || 9999));
-  }, [selectedCluster, data.books]);
+    return data.images
+      .filter((img) => img.cluster === selectedCluster)
+      .sort((a, b) => (b.quality || 0) - (a.quality || 0));
+  }, [selectedCluster, data.images]);
 
   const selectedClusterInfo = selectedCluster !== null ? data.clusters[String(selectedCluster)] : null;
 
   const stats = useMemo(() => ({
-    totalBooks: data.meta.total_books,
+    totalImages: data.meta.total_images,
     nClusters: data.meta.n_clusters,
-    nLanguages: new Set(data.books.map((b) => b.language)).size,
-    firstTranslations: data.books.filter((b) => b.first_translation).length,
+    nTypes: new Set(data.images.map((img) => img.type)).size,
+    nBooks: new Set(data.images.map((img) => img.book_id)).size,
   }), [data]);
 
   const legendItems = useMemo(() => {
+    if (colorMode === 'type') {
+      const counts: Record<string, number> = {};
+      data.images.forEach((img) => { counts[img.type] = (counts[img.type] || 0) + 1; });
+      return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 12)
+        .map(([type, count]) => ({
+          label: type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          color: TYPE_COLORS[type] || '#666',
+          count,
+        }));
+    }
     if (colorMode === 'cluster') {
       return Object.values(data.clusters)
         .sort((a, b) => b.size - a.size)
         .slice(0, 10)
         .map((c) => ({
-          label: c.label || c.label_keywords.slice(0, 2).join(', '),
+          label: c.label,
           color: CLUSTER_COLORS[c.id % CLUSTER_COLORS.length],
           count: c.size,
         }));
-    }
-    if (colorMode === 'language') {
-      const counts: Record<string, number> = {};
-      data.books.forEach((b) => { counts[b.language] = (counts[b.language] || 0) + 1; });
-      return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
-        .map(([lang, count]) => ({ label: lang, color: LANGUAGE_COLORS[lang] || '#666', count }));
     }
     return [
       { label: 'Before 500', color: getCenturyColor(100), count: 0 },
@@ -211,7 +218,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     ];
   }, [colorMode, data]);
 
-  // ── Initialize Three.js ──────────────────────────────────
+  // ── Initialize Three.js ──
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -243,7 +250,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     controls.target.set(0, 0, 0);
     controlsRef.current = controls;
 
-    // Auto-rotation
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReducedMotion) {
       controls.autoRotate = true;
@@ -260,9 +266,9 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       }
     });
 
-    // ── InstancedMesh ──
-    const n = data.books.length;
-    const geometry = new THREE.BoxGeometry(BOOK_SIZE, BOOK_SIZE, BOOK_SIZE);
+    // InstancedMesh
+    const n = data.images.length;
+    const geometry = new THREE.BoxGeometry(POINT_SIZE, POINT_SIZE, POINT_SIZE);
     const material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
@@ -277,10 +283,10 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     const tempColor = new THREE.Color();
 
     for (let i = 0; i < n; i++) {
-      const b = data.books[i];
-      const px = (b.x - 0.5) * SPREAD;
-      const py = (b.y - 0.5) * SPREAD;
-      const pz = (b.z - 0.5) * SPREAD;
+      const img = data.images[i];
+      const px = (img.x - 0.5) * SPREAD;
+      const py = (img.y - 0.5) * SPREAD;
+      const pz = (img.z - 0.5) * SPREAD;
       positions[i * 3] = px;
       positions[i * 3 + 1] = py;
       positions[i * 3 + 2] = pz;
@@ -294,8 +300,8 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
 
-      const [r, g, b2] = hexToRgb(getBookColor(b, 'cluster'));
-      tempColor.setRGB(r, g, b2);
+      const [r, g, b] = hexToRgb(getImageColor(img, 'type'));
+      tempColor.setRGB(r, g, b);
       mesh.setColorAt(i, tempColor);
     }
 
@@ -303,14 +309,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     scene.add(mesh);
     meshRef.current = mesh;
-    bookPosRef.current = positions;
-    bookRotRef.current = rotations;
+    imgPosRef.current = positions;
+    imgRotRef.current = rotations;
 
-    // ── Cluster label sprites ──
+    // Cluster label sprites
     const labelGroup = new THREE.Group();
     labelGroup.name = 'clusterLabels';
     for (const [, cluster] of Object.entries(data.clusters)) {
-      const text = cluster.label || cluster.label_keywords.slice(0, 2).join(', ');
+      const text = cluster.label;
       if (!text) continue;
 
       const canvas = document.createElement('canvas');
@@ -345,7 +351,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     scene.add(labelGroup);
     labelGroupRef.current = labelGroup;
 
-    // ── Animation loop ──
     function animate() {
       animFrameRef.current = requestAnimationFrame(animate);
       controls.update();
@@ -353,7 +358,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     }
     animate();
 
-    // ── Resize ──
     const onResize = () => {
       const w = container.clientWidth;
       const h = container.clientHeight;
@@ -385,14 +389,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  // ── Update instance visuals (colors + scales) ──
+  // ── Update colors & scales ──
   useEffect(() => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
-    const n = data.books.length;
-    const positions = bookPosRef.current;
-    const rotations = bookRotRef.current;
+    const n = data.images.length;
+    const positions = imgPosRef.current;
+    const rotations = imgRotRef.current;
     const dummy = new THREE.Object3D();
     const tempColor = new THREE.Color();
 
@@ -400,15 +404,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     const hasCluster = selectedCluster !== null;
 
     for (let i = 0; i < n; i++) {
-      const b = data.books[i];
+      const img = data.images[i];
       const isSearchMatch = hasSearch ? searchMatches!.has(i) : true;
-      const isClusterMatch = hasCluster ? b.cluster === selectedCluster : true;
+      const isClusterMatch = hasCluster ? img.cluster === selectedCluster : true;
       const isHighlighted = isSearchMatch && isClusterMatch;
       const isHovered = i === hoveredIdx;
-      const isSelected = i === selectedBookIdx;
+      const isSelected = i === selectedIdx;
 
-      // Color
-      const hex = getBookColor(b, colorMode);
+      const hex = getImageColor(img, colorMode);
       const [r, g, bl] = hexToRgb(hex);
       if (isHighlighted || isHovered || isSelected) {
         tempColor.setRGB(r, g, bl);
@@ -417,7 +420,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       }
       mesh.setColorAt(i, tempColor);
 
-      // Matrix
       const px = positions[i * 3];
       const py = positions[i * 3 + 1];
       const pz = positions[i * 3 + 2];
@@ -431,9 +433,9 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, selectedBookIdx, data.books]);
+  }, [colorMode, searchMatches, selectedCluster, hoveredIdx, selectedIdx, data.images]);
 
-  // ── Pointer move: screen-space proximity picking + label hover ──
+  // ── Pointer move ──
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
       const container = containerRef.current;
@@ -444,15 +446,10 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       const rect = container.getBoundingClientRect();
       const mx = e.clientX - rect.left;
       const my = e.clientY - rect.top;
-      const w = rect.width;
-      const h = rect.height;
-
-      // NDC for raycaster (used for label sprites)
-      const ndcX = (mx / w) * 2 - 1;
-      const ndcY = -(my / h) * 2 + 1;
+      const ndcX = (mx / rect.width) * 2 - 1;
+      const ndcY = -(my / rect.height) * 2 + 1;
       raycasterRef.current.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
 
-      // Check cluster labels first
       if (labelGroup) {
         const prevLabel = hoveredLabelRef.current;
         const labelIntersects = raycasterRef.current.intersectObjects(labelGroup.children);
@@ -474,7 +471,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         }
       }
 
-      // Raycast against InstancedMesh for accurate picking
       const mesh = meshRef.current;
       if (mesh) {
         const intersects = raycasterRef.current.intersectObject(mesh);
@@ -489,7 +485,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         }
       }
     },
-    [data.books.length],
+    [data.images.length],
   );
 
   // ── Click handler ──
@@ -506,7 +502,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       const ndcY = -(my / rect.height) * 2 + 1;
       raycasterRef.current.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
 
-      // Check cluster labels first
       const labelGroup = labelGroupRef.current;
       if (labelGroup) {
         const labelIntersects = raycasterRef.current.intersectObjects(labelGroup.children);
@@ -515,27 +510,25 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           const cId = sprite.userData.clusterId as number;
           if (cId !== undefined) {
             setSelectedCluster((prev) => (prev === cId ? null : cId));
-            setSelectedBookIdx(null);
-            setSelectedBookPos(null);
+            setSelectedIdx(null);
+            setSelectedPos(null);
             return;
           }
         }
       }
 
-      // Raycast against books directly at click time
       const mesh = meshRef.current;
       if (mesh) {
         const intersects = raycasterRef.current.intersectObject(mesh);
         if (intersects.length > 0 && intersects[0].instanceId !== undefined) {
-          setSelectedBookIdx(intersects[0].instanceId);
-          setSelectedBookPos({ x: mx, y: my });
+          setSelectedIdx(intersects[0].instanceId);
+          setSelectedPos({ x: mx, y: my });
           return;
         }
       }
 
-      // Clicked empty space
-      setSelectedBookIdx(null);
-      setSelectedBookPos(null);
+      setSelectedIdx(null);
+      setSelectedPos(null);
     },
     [],
   );
@@ -543,8 +536,8 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
   const resetView = useCallback(() => {
     setSearchQuery('');
     setSelectedCluster(null);
-    setSelectedBookIdx(null);
-    setSelectedBookPos(null);
+    setSelectedIdx(null);
+    setSelectedPos(null);
     const camera = cameraRef.current;
     const controls = controlsRef.current;
     if (camera && controls) {
@@ -554,12 +547,11 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     }
   }, []);
 
-  const hoveredBook = hoveredIdx !== null ? data.books[hoveredIdx] : null;
+  const hoveredImage = hoveredIdx !== null ? data.images[hoveredIdx] : null;
 
-  // ── Render ──────────────────────────────────────────────
   return (
     <div className="relative w-full h-full select-none">
-      {/* Three.js canvas mount */}
+      {/* Three.js canvas */}
       <div
         ref={containerRef}
         className="absolute inset-0"
@@ -568,7 +560,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         onClick={handleClick}
       />
 
-      {/* ── Top-left: branding ── */}
+      {/* Top-left: branding */}
       <div className="absolute top-4 left-5 z-10">
         <a
           href="/"
@@ -576,18 +568,14 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         >
           Source Library
         </a>
-        <div className="text-white/70 font-serif text-xl leading-tight">Book Atlas</div>
-        <a
-          href="/research/image-atlas"
-          className="text-white/25 hover:text-white/50 text-xs font-mono tracking-wide transition-colors"
-        >
-          Image Atlas &rarr;
-        </a>
+        <div className="text-white/70 font-serif text-xl leading-tight">Image Atlas</div>
+        <div className="text-white/25 text-xs mt-0.5 font-mono">
+          {stats.totalImages.toLocaleString()} illustrations from {stats.nBooks.toLocaleString()} books
+        </div>
       </div>
 
-      {/* ── Top-right: controls ── */}
+      {/* Top-right: controls */}
       <div className="absolute top-4 right-5 z-10 flex items-center gap-2">
-        {/* Search */}
         <div className="relative">
           <input
             type="text"
@@ -609,8 +597,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           )}
         </div>
 
-        {/* Color mode */}
-        {(['cluster', 'language', 'century'] as ColorMode[]).map((mode) => (
+        {(['type', 'cluster', 'century'] as ColorMode[]).map((mode) => (
           <button
             key={mode}
             onClick={() => setColorMode(mode)}
@@ -620,11 +607,10 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
                 : 'bg-transparent border-white/8 text-white/30 hover:text-white/50 hover:border-white/15'
             }`}
           >
-            {mode === 'cluster' ? 'Topic' : mode.charAt(0).toUpperCase() + mode.slice(1)}
+            {mode === 'type' ? 'Type' : mode === 'cluster' ? 'Topic' : 'Century'}
           </button>
         ))}
 
-        {/* Info toggle */}
         <button
           onClick={() => setShowInfo(!showInfo)}
           className={`w-7 h-7 flex items-center justify-center rounded border text-sm font-serif italic transition-colors ${
@@ -636,7 +622,6 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           i
         </button>
 
-        {/* Reset */}
         <button
           onClick={resetView}
           className="px-2.5 py-1 text-xs rounded border border-white/8 text-white/30 hover:text-white/50 hover:border-white/15 transition-colors"
@@ -645,7 +630,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         </button>
       </div>
 
-      {/* ── Info panel ── */}
+      {/* Info panel */}
       {showInfo && (
         <div
           className="absolute top-14 right-5 w-[300px] bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-4 z-20 max-h-[85vh] overflow-y-auto shadow-lg"
@@ -653,36 +638,44 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           onClick={(e) => e.stopPropagation()}
         >
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div><div className="text-gray-800 font-mono text-xl">{stats.totalBooks.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.totalImages.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Images</div></div>
             <div><div className="text-gray-800 font-mono text-xl">{stats.nClusters}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Clusters</div></div>
-            <div><div className="text-gray-800 font-mono text-xl">{stats.nLanguages}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Languages</div></div>
-            <div><div className="text-gray-800 font-mono text-xl">{stats.firstTranslations.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">First Trans.</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.nTypes}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Image Types</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.nBooks.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
           </div>
           <div className="border-t border-gray-200 pt-3 text-gray-500 text-sm leading-relaxed space-y-2">
             <p>
-              Each rectangle is a book. Position reflects content similarity — AI
-              embeddings of summaries, themes, and index terms are projected with UMAP.
-              Height represents date of composition.
+              Each cube is an illustration extracted from a pre-modern text. Position
+              reflects visual/thematic similarity — AI descriptions of subjects, figures,
+              and symbols are embedded and projected with UMAP.
             </p>
             <p>
               <strong className="text-gray-600">Embeddings:</strong>{' '}
               <span className="font-mono text-xs">paraphrase-multilingual-MiniLM-L12-v2</span>{' '}
-              (384-dim). UMAP with cosine distance, n_neighbors=25, min_dist=0.03.
-            </p>
-            <p>
-              <strong className="text-gray-600">Clustering:</strong>{' '}
-              K-Means (k={stats.nClusters}) on original embeddings. Labels from category + keyword analysis.
+              (384-dim). UMAP with cosine distance.
             </p>
             <p>
               <strong className="text-gray-600">Z-axis:</strong>{' '}
-              Piecewise linear normalization — pre-1400 compressed, 1400-1970 expanded.
+              Source book publication year.
             </p>
+            <p>
+              <strong className="text-gray-600">Color:</strong>{' '}
+              Default by image type (emblem, woodcut, engraving, etc.).
+            </p>
+          </div>
+          <div className="border-t border-gray-200 mt-3 pt-3">
+            <a
+              href="/research/atlas"
+              className="text-gray-400 text-sm hover:text-gray-600 transition-colors"
+            >
+              View Book Atlas &rarr;
+            </a>
           </div>
         </div>
       )}
 
-      {/* ── Hover tooltip ── */}
-      {hoveredBook && tooltipPos && selectedBookIdx !== hoveredIdx && (
+      {/* Hover tooltip */}
+      {hoveredImage && tooltipPos && selectedIdx !== hoveredIdx && (
         <div
           className="absolute pointer-events-none bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-3 max-w-[280px] z-20 shadow-lg"
           style={{
@@ -690,86 +683,112 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
             top: Math.max(tooltipPos.y - 70, 10),
           }}
         >
-          <div className="font-serif text-base text-gray-900 leading-tight mb-0.5">
-            {hoveredBook.title}
+          <div className="flex items-center gap-1.5 mb-1">
+            <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-600">
+              {hoveredImage.type.replace(/_/g, ' ')}
+            </span>
+            {hoveredImage.subjects.slice(0, 2).map((s) => (
+              <span key={s} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-400">{s}</span>
+            ))}
           </div>
-          <div className="text-sm text-gray-500">
-            {hoveredBook.author !== 'Unknown' ? hoveredBook.author : ''}
-            {hoveredBook.author !== 'Unknown' && hoveredBook.year ? ' · ' : ''}
-            {hoveredBook.year || ''}
+          <div className="text-sm text-gray-500 leading-tight">
+            {hoveredImage.book_title}
+            {hoveredImage.book_year ? ` (${hoveredImage.book_year})` : ''}
           </div>
         </div>
       )}
 
-      {/* ── Selected book panel ── */}
-      {selectedBookIdx !== null && selectedBookPos && (() => {
-        const book = data.books[selectedBookIdx];
-        if (!book) return null;
-        const ci = data.clusters[String(book.cluster)];
+      {/* Selected image panel */}
+      {selectedIdx !== null && selectedPos && (() => {
+        const img = data.images[selectedIdx];
+        if (!img) return null;
+        const ci = data.clusters[String(img.cluster)];
         return (
           <div
-            className="absolute bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-4 max-w-[300px] z-20 shadow-lg"
+            className="absolute bg-white/95 backdrop-blur-md border border-black/10 rounded-md p-4 max-w-[320px] z-20 shadow-lg"
             style={{
-              left: Math.min(selectedBookPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 310),
-              top: Math.max(selectedBookPos.y - 100, 10),
+              left: Math.min(selectedPos.x + 14, (containerRef.current?.clientWidth ?? 600) - 330),
+              top: Math.max(selectedPos.y - 120, 10),
             }}
             onPointerMove={(e) => e.stopPropagation()}
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              onClick={() => { setSelectedBookIdx(null); setSelectedBookPos(null); }}
+              onClick={() => { setSelectedIdx(null); setSelectedPos(null); }}
               className="absolute top-2 right-2.5 text-gray-400 hover:text-gray-600 text-sm leading-none"
               aria-label="Close"
             >
               &times;
             </button>
-            <a
-              href={`/book/${book.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-serif text-base text-gray-900 hover:text-black leading-tight block mb-1 pr-4"
-            >
-              {book.title}
-            </a>
-            <div className="text-sm text-gray-500 mb-2">
-              {book.author !== 'Unknown' ? book.author : ''}
-              {book.author !== 'Unknown' && book.year ? ' · ' : ''}
-              {book.year || ''}
-              {book.pages > 0 ? ` · ${book.pages} pp.` : ''}
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {book.categories.slice(0, 3).map((cat) => (
-                <span key={cat} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-600">
-                  {cat.replace(/-/g, ' ')}
-                </span>
-              ))}
-              <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-500">
-                {book.language}
+
+            {/* Image thumbnail */}
+            {img.thumbnail && (
+              <div className="mb-3 rounded overflow-hidden bg-gray-100" style={{ maxHeight: 180 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img.thumbnail}
+                  alt={img.subjects.join(', ') || img.type}
+                  className="w-full object-contain"
+                  style={{ maxHeight: 180 }}
+                  loading="lazy"
+                />
+              </div>
+            )}
+
+            <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+              <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-600 font-medium">
+                {img.type.replace(/_/g, ' ')}
+              </span>
+              <span className="px-1.5 py-0.5 text-xs rounded bg-amber-50 text-amber-700 font-mono">
+                {img.quality.toFixed(2)}
               </span>
             </div>
-            {book.keywords.length > 0 && (
-              <div className="text-xs text-gray-400 mt-2 leading-relaxed">
-                {book.keywords.join(' · ')}
+
+            {img.subjects.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-2">
+                {img.subjects.map((s) => (
+                  <span key={s} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-500">{s}</span>
+                ))}
               </div>
             )}
-            {book.first_translation && (
-              <div className="text-xs text-[#9e4a3a] mt-1.5 font-medium">
-                First English Translation
-              </div>
-            )}
-            {ci && (
-              <button
-                onClick={() => setSelectedCluster(ci.id)}
-                className="text-xs text-gray-400 mt-2 hover:text-gray-600 transition-colors"
+
+            <a
+              href={`/book/${img.book_slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-serif text-sm text-gray-900 hover:text-black leading-tight block mb-1 pr-4"
+            >
+              {img.book_title}
+            </a>
+            <div className="text-sm text-gray-500 mb-2">
+              {img.book_author !== 'Unknown' ? img.book_author : ''}
+              {img.book_author !== 'Unknown' && img.book_year ? ' · ' : ''}
+              {img.book_year || ''}
+            </div>
+
+            <div className="flex items-center gap-2 text-xs">
+              <a
+                href={`/gallery?book=${img.book_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                Cluster: {ci.label} ({ci.size} books) &rarr;
-              </button>
-            )}
+                View in Gallery &rarr;
+              </a>
+              {ci && (
+                <button
+                  onClick={() => setSelectedCluster(ci.id)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  Cluster: {ci.label} ({ci.size}) &rarr;
+                </button>
+              )}
+            </div>
           </div>
         );
       })()}
 
-      {/* ── Bottom-left: legend ── */}
+      {/* Bottom-left: legend */}
       <div className="absolute bottom-12 left-5 z-10 bg-black/50 backdrop-blur-sm border border-white/8 rounded p-2.5 max-w-[200px]">
         <div className="grid grid-cols-1 gap-y-0.5">
           {legendItems.map((item) => (
@@ -782,26 +801,26 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         </div>
       </div>
 
-      {/* ── Bottom: cluster pills ── */}
+      {/* Bottom: cluster pills */}
       <div className={`absolute bottom-3 left-5 z-10 ${selectedCluster !== null ? 'right-[370px]' : 'right-5'}`}>
         <ClusterPills
           clusters={data.clusters}
           selectedCluster={selectedCluster}
           onSelect={(id) => {
             setSelectedCluster(selectedCluster === id ? null : id);
-            setSelectedBookIdx(null);
-            setSelectedBookPos(null);
+            setSelectedIdx(null);
+            setSelectedPos(null);
           }}
           onClear={() => { setSelectedCluster(null); }}
         />
       </div>
 
-      {/* ── Bottom-right: hint ── */}
+      {/* Bottom-right: hint */}
       <div className="absolute bottom-12 right-5 z-10 text-xs text-white/20 font-mono">
         Click to inspect · Drag to rotate · Scroll to zoom
       </div>
 
-      {/* ── Cluster detail panel ── */}
+      {/* Cluster detail panel */}
       {selectedCluster !== null && selectedClusterInfo && (
         <div
           className="absolute top-0 right-0 w-[360px] h-full bg-white/95 backdrop-blur-md border-l border-black/10 z-30 flex flex-col shadow-2xl"
@@ -811,7 +830,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
           <div className="p-4 border-b border-gray-200 flex items-center justify-between shrink-0">
             <div>
               <h3 className="text-gray-900 font-serif text-lg leading-tight">{selectedClusterInfo.label}</h3>
-              <p className="text-gray-400 text-sm mt-0.5 font-mono">{clusterBooks.length} books</p>
+              <p className="text-gray-400 text-sm mt-0.5 font-mono">{clusterImages.length} images</p>
             </div>
             <button
               onClick={() => setSelectedCluster(null)}
@@ -821,41 +840,45 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
               &times;
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-3 space-y-1.5 min-h-0">
-            {clusterBooks.map((book) => (
-              <a
-                key={book.id}
-                href={`/book/${book.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-2.5 rounded-md border border-gray-100 hover:border-gray-300 hover:bg-gray-50 transition-colors"
-              >
-                <div className="text-gray-800 text-sm font-serif leading-tight">{book.title}</div>
-                <div className="text-gray-400 text-sm mt-0.5">
-                  {book.author !== 'Unknown' && book.author}
-                  {book.author !== 'Unknown' && book.year ? ' · ' : ''}
-                  {book.year || ''}
-                </div>
-                <div className="flex gap-1 mt-1.5">
-                  <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-500">{book.language}</span>
-                  {book.keywords.slice(0, 2).map((kw) => (
-                    <span key={kw} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-400">{kw}</span>
-                  ))}
-                  {book.first_translation && (
-                    <span className="px-1.5 py-0.5 text-xs rounded bg-[#9e4a3a]/10 text-[#9e4a3a]">1st trans.</span>
+          <div className="flex-1 overflow-y-auto p-3 min-h-0">
+            <div className="grid grid-cols-2 gap-2">
+              {clusterImages.slice(0, 60).map((img) => (
+                <a
+                  key={img.id}
+                  href={`/gallery?book=${img.book_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-md border border-gray-100 hover:border-gray-300 overflow-hidden transition-colors group"
+                >
+                  {img.thumbnail ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={img.thumbnail}
+                      alt={img.subjects.join(', ') || img.type}
+                      className="w-full h-28 object-cover bg-gray-100"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-28 bg-gray-100 flex items-center justify-center text-gray-300 text-xs">
+                      No image
+                    </div>
                   )}
-                </div>
-              </a>
-            ))}
+                  <div className="p-1.5">
+                    <div className="text-gray-400 text-xs truncate group-hover:text-gray-600">{img.book_title}</div>
+                    <span className="px-1 py-0.5 text-[10px] rounded bg-gray-100 text-gray-400">{img.type.replace(/_/g, ' ')}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
           <div className="p-3 border-t border-gray-200 shrink-0">
             <a
-              href={`/search?q=${encodeURIComponent(selectedClusterInfo.label)}`}
+              href={`/gallery`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 text-sm hover:text-gray-600 transition-colors"
             >
-              Search in library &rarr;
+              Browse full gallery &rarr;
             </a>
           </div>
         </div>
@@ -901,24 +924,20 @@ function ClusterPills({
       >
         All
       </button>
-      {visible.map((cluster) => {
-        const label =
-          cluster.label || cluster.label_keywords.slice(0, 2).join(', ') || `Cluster ${cluster.id}`;
-        return (
-          <button
-            key={cluster.id}
-            onClick={() => onSelect(cluster.id)}
-            className={`px-2 py-0.5 rounded text-xs border transition-colors ${
-              selectedCluster === cluster.id
-                ? 'bg-white/10 border-white/20 text-white/70'
-                : 'bg-transparent border-white/8 text-white/25 hover:text-white/40'
-            }`}
-          >
-            {label}
-            <span className="ml-1 text-white/15 font-mono">{cluster.size}</span>
-          </button>
-        );
-      })}
+      {visible.map((cluster) => (
+        <button
+          key={cluster.id}
+          onClick={() => onSelect(cluster.id)}
+          className={`px-2 py-0.5 rounded text-xs border transition-colors ${
+            selectedCluster === cluster.id
+              ? 'bg-white/10 border-white/20 text-white/70'
+              : 'bg-transparent border-white/8 text-white/25 hover:text-white/40'
+          }`}
+        >
+          {cluster.label}
+          <span className="ml-1 text-white/15 font-mono">{cluster.size}</span>
+        </button>
+      ))}
       {hasMore && (
         <button
           onClick={() => setExpanded(!expanded)}
