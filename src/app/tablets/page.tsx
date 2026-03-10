@@ -4,6 +4,7 @@ import {
   tokenizeAtfLine,
   type AtfToken,
 } from '@/lib/cuneiform-signs';
+import CroppedSurfaceImage from './CroppedSurfaceImage';
 
 export const metadata: Metadata = {
   title: 'Cuneiform Tablet Corpus — Source Library',
@@ -217,48 +218,53 @@ export default function TabletsPage() {
               {/* Detection map: full photo with blue/red bounding boxes */}
               {tablet.photoBounds && tablet.photoBounds.surfaces.length > 0 && (
                 <div
-                  className="p-4 border-b flex justify-center"
+                  className="p-4 border-b"
                   style={{ backgroundColor: '#f0ece3', borderColor: 'var(--border-light)' }}
                 >
-                  <a
-                    href={tablet.cdliUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative inline-block"
-                    style={{ maxWidth: '280px' }}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={tablet.photoUrl}
-                      alt={`${tablet.designation} with detected surfaces`}
-                      loading="lazy"
-                      className="block w-full rounded shadow-sm"
-                    />
-                    {tablet.photoBounds.surfaces.map((surface, si) => (
-                      <div
-                        key={si}
-                        className="absolute border-2 pointer-events-none"
-                        style={{
-                          left: `${surface.bbox.x * 100}%`,
-                          top: `${surface.bbox.y * 100}%`,
-                          width: `${surface.bbox.w * 100}%`,
-                          height: `${surface.bbox.h * 100}%`,
-                          borderColor: surface.label === 'obverse' ? '#3b82f6' : '#ef4444',
-                          backgroundColor: surface.label === 'obverse' ? 'rgba(59, 130, 246, 0.08)' : 'rgba(239, 68, 68, 0.08)',
-                        }}
-                      >
-                        <span
-                          className="absolute top-1 left-1 text-[10px] font-mono px-1.5 py-0.5 rounded leading-none"
+                  <div className="flex justify-center">
+                    <a
+                      href={tablet.cdliUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative inline-block"
+                      style={{ maxWidth: '280px' }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={tablet.photoUrl}
+                        alt={`${tablet.designation} with detected surfaces`}
+                        loading="lazy"
+                        className="block w-full rounded shadow-sm"
+                      />
+                      {tablet.photoBounds.surfaces.map((surface, si) => (
+                        <div
+                          key={si}
+                          className="absolute border-2 pointer-events-none"
                           style={{
-                            backgroundColor: surface.label === 'obverse' ? '#3b82f6' : '#ef4444',
-                            color: 'white',
+                            left: `${surface.bbox.x * 100}%`,
+                            top: `${surface.bbox.y * 100}%`,
+                            width: `${surface.bbox.w * 100}%`,
+                            height: `${surface.bbox.h * 100}%`,
+                            borderColor: surface.label === 'obverse' ? '#3b82f6' : '#ef4444',
+                            backgroundColor: surface.label === 'obverse' ? 'rgba(59, 130, 246, 0.08)' : 'rgba(239, 68, 68, 0.08)',
                           }}
                         >
-                          @{surface.label}
-                        </span>
-                      </div>
-                    ))}
-                  </a>
+                          <span
+                            className="absolute top-1 left-1 text-[10px] font-mono px-1.5 py-0.5 rounded leading-none"
+                            style={{
+                              backgroundColor: surface.label === 'obverse' ? '#3b82f6' : '#ef4444',
+                              color: 'white',
+                            }}
+                          >
+                            @{surface.label}
+                          </span>
+                        </div>
+                      ))}
+                    </a>
+                  </div>
+                  <p className="text-center mt-2 text-[10px] font-mono italic" style={{ color: 'var(--text-faint)' }}>
+                    Surface detection by Gemini Vision (AI-generated bounding boxes)
+                  </p>
                 </div>
               )}
 
@@ -270,34 +276,16 @@ export default function TabletsPage() {
                       (s) => s.label.toLowerCase() === section.surface.toLowerCase()
                     );
                     const aspect = tablet.photoBounds?.imageAspect;
-                    // Pixel-based crop: eliminates CSS percentage reference frame ambiguity
-                    const containerW = 120;
-                    const imgW = bounds ? containerW / bounds.bbox.w : 0;
-                    const imgH = bounds && aspect ? imgW / aspect : 0;
                     return (
                       <div key={si} className="flex gap-4 px-5 py-3">
                         {bounds && aspect ? (
-                          <div
-                            className="shrink-0 relative overflow-hidden rounded shadow-sm"
-                            style={{
-                              width: `${containerW}px`,
-                              height: `${bounds.bbox.h * imgH}px`,
-                            }}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={tablet.photoUrl}
-                              alt={`${tablet.designation} ${section.surface}`}
-                              loading="lazy"
-                              style={{
-                                position: 'absolute',
-                                width: `${imgW}px`,
-                                maxWidth: 'none',
-                                left: `${-bounds.bbox.x * imgW}px`,
-                                top: `${-bounds.bbox.y * imgH}px`,
-                              }}
-                            />
-                          </div>
+                          <CroppedSurfaceImage
+                            photoUrl={tablet.photoUrl}
+                            bbox={bounds.bbox}
+                            imageAspect={aspect}
+                            containerWidth={360}
+                            alt={`${tablet.designation} ${section.surface}`}
+                          />
                         ) : null}
                         <div className="min-w-0 flex-1">
                           <SurfaceLines section={section} />
@@ -317,18 +305,76 @@ export default function TabletsPage() {
                 </div>
               )}
 
-              {/* Compact metadata footer */}
+              {/* Metadata footer with source attribution */}
               <div
-                className="px-5 py-3 border-t text-xs flex flex-wrap gap-x-4 gap-y-1"
-                style={{
-                  borderColor: 'var(--border-light)',
-                  color: 'var(--text-muted)',
-                }}
+                className="px-5 py-3 border-t"
+                style={{ borderColor: 'var(--border-light)' }}
               >
-                <span>{tablet.museum}</span>
-                <span>{tablet.museumNo}</span>
-                <span>{tablet.lineCount} lines</span>
-                <span>{tablet.surfaces.join(', ')}</span>
+                <div className="flex gap-6 text-xs" style={{ color: 'var(--text-muted)' }}>
+                  {/* CDLI source data */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span
+                        className="font-mono text-[10px] px-1.5 py-0.5 rounded font-medium"
+                        style={{ backgroundColor: 'var(--accent-sage)/12', color: 'var(--accent-sage-dark)' }}
+                      >
+                        CDLI
+                      </span>
+                      <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                        Source data
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                      <span style={{ color: 'var(--text-faint)' }}>Period</span>
+                      <span>{tablet.period}</span>
+                      <span style={{ color: 'var(--text-faint)' }}>Language</span>
+                      <span>{tablet.language}</span>
+                      <span style={{ color: 'var(--text-faint)' }}>Genre</span>
+                      <span>{tablet.genre}</span>
+                      <span style={{ color: 'var(--text-faint)' }}>Museum</span>
+                      <span>{tablet.museum} ({tablet.museumNo})</span>
+                      <span style={{ color: 'var(--text-faint)' }}>Lines</span>
+                      <span>{tablet.lineCount}</span>
+                      <span style={{ color: 'var(--text-faint)' }}>Surfaces</span>
+                      <span>{tablet.surfaces.join(', ')}</span>
+                      {tablet.hasTranslation && (
+                        <>
+                          <span style={{ color: 'var(--text-faint)' }}>Translation</span>
+                          <span>Available on CDLI</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Generated data */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span
+                        className="font-mono text-[10px] px-1.5 py-0.5 rounded font-medium"
+                        style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}
+                      >
+                        Generated
+                      </span>
+                      <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                        Source Library
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                      <span style={{ color: 'var(--text-faint)' }}>Difficulty</span>
+                      <span>{tablet.difficulty}</span>
+                      {tablet.photoBounds && (
+                        <>
+                          <span style={{ color: 'var(--text-faint)' }}>Detection</span>
+                          <span>
+                            {tablet.photoBounds.surfaces.length} surface{tablet.photoBounds.surfaces.length !== 1 ? 's' : ''} ({tablet.photoBounds.layout})
+                          </span>
+                        </>
+                      )}
+                      <span style={{ color: 'var(--text-faint)' }}>Cuneiform</span>
+                      <span>Unicode sign mapping (experimental)</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </article>
           );
@@ -342,10 +388,23 @@ function SurfaceLines({ section }: { section: ParsedSection }) {
   return (
     <div className="p-4 overflow-x-auto">
       <div
-        className="text-xs font-semibold uppercase tracking-wider mb-1.5 pb-1 border-b"
-        style={{ color: 'var(--accent-gold-dark)', borderColor: 'var(--border-light)' }}
+        className="flex items-center justify-between mb-1.5 pb-1 border-b"
+        style={{ borderColor: 'var(--border-light)' }}
       >
-        @{section.surface}
+        <span
+          className="text-xs font-semibold uppercase tracking-wider"
+          style={{ color: 'var(--accent-gold-dark)' }}
+        >
+          @{section.surface}
+        </span>
+        <div className="flex gap-2">
+          <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-sage)/12', color: 'var(--accent-sage-dark)' }}>
+            ATF: CDLI
+          </span>
+          <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}>
+            Signs: generated
+          </span>
+        </div>
       </div>
       <div className="space-y-1">
         {section.lines.map((line, li) => (
