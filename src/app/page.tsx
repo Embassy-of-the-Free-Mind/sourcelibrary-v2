@@ -76,27 +76,42 @@ async function getFeaturedCollections() {
 
   if (collections.length === 0) return [];
 
-  // Fetch top 10 translated books for each collection in parallel
-  const results = await Promise.all(collections.map(async (collection) => {
+  // Batch-fetch books for ALL 5 collections in a single query instead of 5 separate queries.
+  // Each individual query was doing a full collection sort (no read_count index) → 5x full scan.
+  const allSlugs = collections.map(c => c.slug);
+  const allBooks = await db.collection('books').aggregate([
+    {
+      $match: {
+        collections: { $in: allSlugs },
+        hidden: { $ne: true },
+        pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
+      },
+    },
+    { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 } },
+  ], { maxTimeMS: 8000 }).toArray();
+
+  // Group books by collection slug (a book can appear in multiple collections)
+  const booksBySlug = new Map<string, typeof allBooks>();
+  for (const book of allBooks) {
+    const bookCollections = Array.isArray(book.collections) ? book.collections : [];
+    for (const slug of allSlugs) {
+      if (bookCollections.includes(slug)) {
+        if (!booksBySlug.has(slug)) booksBySlug.set(slug, []);
+        const arr = booksBySlug.get(slug)!;
+        if (arr.length < 10) arr.push(book);
+      }
+    }
+  }
+
+  const results = collections.map((collection) => {
     const images = collection.featured_images || [];
     const hero = images.find(
       (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
     );
     const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
 
-    const books = await db.collection('books').aggregate([
-      {
-        $match: {
-          collections: collection.slug,
-          hidden: { $ne: true },
-          pages_count: { $gt: 0 },
-          pages_translated: { $gt: 0 },
-        },
-      },
-      { $sort: { read_count: -1 } },
-      { $limit: 10 },
-      { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1 } },
-    ]).toArray();
+    const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
 
     return {
       collection: {
@@ -109,7 +124,7 @@ async function getFeaturedCollections() {
       },
       books: JSON.parse(JSON.stringify(books)),
     };
-  }));
+  });
 
   // Only return collections that have translated books to show
   return results.filter(r => r.books.length > 0);
@@ -149,28 +164,34 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
     };
   }) as CollectionForGrid[];
 
-  // Fill in missing hero images from book thumbnails
+  // Fill in missing hero images from book thumbnails — batch query instead of N+1
   const missingHero = result.filter(c => !c.hero_image);
   if (missingHero.length > 0) {
-    for (const col of missingHero) {
-      try {
-        const book = await db.collection('books').findOne(
-          {
-            collections: col.slug,
+    try {
+      const missingSlugs = missingHero.map(c => c.slug);
+      const heroBooks = await db.collection('books').aggregate([
+        {
+          $match: {
+            collections: { $in: missingSlugs },
             hidden: { $ne: true },
             $or: [
               { thumbnail_blob: { $exists: true, $nin: [null, ''] } },
               { thumbnail: { $exists: true, $nin: [null, ''] } },
             ],
           },
-          { projection: { thumbnail_blob: 1, thumbnail: 1 } },
-        );
+        },
+        { $project: { collections: 1, thumbnail_blob: 1, thumbnail: 1 } },
+        { $limit: 50 },
+      ], { maxTimeMS: 5000 }).toArray();
+
+      for (const col of missingHero) {
+        const book = heroBooks.find(b => Array.isArray(b.collections) && b.collections.includes(col.slug));
         if (book) {
           col.hero_image = (book.thumbnail_blob || book.thumbnail) as string;
         }
-      } catch {
-        // Skip — gradient fallback will show
       }
+    } catch {
+      // Skip — gradient fallback will show
     }
   }
 
@@ -183,14 +204,15 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
 async function getDiscoverBooks(): Promise<Book[]> {
   const db = await getDb();
 
-  // Use $sample instead of sort-by-read_count — the sort was doing a 44s full-collection
-  // scan without an index. $sample is O(n) but much faster in practice.
-  // TODO: add { read_count: -1 } index and revert to sorted approach.
+  // $sample FIRST so MongoDB uses fast random cursor (O(1) when size < 5% of collection).
+  // $match after $sample filters the random sample down.
+  // Over-sample to account for hidden/untranslated books being filtered out.
   const books = await db.collection('books').aggregate([
+    { $sample: { size: 200 } },
     { $match: { hidden: { $ne: true }, pages_translated: { $gte: 10 } } },
-    { $sample: { size: 10 } },
+    { $limit: 10 },
     { $project: BOOK_PROJECTION },
-  ]).toArray();
+  ], { maxTimeMS: 8000 }).toArray();
 
   return JSON.parse(JSON.stringify(books)) as Book[];
 }
@@ -216,7 +238,7 @@ async function getCollectionShowcase() {
       },
     },
     { $limit: 40 },
-  ]).toArray();
+  ], { maxTimeMS: 8000 }).toArray();
 
   // Diversify: max 1 per book, take 8
   const seen = new Set<string>();
@@ -228,50 +250,36 @@ async function getCollectionShowcase() {
     if (selected.length >= 8) break;
   }
 
-  // For each selected image, try to find a quote from the book
-  const items = await Promise.all(
-    selected.map(async (img) => {
-      let quote: { text: string; page: number } | undefined;
-      try {
-        const book = await db.collection('books').findOne(
-          { id: img.book_id },
-          { projection: { 'reading_summary.quotes': 1, slug: 1 } },
-        );
-        const quotes = book?.reading_summary?.quotes;
-        if (quotes && quotes.length > 0) {
-          quote = quotes[Math.floor(Math.random() * quotes.length)];
-        }
-        return {
-          page_id: img.page_id,
-          book_id: img.book_id,
-          page_number: img.page_number || 0,
-          detection_index: img.detection_index || 0,
-          thumbnail_url: img.thumbnail_url || img.extracted_url,
-          type: img.type || '',
-          museum_description: img.museum_description,
-          book_title: img.book_title || '',
-          book_author: img.book_author || '',
-          book_year: img.book_year || 0,
-          book_slug: book?.slug,
-          quote,
-        };
-      } catch {
-        return {
-          page_id: img.page_id,
-          book_id: img.book_id,
-          page_number: img.page_number || 0,
-          detection_index: img.detection_index || 0,
-          thumbnail_url: img.thumbnail_url || img.extracted_url,
-          type: img.type || '',
-          museum_description: img.museum_description,
-          book_title: img.book_title || '',
-          book_author: img.book_author || '',
-          book_year: img.book_year || 0,
-          quote,
-        };
-      }
-    })
-  );
+  // Batch-fetch quotes + slugs for all selected books in ONE query (not N+1)
+  const bookIds = [...new Set(selected.map(img => img.book_id))];
+  const booksWithQuotes = await db.collection('books').find(
+    { id: { $in: bookIds } },
+    { projection: { id: 1, 'reading_summary.quotes': 1, slug: 1 } },
+  ).toArray();
+  const bookMap = new Map(booksWithQuotes.map(b => [b.id, b]));
+
+  const items = selected.map((img) => {
+    const book = bookMap.get(img.book_id);
+    let quote: { text: string; page: number } | undefined;
+    const quotes = book?.reading_summary?.quotes;
+    if (quotes && quotes.length > 0) {
+      quote = quotes[Math.floor(Math.random() * quotes.length)];
+    }
+    return {
+      page_id: img.page_id,
+      book_id: img.book_id,
+      page_number: img.page_number || 0,
+      detection_index: img.detection_index || 0,
+      thumbnail_url: img.thumbnail_url || img.extracted_url,
+      type: img.type || '',
+      museum_description: img.museum_description,
+      book_title: img.book_title || '',
+      book_author: img.book_author || '',
+      book_year: img.book_year || 0,
+      book_slug: book?.slug,
+      quote,
+    };
+  });
 
   return JSON.parse(JSON.stringify(items));
 }
