@@ -7,6 +7,7 @@ import { verifyFirstTranslation } from '@/lib/verify-first-translation';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES, IMAGE_CANDIDATE_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
+import { getQueueDepth, QUEUE_URLS } from '@/lib/sqs-client';
 import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { syncBookToGitHub } from '@/lib/git-sync';
@@ -29,6 +30,8 @@ const MAX_ACTIVE_IMAGE_JOBS = 50;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 const GLOBAL_ACTIVE_JOB_LIMIT = 40; // Total active jobs across all types — skip submissions when exceeded
+const SQS_OCR_DEPTH_LIMIT = 500; // Skip OCR submission when queue has 500+ messages pending
+const SQS_TRANSLATE_DEPTH_LIMIT = 1000; // Skip translation submission when queue has 1000+ messages pending
 
 function getBaseUrl(): string {
   // Always use the production URL for all HTTP calls.
@@ -496,6 +499,32 @@ export async function GET(request: NextRequest) {
       logger.backpressure('global_job_limit', { active: totalActiveJobs, max: GLOBAL_ACTIVE_JOB_LIMIT });
     }
 
+    // SQS queue depth backpressure: prevent piling onto deep queues
+    let ocrQueueDepth = 0;
+    let translateQueueDepth = 0;
+    let ocrQueueOverloaded = false;
+    let translateQueueOverloaded = false;
+    try {
+      const [ocrDepth, translateDepth] = await Promise.all([
+        QUEUE_URLS.pageOcr ? getQueueDepth(QUEUE_URLS.pageOcr) : null,
+        QUEUE_URLS.pageTranslation ? getQueueDepth(QUEUE_URLS.pageTranslation) : null,
+      ]);
+      ocrQueueDepth = ocrDepth?.total ?? 0;
+      translateQueueDepth = translateDepth?.total ?? 0;
+      ocrQueueOverloaded = ocrQueueDepth >= SQS_OCR_DEPTH_LIMIT;
+      translateQueueOverloaded = translateQueueDepth >= SQS_TRANSLATE_DEPTH_LIMIT;
+
+      if (ocrQueueOverloaded) {
+        logger.backpressure('ocr_sqs_depth', { depth: ocrQueueDepth, threshold: SQS_OCR_DEPTH_LIMIT });
+      }
+      if (translateQueueOverloaded) {
+        logger.backpressure('translate_sqs_depth', { depth: translateQueueDepth, threshold: SQS_TRANSLATE_DEPTH_LIMIT });
+      }
+    } catch (err) {
+      // SQS check failure is non-blocking — log and continue
+      console.warn('[pipeline] SQS depth check failed:', err instanceof Error ? err.message : err);
+    }
+
     // ════════════════════════════════════════════════════════════════════
     // PRIORITY PASS: Run fast, late-stage phases FIRST so they don't get
     // starved by heavy enrichment/chapters work consuming the time budget.
@@ -894,7 +923,10 @@ export async function GET(request: NextRequest) {
     if (systemOverloaded && !ocrPaused) {
       logger.decision('skip', `OCR submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
     }
-    if (hasTimeBudget(startTime) && !ocrPaused && !systemOverloaded) {
+    if (ocrQueueOverloaded && !ocrPaused && !systemOverloaded) {
+      logger.decision('skip', `OCR submission skipped: SQS queue depth ${ocrQueueDepth} >= ${SQS_OCR_DEPTH_LIMIT}`);
+    }
+    if (hasTimeBudget(startTime) && !ocrPaused && !systemOverloaded && !ocrQueueOverloaded) {
       // Backpressure: don't overwhelm the Gemini Batch API queue
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
         type: 'ocr',
@@ -1414,7 +1446,10 @@ export async function GET(request: NextRequest) {
     if (systemOverloaded && !translatePaused) {
       logger.decision('skip', `Translation submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
     }
-    if (hasTimeBudget(startTime) && !translatePaused && !systemOverloaded) {
+    if (translateQueueOverloaded && !translatePaused && !systemOverloaded) {
+      logger.decision('skip', `Translation submission skipped: SQS queue depth ${translateQueueDepth} >= ${SQS_TRANSLATE_DEPTH_LIMIT}`);
+    }
+    if (hasTimeBudget(startTime) && !translatePaused && !systemOverloaded && !translateQueueOverloaded) {
       // Lambda backpressure: check active realtime translation jobs
       const activeLambdaTranslate = await db.collection('jobs').countDocuments({
         type: 'translation',
@@ -1807,6 +1842,8 @@ export async function GET(request: NextRequest) {
       stale_retranslate: log.stale_retranslate,
       total_active_jobs: totalActiveJobs,
       global_backpressure: systemOverloaded ? 1 : 0,
+      ocr_queue_depth: ocrQueueDepth,
+      translate_queue_depth: translateQueueDepth,
     });
     logger.addErrors(log.errors);
 
@@ -1819,7 +1856,10 @@ export async function GET(request: NextRequest) {
       success: true,
       duration_ms: duration,
       actions: log,
-      backpressure: { total_active_jobs: totalActiveJobs, limit: GLOBAL_ACTIVE_JOB_LIMIT, overloaded: systemOverloaded },
+      backpressure: {
+        total_active_jobs: totalActiveJobs, limit: GLOBAL_ACTIVE_JOB_LIMIT, overloaded: systemOverloaded,
+        sqs: { ocr: ocrQueueDepth, translation: translateQueueDepth },
+      },
       pipeline_status: counts,
       pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
     });

@@ -1,4 +1,4 @@
-import { SQSClient, SendMessageCommand, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
+import { SQSClient, SendMessageCommand, SendMessageBatchCommand, GetQueueAttributesCommand, PurgeQueueCommand } from '@aws-sdk/client-sqs';
 import type { PageProcessingMessage, PageOcrMessage, WriteResultMessage } from './types/sqs';
 
 // Initialize SQS client
@@ -124,6 +124,73 @@ export async function sendPageOcrMessageBatch(messages: PageOcrMessage[]) {
 }
 
 export { sqsClient };
+
+// --- Queue management utilities ---
+
+export interface QueueDepth {
+  visible: number;
+  inFlight: number;
+  total: number;
+}
+
+/**
+ * Get the approximate message count for an SQS queue.
+ * Returns visible + in-flight counts.
+ */
+export async function getQueueDepth(queueUrl: string): Promise<QueueDepth> {
+  const resp = await sqsClient.send(new GetQueueAttributesCommand({
+    QueueUrl: queueUrl,
+    AttributeNames: [
+      'ApproximateNumberOfMessages',
+      'ApproximateNumberOfMessagesNotVisible',
+    ],
+  }));
+  const attrs = resp.Attributes || {};
+  const visible = parseInt(attrs.ApproximateNumberOfMessages || '0');
+  const inFlight = parseInt(attrs.ApproximateNumberOfMessagesNotVisible || '0');
+  return { visible, inFlight, total: visible + inFlight };
+}
+
+/**
+ * Purge all messages from an SQS queue.
+ * Note: SQS allows one purge per 60 seconds per queue.
+ */
+export async function purgeQueue(queueUrl: string): Promise<void> {
+  await sqsClient.send(new PurgeQueueCommand({ QueueUrl: queueUrl }));
+}
+
+/**
+ * Purge all AI worker queues (OCR, Translation, Image Extraction).
+ * Does NOT purge the write-results queue — in-flight DB writes should complete.
+ */
+export async function purgeAIQueues(): Promise<{ purged: string[]; errors: string[] }> {
+  const purged: string[] = [];
+  const errors: string[] = [];
+
+  const queues = [
+    { name: 'ocr', url: QUEUE_URLS.pageOcr },
+    { name: 'translation', url: QUEUE_URLS.pageTranslation },
+    { name: 'image_extraction', url: QUEUE_URLS.pageImageExtraction },
+  ];
+
+  for (const { name, url } of queues) {
+    if (!url) {
+      errors.push(`${name}: queue URL not configured`);
+      continue;
+    }
+    try {
+      await purgeQueue(url);
+      purged.push(name);
+      console.log(`[SQS] Purged ${name} queue`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      errors.push(`${name}: ${msg}`);
+      console.error(`[SQS] Failed to purge ${name} queue:`, msg);
+    }
+  }
+
+  return { purged, errors };
+}
 
 /**
  * Send a write result message to the write-results queue.

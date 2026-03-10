@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
-import { GetQueueAttributesCommand } from '@aws-sdk/client-sqs';
-import { sqsClient, QUEUE_URLS } from '@/lib/sqs-client';
+import { QUEUE_URLS, getQueueDepth } from '@/lib/sqs-client';
 
 export const maxDuration = 30;
 
@@ -152,8 +151,14 @@ export const GET = withAuth(async () => {
   };
 
   // --- 5. SQS queue depths ---
+  const totalQueuedMessages = Object.values(sqsDepths).reduce(
+    (sum, d) => sum + (d.total || 0), 0
+  );
   checks.sqs_queues = {
-    status: Object.values(sqsDepths).some(d => d.error) ? 'warning' : 'ok',
+    status: Object.values(sqsDepths).some(d => d.error) ? 'warning'
+          : totalQueuedMessages > 5000 ? 'warning'
+          : 'ok',
+    total_messages: totalQueuedMessages,
     ...sqsDepths,
   };
 
@@ -213,21 +218,22 @@ interface CheckResult {
   [key: string]: unknown;
 }
 
-interface QueueDepth {
+interface HealthQueueDepth {
   visible?: number;
   in_flight?: number;
-  delayed?: number;
+  total?: number;
   error?: string;
 }
 
-async function getQueueDepths(): Promise<Record<string, QueueDepth>> {
+async function getQueueDepths(): Promise<Record<string, HealthQueueDepth>> {
   const queues = {
     ocr: QUEUE_URLS.pageOcr,
     translation: QUEUE_URLS.pageTranslation,
     image_extraction: QUEUE_URLS.pageImageExtraction,
+    write_results: QUEUE_URLS.writeResults,
   };
 
-  const results: Record<string, QueueDepth> = {};
+  const results: Record<string, HealthQueueDepth> = {};
 
   await Promise.all(
     Object.entries(queues).map(async ([name, url]) => {
@@ -236,19 +242,11 @@ async function getQueueDepths(): Promise<Record<string, QueueDepth>> {
         return;
       }
       try {
-        const resp = await sqsClient.send(new GetQueueAttributesCommand({
-          QueueUrl: url,
-          AttributeNames: [
-            'ApproximateNumberOfMessages',
-            'ApproximateNumberOfMessagesNotVisible',
-            'ApproximateNumberOfMessagesDelayed',
-          ],
-        }));
-        const attrs = resp.Attributes || {};
+        const depth = await getQueueDepth(url);
         results[name] = {
-          visible: parseInt(attrs.ApproximateNumberOfMessages || '0'),
-          in_flight: parseInt(attrs.ApproximateNumberOfMessagesNotVisible || '0'),
-          delayed: parseInt(attrs.ApproximateNumberOfMessagesDelayed || '0'),
+          visible: depth.visible,
+          in_flight: depth.inFlight,
+          total: depth.total,
         };
       } catch (error) {
         results[name] = { error: error instanceof Error ? error.message : String(error) };
