@@ -119,7 +119,6 @@ function seededRandom(seed: number): number {
 
 const SPREAD = 40;
 const POINT_SIZE = 0.35;
-const HOVER_SCALE = 3.0;
 
 // ────────────────────────────────────────────────────────────
 // Component
@@ -423,10 +422,9 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
       const px = positions[i * 3];
       const py = positions[i * 3 + 1];
       const pz = positions[i * 3 + 2];
-      const scale = isHovered || isSelected ? HOVER_SCALE : 1;
       dummy.position.set(px, py, pz);
       dummy.rotation.set(0, 0, rotations[i]);
-      dummy.scale.set(scale, scale, scale);
+      dummy.scale.set(1, 1, 1);
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
     }
