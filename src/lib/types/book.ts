@@ -3,6 +3,19 @@ import { ImageSource } from "./image-source";
 import { TranslationEdition } from "./edition";
 import { PipelineState } from "./pipeline";
 
+export interface CdliWitness {
+  p_number: string;        // e.g. "P271955"
+  designation: string;     // e.g. "CBS 13895"
+  q_number?: string;       // e.g. "Q000332"
+  museum?: string;         // e.g. "Penn Museum"
+  period?: string;         // e.g. "Old Babylonian"
+  provenience?: string;    // e.g. "Nippur"
+  photo_url?: string;      // https://cdli.earth/dl/photo/P271955.jpg
+  thumbnail_url?: string;  // https://cdli.earth/dl/tn_photo/P271955.jpg
+  has_photo: boolean;
+  cdli_url: string;        // https://cdli.earth/artifacts/271955
+}
+
 export interface Book {
   id: string;
   slug?: string;              // SEO-friendly URL slug (e.g., "atalanta-fugiens-maier")
@@ -148,6 +161,10 @@ export interface Book {
   // Data provenance — tracks who set each metadata field
   field_provenance?: Record<string, FieldProvenanceEntry>;
   ai_metadata?: Record<string, unknown>;
+
+  // ETCSL / CDLI integration (Sumerian texts with tablet witnesses)
+  etcsl_id?: string;              // e.g. "1.1.1" (ETCSL composition number)
+  cdli_witnesses?: CdliWitness[]; // Physical tablet witnesses from CDLI
 
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous

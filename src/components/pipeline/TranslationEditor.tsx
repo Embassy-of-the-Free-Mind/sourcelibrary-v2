@@ -543,16 +543,32 @@ export default function TranslationEditor({
   const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
   const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
 
+  // CDLI tablet witnesses (for text-only ETCSL books)
+  const witnessesWithPhotos = useMemo(
+    () => (book.cdli_witnesses || []).filter(w => w.has_photo && w.photo_url),
+    [book.cdli_witnesses]
+  );
+  const [currentWitnessIndex, setCurrentWitnessIndex] = useState(0);
+  const currentWitness = witnessesWithPhotos[currentWitnessIndex];
+  const hasWitnessPhotos = witnessesWithPhotos.length > 0;
+
   // Text-only books (e.g. ETCSL corpus): show OCR panel instead of empty image panel
+  // Exception: if CDLI witnesses with photos exist, keep image panel on to show tablet photos
   const hasPageImage = !!pageDisplayUrl;
   const textOnlyInitialized = useRef(false);
   useEffect(() => {
     if (!hasPageImage && !textOnlyInitialized.current) {
       textOnlyInitialized.current = true;
-      setShowImagePanel(false);
-      setShowOcrPanel(true);
+      if (hasWitnessPhotos) {
+        // Has tablet photos — show image panel + OCR + translation (three-panel)
+        setShowImagePanel(true);
+        setShowOcrPanel(true);
+      } else {
+        setShowImagePanel(false);
+        setShowOcrPanel(true);
+      }
     }
-  }, [hasPageImage]);
+  }, [hasPageImage, hasWitnessPhotos]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -1065,18 +1081,75 @@ export default function TranslationEditor({
               {showImagePanel && (
                 <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-                    <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
+                    <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                      {!pageDisplayUrl && hasWitnessPhotos ? 'Tablet Photo' : 'Source Image'}
+                    </span>
+                    {!pageDisplayUrl && hasWitnessPhotos && currentWitness && (
+                      <a
+                        href={currentWitness.cdli_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs hover:underline"
+                        style={{ color: 'var(--accent-rust)' }}
+                        title="View on CDLI"
+                      >
+                        CDLI
+                      </a>
+                    )}
                   </div>
                   <div className="flex-1 overflow-auto p-2 lg:p-4" data-reader-panel>
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
                         <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
+                      ) : hasWitnessPhotos && currentWitness ? (
+                        <ImageWithMagnifier
+                          src={currentWitness.photo_url!}
+                          thumbnail={currentWitness.thumbnail_url || currentWitness.photo_url!}
+                          alt={`Tablet ${currentWitness.designation}`}
+                          scrollable
+                        />
                       ) : (
                         <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                           No image available
                         </div>
                       )}
                     </div>
+                    {/* CDLI Witness selector */}
+                    {!pageDisplayUrl && hasWitnessPhotos && currentWitness && (
+                      <div className="mt-2 px-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <button
+                            onClick={() => setCurrentWitnessIndex(i => Math.max(0, i - 1))}
+                            disabled={currentWitnessIndex === 0}
+                            className="p-1 rounded disabled:opacity-30 transition-opacity"
+                            style={{ color: 'var(--text-secondary)' }}
+                            aria-label="Previous witness"
+                          >
+                            <ChevronLeft className="w-3.5 h-3.5" />
+                          </button>
+                          <div className="text-center min-w-0 flex-1">
+                            <div className="text-xs font-medium truncate" style={{ color: 'var(--text-primary)' }}>
+                              {currentWitness.designation}
+                            </div>
+                            <div className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
+                              {[currentWitness.museum, currentWitness.period].filter(Boolean).join(' — ')}
+                              {witnessesWithPhotos.length > 1 && (
+                                <span className="ml-1">({currentWitnessIndex + 1}/{witnessesWithPhotos.length})</span>
+                              )}
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => setCurrentWitnessIndex(i => Math.min(witnessesWithPhotos.length - 1, i + 1))}
+                            disabled={currentWitnessIndex === witnessesWithPhotos.length - 1}
+                            className="p-1 rounded disabled:opacity-30 transition-opacity"
+                            style={{ color: 'var(--text-secondary)' }}
+                            aria-label="Next witness"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -1659,12 +1732,61 @@ export default function TranslationEditor({
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
+                ) : hasWitnessPhotos && currentWitness ? (
+                  <ImageWithMagnifier
+                    src={currentWitness.photo_url!}
+                    thumbnail={currentWitness.thumbnail_url || currentWitness.photo_url!}
+                    alt={`Tablet ${currentWitness.designation}`}
+                    scrollable
+                  />
                 ) : (
                   <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                     No image available
                   </div>
                 )}
               </div>
+              {/* CDLI Witness selector (edit mode) */}
+              {!pageDisplayUrl && hasWitnessPhotos && currentWitness && (
+                <div className="mt-2 px-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <button
+                      onClick={() => setCurrentWitnessIndex(i => Math.max(0, i - 1))}
+                      disabled={currentWitnessIndex === 0}
+                      className="p-1 rounded disabled:opacity-30 transition-opacity"
+                      style={{ color: 'var(--text-secondary)' }}
+                      aria-label="Previous witness"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                    <div className="text-center min-w-0 flex-1">
+                      <a
+                        href={currentWitness.cdli_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-medium truncate hover:underline"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {currentWitness.designation}
+                      </a>
+                      <div className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
+                        {[currentWitness.museum, currentWitness.period].filter(Boolean).join(' — ')}
+                        {witnessesWithPhotos.length > 1 && (
+                          <span className="ml-1">({currentWitnessIndex + 1}/{witnessesWithPhotos.length})</span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setCurrentWitnessIndex(i => Math.min(witnessesWithPhotos.length - 1, i + 1))}
+                      disabled={currentWitnessIndex === witnessesWithPhotos.length - 1}
+                      className="p-1 rounded disabled:opacity-30 transition-opacity"
+                      style={{ color: 'var(--text-secondary)' }}
+                      aria-label="Next witness"
+                    >
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

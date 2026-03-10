@@ -15,6 +15,7 @@ interface PageProps {
 const BOOK_NAV_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
+  cdli_witnesses: 1, etcsl_id: 1,
 };
 
 export default async function PageEditorPage({ params }: PageProps) {
