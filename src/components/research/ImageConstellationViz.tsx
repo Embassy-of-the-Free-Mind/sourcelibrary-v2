@@ -118,6 +118,7 @@ function seededRandom(seed: number): number {
 // ────────────────────────────────────────────────────────────
 
 const SPREAD = 40;
+const TIME_SPREAD = 3;
 const POINT_SIZE = 0.35;
 
 // ────────────────────────────────────────────────────────────
@@ -139,6 +140,8 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
 
   const hoveredLabelRef = useRef<THREE.Sprite | null>(null);
   const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
+  const outlineRef = useRef<THREE.LineSegments | null>(null);
+  const selectedIdxRef = useRef<number | null>(null);
 
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -224,13 +227,13 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#000000');
-    scene.fog = new THREE.FogExp2('#000000', 0.003);
+    scene.fog = new THREE.FogExp2('#000000', 0.0015);
     sceneRef.current = scene;
 
     const w = container.clientWidth;
     const h = container.clientHeight;
     const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 500);
-    camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
+    camera.position.set(0, -SPREAD * 0.3, SPREAD * TIME_SPREAD * 0.8);
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
@@ -245,7 +248,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
     controls.rotateSpeed = 0.5;
     controls.zoomSpeed = 0.8;
     controls.minDistance = 5;
-    controls.maxDistance = SPREAD * 3;
+    controls.maxDistance = SPREAD * TIME_SPREAD * 2;
     controls.target.set(0, 0, 0);
     controlsRef.current = controls;
 
@@ -260,7 +263,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
       clearTimeout(rotationTimeout);
     });
     controls.addEventListener('end', () => {
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && selectedIdxRef.current === null) {
         rotationTimeout = setTimeout(() => { controls.autoRotate = true; }, 5000);
       }
     });
@@ -283,9 +286,9 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
 
     for (let i = 0; i < n; i++) {
       const img = data.images[i];
-      const px = (img.x - 0.5) * SPREAD;
+      const px = (img.z - 0.5) * SPREAD * TIME_SPREAD;
       const py = (img.y - 0.5) * SPREAD;
-      const pz = (img.z - 0.5) * SPREAD;
+      const pz = (img.x - 0.5) * SPREAD;
       positions[i * 3] = px;
       positions[i * 3 + 1] = py;
       positions[i * 3 + 2] = pz;
@@ -310,6 +313,14 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
     meshRef.current = mesh;
     imgPosRef.current = positions;
     imgRotRef.current = rotations;
+
+    // Selection outline
+    const outlineGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(POINT_SIZE * 1.6, POINT_SIZE * 1.6, POINT_SIZE * 1.6));
+    const outlineMat = new THREE.LineBasicMaterial({ color: 0xffffff });
+    const outlineMesh = new THREE.LineSegments(outlineGeo, outlineMat);
+    outlineMesh.visible = false;
+    scene.add(outlineMesh);
+    outlineRef.current = outlineMesh;
 
     // Cluster label sprites
     const labelGroup = new THREE.Group();
@@ -339,9 +350,9 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
       });
       const sprite = new THREE.Sprite(spriteMat);
       sprite.position.set(
-        (cluster.cx - 0.5) * SPREAD,
+        (cluster.cz - 0.5) * SPREAD * TIME_SPREAD,
         (cluster.cy - 0.5) * SPREAD,
-        (cluster.cz - 0.5) * SPREAD,
+        (cluster.cx - 0.5) * SPREAD,
       );
       sprite.scale.set(12, 1.5, 1);
       sprite.userData.clusterId = cluster.id;
@@ -381,6 +392,10 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
         sprite.material.map?.dispose();
         sprite.material.dispose();
       });
+      if (outlineRef.current) {
+        outlineRef.current.geometry.dispose();
+        (outlineRef.current.material as THREE.LineBasicMaterial).dispose();
+      }
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
@@ -401,6 +416,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
 
     const hasSearch = searchMatches && searchMatches.size > 0;
     const hasCluster = selectedCluster !== null;
+    const hasFilter = hasSearch || hasCluster;
 
     for (let i = 0; i < n; i++) {
       const img = data.images[i];
@@ -412,10 +428,18 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
 
       const hex = getImageColor(img, colorMode);
       const [r, g, bl] = hexToRgb(hex);
-      if (isHighlighted || isHovered || isSelected) {
-        tempColor.setRGB(r, g, bl);
+      if (hasFilter) {
+        if (isHighlighted || isHovered || isSelected) {
+          tempColor.setRGB(r, g, bl);
+        } else {
+          tempColor.setRGB(r * 0.12, g * 0.12, bl * 0.12);
+        }
       } else {
-        tempColor.setRGB(r * 0.12, g * 0.12, bl * 0.12);
+        if (isHovered || isSelected) {
+          tempColor.setRGB(Math.min(r * 1.5, 1), Math.min(g * 1.5, 1), Math.min(bl * 1.5, 1));
+        } else {
+          tempColor.setRGB(r * 0.6, g * 0.6, bl * 0.6);
+        }
       }
       mesh.setColorAt(i, tempColor);
 
@@ -429,9 +453,34 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
       mesh.setMatrixAt(i, dummy.matrix);
     }
 
+    // Update selection outline
+    const outline = outlineRef.current;
+    if (outline) {
+      if (selectedIdx !== null) {
+        outline.position.set(
+          positions[selectedIdx * 3],
+          positions[selectedIdx * 3 + 1],
+          positions[selectedIdx * 3 + 2],
+        );
+        outline.visible = true;
+      } else {
+        outline.visible = false;
+      }
+    }
+
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
   }, [colorMode, searchMatches, selectedCluster, hoveredIdx, selectedIdx, data.images]);
+
+  // ── Sync selectedIdx ref for rotation control ──
+  useEffect(() => {
+    selectedIdxRef.current = selectedIdx;
+    const controls = controlsRef.current;
+    if (!controls) return;
+    if (selectedIdx !== null) {
+      controls.autoRotate = false;
+    }
+  }, [selectedIdx]);
 
   // ── Pointer move ──
   const handlePointerMove = useCallback(
@@ -539,7 +588,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
     const camera = cameraRef.current;
     const controls = controlsRef.current;
     if (camera && controls) {
-      camera.position.set(SPREAD * 0.8, -SPREAD * 0.6, SPREAD * 1.2);
+      camera.position.set(0, -SPREAD * 0.3, SPREAD * TIME_SPREAD * 0.8);
       controls.target.set(0, 0, 0);
       controls.update();
     }
