@@ -582,7 +582,7 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
   const [useCropFallback, setUseCropFallback] = useState(false);
 
   const cropUrl = item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
-  const blobUrl = item.thumbnailUrl || item.extractedUrl;
+  const blobUrl = item.extractedUrl || item.thumbnailUrl;
 
   const displayUrl = useCropFallback
     ? (cropUrl || toThumbnailUrl(item.imageUrl))

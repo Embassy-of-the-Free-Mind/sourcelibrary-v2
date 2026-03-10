@@ -8,6 +8,7 @@ interface ShowcaseItem {
   page_number: number;
   detection_index: number;
   thumbnail_url: string;
+  extracted_url?: string;
   type: string;
   museum_description: string;
   book_title: string;
@@ -51,7 +52,7 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
                 <Link href={`/gallery/image/${galleryId}`}>
                   <div className="relative aspect-[3/4] bg-cream rounded-lg overflow-hidden border border-border-light group-hover:shadow-lg transition-all">
                     <Image
-                      src={item.thumbnail_url}
+                      src={item.extracted_url || item.thumbnail_url}
                       alt={item.museum_description || 'Gallery image'}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
