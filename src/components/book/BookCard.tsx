@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Book as BookIcon } from 'lucide-react';
 import type { Book } from '@/lib/types';
-import { cn } from '@/lib/utils';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
 
@@ -111,9 +110,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
           </div>
         )}
 
-        {/* Image area - shimmer until loaded */}
+        {/* Image area - shimmer sits behind image, covered naturally as image loads */}
         <div className="aspect-[3/4] relative bg-stone-100 overflow-hidden flex-shrink-0">
-          {/* Shimmer placeholder - only for images, shows until loaded */}
+          {/* Shimmer placeholder - always rendered behind image, hidden once loaded */}
           {!imageLoaded && !imageError && thumbnailUrl && (
             <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
           )}
@@ -123,10 +122,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               src={thumbnailUrl}
               alt={book.title}
               fill
-              className={cn(
-                'object-cover group-hover:scale-105 transition-transform duration-300',
-                imageLoaded ? 'opacity-100' : 'opacity-0'
-              )}
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={handleImageLoad}
               onError={() => setImageError(true)}
