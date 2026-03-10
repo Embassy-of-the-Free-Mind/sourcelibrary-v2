@@ -104,7 +104,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Video — fades in once ready */}
+      {/* Video — poster shows instantly while video loads, no JS dependency */}
       <video
         autoPlay
         loop
@@ -112,8 +112,8 @@ export default function HeroSection() {
         playsInline
         preload="auto"
         onCanPlay={handleVideoLoad}
-        className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000"
-        style={{ opacity: videoReady ? 1 : 0 }}
+        poster="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d0fa77f38f6761bc5aef/24.jpg"
+        className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm#t=3" type="video/webm" />
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4#t=3" type="video/mp4" />
