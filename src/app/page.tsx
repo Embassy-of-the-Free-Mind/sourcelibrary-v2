@@ -10,9 +10,9 @@ import SocietyGate from '@/components/layout/SocietyGate';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import Link from 'next/link';
 
-// ISR: serve cached HTML, revalidate in background every 5 minutes.
-// force-dynamic was causing every visitor to wait for 5 MongoDB queries.
-export const revalidate = 300;
+// ISR: serve cached HTML, revalidate in background every 60 seconds.
+// Short revalidation so stale fallback data (from DB stress) doesn't persist long.
+export const revalidate = 60;
 export const maxDuration = 60;
 
 // ---------- Collection ordering (user-specified) ----------
@@ -407,7 +407,7 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  {counts.totalBooks.toLocaleString()} books &middot; {counts.translatedCount.toLocaleString()} with translations
+                  {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.translatedCount.toLocaleString('en-US')} with translations
                 </p>
               </div>
               <Link
