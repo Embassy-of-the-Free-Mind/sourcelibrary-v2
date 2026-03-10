@@ -450,7 +450,7 @@ export default async function HomePage() {
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
-                  className="group relative bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-all"
+                  className="group relative bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
                 >
                   {/* Hero image */}
                   <div className="aspect-[16/9] relative bg-warm overflow-hidden">
@@ -553,7 +553,7 @@ export default async function HomePage() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-all"
+                  className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
                 >
                   {post.image && (
                     <div className="aspect-[16/10] relative bg-warm overflow-hidden">

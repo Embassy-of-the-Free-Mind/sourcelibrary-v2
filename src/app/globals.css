@@ -82,11 +82,8 @@
 }
 
 /* Base styles */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
+/* scroll-behavior: smooth removed — causes visible tearing during fast
+   scrolling when combined with many compositing layers. */
 
 /* Disable animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
