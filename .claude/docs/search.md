@@ -2,37 +2,53 @@
 
 ## Overview
 
-Full-text search across books, pages, and book indexes. Uses MongoDB `$text` indexes with regex fallback for robustness.
+Full-text search across books, pages, and book indexes. Uses MongoDB Atlas Search (Lucene-based) with regex fallback for robustness.
 
 ## Routes
 
 | Route | Purpose | Index used |
 |-------|---------|-----------|
-| `GET /api/search` | Global search (books + page content) | `books_text_idx`, `pages_text_idx` |
-| `GET /api/search/unified` | Homepage dropdown (books + index entries) | `books_text_idx`, `books_index_generated_idx` |
+| `GET /api/search` | Global search (books + page content) | `books_search` (Atlas), `pages_search` (Atlas) |
+| `GET /api/search/unified` | Homepage dropdown (books + index entries) | `books_search` (Atlas), `books_index_generated_idx` |
 | `GET /api/search/index` | Index-only search (concepts, people, places, quotes) | `books_index_generated_idx` |
 | `GET /api/books/[id]/search` | Within-book page search | `pages_text_idx` |
 
-## Text Indexes
+## Atlas Search Indexes (Lucene-based)
 
-Both text indexes use `default_language: 'none'` (disables stemming for multilingual content) and `language_override: '_text_lang'` (prevents MongoDB from reading the document's `language` field).
+Replaced `$text` indexes with Atlas Search for relevance-ranked compound queries. Helper functions in `src/lib/atlas-search.ts`.
 
-### `books_text_idx`
-Fields: `title` (weight 10), `display_title` (weight 10), `author` (weight 5), `reading_summary.overview` (weight 1)
+### `books_search` on `books` collection
+- **Text fields** (lucene.standard): `title` (boost 10), `display_title` (boost 10), `author` (boost 5), `reading_summary.overview` (boost 1)
+- **Filter fields** (token): `language`, `categories`
+- **Boolean fields**: `hidden`, `is_first_translation`
+- **Number fields**: `year`, `pages_translated`
+- Uses `compound` query with `should` (text search), `filter` (structured filters), `mustNot` (hidden exclusion)
 
-### `pages_text_idx`
-Fields: `translation.data` (weight 2), `ocr.data` (weight 1)
+### `pages_search` on `pages` collection
+- **Text fields** (lucene.standard): `translation.data` (boost 2), `ocr.data` (boost 1)
+- **Filter fields** (token): `book_id`, `id`
+- **Number fields**: `page_number`
+- `book_id` filter is inside the Lucene index, so compound queries filter at search time (not post-filter)
+
+### Legacy `$text` Indexes (kept as fallback)
+
+Both text indexes still exist and are used by regex fallback paths. Can be dropped after Atlas Search is confirmed stable.
+
+- `books_text_idx`: `title` (weight 10), `display_title` (weight 10), `author` (weight 5), `reading_summary.overview` (weight 1). `default_language: 'none'`, `language_override: '_text_lang'`
+- `pages_text_idx`: `translation.data` (weight 2), `ocr.data` (weight 1). Same language settings.
 
 Both defined in `src/app/api/admin/ensure-indexes/route.ts`.
 
 ## Search Strategy
 
-All routes use a **$text primary + regex fallback** pattern:
-1. Try `$text` search with `textScore` relevance ranking
-2. If `$text` fails (e.g., no text index), fall back to regex on key fields
-3. Results sorted by `textScore` for relevance
+Book and page search routes use **Atlas Search primary + regex fallback**:
+1. Try `$search` aggregation with Atlas Search compound queries (relevance-ranked by Lucene `searchScore`)
+2. If `$search` fails (e.g., index still building), fall back to regex on key fields
+3. All `$search` aggregations have `maxTimeMS` to prevent hanging during index rebuilds
 
-This handles edge cases like index rebuilds or new collections gracefully.
+Within-book search (`/api/books/[id]/search`) still uses `$text` index.
+
+This handles edge cases like index rebuilds or new deployments gracefully.
 
 ## Global Search (`/api/search`)
 
