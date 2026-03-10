@@ -196,17 +196,24 @@ async function getDiscoverBooks(): Promise<Book[]> {
 async function getCollectionShowcase() {
   const db = await getDb();
 
-  // Sample high-quality gallery images with museum descriptions.
-  // Dropped extracted_url regex — kills index usage and nearly all URLs are https anyway.
+  // $sample FIRST (before $match) so MongoDB uses fast random cursor algorithm.
+  // When $sample is after $match, Mongo scans all matching docs first → 22s on 77k docs.
+  // $sample first on full collection with size < 5% uses O(1) random selection.
+  // Use $gt:'' for thumbnail_url — $ne:'' doesn't exclude null values.
   const rawImages = await db.collection('gallery_images').aggregate([
+    { $sample: { size: 500 } },
     {
       $match: {
         gallery_quality: { $gte: 0.85 },
         museum_description: { $exists: true, $ne: '' },
+        $or: [
+          { thumbnail_url: { $type: 'string', $gt: '' } },
+          { extracted_url: { $type: 'string', $gt: '' } },
+        ],
         book_hidden: { $ne: true },
       },
     },
-    { $sample: { size: 40 } },
+    { $limit: 40 },
   ]).toArray();
 
   // Diversify: max 1 per book, take 8
