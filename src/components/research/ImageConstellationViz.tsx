@@ -17,7 +17,7 @@ interface ImageItem {
   book_author: string;
   book_year: number | null;
   book_id: string;
-  book_slug: string;
+  book_slug?: string;
   subjects: string[];
   x: number;
   y: number;
@@ -753,7 +753,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
             )}
 
             <a
-              href={`/book/${img.book_slug}`}
+              href={`/book/${img.book_slug || img.book_id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="font-serif text-sm text-gray-900 hover:text-black leading-tight block mb-1 pr-4"
