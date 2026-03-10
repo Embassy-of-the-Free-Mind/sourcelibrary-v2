@@ -714,9 +714,11 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Priority: Zombie job detection — force-complete jobs stuck >24h ──
+    // ── Priority: Zombie job detection — force-complete jobs stuck >2h ──
+    // Lambda max runtime is 15 min. Any job in "processing" for >2h is dead.
+    // Previously 24h, but Mar 10 outage showed 14 zombie jobs hammering DB for 11h.
     if (hasTimeBudget(startTime)) {
-      const zombieThreshold = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const zombieThreshold = new Date(Date.now() - 2 * 60 * 60 * 1000);
       const zombieJobs = await db.collection('jobs').find({
         status: 'processing',
         updated_at: { $lt: zombieThreshold },
