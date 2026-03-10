@@ -28,6 +28,7 @@ const FINALIZE_LIMIT = 50; // Just DB updates
 const MAX_ACTIVE_IMAGE_JOBS = 50;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
+const GLOBAL_ACTIVE_JOB_LIMIT = 150; // Total active jobs across all types — skip submissions when exceeded
 
 function getBaseUrl(): string {
   // Always use the production URL for all HTTP calls.
@@ -485,6 +486,16 @@ export async function GET(request: NextRequest) {
     const translatePaused = control?.paused_phases?.includes('translation');
     const imagesPaused = control?.paused_phases?.includes('images');
 
+    // Global backpressure: skip ALL submission phases when total active jobs exceed limit.
+    // Completion/advancement phases still run — they drain work, not add it.
+    const totalActiveJobs = await db.collection('jobs').countDocuments({
+      status: { $in: ['pending', 'processing'] },
+    });
+    const systemOverloaded = totalActiveJobs >= GLOBAL_ACTIVE_JOB_LIMIT;
+    if (systemOverloaded) {
+      logger.backpressure('global_job_limit', { active: totalActiveJobs, max: GLOBAL_ACTIVE_JOB_LIMIT });
+    }
+
     // ════════════════════════════════════════════════════════════════════
     // PRIORITY PASS: Run fast, late-stage phases FIRST so they don't get
     // starved by heavy enrichment/chapters work consuming the time budget.
@@ -549,7 +560,10 @@ export async function GET(request: NextRequest) {
     if (imagesPaused) {
       logger.decision('skip', 'Image extraction paused via processing_control.paused_phases');
     }
-    if (hasTimeBudget(startTime) && !imagesPaused) {
+    if (systemOverloaded && !imagesPaused) {
+      logger.decision('skip', `Image submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
+    }
+    if (hasTimeBudget(startTime) && !imagesPaused && !systemOverloaded) {
       const activeImageJobs = await db.collection('jobs').countDocuments({
         type: 'image_extraction',
         status: { $in: ['pending', 'processing'] },
@@ -877,7 +891,10 @@ export async function GET(request: NextRequest) {
     if (ocrPaused) {
       logger.decision('skip', 'OCR submission paused via processing_control.paused_phases');
     }
-    if (hasTimeBudget(startTime) && !ocrPaused) {
+    if (systemOverloaded && !ocrPaused) {
+      logger.decision('skip', `OCR submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
+    }
+    if (hasTimeBudget(startTime) && !ocrPaused && !systemOverloaded) {
       // Backpressure: don't overwhelm the Gemini Batch API queue
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
         type: 'ocr',
@@ -1394,7 +1411,10 @@ export async function GET(request: NextRequest) {
     if (translatePaused) {
       logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
     }
-    if (hasTimeBudget(startTime) && !translatePaused) {
+    if (systemOverloaded && !translatePaused) {
+      logger.decision('skip', `Translation submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
+    }
+    if (hasTimeBudget(startTime) && !translatePaused && !systemOverloaded) {
       // Lambda backpressure: check active realtime translation jobs
       const activeLambdaTranslate = await db.collection('jobs').countDocuments({
         type: 'translation',
@@ -1785,6 +1805,8 @@ export async function GET(request: NextRequest) {
       stale_retried: log.stale_retried,
       stale_failed: log.stale_failed,
       stale_retranslate: log.stale_retranslate,
+      total_active_jobs: totalActiveJobs,
+      global_backpressure: systemOverloaded ? 1 : 0,
     });
     logger.addErrors(log.errors);
 
@@ -1797,6 +1819,7 @@ export async function GET(request: NextRequest) {
       success: true,
       duration_ms: duration,
       actions: log,
+      backpressure: { total_active_jobs: totalActiveJobs, limit: GLOBAL_ACTIVE_JOB_LIMIT, overloaded: systemOverloaded },
       pipeline_status: counts,
       pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
     });
