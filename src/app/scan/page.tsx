@@ -33,6 +33,21 @@ interface CatalogMatch {
   url?: string;
 }
 
+interface RecentScan {
+  id: string;
+  slug: string;
+  title: string;
+  author?: string;
+  language?: string;
+  pages_count?: number;
+  pages_ocr?: number;
+  pages_translated?: number;
+  status?: string;
+  thumbnail?: string;
+  pipeline_auto?: { status?: string };
+  created_at?: string;
+}
+
 type Corners = [number, number][];
 
 const BATCH_SIZE = 5;
@@ -55,6 +70,9 @@ export default function ScanPage() {
   const [error, setError] = useState<string | null>(null);
   const [catalogMatches, setCatalogMatches] = useState<CatalogMatch[]>([]);
   const [capturePreview, setCapturePreview] = useState<{ file: File; thumbnailUrl: string; quality: QualityMetrics } | null>(null);
+  const [recentScans, setRecentScans] = useState<RecentScan[]>([]);
+  const [loadingRecent, setLoadingRecent] = useState(true);
+  const [ocrLoading, setOcrLoading] = useState<Record<string, boolean>>({});
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const captureInputRef = useRef<HTMLInputElement>(null);
@@ -80,6 +98,49 @@ export default function ScanPage() {
       if (capturePreview) URL.revokeObjectURL(capturePreview.thumbnailUrl);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Fetch recent scans on mount and after upload completes
+  useEffect(() => {
+    const fetchRecent = async () => {
+      try {
+        const res = await fetch('/api/scan/recent');
+        if (res.ok) {
+          const data = await res.json();
+          setRecentScans(data.books || []);
+        }
+      } catch {
+        // Silently fail — recent scans are informational
+      } finally {
+        setLoadingRecent(false);
+      }
+    };
+    fetchRecent();
+  }, [step]); // Refetch when step changes (e.g. after upload completes)
+
+  // Start OCR for a scanned book
+  const handleStartOcr = useCallback(async (scanBookId: string) => {
+    setOcrLoading(prev => ({ ...prev, [scanBookId]: true }));
+    try {
+      const res = await fetch('/api/scan/start-ocr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookId: scanBookId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to start OCR');
+
+      // Update local state to reflect OCR started
+      setRecentScans(prev => prev.map(s =>
+        s.id === scanBookId
+          ? { ...s, pipeline_auto: { status: 'ocr_submitted' } }
+          : s
+      ));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to start OCR');
+    } finally {
+      setOcrLoading(prev => ({ ...prev, [scanBookId]: false }));
+    }
   }, []);
 
   // Apply perspective correction to the title page
@@ -429,6 +490,15 @@ export default function ScanPage() {
                         description="Send all pages to Source Library for OCR and translation"
                       />
                     </div>
+
+                    {/* Recent Scans */}
+                    {recentScans.length > 0 && (
+                      <RecentScansSection
+                        scans={recentScans}
+                        ocrLoading={ocrLoading}
+                        onStartOcr={handleStartOcr}
+                      />
+                    )}
                   </div>
                 )}
 
@@ -928,6 +998,15 @@ export default function ScanPage() {
                   Scan Another Book
                 </button>
               </div>
+
+              {/* Recent Scans */}
+              {recentScans.length > 0 && (
+                <RecentScansSection
+                  scans={recentScans}
+                  ocrLoading={ocrLoading}
+                  onStartOcr={handleStartOcr}
+                />
+              )}
             </div>
           )}
         </div>
@@ -974,6 +1053,130 @@ function StepPreview({ number, title, description }: {
   );
 }
 
+
+function RecentScansSection({ scans, ocrLoading, onStartOcr }: {
+  scans: RecentScan[];
+  ocrLoading: Record<string, boolean>;
+  onStartOcr: (bookId: string) => void;
+}) {
+  return (
+    <div className="text-left space-y-3 mt-2">
+      <p className="text-xs text-muted font-medium uppercase tracking-wide">Your Scanned Books</p>
+      <div className="space-y-2">
+        {scans.map(scan => {
+          const pipelineStatus = scan.pipeline_auto?.status;
+          const hasOcr = (scan.pages_ocr || 0) > 0;
+          const hasTranslation = (scan.pages_translated || 0) > 0;
+          const isDraft = scan.status === 'draft' && !pipelineStatus;
+          const isProcessing = pipelineStatus && !['complete', 'failed'].includes(pipelineStatus);
+          const isComplete = pipelineStatus === 'complete';
+          const isFailed = pipelineStatus === 'failed';
+          const canStartOcr = isDraft || isFailed;
+
+          return (
+            <div
+              key={scan.id}
+              className="flex items-center gap-3 p-3 border border-border-light rounded-lg bg-white"
+            >
+              {/* Thumbnail */}
+              {scan.thumbnail && (
+                <a href={`/book/${scan.slug}`} className="flex-none">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={scan.thumbnail}
+                    alt=""
+                    className="w-10 h-14 object-cover rounded bg-warm"
+                  />
+                </a>
+              )}
+
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <a href={`/book/${scan.slug}`} className="text-sm font-medium text-primary hover:text-accent-rust leading-snug line-clamp-1">
+                  {scan.title}
+                </a>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-xs text-muted">
+                    {scan.pages_count || 0} {(scan.pages_count || 0) === 1 ? 'page' : 'pages'}
+                  </span>
+                  {/* Status badge */}
+                  {isComplete && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-status-success/15 text-status-success font-medium">
+                      Complete
+                    </span>
+                  )}
+                  {isProcessing && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-accent-rust/10 text-accent-rust font-medium">
+                      {formatPipelineStatus(pipelineStatus)}
+                    </span>
+                  )}
+                  {isFailed && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-status-error/15 text-status-error font-medium">
+                      Failed
+                    </span>
+                  )}
+                  {isDraft && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-border-medium/30 text-muted font-medium">
+                      Draft
+                    </span>
+                  )}
+                </div>
+                {/* Progress bar for processing books */}
+                {hasOcr && !isComplete && (scan.pages_count || 0) > 0 && (
+                  <div className="mt-1 flex items-center gap-1.5">
+                    <div className="flex-1 bg-warm rounded-full h-1 overflow-hidden">
+                      <div
+                        className="bg-accent-sage h-full rounded-full"
+                        style={{ width: `${Math.min(100, ((scan.pages_ocr || 0) / (scan.pages_count || 1)) * 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-muted">{scan.pages_ocr}/{scan.pages_count} OCR</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Start OCR button */}
+              {canStartOcr && (scan.pages_count || 0) > 0 && (
+                <button
+                  onClick={() => onStartOcr(scan.id)}
+                  disabled={ocrLoading[scan.id]}
+                  className="flex-none text-xs px-3 py-1.5 bg-accent-sage-dark text-white rounded-lg font-medium disabled:opacity-50"
+                >
+                  {ocrLoading[scan.id] ? 'Starting...' : 'Start OCR'}
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function formatPipelineStatus(status?: string): string {
+  if (!status) return 'Pending';
+  const map: Record<string, string> = {
+    queued: 'Queued',
+    archiving: 'Archiving',
+    archive_complete: 'Archived',
+    ocr_submitted: 'OCR in progress',
+    ocr_complete: 'OCR done',
+    metadata_enriched: 'Enriched',
+    ft_verifying: 'Verifying',
+    ft_verified: 'Verified',
+    translate_submitted: 'Translating',
+    translate_complete: 'Translated',
+    enriching: 'Enriching',
+    enriched: 'Enriched',
+    chapters: 'Extracting chapters',
+    chapters_complete: 'Chapters done',
+    images_submitted: 'Extracting images',
+    images_complete: 'Images done',
+    complete: 'Complete',
+    failed: 'Failed',
+  };
+  return map[status] || status;
+}
 
 // --- Illustrated onboarding components ---
 
