@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
 import { withAuth } from '@/lib/auth-helpers';
 
+export const maxDuration = 300;
+
 /**
  * Import a book from Cambridge Digital Library (CUDL)
  *

@@ -6,6 +6,8 @@ import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 
+export const maxDuration = 300;
+
 // IIIF v2 canvas
 interface IIIFv2Canvas {
   '@id'?: string;

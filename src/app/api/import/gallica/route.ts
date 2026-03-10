@@ -7,6 +7,8 @@ import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 
+export const maxDuration = 300;
+
 interface IIIFManifest {
   label?: string;
   description?: string;

@@ -7,7 +7,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 
-export const maxDuration = 120;
+export const maxDuration = 300;
 
 interface LOCFileVariant {
   height?: number;
