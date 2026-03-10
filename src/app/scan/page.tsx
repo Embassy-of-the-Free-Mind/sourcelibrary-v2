@@ -50,7 +50,6 @@ interface RecentScan {
 
 type Corners = [number, number][];
 
-const BATCH_SIZE = 5;
 
 export default function ScanPage() {
   const [step, setStep] = useState<Step>('onboarding-1');
@@ -66,29 +65,40 @@ export default function ScanPage() {
   const [processing, setProcessing] = useState(false);
   const [processingCount, setProcessingCount] = useState(0);
   const [creating, setCreating] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0 });
+
   const [error, setError] = useState<string | null>(null);
   const [catalogMatches, setCatalogMatches] = useState<CatalogMatch[]>([]);
   const [capturePreview, setCapturePreview] = useState<{ file: File; thumbnailUrl: string; quality: QualityMetrics } | null>(null);
   const [recentScans, setRecentScans] = useState<RecentScan[]>([]);
   const [loadingRecent, setLoadingRecent] = useState(true);
   const [ocrLoading, setOcrLoading] = useState<Record<string, boolean>>({});
+  const [uploadStatus, setUploadStatus] = useState<Record<string, 'pending' | 'uploading' | 'uploaded' | 'failed'>>({});
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const captureInputRef = useRef<HTMLInputElement>(null);
   const rollInputRef = useRef<HTMLInputElement>(null);
   const thumbnailStripRef = useRef<HTMLDivElement>(null);
+  const uploadStatusRef = useRef<Record<string, 'pending' | 'uploading' | 'uploaded' | 'failed'>>({});
+  const uploadQueueRef = useRef<{ pageId: string; file: File }[]>([]);
+  const uploadActiveRef = useRef(false);
+  const pagesRef = useRef<ProcessedFile[]>([]);
+  const bookIdRef = useRef<string | null>(null);
 
-  // Warn before leaving with unuploaded files
+  // Keep refs in sync with state
+  useEffect(() => { pagesRef.current = pages; }, [pages]);
+  useEffect(() => { bookIdRef.current = bookId; }, [bookId]);
+
+  // Warn before leaving with unsaved pages
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
-      if (pages.length > 0 && step !== 'done') {
-        e.preventDefault();
-      }
+      if (step === 'done') return;
+      const statuses = uploadStatusRef.current;
+      const hasUnsaved = pagesRef.current.some(p => statuses[p.id] !== 'uploaded');
+      if (hasUnsaved) e.preventDefault();
     };
     window.addEventListener('beforeunload', handler);
     return () => window.removeEventListener('beforeunload', handler);
-  }, [pages.length, step]);
+  }, [step]);
 
   // Clean up object URLs on unmount
   useEffect(() => {
@@ -117,6 +127,51 @@ export default function ScanPage() {
     };
     fetchRecent();
   }, [step]); // Refetch when step changes (e.g. after upload completes)
+
+  // Background upload queue — processes one page at a time to avoid page-number races
+  const processUploadQueue = useCallback(async () => {
+    if (uploadActiveRef.current) return;
+    uploadActiveRef.current = true;
+
+    while (uploadQueueRef.current.length > 0) {
+      const item = uploadQueueRef.current.shift()!;
+      const currentBookId = bookIdRef.current;
+      if (!currentBookId) {
+        // Book not created yet — re-queue and wait
+        uploadQueueRef.current.unshift(item);
+        await new Promise(r => setTimeout(r, 500));
+        continue;
+      }
+
+      uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'uploading' };
+      setUploadStatus(prev => ({ ...prev, [item.pageId]: 'uploading' }));
+
+      try {
+        const resized = await resizeForUpload(item.file);
+        const formData = new FormData();
+        formData.append('bookId', currentBookId);
+        formData.append('files', resized);
+
+        const res = await fetch('/api/scan/upload', { method: 'POST', body: formData });
+        if (!res.ok) throw new Error(`Upload failed (${res.status})`);
+
+        uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'uploaded' };
+        setUploadStatus(prev => ({ ...prev, [item.pageId]: 'uploaded' }));
+      } catch {
+        uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'failed' };
+        setUploadStatus(prev => ({ ...prev, [item.pageId]: 'failed' }));
+      }
+    }
+
+    uploadActiveRef.current = false;
+  }, []);
+
+  const enqueueUpload = useCallback((pageId: string, file: File) => {
+    uploadStatusRef.current = { ...uploadStatusRef.current, [pageId]: 'pending' };
+    setUploadStatus(prev => ({ ...prev, [pageId]: 'pending' }));
+    uploadQueueRef.current.push({ pageId, file });
+    processUploadQueue();
+  }, [processUploadQueue]);
 
   // Start OCR for a scanned book
   const handleStartOcr = useCallback(async (scanBookId: string) => {
@@ -246,8 +301,9 @@ export default function ScanPage() {
       const data = await res.json();
       setBookId(data.id);
       setBookSlug(data.slug);
+      bookIdRef.current = data.id; // Set ref immediately for upload queue
 
-      // Add title page as page 1 (will upload in batch later)
+      // Add title page as page 1 and start uploading it immediately
       if (titlePageFile) {
         const imageToUse = correctedBlob
           ? new File([correctedBlob], 'title-page.jpg', { type: 'image/jpeg' })
@@ -256,13 +312,15 @@ export default function ScanPage() {
           generateThumbnail(imageToUse, 400),
           assessQuality(imageToUse),
         ]);
+        const pageId = crypto.randomUUID();
         setPages([{
-          id: crypto.randomUUID(),
+          id: pageId,
           file: imageToUse,
           thumbnailUrl,
           timestamp: new Date(),
           quality,
         }]);
+        enqueueUpload(pageId, imageToUse);
       }
 
       setStep('capture');
@@ -271,7 +329,7 @@ export default function ScanPage() {
     } finally {
       setCreating(false);
     }
-  }, [metadata, titlePageFile, correctedBlob]);
+  }, [metadata, titlePageFile, correctedBlob, enqueueUpload]);
 
   // Capture: single page captured via camera
   const handlePageCapture = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -291,7 +349,7 @@ export default function ScanPage() {
     if (captureInputRef.current) captureInputRef.current.value = '';
   }, []);
 
-  // Keep the captured page
+  // Keep the captured page and start uploading it immediately
   const handleKeepPage = useCallback(() => {
     if (!capturePreview) return;
     const newPage: ProcessedFile = {
@@ -303,6 +361,7 @@ export default function ScanPage() {
     };
     setPages(prev => [...prev, newPage]);
     setCapturePreview(null);
+    enqueueUpload(newPage.id, newPage.file);
 
     // Scroll thumbnail strip to the end
     setTimeout(() => {
@@ -311,7 +370,7 @@ export default function ScanPage() {
         behavior: 'smooth',
       });
     }, 50);
-  }, [capturePreview]);
+  }, [capturePreview, enqueueUpload]);
 
   // Retake — discard the preview
   const handleRetakePage = useCallback(() => {
@@ -334,6 +393,10 @@ export default function ScanPage() {
       const newFiles = Array.from(fileList);
       const processed = await processFiles(newFiles);
       setPages(prev => [...prev, ...processed]);
+      // Enqueue each for background upload
+      for (const page of processed) {
+        enqueueUpload(page.id, page.file);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to process photos');
     } finally {
@@ -341,14 +404,23 @@ export default function ScanPage() {
       setProcessingCount(0);
       if (rollInputRef.current) rollInputRef.current.value = '';
     }
-  }, []);
+  }, [enqueueUpload]);
 
-  // Delete a page
+  // Delete a page and clean up upload tracking
   const handleDelete = useCallback((id: string) => {
     setPages(prev => {
       const file = prev.find(p => p.id === id);
       if (file) URL.revokeObjectURL(file.thumbnailUrl);
       return prev.filter(p => p.id !== id);
+    });
+    // Remove from upload queue if pending
+    uploadQueueRef.current = uploadQueueRef.current.filter(item => item.pageId !== id);
+    // Clean up status
+    const { [id]: _, ...rest } = uploadStatusRef.current;
+    uploadStatusRef.current = rest;
+    setUploadStatus(prev => {
+      const { [id]: __, ...remaining } = prev;
+      return remaining;
     });
   }, []);
 
@@ -365,47 +437,53 @@ export default function ScanPage() {
     });
   }, []);
 
-  // Upload all pages
-  const handleUploadAll = useCallback(async () => {
+  // Finish: re-enqueue any failed pages, wait for all uploads to complete, then transition
+  const handleFinish = useCallback(async () => {
     if (!bookId || pages.length === 0) return;
 
     setStep('uploading');
-    setUploadProgress({ done: 0, total: pages.length });
     setError(null);
 
-    let uploaded = 0;
-
-    // Upload in batches of BATCH_SIZE
-    for (let i = 0; i < pages.length; i += BATCH_SIZE) {
-      const batch = pages.slice(i, i + BATCH_SIZE);
-      const formData = new FormData();
-      formData.append('bookId', bookId);
-
-      for (const pf of batch) {
-        const resized = await resizeForUpload(pf.file);
-        formData.append('files', resized);
+    // Re-enqueue any failed pages
+    for (const page of pagesRef.current) {
+      const status = uploadStatusRef.current[page.id];
+      if (status === 'failed') {
+        enqueueUpload(page.id, page.file);
       }
+    }
 
-      try {
-        const res = await fetch('/api/scan/upload', { method: 'POST', body: formData });
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.error || `Upload batch failed (${res.status})`);
+    // Wait for all uploads to complete (poll every 500ms)
+    const waitForCompletion = () => new Promise<void>((resolve) => {
+      const check = () => {
+        const statuses = uploadStatusRef.current;
+        const currentPages = pagesRef.current;
+        const allDone = currentPages.every(p => {
+          const s = statuses[p.id];
+          return s === 'uploaded' || s === 'failed';
+        });
+        if (allDone || uploadQueueRef.current.length === 0 && !uploadActiveRef.current) {
+          resolve();
+        } else {
+          setTimeout(check, 500);
         }
+      };
+      check();
+    });
 
-        const data = await res.json();
-        uploaded += data.uploaded || batch.length;
-        setUploadProgress({ done: uploaded, total: pages.length });
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Upload failed');
-        // Don't return — continue trying remaining batches
-      }
+    await waitForCompletion();
+
+    // Check if any still failed
+    const failedCount = pagesRef.current.filter(p => uploadStatusRef.current[p.id] === 'failed').length;
+    if (failedCount > 0) {
+      setError(`${failedCount} ${failedCount === 1 ? 'page' : 'pages'} failed to upload. Tap Finish to retry.`);
+      setStep('capture');
+      return;
     }
 
     // Clean up thumbnails
     pages.forEach(p => URL.revokeObjectURL(p.thumbnailUrl));
     setStep('done');
-  }, [bookId, pages]);
+  }, [bookId, pages, enqueueUpload]);
 
   // Reset everything
   const handleReset = useCallback(() => {
@@ -422,8 +500,12 @@ export default function ScanPage() {
     setBookSlug(null);
     setPages([]);
     setCapturePreview(null);
-    setUploadProgress({ done: 0, total: 0 });
     setError(null);
+    setUploadStatus({});
+    uploadStatusRef.current = {};
+    uploadQueueRef.current = [];
+    uploadActiveRef.current = false;
+    bookIdRef.current = null;
     if (titleInputRef.current) titleInputRef.current.value = '';
   }, [pages, correctedPreview, capturePreview]);
 
@@ -787,6 +869,22 @@ export default function ScanPage() {
                       <div className="absolute top-0.5 left-0.5 bg-dark/60 text-white text-[10px] px-1 rounded">
                         {i + 1}
                       </div>
+                      {/* Upload status indicator */}
+                      {uploadStatus[page.id] === 'uploaded' && (
+                        <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-status-success rounded-full flex items-center justify-center">
+                          <svg className="w-2 h-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                          </svg>
+                        </div>
+                      )}
+                      {(uploadStatus[page.id] === 'uploading' || uploadStatus[page.id] === 'pending') && (
+                        <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 border border-white/80 border-t-transparent rounded-full animate-spin" />
+                      )}
+                      {uploadStatus[page.id] === 'failed' && (
+                        <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-status-error rounded-full flex items-center justify-center">
+                          <span className="text-white text-[8px] font-bold">!</span>
+                        </div>
+                      )}
                       {/* Quality badge */}
                       {page.quality.blurScore < 0.3 && (
                         <div className="absolute bottom-0.5 left-0.5 right-0.5 bg-status-warning/90 text-white text-[8px] text-center rounded px-0.5">
@@ -922,45 +1020,64 @@ export default function ScanPage() {
                     />
                   </label>
 
-                  {/* Upload button */}
-                  {pages.length > 0 && (
-                    <button
-                      onClick={handleUploadAll}
-                      className="w-full py-3 bg-accent-sage-dark text-white rounded-lg font-medium text-sm mt-2"
-                    >
-                      Upload All ({pages.length} {pages.length === 1 ? 'page' : 'pages'})
-                    </button>
-                  )}
+                  {/* Finish button with upload progress */}
+                  {pages.length > 0 && (() => {
+                    const uploadedCount = pages.filter(p => uploadStatus[p.id] === 'uploaded').length;
+                    const failedCount = pages.filter(p => uploadStatus[p.id] === 'failed').length;
+                    const allUploaded = uploadedCount === pages.length;
+                    const hasFailures = failedCount > 0;
+                    return (
+                      <div className="mt-2 space-y-2">
+                        {/* Upload progress text */}
+                        <div className="text-center text-xs text-muted">
+                          {allUploaded
+                            ? `All ${pages.length} pages saved`
+                            : `${uploadedCount} of ${pages.length} pages saved${hasFailures ? ` (${failedCount} failed)` : ''}`
+                          }
+                        </div>
+                        <button
+                          onClick={handleFinish}
+                          disabled={uploadedCount === 0 && !hasFailures}
+                          className="w-full py-3 bg-accent-sage-dark text-white rounded-lg font-medium text-sm disabled:opacity-50"
+                        >
+                          {hasFailures ? `Retry & Finish` : allUploaded ? 'Finish' : `Finish (${uploadedCount}/${pages.length} saved)`}
+                        </button>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </div>
           )}
 
-          {/* Uploading */}
-          {step === 'uploading' && (
-            <div className="text-center space-y-6 max-w-md mx-auto py-8">
-              <div>
-                <h1 className="font-serif text-xl text-primary mb-2">Uploading Pages</h1>
-                <p className="text-muted text-sm">
-                  {uploadProgress.done} of {uploadProgress.total} pages uploaded
+          {/* Finishing upload */}
+          {step === 'uploading' && (() => {
+            const uploadedCount = pages.filter(p => uploadStatus[p.id] === 'uploaded').length;
+            return (
+              <div className="text-center space-y-6 max-w-md mx-auto py-8">
+                <div>
+                  <h1 className="font-serif text-xl text-primary mb-2">Finishing Upload</h1>
+                  <p className="text-muted text-sm">
+                    {uploadedCount} of {pages.length} pages saved
+                  </p>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-full bg-warm rounded-full h-3 overflow-hidden">
+                  <div
+                    className="bg-accent-rust h-full rounded-full transition-all duration-300"
+                    style={{
+                      width: `${pages.length > 0 ? (uploadedCount / pages.length) * 100 : 0}%`
+                    }}
+                  />
+                </div>
+
+                <p className="text-muted text-xs">
+                  Almost done...
                 </p>
               </div>
-
-              {/* Progress bar */}
-              <div className="w-full bg-warm rounded-full h-3 overflow-hidden">
-                <div
-                  className="bg-accent-rust h-full rounded-full transition-all duration-300"
-                  style={{
-                    width: `${uploadProgress.total > 0 ? (uploadProgress.done / uploadProgress.total) * 100 : 0}%`
-                  }}
-                />
-              </div>
-
-              <p className="text-muted text-xs">
-                Do not close this page while uploading
-              </p>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Done */}
           {step === 'done' && (
