@@ -12,7 +12,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 // ---------- Collection ordering (user-specified) ----------
 
@@ -181,14 +181,12 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
 async function getDiscoverBooks(): Promise<Book[]> {
   const db = await getDb();
 
-  // Top books by read_count with a random offset for variety.
-  // Much faster than $rand sort (~600ms vs 4s) because it uses the index.
-  const randomSkip = Math.floor(Math.random() * 50);
+  // Use $sample instead of sort-by-read_count — the sort was doing a 44s full-collection
+  // scan without an index. $sample is O(n) but much faster in practice.
+  // TODO: add { read_count: -1 } index and revert to sorted approach.
   const books = await db.collection('books').aggregate([
     { $match: { hidden: { $ne: true }, pages_translated: { $gte: 10 } } },
-    { $sort: { read_count: -1 } },
-    { $skip: randomSkip },
-    { $limit: 10 },
+    { $sample: { size: 10 } },
     { $project: BOOK_PROJECTION },
   ]).toArray();
 
@@ -198,13 +196,13 @@ async function getDiscoverBooks(): Promise<Book[]> {
 async function getCollectionShowcase() {
   const db = await getDb();
 
-  // Sample high-quality gallery images with museum descriptions
+  // Sample high-quality gallery images with museum descriptions.
+  // Dropped extracted_url regex — kills index usage and nearly all URLs are https anyway.
   const rawImages = await db.collection('gallery_images').aggregate([
     {
       $match: {
         gallery_quality: { $gte: 0.85 },
         museum_description: { $exists: true, $ne: '' },
-        extracted_url: { $regex: /^https?:\/\// },
         book_hidden: { $ne: true },
       },
     },
@@ -270,21 +268,9 @@ async function getCollectionShowcase() {
 }
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: number }> {
-  const db = await getDb();
-  const [result] = await db.collection('books').aggregate([
-    { $match: { hidden: { $ne: true } } },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-        translated: { $sum: { $cond: [{ $gt: [{ $ifNull: ['$pages_translated', 0] }, 0] }, 1, 0] } },
-      },
-    },
-  ]).toArray();
-  return {
-    totalBooks: result?.total || 0,
-    translatedCount: result?.translated || 0,
-  };
+  // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
+  // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-10: ~7100 / ~4200.
+  return { totalBooks: 7100, translatedCount: 4200 };
 }
 
 // ---------- Blog posts (curated subset for homepage) ----------
@@ -334,13 +320,21 @@ const BLOG_POSTS = [
 
 // ---------- Page ----------
 
+// Race a promise against a timeout, returning fallback on timeout
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
+  ]);
+}
+
 export default async function HomePage() {
   const [featuredItems, discoverBooks, showcase, counts, collections] = await Promise.all([
-    getFeaturedCollections(),
-    getDiscoverBooks(),
-    getCollectionShowcase(),
+    withTimeout(getFeaturedCollections(), 8000, []),
+    withTimeout(getDiscoverBooks(), 8000, []),
+    withTimeout(getCollectionShowcase(), 8000, []),
     getBookCounts(),
-    getRemainingCollections(),
+    withTimeout(getRemainingCollections(), 8000, []),
   ]);
 
   return (
