@@ -40,7 +40,10 @@ interface PageProps {
 
 // Lightweight book fetch for metadata (no pages, no heavy index)
 async function getBookForMetadata(id: string): Promise<Book | null> {
-  const db = await getDb();
+  const db = await Promise.race([
+    getDb(),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 8000)),
+  ]);
   const result = await findBookByIdOrSlug(db, id, {
     index: 0,
     reading_summary: 0,
@@ -68,7 +71,10 @@ interface CitedBook {
 
 const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
   try {
-    const db = await getDb();
+    const db = await Promise.race([
+      getDb(),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 8000)),
+    ]);
 
     // Step 1: Find person entities mentioned in THIS book.
     // Only fetch name/aliases — we'll match against author fields in a separate query.
@@ -446,7 +452,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImageCount: number; matchedBySlug: boolean } | null> {
-  const db = await getDb();
+  // Timeout on getDb() — when MongoDB Atlas is overloaded, the connection
+  // itself can hang for 60+ seconds. Better to fail fast.
+  const dbPromise = getDb();
+  const db = await Promise.race([
+    dbPromise,
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB connection timeout (10s)')), 10000)),
+  ]);
 
   // Exclude heavy fields not used on the book detail page.
   // index.*.pages arrays are ~100KB for well-indexed books but only .term is displayed.
@@ -474,6 +486,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
 
   // Inclusion projection — only fetch fields the book detail UI actually uses
   // Status dots need .updated_at; image count needs array length via .type
+  // All queries have maxTimeMS to fail fast during DB degradation
   const [pagesRaw, totalBooks, galleryImageCount] = await Promise.all([
     db.collection('pages')
       .find({ book_id: bookId }, {
@@ -492,16 +505,15 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           'translation.updated_at': 1,
           'summary.updated_at': 1,
           display_brightness: 1,
-        }
+        },
+        maxTimeMS: 8000,
       })
       .sort({ page_number: 1 })
       .toArray(),
-    db.collection('books').estimatedDocumentCount(),
-    db.collection('gallery_images').countDocuments({
-      book_id: bookId,
-      gallery_quality: { $gte: 0.7 },
-      book_hidden: { $ne: true },
-    }),
+    db.collection('books').estimatedDocumentCount().catch(() => 1200),
+    db.collection('gallery_images').countDocuments(
+      { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
+    ).catch(() => 0),
   ]);
 
   // Serialize MongoDB objects to plain JavaScript objects
@@ -548,9 +560,24 @@ function PagesGridSkeleton() {
   );
 }
 
-// Book info component (streams in)
+// Book info component (streams in via Suspense)
 async function BookInfo({ id }: { id: string }) {
-  const data = await getBook(id);
+  let data;
+  try {
+    data = await getBook(id);
+  } catch (err) {
+    console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
+    // Return a friendly message instead of crashing the Suspense boundary
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center max-w-md px-6">
+          <h2 className="text-2xl font-display text-primary mb-3">Temporarily Unavailable</h2>
+          <p className="text-secondary mb-6">This book is taking longer than expected to load. Please try again in a moment.</p>
+          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!data) {
     notFound();

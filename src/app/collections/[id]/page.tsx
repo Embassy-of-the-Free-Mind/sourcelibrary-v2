@@ -27,7 +27,10 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   try {
-    const db = await getDb();
+    const db = await Promise.race([
+      getDb(),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 5000)),
+    ]);
     const collection = await db.collection('collections').findOne({ slug: id });
 
     if (!collection) {
@@ -182,9 +185,15 @@ function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T
 }
 
 async function fetchCollectionData(id: string) {
-  const db = await getDb();
+  // Wrap getDb() in a timeout — when MongoDB Atlas is overloaded, the connection
+  // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
+  const db = await withTimeout(getDb(), 10000, null as unknown as Awaited<ReturnType<typeof getDb>>);
+  if (!db) return null;
 
-  const collection = await db.collection('collections').findOne({ slug: id });
+  const collection = await withTimeout(
+    db.collection('collections').findOne({ slug: id }),
+    8000, null,
+  );
   if (!collection) return null;
 
   const filter: Record<string, unknown> = {
@@ -295,7 +304,17 @@ export default async function CollectionDetailPage({ params }: Props) {
     data = await fetchCollectionData(id);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
-    throw err; // Re-throw so ISR sees 500 (not cached)
+    // Show a temporary error page instead of 500 — ISR won't cache this
+    // because we return a response, not throw
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center max-w-md px-6">
+          <h1 className="text-2xl font-display text-primary mb-3">Temporarily Unavailable</h1>
+          <p className="text-secondary mb-6">This collection is taking longer than expected to load. Please try again in a moment.</p>
+          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
+        </div>
+      </div>
+    );
   }
   if (!data) notFound();
 
