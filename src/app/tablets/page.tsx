@@ -277,18 +277,55 @@ export default function TabletsPage() {
                     );
                     const aspect = tablet.photoBounds?.imageAspect;
                     return (
-                      <div key={si} className="flex gap-4 px-5 py-3">
-                        {bounds && aspect ? (
-                          <CroppedSurfaceImage
-                            photoUrl={tablet.photoUrl}
-                            bbox={bounds.bbox}
-                            imageAspect={aspect}
-                            containerWidth={360}
-                            alt={`${tablet.designation} ${section.surface}`}
-                          />
-                        ) : null}
-                        <div className="min-w-0 flex-1">
-                          <SurfaceLines section={section} />
+                      <div key={si}>
+                        {/* Surface header */}
+                        <div
+                          className="px-5 pt-3 pb-1 flex items-center gap-3"
+                        >
+                          <span
+                            className="text-xs font-semibold uppercase tracking-wider"
+                            style={{ color: 'var(--accent-gold-dark)' }}
+                          >
+                            @{section.surface}
+                          </span>
+                        </div>
+                        {/* Three-column layout: Photo | ATF (CDLI) | Signs (generated) */}
+                        <div className="flex gap-0 px-5 pb-3">
+                          {bounds && aspect ? (
+                            <div className="shrink-0">
+                              <CroppedSurfaceImage
+                                photoUrl={tablet.photoUrl}
+                                bbox={bounds.bbox}
+                                imageAspect={aspect}
+                                containerWidth={360}
+                                alt={`${tablet.designation} ${section.surface}`}
+                              />
+                            </div>
+                          ) : null}
+                          {/* ATF column — CDLI source data */}
+                          <div className="min-w-0 flex-1 px-4">
+                            <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                              <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-sage)/12', color: 'var(--accent-sage-dark)' }}>
+                                CDLI
+                              </span>
+                              <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                                ATF Transliteration
+                              </span>
+                            </div>
+                            <AtfColumn section={section} />
+                          </div>
+                          {/* Cuneiform signs column — generated */}
+                          <div className="min-w-0 flex-1 px-4 border-l" style={{ borderColor: 'var(--border-light)' }}>
+                            <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                              <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}>
+                                Generated
+                              </span>
+                              <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                                Cuneiform Signs (experimental)
+                              </span>
+                            </div>
+                            <SignsColumn section={section} />
+                          </div>
                         </div>
                       </div>
                     );
@@ -384,55 +421,60 @@ export default function TabletsPage() {
   );
 }
 
-function SurfaceLines({ section }: { section: ParsedSection }) {
+/** ATF column: raw scholarly transliteration from CDLI */
+function AtfColumn({ section }: { section: ParsedSection }) {
   return (
-    <div className="p-4 overflow-x-auto">
-      <div
-        className="flex items-center justify-between mb-1.5 pb-1 border-b"
-        style={{ borderColor: 'var(--border-light)' }}
-      >
-        <span
-          className="text-xs font-semibold uppercase tracking-wider"
-          style={{ color: 'var(--accent-gold-dark)' }}
-        >
-          @{section.surface}
-        </span>
-        <div className="flex gap-2">
-          <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-sage)/12', color: 'var(--accent-sage-dark)' }}>
-            ATF: CDLI
+    <div className="space-y-0.5">
+      {section.lines.map((line, li) => (
+        <div key={li} className="flex gap-2">
+          <span
+            className="text-xs font-mono w-5 shrink-0 text-right"
+            style={{ color: 'var(--text-faint)' }}
+          >
+            {line.lineNum}
           </span>
-          <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}>
-            Signs: generated
+          <span
+            className="text-xs font-mono"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            {line.text}
           </span>
         </div>
-      </div>
-      <div className="space-y-1">
-        {section.lines.map((line, li) => (
-          <div key={li} className="flex gap-2">
-            <span
-              className="text-xs font-mono w-5 shrink-0 pt-1.5 text-right"
-              style={{ color: 'var(--text-faint)' }}
-            >
-              {line.lineNum}
-            </span>
-            <div className="min-w-0">
-              {line.tokens.length > 0 ? (
-                <div className="flex flex-wrap gap-x-0.5 items-baseline leading-tight">
-                  {line.tokens.map((token, ti) => (
-                    <CuneiformToken key={ti} token={token} />
-                  ))}
-                </div>
-              ) : null}
-              <div
-                className="text-[10px] font-mono leading-tight"
+      ))}
+    </div>
+  );
+}
+
+/** Signs column: generated Unicode cuneiform rendering */
+function SignsColumn({ section }: { section: ParsedSection }) {
+  return (
+    <div className="space-y-0.5">
+      {section.lines.map((line, li) => (
+        <div key={li} className="flex gap-2">
+          <span
+            className="text-xs font-mono w-5 shrink-0 pt-1 text-right"
+            style={{ color: 'var(--text-faint)' }}
+          >
+            {line.lineNum}
+          </span>
+          <div className="min-w-0">
+            {line.tokens.length > 0 ? (
+              <div className="flex flex-wrap gap-x-0.5 items-baseline leading-tight">
+                {line.tokens.map((token, ti) => (
+                  <CuneiformToken key={ti} token={token} />
+                ))}
+              </div>
+            ) : (
+              <span
+                className="text-[10px] font-mono italic"
                 style={{ color: 'var(--text-faint)' }}
               >
-                {line.text}
-              </div>
-            </div>
+                {line.text.startsWith('$') ? line.text : '—'}
+              </span>
+            )}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }
