@@ -49,6 +49,7 @@ interface ParsedLine {
   lineNum: string;
   text: string;
   tokens: AtfToken[];
+  translation?: string;
 }
 
 interface ParsedSection {
@@ -63,13 +64,20 @@ function parseAtf(raw: string): ParsedSection[] {
   for (const line of raw.split(/\r?\n/)) {
     const trimmed = line.trim();
 
-    if (
-      trimmed.startsWith('&') ||
-      trimmed.startsWith('#') ||
-      trimmed === '@tablet' ||
-      trimmed === ''
-    )
+    if (trimmed.startsWith('&') || trimmed === '@tablet' || trimmed === '')
       continue;
+
+    // Translation lines: attach to the most recent line
+    if (trimmed.startsWith('#tr.en:')) {
+      if (current && current.lines.length > 0) {
+        const last = current.lines[current.lines.length - 1];
+        last.translation = trimmed.replace(/^#tr\.en:\s*/, '');
+      }
+      continue;
+    }
+
+    // Skip other comment/metadata lines
+    if (trimmed.startsWith('#')) continue;
 
     const surfaceMatch = trimmed.match(
       /^@(obverse|reverse|left|right|top|bottom|seal\s*\d*|column\s*\d*)/i
@@ -289,7 +297,7 @@ export default function TabletsPage() {
                             @{section.surface}
                           </span>
                         </div>
-                        {/* Three-column layout: Photo | ATF (CDLI) | Signs (generated) */}
+                        {/* Columns: Photo | Signs (generated) | ATF (CDLI) | Translation */}
                         <div className="flex gap-0 px-5 pb-3">
                           {bounds && aspect ? (
                             <div className="shrink-0">
@@ -302,8 +310,20 @@ export default function TabletsPage() {
                               />
                             </div>
                           ) : null}
-                          {/* ATF column — CDLI source data */}
+                          {/* Cuneiform signs column — generated */}
                           <div className="min-w-0 flex-1 px-4">
+                            <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                              <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}>
+                                Generated
+                              </span>
+                              <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                                Cuneiform Signs
+                              </span>
+                            </div>
+                            <SignsColumn section={section} />
+                          </div>
+                          {/* ATF column — CDLI source data */}
+                          <div className="min-w-0 flex-1 px-4 border-l" style={{ borderColor: 'var(--border-light)' }}>
                             <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b" style={{ borderColor: 'var(--border-light)' }}>
                               <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-sage)/12', color: 'var(--accent-sage-dark)' }}>
                                 CDLI
@@ -314,18 +334,20 @@ export default function TabletsPage() {
                             </div>
                             <AtfColumn section={section} />
                           </div>
-                          {/* Cuneiform signs column — generated */}
-                          <div className="min-w-0 flex-1 px-4 border-l" style={{ borderColor: 'var(--border-light)' }}>
-                            <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b" style={{ borderColor: 'var(--border-light)' }}>
-                              <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}>
-                                Generated
-                              </span>
-                              <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                                Cuneiform Signs (experimental)
-                              </span>
+                          {/* Translation column — from CDLI ATF when available */}
+                          {section.lines.some(l => l.translation) && (
+                            <div className="min-w-0 flex-1 px-4 border-l" style={{ borderColor: 'var(--border-light)' }}>
+                              <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                                <span className="text-[9px] font-mono px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-sage)/12', color: 'var(--accent-sage-dark)' }}>
+                                  CDLI
+                                </span>
+                                <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                                  English Translation
+                                </span>
+                              </div>
+                              <TranslationColumn section={section} />
                             </div>
-                            <SignsColumn section={section} />
-                          </div>
+                          )}
                         </div>
                       </div>
                     );
@@ -473,6 +495,30 @@ function SignsColumn({ section }: { section: ParsedSection }) {
               </span>
             )}
           </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Translation column: English translations from CDLI ATF (#tr.en: lines) */
+function TranslationColumn({ section }: { section: ParsedSection }) {
+  return (
+    <div className="space-y-0.5">
+      {section.lines.map((line, li) => (
+        <div key={li} className="flex gap-2">
+          <span
+            className="text-xs font-mono w-5 shrink-0 text-right"
+            style={{ color: 'var(--text-faint)' }}
+          >
+            {line.lineNum}
+          </span>
+          <span
+            className="text-xs font-body"
+            style={{ color: line.translation ? 'var(--text-secondary)' : 'var(--text-faint)' }}
+          >
+            {line.translation || '—'}
+          </span>
         </div>
       ))}
     </div>
