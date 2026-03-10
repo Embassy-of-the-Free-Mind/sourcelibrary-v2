@@ -11,9 +11,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// ISR: cache homepage for 5 minutes. Avoids hammering MongoDB on every request
-// (was force-dynamic, which caused empty pages when DB was slow post-outage).
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 // ---------- Collection ordering (user-specified) ----------
@@ -337,10 +335,13 @@ const BLOG_POSTS = [
 
 // ---------- Page ----------
 
-// Race a promise against a timeout, returning fallback on timeout
+// Race a promise against a timeout, returning fallback on timeout OR error
 function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
   return Promise.race([
-    promise,
+    promise.catch((err) => {
+      console.error('[Homepage] query failed:', err?.message || err);
+      return fallback;
+    }),
     new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
   ]);
 }
