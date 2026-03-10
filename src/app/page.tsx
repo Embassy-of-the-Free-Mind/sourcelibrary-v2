@@ -288,6 +288,40 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: n
   return { totalBooks: 7100, translatedCount: 4200 };
 }
 
+// ---------- Hardcoded fallback data (DB resilience) ----------
+// Used when MongoDB is unreachable. Same pattern as getBookCounts().
+// Last updated: 2026-03-10 from /api/collections.
+
+const FALLBACK_COLLECTIONS: CollectionForGrid[] = [
+  { slug: 'natural-philosophy', name: 'Natural Philosophy & Science', subtitle: 'From Aristotle to Newton', description: '', book_count: 971, hero_image: null, languages: ['Latin', 'Chinese', 'English'] },
+  { slug: 'theology', name: 'Theology & Religious Thought', subtitle: 'Scholasticism, Reformation & Apologetics', description: '', book_count: 1456, hero_image: null, languages: ['Latin', 'English', 'German'] },
+  { slug: 'classical-philosophy', name: 'Classical Philosophy', subtitle: 'Ancient Greek & Roman Thought', description: '', book_count: 753, hero_image: null, languages: ['Greek', 'Latin', 'English'] },
+  { slug: 'alchemy', name: 'Alchemy', subtitle: 'The Art of Transmutation', description: '', book_count: 577, hero_image: null, languages: ['Latin', 'German', 'English'] },
+  { slug: 'indic-traditions', name: 'Indic Traditions', subtitle: 'Vedas, Yoga, Tantra & Buddhist Texts', description: '', book_count: 654, hero_image: null, languages: ['Sanskrit', 'English', 'Tamil'] },
+  { slug: 'chinese-classics', name: 'Chinese Classics', subtitle: 'Confucian, Daoist & Buddhist Texts', description: '', book_count: 589, hero_image: null, languages: ['Chinese', 'English', 'French'] },
+  { slug: 'magic', name: 'Magic & Occult Arts', subtitle: 'Grimoires, Natural Magic & Ceremonial Practice', description: '', book_count: 337, hero_image: null, languages: ['Latin', 'English', 'French'] },
+  { slug: 'medicine', name: 'Medicine & Natural History', subtitle: 'Herbalism, Anatomy & the Living World', description: '', book_count: 510, hero_image: null, languages: ['Latin', 'Chinese', 'English'] },
+  { slug: 'art-illustrated', name: 'Art & Illustrated Books', subtitle: 'Emblems, Engravings & Visual Knowledge', description: '', book_count: 252, hero_image: null, languages: ['Chinese', 'Latin', 'Italian'] },
+  { slug: 'secret-societies', name: 'Secret Societies', subtitle: 'Freemasonry, Rosicrucians & Fraternal Orders', description: '', book_count: 211, hero_image: null, languages: ['German', 'Latin', 'French'] },
+  { slug: 'leonardo-da-vinci', name: 'Leonardo da Vinci', subtitle: 'Manuscripts, codices, treatises, and anatomical drawings', description: '', book_count: 30, hero_image: null, languages: ['Italian', 'French', 'English'] },
+  { slug: 'hermetica', name: 'Hermetica', subtitle: 'Hermetic Philosophy & Prisca Theologia', description: '', book_count: 677, hero_image: null, languages: ['Latin', 'German', 'English'] },
+  { slug: 'kabbalah', name: 'Kabbalah', subtitle: 'Jewish Mysticism & Christian Cabala', description: '', book_count: 158, hero_image: null, languages: ['Latin', 'Hebrew', 'German'] },
+  { slug: 'astrology', name: 'Astrology & Divination', subtitle: 'Celestial Science & the Mantic Arts', description: '', book_count: 494, hero_image: null, languages: ['Sanskrit', 'Latin', 'Chinese'] },
+  { slug: 'mysticism', name: 'Mysticism', subtitle: 'Direct Experience of the Divine', description: '', book_count: 719, hero_image: null, languages: ['German', 'English', 'Latin'] },
+  { slug: 'sacred-texts', name: 'Sacred Texts', subtitle: 'Scripture, Church Fathers & Liturgy', description: '', book_count: 495, hero_image: null, languages: ['English', 'Latin', 'Greek'] },
+  { slug: 'renaissance-philosophy', name: 'Renaissance Philosophy', subtitle: 'Florentine Platonism & Humanist Thought', description: '', book_count: 388, hero_image: null, languages: ['Latin', 'English', 'Italian'] },
+  { slug: 'demonology', name: 'Demonology & Witchcraft', subtitle: 'Witch Trials, Possession & the Demonic', description: '', book_count: 152, hero_image: null, languages: ['English', 'Latin', 'German'] },
+  { slug: 'literature', name: 'Literature & Poetry', subtitle: 'Epic, Allegory & Early Fiction', description: '', book_count: 531, hero_image: null, languages: ['Greek', 'English', 'Latin'] },
+  { slug: 'herbalism', name: 'Herbalism & Botany', subtitle: 'Herbals, Materia Medica & the Science of Plants', description: '', book_count: 192, hero_image: null, languages: ['Italian', 'Chinese', 'Latin'] },
+  { slug: 'music-harmony', name: 'Music, Harmony & Resonance', subtitle: 'The mathematical and mystical dimensions of sound', description: '', book_count: 39, hero_image: null, languages: ['Latin', 'Chinese', 'Greek'] },
+  { slug: 'shwep', name: 'SHWEP Reading Room', subtitle: 'Primary Sources from the Secret History of Western Esotericism Podcast', description: '', book_count: 440, hero_image: null, languages: ['Greek', 'Latin', 'English'] },
+];
+
+// Pre-sorted fallback (matches collectionSortIndex order)
+const SORTED_FALLBACK_COLLECTIONS = [...FALLBACK_COLLECTIONS].sort(
+  (a, b) => collectionSortIndex(a.name) - collectionSortIndex(b.name)
+);
+
 // ---------- Blog posts (curated subset for homepage) ----------
 
 const BLOG_POSTS = [
@@ -352,7 +386,7 @@ export default async function HomePage() {
     withTimeout(getDiscoverBooks(), 20000, []),
     withTimeout(getCollectionShowcase(), 20000, []),
     getBookCounts(),
-    withTimeout(getRemainingCollections(), 20000, []),
+    withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
   ]);
 
   return (
@@ -449,11 +483,20 @@ export default async function HomePage() {
               Translated primary sources from the collection.
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-              {discoverBooks.map((book, i) => (
-                <BookCard key={book.id} book={book} priority={i < 2} />
-              ))}
-            </div>
+            {discoverBooks.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+                {discoverBooks.map((book, i) => (
+                  <BookCard key={book.id} book={book} priority={i < 2} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted mb-4">Browse the collection to discover translated primary sources.</p>
+                <Link href="/search?has_translation=true" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
+                  Browse all books
+                </Link>
+              </div>
+            )}
           </div>
         </section>
 
