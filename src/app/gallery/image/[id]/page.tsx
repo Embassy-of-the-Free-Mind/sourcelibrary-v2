@@ -370,7 +370,7 @@ export default function ImageDetailPage({
         <div className="max-w-6xl mx-auto px-4">
           {/* Image container with magnifier */}
           <div className="relative bg-stone-800 rounded-xl overflow-hidden my-8">
-            <div className="aspect-[4/3] h-96 relative">
+            <div className="h-[50vh] sm:h-[60vh] md:h-[70vh] relative">
               <div
                 className="w-full h-full transition-transform duration-300"
                 style={{
