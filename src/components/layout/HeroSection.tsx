@@ -112,7 +112,7 @@ export default function HeroSection() {
         playsInline
         preload="auto"
         onCanPlay={handleVideoLoad}
-        poster="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d0fa77f38f6761bc5aef/24.jpg"
+
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm#t=3" type="video/webm" />
