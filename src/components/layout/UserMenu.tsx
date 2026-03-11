@@ -103,14 +103,6 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               Scan Book
             </Link>
             <Link
-              href="/bookshelf"
-              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
-              style={{ color: 'var(--text-primary)' }}
-              onClick={() => setIsOpen(false)}
-            >
-              Bookshelf
-            </Link>
-            <Link
               href="/history"
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
