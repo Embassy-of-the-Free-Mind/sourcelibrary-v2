@@ -5,7 +5,7 @@ import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
-import { pages as pagesApi, bookshelf } from '@/lib/api-client';
+import { pages as pagesApi, bookshelf, readingHistory } from '@/lib/api-client';
 
 interface PageEditorClientProps {
   initialBook: Book;
@@ -112,6 +112,12 @@ export default function PageEditorClient({
   useEffect(() => {
     if (!currentPage?.page_number) return;
     bookshelf.trackProgress(book.id, currentPageId, currentPage.page_number);
+  }, [book.id, currentPageId, currentPage?.page_number]);
+
+  // Track reading history (fire-and-forget, server handles session collapsing)
+  useEffect(() => {
+    if (!currentPage?.page_number) return;
+    readingHistory.record(book.id, currentPageId, currentPage.page_number);
   }, [book.id, currentPageId, currentPage?.page_number]);
 
   // Client-side navigation - update URL and current page

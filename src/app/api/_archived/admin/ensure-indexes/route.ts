@@ -1146,6 +1146,36 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Reading history - list by user
+    // Query: { user_id, updated_at: -1 }
+    try {
+      await db.collection('reading_history').createIndex(
+        { user_id: 1, updated_at: -1 },
+        { name: 'rh_user_updated_idx', background: true }
+      );
+      results['reading_history.rh_user_updated_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['reading_history.rh_user_updated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Reading history - session collapse lookup
+    // Query: { user_id, book_id, updated_at: { $gte } }
+    try {
+      await db.collection('reading_history').createIndex(
+        { user_id: 1, book_id: 1, updated_at: -1 },
+        { name: 'rh_user_book_updated_idx', background: true }
+      );
+      results['reading_history.rh_user_book_updated_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['reading_history.rh_user_book_updated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
@@ -1166,7 +1196,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'gemini_usage_daily', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog', 'kdp_publications'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'gemini_usage_daily', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog', 'kdp_publications', 'reading_history'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {
