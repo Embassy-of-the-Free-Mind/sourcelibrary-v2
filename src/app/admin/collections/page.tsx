@@ -445,7 +445,7 @@ export default function AdminCollectionsPage() {
                         <div key={item.id} className="group relative">
                           <div className="aspect-square rounded-lg overflow-hidden bg-stone-100">
                             <Image
-                              src={item.extractedUrl || item.thumbnailUrl || item.imageUrl || ''}
+                              src={item.thumbnailUrl || item.extractedUrl || item.imageUrl || ''}
                               alt={item.description}
                               width={150}
                               height={150}

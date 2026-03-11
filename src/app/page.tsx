@@ -280,7 +280,7 @@ async function getCollectionShowcase() {
       book_id: img.book_id,
       page_number: img.page_number || 0,
       detection_index: img.detection_index || 0,
-      thumbnail_url: img.extracted_url || img.thumbnail_url,
+      thumbnail_url: img.thumbnail_url || img.extracted_url,
       type: img.type || '',
       museum_description: img.museum_description,
       book_title: img.book_title || '',

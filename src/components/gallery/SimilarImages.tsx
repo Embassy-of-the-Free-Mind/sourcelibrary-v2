@@ -70,7 +70,7 @@ export default function SimilarImages({ imageId }: SimilarImagesProps) {
       <div className="grid grid-cols-3 gap-2">
         {items.map((item) => {
           const id = `${item.pageId}-${item.detectionIndex}`;
-          const imgSrc = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
+          const imgSrc = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
 
           return (
             <Link

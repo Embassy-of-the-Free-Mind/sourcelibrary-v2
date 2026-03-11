@@ -175,7 +175,7 @@ export default async function ParticipatePage() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.extracted_url || img.thumbnail_url || img.image_url}
+                  src={img.thumbnail_url || img.extracted_url || img.image_url}
                   alt={img.description || img.book_title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"

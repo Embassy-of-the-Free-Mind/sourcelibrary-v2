@@ -208,7 +208,7 @@ async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promis
     return {
       results: images.map((img: any) => ({
         id: `${img.page_id}-${img.detection_index}`,
-        imageUrl: img.extracted_url || img.thumbnail_url || '',
+        imageUrl: img.thumbnail_url || img.extracted_url || '',
         description: img.description || '',
         type: img.type,
         bookTitle: img.book_title || '',
