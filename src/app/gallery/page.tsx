@@ -157,7 +157,7 @@ async function fetchFeaturedCollections() {
             if (page?.detected_images?.[detIdx]) {
               const det = page.detected_images[detIdx];
               coverImage = {
-                url: det.thumbnail_url || det.extracted_url || '',
+                url: det.extracted_url || det.thumbnail_url || '',
                 description: det.description || col.title,
               };
             }

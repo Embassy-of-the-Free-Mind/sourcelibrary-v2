@@ -175,7 +175,7 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
 
     const bookCounts: Record<string, number> = {};
     for (const img of rawImages) {
-      const thumb = img.thumbnail_url || img.extracted_url;
+      const thumb = img.extracted_url || img.thumbnail_url;
       if (!thumb) continue;
       const bid = img.book_id?.toString() || '';
       bookCounts[bid] = (bookCounts[bid] || 0) + 1;

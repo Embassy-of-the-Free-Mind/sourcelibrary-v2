@@ -69,7 +69,7 @@ function getImageId(item: GalleryItem): string {
 }
 
 function getImageSrc(item: GalleryItem): string {
-  return item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+  return item.extractedUrl || item.thumbnailUrl || item.imageUrl;
 }
 
 export default function CurateClient() {

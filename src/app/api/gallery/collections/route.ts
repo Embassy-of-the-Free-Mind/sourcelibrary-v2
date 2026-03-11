@@ -155,7 +155,7 @@ async function resolveCoverImages(db: any, imageIds: string[]) {
     }
 
     result.set(id, {
-      url: det.thumbnail_url || det.extracted_url || cropUrl || page.cropped_photo || page.photo || '',
+      url: det.extracted_url || det.thumbnail_url || cropUrl || page.cropped_photo || page.photo || '',
       description: det.description || '',
     });
   }

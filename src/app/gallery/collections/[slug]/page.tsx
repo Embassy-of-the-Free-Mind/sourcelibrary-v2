@@ -137,7 +137,7 @@ export default function CollectionDetailPage({
 
 function CollectionImageCard({ item }: { item: CollectionImage }) {
   const [imageError, setImageError] = useState(false);
-  const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+  const displayUrl = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
 
   return (
     <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">

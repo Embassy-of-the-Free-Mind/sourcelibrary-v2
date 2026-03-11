@@ -76,7 +76,7 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
   for (const img of heroImages) {
     const provider = bookToProvider.get(img.book_id as string);
     if (provider && !providerHero.has(provider)) {
-      const url = (img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url) as string;
+      const url = (img.extractedUrl || img.extracted_url || img.thumbnailUrl || img.thumbnail_url || img.imageUrl || img.image_url) as string;
       if (url) providerHero.set(provider, url);
     }
   }

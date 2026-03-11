@@ -873,7 +873,7 @@ function ImageResultCard({ item, query, large }: { item: GalleryItem; query: str
 
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
-  const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+  const displayUrl = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
 
   return (
     <Link

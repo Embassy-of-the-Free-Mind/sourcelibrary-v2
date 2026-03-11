@@ -129,7 +129,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                       <div className="flex gap-2 overflow-x-auto pb-2">
                         {sectionImages.slice(0, 4).map((item) => {
                           const imageId = `${item.pageId}-${item.detectionIndex}`;
-                          const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+                          const displayUrl = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
                           return (
                             <Link
                               key={imageId}
