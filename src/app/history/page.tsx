@@ -8,7 +8,6 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import UserMenu from '@/components/layout/UserMenu';
 import { useIdentity } from '@/hooks/useIdentity';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
-import { bookUrl } from '@/lib/slugify';
 
 function LogoBar() {
   return (
@@ -208,7 +207,6 @@ export default function HistoryPage() {
 function HistoryCard({ entry }: { entry: ReadingHistoryEntry }) {
   const [imageError, setImageError] = useState(false);
   const continueUrl = `/book/${entry.book.slug || entry.book_id}/page/${entry.last_page_id}`;
-  const bookLink = bookUrl(entry.book);
 
   const pageRange =
     entry.first_page_number === entry.last_page_number
