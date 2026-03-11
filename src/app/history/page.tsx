@@ -5,9 +5,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Clock, BookOpen, ArrowRight, Trash2, Library } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
+import UserMenu from '@/components/layout/UserMenu';
 import { useIdentity } from '@/hooks/useIdentity';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
+
+function LogoBar() {
+  return (
+    <header className="bg-white border-b border-border-light">
+      <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+        >
+          <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
+            <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
+            <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+          </svg>
+          <span className="font-medium">Source Library</span>
+        </Link>
+        <UserMenu />
+      </div>
+    </header>
+  );
+}
 
 function groupByDate(entries: ReadingHistoryEntry[]): Record<string, ReadingHistoryEntry[]> {
   const now = new Date();
@@ -81,12 +103,8 @@ export default function HistoryPage() {
 
   if (identity.loading || loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-        <header className="bg-stone-900 text-white py-6">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-serif">Reading History</h1>
-          </div>
-        </header>
+      <div className="min-h-screen bg-stone-50">
+        <LogoBar />
         <div className="flex items-center justify-center py-20">
           <BookLoader size="sm" />
         </div>
@@ -96,12 +114,16 @@ export default function HistoryPage() {
 
   if (identity.type !== 'authenticated') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-        <header className="bg-stone-900 text-white py-6">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-serif">Reading History</h1>
+      <div className="min-h-screen bg-stone-50">
+        <LogoBar />
+        <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-16">
+          <div className="max-w-5xl mx-auto px-6">
+            <h1 className="text-4xl md:text-5xl mb-4">Reading History</h1>
+            <p className="text-xl text-stone-300 max-w-2xl">
+              Track the books and pages you&apos;ve been reading.
+            </p>
           </div>
-        </header>
+        </div>
         <div className="text-center py-20">
           <Clock className="w-16 h-16 text-stone-300 mx-auto mb-4" />
           <h2 className="text-xl font-serif text-stone-700 mb-2">Sign in to track your reading</h2>
@@ -120,20 +142,16 @@ export default function HistoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      <header className="bg-stone-900 text-white py-6">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-serif">Reading History</h1>
-              <p className="text-stone-400 text-sm mt-1">
-                {entries.length} {entries.length === 1 ? 'session' : 'sessions'}
-              </p>
-            </div>
-            <Clock className="w-8 h-8 text-accent-gold" />
-          </div>
+    <div className="min-h-screen bg-stone-50">
+      <LogoBar />
+      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-16">
+        <div className="max-w-5xl mx-auto px-6">
+          <h1 className="text-4xl md:text-5xl mb-4">Reading History</h1>
+          <p className="text-xl text-stone-300 max-w-2xl">
+            {entries.length} {entries.length === 1 ? 'reading session' : 'reading sessions'}
+          </p>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {entries.length === 0 ? (
