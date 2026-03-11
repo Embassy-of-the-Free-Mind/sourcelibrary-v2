@@ -56,7 +56,7 @@ function HeroSignUp() {
         <button
           type="submit"
           disabled={loading || !email}
-          className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
+          className="px-7 py-3.5 rounded-lg text-base font-medium transition-[filter,opacity] hover:brightness-110 disabled:opacity-50 shrink-0"
           style={{ background: 'var(--accent-rust)', color: '#fff' }}
         >
           {loading ? 'Sending...' : 'Join free'}

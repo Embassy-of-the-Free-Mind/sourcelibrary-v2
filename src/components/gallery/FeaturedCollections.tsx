@@ -53,7 +53,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
           <Link
             key={collection.id}
             href={`/gallery/collections/${collection.slug}`}
-            className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5"
+            className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-[box-shadow,transform] hover:-translate-y-0.5"
           >
             <div className="relative aspect-[16/10] bg-stone-100">
               {collection.coverImage?.url ? (
@@ -93,7 +93,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
         {hasMore && (
           <Link
             href="/gallery/collections"
-            className="group bg-warm rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col items-center justify-center"
+            className="group bg-warm rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-[box-shadow,transform] hover:-translate-y-0.5 flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center gap-3 p-8 text-center h-full">
               <div className="w-12 h-12 rounded-full bg-accent-rust/10 flex items-center justify-center group-hover:bg-accent-rust/20 transition-colors">
