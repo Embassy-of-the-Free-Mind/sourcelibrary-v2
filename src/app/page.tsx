@@ -466,7 +466,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {collections.map((col, i) => (
+              {collections.slice(0, 7).map((col, i) => (
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
@@ -509,6 +509,25 @@ export default async function HomePage() {
                   </div>
                 </Link>
               ))}
+
+              {/* "Show all" card */}
+              {collections.length > 7 && (
+                <Link
+                  href="/collections"
+                  className="group relative bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color] flex flex-col items-center justify-center"
+                >
+                  <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
+                    <div className="w-12 h-12 rounded-full bg-accent-rust/10 flex items-center justify-center mb-4 group-hover:bg-accent-rust/20 transition-colors">
+                      <svg className="w-6 h-6 text-accent-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                    </div>
+                    <span className="font-display text-lg text-primary group-hover:text-accent-rust transition-colors">
+                      View all {collections.length} collections
+                    </span>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </section>
