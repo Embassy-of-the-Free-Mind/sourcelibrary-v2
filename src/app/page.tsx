@@ -422,11 +422,31 @@ export default async function HomePage() {
       <div className="min-h-screen">
         <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedCount} />
 
-        {/* Video Hero — same as current homepage */}
+        {/* Video Hero — shorter so next section peeks above fold */}
         <HeroSection />
 
+        {/* Stats Bar */}
+        <section id="library" className="bg-dark text-white py-6">
+          <div className="px-6 md:px-12 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center">
+            <p className="text-lg md:text-xl font-light tracking-wide">
+              The Source Library contains <strong className="font-semibold">{counts.translatedCount.toLocaleString('en-US')}</strong> translated books from <strong className="font-semibold">{counts.totalBooks.toLocaleString('en-US')}</strong> primary sources
+            </p>
+            <Link
+              href="/search"
+              className="text-sm px-5 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors whitespace-nowrap"
+            >
+              Browse all
+            </Link>
+          </div>
+        </section>
+
+        {/* Featured Collection Carousel */}
+        {featuredItems.length > 0 && (
+          <FeaturedCollectionCarousel items={featuredItems} />
+        )}
+
         {/* Collections Grid */}
-        <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
             <div className="flex items-baseline justify-between mb-8">
               <div>
@@ -434,7 +454,7 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.translatedCount.toLocaleString('en-US')} with translations
+                  Browse by tradition, language, and subject
                 </p>
               </div>
               <Link
@@ -493,16 +513,73 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Featured Collection Carousel — flip through collections */}
-        {featuredItems.length > 0 && (
-          <FeaturedCollectionCarousel items={featuredItems} />
-        )}
-
         {/* From the Collection — image-heavy gallery showcase */}
         <FromTheCollection items={showcase} />
 
-        {/* Discover Section */}
+        {/* Contribute Section */}
         <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-primary mb-4 font-display">
+              Join the project
+            </h2>
+            <p className="text-lg md:text-xl text-muted leading-relaxed max-w-3xl mb-12">
+              The Source Library is an open initiative. Whether you&apos;re a scholar, developer, or simply curious about these traditions, there are many ways to participate.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {/* Read & Explore */}
+              <div className="bg-cream rounded-xl p-6 border border-border-light">
+                <div className="w-10 h-10 rounded-full bg-accent-rust/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-accent-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-xl text-primary mb-2">Read &amp; Explore</h3>
+                <p className="text-muted leading-relaxed">
+                  Browse the collection, read translations side-by-side with original texts, and discover connections across traditions. Every page view helps us prioritize what to translate next.
+                </p>
+                <Link href="/search" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
+                  Start exploring
+                </Link>
+              </div>
+
+              {/* Contribute Knowledge */}
+              <div className="bg-cream rounded-xl p-6 border border-border-light">
+                <div className="w-10 h-10 rounded-full bg-accent-sage/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-accent-sage-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-xl text-primary mb-2">Contribute Knowledge</h3>
+                <p className="text-muted leading-relaxed">
+                  Suggest books for import, improve translations, correct OCR errors, or help verify metadata. Subject matter expertise in any tradition is valuable.
+                </p>
+                <Link href="/blog/first-translations" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
+                  See what we&apos;re translating
+                </Link>
+              </div>
+
+              {/* Build With Us */}
+              <div className="bg-cream rounded-xl p-6 border border-border-light">
+                <div className="w-10 h-10 rounded-full bg-accent-violet/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-accent-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-xl text-primary mb-2">Build With Us</h3>
+                <p className="text-muted leading-relaxed">
+                  The Source Library is open source and offers an MCP server for AI integration. Use our data for research, build applications, or help improve the platform.
+                </p>
+                <Link href="/developers" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
+                  Developer tools
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Discover Section */}
+        <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
               Discover
@@ -529,7 +606,7 @@ export default async function HomePage() {
         </section>
 
         {/* Blog Section */}
-        <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
             <div className="flex items-baseline justify-between mb-10">
               <div>
@@ -553,7 +630,7 @@ export default async function HomePage() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
+                  className="group bg-cream rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
                 >
                   {post.image && (
                     <div className="aspect-[16/10] relative bg-warm overflow-hidden">
@@ -589,7 +666,7 @@ export default async function HomePage() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="bg-white py-16 md:py-24">
+        <section id="about" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
               The rediscovery of ancient wisdom helped spark the Renaissance. It&apos;s time for another.
