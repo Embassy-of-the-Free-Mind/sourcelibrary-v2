@@ -9,10 +9,6 @@ import { useIdentity } from '@/hooks/useIdentity';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
 
-export const metadata = {
-  title: 'Reading History — Source Library',
-};
-
 function groupByDate(entries: ReadingHistoryEntry[]): Record<string, ReadingHistoryEntry[]> {
   const now = new Date();
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
