@@ -1,5 +1,12 @@
 # Claude Code Guidelines for Source Library
 
+## Development Workflow — CRITICAL
+- **Work on the `dev/prototype` branch.** All changes go here, NOT on `main`.
+- **Never deploy to production** (`vercel --prod`) from this branch. Use `vercel` (no `--prod`) for preview deploys.
+- **Never push to main.** When work is ready, open a PR: `gh pr create --base main`.
+- **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
+- The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
+
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
 - **NEVER** batch delete — list items first, wait for approval
