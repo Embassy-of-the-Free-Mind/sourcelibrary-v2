@@ -143,6 +143,11 @@ function needsConversion(file: File): boolean {
 }
 
 /**
+ * Resize/convert a file to JPEG for upload.
+ */
+export const resizeForUpload = convertToJpeg;
+
+/**
  * Convert a non-JPEG file to JPEG via Canvas API.
  * Returns a new File object with image/jpeg MIME type.
  */
