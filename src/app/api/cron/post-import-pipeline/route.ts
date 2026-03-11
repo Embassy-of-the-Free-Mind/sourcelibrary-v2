@@ -19,17 +19,17 @@ const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 
 const EARLY_FLUSH_MS = 240_000; // 4 min — flush partial cron_runs record before budget expires
 const ENROLL_LIMIT = 50;
 const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 20; // Re-enabled — pushing to 2,000 fully OCR'd books
+const OCR_SUBMIT_LIMIT = 3; // SLOW RESUME: observing DB impact (was 20)
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
 const FT_VERIFY_LIMIT = 10; // First-translation verification — 2-4 Gemini rounds per book
-const TRANSLATE_SUBMIT_LIMIT = 50; // Increased — large backlog at metadata_enriched
+const TRANSLATE_SUBMIT_LIMIT = 3; // SLOW RESUME: observing DB impact (was 50)
 const IMAGE_SUBMIT_LIMIT = 20;
 const FINALIZE_LIMIT = 50; // Just DB updates
 const MAX_ACTIVE_IMAGE_JOBS = 50;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
-const GLOBAL_ACTIVE_JOB_LIMIT = 40; // Total active jobs across all types — skip submissions when exceeded
+const GLOBAL_ACTIVE_JOB_LIMIT = 10; // SLOW RESUME: observing DB impact (was 40)
 const SQS_OCR_DEPTH_LIMIT = 500; // Skip OCR submission when queue has 500+ messages pending
 const SQS_TRANSLATE_DEPTH_LIMIT = 1000; // Skip translation submission when queue has 1000+ messages pending
 
@@ -938,7 +938,7 @@ export async function GET(request: NextRequest) {
         type: 'ocr',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_OCR = 20; // Cap Lambda jobs — 10 reserved Lambdas, 2x buffer for pending
+      const MAX_ACTIVE_LAMBDA_OCR = 5; // SLOW RESUME: observing DB impact (was 20)
 
       const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
 
@@ -1455,7 +1455,7 @@ export async function GET(request: NextRequest) {
         type: 'translation',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_TRANSLATE = 30; // Lowered from 100 — 68 jobs saturated MongoDB Atlas (Mar 10 outage)
+      const MAX_ACTIVE_LAMBDA_TRANSLATE = 5; // SLOW RESUME: observing DB impact (was 30)
 
       if (activeLambdaTranslate >= MAX_ACTIVE_LAMBDA_TRANSLATE) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
