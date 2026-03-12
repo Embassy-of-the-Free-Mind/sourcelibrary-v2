@@ -87,7 +87,7 @@ export default function VaticanManuscriptsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/aristotle-organon-codex-ottobonianus-graecus-86-aristotle" className="text-accent-rust hover:underline">Ott.gr.86</a></strong> contains <strong>Synesius of Cyrene</strong>&rsquo;s <em>De Insomniis</em> (On Dreams), a 4th-century Neoplatonic treatise on the philosophical significance of dreams. Synesius was one of the last students of <strong>Hypatia of Alexandria</strong> &mdash; the philosopher and mathematician murdered by a Christian mob in 415 CE.
+          <strong><a href="https://sourcelibrary.org/book/synesius-of-cyrene-on-dreams-ott-gr-86" className="text-accent-rust hover:underline">Ott.gr.86</a></strong> contains <strong>Synesius of Cyrene</strong>&rsquo;s <em>De Insomniis</em> (On Dreams), a 4th-century Neoplatonic treatise on the philosophical significance of dreams. Synesius was one of the last students of <strong>Hypatia of Alexandria</strong> &mdash; the philosopher and mathematician murdered by a Christian mob in 415 CE.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -104,7 +104,7 @@ export default function VaticanManuscriptsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/corpus-hermeticum-codex-vaticanus-graecus-2306-trismegistus" className="text-accent-rust hover:underline">Vat.gr.2306</a></strong> is a palimpsest &mdash; a manuscript where the original text has been scraped away and overwritten with something new. The undertext is Greek Septuagint: the books of Genesis and Exodus. The upper text, written over those erased biblical passages, consists of Latin Inquisition abjuration documents from the pontificate of Paul V (early 17th century).
+          <strong><a href="https://sourcelibrary.org/book/biblical-palimpsest-inquisition-abjuration-vat-gr-2306" className="text-accent-rust hover:underline">Vat.gr.2306</a></strong> is a palimpsest &mdash; a manuscript where the original text has been scraped away and overwritten with something new. The undertext is Greek Septuagint: the books of Genesis and Exodus. The upper text, written over those erased biblical passages, consists of Latin Inquisition abjuration documents from the pontificate of Paul V (early 17th century).
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -117,7 +117,7 @@ export default function VaticanManuscriptsPage() {
         </h2>
 
         <div className="my-8">
-          <a href="https://sourcelibrary.org/book/strabo-geography-codex-vaticanus-graecus-191-strabo?page=257">
+          <a href="https://sourcelibrary.org/book/mathematical-astronomical-compendium-vat-gr-191?page=257">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://digi.vatlib.it/iiifimage/MSS_Vat.gr.191/Vat.gr.191_0257_fa_0117r.jp2/full/800,/0/default.jpg"
@@ -129,7 +129,7 @@ export default function VaticanManuscriptsPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/strabo-geography-codex-vaticanus-graecus-191-strabo" className="text-accent-rust hover:underline">Vat.gr.191</a></strong> is the largest manuscript in this batch at 842 pages. It&rsquo;s a comprehensive codex assembling the major works of ancient Greek mathematics and astronomy into a single volume: <strong>Euclid</strong>, <strong>Theodosius</strong>&rsquo;s <em>Spherics</em>, <strong>Hypsicles</strong>, <strong>Autolycus</strong>, <strong>Eutocius</strong>&rsquo;s commentaries on Archimedes, <strong>Ptolemy</strong>, <strong>Proclus</strong>&rsquo;s <em>Sphaera</em>, commentaries on <strong>Aratus</strong>&rsquo;s <em>Phaenomena</em>, and <strong>Hipparchus</strong>.
+          <strong><a href="https://sourcelibrary.org/book/mathematical-astronomical-compendium-vat-gr-191" className="text-accent-rust hover:underline">Vat.gr.191</a></strong> is the largest manuscript in this batch at 842 pages. It&rsquo;s a comprehensive codex assembling the major works of ancient Greek mathematics and astronomy into a single volume: <strong>Euclid</strong>, <strong>Theodosius</strong>&rsquo;s <em>Spherics</em>, <strong>Hypsicles</strong>, <strong>Autolycus</strong>, <strong>Eutocius</strong>&rsquo;s commentaries on Archimedes, <strong>Ptolemy</strong>, <strong>Proclus</strong>&rsquo;s <em>Sphaera</em>, commentaries on <strong>Aratus</strong>&rsquo;s <em>Phaenomena</em>, and <strong>Hipparchus</strong>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -146,7 +146,7 @@ export default function VaticanManuscriptsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/galen-on-the-natural-faculties-codex-vaticanus-graecus-283-galen" className="text-accent-rust hover:underline">Vat.gr.283</a></strong> is a Greek medical codex binding together works by <strong>Galen</strong> and <strong>Hippocrates</strong>, with commentary by <strong>Philo the Physician</strong>. The Hippocratic texts are standard medical works: the <em>Prognostics</em>, <em>Prorrhetics</em>, and <em>Aphorisms</em>.
+          <strong><a href="https://sourcelibrary.org/book/galen-hippocrates-medical-compendium-vat-gr-283" className="text-accent-rust hover:underline">Vat.gr.283</a></strong> is a Greek medical codex binding together works by <strong>Galen</strong> and <strong>Hippocrates</strong>, with commentary by <strong>Philo the Physician</strong>. The Hippocratic texts are standard medical works: the <em>Prognostics</em>, <em>Prorrhetics</em>, and <em>Aphorisms</em>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -163,19 +163,19 @@ export default function VaticanManuscriptsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/diogenes-laertius-lives-of-the-eminent-philosophers-codex-laertius" className="text-accent-rust hover:underline">Reg.gr.80</a></strong> pairs <strong>Aristotle</strong>&rsquo;s <em>Parva Naturalia</em> (short treatises on sense perception, memory, and dreams) with <strong>Maximus the Confessor</strong>&rsquo;s <em>Ambigua</em> &mdash; 7th-century theological interpretations of Gregory of Nazianzus. Aristotelian empirical psychology bound alongside Byzantine mystical theology.
+          <strong><a href="https://sourcelibrary.org/book/aristotle-parva-naturalia-maximus-confessor-ambigua-reg-gr-80" className="text-accent-rust hover:underline">Reg.gr.80</a></strong> pairs <strong>Aristotle</strong>&rsquo;s <em>Parva Naturalia</em> (short treatises on sense perception, memory, and dreams) with <strong>Maximus the Confessor</strong>&rsquo;s <em>Ambigua</em> &mdash; 7th-century theological interpretations of Gregory of Nazianzus. Aristotelian empirical psychology bound alongside Byzantine mystical theology.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/marcus-aurelius-meditations-codex-vaticanus-graecus-12-aurelius" className="text-accent-rust hover:underline">Vat.gr.12</a></strong> is a 14th-century educational codex: excerpts from <strong>Pythagoras</strong>, <strong>Isocrates</strong>, grammar lessons, rhetorical exercises, definitions, ethical maxims. A window into the Byzantine classroom &mdash; what a student in Constantinople was expected to read.
+          <strong><a href="https://sourcelibrary.org/book/byzantine-teaching-miscellany-vat-gr-12" className="text-accent-rust hover:underline">Vat.gr.12</a></strong> is a 14th-century educational codex: excerpts from <strong>Pythagoras</strong>, <strong>Isocrates</strong>, grammar lessons, rhetorical exercises, definitions, ethical maxims. A window into the Byzantine classroom &mdash; what a student in Constantinople was expected to read.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong><a href="https://sourcelibrary.org/book/porphyry-works-codex-vaticanus-graecus-2181-porphyry" className="text-accent-rust hover:underline">Vat.gr.2181</a></strong> juxtaposes mystical philosophical treatises on &ldquo;true philosophy&rdquo; as a spiritual path with fragments of <strong>Aristophanes</strong> and treatises on poetic metrics. Comedy and contemplation in the same binding.
+          <strong><a href="https://sourcelibrary.org/book/philosophical-literary-miscellany-vat-gr-2181" className="text-accent-rust hover:underline">Vat.gr.2181</a></strong> juxtaposes mystical philosophical treatises on &ldquo;true philosophy&rdquo; as a spiritual path with fragments of <strong>Aristophanes</strong> and treatises on poetic metrics. Comedy and contemplation in the same binding.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          Two manuscripts document the <strong>Hesychast controversy</strong>, one of the most intense theological crises in Byzantine history. <strong><a href="https://sourcelibrary.org/book/dionysius-areopagita-opera-codex-vaticanus-graecus-573-areopagite" className="text-accent-rust hover:underline">Vat.gr.573</a></strong> contains hagiographic texts alongside polemics related to Barlaam of Calabria and Gregory Akindynos. <strong><a href="https://sourcelibrary.org/book/magical-and-astrological-texts-reg-lat-1228-various" className="text-accent-rust hover:underline">Reg.lat.1228</a></strong> collects treatises debating divine essence versus divine energies, with texts connected to Gregory of Nyssa and St. Basil. These documents record the 14th-century fight over whether monks could directly experience God&rsquo;s uncreated light through contemplative prayer &mdash; a debate that permanently shaped Orthodox theology.
+          Two manuscripts document the <strong>Hesychast controversy</strong>, one of the most intense theological crises in Byzantine history. <strong><a href="https://sourcelibrary.org/book/byzantine-theological-miscellany-vat-gr-573" className="text-accent-rust hover:underline">Vat.gr.573</a></strong> contains hagiographic texts alongside polemics related to Barlaam of Calabria and Gregory Akindynos. <strong><a href="https://sourcelibrary.org/book/hesychast-theological-treatises-reg-lat-1228" className="text-accent-rust hover:underline">Reg.lat.1228</a></strong> collects treatises debating divine essence versus divine energies, with texts connected to Gregory of Nyssa and St. Basil. These documents record the 14th-century fight over whether monks could directly experience God&rsquo;s uncreated light through contemplative prayer &mdash; a debate that permanently shaped Orthodox theology.
         </p>
 
         {/* --- What miscellanies tell us --- */}
@@ -203,16 +203,16 @@ export default function VaticanManuscriptsPage() {
 
         <ul className="text-muted text-sm leading-relaxed space-y-1 mb-4">
           <li><a href="https://sourcelibrary.org/book/anthemius-of-tralles-on-paradoxical-machines-vat-gr-218" className="text-accent-rust hover:underline">Vat.gr.218</a> &mdash; Anthemius of Tralles, <em>On Paradoxical Machines</em> (432 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/aristotle-organon-codex-ottobonianus-graecus-86-aristotle" className="text-accent-rust hover:underline">Ott.gr.86</a> &mdash; Synesius of Cyrene, <em>On Dreams</em> (478 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/strabo-geography-codex-vaticanus-graecus-191-strabo" className="text-accent-rust hover:underline">Vat.gr.191</a> &mdash; Mathematical and Astronomical Compendium (842 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/galen-on-the-natural-faculties-codex-vaticanus-graecus-283-galen" className="text-accent-rust hover:underline">Vat.gr.283</a> &mdash; Galen and Hippocrates, Medical Compendium (161 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/corpus-hermeticum-codex-vaticanus-graecus-2306-trismegistus" className="text-accent-rust hover:underline">Vat.gr.2306</a> &mdash; Biblical Palimpsest with Inquisition Documents (197 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/iamblichus-de-vita-pythagorica-codex-barberinianus-graecus-iamblichus" className="text-accent-rust hover:underline">Barb.gr.147</a> &mdash; Pseudo-Aristotle, <em>Problemata</em> (420 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/diogenes-laertius-lives-of-the-eminent-philosophers-codex-laertius" className="text-accent-rust hover:underline">Reg.gr.80</a> &mdash; Aristotle&rsquo;s Parva Naturalia + Maximus the Confessor (148 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/marcus-aurelius-meditations-codex-vaticanus-graecus-12-aurelius" className="text-accent-rust hover:underline">Vat.gr.12</a> &mdash; Byzantine Teaching Miscellany (262 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/porphyry-works-codex-vaticanus-graecus-2181-porphyry" className="text-accent-rust hover:underline">Vat.gr.2181</a> &mdash; Philosophical and Literary Miscellany (209 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/dionysius-areopagita-opera-codex-vaticanus-graecus-573-areopagite" className="text-accent-rust hover:underline">Vat.gr.573</a> &mdash; Hesychast Controversy Documents (392 pages)</li>
-          <li><a href="https://sourcelibrary.org/book/magical-and-astrological-texts-reg-lat-1228-various" className="text-accent-rust hover:underline">Reg.lat.1228</a> &mdash; Hesychast Theological Treatises (110 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/synesius-of-cyrene-on-dreams-ott-gr-86" className="text-accent-rust hover:underline">Ott.gr.86</a> &mdash; Synesius of Cyrene, <em>On Dreams</em> (478 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/mathematical-astronomical-compendium-vat-gr-191" className="text-accent-rust hover:underline">Vat.gr.191</a> &mdash; Mathematical and Astronomical Compendium (842 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/galen-hippocrates-medical-compendium-vat-gr-283" className="text-accent-rust hover:underline">Vat.gr.283</a> &mdash; Galen and Hippocrates, Medical Compendium (161 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/biblical-palimpsest-inquisition-abjuration-vat-gr-2306" className="text-accent-rust hover:underline">Vat.gr.2306</a> &mdash; Biblical Palimpsest with Inquisition Documents (197 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/pseudo-aristotle-problemata-barb-gr-147" className="text-accent-rust hover:underline">Barb.gr.147</a> &mdash; Pseudo-Aristotle, <em>Problemata</em> (420 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/aristotle-parva-naturalia-maximus-confessor-ambigua-reg-gr-80" className="text-accent-rust hover:underline">Reg.gr.80</a> &mdash; Aristotle&rsquo;s Parva Naturalia + Maximus the Confessor (148 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/byzantine-teaching-miscellany-vat-gr-12" className="text-accent-rust hover:underline">Vat.gr.12</a> &mdash; Byzantine Teaching Miscellany (262 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/philosophical-literary-miscellany-vat-gr-2181" className="text-accent-rust hover:underline">Vat.gr.2181</a> &mdash; Philosophical and Literary Miscellany (209 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/byzantine-theological-miscellany-vat-gr-573" className="text-accent-rust hover:underline">Vat.gr.573</a> &mdash; Hesychast Controversy Documents (392 pages)</li>
+          <li><a href="https://sourcelibrary.org/book/hesychast-theological-treatises-reg-lat-1228" className="text-accent-rust hover:underline">Reg.lat.1228</a> &mdash; Hesychast Theological Treatises (110 pages)</li>
         </ul>
 
         <p className="text-muted text-sm leading-relaxed">
