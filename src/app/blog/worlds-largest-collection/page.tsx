@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Comparison data
-const COLLECTIONS = [
+// Comparison data — scholarly print series
+const PRINT_SERIES = [
   { name: 'Source Library', count: 3378, year: '2025–', access: 'Free & open', color: '#9e4a3a', type: 'AI translation' },
   { name: 'Loeb Classical Library', count: 540, year: '1911–', access: 'Paywall', color: '#7c5db5', type: 'Human scholarly' },
   { name: 'I Tatti Renaissance Library', count: 100, year: '2001–', access: 'Paywall', color: '#c9a86c', type: 'Human scholarly' },
@@ -34,6 +34,16 @@ const COLLECTIONS = [
   { name: 'Translated Texts for Historians', count: 60, year: '1985–', access: 'Paywall', color: '#7c5db5', type: 'Human scholarly' },
 ];
 const MAX_COUNT = 3378;
+
+// Comparison data — digital libraries
+const DIGITAL_LIBRARIES = [
+  { name: 'Source Library', translations: 3378, newTranslations: true, scope: '30+ languages, antiquity–1900', note: 'AI-generated, 2,400+ are first-ever English translations' },
+  { name: 'Perseus Digital Library', translations: 1000, newTranslations: false, scope: 'Greek & Latin classics', note: 'Public domain Victorian-era translations (Loeb, etc.)' },
+  { name: 'Sacred Texts Archive', translations: 1700, newTranslations: false, scope: 'Religious & mythological texts', note: 'Reprints of existing public domain translations' },
+  { name: 'Chinese Text Project', translations: 400, newTranslations: true, scope: 'Pre-modern Chinese', note: 'Mix of published translations + AI-generated (2026)' },
+  { name: 'Global Medieval Sourcebook', translations: 200, newTranslations: true, scope: 'Medieval texts', note: 'New scholarly translations (Stanford)' },
+  { name: 'LacusCurtius', translations: 75, newTranslations: false, scope: 'Roman history & geography', note: 'Rekeyed public domain Loeb editions' },
+];
 
 const LANGUAGES = [
   { lang: 'Latin', n: 868 },
@@ -100,19 +110,18 @@ export default function WorldsLargestCollectionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          The established scholarly translation series that have served as the gold standard
-          for a century do not come close to this scale. The Loeb Classical Library, founded
-          in 1911, has published roughly 540 volumes. The I Tatti Renaissance Library, Harvard&rsquo;s
-          flagship series for Renaissance Latin texts, reached its 100th volume in 2025 after
-          24 years. The Dumbarton Oaks Medieval Library has about 75. Source Library has more
+          No comparable project &mdash; print or digital &mdash; comes close to this scale.
+          The Loeb Classical Library, founded in 1911, has published roughly 540 volumes. The I Tatti
+          Renaissance Library reached its 100th volume in 2025 after 24 years. Perseus hosts about
+          1,000 public domain translations of Greek and Latin classics. Source Library has more
           translated books than all of them combined &mdash; and every page is free.
         </p>
 
-        {/* === Comparison chart === */}
+        {/* === Comparison chart: print series === */}
         <div className="my-12 bg-warm rounded-lg border border-border-light p-6 md:p-8">
           <h3 className="font-serif text-xl text-primary mb-6">Translated texts by collection</h3>
           <div className="space-y-4">
-            {COLLECTIONS.map((col) => (
+            {PRINT_SERIES.map((col) => (
               <div key={col.name}>
                 <div className="flex justify-between items-baseline mb-1">
                   <span className="text-sm text-secondary font-medium">{col.name}</span>
@@ -208,7 +217,122 @@ export default function WorldsLargestCollectionPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* === Section 2: Languages === */}
+        {/* === Section 2: Digital libraries comparison === */}
+        <section className="mb-16">
+          <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
+            What about other digital libraries?
+          </h2>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Print series like Loeb are one kind of comparator. The more natural question is:
+            what about the major digital text projects? Perseus, the Chinese Text Project,
+            Project Gutenberg, Sacred Texts &mdash; between them, they make millions of pages available
+            online. How can Source Library be larger?
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The answer lies in a distinction that matters enormously: <em>hosting</em> existing
+            translations versus <em>creating</em> new ones.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The{' '}
+            <a href="https://scaife.perseus.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Perseus Digital Library
+            </a>{' '}
+            is the definitive digital repository for Greek and Latin texts. Its catalog contains roughly
+            1,000 English translations of classical works. But these are all pre-existing public domain
+            translations &mdash; Victorian-era Loeb editions, 19th-century scholarly renderings, works
+            that were already available in university libraries. Perseus digitized them superbly and made
+            them searchable. It did not translate anything new.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The same is true of{' '}
+            <a href="https://sacred-texts.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Sacred Texts
+            </a>{' '}
+            (~1,700 books, all public domain reprints),{' '}
+            <a href="https://www.gutenberg.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Project Gutenberg
+            </a>{' '}
+            (thousands of translated works, but all pre-1928 and heavily skewed toward modern-language
+            novels &mdash; Tolstoy, Dumas, Verne &mdash; not pre-modern scholarly texts), and{' '}
+            <a href="https://penelope.uchicago.edu/Thayer/E/Roman/home.html" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              LacusCurtius
+            </a>{' '}
+            (~75 rekeyed Loeb volumes). These are invaluable resources. But they are libraries of
+            existing translations, not producers of new ones.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The{' '}
+            <a href="https://ctext.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Chinese Text Project
+            </a>{' '}
+            is the closest parallel to what Source Library is doing. With over 30,000 pre-modern Chinese
+            texts and a recent AI translation initiative covering the pre-Qin philosophical canon and the
+            25 Standard Histories, ctext.org is also using AI to make pre-modern texts readable for the
+            first time. Their English translation coverage is currently in the hundreds of works. Source
+            Library has broader language coverage but ctext.org goes far deeper into the Chinese
+            literary tradition.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Stanford&rsquo;s{' '}
+            <a href="https://sourcebook.stanford.edu/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              Global Medieval Sourcebook
+            </a>{' '}
+            deserves mention as one of the few projects producing genuinely new scholarly translations
+            of pre-modern texts, with about 200 works &mdash; each translated by specialists.
+          </p>
+
+          {/* Digital libraries comparison table */}
+          <div className="bg-warm rounded-lg border border-border-light p-6 md:p-8 overflow-x-auto">
+            <h3 className="font-serif text-xl text-primary mb-4">Digital libraries with English translations</h3>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border-medium">
+                  <th className="text-left py-2 text-secondary font-medium">Project</th>
+                  <th className="text-right py-2 text-secondary font-medium px-4">Translations</th>
+                  <th className="text-left py-2 text-secondary font-medium">New?</th>
+                  <th className="text-left py-2 text-secondary font-medium hidden md:table-cell">Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DIGITAL_LIBRARIES.map((lib) => (
+                  <tr key={lib.name} className="border-b border-border-light">
+                    <td className="py-2.5 text-secondary font-medium">{lib.name}</td>
+                    <td className="py-2.5 text-right px-4 text-muted tabular-nums">~{lib.translations.toLocaleString()}</td>
+                    <td className="py-2.5">
+                      {lib.newTranslations ? (
+                        <span className="text-status-success text-xs font-medium">New</span>
+                      ) : (
+                        <span className="text-muted text-xs">Existing</span>
+                      )}
+                    </td>
+                    <td className="py-2.5 text-xs text-muted hidden md:table-cell">{lib.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="text-xs text-muted mt-4">
+              Perseus count estimated from catalog. Sacred Texts from site listing.
+              ctext.org AI translations announced March 2026.
+              Global Medieval Sourcebook from Stanford project page.
+            </p>
+          </div>
+
+          <p className="text-secondary leading-relaxed mt-6 font-body">
+            EEBO-TCP (60,000+ early English printed books) and HathiTrust (18 million digitized volumes)
+            are sometimes mentioned in this context, but neither is a translation project &mdash; they
+            provide access to texts in their original languages.
+          </p>
+        </section>
+
+        <hr className="border-border-light my-12" />
+
+        {/* === Section 3: Languages === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
             Ten languages and counting
@@ -242,7 +366,7 @@ export default function WorldsLargestCollectionPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* === Section 3: IIIF === */}
+        {/* === Section 4: IIIF === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
             How IIIF makes this possible
@@ -291,7 +415,7 @@ export default function WorldsLargestCollectionPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* === Section 4: The pipeline === */}
+        {/* === Section 5: The pipeline === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
             From manifest to readable book
@@ -334,7 +458,7 @@ export default function WorldsLargestCollectionPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* === Section 5: Mission === */}
+        {/* === Section 6: Mission === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
             Translate the Renaissance, create a new one
