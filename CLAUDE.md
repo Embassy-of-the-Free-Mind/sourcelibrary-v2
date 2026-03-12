@@ -27,31 +27,17 @@
 - OCR/Translation: check batch-ocr and translate routes for current models
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
-## Audit Trail
-All AI calls logged to `gemini_usage` collection via `logGeminiCall()` in `src/lib/gemini-logger.ts`.
-- Book history timeline: `GET /api/books/[id]/history` (assembles from 6 collections)
-- Dashboard: `GET /api/admin/processing-dashboard?provider=ia`
-- Error classification: `src/lib/errors.ts` → `classifyError(error)`
-- `cost_tracking` collection is DEPRECATED — use `gemini_usage` for all cost queries
-
-## QA Audit Workflow
-- Check 20-30 pages per book, compare catalog metadata vs title page OCR, align to USTC
-- Save reports to `QAreport.md`, keep auditing until told to stop
-
-## IA Page Count Bug
-Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page-count-bug-report.md`.
-- Too many pages: `npx tsx scripts/maintenance/fix-ia-page-counts.ts --book-id=XXX --correct-count=YYY`
-- Too few pages: reimport via `POST https://sourcelibrary.org/api/books/{id}/reimport`
-
-## Domain Memory
-When working in a specific domain, read the relevant memory file first:
-- **Pipeline/cron/Lambda/OCR/translation:** `memory/pipeline-ops.md`
-- **Data quality/known bugs/stale stats:** `memory/data-quality.md`
-- **UI/hydration/navigation/analytics:** `memory/ui-navigation.md`
-- **MCP server/CLI/developer tools:** `memory/mcp-server.md`
-- **Operational lessons/postmortems:** `memory/lessons-learned.md`
-- **Conversation search/indexer:** `memory/conversation-index-notes.md`
-- **Handoffs from previous sessions:** `.claude/handoffs/` (read relevant files by date/topic)
+## Domain Context
+Use `/skill-name` to load domain context, or read memory files directly:
+- **Pipeline/cron/Lambda:** `/pipeline-context` — or read `memory/pipeline-ops.md`
+- **UI/frontend:** `/ui-context` — or read `memory/ui-navigation.md`
+- **Data fixes/maintenance:** `/maintenance` — or read `memory/data-quality.md`
+- **Book acquisition:** `/curator` or `/library-curator`
+- **Quality auditing:** `/qa-audit`
+- **Batch processing:** `/batch-translate`
+- **MCP server/CLI:** read `memory/mcp-server.md`
+- **Handoffs:** `.claude/handoffs/` (read by date/topic)
+- **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:
@@ -59,21 +45,3 @@ When compacting (`/compact`), ALWAYS preserve:
 - Current task state and what was agreed with the user
 - Any test results, errors, or deployment outcomes
 - Which domain memory files were already read (avoid re-reading)
-
-## Reference Docs
-Read these on demand when working on related features — do NOT load all at once.
-- Import APIs (Gallica, IA, MDZ, Wellcome, e-rara): `.claude/docs/import-apis.md`
-- Image archiving & provenance: `.claude/docs/image-archiving.md`
-- Observability & audit trail: `.claude/docs/observability.md`
-- Page processing lifecycle: `.claude/docs/page-lifecycle.md`
-- Lambda worker architecture: `.claude/docs/worker-architecture.md`
-- Batch processing (Gemini Batch API): `.claude/docs/batch-processing.md`
-- Edition publishing & DOI minting: `.claude/docs/editions.md`
-- Social media system: `.claude/docs/social-media.md`
-- Analytics & engagement: `.claude/docs/analytics.md`
-- Search system: `.claude/docs/search.md`
-- Schema.org structured data: `.claude/docs/structured-data.md`
-- Style system (colors, tokens, shared constants): `.claude/docs/style-system.md`
-- Full processing pipeline (states, crons, prompts, costs): `.claude/docs/pipeline.md`
-- First translation identification system: `.claude/docs/first-translation-system.md`
-- Thumbnails & cover selection: `.claude/docs/thumbnails.md`
