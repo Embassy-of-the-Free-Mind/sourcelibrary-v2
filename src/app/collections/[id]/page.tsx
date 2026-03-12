@@ -367,7 +367,7 @@ export default async function CollectionDetailPage({ params }: Props) {
     if (seenBooks.has(bid)) continue;
     seenBooks.add(bid);
     diverseGalleryImages.push(img);
-    if (diverseGalleryImages.length >= 11) break;
+    if (diverseGalleryImages.length >= 9) break;
   }
 
   const heroImages = diverseGalleryImages.slice(0, 6);
@@ -460,7 +460,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             >
               Illustrations
             </h2>
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
@@ -480,7 +480,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                         alt={img.description || img.bookTitle || img.book_title || 'Illustration'}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="(min-width: 1024px) 160px, (min-width: 640px) 140px, 120px"
+                        sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
                       />
                     ) : (
                       <div className="w-full h-full bg-cream flex items-center justify-center">
