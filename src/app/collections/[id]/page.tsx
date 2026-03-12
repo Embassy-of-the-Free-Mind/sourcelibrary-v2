@@ -80,6 +80,17 @@ interface BookItem {
   categories?: string[];
   published?: string;
   read_count?: number;
+  is_first_translation?: boolean;
+}
+
+interface CuratedHighlight {
+  book_id: string;
+  rank: number;
+  tier: number;
+  note: string;
+  title?: string;
+  author?: string;
+  year?: number;
 }
 
 /** Auto-link book titles found in description text to their book pages.
@@ -209,11 +220,9 @@ async function fetchCollectionData(id: string) {
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
   };
 
-  const highlightProjection = {
-    ...projection,
-    reading_summary: 1,
-    quality_score: 1,
-  };
+  // Extract curated highlights from collection document
+  const curatedHighlights: CuratedHighlight[] = collection.highlighted_books || [];
+  const curatedBookIds = curatedHighlights.map((h: CuratedHighlight) => h.book_id);
 
   const mentionedBookIds = (collection.mentioned_books || [])
     .map((m: { book_id: string }) => m.book_id)
@@ -234,17 +243,17 @@ async function fetchCollectionData(id: string) {
         .toArray(),
       15000, [],
     ),
-    withTimeout(
-      db.collection('books')
-        .find(
-          { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
-          { projection: highlightProjection },
+    curatedBookIds.length > 0
+      ? withTimeout(
+          db.collection('books')
+            .find(
+              { id: { $in: curatedBookIds }, status: { $ne: 'deleted' } },
+              { projection: { ...projection, is_first_translation: 1 } },
+            )
+            .toArray(),
+          8000, [],
         )
-        .sort({ read_count: -1 })
-        .limit(5)
-        .toArray(),
-      8000, [],
-    ),
+      : Promise.resolve([]),
     // Gallery: use pre-curated images if available, otherwise fall back to dynamic query
     collection.curated_gallery_images?.length > 0
       ? Promise.resolve(collection.curated_gallery_images)
@@ -283,12 +292,31 @@ async function fetchCollectionData(id: string) {
   const sanitizeBookThumbs = (items: Record<string, unknown>[]) =>
     items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail as string) }));
 
+  // Merge curated highlights with live book data (thumbnails, slugs, first-translation status)
+  const curatedBookMap = new Map(
+    (highlights as Record<string, unknown>[]).map(b => [b.id as string, b]),
+  );
+  const mergedHighlights = curatedHighlights
+    .filter((h: CuratedHighlight) => curatedBookMap.has(h.book_id))
+    .map((h: CuratedHighlight) => {
+      const book = curatedBookMap.get(h.book_id) as Record<string, unknown>;
+      return {
+        ...h,
+        title: (book.display_title as string) || (book.title as string) || h.title,
+        author: (book.author as string) || h.author,
+        year: (book.year as number) || h.year,
+        slug: book.slug as string | undefined,
+        thumbnail: sanitizeThumbnail(book.thumbnail as string),
+        is_first_translation: book.is_first_translation as boolean | undefined,
+        id: h.book_id,
+      };
+    });
+
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collection: collectionClean as any,
     books: sanitizeBookThumbs(books) as unknown as BookItem[],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    highlights: sanitizeBookThumbs(highlights) as any[],
+    highlights: mergedHighlights,
     total,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
@@ -320,8 +348,14 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   if (!data) notFound();
 
-  const { collection, books, highlights, galleryImages, total, mentionedBooks } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
+
+  // Group curated highlights by tier
+  const tier1 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 1);
+  const tier2 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 2);
+  const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3);
+  const hasCuratedHighlights = curatedHighlightsData.length > 0;
 
   // Diversify gallery images: max 1 per book (no duplicates), skip images without thumbnails
   const diverseGalleryImages: typeof galleryImages = [];
@@ -337,7 +371,16 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
 
   const heroImages = diverseGalleryImages.slice(0, 6);
-  const allBooksForLinking = [...highlights, ...books, ...mentionedBooks];
+  const allBooksForLinking = [
+    ...curatedHighlightsData.map((h: { book_id: string; slug?: string; title?: string }) => ({
+      id: h.book_id,
+      slug: h.slug,
+      title: h.title || '',
+      display_title: h.title,
+    })),
+    ...books,
+    ...mentionedBooks,
+  ] as BookItem[];
   const explicitMentions: { text: string; book_id: string }[] = collection.mentioned_books || [];
 
   return (
@@ -476,104 +519,161 @@ export default async function CollectionDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Highlights */}
-        {highlights.length > 0 && (
+        {/* Curated Highlights — 3-tier display */}
+        {hasCuratedHighlights && (
           <div className="mb-12">
-            <h2
-              className="text-2xl sm:text-3xl text-primary mb-6 font-display"
-            >
-              Highlights
-            </h2>
-            <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {highlights.slice(0, 3).map((book: { id: string; slug?: string; display_title?: string; title: string; author?: string; year?: number; language?: string; pages_count?: number; thumbnail?: string; reading_summary?: { overview?: string } }) => {
-                const summary = book.reading_summary?.overview;
-                const snippet = summary
-                  ? summary.length > 160 ? summary.slice(0, 160).replace(/\s+\S*$/, '') + '...' : summary
-                  : null;
-
-                return (
-                  <Link
-                    key={book.id}
-                    href={bookUrl(book)}
-                    className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
-                  >
-                    <div className="w-20 sm:w-24 flex-shrink-0">
-                      <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
-                        {book.thumbnail ? (
-                          <Image
-                            src={book.thumbnail}
-                            alt={bookTitle(book)}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                            sizes="96px"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <BookOpen className="w-8 h-8 text-muted" />
-                          </div>
-                        )}
+            {/* Tier 1: Essential Reading */}
+            {tier1.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-2xl sm:text-3xl text-primary mb-2 font-display">
+                  Essential Reading
+                </h2>
+                <p className="text-sm text-muted mb-6">The foundational texts of this tradition</p>
+                <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
+                  {tier1.map((h: { book_id: string; slug?: string; title?: string; author?: string; year?: number; thumbnail?: string; note: string; is_first_translation?: boolean; id: string }) => (
+                    <Link
+                      key={h.book_id}
+                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
+                    >
+                      <div className="w-20 sm:w-24 flex-shrink-0">
+                        <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
+                          {h.thumbnail ? (
+                            <Image
+                              src={h.thumbnail}
+                              alt={h.title || ''}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              sizes="96px"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <BookOpen className="w-8 h-8 text-muted" />
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="flex-1 min-w-0 py-1">
-                      <h3
-                        className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-display"
-                      >
-                        {bookTitle(book)}
-                      </h3>
-                      {book.author && (
-                        <p className="text-sm text-muted mb-2">{book.author}{book.year ? `, ${book.year}` : ''}</p>
-                      )}
-                      {snippet && (
-                        <p className="text-xs text-secondary leading-relaxed line-clamp-3">
-                          {snippet}
+                      <div className="flex-1 min-w-0 py-1">
+                        <h3 className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-display">
+                          {h.title}
+                        </h3>
+                        <p className="text-sm text-muted mb-2">
+                          {h.author}{h.year ? `, ${h.year}` : ''}
+                          {h.is_first_translation && (
+                            <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
+                              First Translation
+                            </span>
+                          )}
                         </p>
-                      )}
-                      {!snippet && book.language && (
-                        <p className="text-xs text-muted">
-                          {book.language}{book.pages_count ? ` · ${book.pages_count} pages` : ''}
+                        <p className="text-sm text-secondary leading-relaxed line-clamp-3">
+                          {h.note}
                         </p>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-            {highlights.length > 3 && (
-              <div className="mt-4 grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
-                {highlights.slice(3).map((book: { id: string; slug?: string; display_title?: string; title: string; author?: string; year?: number; thumbnail?: string }) => (
-                  <Link
-                    key={book.id}
-                    href={bookUrl(book)}
-                    className="group flex items-center gap-3 p-3 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
-                  >
-                    <div className="w-12 flex-shrink-0">
-                      <div className="aspect-[3/4] relative rounded overflow-hidden bg-warm">
-                        {book.thumbnail ? (
-                          <Image
-                            src={book.thumbnail}
-                            alt={bookTitle(book)}
-                            fill
-                            className="object-cover"
-                            sizes="48px"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <BookOpen className="w-4 h-4 text-muted" />
-                          </div>
-                        )}
                       </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors truncate">
-                        {bookTitle(book)}
-                      </h4>
-                      <p className="text-xs text-muted truncate">
-                        {book.author}{book.year ? `, ${book.year}` : ''}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tier 2: Important Works */}
+            {tier2.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-xl sm:text-2xl text-primary mb-2 font-display">
+                  Important Works
+                </h2>
+                <p className="text-sm text-muted mb-5">Significant texts that deepen understanding</p>
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                  {tier2.map((h: { book_id: string; slug?: string; title?: string; author?: string; year?: number; thumbnail?: string; note: string; is_first_translation?: boolean; id: string }) => (
+                    <Link
+                      key={h.book_id}
+                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      className="group flex gap-3 p-3 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
+                    >
+                      <div className="w-14 flex-shrink-0">
+                        <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
+                          {h.thumbnail ? (
+                            <Image
+                              src={h.thumbnail}
+                              alt={h.title || ''}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              sizes="56px"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <BookOpen className="w-5 h-5 text-muted" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0 py-0.5">
+                        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-0.5">
+                          {h.title}
+                        </h3>
+                        <p className="text-xs text-muted mb-1">
+                          {h.author}{h.year ? `, ${h.year}` : ''}
+                          {h.is_first_translation && (
+                            <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
+                              First Translation
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-xs text-secondary leading-relaxed line-clamp-2">
+                          {h.note}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tier 3: Also Notable */}
+            {tier3.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-lg sm:text-xl text-primary mb-4 font-display">
+                  Also Notable
+                </h2>
+                <div className="grid gap-2 grid-cols-1 sm:grid-cols-2">
+                  {tier3.map((h: { book_id: string; slug?: string; title?: string; author?: string; year?: number; thumbnail?: string; is_first_translation?: boolean; id: string }) => (
+                    <Link
+                      key={h.book_id}
+                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      className="group flex items-center gap-3 p-2.5 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
+                    >
+                      <div className="w-10 flex-shrink-0">
+                        <div className="aspect-[3/4] relative rounded overflow-hidden bg-warm">
+                          {h.thumbnail ? (
+                            <Image
+                              src={h.thumbnail}
+                              alt={h.title || ''}
+                              fill
+                              className="object-cover"
+                              sizes="40px"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <BookOpen className="w-3.5 h-3.5 text-muted" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors truncate">
+                          {h.title}
+                        </h4>
+                        <p className="text-xs text-muted truncate">
+                          {h.author}{h.year ? `, ${h.year}` : ''}
+                          {h.is_first_translation && (
+                            <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
+                              First Translation
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
