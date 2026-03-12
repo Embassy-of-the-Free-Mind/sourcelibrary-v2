@@ -598,8 +598,8 @@ export default function ImageDetailPage({
 
           {/* Title + attribution overlay at bottom of image */}
           <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black via-black/80 via-30% to-transparent">
-            <h1 className="text-lg sm:text-xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
-            <p className="text-sm text-white/60 mt-1">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
+            <p className="text-base sm:text-lg text-white/60 mt-1.5">
               {data.book.title}{data.book.author ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
             </p>
           </div>
@@ -608,10 +608,10 @@ export default function ImageDetailPage({
 
       {/* Details below the fold - always visible, scroll to see */}
       <div className="bg-stone-900 border-t border-white/10">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-            <div className="grid md:grid-cols-3 gap-6">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
+            <div className="grid md:grid-cols-3 gap-8">
               {/* Left column: description + metadata */}
-              <div className="md:col-span-2 space-y-5">
+              <div className="md:col-span-2 space-y-6">
                 {/* Title / Description */}
                 <div>
                   {editingTitle ? (
@@ -619,7 +619,7 @@ export default function ImageDetailPage({
                       <textarea
                         value={titleValue}
                         onChange={(e) => setTitleValue(e.target.value)}
-                        className="w-full p-3 bg-stone-800 text-stone-100 text-xl font-serif rounded-lg resize-none focus:outline-none focus:ring-2 focus-visible:ring-accent-rust leading-relaxed"
+                        className="w-full p-3 bg-stone-800 text-stone-100 text-2xl font-serif rounded-lg resize-none focus:outline-none focus:ring-2 focus-visible:ring-accent-rust leading-relaxed"
                         rows={3}
                         autoFocus
                       />
@@ -634,7 +634,7 @@ export default function ImageDetailPage({
                     </div>
                   ) : (
                     <div className="group relative">
-                      <h1 className="text-xl font-serif text-stone-100 leading-relaxed pr-12">
+                      <h1 className="text-2xl sm:text-3xl font-serif text-stone-100 leading-relaxed pr-12">
                         {data.description}
                       </h1>
                       <button onClick={() => setEditingTitle(true)} className="absolute top-0 right-0 text-xs text-accent-gold hover:text-accent-gold opacity-0 group-hover:opacity-100 transition-opacity">
@@ -642,30 +642,30 @@ export default function ImageDetailPage({
                       </button>
                     </div>
                   )}
-                  <div className="mt-2 flex items-center gap-2 flex-wrap">
+                  <div className="mt-3 flex items-center gap-3 flex-wrap">
                     {data.model && (
-                      <p className="text-xs text-stone-500 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
+                      <p className="text-sm text-stone-500 flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5" />
                         {data.model}
                         {data.confidence ? ` (${Math.round(data.confidence * 100)}%)` : ''}
                       </p>
                     )}
                     <button
                       onClick={() => setShowInfo(true)}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-300 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-sm bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-300 transition-colors"
                     >
-                      <Info className="w-3 h-3" />
+                      <Info className="w-3.5 h-3.5" />
                       Info
                     </button>
                   </div>
                 </div>
 
                 {/* Museum Description */}
-                <div className="bg-stone-800 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm text-stone-400">Museum Description</p>
+                <div className="bg-stone-800 rounded-lg p-5">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-base font-medium text-stone-300">Museum Description</h3>
                     {!editingDescription && (
-                      <button onClick={() => setEditingDescription(true)} className="text-xs text-accent-gold hover:text-accent-gold">Edit</button>
+                      <button onClick={() => setEditingDescription(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
                     )}
                   </div>
                   {editingDescription ? (
@@ -673,26 +673,26 @@ export default function ImageDetailPage({
                       <textarea
                         value={museumDescValue}
                         onChange={(e) => setMuseumDescValue(e.target.value)}
-                        className="w-full h-24 p-2 bg-stone-700 text-stone-200 rounded text-sm resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
+                        className="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
                         placeholder="Write a 2-3 sentence museum-style description..."
                       />
                       <div className="flex gap-2">
-                        <button onClick={saveMuseumDescription} disabled={saving} className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
-                        <button onClick={() => { setMuseumDescValue(data.museumDescription || ''); setEditingDescription(false); }} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
+                        <button onClick={saveMuseumDescription} disabled={saving} className="flex-1 py-2 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
+                        <button onClick={() => { setMuseumDescValue(data.museumDescription || ''); setEditingDescription(false); }} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
                       </div>
                     </div>
                   ) : (
-                    <p className="text-stone-300 text-sm leading-relaxed">
+                    <p className="text-stone-300 text-base leading-relaxed">
                       {data.museumDescription || <span className="text-stone-500 italic">No description yet</span>}
                     </p>
                   )}
                 </div>
 
                 {/* Gallery Quality */}
-                <div className="bg-stone-800 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm text-stone-400">Gallery Quality</p>
-                    <span className="text-xs text-stone-500">Guide cutoff: 0.75</span>
+                <div className="bg-stone-800 rounded-lg p-5">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-base font-medium text-stone-300">Gallery Quality</h3>
+                    <span className="text-sm text-stone-500">Guide cutoff: 0.75</span>
                   </div>
                   {editingQuality ? (
                     <div className="space-y-3">
@@ -725,11 +725,11 @@ export default function ImageDetailPage({
                 </div>
 
                 {/* Metadata Tags */}
-                <div className="bg-stone-800 rounded-lg p-4">
+                <div className="bg-stone-800 rounded-lg p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm text-stone-400">Metadata</p>
+                    <h3 className="text-base font-medium text-stone-300">Metadata</h3>
                     {!editingMetadata && (
-                      <button onClick={() => setEditingMetadata(true)} className="text-xs text-accent-gold hover:text-accent-gold">Edit</button>
+                      <button onClick={() => setEditingMetadata(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
                     )}
                   </div>
                   {editingMetadata ? (
@@ -762,7 +762,7 @@ export default function ImageDetailPage({
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2.5 text-base">
                       {metadataValues.subjects && metadataValues.subjects.length > 0 && (
                         <div><span className="text-stone-500">Subjects: </span><span className="text-stone-300">{metadataValues.subjects.join(', ')}</span></div>
                       )}
@@ -787,9 +787,9 @@ export default function ImageDetailPage({
 
                 {/* Bounding Box Editor */}
                 {data.bbox && data.fullPageUrl && (
-                  <div className="bg-stone-800 rounded-lg p-4">
+                  <div className="bg-stone-800 rounded-lg p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-sm text-stone-400 flex items-center gap-2"><Crop className="w-4 h-4" />Bounding Box</p>
+                      <h3 className="text-base font-medium text-stone-300 flex items-center gap-2"><Crop className="w-4 h-4" />Bounding Box</h3>
                       {!editingBbox ? (
                         <div className="flex gap-2">
                           <button onClick={() => setEditingBbox(true)} className="text-xs text-accent-gold hover:text-accent-gold">Edit Crop</button>
@@ -854,14 +854,14 @@ export default function ImageDetailPage({
                 )}
 
                 {/* Rotation Control */}
-                <div className="bg-stone-800 rounded-lg p-4">
+                <div className="bg-stone-800 rounded-lg p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm text-stone-400 flex items-center gap-2"><RotateCw className="w-4 h-4" />Rotation</p>
-                    {savingRotation && <span className="text-xs text-accent-gold">Saving...</span>}
+                    <h3 className="text-base font-medium text-stone-300 flex items-center gap-2"><RotateCw className="w-4 h-4" />Rotation</h3>
+                    {savingRotation && <span className="text-sm text-accent-gold">Saving...</span>}
                   </div>
                   <div className="flex gap-2">
                     {([0, 90, 180, 270] as const).map((deg) => (
-                      <button key={deg} onClick={() => saveRotation(deg)} disabled={savingRotation} className={`flex-1 py-1.5 rounded text-sm transition-colors ${rotation === deg ? 'bg-accent-rust text-white' : 'bg-stone-700 text-stone-300 hover:bg-stone-600'} disabled:opacity-50`}>
+                      <button key={deg} onClick={() => saveRotation(deg)} disabled={savingRotation} className={`flex-1 py-2 rounded text-base transition-colors ${rotation === deg ? 'bg-accent-rust text-white' : 'bg-stone-700 text-stone-300 hover:bg-stone-600'} disabled:opacity-50`}>
                         {deg}&deg;
                       </button>
                     ))}
@@ -869,17 +869,17 @@ export default function ImageDetailPage({
                 </div>
 
                 {/* Citation */}
-                <div className="bg-stone-800 rounded-lg p-4">
-                  <p className="text-sm text-stone-400 mb-2">Cite this image:</p>
-                  <p className="text-stone-300 text-sm font-mono">{data.citation}</p>
-                  <button onClick={copyCitation} className="mt-3 text-xs text-accent-gold hover:text-accent-gold flex items-center gap-1">
-                    <Copy className="w-3 h-3" />Copy citation
+                <div className="bg-stone-800 rounded-lg p-5">
+                  <h3 className="text-base font-medium text-stone-300 mb-2">Cite this image</h3>
+                  <p className="text-stone-300 text-base font-mono leading-relaxed">{data.citation}</p>
+                  <button onClick={copyCitation} className="mt-3 text-sm text-accent-gold hover:text-accent-gold flex items-center gap-1.5">
+                    <Copy className="w-4 h-4" />Copy citation
                   </button>
                 </div>
               </div>
 
               {/* Right column: book card + similar */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div className="bg-stone-800 rounded-lg overflow-hidden">
                   <Link href={data.readUrl} className="block group">
                     {data.book.thumbnail && (
@@ -887,20 +887,20 @@ export default function ImageDetailPage({
                         <Image src={data.book.thumbnail} alt={data.book.title} fill sizes="(max-width: 768px) 90vw, 300px" className="object-cover group-hover:opacity-90 transition-opacity" unoptimized />
                       </div>
                     )}
-                    <div className="p-4">
-                      <p className="text-white font-medium group-hover:text-accent-gold transition-colors">{data.book.title}</p>
-                      {data.book.author && <p className="text-stone-400 text-sm mt-1">{data.book.author}</p>}
-                      {data.book.year && <p className="text-stone-500 text-sm">{data.book.year}</p>}
+                    <div className="p-5">
+                      <p className="text-lg text-white font-medium group-hover:text-accent-gold transition-colors">{data.book.title}</p>
+                      {data.book.author && <p className="text-stone-400 text-base mt-1">{data.book.author}</p>}
+                      {data.book.year && <p className="text-stone-500 text-base">{data.book.year}</p>}
                     </div>
                   </Link>
-                  <div className="px-4 pb-4">
-                    <Link href={data.readUrl} className="flex items-center justify-center gap-2 py-3 px-4 bg-accent-rust hover:bg-accent-rust/80 text-white rounded-lg transition-colors font-medium">
+                  <div className="px-5 pb-5">
+                    <Link href={data.readUrl} className="flex items-center justify-center gap-2 py-3 px-4 bg-accent-rust hover:bg-accent-rust/80 text-white rounded-lg transition-colors font-medium text-base">
                       <BookOpen className="w-5 h-5" />Read page {data.pageNumber} in context
                     </Link>
                   </div>
                 </div>
 
-                <Link href={data.galleryUrl} className="block text-center py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors">
+                <Link href={data.galleryUrl} className="block text-center py-3 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-base transition-colors">
                   More from this book
                 </Link>
 
