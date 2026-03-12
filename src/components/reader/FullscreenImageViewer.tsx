@@ -17,13 +17,35 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   const [isDragging, setIsDragging] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
-  const lastTouchDistance = useRef<number>(0);
-  const lastTouchCenter = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const dragStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const positionStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const hasDragged = useRef(false);
+
+  // Refs mirror state so native event listeners always read current values
+  // without needing to be re-registered on every render.
+  const scaleRef = useRef(1);
+  const positionRef = useRef({ x: 0, y: 0 });
+  const isDraggingRef = useRef(false);
+  const lastTouchDistance = useRef(0);
+  const lastTap = useRef(0);
+  const mouseDragStart = useRef({ x: 0, y: 0 });
+  const mousePosStart = useRef({ x: 0, y: 0 });
+  const touchDragStart = useRef({ x: 0, y: 0 });
+  const touchPosStart = useRef({ x: 0, y: 0 });
+
+  useEffect(() => { scaleRef.current = scale; }, [scale]);
+  useEffect(() => { positionRef.current = position; }, [position]);
+
+  // Detect touch device
+  useEffect(() => {
+    setIsTouchDevice(
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches
+    );
+  }, []);
 
   // Reset state when opening
   useEffect(() => {
@@ -32,159 +54,207 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       setPosition({ x: 0, y: 0 });
       setIsLoaded(false);
       setHasError(false);
+      scaleRef.current = 1;
+      positionRef.current = { x: 0, y: 0 };
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  // Handle escape key
+  // Escape key
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
+    const onKeyDown = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
+      window.addEventListener('keydown', onKeyDown);
+      return () => window.removeEventListener('keydown', onKeyDown);
     }
   }, [isOpen, onClose]);
 
-  // Get distance between two touch points
-  const getTouchDistance = (touches: React.TouchList) => {
-    if (touches.length < 2) return 0;
-    const dx = touches[0].clientX - touches[1].clientX;
-    const dy = touches[0].clientY - touches[1].clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-  };
+  // ── Native touch listeners (passive: false so preventDefault works) ────────
+  // React 17+ registers synthetic touch listeners as passive at the root,
+  // so we must attach directly to the DOM element to call preventDefault.
 
-  // Get center point between two touches
-  const getTouchCenter = (touches: React.TouchList) => {
-    if (touches.length < 2) {
-      return { x: touches[0].clientX, y: touches[0].clientY };
-    }
-    return {
-      x: (touches[0].clientX + touches[1].clientX) / 2,
-      y: (touches[0].clientY + touches[1].clientY) / 2,
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || !isOpen) return;
+
+    const getTouchDist = (touches: TouchList) => {
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
     };
-  };
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      // Pinch start
-      lastTouchDistance.current = getTouchDistance(e.touches);
-      lastTouchCenter.current = getTouchCenter(e.touches);
-    } else if (e.touches.length === 1 && scale > 1) {
-      // Pan start (only when zoomed)
-      setIsDragging(true);
-      dragStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      positionStart.current = { ...position };
-    }
-  }, [scale, position]);
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        lastTouchDistance.current = getTouchDist(e.touches);
+      } else if (e.touches.length === 1 && scaleRef.current > 1) {
+        isDraggingRef.current = true;
+        setIsDragging(true);
+        touchDragStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        touchPosStart.current = { ...positionRef.current };
+      }
+    };
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      // Pinch zoom
-      e.preventDefault();
-      const newDistance = getTouchDistance(e.touches);
-      const newCenter = getTouchCenter(e.touches);
-
-      if (lastTouchDistance.current > 0) {
-        const scaleDelta = newDistance / lastTouchDistance.current;
-        const newScale = Math.min(Math.max(scale * scaleDelta, 1), 5);
-
-        // Adjust position to zoom toward pinch center
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect();
-          const centerX = newCenter.x - rect.left - rect.width / 2;
-          const centerY = newCenter.y - rect.top - rect.height / 2;
-
-          const scaleChange = newScale / scale;
-          const newX = position.x - (centerX - position.x) * (scaleChange - 1);
-          const newY = position.y - (centerY - position.y) * (scaleChange - 1);
-
-          setPosition({ x: newX, y: newY });
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const newDist = getTouchDist(e.touches);
+        if (lastTouchDistance.current > 0) {
+          const newScale = Math.min(Math.max(scaleRef.current * (newDist / lastTouchDistance.current), 1), 5);
+          const rect = container.getBoundingClientRect();
+          const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left - rect.width / 2;
+          const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top - rect.height / 2;
+          const ratio = newScale / scaleRef.current;
+          const newPos = {
+            x: positionRef.current.x - (cx - positionRef.current.x) * (ratio - 1),
+            y: positionRef.current.y - (cy - positionRef.current.y) * (ratio - 1),
+          };
+          positionRef.current = newPos;
+          scaleRef.current = newScale;
+          setPosition(newPos);
+          setScale(newScale);
         }
+        lastTouchDistance.current = newDist;
+      } else if (e.touches.length === 1 && isDraggingRef.current && scaleRef.current > 1) {
+        e.preventDefault();
+        const newPos = {
+          x: touchPosStart.current.x + (e.touches[0].clientX - touchDragStart.current.x),
+          y: touchPosStart.current.y + (e.touches[0].clientY - touchDragStart.current.y),
+        };
+        positionRef.current = newPos;
+        setPosition(newPos);
+      }
+    };
 
-        setScale(newScale);
+    const onTouchEnd = (e: TouchEvent) => {
+      lastTouchDistance.current = 0;
+      isDraggingRef.current = false;
+      setIsDragging(false);
+      if (scaleRef.current <= 1) {
+        positionRef.current = { x: 0, y: 0 };
+        setPosition({ x: 0, y: 0 });
       }
 
-      lastTouchDistance.current = newDistance;
-      lastTouchCenter.current = newCenter;
-    } else if (e.touches.length === 1 && isDragging && scale > 1) {
-      // Pan
-      e.preventDefault();
-      const dx = e.touches[0].clientX - dragStart.current.x;
-      const dy = e.touches[0].clientY - dragStart.current.y;
-      setPosition({
-        x: positionStart.current.x + dx,
-        y: positionStart.current.y + dy,
-      });
-    }
-  }, [scale, position, isDragging]);
+      // Double-tap to zoom
+      const now = Date.now();
+      const diff = now - lastTap.current;
+      if (diff < 300 && diff > 0 && e.changedTouches.length === 1) {
+        e.preventDefault();
+        if (scaleRef.current > 1) {
+          scaleRef.current = 1;
+          positionRef.current = { x: 0, y: 0 };
+          setScale(1);
+          setPosition({ x: 0, y: 0 });
+        } else {
+          const touch = e.changedTouches[0];
+          const rect = container.getBoundingClientRect();
+          const newPos = {
+            x: -(touch.clientX - rect.left - rect.width / 2),
+            y: -(touch.clientY - rect.top - rect.height / 2),
+          };
+          scaleRef.current = 2;
+          positionRef.current = newPos;
+          setScale(2);
+          setPosition(newPos);
+        }
+      }
+      lastTap.current = now;
+    };
 
-  const handleTouchEnd = useCallback(() => {
-    lastTouchDistance.current = 0;
+    container.addEventListener('touchstart', onTouchStart, { passive: false });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
+    container.addEventListener('touchend', onTouchEnd, { passive: false });
+
+    return () => {
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchmove', onTouchMove);
+      container.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [isOpen]); // refs keep handlers current without re-registration
+
+  // ── Mouse drag to pan ─────────────────────────────────────────────────────
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (e.target === containerRef.current || scaleRef.current <= 1) return;
+    e.preventDefault();
+    hasDragged.current = false;
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    mouseDragStart.current = { x: e.clientX, y: e.clientY };
+    mousePosStart.current = { ...positionRef.current };
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return;
+    const dx = e.clientX - mouseDragStart.current.x;
+    const dy = e.clientY - mouseDragStart.current.y;
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) hasDragged.current = true;
+    const newPos = { x: mousePosStart.current.x + dx, y: mousePosStart.current.y + dy };
+    positionRef.current = newPos;
+    setPosition(newPos);
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    isDraggingRef.current = false;
     setIsDragging(false);
-
-    // Snap back to bounds if needed
-    if (scale <= 1) {
+    if (scaleRef.current <= 1) {
+      positionRef.current = { x: 0, y: 0 };
       setPosition({ x: 0, y: 0 });
     }
-  }, [scale]);
+  }, []);
 
-  // Double tap to zoom
-  const lastTap = useRef<number>(0);
-  const handleTap = useCallback((e: React.TouchEvent) => {
-    const now = Date.now();
-    const timeDiff = now - lastTap.current;
+  // ── Mouse double-click to zoom ────────────────────────────────────────────
 
-    if (timeDiff < 300 && timeDiff > 0) {
-      // Double tap
-      e.preventDefault();
-      if (scale > 1) {
-        // Zoom out
-        setScale(1);
-        setPosition({ x: 0, y: 0 });
-      } else {
-        // Zoom in to 2x at tap location
-        const touch = e.changedTouches[0];
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect();
-          const tapX = touch.clientX - rect.left - rect.width / 2;
-          const tapY = touch.clientY - rect.top - rect.height / 2;
-          setScale(2);
-          setPosition({ x: -tapX, y: -tapY });
-        }
-      }
+  const handleDoubleClick = useCallback((e: React.MouseEvent) => {
+    if (e.target === containerRef.current) return;
+    if (scaleRef.current > 1) {
+      scaleRef.current = 1;
+      positionRef.current = { x: 0, y: 0 };
+      setScale(1);
+      setPosition({ x: 0, y: 0 });
+    } else if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const newPos = {
+        x: -(e.clientX - rect.left - rect.width / 2),
+        y: -(e.clientY - rect.top - rect.height / 2),
+      };
+      scaleRef.current = 2;
+      positionRef.current = newPos;
+      setScale(2);
+      setPosition(newPos);
     }
-    lastTap.current = now;
-  }, [scale]);
+  }, []);
 
-  // Button controls
+  // ── Button controls ───────────────────────────────────────────────────────
+
   const zoomIn = () => {
-    const newScale = Math.min(scale * 1.5, 5);
-    setScale(newScale);
+    const s = Math.min(scaleRef.current * 1.5, 5);
+    scaleRef.current = s;
+    setScale(s);
   };
 
   const zoomOut = () => {
-    const newScale = Math.max(scale / 1.5, 1);
-    setScale(newScale);
-    if (newScale <= 1) {
+    const s = Math.max(scaleRef.current / 1.5, 1);
+    scaleRef.current = s;
+    setScale(s);
+    if (s <= 1) {
+      positionRef.current = { x: 0, y: 0 };
       setPosition({ x: 0, y: 0 });
     }
   };
 
   const resetZoom = () => {
+    scaleRef.current = 1;
+    positionRef.current = { x: 0, y: 0 };
     setScale(1);
     setPosition({ x: 0, y: 0 });
   };
 
-  // Click backdrop to close (only if not zoomed)
+  // Backdrop click closes (only when not zoomed and no drag occurred)
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === containerRef.current && scale <= 1) {
+    if (e.target === containerRef.current && scaleRef.current <= 1 && !hasDragged.current) {
       onClose();
     }
   };
@@ -238,9 +308,11 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
         ref={containerRef}
         className="flex-1 flex items-center justify-center overflow-hidden"
         onClick={handleBackdropClick}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        onDoubleClick={handleDoubleClick}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
       >
         {!isLoaded && !hasError && (
           <div className="absolute inset-0 flex items-center justify-center">
@@ -268,11 +340,10 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
             style={{
               transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
               transition: isDragging ? 'none' : 'transform 0.2s ease-out',
-              cursor: scale > 1 ? 'grab' : 'default',
+              cursor: isDragging ? 'grabbing' : scale > 1 ? 'grab' : 'default',
             }}
             onLoad={() => setIsLoaded(true)}
             onError={() => setHasError(true)}
-            onTouchEnd={handleTap}
             draggable={false}
           />
         )}
@@ -280,7 +351,10 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
 
       {/* Hint */}
       <div className="px-4 py-2 text-center text-xs text-white/50 bg-black/50">
-        {scale <= 1 ? 'Double-tap to zoom • Pinch to zoom' : 'Drag to pan • Double-tap to reset'}
+        {isTouchDevice
+          ? scale <= 1 ? 'Double-Tap to Zoom • Pinch to Zoom' : 'Drag to Pan • Double-Tap to Reset'
+          : scale <= 1 ? 'Double-Click to Zoom' : 'Drag to Pan • Double-Click to Reset'
+        }
       </div>
     </div>
   );

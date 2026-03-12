@@ -80,6 +80,7 @@ export default function ImageWithMagnifier({
     setIsLoaded(false);
     setFullImageLoaded(false);
     setFullImageDimensions({ width: 0, height: 0 });
+    setUseFallback(false);
 
     // Check if image is already cached/loaded (fixes race condition on initial render)
     // Use a small timeout to let the img element mount first
@@ -204,9 +205,9 @@ export default function ImageWithMagnifier({
     }
   };
 
-  // Mobile: tap to open fullscreen
+  // Tap/click to open fullscreen
   const handleClick = () => {
-    if (isTouchDevice && isLoaded) {
+    if (isLoaded) {
       setShowFullscreen(true);
     }
   };

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { generateGalleryImages } from '@/lib/gallery-image-gen';
+import { getSession } from '@/lib/auth-helpers';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -173,12 +174,16 @@ export async function GET(
     }
 
     const detection = detections[detectionIndex];
-    // Prefer archived photo (Vercel Blob - fast CDN), fall back to original source
-    let imageUrl = pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo;
+    // For bbox editing: MUST use the same source priority as the image extraction worker
+    // (cropped_photo first) so bbox coordinates are in the same coordinate space as the detection.
+    // archived_photo is the full unsplit spread; cropped_photo is the split single page.
+    // Using archived_photo here when cropped_photo exists causes a coordinate mismatch.
+    let imageUrl = pageData.cropped_photo || pageData.archived_photo || pageData.photo_original || pageData.photo;
 
-    // For IIIF sources, upgrade resolution if requested
-    const isIiif = imageUrl?.includes('/iiif/');
-    const fullResUrl = isIiif ? upgradeIiifUrl(imageUrl, 'high') : imageUrl;
+    // For the magnifier/high-res viewer, prefer archived_photo (higher quality full page)
+    const magnifierBaseUrl = pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo;
+    const isIiif = magnifierBaseUrl?.includes('/iiif/');
+    const fullResUrl = isIiif ? upgradeIiifUrl(magnifierBaseUrl, 'high') : magnifierBaseUrl;
 
     // Build on-the-fly crop URL (always available as fallback)
     let cropUrl: string | null = null;
@@ -291,6 +296,12 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
 
+    // All writes require authentication
+    const session = await getSession();
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     // Parse compound ID: pageId:index or pageId-index
     const match = id.match(/^(.+)[:\-](\d+)$/);
 
@@ -345,12 +356,10 @@ export async function PATCH(
       }
     }
 
-    // Handle rotation
     if (typeof body.rotation === 'number' && [0, 90, 180, 270].includes(body.rotation)) {
       updateFields[`detected_images.${detectionIndex}.rotation`] = body.rotation;
     }
 
-    // Handle bbox updates
     if (body.bbox && typeof body.bbox === 'object') {
       const b = body.bbox;
       if (typeof b.x === 'number' && typeof b.y === 'number' &&
@@ -389,7 +398,9 @@ export async function PATCH(
         const updatedPage = await db.collection('pages').findOne({ id: pageId });
         if (updatedPage) {
           const det = updatedPage.detected_images?.[detectionIndex];
-          const sourceUrl = updatedPage.archived_photo || updatedPage.cropped_photo || updatedPage.photo_original || updatedPage.photo;
+          // Use same priority as the image extraction worker (cropped_photo first)
+          // so bbox coordinates stay in the same coordinate space as the original detection.
+          const sourceUrl = updatedPage.cropped_photo || updatedPage.archived_photo || updatedPage.photo_original || updatedPage.photo;
           if (det?.bbox && sourceUrl) {
             const generated = await generateGalleryImages({
               sourceImageUrl: sourceUrl,

@@ -115,11 +115,13 @@ export async function generateGalleryImages(
       access: 'public',
       contentType: 'image/jpeg',
       addRandomSuffix: false,
+      allowOverwrite: true,
     }),
     put(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
       access: 'public',
       contentType: 'image/jpeg',
       addRandomSuffix: false,
+      allowOverwrite: true,
     }),
   ]);
 

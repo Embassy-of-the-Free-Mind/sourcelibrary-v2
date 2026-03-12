@@ -19,7 +19,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -43,6 +43,7 @@ import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
 import { sendGAEvent } from '@/lib/ga';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 
 export default function ImageDetailPage({
   params
@@ -53,7 +54,8 @@ export default function ImageDetailPage({
   const [data, setData] = useState<GalleryImageDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedCitation, setCopiedCitation] = useState(false);
   const [editingQuality, setEditingQuality] = useState(false);
   const [qualityValue, setQualityValue] = useState<number>(0);
   const [saving, setSaving] = useState(false);
@@ -71,6 +73,23 @@ export default function ImageDetailPage({
   const [savingRotation, setSavingRotation] = useState(false);
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
+  const [showBrightnessPanel, setShowBrightnessPanel] = useState(false);
+  const brightnessPanelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showBrightnessPanel) return;
+    function handleClickOutside(e: Event) {
+      if (brightnessPanelRef.current && !brightnessPanelRef.current.contains(e.target as Node)) {
+        setShowBrightnessPanel(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showBrightnessPanel]);
 
   useEffect(() => {
     params.then(p => setImageId(p.id));
@@ -190,27 +209,29 @@ export default function ImageDetailPage({
     setSaving(true);
     try {
       const result = await gallery.update(data.id, { bbox: bboxValues });
+
+      // Always compute a fresh on-the-fly crop URL for the new bbox.
+      // Used as imageUrl fallback if the pre-generated Blob URL is slow to propagate.
+      const newCropParams = new URLSearchParams({
+        url: data.fullPageUrl,
+        x: bboxValues.x.toString(),
+        y: bboxValues.y.toString(),
+        w: bboxValues.width.toString(),
+        h: bboxValues.height.toString(),
+      });
+      const newCropUrl = `/api/crop-image?${newCropParams}`;
+
       if (result.extractedUrl) {
-        // Use pre-generated image
         setData({
           ...data,
           bbox: bboxValues,
           imageUrl: result.extractedUrl,
           extractedUrl: result.extractedUrl,
           thumbnailUrl: result.thumbnailUrl,
+          cropUrl: newCropUrl,
         });
       } else {
-        // Fallback to on-the-fly crop
-        const imageUrl = data.fullPageUrl;
-        const cropParams = new URLSearchParams({
-          url: imageUrl,
-          x: bboxValues.x.toString(),
-          y: bboxValues.y.toString(),
-          w: bboxValues.width.toString(),
-          h: bboxValues.height.toString()
-        });
-        const newCroppedUrl = `/api/crop-image?${cropParams}`;
-        setData({ ...data, bbox: bboxValues, imageUrl: newCroppedUrl });
+        setData({ ...data, bbox: bboxValues, imageUrl: newCropUrl, cropUrl: newCropUrl });
       }
       setEditingBbox(false);
     } catch (e) {
@@ -277,15 +298,15 @@ export default function ImageDetailPage({
   const copyLink = async () => {
     const url = window.location.href;
     await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
   };
 
   const copyCitation = async () => {
     if (!data) return;
     await navigator.clipboard.writeText(data.citation);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedCitation(true);
+    setTimeout(() => setCopiedCitation(false), 2000);
   };
 
   const shareToTwitter = () => {
@@ -348,7 +369,7 @@ export default function ImageDetailPage({
               className="p-2 rounded-lg hover:bg-stone-800 transition-colors"
               title="Copy link"
             >
-              {copied ? (
+              {copiedLink ? (
                 <Check className="w-5 h-5 text-status-success" />
               ) : (
                 <Copy className="w-5 h-5" />
@@ -404,18 +425,23 @@ export default function ImageDetailPage({
               {(brightness !== 100 || contrast !== 100) && (
                 <button
                   onClick={() => { setBrightness(100); setContrast(100); }}
-                  className="px-2 py-1 bg-stone-900/80 rounded text-xs text-stone-400 hover:text-white transition-colors"
+                  className="px-2 py-1 bg-stone-900/80 rounded text-xs text-stone-400 hover:text-white transition-colors cursor-pointer"
                 >
                   Reset
                 </button>
               )}
-              <div className="group relative">
-                <button className="p-1.5 bg-stone-900/80 rounded-lg text-stone-400 hover:text-white transition-colors">
+              <div className="group relative" ref={brightnessPanelRef}>
+                <button
+                  onClick={() => setShowBrightnessPanel(v => !v)}
+                  className="p-1.5 bg-stone-900/80 rounded-lg text-stone-400 hover:text-white transition-colors cursor-pointer"
+                >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                   </svg>
                 </button>
-                <div className="invisible group-hover:visible absolute right-0 top-full mt-2 p-3 bg-stone-900/95 backdrop-blur-sm rounded-lg shadow-xl min-w-[180px] space-y-3">
+                {/* Invisible bridge covering the mt-2 gap so hover stays active */}
+                <div className="absolute top-full left-0 right-0 h-2" />
+                <div className={`${showBrightnessPanel ? 'visible' : 'invisible group-hover:visible'} absolute right-0 top-full mt-2 p-3 bg-stone-900/95 backdrop-blur-sm rounded-lg shadow-xl min-w-[180px] space-y-3`}>
                   <div>
                     <div className="flex justify-between text-xs text-stone-400 mb-1">
                       <span>Brightness</span>
@@ -448,9 +474,12 @@ export default function ImageDetailPage({
               </div>
             </div>
 
-            {/* Hint for desktop users */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900/70 rounded-full text-xs text-stone-400 pointer-events-none">
-              Hover to magnify · Tap for fullscreen
+            {/* Hint — device-specific */}
+            <div className="[@media(pointer:fine)]:block hidden absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900/70 rounded-full text-xs text-stone-400 pointer-events-none">
+              Hover to Magnify · Click for Fullscreen
+            </div>
+            <div className="[@media(pointer:coarse)]:block hidden absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900/70 rounded-full text-xs text-stone-400 pointer-events-none">
+              Tap for Fullscreen
             </div>
           </div>
 
@@ -488,16 +517,18 @@ export default function ImageDetailPage({
                     </div>
                   </div>
                 ) : (
-                  <div className="group relative">
-                    <h1 className="text-2xl font-serif text-stone-100 leading-relaxed pr-16">
+                  <div className="flex items-start justify-between gap-4">
+                    <h1 className="text-2xl font-serif text-stone-100 leading-relaxed">
                       {data.description}
                     </h1>
-                    <button
-                      onClick={() => setEditingTitle(true)}
-                      className="absolute top-0 right-0 text-xs text-accent-gold hover:text-accent-gold opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      Edit
-                    </button>
+                    <AuthCheck>
+                      <button
+                        onClick={() => setEditingTitle(true)}
+                        className="text-xs text-accent-gold hover:text-accent-gold shrink-0 mt-1 cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                    </AuthCheck>
                   </div>
                 )}
 
@@ -557,26 +588,26 @@ export default function ImageDetailPage({
                     <div className="flex items-center gap-3">
                       <div className="w-32 h-2 bg-stone-700 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${
-                            (data.galleryQuality ?? 0) >= 0.75 ? 'bg-status-success' :
+                          className={`h-full rounded-full transition-all ${(data.galleryQuality ?? 0) >= 0.75 ? 'bg-status-success' :
                             (data.galleryQuality ?? 0) >= 0.5 ? 'bg-accent-gold/80' : 'bg-status-error'
-                          }`}
+                            }`}
                           style={{ width: `${(data.galleryQuality ?? 0) * 100}%` }}
                         />
                       </div>
-                      <span className={`text-lg font-mono ${
-                        (data.galleryQuality ?? 0) >= 0.75 ? 'text-status-success' :
+                      <span className={`text-lg font-mono ${(data.galleryQuality ?? 0) >= 0.75 ? 'text-status-success' :
                         (data.galleryQuality ?? 0) >= 0.5 ? 'text-accent-gold' : 'text-status-error'
-                      }`}>
+                        }`}>
                         {data.galleryQuality != null ? data.galleryQuality.toFixed(2) : 'N/A'}
                       </span>
                     </div>
-                    <button
-                      onClick={() => setEditingQuality(true)}
-                      className="text-xs text-accent-gold hover:text-accent-gold"
-                    >
-                      Adjust
-                    </button>
+                    <AuthCheck>
+                      <button
+                        onClick={() => setEditingQuality(true)}
+                        className="text-xs text-accent-gold hover:text-accent-gold cursor-pointer"
+                      >
+                        Adjust
+                      </button>
+                    </AuthCheck>
                   </div>
                 )}
 
@@ -592,12 +623,14 @@ export default function ImageDetailPage({
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm text-stone-400">Museum Description</p>
                   {!editingDescription && (
-                    <button
-                      onClick={() => setEditingDescription(true)}
-                      className="text-xs text-accent-gold hover:text-accent-gold"
-                    >
-                      Edit
-                    </button>
+                    <AuthCheck>
+                      <button
+                        onClick={() => setEditingDescription(true)}
+                        className="text-xs text-accent-gold hover:text-accent-gold cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                    </AuthCheck>
                   )}
                 </div>
 
@@ -640,12 +673,14 @@ export default function ImageDetailPage({
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-sm text-stone-400">Metadata</p>
                   {!editingMetadata && (
-                    <button
-                      onClick={() => setEditingMetadata(true)}
-                      className="text-xs text-accent-gold hover:text-accent-gold"
-                    >
-                      Edit
-                    </button>
+                    <AuthCheck>
+                      <button
+                        onClick={() => setEditingMetadata(true)}
+                        className="text-xs text-accent-gold hover:text-accent-gold cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                    </AuthCheck>
                   )}
                 </div>
 
@@ -770,112 +805,110 @@ export default function ImageDetailPage({
                       </div>
                     )}
                     {!metadataValues.subjects?.length && !metadataValues.figures?.length &&
-                     !metadataValues.symbols?.length && !metadataValues.style && !metadataValues.technique && (
-                      <p className="text-stone-500 italic">No metadata yet</p>
-                    )}
+                      !metadataValues.symbols?.length && !metadataValues.style && !metadataValues.technique && (
+                        <p className="text-stone-500 italic">No metadata yet</p>
+                      )}
                   </div>
                 )}
               </div>
 
-              {/* Bounding Box Editor */}
-              {data.bbox && data.fullPageUrl && (
-                <div className="bg-stone-800 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm text-stone-400 flex items-center gap-2">
-                      <Crop className="w-4 h-4" />
-                      Bounding Box
-                    </p>
-                    {!editingBbox ? (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => setEditingBbox(true)}
-                          className="text-xs text-accent-gold hover:text-accent-gold"
-                        >
-                          Edit Crop
-                        </button>
-                        <button
-                          onClick={() => {
-                            setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 });
-                            setEditingBbox(true);
-                          }}
-                          className="text-xs text-stone-500 hover:text-stone-400"
-                        >
-                          Reset
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={saveBbox}
-                          disabled={saving}
-                          className="flex items-center gap-1 px-2 py-1 bg-accent-rust hover:bg-accent-gold/80 rounded text-xs transition-colors disabled:opacity-50"
-                        >
-                          <Save className="w-3 h-3" />
-                          {saving ? 'Saving...' : 'Save'}
-                        </button>
-                        <button
-                          onClick={() => {
-                            setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 });
-                          }}
-                          className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors"
-                        >
-                          Reset
-                        </button>
-                        <button
-                          onClick={() => {
-                            setBboxValues(data.bbox || { x: 0, y: 0, width: 1, height: 1 });
-                            setEditingBbox(false);
-                          }}
-                          className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )}
-                  </div>
+              {/* Bounding Box Editor + Rotation — authenticated users only */}
+              <AuthCheck>
+                {data.bbox && data.fullPageUrl && (
+                  <div className="bg-stone-800 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-sm text-stone-400 flex items-center gap-2">
+                        <Crop className="w-4 h-4" />
+                        Bounding Box
+                      </p>
+                      {!editingBbox ? (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setEditingBbox(true)}
+                            className="text-xs text-accent-gold hover:text-accent-gold cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => {
+                              setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 });
+                              setEditingBbox(true);
+                            }}
+                            className="text-xs text-stone-500 hover:text-stone-400 cursor-pointer"
+                          >
+                            Reset
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={saveBbox}
+                            disabled={saving}
+                            className="flex items-center gap-1 px-2 py-1 bg-accent-rust hover:bg-accent-gold/80 rounded text-xs transition-colors disabled:opacity-50"
+                          >
+                            <Save className="w-3 h-3" />
+                            {saving ? 'Saving...' : 'Save'}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 });
+                            }}
+                            className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors"
+                          >
+                            Reset
+                          </button>
+                          <button
+                            onClick={() => {
+                              setBboxValues(data.bbox || { x: 0, y: 0, width: 1, height: 1 });
+                              setEditingBbox(false);
+                            }}
+                            className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
+                    </div>
 
-                  {editingBbox ? (
-                    <div className="space-y-3">
-                      <p className="text-xs text-stone-500">Drag the box to move, drag the corner to resize</p>
-                      <div
-                        className="relative bg-stone-900 rounded overflow-hidden cursor-crosshair select-none"
-                        style={{ aspectRatio: '3/4' }}
-                        onMouseDown={(e) => {
-                          // Click outside bbox = reposition bbox centered on click
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const x = (e.clientX - rect.left) / rect.width;
-                          const y = (e.clientY - rect.top) / rect.height;
-                          setBboxValues(prev => ({
-                            ...prev,
-                            x: Math.max(0, Math.min(1 - prev.width, x - prev.width / 2)),
-                            y: Math.max(0, Math.min(1 - prev.height, y - prev.height / 2))
-                          }));
-                          setIsDragging('move');
-                          setDragStart({ x: e.clientX, y: e.clientY });
-                          e.preventDefault();
-                        }}
-                        onMouseMove={(e) => {
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          handleBboxMouseMove(e, rect);
-                        }}
-                        onMouseUp={handleBboxMouseUp}
-                        onMouseLeave={handleBboxMouseUp}
-                      >
-                        {/* Full page image */}
-                        <Image
-                          src={data.fullPageUrl}
-                          alt="Full page"
-                          fill
-                          sizes="(max-width: 768px) 90vw, 80vw"
-                          className="object-contain pointer-events-none"
-                          onDragStart={(e) => e.preventDefault()}
-                          unoptimized
-                        />
-                        {/* Darkened overlay outside bbox */}
+                    {editingBbox ? (
+                      <div className="space-y-3">
+                        <p className="text-xs text-stone-500">Drag the box to move, drag the corner to resize</p>
                         <div
-                          className="absolute inset-0 bg-black/60 pointer-events-none"
-                          style={{
-                            clipPath: `polygon(
+                          className="relative bg-stone-900 rounded overflow-hidden cursor-crosshair select-none"
+                          onMouseDown={(e) => {
+                            // Click outside bbox = reposition bbox centered on click
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const x = (e.clientX - rect.left) / rect.width;
+                            const y = (e.clientY - rect.top) / rect.height;
+                            setBboxValues(prev => ({
+                              ...prev,
+                              x: Math.max(0, Math.min(1 - prev.width, x - prev.width / 2)),
+                              y: Math.max(0, Math.min(1 - prev.height, y - prev.height / 2))
+                            }));
+                            setIsDragging('move');
+                            setDragStart({ x: e.clientX, y: e.clientY });
+                            e.preventDefault();
+                          }}
+                          onMouseMove={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            handleBboxMouseMove(e, rect);
+                          }}
+                          onMouseUp={handleBboxMouseUp}
+                          onMouseLeave={handleBboxMouseUp}
+                        >
+                          {/* Full page image — natural size so bbox % coords map 1:1 to image coords */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={data.fullPageUrl}
+                            alt="Full page"
+                            className="w-full pointer-events-none select-none block"
+                            draggable={false}
+                          />
+                          {/* Darkened overlay outside bbox */}
+                          <div
+                            className="absolute inset-0 bg-black/60 pointer-events-none"
+                            style={{
+                              clipPath: `polygon(
                               0 0, 100% 0, 100% 100%, 0 100%, 0 0,
                               ${bboxValues.x * 100}% ${bboxValues.y * 100}%,
                               ${bboxValues.x * 100}% ${(bboxValues.y + bboxValues.height) * 100}%,
@@ -883,78 +916,78 @@ export default function ImageDetailPage({
                               ${(bboxValues.x + bboxValues.width) * 100}% ${bboxValues.y * 100}%,
                               ${bboxValues.x * 100}% ${bboxValues.y * 100}%
                             )`
-                          }}
-                        />
-                        {/* Draggable bbox */}
-                        <div
-                          className="absolute border-2 border-accent-gold cursor-move"
-                          style={{
-                            left: `${bboxValues.x * 100}%`,
-                            top: `${bboxValues.y * 100}%`,
-                            width: `${bboxValues.width * 100}%`,
-                            height: `${bboxValues.height * 100}%`
-                          }}
-                          onMouseDown={(e) => handleBboxMouseDown(e, 'move')}
-                        >
-                          {/* Move handle in center */}
-                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <Move className="w-6 h-6 text-accent-gold opacity-50" />
-                          </div>
-                          {/* Resize handle at bottom-right */}
-                          <div
-                            className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent-gold/80 rounded-sm cursor-se-resize"
-                            onMouseDown={(e) => {
-                              e.stopPropagation();
-                              handleBboxMouseDown(e, 'resize');
                             }}
                           />
+                          {/* Draggable bbox */}
+                          <div
+                            className="absolute border-2 border-accent-gold cursor-move"
+                            style={{
+                              left: `${bboxValues.x * 100}%`,
+                              top: `${bboxValues.y * 100}%`,
+                              width: `${bboxValues.width * 100}%`,
+                              height: `${bboxValues.height * 100}%`
+                            }}
+                            onMouseDown={(e) => handleBboxMouseDown(e, 'move')}
+                          >
+                            {/* Move handle in center */}
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                              <Move className="w-6 h-6 text-accent-gold opacity-50" />
+                            </div>
+                            {/* Resize handle at bottom-right */}
+                            <div
+                              className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent-gold/80 rounded-sm cursor-se-resize"
+                              onMouseDown={(e) => {
+                                e.stopPropagation();
+                                handleBboxMouseDown(e, 'resize');
+                              }}
+                            />
+                          </div>
+                        </div>
+                        {/* Coordinates display */}
+                        <div className="grid grid-cols-4 gap-2 text-xs text-stone-500">
+                          <div>x: {bboxValues.x.toFixed(3)}</div>
+                          <div>y: {bboxValues.y.toFixed(3)}</div>
+                          <div>w: {bboxValues.width.toFixed(3)}</div>
+                          <div>h: {bboxValues.height.toFixed(3)}</div>
                         </div>
                       </div>
-                      {/* Coordinates display */}
-                      <div className="grid grid-cols-4 gap-2 text-xs text-stone-500">
+                    ) : (
+                      <div className="text-xs text-stone-500 grid grid-cols-4 gap-2">
                         <div>x: {bboxValues.x.toFixed(3)}</div>
                         <div>y: {bboxValues.y.toFixed(3)}</div>
                         <div>w: {bboxValues.width.toFixed(3)}</div>
                         <div>h: {bboxValues.height.toFixed(3)}</div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="text-xs text-stone-500 grid grid-cols-4 gap-2">
-                      <div>x: {bboxValues.x.toFixed(3)}</div>
-                      <div>y: {bboxValues.y.toFixed(3)}</div>
-                      <div>w: {bboxValues.width.toFixed(3)}</div>
-                      <div>h: {bboxValues.height.toFixed(3)}</div>
-                    </div>
-                  )}
-                </div>
-              )}
+                    )}
+                  </div>
+                )}
 
-              {/* Rotation Control */}
-              <div className="bg-stone-800 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm text-stone-400 flex items-center gap-2">
-                    <RotateCw className="w-4 h-4" />
-                    Rotation
-                  </p>
-                  {savingRotation && <span className="text-xs text-accent-gold">Saving...</span>}
-                </div>
-                <div className="flex gap-2">
-                  {([0, 90, 180, 270] as const).map((deg) => (
-                    <button
-                      key={deg}
-                      onClick={() => saveRotation(deg)}
-                      disabled={savingRotation}
-                      className={`flex-1 py-1.5 rounded text-sm transition-colors ${
-                        rotation === deg
+                {/* Rotation Control */}
+                <div className="bg-stone-800 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm text-stone-400 flex items-center gap-2">
+                      <RotateCw className="w-4 h-4" />
+                      Rotation
+                    </p>
+                    {savingRotation && <span className="text-xs text-accent-gold">Saving...</span>}
+                  </div>
+                  <div className="flex gap-2">
+                    {([0, 90, 180, 270] as const).map((deg) => (
+                      <button
+                        key={deg}
+                        onClick={() => saveRotation(deg)}
+                        disabled={savingRotation}
+                        className={`flex-1 py-1.5 rounded text-sm transition-colors ${rotation === deg
                           ? 'bg-accent-rust text-white'
                           : 'bg-stone-700 text-stone-300 hover:bg-stone-600'
-                      } disabled:opacity-50`}
-                    >
-                      {deg}°
-                    </button>
-                  ))}
+                          } disabled:opacity-50`}
+                      >
+                        {deg}°
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </AuthCheck>
 
               {/* Citation */}
               <div className="bg-stone-800 rounded-lg p-4">
@@ -962,10 +995,19 @@ export default function ImageDetailPage({
                 <p className="text-stone-300 text-sm font-mono">{data.citation}</p>
                 <button
                   onClick={copyCitation}
-                  className="mt-3 text-xs text-accent-gold hover:text-accent-gold flex items-center gap-1"
+                  className="mt-3 text-xs text-accent-gold hover:text-accent-gold flex items-center gap-1 cursor-pointer"
                 >
-                  <Copy className="w-3 h-3" />
-                  Copy citation
+                  {copiedCitation ? (
+                    <>
+                      <Check className="w-3 h-3 text-status-success" />
+                      <span className="text-status-success">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3" />
+                      Copy Citation
+                    </>
+                  )}
                 </button>
               </div>
             </div>
