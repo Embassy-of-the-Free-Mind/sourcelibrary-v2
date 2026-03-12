@@ -56,7 +56,7 @@ function HeroSignUp() {
         <button
           type="submit"
           disabled={loading || !email}
-          className="px-7 py-3.5 rounded-lg text-base font-medium transition-[filter,opacity] hover:brightness-110 disabled:opacity-50 shrink-0"
+          className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
           style={{ background: 'var(--accent-rust)', color: '#fff' }}
         >
           {loading ? 'Sending...' : 'Join free'}
@@ -103,7 +103,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative h-[75vh] min-h-[500px] w-full overflow-hidden bg-black">
+    <section className="relative h-screen w-full overflow-hidden bg-black">
       {/* Video — poster shows instantly while video loads, no JS dependency */}
       <video
         autoPlay
@@ -143,7 +143,7 @@ export default function HeroSection() {
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
           >
-            Helping create the next renaissance by translating the first
+            Unlock a New Renaissance of Ancient Knowledge
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
             Five centuries of lost knowledge&mdash;in alchemy, Hermetica, Kabbalah, natural philosophy, and the roots of modern science&mdash;translated and freely accessible for the first time.

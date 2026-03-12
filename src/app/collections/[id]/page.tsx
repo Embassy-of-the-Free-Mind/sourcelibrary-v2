@@ -245,28 +245,26 @@ async function fetchCollectionData(id: string) {
         .toArray(),
       8000, [],
     ),
-    // Gallery: use pre-curated images if available, otherwise fall back to dynamic query
-    collection.curated_gallery_images?.length > 0
-      ? Promise.resolve(collection.curated_gallery_images)
-      : withTimeout(
-          db.collection('books')
-            .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
-            .toArray()
-            .then(docs => docs.map(d => d.id))
-            .then(bookIds => bookIds.length > 0
-              ? db.collection('gallery_images')
-                  .find({
-                    book_id: { $in: bookIds },
-                    gallery_quality: { $gte: 0.8 },
-                    type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-                  })
-                  .sort({ gallery_quality: -1 })
-                  .limit(60)
-                  .toArray()
-              : [],
-            ),
-          8000, [],
+    // Gallery: fetch book IDs then query gallery_images, with 8s timeout for the whole chain
+    withTimeout(
+      db.collection('books')
+        .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
+        .toArray()
+        .then(docs => docs.map(d => d.id))
+        .then(bookIds => bookIds.length > 0
+          ? db.collection('gallery_images')
+              .find({
+                book_id: { $in: bookIds },
+                gallery_quality: { $gte: 0.8 },
+                type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+              })
+              .sort({ gallery_quality: -1 })
+              .limit(60)
+              .toArray()
+          : [],
         ),
+      8000, [],
+    ),
     mentionedBookIds.length > 0
       ? withTimeout(
           db.collection('books')
@@ -323,15 +321,16 @@ export default async function CollectionDetailPage({ params }: Props) {
   const { collection, books, highlights, galleryImages, total, mentionedBooks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
 
-  // Diversify gallery images: max 1 per book (no duplicates), skip images without thumbnails
+  // Diversify gallery images: max 2 per book, skip images without thumbnails, take first 11
   const diverseGalleryImages: typeof galleryImages = [];
-  const seenBooks = new Set<string>();
+  const bookImageCounts: Record<string, number> = {};
   for (const img of galleryImages) {
-    const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+    const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
     if (!thumb) continue;
     const bid = img.book_id || img.bookId;
-    if (seenBooks.has(bid)) continue;
-    seenBooks.add(bid);
+    const count = bookImageCounts[bid] || 0;
+    if (count >= 2) continue;
+    bookImageCounts[bid] = count + 1;
     diverseGalleryImages.push(img);
     if (diverseGalleryImages.length >= 11) break;
   }
@@ -360,7 +359,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         {heroImages.length > 0 && (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
-              const src = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+              const src = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
               if (!src) return null;
               return (
@@ -419,7 +418,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             </h2>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
-                const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+                const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
                 const bookId = img.bookId || img.book_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;

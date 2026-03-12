@@ -192,7 +192,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
                 </div>
                 <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
                   <div
-                    className={`h-full transition-[width] duration-300 ${(book.translation_percent ?? 0) >= 95
+                    className={`h-full transition-all duration-300 ${(book.translation_percent ?? 0) >= 95
                       ? 'bg-status-success'
                       : book.translation_percent && book.translation_percent > 0
                         ? 'bg-accent-gold/80'

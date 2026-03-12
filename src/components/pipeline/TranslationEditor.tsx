@@ -28,7 +28,6 @@ import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
-import PageNotes, { type PageNotesHandle } from '@/components/annotations/PageNotes';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import ShareButton from '@/components/ui/ShareButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
@@ -495,7 +494,6 @@ export default function TranslationEditor({
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
   const fontControlsRef = useRef<HTMLDivElement>(null);
-  const notesRef = useRef<PageNotesHandle>(null);
 
   // Highlights and Annotations panels
 
@@ -1357,37 +1355,29 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText ? (
-                      <>
-                        <HighlightSelection
-                          bookId={book.id}
-                          pageId={page.id}
-                          pageNumber={page.page_number}
-                          bookTitle={book.display_title || book.title}
-                          bookAuthor={book.author}
-                          bookYear={book.published}
-                          doi={book.doi}
-                          onNoteAdded={() => notesRef.current?.refresh()}
-                        >
-                          <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
-                        </HighlightSelection>
-                        <PageNotes ref={notesRef} bookId={book.id} pageId={page.id} pageNumber={page.page_number} />
-                      </>
+                      <HighlightSelection
+                        bookId={book.id}
+                        pageId={page.id}
+                        pageNumber={page.page_number}
+                        bookTitle={book.display_title || book.title}
+                        bookAuthor={book.author}
+                        bookYear={book.published}
+                        doi={book.doi}
+                      >
+                        <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                      </HighlightSelection>
                     ) : (book.language === 'English' && ocrText) ? (
-                      <>
-                        <HighlightSelection
-                          bookId={book.id}
-                          pageId={page.id}
-                          pageNumber={page.page_number}
-                          bookTitle={book.display_title || book.title}
-                          bookAuthor={book.author}
-                          bookYear={book.published}
-                          doi={book.doi}
-                          onNoteAdded={() => notesRef.current?.refresh()}
-                        >
-                          <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
-                        </HighlightSelection>
-                        <PageNotes ref={notesRef} bookId={book.id} pageId={page.id} pageNumber={page.page_number} />
-                      </>
+                      <HighlightSelection
+                        bookId={book.id}
+                        pageId={page.id}
+                        pageNumber={page.page_number}
+                        bookTitle={book.display_title || book.title}
+                        bookAuthor={book.author}
+                        bookYear={book.published}
+                        doi={book.doi}
+                      >
+                        <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                      </HighlightSelection>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>

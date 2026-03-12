@@ -176,7 +176,7 @@ export default async function FeaturedCollections() {
             return (
               <Link key={coll.id} href={href} className="group block">
                 <div
-                  className={`h-full rounded-xl border ${colors.border} ${colors.bg} p-5 hover:shadow-md transition-[box-shadow]`}
+                  className={`h-full rounded-xl border ${colors.border} ${colors.bg} p-5 hover:shadow-md transition-all`}
                 >
                   {/* Category label */}
                   {category && (
