@@ -206,7 +206,6 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
     description:
       'Historical musical notation from liturgical chants to Renaissance polyphony and baroque compositions.',
     slug: 'musical-scores',
-    types: ['musical_score'],
     subjects: ['music'],
     searchTerms: ['musical', 'score', 'notation', 'polyphon'],
     anchorBooks: [
