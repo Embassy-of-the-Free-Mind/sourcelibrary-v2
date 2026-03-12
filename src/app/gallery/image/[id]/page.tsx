@@ -36,7 +36,6 @@ import {
   Save,
   RotateCw,
   Info,
-  AlertTriangle,
   X
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
@@ -134,6 +133,13 @@ export default function ImageDetailPage({
       setRotation(data.rotation as 0 | 90 | 180 | 270);
     }
   }, [data?.description, data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox, data?.rotation]);
+
+  // Auto-open info modal for images not extracted with current model
+  useEffect(() => {
+    if (data && data.model !== 'gemini-3-flash-preview') {
+      setShowInfo(true);
+    }
+  }, [data]);
 
   // Load natural aspect ratio of the full page image for accurate bbox editing
   useEffect(() => {
@@ -529,7 +535,7 @@ export default function ImageDetailPage({
                   </div>
                 )}
 
-                {/* Model info + needs-update flag + info button */}
+                {/* Model info + info button */}
                 <div className="mt-2 flex items-center gap-2 flex-wrap">
                   {data.model && (
                     <p className="text-sm text-stone-500 flex items-center gap-1">
@@ -537,12 +543,6 @@ export default function ImageDetailPage({
                       {data.model}
                       {data.confidence ? ` (${Math.round(data.confidence * 100)}%)` : ''}
                     </p>
-                  )}
-                  {data.model !== 'gemini-3-flash-preview' && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-status-warning/15 text-status-warning">
-                      <AlertTriangle className="w-3 h-3" />
-                      Needs re-extraction
-                    </span>
                   )}
                   <button
                     onClick={() => setShowInfo(true)}
