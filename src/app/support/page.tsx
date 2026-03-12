@@ -322,6 +322,26 @@ export default function SupportPage() {
         </div>
       </section>
 
+      {/* Scan the Renaissance */}
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
+            Scan the Renaissance
+          </h2>
+          <p className="text-lg text-stone-600 mb-6 leading-relaxed">
+            1.15 million Renaissance editions remain unscanned. We&apos;re starting with the Bibliotheca
+            Klossiana — 9,000 volumes of Masonic, Rosicrucian, and alchemical texts locked behind closed
+            doors in The Hague. A single gift can open an entire subject area.
+          </p>
+          <Link
+            href="/scan-the-renaissance"
+            className="inline-block bg-stone-900 text-white py-3 px-8 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+          >
+            Read the Vision
+          </Link>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">

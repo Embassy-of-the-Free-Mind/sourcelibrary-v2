@@ -598,3 +598,14 @@ mark {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* Print styles for donor-facing pages */
+@media print {
+  header, footer, nav { display: none !important; }
+  body { background: white !important; }
+  .bg-cream { background: white !important; }
+  .bg-stone-900 { background: #1c1917 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .border-accent-rust\/30 { border-color: #b45309 !important; }
+  * { break-inside: avoid; }
+  a[href]::after { content: none !important; }
+}
