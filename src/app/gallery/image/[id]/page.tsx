@@ -34,8 +34,7 @@ import {
   Move,
   Crop,
   Save,
-  RotateCw,
-  Images
+  RotateCw
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -995,52 +994,58 @@ export default function ImageDetailPage({
               </div>
             </div>
 
-            {/* Source info */}
+            {/* Book card + CTA */}
             <div className="space-y-4">
-              <div className="bg-stone-800 rounded-lg p-4">
-                <h2 className="text-sm text-stone-500 uppercase tracking-wide mb-3">Source</h2>
-
+              <div className="bg-stone-800 rounded-lg overflow-hidden">
+                {/* Book cover + info card */}
                 <Link
-                  href={`/book/${data.book.slug || data.book.id}`}
+                  href={data.readUrl}
                   className="block group"
                 >
-                  <p className="text-accent-gold group-hover:text-accent-gold font-medium">
-                    {data.book.title}
-                  </p>
-                  {data.book.author && (
-                    <p className="text-stone-400 text-sm">{data.book.author}</p>
+                  {data.book.thumbnail && (
+                    <div className="relative w-full aspect-[3/4] bg-stone-900">
+                      <Image
+                        src={data.book.thumbnail}
+                        alt={data.book.title}
+                        fill
+                        sizes="(max-width: 768px) 90vw, 300px"
+                        className="object-cover group-hover:opacity-90 transition-opacity"
+                        unoptimized
+                      />
+                    </div>
                   )}
-                  {data.book.year && (
-                    <p className="text-stone-500 text-sm">{data.book.year}</p>
-                  )}
+                  <div className="p-4">
+                    <p className="text-white font-medium group-hover:text-accent-gold transition-colors">
+                      {data.book.title}
+                    </p>
+                    {data.book.author && (
+                      <p className="text-stone-400 text-sm mt-1">{data.book.author}</p>
+                    )}
+                    {data.book.year && (
+                      <p className="text-stone-500 text-sm">{data.book.year}</p>
+                    )}
+                  </div>
                 </Link>
 
                 {/* Primary CTA: Read in context */}
-                <Link
-                  href={data.readUrl}
-                  className="mt-4 flex items-center justify-center gap-2 py-3 px-4 bg-accent-rust hover:bg-accent-rust/80 text-white rounded-lg transition-colors font-medium"
-                >
-                  <BookOpen className="w-5 h-5" />
-                  Read page {data.pageNumber} in context
-                </Link>
+                <div className="px-4 pb-4">
+                  <Link
+                    href={data.readUrl}
+                    className="flex items-center justify-center gap-2 py-3 px-4 bg-accent-rust hover:bg-accent-rust/80 text-white rounded-lg transition-colors font-medium"
+                  >
+                    <BookOpen className="w-5 h-5" />
+                    Read page {data.pageNumber} in context
+                  </Link>
+                </div>
               </div>
 
-              {/* Quick actions */}
-              <div className="flex flex-col gap-2">
-                <Link
-                  href={data.galleryUrl}
-                  className="block text-center py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
-                >
-                  More from this book
-                </Link>
-                <Link
-                  href="/gallery"
-                  className="flex items-center justify-center gap-2 py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm text-stone-400 transition-colors"
-                >
-                  <Images className="w-4 h-4" />
-                  Browse all images
-                </Link>
-              </div>
+              {/* More from this book */}
+              <Link
+                href={data.galleryUrl}
+                className="block text-center py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
+              >
+                More from this book
+              </Link>
 
               {/* Similar images */}
               {imageId && <SimilarImages imageId={imageId} />}

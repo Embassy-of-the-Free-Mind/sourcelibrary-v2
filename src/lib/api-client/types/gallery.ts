@@ -131,6 +131,7 @@ export interface GalleryImageDetail {
     author?: string;
     year?: number;
     doi?: string;
+    thumbnail?: string;
   };
   pageNumber: number;
   readUrl: string;

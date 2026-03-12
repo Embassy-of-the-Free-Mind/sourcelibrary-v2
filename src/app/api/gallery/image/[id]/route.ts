@@ -252,7 +252,8 @@ export async function GET(
         title: pageData.book?.display_title || pageData.book?.title || 'Unknown',
         author: pageData.book?.author,
         year: pageData.book?.published,
-        doi: pageData.book?.doi
+        doi: pageData.book?.doi,
+        thumbnail: pageData.book?.thumbnail,
       },
       pageNumber: pageData.page_number,
 
