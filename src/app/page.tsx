@@ -440,6 +440,36 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* About — immediately establish the why */}
+        <section id="about" className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
+              The rediscovery of ancient wisdom helped spark the Renaissance. It&apos;s time for another.
+            </h2>
+            <div className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed">
+              <p>
+                Centuries of humanity&apos;s deepest thinking sit locked in Latin and other inaccessible
+                languages. These aren&apos;t just inaccessible to humans; contemporary AI systems were trained
+                on Reddit but not the Renaissance. Millions of books and manuscripts are unscanned and
+                untranslated. These aren&apos;t obscure footnotes. They are the roots of modern science,
+                psychology, philosophy of mind, and the perennial questions about what it means to be human.
+              </p>
+              <p>
+                The Source Library uses scholarship and AI systems to recover this knowledge and make it
+                accessible to all. We are building the world&apos;s largest open-access collection of translated
+                primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
+                the human intellectual tradition.
+              </p>
+              <p className="text-gray-500 text-base">
+                The Source Library is an initiative of the{' '}
+                <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
+                in Amsterdam, home to the Bibliotheca Philosophica Hermetica: one of the world&apos;s most
+                important collections of Hermetic, alchemical, and esoteric books.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Featured Collection Carousel */}
         {featuredItems.length > 0 && (
           <FeaturedCollectionCarousel items={featuredItems} />
@@ -535,68 +565,6 @@ export default async function HomePage() {
         {/* From the Collection — image-heavy gallery showcase */}
         <FromTheCollection items={showcase} />
 
-        {/* Contribute Section */}
-        <section className="bg-white py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-primary mb-4 font-display">
-              Join the project
-            </h2>
-            <p className="text-lg md:text-xl text-muted leading-relaxed max-w-3xl mb-12">
-              The Source Library is an open initiative. Whether you&apos;re a scholar, developer, or simply curious about these traditions, there are many ways to participate.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {/* Read & Explore */}
-              <div className="bg-cream rounded-xl p-6 border border-border-light">
-                <div className="w-10 h-10 rounded-full bg-accent-rust/10 flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-accent-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="font-display text-xl text-primary mb-2">Read &amp; Explore</h3>
-                <p className="text-muted leading-relaxed">
-                  Browse the collection, read translations side-by-side with original texts, and discover connections across traditions. Every page view helps us prioritize what to translate next.
-                </p>
-                <Link href="/search" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
-                  Start exploring
-                </Link>
-              </div>
-
-              {/* Contribute Knowledge */}
-              <div className="bg-cream rounded-xl p-6 border border-border-light">
-                <div className="w-10 h-10 rounded-full bg-accent-sage/10 flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-accent-sage-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                </div>
-                <h3 className="font-display text-xl text-primary mb-2">Contribute Knowledge</h3>
-                <p className="text-muted leading-relaxed">
-                  Suggest books for import, improve translations, correct OCR errors, or help verify metadata. Subject matter expertise in any tradition is valuable.
-                </p>
-                <Link href="/blog/first-translations" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
-                  See what we&apos;re translating
-                </Link>
-              </div>
-
-              {/* Build With Us */}
-              <div className="bg-cream rounded-xl p-6 border border-border-light">
-                <div className="w-10 h-10 rounded-full bg-accent-violet/10 flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-accent-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
-                </div>
-                <h3 className="font-display text-xl text-primary mb-2">Build With Us</h3>
-                <p className="text-muted leading-relaxed">
-                  The Source Library is open source and offers an MCP server for AI integration. Use our data for research, build applications, or help improve the platform.
-                </p>
-                <Link href="/developers" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
-                  Developer tools
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Discover Section */}
         <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
@@ -684,32 +652,64 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        {/* Contribute Section */}
+        <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
-              The rediscovery of ancient wisdom helped spark the Renaissance. It&apos;s time for another.
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-primary mb-4 font-display">
+              Join the project
             </h2>
-            <div className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed">
-              <p>
-                Centuries of humanity&apos;s deepest thinking sit locked in Latin and other inaccessible
-                languages. These aren&apos;t just inaccessible to humans; contemporary AI systems were trained
-                on Reddit but not the Renaissance. Millions of books and manuscripts are unscanned and
-                untranslated. These aren&apos;t obscure footnotes. They are the roots of modern science,
-                psychology, philosophy of mind, and the perennial questions about what it means to be human.
-              </p>
-              <p>
-                The Source Library uses scholarship and AI systems to recover this knowledge and make it
-                accessible to all. We are building the world&apos;s largest open-access collection of translated
-                primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
-                the human intellectual tradition.
-              </p>
-              <p className="text-gray-500 text-base">
-                The Source Library is an initiative of the{' '}
-                <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a>{' '}
-                in Amsterdam, home to the Bibliotheca Philosophica Hermetica: one of the world&apos;s most
-                important collections of Hermetic, alchemical, and esoteric books.
-              </p>
+            <p className="text-lg md:text-xl text-muted leading-relaxed max-w-3xl mb-12">
+              The Source Library is an open initiative. Whether you&apos;re a scholar, developer, or simply curious about these traditions, there are many ways to participate.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {/* Read & Explore */}
+              <div className="bg-white rounded-xl p-6 border border-border-light">
+                <div className="w-10 h-10 rounded-full bg-accent-rust/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-accent-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-xl text-primary mb-2">Read &amp; Explore</h3>
+                <p className="text-muted leading-relaxed">
+                  Browse the collection, read translations side-by-side with original texts, and discover connections across traditions. Every page view helps us prioritize what to translate next.
+                </p>
+                <Link href="/search" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
+                  Start exploring
+                </Link>
+              </div>
+
+              {/* Contribute Knowledge */}
+              <div className="bg-white rounded-xl p-6 border border-border-light">
+                <div className="w-10 h-10 rounded-full bg-accent-sage/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-accent-sage-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-xl text-primary mb-2">Contribute Knowledge</h3>
+                <p className="text-muted leading-relaxed">
+                  Suggest books for import, improve translations, correct OCR errors, or help verify metadata. Subject matter expertise in any tradition is valuable.
+                </p>
+                <Link href="/blog/first-translations" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
+                  See what we&apos;re translating
+                </Link>
+              </div>
+
+              {/* Build With Us */}
+              <div className="bg-white rounded-xl p-6 border border-border-light">
+                <div className="w-10 h-10 rounded-full bg-accent-violet/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-accent-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-xl text-primary mb-2">Build With Us</h3>
+                <p className="text-muted leading-relaxed">
+                  The Source Library is open source and offers an MCP server for AI integration. Use our data for research, build applications, or help improve the platform.
+                </p>
+                <Link href="/developers" className="inline-block mt-4 text-sm text-accent-rust hover:underline">
+                  Developer tools
+                </Link>
+              </div>
             </div>
           </div>
         </section>
