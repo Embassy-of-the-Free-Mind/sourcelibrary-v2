@@ -177,13 +177,13 @@ export default async function ImageLayout({
   const data = await getImageData(id);
   const urlSafeId = decodeURIComponent(id).replace(/:(\d+)$/, '-$1');
 
-  if (!data) return children;
+  if (!data) return <div className="min-h-screen bg-black">{children}</div>;
 
   const { page, detection } = data;
   const imageUrl = page.cropped_photo || page.archived_photo || page.photo;
 
   return (
-    <>
+    <div className="min-h-screen bg-black">
       <GalleryImageSchema
         imageId={urlSafeId}
         description={detection.description}
@@ -194,6 +194,6 @@ export default async function ImageLayout({
         book={page.book}
       />
       {children}
-    </>
+    </div>
   );
 }
