@@ -60,20 +60,21 @@ try {
       page_number,
       anchor,
       content,
-      type,
-      user_name,
-      user_id,
+      type: rawType,
       parent_id,
       encyclopedia_refs,
     } = body;
 
-    // Validate required fields
-    if (!book_id || !page_id || !anchor?.text || !content || !type) {
+    // Validate required fields — anchor and type are now optional
+    if (!book_id || !page_id || !content) {
       return NextResponse.json(
-        { error: 'book_id, page_id, anchor.text, content, and type are required' },
+        { error: 'book_id, page_id, and content are required' },
         { status: 400 }
       );
     }
+
+    // Default type to 'comment' when not provided
+    const type: AnnotationType = rawType || 'comment';
 
     // Validate type
     const validTypes: AnnotationType[] = ['comment', 'context', 'correction', 'reference', 'question', 'etymology'];
@@ -117,24 +118,26 @@ try {
       );
     }
 
+    // Use session for user identity — don't trust client-supplied values
+    const userName = session.user?.name || 'Anonymous';
+    const userId = (session.user as any)?.id || undefined;
+
     const annotation: Annotation = {
       id: new ObjectId().toHexString(),
       book_id,
       page_id,
       page_number: page_number || 0,
       anchor: {
-        text: anchor.text.trim(),
-        start_offset: anchor.start_offset,
-        end_offset: anchor.end_offset,
+        text: anchor?.text?.trim() || '',
+        start_offset: anchor?.start_offset,
+        end_offset: anchor?.end_offset,
       },
       content: content.trim(),
       type,
-      user_id: user_id || undefined,
-      user_name: user_name?.trim() || 'Anonymous',
+      user_id: userId,
+      user_name: userName,
       upvotes: 0,
       upvoted_by: [],
-      // TODO: Add moderation audit trail — requires admin UI + auth first.
-      // Currently auto-approves all annotations with no logging.
       status: 'approved',
       parent_id: parent_id || undefined,
       reply_count: 0,
