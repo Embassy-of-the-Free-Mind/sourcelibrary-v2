@@ -117,77 +117,43 @@ export const POST = withAuth(async (request, session, context) => {
 
 /**
  * Resolve gallery image IDs to full item data.
+ * Reads from the flat gallery_images collection (materialized, fast)
+ * instead of pages+books $lookup (slow, can be out of sync).
  */
 async function resolveImages(db: any, imageIds: string[]) {
   if (imageIds.length === 0) return [];
 
-  const parsed = imageIds.map((id) => {
-    const parts = id.split('-');
-    const idx = parseInt(parts.pop()!);
-    return { id, pageId: parts.join('-'), detIdx: idx };
-  });
-
-  const pageIds = [...new Set(parsed.map((p) => p.pageId))];
-
-  const pages = await db
-    .collection('pages')
-    .aggregate([
-      { $match: { id: { $in: pageIds } } },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'book_id',
-          foreignField: 'id',
-          as: 'book',
-        },
-      },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-    ])
+  const docs = await db
+    .collection('gallery_images')
+    .find({ id: { $in: imageIds } })
     .toArray();
 
-  const pageMap = new Map<string, any>(pages.map((p: any) => [p.id, p]));
+  const docMap = new Map<string, any>(docs.map((d: any) => [d.id, d]));
 
-  // Return in order of image_ids
-  return parsed
-    .map(({ id, pageId, detIdx }) => {
-      const page = pageMap.get(pageId);
-      if (!page) return null;
-      const det = page.detected_images?.[detIdx];
-      if (!det) return null;
-
-      // Build on-the-fly crop URL when no pre-generated image exists
-      const baseUrl = page.archived_photo || page.cropped_photo || page.photo;
-      let cropUrl: string | null = null;
-      if (det.bbox && baseUrl) {
-        const params = new URLSearchParams({
-          url: baseUrl,
-          x: det.bbox.x.toString(),
-          y: det.bbox.y.toString(),
-          w: det.bbox.width.toString(),
-          h: det.bbox.height.toString(),
-        });
-        if (det.rotation) params.set('rotation', det.rotation.toString());
-        cropUrl = `/api/crop-image?${params}`;
-      }
+  // Return in order of image_ids, skip any that weren't found
+  return imageIds
+    .map((id) => {
+      const doc = docMap.get(id);
+      if (!doc) return null;
 
       return {
-        id,
-        pageId,
-        bookId: page.book_id,
-        pageNumber: page.page_number,
-        detectionIndex: detIdx,
-        imageUrl: det.extracted_url || det.thumbnail_url || cropUrl || page.cropped_photo || page.photo,
-        bookTitle: page.book?.display_title || page.book?.title || 'Unknown',
-        author: page.book?.author,
-        year: page.book?.year,
-        description: det.description || '',
-        type: det.type,
-        bbox: det.bbox,
-        rotation: det.rotation ?? 0,
-        thumbnailUrl: det.thumbnail_url,
-        extractedUrl: det.extracted_url,
-        galleryQuality: det.gallery_quality,
-        museumDescription: det.museum_description,
+        id: doc.id,
+        pageId: doc.page_id,
+        bookId: doc.book_id,
+        pageNumber: doc.page_number,
+        detectionIndex: doc.detection_index,
+        imageUrl: doc.extracted_url || doc.thumbnail_url || doc.image_url,
+        bookTitle: doc.book_title || 'Unknown',
+        author: doc.book_author,
+        year: doc.book_year,
+        description: doc.description || '',
+        type: doc.type,
+        bbox: doc.bbox,
+        rotation: doc.rotation ?? 0,
+        thumbnailUrl: doc.thumbnail_url,
+        extractedUrl: doc.extracted_url,
+        galleryQuality: doc.gallery_quality,
+        museumDescription: doc.museum_description,
       };
     })
     .filter(Boolean);
