@@ -6,6 +6,7 @@ dist/
 
 # Dependencies
 node_modules/
+package-lock.json
 
 # Large data files
 data/
@@ -16,6 +17,16 @@ public/test-images/
 mcp-server/dist/
 mcp-server/node_modules/
 
-# Logs
+# Temp scripts (300+ untracked files)
+_tmp-*
+scripts/_tmp-*
+
+# Logs and screenshots
 logs/
 *.log
+*.png
+*.gif
+*.mp4
+
+# Handoffs (read on demand, not indexed)
+.claude/handoffs/

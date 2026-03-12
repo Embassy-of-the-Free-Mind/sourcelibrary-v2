@@ -65,6 +65,7 @@ check-books.js
 # Temp files
 tmp/
 tmp_*
+_tmp-*
 scripts/_tmp-*
 scripts/output/
 
