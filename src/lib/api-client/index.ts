@@ -55,4 +55,5 @@ export * from './social';
 export * from './email';
 export * from './split-detection';
 export * from './upload';
+export * from './reading-history';
 export * from './utils';

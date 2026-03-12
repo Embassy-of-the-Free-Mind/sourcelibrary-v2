@@ -1,5 +1,12 @@
 # Claude Code Guidelines for Source Library
 
+## Development Workflow — CRITICAL
+- **Work on the `dev/prototype` branch.** All changes go here, NOT on `main`.
+- **NEVER run `vercel --prod` from this branch.** The CLI deploys whatever is on disk — it ignores the Vercel production branch setting. This has caused accidental production deploys before. Use `vercel` (no `--prod`) for preview deploys only.
+- **Never push to main.** When work is ready, open a PR: `gh pr create --base main`.
+- **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
+- The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
+
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
 - **NEVER** batch delete — list items first, wait for approval
@@ -13,7 +20,7 @@
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore` (1,200+ books), NOT `sourcelibrary_research`
+- Production database: `bookstore` (5,355 books), NOT `sourcelibrary_research`
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: ALWAYS use `gemini-3-flash-preview`. This was a recurring issue — do not use older models.

@@ -40,7 +40,7 @@ async function getGalleryImages() {
     const images = await db.collection('gallery_images')
       .find(
         { gallery_quality: { $gte: 0.8 }, book_rank: { $lte: 1 } },
-        { projection: { _id: 0, image_url: 1, thumbnail_url: 1, book_title: 1, book_author: 1, book_year: 1, type: 1, description: 1 } }
+        { projection: { _id: 0, image_url: 1, extracted_url: 1, thumbnail_url: 1, book_title: 1, book_author: 1, book_year: 1, type: 1, description: 1 } }
       )
       .sort({ gallery_quality: -1 })
       .limit(6)
@@ -167,7 +167,7 @@ export default async function ParticipatePage() {
       {galleryImages.length > 0 && (
         <section className="max-w-5xl mx-auto px-6 pb-16">
           <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-            {galleryImages.map((img: { image_url: string; thumbnail_url?: string; book_title: string; book_year: number; description: string }, i: number) => (
+            {galleryImages.map((img: { image_url: string; extracted_url?: string; thumbnail_url?: string; book_title: string; book_year: number; description: string }, i: number) => (
               <Link
                 key={i}
                 href="/gallery"
@@ -175,7 +175,7 @@ export default async function ParticipatePage() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.thumbnail_url || img.image_url}
+                  src={img.thumbnail_url || img.extracted_url || img.image_url}
                   alt={img.description || img.book_title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"

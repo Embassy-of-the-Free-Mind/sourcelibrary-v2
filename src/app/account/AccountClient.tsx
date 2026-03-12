@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { BookOpen, Heart, LogOut } from 'lucide-react';
+import { Clock, Heart, LogOut } from 'lucide-react';
 
 interface AccountClientProps {
   user: {
@@ -62,12 +62,12 @@ export default function AccountClient({ user }: AccountClientProps) {
           style={{ background: 'white', border: '1px solid var(--border-light)', borderColor: 'var(--border-light)' }}
         >
           <Link
-            href="/bookshelf"
+            href="/history"
             className="flex items-center gap-3 px-6 py-4 hover:opacity-70 transition-opacity"
             style={{ color: 'var(--text-primary)' }}
           >
-            <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
-            <span>Bookshelf</span>
+            <Clock className="w-5 h-5" style={{ color: 'var(--accent-gold)' }} />
+            <span>Reading History</span>
           </Link>
           <Link
             href="/favorites"

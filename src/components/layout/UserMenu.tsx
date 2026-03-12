@@ -95,12 +95,28 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               Account
             </Link>
             <Link
-              href="/bookshelf"
+              href="/scan"
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
               onClick={() => setIsOpen(false)}
             >
-              Bookshelf
+              Scan Book
+            </Link>
+            <Link
+              href="/history"
+              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-primary)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              Reading History
+            </Link>
+            <Link
+              href="/favorites"
+              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-primary)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              Favorites
             </Link>
             {isAdmin && (
               <Link

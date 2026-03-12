@@ -19,9 +19,10 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   BookOpen,
@@ -34,7 +35,8 @@ import {
   Crop,
   Save,
   RotateCw,
-  Images
+  Info,
+  X
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -49,6 +51,7 @@ export default function ImageDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const router = useRouter();
   const [imageId, setImageId] = useState<string | null>(null);
   const [data, setData] = useState<GalleryImageDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,6 +74,8 @@ export default function ImageDetailPage({
   const [savingRotation, setSavingRotation] = useState(false);
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
+  const [pageImageAspect, setPageImageAspect] = useState<string>('3/4');
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     params.then(p => setImageId(p.id));
@@ -128,6 +133,34 @@ export default function ImageDetailPage({
       setRotation(data.rotation as 0 | 90 | 180 | 270);
     }
   }, [data?.description, data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox, data?.rotation]);
+
+  // Auto-open info modal for images not extracted with current model
+  useEffect(() => {
+    if (data && data.model !== 'gemini-3-flash-preview') {
+      setShowInfo(true);
+    }
+  }, [data]);
+
+  // Load natural aspect ratio of the full page image for accurate bbox editing
+  useEffect(() => {
+    if (!data?.fullPageUrl) return;
+    const img = new window.Image();
+    img.onload = () => {
+      if (img.naturalWidth && img.naturalHeight) {
+        setPageImageAspect(`${img.naturalWidth}/${img.naturalHeight}`);
+      }
+    };
+    img.src = data.fullPageUrl;
+  }, [data?.fullPageUrl]);
+
+  const handleBackClick = useCallback((e: React.MouseEvent) => {
+    // Use browser history if we came from within the site
+    if (window.history.length > 1) {
+      e.preventDefault();
+      router.back();
+    }
+    // Otherwise the Link href fallback takes over
+  }, [router]);
 
   const saveTitle = async () => {
     if (!data) return;
@@ -326,10 +359,11 @@ export default function ImageDetailPage({
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link
             href={data?.galleryUrl || '/gallery'}
+            onClick={handleBackClick}
             className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span className="hidden sm:inline">Back to gallery</span>
+            <span className="hidden sm:inline">Back</span>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -501,13 +535,24 @@ export default function ImageDetailPage({
                   </div>
                 )}
 
-                {data.model && (
-                  <p className="text-sm text-stone-500 mt-2 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
-                    Identified by {data.model}
-                    {data.confidence && ` (${Math.round(data.confidence * 100)}% confidence)`}
-                  </p>
-                )}
+                {/* Model info + info button */}
+                <div className="mt-2 flex items-center gap-2 flex-wrap">
+                  {data.model && (
+                    <p className="text-sm text-stone-500 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" />
+                      {data.model}
+                      {data.confidence ? ` (${Math.round(data.confidence * 100)}%)` : ''}
+                    </p>
+                  )}
+                  <button
+                    onClick={() => setShowInfo(true)}
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-300 transition-colors"
+                    title="View processing metadata"
+                  >
+                    <Info className="w-3 h-3" />
+                    Info
+                  </button>
+                </div>
               </div>
 
               {/* Gallery Quality Rating */}
@@ -839,7 +884,7 @@ export default function ImageDetailPage({
                       <p className="text-xs text-stone-500">Drag the box to move, drag the corner to resize</p>
                       <div
                         className="relative bg-stone-900 rounded overflow-hidden cursor-crosshair select-none"
-                        style={{ aspectRatio: '3/4' }}
+                        style={{ aspectRatio: pageImageAspect }}
                         onMouseDown={(e) => {
                           // Click outside bbox = reposition bbox centered on click
                           const rect = e.currentTarget.getBoundingClientRect();
@@ -970,54 +1015,58 @@ export default function ImageDetailPage({
               </div>
             </div>
 
-            {/* Source info */}
+            {/* Book card + CTA */}
             <div className="space-y-4">
-              <div className="bg-stone-800 rounded-lg p-4">
-                <h2 className="text-sm text-stone-500 uppercase tracking-wide mb-3">Source</h2>
-
+              <div className="bg-stone-800 rounded-lg overflow-hidden">
+                {/* Book cover + info card */}
                 <Link
-                  href={`/book/${data.book.slug || data.book.id}`}
+                  href={data.readUrl}
                   className="block group"
                 >
-                  <p className="text-accent-gold group-hover:text-accent-gold font-medium">
-                    {data.book.title}
-                  </p>
-                  {data.book.author && (
-                    <p className="text-stone-400 text-sm">{data.book.author}</p>
+                  {data.book.thumbnail && (
+                    <div className="relative w-full aspect-[3/4] bg-stone-900">
+                      <Image
+                        src={data.book.thumbnail}
+                        alt={data.book.title}
+                        fill
+                        sizes="(max-width: 768px) 90vw, 300px"
+                        className="object-cover group-hover:opacity-90 transition-opacity"
+                        unoptimized
+                      />
+                    </div>
                   )}
-                  {data.book.year && (
-                    <p className="text-stone-500 text-sm">{data.book.year}</p>
-                  )}
+                  <div className="p-4">
+                    <p className="text-white font-medium group-hover:text-accent-gold transition-colors">
+                      {data.book.title}
+                    </p>
+                    {data.book.author && (
+                      <p className="text-stone-400 text-sm mt-1">{data.book.author}</p>
+                    )}
+                    {data.book.year && (
+                      <p className="text-stone-500 text-sm">{data.book.year}</p>
+                    )}
+                  </div>
                 </Link>
 
-                <div className="mt-4 pt-4 border-t border-stone-700">
+                {/* Primary CTA: Read in context */}
+                <div className="px-4 pb-4">
                   <Link
                     href={data.readUrl}
-                    className="flex items-center gap-2 text-sm text-stone-300 hover:text-white transition-colors"
+                    className="flex items-center justify-center gap-2 py-3 px-4 bg-accent-rust hover:bg-accent-rust/80 text-white rounded-lg transition-colors font-medium"
                   >
-                    <BookOpen className="w-4 h-4" />
+                    <BookOpen className="w-5 h-5" />
                     Read page {data.pageNumber} in context
-                    <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
               </div>
 
-              {/* Quick actions */}
-              <div className="flex flex-col gap-2">
-                <Link
-                  href={data.galleryUrl}
-                  className="block text-center py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
-                >
-                  More from this book
-                </Link>
-                <Link
-                  href="/gallery"
-                  className="flex items-center justify-center gap-2 py-2 px-4 bg-accent-gold-dark/30 hover:bg-accent-gold-dark/50 text-accent-gold rounded-lg text-sm transition-colors border border-accent-gold-dark/30"
-                >
-                  <Images className="w-4 h-4" />
-                  Browse all images
-                </Link>
-              </div>
+              {/* More from this book */}
+              <Link
+                href={data.galleryUrl}
+                className="block text-center py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
+              >
+                More from this book
+              </Link>
 
               {/* Similar images */}
               {imageId && <SimilarImages imageId={imageId} />}
@@ -1026,6 +1075,129 @@ export default function ImageDetailPage({
         </div>
       </main>
 
+      {/* Processing Info Modal */}
+      {showInfo && data && (
+        <div
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowInfo(false)}
+        >
+          <div
+            className="bg-stone-800 rounded-xl max-w-md w-full shadow-2xl border border-stone-700"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-stone-700">
+              <h3 className="text-white font-medium flex items-center gap-2">
+                <Info className="w-4 h-4 text-stone-400" />
+                Processing Info
+              </h3>
+              <button
+                onClick={() => setShowInfo(false)}
+                className="text-stone-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="px-5 py-4 space-y-4">
+              {/* Extraction Model */}
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Extraction Model</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-stone-200 text-sm">{data.model || 'Unknown'}</p>
+                  {data.model === 'gemini-3-flash-preview' ? (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-status-success/15 text-status-success">Current</span>
+                  ) : (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-status-warning/15 text-status-warning">Outdated</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Detection Source */}
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Detection Source</p>
+                <p className="text-stone-200 text-sm">
+                  {data.detectionSource === 'vision_model' && 'Vision model (dedicated image extraction)'}
+                  {data.detectionSource === 'ocr_tag' && 'OCR tag (detected during text extraction)'}
+                  {data.detectionSource === 'manual' && 'Manually added'}
+                  {!data.detectionSource && 'Unknown'}
+                </p>
+              </div>
+
+              {/* Confidence */}
+              {data.confidence != null && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Confidence</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1.5 bg-stone-700 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-accent-gold"
+                        style={{ width: `${Math.round(data.confidence * 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-stone-300 text-sm font-mono w-10 text-right">
+                      {Math.round(data.confidence * 100)}%
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Gallery Quality */}
+              {data.galleryQuality != null && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Gallery Quality</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1.5 bg-stone-700 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${Math.round(data.galleryQuality * 100)}%`,
+                          backgroundColor: data.galleryQuality >= 0.75 ? 'var(--status-success)' : data.galleryQuality >= 0.5 ? 'var(--accent-gold)' : 'var(--status-error)'
+                        }}
+                      />
+                    </div>
+                    <span className="text-stone-300 text-sm font-mono w-10 text-right">
+                      {data.galleryQuality.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Quality Rationale */}
+              {data.galleryRationale && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Quality Rationale</p>
+                  <p className="text-stone-300 text-sm leading-relaxed">{data.galleryRationale}</p>
+                </div>
+              )}
+
+              {/* Type */}
+              {data.type && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Image Type</p>
+                  <p className="text-stone-200 text-sm capitalize">{data.type}</p>
+                </div>
+              )}
+
+              {/* Featured */}
+              {data.featured && (
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-accent-gold" />
+                  <p className="text-accent-gold text-sm">Featured image</p>
+                </div>
+              )}
+            </div>
+
+            <div className="px-5 py-3 border-t border-stone-700">
+              <button
+                onClick={() => setShowInfo(false)}
+                className="w-full py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-stone-300 text-sm transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

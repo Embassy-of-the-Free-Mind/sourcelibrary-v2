@@ -6,13 +6,7 @@ import Image from 'next/image';
 import { Heart, BookOpen, FileText, Image as ImageIcon, User, TrendingUp } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { likes } from '@/lib/api-client';
-
-const VISITOR_ID_KEY = 'sl_visitor_id';
-
-function getVisitorId(): string {
-  if (typeof window === 'undefined') return '';
-  return localStorage.getItem(VISITOR_ID_KEY) || '';
-}
+import { useIdentity } from '@/hooks/useIdentity';
 
 interface FeaturedImage {
   url: string;
@@ -64,6 +58,7 @@ type Tab = 'books' | 'pages' | 'images';
 type Mode = 'popular' | 'mine';
 
 export default function FavoritesPage() {
+  const identity = useIdentity();
   const [tab, setTab] = useState<Tab>('books');
   const [mode, setMode] = useState<Mode>('mine');
 
@@ -84,9 +79,10 @@ export default function FavoritesPage() {
   const [loadingMyPages, setLoadingMyPages] = useState(true);
   const [loadingMyImages, setLoadingMyImages] = useState(true);
 
-  // Load my likes on mount
+  // Load my likes once identity is resolved
   useEffect(() => {
-    const visitorId = getVisitorId();
+    if (identity.loading) return;
+    const visitorId = identity.id;
     if (!visitorId) {
       setLoadingMyBooks(false);
       setLoadingMyPages(false);
@@ -108,7 +104,7 @@ export default function FavoritesPage() {
       .then(data => setMyImages(data.items))
       .catch(console.error)
       .finally(() => setLoadingMyImages(false));
-  }, []);
+  }, [identity.loading, identity.id]);
 
   // Lazy-load popular data only when switching to that mode
   const loadPopular = useCallback(() => {

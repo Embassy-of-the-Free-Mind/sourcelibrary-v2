@@ -88,7 +88,7 @@ export async function GET() {
       subjects ? `Subjects: ${subjects}` : '',
     ].filter(Boolean);
 
-    const thumbnailUrl = img.thumbnailUrl || img.extractedUrl;
+    const thumbnailUrl = img.extractedUrl || img.thumbnailUrl;
     const imageTag = thumbnailUrl
       ? `<img src="${escapeXml(thumbnailUrl.startsWith('/') ? BASE_URL + thumbnailUrl : thumbnailUrl)}" alt="${escapeXml(title)}" /><br/>`
       : '';

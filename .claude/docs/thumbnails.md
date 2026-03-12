@@ -75,6 +75,8 @@ Click any page thumbnail to set it as the book's cover. Sets `thumbnail_source: 
 
 **URL priority for manual picks:** `thumbnail_blob` → `cropped_photo` → `archived_photo` → `photo`
 
+**Cache invalidation (fixed Mar 11 2026):** The PATCH route calls `revalidatePath()` when thumbnail changes, and the component calls `router.refresh()` after saving. Before this fix, the ISR-cached page (120s TTL) kept serving the old thumbnail after manual changes.
+
 ---
 
 ## What Works Well
@@ -112,7 +114,7 @@ Click any page thumbnail to set it as the book's cover. Sets `thumbnail_source: 
 ### 4. Ex Libris / Bookplate Pages
 
 **Impact:** Some books have ex libris stamps, ownership inscriptions, or library bookplates on pages classified as `text` or unclassified. These aren't caught by the `page_type` priority system.
-**Scale:** Minor — only ~36 books had genuinely bad covers with better alternatives available (fixed via `_tmp-check-covers.mjs`, Mar 2026).
+**Scale:** Two rounds of fixes — 36 books fixed Mar 2026 (`_tmp-check-covers.mjs`), then 71 more fixed Mar 11 2026 (bulk scan of all non-manual books with frontispiece/title-page available but not selected as cover).
 **Future:** Could add `ex_libris` or `bookplate` as a page_type to the OCR prompt, then exclude those from cover selection.
 
 ### 5. Gallery Quality Not Used for Covers

@@ -8,14 +8,14 @@ export interface AnnotationCreateRequest {
   book_id: string;
   page_id: string;
   page_number: number;
-  anchor: {
+  anchor?: {
     text: string;
     start_offset?: number;
     end_offset?: number;
   };
   content: string;
-  type: AnnotationType;
-  user_name: string;
+  type?: AnnotationType;
+  user_name?: string;
   parent_id?: string;
 }
 

@@ -41,7 +41,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
       href={`/book/${book.slug || book.id || book.bookId}`}
       className="group block"
     >
-      <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-all overflow-hidden bg-white">
+      <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
         {/* Book Poster with Shimmer Loading */}
         <div className="relative aspect-[3/4] bg-warm overflow-hidden">
           {/* Shimmer placeholder - only for images, shows until loaded */}
