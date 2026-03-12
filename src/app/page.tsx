@@ -245,6 +245,10 @@ async function getCollectionShowcase() {
           { extracted_url: { $type: 'string', $gt: '' } },
         ],
         book_hidden: { $ne: true },
+        // Exclude text-heavy crops and tiny decorative elements
+        type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
+        // Require meaningful bbox size (at least 10% of page width)
+        'bbox.width': { $gte: 0.1 },
       },
     },
     { $limit: 40 },
@@ -281,6 +285,7 @@ async function getCollectionShowcase() {
       page_number: img.page_number || 0,
       detection_index: img.detection_index || 0,
       thumbnail_url: img.thumbnail_url || img.extracted_url,
+      extracted_url: img.extracted_url || img.thumbnail_url,
       type: img.type || '',
       museum_description: img.museum_description,
       book_title: img.book_title || '',
