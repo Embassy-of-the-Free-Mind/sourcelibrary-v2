@@ -597,9 +597,9 @@ export default function ImageDetailPage({
           )}
 
           {/* Title + attribution overlay at bottom of image */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 px-4 py-3 bg-gradient-to-t from-black/90 via-black/70 to-transparent">
-            <p className="text-sm text-white/90 line-clamp-2">{data.description}</p>
-            <p className="text-xs text-white/50 truncate mt-0.5">
+          <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black via-black/80 via-30% to-transparent">
+            <h1 className="text-lg sm:text-xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
+            <p className="text-sm text-white/60 mt-1">
               {data.book.title}{data.book.author ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
             </p>
           </div>
