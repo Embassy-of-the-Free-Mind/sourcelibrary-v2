@@ -173,7 +173,30 @@ export async function GET(
       );
     }
 
-    const detection = detections[detectionIndex];
+    let detection = detections[detectionIndex];
+
+    // If the page detection is missing key fields, backfill from gallery_images
+    // (gallery_images may have richer data from a previous extraction run)
+    if (!detection.description || detection.gallery_quality == null) {
+      const galleryImageId = `${pageId}-${detectionIndex}`;
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      if (galleryDoc) {
+        detection = {
+          ...detection,
+          description: detection.description || galleryDoc.description,
+          type: detection.type || galleryDoc.type,
+          gallery_quality: detection.gallery_quality ?? galleryDoc.gallery_quality,
+          museum_description: detection.museum_description ?? galleryDoc.museum_description,
+          metadata: detection.metadata ?? galleryDoc.metadata,
+          confidence: detection.confidence ?? galleryDoc.confidence,
+          model: detection.model ?? galleryDoc.model,
+          extracted_url: detection.extracted_url ?? galleryDoc.extracted_url,
+          thumbnail_url: detection.thumbnail_url ?? galleryDoc.thumbnail_url,
+          bbox: detection.bbox ?? galleryDoc.bbox,
+        };
+      }
+    }
+
     // For bbox editing: MUST use the same source priority as the image extraction worker
     // (cropped_photo first) so bbox coordinates are in the same coordinate space as the detection.
     // archived_photo is the full unsplit spread; cropped_photo is the split single page.
