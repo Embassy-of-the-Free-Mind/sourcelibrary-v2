@@ -135,12 +135,15 @@ async function fixStaleThumbnail(
   const thumbProj = { page_number: 1, cropped_photo: 1, thumbnail_blob: 1, 'ocr.data': 1 };
 
   // Try title-page, frontispiece, then first non-blank page — skip ex libris pages
+  // Exception: ex libris on title pages is acceptable (library stamps on title pages are common and fine)
   const candidates = await db.collection('pages').find(
     { ...croppedFilter, page_type: { $in: ['title-page', 'frontispiece'] } },
     { projection: thumbProj, sort: { page_type: 1, page_number: 1 } }
   ).toArray();
 
-  let bestPage = candidates.find(p => !isExLibrisPage(p.ocr?.data));
+  let bestPage = candidates.find(p =>
+    p.page_type === 'title-page' || !isExLibrisPage(p.ocr?.data)
+  );
 
   if (!bestPage) {
     const fallbacks = await db.collection('pages').find(
@@ -207,16 +210,15 @@ async function upgradeThumbnailFromPageType(
   ).toArray();
   let bestPage = frontispieces.find(p => !isExLibrisPage(p.ocr?.data)) || null;
 
-  // If current is title-page (and not ex libris) and no frontispiece found, keep it
-  if (!bestPage && currentPage?.page_type === 'title-page' && !isExLibrisPage(currentPage.ocr?.data)) return;
+  // If current is title-page and no frontispiece found, keep it (ex libris on title pages is OK)
+  if (!bestPage && currentPage?.page_type === 'title-page') return;
 
-  // Priority 2: title-page (within first 30 pages), skip ex libris
+  // Priority 2: title-page (within first 30 pages) — ex libris on title pages is OK
   if (!bestPage) {
-    const titlePages = await db.collection('pages').find(
+    bestPage = await db.collection('pages').findOne(
       { book_id: bookId, page_type: 'title-page', page_number: { $lte: 30 } },
-      { projection: proj, sort: { page_number: 1 }, limit: 3 }
-    ).toArray();
-    bestPage = titlePages.find(p => !isExLibrisPage(p.ocr?.data)) || null;
+      { projection: proj, sort: { page_number: 1 } }
+    );
   }
 
   // Priority 3: first illustration within first 20 pages, skip ex libris
