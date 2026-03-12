@@ -220,7 +220,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
     }
   };
 
-  const hasFilters = bookId || typeFilter || subjectFilter || libraryFilter || imageSearchQuery;
+  const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery;
   const showCollections = !hasFilters && page === 0;
 
   return (
@@ -324,7 +324,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Active Filters / Book Info */}
-        {(data?.bookInfo || typeFilter || subjectFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
+        {(data?.bookInfo || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {data?.bookInfo && (
               <>
@@ -343,6 +343,14 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                   View all images
                 </button>
               </>
+            )}
+            {collectionFilter && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-gold/15 text-accent-gold-dark rounded-full text-sm">
+                Collection: {collectionFilter.replace(/-/g, ' ')}
+                <button onClick={() => updateParams({ collection: '' })} className="hover:text-accent-gold-dark">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
             )}
             {libraryFilter && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
