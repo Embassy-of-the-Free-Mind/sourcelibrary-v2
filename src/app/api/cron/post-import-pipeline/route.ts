@@ -103,6 +103,13 @@ async function setPipelineStatus(
   }
 }
 
+/** Check if a page's OCR text indicates an ex libris / bookplate / library stamp */
+function isExLibrisPage(ocrData?: string): boolean {
+  if (!ocrData) return false;
+  const start = ocrData.substring(0, 1000);
+  return /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
+}
+
 /**
  * If a book's thumbnail still points to an unsplit upload, update it to the best cropped page.
  * Prefers title-page > frontispiece > first non-blank cropped page.
@@ -124,28 +131,30 @@ async function fixStaleThumbnail(
   });
   if (hasCroppedPages === 0) return;
 
-  let bestPage = await db.collection('pages').findOne({
-    book_id: bookId, page_type: 'title-page',
-    cropped_photo: { $exists: true, $ne: '' },
-  });
+  const croppedFilter = { book_id: bookId, cropped_photo: { $exists: true, $ne: '' } };
+  const thumbProj = { page_number: 1, cropped_photo: 1, thumbnail_blob: 1, 'ocr.data': 1 };
+
+  // Try title-page, frontispiece, then first non-blank page — skip ex libris pages
+  const candidates = await db.collection('pages').find(
+    { ...croppedFilter, page_type: { $in: ['title-page', 'frontispiece'] } },
+    { projection: thumbProj, sort: { page_type: 1, page_number: 1 } }
+  ).toArray();
+
+  let bestPage = candidates.find(p => !isExLibrisPage(p.ocr?.data));
+
   if (!bestPage) {
-    bestPage = await db.collection('pages').findOne({
-      book_id: bookId, page_type: 'frontispiece',
-      cropped_photo: { $exists: true, $ne: '' },
-    });
+    const fallbacks = await db.collection('pages').find(
+      { ...croppedFilter, page_type: { $nin: ['blank', null] } },
+      { projection: thumbProj, sort: { page_number: 1 }, limit: 5 }
+    ).toArray();
+    bestPage = fallbacks.find(p => !isExLibrisPage(p.ocr?.data));
   }
   if (!bestPage) {
-    bestPage = await db.collection('pages').findOne({
-      book_id: bookId,
-      cropped_photo: { $exists: true, $ne: '' },
-      page_type: { $nin: ['blank', null] },
-    }, { sort: { page_number: 1 } });
-  }
-  if (!bestPage) {
-    bestPage = await db.collection('pages').findOne({
-      book_id: bookId,
-      cropped_photo: { $exists: true, $ne: '' },
-    }, { sort: { page_number: 1 } });
+    const lastFallbacks = await db.collection('pages').find(
+      croppedFilter,
+      { projection: thumbProj, sort: { page_number: 1 }, limit: 5 }
+    ).toArray();
+    bestPage = lastFallbacks.find(p => !isExLibrisPage(p.ocr?.data));
   }
 
   if (bestPage) {
@@ -184,36 +193,39 @@ async function upgradeThumbnailFromPageType(
       { photo_original: book.thumbnail },
       { thumbnail_blob: book.thumbnail },
     ]
-  }, { projection: { page_type: 1 } });
+  }, { projection: { page_type: 1, 'ocr.data': 1 } });
 
-  // If current thumbnail is already a frontispiece, nothing to do
-  if (currentPage?.page_type === 'frontispiece') return;
+  // If current thumbnail is already a frontispiece and NOT ex libris, nothing to do
+  if (currentPage?.page_type === 'frontispiece' && !isExLibrisPage(currentPage.ocr?.data)) return;
 
-  const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1 };
+  const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1, 'ocr.data': 1 };
 
-  // Priority 1: frontispiece (within first 50 pages)
-  let bestPage = await db.collection('pages').findOne(
+  // Priority 1: frontispiece (within first 50 pages), skip ex libris
+  const frontispieces = await db.collection('pages').find(
     { book_id: bookId, page_type: 'frontispiece', page_number: { $lte: 50 } },
-    { projection: proj, sort: { page_number: 1 } }
-  );
+    { projection: proj, sort: { page_number: 1 }, limit: 3 }
+  ).toArray();
+  let bestPage = frontispieces.find(p => !isExLibrisPage(p.ocr?.data)) || null;
 
-  // If current is title-page and no frontispiece found, keep it
-  if (!bestPage && currentPage?.page_type === 'title-page') return;
+  // If current is title-page (and not ex libris) and no frontispiece found, keep it
+  if (!bestPage && currentPage?.page_type === 'title-page' && !isExLibrisPage(currentPage.ocr?.data)) return;
 
-  // Priority 2: title-page (within first 30 pages)
+  // Priority 2: title-page (within first 30 pages), skip ex libris
   if (!bestPage) {
-    bestPage = await db.collection('pages').findOne(
+    const titlePages = await db.collection('pages').find(
       { book_id: bookId, page_type: 'title-page', page_number: { $lte: 30 } },
-      { projection: proj, sort: { page_number: 1 } }
-    );
+      { projection: proj, sort: { page_number: 1 }, limit: 3 }
+    ).toArray();
+    bestPage = titlePages.find(p => !isExLibrisPage(p.ocr?.data)) || null;
   }
 
-  // Priority 3: first illustration within first 20 pages
+  // Priority 3: first illustration within first 20 pages, skip ex libris
   if (!bestPage) {
-    bestPage = await db.collection('pages').findOne(
+    const illustrations = await db.collection('pages').find(
       { book_id: bookId, page_type: 'illustration', page_number: { $lte: 20 } },
-      { projection: proj, sort: { page_number: 1 } }
-    );
+      { projection: proj, sort: { page_number: 1 }, limit: 5 }
+    ).toArray();
+    bestPage = illustrations.find(p => !isExLibrisPage(p.ocr?.data)) || null;
   }
 
   // Priority 4: best gallery image by quality score (fallback for books without frontispiece/title-page)
