@@ -2,7 +2,7 @@
 
 ## Development Workflow — CRITICAL
 - **Work on the `dev/prototype` branch.** All changes go here, NOT on `main`.
-- **Never deploy to production** (`vercel --prod`) from this branch. Use `vercel` (no `--prod`) for preview deploys.
+- **NEVER run `vercel --prod` from this branch.** The CLI deploys whatever is on disk — it ignores the Vercel production branch setting. This has caused accidental production deploys before. Use `vercel` (no `--prod`) for preview deploys only.
 - **Never push to main.** When work is ready, open a PR: `gh pr create --base main`.
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
