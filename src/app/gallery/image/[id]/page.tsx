@@ -83,7 +83,7 @@ export default function ImageDetailPage({
   const [bookImages, setBookImages] = useState<BookImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [showDetails, setShowDetails] = useState(false);
-  const [navLoading, setNavLoading] = useState(false);
+  const [imageOpacity, setImageOpacity] = useState(1);
 
   // Ref to prevent stale closures in keyboard handler
   const navRef = useRef({ bookImages: [] as BookImage[], currentIndex: -1, showDetails: false });
@@ -102,15 +102,14 @@ export default function ImageDetailPage({
 
     async function fetchImage() {
       try {
-        setNavLoading(true);
         const json = await gallery.get(imageId!);
         setData(json);
+        requestAnimationFrame(() => setImageOpacity(1));
         sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {
         setLoading(false);
-        setNavLoading(false);
       }
     }
 
@@ -214,17 +213,19 @@ export default function ImageDetailPage({
   const navigateTo = useCallback((index: number) => {
     if (index < 0 || index >= navRef.current.bookImages.length) return;
     const img = navRef.current.bookImages[index];
-    setCurrentIndex(index);
-    setImageId(img.id);
-    // Reset editing states
-    setEditingTitle(false);
-    setEditingQuality(false);
-    setEditingDescription(false);
-    setEditingMetadata(false);
-    setEditingBbox(false);
-    setBrightness(100);
-    setContrast(100);
-    window.history.replaceState(null, '', `/gallery/image/${img.id}`);
+    setImageOpacity(0);
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setImageId(img.id);
+      setEditingTitle(false);
+      setEditingQuality(false);
+      setEditingDescription(false);
+      setEditingMetadata(false);
+      setEditingBbox(false);
+      setBrightness(100);
+      setContrast(100);
+      window.history.replaceState(null, '', `/gallery/image/${img.id}`);
+    }, 200);
   }, []);
 
   // Back navigation
@@ -482,6 +483,8 @@ export default function ImageDetailPage({
         <div
           className="w-full h-full relative"
           style={{
+            opacity: imageOpacity,
+            transition: 'opacity 0.25s ease-in-out',
             filter: (brightness !== 100 || contrast !== 100)
               ? `brightness(${brightness}%) contrast(${contrast}%)`
               : undefined,
@@ -502,13 +505,6 @@ export default function ImageDetailPage({
             />
           </div>
         </div>
-
-        {/* Loading overlay during navigation */}
-        {navLoading && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-20">
-            <BookLoader size="sm" variant="dark" />
-          </div>
-        )}
 
         {/* Type badge */}
         {data.type && (
