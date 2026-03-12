@@ -44,10 +44,11 @@ export default function ScanTheRenaissancePage() {
           The Renaissance began when one man funded one translation.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-4">
-          In 1460, Cosimo de&apos; Medici asked Marsilio Ficino to translate the <em>Corpus Hermeticum</em> —
-          a decision that helped spark the most consequential intellectual revolution in Western history.
-          Ficino set aside Plato to do it. The resulting text reshaped philosophy, science, and religion
-          across Europe.
+          In 1462, Cosimo de&apos; Medici directed Marsilio Ficino to set aside his translation of Plato
+          and instead translate the <em>Corpus Hermeticum</em> — a Greek manuscript that had arrived in
+          Florence two years earlier. Cosimo was elderly and dying; he wanted to read it before the end.
+          Ficino completed the translation by April 1463. The resulting text reshaped philosophy, science,
+          and religion across Europe.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-12">
           Five centuries later, the vast majority of texts from that revolution remain unread.
@@ -58,9 +59,9 @@ export default function ScanTheRenaissancePage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { value: '1.6M', label: 'Editions printed 1450–1700', color: 'text-accent-rust' },
-            { value: '~28%', label: 'Have any digital scan', color: 'text-accent-sage' },
-            { value: '1.15M', label: 'Editions still unscanned', color: 'text-accent-violet' },
+            { value: '1.65M', label: 'Editions printed 1450–1700', color: 'text-accent-rust' },
+            { value: '~30%', label: 'Have a linked digital scan', color: 'text-accent-sage' },
+            { value: '~1.15M', label: 'Editions still unscanned', color: 'text-accent-violet' },
             { value: '~$3', label: 'AI cost to translate one book', color: 'text-accent-gold' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-xl p-5 border border-border-light text-center">
@@ -71,9 +72,10 @@ export default function ScanTheRenaissancePage() {
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-4">
-          The Universal Short Title Catalogue records 1.6 million editions printed in Europe between 1450 and 1700.
-          Only about 28% have been digitized in any form. The remaining <strong>1.15 million editions</strong> —
-          books that shaped the modern world — sit in archives, unscanned, untranslated, effectively invisible.
+          The Universal Short Title Catalogue records over 1.65 million editions printed in Europe between 1450 and 1700.
+          Only about 30% have a linked digital scan — roughly half a million editions. The remaining{' '}
+          <strong>1.15 million editions</strong> — books that shaped the modern world — sit in archives,
+          unscanned, untranslated, effectively invisible.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-8">
           The scholars who can read them are retiring. The physical books are deteriorating.
@@ -92,11 +94,14 @@ export default function ScanTheRenaissancePage() {
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-4">
-          The total cost to scan every remaining undigitized Renaissance edition is estimated at $50–100 million.
+          The total cost to scan every remaining undigitized Renaissance edition is on the order
+          of $100–200 million — depending on conservation requirements and institutional access.
+          At Internet Archive bulk rates the floor is lower; for fragile manuscripts it&apos;s higher.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-4">
-          That&apos;s less than one endowed university chair. Less than one year of NEH grants.
-          Less than what a single large foundation distributes in a quarter.
+          That sounds like a lot until you compare it to what we already spend on cultural preservation.
+          It&apos;s less than a single large museum renovation. Less than what the NEH distributes in a year.
+          Less than what the Arcadia Fund has already given to endangered archives.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-12">
           This is not an intractable problem. It&apos;s a solvable one.
@@ -124,17 +129,29 @@ export default function ScanTheRenaissancePage() {
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-4">
           The Bibliotheca Klossiana — 7,000 books and 2,000 manuscripts on Masonic ritual,
-          Rosicrucian treatises, alchemical works, and Illuminati documents — was assembled
-          by Georg Kloss, a 19th-century Frankfurt physician who spent decades acquiring
-          entire monastery libraries. It is held today at the Cultureel Maconniek Centrum
+          Rosicrucian treatises, alchemical works, and documents of the Bavarian Illuminati —
+          bears the name of Georg Kloss (1787–1854), a Frankfurt physician and obsessive
+          collector. Kloss first built one of Europe&apos;s great incunabula libraries by
+          purchasing entire monastery collections, then sold it all at Sotheby&apos;s in 1835
+          to fund a second, even more ambitious project: a comprehensive library of Freemasonry
+          and its antecedents.
+        </p>
+        <p className="font-body text-lg text-secondary leading-relaxed mb-4">
+          That collection was acquired by Prince Frederik of the Netherlands, Grand Master
+          of the Dutch Masonic Order, who donated it in 1866 to mark fifty years of his
+          Grand Mastership. It has been held ever since at the Cultureel Maconniek Centrum
           &ldquo;Prins Frederik&rdquo; in The Hague.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-4">
-          Since 2023, the archive has been shuttered. No one can access it. None of it is digitized.
+          Today, while the building houses a small public museum, the library and archive
+          themselves are accessible only by appointment — and none of the collection has
+          been digitized. For the vast majority of researchers, these 9,000 volumes are
+          effectively unreachable.
         </p>
         <p className="font-body text-lg text-secondary leading-relaxed mb-12">
-          A partnership between the Embassy of the Free Mind and CMC Prins Frederik
-          now makes access possible — if the scanning can be funded.
+          Source Library and the Embassy of the Free Mind are exploring a collaboration
+          with CMC Prins Frederik to change that — to digitize, OCR, translate, and publish
+          the entire Kloss collection as a freely accessible online resource.
         </p>
 
         {/* Why Kloss */}
@@ -143,8 +160,8 @@ export default function ScanTheRenaissancePage() {
         <div className="grid md:grid-cols-2 gap-4 mb-12">
           {[
             {
-              title: 'Unique Rosicrucian manuscripts',
-              desc: 'Gold- und Rosenkreuzer material found nowhere else — primary sources for the history of esoteric orders.',
+              title: 'Rare Rosicrucian manuscripts',
+              desc: 'Exceptional Gold- und Rosenkreuzer material rarely found outside specialist archives — primary sources for the history of esoteric orders.',
             },
             {
               title: 'Masonic history',
@@ -155,8 +172,8 @@ export default function ScanTheRenaissancePage() {
               desc: 'Covers traditions the BPH/Ritman collection doesn\'t — particularly Germanic lodge documents and Illuminati materials.',
             },
             {
-              title: 'Partnership ready',
-              desc: 'The Embassy of the Free Mind and CMC Prins Frederik have agreed to collaborate. Access is possible now.',
+              title: 'Collaboration in progress',
+              desc: 'Source Library and the Embassy of the Free Mind are in discussions with CMC Prins Frederik to enable digitization access.',
             },
           ].map(item => (
             <div key={item.title} className="bg-white rounded-xl p-5 border border-border-light">
@@ -250,6 +267,118 @@ export default function ScanTheRenaissancePage() {
         </div>
 
 
+        {/* ── Operational Plan ── */}
+        <h3 className="font-serif text-2xl md:text-3xl text-primary mt-16 mb-6">How It Works: The Operational Plan</h3>
+
+        <p className="font-body text-lg text-secondary leading-relaxed mb-8">
+          This is not a speculative proposal. Every step below uses proven methods and existing relationships.
+        </p>
+
+        {/* Phase 1 */}
+        <div className="bg-white rounded-xl p-6 border border-border-light mb-4">
+          <div className="flex items-baseline gap-3 mb-3">
+            <span className="text-xs font-semibold text-accent-rust bg-accent-rust/10 px-2 py-0.5 rounded-full">Phase 1</span>
+            <h4 className="text-lg text-primary">Survey &amp; Conservation Assessment</h4>
+          </div>
+          <p className="text-muted text-sm mb-3">Months 1–4 &middot; ~$40K</p>
+          <ul className="text-secondary text-sm space-y-2">
+            <li>On-site inventory: catalog every volume and manuscript by subject, condition, and language</li>
+            <li>Conservation assessment: identify fragile items requiring special handling or repair before scanning</li>
+            <li>Prioritize: rank subject areas by scholarly value and scanning readiness</li>
+            <li>Technical planning: select scanning equipment, define image standards (600 DPI, RAW + JPEG2000), IIIF spec</li>
+            <li>Deliverable: complete catalog, condition report, and digitization schedule</li>
+          </ul>
+        </div>
+
+        {/* Phase 2 */}
+        <div className="bg-white rounded-xl p-6 border border-border-light mb-4">
+          <div className="flex items-baseline gap-3 mb-3">
+            <span className="text-xs font-semibold text-accent-sage bg-accent-sage/10 px-2 py-0.5 rounded-full">Phase 2</span>
+            <h4 className="text-lg text-primary">Scanning</h4>
+          </div>
+          <p className="text-muted text-sm mb-3">Months 4–30 &middot; $400K–$800K (bulk of cost)</p>
+          <ul className="text-secondary text-sm space-y-2">
+            <li>On-site scanning station: conservation-grade V-cradle book scanner (e.g. Zeutschel OS 15000) installed at CMC Prins Frederik</li>
+            <li>Two trained operators, supervised by a conservator for fragile items</li>
+            <li>Target throughput: 100–150 volumes/month (200–400 pages each)</li>
+            <li>Manuscript handling: flatbed scanning with UV/IR capture for palimpsests and faded inks</li>
+            <li>Images uploaded nightly to Vercel Blob storage with automated quality checks</li>
+            <li>Weekly progress reports published to sourcelibrary.org/scan-the-renaissance/progress</li>
+          </ul>
+        </div>
+
+        {/* Phase 3 */}
+        <div className="bg-white rounded-xl p-6 border border-border-light mb-4">
+          <div className="flex items-baseline gap-3 mb-3">
+            <span className="text-xs font-semibold text-accent-violet bg-accent-violet/10 px-2 py-0.5 rounded-full">Phase 3</span>
+            <h4 className="text-lg text-primary">AI Processing Pipeline</h4>
+          </div>
+          <p className="text-muted text-sm mb-3">Ongoing from month 5 &middot; ~$25K (AI costs for 9,000 volumes)</p>
+          <ul className="text-secondary text-sm space-y-2">
+            <li>OCR: Gemini AI reads each scanned page — Latin, German, French, Dutch, and manuscript hands</li>
+            <li>Translation: every page translated to English with full-book context continuity</li>
+            <li>Image extraction: illustrations, diagrams, and symbols cataloged with AI-generated metadata</li>
+            <li>Index generation: automated subject indices, named entity recognition, cross-references</li>
+            <li>Processing runs in parallel with scanning — books enter the pipeline as soon as they&apos;re scanned</li>
+            <li>Proven at scale: Source Library has already processed 5,000+ books through this exact pipeline</li>
+          </ul>
+        </div>
+
+        {/* Phase 4 */}
+        <div className="bg-white rounded-xl p-6 border border-border-light mb-4">
+          <div className="flex items-baseline gap-3 mb-3">
+            <span className="text-xs font-semibold text-accent-gold bg-accent-gold/10 px-2 py-0.5 rounded-full">Phase 4</span>
+            <h4 className="text-lg text-primary">Scholarly Review &amp; Publication</h4>
+          </div>
+          <p className="text-muted text-sm mb-3">Ongoing from month 8 &middot; $50K–$100K</p>
+          <ul className="text-secondary text-sm space-y-2">
+            <li>Expert review: specialists in Masonic history, Rosicrucianism, and Western esotericism review AI translations</li>
+            <li>Scholarly editions: key texts published with introductions, apparatus, and DOI registration via Zenodo</li>
+            <li>IIIF manifests: every volume available through standard digital library protocols, interoperable with major platforms</li>
+            <li>Open access: all materials published under CC0 — no paywalls, no restrictions, forever</li>
+            <li>Metadata alignment: catalog records cross-referenced with WorldCat, USTC, and library union catalogs</li>
+          </ul>
+        </div>
+
+        {/* Phase 5 */}
+        <div className="bg-white rounded-xl p-6 border border-border-light mb-12">
+          <div className="flex items-baseline gap-3 mb-3">
+            <span className="text-xs font-semibold text-primary bg-stone-100 px-2 py-0.5 rounded-full">Phase 5</span>
+            <h4 className="text-lg text-primary">Long-term Stewardship</h4>
+          </div>
+          <p className="text-muted text-sm mb-3">Year 3+ &middot; covered by Source Library operating budget</p>
+          <ul className="text-secondary text-sm space-y-2">
+            <li>Permanent hosting on sourcelibrary.org with CDN-backed image delivery</li>
+            <li>Ongoing AI model improvements retroactively improve OCR and translation quality</li>
+            <li>Scholar-contributed corrections integrated through edition versioning system</li>
+            <li>Digital preservation: IIIF + METS packaging for deposit in institutional repositories</li>
+          </ul>
+        </div>
+
+        {/* Budget summary */}
+        <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-12">
+          <h4 className="text-primary font-medium mb-3">Budget Summary</h4>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-muted border-b border-border-light">
+                  <th className="pb-2 pr-4">Phase</th>
+                  <th className="pb-2 pr-4">Cost</th>
+                  <th className="pb-2">Notes</th>
+                </tr>
+              </thead>
+              <tbody className="text-secondary">
+                <tr className="border-b border-border-light/50"><td className="py-2 pr-4">Survey &amp; assessment</td><td className="py-2 pr-4 whitespace-nowrap">$40K</td><td className="py-2">On-site inventory, conservation report, catalog</td></tr>
+                <tr className="border-b border-border-light/50"><td className="py-2 pr-4">Scanning (9,000 volumes)</td><td className="py-2 pr-4 whitespace-nowrap">$400K–$800K</td><td className="py-2">Equipment, operators, conservator oversight</td></tr>
+                <tr className="border-b border-border-light/50"><td className="py-2 pr-4">AI processing</td><td className="py-2 pr-4 whitespace-nowrap">~$25K</td><td className="py-2">OCR, translation, images, indexing — entire collection</td></tr>
+                <tr className="border-b border-border-light/50"><td className="py-2 pr-4">Scholarly review</td><td className="py-2 pr-4 whitespace-nowrap">$50K–$100K</td><td className="py-2">Expert review, DOI editions, metadata</td></tr>
+                <tr className="border-b border-border-light/50"><td className="py-2 pr-4">Project management</td><td className="py-2 pr-4 whitespace-nowrap">$80K</td><td className="py-2">Coordination across 2–3 years</td></tr>
+                <tr className="font-medium"><td className="py-2 pr-4">Total</td><td className="py-2 pr-4 whitespace-nowrap text-accent-rust">$600K–$1.05M</td><td className="py-2">Complete digitization of the Bibliotheca Klossiana</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         {/* ══════════════════════════════════════════════
             CREDIBILITY & CTA
             ══════════════════════════════════════════════ */}
@@ -261,7 +390,7 @@ export default function ScanTheRenaissancePage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
             { value: '5,000+', label: 'Books processed', color: 'text-accent-rust' },
-            { value: '1,873', label: 'First-ever English translations', color: 'text-accent-sage' },
+            { value: '2,400+', label: 'First-ever English translations', color: 'text-accent-sage' },
             { value: '30+', label: 'Languages', color: 'text-accent-violet' },
             { value: 'CC0', label: 'Open access', color: 'text-accent-gold' },
           ].map(s => (
@@ -277,7 +406,7 @@ export default function ScanTheRenaissancePage() {
             'IIIF manifests for interoperability with global digital library infrastructure',
             'DOI-minted scholarly editions for permanent citation',
             'Embassy of the Free Mind — institutional home (Amsterdam)',
-            'BPH / Bibliotheca Philosophica Hermetica — UNESCO Memory of the World',
+            'BPH / Bibliotheca Philosophica Hermetica — Netherlands UNESCO Memory of the World Register',
             'Full cost transparency — see our strategic plan and annual letter',
             'Every text freely available, forever — no paywalls, no subscriptions',
           ].map(item => (
