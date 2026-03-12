@@ -87,6 +87,7 @@ export default function ImageDetailPage({
 
   // Ref to prevent stale closures in keyboard handler
   const navRef = useRef({ bookImages: [] as BookImage[], currentIndex: -1, showDetails: false });
+  const isNavigatingRef = useRef(false);
   useEffect(() => {
     navRef.current = { bookImages, currentIndex, showDetails };
   }, [bookImages, currentIndex, showDetails]);
@@ -96,15 +97,23 @@ export default function ImageDetailPage({
     params.then(p => setImageId(p.id));
   }, [params]);
 
-  // Fetch image data
+  // Fetch image data (initial load only — navigation handles its own fetching)
   useEffect(() => {
     if (!imageId) return;
+    if (isNavigatingRef.current) {
+      isNavigatingRef.current = false;
+      return;
+    }
 
     async function fetchImage() {
       try {
         const json = await gallery.get(imageId!);
         setData(json);
-        requestAnimationFrame(() => setImageOpacity(1));
+        // Preload image before showing
+        const preload = new window.Image();
+        preload.onload = () => requestAnimationFrame(() => setImageOpacity(1));
+        preload.onerror = () => requestAnimationFrame(() => setImageOpacity(1));
+        preload.src = json.imageUrl;
         sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
@@ -209,23 +218,48 @@ export default function ImageDetailPage({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Navigation
-  const navigateTo = useCallback((index: number) => {
+  // Navigation — fade out, preload next image, fade in only when ready
+  const navigateTo = useCallback(async (index: number) => {
     if (index < 0 || index >= navRef.current.bookImages.length) return;
     const img = navRef.current.bookImages[index];
+
+    // Fade out
     setImageOpacity(0);
-    setTimeout(() => {
-      setCurrentIndex(index);
+    await new Promise(r => setTimeout(r, 280));
+
+    // Update URL and reset editing state while screen is black
+    setCurrentIndex(index);
+    window.history.replaceState(null, '', `/gallery/image/${img.id}`);
+    setEditingTitle(false);
+    setEditingQuality(false);
+    setEditingDescription(false);
+    setEditingMetadata(false);
+    setEditingBbox(false);
+    setBrightness(100);
+    setContrast(100);
+
+    try {
+      // Fetch new image data
+      const json = await gallery.get(img.id);
+
+      // Preload the actual image pixels before showing anything
+      await new Promise<void>((resolve) => {
+        const preload = new window.Image();
+        preload.onload = () => resolve();
+        preload.onerror = () => resolve();
+        preload.src = json.imageUrl;
+      });
+
+      // Now update data and fade in — image is already cached
+      isNavigatingRef.current = true;
       setImageId(img.id);
-      setEditingTitle(false);
-      setEditingQuality(false);
-      setEditingDescription(false);
-      setEditingMetadata(false);
-      setEditingBbox(false);
-      setBrightness(100);
-      setContrast(100);
-      window.history.replaceState(null, '', `/gallery/image/${img.id}`);
-    }, 200);
+      setData(json);
+      sendGAEvent({ action: 'view_item', category: 'gallery', label: img.id, content_type: 'image' });
+      requestAnimationFrame(() => setImageOpacity(1));
+    } catch {
+      // On error, fade back in with old content
+      setImageOpacity(1);
+    }
   }, []);
 
   // Back navigation
