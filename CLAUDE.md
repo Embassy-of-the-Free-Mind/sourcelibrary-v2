@@ -20,7 +20,7 @@
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore` (~7,400 books, ~5,300 visible), NOT `sourcelibrary_research`
+- Production database: `bookstore` (5,355 books), NOT `sourcelibrary_research`
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: ALWAYS use `gemini-3-flash-preview`. This was a recurring issue — do not use older models.
