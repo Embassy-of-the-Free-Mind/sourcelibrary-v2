@@ -38,6 +38,7 @@ const MAX_COUNT = 3378;
 // Comparison data — digital libraries
 const DIGITAL_LIBRARIES = [
   { name: 'Source Library', translations: 3378, newTranslations: true, scope: '30+ languages, antiquity–1900', note: 'AI-generated, 2,400+ are first-ever English translations' },
+  { name: 'Internet Archive', translations: null, newTranslations: false, scope: '40M+ texts total', note: 'General archive — hosts existing translations, does not produce new ones' },
   { name: 'Perseus Digital Library', translations: 1000, newTranslations: false, scope: 'Greek & Latin classics', note: 'Public domain Victorian-era translations (Loeb, etc.)' },
   { name: 'Sacred Texts Archive', translations: 1700, newTranslations: false, scope: 'Religious & mythological texts', note: 'Reprints of existing public domain translations' },
   { name: 'Chinese Text Project', translations: 400, newTranslations: true, scope: 'Pre-modern Chinese', note: 'Mix of published translations + AI-generated (2026)' },
@@ -225,14 +226,29 @@ export default function WorldsLargestCollectionPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Print series like Loeb are one kind of comparator. The more natural question is:
-            what about the major digital text projects? Perseus, the Chinese Text Project,
-            Project Gutenberg, Sacred Texts &mdash; between them, they make millions of pages available
-            online. How can Source Library be larger?
+            what about the major digital text projects? The Internet Archive, Perseus, the Chinese
+            Text Project, Project Gutenberg, Sacred Texts &mdash; between them, they make millions
+            of pages available online. How can Source Library be larger?
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The answer lies in a distinction that matters enormously: <em>hosting</em> existing
             translations versus <em>creating</em> new ones.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Start with the biggest.{' '}
+            <a href="https://archive.org/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+              The Internet Archive
+            </a>{' '}
+            holds over 40 million digitized texts, including thousands of English translations of
+            classical, medieval, and early modern works &mdash; every old Bohn&rsquo;s Classical Library
+            volume, the Sacred Books of the East, countless 19th-century renderings of Greek, Latin, and
+            Sanskrit texts. It is, in fact, Source Library&rsquo;s primary upstream source: over 2,800 of
+            our books come from IA&rsquo;s digitized collections. But the Internet Archive is a general-purpose
+            archive. It preserves and hosts what already exists. The translations it contains were published
+            decades or centuries ago and happen to be in its collection. It does not produce new translations,
+            and it does not organize its holdings as a curated translation library.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -303,7 +319,9 @@ export default function WorldsLargestCollectionPage() {
                 {DIGITAL_LIBRARIES.map((lib) => (
                   <tr key={lib.name} className="border-b border-border-light">
                     <td className="py-2.5 text-secondary font-medium">{lib.name}</td>
-                    <td className="py-2.5 text-right px-4 text-muted tabular-nums">~{lib.translations.toLocaleString()}</td>
+                    <td className="py-2.5 text-right px-4 text-muted tabular-nums">
+                      {lib.translations ? `~${lib.translations.toLocaleString()}` : 'thousands'}
+                    </td>
                     <td className="py-2.5">
                       {lib.newTranslations ? (
                         <span className="text-status-success text-xs font-medium">New</span>
@@ -326,7 +344,9 @@ export default function WorldsLargestCollectionPage() {
           <p className="text-secondary leading-relaxed mt-6 font-body">
             EEBO-TCP (60,000+ early English printed books) and HathiTrust (18 million digitized volumes)
             are sometimes mentioned in this context, but neither is a translation project &mdash; they
-            provide access to texts in their original languages.
+            provide access to texts in their original languages. The Internet Archive is the largest
+            digital library in the world, but it is an archive, not a translator. Source Library uses
+            IA as its primary source of page images and then does something IA does not: translates them.
           </p>
         </section>
 
