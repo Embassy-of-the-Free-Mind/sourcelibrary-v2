@@ -12,6 +12,7 @@ import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { syncBookToGitHub } from '@/lib/git-sync';
 import { deduplicateOverlappingPages } from '@/lib/page-split/dedup-overlapping-pages';
+import { getAdaptiveLimits } from '@/lib/adaptive-limits';
 
 export const maxDuration = 300;
 
@@ -19,19 +20,15 @@ const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 
 const EARLY_FLUSH_MS = 240_000; // 4 min — flush partial cron_runs record before budget expires
 const ENROLL_LIMIT = 50;
 const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 3; // SLOW RESUME: observing DB impact (was 20)
+// Adaptive limits (ocr_submit, translate_submit, global_active_max, etc.) are loaded
+// from system_config.adaptive_limits by getAdaptiveLimits() — see src/lib/adaptive-limits.ts.
+// The following constants are NOT DB-heavy and stay hardcoded:
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
 const FT_VERIFY_LIMIT = 10; // First-translation verification — 2-4 Gemini rounds per book
-const TRANSLATE_SUBMIT_LIMIT = 3; // SLOW RESUME: observing DB impact (was 50)
-const IMAGE_SUBMIT_LIMIT = 20;
 const FINALIZE_LIMIT = 50; // Just DB updates
-const MAX_ACTIVE_IMAGE_JOBS = 50;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
-const GLOBAL_ACTIVE_JOB_LIMIT = 10; // SLOW RESUME: observing DB impact (was 40)
-const SQS_OCR_DEPTH_LIMIT = 500; // Skip OCR submission when queue has 500+ messages pending
-const SQS_TRANSLATE_DEPTH_LIMIT = 1000; // Skip translation submission when queue has 1000+ messages pending
 
 function getBaseUrl(): string {
   // Always use the production URL for all HTTP calls.
@@ -489,14 +486,16 @@ export async function GET(request: NextRequest) {
     const translatePaused = control?.paused_phases?.includes('translation');
     const imagesPaused = control?.paused_phases?.includes('images');
 
+    // ── Adaptive limits: probe DB health, adjust concurrency limits ──
+    const limits = await getAdaptiveLimits(db, logger);
+
     // Global backpressure: skip ALL submission phases when total active jobs exceed limit.
     // Completion/advancement phases still run — they drain work, not add it.
-    const totalActiveJobs = await db.collection('jobs').countDocuments({
-      status: { $in: ['pending', 'processing'] },
-    });
-    const systemOverloaded = totalActiveJobs >= GLOBAL_ACTIVE_JOB_LIMIT;
+    // Note: active_jobs already counted by getAdaptiveLimits — reuse it
+    const totalActiveJobs = limits._health.active_jobs;
+    const systemOverloaded = totalActiveJobs >= limits.global_active_max;
     if (systemOverloaded) {
-      logger.backpressure('global_job_limit', { active: totalActiveJobs, max: GLOBAL_ACTIVE_JOB_LIMIT });
+      logger.backpressure('global_job_limit', { active: totalActiveJobs, max: limits.global_active_max });
     }
 
     // SQS queue depth backpressure: prevent piling onto deep queues
@@ -511,14 +510,14 @@ export async function GET(request: NextRequest) {
       ]);
       ocrQueueDepth = ocrDepth?.total ?? 0;
       translateQueueDepth = translateDepth?.total ?? 0;
-      ocrQueueOverloaded = ocrQueueDepth >= SQS_OCR_DEPTH_LIMIT;
-      translateQueueOverloaded = translateQueueDepth >= SQS_TRANSLATE_DEPTH_LIMIT;
+      ocrQueueOverloaded = ocrQueueDepth >= limits.sqs_ocr_depth;
+      translateQueueOverloaded = translateQueueDepth >= limits.sqs_translate_depth;
 
       if (ocrQueueOverloaded) {
-        logger.backpressure('ocr_sqs_depth', { depth: ocrQueueDepth, threshold: SQS_OCR_DEPTH_LIMIT });
+        logger.backpressure('ocr_sqs_depth', { depth: ocrQueueDepth, threshold: limits.sqs_ocr_depth });
       }
       if (translateQueueOverloaded) {
-        logger.backpressure('translate_sqs_depth', { depth: translateQueueDepth, threshold: SQS_TRANSLATE_DEPTH_LIMIT });
+        logger.backpressure('translate_sqs_depth', { depth: translateQueueDepth, threshold: limits.sqs_translate_depth });
       }
     } catch (err) {
       // SQS check failure is non-blocking — log and continue
@@ -590,7 +589,7 @@ export async function GET(request: NextRequest) {
       logger.decision('skip', 'Image extraction paused via processing_control.paused_phases');
     }
     if (systemOverloaded && !imagesPaused) {
-      logger.decision('skip', `Image submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
+      logger.decision('skip', `Image submission skipped: global backpressure (${totalActiveJobs}/${limits.global_active_max} active jobs)`);
     }
     if (hasTimeBudget(startTime) && !imagesPaused && !systemOverloaded) {
       const activeImageJobs = await db.collection('jobs').countDocuments({
@@ -598,16 +597,16 @@ export async function GET(request: NextRequest) {
         status: { $in: ['pending', 'processing'] },
       });
 
-      if (activeImageJobs >= MAX_ACTIVE_IMAGE_JOBS) {
-        logger.backpressure('image_jobs_limit', { active: activeImageJobs, max: MAX_ACTIVE_IMAGE_JOBS });
+      if (activeImageJobs >= limits.image_max) {
+        logger.backpressure('image_jobs_limit', { active: activeImageJobs, max: limits.image_max });
       }
 
-      if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+      if (activeImageJobs < limits.image_max) {
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
           .sort({ hidden: 1 })
           .project({ id: 1, title: 1 })
-          .limit(IMAGE_SUBMIT_LIMIT)
+          .limit(limits.image_submit)
           .toArray();
 
         for (const book of readyForImages) {
@@ -921,10 +920,10 @@ export async function GET(request: NextRequest) {
       logger.decision('skip', 'OCR submission paused via processing_control.paused_phases');
     }
     if (systemOverloaded && !ocrPaused) {
-      logger.decision('skip', `OCR submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
+      logger.decision('skip', `OCR submission skipped: global backpressure (${totalActiveJobs}/${limits.global_active_max} active jobs)`);
     }
     if (ocrQueueOverloaded && !ocrPaused && !systemOverloaded) {
-      logger.decision('skip', `OCR submission skipped: SQS queue depth ${ocrQueueDepth} >= ${SQS_OCR_DEPTH_LIMIT}`);
+      logger.decision('skip', `OCR submission skipped: SQS queue depth ${ocrQueueDepth} >= ${limits.sqs_ocr_depth}`);
     }
     if (hasTimeBudget(startTime) && !ocrPaused && !systemOverloaded && !ocrQueueOverloaded) {
       // Backpressure: don't overwhelm the Gemini Batch API queue
@@ -938,18 +937,17 @@ export async function GET(request: NextRequest) {
         type: 'ocr',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_OCR = 5; // SLOW RESUME: observing DB impact (was 20)
 
-      const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
+      const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : limits.ocr_submit;
 
       if (activeBatchOcr >= MAX_ACTIVE_BATCH_OCR) {
         logger.backpressure('ocr_batch_limit', { active: activeBatchOcr, max: MAX_ACTIVE_BATCH_OCR });
       }
-      if (activeLambdaOcr >= MAX_ACTIVE_LAMBDA_OCR) {
-        logger.backpressure('ocr_lambda_limit', { active: activeLambdaOcr, max: MAX_ACTIVE_LAMBDA_OCR });
+      if (activeLambdaOcr >= limits.ocr_lambda_max) {
+        logger.backpressure('ocr_lambda_limit', { active: activeLambdaOcr, max: limits.ocr_lambda_max });
       }
 
-      const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < MAX_ACTIVE_LAMBDA_OCR) ? await db.collection('books')
+      const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < limits.ocr_lambda_max) ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
         .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
@@ -1444,10 +1442,10 @@ export async function GET(request: NextRequest) {
       logger.decision('skip', 'Translation submission paused via processing_control.paused_phases');
     }
     if (systemOverloaded && !translatePaused) {
-      logger.decision('skip', `Translation submission skipped: global backpressure (${totalActiveJobs}/${GLOBAL_ACTIVE_JOB_LIMIT} active jobs)`);
+      logger.decision('skip', `Translation submission skipped: global backpressure (${totalActiveJobs}/${limits.global_active_max} active jobs)`);
     }
     if (translateQueueOverloaded && !translatePaused && !systemOverloaded) {
-      logger.decision('skip', `Translation submission skipped: SQS queue depth ${translateQueueDepth} >= ${SQS_TRANSLATE_DEPTH_LIMIT}`);
+      logger.decision('skip', `Translation submission skipped: SQS queue depth ${translateQueueDepth} >= ${limits.sqs_translate_depth}`);
     }
     if (hasTimeBudget(startTime) && !translatePaused && !systemOverloaded && !translateQueueOverloaded) {
       // Lambda backpressure: check active realtime translation jobs
@@ -1455,14 +1453,13 @@ export async function GET(request: NextRequest) {
         type: 'translation',
         status: { $in: ['pending', 'processing'] },
       });
-      const MAX_ACTIVE_LAMBDA_TRANSLATE = 5; // SLOW RESUME: observing DB impact (was 30)
 
-      if (activeLambdaTranslate >= MAX_ACTIVE_LAMBDA_TRANSLATE) {
-        logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: MAX_ACTIVE_LAMBDA_TRANSLATE });
+      if (activeLambdaTranslate >= limits.translate_lambda_max) {
+        logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: limits.translate_lambda_max });
       }
 
       // Priority: finish 90%+ books first (close to done), then everything else by size
-      const readyForTranslate = activeLambdaTranslate < MAX_ACTIVE_LAMBDA_TRANSLATE ? await db.collection('books')
+      const readyForTranslate = activeLambdaTranslate < limits.translate_lambda_max ? await db.collection('books')
         .aggregate([
           { $match: { 'pipeline_auto.status': 'ft_verified' } },
           { $addFields: {
@@ -1474,7 +1471,7 @@ export async function GET(request: NextRequest) {
           }},
           { $sort: { _isEfm: 1, _nearlyDone: 1, hidden: 1, pages_count: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 } },
-          { $limit: TRANSLATE_SUBMIT_LIMIT },
+          { $limit: limits.translate_submit },
         ]).toArray() : [];
 
       let translateQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
@@ -1857,9 +1854,10 @@ export async function GET(request: NextRequest) {
       duration_ms: duration,
       actions: log,
       backpressure: {
-        total_active_jobs: totalActiveJobs, limit: GLOBAL_ACTIVE_JOB_LIMIT, overloaded: systemOverloaded,
+        total_active_jobs: totalActiveJobs, limit: limits.global_active_max, overloaded: systemOverloaded,
         sqs: { ocr: ocrQueueDepth, translation: translateQueueDepth },
       },
+      adaptive: { grade: limits._health.grade, limits: { ...limits, _health: undefined } },
       pipeline_status: counts,
       pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
     });
