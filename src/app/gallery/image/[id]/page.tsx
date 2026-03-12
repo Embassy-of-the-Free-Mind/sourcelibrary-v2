@@ -26,9 +26,7 @@ import {
   Info,
   X,
   ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  ChevronDown
+  ChevronRight
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -82,15 +80,14 @@ export default function ImageDetailPage({
   // Navigation state
   const [bookImages, setBookImages] = useState<BookImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [showDetails, setShowDetails] = useState(false);
   const [imageOpacity, setImageOpacity] = useState(1);
 
   // Ref to prevent stale closures in keyboard handler
-  const navRef = useRef({ bookImages: [] as BookImage[], currentIndex: -1, showDetails: false });
+  const navRef = useRef({ bookImages: [] as BookImage[], currentIndex: -1 });
   const isNavigatingRef = useRef(false);
   useEffect(() => {
-    navRef.current = { bookImages, currentIndex, showDetails };
-  }, [bookImages, currentIndex, showDetails]);
+    navRef.current = { bookImages, currentIndex };
+  }, [bookImages, currentIndex]);
 
   // Resolve params
   useEffect(() => {
@@ -200,7 +197,7 @@ export default function ImageDetailPage({
       // Don't intercept when typing in inputs
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
-      const { bookImages: imgs, currentIndex: idx, showDetails: details } = navRef.current;
+      const { bookImages: imgs, currentIndex: idx } = navRef.current;
 
       if (e.key === 'ArrowLeft' && idx > 0) {
         e.preventDefault();
@@ -208,10 +205,6 @@ export default function ImageDetailPage({
       } else if (e.key === 'ArrowRight' && idx < imgs.length - 1) {
         e.preventDefault();
         navigateTo(idx + 1);
-      } else if (e.key === 'Escape') {
-        if (details) setShowDetails(false);
-      } else if (e.key === 'i') {
-        setShowDetails(prev => !prev);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -462,168 +455,160 @@ export default function ImageDetailPage({
   const hasNext = currentIndex < bookImages.length - 1;
 
   return (
-    <div className="h-screen bg-black text-white overflow-hidden flex flex-col">
-      {/* Minimal header */}
-      <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2 flex items-center justify-between">
-          <Link
-            href={data?.galleryUrl || '/gallery'}
-            onClick={handleBackClick}
-            className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="hidden sm:inline text-sm">Back</span>
-          </Link>
+    <div className="bg-black text-white">
+      {/* Image viewer - fills viewport */}
+      <div className="h-screen relative flex flex-col">
+        {/* Minimal header */}
+        <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
+          <div className="px-4 py-2 flex items-center justify-between">
+            <Link
+              href={data?.galleryUrl || '/gallery'}
+              onClick={handleBackClick}
+              className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="hidden sm:inline text-sm">Back</span>
+            </Link>
 
-          {/* Counter */}
-          {bookImages.length > 1 && (
-            <span className="text-stone-500 text-sm tabular-nums">
-              {currentIndex + 1} / {bookImages.length}
+            {/* Counter */}
+            {bookImages.length > 1 && (
+              <span className="text-stone-500 text-sm tabular-nums">
+                {currentIndex + 1} / {bookImages.length}
+              </span>
+            )}
+
+            <div className="flex items-center gap-1">
+              {imageId && (
+                <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
+                  <LikeButton
+                    targetType="image"
+                    targetId={imageId}
+                    size="md"
+                    showCount={true}
+                  />
+                </div>
+              )}
+              <button
+                onClick={copyLink}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                title="Copy link"
+              >
+                {copied ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
+              </button>
+              <button
+                onClick={shareToTwitter}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                title="Share on X"
+              >
+                <Share2 className="w-4 h-4 text-stone-400" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Image area - fills remaining viewport */}
+        <div className="flex-1 relative min-h-0">
+          {/* The image */}
+          <div
+            className="w-full h-full relative"
+            style={{
+              opacity: imageOpacity,
+              transition: 'opacity 0.25s ease-in-out',
+              filter: (brightness !== 100 || contrast !== 100)
+                ? `brightness(${brightness}%) contrast(${contrast}%)`
+                : undefined,
+            }}
+          >
+            <div
+              className="w-full h-full transition-transform duration-300"
+              style={{ transform: rotation ? `rotate(${rotation}deg)` : undefined }}
+            >
+              <ImageWithMagnifier
+                src={data.imageUrl}
+                alt={data.description}
+                className="w-full h-full"
+                magnifierSize={250}
+                zoomLevel={4}
+                highResSrc={data.highResUrl}
+                fallbackSrc={data.cropUrl || undefined}
+                darkMode
+              />
+            </div>
+          </div>
+
+          {/* Type badge */}
+          {data.type && (
+            <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-xs bg-accent-rust/90 text-white capitalize z-10">
+              {data.type}
             </span>
           )}
 
-          <div className="flex items-center gap-1">
-            {imageId && (
-              <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
-                <LikeButton
-                  targetType="image"
-                  targetId={imageId}
-                  size="md"
-                  showCount={true}
-                />
-              </div>
+          {/* Brightness/contrast controls */}
+          <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+            {(brightness !== 100 || contrast !== 100) && (
+              <button
+                onClick={() => { setBrightness(100); setContrast(100); }}
+                className="px-2 py-1 bg-black/70 rounded text-xs text-stone-400 hover:text-white transition-colors"
+              >
+                Reset
+              </button>
             )}
-            <button
-              onClick={copyLink}
-              className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-              title="Copy link"
-            >
-              {copied ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
-            </button>
-            <button
-              onClick={shareToTwitter}
-              className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-              title="Share on X"
-            >
-              <Share2 className="w-4 h-4 text-stone-400" />
-            </button>
+            <div className="group relative">
+              <button className="p-1.5 bg-black/70 rounded-lg text-stone-400 hover:text-white transition-colors">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              </button>
+              <div className="invisible group-hover:visible absolute right-0 top-full mt-2 p-3 bg-stone-900/95 backdrop-blur-sm rounded-lg shadow-xl min-w-[180px] space-y-3">
+                <div>
+                  <div className="flex justify-between text-xs text-stone-400 mb-1">
+                    <span>Brightness</span><span>{brightness}%</span>
+                  </div>
+                  <input type="range" min="50" max="200" value={brightness} onChange={(e) => setBrightness(parseInt(e.target.value))} className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-accent-gold" />
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs text-stone-400 mb-1">
+                    <span>Contrast</span><span>{contrast}%</span>
+                  </div>
+                  <input type="range" min="50" max="200" value={contrast} onChange={(e) => setContrast(parseInt(e.target.value))} className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-accent-gold" />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </header>
 
-      {/* Image viewer - fills remaining space */}
-      <div className="flex-1 relative min-h-0">
-        {/* The image */}
-        <div
-          className="w-full h-full relative"
-          style={{
-            opacity: imageOpacity,
-            transition: 'opacity 0.25s ease-in-out',
-            filter: (brightness !== 100 || contrast !== 100)
-              ? `brightness(${brightness}%) contrast(${contrast}%)`
-              : undefined,
-          }}
-        >
-          <div
-            className="w-full h-full transition-transform duration-300"
-            style={{ transform: rotation ? `rotate(${rotation}deg)` : undefined }}
-          >
-            <ImageWithMagnifier
-              src={data.imageUrl}
-              alt={data.description}
-              className="w-full h-full"
-              magnifierSize={250}
-              zoomLevel={4}
-              highResSrc={data.highResUrl}
-              fallbackSrc={data.cropUrl || undefined}
-            />
-          </div>
-        </div>
-
-        {/* Type badge */}
-        {data.type && (
-          <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-xs bg-accent-rust/90 text-white capitalize z-10">
-            {data.type}
-          </span>
-        )}
-
-        {/* Brightness/contrast controls */}
-        <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
-          {(brightness !== 100 || contrast !== 100) && (
+          {/* Navigation arrows */}
+          {hasPrev && (
             <button
-              onClick={() => { setBrightness(100); setContrast(100); }}
-              className="px-2 py-1 bg-black/70 rounded text-xs text-stone-400 hover:text-white transition-colors"
+              onClick={() => navigateTo(currentIndex - 1)}
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white/70 hover:text-white transition-all"
+              title="Previous image (Left arrow)"
             >
-              Reset
+              <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
             </button>
           )}
-          <div className="group relative">
-            <button className="p-1.5 bg-black/70 rounded-lg text-stone-400 hover:text-white transition-colors">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </svg>
+          {hasNext && (
+            <button
+              onClick={() => navigateTo(currentIndex + 1)}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white/70 hover:text-white transition-all"
+              title="Next image (Right arrow)"
+            >
+              <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
             </button>
-            <div className="invisible group-hover:visible absolute right-0 top-full mt-2 p-3 bg-stone-900/95 backdrop-blur-sm rounded-lg shadow-xl min-w-[180px] space-y-3">
-              <div>
-                <div className="flex justify-between text-xs text-stone-400 mb-1">
-                  <span>Brightness</span><span>{brightness}%</span>
-                </div>
-                <input type="range" min="50" max="200" value={brightness} onChange={(e) => setBrightness(parseInt(e.target.value))} className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-accent-gold" />
-              </div>
-              <div>
-                <div className="flex justify-between text-xs text-stone-400 mb-1">
-                  <span>Contrast</span><span>{contrast}%</span>
-                </div>
-                <input type="range" min="50" max="200" value={contrast} onChange={(e) => setContrast(parseInt(e.target.value))} className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-accent-gold" />
-              </div>
-            </div>
+          )}
+
+          {/* Title + attribution overlay at bottom of image */}
+          <div className="absolute bottom-0 left-0 right-0 z-20 px-4 py-3 bg-gradient-to-t from-black/90 via-black/70 to-transparent">
+            <p className="text-sm text-white/90 line-clamp-2">{data.description}</p>
+            <p className="text-xs text-white/50 truncate mt-0.5">
+              {data.book.title}{data.book.author ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
+            </p>
           </div>
-        </div>
-
-        {/* Navigation arrows */}
-        {hasPrev && (
-          <button
-            onClick={() => navigateTo(currentIndex - 1)}
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white/70 hover:text-white transition-all"
-            title="Previous image (Left arrow)"
-          >
-            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
-          </button>
-        )}
-        {hasNext && (
-          <button
-            onClick={() => navigateTo(currentIndex + 1)}
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white/70 hover:text-white transition-all"
-            title="Next image (Right arrow)"
-          >
-            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
-          </button>
-        )}
-
-        {/* Bottom info bar */}
-        <div className="absolute bottom-0 left-0 right-0 z-20">
-          {/* Toggle bar */}
-          <button
-            onClick={() => setShowDetails(!showDetails)}
-            className="w-full flex items-center justify-between px-4 py-2.5 bg-gradient-to-t from-black/90 via-black/70 to-transparent hover:from-black/95 transition-all"
-          >
-            <div className="flex-1 min-w-0 text-left">
-              <p className="text-sm text-white/90 truncate">{data.description}</p>
-              <p className="text-xs text-white/50 truncate mt-0.5">
-                {data.book.title}{data.book.author ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
-              </p>
-            </div>
-            <div className="flex-shrink-0 ml-3 p-1 rounded-full bg-white/10">
-              {showDetails ? <ChevronDown className="w-4 h-4 text-white/70" /> : <ChevronUp className="w-4 h-4 text-white/70" />}
-            </div>
-          </button>
         </div>
       </div>
 
-      {/* Expandable details panel */}
-      {showDetails && (
-        <div className="flex-shrink-0 bg-stone-900 border-t border-white/10 overflow-y-auto" style={{ maxHeight: '60vh' }}>
-          <div className="max-w-4xl mx-auto px-4 py-6">
+      {/* Details below the fold - always visible, scroll to see */}
+      <div className="bg-stone-900 border-t border-white/10">
+        <div className="max-w-4xl mx-auto px-4 py-6">
             <div className="grid md:grid-cols-3 gap-6">
               {/* Left column: description + metadata */}
               <div className="md:col-span-2 space-y-5">
@@ -924,7 +909,6 @@ export default function ImageDetailPage({
             </div>
           </div>
         </div>
-      )}
 
       {/* Processing Info Modal */}
       {showInfo && data && (

@@ -13,6 +13,7 @@ interface ImageWithMagnifierProps {
   scrollable?: boolean;
   highResSrc?: string; // For magnifier/zoom, use higher resolution version
   fallbackSrc?: string; // Fallback if src fails to load (e.g. on-the-fly crop URL)
+  darkMode?: boolean; // Dark skeleton/background for lightbox contexts
 }
 
 // Magnifier component for zooming into the source image
@@ -27,7 +28,8 @@ export default function ImageWithMagnifier({
   zoomLevel = 3,
   scrollable = false,
   highResSrc,
-  fallbackSrc
+  fallbackSrc,
+  darkMode = false
 }: ImageWithMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
@@ -223,8 +225,8 @@ export default function ImageWithMagnifier({
       >
         {/* Loading skeleton */}
         {!isLoaded && (
-          <div className={`flex items-center justify-center bg-stone-100 animate-pulse ${scrollable ? 'w-full h-48' : 'absolute inset-0'}`}>
-            <div className="text-stone-400 text-sm">Loading...</div>
+          <div className={`flex items-center justify-center ${darkMode ? 'bg-black' : 'bg-stone-100 animate-pulse'} ${scrollable ? 'w-full h-48' : 'absolute inset-0'}`}>
+            <div className={`text-sm ${darkMode ? 'text-stone-600' : 'text-stone-400'}`}>Loading...</div>
           </div>
         )}
 
