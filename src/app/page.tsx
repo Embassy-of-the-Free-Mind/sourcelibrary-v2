@@ -247,10 +247,13 @@ async function getCollectionShowcase() {
         book_hidden: { $ne: true },
         // Exclude text-heavy crops and tiny decorative elements
         type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
-        // Require meaningful bbox size (at least 10% of page width)
-        'bbox.width': { $gte: 0.1 },
+        // Require meaningful bbox size
+        'bbox.width': { $gte: 0.15 },
+        'bbox.height': { $gte: 0.25 },
       },
     },
+    // Filter for portrait-friendly AR (<=1.33) — landscape crops look blurry in 3:4 containers
+    { $match: { $expr: { $gte: ['$bbox.height', { $multiply: ['$bbox.width', 0.75] }] } } },
     { $limit: 40 },
   ], { maxTimeMS: 8000 }).toArray();
 
