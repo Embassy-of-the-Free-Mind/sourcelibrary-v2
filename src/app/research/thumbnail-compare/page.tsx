@@ -6,40 +6,38 @@ export const metadata: Metadata = {
   robots: 'noindex',
 };
 
-// Diverse gallery images across types, books, and bbox sizes
+// Diverse gallery images across types, books, and bbox sizes — all verified on Vercel Blob
 const images = [
   // Frontispieces (large bbox)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55877f38f6761bf060a-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55877f38f6761bf060a-0.jpg', desc: 'Druid stone circle engraving', book: 'Stonehenge', type: 'frontispiece', bw: 0.67 },
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55777f38f6761bf05d1-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55777f38f6761bf05d1-0.jpg', desc: 'Anatomical dissection scene', book: 'De Humani Corporis Fabrica', type: 'frontispiece', bw: 1.0 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099e4b-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099e4b-0.jpg', desc: 'Vesalius anatomical dissection scene', book: 'De Humani Corporis Fabrica (1555)', type: 'frontispiece', bw: 1.0 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69906623ef12272ffdc952c7/69906624ef12272ffdc952ce-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69906623ef12272ffdc952c7/69906624ef12272ffdc952ce-0.jpg', desc: 'Hobbes Leviathan sovereign figure', book: 'Leviathan (1651)', type: 'frontispiece', bw: 0.96 },
 
-  // Emblems (medium bbox)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044158-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044158-0.jpg', desc: 'Pelican hermetic emblem', book: 'Atalanta fugiens', type: 'emblem', bw: 0.31 },
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6975158ba88d83c830d99e24/697627ff392c2251e0d13990-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6975158ba88d83c830d99e24/697627ff392c2251e0d13990-0.jpg', desc: 'Allegorical title engraving', book: 'Atalanta fugiens', type: 'emblem', bw: 0.45 },
+  // Emblems (medium-large bbox)
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dbf977f38f6761bc7720/695906d94953388fe7ac7538-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dbf977f38f6761bc7720/695906d94953388fe7ac7538-0.jpg', desc: 'Alchemical emblem from Splendor Solis', book: 'Splendor Solis', type: 'emblem', bw: 0.72 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dbf977f38f6761bc7720/695906d94953388fe7ac755c-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dbf977f38f6761bc7720/695906d94953388fe7ac755c-0.jpg', desc: 'Splendor Solis Plate 16 reproduction', book: 'Splendor Solis', type: 'emblem', bw: 0.75 },
 
   // Woodcuts (medium-large bbox)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69906f694b3bd4d1fffd0b26/69906f6a4b3bd4d1fffd0b61-3-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69906f694b3bd4d1fffd0b26/69906f6a4b3bd4d1fffd0b61-3.jpg', desc: 'Acephalous monsters (Blemmyes)', book: 'Bodleian MS', type: 'woodcut', bw: 0.22 },
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953ccb377f38f6761be31c1/6953ccb477f38f6761be31d4-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953ccb377f38f6761be31c1/6953ccb477f38f6761be31d4-0.jpg', desc: 'Botanical taproot', book: 'Voynich Manuscript', type: 'woodcut', bw: 0.85 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc67a8-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc67a8-0.jpg', desc: 'Anatomical woodcut, two male figures', book: 'On the Symmetry of Human Bodies', type: 'woodcut', bw: 0.85 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc67ae-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc67ae-0.jpg', desc: 'Female figure anatomical study', book: 'On the Symmetry of Human Bodies', type: 'woodcut', bw: 0.73 },
 
-  // Diagrams (large bbox)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991e953efe0293c6e9e9df9/6991e953efe0293c6e9e9e6b-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991e953efe0293c6e9e9df9/6991e953efe0293c6e9e9e6b-0.jpg', desc: 'Leonardo perspective diagram', book: 'Trattato della pittura', type: 'diagram', bw: 0.85 },
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991e953efe0293c6e9e9df9/6991e953efe0293c6e9e9eb1-1-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991e953efe0293c6e9e9df9/6991e953efe0293c6e9e9eb1-1.jpg', desc: 'Da Vinci mechanical sketches', book: 'Trattato della pittura', type: 'diagram', bw: 0.55 },
+  // Diagrams
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d12e77f38f6761bc5bec/6952d12f77f38f6761bc5d02-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d12e77f38f6761bc5bec/6952d12f77f38f6761bc5d02-0.jpg', desc: 'Kepler planetary spheres model', book: 'Harmony of the World', type: 'diagram', bw: 0.40 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc6751-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc6751-0.jpg', desc: 'Female proportion studies (Dürer)', book: 'On the Symmetry of Human Bodies', type: 'diagram', bw: 0.78 },
 
-  // Engravings (medium-large bbox)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b39-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b39-0.jpg', desc: 'Astronomical sextant', book: 'Instruments of Astronomy', type: 'engraving', bw: 0.69 },
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55877f38f6761bf0726-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55877f38f6761bf0726-0.jpg', desc: 'Nervous system anatomy', book: 'De Humani Corporis Fabrica', type: 'engraving', bw: 0.53 },
+  // Engravings (large bbox)
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b56-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b56-0.jpg', desc: 'Uraniborg observatory elevation', book: 'Instruments of the Restored Astronomy', type: 'engraving', bw: 0.95 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0.jpg', desc: 'Integra Naturae Speculum (Fludd)', book: 'History of Both Worlds: Macrocosm', type: 'engraving', bw: 0.91 },
 
-  // Portrait (full-page)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc66cb-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc66cb-0.jpg', desc: 'Full body proportions study', book: 'Dürer Symmetry', type: 'portrait', bw: 0.75 },
+  // Portraits
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952587bab34727b1f045546/6959068695a91542b28bd761-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952587bab34727b1f045546/6959068695a91542b28bd761-0.jpg', desc: 'Michael Maier alchemist portrait', book: 'Symbola aureae mensae', type: 'portrait', bw: 0.80 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991e93135ed50020acc1458/6991e93135ed50020acc1460-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991e93135ed50020acc1458/6991e93135ed50020acc1460-0.jpg', desc: 'Leonardo da Vinci self-portrait', book: 'Notebooks of Leonardo da Vinci', type: 'portrait', bw: 0.83 },
 
-  // Kepler planetary spheres (geometric)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d12e77f38f6761bc5bec/6952d12f77f38f6761bc5d02-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d12e77f38f6761bc5bec/6952d12f77f38f6761bc5d02-0.jpg', desc: 'Planetary spheres model', book: 'Kepler Harmonices Mundi', type: 'diagram', bw: 0.40 },
-
-  // Clockwork
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6955d43928a09ca6592805b3/6955d43928a09ca6592805cb-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6955d43928a09ca6592805b3/6955d43928a09ca6592805cb-0.jpg', desc: 'Clockwork mechanism', book: 'Horologium Oscillatorium', type: 'engraving', bw: 0.46 },
+  // Monas Hieroglyphica (frontispiece — different book for variety)
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520571ab34727b1f042c78/69520572ab34727b1f042c7a-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520571ab34727b1f042c78/69520572ab34727b1f042c7a-0.jpg', desc: 'John Dee Monas Hieroglyphica title page', book: 'Monas Hieroglyphica', type: 'frontispiece', bw: 0.87 },
 
   // Small decorative initials (BAD examples — what the homepage filter should exclude)
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55777f38f6761bf0805-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6953e55777f38f6761bf05cf/6953e55777f38f6761bf0805-0.jpg', desc: 'Historiated initial C (tiny)', book: 'De Humani Corporis Fabrica', type: 'decorative', bw: 0.07 },
-  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/adefe2d5-88a7-4595-9885-903a93abee51/69500535f426a210d109f8bd-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/adefe2d5-88a7-4595-9885-903a93abee51/69500535f426a210d109f8bd-0.jpg', desc: 'Initial O with portrait (tiny)', book: 'Plato Complete Works', type: 'decorative', bw: 0.08 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/e532b010-6d2e-40ca-9f95-c67e74c5ee61/695004b4f426a210d10975b1-0-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/e532b010-6d2e-40ca-9f95-c67e74c5ee61/695004b4f426a210d10975b1-0.jpg', desc: 'Ornate initial S (tiny)', book: 'Instruction in Measurement', type: 'decorative', bw: 0.04 },
+  { thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/25dfd63a-8080-4864-aa79-a0fcb1c76102/695004c9f426a210d109890a-1-thumb.jpg', full: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/25dfd63a-8080-4864-aa79-a0fcb1c76102/695004c9f426a210d109890a-1.jpg', desc: 'Initial G with decoration (tiny)', book: 'Landino: Dante Commentary (1481)', type: 'decorative', bw: 0.04 },
 ];
 
 function GalleryGrid({ items, label }: { items: typeof images; label: string }) {
