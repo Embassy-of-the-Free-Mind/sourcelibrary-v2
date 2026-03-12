@@ -103,8 +103,11 @@ function gradeJobs(active: number): HealthGrade {
 }
 
 function gradeCronDuration(ms: number): HealthGrade {
-  if (ms > 180_000) return 'critical';
-  if (ms > 60_000) return 'degraded';
+  // Vercel timeout is 300s. Pipeline legitimately takes 150-200s when processing
+  // large backlogs (23+ OCR books + metadata enrichment). Only flag as degraded/critical
+  // when approaching or exceeding the timeout.
+  if (ms > 250_000) return 'critical';
+  if (ms > 150_000) return 'degraded';
   return 'healthy';
 }
 
