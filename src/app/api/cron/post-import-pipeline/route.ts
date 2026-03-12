@@ -261,7 +261,7 @@ async function markFailed(
 async function submitOcrViaLambda(
   db: Awaited<ReturnType<typeof getDb>>,
   bookId: string,
-): Promise<{ success: boolean; jobId?: string; error?: string }> {
+): Promise<{ success: boolean; jobId?: string; error?: string; pagesEnqueued: number }> {
   try {
     // Find pages that need OCR
     const pages = await db.collection('pages')
@@ -277,7 +277,7 @@ async function submitOcrViaLambda(
       .toArray();
 
     if (pages.length === 0) {
-      return { success: true, jobId: undefined, error: 'No pages need OCR' };
+      return { success: true, jobId: undefined, error: 'No pages need OCR', pagesEnqueued: 0 };
     }
 
     const pageIds = pages.map(p => p.id);
@@ -316,11 +316,11 @@ async function submitOcrViaLambda(
     await enqueuePagesForJob(bookId, pageIds, 'ocr', jobId);
 
     console.log(`[pipeline] Lambda OCR fallback: ${pageIds.length} pages for ${bookId} (job ${jobId})`);
-    return { success: true, jobId };
+    return { success: true, jobId, pagesEnqueued: pageIds.length };
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'unknown';
     console.error(`[pipeline] Lambda OCR fallback failed for ${bookId}:`, msg);
-    return { success: false, error: msg };
+    return { success: false, error: msg, pagesEnqueued: 0 };
   }
 }
 
@@ -331,7 +331,7 @@ async function submitOcrViaLambda(
 async function submitTranslationViaLambda(
   db: Awaited<ReturnType<typeof getDb>>,
   bookId: string,
-): Promise<{ success: boolean; jobId?: string; error?: string }> {
+): Promise<{ success: boolean; jobId?: string; error?: string; pagesEnqueued: number }> {
   try {
     // Find pages that need translation: either no translation yet, OR translation is stale (older than OCR).
     // The translation worker already checks `transTime >= ocrTime` and skips current translations,
@@ -355,7 +355,7 @@ async function submitTranslationViaLambda(
       .toArray();
 
     if (pages.length === 0) {
-      return { success: true, jobId: undefined, error: 'No pages need translation' };
+      return { success: true, jobId: undefined, error: 'No pages need translation', pagesEnqueued: 0 };
     }
 
     const pageIds = pages.map(p => p.id);
@@ -392,11 +392,11 @@ async function submitTranslationViaLambda(
     await enqueuePagesForJob(bookId, pageIds, 'translation', jobId);
 
     console.log(`[pipeline] Lambda translate fallback: ${pageIds.length} pages for ${bookId} (job ${jobId})`);
-    return { success: true, jobId };
+    return { success: true, jobId, pagesEnqueued: pageIds.length };
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'unknown';
     console.error(`[pipeline] Lambda translate fallback failed for ${bookId}:`, msg);
-    return { success: false, error: msg };
+    return { success: false, error: msg, pagesEnqueued: 0 };
   }
 }
 
@@ -486,23 +486,9 @@ export async function GET(request: NextRequest) {
     const translatePaused = control?.paused_phases?.includes('translation');
     const imagesPaused = control?.paused_phases?.includes('images');
 
-    // ── Adaptive limits: probe DB health, adjust concurrency limits ──
-    const limits = await getAdaptiveLimits(db, logger);
-
-    // Global backpressure: skip ALL submission phases when total active jobs exceed limit.
-    // Completion/advancement phases still run — they drain work, not add it.
-    // Note: active_jobs already counted by getAdaptiveLimits — reuse it
-    const totalActiveJobs = limits._health.active_jobs;
-    const systemOverloaded = totalActiveJobs >= limits.global_active_max;
-    if (systemOverloaded) {
-      logger.backpressure('global_job_limit', { active: totalActiveJobs, max: limits.global_active_max });
-    }
-
-    // SQS queue depth backpressure: prevent piling onto deep queues
+    // SQS queue depth — measure early so it feeds into adaptive health grade
     let ocrQueueDepth = 0;
     let translateQueueDepth = 0;
-    let ocrQueueOverloaded = false;
-    let translateQueueOverloaded = false;
     try {
       const [ocrDepth, translateDepth] = await Promise.all([
         QUEUE_URLS.pageOcr ? getQueueDepth(QUEUE_URLS.pageOcr) : null,
@@ -510,18 +496,34 @@ export async function GET(request: NextRequest) {
       ]);
       ocrQueueDepth = ocrDepth?.total ?? 0;
       translateQueueDepth = translateDepth?.total ?? 0;
-      ocrQueueOverloaded = ocrQueueDepth >= limits.sqs_ocr_depth;
-      translateQueueOverloaded = translateQueueDepth >= limits.sqs_translate_depth;
-
-      if (ocrQueueOverloaded) {
-        logger.backpressure('ocr_sqs_depth', { depth: ocrQueueDepth, threshold: limits.sqs_ocr_depth });
-      }
-      if (translateQueueOverloaded) {
-        logger.backpressure('translate_sqs_depth', { depth: translateQueueDepth, threshold: limits.sqs_translate_depth });
-      }
     } catch (err) {
-      // SQS check failure is non-blocking — log and continue
       console.warn('[pipeline] SQS depth check failed:', err instanceof Error ? err.message : err);
+    }
+
+    // ── Adaptive limits: probe DB health + SQS depth, adjust concurrency limits ──
+    // On degraded/critical this also cancels pending jobs and slams limits to minimums.
+    const limits = await getAdaptiveLimits(db, logger, { ocr: ocrQueueDepth, translate: translateQueueDepth });
+
+    // Per-run page cap: track total SQS messages enqueued this run across OCR + translation
+    let pagesEnqueuedThisRun = 0;
+    const pageCapPerRun = limits.pages_per_run;
+
+    // Global backpressure: skip ALL submission phases when total active jobs exceed limit.
+    // Completion/advancement phases still run — they drain work, not add it.
+    const totalActiveJobs = limits._health.active_jobs;
+    const systemOverloaded = totalActiveJobs >= limits.global_active_max;
+    if (systemOverloaded) {
+      logger.backpressure('global_job_limit', { active: totalActiveJobs, max: limits.global_active_max });
+    }
+
+    // SQS per-queue backpressure
+    const ocrQueueOverloaded = ocrQueueDepth >= limits.sqs_ocr_depth;
+    const translateQueueOverloaded = translateQueueDepth >= limits.sqs_translate_depth;
+    if (ocrQueueOverloaded) {
+      logger.backpressure('ocr_sqs_depth', { depth: ocrQueueDepth, threshold: limits.sqs_ocr_depth });
+    }
+    if (translateQueueOverloaded) {
+      logger.backpressure('translate_sqs_depth', { depth: translateQueueDepth, threshold: limits.sqs_translate_depth });
     }
 
     // ════════════════════════════════════════════════════════════════════
@@ -964,6 +966,11 @@ export async function GET(request: NextRequest) {
         if (!hasTimeBudget(startTime)) break;
         // When batch is exhausted, switch to Lambda fallback (limited per run)
         if (ocrQuotaExhausted && lambdaFallbackCount >= LAMBDA_FALLBACK_LIMIT) break;
+        // Per-run page cap: don't flood SQS in a single cron run
+        if (pagesEnqueuedThisRun >= pageCapPerRun) {
+          logger.decision('backpressure', `OCR page cap reached: ${pagesEnqueuedThisRun}/${pageCapPerRun} pages this run`);
+          break;
+        }
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
           // Guard: verify book has pages with good archived images (not failed)
@@ -1000,6 +1007,7 @@ export async function GET(request: NextRequest) {
               });
               log.ocr_submitted++;
               lambdaFallbackCount++;
+              pagesEnqueuedThisRun += lambdaResult.pagesEnqueued;
               logger.action('ocr_lambda_fallback', lambdaFallbackCount);
             } else if (lambdaResult.success) {
               // No pages needed OCR — advance directly
@@ -1132,6 +1140,7 @@ export async function GET(request: NextRequest) {
               });
               log.ocr_submitted++;
               lambdaFallbackCount++;
+              pagesEnqueuedThisRun += lambdaResult.pagesEnqueued;
               logger.action('ocr_lambda_fallback', lambdaFallbackCount);
             } else if (lambdaResult.success) {
               await setPipelineStatus(db, book.id, 'ocr_complete');
@@ -1483,6 +1492,11 @@ export async function GET(request: NextRequest) {
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
         if (translateQuotaExhausted && translateLambdaCount >= TRANSLATE_LAMBDA_LIMIT) break;
+        // Per-run page cap: don't flood SQS in a single cron run
+        if (pagesEnqueuedThisRun >= pageCapPerRun) {
+          logger.decision('backpressure', `Translation page cap reached: ${pagesEnqueuedThisRun}/${pageCapPerRun} pages this run`);
+          break;
+        }
         const retries = book.pipeline_auto?.retry_count || 0;
 
         // English books get modernized (Early Modern → Modern English) via the same batch route
@@ -1497,6 +1511,7 @@ export async function GET(request: NextRequest) {
               });
               log.translate_submitted++;
               translateLambdaCount++;
+              pagesEnqueuedThisRun += lambdaResult.pagesEnqueued;
               logger.action('translate_lambda_fallback', translateLambdaCount);
             } else if (lambdaResult.success) {
               await setPipelineStatus(db, book.id, 'translate_complete');
@@ -1615,6 +1630,7 @@ export async function GET(request: NextRequest) {
               });
               log.translate_submitted++;
               translateLambdaCount++;
+              pagesEnqueuedThisRun += lambdaResult.pagesEnqueued;
               logger.action('translate_lambda_fallback', translateLambdaCount);
             } else if (lambdaResult.success) {
               await setPipelineStatus(db, book.id, 'translate_complete');

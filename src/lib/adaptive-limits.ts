@@ -12,11 +12,18 @@ export const LIMIT_RANGES = {
   image_max:           { min: 5,   default: 25,  max: 50  },
   sqs_ocr_depth:       { min: 100, default: 300, max: 500  },
   sqs_translate_depth: { min: 200, default: 500, max: 1000 },
+  pages_per_run:       { min: 200, default: 2000, max: 5000 },
 } as const;
 
 export type LimitKey = keyof typeof LIMIT_RANGES;
 export type AdaptiveLimits = Record<LimitKey, number>;
 export type HealthGrade = 'healthy' | 'degraded' | 'critical';
+
+/** SQS queue depths passed in from the cron (already measured there) */
+export interface SqsDepths {
+  ocr: number;
+  translate: number;
+}
 
 interface HealthState {
   grade: HealthGrade;
@@ -24,10 +31,12 @@ interface HealthState {
   count_ms: number;
   active_jobs: number;
   last_cron_duration_ms: number;
+  sqs_combined_depth: number;
   sample_book_id: string | null;
   measured_at: Date;
   consecutive_healthy: number;
   consecutive_degraded: number;
+  jobs_cancelled: number;
 }
 
 interface AdaptiveDoc {
@@ -39,11 +48,20 @@ interface AdaptiveDoc {
   locked: boolean;
 }
 
-/** Default limits (used to seed the document on first run) */
+/** Default limits (used by admin reset) */
 function defaultLimits(): AdaptiveLimits {
   const limits = {} as AdaptiveLimits;
   for (const [key, range] of Object.entries(LIMIT_RANGES)) {
     limits[key as LimitKey] = range.default;
+  }
+  return limits;
+}
+
+/** Minimum limits — used to seed on first run so new/recovering systems start conservative */
+function minLimits(): AdaptiveLimits {
+  const limits = {} as AdaptiveLimits;
+  for (const [key, range] of Object.entries(LIMIT_RANGES)) {
+    limits[key as LimitKey] = range.min;
   }
   return limits;
 }
@@ -77,8 +95,10 @@ function gradeLatency(findMs: number, countMs: number): HealthGrade {
 }
 
 function gradeJobs(active: number): HealthGrade {
-  if (active > 50) return 'critical';
-  if (active > 30) return 'degraded';
+  // Writer Lambda caps DB connections at 50 — job count alone doesn't saturate the DB.
+  // Old thresholds (30/50) caused false-critical death spirals where the system never recovered.
+  if (active > 200) return 'critical';
+  if (active > 100) return 'degraded';
   return 'healthy';
 }
 
@@ -88,10 +108,18 @@ function gradeCronDuration(ms: number): HealthGrade {
   return 'healthy';
 }
 
-/** Composite: worst of three signals */
-function compositeGrade(latency: HealthGrade, jobs: HealthGrade, cron: HealthGrade): HealthGrade {
-  if (latency === 'critical' || jobs === 'critical' || cron === 'critical') return 'critical';
-  if (latency === 'degraded' || jobs === 'degraded' || cron === 'degraded') return 'degraded';
+/** Grade combined SQS queue depth (OCR + translate) */
+function gradeSqsDepth(combined: number): HealthGrade {
+  if (combined > 8000) return 'critical';
+  if (combined > 4000) return 'degraded';
+  return 'healthy';
+}
+
+/** Composite: worst of four signals */
+function compositeGrade(latency: HealthGrade, jobs: HealthGrade, cron: HealthGrade, sqs: HealthGrade): HealthGrade {
+  const grades = [latency, jobs, cron, sqs];
+  if (grades.includes('critical')) return 'critical';
+  if (grades.includes('degraded')) return 'degraded';
   return 'healthy';
 }
 
@@ -99,16 +127,21 @@ function compositeGrade(latency: HealthGrade, jobs: HealthGrade, cron: HealthGra
  * Probe DB health, adjust limits, return current limits for the pipeline cron.
  * Writes health + limits to system_config.adaptive_limits.
  *
+ * On degraded or critical: slams all limits to minimums AND cancels pending (not processing) jobs.
+ * On healthy (2+ consecutive): ramps up by 30%.
+ *
  * @param logger - optional CronLogger for decision recording
+ * @param sqsDepths - SQS queue depths (already measured by cron), used as 4th health signal
  */
 export async function getAdaptiveLimits(
   db: Db,
-  logger?: { decision: (type: 'skip' | 'backpressure' | 'time_budget' | 'circuit_breaker' | 'early_return' | 'rollback', reason: string, data?: Record<string, unknown>) => void }
+  logger?: { decision: (type: 'skip' | 'backpressure' | 'time_budget' | 'circuit_breaker' | 'early_return' | 'rollback', reason: string, data?: Record<string, unknown>) => void },
+  sqsDepths?: SqsDepths,
 ): Promise<AdaptiveLimits & { _health: HealthState }> {
   const doc = await db.collection('system_config').findOne({ _id: 'adaptive_limits' as any }) as unknown as AdaptiveDoc | null;
 
-  // Seed on first run
-  const currentLimits: AdaptiveLimits = doc?.limits ?? defaultLimits();
+  // Seed on first run — start at minimums so new/recovering systems are conservative
+  const currentLimits: AdaptiveLimits = doc?.limits ?? minLimits();
   const prevHealth = doc?.health;
   const locked = doc?.locked ?? false;
 
@@ -171,15 +204,25 @@ export async function getAdaptiveLimits(
     lastCronMs = lastRun?.duration_ms ?? 0;
   } catch { /* non-critical */ }
 
+  // ── Signal 4: SQS queue depth (passed in from cron) ──
+  const sqsCombined = (sqsDepths?.ocr ?? 0) + (sqsDepths?.translate ?? 0);
+
   // ── Grade ──
   const grade = compositeGrade(
     gradeLatency(findMs, countMs),
     gradeJobs(activeJobs),
-    gradeCronDuration(lastCronMs)
+    gradeCronDuration(lastCronMs),
+    gradeSqsDepth(sqsCombined),
   );
 
   const consecutiveHealthy = grade === 'healthy' ? (prevHealth?.consecutive_healthy ?? 0) + 1 : 0;
   const consecutiveDegraded = grade === 'degraded' ? (prevHealth?.consecutive_degraded ?? 0) + 1 : 0;
+
+  // ── Active cancel: kill pending jobs on degraded/critical to reduce in-flight pressure ──
+  let jobsCancelled = 0;
+  if (!locked && (grade === 'critical' || grade === 'degraded')) {
+    jobsCancelled = await cancelPendingJobs(db, logger);
+  }
 
   const health: HealthState = {
     grade,
@@ -187,10 +230,12 @@ export async function getAdaptiveLimits(
     count_ms: countMs,
     active_jobs: activeJobs,
     last_cron_duration_ms: lastCronMs,
+    sqs_combined_depth: sqsCombined,
     sample_book_id: sampleBookId,
     measured_at: new Date(),
     consecutive_healthy: consecutiveHealthy,
     consecutive_degraded: consecutiveDegraded,
+    jobs_cancelled: jobsCancelled,
   };
 
   // ── Adjust limits (unless admin-locked) ──
@@ -198,19 +243,13 @@ export async function getAdaptiveLimits(
   let adjustment = 'none';
 
   if (!locked) {
-    if (grade === 'critical') {
-      // Slam to minimums
+    if (grade === 'critical' || grade === 'degraded') {
+      // Slam to minimums — both degraded and critical get aggressive response.
+      // Mar 10 outage showed 50% cuts were too slow to prevent cascading failure.
       for (const [key, range] of Object.entries(LIMIT_RANGES)) {
         newLimits[key as LimitKey] = range.min;
       }
-      adjustment = 'critical_slam_to_min';
-    } else if (grade === 'degraded') {
-      // Cut by 50%
-      for (const key of Object.keys(LIMIT_RANGES) as LimitKey[]) {
-        newLimits[key] = Math.round(currentLimits[key] * 0.5);
-      }
-      newLimits = clampLimits(newLimits);
-      adjustment = 'degraded_cut_50pct';
+      adjustment = grade === 'critical' ? 'critical_slam_to_min' : 'degraded_slam_to_min';
     } else if (grade === 'healthy' && consecutiveHealthy >= 2) {
       // Ramp up by 30%
       for (const key of Object.keys(LIMIT_RANGES) as LimitKey[]) {
@@ -243,12 +282,52 @@ export async function getAdaptiveLimits(
 
   // Log decision
   if (logger && adjustment !== 'none') {
-    logger.decision('backpressure', `adaptive: ${adjustment} (grade=${grade}, find=${findMs}ms, count=${countMs}ms, jobs=${activeJobs}, cron=${lastCronMs}ms)`, {
-      grade, find_ms: findMs, count_ms: countMs, active_jobs: activeJobs, last_cron_duration_ms: lastCronMs, adjustment,
+    logger.decision('backpressure', `adaptive: ${adjustment} (grade=${grade}, find=${findMs}ms, count=${countMs}ms, jobs=${activeJobs}, cron=${lastCronMs}ms, sqs=${sqsCombined}${jobsCancelled ? `, cancelled=${jobsCancelled}` : ''})`, {
+      grade, find_ms: findMs, count_ms: countMs, active_jobs: activeJobs, last_cron_duration_ms: lastCronMs,
+      sqs_combined_depth: sqsCombined, jobs_cancelled: jobsCancelled, adjustment,
     });
   }
 
   return { ...newLimits, _health: health };
+}
+
+/**
+ * Cancel pending (NOT processing) jobs to reduce in-flight pressure.
+ * Processing jobs are left alone — they've already started and cancelling them
+ * would waste the work done so far.
+ */
+async function cancelPendingJobs(
+  db: Db,
+  logger?: { decision: (type: 'skip' | 'backpressure' | 'time_budget' | 'circuit_breaker' | 'early_return' | 'rollback', reason: string, data?: Record<string, unknown>) => void },
+): Promise<number> {
+  try {
+    const result = await db.collection('jobs').updateMany(
+      { status: 'pending' },
+      {
+        $set: {
+          status: 'cancelled',
+          updated_at: new Date(),
+          cancelled_at: new Date(),
+          cancelled_by: 'adaptive-limits',
+        },
+      },
+    );
+    const cancelled = result.modifiedCount;
+    if (cancelled > 0) {
+      // Clear book.job references so books can be re-submitted later
+      await db.collection('books').updateMany(
+        { 'job.job_id': { $exists: true } },
+        { $unset: { job: '' }, $set: { updated_at: new Date() } },
+      );
+      if (logger) {
+        logger.decision('circuit_breaker', `adaptive: cancelled ${cancelled} pending jobs`, { jobs_cancelled: cancelled });
+      }
+    }
+    return cancelled;
+  } catch (e) {
+    console.error('[adaptive-limits] cancelPendingJobs failed:', e);
+    return 0;
+  }
 }
 
 /**
