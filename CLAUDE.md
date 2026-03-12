@@ -43,6 +43,23 @@ Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page
 - Too many pages: `npx tsx scripts/maintenance/fix-ia-page-counts.ts --book-id=XXX --correct-count=YYY`
 - Too few pages: reimport via `POST https://sourcelibrary.org/api/books/{id}/reimport`
 
+## Domain Memory
+When working in a specific domain, read the relevant memory file first:
+- **Pipeline/cron/Lambda/OCR/translation:** `memory/pipeline-ops.md`
+- **Data quality/known bugs/stale stats:** `memory/data-quality.md`
+- **UI/hydration/navigation/analytics:** `memory/ui-navigation.md`
+- **MCP server/CLI/developer tools:** `memory/mcp-server.md`
+- **Operational lessons/postmortems:** `memory/lessons-learned.md`
+- **Conversation search/indexer:** `memory/conversation-index-notes.md`
+- **Handoffs from previous sessions:** `.claude/handoffs/` (read relevant files by date/topic)
+
+## Compaction Instructions
+When compacting (`/compact`), ALWAYS preserve:
+- List of files modified this session
+- Current task state and what was agreed with the user
+- Any test results, errors, or deployment outcomes
+- Which domain memory files were already read (avoid re-reading)
+
 ## Reference Docs
 Read these on demand when working on related features — do NOT load all at once.
 - Import APIs (Gallica, IA, MDZ, Wellcome, e-rara): `.claude/docs/import-apis.md`

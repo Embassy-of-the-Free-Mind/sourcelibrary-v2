@@ -28,5 +28,5 @@ logs/
 *.gif
 *.mp4
 
-# Handoffs (read on demand, not indexed)
-.claude/handoffs/
+# Handoffs (indexed so Claude can find them, read on demand)
+# .claude/handoffs/
