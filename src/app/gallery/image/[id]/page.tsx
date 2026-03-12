@@ -34,7 +34,10 @@ import {
   Move,
   Crop,
   Save,
-  RotateCw
+  RotateCw,
+  Info,
+  AlertTriangle,
+  X
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -73,6 +76,7 @@ export default function ImageDetailPage({
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
   const [pageImageAspect, setPageImageAspect] = useState<string>('3/4');
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     params.then(p => setImageId(p.id));
@@ -525,13 +529,30 @@ export default function ImageDetailPage({
                   </div>
                 )}
 
-                {data.model && (
-                  <p className="text-sm text-stone-500 mt-2 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
-                    Identified by {data.model}
-                    {data.confidence && ` (${Math.round(data.confidence * 100)}% confidence)`}
-                  </p>
-                )}
+                {/* Model info + needs-update flag + info button */}
+                <div className="mt-2 flex items-center gap-2 flex-wrap">
+                  {data.model && (
+                    <p className="text-sm text-stone-500 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" />
+                      {data.model}
+                      {data.confidence ? ` (${Math.round(data.confidence * 100)}%)` : ''}
+                    </p>
+                  )}
+                  {data.model !== 'gemini-3-flash-preview' && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-status-warning/15 text-status-warning">
+                      <AlertTriangle className="w-3 h-3" />
+                      Needs re-extraction
+                    </span>
+                  )}
+                  <button
+                    onClick={() => setShowInfo(true)}
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-300 transition-colors"
+                    title="View processing metadata"
+                  >
+                    <Info className="w-3 h-3" />
+                    Info
+                  </button>
+                </div>
               </div>
 
               {/* Gallery Quality Rating */}
@@ -1054,6 +1075,129 @@ export default function ImageDetailPage({
         </div>
       </main>
 
+      {/* Processing Info Modal */}
+      {showInfo && data && (
+        <div
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowInfo(false)}
+        >
+          <div
+            className="bg-stone-800 rounded-xl max-w-md w-full shadow-2xl border border-stone-700"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-stone-700">
+              <h3 className="text-white font-medium flex items-center gap-2">
+                <Info className="w-4 h-4 text-stone-400" />
+                Processing Info
+              </h3>
+              <button
+                onClick={() => setShowInfo(false)}
+                className="text-stone-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="px-5 py-4 space-y-4">
+              {/* Extraction Model */}
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Extraction Model</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-stone-200 text-sm">{data.model || 'Unknown'}</p>
+                  {data.model === 'gemini-3-flash-preview' ? (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-status-success/15 text-status-success">Current</span>
+                  ) : (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-status-warning/15 text-status-warning">Outdated</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Detection Source */}
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Detection Source</p>
+                <p className="text-stone-200 text-sm">
+                  {data.detectionSource === 'vision_model' && 'Vision model (dedicated image extraction)'}
+                  {data.detectionSource === 'ocr_tag' && 'OCR tag (detected during text extraction)'}
+                  {data.detectionSource === 'manual' && 'Manually added'}
+                  {!data.detectionSource && 'Unknown'}
+                </p>
+              </div>
+
+              {/* Confidence */}
+              {data.confidence != null && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Confidence</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1.5 bg-stone-700 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-accent-gold"
+                        style={{ width: `${Math.round(data.confidence * 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-stone-300 text-sm font-mono w-10 text-right">
+                      {Math.round(data.confidence * 100)}%
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Gallery Quality */}
+              {data.galleryQuality != null && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Gallery Quality</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1.5 bg-stone-700 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${Math.round(data.galleryQuality * 100)}%`,
+                          backgroundColor: data.galleryQuality >= 0.75 ? 'var(--status-success)' : data.galleryQuality >= 0.5 ? 'var(--accent-gold)' : 'var(--status-error)'
+                        }}
+                      />
+                    </div>
+                    <span className="text-stone-300 text-sm font-mono w-10 text-right">
+                      {data.galleryQuality.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Quality Rationale */}
+              {data.galleryRationale && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Quality Rationale</p>
+                  <p className="text-stone-300 text-sm leading-relaxed">{data.galleryRationale}</p>
+                </div>
+              )}
+
+              {/* Type */}
+              {data.type && (
+                <div>
+                  <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Image Type</p>
+                  <p className="text-stone-200 text-sm capitalize">{data.type}</p>
+                </div>
+              )}
+
+              {/* Featured */}
+              {data.featured && (
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-accent-gold" />
+                  <p className="text-accent-gold text-sm">Featured image</p>
+                </div>
+              )}
+            </div>
+
+            <div className="px-5 py-3 border-t border-stone-700">
+              <button
+                onClick={() => setShowInfo(false)}
+                className="w-full py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-stone-300 text-sm transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
