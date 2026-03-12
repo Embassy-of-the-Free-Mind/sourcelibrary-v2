@@ -44,18 +44,19 @@ Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page
 - Too few pages: reimport via `POST https://sourcelibrary.org/api/books/{id}/reimport`
 
 ## Reference Docs
-- Import APIs (Gallica, IA, MDZ, Wellcome, e-rara): @.claude/docs/import-apis.md
-- Image archiving & provenance: @.claude/docs/image-archiving.md
-- Observability & audit trail: @.claude/docs/observability.md
-- Page processing lifecycle: @.claude/docs/page-lifecycle.md
-- Lambda worker architecture: @.claude/docs/worker-architecture.md
-- Batch processing (Gemini Batch API): @.claude/docs/batch-processing.md
-- Edition publishing & DOI minting: @.claude/docs/editions.md
-- Social media system: @.claude/docs/social-media.md
-- Analytics & engagement: @.claude/docs/analytics.md
-- Search system: @.claude/docs/search.md
-- Schema.org structured data: @.claude/docs/structured-data.md
-- Style system (colors, tokens, shared constants): @.claude/docs/style-system.md
-- Full processing pipeline (states, crons, prompts, costs): @.claude/docs/pipeline.md
-- First translation identification system: @.claude/docs/first-translation-system.md
-- Thumbnails & cover selection: @.claude/docs/thumbnails.md
+Read these on demand when working on related features — do NOT load all at once.
+- Import APIs (Gallica, IA, MDZ, Wellcome, e-rara): `.claude/docs/import-apis.md`
+- Image archiving & provenance: `.claude/docs/image-archiving.md`
+- Observability & audit trail: `.claude/docs/observability.md`
+- Page processing lifecycle: `.claude/docs/page-lifecycle.md`
+- Lambda worker architecture: `.claude/docs/worker-architecture.md`
+- Batch processing (Gemini Batch API): `.claude/docs/batch-processing.md`
+- Edition publishing & DOI minting: `.claude/docs/editions.md`
+- Social media system: `.claude/docs/social-media.md`
+- Analytics & engagement: `.claude/docs/analytics.md`
+- Search system: `.claude/docs/search.md`
+- Schema.org structured data: `.claude/docs/structured-data.md`
+- Style system (colors, tokens, shared constants): `.claude/docs/style-system.md`
+- Full processing pipeline (states, crons, prompts, costs): `.claude/docs/pipeline.md`
+- First translation identification system: `.claude/docs/first-translation-system.md`
+- Thumbnails & cover selection: `.claude/docs/thumbnails.md`
