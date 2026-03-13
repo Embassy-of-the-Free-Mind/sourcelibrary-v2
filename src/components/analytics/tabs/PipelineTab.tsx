@@ -102,6 +102,43 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         </div>
       )}
 
+      {/* Throughput Rate Chart (pages/hr) */}
+      {(() => {
+        if (!pipelineData.snapshots || pipelineData.snapshots.length < 3) return null;
+        const sorted = [...pipelineData.snapshots].sort((a, b) =>
+          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+        const labels: string[] = [];
+        const ocrRate: number[] = [];
+        const transRate: number[] = [];
+
+        for (let i = 1; i < sorted.length; i++) {
+          const dt = (new Date(sorted[i].timestamp).getTime() - new Date(sorted[i - 1].timestamp).getTime()) / 3600000;
+          if (dt < 0.01) continue;
+          labels.push(dateLabel(sorted[i].timestamp));
+          ocrRate.push(Math.max(0, Math.round(((sorted[i].pages?.ocr ?? 0) - (sorted[i - 1].pages?.ocr ?? 0)) / dt)));
+          transRate.push(Math.max(0, Math.round(((sorted[i].pages?.translated ?? 0) - (sorted[i - 1].pages?.translated ?? 0)) / dt)));
+        }
+
+        if (labels.length < 2) return null;
+
+        return (
+          <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+            <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+              Pipeline Throughput (pages/hr)
+            </h2>
+            <MultiLineChart
+              series={[
+                { label: 'OCR', data: ocrRate, color: 'var(--accent-sage)' },
+                { label: 'Translation', data: transRate, color: 'var(--accent-rust)' },
+              ]}
+              labels={labels}
+              yLabel={compactNumber}
+            />
+          </div>
+        );
+      })()}
+
       {/* Stall Detection */}
       {pipelineData.stalls && pipelineData.stalls.length > 0 && (
         <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>

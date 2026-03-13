@@ -5,6 +5,7 @@ import { Users, Globe, BarChart3 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import type { TrafficData } from '@/lib/api-client/types/analytics';
+import { BarChart } from '../charts/BarChart';
 
 export default function TrafficTab() {
   const [data, setData] = useState<TrafficData | null>(null);
@@ -54,6 +55,17 @@ export default function TrafficTab() {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Visitors Per Hour */}
+      {data.visitorsByHour && data.visitorsByHour.length > 0 && (
+        <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+          <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>Visitors Per Hour</h2>
+          <BarChart
+            data={data.visitorsByHour.map(d => ({ x: d.hour.slice(5), y: d.visitors }))}
+            color="#3b82f6"
+          />
         </div>
       )}
 

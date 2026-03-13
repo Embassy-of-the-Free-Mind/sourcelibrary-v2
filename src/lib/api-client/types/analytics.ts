@@ -264,6 +264,7 @@ export interface TrafficData {
   topCountries?: Array<{ country: string; count: number }>;
   totalVisitors?: number;
   totalPageviews?: number;
+  visitorsByHour?: Array<{ hour: string; visitors: number; pageviews: number }>;
   error?: string;
 }
 

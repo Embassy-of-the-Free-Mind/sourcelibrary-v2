@@ -11,7 +11,7 @@ try {
     const recentWithPath = { timestamp: { $gte: thirtyDaysAgo }, path: { $ne: null } };
 
     // Run all queries in parallel — all scoped to 30-day window, excluding null paths
-    const [totalPageviews, totalVisitors, topPages, topReferrers, topCountries] = await Promise.all([
+    const [totalPageviews, totalVisitors, topPages, topReferrers, topCountries, visitorsByHour] = await Promise.all([
       collection.countDocuments(recentWithPath),
       collection.distinct('ip', recentWithPath),
       collection.aggregate([
@@ -32,6 +32,16 @@ try {
         { $sort: { count: -1 } },
         { $limit: 10 },
       ]).toArray(),
+      collection.aggregate([
+        { $match: recentWithPath },
+        { $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d %H:00', date: '$timestamp' } },
+          visitors: { $addToSet: '$ip' },
+          pageviews: { $sum: 1 },
+        }},
+        { $project: { _id: 0, hour: '$_id', visitors: { $size: '$visitors' }, pageviews: 1 } },
+        { $sort: { hour: 1 } },
+      ]).toArray(),
     ]);
 
     return NextResponse.json({
@@ -40,6 +50,7 @@ try {
       topPages: topPages.map(p => ({ path: p._id, count: p.count })),
       topReferrers: topReferrers.map(r => ({ referrer: r._id, count: r.count })),
       topCountries: topCountries.map(c => ({ country: c._id, count: c.count })),
+      visitorsByHour,
     });
   } catch (error) {
     console.error('Analytics API error:', error);
