@@ -116,7 +116,7 @@ if (process.env.RESEND_API_KEY) {
               </div>
               <div style="text-align: center; margin: 32px 0;">
                 <a href="${url}" style="display: inline-block; padding: 14px 40px; background: #9e4a3a; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-family: -apple-system, sans-serif;">
-                  Sign in
+                  Sign In
                 </a>
               </div>
               <div style="border-top: 1px solid #e8e4dc; padding-top: 24px; text-align: center;">

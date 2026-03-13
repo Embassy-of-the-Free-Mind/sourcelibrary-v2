@@ -13,16 +13,31 @@ function SignInContent() {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setLoading(true);
+    setEmailError('');
     try {
-      await signIn('email', { email, callbackUrl, redirect: false });
-      setEmailSent(true);
+      // Auth.js v5 requires CSRF double-submit: fetch token first (sets cookie),
+      // then POST to signin endpoint with that token in the body.
+      const csrfRes = await fetch('/api/auth/csrf');
+      const { csrfToken } = await csrfRes.json();
+      const res = await fetch('/api/auth/signin/nodemailer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email, csrfToken, callbackUrl }),
+        redirect: 'follow',
+      });
+      if (res.ok || res.redirected) {
+        setEmailSent(true);
+      } else {
+        setEmailError('Could not send sign-in link. Please try again.');
+      }
     } catch {
-      // Fall through to error state
+      setEmailError('Could not send sign-in link. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -31,32 +46,20 @@ function SignInContent() {
   if (emailSent) {
     return (
       <div className="min-h-screen relative flex items-center justify-center">
-        {/* Background image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/auth-bg.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src="/auth-bg.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/50" />
-
         <div className="relative z-10 w-full max-w-md p-8 rounded-2xl text-center bg-white/95 backdrop-blur-sm border border-white/20 mx-4">
           <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
             <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
             <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
           </svg>
-          <h1 className="text-2xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
-            Check your email
-          </h1>
+          <h1 className="text-2xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>Check your email</h1>
           <p className="text-base mb-6" style={{ color: 'var(--text-muted)' }}>
-            We sent a sign-in link to <strong>{email}</strong>. Click the link in the email to access the library.
+            We sent a sign-in link to <strong>{email}</strong>. Click the link to access the library.
           </p>
-          <button
-            onClick={() => setEmailSent(false)}
-            className="text-sm underline"
-            style={{ color: 'var(--text-muted)' }}
-          >
+          <button onClick={() => setEmailSent(false)} className="text-sm underline" style={{ color: 'var(--text-muted)' }}>
             Use a different email
           </button>
         </div>
@@ -96,13 +99,15 @@ function SignInContent() {
           </p>
         </div>
 
-        {error && (
+        {(error || emailError) && (
           <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fef2f2', color: '#991b1b' }}>
-            {error === 'OAuthAccountNotLinked'
-              ? 'This email is already associated with another account.'
-              : error === 'EmailSignin'
-              ? 'Could not send sign-in email. Please try again or use Google.'
-              : 'An error occurred during sign in. Please try again.'}
+            {emailError
+              ? emailError
+              : error === 'OAuthAccountNotLinked'
+                ? 'This email is already associated with another account.'
+                : error === 'EmailSignin'
+                  ? 'Could not send sign-in email. Please try again or use Google.'
+                  : 'An error occurred during sign in. Please try again.'}
           </div>
         )}
 
@@ -131,7 +136,7 @@ function SignInContent() {
             className="w-full mt-3 px-4 py-3 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50"
             style={{ background: 'var(--accent-rust)', color: '#ffffff' }}
           >
-            {loading ? 'Sending link...' : 'Continue with email'}
+            {loading ? 'Sending link...' : 'Continue with Email'}
           </button>
         </form>
 
@@ -155,15 +160,6 @@ function SignInContent() {
             </svg>
             Continue with Google
           </button>
-        </div>
-
-        <div className="mt-8 pt-6 text-center" style={{ borderTop: '1px solid var(--border-light)' }}>
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Don&apos;t have an account?{' '}
-            <Link href="/" className="font-medium underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
-              Join free
-            </Link>
-          </p>
         </div>
 
         <p className="mt-4 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
