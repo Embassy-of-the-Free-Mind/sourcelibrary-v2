@@ -28,10 +28,10 @@
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
 ## Domain Context
-Use `/skill-name` to load domain context, or read memory files directly:
-- **Pipeline/cron/Lambda:** `/pipeline-context` — or read `memory/pipeline-ops.md`
-- **UI/frontend:** `/ui-context` — or read `memory/ui-navigation.md`
-- **Data fixes/maintenance:** `/maintenance` — or read `memory/data-quality.md`
+Detect the work domain from the user's prompt and load the right context automatically:
+- **Pipeline/cron/Lambda/OCR/translation work:** read `memory/pipeline-ops.md` (or invoke `/pipeline-context` for full context)
+- **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
+- **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
 - **Book acquisition:** `/curator` or `/library-curator`
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
@@ -40,9 +40,9 @@ Use `/skill-name` to load domain context, or read memory files directly:
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
 ## Knowledge Maintenance
-- After fixing a non-trivial bug or discovering a pattern, run `/lesson` to record it.
-- When loading domain context via skills, check for stale or contradictory memory entries.
-- Memory entries with dates >14 days old should be verified before trusting stats/counts.
+- **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
+- When reading memory files, flag anything that contradicts the current codebase and fix it.
+- Memory entries with dates >14 days old: verify before trusting stats/counts.
 
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:
