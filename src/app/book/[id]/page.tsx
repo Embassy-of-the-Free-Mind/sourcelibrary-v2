@@ -100,7 +100,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
     }
     if (entityNames.length > 0) {
       const candidateBooks = await db.collection('books').find(
-        { id: { $ne: bookId }, hidden: { $ne: true }, author: { $nin: ['', 'Unknown'] } },
+        { id: { $ne: bookId }, hidden: { $ne: true }, author: { $exists: true, $nin: [null, '', 'Unknown'] } },
         { projection: { id: 1, author: 1 } },
       ).toArray();
       for (const doc of candidateBooks) {
