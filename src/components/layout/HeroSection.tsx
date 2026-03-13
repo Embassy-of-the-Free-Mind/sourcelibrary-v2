@@ -149,13 +149,24 @@ export default function HeroSection() {
             Five centuries of lost knowledge&mdash;in alchemy, Hermetica, Kabbalah, natural philosophy, and the roots of modern science&mdash;translated and freely accessible for the first time.
           </p>
 
-          {status === 'authenticated' ? (
-            <div className="max-w-xl">
-              <UnifiedSearch />
-            </div>
-          ) : (
-            <HeroSignUp />
-          )}
+          {/* Reserve min-height to prevent layout shift while session loads */}
+          <div className="min-h-[120px]">
+            {status === 'loading' ? (
+              <div className="max-w-xl opacity-0">
+                {/* Invisible placeholder matching sign-up form height */}
+                <div className="h-[52px] rounded-lg" />
+                <div className="h-[24px] mt-4" />
+              </div>
+            ) : status === 'authenticated' ? (
+              <div className="max-w-xl animate-fade-in">
+                <UnifiedSearch />
+              </div>
+            ) : (
+              <div className="animate-fade-in">
+                <HeroSignUp />
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
