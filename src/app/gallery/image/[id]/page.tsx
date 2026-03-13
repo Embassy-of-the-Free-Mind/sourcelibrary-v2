@@ -10,9 +10,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
   BookOpen,
   Share2,
   Copy,
@@ -50,7 +48,6 @@ export default function ImageDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const router = useRouter();
   const { data: session } = useSession();
   const isAdmin = (session?.user as any)?.role === 'admin';
   const [imageId, setImageId] = useState<string | null>(null);
@@ -258,13 +255,6 @@ export default function ImageDetailPage({
     }
   }, []);
 
-  // Back navigation
-  const handleBackClick = useCallback((e: React.MouseEvent) => {
-    if (window.history.length > 1) {
-      e.preventDefault();
-      router.back();
-    }
-  }, [router]);
 
   // Save handlers (unchanged)
   const saveTitle = async () => {
@@ -464,14 +454,11 @@ export default function ImageDetailPage({
         {/* Minimal header */}
         <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
           <div className="px-4 py-2 flex items-center justify-between">
-            <Link
-              href={data?.galleryUrl || '/gallery'}
-              onClick={handleBackClick}
-              className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Back</span>
-            </Link>
+            <nav className="flex items-center gap-1.5 text-sm">
+              <Link href="/" className="text-stone-500 hover:text-white transition-colors">Source Library</Link>
+              <span className="text-stone-600">/</span>
+              <Link href="/gallery" className="text-stone-400 hover:text-white transition-colors">Gallery</Link>
+            </nav>
 
             {/* Counter */}
             {bookImages.length > 1 && (
