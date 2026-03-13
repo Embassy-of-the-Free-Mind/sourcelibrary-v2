@@ -12,7 +12,6 @@ import {
   Pencil,
   Copy,
   Check,
-  BookOpen,
   Image as ImageIcon,
   FileText,
   Languages,
@@ -834,11 +833,20 @@ export default function TranslationEditor({
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
           <div className="flex items-center justify-between gap-2 relative">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-              <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }} aria-label="Back to book">
-                <BookOpen className="w-5 h-5" aria-hidden="true" />
+              <a href="/" className="inline-flex items-center gap-1.5 shrink-0 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-primary)' }} aria-label="Source Library home">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
+                  <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
+                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+                </svg>
+                <span className="hidden sm:inline text-sm uppercase tracking-wider">
+                  <span className="font-semibold">Source</span>
+                  <span className="font-light">Library</span>
+                </span>
               </a>
+              <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>
               <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
-                <h1 className="text-base sm:text-lg font-medium truncate" style={{ color: 'var(--text-primary)' }}>
+                <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
               </a>
@@ -1576,12 +1584,23 @@ export default function TranslationEditor({
         {/* Row 1: Back, Title, Navigation */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
-            <a href={`/book/${book.id}`} className="hover:opacity-70 transition-opacity shrink-0" style={{ color: 'var(--text-muted)' }}>
-              <ChevronLeft className="w-5 h-5" />
+            <a href="/" className="inline-flex items-center gap-1.5 shrink-0 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-primary)' }} aria-label="Source Library home">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
+                <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
+                <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+              </svg>
+              <span className="hidden sm:inline text-sm uppercase tracking-wider">
+                <span className="font-semibold">Source</span>
+                <span className="font-light">Library</span>
+              </span>
             </a>
-            <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
-              {book.display_title || book.title}
-            </h1>
+            <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>
+            <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+              <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
+                {book.display_title || book.title}
+              </h1>
+            </a>
           </div>
 
           {/* Navigation */}
