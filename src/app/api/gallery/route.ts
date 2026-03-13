@@ -150,16 +150,35 @@ export async function GET(request: NextRequest) {
       ];
     }
 
+    // Sort mode
+    const sortParam = searchParams.get('sort');
+    const useRandom = sortParam === 'random' && !searchQuery;
+
     // Run query and count in parallel
-    const [items, total] = await Promise.all([
-      db.collection('gallery_images')
-        .find(filter, { projection: { _id: 0 } })
-        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
-        .skip(offset)
-        .limit(limit)
-        .toArray(),
-      db.collection('gallery_images').countDocuments(filter),
-    ]);
+    let items;
+    let total: number;
+
+    if (useRandom) {
+      // Random sampling via aggregation — fresh results each visit
+      const pipeline: Record<string, unknown>[] = [
+        { $match: filter },
+      ];
+      // Count total separately
+      total = await db.collection('gallery_images').countDocuments(filter);
+      pipeline.push({ $sample: { size: limit } });
+      pipeline.push({ $project: { _id: 0 } });
+      items = await db.collection('gallery_images').aggregate(pipeline).toArray();
+    } else {
+      [items, total] = await Promise.all([
+        db.collection('gallery_images')
+          .find(filter, { projection: { _id: 0 } })
+          .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+          .skip(offset)
+          .limit(limit)
+          .toArray(),
+        db.collection('gallery_images').countDocuments(filter),
+      ]);
+    }
 
     // Map to GalleryItem format (camelCase for API consumers)
     const mappedItems = items.map(doc => ({

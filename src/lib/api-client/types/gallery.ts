@@ -82,6 +82,7 @@ export interface GallerySearchParams {
   minQuality?: number;
   includeArchive?: boolean;
   maxPerBook?: number;
+  sort?: string;
 }
 
 export interface GalleryImageUpdateRequest {

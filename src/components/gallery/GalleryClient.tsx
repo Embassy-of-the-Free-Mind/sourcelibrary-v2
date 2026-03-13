@@ -127,6 +127,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
       setLoading(true);
       setError(null);
       try {
+        const noFilters = !bookId && !collectionFilter && !libraryFilter && !imageSearchQuery && !typeFilter && !subjectFilter && !yearStart && !yearEnd && !qualityParam;
         const json = await gallery.list({
           limit,
           offset: page * limit,
@@ -139,6 +140,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+          sort: noFilters ? 'random' : undefined,
         });
         // Preserve filters from initial page load on pagination
         if (page > 0 && data?.filters && (!json.filters?.types?.length)) {
