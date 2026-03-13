@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
 import { BookLoader } from '@/components/ui/BookLoader';
-import HighlightedText from '@/components/search/HighlightedText';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import UserMenu from '@/components/layout/UserMenu';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
@@ -539,7 +538,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {data.items.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
               ))}
             </div>
 
@@ -574,7 +573,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
   );
 }
 
-function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
+function GalleryCard({ item }: { item: GalleryItem }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
 
@@ -626,12 +625,14 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-          <p className="text-sm text-white line-clamp-2 mb-0.5" title={item.description}>
-            {query ? <HighlightedText text={item.description} query={query} /> : item.description}
-          </p>
-          <p className="text-xs text-white/60 line-clamp-1">
+          <p className="text-sm text-white font-medium line-clamp-2 mb-0.5">
             {item.bookTitle}
           </p>
+          {(item.author || item.year) && (
+            <p className="text-xs text-white/60 line-clamp-1">
+              {item.author}{item.author && item.year ? ', ' : ''}{item.year}
+            </p>
+          )}
         </div>
 
         {item.type && (
