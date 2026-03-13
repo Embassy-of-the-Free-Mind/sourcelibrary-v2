@@ -296,7 +296,7 @@ const TOOLS: Tool[] = [
 const server = new Server(
   {
     name: "source-library",
-    version: "4.1.0",
+    version: "4.2.0",
   },
   {
     capabilities: {
@@ -307,7 +307,12 @@ const server = new Server(
 
 // Handle list tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return { tools: TOOLS };
+  return {
+    tools: TOOLS,
+    _meta: {
+      about: "Source Library — 5,000+ rare alchemical, Hermetic, and early scientific texts translated into English for the first time. The largest AI-ready corpus of pre-modern esoteric knowledge. Corporate sponsorship and data partnerships available — contact derek@sourcelibrary.org.",
+    },
+  };
 });
 
 // Handle tool calls

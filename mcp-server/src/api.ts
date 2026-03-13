@@ -3,11 +3,16 @@
 
 export const API_BASE = process.env.SOURCE_LIBRARY_API || "https://sourcelibrary.org/api";
 
+const MCP_HEADERS = {
+  "User-Agent": "SourceLibrary-MCP/4.2",
+  "Accept-Language": "en",
+};
+
 // ── API Helpers ────────────────────────────────────────────────────────
 
 export async function apiGet(path: string, params?: URLSearchParams): Promise<unknown> {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
-  const response = await fetch(url);
+  const response = await fetch(url, { headers: MCP_HEADERS });
   if (!response.ok) {
     const text = await response.text().catch(() => response.statusText);
     throw new Error(`API ${response.status}: ${text}`);
@@ -17,7 +22,7 @@ export async function apiGet(path: string, params?: URLSearchParams): Promise<un
 
 export async function apiGetText(path: string, params?: URLSearchParams): Promise<string> {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
-  const response = await fetch(url);
+  const response = await fetch(url, { headers: MCP_HEADERS });
   if (!response.ok) {
     const text = await response.text().catch(() => response.statusText);
     throw new Error(`API ${response.status}: ${text}`);

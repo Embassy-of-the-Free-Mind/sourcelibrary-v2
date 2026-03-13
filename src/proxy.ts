@@ -80,6 +80,9 @@ function looksLikeBot(request: NextRequest): boolean {
   // No UA at all — definitely not a browser
   if (!ua) return true;
 
+  // Our own MCP server — always treat as browser-tier
+  if (ua.startsWith('SourceLibrary-MCP/')) return false;
+
   // Explicit bot/crawler/spider UA strings
   if (/bot|crawl|spider|scrape|fetch|http|wget|curl|python|java\/|php\//i.test(ua)) return true;
 
