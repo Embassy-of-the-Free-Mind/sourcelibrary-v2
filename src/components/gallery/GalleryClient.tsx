@@ -598,6 +598,7 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
             src={displayUrl}
             alt={item.description}
             fill
+            quality={85}
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 16vw, 14vw"
             onLoad={(e) => {
