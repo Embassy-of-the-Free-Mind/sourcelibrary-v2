@@ -127,7 +127,7 @@ export async function GET() {
       status: status === 'healthy' ? 'success' : status === 'degraded' ? 'partial' : 'failed',
       failed: status === 'down',
       actions: { issues_found: issues.length },
-      errors: issues.map(i => ({ message: `[${i.severity}] ${i.check}: ${i.detail}` })),
+      errors: issues.map(i => `[${i.severity}] ${i.check}: ${i.detail}`),
       error_count: issues.length,
       summary: status === 'healthy' ? `Healthy (${duration}ms)` : `${status}: ${issues.map(i => i.check).join(', ')}`,
     });
