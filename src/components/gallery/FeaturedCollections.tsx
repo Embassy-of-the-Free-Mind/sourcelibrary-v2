@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, Layers, ArrowRight } from 'lucide-react';
+import { Image as ImageIcon, ArrowRight } from 'lucide-react';
 import { gallery } from '@/lib/api-client';
 
 const MAX_SHOWN = 11;
@@ -42,11 +42,9 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
   const hasMore = collections.length > MAX_SHOWN;
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-2 mb-4">
-        <Layers className="w-5 h-5 text-accent-rust" />
-        <h2 className="text-lg font-serif text-stone-800">Collections</h2>
-      </div>
+    <div className="mb-10">
+      <h2 className="text-2xl font-serif text-stone-800 mb-1">Collections</h2>
+      <p className="text-stone-500 text-base mb-5">Curated selections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {shown.map((collection) => (

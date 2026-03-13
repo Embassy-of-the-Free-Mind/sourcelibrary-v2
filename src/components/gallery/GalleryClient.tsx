@@ -12,6 +12,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { BookLoader } from '@/components/ui/BookLoader';
 import HighlightedText from '@/components/search/HighlightedText';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
+import UserMenu from '@/components/layout/UserMenu';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
   gallery,
@@ -226,100 +227,89 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
   return (
     <>
       {/* Header */}
-      <header className="bg-stone-900 text-white py-4 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
-                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-                  <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-                  <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-                </svg>
-                <span className="text-xl uppercase tracking-wider hidden sm:inline">
-                  <span className="font-semibold">Source</span>
-                  <span className="font-light">Library</span>
-                </span>
-              </Link>
-              <span className="text-stone-500 hidden sm:inline">/</span>
-              <Link href="/gallery" className="hover:opacity-80 transition-opacity">
-                <h1 className="text-lg font-serif">Image Gallery</h1>
-                <p className="text-stone-400 text-xs">73,000+ images</p>
-              </Link>
-            </div>
+      <header className="bg-stone-900 text-white py-3 sticky top-0 z-20">
+        <div className="px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
+                <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
+                <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
+              </svg>
+              <span className="text-lg uppercase tracking-wider hidden sm:inline">
+                <span className="font-semibold">Source</span>
+                <span className="font-light">Library</span>
+              </span>
+            </Link>
+            <span className="text-stone-600 hidden sm:inline">/</span>
+            <Link href="/gallery" className="hover:opacity-80 transition-opacity">
+              <span className="text-base font-serif">Image Gallery</span>
+            </Link>
           </div>
-
-          {/* Search Bar */}
-          <div className="flex gap-3">
-            {/* Book Search */}
-            <div className="relative flex-1 max-w-xs" ref={bookSearchRef}>
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <input
-                type="search"
-                value={bookSearchQuery}
-                onChange={(e) => {
-                  setBookSearchQuery(e.target.value);
-                  setShowBookDropdown(true);
-                }}
-                onFocus={() => setShowBookDropdown(true)}
-                placeholder="Find a book..."
-                aria-label="Filter by book"
-                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-accent-gold focus:outline-none"
-              />
-              {bookSearchLoading && (
-                <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
-              )}
-
-              {showBookDropdown && bookSearchResults.length > 0 && (
-                <div className="absolute top-full mt-1 left-0 right-0 bg-white rounded-lg shadow-lg border border-stone-200 max-h-64 overflow-y-auto z-30">
-                  {bookSearchResults.map((book) => (
-                    <button
-                      key={book.id}
-                      onClick={() => handleBookSelect(book)}
-                      className="w-full px-4 py-2 text-left text-stone-800 hover:bg-accent-gold/8 border-b border-stone-100 last:border-0"
-                    >
-                      <div className="font-medium text-sm line-clamp-1">
-                        <HighlightedText text={book.display_title || book.title} query={bookSearchQuery} />
-                      </div>
-                      {book.author && (
-                        <div className="text-xs text-stone-500">
-                          <HighlightedText text={book.author} query={bookSearchQuery} />
-                        </div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Image Content Search */}
-            <form onSubmit={handleImageSearch} className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <input
-                type="search"
-                value={imageSearchQuery}
-                onChange={(e) => setImageSearchQuery(e.target.value)}
-                placeholder="Search image content (serpent, Mercury, emblem...)"
-                aria-label="Search image descriptions"
-                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-accent-gold focus:outline-none"
-              />
-            </form>
-
-            {/* Filter Toggle */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-                showFilters ? 'bg-accent-rust text-white' : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              Filters
-            </button>
-          </div>
+          <UserMenu variant="hero" />
         </div>
       </header>
 
       <div className="px-4 sm:px-6 lg:px-8 py-6">
+        {/* Search & Filter Bar */}
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          {/* Image Search */}
+          <form onSubmit={handleImageSearch} className="flex-1 min-w-[200px] max-w-md relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+            <input
+              type="text"
+              placeholder="Search images..."
+              value={imageSearchQuery}
+              onChange={(e) => setImageSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
+            />
+          </form>
+
+          {/* Book Search */}
+          <div ref={bookSearchRef} className="relative min-w-[200px] max-w-sm flex-1">
+            <BookOpen className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+            <input
+              type="text"
+              placeholder="Filter by book..."
+              value={bookSearchQuery}
+              onChange={(e) => {
+                setBookSearchQuery(e.target.value);
+                setShowBookDropdown(true);
+              }}
+              onFocus={() => bookSearchResults.length > 0 && setShowBookDropdown(true)}
+              className="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
+            />
+            {showBookDropdown && bookSearchResults.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-stone-200 z-30 max-h-64 overflow-y-auto">
+                {bookSearchResults.map((book) => (
+                  <button
+                    key={book.id}
+                    onClick={() => handleBookSelect(book)}
+                    className="w-full text-left px-3 py-2 hover:bg-stone-50 text-sm border-b border-stone-100 last:border-0"
+                  >
+                    <span className="font-medium text-stone-800">{book.display_title || book.title}</span>
+                    {book.author && <span className="text-stone-500 ml-1">— {book.author}</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+            {bookSearchLoading && (
+              <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
+            )}
+          </div>
+
+          {/* Filters Toggle */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
+              showFilters ? 'bg-accent-rust text-white border-accent-rust' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
+            }`}
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+            Filters
+          </button>
+        </div>
+
         {/* Active Filters / Book Info */}
         {(data?.bookInfo || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -539,7 +529,15 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
         {/* Image Grid */}
         {!loading && data && data.items.length > 0 && (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
+            {!hasFilters && (
+              <div className="mb-4">
+                <h2 className="text-2xl font-serif text-stone-800 mb-1">Browse Images</h2>
+                <p className="text-stone-500 text-base">
+                  {data.total.toLocaleString()} illustrations from rare alchemical, Hermetic, and philosophical manuscripts.
+                </p>
+              </div>
+            )}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {data.items.map((item, idx) => (
                 <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
               ))}
@@ -600,7 +598,7 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
             fill
             quality={85}
             className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 16vw, 14vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
             onLoad={(e) => {
               // Detect corrupt Blob thumbnails (real ones are 300px+)
               if (!useCropFallback && blobUrl && cropUrl) {
@@ -627,11 +625,11 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        <div className="absolute bottom-0 left-0 right-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-          <p className="text-xs text-white line-clamp-2 mb-0.5" title={item.description}>
+        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+          <p className="text-sm text-white line-clamp-2 mb-0.5" title={item.description}>
             {query ? <HighlightedText text={item.description} query={query} /> : item.description}
           </p>
-          <p className="text-[10px] text-white/60 line-clamp-1">
+          <p className="text-xs text-white/60 line-clamp-1">
             {item.bookTitle}
           </p>
         </div>
