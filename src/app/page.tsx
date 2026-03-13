@@ -8,6 +8,7 @@ import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SocietyGate from '@/components/layout/SocietyGate';
 import SignUpCTA from '@/components/auth/SignUpCTA';
+import Image from 'next/image';
 import Link from 'next/link';
 
 // ISR: serve cached HTML, revalidate in background every 60 seconds.
@@ -455,14 +456,14 @@ export default async function HomePage() {
                   {/* Hero image */}
                   <div className="aspect-[16/9] relative bg-warm overflow-hidden">
                     {col.hero_image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={col.hero_image}
                         alt=""
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        priority={i < 4}
                         loading={i < 8 ? 'eager' : 'lazy'}
-                        // eslint-disable-next-line react/no-unknown-property
-                        fetchPriority={i < 4 ? 'high' : 'auto'}
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
@@ -557,11 +558,12 @@ export default async function HomePage() {
                 >
                   {post.image && (
                     <div className="aspect-[16/10] relative bg-warm overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={post.image}
                         alt=""
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
                     </div>
