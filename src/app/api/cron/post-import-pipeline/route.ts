@@ -987,6 +987,26 @@ export async function GET(request: NextRequest) {
         }
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
+          // Guard: block OCR for books that need splitting first.
+          // Sending unsplit spreads to OCR wastes money and produces bad results.
+          const bookDoc = await db.collection('books').findOne(
+            { id: book.id },
+            { projection: { needs_splitting: 1 } },
+          );
+          if (bookDoc?.needs_splitting === true) {
+            const hasSplitPages = await db.collection('pages').countDocuments(
+              { book_id: book.id, split_from: { $exists: true } },
+            );
+            if (hasSplitPages === 0) {
+              await setPipelineStatus(db, book.id, 'needs_attention', {
+                error: 'Book needs splitting before OCR — has two-page spreads',
+              });
+              log.needs_attention++;
+              log.errors.push(`OCR skip ${book.id} (${book.title}): needs splitting first`);
+              continue;
+            }
+          }
+
           // Guard: verify book has pages with good archived images (not failed)
           const archivedPageCount = await db.collection('pages').countDocuments({
             book_id: book.id,
