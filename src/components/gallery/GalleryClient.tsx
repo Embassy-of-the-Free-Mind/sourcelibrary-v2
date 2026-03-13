@@ -62,12 +62,25 @@ function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
   return `/api/crop-image?${params}`;
 }
 
+/** Fisher-Yates shuffle (in-place) */
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function GalleryClient({ initialData, initialCollections }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // State
-  const [data, setData] = useState<GalleryResponse>(initialData);
+  // Shuffle initial items client-side so order varies each visit
+  const [data, setData] = useState<GalleryResponse>(() => ({
+    ...initialData,
+    items: shuffle(initialData.items),
+  }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -127,7 +140,6 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
       setLoading(true);
       setError(null);
       try {
-        const noFilters = !bookId && !collectionFilter && !libraryFilter && !imageSearchQuery && !typeFilter && !subjectFilter && !yearStart && !yearEnd && !qualityParam;
         const json = await gallery.list({
           limit,
           offset: page * limit,
@@ -140,7 +152,6 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
-          sort: noFilters ? 'random' : undefined,
         });
         // Preserve filters from initial page load on pagination
         if (page > 0 && data?.filters && (!json.filters?.types?.length)) {

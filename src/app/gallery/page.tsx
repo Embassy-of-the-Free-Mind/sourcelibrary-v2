@@ -61,11 +61,11 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
     };
 
     const [items, total, typesResult, subjectsResult, yearResult] = await Promise.all([
-      db.collection('gallery_images').aggregate([
-        { $match: filter },
-        { $sample: { size: limit } },
-        { $project: { _id: 0 } },
-      ]).toArray(),
+      db.collection('gallery_images')
+        .find(filter, { projection: { _id: 0 } })
+        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+        .limit(limit)
+        .toArray(),
       db.collection('gallery_images').countDocuments(filter),
       db.collection('gallery_images').aggregate([
         { $group: { _id: '$type' } },
