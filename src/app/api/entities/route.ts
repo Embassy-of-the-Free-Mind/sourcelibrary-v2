@@ -199,14 +199,17 @@ export const POST = withAuth(async (request, session) => {
       const bookAuthor = book.author || 'Unknown';
 
       for (const person of (book.index?.people || [])) {
+        if (!person.term) continue;
         addToEntityMap(person.term, 'person', bookId, bookTitle, bookAuthor, person.pages || []);
       }
 
       for (const place of (book.index?.places || [])) {
+        if (!place.term) continue;
         addToEntityMap(place.term, 'place', bookId, bookTitle, bookAuthor, place.pages || []);
       }
 
       for (const concept of (book.index?.concepts || [])) {
+        if (!concept.term) continue;
         addToEntityMap(concept.term, 'concept', bookId, bookTitle, bookAuthor, concept.pages || []);
       }
     }

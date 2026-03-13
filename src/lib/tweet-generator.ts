@@ -601,6 +601,7 @@ export function suggestHashtags(
   };
 
   for (const subject of image.metadata?.subjects || []) {
+    if (!subject) continue;
     const lower = subject.toLowerCase();
     for (const [key, hashtag] of Object.entries(subjectHashtags)) {
       if (lower.includes(key)) {

@@ -1017,14 +1017,17 @@ async function syncBookEntities(
   const promises: Promise<void>[] = [];
 
   for (const person of conceptIndex.people) {
+    if (!person.term) continue;
     promises.push(syncEntity(person.term, 'person', person.pages));
   }
 
   for (const place of conceptIndex.places) {
+    if (!place.term) continue;
     promises.push(syncEntity(place.term, 'place', place.pages));
   }
 
   for (const concept of conceptIndex.concepts) {
+    if (!concept.term) continue;
     promises.push(syncEntity(concept.term, 'concept', concept.pages));
   }
 
@@ -1033,9 +1036,9 @@ async function syncBookEntities(
   // Update book_count and total_mentions for affected entities
   // Use canonical names for the lookup
   const allTerms = [
-    ...conceptIndex.people.map(p => ({ name: aliasResolver.resolve(p.term, 'person'), type: 'person' as const })),
-    ...conceptIndex.places.map(p => ({ name: aliasResolver.resolve(p.term, 'place'), type: 'place' as const })),
-    ...conceptIndex.concepts.map(p => ({ name: aliasResolver.resolve(p.term, 'concept'), type: 'concept' as const }))
+    ...conceptIndex.people.filter(p => p.term).map(p => ({ name: aliasResolver.resolve(p.term, 'person'), type: 'person' as const })),
+    ...conceptIndex.places.filter(p => p.term).map(p => ({ name: aliasResolver.resolve(p.term, 'place'), type: 'place' as const })),
+    ...conceptIndex.concepts.filter(p => p.term).map(p => ({ name: aliasResolver.resolve(p.term, 'concept'), type: 'concept' as const }))
   ];
 
   // Deduplicate — multiple variants may resolve to the same canonical

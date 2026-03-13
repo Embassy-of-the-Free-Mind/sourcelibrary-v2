@@ -182,10 +182,10 @@ function categorizeBook(book: {
 
   // Add index keywords and concepts
   if (book.index?.keywords) {
-    texts.push(...book.index.keywords.map(k => k.term.toLowerCase()));
+    texts.push(...book.index.keywords.map(k => k.term?.toLowerCase()).filter(Boolean));
   }
   if (book.index?.concepts) {
-    texts.push(...book.index.concepts.map(c => c.term.toLowerCase()));
+    texts.push(...book.index.concepts.map(c => c.term?.toLowerCase()).filter(Boolean));
   }
 
   const fullText = texts.join(' ');

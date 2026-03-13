@@ -773,7 +773,7 @@ function createFixedPage(content: string, title: string, pageClass: string): str
 
 // Helper to escape XML special characters
 function escapeXml(str: string): string {
-  return str
+  return (str || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -2294,7 +2294,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       .toArray();
 
     // Create safe filename base
-    const safeTitle = (book.display_title || book.title)
+    const safeTitle = (book.display_title || book.title || 'untitled')
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '')
