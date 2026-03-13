@@ -254,28 +254,39 @@ async function fetchCollectionData(id: string) {
           8000, [],
         )
       : Promise.resolve([]),
-    // Gallery: use pre-curated images if available, otherwise fall back to dynamic query
-    collection.curated_gallery_images?.length > 0
-      ? Promise.resolve(collection.curated_gallery_images)
-      : withTimeout(
-          db.collection('books')
+    // Gallery: prefer thematic gallery collection (materialized), then curated, then dynamic query
+    withTimeout(
+      db.collection('gallery_collections')
+        .findOne({ book_collection_slug: id, type: 'thematic' })
+        .then(async (thematicCol) => {
+          const thematicIds = thematicCol?.image_ids as string[] | undefined;
+          if (thematicIds && thematicIds.length > 0) {
+            // Resolve image IDs to full gallery_images docs for rendering
+            return db.collection('gallery_images')
+              .find({ id: { $in: thematicIds.slice(0, 60) } })
+              .toArray();
+          }
+          if (collection.curated_gallery_images?.length > 0) {
+            return collection.curated_gallery_images;
+          }
+          // Fallback: dynamic query (before thematic collections are seeded)
+          const bookDocs = await db.collection('books')
             .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
-            .toArray()
-            .then(docs => docs.map(d => d.id))
-            .then(bookIds => bookIds.length > 0
-              ? db.collection('gallery_images')
-                  .find({
-                    book_id: { $in: bookIds },
-                    gallery_quality: { $gte: 0.8 },
-                    type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-                  })
-                  .sort({ gallery_quality: -1 })
-                  .limit(60)
-                  .toArray()
-              : [],
-            ),
-          8000, [],
-        ),
+            .toArray();
+          const bookIds = bookDocs.map(d => d.id);
+          if (bookIds.length === 0) return [];
+          return db.collection('gallery_images')
+            .find({
+              book_id: { $in: bookIds },
+              gallery_quality: { $gte: 0.8 },
+              type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+            })
+            .sort({ gallery_quality: -1 })
+            .limit(60)
+            .toArray();
+        }),
+      8000, [],
+    ),
     mentionedBookIds.length > 0
       ? withTimeout(
           db.collection('books')
@@ -496,7 +507,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                 );
               })}
               <Link
-                href={`/gallery?collection=${id}`}
+                href={`/gallery/collections/collection-${id}`}
                 className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
               >
                 <Images className="w-7 h-7" />

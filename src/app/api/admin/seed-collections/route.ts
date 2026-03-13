@@ -316,9 +316,100 @@ function buildPipeline(seed: CollectionSeed): Document[] {
 }
 
 /**
+ * Seed thematic gallery collections — one per book collection.
+ * Queries all gallery_images from books in each collection, ordered by quality.
+ * Creates non-featured gallery_collections with type: 'thematic'.
+ */
+async function seedThematicCollections(
+  db: Awaited<ReturnType<typeof getDb>>,
+  opts: { dryRun: boolean; force: boolean; onlySlug: string | null },
+) {
+  const filter: Record<string, unknown> = {};
+  if (opts.onlySlug) filter.slug = opts.onlySlug;
+
+  const bookCollections = await db.collection('collections').find(filter).sort({ order: 1 }).toArray();
+
+  const results: Array<{ slug: string; title: string; imageCount: number; status: string }> = [];
+
+  for (const bc of bookCollections) {
+    const galSlug = `collection-${bc.slug}`;
+    const existing = await db.collection('gallery_collections').findOne({ slug: galSlug });
+
+    if (existing && !opts.force) {
+      results.push({
+        slug: galSlug,
+        title: bc.name,
+        imageCount: (existing.image_ids as string[])?.length || 0,
+        status: 'already_exists',
+      });
+      continue;
+    }
+
+    // Find all book IDs in this collection
+    const bookDocs = await db.collection('books')
+      .find(
+        { collections: bc.slug, status: { $ne: 'deleted' }, hidden: { $ne: true } },
+        { projection: { id: 1 } },
+      )
+      .toArray();
+    const bookIds = bookDocs.map((b) => b.id);
+
+    if (bookIds.length === 0) {
+      results.push({ slug: galSlug, title: bc.name, imageCount: 0, status: 'no_books' });
+      continue;
+    }
+
+    // Get all gallery images from those books, ordered by quality
+    const images = await db.collection('gallery_images')
+      .find({
+        book_id: { $in: bookIds },
+        gallery_quality: { $gte: 0.7 },
+        type: { $nin: ['decorative', 'symbol', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+      })
+      .sort({ gallery_quality: -1 })
+      .limit(500)
+      .project({ id: 1 })
+      .toArray();
+
+    const imageIds = images.map((img) => img.id as string);
+
+    if (opts.dryRun) {
+      results.push({ slug: galSlug, title: bc.name, imageCount: imageIds.length, status: 'dry_run' });
+      continue;
+    }
+
+    // Upsert: delete existing if force, then insert
+    if (existing && opts.force) {
+      await db.collection('gallery_collections').deleteOne({ slug: galSlug });
+    }
+
+    const doc = {
+      id: randomUUID(),
+      slug: galSlug,
+      title: bc.name,
+      description: `Illustrations from the ${bc.name} collection.`,
+      cover_image_id: imageIds[0] || '',
+      image_ids: imageIds,
+      featured: false,
+      sort_order: 100 + (bc.order || 0), // after visual collections
+      type: 'thematic' as const,
+      book_collection_slug: bc.slug,
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+
+    await db.collection('gallery_collections').insertOne(doc);
+    results.push({ slug: galSlug, title: bc.name, imageCount: imageIds.length, status: 'created' });
+  }
+
+  return results;
+}
+
+/**
  * POST /api/admin/seed-collections
  *
  * Seed gallery collections from the gallery_images collection.
+ * ?mode=thematic to seed thematic collections (one per book collection).
  * ?dry_run=true to preview without creating.
  * ?force=true to recreate even if slug exists.
  * ?slug=X to seed only one collection.
@@ -329,8 +420,17 @@ export async function POST(request: NextRequest) {
     const dryRun = searchParams.get('dry_run') === 'true';
     const force = searchParams.get('force') === 'true';
     const onlySlug = searchParams.get('slug');
+    const mode = searchParams.get('mode');
 
     const db = await getDb();
+
+    // Thematic mode: seed from book collections
+    if (mode === 'thematic') {
+      const results = await seedThematicCollections(db, { dryRun, force, onlySlug });
+      return NextResponse.json({ mode: 'thematic', results });
+    }
+
+    // Default: seed visual collections from SEED_COLLECTIONS
     const results: Array<{
       slug: string;
       title: string;
@@ -394,6 +494,7 @@ export async function POST(request: NextRequest) {
         image_ids: imageIds,
         featured: seed.featured,
         sort_order: seed.sort_order,
+        type: 'visual' as const,
         created_at: new Date(),
         updated_at: new Date(),
       };

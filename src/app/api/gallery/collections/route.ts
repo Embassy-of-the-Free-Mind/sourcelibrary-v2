@@ -14,10 +14,12 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const featured = searchParams.get('featured') === 'true';
+    const type = searchParams.get('type'); // 'visual' | 'thematic'
 
     const db = await getDb();
     const filter: Record<string, unknown> = {};
     if (featured) filter.featured = true;
+    if (type === 'visual' || type === 'thematic') filter.type = type;
 
     const collections = await db
       .collection('gallery_collections')
@@ -39,6 +41,8 @@ export async function GET(request: NextRequest) {
       description: c.description,
       imageCount: (c.image_ids as string[])?.length || 0,
       featured: c.featured,
+      type: c.type || 'visual',
+      book_collection_slug: c.book_collection_slug || undefined,
       coverImage: coverPages.get(c.cover_image_id as string) || null,
     }));
 
@@ -63,7 +67,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, description, image_ids, cover_image_id, featured, sort_order } = body;
+    const { title, description, image_ids, cover_image_id, featured, sort_order, type, book_collection_slug } = body;
 
     if (!title || !description) {
       return NextResponse.json({ error: 'title and description required' }, { status: 400 });
@@ -84,7 +88,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: `Collection with slug "${slug}" already exists` }, { status: 409 });
     }
 
-    const doc = {
+    const doc: Record<string, unknown> = {
       id: randomUUID(),
       slug,
       title,
@@ -93,9 +97,11 @@ export async function POST(request: NextRequest) {
       image_ids: image_ids || [],
       featured: featured ?? false,
       sort_order: sort_order ?? 0,
+      type: type || 'visual',
       created_at: new Date(),
       updated_at: new Date(),
     };
+    if (book_collection_slug) doc.book_collection_slug = book_collection_slug;
 
     await db.collection('gallery_collections').insertOne(doc);
 

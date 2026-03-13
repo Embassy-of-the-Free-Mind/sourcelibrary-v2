@@ -32,6 +32,8 @@ export async function GET(
       title: collection.title,
       description: collection.description,
       featured: collection.featured,
+      type: collection.type || 'visual',
+      book_collection_slug: collection.book_collection_slug || undefined,
       imageCount: imageIds.length,
       items,
     });
@@ -55,7 +57,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     const body = await request.json();
     const db = await getDb();
 
-    const allowedFields = ['title', 'description', 'image_ids', 'cover_image_id', 'featured', 'sort_order'];
+    const allowedFields = ['title', 'description', 'image_ids', 'cover_image_id', 'featured', 'sort_order', 'type', 'book_collection_slug'];
     const update: Record<string, unknown> = { updated_at: new Date() };
 
     for (const field of allowedFields) {
