@@ -73,7 +73,10 @@ export const POST = withAuth(async (request, session) => {
     for (let i = 0; i < pages.length; i += 5) {
       const batch = pages.slice(i, i + 5);
       const promises = batch.flatMap(page => {
-        const sourceUrl = page.archived_photo || page.cropped_photo || page.photo_original || page.photo;
+        // MUST use cropped_photo first — same priority as the extract-images worker.
+        // archived_photo is the full unsplit spread; cropped_photo is the split single page.
+        // The bbox was computed against cropped_photo, so the crop source must match.
+        const sourceUrl = page.cropped_photo || page.archived_photo || page.photo_original || page.photo;
         if (!sourceUrl) return [];
 
         return (page.detected_images || [])
