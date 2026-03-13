@@ -34,6 +34,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
+import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
 
 interface BookImage {
@@ -50,6 +51,8 @@ export default function ImageDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const isAdmin = (session?.user as any)?.role === 'admin';
   const [imageId, setImageId] = useState<string | null>(null);
   const [data, setData] = useState<GalleryImageDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -614,7 +617,7 @@ export default function ImageDetailPage({
               <div className="md:col-span-2 space-y-6">
                 {/* Title / Description */}
                 <div>
-                  {editingTitle ? (
+                  {isAdmin && editingTitle ? (
                     <div className="space-y-3">
                       <textarea
                         value={titleValue}
@@ -634,251 +637,266 @@ export default function ImageDetailPage({
                     </div>
                   ) : (
                     <div className="group relative">
-                      <h1 className="text-2xl sm:text-3xl font-serif text-stone-100 leading-relaxed pr-12">
+                      <h1 className="text-2xl sm:text-3xl font-serif text-stone-100 leading-relaxed">
                         {data.description}
                       </h1>
-                      <button onClick={() => setEditingTitle(true)} className="absolute top-0 right-0 text-xs text-accent-gold hover:text-accent-gold opacity-0 group-hover:opacity-100 transition-opacity">
-                        Edit
-                      </button>
+                      {isAdmin && (
+                        <button onClick={() => setEditingTitle(true)} className="absolute top-0 right-0 text-xs text-accent-gold hover:text-accent-gold opacity-0 group-hover:opacity-100 transition-opacity">
+                          Edit
+                        </button>
+                      )}
                     </div>
                   )}
-                  <div className="mt-3 flex items-center gap-3 flex-wrap">
-                    {data.model && (
-                      <p className="text-sm text-stone-500 flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        {data.model}
-                        {data.confidence ? ` (${Math.round(data.confidence * 100)}%)` : ''}
-                      </p>
-                    )}
-                    <button
-                      onClick={() => setShowInfo(true)}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-sm bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-300 transition-colors"
-                    >
-                      <Info className="w-3.5 h-3.5" />
-                      Info
-                    </button>
-                  </div>
                 </div>
 
                 {/* Museum Description */}
-                <div className="bg-stone-800 rounded-lg p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300">Museum Description</h3>
-                    {!editingDescription && (
-                      <button onClick={() => setEditingDescription(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
-                    )}
-                  </div>
-                  {editingDescription ? (
-                    <div className="space-y-3">
-                      <textarea
-                        value={museumDescValue}
-                        onChange={(e) => setMuseumDescValue(e.target.value)}
-                        className="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
-                        placeholder="Write a 2-3 sentence museum-style description..."
-                      />
-                      <div className="flex gap-2">
-                        <button onClick={saveMuseumDescription} disabled={saving} className="flex-1 py-2 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
-                        <button onClick={() => { setMuseumDescValue(data.museumDescription || ''); setEditingDescription(false); }} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-stone-300 text-base leading-relaxed">
-                      {data.museumDescription || <span className="text-stone-500 italic">No description yet</span>}
-                    </p>
-                  )}
-                </div>
-
-                {/* Gallery Quality */}
-                <div className="bg-stone-800 rounded-lg p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300">Gallery Quality</h3>
-                    <span className="text-sm text-stone-500">Guide cutoff: 0.75</span>
-                  </div>
-                  {editingQuality ? (
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <input type="range" min="0" max="1" step="0.05" value={qualityValue} onChange={(e) => setQualityValue(parseFloat(e.target.value))} className="flex-1 h-2 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-accent-gold" />
-                        <span className="text-lg font-mono text-accent-gold w-12 text-right">{qualityValue.toFixed(2)}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <button onClick={() => saveQuality(qualityValue)} disabled={saving} className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
-                        <button onClick={() => { setQualityValue(data.galleryQuality ?? 0); setEditingQuality(false); }} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-32 h-2 bg-stone-700 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full rounded-full transition-all ${(data.galleryQuality ?? 0) >= 0.75 ? 'bg-status-success' : (data.galleryQuality ?? 0) >= 0.5 ? 'bg-accent-gold/80' : 'bg-status-error'}`}
-                            style={{ width: `${(data.galleryQuality ?? 0) * 100}%` }}
-                          />
-                        </div>
-                        <span className={`text-lg font-mono ${(data.galleryQuality ?? 0) >= 0.75 ? 'text-status-success' : (data.galleryQuality ?? 0) >= 0.5 ? 'text-accent-gold' : 'text-status-error'}`}>
-                          {data.galleryQuality != null ? data.galleryQuality.toFixed(2) : 'N/A'}
-                        </span>
-                      </div>
-                      <button onClick={() => setEditingQuality(true)} className="text-xs text-accent-gold hover:text-accent-gold">Adjust</button>
-                    </div>
-                  )}
-                  {data.galleryRationale && <p className="text-xs text-stone-500 mt-2 italic">{data.galleryRationale}</p>}
-                </div>
-
-                {/* Metadata Tags */}
-                <div className="bg-stone-800 rounded-lg p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300">Metadata</h3>
-                    {!editingMetadata && (
-                      <button onClick={() => setEditingMetadata(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
-                    )}
-                  </div>
-                  {editingMetadata ? (
-                    <div className="space-y-3">
-                      <div>
-                        <label className="text-xs text-stone-500 block mb-1">Subjects (comma-separated)</label>
-                        <input type="text" value={metadataValues.subjects?.join(', ') || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, subjects: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="alchemy, transformation, mythology" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-stone-500 block mb-1">Figures (comma-separated)</label>
-                        <input type="text" value={metadataValues.figures?.join(', ') || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, figures: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="Mercury, old man, serpent" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-stone-500 block mb-1">Symbols (comma-separated)</label>
-                        <input type="text" value={metadataValues.symbols?.join(', ') || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, symbols: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="ouroboros, athanor, philosophical egg" />
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs text-stone-500 block mb-1">Style</label>
-                          <input type="text" value={metadataValues.style || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, style: e.target.value }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="Northern European Renaissance" />
-                        </div>
-                        <div>
-                          <label className="text-xs text-stone-500 block mb-1">Technique</label>
-                          <input type="text" value={metadataValues.technique || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, technique: e.target.value }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="woodcut, engraving" />
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <button onClick={saveMetadata} disabled={saving} className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
-                        <button onClick={() => { setMetadataValues(data.metadata || {}); setEditingMetadata(false); }} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-2.5 text-base">
-                      {metadataValues.subjects && metadataValues.subjects.length > 0 && (
-                        <div><span className="text-stone-500">Subjects: </span><span className="text-stone-300">{metadataValues.subjects.join(', ')}</span></div>
-                      )}
-                      {metadataValues.figures && metadataValues.figures.length > 0 && (
-                        <div><span className="text-stone-500">Figures: </span><span className="text-stone-300">{metadataValues.figures.join(', ')}</span></div>
-                      )}
-                      {metadataValues.symbols && metadataValues.symbols.length > 0 && (
-                        <div><span className="text-stone-500">Symbols: </span><span className="text-stone-300">{metadataValues.symbols.join(', ')}</span></div>
-                      )}
-                      {metadataValues.style && (
-                        <div><span className="text-stone-500">Style: </span><span className="text-stone-300">{metadataValues.style}</span></div>
-                      )}
-                      {metadataValues.technique && (
-                        <div><span className="text-stone-500">Technique: </span><span className="text-stone-300">{metadataValues.technique}</span></div>
-                      )}
-                      {!metadataValues.subjects?.length && !metadataValues.figures?.length && !metadataValues.symbols?.length && !metadataValues.style && !metadataValues.technique && (
-                        <p className="text-stone-500 italic">No metadata yet</p>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {/* Bounding Box Editor */}
-                {data.bbox && data.fullPageUrl && (
+                {(data.museumDescription || isAdmin) && (
                   <div className="bg-stone-800 rounded-lg p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-base font-medium text-stone-300 flex items-center gap-2"><Crop className="w-4 h-4" />Bounding Box</h3>
-                      {!editingBbox ? (
-                        <div className="flex gap-2">
-                          <button onClick={() => setEditingBbox(true)} className="text-xs text-accent-gold hover:text-accent-gold">Edit Crop</button>
-                          <button onClick={() => { setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 }); setEditingBbox(true); }} className="text-xs text-stone-500 hover:text-stone-400">Reset</button>
-                        </div>
-                      ) : (
-                        <div className="flex gap-2">
-                          <button onClick={saveBbox} disabled={saving} className="flex items-center gap-1 px-2 py-1 bg-accent-rust hover:bg-accent-gold/80 rounded text-xs transition-colors disabled:opacity-50"><Save className="w-3 h-3" />{saving ? 'Saving...' : 'Save'}</button>
-                          <button onClick={() => setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 })} className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors">Reset</button>
-                          <button onClick={() => { setBboxValues(data.bbox || { x: 0, y: 0, width: 1, height: 1 }); setEditingBbox(false); }} className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors">Cancel</button>
-                        </div>
+                      <h3 className="text-base font-medium text-stone-300">About this image</h3>
+                      {isAdmin && !editingDescription && (
+                        <button onClick={() => setEditingDescription(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
                       )}
                     </div>
-                    {editingBbox ? (
+                    {isAdmin && editingDescription ? (
                       <div className="space-y-3">
-                        <p className="text-xs text-stone-500">Drag the box to move, drag the corner to resize</p>
-                        <div
-                          className="relative bg-stone-900 rounded overflow-hidden cursor-crosshair select-none"
-                          style={{ aspectRatio: pageImageAspect }}
-                          onMouseDown={(e) => {
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const x = (e.clientX - rect.left) / rect.width;
-                            const y = (e.clientY - rect.top) / rect.height;
-                            setBboxValues(prev => ({
-                              ...prev,
-                              x: Math.max(0, Math.min(1 - prev.width, x - prev.width / 2)),
-                              y: Math.max(0, Math.min(1 - prev.height, y - prev.height / 2))
-                            }));
-                            setIsDragging('move');
-                            setDragStart({ x: e.clientX, y: e.clientY });
-                            e.preventDefault();
-                          }}
-                          onMouseMove={(e) => { handleBboxMouseMove(e, e.currentTarget.getBoundingClientRect()); }}
-                          onMouseUp={handleBboxMouseUp}
-                          onMouseLeave={handleBboxMouseUp}
-                        >
-                          <Image src={data.fullPageUrl} alt="Full page" fill sizes="(max-width: 768px) 90vw, 80vw" className="object-contain pointer-events-none" onDragStart={(e) => e.preventDefault()} unoptimized />
-                          <div className="absolute inset-0 bg-black/60 pointer-events-none" style={{
-                            clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${bboxValues.x * 100}% ${bboxValues.y * 100}%, ${bboxValues.x * 100}% ${(bboxValues.y + bboxValues.height) * 100}%, ${(bboxValues.x + bboxValues.width) * 100}% ${(bboxValues.y + bboxValues.height) * 100}%, ${(bboxValues.x + bboxValues.width) * 100}% ${bboxValues.y * 100}%, ${bboxValues.x * 100}% ${bboxValues.y * 100}%)`
-                          }} />
-                          <div className="absolute border-2 border-accent-gold cursor-move" style={{ left: `${bboxValues.x * 100}%`, top: `${bboxValues.y * 100}%`, width: `${bboxValues.width * 100}%`, height: `${bboxValues.height * 100}%` }} onMouseDown={(e) => handleBboxMouseDown(e, 'move')}>
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none"><Move className="w-6 h-6 text-accent-gold opacity-50" /></div>
-                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent-gold/80 rounded-sm cursor-se-resize" onMouseDown={(e) => { e.stopPropagation(); handleBboxMouseDown(e, 'resize'); }} />
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-4 gap-2 text-xs text-stone-500">
-                          <div>x: {bboxValues.x.toFixed(3)}</div>
-                          <div>y: {bboxValues.y.toFixed(3)}</div>
-                          <div>w: {bboxValues.width.toFixed(3)}</div>
-                          <div>h: {bboxValues.height.toFixed(3)}</div>
+                        <textarea
+                          value={museumDescValue}
+                          onChange={(e) => setMuseumDescValue(e.target.value)}
+                          className="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
+                          placeholder="Write a 2-3 sentence museum-style description..."
+                        />
+                        <div className="flex gap-2">
+                          <button onClick={saveMuseumDescription} disabled={saving} className="flex-1 py-2 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
+                          <button onClick={() => { setMuseumDescValue(data.museumDescription || ''); setEditingDescription(false); }} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
                         </div>
                       </div>
                     ) : (
-                      <div className="text-xs text-stone-500 grid grid-cols-4 gap-2">
-                        <div>x: {bboxValues.x.toFixed(3)}</div>
-                        <div>y: {bboxValues.y.toFixed(3)}</div>
-                        <div>w: {bboxValues.width.toFixed(3)}</div>
-                        <div>h: {bboxValues.height.toFixed(3)}</div>
+                      <p className="text-stone-300 text-base leading-relaxed">
+                        {data.museumDescription || <span className="text-stone-500 italic">No description yet</span>}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {/* Metadata Tags */}
+                {(metadataValues.subjects?.length || metadataValues.figures?.length || metadataValues.symbols?.length || metadataValues.style || metadataValues.technique || isAdmin) && (
+                  <div className="bg-stone-800 rounded-lg p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-base font-medium text-stone-300">Details</h3>
+                      {isAdmin && !editingMetadata && (
+                        <button onClick={() => setEditingMetadata(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
+                      )}
+                    </div>
+                    {isAdmin && editingMetadata ? (
+                      <div className="space-y-3">
+                        <div>
+                          <label className="text-xs text-stone-500 block mb-1">Subjects (comma-separated)</label>
+                          <input type="text" value={metadataValues.subjects?.join(', ') || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, subjects: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="alchemy, transformation, mythology" />
+                        </div>
+                        <div>
+                          <label className="text-xs text-stone-500 block mb-1">Figures (comma-separated)</label>
+                          <input type="text" value={metadataValues.figures?.join(', ') || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, figures: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="Mercury, old man, serpent" />
+                        </div>
+                        <div>
+                          <label className="text-xs text-stone-500 block mb-1">Symbols (comma-separated)</label>
+                          <input type="text" value={metadataValues.symbols?.join(', ') || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, symbols: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="ouroboros, athanor, philosophical egg" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-xs text-stone-500 block mb-1">Style</label>
+                            <input type="text" value={metadataValues.style || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, style: e.target.value }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="Northern European Renaissance" />
+                          </div>
+                          <div>
+                            <label className="text-xs text-stone-500 block mb-1">Technique</label>
+                            <input type="text" value={metadataValues.technique || ''} onChange={(e) => setMetadataValues(prev => ({ ...prev, technique: e.target.value }))} className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust" placeholder="woodcut, engraving" />
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button onClick={saveMetadata} disabled={saving} className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
+                          <button onClick={() => { setMetadataValues(data.metadata || {}); setEditingMetadata(false); }} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5 text-base">
+                        {metadataValues.subjects && metadataValues.subjects.length > 0 && (
+                          <div><span className="text-stone-500">Subjects: </span><span className="text-stone-300">{metadataValues.subjects.join(', ')}</span></div>
+                        )}
+                        {metadataValues.figures && metadataValues.figures.length > 0 && (
+                          <div><span className="text-stone-500">Figures: </span><span className="text-stone-300">{metadataValues.figures.join(', ')}</span></div>
+                        )}
+                        {metadataValues.symbols && metadataValues.symbols.length > 0 && (
+                          <div><span className="text-stone-500">Symbols: </span><span className="text-stone-300">{metadataValues.symbols.join(', ')}</span></div>
+                        )}
+                        {metadataValues.style && (
+                          <div><span className="text-stone-500">Style: </span><span className="text-stone-300">{metadataValues.style}</span></div>
+                        )}
+                        {metadataValues.technique && (
+                          <div><span className="text-stone-500">Technique: </span><span className="text-stone-300">{metadataValues.technique}</span></div>
+                        )}
+                        {!metadataValues.subjects?.length && !metadataValues.figures?.length && !metadataValues.symbols?.length && !metadataValues.style && !metadataValues.technique && (
+                          <p className="text-stone-500 italic">No metadata yet</p>
+                        )}
                       </div>
                     )}
                   </div>
                 )}
 
-                {/* Rotation Control */}
+                {/* Citation + Sharing */}
                 <div className="bg-stone-800 rounded-lg p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300 flex items-center gap-2"><RotateCw className="w-4 h-4" />Rotation</h3>
-                    {savingRotation && <span className="text-sm text-accent-gold">Saving...</span>}
-                  </div>
-                  <div className="flex gap-2">
-                    {([0, 90, 180, 270] as const).map((deg) => (
-                      <button key={deg} onClick={() => saveRotation(deg)} disabled={savingRotation} className={`flex-1 py-2 rounded text-base transition-colors ${rotation === deg ? 'bg-accent-rust text-white' : 'bg-stone-700 text-stone-300 hover:bg-stone-600'} disabled:opacity-50`}>
-                        {deg}&deg;
-                      </button>
-                    ))}
+                  <h3 className="text-base font-medium text-stone-300 mb-3">Cite this image</h3>
+                  <p className="text-stone-400 text-sm font-mono leading-relaxed bg-stone-900 rounded p-3">{data.citation}{'\n'}URL: {typeof window !== 'undefined' ? window.location.href : ''}</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    <button onClick={copyCitation} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
+                      <Copy className="w-4 h-4" />Copy citation
+                    </button>
+                    <button onClick={copyLink} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
+                      {copied ? <Check className="w-4 h-4 text-status-success" /> : <ExternalLink className="w-4 h-4" />}
+                      {copied ? 'Copied!' : 'Copy link'}
+                    </button>
+                    <button onClick={shareToTwitter} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
+                      <Share2 className="w-4 h-4" />Share on X
+                    </button>
                   </div>
                 </div>
 
-                {/* Citation */}
-                <div className="bg-stone-800 rounded-lg p-5">
-                  <h3 className="text-base font-medium text-stone-300 mb-2">Cite this image</h3>
-                  <p className="text-stone-300 text-base font-mono leading-relaxed">{data.citation}</p>
-                  <button onClick={copyCitation} className="mt-3 text-sm text-accent-gold hover:text-accent-gold flex items-center gap-1.5">
-                    <Copy className="w-4 h-4" />Copy citation
-                  </button>
-                </div>
+                {/* Admin-only editing tools */}
+                {isAdmin && (
+                  <div className="space-y-6 border-t border-white/10 pt-6">
+                    <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wide">Admin Tools</h3>
+
+                    {/* Gallery Quality */}
+                    <div className="bg-stone-800 rounded-lg p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-base font-medium text-stone-300">Gallery Quality</h3>
+                        <span className="text-sm text-stone-500">Guide cutoff: 0.75</span>
+                      </div>
+                      {editingQuality ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                            <input type="range" min="0" max="1" step="0.05" value={qualityValue} onChange={(e) => setQualityValue(parseFloat(e.target.value))} className="flex-1 h-2 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-accent-gold" />
+                            <span className="text-lg font-mono text-accent-gold w-12 text-right">{qualityValue.toFixed(2)}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <button onClick={() => saveQuality(qualityValue)} disabled={saving} className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
+                            <button onClick={() => { setQualityValue(data.galleryQuality ?? 0); setEditingQuality(false); }} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors">Cancel</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-32 h-2 bg-stone-700 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full transition-all ${(data.galleryQuality ?? 0) >= 0.75 ? 'bg-status-success' : (data.galleryQuality ?? 0) >= 0.5 ? 'bg-accent-gold/80' : 'bg-status-error'}`}
+                                style={{ width: `${(data.galleryQuality ?? 0) * 100}%` }}
+                              />
+                            </div>
+                            <span className={`text-lg font-mono ${(data.galleryQuality ?? 0) >= 0.75 ? 'text-status-success' : (data.galleryQuality ?? 0) >= 0.5 ? 'text-accent-gold' : 'text-status-error'}`}>
+                              {data.galleryQuality != null ? data.galleryQuality.toFixed(2) : 'N/A'}
+                            </span>
+                          </div>
+                          <button onClick={() => setEditingQuality(true)} className="text-xs text-accent-gold hover:text-accent-gold">Adjust</button>
+                        </div>
+                      )}
+                      {data.galleryRationale && <p className="text-xs text-stone-500 mt-2 italic">{data.galleryRationale}</p>}
+                    </div>
+
+                    {/* Bounding Box Editor */}
+                    {data.bbox && data.fullPageUrl && (
+                      <div className="bg-stone-800 rounded-lg p-5">
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-base font-medium text-stone-300 flex items-center gap-2"><Crop className="w-4 h-4" />Bounding Box</h3>
+                          {!editingBbox ? (
+                            <div className="flex gap-2">
+                              <button onClick={() => setEditingBbox(true)} className="text-xs text-accent-gold hover:text-accent-gold">Edit Crop</button>
+                              <button onClick={() => { setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 }); setEditingBbox(true); }} className="text-xs text-stone-500 hover:text-stone-400">Reset</button>
+                            </div>
+                          ) : (
+                            <div className="flex gap-2">
+                              <button onClick={saveBbox} disabled={saving} className="flex items-center gap-1 px-2 py-1 bg-accent-rust hover:bg-accent-gold/80 rounded text-xs transition-colors disabled:opacity-50"><Save className="w-3 h-3" />{saving ? 'Saving...' : 'Save'}</button>
+                              <button onClick={() => setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 })} className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors">Reset</button>
+                              <button onClick={() => { setBboxValues(data.bbox || { x: 0, y: 0, width: 1, height: 1 }); setEditingBbox(false); }} className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors">Cancel</button>
+                            </div>
+                          )}
+                        </div>
+                        {editingBbox ? (
+                          <div className="space-y-3">
+                            <p className="text-xs text-stone-500">Drag the box to move, drag the corner to resize</p>
+                            <div
+                              className="relative bg-stone-900 rounded overflow-hidden cursor-crosshair select-none"
+                              style={{ aspectRatio: pageImageAspect }}
+                              onMouseDown={(e) => {
+                                const rect = e.currentTarget.getBoundingClientRect();
+                                const x = (e.clientX - rect.left) / rect.width;
+                                const y = (e.clientY - rect.top) / rect.height;
+                                setBboxValues(prev => ({
+                                  ...prev,
+                                  x: Math.max(0, Math.min(1 - prev.width, x - prev.width / 2)),
+                                  y: Math.max(0, Math.min(1 - prev.height, y - prev.height / 2))
+                                }));
+                                setIsDragging('move');
+                                setDragStart({ x: e.clientX, y: e.clientY });
+                                e.preventDefault();
+                              }}
+                              onMouseMove={(e) => { handleBboxMouseMove(e, e.currentTarget.getBoundingClientRect()); }}
+                              onMouseUp={handleBboxMouseUp}
+                              onMouseLeave={handleBboxMouseUp}
+                            >
+                              <Image src={data.fullPageUrl} alt="Full page" fill sizes="(max-width: 768px) 90vw, 80vw" className="object-contain pointer-events-none" onDragStart={(e) => e.preventDefault()} unoptimized />
+                              <div className="absolute inset-0 bg-black/60 pointer-events-none" style={{
+                                clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${bboxValues.x * 100}% ${bboxValues.y * 100}%, ${bboxValues.x * 100}% ${(bboxValues.y + bboxValues.height) * 100}%, ${(bboxValues.x + bboxValues.width) * 100}% ${(bboxValues.y + bboxValues.height) * 100}%, ${(bboxValues.x + bboxValues.width) * 100}% ${bboxValues.y * 100}%, ${bboxValues.x * 100}% ${bboxValues.y * 100}%)`
+                              }} />
+                              <div className="absolute border-2 border-accent-gold cursor-move" style={{ left: `${bboxValues.x * 100}%`, top: `${bboxValues.y * 100}%`, width: `${bboxValues.width * 100}%`, height: `${bboxValues.height * 100}%` }} onMouseDown={(e) => handleBboxMouseDown(e, 'move')}>
+                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none"><Move className="w-6 h-6 text-accent-gold opacity-50" /></div>
+                                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent-gold/80 rounded-sm cursor-se-resize" onMouseDown={(e) => { e.stopPropagation(); handleBboxMouseDown(e, 'resize'); }} />
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-2 text-xs text-stone-500">
+                              <div>x: {bboxValues.x.toFixed(3)}</div>
+                              <div>y: {bboxValues.y.toFixed(3)}</div>
+                              <div>w: {bboxValues.width.toFixed(3)}</div>
+                              <div>h: {bboxValues.height.toFixed(3)}</div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-xs text-stone-500 grid grid-cols-4 gap-2">
+                            <div>x: {bboxValues.x.toFixed(3)}</div>
+                            <div>y: {bboxValues.y.toFixed(3)}</div>
+                            <div>w: {bboxValues.width.toFixed(3)}</div>
+                            <div>h: {bboxValues.height.toFixed(3)}</div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Rotation Control */}
+                    <div className="bg-stone-800 rounded-lg p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-base font-medium text-stone-300 flex items-center gap-2"><RotateCw className="w-4 h-4" />Rotation</h3>
+                        {savingRotation && <span className="text-sm text-accent-gold">Saving...</span>}
+                      </div>
+                      <div className="flex gap-2">
+                        {([0, 90, 180, 270] as const).map((deg) => (
+                          <button key={deg} onClick={() => saveRotation(deg)} disabled={savingRotation} className={`flex-1 py-2 rounded text-base transition-colors ${rotation === deg ? 'bg-accent-rust text-white' : 'bg-stone-700 text-stone-300 hover:bg-stone-600'} disabled:opacity-50`}>
+                            {deg}&deg;
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Processing Info */}
+                    <button
+                      onClick={() => setShowInfo(true)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-sm bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-300 transition-colors"
+                    >
+                      <Info className="w-3.5 h-3.5" />
+                      Processing Info
+                    </button>
+                  </div>
+                )}
               </div>
 
-              {/* Right column: book card + similar */}
+              {/* Right column: book card + more from book + similar */}
               <div className="space-y-5">
                 <div className="bg-stone-800 rounded-lg overflow-hidden">
                   <Link href={data.readUrl} className="block group">
@@ -900,9 +918,42 @@ export default function ImageDetailPage({
                   </div>
                 </div>
 
-                <Link href={data.galleryUrl} className="block text-center py-3 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-base transition-colors">
-                  More from this book
-                </Link>
+                {/* More pictures from this book */}
+                {bookImages.length > 1 && (
+                  <div className="bg-stone-800 rounded-lg p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-base font-medium text-stone-300">More pictures from this book</h3>
+                      <Link href={data.galleryUrl} className="text-sm text-accent-gold hover:text-accent-gold">See all</Link>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {bookImages
+                        .filter(img => img.id !== imageId)
+                        .slice(0, 3)
+                        .map((img) => (
+                          <Link
+                            key={img.id}
+                            href={`/gallery/image/${img.id}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const idx = bookImages.findIndex(bi => bi.id === img.id);
+                              if (idx >= 0) navigateTo(idx);
+                            }}
+                            className="group relative aspect-square bg-stone-700 rounded overflow-hidden"
+                            title={img.description}
+                          >
+                            <Image
+                              src={img.thumbnailUrl || img.imageUrl}
+                              alt={img.description}
+                              fill
+                              sizes="120px"
+                              className="object-cover group-hover:scale-105 transition-transform duration-200"
+                              unoptimized
+                            />
+                          </Link>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
                 {imageId && <SimilarImages imageId={imageId} />}
               </div>

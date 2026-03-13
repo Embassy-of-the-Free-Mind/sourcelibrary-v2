@@ -32,7 +32,7 @@ export default function SimilarImages({ imageId }: SimilarImagesProps) {
 
     async function fetchSimilar() {
       try {
-        const res = await fetch(`/api/gallery/similar?id=${encodeURIComponent(imageId)}&limit=6`);
+        const res = await fetch(`/api/gallery/similar?id=${encodeURIComponent(imageId)}&limit=3`);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         if (!cancelled) {
@@ -51,8 +51,8 @@ export default function SimilarImages({ imageId }: SimilarImagesProps) {
 
   if (loading) {
     return (
-      <div className="bg-stone-800 rounded-lg p-4">
-        <h3 className="text-sm text-stone-500 uppercase tracking-wide mb-3">More Like This</h3>
+      <div className="bg-stone-800 rounded-lg p-5">
+        <h3 className="text-base font-medium text-stone-300 mb-3">Related images</h3>
         <div className="flex items-center justify-center py-4">
           <Loader2 className="w-4 h-4 animate-spin text-stone-500" />
         </div>
@@ -63,9 +63,9 @@ export default function SimilarImages({ imageId }: SimilarImagesProps) {
   if (items.length === 0) return null;
 
   return (
-    <div className="bg-stone-800 rounded-lg p-4">
-      <h3 className="text-sm text-stone-500 uppercase tracking-wide mb-3">
-        More Like This
+    <div className="bg-stone-800 rounded-lg p-5">
+      <h3 className="text-base font-medium text-stone-300 mb-3">
+        Related images
       </h3>
       <div className="grid grid-cols-3 gap-2">
         {items.map((item) => {
