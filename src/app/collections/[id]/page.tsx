@@ -368,20 +368,28 @@ export default async function CollectionDetailPage({ params }: Props) {
   const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3);
   const hasCuratedHighlights = curatedHighlightsData.length > 0;
 
-  // Diversify gallery images: max 1 per book (no duplicates), skip images without thumbnails
-  const diverseGalleryImages: typeof galleryImages = [];
-  const seenBooks = new Set<string>();
+  // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
+  const imagePool: typeof galleryImages = [];
+  const bookImageCounts = new Map<string, number>();
   for (const img of galleryImages) {
     const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
     if (!thumb) continue;
     const bid = img.book_id || img.bookId;
-    if (seenBooks.has(bid)) continue;
-    seenBooks.add(bid);
-    diverseGalleryImages.push(img);
-    if (diverseGalleryImages.length >= 9) break;
+    const count = bookImageCounts.get(bid) || 0;
+    if (count >= 2) continue;
+    bookImageCounts.set(bid, count + 1);
+    imagePool.push(img);
+    if (imagePool.length >= 50) break;
   }
 
-  const heroImages = diverseGalleryImages.slice(0, 6);
+  // Fisher-Yates shuffle for randomized selection each ISR build
+  const shuffled = [...imagePool];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const diverseGalleryImages = shuffled.slice(0, 9);
+  const heroImages = shuffled.slice(0, 6);
   const allBooksForLinking = [
     ...curatedHighlightsData.map((h: { book_id: string; slug?: string; title?: string }) => ({
       id: h.book_id,
@@ -462,15 +470,24 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Gallery Grid */}
-      {diverseGalleryImages.length > 0 && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-6xl mx-auto px-6 py-6">
-            <h2
-              className="text-xl sm:text-2xl text-primary mb-4 font-display"
-            >
-              Illustrations
-            </h2>
+      {/* Overview: description + gallery grid */}
+      <div className="bg-warm border-b border-border-light">
+        <div className="max-w-6xl mx-auto px-6 py-8">
+          <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
+            Overview
+          </h2>
+
+          {(collection.expanded_description || collection.description) && (
+            <div className="mb-8 max-w-5xl">
+              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className="text-secondary text-xl leading-relaxed mb-5 last:mb-0 font-body">
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions)}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {diverseGalleryImages.length > 0 && (
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
@@ -514,21 +531,11 @@ export default async function CollectionDetailPage({ params }: Props) {
                 <span className="text-xs font-medium">Browse gallery</span>
               </Link>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
 
       <div className="max-w-6xl mx-auto px-6 py-10">
-        {/* Description */}
-        {(collection.expanded_description || collection.description) && (
-          <div className="mb-10 max-w-5xl">
-            {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-              <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                {linkBookTitles(para, allBooksForLinking, explicitMentions)}
-              </p>
-            ))}
-          </div>
-        )}
 
         {/* Curated Highlights — 3-tier display */}
         {hasCuratedHighlights && (
