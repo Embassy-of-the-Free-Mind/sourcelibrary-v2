@@ -71,10 +71,10 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-4">
-              <h3 className="font-serif text-lg text-white group-hover:text-accent-gold transition-colors">
+              <h3 className="font-serif text-xl text-white group-hover:text-accent-gold transition-colors">
                 {collection.title}
               </h3>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white/60 text-sm mt-1">
                 {collection.imageCount} {collection.imageCount === 1 ? 'image' : 'images'}
               </p>
             </div>

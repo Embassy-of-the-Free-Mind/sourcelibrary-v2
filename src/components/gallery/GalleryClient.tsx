@@ -319,7 +319,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="px-4 sm:px-6 lg:px-8 py-6">
         {/* Active Filters / Book Info */}
         {(data?.bookInfo || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -539,7 +539,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
         {/* Image Grid */}
         {!loading && data && data.items.length > 0 && (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
               {data.items.map((item, idx) => (
                 <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
               ))}
@@ -591,63 +591,55 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
 
   return (
-    <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={`/gallery/image/${galleryImageId}`}>
-        <div className="relative aspect-square bg-stone-100">
-          {!imageError ? (
-            <Image
-              src={displayUrl}
-              alt={item.description}
-              fill
-              className="object-contain group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-              onLoad={(e) => {
-                // Detect corrupt Blob thumbnails (real ones are 300px+)
-                if (!useCropFallback && blobUrl && cropUrl) {
-                  const img = e.target as HTMLImageElement;
-                  if (img.naturalWidth < 150 || img.naturalHeight < 150) {
-                    setUseCropFallback(true);
-                  }
-                }
-              }}
-              onError={() => {
-                if (!useCropFallback && cropUrl) {
+    <div className="relative group rounded-lg overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
+      <Link href={`/gallery/image/${galleryImageId}`} className="block relative aspect-square bg-stone-100">
+        {!imageError ? (
+          <Image
+            src={displayUrl}
+            alt={item.description}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 16vw, 14vw"
+            onLoad={(e) => {
+              // Detect corrupt Blob thumbnails (real ones are 300px+)
+              if (!useCropFallback && blobUrl && cropUrl) {
+                const img = e.target as HTMLImageElement;
+                if (img.naturalWidth < 150 || img.naturalHeight < 150) {
                   setUseCropFallback(true);
-                } else {
-                  setImageError(true);
                 }
-              }}
-              unoptimized={!isPreGenerated && !!item.bbox}
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-stone-300">
-              <ImageIcon className="w-8 h-8" />
-            </div>
-          )}
+              }
+            }}
+            onError={() => {
+              if (!useCropFallback && cropUrl) {
+                setUseCropFallback(true);
+              } else {
+                setImageError(true);
+              }
+            }}
+            unoptimized={!isPreGenerated && !!item.bbox}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
+            <ImageIcon className="w-8 h-8" />
+          </div>
+        )}
 
-          {item.type && (
-            <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
-              {item.type}
-            </span>
-          )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        </div>
-
-        <div className="p-2">
-          <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
+        <div className="absolute bottom-0 left-0 right-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+          <p className="text-xs text-white line-clamp-2 mb-0.5" title={item.description}>
             {query ? <HighlightedText text={item.description} query={query} /> : item.description}
           </p>
-          <p className="text-[10px] text-stone-400 line-clamp-1">
+          <p className="text-[10px] text-white/60 line-clamp-1">
             {item.bookTitle}
           </p>
         </div>
-      </Link>
-      <Link
-        href={`/gallery?bookId=${item.bookId}`}
-        className="block px-2 pb-2 text-[10px] text-accent-rust hover:text-accent-gold-dark transition-colors"
-        onClick={(e) => e.stopPropagation()}
-      >
-        More from this book
+
+        {item.type && (
+          <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
+            {item.type}
+          </span>
+        )}
       </Link>
 
       <div className="absolute top-1.5 left-1.5 z-10">
