@@ -229,26 +229,23 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
       <header className="bg-stone-900 text-white py-4 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-4">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
-              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-                <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-                <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-              </svg>
-              <span className="text-xl uppercase tracking-wider">
-                <span className="font-semibold">Source</span>
-                <span className="font-light">Library</span>
-              </span>
-            </Link>
-
-            <div className="flex items-center gap-4">
-              <div className="text-right hidden sm:block">
+            <div className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
+                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
+                  <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
+                  <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
+                </svg>
+                <span className="text-xl uppercase tracking-wider hidden sm:inline">
+                  <span className="font-semibold">Source</span>
+                  <span className="font-light">Library</span>
+                </span>
+              </Link>
+              <span className="text-stone-500 hidden sm:inline">/</span>
+              <Link href="/gallery" className="hover:opacity-80 transition-opacity">
                 <h1 className="text-lg font-serif">Image Gallery</h1>
-                <p className="text-stone-400 text-xs">
-                  {(data?.total || 0).toLocaleString()} images
-                </p>
-              </div>
-              <ImageIcon className="w-6 h-6 text-accent-gold" />
+                <p className="text-stone-400 text-xs">73,000+ images</p>
+              </Link>
             </div>
           </div>
 
@@ -441,42 +438,36 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
               {/* Image Type */}
               <div>
                 <label className="block text-xs font-medium text-stone-500 mb-2">Image Type</label>
-                <div className="flex flex-wrap gap-1">
+                <select
+                  value={typeFilter}
+                  onChange={(e) => updateParams({ type: e.target.value })}
+                  className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
+                >
+                  <option value="">All types</option>
                   {data.filters.types.map((type) => (
-                    <button
-                      key={type}
-                      onClick={() => updateParams({ type: typeFilter === type ? '' : type })}
-                      className={`px-2 py-1 text-xs rounded-full transition-colors ${
-                        typeFilter === type
-                          ? 'bg-accent-rust text-white'
-                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                      }`}
-                    >
-                      {type}
-                    </button>
+                    <option key={type} value={type}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
 
               {/* Subjects */}
               {data.filters.subjects.length > 0 && (
                 <div>
-                  <label className="block text-xs font-medium text-stone-500 mb-2">Subjects</label>
-                  <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
-                    {data.filters.subjects.slice(0, 15).map((subject) => (
-                      <button
-                        key={subject}
-                        onClick={() => updateParams({ subject: subjectFilter === subject ? '' : subject })}
-                        className={`px-2 py-1 text-xs rounded-full transition-colors ${
-                          subjectFilter === subject
-                            ? 'bg-accent-rust text-white'
-                            : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                        }`}
-                      >
-                        {subject}
-                      </button>
+                  <label className="block text-xs font-medium text-stone-500 mb-2">Subject</label>
+                  <select
+                    value={subjectFilter}
+                    onChange={(e) => updateParams({ subject: e.target.value })}
+                    className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
+                  >
+                    <option value="">All subjects</option>
+                    {data.filters.subjects.map((subject) => (
+                      <option key={subject} value={subject}>
+                        {subject.charAt(0).toUpperCase() + subject.slice(1)}
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
               )}
 
