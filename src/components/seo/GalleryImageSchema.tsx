@@ -42,6 +42,7 @@ export default function GalleryImageSchema({
   imageUrl,
   book,
 }: GalleryImageSchemaProps) {
+  const desc = description || 'Historical illustration';
   const pageUrl = `${BASE_URL}/gallery/image/${imageId}`;
   const bookTitle = book?.display_title || book?.title || 'Unknown';
 
@@ -66,7 +67,7 @@ export default function GalleryImageSchema({
   const artwork = {
     '@type': ['VisualArtwork', 'ImageObject'],
     '@id': `${pageUrl}#artwork`,
-    name: description,
+    name: desc,
     ...(museumDescription && { description: museumDescription }),
     ...(imageUrl && { contentUrl: imageUrl }),
     ...(imageUrl && { url: imageUrl }),
@@ -95,7 +96,7 @@ export default function GalleryImageSchema({
     '@type': 'WebPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${description} — ${bookTitle}`,
+    name: `${desc} — ${bookTitle}`,
     mainEntity: { '@id': `${pageUrl}#artwork` },
   };
 
@@ -104,7 +105,7 @@ export default function GalleryImageSchema({
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
       { '@type': 'ListItem', position: 2, name: 'Gallery', item: `${BASE_URL}/gallery` },
-      { '@type': 'ListItem', position: 3, name: description.slice(0, 60), item: pageUrl },
+      { '@type': 'ListItem', position: 3, name: desc.slice(0, 60), item: pageUrl },
     ],
   };
 
