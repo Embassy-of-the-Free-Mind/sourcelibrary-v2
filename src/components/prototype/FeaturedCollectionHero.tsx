@@ -113,7 +113,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
           {books.length > 0 && (
             <div className="lg:col-span-3 grid grid-cols-4 sm:grid-cols-5 gap-3">
               {books.map((book) => {
-                const thumb = book.thumbnail_blob || book.thumbnail;
+                const thumb = book.thumbnail || book.thumbnail_blob;
                 return (
                   <Link
                     key={book.id}
