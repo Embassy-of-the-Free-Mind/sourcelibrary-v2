@@ -142,25 +142,29 @@ async function fetchFeaturedCollections() {
 
     if (collections.length === 0) return undefined;
 
-    // Resolve cover images
+    // Resolve cover images — use gallery_images (always populated) with pages fallback
+    const coverImageIds = collections
+      .map((c) => c.cover_image_id as string)
+      .filter(Boolean);
+    const galleryDocs = coverImageIds.length > 0
+      ? await db.collection('gallery_images')
+          .find({ id: { $in: coverImageIds } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
+          .toArray()
+      : [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const galleryMap = new Map(galleryDocs.map((d: any) => [d.id, d]));
+
     const result = await Promise.all(
       collections.map(async (col) => {
         let coverImage: { url: string; description: string } | null = null;
         if (col.cover_image_id) {
-          const [pageId, detIdxStr] = (col.cover_image_id as string).split('-');
-          const detIdx = parseInt(detIdxStr || '0');
-          if (pageId) {
-            const page = await db.collection('pages').findOne(
-              { id: pageId },
-              { projection: { detected_images: 1 } }
-            );
-            if (page?.detected_images?.[detIdx]) {
-              const det = page.detected_images[detIdx];
-              coverImage = {
-                url: det.thumbnail_url || det.extracted_url || '',
-                description: det.description || col.title,
-              };
-            }
+          const gImg = galleryMap.get(col.cover_image_id as string);
+          if (gImg) {
+            coverImage = {
+              url: (gImg as { extracted_url?: string; thumbnail_url?: string }).extracted_url
+                || (gImg as { thumbnail_url?: string }).thumbnail_url || '',
+              description: (gImg as { description?: string }).description || col.title as string,
+            };
           }
         }
         return {

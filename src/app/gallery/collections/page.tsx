@@ -61,50 +61,21 @@ async function getCollections(): Promise<CollectionListItem[]> {
 async function resolveCoverImages(db: any, imageIds: string[]) {
   if (imageIds.length === 0) return new Map<string, { url: string; description: string }>();
 
-  const parsed = imageIds.map((id) => {
-    const parts = id.split('-');
-    const idx = parseInt(parts.pop()!);
-    return { id, pageId: parts.join('-'), detIdx: idx };
-  });
-
-  const pageIds = [...new Set(parsed.map((p) => p.pageId))];
-  const pages = await db
-    .collection('pages')
+  // Resolve from gallery_images (always populated, unlike pages.detected_images)
+  const docs = await db
+    .collection('gallery_images')
     .find(
-      { id: { $in: pageIds } },
-      { projection: { id: 1, detected_images: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
+      { id: { $in: imageIds } },
+      { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } }
     )
     .toArray();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const pageMap = new Map<string, any>(pages.map((p: any) => [p.id, p]));
   const result = new Map<string, { url: string; description: string }>();
-
-  for (const { id, pageId, detIdx } of parsed) {
-    const page = pageMap.get(pageId);
-    if (!page) continue;
-    const det = page.detected_images?.[detIdx];
-    if (!det) continue;
-
-    let cropUrl: string | null = null;
-    if (det.bbox) {
-      const baseUrl = page.archived_photo || page.cropped_photo || page.photo;
-      if (baseUrl) {
-        const params = new URLSearchParams({
-          url: baseUrl,
-          x: det.bbox.x.toString(),
-          y: det.bbox.y.toString(),
-          w: det.bbox.width.toString(),
-          h: det.bbox.height.toString(),
-        });
-        if (det.rotation) params.set('rotation', det.rotation.toString());
-        cropUrl = `https://sourcelibrary.org/api/crop-image?${params}`;
-      }
-    }
-
-    result.set(id, {
-      url: det.thumbnail_url || det.extracted_url || cropUrl || page.cropped_photo || page.photo || '',
-      description: det.description || '',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  for (const doc of docs as any[]) {
+    result.set(doc.id, {
+      url: doc.extracted_url || doc.thumbnail_url || '',
+      description: doc.description || '',
     });
   }
 
