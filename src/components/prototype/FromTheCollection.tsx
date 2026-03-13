@@ -55,6 +55,7 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
                       src={item.extracted_url || item.thumbnail_url}
                       alt={item.museum_description || 'Gallery image'}
                       fill
+                      quality={85}
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />

@@ -126,6 +126,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                           src={thumb}
                           alt={bookTitle(book)}
                           fill
+                          quality={85}
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                           sizes="(max-width: 640px) 22vw, 12vw"
                         />

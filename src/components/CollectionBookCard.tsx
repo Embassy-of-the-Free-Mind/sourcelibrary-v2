@@ -54,6 +54,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
               src={book.thumbnail}
               alt={book.title}
               fill
+              quality={85}
               className={cn(
                 'object-cover group-hover:scale-105 transition-transform duration-300',
                 imageLoaded ? 'opacity-100' : 'opacity-0'
