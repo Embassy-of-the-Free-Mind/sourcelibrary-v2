@@ -41,6 +41,7 @@ export interface ImageSource {
   access_date?: Date;           // When images were retrieved
   notes?: string;               // Additional context (e.g., "Scans provided by X library")
   iiif_manifest?: string;       // IIIF Presentation API manifest URL
+  shelfmark?: string;           // Physical shelfmark/classmark (e.g., "Pal.lat.1885", "MS. Arab. c. 90")
   contributing_library?: string; // Physical library that provided/digitized the item (e.g., IA contributor field)
   sponsor?: string;             // Funding entity for digitization (e.g., "Google", "Sloan Foundation")
 }

@@ -399,6 +399,12 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                     <span className="text-stone-200">{book.image_source.attribution}</span>
                   </div>
                 )}
+                {book.image_source.shelfmark && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Shelfmark:</span>
+                    <span className="text-stone-200">{book.image_source.shelfmark}</span>
+                  </div>
+                )}
                 {book.image_source.iiif_manifest && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">IIIF:</span>
