@@ -1,91 +1,91 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
-import LikeButton from '@/components/ui/LikeButton';
-import { gallery } from '@/lib/api-client';
-import { BookLoader } from '@/components/ui/BookLoader';
+import { getDb } from '@/lib/mongodb';
+import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
-interface CollectionImage {
-  id: string;
-  pageId: string;
-  bookId: string;
-  pageNumber: number;
-  detectionIndex: number;
-  imageUrl: string;
-  bookTitle: string;
-  author?: string;
-  year?: number;
-  description: string;
-  type?: string;
-  thumbnailUrl?: string;
-  extractedUrl?: string;
-  galleryQuality?: number;
-  museumDescription?: string;
-}
+export const dynamic = 'force-dynamic';
 
-interface CollectionDetail {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  featured: boolean;
-  imageCount: number;
-  items: CollectionImage[];
-}
-
-export default function CollectionDetailPage({
-  params,
-}: {
+interface PageProps {
   params: Promise<{ slug: string }>;
-}) {
-  const [slug, setSlug] = useState<string | null>(null);
-  const [data, setData] = useState<CollectionDetail | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+}
 
-  useEffect(() => {
-    params.then((p) => setSlug(p.slug));
-  }, [params]);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const db = await getDb();
+  const collection = await db.collection('gallery_collections').findOne({ slug });
 
-  useEffect(() => {
-    if (!slug) return;
-
-    async function fetchCollection() {
-      try {
-        const json = await gallery.collections.get(slug!);
-        setData(json);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Failed to load collection');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchCollection();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] flex items-center justify-center">
-        <BookLoader size="sm" />
-      </div>
-    );
+  if (!collection) {
+    return { title: 'Collection Not Found — Source Library' };
   }
 
-  if (error || !data) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-stone-600 text-xl mb-4">{error || 'Collection not found'}</p>
-          <Link href="/gallery/collections" className="text-accent-rust hover:text-accent-rust">
-            Browse all collections
-          </Link>
-        </div>
-      </div>
-    );
+  return {
+    title: `${collection.title} — Gallery — Source Library`,
+    description: collection.description as string,
+    openGraph: {
+      title: `${collection.title} — Source Library Gallery`,
+      description: collection.description as string,
+    },
+  };
+}
+
+async function getCollection(slug: string) {
+  try {
+    const db = await getDb();
+    const collection = await db.collection('gallery_collections').findOne({ slug });
+    if (!collection) return null;
+
+    const imageIds = (collection.image_ids as string[]) || [];
+    const items = await resolveImages(db, imageIds);
+
+    return {
+      title: collection.title as string,
+      description: collection.description as string,
+      imageCount: imageIds.length,
+      items,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function resolveImages(db: any, imageIds: string[]): Promise<CollectionImageProps[]> {
+  if (imageIds.length === 0) return [];
+
+  const docs = await db
+    .collection('gallery_images')
+    .find({ id: { $in: imageIds } })
+    .toArray();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const docMap = new Map<string, any>(docs.map((d: any) => [d.id, d]));
+
+  const results: CollectionImageProps[] = [];
+  for (const id of imageIds) {
+    const doc = docMap.get(id);
+    if (!doc) continue;
+    results.push({
+      id: doc.id,
+      imageUrl: doc.extracted_url || doc.thumbnail_url || doc.image_url,
+      bookTitle: doc.book_title || 'Unknown',
+      description: doc.description || '',
+      type: doc.type,
+      thumbnailUrl: doc.thumbnail_url,
+      extractedUrl: doc.extracted_url,
+      galleryQuality: doc.gallery_quality,
+    });
+  }
+  return results;
+}
+
+export default async function CollectionDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const data = await getCollection(slug);
+
+  if (!data) {
+    notFound();
   }
 
   return (
@@ -130,67 +130,6 @@ export default function CollectionDetailPage({
             ))}
           </div>
         )}
-      </div>
-    </div>
-  );
-}
-
-function CollectionImageCard({ item }: { item: CollectionImage }) {
-  const [imageError, setImageError] = useState(false);
-  const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
-
-  return (
-    <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={`/gallery/image/${item.id}`}>
-        <div className="relative aspect-square bg-stone-100">
-          {!imageError ? (
-            <Image
-              src={displayUrl}
-              alt={item.description}
-              fill
-              className="object-contain group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-              onError={() => setImageError(true)}
-              unoptimized
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-stone-300">
-              <ImageIcon className="w-8 h-8" />
-            </div>
-          )}
-
-          {item.type && (
-            <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
-              {item.type}
-            </span>
-          )}
-
-          {item.galleryQuality && item.galleryQuality >= 0.9 && (
-            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-accent-gold/80 text-white">
-              ★
-            </span>
-          )}
-        </div>
-
-        <div className="p-2">
-          <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
-            {item.description}
-          </p>
-          <p className="text-[10px] text-stone-400 line-clamp-1">
-            {item.bookTitle}
-          </p>
-        </div>
-      </Link>
-
-      <div className="absolute top-1.5 left-1.5 z-10">
-        <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors px-1.5 py-0.5">
-          <LikeButton
-            targetType="image"
-            targetId={item.id}
-            size="sm"
-            showCount={true}
-          />
-        </div>
       </div>
     </div>
   );
