@@ -29,6 +29,14 @@ All AI calls logged to `gemini_usage` collection via `logGeminiCall()` in `src/l
 - Error classification: `src/lib/errors.ts` → `classifyError(error)`
 - `cost_tracking` collection is DEPRECATED — use `gemini_usage` for all cost queries
 
+## Staleness Check
+
+After reading the memory files above, flag anything that contradicts what you observe in the codebase:
+- File paths or function names that no longer exist
+- Behavioral claims that don't match the current code
+- Stats or counts with dates older than 14 days — note as potentially stale
+- If you find contradictions, update the memory file immediately and tell the user what changed.
+
 ## Also Relevant
 
 - Batch processing (Gemini Batch API): `.claude/docs/batch-processing.md`

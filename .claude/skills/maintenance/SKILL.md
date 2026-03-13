@@ -25,6 +25,14 @@ Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page
 - **Restore deleted book:** `POST /api/books/restore/[id]`
 - **51 empty shells:** `pipeline_auto.status: 'empty_shell'` — don't delete, may have metadata
 
+## Staleness Check
+
+After reading the memory files above, flag anything that contradicts what you observe in the codebase:
+- File paths or function names that no longer exist
+- Stats/counts with dates older than 14 days — note as potentially stale
+- "Known issues" that have since been fixed — remove them
+- If you find contradictions, update the memory file immediately and tell the user what changed.
+
 ## Also Relevant
 
 - Image archiving & provenance: `.claude/docs/image-archiving.md`

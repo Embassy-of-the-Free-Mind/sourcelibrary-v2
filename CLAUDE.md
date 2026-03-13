@@ -39,6 +39,11 @@ Use `/skill-name` to load domain context, or read memory files directly:
 - **Handoffs:** `.claude/handoffs/` (read by date/topic)
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
+## Knowledge Maintenance
+- After fixing a non-trivial bug or discovering a pattern, run `/lesson` to record it.
+- When loading domain context via skills, check for stale or contradictory memory entries.
+- Memory entries with dates >14 days old should be verified before trusting stats/counts.
+
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:
 - List of files modified this session

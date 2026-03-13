@@ -20,6 +20,13 @@ Read these files before proceeding with UI work:
 - Wrap `useSearchParams()` in Suspense boundary — triggers BAILOUT_TO_CLIENT_SIDE_RENDERING
 - DELETE blocked globally by `src/proxy.ts` safety middleware — use POST-based admin routes
 
+## Staleness Check
+
+After reading the memory files above, flag anything that contradicts what you observe in the codebase:
+- File paths or function names that no longer exist
+- Behavioral claims that don't match the current code
+- If you find contradictions, update the memory file immediately and tell the user what changed.
+
 ## Also Relevant
 
 - Schema.org structured data: `.claude/docs/structured-data.md`
