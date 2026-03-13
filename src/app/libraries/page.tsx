@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Library } from 'lucide-react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
@@ -8,12 +9,12 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Library Partners | Source Library',
-  description: 'Browse books by digitization source — Internet Archive, Gallica, Bodleian Library, Bavarian State Library, and more.',
+  title: 'Libraries | Source Library',
+  description: 'Browse books by digital source and contributing institution — Internet Archive, Gallica, Bodleian Library, Getty Research Institute, and more.',
   alternates: { canonical: '/libraries' },
   openGraph: {
-    title: 'Library Partners | Source Library',
-    description: 'Browse books by digitization source — Internet Archive, Gallica, Bodleian Library, Bavarian State Library, and more.',
+    title: 'Libraries | Source Library',
+    description: 'Browse books by digital source and contributing institution — Internet Archive, Gallica, Bodleian Library, Getty Research Institute, and more.',
     type: 'website',
   },
 };
@@ -23,6 +24,11 @@ interface ProviderStats {
   count: number;
   languages: string[];
   heroImage?: string;
+}
+
+interface ContributingLibrary {
+  name: string;
+  count: number;
 }
 
 async function fetchProviderStats(): Promise<ProviderStats[]> {
@@ -89,8 +95,44 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
   }));
 }
 
+async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
+  const db = await getDb();
+
+  const results = await db.collection('books').aggregate([
+    {
+      $match: {
+        'image_source.contributing_library': { $exists: true, $nin: [null, ''] },
+        status: { $ne: 'deleted' },
+        pages_count: { $gt: 0 },
+      },
+    },
+    {
+      $group: {
+        _id: '$image_source.contributing_library',
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { count: -1 as const } },
+  ]).toArray();
+
+  // Filter out entries that duplicate a digital source name (e.g. "Internet Archive")
+  const digitalNames = new Set(Object.values(LIBRARY_PARTNERS).map(p => p.name.toLowerCase()));
+  return results
+    .filter(r => {
+      const name = (r._id as string).toLowerCase();
+      return !digitalNames.has(name) && name !== 'unknown library';
+    })
+    .map(r => ({
+      name: r._id as string,
+      count: r.count as number,
+    }));
+}
+
 export default async function LibrariesPage() {
-  const stats = await fetchProviderStats();
+  const [stats, contributingLibraries] = await Promise.all([
+    fetchProviderStats(),
+    fetchContributingLibraries(),
+  ]);
 
   const partners = stats
     .map(s => {
@@ -101,15 +143,22 @@ export default async function LibrariesPage() {
     .filter(Boolean) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
 
   const totalBooks = partners.reduce((s, p) => s + p.count, 0);
+  const totalInstitutions = contributingLibraries.length;
 
   return (
     <ContentPageLayout>
       <ContentHeader
-        title="Library Partners"
-        subtitle={`${totalBooks.toLocaleString()} books sourced from ${partners.length} digital libraries and archives worldwide.`}
+        title="Libraries"
+        subtitle={`${totalBooks.toLocaleString()} books sourced from ${partners.length} digital platforms and ${totalInstitutions} contributing institutions worldwide.`}
       />
 
-      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
+      {/* Digital Sources */}
+      <h2 className="text-2xl font-display text-primary mb-4">Digital Sources</h2>
+      <p className="text-sm text-muted mb-6">
+        The platforms and digital libraries that host the scanned books we import.
+      </p>
+
+      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 mb-16">
         {partners.map((partner) => {
           const topLangs = partner.languages.slice(0, 3).map(l => l).join(', ');
 
@@ -159,6 +208,31 @@ export default async function LibrariesPage() {
           );
         })}
       </div>
+
+      {/* Contributing Institutions */}
+      {contributingLibraries.length > 0 && (
+        <>
+          <div className="flex items-center gap-2.5 mb-4">
+            <Library className="w-5 h-5 text-accent-rust" />
+            <h2 className="text-2xl font-display text-primary">Contributing Institutions</h2>
+          </div>
+          <p className="text-sm text-muted mb-6 max-w-3xl">
+            The physical libraries, universities, and archives whose collections were digitized and made available through the platforms above.
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {contributingLibraries.map((lib) => (
+              <span
+                key={lib.name}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-border-light rounded-full text-secondary hover:border-accent-rust/30 transition-colors"
+              >
+                {lib.name}
+                <span className="text-xs text-muted">({lib.count})</span>
+              </span>
+            ))}
+          </div>
+        </>
+      )}
     </ContentPageLayout>
   );
 }

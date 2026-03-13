@@ -175,6 +175,8 @@ export const POST = withAuth(async (request, session) => {
       provider,
       start_page,
       end_page,
+      contributing_library,
+      shelfmark,
     } = body;
 
     if (!manifest_url || !title || !author) {
@@ -327,6 +329,7 @@ export const POST = withAuth(async (request, session) => {
     else if (manifestId.includes('polona.pl')) providerName = 'National Library of Poland';
     else if (manifestId.includes('onb.ac.at')) providerName = 'Austrian National Library';
     else if (manifestId.includes('e-codices.unifr.ch')) providerName = 'e-codices';
+    else if (manifestId.includes('contentdm.oclc.org')) providerName = provider || 'ContentDM (OCLC)';
 
     // Parse license from manifest data
     const { license, license_url } = parseLicense(rawLicenseUrl, attributionText, providerName);
@@ -384,6 +387,8 @@ export const POST = withAuth(async (request, session) => {
         attribution: creditText,
         access_date: new Date(),
         ...(start_page || end_page ? { page_range: `${startIdx + 1}-${endIdx}` } : {}),
+        ...(contributing_library ? { contributing_library } : {}),
+        ...(shelfmark ? { shelfmark } : {}),
       },
       status: 'draft',
       created_at: new Date(),
