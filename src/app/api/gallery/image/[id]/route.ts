@@ -203,8 +203,13 @@ export async function GET(
     // Using archived_photo here when cropped_photo exists causes a coordinate mismatch.
     let imageUrl = pageData.cropped_photo || pageData.archived_photo || pageData.photo_original || pageData.photo;
 
-    // For the magnifier/high-res viewer, prefer archived_photo (higher quality full page)
-    const magnifierBaseUrl = pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo;
+    // For the magnifier/high-res viewer: when a bbox exists, the high-res source MUST
+    // be in the same coordinate space as the detection. If cropped_photo exists (split page),
+    // archived_photo is the full spread — bbox coordinates won't map correctly to it.
+    // Only use archived_photo for high-res when there's no bbox (full-page images).
+    const magnifierBaseUrl = detection.bbox
+      ? imageUrl  // Same coordinate space as the bbox
+      : (pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo);
     const isIiif = magnifierBaseUrl?.includes('/iiif/');
     const fullResUrl = isIiif ? upgradeIiifUrl(magnifierBaseUrl, 'high') : magnifierBaseUrl;
 
