@@ -425,6 +425,21 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
   if (bookId) pageMatch.book_id = bookId;
   pipeline.push({ $match: pageMatch });
 
+  // Exclude original (unsplit) pages that have been superseded by split children.
+  // If another page has split_from pointing to this page's id, this page is a spread
+  // and its split children should be shown instead.
+  pipeline.push({
+    $lookup: {
+      from: 'pages',
+      localField: 'id',
+      foreignField: 'split_from',
+      as: '_splitChildren',
+      pipeline: [{ $limit: 1 }, { $project: { _id: 1 } }],
+    },
+  });
+  pipeline.push({ $match: { '_splitChildren.0': { $exists: false } } });
+  pipeline.push({ $project: { _splitChildren: 0 } });
+
   pipeline.push({ $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } });
   pipeline.push({ $unwind: { path: '$book', preserveNullAndEmptyArrays: true } });
   pipeline.push({ $match: { 'book.hidden': { $ne: true } } });
