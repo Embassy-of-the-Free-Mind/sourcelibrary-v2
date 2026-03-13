@@ -164,6 +164,7 @@ export const POST = withAuth(async (request, session) => {
     const body = await request.json();
     const {
       manifest_url,
+      manifest_data,
       title,
       display_title,
       author,
@@ -183,22 +184,27 @@ export const POST = withAuth(async (request, session) => {
       );
     }
 
-    // Fetch IIIF manifest
-    const manifestRes = await fetch(manifest_url, {
-      headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
-        'Accept': 'application/json, application/ld+json',
+    // Use pre-fetched manifest data if provided, otherwise fetch it
+    let manifest: IIIFManifest;
+    if (manifest_data) {
+      manifest = manifest_data;
+    } else {
+      const manifestRes = await fetch(manifest_url, {
+        headers: {
+          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+          'Accept': 'application/json, application/ld+json',
+        }
+      });
+
+      if (!manifestRes.ok) {
+        return NextResponse.json(
+          { error: `Failed to fetch IIIF manifest: ${manifestRes.status}` },
+          { status: 400 }
+        );
       }
-    });
 
-    if (!manifestRes.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch IIIF manifest: ${manifestRes.status}` },
-        { status: 400 }
-      );
+      manifest = await manifestRes.json();
     }
-
-    const manifest: IIIFManifest = await manifestRes.json();
     const v3 = isV3Manifest(manifest);
 
     // Extract canvases from v2 or v3 manifest
