@@ -399,6 +399,20 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                     <span className="text-stone-200">{book.image_source.attribution}</span>
                   </div>
                 )}
+                {book.image_source.iiif_manifest && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">IIIF:</span>
+                    <a
+                      href={book.image_source.iiif_manifest}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent-gold hover:text-accent-gold flex items-center gap-1"
+                    >
+                      View manifest
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           ) : null}
