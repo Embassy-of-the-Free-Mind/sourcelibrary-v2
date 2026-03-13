@@ -10,6 +10,10 @@ import { formatDuration } from '../shared/formatters';
 import { MultiLineChart } from '../charts/MultiLineChart';
 import { compactNumber, dateLabel } from '../charts/chart-utils';
 
+/** Safely render error values that may be objects like {message: "..."} */
+const errorText = (e: unknown): string =>
+  typeof e === 'string' ? e : (e as any)?.message || JSON.stringify(e);
+
 interface PipelineTabProps {
   hours: number;
 }
@@ -199,7 +203,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
                 .filter(([, h]) => h.recentErrors?.length > 0)
                 .map(([name, h]) => (
                   <div key={name} className="text-xs mb-1" style={{ color: '#7f1d1d' }}>
-                    <span className="font-medium">{name}:</span> {h.recentErrors[0]}
+                    <span className="font-medium">{name}:</span> {errorText(h.recentErrors[0])}
                   </div>
                 ))}
             </div>
@@ -240,7 +244,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
                       </span>
                     </td>
                     <td className="py-2.5 pr-4 text-right font-bold" style={{ color: '#dc2626' }}>{err.count}</td>
-                    <td className="py-2.5 text-xs truncate max-w-xs" style={{ color: 'var(--text-muted)' }}>{err.lastError}</td>
+                    <td className="py-2.5 text-xs truncate max-w-xs" style={{ color: 'var(--text-muted)' }}>{errorText(err.lastError)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -282,7 +286,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
                     )}
                   </div>
                   {book.error && (
-                    <div className="text-xs mt-1 truncate" style={{ color: '#dc2626' }}>{book.error}</div>
+                    <div className="text-xs mt-1 truncate" style={{ color: '#dc2626' }}>{errorText(book.error)}</div>
                   )}
                 </div>
                 <span

@@ -205,10 +205,11 @@ function summarizeCronHealth(runs: any[]): Record<string, {
       ? Math.round(durations.reduce((a: number, b: number) => a + b, 0) / durations.length)
       : 0;
 
-    // Collect unique recent errors
+    // Collect unique recent errors (normalize objects to strings)
     const errors = sorted
       .flatMap(r => r.errors || [])
       .filter(Boolean)
+      .map(e => typeof e === 'string' ? e : (e as any)?.message || String(e))
       .slice(0, 10);
 
     result[name] = {
