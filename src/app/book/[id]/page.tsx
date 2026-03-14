@@ -795,6 +795,7 @@ async function BookInfo({ id }: { id: string }) {
                     />
                     <DownloadButton
                       bookId={book.id}
+                      bookTitle={book.display_title || book.title}
                       hasTranslations={hasTranslations}
                       hasOcr={hasOcr}
                       hasImages={pages.length > 0}

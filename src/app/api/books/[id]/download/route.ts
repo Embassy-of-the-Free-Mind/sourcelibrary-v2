@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { auth } from '@/lib/auth';
+import { canDownload, PRICES } from '@/lib/purchases';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -2266,6 +2268,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json(
         { error: 'Invalid format' },
         { status: 400 }
+      );
+    }
+
+    // Access check: must be a member or have purchased this book
+    const session = await auth();
+    const userId = session?.user?.id || null;
+    const allowed = await canDownload(userId, 'book', id);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
+        { status: 402 }
       );
     }
 

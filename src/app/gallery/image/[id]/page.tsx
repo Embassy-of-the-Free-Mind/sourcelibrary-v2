@@ -414,13 +414,54 @@ export default function ImageDetailPage({
   };
 
   const isMember = (session?.user as any)?.membership != null;
+  const [imagePurchased, setImagePurchased] = useState(false);
+
+  // Check if user has purchased this specific image
+  useEffect(() => {
+    if (isMember || !session?.user || !imageId) return;
+    fetch(`/api/access?type=image&itemId=${imageId}`)
+      .then(r => r.json())
+      .then(d => { if (d.allowed) setImagePurchased(true); })
+      .catch(() => {});
+  }, [isMember, session, imageId]);
+
+  // Also check after returning from purchase
+  useEffect(() => {
+    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('purchased') === 'true') {
+      setImagePurchased(true);
+    }
+  }, []);
+
+  const canDownloadImage = isMember || imagePurchased;
+
+  const purchaseImage = async () => {
+    if (!data || !imageId) return;
+    if (!session?.user) {
+      window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+      return;
+    }
+    try {
+      const res = await fetch('/api/stripe/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'image',
+          itemId: imageId,
+          itemName: data.description?.slice(0, 60) || imageId,
+          returnUrl: window.location.pathname,
+        }),
+      });
+      const result = await res.json();
+      if (result.url) window.location.href = result.url;
+    } catch {
+      // Ignore
+    }
+  };
 
   const downloadImage = async () => {
     if (!data) return;
-    if (!isMember) {
-      // Preserve the current page so the user returns here after joining
-      const returnUrl = encodeURIComponent(window.location.pathname);
-      window.location.href = `/ficino-society?return=${returnUrl}`;
+    if (!canDownloadImage) {
+      purchaseImage();
       return;
     }
     // Prefer pre-extracted image (Vercel Blob, no CORS issues).
@@ -573,12 +614,12 @@ export default function ImageDetailPage({
               <button
                 onClick={downloadImage}
                 className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                title={isMember ? 'Download high-res' : 'Join Ficino Society to download'}
+                title={canDownloadImage ? 'Download high-res' : 'Download — $1.99'}
               >
-                {isMember ? (
+                {canDownloadImage ? (
                   <Download className="w-4 h-4 text-stone-400" />
                 ) : (
-                  <Download className="w-4 h-4 text-stone-600" />
+                  <Download className="w-4 h-4 text-stone-500" />
                 )}
               </button>
             </div>
@@ -840,13 +881,13 @@ export default function ImageDetailPage({
                     <button
                       onClick={downloadImage}
                       className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${
-                        isMember
+                        canDownloadImage
                           ? 'bg-accent-rust hover:bg-accent-rust/80 text-white'
-                          : 'bg-stone-700 hover:bg-stone-600 text-stone-400'
+                          : 'bg-stone-700 hover:bg-stone-600 text-stone-300'
                       }`}
                     >
-                      {isMember ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                      {isMember ? 'Download high-res' : 'Join to download'}
+                      {canDownloadImage ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                      {canDownloadImage ? 'Download high-res' : 'Download $1.99'}
                     </button>
                   </div>
                 </div>

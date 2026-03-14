@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { activateMembership, deactivateMembership } from '@/lib/membership';
 import { sendMembershipWelcomeEmail } from '@/lib/membership-email';
+import { recordPurchase, PurchaseType } from '@/lib/purchases';
 import Stripe from 'stripe';
 import { getDb } from '@/lib/mongodb';
 
@@ -46,14 +47,13 @@ export async function POST(request: NextRequest) {
         const customerId = session.customer as string;
         const subscriptionId = session.subscription as string;
 
+        // Membership subscription checkout
         if (userId && customerId && subscriptionId) {
-          // Annual subscription — first period ends 1 year from now
           const periodEnd = new Date();
           periodEnd.setFullYear(periodEnd.getFullYear() + 1);
           await activateMembership(userId, customerId, subscriptionId, periodEnd);
           console.log(`[stripe] Membership activated for user ${userId}, expires ${periodEnd.toISOString()}`);
 
-          // Send welcome email (fire-and-forget — don't block the webhook)
           const email = session.customer_details?.email || session.customer_email;
           const name = session.customer_details?.name;
           if (email) {
@@ -61,6 +61,14 @@ export async function POST(request: NextRequest) {
               console.error('[stripe] Failed to send welcome email:', err)
             );
           }
+        }
+
+        // Single-item purchase checkout
+        const purchaseType = session.metadata?.purchaseType as PurchaseType | undefined;
+        const purchaseItemId = session.metadata?.itemId;
+        if (userId && purchaseType && purchaseItemId && session.payment_status === 'paid') {
+          await recordPurchase(userId, purchaseType, purchaseItemId, session.payment_intent as string);
+          console.log(`[stripe] Purchase recorded: ${purchaseType} ${purchaseItemId} for user ${userId}`);
         }
         break;
       }
