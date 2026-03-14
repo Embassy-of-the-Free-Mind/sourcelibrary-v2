@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, Lock } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
 interface DownloadButtonProps {
@@ -20,12 +20,11 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(false);
   const [downloading, setDownloading] = useState<string | null>(null);
-  const [accessChecked, setAccessChecked] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
+  const [accessChecked, setAccessChecked] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Check access on mount
   useEffect(() => {
     if (isMember) {
       setHasAccess(true);
@@ -45,24 +44,27 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     }
   }, [bookId, session, isMember]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleDownload = async (format: BookDownloadFormats) => {
+    // If no access, redirect to purchase
+    if (accessChecked && !hasAccess) {
+      handlePurchase();
+      return;
+    }
+
     setDownloading(format);
     try {
       const response = await books.download(bookId, format);
 
-      // 402 = needs purchase
       if (response.status === 402) {
         setDownloading(null);
         handlePurchase();
@@ -75,7 +77,6 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : 'txt';
       const filename = filenameMatch ? filenameMatch[1] : `download-${format}.${defaultExt}`;
 
-      // Create download link
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -99,7 +100,6 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
       return;
     }
-
     setPurchasing(true);
     try {
       const res = await fetch('/api/stripe/purchase', {
@@ -125,12 +125,11 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     }
   };
 
-  // Don't show if no content available
   if (!hasTranslations && !hasOcr && !hasImages) {
     return null;
   }
 
-  const showPrice = accessChecked && !hasAccess;
+  const needsPurchase = accessChecked && !hasAccess;
 
   const buttonClass = variant === 'header'
     ? "flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg text-sm transition-colors"
@@ -139,178 +138,101 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => {
-          if (showPrice && !isOpen) {
-            // First click opens dropdown which shows the purchase option
-          }
-          setIsOpen(!isOpen);
-        }}
+        onClick={() => setIsOpen(!isOpen)}
         className={buttonClass}
       >
         <Download className="w-4 h-4" />
         Download
-        {showPrice && <span className="text-xs opacity-75">$4.99</span>}
+        {needsPurchase && <span className="text-xs opacity-70">$5</span>}
         <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-stone-200 py-2 z-50">
-          {/* Purchase banner for non-members/non-purchasers */}
-          {showPrice && (
-            <div className="px-3 py-3 bg-amber-50 border-b border-stone-200">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-stone-800">Download this book</span>
-                <span className="text-sm font-semibold text-stone-900">$4.99</span>
-              </div>
+
+          {/* Quiet download prompt for non-members */}
+          {needsPurchase && (
+            <div className="px-3 py-3 border-b border-stone-100">
               <button
                 onClick={handlePurchase}
                 disabled={purchasing}
-                className="w-full py-2 bg-accent-rust hover:bg-accent-rust/90 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
               >
-                {purchasing ? 'Redirecting...' : 'Purchase — all formats included'}
+                {purchasing ? 'Redirecting...' : 'Download this book — $5'}
               </button>
-              <p className="mt-2 text-xs text-stone-500 text-center">
-                or <a href="/ficino-society" className="underline">join the Ficino Society</a> for unlimited downloads
+              <p className="mt-2 text-xs text-stone-400 text-center">
+                All formats included
               </p>
             </div>
           )}
 
           <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-b border-stone-100">
-            Download as TXT
+            TXT
           </div>
 
           {hasTranslations && (
-            <DownloadOption
-              format="translation"
-              label="English Translation"
-              desc="Translated text only"
+            <FormatOption format="translation" label="English Translation" desc="Translated text only"
               icon={<Languages className="w-4 h-4 text-status-success" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
-
           {hasOcr && (
-            <DownloadOption
-              format="ocr"
-              label="Original Text (OCR)"
-              desc="Source language transcription"
+            <FormatOption format="ocr" label="Original Text (OCR)" desc="Source language transcription"
               icon={<FileText className="w-4 h-4 text-blue-600" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
-
           {hasTranslations && hasOcr && (
-            <DownloadOption
-              format="both"
-              label="Complete (Both)"
-              desc="Original + translation per page"
+            <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
               icon={<Layers className="w-4 h-4 text-purple-600" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
 
           <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
-            Download as EPUB
+            EPUB
           </div>
 
           {hasTranslations && (
-            <DownloadOption
-              format="epub-translation"
-              label="English Translation"
-              desc="E-reader format"
+            <FormatOption format="epub-translation" label="English Translation" desc="E-reader format"
               icon={<BookOpen className="w-4 h-4 text-status-success" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
-
           {hasOcr && (
-            <DownloadOption
-              format="epub-ocr"
-              label="Original Text (OCR)"
-              desc="E-reader format"
+            <FormatOption format="epub-ocr" label="Original Text (OCR)" desc="E-reader format"
               icon={<BookOpen className="w-4 h-4 text-blue-600" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
-
           {hasTranslations && hasOcr && (
-            <DownloadOption
-              format="epub-both"
-              label="Complete (Both)"
-              desc="E-reader format"
+            <FormatOption format="epub-both" label="Complete (Both)" desc="E-reader format"
               icon={<BookOpen className="w-4 h-4 text-purple-600" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
-
           {hasTranslations && hasOcr && (
-            <DownloadOption
-              format="epub-parallel"
-              label="Parallel Text"
-              desc="OCR + translation facing pages"
+            <FormatOption format="epub-parallel" label="Parallel Text" desc="Facing pages"
               icon={<Columns className="w-4 h-4 text-accent-rust" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-              className="border-t border-stone-100"
-            />
+              onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
           )}
-
           {hasTranslations && hasImages && (
-            <DownloadOption
-              format="epub-facsimile"
-              label="Facsimile Edition"
-              desc="Page images + translation"
+            <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation"
               icon={<Image className="w-4 h-4 text-emerald-700" />}
-              onDownload={handleDownload}
-              downloading={downloading}
-              locked={showPrice}
-            />
+              onDownload={handleDownload} downloading={downloading} />
           )}
 
           {hasImages && (
             <>
               <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
-                Images Only
+                Images
               </div>
-
-              <DownloadOption
-                format="epub-images"
-                label="EPUB (Images)"
-                desc="Page images as e-book"
+              <FormatOption format="epub-images" label="EPUB (Images)" desc="Page images as e-book"
                 icon={<BookOpen className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload}
-                downloading={downloading}
-                locked={showPrice}
-              />
-
-              <DownloadOption
-                format="images-zip"
-                label="ZIP (Images)"
-                desc="All page images as ZIP"
+                onDownload={handleDownload} downloading={downloading} />
+              <FormatOption format="images-zip" label="ZIP (Images)" desc="All page images as ZIP"
                 icon={<Image className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload}
-                downloading={downloading}
-                locked={showPrice}
-              />
+                onDownload={handleDownload} downloading={downloading} />
             </>
           )}
 
           <div className="border-t border-stone-100 mt-2 pt-2 px-3 pb-1">
             <p className="text-xs text-stone-400">
-              Downloads include source attribution and license info.
+              Downloads include source attribution and CC BY-SA 4.0 license.
             </p>
           </div>
         </div>
@@ -319,15 +241,8 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   );
 }
 
-function DownloadOption({
-  format,
-  label,
-  desc,
-  icon,
-  onDownload,
-  downloading,
-  locked,
-  className = '',
+function FormatOption({
+  format, label, desc, icon, onDownload, downloading, className = '',
 }: {
   format: BookDownloadFormats;
   label: string;
@@ -335,18 +250,17 @@ function DownloadOption({
   icon: React.ReactNode;
   onDownload: (format: BookDownloadFormats) => void;
   downloading: string | null;
-  locked: boolean;
   className?: string;
 }) {
   return (
     <button
       onClick={() => onDownload(format)}
-      disabled={downloading !== null || locked}
+      disabled={downloading !== null}
       className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50 ${className}`}
     >
-      {locked ? <Lock className="w-4 h-4 text-stone-300" /> : icon}
+      {icon}
       <div className="text-left">
-        <div className={`text-sm font-medium ${locked ? 'text-stone-400' : 'text-stone-900'}`}>{label}</div>
+        <div className="text-sm font-medium text-stone-900">{label}</div>
         <div className="text-xs text-stone-500">{desc}</div>
       </div>
       {downloading === format && (

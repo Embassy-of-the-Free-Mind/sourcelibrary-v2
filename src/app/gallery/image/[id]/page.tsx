@@ -25,8 +25,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Download,
-  Lock
+  Download
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -614,7 +613,7 @@ export default function ImageDetailPage({
               <button
                 onClick={downloadImage}
                 className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                title={canDownloadImage ? 'Download high-res' : 'Download — $1.99'}
+                title={canDownloadImage ? 'Download high-res' : 'Download — $2'}
               >
                 {canDownloadImage ? (
                   <Download className="w-4 h-4 text-stone-400" />
@@ -882,12 +881,12 @@ export default function ImageDetailPage({
                       onClick={downloadImage}
                       className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${
                         canDownloadImage
-                          ? 'bg-accent-rust hover:bg-accent-rust/80 text-white'
-                          : 'bg-stone-700 hover:bg-stone-600 text-stone-300'
+                          ? 'bg-stone-800 hover:bg-stone-700 text-white'
+                          : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
                       }`}
                     >
-                      {canDownloadImage ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                      {canDownloadImage ? 'Download high-res' : 'Download $1.99'}
+                      <Download className="w-4 h-4" />
+                      {canDownloadImage ? 'Download high-res' : 'Download — $2'}
                     </button>
                   </div>
                 </div>

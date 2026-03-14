@@ -1,8 +1,8 @@
 import { getDb } from './mongodb';
 
 export const PRICES = {
-  book: { amount: 499, label: '$4.99' },   // cents
-  image: { amount: 199, label: '$1.99' },
+  book: { amount: 500, label: '$5' },   // cents
+  image: { amount: 200, label: '$2' },
 } as const;
 
 export type PurchaseType = keyof typeof PRICES;
