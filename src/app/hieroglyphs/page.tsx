@@ -7,53 +7,34 @@ export const metadata: Metadata = {
     'Side-by-side evaluation of Gemini AI hieroglyphic OCR against Budge\'s Egyptian Reading Book (1896).',
 };
 
+interface GardinerLine {
+  gardiner: string;
+  unicode: string;
+  missed: number;
+  total: number;
+}
+
 interface EvalEntry {
   page: number;
   label: string;
   imageUrl: string;
   ocrText: string;
+  gardinerLines?: GardinerLine[];
+  stats?: { totalSigns: number; totalMapped: number; mappingRate: number };
 }
 
 const entries = evalData as EvalEntry[];
 
-function OcrOutput({ text }: { text: string }) {
-  // Split into sections based on === headers ===
-  const sections = text.split(/^(===.*===)$/m).filter(Boolean);
-
+function TransliterationBlock({ text }: { text: string }) {
+  const match = text.match(/=== TRANSLITERATION ===\n([\s\S]*?)$/);
+  if (!match) return null;
   return (
-    <div className="space-y-3">
-      {sections.map((section, i) => {
-        if (section.startsWith('===')) {
-          return (
-            <h4
-              key={i}
-              className="text-[10px] font-mono uppercase tracking-wider pt-2 first:pt-0"
-              style={{ color: 'var(--accent-gold-dark)' }}
-            >
-              {section.replace(/=/g, '').trim()}
-            </h4>
-          );
-        }
-        // Check if this section contains hieroglyphs (Unicode range 13000-1342F)
-        const hasHieroglyphs = /[\u{13000}-\u{1342F}]/u.test(section);
-        return (
-          <pre
-            key={i}
-            className={`whitespace-pre-wrap text-sm leading-relaxed ${
-              hasHieroglyphs ? 'text-2xl leading-loose tracking-wide' : ''
-            }`}
-            style={{
-              color: 'var(--text-primary)',
-              fontFamily: hasHieroglyphs
-                ? '"Noto Sans Egyptian Hieroglyphs", "Segoe UI Historic", serif'
-                : 'inherit',
-            }}
-          >
-            {section.trim()}
-          </pre>
-        );
-      })}
-    </div>
+    <pre
+      className="whitespace-pre-wrap text-sm leading-relaxed"
+      style={{ color: 'var(--text-primary)', fontFamily: 'inherit' }}
+    >
+      {match[1].trim()}
+    </pre>
   );
 }
 
@@ -80,11 +61,11 @@ export default function HieroglyphEvalPage() {
           </h1>
           <p className="text-base mb-2" style={{ color: 'var(--text-muted)' }}>
             {entries.length} pages from Budge&apos;s <em>Egyptian Reading Book for Beginners</em> (1896).
-            Gemini 3 Flash Preview OCR output with Unicode hieroglyphs, compared against the original page.
+            Gemini 3 Flash Preview outputs Gardiner sign codes, then converted to Unicode hieroglyphs.
           </p>
           <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
-            Left: original scan from Internet Archive. Right: Gemini OCR output.
-            The transliteration at the bottom of each page serves as ground truth for evaluation.
+            Pipeline: scan → Gemini OCR → Gardiner codes → Unicode conversion.
+            Compare the Unicode output against the original scan to evaluate accuracy.
           </p>
         </div>
       </header>
@@ -123,6 +104,17 @@ export default function HieroglyphEvalPage() {
                 >
                   scan #{entry.page}
                 </span>
+                {entry.stats && (
+                  <span
+                    className="text-xs px-1.5 py-0.5 rounded font-mono"
+                    style={{
+                      backgroundColor: entry.stats.mappingRate === 100 ? '#e8f5e9' : '#fff3e0',
+                      color: entry.stats.mappingRate === 100 ? '#2e7d32' : '#e65100',
+                    }}
+                  >
+                    {entry.stats.totalSigns} signs — {entry.stats.mappingRate}% mapped
+                  </span>
+                )}
               </div>
               <a
                 href={`https://archive.org/details/egyptianreadingb00budguoft/page/n${entry.page}/mode/1up`}
@@ -135,17 +127,17 @@ export default function HieroglyphEvalPage() {
               </a>
             </div>
 
-            {/* Side-by-side: Image | OCR */}
+            {/* Three-column layout: Image | Gardiner Codes | Unicode */}
             <div className="flex flex-col lg:flex-row gap-0">
               {/* Left: Original page image */}
               <div
-                className="lg:w-1/2 p-4 flex justify-center border-b lg:border-b-0 lg:border-r"
+                className="lg:w-1/3 p-4 flex justify-center border-b lg:border-b-0 lg:border-r"
                 style={{
                   backgroundColor: '#f0ece3',
                   borderColor: 'var(--border-light)',
                 }}
               >
-                <div className="relative" style={{ maxWidth: '500px' }}>
+                <div className="relative w-full">
                   <a
                     href={`https://archive.org/details/egyptianreadingb00budguoft/page/n${entry.page}/mode/1up`}
                     target="_blank"
@@ -168,21 +160,88 @@ export default function HieroglyphEvalPage() {
                 </div>
               </div>
 
-              {/* Right: Gemini OCR output */}
-              <div className="lg:w-1/2 p-5">
+              {/* Middle: Gardiner codes */}
+              <div className="lg:w-1/3 p-4 border-b lg:border-b-0 lg:border-r" style={{ borderColor: 'var(--border-light)' }}>
                 <div className="flex items-center gap-1.5 mb-3 pb-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
                   <span
                     className="text-[9px] font-mono px-1.5 py-0.5 rounded font-medium"
-                    style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}
+                    style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}
                   >
                     Gemini 3 Flash Preview
                   </span>
                   <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                    OCR Output — Unicode Hieroglyphs
+                    Gardiner Sign Codes
                   </span>
                 </div>
-                <OcrOutput text={entry.ocrText} />
+                {entry.gardinerLines ? (
+                  <div className="space-y-1">
+                    {entry.gardinerLines.map((line, i) => (
+                      <p key={i} className="text-xs font-mono leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                        {line.gardiner}
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm italic" style={{ color: 'var(--text-faint)' }}>No Gardiner data</p>
+                )}
               </div>
+
+              {/* Right: Unicode hieroglyphs */}
+              <div className="lg:w-1/3 p-4">
+                <div className="flex items-center gap-1.5 mb-3 pb-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                  <span
+                    className="text-[9px] font-mono px-1.5 py-0.5 rounded font-medium"
+                    style={{ backgroundColor: '#f3e5f5', color: '#7b1fa2' }}
+                  >
+                    Unicode Conversion
+                  </span>
+                  <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                    Gardiner → U+13000 block
+                  </span>
+                </div>
+                {entry.gardinerLines ? (
+                  <div className="space-y-1">
+                    {entry.gardinerLines.map((line, i) => {
+                      // Extract just the Unicode text (strip line numbers from gardiner)
+                      const unicodeOnly = line.unicode.replace(/^\d+\.\s*(\d+\.\s*)?/, '');
+                      return (
+                        <p
+                          key={i}
+                          className="text-xl leading-loose tracking-wide"
+                          style={{
+                            color: 'var(--text-primary)',
+                            fontFamily: '"Noto Sans Egyptian Hieroglyphs", "Segoe UI Historic", serif',
+                          }}
+                        >
+                          <span className="text-[10px] font-mono mr-1" style={{ color: 'var(--text-faint)', fontFamily: 'inherit' }}>
+                            {i + 1}.
+                          </span>
+                          {unicodeOnly}
+                        </p>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-sm italic" style={{ color: 'var(--text-faint)' }}>No Unicode data</p>
+                )}
+              </div>
+            </div>
+
+            {/* Transliteration (ground truth) */}
+            <div
+              className="px-5 py-3 border-t"
+              style={{
+                backgroundColor: 'var(--bg-warm)',
+                borderColor: 'var(--border-light)',
+              }}
+            >
+              <h4
+                className="text-[10px] font-mono uppercase tracking-wider mb-2"
+                style={{ color: 'var(--accent-gold-dark)' }}
+              >
+                Transliteration (Ground Truth)
+              </h4>
+              <TransliterationBlock text={entry.ocrText} />
             </div>
           </article>
         ))}
