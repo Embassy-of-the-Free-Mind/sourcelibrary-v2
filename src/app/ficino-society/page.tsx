@@ -202,11 +202,10 @@ function FicinoSocietyContent() {
           </h2>
           <div className="space-y-5">
             {[
-              { title: 'Download high-resolution images', desc: 'Full-size gallery images — woodcuts, emblems, engravings, diagrams — for research, printing, or simply having.' },
-              { title: 'Download complete translations', desc: 'Every translated book as EPUB, PDF, or plain text. Take them offline, annotate them, share them.' },
-              { title: 'Order archival prints', desc: 'Gallery images printed on museum-quality archival paper and shipped worldwide.' },
-              { title: 'API access', desc: 'Programmatic access to the full catalog and translations — for research tools, AI applications, or your own projects.' },
-              { title: 'Your name in the colophon', desc: 'Supporters are credited in every scholarly edition we publish.' },
+              { title: 'Unlimited downloads', desc: 'Every book as EPUB or plain text, every gallery image in full resolution. No per-item fees.' },
+              { title: 'Your name on the members page', desc: 'A public page listing the people who support this work. With an optional one-line bio, if you like.' },
+              { title: 'A quarterly letter', desc: 'What we translated, what we discovered, what\u2019s coming next. Short, personal, from the team.' },
+              { title: 'Inner circle', desc: 'As we build forums and discussion spaces, members will be the founding community.' },
             ].map((item) => (
               <div key={item.title} className="flex gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--accent-rust)' }} />
@@ -271,6 +270,17 @@ function FicinoSocietyContent() {
             </p>
           </div>
         )}
+
+        {/* Members link */}
+        <div className="text-center mt-12">
+          <Link
+            href="/ficino-society/members"
+            className="text-sm hover:opacity-70 transition-opacity"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            View current members
+          </Link>
+        </div>
       </div>
     </div>
   );
