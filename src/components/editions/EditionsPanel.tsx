@@ -26,7 +26,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     return null;
   }
 
-  const currentEdition = editions.find(e => e.status === 'published');
+  const currentEdition = editions.find(e => e.status === 'published') || editions.find(e => e.status === 'draft');
   const previousEditions = editions.filter(e => e.status === 'superseded');
 
   const copyToClipboard = async (text: string, id: string) => {
@@ -35,25 +35,28 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const generateCitation = (edition: TranslationEdition) => {
+  const generateCitation = (edition: TranslationEdition, pageNumber?: number) => {
     const year = edition.published_at ? new Date(edition.published_at).getFullYear() : new Date().getFullYear();
     const doi = edition.doi ? ` https://doi.org/${edition.doi}` : '';
-    return `Source Library. (${year}). ${edition.citation.title} (Version ${edition.version}).${doi}`;
+    const page = pageNumber ? `, p. ${pageNumber}` : '';
+    // Scholarly convention: original author first, translator credited
+    return `${edition.citation.original_author}. ${edition.citation.original_title}, trans. Source Library (${year}), v${edition.version}${page}.${doi}`;
   };
 
   const generateBibtex = (edition: TranslationEdition) => {
     const year = edition.published_at ? new Date(edition.published_at).getFullYear() : new Date().getFullYear();
-    const aiContributors = edition.contributors.filter(c => c.type === 'ai').map(c => c.name).join(' and ');
-    const humanContributors = edition.contributors.filter(c => c.type === 'human').map(c => c.name).join(' and ');
-    const author = ['{Source Library}', aiContributors, humanContributors].filter(Boolean).join(' and ');
 
-    return `@misc{sourcelibrary_${year}_${edition.id.slice(0, 8)},
-  author       = {${author}},
-  title        = {${edition.citation.title}},
+    return `@book{sourcelibrary_${year}_${edition.id.slice(0, 8)},
+  author       = {${edition.citation.original_author}},
+  title        = {${edition.citation.original_title}},
+  translator   = {{Source Library}},
   year         = ${year},
-  version      = {${edition.version}},${edition.doi ? `
+  publisher    = {Source Library},
+  version      = {${edition.version}},
+  note         = {AI-assisted translation},${edition.doi ? `
   doi          = {${edition.doi}},
-  url          = {https://doi.org/${edition.doi}}` : ''}
+  url          = {https://doi.org/${edition.doi}},` : ''}
+  language     = {${edition.citation.original_language}}
 }`;
   };
 
@@ -125,7 +128,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
             <p className="text-sm text-stone-500">
               {currentEdition ? (
                 <>
-                  Current: v{currentEdition.version}
+                  {currentEdition.status === 'draft' ? 'Draft' : 'Current'}: v{currentEdition.version}
                   {currentEdition.doi && ` • DOI: ${currentEdition.doi}`}
                 </>
               ) : (
@@ -148,8 +151,8 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
           {currentEdition && (
             <div className="space-y-4">
               <h4 className="font-medium text-stone-900 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-status-success" />
-                Current Edition
+                <div className={`w-2 h-2 rounded-full ${currentEdition.status === 'draft' ? 'bg-amber-400' : 'bg-status-success'}`} />
+                {currentEdition.status === 'draft' ? 'Draft Edition' : 'Current Edition'}
               </h4>
 
               <div className="bg-stone-50 rounded-lg p-4 space-y-3">

@@ -251,6 +251,20 @@ export async function getRecord(recordId: number): Promise<ZenodoRecord> {
   return response.json();
 }
 
+/* ── Language mapping ── */
+
+function mapLanguageToIso639_3(language: string): string {
+  const map: Record<string, string> = {
+    'Latin': 'lat', 'Greek': 'grc', 'German': 'deu', 'French': 'fra',
+    'Italian': 'ita', 'Spanish': 'spa', 'Dutch': 'nld', 'Sanskrit': 'san',
+    'Hebrew': 'heb', 'Arabic': 'ara', 'Chinese': 'zho', 'Persian': 'fas',
+    'Syriac': 'syc', 'Ethiopic': 'gez', "Ge'ez": 'gez', 'Tibetan': 'bod',
+    'Russian': 'rus', 'Welsh': 'cym', 'Tamil': 'tam', 'Sumerian': 'sux',
+    'English': 'eng',
+  };
+  return map[language] || 'und';
+}
+
 /* ── Metadata builder ── */
 
 function buildMetadata(book: Book, edition: TranslationEdition) {
@@ -262,29 +276,40 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
     'CC-BY-NC-SA-4.0': 'cc-by-nc-sa-4.0',
   };
 
-  // Build InvenioRDM creators
-  const creators = edition.contributors.map(c => {
-    const displayName = c.type === 'ai' ? `${c.name} (AI)` : c.name;
-    // InvenioRDM wants person_or_org with type
-    return {
-      person_or_org: {
-        name: displayName,
-        type: 'organizational' as const,
-      },
-    };
+  // Build InvenioRDM creators — original author first, then contributors
+  const creators: { person_or_org: { name: string; type: 'personal' | 'organizational'; given_name?: string; family_name?: string }; role?: { id: string } }[] = [];
+
+  // Original author as primary creator
+  if (book.author) {
+    creators.push({
+      person_or_org: { name: book.author, type: 'personal' as const },
+    });
+  }
+
+  // Source Library as translator (organizational)
+  creators.push({
+    person_or_org: { name: 'Source Library', type: 'organizational' as const },
+    role: { id: 'translator' },
   });
 
-  // Ensure at least one creator
-  if (creators.length === 0) {
+  // Additional human contributors as personal, AI as organizational
+  for (const c of edition.contributors) {
+    // Skip if already covered by Source Library entry
+    if (c.name === 'Source Library') continue;
+    const displayName = c.type === 'ai' ? `${c.name} (AI)` : c.name;
     creators.push({
-      person_or_org: { name: 'Source Library', type: 'organizational' as const },
+      person_or_org: {
+        name: displayName,
+        type: c.type === 'human' ? 'personal' as const : 'organizational' as const,
+      },
+      role: { id: c.role },
     });
   }
 
   const description = buildDescription(book, edition) +
     `\n\n<p><strong>Content hash:</strong> <code>${edition.content_hash}</code></p>`;
 
-  // Build related identifiers for version linking
+  // Build related identifiers: version linking + provenance
   const related_identifiers: { identifier: string; relation_type: { id: string }; scheme: string; resource_type?: { id: string } }[] = [];
   if (edition.previous_version_doi) {
     related_identifiers.push({
@@ -293,6 +318,24 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
       scheme: 'doi',
     });
   }
+
+  // Link to Internet Archive source scan (provenance)
+  const iaId = (book as any).ia_identifier || (book as any).ia_id;
+  if (iaId) {
+    related_identifiers.push({
+      identifier: `https://archive.org/details/${iaId}`,
+      relation_type: { id: 'isderivedfrom' },
+      scheme: 'url',
+    });
+  }
+
+  // Link to Source Library book page
+  const bookSlug = (book as any).slug || book.id;
+  related_identifiers.push({
+    identifier: `https://sourcelibrary.org/book/${bookSlug}`,
+    relation_type: { id: 'isidenticalto' },
+    scheme: 'url',
+  });
 
   return {
     title: edition.citation.title,
@@ -305,7 +348,10 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
     rights: [{ id: licenseMap[edition.license] || 'cc-by-4.0' }],
     creators,
     version: edition.version,
-    languages: [{ id: 'eng' }],
+    languages: [
+      { id: 'eng' },
+      ...(book.language && book.language !== 'English' ? [{ id: mapLanguageToIso639_3(book.language) }] : []),
+    ],
     subjects: [
       'translation',
       'historical text',

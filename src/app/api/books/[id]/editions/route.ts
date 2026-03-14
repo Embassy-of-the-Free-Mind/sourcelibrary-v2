@@ -147,15 +147,14 @@ export const POST = withAuth(async (request, session, context) => {
     // Get previous edition info
     const previousEdition = existingEditions.find(e => e.status === 'published');
 
-    // Create the edition
+    // Create the edition as draft — publish after review/DOI minting
     const edition: TranslationEdition = {
       id: crypto.randomUUID(),
       book_id: bookId,
       version,
       version_label,
-      status: 'published',
+      status: 'draft',
       created_at: new Date(),
-      published_at: new Date(),
       page_ids: translatedPages.map(p => p.id),
       page_count: translatedPages.length,
       content_hash: contentHash,
