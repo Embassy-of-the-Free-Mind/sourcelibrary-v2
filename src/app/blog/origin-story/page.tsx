@@ -52,6 +52,19 @@ export default function OriginStoryPage() {
           in Amsterdam &mdash; the Ritman Library, formally the Bibliotheca Philosophica Hermetica &mdash; when I came across Marsilio Ficino&apos;s <em>Liber de Voluptate</em>, his &ldquo;Book on Pleasure.&rdquo; Ficino wrote it in 1457, when he was twenty-four years old. It was published by Aldus Manutius in 1497. And in all the centuries since, no one had ever translated it into English.
         </p>
 
+        {/* Ficino bust with laptop */}
+        <figure className="my-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg"
+            alt="Bronze bust of Marsilio Ficino labeled 'Divinus Interpres' with a laptop open to Plotinus translation work, at the Embassy of the Free Mind in Amsterdam"
+            className="w-full max-w-md mx-auto rounded-lg shadow-md"
+          />
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Marsilio Ficino, &ldquo;Divinus Interpres&rdquo; &mdash; with a laptop open to the translation of Plotinus&apos;s Enneads. Embassy of the Free Mind, Amsterdam. Ritualistically good luck.
+          </figcaption>
+        </figure>
+
         <p className="text-secondary leading-relaxed mb-10 font-body">
           That fact stopped me cold. Ficino is not an obscure figure. He is the translator who sparked the Renaissance &mdash; the man who, under the patronage of Cosimo de&apos; Medici, translated the complete works of Plato into Latin for the first time, along with the Corpus Hermeticum, Plotinus, Porphyry, Iamblichus, and Proclus. Before Ficino, Plato&apos;s works had been lost to the West for nearly a thousand years. His translations made them available again, and the intellectual consequences are still unfolding. Da Vinci, Raphael, Michelangelo &mdash; the art and thought of the Renaissance is incomprehensible without Ficino&apos;s work.
         </p>
@@ -232,7 +245,7 @@ export default function OriginStoryPage() {
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="/downloads/ficino-liber-de-voluptate.pdf"
+              href="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-liber-de-voluptate.pdf"
               className="inline-flex items-center gap-2 bg-stone-800 text-white px-5 py-2.5 rounded-lg hover:bg-stone-700 transition-colors text-sm font-medium"
             >
               Download the translation (PDF)

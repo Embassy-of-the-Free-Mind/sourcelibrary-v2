@@ -32,6 +32,8 @@ const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Origin',
     tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg',
+    imageAlt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind',
   },
   {
     slug: 'hieroglyph-ocr',
