@@ -19,12 +19,12 @@ export async function getMembership(userId: string): Promise<MembershipInfo> {
 
   const m = user?.membership;
   if (!m || !m.active) {
-    return { active: false, plan: null, expiresAt: null, stripeCustomerId: null };
+    return { active: false, plan: null, expiresAt: null, stripeCustomerId: m?.stripeCustomerId || null };
   }
 
-  // Check expiry
+  // Check expiry — but with subscriptions, Stripe handles this via webhooks.
+  // This is a safety net in case the cancellation webhook was missed.
   if (m.expiresAt && new Date(m.expiresAt) < new Date()) {
-    // Expired — mark inactive
     await db.collection('users').updateOne(
       { _id: userId as any },
       { $set: { 'membership.active': false } }
@@ -41,30 +41,48 @@ export async function getMembership(userId: string): Promise<MembershipInfo> {
 }
 
 /**
- * Activate membership for a user after successful payment.
+ * Activate or renew membership after successful payment.
+ * Called from Stripe webhook on invoice.paid.
  */
 export async function activateMembership(
   userId: string,
   stripeCustomerId: string,
-  stripeSubscriptionId?: string,
+  stripeSubscriptionId: string,
+  periodEnd: Date,
 ): Promise<void> {
   const db = await getDb();
-  const expiresAt = new Date();
-  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
 
   await db.collection('users').updateOne(
     { _id: userId as any },
     {
       $set: {
-        membership: {
-          active: true,
-          plan: 'ficino',
-          activatedAt: new Date(),
-          expiresAt,
-          stripeCustomerId,
-          stripeSubscriptionId: stripeSubscriptionId || null,
-        },
+        'membership.active': true,
+        'membership.plan': 'ficino',
+        'membership.expiresAt': periodEnd,
+        'membership.stripeCustomerId': stripeCustomerId,
+        'membership.stripeSubscriptionId': stripeSubscriptionId,
       },
-    }
+      $setOnInsert: {
+        'membership.activatedAt': new Date(),
+      },
+    },
+  );
+}
+
+/**
+ * Deactivate membership after subscription cancellation.
+ * Called from Stripe webhook on customer.subscription.deleted.
+ */
+export async function deactivateMembership(userId: string): Promise<void> {
+  const db = await getDb();
+
+  await db.collection('users').updateOne(
+    { _id: userId as any },
+    {
+      $set: {
+        'membership.active': false,
+        'membership.cancelledAt': new Date(),
+      },
+    },
   );
 }

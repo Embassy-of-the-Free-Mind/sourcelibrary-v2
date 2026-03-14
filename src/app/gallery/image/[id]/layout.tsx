@@ -152,11 +152,15 @@ export async function generateMetadata({
     alternates: {
       canonical: `/gallery/image/${urlSafeId}`,
     },
+    other: {
+      'pinterest-rich-pin': 'true',
+    },
     openGraph: {
       title: ogTitle,
       description,
       type: 'article',
       siteName: 'Source Library',
+      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

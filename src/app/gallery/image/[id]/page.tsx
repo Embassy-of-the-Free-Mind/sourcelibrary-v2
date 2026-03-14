@@ -421,10 +421,16 @@ export default function ImageDetailPage({
       window.location.href = '/ficino-society';
       return;
     }
-    // Use the highest resolution available
-    const url = data.extractedUrl || data.highResUrl || data.imageUrl;
+    // Prefer pre-extracted image (Vercel Blob, no CORS issues).
+    // Fall back to proxying external images through our /api/image route to avoid CORS blocks.
+    const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
+    const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
+    const fetchUrl = isExternal
+      ? `/api/image?url=${encodeURIComponent(sourceUrl)}&w=2000&q=90`
+      : sourceUrl;
+
     try {
-      const res = await fetch(url);
+      const res = await fetch(fetchUrl);
       const blob = await res.blob();
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -434,8 +440,8 @@ export default function ImageDetailPage({
       URL.revokeObjectURL(a.href);
       sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
     } catch {
-      // Fallback: open in new tab
-      window.open(url, '_blank');
+      // Last resort: open in new tab
+      window.open(sourceUrl, '_blank');
     }
   };
 
@@ -447,6 +453,32 @@ export default function ImageDetailPage({
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
       '_blank'
     );
+  };
+
+  const shareToPinterest = () => {
+    if (!data) return;
+    const imageUrl = data.extractedUrl || data.imageUrl;
+    const pageUrl = window.location.href;
+    const desc = `${data.description} — From "${data.book.title}"${data.book.year ? ` (${data.book.year})` : ''} via Source Library`;
+    window.open(
+      `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(pageUrl)}&media=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(desc)}`,
+      '_blank',
+      'width=750,height=550'
+    );
+  };
+
+  const shareNative = async () => {
+    if (!data || !navigator.share) return;
+    const url = window.location.href;
+    try {
+      await navigator.share({
+        title: `${data.description} — Source Library`,
+        text: `From "${data.book.title}"${data.book.author ? ` by ${data.book.author}` : ''}`,
+        url,
+      });
+    } catch {
+      // User cancelled or not supported
+    }
   };
 
   // --- RENDER ---
@@ -514,12 +546,28 @@ export default function ImageDetailPage({
                 {copied ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
               </button>
               <button
+                onClick={shareToPinterest}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                title="Pin on Pinterest"
+              >
+                <svg className="w-4 h-4 text-stone-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+              </button>
+              <button
                 onClick={shareToTwitter}
                 className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
                 title="Share on X"
               >
                 <Share2 className="w-4 h-4 text-stone-400" />
               </button>
+              {typeof navigator !== 'undefined' && 'share' in navigator && (
+                <button
+                  onClick={shareNative}
+                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                  title="Share..."
+                >
+                  <ExternalLink className="w-4 h-4 text-stone-400" />
+                </button>
+              )}
               <button
                 onClick={downloadImage}
                 className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
@@ -772,7 +820,7 @@ export default function ImageDetailPage({
                 <div className="bg-stone-800 rounded-lg p-5">
                   <h3 className="text-base font-medium text-stone-300 mb-3">Cite this image</h3>
                   <p className="text-stone-400 text-sm font-mono leading-relaxed bg-stone-900 rounded p-3">{data.citation}{'\n'}URL: {typeof window !== 'undefined' ? window.location.href : ''}</p>
-                  <div className="mt-4 flex items-center gap-3">
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
                     <button onClick={copyCitation} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
                       <Copy className="w-4 h-4" />Copy citation
                     </button>
@@ -782,6 +830,10 @@ export default function ImageDetailPage({
                     </button>
                     <button onClick={shareToTwitter} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
                       <Share2 className="w-4 h-4" />Share on X
+                    </button>
+                    <button onClick={shareToPinterest} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+                      Pin it
                     </button>
                     <button
                       onClick={downloadImage}
