@@ -109,7 +109,7 @@ export default function BookIndex({ entries, bookSlug, totalPages }: BookIndexPr
                   <span key={p}>
                     {i > 0 && ', '}
                     <Link
-                      href={`/book/${bookSlug}/page/${p}`}
+                      href={`/book/${bookSlug}/page-number/${p}`}
                       className="text-accent-rust hover:text-accent-gold-dark hover:underline"
                     >
                       p.&thinsp;{p}
