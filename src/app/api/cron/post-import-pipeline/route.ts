@@ -1532,7 +1532,7 @@ export async function GET(request: NextRequest) {
               0, 1 // 0 = nearly done (sorts first), 1 = rest
             ]}
           }},
-          { $sort: { _isEfm: 1, _nearlyDone: 1, hidden: 1, pages_count: 1 } },
+          { $sort: { _isEfm: 1, _nearlyDone: 1, processing_priority: -1, hidden: 1, pages_count: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 } },
           { $limit: limits.translate_submit },
         ]).toArray() : [];

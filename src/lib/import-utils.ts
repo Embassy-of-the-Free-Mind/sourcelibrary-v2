@@ -5,6 +5,7 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { computeProcessingPriority } from '@/lib/processing-priority';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -309,6 +310,11 @@ export async function importBookFromIIIF(
     created_at: new Date(),
     updated_at: new Date(),
   };
+
+  // Compute processing priority at import time (deterministic, no AI calls)
+  const priority = computeProcessingPriority(bookDoc);
+  (bookDoc as Record<string, unknown>).processing_priority = priority.score;
+  (bookDoc as Record<string, unknown>).processing_priority_breakdown = priority.breakdown;
 
   await db.collection('books').insertOne(bookDoc);
 
