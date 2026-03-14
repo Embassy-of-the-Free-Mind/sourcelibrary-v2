@@ -762,6 +762,20 @@ async function BookInfo({ id }: { id: string }) {
                 </div>
               )}
 
+              {/* Source attribution — always visible */}
+              {(book.image_source?.provider_name || book.image_source?.contributing_library) && (
+                <p className="text-xs text-stone-500 mt-3">
+                  Images:{' '}
+                  {book.image_source.source_url ? (
+                    <a href={book.image_source.source_url} target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">
+                      {book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}
+                    </a>
+                  ) : (
+                    <span>{book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}</span>
+                  )}
+                </p>
+              )}
+
               {/* Actions */}
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
