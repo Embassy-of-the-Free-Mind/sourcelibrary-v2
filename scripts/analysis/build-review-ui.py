@@ -39,7 +39,7 @@ MACRO_DOMAINS = {
         "color": "#27ae60",
     },
     "Chinese Traditions": {
-        "clusters": [6, 9, 13, 2, 3, 10],
+        "clusters": [6, 9, 13, 2, 3, 10],  # 13=Hai Guo Tu Zhi under Chinese Military
         "color": "#d35400",
     },
     "South & Central Asian": {
@@ -47,7 +47,7 @@ MACRO_DOMAINS = {
         "color": "#16a085",
     },
     "Other": {
-        "clusters": [29, 33, 23, 42, 24, 14, 1, 7],
+        "clusters": [29, 33, 23, 42, 24, 1, 7],  # removed 14 (Ming Coastal → too small)
         "color": "#7f8c8d",
     },
 }
@@ -84,8 +84,8 @@ CURATED_NAMES = {
     0:  "Music Theory & Harmony",
     20: "Medical Philosophy",
     6:  "Chinese Cosmology",
-    9:  "Chinese Military",
-    13: "Hai Guo Tu Zhi Studies",
+    9:  "Chinese Military (Wubei Zhi)",
+    13: "Chinese Military (Hai Guo Tu Zhi)",
     14: "Ming Dynasty Coastal Defense",
     2:  "Chinese Materia Medica",
     3:  "Chinese Medical Texts",
