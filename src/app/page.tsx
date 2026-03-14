@@ -447,7 +447,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              {collections.slice(0, 7).map((col, i) => (
+              {collections.slice(0, 11).map((col, i) => (
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
@@ -477,14 +477,14 @@ export default async function HomePage() {
                   </div>
                 </Link>
               ))}
-              {collections.length > 7 && (
+              {collections.length > 11 && (
                 <Link
                   href="/collections"
                   className="group relative rounded-xl overflow-hidden aspect-[4/3] bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
                 >
                   <div className="text-center px-4">
                     <p className="font-serif text-lg sm:text-xl text-white/90 group-hover:text-accent-gold transition-colors">
-                      See {collections.length - 7} more
+                      See {collections.length - 11} more
                     </p>
                     <p className="text-white/40 text-xs mt-1">collections</p>
                   </div>
