@@ -107,7 +107,7 @@ async function setPipelineStatus(
 function isExLibrisPage(ocrData?: string): boolean {
   if (!ocrData) return false;
   const start = ocrData.substring(0, 1000);
-  return /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
+  return /ex[\s\-.]?libris|bookplate|library\s+stamp|philosophia\s+hermetica|bibliotheca\s+philosophica|google\s+logo|digitized\s+by\s+google|bookplate.*pasted/i.test(start);
 }
 
 /**
