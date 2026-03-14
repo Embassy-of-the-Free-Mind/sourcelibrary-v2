@@ -277,39 +277,86 @@ async function upgradeThumbnailFromGallery(
   if (!book?.thumbnail) return;
   if (book.thumbnail_source === 'manual') return;
 
-  // Get top gallery images for this book, sorted by quality
+  // Check if current thumbnail is already on a frontispiece/title-page — don't downgrade
+  const currentPage = await db.collection('pages').findOne({
+    book_id: bookId,
+    $or: [
+      { cropped_photo: book.thumbnail },
+      { archived_photo: book.thumbnail },
+      { photo: book.thumbnail },
+      { photo_original: book.thumbnail },
+    ]
+  }, { projection: { page_type: 1, page_number: 1, 'ocr.data': 1 } });
+
+  const currentIsGood = currentPage?.page_type === 'frontispiece' || currentPage?.page_type === 'title-page';
+
+  // Candidates: gallery images + title pages (title pages may not have gallery entries)
   const galleryImages = await db.collection('gallery_images').find(
     { book_id: bookId, gallery_quality: { $gte: 0.4 } },
     {
       projection: {
         page_id: 1, page_number: 1, gallery_quality: 1, type: 1,
         museum_description: 1, description: 1, metadata: 1,
-        extracted_url: 1, image_url: 1,
       },
       sort: { gallery_quality: -1, page_number: 1 },
       limit: 20,
     }
   ).toArray();
 
-  if (galleryImages.length === 0) return; // no gallery data, keep current
+  // Also consider title pages — they're often great covers even without gallery entries
+  const titlePage = await db.collection('pages').findOne(
+    { book_id: bookId, page_type: 'title-page', page_number: { $lte: 30 } },
+    { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } }
+  );
 
-  // Score each candidate for cover suitability
-  const scored = galleryImages
-    .filter(img => !isExLibrisGalleryImage(img))
-    .map(img => ({
-      img,
+  // Build unified candidate list
+  type CoverCandidate = { page_id: string; coverScore: number };
+  const candidates: CoverCandidate[] = [];
+
+  // Score gallery images
+  for (const img of galleryImages) {
+    if (isExLibrisGalleryImage(img)) continue;
+    candidates.push({
+      page_id: img.page_id,
       coverScore: computeCoverScore(img),
-    }))
-    .sort((a, b) => b.coverScore - a.coverScore);
+    });
+  }
 
-  if (scored.length === 0) return;
+  // Add title page if not already represented and not ex libris
+  if (titlePage && !isExLibrisPage(titlePage.ocr?.data)) {
+    const alreadyIncluded = candidates.some(c => c.page_id === titlePage.id);
+    if (!alreadyIncluded) {
+      // Title pages get a strong base score even without gallery data
+      const pageNum = titlePage.page_number || 1;
+      let titleScore = 0.75; // strong base — title pages are reliably good covers
+      if (pageNum <= 10) titleScore += 0.08;
+      else if (pageNum <= 30) titleScore += 0.04;
+      candidates.push({ page_id: titlePage.id, coverScore: titleScore });
+    }
+  }
 
-  const best = scored[0];
-  if (best.coverScore < 0.5) return; // nothing compelling enough
+  if (candidates.length === 0) return;
+
+  candidates.sort((a, b) => b.coverScore - a.coverScore);
+  const best = candidates[0];
+
+  // If current cover is already a frontispiece/title-page, require a high score to replace
+  const threshold = currentIsGood ? 0.75 : 0.5;
+  if (best.coverScore < threshold) return;
+
+  // Don't replace a good early-page cover with a deep-page gallery pick
+  if (currentIsGood && currentPage && best.page_id !== currentPage.id) {
+    const bestPageDoc = await db.collection('pages').findOne(
+      { id: best.page_id },
+      { projection: { page_number: 1 } }
+    );
+    // If the candidate is much deeper in the book, skip — frontispieces near the front are fine
+    if (bestPageDoc && currentPage.page_number && bestPageDoc.page_number > currentPage.page_number * 3) return;
+  }
 
   // Get the full page image URL (not the cropped illustration)
   const page = await db.collection('pages').findOne(
-    { id: best.img.page_id },
+    { id: best.page_id },
     { projection: { cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1 } }
   );
   if (!page) return;
@@ -325,19 +372,24 @@ async function upgradeThumbnailFromGallery(
 /**
  * Score a gallery image for cover suitability (0-1 scale).
  * Factors: gallery quality, image type, page position, description richness.
+ *
+ * Position matters a lot — a cover should come from the front of the book.
+ * A beautiful illustration on page 200 is worse than a decent frontispiece on page 3.
  */
 function computeCoverScore(img: Record<string, unknown>): number {
   const quality = (img.gallery_quality as number) || 0;
-  let score = quality;
 
-  // Type bonuses — frontispieces and emblems make the best covers
+  // Quality contributes ~40% of the score
+  let score = quality * 0.4;
+
+  // Type bonuses (~20% weight) — frontispieces and emblems make the best covers
   const type = (img.type as string) || '';
   const typeBonus: Record<string, number> = {
-    frontispiece: 0.15,
-    emblem: 0.12,
-    portrait: 0.10,
-    engraving: 0.08,
-    woodcut: 0.08,
+    frontispiece: 0.20,
+    emblem: 0.15,
+    portrait: 0.12,
+    engraving: 0.10,
+    woodcut: 0.10,
     map: 0.05,
     diagram: -0.05,
     decorative: -0.10,
@@ -345,11 +397,14 @@ function computeCoverScore(img: Record<string, unknown>): number {
   };
   score += typeBonus[type] || 0;
 
-  // Early-page bonus — covers from the front of the book feel more natural
+  // Position is heavily weighted (~30%) — covers belong at the front
   const pageNum = (img.page_number as number) || 999;
-  if (pageNum <= 10) score += 0.08;
-  else if (pageNum <= 30) score += 0.04;
-  else if (pageNum > 100) score -= 0.05;
+  if (pageNum <= 5) score += 0.30;
+  else if (pageNum <= 10) score += 0.25;
+  else if (pageNum <= 20) score += 0.20;
+  else if (pageNum <= 40) score += 0.12;
+  else if (pageNum <= 80) score += 0.05;
+  // pages 80+ get no position bonus — deep illustrations rarely make good covers
 
   // Description richness — images with figures/subjects are more intriguing
   const metadata = img.metadata as Record<string, string[]> | undefined;
@@ -373,9 +428,13 @@ function isExLibrisGalleryImage(img: Record<string, unknown>): boolean {
   if (subjects.some(s => /ex[\s\-.]?libris|bookplate|ownership/i.test(s))) {
     return true;
   }
+  // EFM / Bibliotheca Philosophica Hermetica bookplate — pelican emblem with "Philosophia Hermetica" text
+  if (/philosophia\s+hermetica/i.test(desc)) {
+    return true;
+  }
   // Standalone pelican/bird emblems with no other content are often EFM bookplates
   const type = (img.type as string) || '';
-  if (type === 'emblem' && /pelican|pelikan/i.test(desc) && !/allegori|alchemi|hermet/i.test(desc)) {
+  if (type === 'emblem' && /pelican|pelikan/i.test(desc) && !/allegori|alchemi/i.test(desc)) {
     return true;
   }
   return false;
