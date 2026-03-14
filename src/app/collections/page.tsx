@@ -34,10 +34,21 @@ interface CollectionDoc {
   languages: { lang: string; count: number }[];
 }
 
+const PINNED_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance-philosophy', 'sacred-texts'];
+
 async function fetchCollections(): Promise<CollectionDoc[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({}).sort({ order: 1 }).toArray();
-  return docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+  const docs = await db.collection('collections').find({}).toArray();
+  const all = docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+
+  const pinned = PINNED_SLUGS.map(s => all.find(c => c.slug === s)).filter(Boolean) as CollectionDoc[];
+  const rest = all.filter(c => !PINNED_SLUGS.includes(c.slug));
+  // Fisher-Yates shuffle
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rest[i], rest[j]] = [rest[j], rest[i]];
+  }
+  return [...pinned, ...rest];
 }
 
 export default async function CollectionsPage() {
