@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 /**
  * Send a welcome email to a new Ficino Society member.
- * Uses the same Resend setup as auth emails.
+ * Tone: a letter of welcome into a scholarly tradition, not a SaaS receipt.
  */
 export async function sendMembershipWelcomeEmail(email: string, name?: string): Promise<void> {
   if (!process.env.RESEND_API_KEY) return;
@@ -19,69 +19,55 @@ export async function sendMembershipWelcomeEmail(email: string, name?: string): 
       <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
         <div style="text-align: center; margin-bottom: 32px;">
           <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
-          <h1 style="font-size: 26px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">
-            Welcome to the Ficino Society
+          <h1 style="font-size: 26px; font-weight: 500; margin: 0; letter-spacing: -0.01em;">
+            The Ficino Society
           </h1>
         </div>
 
-        <div style="line-height: 1.7; font-size: 15px; color: #1a1612;">
+        <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
           <p>${greeting}</p>
           <p>
-            Thank you for joining the Ficino Society. Your membership directly supports
-            the digitization and translation of rare historical texts &mdash; work that
-            makes these ideas accessible to scholars, seekers, and anyone curious about
-            the intellectual traditions that shaped the modern world.
-          </p>
-          <p>As a member, you now have access to:</p>
-        </div>
-
-        <table width="100%" cellpadding="0" cellspacing="0" style="margin: 16px 0 24px;">
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #e8e4dc;">
-              <a href="https://sourcelibrary.org/gallery" style="color: #9e4a3a; text-decoration: none; font-size: 15px; font-weight: 500;">High-resolution gallery downloads</a>
-              <div style="color: #6b6560; font-size: 13px; margin-top: 2px;">Full-size woodcuts, emblems, engravings, and diagrams</div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #e8e4dc;">
-              <span style="color: #1a1612; font-size: 15px; font-weight: 500;">Complete translation downloads</span>
-              <div style="color: #6b6560; font-size: 13px; margin-top: 2px;">Every translated book as EPUB, PDF, or plain text</div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #e8e4dc;">
-              <span style="color: #1a1612; font-size: 15px; font-weight: 500;">API access</span>
-              <div style="color: #6b6560; font-size: 13px; margin-top: 2px;">Programmatic access for research tools and applications</div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 10px 0;">
-              <span style="color: #1a1612; font-size: 15px; font-weight: 500;">Your name in the colophon</span>
-              <div style="color: #6b6560; font-size: 13px; margin-top: 2px;">Credited in every scholarly edition we publish</div>
-            </td>
-          </tr>
-        </table>
-
-        <div style="text-align: center; margin: 32px 0;">
-          <a href="https://sourcelibrary.org/gallery" style="display: inline-block; padding: 12px 32px; background: #9e4a3a; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 15px; font-family: -apple-system, sans-serif;">
-            Browse the gallery
-          </a>
-        </div>
-
-        <div style="line-height: 1.7; font-size: 15px; color: #6b6560;">
-          <p>
-            Your membership renews annually. You can manage it anytime from
-            your <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account page</a>.
+            Welcome. You have joined a small group of people who believe that these texts
+            matter &mdash; that the ideas of Ficino, Paracelsus, Agrippa, and thousands of
+            other thinkers deserve to be read, not just preserved.
           </p>
           <p>
-            If you have questions or ideas, just reply to this email. We read everything.
+            Your support makes it possible for us to keep translating. Every book
+            in the library is free to read because of people like you.
+          </p>
+          <p>
+            A few things that are now yours:
           </p>
         </div>
 
-        <div style="border-top: 1px solid #e8e4dc; padding-top: 24px; margin-top: 32px; text-align: center;">
-          <p style="color: #8a8480; font-size: 12px; line-height: 1.6; margin: 0;">
-            The Ficino Society &mdash; Source Library
-            <br />
+        <div style="background: #f5f0e8; border-radius: 8px; padding: 20px 24px; margin: 20px 0 28px; line-height: 1.7; font-size: 14px; color: #1a1612;">
+          You can download any book or gallery image without limit.
+          New translations will be available to you before anyone else.
+          Your name appears on the <a href="https://sourcelibrary.org/ficino-society/members" style="color: #9e4a3a; text-decoration: none;">members page</a>,
+          if you choose &mdash; you can set your display name from your
+          <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account</a>.
+        </div>
+
+        <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
+          <p>
+            We will write to you from time to time &mdash; when we finish
+            a translation we think you should know about, or when something
+            interesting turns up in the archive. Not often. Only when it matters.
+          </p>
+          <p>
+            If you ever want to talk about the texts, or have ideas for what
+            we should translate next, reply to this email. We read everything.
+          </p>
+        </div>
+
+        <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e8e4dc; line-height: 1.7; font-size: 14px; color: #8a8480;">
+          <p style="margin: 0;">
+            With gratitude,
+          </p>
+          <p style="margin: 4px 0 0; color: #1a1612;">
+            The Source Library team
+          </p>
+          <p style="margin: 16px 0 0; font-size: 12px;">
             <a href="https://sourcelibrary.org" style="color: #8a8480;">sourcelibrary.org</a>
           </p>
         </div>

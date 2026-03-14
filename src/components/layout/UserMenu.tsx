@@ -64,10 +64,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
           <img
             src={session.user.image}
             alt={session.user.name || 'User'}
-            className="w-8 h-8 rounded-full border-2 border-white/30"
+            className="w-8 h-8 rounded-full border-2"
+            style={{ borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)' }}
           />
         ) : (
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-medium border-2 border-white/30">
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium border-2"
+            style={{
+              background: isMember ? 'rgba(201,168,108,0.2)' : 'rgba(255,255,255,0.2)',
+              borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)',
+            }}
+          >
             {initials}
           </div>
         )}
