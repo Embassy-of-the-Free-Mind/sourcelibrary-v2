@@ -1,17 +1,23 @@
 /**
- * Steganographia — Digital Printer's Marks
+ * Steganographia — Trithemian Provenance Marks
  *
- * Inspired by Trithemius's Steganographia (1499) and the early modern
- * practice of printers embedding deliberate marks in their editions
- * to identify unauthorized copies.
+ * In the tradition of Johannes Trithemius's Steganographia (1499) and
+ * the Aldine Press anchor-and-dolphin device, this module embeds an
+ * invisible imprimatur — a provenance mark — into translated editions.
  *
- * Embeds a short edition identifier as invisible Unicode marks scattered
- * throughout a text. The marks are deterministically placed using a
- * secret key, so detection requires only the key and the suspect text.
+ * Just as early printers placed colophons and devices in their books
+ * to assert the origin and integrity of an edition, this system weaves
+ * a short edition identifier into the text itself using zero-width
+ * Unicode characters. The mark is a statement of provenance: "this
+ * edition was produced by Source Library."
  *
- * Method: Zero-width Unicode characters encode bits of the edition ID
- * at positions derived from HMAC(key, page_content). Each mark is placed
- * after a sentence-ending period, where whitespace variation is invisible.
+ * Marks are deterministically placed using a secret key, so verifying
+ * provenance requires only the key and the text in question.
+ *
+ * Method: Zero-width Unicode characters encode bits of the edition
+ * identifier at positions derived from HMAC(key, page_content). Each
+ * mark is placed after sentence-ending punctuation, where whitespace
+ * variation is invisible to the reader.
  */
 
 import crypto from 'crypto';
@@ -21,11 +27,11 @@ import crypto from 'crypto';
 const ZWC = {
   ZERO: '\u200B',   // Zero-width space  → bit 0
   ONE: '\u200C',    // Zero-width non-joiner → bit 1
-  MARKER: '\u200D', // Zero-width joiner → marks start of a watermark char
+  MARKER: '\u200D', // Zero-width joiner → marks start of an imprimatur char
   FILLER: '\uFEFF', // Zero-width no-break space → padding/noise
 };
 
-// All zero-width chars we use (for stripping/detection)
+// All zero-width chars we use (for cleaning/reading)
 const ALL_ZWC = new Set(Object.values(ZWC));
 
 /**
@@ -127,18 +133,18 @@ function selectPositions(
 }
 
 /**
- * Embed an edition ID into text using invisible zero-width characters.
+ * Apply an imprimatur — a provenance mark — to the given text.
  *
- * The ID is split into fragments and distributed across multiple
- * insertion points, so even partial text excerpts may contain
- * recoverable fragments.
+ * The edition identifier is encoded as invisible zero-width characters
+ * and distributed across multiple insertion points for redundancy,
+ * so even a partial excerpt may carry a recoverable provenance mark.
  *
- * @param text - The translation text to watermark
- * @param editionId - Short alphanumeric identifier (max 12 chars)
+ * @param text - The translation text to mark
+ * @param editionId - Edition identifier (max 12 alphanumeric chars), akin to a printer's colophon
  * @param secretKey - Secret key for deterministic placement
- * @returns Watermarked text (visually identical to input)
+ * @returns Marked text (visually identical to input)
  */
-export function watermark(
+export function imprimatur(
   text: string,
   editionId: string,
   secretKey: string
@@ -147,8 +153,8 @@ export function watermark(
     throw new Error('Edition ID must be 12 characters or fewer');
   }
 
-  // Strip any existing watermarks first
-  const cleanText = strip(text);
+  // Remove any existing provenance marks first
+  const cleanText = clean(text);
 
   const encoded = encodeId(editionId);
   const points = findInsertionPoints(cleanText);
@@ -173,13 +179,12 @@ export function watermark(
 }
 
 /**
- * Detect and recover an edition ID from potentially watermarked text.
+ * Read the provenance mark from text, recovering the edition identifier.
  *
- * @param text - Text that may contain watermark marks
- * @param secretKey - The same secret key used for embedding
- * @returns The edition ID if found, null otherwise
+ * @param text - Text that may carry a provenance mark
+ * @returns The edition identifier if found, null otherwise
  */
-export function detect(text: string): string | null {
+export function readProvenance(text: string): string | null {
   // Extract all ZWC characters in order
   const zwcChars = [...text].filter(c => ALL_ZWC.has(c));
   if (zwcChars.length === 0) return null;
@@ -206,22 +211,22 @@ export function detect(text: string): string | null {
 }
 
 /**
- * Strip all watermark characters from text, returning clean content.
+ * Remove all provenance mark characters from text, returning clean content.
  */
-export function strip(text: string): string {
+export function clean(text: string): string {
   return [...text].filter(c => !ALL_ZWC.has(c)).join('');
 }
 
 /**
- * Check if text contains any watermark characters.
+ * Check if text carries a provenance mark.
  */
-export function hasWatermark(text: string): boolean {
+export function hasProvenance(text: string): boolean {
   return [...text].some(c => ALL_ZWC.has(c));
 }
 
 /**
- * Generate a short, unique edition ID.
+ * Generate a short, unique edition identifier for use as an imprimatur.
  */
-export function generateEditionId(): string {
+export function generateImprimaturId(): string {
   return crypto.randomBytes(4).toString('hex'); // 8 hex chars
 }
