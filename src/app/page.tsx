@@ -468,12 +468,12 @@ export default async function HomePage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <p className="text-white/50 text-xs mb-1 hidden sm:block">
+                      {col.book_count} books
+                    </p>
                     <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                       {col.name}
                     </h3>
-                    <p className="text-white/60 text-xs mt-1 hidden sm:block">
-                      {col.book_count} books
-                    </p>
                   </div>
                 </Link>
               ))}
