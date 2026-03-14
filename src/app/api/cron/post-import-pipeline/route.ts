@@ -1166,11 +1166,17 @@ export async function GET(request: NextRequest) {
       }
 
       const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < limits.ocr_lambda_max) ? await db.collection('books')
-        .find({ 'pipeline_auto.status': 'archive_complete' })
-        .sort({ processing_priority: -1, hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(ocrLimit)
-        .toArray() : [];
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          { $addFields: {
+            _lang_priority: { $cond: [{ $eq: ['$language', 'Latin'] }, 2,
+              { $cond: [{ $in: ['$language', ['Greek', 'Arabic', 'Hebrew', 'Sanskrit']] }, 1, 0] }] },
+            _year_sort: { $ifNull: ['$year_published', 0] },
+          } },
+          { $sort: { processing_priority: -1, _lang_priority: -1, _year_sort: -1, hidden: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 } },
+          { $limit: ocrLimit },
+        ]).toArray() : [];
 
       let ocrQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let lambdaFallbackCount = 0;
