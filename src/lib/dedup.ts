@@ -50,7 +50,7 @@ export function normalizeTitle(title: string): string {
  * Normalize an author name for fuzzy matching.
  */
 export function normalizeAuthor(author: string): string {
-  return author
+  const cleaned = author
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -60,10 +60,16 @@ export function normalizeAuthor(author: string): string {
     .replace(/\s*\([\d\s\-–,?.]+\)\s*/g, '')
     // Strip trailing comma + dates: "Author, 1500-1560"
     .replace(/,\s*[\d\s\-–?.]+$/, '')
+    // Strip bracketed annotations: "[Meyer, Lodewijk]"
+    .replace(/[\[\]]/g, '')
+    // Strip "born YYYY" / "died YYYY" suffixes
+    .replace(/\b(born|died|fl\.?|circa|ca?\.?)\s*\d{3,4}\b/g, '')
     // Strip punctuation
     .replace(/[^\w\s]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
+  // Sort words alphabetically to handle "Last, First" vs "First Last"
+  return cleaned.split(' ').filter(w => w.length > 0).sort().join(' ');
 }
 
 /**
