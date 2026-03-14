@@ -174,11 +174,8 @@ export const POST = withAuth(async (request, session, context) => {
       front_matter,
     };
 
-    // Mark previous published edition as superseded
-    const updatedEditions = existingEditions.map(e =>
-      e.status === 'published' ? { ...e, status: 'superseded' as const } : e
-    );
-    updatedEditions.push(edition);
+    // Add draft edition alongside existing ones (don't supersede until DOI minting)
+    const updatedEditions = [...existingEditions, edition];
 
     // Update the book
     await db.collection('books').updateOne(
@@ -186,14 +183,13 @@ export const POST = withAuth(async (request, session, context) => {
       {
         $set: {
           editions: updatedEditions,
-          current_edition_id: edition.id,
           updated_at: new Date(),
         }
       }
     );
 
     logAuditEvent({
-      action: 'edition_published',
+      action: 'edition_created',
       book_id: bookId,
       book_title: book.title,
       pages_affected: translatedPages.length,
@@ -245,7 +241,20 @@ export const PATCH = withAuth(async (request, session, context) => {
     }
 
     // Update the edition
-    if (doi) editions[editionIndex].doi = doi;
+    if (doi) {
+      editions[editionIndex].doi = doi;
+      // Adding a DOI promotes draft → published
+      if (editions[editionIndex].status === 'draft') {
+        // Supersede any currently published edition
+        for (let i = 0; i < editions.length; i++) {
+          if (editions[i].status === 'published') {
+            editions[i] = { ...editions[i], status: 'superseded' };
+          }
+        }
+        editions[editionIndex].status = 'published';
+        editions[editionIndex].published_at = new Date();
+      }
+    }
     if (doi_url) editions[editionIndex].doi_url = doi_url;
     if (license) editions[editionIndex].license = license;
 
@@ -254,8 +263,7 @@ export const PATCH = withAuth(async (request, session, context) => {
       {
         $set: {
           editions,
-          // Also update book-level DOI if this is current edition
-          ...(book.current_edition_id === edition_id && doi ? { doi } : {}),
+          ...(doi ? { doi, current_edition_id: edition_id } : {}),
           updated_at: new Date(),
         }
       }

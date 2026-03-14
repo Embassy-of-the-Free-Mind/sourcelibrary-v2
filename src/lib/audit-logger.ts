@@ -29,6 +29,7 @@ export type AuditAction =
   | 'book_metadata_updated'
   | 'book_metadata_verified'
   | 'pipeline_status_changed'
+  | 'edition_created'
   | 'edition_published'
   | 'doi_minted'
   | 'page_edited'
