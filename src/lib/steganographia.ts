@@ -230,3 +230,11 @@ export function hasProvenance(text: string): boolean {
 export function generateImprimaturId(): string {
   return crypto.randomBytes(4).toString('hex'); // 8 hex chars
 }
+
+/**
+ * SHA-256 content hash for provenance verification.
+ * Returns the full 64-character hex digest (not truncated).
+ */
+export function contentHash(text: string): string {
+  return crypto.createHash('sha256').update(text).digest('hex');
+}

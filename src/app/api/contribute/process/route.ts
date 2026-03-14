@@ -7,6 +7,7 @@ import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
 import { createRevision } from '@/lib/page-revisions';
+import { contentHash } from '@/lib/steganographia';
 import { getSession } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
@@ -197,6 +198,7 @@ export async function POST(request: NextRequest) {
                 {
                   $set: {
                     'ocr.data': result.text,
+                    'ocr.content_hash': contentHash(result.text),
                     'ocr.model': DEFAULT_MODEL,
                     'ocr.prompt_version': PROMPT_VERSION,
                     'ocr.processed_at': new Date(),
@@ -236,6 +238,7 @@ export async function POST(request: NextRequest) {
                   $set: {
                     translation: {
                       data: result.text,
+                      content_hash: contentHash(result.text),
                       model: DEFAULT_MODEL,
                       prompt_version: PROMPT_VERSION,
                       processed_at: new Date(),

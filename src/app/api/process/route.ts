@@ -7,6 +7,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { contentHash } from '@/lib/steganographia';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 
@@ -338,6 +339,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       if (results.ocr && promptRefs.ocr) {
         updateData['ocr'] = {
           data: results.ocr,
+          content_hash: contentHash(results.ocr),
           language: language || 'Latin',
           model,
           prompt: promptRefs.ocr.reference,
@@ -363,6 +365,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       if (results.translation && promptRefs.translation) {
         updateData['translation'] = {
           data: results.translation,
+          content_hash: contentHash(results.translation),
           language: targetLanguage,
           model,
           prompt: promptRefs.translation.reference,

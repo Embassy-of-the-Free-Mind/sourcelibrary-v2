@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { contentHash } from '@/lib/steganographia';
 
 export const preferredRegion = 'fra1';
 
@@ -99,6 +100,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     // Update OCR if provided - mark as manual edit
     if (body.ocr) {
       updateData['ocr.data'] = body.ocr.data;
+      updateData['ocr.content_hash'] = contentHash(body.ocr.data);
       updateData['ocr.language'] = body.ocr.language;
       updateData['ocr.model'] = body.ocr.model || 'manual';
       updateData['ocr.updated_at'] = now;
@@ -111,6 +113,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     // Update translation if provided - mark as manual edit
     if (body.translation) {
       updateData['translation.data'] = body.translation.data;
+      updateData['translation.content_hash'] = contentHash(body.translation.data);
       updateData['translation.language'] = body.translation.language;
       updateData['translation.model'] = body.translation.model || 'manual';
       updateData['translation.updated_at'] = now;

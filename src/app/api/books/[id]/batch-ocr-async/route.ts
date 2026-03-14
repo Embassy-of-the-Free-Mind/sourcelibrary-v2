@@ -7,6 +7,7 @@ import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { contentHash } from '@/lib/steganographia';
 import { nanoid } from 'nanoid';
 
 export const maxDuration = 300;
@@ -670,6 +671,7 @@ export const GET = withAuth(async (request, session, context) => {
               {
                 $set: {
                   'ocr.data': text,
+                  'ocr.content_hash': contentHash(text),
                   'ocr.updated_at': now,
                   'ocr.model': jobDoc.model,
                   'ocr.language': jobDoc.language,

@@ -79,6 +79,7 @@ export interface OcrData extends ProcessingMetadata {
   language: string;
   model: string;
   data: string;
+  content_hash?: string;      // SHA-256 of data field for provenance verification
   image_urls?: string[];
   updated_at?: Date;
   prompt_name?: string;
@@ -94,6 +95,7 @@ export interface TranslationData extends ProcessingMetadata {
   language: string;
   model: string;
   data: string;
+  content_hash?: string;      // SHA-256 of data field for provenance verification
   updated_at?: Date;
   prompt_name?: string;
   prompt_version?: string;

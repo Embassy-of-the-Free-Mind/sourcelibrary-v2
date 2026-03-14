@@ -5,6 +5,7 @@ import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { createRevision } from '@/lib/page-revisions';
+import { contentHash } from '@/lib/steganographia';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
@@ -183,6 +184,7 @@ export const POST = withAuth(async (request, session, context) => {
               {
                 $set: {
                   'translation.data': newTranslation,
+                  'translation.content_hash': contentHash(newTranslation),
                   'translation.stitched': true,
                   'translation.stitch_model': modelId,
                   updated_at: new Date(),
