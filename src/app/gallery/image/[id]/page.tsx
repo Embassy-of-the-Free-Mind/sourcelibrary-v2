@@ -24,7 +24,9 @@ import {
   Info,
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Download,
+  Lock
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -411,6 +413,32 @@ export default function ImageDetailPage({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const isMember = (session?.user as any)?.membership != null;
+
+  const downloadImage = async () => {
+    if (!data) return;
+    if (!isMember) {
+      window.location.href = '/ficino-society';
+      return;
+    }
+    // Use the highest resolution available
+    const url = data.extractedUrl || data.highResUrl || data.imageUrl;
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const bookSlug = data.book.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
+      a.download = `source-library-${bookSlug}-p${data.pageNumber}.jpg`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
+    } catch {
+      // Fallback: open in new tab
+      window.open(url, '_blank');
+    }
+  };
+
   const shareToTwitter = () => {
     if (!data) return;
     const text = `${data.description}\n\nFrom "${data.book.title}"${data.book.author ? ` by ${data.book.author}` : ''}${data.book.year ? ` (${data.book.year})` : ''}\n\n`;
@@ -491,6 +519,17 @@ export default function ImageDetailPage({
                 title="Share on X"
               >
                 <Share2 className="w-4 h-4 text-stone-400" />
+              </button>
+              <button
+                onClick={downloadImage}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                title={isMember ? 'Download high-res' : 'Join Ficino Society to download'}
+              >
+                {isMember ? (
+                  <Download className="w-4 h-4 text-stone-400" />
+                ) : (
+                  <Download className="w-4 h-4 text-stone-600" />
+                )}
               </button>
             </div>
           </div>
@@ -743,6 +782,17 @@ export default function ImageDetailPage({
                     </button>
                     <button onClick={shareToTwitter} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
                       <Share2 className="w-4 h-4" />Share on X
+                    </button>
+                    <button
+                      onClick={downloadImage}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${
+                        isMember
+                          ? 'bg-accent-rust hover:bg-accent-rust/80 text-white'
+                          : 'bg-stone-700 hover:bg-stone-600 text-stone-400'
+                      }`}
+                    >
+                      {isMember ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                      {isMember ? 'Download high-res' : 'Join to download'}
                     </button>
                   </div>
                 </div>

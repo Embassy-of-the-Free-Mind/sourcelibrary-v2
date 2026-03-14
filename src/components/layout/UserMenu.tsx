@@ -45,6 +45,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
   // Authenticated user: show avatar + dropdown
   const isAdmin = (session.user as any)?.role === 'admin';
+  const isMember = (session.user as any)?.membership != null;
   const initials = session.user?.name
     ?.split(' ')
     .map(n => n[0])
@@ -110,6 +111,26 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             >
               Reading History
             </Link>
+            {!isMember && (
+              <Link
+                href="/ficino-society"
+                className="block px-4 py-2 text-sm font-medium hover:opacity-70 transition-opacity"
+                style={{ color: 'var(--accent-rust)' }}
+                onClick={() => setIsOpen(false)}
+              >
+                Join the Ficino Society
+              </Link>
+            )}
+            {isMember && (
+              <Link
+                href="/ficino-society"
+                className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                style={{ color: 'var(--accent-sage)' }}
+                onClick={() => setIsOpen(false)}
+              >
+                Ficino Society Member
+              </Link>
+            )}
             {isAdmin && (
               <>
                 <Link
