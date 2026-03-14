@@ -19,7 +19,6 @@ const entries = evalData as EvalEntry[];
 
 /** Extract hieroglyph lines from OCR text */
 function extractHieroLines(text: string): string[] {
-  // Match either === HIEROGLYPHS === or === CORRECTED HIEROGLYPHS ===
   const match = text.match(/(?:HIEROGLYPHS|CORRECTED HIEROGLYPHS)\s*===?\s*\n([\s\S]*?)(?:\n\s*(?:===|###|\n\n))/);
   if (!match) return [];
   return match[1].trim().split('\n').filter(l => l.trim() && /^\d+\./.test(l.trim()));
@@ -31,9 +30,9 @@ function extractTransliteration(text: string): string | null {
   return match ? match[1].trim() : null;
 }
 
-/** Extract corrections from pass 2 */
-function extractCorrections(text: string): string | null {
-  const match = text.match(/CORRECTIONS\s*===?\s*\n([\s\S]*?)$/);
+/** Extract notes from guided pass */
+function extractNotes(text: string): string | null {
+  const match = text.match(/NOTES\s*===?\s*\n([\s\S]*?)$/);
   return match ? match[1].trim() : null;
 }
 
@@ -78,21 +77,21 @@ export default function HieroglyphEvalPage() {
           </h1>
           <p className="text-base mb-2" style={{ color: 'var(--text-muted)' }}>
             {entries.length} pages from Budge&apos;s <em>Egyptian Reading Book for Beginners</em> (1896).
-            Two-pass pipeline: Gemini 3 Flash Preview direct Unicode OCR, then self-correction pass.
+            Comparing direct Unicode OCR vs. transliteration-guided OCR (Gemini 3 Flash Preview).
           </p>
           <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
-            Left: original scan. Middle: pass 1 (direct Unicode). Right: pass 2 (corrected).
-            Transliteration at bottom serves as ground truth.
+            Left: original scan. Middle: direct OCR (image → hieroglyphs). Right: transliteration-guided
+            (OCR transliteration first, then use it to constrain hieroglyph identification).
           </p>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
         {entries.map((entry) => {
-          const pass1Lines = extractHieroLines(entry.pass1Text);
-          const pass2Lines = extractHieroLines(entry.pass2Text);
+          const directLines = extractHieroLines(entry.pass1Text);
+          const guidedLines = extractHieroLines(entry.pass2Text);
           const translit = extractTransliteration(entry.pass2Text) || extractTransliteration(entry.pass1Text);
-          const corrections = extractCorrections(entry.pass2Text);
+          const notes = extractNotes(entry.pass2Text);
 
           return (
             <article
@@ -139,7 +138,7 @@ export default function HieroglyphEvalPage() {
                 </a>
               </div>
 
-              {/* Three-column: Scan | Pass 1 | Pass 2 */}
+              {/* Three-column: Scan | Direct | Guided */}
               <div className="flex flex-col lg:flex-row gap-0">
                 {/* Left: Original scan */}
                 <div
@@ -172,40 +171,40 @@ export default function HieroglyphEvalPage() {
                   </div>
                 </div>
 
-                {/* Middle: Pass 1 */}
+                {/* Middle: Direct OCR */}
                 <div className="lg:w-1/3 p-4 border-b lg:border-b-0 lg:border-r" style={{ borderColor: 'var(--border-light)' }}>
                   <div className="flex items-center gap-1.5 mb-3 pb-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
                     <span
                       className="text-[9px] font-mono px-1.5 py-0.5 rounded font-medium"
                       style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}
                     >
-                      Pass 1
+                      Direct
                     </span>
                     <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                      Direct Unicode OCR
+                      Image → Unicode hieroglyphs
                     </span>
                   </div>
-                  <HieroLines lines={pass1Lines} />
+                  <HieroLines lines={directLines} />
                 </div>
 
-                {/* Right: Pass 2 */}
+                {/* Right: Transliteration-Guided */}
                 <div className="lg:w-1/3 p-4">
                   <div className="flex items-center gap-1.5 mb-3 pb-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
                     <span
                       className="text-[9px] font-mono px-1.5 py-0.5 rounded font-medium"
-                      style={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }}
+                      style={{ backgroundColor: '#fff3e0', color: '#e65100' }}
                     >
-                      Pass 2
+                      Guided
                     </span>
                     <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                      Self-corrected
+                      Transliteration → hieroglyphs
                     </span>
                   </div>
-                  <HieroLines lines={pass2Lines} />
+                  <HieroLines lines={guidedLines} />
                 </div>
               </div>
 
-              {/* Transliteration + Corrections */}
+              {/* Transliteration + Notes */}
               <div
                 className="px-5 py-3 border-t"
                 style={{
@@ -229,19 +228,19 @@ export default function HieroglyphEvalPage() {
                     </pre>
                   </div>
                 )}
-                {corrections && (
+                {notes && (
                   <details className="mt-2">
                     <summary
                       className="text-[10px] font-mono uppercase tracking-wider cursor-pointer"
                       style={{ color: 'var(--text-faint)' }}
                     >
-                      Pass 2 Corrections Log
+                      Guided OCR Notes
                     </summary>
                     <pre
                       className="whitespace-pre-wrap text-xs leading-relaxed mt-2"
                       style={{ color: 'var(--text-muted)', fontFamily: 'inherit' }}
                     >
-                      {corrections}
+                      {notes}
                     </pre>
                   </details>
                 )}
