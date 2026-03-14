@@ -9,7 +9,8 @@ export type CronName =
   | 'archive-ocr'
   | 'submit-batch-ocr'
   | 'social-post'
-  | 'social-reset';
+  | 'social-reset'
+  | 'daily-pipeline-report';
 
 export type CronRunStatus = 'success' | 'partial' | 'failed';
 
