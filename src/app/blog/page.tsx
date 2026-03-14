@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'origin-story',
+    title: 'Where Source Library Came From',
+    subtitle: 'From one untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000 books and the ambition to translate the Renaissance — and why it matters for AI.',
+    date: '15 March 2026',
+    readTime: '8 min read',
+    tag: 'Origin',
+    tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
+  },
+  {
     slug: 'hieroglyph-ocr',
     title: 'Can AI Read Hieroglyphs? (No.)',
     subtitle: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash — direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
