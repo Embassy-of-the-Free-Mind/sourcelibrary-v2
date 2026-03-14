@@ -1408,6 +1408,50 @@ p { margin: 0.8em 0; text-align: justify; }
   vertical-align: super;
   margin-right: 0.3em;
 }
+/* Bilingual layout */
+.bilingual-header {
+  display: flex;
+  gap: 2em;
+  border-bottom: 2px solid #8b0000;
+  padding: 0.5em 0;
+  margin-bottom: 1em;
+}
+.bilingual-header .col-label {
+  flex: 1;
+  font-variant: small-caps;
+  font-size: 0.9em;
+  color: #8b0000;
+  font-weight: bold;
+}
+.bilingual-page {
+  display: flex;
+  gap: 1.5em;
+  margin: 1em 0;
+  padding-top: 0.8em;
+  border-top: 1px solid #e8e0d0;
+}
+.bilingual-col {
+  flex: 1;
+  min-width: 0;
+}
+.bilingual-original {
+  color: #555;
+  font-size: 0.92em;
+  padding-right: 1em;
+  border-right: 1px solid #d4c4a8;
+}
+.bilingual-translation {
+  color: #333;
+}
+.bilingual-col .page-marker {
+  display: block;
+  vertical-align: baseline;
+  margin-bottom: 0.3em;
+}
+.no-ocr, .no-translation {
+  color: #999;
+  font-style: italic;
+}
 `;
 
 // Generate scholarly EPUB with full front and back matter
@@ -1693,7 +1737,8 @@ async function generateScholarlyEpubDownload(
   db: any,
   edition?: TranslationEdition | null,
   bookIndex?: BookIndex | null,
-  bookSummary?: BookSummaryData | null
+  bookSummary?: BookSummaryData | null,
+  bilingual?: boolean
 ): Promise<Buffer> {
   const now = new Date().toISOString().split('T')[0];
   const bookTitle = book.display_title || book.title;
@@ -1873,7 +1918,7 @@ async function generateScholarlyEpubDownload(
     <dc:creator>${escapeXml(book.author)}</dc:creator>
     ${contributors.map(c => `<dc:contributor>${escapeXml(c.name)} (${c.role})</dc:contributor>`).join('\n    ')}
     <dc:publisher>Source Library</dc:publisher>
-    <dc:language>en</dc:language>
+    <dc:language>en</dc:language>${bilingual ? `\n    <dc:language>${escapeXml(book.language.toLowerCase().slice(0, 3))}</dc:language>` : ''}
     <dc:date>${edition?.published_at ? new Date(edition.published_at).toISOString().split('T')[0] : now}</dc:date>
     <dc:rights>${edition?.license || 'CC-BY-SA-4.0'}</dc:rights>
     ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
@@ -1980,7 +2025,7 @@ async function generateScholarlyEpubDownload(
   <div class="title-page">
     ${titlePageScanBuffer ? `<div class="title-page-scan"><img src="images/title-page-scan.jpg" alt="Original title page"/></div>` : ''}
     <h1>${escapeXml(bookTitle)}</h1>
-    <p class="subtitle">English Translation</p>
+    <p class="subtitle">${bilingual ? `Bilingual Edition · ${escapeXml(book.language)} &amp; English` : 'English Translation'}</p>
     <p class="author">by ${escapeXml(book.author)}</p>
     ${book.published ? `<p>(${escapeXml(book.published)})</p>` : ''}
     ${edition?.doi ? `<p class="doi-badge">DOI: ${edition.doi}</p>` : ''}
@@ -2099,20 +2144,24 @@ async function generateScholarlyEpubDownload(
     }
 
     // ========== CREATE CHAPTER CONTENT ==========
-    console.log(`Building ${chapterGroups.length} chapters (${validPages.length} pages) for scholarly EPUB...`);
+    const formatLabel = bilingual ? 'bilingual' : 'scholarly';
+    console.log(`Building ${chapterGroups.length} chapters (${validPages.length} pages) for ${formatLabel} EPUB...`);
     for (const [chapterIdx, group] of chapterGroups.entries()) {
       let chapterBody = '';
 
       // Chapter heading
       chapterBody += `<h2 class="chapter-title">${escapeXml(group.title)}</h2>\n`;
 
-      for (const page of group.pages) {
-        // Subtle page marker for scholarly citation
-        chapterBody += `<span class="page-marker" id="p${page.page_number}">[p.${page.page_number}]</span>\n`;
+      if (bilingual) {
+        // Bilingual column headers
+        chapterBody += `<div class="bilingual-header"><span class="col-label">${escapeXml(book.language)}</span><span class="col-label">English</span></div>\n`;
+      }
 
-        // Illustrations for this page
-        const pageIllustrations = illustrationsByPage.get(page.page_number) || [];
+      for (const page of group.pages) {
         const pageUrl = `${bookPageUrl}?page=${page.page_number}`;
+
+        // Illustrations for this page (outside bilingual layout)
+        const pageIllustrations = illustrationsByPage.get(page.page_number) || [];
         for (const img of pageIllustrations) {
           const illusId = `illus-${(img as any).page_number}-${(img as any).detection_index}`;
           const caption = (img as any).museum_description || (img as any).description || '';
@@ -2125,13 +2174,36 @@ async function generateScholarlyEpubDownload(
     </figure>\n`;
         }
 
-        // Translation text (continuous prose, no heading)
-        const translationHtml = markdownToHtml(
-          page.translation ? page.translation.data : '',
-          { stripNotes: true }
-        );
-        if (translationHtml.trim()) {
-          chapterBody += translationHtml + '\n';
+        if (bilingual) {
+          // Bilingual layout: original OCR left, translation right
+          const ocrHtml = page.ocr?.data
+            ? markdownToHtml(page.ocr.data, { stripNotes: false })
+            : `<p class="no-ocr"><em>[Original text not available]</em></p>`;
+          const translationHtml = page.translation?.data
+            ? markdownToHtml(page.translation.data, { stripNotes: true })
+            : `<p class="no-translation"><em>[Translation not available]</em></p>`;
+
+          chapterBody += `<div class="bilingual-page" id="p${page.page_number}">
+  <div class="bilingual-col bilingual-original">
+    <span class="page-marker">[p.&#160;${page.page_number}]</span>
+    ${ocrHtml}
+  </div>
+  <div class="bilingual-col bilingual-translation">
+    <span class="page-marker">[p.&#160;${page.page_number}]</span>
+    ${translationHtml}
+  </div>
+</div>\n`;
+        } else {
+          // Translation-only scholarly layout
+          chapterBody += `<span class="page-marker" id="p${page.page_number}">[p.${page.page_number}]</span>\n`;
+
+          const translationHtml = markdownToHtml(
+            page.translation ? page.translation.data : '',
+            { stripNotes: true }
+          );
+          if (translationHtml.trim()) {
+            chapterBody += translationHtml + '\n';
+          }
         }
       }
 
@@ -2263,7 +2335,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const format = searchParams.get('format') || 'translation';
 
     // Valid formats: TXT, EPUB, and ZIP
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'images-zip'];
+    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'epub-bilingual', 'images-zip'];
     if (!validFormats.includes(format)) {
       return NextResponse.json(
         { error: 'Invalid format' },
@@ -2290,6 +2362,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const isFacsimile = format === 'epub-facsimile';
     const isImagesOnly = format === 'epub-images';
     const isScholarly = format === 'epub-scholarly';
+    const isBilingual = format === 'epub-bilingual';
     const isImagesZip = format === 'images-zip';
 
     const db = await getDb();
@@ -2353,8 +2426,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           pages as unknown as Page[]
         );
         filename = `${safeTitle}-parallel.epub`;
-      } else if (isScholarly) {
-        // Generate scholarly EPUB with front/back matter
+      } else if (isScholarly || isBilingual) {
+        // Generate scholarly EPUB with front/back matter (optionally bilingual)
         // Fetch additional data: edition, index, summary
         let edition: TranslationEdition | null = null;
         let bookIndex: BookIndex | null = null;
@@ -2419,9 +2492,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           db,
           edition,
           bookIndex,
-          bookSummary
+          bookSummary,
+          isBilingual
         );
-        filename = `${safeTitle}-scholarly.epub`;
+        filename = `${safeTitle}-${isBilingual ? 'bilingual' : 'scholarly'}.epub`;
       } else {
         // Generate standard EPUB
         epubBuffer = await generateEpubDownload(
