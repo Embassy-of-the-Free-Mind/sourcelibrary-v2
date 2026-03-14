@@ -447,6 +447,7 @@ export async function GET(request: NextRequest) {
 
   const log = {
     enrolled: 0,
+    ft_early: 0,
     archived: 0,
     ocr_submitted: 0,
     ocr_advanced: 0,
@@ -550,7 +551,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime) && !imagesPaused) {
       const readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
-        .sort({ hidden: 1 })
+        .sort({ processing_priority: -1, hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
@@ -620,7 +621,7 @@ export async function GET(request: NextRequest) {
       if (activeImageJobs < limits.image_max) {
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
-          .sort({ hidden: 1 })
+          .sort({ processing_priority: -1, hidden: 1 })
           .project({ id: 1, title: 1 })
           .limit(limits.image_submit)
           .toArray();
@@ -862,6 +863,25 @@ export async function GET(request: NextRequest) {
           }
         );
         log.enrolled++;
+
+        // Early FT verification — cheap ($0.001/book), sets is_first_translation
+        // before OCR/translation so we know the book's status from the start.
+        // Phase 3.7 will fast-track these as already verified.
+        if (hasTimeBudget(startTime)) {
+          try {
+            const bookDoc = await db.collection('books').findOne(
+              { id: book.id },
+              { projection: { language: 1 } },
+            );
+            const lang = ((bookDoc?.language || '') as string).toLowerCase();
+            if (lang && lang !== 'english') {
+              await verifyFirstTranslation(db, book.id);
+              log.ft_early++;
+            }
+          } catch {
+            // Non-blocking — Phase 3.7 will catch it later
+          }
+        }
       }
     }
 
@@ -874,7 +894,7 @@ export async function GET(request: NextRequest) {
       // Move queued books to archiving
       const queuedBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'queued' })
-        .sort({ hidden: 1 }) // Visible books first
+        .sort({ processing_priority: -1, hidden: 1 }) // Highest priority first, then visible
         .project({ id: 1 })
         .limit(ARCHIVE_LIMIT)
         .toArray();
@@ -889,7 +909,7 @@ export async function GET(request: NextRequest) {
       const ARCHIVE_TIMEOUT_MS = 24 * 60 * 60 * 1000; // 24h — OCR works on original IIIF URLs
       const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
-        .sort({ hidden: 1 }) // Visible books first
+        .sort({ processing_priority: -1, hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, 'pipeline_auto.last_updated': 1, 'pipeline_auto.started_at': 1 })
         .limit(100) // Just DB queries per book — can handle many
         .toArray();
@@ -965,7 +985,7 @@ export async function GET(request: NextRequest) {
 
       const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < limits.ocr_lambda_max) ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
-        .sort({ hidden: 1 }) // Visible books first
+        .sort({ processing_priority: -1, hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(ocrLimit)
         .toArray() : [];
@@ -1340,7 +1360,7 @@ export async function GET(request: NextRequest) {
             },
           ],
         })
-        .sort({ 'pipeline_auto.status': -1, hidden: 1 }) // ocr_complete first, then preview
+        .sort({ 'pipeline_auto.status': -1, processing_priority: -1, hidden: 1 }) // ocr_complete first, then priority
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.status': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
@@ -1387,7 +1407,7 @@ export async function GET(request: NextRequest) {
         .find({
           'pipeline_auto.status': 'metadata_enriched',
         })
-        .sort({ hidden: 1, pages_count: 1 })
+        .sort({ processing_priority: -1, hidden: 1, pages_count: 1 })
         .limit(FT_VERIFY_LIMIT)
         .project({ id: 1, title: 1, language: 1, 'pipeline_auto.retry_count': 1, translation_verification: 1 })
         .toArray();
