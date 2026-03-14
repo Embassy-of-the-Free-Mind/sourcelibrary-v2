@@ -80,7 +80,7 @@ export default function HieroglyphEvalPage() {
           </h1>
           <p className="text-base mb-2" style={{ color: 'var(--text-muted)' }}>
             {entries.length} pages from Budge&apos;s <em>Egyptian Reading Book for Beginners</em> (1896).
-            Gemini 2.0 Flash OCR output with Unicode hieroglyphs, compared against the original page.
+            Gemini 3 Flash Preview OCR output with Unicode hieroglyphs, compared against the original page.
           </p>
           <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
             Left: original scan from Internet Archive. Right: Gemini OCR output.
@@ -175,7 +175,7 @@ export default function HieroglyphEvalPage() {
                     className="text-[9px] font-mono px-1.5 py-0.5 rounded font-medium"
                     style={{ backgroundColor: 'var(--accent-violet)/12', color: 'var(--accent-violet)' }}
                   >
-                    Gemini 2.0 Flash
+                    Gemini 3 Flash Preview
                   </span>
                   <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
                     OCR Output — Unicode Hieroglyphs
