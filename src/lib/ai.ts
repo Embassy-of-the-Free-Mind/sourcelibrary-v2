@@ -2,6 +2,7 @@ import { DEFAULT_PROMPTS, DEFAULT_MODEL, ENGLISH_MODERNIZATION_PROMPT } from './
 import { getGeminiClient } from './gemini-client';
 import { images } from './api-client/images';
 import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { sanitizeTranslationTags } from './sanitize-translation-tags';
 
 // Safety settings for OCR/transcription - disable all filters for historical texts
 const OCR_SAFETY_SETTINGS = [
@@ -234,7 +235,7 @@ export async function performTranslation(
   const outputTokens = usageMetadata?.candidatesTokenCount || 0;
 
   return {
-    text: result.response.text(),
+    text: sanitizeTranslationTags(result.response.text()),
     usage: {
       inputTokens,
       outputTokens,
