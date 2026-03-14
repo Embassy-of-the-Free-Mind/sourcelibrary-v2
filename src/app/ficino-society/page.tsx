@@ -1,12 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import type { MembershipInfo } from '@/lib/membership';
 
 export default function FicinoSocietyPage() {
+  return (
+    <Suspense>
+      <FicinoSocietyContent />
+    </Suspense>
+  );
+}
+
+function FicinoSocietyContent() {
   const { data: session, status, update: updateSession } = useSession();
   const searchParams = useSearchParams();
   const success = searchParams.get('success') === 'true';
