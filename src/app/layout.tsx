@@ -11,7 +11,7 @@ import ClientToaster from "@/components/providers/ClientToaster";
 
 export const metadata: Metadata = {
   title: "Source Library",
-  description: "Digitizing and translating rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.",
+  description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
     canonical: '/',

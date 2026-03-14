@@ -19,7 +19,7 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
     '@id': `${baseUrl}/#website`,
     url: baseUrl,
     name: 'Source Library',
-    description: 'Digitizing and translating rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.',
+    description: 'Digitizing and translating ancient texts for scholars, seekers and AI systems.',
     inLanguage: 'en-US',
     potentialAction: {
       '@type': 'SearchAction',

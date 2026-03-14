@@ -44,8 +44,8 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   // Header
   lines.push('═'.repeat(60));
   lines.push('SOURCE LIBRARY');
-  lines.push('Digitizing and translating rare Hermetic, esoteric,');
-  lines.push('and humanist texts for scholars, seekers, and AI systems.');
+  lines.push('Digitizing and translating ancient texts');
+  lines.push('for scholars, seekers and AI systems.');
   lines.push('═'.repeat(60));
   lines.push('');
 
