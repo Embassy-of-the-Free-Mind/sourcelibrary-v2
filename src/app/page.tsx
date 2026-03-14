@@ -446,50 +446,50 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {collections.map((col, i) => (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              {collections.slice(0, 11).map((col, i) => (
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
-                  className="group relative bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
+                  className="group relative rounded-xl overflow-hidden aspect-[4/3] hover:shadow-lg transition-all hover:-translate-y-0.5"
                 >
-                  {/* Hero image */}
-                  <div className="aspect-[16/9] relative bg-warm overflow-hidden">
-                    {col.hero_image ? (
-                      <Image
-                        src={col.hero_image}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        priority={i < 4}
-                        loading={i < 8 ? 'eager' : 'lazy'}
-                      />
-                    ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
-                    )}
-                  </div>
-
-                  {/* Text */}
-                  <div className="p-4">
-                    <h3 className="font-display text-lg text-primary group-hover:text-accent-rust transition-colors line-clamp-1">
+                  {col.hero_image ? (
+                    <Image
+                      src={col.hero_image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      priority={i < 4}
+                      loading={i < 8 ? 'eager' : 'lazy'}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                       {col.name}
                     </h3>
-                    {col.subtitle && (
-                      <p className="text-sm text-muted mt-1 line-clamp-2">{col.subtitle}</p>
-                    )}
-                    <div className="flex items-center gap-2 mt-2 text-xs text-faint">
-                      <span>{col.book_count} books</span>
-                      {col.languages && col.languages.length > 0 && (
-                        <>
-                          <span>&middot;</span>
-                          <span>{col.languages.join(', ')}</span>
-                        </>
-                      )}
-                    </div>
+                    <p className="text-white/60 text-xs mt-1 hidden sm:block">
+                      {col.book_count} books
+                    </p>
                   </div>
                 </Link>
               ))}
+              {collections.length > 11 && (
+                <Link
+                  href="/collections"
+                  className="group relative rounded-xl overflow-hidden aspect-[4/3] bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
+                >
+                  <div className="text-center px-4">
+                    <p className="font-serif text-lg sm:text-xl text-white/90 group-hover:text-accent-gold transition-colors">
+                      See {collections.length - 11} more
+                    </p>
+                    <p className="text-white/40 text-xs mt-1">collections</p>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </section>
