@@ -17,22 +17,39 @@ interface EvalEntry {
 
 const entries = evalData as EvalEntry[];
 
-/** Extract hieroglyph lines from OCR text */
+/** Extract hieroglyph lines from direct OCR text */
 function extractHieroLines(text: string): string[] {
   const match = text.match(/(?:HIEROGLYPHS|CORRECTED HIEROGLYPHS)\s*===?\s*\n([\s\S]*?)(?:\n\s*(?:===|###|\n\n))/);
   if (!match) return [];
   return match[1].trim().split('\n').filter(l => l.trim() && /^\d+\./.test(l.trim()));
 }
 
+/** Extract COMBINED lines from describe-each output */
+function extractCombinedLines(text: string): string[] {
+  const lines: string[] = [];
+  const matches = text.matchAll(/COMBINED:\s*(.+)/g);
+  for (const m of matches) {
+    lines.push(m[1].trim());
+  }
+  return lines;
+}
+
+/** Extract the full glyph-by-glyph description (everything between first LINE and TRANSLITERATION) */
+function extractDescription(text: string): string | null {
+  const match = text.match(/===\s*LINE\s*\[?\d\]?\s*===([\s\S]*?)(?:===\s*TRANSLITERATION)/);
+  if (!match) {
+    // Try to get everything from first LINE marker
+    const alt = text.match(/(===\s*LINE[\s\S]*?)(?:===\s*TRANSLITERATION)/);
+    return alt ? alt[1].trim() : null;
+  }
+  // Get all LINE sections
+  const allLines = text.match(/(===\s*LINE[\s\S]*?)(?:===\s*TRANSLITERATION)/);
+  return allLines ? allLines[1].trim() : null;
+}
+
 /** Extract transliteration from OCR text */
 function extractTransliteration(text: string): string | null {
   const match = text.match(/TRANSLITERATION\s*===?\s*\n([\s\S]*?)(?:\n\s*(?:===|###)|$)/);
-  return match ? match[1].trim() : null;
-}
-
-/** Extract notes from guided pass */
-function extractNotes(text: string): string | null {
-  const match = text.match(/NOTES\s*===?\s*\n([\s\S]*?)$/);
   return match ? match[1].trim() : null;
 }
 
@@ -77,11 +94,11 @@ export default function HieroglyphEvalPage() {
           </h1>
           <p className="text-base mb-2" style={{ color: 'var(--text-muted)' }}>
             {entries.length} pages from Budge&apos;s <em>Egyptian Reading Book for Beginners</em> (1896).
-            Comparing direct Unicode OCR vs. transliteration-guided OCR (Gemini 3 Flash Preview).
+            Comparing direct OCR vs. describe-each-glyph approach (Gemini 3 Flash Preview).
           </p>
           <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
-            Left: original scan. Middle: direct OCR (image → hieroglyphs). Right: transliteration-guided
-            (OCR transliteration first, then use it to constrain hieroglyph identification).
+            Left: original scan. Middle: direct OCR (whole-line). Right: describe-each
+            (model describes each glyph visually before identifying it — chain-of-thought for vision).
           </p>
         </div>
       </header>
@@ -89,9 +106,9 @@ export default function HieroglyphEvalPage() {
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
         {entries.map((entry) => {
           const directLines = extractHieroLines(entry.pass1Text);
-          const guidedLines = extractHieroLines(entry.pass2Text);
+          const describedLines = extractCombinedLines(entry.pass2Text);
+          const description = extractDescription(entry.pass2Text);
           const translit = extractTransliteration(entry.pass2Text) || extractTransliteration(entry.pass1Text);
-          const notes = extractNotes(entry.pass2Text);
 
           return (
             <article
@@ -138,7 +155,7 @@ export default function HieroglyphEvalPage() {
                 </a>
               </div>
 
-              {/* Three-column: Scan | Direct | Guided */}
+              {/* Three-column: Scan | Direct | Described */}
               <div className="flex flex-col lg:flex-row gap-0">
                 {/* Left: Original scan */}
                 <div
@@ -181,30 +198,30 @@ export default function HieroglyphEvalPage() {
                       Direct
                     </span>
                     <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                      Image → Unicode hieroglyphs
+                      Whole-line OCR
                     </span>
                   </div>
                   <HieroLines lines={directLines} />
                 </div>
 
-                {/* Right: Transliteration-Guided */}
+                {/* Right: Describe-each */}
                 <div className="lg:w-1/3 p-4">
                   <div className="flex items-center gap-1.5 mb-3 pb-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
                     <span
                       className="text-[9px] font-mono px-1.5 py-0.5 rounded font-medium"
-                      style={{ backgroundColor: '#fff3e0', color: '#e65100' }}
+                      style={{ backgroundColor: '#fce4ec', color: '#c62828' }}
                     >
-                      Guided
+                      Described
                     </span>
                     <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                      Transliteration → hieroglyphs
+                      Glyph-by-glyph reasoning
                     </span>
                   </div>
-                  <HieroLines lines={guidedLines} />
+                  <HieroLines lines={describedLines} />
                 </div>
               </div>
 
-              {/* Transliteration + Notes */}
+              {/* Transliteration + Description chain */}
               <div
                 className="px-5 py-3 border-t"
                 style={{
@@ -228,19 +245,19 @@ export default function HieroglyphEvalPage() {
                     </pre>
                   </div>
                 )}
-                {notes && (
+                {description && (
                   <details className="mt-2">
                     <summary
                       className="text-[10px] font-mono uppercase tracking-wider cursor-pointer"
                       style={{ color: 'var(--text-faint)' }}
                     >
-                      Guided OCR Notes
+                      Glyph-by-Glyph Reasoning Chain
                     </summary>
                     <pre
-                      className="whitespace-pre-wrap text-xs leading-relaxed mt-2"
+                      className="whitespace-pre-wrap text-xs leading-relaxed mt-2 max-h-96 overflow-y-auto"
                       style={{ color: 'var(--text-muted)', fontFamily: 'inherit' }}
                     >
-                      {notes}
+                      {description}
                     </pre>
                   </details>
                 )}
