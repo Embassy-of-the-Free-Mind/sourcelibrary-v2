@@ -193,7 +193,7 @@ export async function getAdaptiveLimits(
   let activeJobs = 0;
   try {
     activeJobs = await db.collection('jobs').countDocuments({
-      status: { $in: ['pending', 'processing'] },
+      status: 'processing',
     });
   } catch { /* non-critical */ }
 
