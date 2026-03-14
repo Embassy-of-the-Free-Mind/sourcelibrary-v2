@@ -34,10 +34,21 @@ interface CollectionDoc {
   languages: { lang: string; count: number }[];
 }
 
+const PINNED_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance-philosophy', 'sacred-texts'];
+
 async function fetchCollections(): Promise<CollectionDoc[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({}).sort({ order: 1 }).toArray();
-  return docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+  const docs = await db.collection('collections').find({}).toArray();
+  const all = docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+
+  const pinned = PINNED_SLUGS.map(s => all.find(c => c.slug === s)).filter(Boolean) as CollectionDoc[];
+  const rest = all.filter(c => !PINNED_SLUGS.includes(c.slug));
+  // Fisher-Yates shuffle
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rest[i], rest[j]] = [rest[j], rest[i]];
+  }
+  return [...pinned, ...rest];
 }
 
 export default async function CollectionsPage() {
@@ -51,7 +62,7 @@ export default async function CollectionsPage() {
         subtitle={`${totalBooks.toLocaleString()} books organized into ${collections.length} thematic collections spanning three millennia of human knowledge.`}
       />
 
-      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         {collections.map((col) => {
           const hero = col.featured_images?.find(
             img => img.extracted_url || img.image_url || img.thumbnail_url
@@ -71,7 +82,7 @@ export default async function CollectionsPage() {
                   src={heroUrl}
                   alt={`Illustration from ${col.name}`}
                   fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
+                  sizes="(max-width: 640px) 50vw, 25vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   unoptimized
                 />
@@ -80,26 +91,16 @@ export default async function CollectionsPage() {
               )}
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.4)] to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
               {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
-                    {col.book_count.toLocaleString()} books
-                  </span>
-                  {topLangs && (
-                    <span className="text-xs text-white/50">
-                      {topLangs}
-                    </span>
-                  )}
-                </div>
-                <h2 className="font-serif text-xl sm:text-2xl text-white font-semibold leading-tight">
+              <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
+                <p className="text-white/50 text-xs mb-1 hidden sm:block">
+                  {col.book_count.toLocaleString()} books
+                </p>
+                <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
                   {col.name}
                 </h2>
-                <p className="mt-1 text-sm text-white/70 line-clamp-2 leading-snug">
-                  {col.subtitle}
-                </p>
               </div>
             </Link>
           );

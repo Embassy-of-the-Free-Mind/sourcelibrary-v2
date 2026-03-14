@@ -18,23 +18,16 @@ export const maxDuration = 60;
 
 // ---------- Collection ordering (user-specified) ----------
 
-const COLLECTION_ORDER = [
-  'Natural Philosophy',
-  'Theology',
-  'Classical Philosophy',
-  'Alchemy',
-  'Indic',
-  'Chinese',
-  'Magic',
-  'Medicine',
-  'Art',
-  'Secret Societies',
-  'Leonardo',
-];
+const PINNED_COLLECTION_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance-philosophy', 'sacred-texts'];
 
-function collectionSortIndex(name: string): number {
-  const idx = COLLECTION_ORDER.findIndex(prefix => name.includes(prefix));
-  return idx === -1 ? COLLECTION_ORDER.length : idx;
+function sortCollections<T extends { slug: string }>(collections: T[]): T[] {
+  const pinned = PINNED_COLLECTION_SLUGS.map(s => collections.find(c => c.slug === s)).filter(Boolean) as T[];
+  const rest = collections.filter(c => !PINNED_COLLECTION_SLUGS.includes(c.slug));
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rest[i], rest[j]] = [rest[j], rest[i]];
+  }
+  return [...pinned, ...rest];
 }
 
 // ---------- Book projection shared across queries ----------
@@ -206,10 +199,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
     }
   }
 
-  // Sort by user-specified order
-  result.sort((a, b) => collectionSortIndex(a.name) - collectionSortIndex(b.name));
-
-  return result;
+  return sortCollections(result);
 }
 
 async function getDiscoverBooks(): Promise<Book[]> {
@@ -346,10 +336,7 @@ const FALLBACK_DISCOVER_BOOKS = [
   { id: '69906828249ce014347d5b4d', slug: 'the-great-journey-of-yoga-brhadyogayatra-varahamihira', title: 'Brhadyogayatra of Varahamihira', display_title: 'The Great Journey of Yoga (Brhadyogayatra)', author: 'Varahamihira', language: 'Sanskrit', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906828249ce014347d5b4d/4.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/69906828249ce014347d5b4d/1.jpg', is_first_translation: false, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
 ] as unknown as Book[];
 
-// Pre-sorted fallback (matches collectionSortIndex order)
-const SORTED_FALLBACK_COLLECTIONS = [...FALLBACK_COLLECTIONS].sort(
-  (a, b) => collectionSortIndex(a.name) - collectionSortIndex(b.name)
-);
+const SORTED_FALLBACK_COLLECTIONS = sortCollections([...FALLBACK_COLLECTIONS]);
 
 // ---------- Blog posts (curated subset for homepage) ----------
 
@@ -468,12 +455,12 @@ export default async function HomePage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <p className="text-white/50 text-xs mb-1 hidden sm:block">
+                      {col.book_count} books
+                    </p>
                     <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                       {col.name}
                     </h3>
-                    <p className="text-white/60 text-xs mt-1 hidden sm:block">
-                      {col.book_count} books
-                    </p>
                   </div>
                 </Link>
               ))}
