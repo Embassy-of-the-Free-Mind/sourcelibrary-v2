@@ -203,6 +203,7 @@ function FicinoSocietyContent() {
           <div className="space-y-5">
             {[
               { title: 'Unlimited downloads', desc: 'Every book as EPUB or plain text, every gallery image in full resolution. No per-item fees.' },
+              { title: 'MCP server and API', desc: 'The API and MCP server are free for everyone. Your membership keeps them running.' },
               { title: 'Your name on the members page', desc: 'A public page listing the people who support this work. With an optional one-line bio, if you like.' },
               { title: 'A quarterly letter', desc: 'What we translated, what we discovered, what\u2019s coming next. Short, personal, from the team.' },
               { title: 'Inner circle', desc: 'As we build forums and discussion spaces, members will be the founding community.' },
