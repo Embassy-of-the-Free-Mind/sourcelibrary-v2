@@ -68,6 +68,7 @@ interface CitedBook {
   type: 'direct' | 'shared';
   cited_as?: string;        // entity name that triggered the direct citation
   shared_entities?: number;  // count for shared type
+  shared_names?: string[];   // top entity names for shared type
 }
 
 const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
@@ -91,8 +92,11 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
     const directCitationBookIds = new Map<string, string>(); // bookId -> cited_as
     const entityNames: Array<{ names: string[]; entityName: string }> = [];
     for (const entity of personEntities) {
+      // Only use multi-word names (e.g. "Jacob Boehme") or long single-word
+      // names (e.g. "Paracelsus"). Short first names like "John", "Isaac",
+      // "Michael" match hundreds of unrelated authors.
       const names = [entity.name, ...(entity.aliases || [])].filter(
-        (n: string) => n && n.length >= 4,
+        (n: string) => n && (n.includes(' ') ? n.length >= 4 : n.length >= 10),
       );
       if (names.length > 0) {
         entityNames.push({ names, entityName: entity.name });
@@ -117,10 +121,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
             const afterIdx = idx + nameLower.length;
             const charAfter = afterIdx < authorLower.length ? authorLower[afterIdx] : ' ';
             const isWordEnd = !/[a-z]/.test(charAfter);
-            const isSingleWord = !name.includes(' ');
-            const commaIdx = authorLower.indexOf(',');
-            const isBeforeComma = commaIdx === -1 || idx < commaIdx;
-            if (isWordStart && isWordEnd && (!isSingleWord || name.length >= 8 || isBeforeComma)) {
+            if (isWordStart && isWordEnd) {
               directCitationBookIds.set(doc.id as string, entityName);
               matched = true;
               break;
@@ -132,7 +133,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
     }
 
     // Step 3: Enrich direct citations with book metadata
-    const directBooks: CitedBook[] = [];
+    let directBooks: CitedBook[] = [];
     if (directCitationBookIds.size > 0) {
       const bookDocs = await db.collection('books').find(
         { id: { $in: [...directCitationBookIds.keys()] }, hidden: { $ne: true } },
@@ -151,9 +152,19 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
       }
     }
 
+    // Deduplicate: max 1 book per cited entity for variety
+    const seenEntities = new Set<string>();
+    directBooks = directBooks.filter(b => {
+      const key = b.cited_as || b.id;
+      if (seenEntities.has(key)) return false;
+      seenEntities.add(key);
+      return true;
+    });
+    // Cap direct citations to keep the section focused
+    if (directBooks.length > 6) directBooks.length = 6;
+
     // Step 4: Fill remaining slots with entity-overlap books (shared context)
-    // Skip if direct citations already fill 10+ slots
-    const sharedSlots = Math.max(0, 10 - directBooks.length);
+    const sharedSlots = Math.max(0, 8 - directBooks.length);
     let sharedBooks: CitedBook[] = [];
     if (sharedSlots > 0) {
       const directIds = new Set(directBooks.map(b => b.id));
@@ -166,6 +177,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
           title: { $first: '$books.book_title' },
           author: { $first: '$books.book_author' },
           shared_entities: { $sum: 1 },
+          shared_names: { $push: '$name' },
         }},
         { $match: { shared_entities: { $gte: 3 } } },
         { $sort: { shared_entities: -1 as const } },
@@ -189,6 +201,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
         year: r.book_doc?.year as number | undefined,
         type: 'shared' as const,
         shared_entities: r.shared_entities as number,
+        shared_names: (r.shared_names as string[])?.slice(0, 3),
       }));
     }
 
@@ -331,7 +344,9 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
                     {rb.author && rb.author !== 'Unknown' && (
                       <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
                     )}
-                    <span className="text-xs text-accent-sage shrink-0">{rb.shared_entities} shared</span>
+                    <span className="text-xs text-accent-sage shrink-0">
+                      {rb.shared_names?.length ? rb.shared_names.join(', ') : `${rb.shared_entities} shared`}
+                    </span>
                   </Link>
                 ))}
               </div>
