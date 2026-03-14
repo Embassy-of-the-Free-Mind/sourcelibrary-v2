@@ -8,6 +8,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
+import EarlyAccessGate from '@/components/book/EarlyAccessGate';
 import BookHistory from '@/components/book/BookHistory';
 import BookIndex from '@/components/book/BookIndex';
 import BookAnalytics from '@/components/book/BookAnalytics';
@@ -442,7 +443,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
-  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
   const publishedDate = currentEdition?.published_at
     ? new Date(currentEdition.published_at).toISOString()
     : book.created_at
@@ -649,7 +650,7 @@ async function BookInfo({ id }: { id: string }) {
   const ocrCount = pages.filter(p => p.ocr).length;
   const translatedCount = pages.filter(p => p.translation).length;
   const imageCount = galleryImageCount;
-  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
@@ -934,7 +935,17 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+        {(() => {
+          const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
+          if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
+            return (
+              <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
+                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+              </EarlyAccessGate>
+            );
+          }
+          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+        })()}
         <AuthCheck>
           <BookHistory bookId={book.id} />
         </AuthCheck>

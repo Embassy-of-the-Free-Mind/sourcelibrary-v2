@@ -39,24 +39,26 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     const year = edition.published_at ? new Date(edition.published_at).getFullYear() : new Date().getFullYear();
     const doi = edition.doi ? ` https://doi.org/${edition.doi}` : '';
     const page = pageNumber ? `, p. ${pageNumber}` : '';
+    const author = edition.citation.original_author || 'Anonymous';
     // Scholarly convention: original author first, translator credited
-    return `${edition.citation.original_author}. ${edition.citation.original_title}, trans. Source Library (${year}), v${edition.version}${page}.${doi}`;
+    return `${author}. ${edition.citation.original_title}, trans. Source Library (${year}), v${edition.version}${page}.${doi}`;
   };
 
   const generateBibtex = (edition: TranslationEdition) => {
     const year = edition.published_at ? new Date(edition.published_at).getFullYear() : new Date().getFullYear();
+    const author = edition.citation.original_author || 'Anonymous';
 
     return `@book{sourcelibrary_${year}_${edition.id.slice(0, 8)},
-  author       = {${edition.citation.original_author}},
+  author       = {${author}},
   title        = {${edition.citation.original_title}},
   translator   = {{Source Library}},
   year         = ${year},
   publisher    = {Source Library},
-  version      = {${edition.version}},
+  edition      = {${edition.version}},
   note         = {AI-assisted translation},${edition.doi ? `
   doi          = {${edition.doi}},
   url          = {https://doi.org/${edition.doi}},` : ''}
-  language     = {${edition.citation.original_language}}
+  language     = {${edition.citation.original_language || 'unknown'}}
 }`;
   };
 
@@ -67,12 +69,17 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     try {
       const data = await books.editions.mintDoi(bookId, editionId);
 
-      // Update local state
-      setEditions(prev => prev.map(e =>
-        e.id === editionId
-          ? { ...e, doi: data.doi, doi_url: data.doi_url, zenodo_id: data.zenodo_id, zenodo_url: data.zenodo_url }
-          : e
-      ));
+      // Update local state — DOI minting publishes the edition
+      setEditions(prev => prev.map(e => {
+        if (e.id === editionId) {
+          return { ...e, status: 'published' as const, published_at: new Date(), doi: data.doi, doi_url: data.doi_url, zenodo_id: data.zenodo_id, zenodo_url: data.zenodo_url };
+        }
+        // Supersede previously published editions
+        if (e.status === 'published') {
+          return { ...e, status: 'superseded' as const };
+        }
+        return e;
+      }));
       onDoiAdded?.(editionId, data.doi);
     } catch (error) {
       setMintError(error instanceof Error ? error.message : 'Failed to mint DOI');

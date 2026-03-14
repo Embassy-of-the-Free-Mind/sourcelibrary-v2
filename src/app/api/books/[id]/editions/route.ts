@@ -199,7 +199,7 @@ export const POST = withAuth(async (request, session, context) => {
     return NextResponse.json({
       success: true,
       edition,
-      message: `Edition ${version} published successfully`,
+      message: `Edition ${version} draft created`,
     });
   } catch (error) {
     console.error('Error creating edition:', error);

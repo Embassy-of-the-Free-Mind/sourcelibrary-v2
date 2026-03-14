@@ -253,16 +253,17 @@ export async function getRecord(recordId: number): Promise<ZenodoRecord> {
 
 /* ── Language mapping ── */
 
-function mapLanguageToIso639_3(language: string): string {
+function mapLanguageToIso639_3(language: string): string | undefined {
   const map: Record<string, string> = {
-    'Latin': 'lat', 'Greek': 'grc', 'German': 'deu', 'French': 'fra',
-    'Italian': 'ita', 'Spanish': 'spa', 'Dutch': 'nld', 'Sanskrit': 'san',
-    'Hebrew': 'heb', 'Arabic': 'ara', 'Chinese': 'zho', 'Persian': 'fas',
-    'Syriac': 'syc', 'Ethiopic': 'gez', "Ge'ez": 'gez', 'Tibetan': 'bod',
+    'Latin': 'lat', 'Greek': 'grc', 'Ancient Greek': 'grc',
+    'German': 'deu', 'French': 'fra', 'Italian': 'ita', 'Spanish': 'spa',
+    'Dutch': 'nld', 'Sanskrit': 'san', 'Hebrew': 'heb', 'Arabic': 'ara',
+    'Chinese': 'zho', 'Persian': 'fas', 'Syriac': 'syc',
+    'Ethiopic': 'gez', "Ge'ez": 'gez', 'Tibetan': 'bod',
     'Russian': 'rus', 'Welsh': 'cym', 'Tamil': 'tam', 'Sumerian': 'sux',
-    'English': 'eng',
+    'English': 'eng', 'Coptic': 'cop', 'Akkadian': 'akk',
   };
-  return map[language] || 'und';
+  return map[language];
 }
 
 /* ── Metadata builder ── */
@@ -333,7 +334,7 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
   const bookSlug = (book as any).slug || book.id;
   related_identifiers.push({
     identifier: `https://sourcelibrary.org/book/${bookSlug}`,
-    relation_type: { id: 'isidenticalto' },
+    relation_type: { id: 'issupplementedby' },
     scheme: 'url',
   });
 
@@ -350,7 +351,9 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
     version: edition.version,
     languages: [
       { id: 'eng' },
-      ...(book.language && book.language !== 'English' ? [{ id: mapLanguageToIso639_3(book.language) }] : []),
+      ...(book.language && book.language !== 'English'
+        ? (() => { const code = mapLanguageToIso639_3(book.language); return code ? [{ id: code }] : []; })()
+        : []),
     ],
     subjects: [
       'translation',
@@ -363,15 +366,16 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
 }
 
 function buildDescription(book: Book, edition: TranslationEdition): string {
+  const author = book.author || 'Anonymous';
   const parts = [
-    `<p>English translation of <em>${book.title}</em> by ${book.author}`,
+    `<p>English translation of <em>${book.title}</em> by ${author}`,
     book.published ? ` (${book.published})` : '',
     '.</p>',
     '',
     '<p><strong>Original work:</strong></p>',
     '<ul>',
     `<li>Title: ${book.title}</li>`,
-    `<li>Author: ${book.author}</li>`,
+    `<li>Author: ${author}</li>`,
     `<li>Language: ${book.language}</li>`,
     book.published ? `<li>Published: ${book.published}</li>` : '',
     book.place_published ? `<li>Place: ${book.place_published}</li>` : '',
