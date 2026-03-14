@@ -149,7 +149,15 @@ def load_data():
                 except Exception:
                     pass
 
-    return all_books, results, labels, embeddings, sub_results
+    # Load named subclusters if available
+    named_path = OUTPUT_DIR / "named-subclusters.json"
+    named_subs = None
+    if named_path.exists():
+        with open(named_path) as f:
+            named_subs = json.load(f)
+        print(f"  Loaded named subclusters ({sum(len(r['subclusters']) for r in named_subs if r.get('split'))} names)")
+
+    return all_books, results, labels, embeddings, sub_results, named_subs
 
 
 def get_books_for_cluster(assignments, book_lookup, cluster_id):
@@ -169,7 +177,7 @@ def get_books_for_cluster(assignments, book_lookup, cluster_id):
     return books
 
 
-def build_hierarchy(all_books, results, labels, sub_results):
+def build_hierarchy(all_books, results, labels, sub_results, named_subs=None):
     book_lookup = {b["id"]: b for b in all_books}
     assignments = results["book_assignments"]
 
@@ -182,6 +190,13 @@ def build_hierarchy(all_books, results, labels, sub_results):
                 sub_by_id[sr["raw_id"]] = sr
             if "parent" in sr:  # v1 format
                 sub_by_name[sr["parent"]] = sr
+
+    # Build named subcluster lookup by raw_id
+    names_by_id = {}
+    if named_subs:
+        for ns in named_subs:
+            if ns.get("split") and "raw_id" in ns:
+                names_by_id[ns["raw_id"]] = [sc["name"] for sc in ns["subclusters"]]
 
     hierarchy = []
 
@@ -223,8 +238,9 @@ def build_hierarchy(all_books, results, labels, sub_results):
 
             # Check for sub-cluster data (v2 by raw_id, v1 by name)
             sr = sub_by_id.get(raw_id) or sub_by_name.get(curated_name)
+            sc_names = names_by_id.get(raw_id, [])
             if sr and sr.get("split", True):
-                for sc in sr["subclusters"]:
+                for sc_idx, sc in enumerate(sr["subclusters"]):
                     # v2 has full book lists; v1 has sample_titles
                     sc_books = sc.get("books", [])
                     langs = sc.get("languages", {})
@@ -252,8 +268,11 @@ def build_hierarchy(all_books, results, labels, sub_results):
                             for t in sc.get("sample_titles", [])
                         ]
 
+                    # Use Gemini-generated name if available
+                    sc_name = sc_names[sc_idx] if sc_idx < len(sc_names) else f"Sub-cluster {sc_idx + 1}"
+
                     sc_node = {
-                        "name": f"Sub-cluster ({sc['size']} books)",
+                        "name": sc_name,
                         "size": sc["size"],
                         "type": "subcluster",
                         "languages": lang_str,
@@ -826,10 +845,10 @@ render();
 
 def main():
     print("Loading data...")
-    all_books, results, labels, embeddings, sub_results = load_data()
+    all_books, results, labels, embeddings, sub_results, named_subs = load_data()
 
     print("Building hierarchy...")
-    hierarchy = build_hierarchy(all_books, results, labels, sub_results)
+    hierarchy = build_hierarchy(all_books, results, labels, sub_results, named_subs)
 
     print("Generating HTML...")
     html_content = generate_html(hierarchy)
