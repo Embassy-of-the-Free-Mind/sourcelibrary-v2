@@ -29,26 +29,37 @@ export default function TermsPage() {
         </p>
 
         <p className="text-sm text-muted">
-          <strong>Effective date:</strong> February 25, 2026
+          <strong>Effective date:</strong> March 15, 2026
           &middot; Operated by the Ancient Wisdom Trust
           in partnership with the Embassy of the Free Mind, Amsterdam.
         </p>
 
-        {/* ── Tier 1: Original Texts ── */}
+        {/* ── Tier 1: Original Texts & Page Images ── */}
         <section className="bg-white rounded-xl p-8 border border-border-light">
           <h2 className="text-2xl text-primary mb-4">
-            Original Texts
+            Original Texts & Page Images
           </h2>
           <p className="text-secondary mb-4">
             The historical source texts on Source Library are <strong>public domain</strong>.
             These are works published centuries ago whose copyright has long expired.
-            The digitized page images are sourced from partner institutions
-            (Internet Archive, Gallica, Bavarian State Library, etc.) under their
-            respective open access terms.
+            You may use the text content freely for any purpose.
           </p>
-          <p className="text-secondary">
-            You may use the original texts and page images for any purpose without restriction.
+          <p className="text-secondary mb-4">
+            <strong>Page images</strong> are sourced from over{' '}
+            <Link href="/libraries" className="text-accent-rust hover:underline">160 partner institutions</Link>{' '}
+            worldwide. Most are public domain or open access, but some carry restrictions
+            set by the digitizing institution &mdash; particularly non-commercial clauses
+            on high-resolution scans. Each book&rsquo;s bibliographic information shows the
+            specific license and attribution requirements for its images.
           </p>
+          <div className="bg-cream rounded-lg p-6">
+            <p className="text-secondary font-medium mb-2">Image license summary:</p>
+            <ul className="text-secondary space-y-1 list-disc list-inside text-sm">
+              <li><strong>~6,000 books</strong> &mdash; public domain or CC0 (use freely)</li>
+              <li><strong>~1,500 books</strong> &mdash; non-commercial only (Bavarian State Library, Bodleian, Vatican, Cambridge)</li>
+              <li><strong>~2,500 books</strong> &mdash; institution-specific terms (check per book)</li>
+            </ul>
+          </div>
         </section>
 
         {/* ── Tier 2: Translations & Generated Content ── */}

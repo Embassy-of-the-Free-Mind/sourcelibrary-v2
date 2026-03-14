@@ -12,10 +12,11 @@ interface DownloadButtonProps {
   hasTranslations: boolean;
   hasOcr: boolean;
   hasImages?: boolean;
+  imageRestricted?: boolean;
   variant?: 'default' | 'header';
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, variant = 'default' }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, variant = 'default' }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(false);
@@ -209,13 +210,13 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               icon={<Columns className="w-4 h-4 text-accent-rust" />}
               onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
           )}
-          {hasTranslations && hasImages && (
+          {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation"
               icon={<Image className="w-4 h-4 text-emerald-700" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
 
-          {hasImages && (
+          {hasImages && !imageRestricted && (
             <>
               <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
                 Images
@@ -227,6 +228,14 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 icon={<Image className="w-4 h-4 text-stone-600" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>
+          )}
+          {hasImages && imageRestricted && (
+            <div className="px-3 py-2 border-t border-stone-100 mt-2">
+              <p className="text-xs text-stone-400">
+                Image downloads unavailable &mdash; source institution&rsquo;s non-commercial license.
+                View images on the book page.
+              </p>
+            </div>
           )}
 
           <div className="border-t border-stone-100 mt-2 pt-2 px-3 pb-1">

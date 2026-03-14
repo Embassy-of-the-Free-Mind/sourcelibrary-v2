@@ -654,6 +654,9 @@ async function BookInfo({ id }: { id: string }) {
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
   const hasTranslations = translatedCount > pages.length / 2; // >50% translated
+  // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
+  const imgLicense = (book as any).image_source?.license || 'unknown';
+  const imageRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
   const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
@@ -799,6 +802,7 @@ async function BookInfo({ id }: { id: string }) {
                       hasTranslations={hasTranslations}
                       hasOcr={hasOcr}
                       hasImages={pages.length > 0}
+                      imageRestricted={imageRestricted}
                       variant="header"
                     />
                     <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />

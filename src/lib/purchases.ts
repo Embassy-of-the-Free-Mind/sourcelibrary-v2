@@ -5,6 +5,28 @@ export const PRICES = {
   image: { amount: 200, label: '$2' },
 } as const;
 
+/** Licenses that prohibit commercial use of page images. */
+const NC_LICENSE_PATTERNS = [
+  /\bnc\b/i,        // NoC-NC, CC-BY-NC, CC-BY-NC-ND, CC-BY-NC-SA
+  /non.?commercial/i,
+];
+
+/**
+ * Check if a book's page images carry a non-commercial restriction.
+ * Returns true if images CANNOT be sold (NC-restricted).
+ * Text-only formats (translation, OCR) are always commercially safe.
+ */
+export async function isImageRestricted(bookId: string): Promise<boolean> {
+  const db = await getDb();
+  const book = await db.collection('books').findOne(
+    { _id: bookId as any },
+    { projection: { 'image_source.license': 1 } },
+  );
+  const license = book?.image_source?.license;
+  if (!license || license === 'unknown') return true; // conservative: unknown = restricted
+  return NC_LICENSE_PATTERNS.some(p => p.test(license));
+}
+
 export type PurchaseType = keyof typeof PRICES;
 
 export interface Purchase {

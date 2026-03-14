@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { canDownload, PRICES } from '@/lib/purchases';
+import { canDownload, isImageRestricted, PRICES } from '@/lib/purchases';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -2364,6 +2364,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const isScholarly = format === 'epub-scholarly';
     const isBilingual = format === 'epub-bilingual';
     const isImagesZip = format === 'images-zip';
+
+    // Image-containing formats require a commercially-clear license.
+    // NC-restricted books (BSB, Bodleian, Vatican, etc.) block paid image downloads.
+    const imageFormat = isFacsimile || isImagesOnly || isImagesZip;
+    if (imageFormat && await isImageRestricted(id)) {
+      return NextResponse.json(
+        {
+          error: 'Image downloads are not available for this book due to the source institution\'s non-commercial license. Text-only formats (TXT, EPUB translation) are available.',
+          license_restricted: true,
+        },
+        { status: 403 },
+      );
+    }
 
     const db = await getDb();
 
