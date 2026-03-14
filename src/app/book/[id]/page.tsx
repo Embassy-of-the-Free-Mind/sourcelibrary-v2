@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
-import { Calendar, Globe, FileText, BookText, BookMarked, User, MapPin, Lightbulb, Images, Search } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import BookHistory from '@/components/book/BookHistory';
@@ -477,7 +477,6 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   ]);
 
   // Exclude heavy fields not used on the book detail page.
-  // index.*.pages arrays are ~100KB for well-indexed books but only .term is displayed.
   const bookProjection = {
     chapters: 0,
     reading_sections: 0,
@@ -485,10 +484,11 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     pipeline_auto: 0,
     split_check: 0,
     'index.sectionSummaries': 0,
-    'index.people.pages': 0,
-    'index.places.pages': 0,
-    'index.concepts.pages': 0,
-    'index.keyTerms.pages': 0,
+    // Legacy flat lists — no longer displayed
+    'index.people': 0,
+    'index.places': 0,
+    'index.concepts': 0,
+    'index.keyTerms': 0,
     pages_ocr: 0,
     translation_percent: 0,
   };
@@ -863,113 +863,68 @@ async function BookInfo({ id }: { id: string }) {
               />
             ) : null}
 
-            {/* Index — collapsed by default */}
+            {/* Index — collapsed by default, with page links */}
             {(() => {
-              const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; places?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
-              const people = index?.people || [];
-              const places = index?.places || [];
-              const concepts = index?.concepts || [];
-              const hasEntities = people.length > 0 || places.length > 0 || concepts.length > 0;
+              const indexEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+              if (!indexEntries || indexEntries.length === 0) return null;
 
-              if (!hasEntities) return null;
-
-              const counts = [
-                people.length > 0 ? `${people.length} people` : '',
-                places.length > 0 ? `${places.length} places` : '',
-                concepts.length > 0 ? `${concepts.length} concepts` : '',
-              ].filter(Boolean).join(', ');
+              const MAX_VISIBLE = 30;
+              const MAX_PAGES_INLINE = 8;
+              const visible = indexEntries.slice(0, MAX_VISIBLE);
 
               return (
                 <details className="card mt-6">
                   <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                     <div className="flex items-center gap-3">
                       <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Index</h2>
-                      <span className="text-xs text-stone-400">{counts}</span>
+                      <span className="text-xs text-stone-400">{indexEntries.length} terms</span>
                     </div>
-                    <Link
-                      href="/encyclopedia"
-                      className="text-sm text-accent-rust hover:text-accent-gold-dark"
-                    >
-                      Browse All &rarr;
-                    </Link>
+                    <span className="text-sm text-accent-rust">
+                      See All &rarr;
+                    </span>
                   </summary>
-                  <div className="px-6 pb-6 space-y-4">
-                    {/* People */}
-                    {people.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <User className="w-4 h-4 text-accent-rust" />
-                          People ({people.length})
+                  <div className="px-6 pb-6">
+                    <div className="space-y-2">
+                      {visible.map((entry) => (
+                        <div key={entry.term} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 py-1 border-b border-stone-50 last:border-0">
+                          <span className={`text-sm font-medium ${
+                            entry.type === 'vocab' ? 'italic text-stone-600' :
+                            entry.type === 'keyword' ? 'text-stone-800' :
+                            'text-stone-700'
+                          }`}>
+                            {entry.term}
+                          </span>
+                          <span className="text-xs text-stone-400">
+                            {entry.pages.slice(0, MAX_PAGES_INLINE).map((p, i) => (
+                              <span key={p}>
+                                {i > 0 && ', '}
+                                <Link
+                                  href={`/book/${book.slug || book.id}/page/${p}`}
+                                  className="text-accent-rust hover:text-accent-gold-dark hover:underline"
+                                >
+                                  p.&thinsp;{p}
+                                </Link>
+                              </span>
+                            ))}
+                            {entry.pages.length > MAX_PAGES_INLINE && (
+                              <span className="text-stone-300 ml-1">
+                                +{entry.pages.length - MAX_PAGES_INLINE} more
+                              </span>
+                            )}
+                          </span>
                         </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {people.slice(0, 15).map((p) => (
-                            <Link
-                              key={p.term}
-                              href={`/encyclopedia/${encodeURIComponent(p.term)}`}
-                              className="px-2 py-1 text-xs bg-accent-rust/8 text-accent-rust rounded hover:bg-accent-rust/15 transition-colors"
-                            >
-                              {p.term}
-                            </Link>
-                          ))}
-                          {people.length > 15 && (
-                            <span className="px-2 py-1 text-xs text-stone-400">
-                              +{people.length - 15} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Places */}
-                    {places.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <MapPin className="w-4 h-4 text-accent-sage" />
-                          Places ({places.length})
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {places.slice(0, 15).map((p) => (
-                            <Link
-                              key={p.term}
-                              href={`/encyclopedia/${encodeURIComponent(p.term)}`}
-                              className="px-2 py-1 text-xs bg-accent-sage/12 text-accent-sage-dark rounded hover:bg-accent-sage/20 transition-colors"
-                            >
-                              {p.term}
-                            </Link>
-                          ))}
-                          {places.length > 15 && (
-                            <span className="px-2 py-1 text-xs text-stone-400">
-                              +{places.length - 15} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Concepts */}
-                    {concepts.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <Lightbulb className="w-4 h-4 text-accent-violet" />
-                          Concepts ({concepts.length})
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {concepts.slice(0, 15).map((c) => (
-                            <Link
-                              key={c.term}
-                              href={`/encyclopedia/${encodeURIComponent(c.term)}`}
-                              className="px-2 py-1 text-xs bg-accent-violet/8 text-accent-violet rounded hover:bg-accent-violet/15 transition-colors"
-                            >
-                              {c.term}
-                            </Link>
-                          ))}
-                          {concepts.length > 15 && (
-                            <span className="px-2 py-1 text-xs text-stone-400">
-                              +{concepts.length - 15} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                      ))}
+                    </div>
+                    {indexEntries.length > MAX_VISIBLE && (
+                      <p className="text-xs text-stone-400 mt-4 pt-3 border-t border-stone-100">
+                        Showing {MAX_VISIBLE} of {indexEntries.length} terms.{' '}
+                        <Link
+                          href={`/book/${book.slug || book.id}/guide`}
+                          className="text-accent-rust hover:underline"
+                        >
+                          View full index
+                        </Link>
+                      </p>
                     )}
                   </div>
                 </details>

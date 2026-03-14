@@ -113,6 +113,19 @@ export interface Book {
       quotes?: Array<{ text: string; page: number; significance?: string }>;
       concepts?: string[];
     }>;
+    // Tag-extracted index entries with page references
+    entries?: Array<{
+      term: string;
+      pages: number[];
+      type: 'vocab' | 'term' | 'keyword';
+    }>;
+    // Legacy flat lists (from old AI extraction)
+    people?: Array<{ term: string; pages: number[] }>;
+    places?: Array<{ term: string; pages: number[] }>;
+    concepts?: Array<{ term: string; pages: number[] }>;
+    keyTerms?: Array<{ term: string; pages: number[] }>;
+    method?: 'tag-extraction' | 'ai-extraction';
+    pagesCovered?: number;
     generatedAt?: Date;
   };
 
