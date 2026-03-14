@@ -24,6 +24,17 @@ interface BlogPost {
 }
 
 const posts: BlogPost[] = [
+  {
+    slug: 'clustering',
+    title: 'What Does a Library of 3,400 Rare Books Look Like?',
+    subtitle: 'We embedded 3,400 book summaries with a neural language model and let HDBSCAN find the structure. 48 natural clusters reveal six intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
+    date: '14 March 2026',
+    readTime: '10 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
+    imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being, 1617',
+  },
   // Hidden: needs rewrite with proper import session data
   // {
   //   slug: 'autonomous-agents',
