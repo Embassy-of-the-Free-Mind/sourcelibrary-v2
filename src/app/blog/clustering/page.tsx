@@ -5,10 +5,10 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Does a Library of 3,400 Rare Books Look Like? - Blog - Source Library',
-  description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 48 natural groupings spanning six intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
+  description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 34 curated groupings spanning seven intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
   openGraph: {
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
-    description: 'Embedding-based clustering reveals 48 natural groupings across six intellectual traditions in one of the largest digitized rare book collections.',
+    description: 'Embedding-based clustering reveals 34 curated groupings across seven intellectual traditions in one of the largest digitized rare book collections.',
   },
   alternates: {
     canonical: '/blog/clustering',
@@ -48,7 +48,7 @@ export default function ClusteringPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          The result: 48 natural clusters across six broad intellectual traditions. Not the categories we assigned &mdash; the categories the books assigned themselves.
+          The algorithm found 48 raw clusters. After editorial review &mdash; merging redundant splits, renaming opaque labels, and organizing into macro-domains &mdash; we arrived at <strong>34 curated clusters across seven intellectual traditions</strong>. Not the categories we assigned &mdash; the categories the books assigned themselves, refined by human judgment.
         </p>
 
         {/* --- Interactive visualization --- */}
@@ -57,7 +57,7 @@ export default function ClusteringPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Each dot is a book. Position reflects semantic similarity &mdash; books near each other have similar content. Colors represent the 48 discovered clusters. Hover over any point to see the title, author, year, and language. Click a cluster name in the legend to isolate it.
+          Each dot is a book. Position reflects semantic similarity &mdash; books near each other have similar content. Colors are grouped by macro-domain: warm reds for Western esotericism, purples for Christian traditions, blues for classical &amp; Renaissance, greens for natural philosophy, ambers for Chinese traditions, teals for South Asian traditions. Hover to see the title, author, year, and cluster name. Use the search box to find specific books or clusters.
         </p>
 
         <div className="mb-8 -mx-4 md:-mx-8 lg:-mx-12">
@@ -107,45 +107,65 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           Finally, we sent each cluster&rsquo;s metadata (themes, terms, languages, sample titles) to Gemini Flash and asked it to generate a descriptive name, a one-sentence description, and tradition tags from a controlled vocabulary. The result is a taxonomy discovered from the data, not imposed on it.
         </p>
 
+        {/* --- Curation --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          From 48 Raw Clusters to 34 Curated Labels
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Algorithmic clustering is a starting point, not an end. Reviewing the 48 raw clusters revealed four categories of issues:
+        </p>
+
+        <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-2">
+          <li><strong>Artificial splits:</strong> HDBSCAN found multiple density peaks within what is really one intellectual tradition. Three separate Sanskrit astrology clusters, two Rosicrucian clusters, two grimoire clusters, two natural philosophy clusters. These were merged.</li>
+          <li><strong>Single-work clusters:</strong> The Wubei Zhi (66 books), Bencao Gangmu (60 books), and Hai Guo Tu Zhi (35 books) each formed their own cluster because Source Library holds many volumes of these multi-volume Chinese encyclopedias. These are real density peaks but represent a single work, not a category.</li>
+          <li><strong>Language artifacts:</strong> Celtic/Irish texts (29 books) and African/Indigenous studies (29 books) clustered by language and regional origin rather than by subject matter. These are genuine clusters in embedding space, but they reflect linguistic distance more than intellectual affinity.</li>
+          <li><strong>Facets masquerading as categories:</strong> &ldquo;Thirty Years&rsquo; War Politics&rdquo; is a historical period, not a subject. &ldquo;Classical Political Economy&rdquo; is real but tangential to the library&rsquo;s focus. These were kept but noted.</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-12">
+          After merging 10 groups of redundant clusters and renaming 24 others for clarity, we arrived at 34 curated clusters organized into seven macro-domains.
+        </p>
+
         {/* --- Findings --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          What We Found: Six Intellectual Traditions
+          Seven Intellectual Traditions
         </h2>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The 48 clusters organize naturally into roughly six macro-domains. This isn&rsquo;t a classification we designed &mdash; it&rsquo;s what the embedding space reveals about the collection&rsquo;s actual content.
+          The curated clusters organize into seven macro-domains. This isn&rsquo;t a classification we designed &mdash; it&rsquo;s what the embedding space reveals about the collection&rsquo;s actual content, refined by editorial judgment.
         </p>
 
         {/* Macro-domain 1 */}
         <h3 className="text-xl text-primary mt-10 mb-3">
-          Western Esotericism &amp; Occult Sciences
+          Western Esotericism
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          The largest domain by far, spanning 10+ clusters and over 800 books. <strong>Early Modern Alchemy</strong> is the single biggest cluster (350 books) &mdash; Latin and German texts on transmutation, Paracelsian medicine, and spagyric chemistry. Nearby: <strong>Hermetic and Neoplatonic Theurgy</strong> (79), <strong>Grimoires and Ceremonial Magic</strong> (59), <strong>Solomonic Grimoires</strong> (19), <strong>Rosicrucian Fraternity Defenses</strong> (38), and <strong>Christian Kabbalah</strong> (47). These form a dense archipelago in the visualization &mdash; closely related but distinguishable by period, language, and specificity.
+          The largest domain, spanning 8 clusters and over 750 books. <strong>Western Alchemy</strong> is the single biggest cluster (350 books) &mdash; Latin and German texts on transmutation, Paracelsian medicine, and spagyric chemistry. It&rsquo;s arguably too broad, mixing 16th-century Paracelsians with 18th-century chrysopoeia. Nearby: <strong>Hermeticism &amp; Theurgy</strong> (79), <strong>Grimoires &amp; Ritual Magic</strong> (78, merged from two raw clusters), <strong>Rosicrucianism</strong> (63, merged from two), <strong>Mesmerism &amp; New Thought</strong> (58, merged from animal magnetism and self-improvement), <strong>Christian Kabbalah</strong> (47), <strong>Freemasonry &amp; Secret Societies</strong> (47), and <strong>Demonology &amp; Witchcraft</strong> (74).
         </p>
 
         {/* Macro-domain 2 */}
         <h3 className="text-xl text-primary mt-10 mb-3">
-          Christian Theology &amp; Mysticism
+          Christian Traditions
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Five clusters totaling ~350 books. <strong>Continental Christian Mysticism</strong> (185) is the second-largest cluster overall, mostly German and Latin texts from Bohme, Tauler, Eckhart, and their successors. <strong>Biblical Texts and Scholarship</strong> (85), <strong>Early Modern Eschatology</strong> (24), <strong>Syriac and Armenian Christian Texts</strong> (41), and <strong>Religious Persecution and Confession</strong> (30) round out the domain. The mystical tradition sits close to the Hermetic cluster in embedding space &mdash; correctly reflecting the historical intertwining of Christian mysticism and Hermeticism.
+          Six clusters, ~430 books. <strong>Continental Christian Mysticism</strong> (185) is the second-largest cluster overall &mdash; German and Latin texts from Bohme, Tauler, Eckhart, and their successors. <strong>Biblical Scholarship</strong> (85), <strong>Patristic &amp; Eastern Christianity</strong> (68, merged from Syriac/Armenian and early apologetics), <strong>Swedenborgian Theology</strong> (18, a single-author cluster), <strong>Religious Persecution &amp; Toleration</strong> (30), and <strong>Apocalypticism &amp; Prophecy</strong> (24). The mystical tradition sits close to the Hermetic cluster in embedding space &mdash; correctly reflecting the historical intertwining of these traditions.
         </p>
 
         {/* Macro-domain 3 */}
         <h3 className="text-xl text-primary mt-10 mb-3">
-          Classical &amp; Renaissance Philosophy
+          Classical &amp; Renaissance
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Classical Greek and Latin Texts</strong> (187 books) is the third-largest cluster: Aristotle, Plato, Cicero, Seneca, Plotinus, Proclus. <strong>Renaissance Philosophy and Theology</strong> (110) captures the Ficino-Pico-Bruno axis. <strong>Early Modern Moral Philosophy</strong> (38) and <strong>Baconian Natural Philosophy</strong> (25) extend into the Enlightenment. These clusters bridge the gap between the esoteric and the scientific.
+          Three clusters. <strong>Classical Texts &amp; Philology</strong> (187 books) is very broad &mdash; Aristotle, Plato, Cicero, Plotinus, plus philological editions. It could arguably be split by period or language. <strong>Renaissance Philosophy</strong> (110) captures the Ficino-Pico-Bruno axis. <strong>German &amp; Dutch Mysticism</strong> (47) is a language-specific subset of late-medieval mysticism that the algorithm correctly separated from the broader Christian mysticism cluster.
         </p>
 
         {/* Macro-domain 4 */}
         <h3 className="text-xl text-primary mt-10 mb-3">
-          Natural Philosophy &amp; Early Science
+          Natural Philosophy &amp; Science
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Astrology and Mathematical Astronomy</strong> (121), <strong>Early Botanical Texts</strong> (90), <strong>Renaissance Anatomy and Engineering</strong> (51), <strong>Early Optics</strong> (47), <strong>Ancient Mechanical Engineering</strong> (27), <strong>Early Music Theory</strong> (49). These clusters trace the pre-disciplinary history of science &mdash; before physics, chemistry, and biology separated from natural philosophy, alchemy, and music theory. Latin dominates, but the engineering cluster includes Hero of Alexandria in Greek and Arabic mechanical texts.
+          Six clusters tracing the pre-disciplinary history of science. <strong>Astrology &amp; Astronomy</strong> (121), <strong>Botany &amp; Herbals</strong> (90), <strong>Natural Philosophy &amp; Optics</strong> (72, merged from two raw clusters), <strong>Engineering &amp; Mechanical Arts</strong> (78, merged from Renaissance and ancient engineering), <strong>Music Theory &amp; Harmony</strong> (49), and <strong>Medical Philosophy</strong> (52). These clusters capture the era before physics, chemistry, and biology separated from natural philosophy, alchemy, and Pythagorean harmony.
         </p>
 
         {/* Macro-domain 5 */}
@@ -153,15 +173,23 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           Chinese Traditions
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Five clusters, ~350 books. <strong>Chinese Religious Systems</strong> (152) is the largest, covering Buddhism, Daoism, and folk religion. <strong>Chinese Military Encyclopedia Wubei Zhi</strong> (66) and <strong>Ming Dynasty Coastal Defense</strong> (18) reflect the military-strategic tradition. <strong>Chinese Materia Medica</strong> (60) captures the pharmacological tradition centered on the Bencao Gangmu. <strong>Hai Guo Tu Zhi</strong> (35) documents the 19th-century encounter with Western knowledge. These clusters sit in a completely separate region of the embedding space &mdash; Chinese-language content about Chinese knowledge systems, with little overlap.
+          Four clusters, ~350 books. <strong>Chinese Religion &amp; Cosmology</strong> (152) covers Buddhism, Daoism, and folk religion. <strong>Chinese Military &amp; Strategic Texts</strong> (119, merged from Wubei Zhi, coastal defense, and Hai Guo Tu Zhi) &mdash; though note this merges multi-volume encyclopedias with independent strategic works. <strong>Chinese Medicine</strong> (86, merged from materia medica and medical anatomy), and <strong>Chinese Celestial &amp; Terrestrial Lore</strong> (31). These clusters sit in a completely separate region of the embedding space &mdash; Chinese-language content clusters by linguistic distance as much as by subject.
         </p>
 
         {/* Macro-domain 6 */}
         <h3 className="text-xl text-primary mt-10 mb-3">
           South &amp; Central Asian Traditions
         </h3>
+        <p className="text-secondary leading-relaxed mb-6">
+          Three clusters. <strong>Sanskrit Astrology &amp; Astronomy</strong> (182, merged from three raw clusters covering Jyotisha, astronomical treatises, and divinatory texts), <strong>Hindu Philosophy &amp; Indology</strong> (68), and <strong>Islamic Mysticism &amp; Philosophy</strong> (41). As with the Chinese clusters, Sanskrit content forms its own island in embedding space &mdash; a genuine structural feature, but one driven partly by linguistic distance rather than pure subject matter.
+        </p>
+
+        {/* Macro-domain 7 */}
+        <h3 className="text-xl text-primary mt-10 mb-3">
+          Other
+        </h3>
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>Sanskrit Jyotisha</strong> (137) and <strong>Sanskrit Astronomical Treatises</strong> (27) cover Vedic astrology and mathematical astronomy. <strong>Hinduism and Indology</strong> (68) captures the broader Indological corpus &mdash; Tantric texts, Vedantic philosophy, the Puranas. <strong>Sanskrit Astrological and Divinatory Texts</strong> (18) is a smaller specialized cluster. Like the Chinese clusters, these form an isolated region in the visualization.
+          Four clusters that don&rsquo;t fit neatly into the macro-domains above. <strong>Political &amp; Moral Philosophy</strong> (123, merged from four small raw clusters including Thirty Years&rsquo; War politics, classical economics, legal treatises, and moral philosophy), <strong>African &amp; Indigenous Studies</strong> (29, a language artifact), <strong>Celtic &amp; Irish Traditions</strong> (29, also a language artifact), and <strong>Pseudo-Dionysius &amp; Commentators</strong> (15, a very specific but genuine intellectual cluster around a single late-antique corpus).
         </p>
 
         {/* --- The noise --- */}
@@ -200,8 +228,16 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
                 <td className="py-3 text-right font-mono">3,424</td>
               </tr>
               <tr className="border-b border-border-light">
-                <td className="py-3 pr-6">Clusters discovered</td>
+                <td className="py-3 pr-6">Raw clusters (HDBSCAN)</td>
                 <td className="py-3 text-right font-mono">48</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="py-3 pr-6">Curated clusters (after merges)</td>
+                <td className="py-3 text-right font-mono">34</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="py-3 pr-6">Macro-domains</td>
+                <td className="py-3 text-right font-mono">7</td>
               </tr>
               <tr className="border-b border-border-light">
                 <td className="py-3 pr-6">Books clustered</td>
@@ -213,19 +249,11 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
               </tr>
               <tr className="border-b border-border-light">
                 <td className="py-3 pr-6">Largest cluster</td>
-                <td className="py-3 text-right font-mono">Early Modern Alchemy (350)</td>
-              </tr>
-              <tr className="border-b border-border-light">
-                <td className="py-3 pr-6">Smallest cluster</td>
-                <td className="py-3 text-right font-mono">Dionysian Corpus (15)</td>
-              </tr>
-              <tr className="border-b border-border-light">
-                <td className="py-3 pr-6">Languages represented</td>
-                <td className="py-3 text-right font-mono">20+</td>
+                <td className="py-3 text-right font-mono">Western Alchemy (350)</td>
               </tr>
               <tr>
-                <td className="py-3 pr-6">Year range</td>
-                <td className="py-3 text-right font-mono">~50 CE &ndash; 1994</td>
+                <td className="py-3 pr-6">Smallest cluster</td>
+                <td className="py-3 text-right font-mono">Pseudo-Dionysius (15)</td>
               </tr>
             </tbody>
           </table>
@@ -280,13 +308,13 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           </table>
         </div>
 
-        {/* --- All 48 clusters --- */}
+        {/* --- All 34 clusters by domain --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          All 48 Clusters
+          All 34 Curated Clusters
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Sorted by size. Cluster names were generated by Gemini Flash from each cluster&rsquo;s thematic profile; tradition tags come from a controlled vocabulary of ~50 terms.
+          Organized by macro-domain. &ldquo;Raw&rdquo; shows how many algorithmic clusters were merged. &ldquo;Notes&rdquo; flags known issues: language artifacts, single-work collections, overly broad groupings.
         </p>
 
         <div className="overflow-x-auto mb-12">
@@ -295,59 +323,79 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
               <tr className="border-b-2 border-border-medium">
                 <th className="py-2 pr-4 text-primary font-semibold">Cluster</th>
                 <th className="py-2 pr-4 text-primary font-semibold text-right">Books</th>
-                <th className="py-2 pr-4 text-primary font-semibold">Period</th>
-                <th className="py-2 text-primary font-semibold">Tradition Tags</th>
+                <th className="py-2 pr-4 text-primary font-semibold text-right">Raw</th>
+                <th className="py-2 text-primary font-semibold">Notes</th>
               </tr>
             </thead>
             <tbody className="text-secondary">
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Modern Alchemy</td><td className="py-2 pr-4 text-right font-mono">350</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Western Alchemy, Hermeticism, Natural Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Classical Greek and Latin Texts</td><td className="py-2 pr-4 text-right font-mono">187</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Classical Philosophy, Philology, Textual Criticism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Continental Christian Mysticism</td><td className="py-2 pr-4 text-right font-mono">185</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Christian Mysticism, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Religious Systems</td><td className="py-2 pr-4 text-right font-mono">152</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Chinese Religion</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Sanskrit Jyotisha and Cataloging</td><td className="py-2 pr-4 text-right font-mono">137</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Vedic Astrology, Sanskrit Literature, Astrology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Astrology and Mathematical Astronomy</td><td className="py-2 pr-4 text-right font-mono">121</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Astrology, Astronomy, Mathematics</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Renaissance Philosophy and Theology</td><td className="py-2 pr-4 text-right font-mono">110</td><td className="py-2 pr-4">Renaissance</td><td className="py-2">Neoplatonism, Christian Theology, Classical Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Botanical Texts</td><td className="py-2 pr-4 text-right font-mono">90</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Botany, Medicine, Natural Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Biblical Texts and Scholarship</td><td className="py-2 pr-4 text-right font-mono">85</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Textual Criticism, Philology, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Hermetic and Neoplatonic Theurgy</td><td className="py-2 pr-4 text-right font-mono">79</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Hermeticism, Neoplatonism, Theurgy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Modern Demonology</td><td className="py-2 pr-4 text-right font-mono">74</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Witchcraft &amp; Demonology, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Hinduism and Indology</td><td className="py-2 pr-4 text-right font-mono">68</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Hindu Philosophy, Sanskrit Literature, Tantra</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Military Encyclopedia (Wubei Zhi)</td><td className="py-2 pr-4 text-right font-mono">66</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Chinese Military Arts, Chinese Divination, Engineering</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Materia Medica</td><td className="py-2 pr-4 text-right font-mono">60</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Chinese Medicine, Botany</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Grimoires and Ceremonial Magic</td><td className="py-2 pr-4 text-right font-mono">59</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Ceremonial Magic, Divination, Occult Revival</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Melancholy, Medicine, and Longevity</td><td className="py-2 pr-4 text-right font-mono">52</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Medicine, Natural Philosophy, Neoplatonism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Renaissance Anatomy and Engineering</td><td className="py-2 pr-4 text-right font-mono">51</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Engineering, Medicine, Natural Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Music Theory &amp; Harmony</td><td className="py-2 pr-4 text-right font-mono">49</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Mathematics, Philology, Pythagoreanism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Christian Kabbalah and Universalism</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Kabbalah, Christian Mysticism, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Freemasonry and Secret Societies</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4">Enlightenment</td><td className="py-2">Freemasonry, Secret Societies</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Optics and Natural Philosophy</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4">Enlightenment</td><td className="py-2">Natural Philosophy, Optics, Mathematics</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Islamic Mysticism and Folklore</td><td className="py-2 pr-4 text-right font-mono">41</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Islamic Mysticism, Islamic Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Syriac and Armenian Christian Texts</td><td className="py-2 pr-4 text-right font-mono">41</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Patristic Christianity, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Rosicrucian Fraternity Defenses</td><td className="py-2 pr-4 text-right font-mono">38</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Rosicrucianism, Hermeticism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Modern Moral Philosophy</td><td className="py-2 pr-4 text-right font-mono">38</td><td className="py-2 pr-4">Enlightenment</td><td className="py-2">Political Philosophy, Classical Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Modern Philosophy</td><td className="py-2 pr-4 text-right font-mono">36</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Classical Philosophy, Political Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Hai Guo Tu Zhi Studies</td><td className="py-2 pr-4 text-right font-mono">35</td><td className="py-2 pr-4">19th Century</td><td className="py-2">Chinese Military Arts, Economics</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">New Thought Self-Improvement</td><td className="py-2 pr-4 text-right font-mono">35</td><td className="py-2 pr-4">Modern</td><td className="py-2">Occult Revival, Mesmerism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Celestial and Terrestrial Lore</td><td className="py-2 pr-4 text-right font-mono">31</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Chinese Divination, Chinese Philosophy, Astronomy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Religious Persecution and Confession</td><td className="py-2 pr-4 text-right font-mono">30</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Christian Theology, Political Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">West African Ethnographic Studies</td><td className="py-2 pr-4 text-right font-mono">29</td><td className="py-2 pr-4">Modern</td><td className="py-2">Philology, Textual Criticism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Celtic &amp; Irish Legal Texts</td><td className="py-2 pr-4 text-right font-mono">29</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Philology, Textual Criticism</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Sanskrit Astronomical Treatises</td><td className="py-2 pr-4 text-right font-mono">27</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Vedic Astrology, Sanskrit Literature, Astronomy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Ancient Mechanical Engineering</td><td className="py-2 pr-4 text-right font-mono">27</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Engineering, Mathematics, Classical Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Christian History &amp; Apologetics</td><td className="py-2 pr-4 text-right font-mono">27</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Patristic Christianity, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Medical Texts and Anatomy</td><td className="py-2 pr-4 text-right font-mono">26</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Chinese Medicine, Medicine</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Baconian Natural Philosophy</td><td className="py-2 pr-4 text-right font-mono">25</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Natural Philosophy, Optics, Classical Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Legal and Political Treatises</td><td className="py-2 pr-4 text-right font-mono">25</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Political Philosophy, Philology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Modern Rosicrucianism</td><td className="py-2 pr-4 text-right font-mono">25</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Rosicrucianism, Hermeticism, Western Alchemy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Thirty Years&rsquo; War Politics</td><td className="py-2 pr-4 text-right font-mono">24</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Political Philosophy, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Early Modern Eschatology</td><td className="py-2 pr-4 text-right font-mono">24</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Eschatology, Christian Theology</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Animal Magnetism and Mesmerism</td><td className="py-2 pr-4 text-right font-mono">23</td><td className="py-2 pr-4">19th Century</td><td className="py-2">Mesmerism, Occult Revival, Medicine</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Classical Political Economy</td><td className="py-2 pr-4 text-right font-mono">20</td><td className="py-2 pr-4">Enlightenment</td><td className="py-2">Economics, Political Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Solomonic Grimoires and Magic</td><td className="py-2 pr-4 text-right font-mono">19</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Ceremonial Magic, Kabbalah</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Ming Dynasty Coastal Defense</td><td className="py-2 pr-4 text-right font-mono">18</td><td className="py-2 pr-4">Early Modern</td><td className="py-2">Chinese Military Arts</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Sanskrit Astrological and Divinatory Texts</td><td className="py-2 pr-4 text-right font-mono">18</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Vedic Astrology, Hindu Philosophy</td></tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Swedenborgian Theology</td><td className="py-2 pr-4 text-right font-mono">18</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Christian Theology, Christian Mysticism</td></tr>
-              <tr><td className="py-2 pr-4">Dionysian Corpus and Interpreters</td><td className="py-2 pr-4 text-right font-mono">15</td><td className="py-2 pr-4">Mixed</td><td className="py-2">Neoplatonism, Christian Theology</td></tr>
+              {/* Western Esotericism */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Western Esotericism</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Western Alchemy</td><td className="py-2 pr-4 text-right font-mono">350</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Too broad &mdash; mixes Paracelsians with chrysopoeia</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Hermeticism &amp; Theurgy</td><td className="py-2 pr-4 text-right font-mono">79</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Grimoires &amp; Ritual Magic</td><td className="py-2 pr-4 text-right font-mono">78</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: ceremonial + Solomonic</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Demonology &amp; Witchcraft</td><td className="py-2 pr-4 text-right font-mono">74</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Rosicrucianism</td><td className="py-2 pr-4 text-right font-mono">63</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: fraternity defenses + early modern</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Mesmerism &amp; New Thought</td><td className="py-2 pr-4 text-right font-mono">58</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: animal magnetism + self-improvement</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Christian Kabbalah</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Freemasonry &amp; Secret Societies</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+
+              {/* Christian Traditions */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Christian Traditions</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Continental Christian Mysticism</td><td className="py-2 pr-4 text-right font-mono">185</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Biblical Scholarship</td><td className="py-2 pr-4 text-right font-mono">85</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Patristic &amp; Eastern Christianity</td><td className="py-2 pr-4 text-right font-mono">68</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: Syriac/Armenian + apologetics</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Religious Persecution &amp; Toleration</td><td className="py-2 pr-4 text-right font-mono">30</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">More of a theme than a tradition</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Apocalypticism &amp; Prophecy</td><td className="py-2 pr-4 text-right font-mono">24</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Swedenborgian Theology</td><td className="py-2 pr-4 text-right font-mono">18</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Single-author cluster</td></tr>
+
+              {/* Classical & Renaissance */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Classical &amp; Renaissance</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Classical Texts &amp; Philology</td><td className="py-2 pr-4 text-right font-mono">187</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Too broad &mdash; Aristotle to Proclus in one bucket</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Renaissance Philosophy</td><td className="py-2 pr-4 text-right font-mono">110</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">German &amp; Dutch Mysticism</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Language-specific split from Christian mysticism</td></tr>
+
+              {/* Natural Philosophy & Science */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Natural Philosophy &amp; Science</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Astrology &amp; Astronomy</td><td className="py-2 pr-4 text-right font-mono">121</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Botany &amp; Herbals</td><td className="py-2 pr-4 text-right font-mono">90</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Engineering &amp; Mechanical Arts</td><td className="py-2 pr-4 text-right font-mono">78</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: Renaissance + ancient engineering</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Natural Philosophy &amp; Optics</td><td className="py-2 pr-4 text-right font-mono">72</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: Baconian + early optics</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Medical Philosophy</td><td className="py-2 pr-4 text-right font-mono">52</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Music Theory &amp; Harmony</td><td className="py-2 pr-4 text-right font-mono">49</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+
+              {/* Chinese Traditions */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Chinese Traditions</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Religion &amp; Cosmology</td><td className="py-2 pr-4 text-right font-mono">152</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Very broad &mdash; Buddhism, Daoism, folk religion</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Military &amp; Strategic Texts</td><td className="py-2 pr-4 text-right font-mono">119</td><td className="py-2 pr-4 text-right font-mono">3</td><td className="py-2 text-muted text-xs">Merged: Wubei Zhi + coastal defense + Hai Guo Tu Zhi. Includes single-work volumes.</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Medicine</td><td className="py-2 pr-4 text-right font-mono">86</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: materia medica + anatomy. Includes Bencao Gangmu volumes.</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Celestial &amp; Terrestrial Lore</td><td className="py-2 pr-4 text-right font-mono">31</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+
+              {/* South & Central Asian */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>South &amp; Central Asian</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Sanskrit Astrology &amp; Astronomy</td><td className="py-2 pr-4 text-right font-mono">182</td><td className="py-2 pr-4 text-right font-mono">3</td><td className="py-2 text-muted text-xs">Merged: Jyotisha + astronomical treatises + divinatory texts</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Hindu Philosophy &amp; Indology</td><td className="py-2 pr-4 text-right font-mono">68</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Islamic Mysticism &amp; Philosophy</td><td className="py-2 pr-4 text-right font-mono">41</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
+
+              {/* Other */}
+              <tr className="border-b border-border-medium bg-warm">
+                <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Other</td>
+              </tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Political &amp; Moral Philosophy</td><td className="py-2 pr-4 text-right font-mono">123</td><td className="py-2 pr-4 text-right font-mono">4</td><td className="py-2 text-muted text-xs">Merged: 4 small clusters. Includes period artifacts (Thirty Years&rsquo; War).</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">African &amp; Indigenous Studies</td><td className="py-2 pr-4 text-right font-mono">29</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Language artifact</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Celtic &amp; Irish Traditions</td><td className="py-2 pr-4 text-right font-mono">29</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Language artifact</td></tr>
+              <tr><td className="py-2 pr-4">Pseudo-Dionysius &amp; Commentators</td><td className="py-2 pr-4 text-right font-mono">15</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Very specific but genuine</td></tr>
             </tbody>
           </table>
         </div>
@@ -362,7 +410,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Worse, the current categories are flat and mutually exclusive. A book tagged &ldquo;Alchemy&rdquo; can&rsquo;t also be tagged &ldquo;Medicine&rdquo; or &ldquo;Natural Philosophy&rdquo; &mdash; but the clustering shows that these categories overlap heavily. The &ldquo;Melancholy, Medicine, and Longevity&rdquo; cluster (52 books) sits at the intersection of medicine, natural philosophy, and Neoplatonism. &ldquo;Christian Kabbalah&rdquo; bridges three traditions. Forcing these into a single category loses information.
+          Worse, the current categories are flat and mutually exclusive. A book tagged &ldquo;Alchemy&rdquo; can&rsquo;t also be tagged &ldquo;Medicine&rdquo; or &ldquo;Natural Philosophy&rdquo; &mdash; but the clustering shows that these categories overlap heavily. The &ldquo;Medical Philosophy&rdquo; cluster (52 books) sits at the intersection of medicine, natural philosophy, and Neoplatonism. &ldquo;Christian Kabbalah&rdquo; bridges three traditions. Forcing these into a single category loses information.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -370,13 +418,13 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The 48 clusters and their tradition tags are the starting point for designing that taxonomy. They represent what the collection actually contains, discovered from the data rather than imposed by assumption.
+          The 34 curated clusters and their macro-domains are the starting point for designing that taxonomy. They represent what the collection actually contains &mdash; discovered from the data, refined by judgment, and honest about where the algorithm sees structure that isn&rsquo;t really there.
         </p>
 
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Embeddings: all-mpnet-base-v2 (768d, local). Dimensionality reduction: UMAP (n_neighbors=30, min_dist=0.3, metric=cosine). Clustering: HDBSCAN (min_cluster_size=15, min_samples=5, cluster_selection_method=eom). Cluster labeling: Gemini 2.0 Flash with structured JSON output. Visualization: Plotly.js with UMAP 2D projection. Pipeline code and data available on request.
+          <strong>Technical details:</strong> Embeddings: all-mpnet-base-v2 (768d, local). Dimensionality reduction: UMAP (n_neighbors=30, min_dist=0.3, metric=cosine). Clustering: HDBSCAN (min_cluster_size=15, min_samples=5, cluster_selection_method=eom). Cluster labeling: Gemini 2.0 Flash with structured JSON output. Visualization: Plotly.js with UMAP 2D projection. 48 raw clusters → 34 curated (10 merge groups, 24 renames). Pipeline code and data available on request.
         </p>
 
       </article>
