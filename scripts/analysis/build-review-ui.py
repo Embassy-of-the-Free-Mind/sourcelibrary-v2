@@ -15,23 +15,31 @@ OUTPUT_DIR = Path(__file__).parent.parent / "output"
 # ── Macro-domain assignments (from build-cluster-viz-v2.py) ──
 MACRO_DOMAINS = {
     "Western Esotericism": {
-        "clusters": [21, 35, 27, 26, 25, 11, 30, 18, 19, 4, 12],
+        "clusters": [21, 35, 25, 4, 12, 11, 30, 18, 19],
         "color": "#c0392b",
+    },
+    "Magic and the Occult": {
+        "clusters": [27, 26],
+        "color": "#e74c3c",
     },
     "Christian Traditions": {
         "clusters": [47, 45, 41, 44, 40, 46, 43],
         "color": "#8e44ad",
     },
-    "Classical & Renaissance": {
-        "clusters": [36, 32, 39],
+    "Classical Greek": {
+        "clusters": [36],
         "color": "#2980b9",
+    },
+    "Classical & Renaissance": {
+        "clusters": [32, 39],
+        "color": "#3498db",
     },
     "Natural Philosophy & Science": {
         "clusters": [31, 15, 34, 22, 38, 37, 0, 20],
         "color": "#27ae60",
     },
     "Chinese Traditions": {
-        "clusters": [6, 9, 13, 14, 2, 3, 10],
+        "clusters": [6, 9, 13, 2, 3, 10],
         "color": "#d35400",
     },
     "South & Central Asian": {
@@ -39,7 +47,7 @@ MACRO_DOMAINS = {
         "color": "#16a085",
     },
     "Other": {
-        "clusters": [29, 33, 23, 42, 24, 1, 7],
+        "clusters": [29, 33, 23, 42, 24, 14, 1, 7],
         "color": "#7f8c8d",
     },
 }
@@ -60,10 +68,10 @@ CURATED_NAMES = {
     47: "Continental Christian Mysticism",
     45: "Biblical Scholarship",
     41: "Syriac & Armenian Christianity",
-    44: "Early Christian Apologetics",
+    44: "Early Christianity",
     40: "Swedenborgian Theology",
     46: "Religious Persecution & Toleration",
-    43: "Early Modern Eschatology",
+    43: "Early Modern Prophecy and Apocalypse",
     36: "Classical Greek & Latin Texts",
     32: "Renaissance Philosophy",
     39: "Pseudo-Dionysius & Commentators",
@@ -75,8 +83,8 @@ CURATED_NAMES = {
     37: "Ancient Mechanical Engineering",
     0:  "Music Theory & Harmony",
     20: "Medical Philosophy",
-    6:  "Chinese Religion & Cosmology",
-    9:  "Chinese Military Encyclopedia (Wubei Zhi)",
+    6:  "Chinese Cosmology",
+    9:  "Chinese Military",
     13: "Hai Guo Tu Zhi Studies",
     14: "Ming Dynasty Coastal Defense",
     2:  "Chinese Materia Medica",
@@ -85,7 +93,7 @@ CURATED_NAMES = {
     8:  "Sanskrit Jyotisha",
     5:  "Sanskrit Astronomical Treatises",
     16: "Sanskrit Divinatory Texts",
-    17: "Hindu Philosophy & Indology",
+    17: "Hindu Philosophy",
     28: "Islamic Mysticism & Philosophy",
     29: "Early Modern Moral Philosophy",
     33: "Early Modern Philosophy",
