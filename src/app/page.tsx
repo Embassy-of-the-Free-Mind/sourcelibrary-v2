@@ -446,8 +446,8 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {collections.map((col, i) => (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              {collections.slice(0, 7).map((col, i) => (
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
@@ -458,7 +458,7 @@ export default async function HomePage() {
                       src={col.hero_image}
                       alt=""
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 50vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       priority={i < 4}
                       loading={i < 8 ? 'eager' : 'lazy'}
@@ -468,15 +468,28 @@ export default async function HomePage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="font-serif text-base sm:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-1">
+                    <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                       {col.name}
                     </h3>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white/60 text-xs mt-1 hidden sm:block">
                       {col.book_count} books
                     </p>
                   </div>
                 </Link>
               ))}
+              {collections.length > 7 && (
+                <Link
+                  href="/collections"
+                  className="group relative rounded-xl overflow-hidden aspect-[4/3] bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
+                >
+                  <div className="text-center px-4">
+                    <p className="font-serif text-lg sm:text-xl text-white/90 group-hover:text-accent-gold transition-colors">
+                      See {collections.length - 7} more
+                    </p>
+                    <p className="text-white/40 text-xs mt-1">collections</p>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </section>
