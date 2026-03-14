@@ -124,7 +124,7 @@ async function main() {
 
   const books = await db.collection('books')
     .find(
-      { hidden: { $ne: true }, pages_translated: { $gte: 1 } },
+      { hidden: { $ne: true }, $or: [{ pages_translated: { $gte: 1 } }, { pages_ocr: { $gte: 1 } }] },
       { projection: { id: 1, title: 1, pages_count: 1 } }
     )
     .sort({ pages_translated: -1 })
