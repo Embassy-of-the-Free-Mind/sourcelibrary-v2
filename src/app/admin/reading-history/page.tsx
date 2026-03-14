@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ChevronLeft, RefreshCw, Trash2, BookOpen, Clock, Eye } from 'lucide-react';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -132,12 +131,10 @@ export default function AdminReadingHistoryPage() {
                       {/* Thumbnail */}
                       {book.thumbnail ? (
                         <Link href={url} className="flex-shrink-0">
-                          <Image
-                            src={`/api/image?url=${encodeURIComponent(book.thumbnail)}&w=80&h=100`}
+                          <img
+                            src={book.thumbnail}
                             alt=""
-                            width={48}
-                            height={64}
-                            className="rounded object-cover bg-stone-100"
+                            className="w-12 h-16 rounded object-cover bg-stone-100"
                           />
                         </Link>
                       ) : (
