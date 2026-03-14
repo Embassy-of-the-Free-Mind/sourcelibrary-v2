@@ -61,19 +61,20 @@ const LANGUAGES = [
 const MAX_LANG = 961;
 
 const IIIF_PROVIDERS = [
-  { name: 'Internet Archive', books: '2,800+' },
-  { name: 'Embassy of the Free Mind', books: '800+' },
-  { name: 'Bibliothèque nationale de France (Gallica)', books: '90+' },
-  { name: 'Bavarian State Library (MDZ)', books: '60+' },
-  { name: 'Vatican Library', books: '40+' },
-  { name: 'Cambridge University Library', books: '35+' },
-  { name: 'Bodleian Library, Oxford', books: '20+' },
-  { name: 'Library of Congress', books: '15+' },
-  { name: 'Herzog August Bibliothek', books: '10+' },
+  { name: 'Internet Archive', books: '5,600+' },
+  { name: 'Bavarian State Library (MDZ)', books: '1,380+' },
+  { name: 'Embassy of the Free Mind', books: '1,090+' },
+  { name: 'Vatican Library', books: '950+' },
+  { name: 'Electronic Text Corpus of Sumerian Literature', books: '370+' },
+  { name: 'Google Books (via IA mirror)', books: '200+' },
+  { name: 'Bibliothèque nationale de France (Gallica)', books: '170+' },
+  { name: 'Bodleian Library, Oxford', books: '90+' },
+  { name: 'Library of Congress', books: '60+' },
+  { name: 'Cambridge Digital Library', books: '55+' },
+  { name: 'CMC Prins Frederik — Bibliotheca Klossiana', books: '19' },
   { name: 'Swiss e-rara', books: '10+' },
-  { name: 'Wellcome Collection', books: '5+' },
-  { name: 'Europeana (aggregator)', books: '5+' },
-  { name: 'Google Books (via IA mirror)', books: '30+' },
+  { name: 'Wellcome Collection', books: '8' },
+  { name: 'Cuneiform Digital Library Initiative', books: '4' },
 ];
 
 export default function WorldsLargestCollectionPage() {
@@ -247,7 +248,7 @@ export default function WorldsLargestCollectionPage() {
             holds over 40 million digitized texts, including thousands of English translations of
             classical, medieval, and early modern works &mdash; every old Bohn&rsquo;s Classical Library
             volume, the Sacred Books of the East, countless 19th-century renderings of Greek, Latin, and
-            Sanskrit texts. It is, in fact, Source Library&rsquo;s primary upstream source: over 2,800 of
+            Sanskrit texts. It is, in fact, Source Library&rsquo;s primary upstream source: over 5,600 of
             our books come from IA&rsquo;s digitized collections. But the Internet Archive is a general-purpose
             archive. It preserves and hosts what already exists. The translations it contains were published
             decades or centuries ago and happen to be in its collection. It does not produce new translations,
@@ -404,15 +405,15 @@ export default function WorldsLargestCollectionPage() {
             (IIIF). Because institutions like the Biblioth&egrave;que nationale de France, the
             Bavarian State Library, the Bodleian Library, and the Vatican Library all expose their
             digitized collections through IIIF manifests, Source Library can consume page images
-            from 13 different providers through a single, uniform input layer.
+            from 14 different providers through a single, uniform input layer.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Adding a new institutional source requires only a manifest parser. The entire downstream
             pipeline &mdash; image archiving, Gemini vision OCR, automated translation, illustration
             detection, metadata enrichment, and scholarly edition publishing with DOIs &mdash; works
-            unchanged regardless of whether the source is the Vatican, Cambridge, or a small Swiss
-            cantonal library.
+            unchanged regardless of whether the source is the Vatican, the Bavarian State Library,
+            or a small Swiss cantonal library.
           </p>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
