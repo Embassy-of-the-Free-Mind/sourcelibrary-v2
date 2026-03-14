@@ -9,6 +9,7 @@ import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import BookHistory from '@/components/book/BookHistory';
+import BookIndex from '@/components/book/BookIndex';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
@@ -894,71 +895,21 @@ async function BookInfo({ id }: { id: string }) {
               />
             ) : null}
 
-            {/* Index — collapsed by default, with page links */}
+            {/* Index — tiered with filter */}
             {(() => {
-              const indexEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
-              if (!indexEntries || indexEntries.length === 0) return null;
+              const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+              if (!allEntries || allEntries.length === 0) return null;
 
-              const MAX_VISIBLE = 30;
-              const MAX_PAGES_INLINE = 8;
-              const visible = indexEntries.slice(0, MAX_VISIBLE);
+              // Drop hapax (single-mention) entries server-side to keep serialization small
+              const entries = allEntries.filter(e => e.pages.length >= 2);
+              if (entries.length === 0) return null;
 
               return (
-                <details className="card mt-6">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Index</h2>
-                      <span className="text-xs text-stone-400">{indexEntries.length} terms</span>
-                    </div>
-                    <span className="text-sm text-accent-rust">
-                      See All &rarr;
-                    </span>
-                  </summary>
-                  <div className="px-6 pb-6">
-                    <div className="space-y-2">
-                      {visible.map((entry) => (
-                        <div key={entry.term} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 py-1 border-b border-stone-50 last:border-0">
-                          <span className={`text-sm font-medium ${
-                            entry.type === 'vocab' ? 'italic text-stone-600' :
-                            entry.type === 'keyword' ? 'text-stone-800' :
-                            'text-stone-700'
-                          }`}>
-                            {entry.term}
-                          </span>
-                          <span className="text-xs text-stone-400">
-                            {entry.pages.slice(0, MAX_PAGES_INLINE).map((p, i) => (
-                              <span key={p}>
-                                {i > 0 && ', '}
-                                <Link
-                                  href={`/book/${book.slug || book.id}/page/${p}`}
-                                  className="text-accent-rust hover:text-accent-gold-dark hover:underline"
-                                >
-                                  p.&thinsp;{p}
-                                </Link>
-                              </span>
-                            ))}
-                            {entry.pages.length > MAX_PAGES_INLINE && (
-                              <span className="text-stone-300 ml-1">
-                                +{entry.pages.length - MAX_PAGES_INLINE} more
-                              </span>
-                            )}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    {indexEntries.length > MAX_VISIBLE && (
-                      <p className="text-xs text-stone-400 mt-4 pt-3 border-t border-stone-100">
-                        Showing {MAX_VISIBLE} of {indexEntries.length} terms.{' '}
-                        <Link
-                          href={`/book/${book.slug || book.id}/guide`}
-                          className="text-accent-rust hover:underline"
-                        >
-                          View full index
-                        </Link>
-                      </p>
-                    )}
-                  </div>
-                </details>
+                <BookIndex
+                  entries={entries}
+                  bookSlug={book.slug || book.id}
+                  totalPages={pages.length}
+                />
               );
             })()}
 
