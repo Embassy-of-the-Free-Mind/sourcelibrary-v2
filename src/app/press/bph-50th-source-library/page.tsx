@@ -71,10 +71,11 @@ export default function PressReleasePage() {
           <h3 className="font-serif text-2xl text-primary pt-6">A new scale of access</h3>
 
           <p>
-            Source Library draws on digitised books from 14 partner institutions,
-            including the Internet Archive, the Bavarian State Library,
-            the Biblioth&egrave;que nationale de France (Gallica), the Vatican Library,
-            the Bodleian Library at Oxford, the Library of Congress, and others.
+            Source Library draws on digitised books from over 160 libraries and institutions
+            worldwide, including the Bavarian State Library, the Biblioth&egrave;que nationale
+            de France, the Vatican Library, the Bodleian Library at Oxford, the Getty Research
+            Institute, the Library of Congress, Harvard, and many others &mdash; accessed
+            through IIIF and the Internet Archive.
             Using AI-powered translation, texts that have sat unread in Latin, German, Arabic,
             Sanskrit, and dozens of other languages &mdash; many since they were first printed
             centuries ago &mdash; are now available to anyone with a browser, free of charge.
@@ -96,7 +97,7 @@ export default function PressReleasePage() {
             <li><strong>800,000+</strong> pages translated into English</li>
             <li><strong>2,400+</strong> first-ever English translations</li>
             <li><strong>3.7&nbsp;million</strong> digitised page images with 76,000+ extracted illustrations</li>
-            <li><strong>14</strong> digital library partners worldwide</li>
+            <li><strong>160+</strong> source libraries and institutions worldwide</li>
           </ul>
 
           <p>
@@ -188,8 +189,8 @@ export default function PressReleasePage() {
               Source Library is a free, open-access digital library of translated ancient and
               early modern primary sources. Using AI-powered translation, it makes previously
               inaccessible texts available in English alongside their original languages.
-              The collection spans 10,000+ books in 100+ languages from 14 digital library
-              partners. Source Library is [an initiative of / developed in partnership with]
+              The collection spans 10,000+ books in 100+ languages from 160+ source
+              institutions worldwide. Source Library is [an initiative of / developed in partnership with]
               the Embassy of the Free Mind.{' '}
               <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>
             </p>

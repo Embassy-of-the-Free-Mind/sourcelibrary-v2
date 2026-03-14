@@ -60,21 +60,27 @@ const LANGUAGES = [
 ];
 const MAX_LANG = 961;
 
-const IIIF_PROVIDERS = [
-  { name: 'Internet Archive', books: '5,600+' },
-  { name: 'Bavarian State Library (MDZ)', books: '1,380+' },
-  { name: 'Embassy of the Free Mind', books: '1,090+' },
-  { name: 'Vatican Library', books: '950+' },
-  { name: 'Electronic Text Corpus of Sumerian Literature', books: '370+' },
-  { name: 'Google Books (via IA mirror)', books: '200+' },
-  { name: 'Bibliothèque nationale de France (Gallica)', books: '170+' },
-  { name: 'Bodleian Library, Oxford', books: '90+' },
-  { name: 'Library of Congress', books: '60+' },
-  { name: 'Cambridge Digital Library', books: '55+' },
-  { name: 'CMC Prins Frederik — Bibliotheca Klossiana', books: '19' },
-  { name: 'Swiss e-rara', books: '10+' },
-  { name: 'Wellcome Collection', books: '8' },
-  { name: 'Cuneiform Digital Library Initiative', books: '4' },
+// Top source institutions (contributing libraries, not intermediaries)
+const SOURCE_INSTITUTIONS = [
+  { name: 'Bavarian State Library (MDZ)', books: '1,380+', access: 'IIIF direct' },
+  { name: 'Embassy of the Free Mind', books: '1,090+', access: 'IIIF direct' },
+  { name: 'Electronic Text Corpus of Sumerian Literature', books: '370+', access: 'Direct' },
+  { name: 'University of Toronto', books: '450+', access: 'via Internet Archive' },
+  { name: 'Koninklijke Bibliotheek (Netherlands)', books: '200+', access: 'via Internet Archive' },
+  { name: 'Getty Research Institute', books: '170+', access: 'via Internet Archive' },
+  { name: 'Biblioth\u00e8que nationale de France (Gallica)', books: '170+', access: 'IIIF direct' },
+  { name: 'Biblioteca Nazionale Centrale di Firenze', books: '165+', access: 'via Internet Archive' },
+  { name: 'National Central Library of Rome', books: '160+', access: 'via Internet Archive' },
+  { name: 'Peking University Library', books: '135+', access: 'via CADAL' },
+  { name: 'Harvard University', books: '115+', access: 'via Internet Archive' },
+  { name: 'University of Michigan', books: '115+', access: 'via Internet Archive' },
+  { name: 'Wellcome Library', books: '105+', access: 'IIIF direct + via IA' },
+  { name: 'Biblioteca Medicea Laurenziana', books: '100+', access: 'IIIF direct' },
+  { name: 'Bodleian Library, Oxford', books: '90+', access: 'IIIF direct + via IA' },
+  { name: 'Biblioteca Apostolica Vaticana', books: '85+', access: 'IIIF direct' },
+  { name: 'Smithsonian Libraries', books: '65+', access: 'via Internet Archive' },
+  { name: 'Boston Public Library', books: '65+', access: 'via Internet Archive' },
+  { name: 'Library of Congress', books: '60+', access: 'IIIF direct' },
 ];
 
 export default function WorldsLargestCollectionPage() {
@@ -394,47 +400,54 @@ export default function WorldsLargestCollectionPage() {
         {/* === Section 4: IIIF === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            How IIIF makes this possible
+            160+ libraries, one pipeline
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The scale of Source Library depends on a single infrastructural fact: the{' '}
+            Source Library draws on books from over 160 libraries and institutions worldwide.
+            Some &mdash; the Bavarian State Library, the Biblioth&egrave;que nationale de France,
+            the Bodleian, the Vatican &mdash; expose their collections directly through the{' '}
             <a href="https://iiif.io/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               International Image Interoperability Framework
             </a>{' '}
-            (IIIF). Because institutions like the Biblioth&egrave;que nationale de France, the
-            Bavarian State Library, the Bodleian Library, and the Vatican Library all expose their
-            digitized collections through IIIF manifests, Source Library can consume page images
-            from 14 different providers through a single, uniform input layer.
+            (IIIF). Others are accessible through the Internet Archive, which hosts digitized
+            books from hundreds of contributing libraries &mdash; the Getty Research Institute,
+            the Koninklijke Bibliotheek, the Biblioteca Nazionale in Florence, Harvard, and
+            many more.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Adding a new institutional source requires only a manifest parser. The entire downstream
-            pipeline &mdash; image archiving, Gemini vision OCR, automated translation, illustration
-            detection, metadata enrichment, and scholarly edition publishing with DOIs &mdash; works
-            unchanged regardless of whether the source is the Vatican, the Bavarian State Library,
-            or a small Swiss cantonal library.
+            IIIF is the infrastructural key. Because these institutions expose their digitized
+            pages through a standard protocol, Source Library can consume images from any of them
+            through a single, uniform input layer. Adding a new institutional source requires only
+            a manifest parser. The entire downstream pipeline &mdash; OCR, translation, illustration
+            detection, metadata enrichment, scholarly edition publishing &mdash; works unchanged
+            regardless of origin.
           </p>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
             IIIF was designed to make images interoperable for human viewers. It turns out to be
             even more transformative when the consumer is an AI model. A standardized way to access
             page images at arbitrary resolution from any institution is exactly what an automated
-            OCR and translation pipeline needs. The interoperability promise of IIIF &mdash; write
-            once, access anywhere &mdash; becomes a force multiplier for AI-powered scholarship.
+            translation pipeline needs. The interoperability promise of IIIF &mdash; write once,
+            access anywhere &mdash; becomes a force multiplier for AI-powered scholarship.
           </p>
 
-          {/* Provider table */}
+          {/* Institutional sources table */}
           <div className="bg-warm rounded-lg border border-border-light p-6 md:p-8">
-            <h3 className="font-serif text-xl text-primary mb-4">Institutional sources</h3>
+            <h3 className="font-serif text-xl text-primary mb-4">Largest source institutions</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-              {IIIF_PROVIDERS.map((p) => (
+              {SOURCE_INSTITUTIONS.map((p) => (
                 <div key={p.name} className="flex justify-between py-1.5 border-b border-border-light last:border-0">
                   <span className="text-sm text-secondary">{p.name}</span>
-                  <span className="text-xs text-muted">{p.books} books</span>
+                  <span className="text-xs text-muted">{p.books}</span>
                 </div>
               ))}
             </div>
+            <p className="text-xs text-muted mt-4">
+              160+ institutions total. Many contribute through the Internet Archive and Google Books
+              digitization programs. Counts reflect books currently in the collection.
+            </p>
           </div>
         </section>
 
