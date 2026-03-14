@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { stripe, MEMBERSHIP_PRICE, MEMBERSHIP_CURRENCY, MEMBERSHIP_NAME, MEMBERSHIP_DESCRIPTION } from '@/lib/stripe';
 import { getDb } from '@/lib/mongodb';
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   if (!stripe) {
     return NextResponse.json({ error: 'Payments not configured' }, { status: 503 });
   }
@@ -14,6 +14,18 @@ export async function POST() {
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+
+  // Optional return URL — where to send the user after successful checkout
+  let returnUrl: string | null = null;
+  try {
+    const body = await request.json().catch(() => null);
+    if (body?.returnUrl && typeof body.returnUrl === 'string' && body.returnUrl.startsWith('/')) {
+      returnUrl = body.returnUrl;
+    }
+  } catch { /* no body is fine */ }
+
+  const successParams = new URLSearchParams({ success: 'true' });
+  if (returnUrl) successParams.set('return', returnUrl);
 
   try {
     // Reuse existing Stripe customer if we have one, otherwise create
@@ -63,8 +75,8 @@ export async function POST() {
           quantity: 1,
         },
       ],
-      success_url: `${baseUrl}/ficino-society?success=true`,
-      cancel_url: `${baseUrl}/ficino-society`,
+      success_url: `${baseUrl}/ficino-society?${successParams}`,
+      cancel_url: `${baseUrl}/ficino-society${returnUrl ? `?return=${encodeURIComponent(returnUrl)}` : ''}`,
     });
 
     return NextResponse.json({ url: checkoutSession.url });

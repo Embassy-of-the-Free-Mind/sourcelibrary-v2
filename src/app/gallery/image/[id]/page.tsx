@@ -418,7 +418,9 @@ export default function ImageDetailPage({
   const downloadImage = async () => {
     if (!data) return;
     if (!isMember) {
-      window.location.href = '/ficino-society';
+      // Preserve the current page so the user returns here after joining
+      const returnUrl = encodeURIComponent(window.location.pathname);
+      window.location.href = `/ficino-society?return=${returnUrl}`;
       return;
     }
     // Prefer pre-extracted image (Vercel Blob, no CORS issues).

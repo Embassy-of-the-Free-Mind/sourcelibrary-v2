@@ -10,6 +10,7 @@ export default function FicinoSocietyPage() {
   const { data: session, status, update: updateSession } = useSession();
   const searchParams = useSearchParams();
   const success = searchParams.get('success') === 'true';
+  const returnUrl = searchParams.get('return');
   const [membership, setMembership] = useState<MembershipInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [activating, setActivating] = useState(false);
@@ -60,7 +61,11 @@ export default function FicinoSocietyPage() {
   const handleJoin = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/stripe/checkout', { method: 'POST' });
+      const body = returnUrl ? JSON.stringify({ returnUrl }) : undefined;
+      const res = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        ...(body && { headers: { 'Content-Type': 'application/json' }, body }),
+      });
       const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
@@ -105,13 +110,23 @@ export default function FicinoSocietyPage() {
                   gallery downloads and the complete translated collection.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                  <Link
-                    href="/gallery"
-                    className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90"
-                    style={{ background: 'var(--accent-rust)' }}
-                  >
-                    Browse the gallery
-                  </Link>
+                  {returnUrl ? (
+                    <Link
+                      href={returnUrl}
+                      className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90"
+                      style={{ background: 'var(--accent-rust)' }}
+                    >
+                      Continue where you left off
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/gallery"
+                      className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90"
+                      style={{ background: 'var(--accent-rust)' }}
+                    >
+                      Browse the gallery
+                    </Link>
+                  )}
                   <Link
                     href="/account"
                     className="inline-block px-6 py-2.5 rounded-lg font-medium transition-opacity hover:opacity-90"
@@ -181,7 +196,7 @@ export default function FicinoSocietyPage() {
             {[
               { title: 'Download high-resolution images', desc: 'Full-size gallery images — woodcuts, emblems, engravings, diagrams — for research, printing, or simply having.' },
               { title: 'Download complete translations', desc: 'Every translated book as EPUB, PDF, or plain text. Take them offline, annotate them, share them.' },
-              { title: 'Order archival prints', desc: 'Gallery images printed on museum-quality paper and shipped to you. Coming soon.' },
+              { title: 'Order archival prints', desc: 'Gallery images printed on museum-quality archival paper and shipped worldwide.' },
               { title: 'API access', desc: 'Programmatic access to the full catalog and translations — for research tools, AI applications, or your own projects.' },
               { title: 'Your name in the colophon', desc: 'Supporters are credited in every scholarly edition we publish.' },
             ].map((item) => (
@@ -236,7 +251,7 @@ export default function FicinoSocietyPage() {
               </button>
             ) : (
               <Link
-                href="/auth/signin?callbackUrl=/ficino-society"
+                href={`/auth/signin?callbackUrl=${encodeURIComponent(`/ficino-society${returnUrl ? `?return=${encodeURIComponent(returnUrl)}` : ''}`)}`}
                 className="inline-block px-10 py-3.5 rounded-lg text-white text-lg font-medium transition-opacity hover:opacity-90"
                 style={{ background: 'var(--accent-rust)' }}
               >
@@ -244,7 +259,7 @@ export default function FicinoSocietyPage() {
               </Link>
             )}
             <p className="mt-4 text-sm" style={{ color: 'var(--text-muted)' }}>
-              Cancel anytime. Billed annually.
+              Billed annually. You can cancel at any time from your account.
             </p>
           </div>
         )}

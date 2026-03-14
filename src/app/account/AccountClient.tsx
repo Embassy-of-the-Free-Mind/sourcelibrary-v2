@@ -17,12 +17,26 @@ export default function AccountClient({ user }: AccountClientProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [expiresAt, setExpiresAt] = useState<string | null>(null);
+  const [managingBilling, setManagingBilling] = useState(false);
 
   useEffect(() => {
     fetch('/api/membership').then(r => r.json()).then(data => {
       if (data.expiresAt) setExpiresAt(new Date(data.expiresAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
     });
   }, []);
+
+  const openBillingPortal = async () => {
+    setManagingBilling(true);
+    try {
+      const res = await fetch('/api/stripe/portal', { method: 'POST' });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch {
+      setManagingBilling(false);
+    }
+  };
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
@@ -73,12 +87,22 @@ export default function AccountClient({ user }: AccountClientProps) {
             className="rounded-xl p-6 mb-6"
             style={{ background: 'var(--bg-warm)', border: '1px solid var(--accent-sage)' }}
           >
-            <div className="flex items-center gap-3">
-              <Crown className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
-              <div>
-                <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Ficino Society Member</p>
-                {expiresAt && <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Renews {expiresAt}</p>}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Crown className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                <div>
+                  <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Ficino Society Member</p>
+                  {expiresAt && <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Renews {expiresAt}</p>}
+                </div>
               </div>
+              <button
+                onClick={openBillingPortal}
+                disabled={managingBilling}
+                className="text-sm hover:opacity-70 transition-opacity disabled:opacity-50"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {managingBilling ? 'Opening...' : 'Manage'}
+              </button>
             </div>
           </div>
         ) : (

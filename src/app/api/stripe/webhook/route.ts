@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { activateMembership, deactivateMembership } from '@/lib/membership';
+import { sendMembershipWelcomeEmail } from '@/lib/membership-email';
 import Stripe from 'stripe';
 import { getDb } from '@/lib/mongodb';
 
@@ -51,6 +52,15 @@ export async function POST(request: NextRequest) {
           periodEnd.setFullYear(periodEnd.getFullYear() + 1);
           await activateMembership(userId, customerId, subscriptionId, periodEnd);
           console.log(`[stripe] Membership activated for user ${userId}, expires ${periodEnd.toISOString()}`);
+
+          // Send welcome email (fire-and-forget — don't block the webhook)
+          const email = session.customer_details?.email || session.customer_email;
+          const name = session.customer_details?.name;
+          if (email) {
+            sendMembershipWelcomeEmail(email, name || undefined).catch(err =>
+              console.error('[stripe] Failed to send welcome email:', err)
+            );
+          }
         }
         break;
       }

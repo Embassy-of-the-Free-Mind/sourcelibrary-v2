@@ -33,6 +33,7 @@ const NAV_COLUMNS = [
     title: 'Participate',
     links: [
       { label: 'Contribute', href: '/contribute' },
+      { label: 'Ficino Society', href: '/ficino-society' },
       { label: 'Support', href: '/support' },
       { label: 'Scan the Renaissance', href: '/scan-the-renaissance' },
       { label: 'Developers', href: '/developers' },
@@ -98,7 +99,17 @@ export default function GlobalFooter() {
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    {link.label === 'Support' ? (
+                    {link.label === 'Ficino Society' ? (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                      >
+                        {link.label}
+                        <span className="text-[10px] bg-accent-gold/20 text-accent-gold px-1.5 py-0.5 rounded-full font-medium">
+                          Join
+                        </span>
+                      </Link>
+                    ) : link.label === 'Support' ? (
                       <Link
                         href={link.href}
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
