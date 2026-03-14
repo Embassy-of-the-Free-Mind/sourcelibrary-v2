@@ -71,7 +71,17 @@ interface CitedBook {
   shared_names?: string[];   // top entity names for shared type
 }
 
-const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
+// Entities too common to be meaningful shared-context signals
+const UBIQUITOUS_ENTITIES = new Set([
+  'Jesus Christ', 'God', 'The Devil', 'Satan', 'Lucifer',
+  'Moses', 'Abraham', 'Adam', 'Eve', 'Noah', 'David',
+  'Hermes Trismegistus', 'Hermes', 'Mercury',
+  'Aristotle', 'Plato', 'Socrates',
+  'The Holy Spirit', 'The Son of God', 'The Apostles',
+  'The Patriarchs', 'The Prophets',
+]);
+
+const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promise<CitedBook[]> => {
   try {
     const db = await Promise.race([
       getDb(),
@@ -102,32 +112,37 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
         entityNames.push({ names, entityName: entity.name });
       }
     }
+    // Build a single regex from all entity names and query MongoDB directly
+    // instead of fetching all ~5,000 books and looping in JS.
     if (entityNames.length > 0) {
+      const allNames: Array<{ pattern: string; entityName: string }> = [];
+      for (const { names, entityName } of entityNames) {
+        for (const name of names) {
+          // Escape regex special chars, use word boundaries
+          const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          allNames.push({ pattern: escaped, entityName });
+        }
+      }
+      // Combined regex: match any entity name with word boundaries
+      const combinedPattern = allNames.map(n => n.pattern).join('|');
+      const authorFilter: Record<string, unknown> = {
+        id: { $ne: bookId },
+        hidden: { $ne: true },
+        author: { $regex: combinedPattern, $options: 'i' },
+      };
       const candidateBooks = await db.collection('books').find(
-        { id: { $ne: bookId }, hidden: { $ne: true }, author: { $exists: true, $nin: [null, '', 'Unknown'] } },
+        authorFilter,
         { projection: { id: 1, author: 1 } },
       ).toArray();
+      // Verify word-boundary matches and map to entity names
       for (const doc of candidateBooks) {
-        const authorStr = doc.author as string;
-        const authorLower = authorStr.toLowerCase();
-        for (const { names, entityName } of entityNames) {
-          let matched = false;
-          for (const name of names) {
-            const nameLower = name.toLowerCase();
-            const idx = authorLower.indexOf(nameLower);
-            if (idx === -1) continue;
-            const charBefore = idx > 0 ? authorLower[idx - 1] : ' ';
-            const isWordStart = !/[a-z]/.test(charBefore);
-            const afterIdx = idx + nameLower.length;
-            const charAfter = afterIdx < authorLower.length ? authorLower[afterIdx] : ' ';
-            const isWordEnd = !/[a-z]/.test(charAfter);
-            if (isWordStart && isWordEnd) {
-              directCitationBookIds.set(doc.id as string, entityName);
-              matched = true;
-              break;
-            }
+        const authorLower = (doc.author as string).toLowerCase();
+        for (const { pattern, entityName } of allNames) {
+          const re = new RegExp(`(?<![a-z])${pattern}(?![a-z])`, 'i');
+          if (re.test(authorLower)) {
+            directCitationBookIds.set(doc.id as string, entityName);
+            break;
           }
-          if (matched) break;
         }
       }
     }
@@ -149,6 +164,20 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
           type: 'direct',
           cited_as: directCitationBookIds.get(doc.id as string),
         });
+      }
+    }
+
+    // Exclude same-author books (already covered by "More by Author" pill).
+    // Check both the matched book's author AND the cited entity name, since
+    // diacritics differ between author fields ("Jakob Böhme" vs "Boehme, Jacob")
+    // but entity names are standardized ("Jacob Boehme").
+    if (bookAuthor && bookAuthor !== 'Unknown') {
+      const surname = bookAuthor.split(/[,;]/)[0].trim().toLowerCase();
+      if (surname.length >= 4) {
+        directBooks = directBooks.filter(b =>
+          !b.author.toLowerCase().includes(surname) &&
+          !(b.cited_as || '').toLowerCase().includes(surname)
+        );
       }
     }
 
@@ -179,7 +208,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
           shared_entities: { $sum: 1 },
           shared_names: { $push: '$name' },
         }},
-        { $match: { shared_entities: { $gte: 3 } } },
+        { $match: { shared_entities: { $gte: 5 } } },
         { $sort: { shared_entities: -1 as const } },
         { $limit: sharedSlots },
         { $lookup: {
@@ -201,7 +230,9 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
         year: r.book_doc?.year as number | undefined,
         type: 'shared' as const,
         shared_entities: r.shared_entities as number,
-        shared_names: (r.shared_names as string[])?.slice(0, 3),
+        shared_names: (r.shared_names as string[])
+          ?.filter(n => !UBIQUITOUS_ENTITIES.has(n))
+          .slice(0, 3),
       }));
     }
 
@@ -233,7 +264,7 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
         { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
       ).sort({ published: 1 }).limit(20).toArray()
       : Promise.resolve([]),
-    getRelatedBooks(bookId),
+    getRelatedBooks(bookId, bookAuthor),
   ]);
 
   const topPeople = (bookIndex?.people || []).slice(0, 3);
