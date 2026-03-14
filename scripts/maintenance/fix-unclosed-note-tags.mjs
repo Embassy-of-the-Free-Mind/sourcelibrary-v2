@@ -9,6 +9,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { nanoid } from 'nanoid';
 
 const DRY_RUN = process.env.DRY_RUN === '1';
 
@@ -159,14 +160,17 @@ async function main() {
     }
 
     try {
-      // Create revision before modifying
+      // Create revision before modifying (matches PageRevision schema)
       await revisions.insertOne({
-        page_id: page._id,
-        book_id: page.book_id,
+        id: nanoid(12),
+        page_id: String(page._id),
+        book_id: String(page.book_id),
         field: 'translation',
-        previous_value: original,
+        data: original,
+        source: 'maintenance',
+        job_id: 'fix-unclosed-note-tags',
+        original_date: new Date(),
         created_at: new Date(),
-        reason: 'fix-unclosed-note-tags',
       });
 
       // Update translation
