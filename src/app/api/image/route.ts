@@ -3,6 +3,7 @@ import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import crypto from 'crypto';
 
 // Cache resized images for 1 week
 const CACHE_DURATION = 60 * 60 * 24 * 7;
@@ -10,6 +11,34 @@ const CACHE_DURATION = 60 * 60 * 24 * 7;
 // Timeout for fetching images from external sources (150 seconds)
 // Internet Archive and other IIIF servers can be slow
 const FETCH_TIMEOUT_IN_MS = 150000;
+
+// Provenance mark — the Source Library icon, loaded once at startup
+const MARK_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--48h.png');
+let provenanceMarkBuffer: Buffer | null = null;
+let provenanceMarkGhostBuffer: Buffer | null = null;
+
+async function getProvenanceMarks() {
+  if (provenanceMarkBuffer && provenanceMarkGhostBuffer) {
+    return { visible: provenanceMarkBuffer, ghost: provenanceMarkGhostBuffer };
+  }
+  try {
+    const raw = fs.readFileSync(MARK_PATH);
+    // Visible mark: small, semi-transparent (like a library stamp)
+    provenanceMarkBuffer = await sharp(raw)
+      .resize(16, 16)
+      .ensureAlpha()
+      .modulate({ brightness: 0.3 })
+      .toBuffer();
+    // Ghost mark: very faint, larger — low-frequency watermark
+    provenanceMarkGhostBuffer = await sharp(raw)
+      .resize(80, 80)
+      .ensureAlpha()
+      .toBuffer();
+    return { visible: provenanceMarkBuffer, ghost: provenanceMarkGhostBuffer };
+  } catch {
+    return { visible: null, ghost: null };
+  }
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -160,11 +189,80 @@ export async function GET(request: NextRequest) {
       sharpInstance = sharpInstance.modulate({ brightness });
     }
 
-    // Resize with sharp
-    const resized = await sharpInstance
+    // Resize first, then apply provenance marks
+    const resizedInstance = sharpInstance
       .resize(width, null, {
         fit: 'inside',
         withoutEnlargement: true,
+      });
+
+    // Get resized dimensions for mark placement
+    const resizedBuffer = await resizedInstance.toBuffer();
+    const resizedMeta = await sharp(resizedBuffer).metadata();
+    const imgW = resizedMeta.width || width;
+    const imgH = resizedMeta.height || width;
+
+    // Apply provenance marks (visible + ghost)
+    const composites: sharp.OverlayOptions[] = [];
+    const marks = await getProvenanceMarks();
+
+    if (marks.visible && imgW > 100 && imgH > 100) {
+      // Visible mark: small icon, usually top-left, position varies by content hash
+      const hash = crypto.createHash('md5').update(resizedBuffer).digest();
+      const cornerIndex = hash[0] % 4; // 0=TL, 1=TR, 2=BL, 3=BR
+      const corners = [
+        { left: 4, top: 4 },
+        { left: imgW - 20, top: 4 },
+        { left: 4, top: imgH - 20 },
+        { left: imgW - 20, top: imgH - 20 },
+      ];
+      // Bias toward top-left: ~75% TL, ~25% other corners
+      const pos = cornerIndex < 3 ? corners[0] : corners[hash[1] % 3 + 1];
+
+      composites.push({
+        input: marks.visible,
+        left: pos.left,
+        top: pos.top,
+        blend: 'over' as const,
+      });
+    }
+
+    if (marks.ghost && imgW > 200 && imgH > 200) {
+      // Ghost mark: very faint logo tiled as low-frequency pattern
+      // Rendered at ~3% opacity by compositing with extreme transparency
+      const ghostFaint = await sharp(marks.ghost)
+        .composite([{
+          input: Buffer.from([0, 0, 0, 8]), // RGBA: black at ~3% opacity
+          raw: { width: 1, height: 1, channels: 4 },
+          tile: true,
+          blend: 'dest-in' as const,
+        }])
+        .toBuffer();
+
+      // Place ghost mark at center
+      composites.push({
+        input: ghostFaint,
+        left: Math.round((imgW - 80) / 2),
+        top: Math.round((imgH - 80) / 2),
+        blend: 'over' as const,
+      });
+    }
+
+    // Final output: composite marks, add EXIF, encode JPEG
+    let finalInstance = sharp(resizedBuffer);
+
+    if (composites.length > 0) {
+      finalInstance = finalInstance.composite(composites);
+    }
+
+    const resized = await finalInstance
+      .withExifMerge({
+        IFD0: {
+          Copyright: 'Source Library (sourcelibrary.org) — CC BY-SA 4.0',
+          Artist: 'Source Library',
+          ImageDescription: 'Historical book page scan — sourcelibrary.org',
+          Software: 'Source Library Steganographia',
+        },
       })
       .jpeg({ quality, progressive: true })
       .toBuffer();
