@@ -6,6 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -231,11 +232,35 @@ export async function importBookFromIIIF(
 
   const db = await getDb();
 
-  // Check for duplicates
+  // Check for duplicates (provider-specific query)
   const existing = await db.collection('books').findOne(config.duplicate_query);
   if (existing) {
     return NextResponse.json(
       { error: 'Book already exists', existingId: existing.id || existing._id.toString() },
+      { status: 409 }
+    );
+  }
+
+  // Cross-source dedup check (catches duplicates across providers)
+  const dedupResult = await checkDuplicate(db, {
+    title: config.title,
+    author: config.author,
+    display_title: config.display_title,
+    image_source: {
+      provider: config.provider,
+      identifier: config.identifier,
+      iiif_manifest: config.manifest_url,
+      source_url: config.source_url,
+    },
+  });
+  if (dedupResult.isDuplicate) {
+    const best = dedupResult.matches[0];
+    return NextResponse.json(
+      {
+        error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`,
+        existingId: best.matchedBookId,
+        matches: dedupResult.matches,
+      },
       { status: 409 }
     );
   }
@@ -315,6 +340,12 @@ export async function importBookFromIIIF(
   const priority = computeProcessingPriority(bookDoc);
   (bookDoc as Record<string, unknown>).processing_priority = priority.score;
   (bookDoc as Record<string, unknown>).processing_priority_breakdown = priority.breakdown;
+
+  // Dedup fields for cross-source matching
+  const fp = sourceFingerprint(bookDoc as Record<string, unknown>);
+  if (fp) (bookDoc as Record<string, unknown>).source_fingerprint = fp;
+  (bookDoc as Record<string, unknown>).normalized_title = normalizeTitle(config.title);
+  (bookDoc as Record<string, unknown>).normalized_author = normalizeAuthor(config.author);
 
   await db.collection('books').insertOne(bookDoc);
 

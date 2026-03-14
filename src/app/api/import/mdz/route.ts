@@ -6,6 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 interface IIIFCanvas {
   '@id'?: string;
@@ -119,6 +120,32 @@ export const POST = withAuth(async (request, session) => {
       );
     }
 
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title,
+      author,
+      display_title,
+      mdz_id: normalizedId,
+      bsb_id: normalizedId,
+      image_source: {
+        provider: 'mdz',
+        identifier: normalizedId,
+        iiif_manifest: manifestUrl,
+        source_url: `https://www.digitale-sammlungen.de/de/view/${normalizedId}`,
+      },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        {
+          error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`,
+          existingId: best.matchedBookId,
+          matches: dedupResult.matches,
+        },
+        { status: 409 }
+      );
+    }
+
     // Create book
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
@@ -197,6 +224,9 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ mdz_id: normalizedId }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: new Date(),
       updated_at: new Date()
     };

@@ -6,6 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 export const maxDuration = 300;
 
@@ -164,6 +165,19 @@ export const POST = withAuth(async (request, session) => {
       work.languages?.[0]?.label ||
       'Unknown';
 
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title, author,
+      image_source: { provider: 'wellcome', identifier: work_id, iiif_manifest: manifestUrl, source_url: `https://wellcomecollection.org/works/${work_id}` },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
+        { status: 409 }
+      );
+    }
+
     // Extract license
     const licenseId = iiifLocation.license?.id || 'unknown';
     const licenseUrl = iiifLocation.license?.url || null;
@@ -234,6 +248,9 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ image_source: { provider: 'wellcome', identifier: work_id, iiif_manifest: manifestUrl } }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: new Date(),
       updated_at: new Date()
     };
