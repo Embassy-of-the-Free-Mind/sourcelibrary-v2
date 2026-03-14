@@ -44,10 +44,11 @@ export const metadata: Metadata = {
   },
   other: {
     'msapplication-TileColor': '#1c1917',
+    'pinterest-rich-pin': 'true',
   },
   openGraph: {
     title: "Source Library",
-    description: "Rare Hermetic & Renaissance texts digitized and translated with AI",
+    description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
     siteName: "Source Library",
     locale: "en_US",
     type: "website",
@@ -55,18 +56,18 @@ export const metadata: Metadata = {
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Source Library — Unlock a New Renaissance of Ancient Knowledge',
+      alt: 'Source Library — Digitizing and translating ancient texts',
     }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Source Library",
-    description: "Rare Hermetic & Renaissance texts digitized and translated with AI",
+    description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
     images: [{
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Source Library — Unlock a New Renaissance of Ancient Knowledge',
+      alt: 'Source Library — Digitizing and translating ancient texts',
     }],
   },
 };
