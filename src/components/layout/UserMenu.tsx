@@ -111,14 +111,24 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               Reading History
             </Link>
             {isAdmin && (
-              <Link
-                href="/analytics"
-                className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
-                style={{ color: 'var(--text-primary)' }}
-                onClick={() => setIsOpen(false)}
-              >
-                Analytics
-              </Link>
+              <>
+                <Link
+                  href="/analytics"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Analytics
+                </Link>
+                <Link
+                  href="/admin/duplicates"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Duplicates
+                </Link>
+              </>
             )}
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
