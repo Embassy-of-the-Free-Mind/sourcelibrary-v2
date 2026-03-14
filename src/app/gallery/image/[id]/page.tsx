@@ -613,13 +613,9 @@ export default function ImageDetailPage({
               <button
                 onClick={downloadImage}
                 className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                title={canDownloadImage ? 'Download high-res' : 'Download — $2'}
+                title="Download"
               >
-                {canDownloadImage ? (
-                  <Download className="w-4 h-4 text-stone-400" />
-                ) : (
-                  <Download className="w-4 h-4 text-stone-500" />
-                )}
+                <Download className="w-4 h-4 text-stone-400" />
               </button>
             </div>
           </div>
@@ -886,7 +882,7 @@ export default function ImageDetailPage({
                       }`}
                     >
                       <Download className="w-4 h-4" />
-                      {canDownloadImage ? 'Download high-res' : 'Download — $2'}
+                      Download
                     </button>
                   </div>
                 </div>
