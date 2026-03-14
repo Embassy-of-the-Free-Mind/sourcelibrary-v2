@@ -87,9 +87,9 @@ async function setPipelineStatus(
     upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget
   }
 
-  // When images complete, gallery quality data is available — try gallery fallback for covers
+  // When images complete, gallery descriptions + quality scores are available — pick the best cover
   if (status === 'images_complete' && prevStatus !== 'images_complete') {
-    upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget — includes gallery fallback
+    upgradeThumbnailFromGallery(db, bookId).catch(() => {}); // fire-and-forget
   }
 
   // Log transition to audit trail (fire-and-forget)
@@ -256,6 +256,129 @@ async function upgradeThumbnailFromPageType(
   const update: Record<string, string> = { thumbnail: newUrl, thumbnail_source: 'auto' };
   if (bestPage.thumbnail_blob) update.thumbnail_blob = bestPage.thumbnail_blob;
   await db.collection('books').updateOne({ id: bookId }, { $set: update });
+}
+
+/**
+ * After image extraction, use gallery descriptions + quality scores to pick
+ * the most visually compelling cover page. Prefers beautiful illustrations,
+ * frontispieces, emblems, and allegorical scenes. Skips ex libris / bookplate pages.
+ *
+ * This replaces the simple page_type-based selection with description-aware scoring.
+ * Uses the full page image (not the cropped illustration) as the thumbnail.
+ */
+async function upgradeThumbnailFromGallery(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+) {
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { thumbnail: 1, thumbnail_source: 1 } }
+  );
+  if (!book?.thumbnail) return;
+  if (book.thumbnail_source === 'manual') return;
+
+  // Get top gallery images for this book, sorted by quality
+  const galleryImages = await db.collection('gallery_images').find(
+    { book_id: bookId, gallery_quality: { $gte: 0.4 } },
+    {
+      projection: {
+        page_id: 1, page_number: 1, gallery_quality: 1, type: 1,
+        museum_description: 1, description: 1, metadata: 1,
+        extracted_url: 1, image_url: 1,
+      },
+      sort: { gallery_quality: -1, page_number: 1 },
+      limit: 20,
+    }
+  ).toArray();
+
+  if (galleryImages.length === 0) return; // no gallery data, keep current
+
+  // Score each candidate for cover suitability
+  const scored = galleryImages
+    .filter(img => !isExLibrisGalleryImage(img))
+    .map(img => ({
+      img,
+      coverScore: computeCoverScore(img),
+    }))
+    .sort((a, b) => b.coverScore - a.coverScore);
+
+  if (scored.length === 0) return;
+
+  const best = scored[0];
+  if (best.coverScore < 0.5) return; // nothing compelling enough
+
+  // Get the full page image URL (not the cropped illustration)
+  const page = await db.collection('pages').findOne(
+    { id: best.img.page_id },
+    { projection: { cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1 } }
+  );
+  if (!page) return;
+
+  const newUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
+  if (!newUrl || newUrl === book.thumbnail) return;
+
+  const update: Record<string, string> = { thumbnail: newUrl, thumbnail_source: 'auto' };
+  if (page.thumbnail_blob) update.thumbnail_blob = page.thumbnail_blob;
+  await db.collection('books').updateOne({ id: bookId }, { $set: update });
+}
+
+/**
+ * Score a gallery image for cover suitability (0-1 scale).
+ * Factors: gallery quality, image type, page position, description richness.
+ */
+function computeCoverScore(img: Record<string, unknown>): number {
+  const quality = (img.gallery_quality as number) || 0;
+  let score = quality;
+
+  // Type bonuses — frontispieces and emblems make the best covers
+  const type = (img.type as string) || '';
+  const typeBonus: Record<string, number> = {
+    frontispiece: 0.15,
+    emblem: 0.12,
+    portrait: 0.10,
+    engraving: 0.08,
+    woodcut: 0.08,
+    map: 0.05,
+    diagram: -0.05,
+    decorative: -0.10,
+    symbol: -0.05,
+  };
+  score += typeBonus[type] || 0;
+
+  // Early-page bonus — covers from the front of the book feel more natural
+  const pageNum = (img.page_number as number) || 999;
+  if (pageNum <= 10) score += 0.08;
+  else if (pageNum <= 30) score += 0.04;
+  else if (pageNum > 100) score -= 0.05;
+
+  // Description richness — images with figures/subjects are more intriguing
+  const metadata = img.metadata as Record<string, string[]> | undefined;
+  if (metadata?.figures?.length) score += 0.05;
+  if (metadata?.symbols?.length) score += 0.03;
+
+  return Math.max(0, Math.min(1, score));
+}
+
+/**
+ * Detect ex libris / bookplate gallery images using description and metadata.
+ * These are ownership marks, not content — never good covers.
+ */
+function isExLibrisGalleryImage(img: Record<string, unknown>): boolean {
+  const desc = ((img.museum_description as string) || '') + ' ' + ((img.description as string) || '');
+  if (/ex[\s\-.]?libris|bookplate|ownership\s+(mark|stamp|inscription)|library\s+stamp/i.test(desc)) {
+    return true;
+  }
+  const metadata = img.metadata as Record<string, string[]> | undefined;
+  const subjects = metadata?.subjects || [];
+  if (subjects.some(s => /ex[\s\-.]?libris|bookplate|ownership/i.test(s))) {
+    return true;
+  }
+  // Standalone pelican/bird emblems with no other content are often EFM bookplates
+  const type = (img.type as string) || '';
+  if (type === 'emblem' && /pelican|pelikan/i.test(desc) && !/allegori|alchemi|hermet/i.test(desc)) {
+    return true;
+  }
+  return false;
 }
 
 async function markFailed(
