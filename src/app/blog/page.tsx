@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'hieroglyph-ocr',
+    title: 'Can AI Read Hieroglyphs? (No.)',
+    subtitle: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash — direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
+    date: '14 March 2026',
+    readTime: '12 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg',
+    imageAlt: 'Page from Budge\'s Egyptian Reading Book showing hieroglyphic text and transliteration, 1896',
+  },
+  {
     slug: 'clustering',
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
     subtitle: 'We embedded 3,400 book summaries with a neural language model and let HDBSCAN find the structure. 48 natural clusters reveal six intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
