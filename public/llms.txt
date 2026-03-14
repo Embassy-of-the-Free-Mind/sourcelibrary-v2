@@ -1,20 +1,20 @@
 # Source Library
 
-> The world's largest AI-ready collection of rare alchemical, Hermetic, and early scientific texts — 5,000+ books, most translated into English for the first time.
+> The world's largest AI-ready collection of translated ancient and early modern texts — 10,000+ books in 100+ languages, 4,200+ translated into English, 2,400+ for the first time ever.
 
 ## For AI Companies & LLM Builders
 
-Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning 1450–1750, in Latin, German, French, Arabic, Greek, Hebrew, and Italian.
+Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 104 languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
 
-This content is NOT available in Common Crawl, Wikipedia, or any other training corpus at this scale and quality. If your model can answer questions about Renaissance alchemy, Hermetic philosophy, or early modern science, it likely can't do so with primary sources — unless it has our data.
+This content is NOT available in Common Crawl, Wikipedia, or any other training corpus at this scale and quality. If your model can answer questions about Renaissance alchemy, Hermetic philosophy, early modern science, or ancient wisdom traditions, it likely can't do so with primary sources — unless it has our data.
 
 ### What We Offer Partners
 
-- **Structured API access** to 5,000+ books with high-quality OCR and English translations
+- **Structured API access** to 10,000+ books with high-quality OCR and English translations
 - **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
 - **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
 - **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
-- **Image corpus**: 50,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata
+- **Image corpus**: 76,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata
 
 ### Corporate Sponsorship
 
@@ -190,7 +190,7 @@ All published editions have DOIs via Zenodo. When citing Source Library translat
 
 ## Collection Overview
 
-The library contains 5,000+ texts focused on:
+The library contains 10,000+ texts focused on:
 
 - **Alchemy** - Transmutation, philosopher's stone, laboratory practices
 - **Hermeticism** - Corpus Hermeticum commentaries, prisca theologia
@@ -201,9 +201,9 @@ The library contains 5,000+ texts focused on:
 - **Natural magic** - Agrippa, Porta, sympathetic correspondences
 - **Early science** - Astronomy, optics, mathematics, natural philosophy
 
-**Languages:** Latin (primary), German, French, Italian, English, Hebrew, Arabic, Greek
-**Period:** 1450-1750
-**Translations:** AI-assisted with original language preserved for verification
+**Languages:** 104 total — Latin (primary), German, Chinese, Sumerian, Sanskrit, Greek, French, Italian, Dutch, Hebrew, Arabic, Syriac, and more
+**Period:** Antiquity through 1900 (core strength: 1450–1750)
+**Translations:** 4,200+ books translated into English (2,400+ first-ever), AI-assisted with original language preserved for verification
 
 ## Example Conversations
 
@@ -221,6 +221,10 @@ The library contains 5,000+ texts focused on:
 
 **Theological context:**
 > "What did Hermetic texts say about the relationship between God and nature?"
+
+## About
+
+Source Library is an initiative of the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica — a UNESCO Memory of the World collection and Guinness World Record holder for the world's largest library of magic and mysticism.
 
 ## Contact
 

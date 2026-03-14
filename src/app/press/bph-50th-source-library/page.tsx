@@ -94,7 +94,7 @@ export default function PressReleasePage() {
             <li><strong>4,000+</strong> books with English translation (1,300+ fully translated)</li>
             <li><strong>800,000+</strong> pages translated into English</li>
             <li><strong>2,400+</strong> first-ever English translations</li>
-            <li><strong>3.7&nbsp;million</strong> digitised page images</li>
+            <li><strong>3.7&nbsp;million</strong> digitised page images with 76,000+ extracted illustrations</li>
             <li><strong>13+</strong> digital library partners worldwide</li>
           </ul>
 
