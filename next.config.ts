@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       // Cloudflare R2 (primary image storage)
       { protocol: 'https', hostname: 'images.sourcelibrary.org' },
+      { protocol: 'https', hostname: 'pub-466c3b04936d401bb77b8978960b60c5.r2.dev' },
       // Vercel Blob CDN (legacy — kept during migration)
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
       // AWS S3 (legacy book data)
