@@ -9,6 +9,7 @@ import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
+import BookDedication from '@/components/book/BookDedication';
 import BookHistory from '@/components/book/BookHistory';
 import BookIndex from '@/components/book/BookIndex';
 import BookAnalytics from '@/components/book/BookAnalytics';
@@ -775,6 +776,11 @@ async function BookInfo({ id }: { id: string }) {
                   )}
                 </p>
               )}
+
+              {/* Dedication */}
+              <div className="mt-3">
+                <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
+              </div>
 
               {/* Actions */}
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">

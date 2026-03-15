@@ -206,6 +206,7 @@ function FicinoSocietyContent() {
               { title: 'MCP server and API', desc: 'The API and MCP server are free for everyone. Your membership keeps them running.' },
               { title: 'Your name on the members page', desc: 'A public page listing the people who support this work. With an optional one-line bio, if you like.' },
               { title: 'A quarterly letter', desc: 'What we translated, what we discovered, what\u2019s coming next. Short, personal, from the team.' },
+              { title: 'Dedicate a translation', desc: 'Choose a book and put your name on it \u2014 permanently. One dedication per year.' },
               { title: 'Inner circle', desc: 'As we build forums and discussion spaces, members will be the founding community.' },
             ].map((item) => (
               <div key={item.title} className="flex gap-3">
