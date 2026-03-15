@@ -42,7 +42,7 @@ export async function sendMembershipWelcomeEmail(email: string, name?: string): 
 
         <div style="background: #f5f0e8; border-radius: 8px; padding: 20px 24px; margin: 20px 0 28px; line-height: 1.7; font-size: 14px; color: #1a1612;">
           You can download any book or gallery image without limit.
-          New translations will be available to you before anyone else.
+          New translations are yours a month before they go public.
           Your name appears on the <a href="https://sourcelibrary.org/ficino-society/members" style="color: #9e4a3a; text-decoration: none;">members page</a>,
           if you choose &mdash; you can set your display name from your
           <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account</a>.
