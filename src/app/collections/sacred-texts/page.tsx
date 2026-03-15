@@ -11,11 +11,11 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',
   description:
-    'The books humanity has called holy. Nineteen traditions, thousands of years, translated and freely accessible. From the Psalms to the Upanishads, from the Orphic hymns to the Poetic Edda.',
+    'The books humanity has called holy. Ten traditions, thousands of years, translated and freely accessible. From the Psalms to the Upanishads, from Zoroastrian hymns to Mandaean scripture.',
   openGraph: {
     title: 'Sacred Texts - Source Library',
     description:
-      'The books humanity has called holy. Nine traditions, thousands of years, translated and freely accessible.',
+      'The books humanity has called holy. Ten traditions, thousands of years, translated and freely accessible.',
     type: 'website',
     url: 'https://sourcelibrary.org/collections/sacred-texts',
   },
@@ -107,17 +107,25 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
       {/* Thumbnail strip */}
       {thumbnails.length > 0 && (
         <div className="flex h-32 sm:h-36 overflow-hidden bg-warm">
-          {thumbnails.map((thumb, i) => (
-            <div key={i} className="relative flex-1 min-w-0">
-              <Image
-                src={thumb}
-                alt=""
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(min-width: 1024px) 150px, (min-width: 640px) 120px, 80px"
-              />
-            </div>
-          ))}
+          {thumbnails.map((thumb, i) => {
+            const isDataUrl = thumb.startsWith('data:');
+            return (
+              <div key={i} className="relative flex-1 min-w-0">
+                {isDataUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={thumb} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                ) : (
+                  <Image
+                    src={thumb}
+                    alt=""
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(min-width: 1024px) 150px, (min-width: 640px) 120px, 80px"
+                  />
+                )}
+              </div>
+            );
+          })}
           {thumbnails.length < 4 && (
             <div className="relative flex-1 min-w-0 bg-warm flex items-center justify-center">
               <BookOpen className="w-6 h-6 text-muted" />
@@ -169,7 +177,7 @@ export default async function SacredTextsPortal() {
     <div className="min-h-screen bg-cream">
       {/* Hero */}
       <div className="bg-dark">
-        <div className="max-w-6xl mx-auto px-6 pt-8 pb-14 sm:pb-18">
+        <div className="max-w-6xl mx-auto px-6 pt-8 pb-14 sm:pb-16">
           <Link
             href="/#library"
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-10"
