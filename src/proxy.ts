@@ -204,7 +204,7 @@ export function proxy(request: NextRequest) {
       limit = 10;
       key = `${ip}:bot`;
     } else {
-      limit = 60;
+      limit = 200;
       key = `${ip}:browser`;
     }
 
