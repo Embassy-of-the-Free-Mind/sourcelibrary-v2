@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { toast } from 'sonner';
+import { Grid, type CellComponentProps } from 'react-window';
 import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
@@ -72,6 +73,219 @@ function getImageSrc(item: GalleryItem): string {
   return item.thumbnailUrl || item.extractedUrl || item.imageUrl;
 }
 
+// --- Memoized tile component (win #1) ---
+interface ImageTileProps {
+  item: GalleryItem;
+  imageId: string;
+  isLiked: boolean;
+  isDownvoted: boolean;
+  isToggling: boolean;
+  infoOpen: boolean;
+  isExcluded: boolean;
+  onLike: (item: GalleryItem, e: React.MouseEvent) => void;
+  onDownvote: (item: GalleryItem, e: React.MouseEvent) => void;
+  onClickTile: () => void;
+  onToggleInfo: (imageId: string) => void;
+  onExcludeBook: (item: GalleryItem) => void;
+}
+
+const ImageTile = memo(function ImageTile({
+  item, imageId, isLiked, isDownvoted, isToggling, infoOpen, isExcluded,
+  onLike, onDownvote, onClickTile, onToggleInfo, onExcludeBook,
+}: ImageTileProps) {
+  const hasRating = isLiked || isDownvoted;
+
+  return (
+    <div
+      className={`
+        relative aspect-square group cursor-pointer overflow-hidden bg-warm
+        ${isDownvoted ? 'opacity-40' : ''}
+      `}
+      onClick={onClickTile}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={getImageSrc(item)}
+        alt=""
+        loading="lazy"
+        className="w-full h-full object-cover"
+      />
+
+      {/* Action buttons — visible on hover or when rated */}
+      <div
+        className={`
+          absolute inset-0 flex items-center justify-center gap-3
+          transition-opacity duration-150
+          ${hasRating ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+        `}
+      >
+        <button
+          onClick={(e) => onLike(item, e)}
+          className={`
+            rounded-full p-1.5 transition-all duration-150
+            ${isLiked ? '' : 'bg-black/30 hover:bg-black/50'}
+          `}
+        >
+          <Heart
+            className={`
+              w-5 h-5 drop-shadow-md transition-transform duration-150
+              ${isLiked ? 'text-status-error scale-110' : 'text-white'}
+              ${isToggling ? 'animate-pulse' : ''}
+            `}
+            fill={isLiked ? 'currentColor' : 'none'}
+            strokeWidth={isLiked ? 0 : 2.5}
+          />
+        </button>
+
+        <button
+          onClick={(e) => onDownvote(item, e)}
+          className={`
+            rounded-full p-1.5 transition-all duration-150
+            ${isDownvoted ? '' : 'bg-black/30 hover:bg-black/50'}
+          `}
+        >
+          <ThumbsDown
+            className={`
+              w-4.5 h-4.5 drop-shadow-md transition-transform duration-150
+              ${isDownvoted ? 'text-blue-500 scale-110' : 'text-white'}
+            `}
+            fill={isDownvoted ? 'currentColor' : 'none'}
+            strokeWidth={isDownvoted ? 0 : 2.5}
+          />
+        </button>
+      </div>
+
+      {/* Info button — bottom-left */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleInfo(imageId);
+        }}
+        className="absolute bottom-0.5 left-0.5 rounded-full p-0.5 bg-black/40 text-white/70 hover:text-white hover:bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+      >
+        <Info className="w-3.5 h-3.5" />
+      </button>
+
+      {/* Info overlay */}
+      {infoOpen && (
+        <div
+          className="absolute inset-x-0 bottom-0 bg-black/85 text-white p-2 text-[10px] leading-tight z-10"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <p className="font-medium line-clamp-2">{item.bookTitle}</p>
+          {item.author && <p className="text-white/60 mt-0.5">{item.author}{item.year ? `, ${item.year}` : ''}</p>}
+          <p className="text-white/50 mt-0.5">
+            {item.type && <span className="capitalize">{item.type}</span>}
+            {item.galleryQuality !== undefined && <span> · {item.galleryQuality.toFixed(2)}</span>}
+            {item.pageNumber > 0 && <span> · p.{item.pageNumber}</span>}
+          </p>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onExcludeBook(item);
+            }}
+            className={`mt-1 text-[9px] px-1.5 py-0.5 rounded transition-colors ${
+              isExcluded
+                ? 'bg-amber-500/30 text-amber-300'
+                : 'bg-white/10 text-white/50 hover:bg-amber-500/20 hover:text-amber-300'
+            }`}
+          >
+            {isExcluded ? 'Excluded from showcase' : 'Exclude book from showcase'}
+          </button>
+        </div>
+      )}
+
+      {/* Quality badge — tiny, bottom-right */}
+      {item.galleryQuality !== undefined && !infoOpen && (
+        <span className="absolute bottom-0.5 right-0.5 text-[9px] font-mono text-white/70 bg-black/40 px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+          {item.galleryQuality.toFixed(2)}
+        </span>
+      )}
+    </div>
+  );
+});
+
+// --- Grid cell component for react-window v2 ---
+interface GridCellProps {
+  displayImages: GalleryItem[];
+  columnCount: number;
+  likedIds: Set<string>;
+  downvotedIds: Set<string>;
+  toggling: Set<string>;
+  infoId: string | null;
+  excludedBooks: Set<string>;
+  onLike: (item: GalleryItem, e: React.MouseEvent) => void;
+  onDownvote: (item: GalleryItem, e: React.MouseEvent) => void;
+  onClickTile: (idx: number) => void;
+  onToggleInfo: (imageId: string) => void;
+  onExcludeBook: (item: GalleryItem) => void;
+  gap: number;
+}
+
+function GridCell({ columnIndex, rowIndex, style, ...cellProps }: CellComponentProps<GridCellProps>) {
+  const { displayImages, columnCount, likedIds, downvotedIds, toggling, infoId, excludedBooks, onLike, onDownvote, onClickTile, onToggleInfo, onExcludeBook, gap } = cellProps;
+  const idx = rowIndex * columnCount + columnIndex;
+  if (idx >= displayImages.length) return <div style={style} />;
+
+  const item = displayImages[idx];
+  const imageId = getImageId(item);
+
+  return (
+    <div style={{ ...style, padding: gap / 2 }}>
+      <ImageTile
+        item={item}
+        imageId={imageId}
+        isLiked={likedIds.has(imageId)}
+        isDownvoted={downvotedIds.has(imageId)}
+        isToggling={toggling.has(imageId)}
+        infoOpen={infoId === imageId}
+        isExcluded={excludedBooks.has(item.bookId)}
+        onLike={onLike}
+        onDownvote={onDownvote}
+        onClickTile={() => onClickTile(idx)}
+        onToggleInfo={onToggleInfo}
+        onExcludeBook={onExcludeBook}
+      />
+    </div>
+  );
+}
+
+// --- Column count for grid sizes at various breakpoints ---
+function useColumnCount(gridSize: 'sm' | 'md' | 'lg'): number {
+  const [cols, setCols] = useState(6);
+
+  useEffect(() => {
+    function compute() {
+      const w = window.innerWidth;
+      if (gridSize === 'sm') {
+        if (w >= 1280) return 12;
+        if (w >= 1024) return 10;
+        if (w >= 768) return 8;
+        if (w >= 640) return 6;
+        return 4;
+      } else if (gridSize === 'md') {
+        if (w >= 1280) return 6;
+        if (w >= 1024) return 5;
+        if (w >= 768) return 4;
+        if (w >= 640) return 3;
+        return 2;
+      } else {
+        if (w >= 768) return 3;
+        if (w >= 640) return 2;
+        return 1;
+      }
+    }
+
+    setCols(compute());
+    const handler = () => setCols(compute());
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, [gridSize]);
+
+  return cols;
+}
+
+// --- Main component ---
 export default function CurateClient() {
   const [images, setImages] = useState<GalleryItem[]>([]);
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
@@ -104,9 +318,33 @@ export default function CurateClient() {
   const [collections, setCollections] = useState<{ slug: string; name: string }[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  // Virtualization
+  const columnCount = useColumnCount(gridSize);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w) setContainerWidth(w);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const sentinelRef = useRef<HTMLDivElement>(null);
   const loadingRef = useRef(false);
   const initialLoadDone = useRef(false);
+
+  // Stable refs for callbacks (win #4 — avoids useCallback re-creation)
+  const likedIdsRef = useRef(likedIds);
+  likedIdsRef.current = likedIds;
+  const downvotedIdsRef = useRef(downvotedIds);
+  downvotedIdsRef.current = downvotedIds;
+  const toggledRef = useRef(toggling);
+  toggledRef.current = toggling;
 
   // Fetch images from gallery API
   const fetchImages = useCallback(async (newOffset: number, reset: boolean) => {
@@ -178,7 +416,6 @@ export default function CurateClient() {
 
         if (items.length < 1000) keepGoing = false;
 
-        // Update total on first fetch
         if (allItems.length === items.length) {
           setTotal(data.total || 0);
           if (data.filters?.types?.length && types.length === 0) {
@@ -207,13 +444,11 @@ export default function CurateClient() {
 
   // Load liked IDs + downvoted IDs on mount
   useEffect(() => {
-    // Load downvotes from localStorage
     setDownvotedIds(getDownvotesCache());
 
     const visitorId = getVisitorId();
     if (!visitorId) return;
 
-    // Use localStorage cache as initial state for likes
     const cache = getLikesCache();
     const initialLiked = new Set<string>();
     for (const key of Object.keys(cache)) {
@@ -223,7 +458,6 @@ export default function CurateClient() {
     }
     setLikedIds(initialLiked);
 
-    // Load collections for filter dropdown
     fetch('/api/collections')
       .then(res => res.json())
       .then(data => {
@@ -233,7 +467,6 @@ export default function CurateClient() {
       })
       .catch(() => {});
 
-    // Then fetch from server for accuracy
     fetch(`/api/likes/mine?visitor_id=${visitorId}&type=image&limit=5000`)
       .then(res => res.json())
       .then(data => {
@@ -244,7 +477,6 @@ export default function CurateClient() {
             if (id) serverLiked.add(id);
           }
           setLikedIds(serverLiked);
-          // Update cache
           for (const id of serverLiked) {
             setLikeInCache(`image:${id}`, true);
           }
@@ -282,15 +514,14 @@ export default function CurateClient() {
     return () => observer.disconnect();
   }, [hasMore, offset, fetchImages, showLikedOnly, showDownvotedOnly]);
 
-  // Toggle like (heart)
+  // Toggle like — uses refs so the callback identity is stable
   const handleToggleLike = useCallback(async (item: GalleryItem, e: React.MouseEvent) => {
     e.stopPropagation();
     const imageId = getImageId(item);
     const visitorId = getVisitorId();
-    if (!visitorId || toggling.has(imageId)) return;
+    if (!visitorId || toggledRef.current.has(imageId)) return;
 
-    // If currently downvoted, remove downvote first
-    if (downvotedIds.has(imageId)) {
+    if (downvotedIdsRef.current.has(imageId)) {
       setDownvotedIds(prev => {
         const next = new Set(prev);
         next.delete(imageId);
@@ -302,8 +533,7 @@ export default function CurateClient() {
     setToggling(prev => new Set(prev).add(imageId));
     setApplied(false);
 
-    // Optimistic update
-    const wasLiked = likedIds.has(imageId);
+    const wasLiked = likedIdsRef.current.has(imageId);
     setLikedIds(prev => {
       const next = new Set(prev);
       if (wasLiked) next.delete(imageId);
@@ -316,11 +546,7 @@ export default function CurateClient() {
       const res = await fetch('/api/likes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          target_type: 'image',
-          target_id: imageId,
-          visitor_id: visitorId,
-        }),
+        body: JSON.stringify({ target_type: 'image', target_id: imageId, visitor_id: visitorId }),
       });
       const data = await res.json();
       setLikedIds(prev => {
@@ -331,7 +557,6 @@ export default function CurateClient() {
       });
       setLikeInCache(`image:${imageId}`, data.liked);
     } catch {
-      // Revert
       setLikedIds(prev => {
         const next = new Set(prev);
         if (wasLiked) next.add(imageId);
@@ -346,15 +571,14 @@ export default function CurateClient() {
         return next;
       });
     }
-  }, [likedIds, downvotedIds, toggling]);
+  }, []);
 
-  // Toggle downvote (thumbs down) — local only, no server API
+  // Toggle downvote — stable callback via refs
   const handleToggleDownvote = useCallback((item: GalleryItem, e: React.MouseEvent) => {
     e.stopPropagation();
     const imageId = getImageId(item);
 
-    // If currently liked, remove like first (fire and forget)
-    if (likedIds.has(imageId)) {
+    if (likedIdsRef.current.has(imageId)) {
       const visitorId = getVisitorId();
       if (visitorId) {
         setLikedIds(prev => {
@@ -363,7 +587,6 @@ export default function CurateClient() {
           return next;
         });
         setLikeInCache(`image:${imageId}`, false);
-        // Unlike on server
         fetch('/api/likes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -380,12 +603,31 @@ export default function CurateClient() {
       return next;
     });
     setApplied(false);
-  }, [likedIds]);
+  }, []);
+
+  const handleToggleInfo = useCallback((imageId: string) => {
+    setInfoId(prev => prev === imageId ? null : imageId);
+  }, []);
+
+  const handleExcludeBook = useCallback(async (item: GalleryItem) => {
+    if (excludedBooks.has(item.bookId)) return;
+    try {
+      const res = await fetch('/api/gallery/curate', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookId: item.bookId, galleryExclude: true }),
+      });
+      if (res.ok) {
+        setExcludedBooks(prev => new Set(prev).add(item.bookId));
+        toast.success(`Excluded: ${item.bookTitle}`);
+      }
+    } catch { toast.error('Failed to exclude book'); }
+  }, [excludedBooks]);
 
   // Apply curation
   const handleApplyCurated = useCallback(async () => {
-    const upCount = likedIds.size;
-    const downCount = downvotedIds.size;
+    const upCount = likedIdsRef.current.size;
+    const downCount = downvotedIdsRef.current.size;
     if (upCount === 0 && downCount === 0) return;
 
     const parts = [];
@@ -399,8 +641,8 @@ export default function CurateClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          upvoteIds: [...likedIds],
-          downvoteIds: [...downvotedIds],
+          upvoteIds: [...likedIdsRef.current],
+          downvoteIds: [...downvotedIdsRef.current],
         }),
       });
       const data = await res.json();
@@ -416,20 +658,23 @@ export default function CurateClient() {
     } finally {
       setApplying(false);
     }
-  }, [likedIds, downvotedIds]);
+  }, []);
 
-  // Filter and sort displayed images
-  const filteredImages = showLikedOnly
-    ? images.filter(img => likedIds.has(getImageId(img)))
-    : showDownvotedOnly
-    ? images.filter(img => downvotedIds.has(getImageId(img)))
-    : images;
+  // --- Win #2: useMemo on filter + sort ---
+  const displayImages = useMemo(() => {
+    let filtered: GalleryItem[];
+    if (showLikedOnly) {
+      filtered = images.filter(img => likedIds.has(getImageId(img)));
+    } else if (showDownvotedOnly) {
+      filtered = images.filter(img => downvotedIds.has(getImageId(img)));
+    } else {
+      filtered = images;
+    }
 
-  const displayImages = (() => {
-    if (sortMode === 'default') return filteredImages;
-    const sorted = [...filteredImages];
+    if (sortMode === 'default') return filtered;
+
+    const sorted = [...filtered];
     if (sortMode === 'random') {
-      // Seeded shuffle so it's stable until user clicks again
       for (let i = sorted.length - 1; i > 0; i--) {
         const j = Math.floor(((Math.sin(i + randomSeed) + 1) / 2) * (i + 1));
         [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
@@ -444,7 +689,7 @@ export default function CurateClient() {
       sorted.sort((a, b) => (a.year || 9999) - (b.year || 9999));
     }
     return sorted;
-  })();
+  }, [images, likedIds, downvotedIds, showLikedOnly, showDownvotedOnly, sortMode, randomSeed]);
 
   // Lightbox keyboard navigation
   useEffect(() => {
@@ -464,6 +709,30 @@ export default function CurateClient() {
 
   const heartedCount = likedIds.size;
   const downvotedCount = downvotedIds.size;
+
+  // --- Win #3: Virtualized grid ---
+  const rowCount = Math.ceil(displayImages.length / columnCount);
+  const gap = 4;
+
+  const handleClickTile = useCallback((idx: number) => {
+    setLightboxIndex(idx);
+  }, []);
+
+  const cellProps = useMemo<GridCellProps>(() => ({
+    displayImages,
+    columnCount,
+    likedIds,
+    downvotedIds,
+    toggling,
+    infoId,
+    excludedBooks,
+    onLike: handleToggleLike,
+    onDownvote: handleToggleDownvote,
+    onClickTile: handleClickTile,
+    onToggleInfo: handleToggleInfo,
+    onExcludeBook: handleExcludeBook,
+    gap,
+  }), [displayImages, columnCount, likedIds, downvotedIds, toggling, infoId, excludedBooks, handleToggleLike, handleToggleDownvote, handleClickTile, handleToggleInfo, handleExcludeBook]);
 
   return (
     <div className="max-w-[2000px] mx-auto">
@@ -638,7 +907,6 @@ export default function CurateClient() {
         {/* Filter controls */}
         {filtersOpen && (
           <div className="flex items-center gap-4 mt-3 pt-3 border-t border-border-light flex-wrap">
-            {/* Min quality slider */}
             <label className="flex items-center gap-2 text-sm text-text-secondary">
               Min quality
               <input
@@ -653,7 +921,6 @@ export default function CurateClient() {
               <span className="font-mono text-xs w-8">{minQuality.toFixed(2)}</span>
             </label>
 
-            {/* Collection filter */}
             <label className="flex items-center gap-2 text-sm text-text-secondary">
               Collection
               <select
@@ -668,7 +935,6 @@ export default function CurateClient() {
               </select>
             </label>
 
-            {/* Type filter */}
             <label className="flex items-center gap-2 text-sm text-text-secondary">
               Type
               <select
@@ -686,142 +952,20 @@ export default function CurateClient() {
         )}
       </div>
 
-      {/* Image grid */}
-      <div className={`grid gap-1 p-1 ${
-        gridSize === 'sm' ? 'grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12' :
-        gridSize === 'md' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
-        'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
-      }`}>
-        {displayImages.map((item, idx) => {
-          const imageId = getImageId(item);
-          const isLiked = likedIds.has(imageId);
-          const isDownvoted = downvotedIds.has(imageId);
-          const isToggling = toggling.has(imageId);
-          const hasRating = isLiked || isDownvoted;
-
-          return (
-            <div
-              key={`${item.pageId}-${item.detectionIndex}`}
-              className={`
-                relative aspect-square group cursor-pointer overflow-hidden bg-warm
-                ${isDownvoted ? 'opacity-40' : ''}
-              `}
-              onClick={() => setLightboxIndex(idx)}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={getImageSrc(item)}
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-
-              {/* Action buttons — visible on hover or when rated */}
-              <div
-                className={`
-                  absolute inset-0 flex items-center justify-center gap-3
-                  transition-opacity duration-150
-                  ${hasRating ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
-                `}
-              >
-                {/* Heart button */}
-                <button
-                  onClick={(e) => handleToggleLike(item, e)}
-                  className={`
-                    rounded-full p-1.5 transition-all duration-150
-                    ${isLiked ? '' : 'bg-black/30 hover:bg-black/50'}
-                  `}
-                >
-                  <Heart
-                    className={`
-                      w-5 h-5 drop-shadow-md transition-transform duration-150
-                      ${isLiked ? 'text-status-error scale-110' : 'text-white'}
-                      ${isToggling ? 'animate-pulse' : ''}
-                    `}
-                    fill={isLiked ? 'currentColor' : 'none'}
-                    strokeWidth={isLiked ? 0 : 2.5}
-                  />
-                </button>
-
-                {/* Thumbs down button */}
-                <button
-                  onClick={(e) => handleToggleDownvote(item, e)}
-                  className={`
-                    rounded-full p-1.5 transition-all duration-150
-                    ${isDownvoted ? '' : 'bg-black/30 hover:bg-black/50'}
-                  `}
-                >
-                  <ThumbsDown
-                    className={`
-                      w-4.5 h-4.5 drop-shadow-md transition-transform duration-150
-                      ${isDownvoted ? 'text-blue-500 scale-110' : 'text-white'}
-                    `}
-                    fill={isDownvoted ? 'currentColor' : 'none'}
-                    strokeWidth={isDownvoted ? 0 : 2.5}
-                  />
-                </button>
-              </div>
-
-              {/* Info button — bottom-left */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setInfoId(prev => prev === imageId ? null : imageId);
-                }}
-                className="absolute bottom-0.5 left-0.5 rounded-full p-0.5 bg-black/40 text-white/70 hover:text-white hover:bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-              >
-                <Info className="w-3.5 h-3.5" />
-              </button>
-
-              {/* Info overlay */}
-              {infoId === imageId && (
-                <div
-                  className="absolute inset-x-0 bottom-0 bg-black/85 text-white p-2 text-[10px] leading-tight z-10"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <p className="font-medium line-clamp-2">{item.bookTitle}</p>
-                  {item.author && <p className="text-white/60 mt-0.5">{item.author}{item.year ? `, ${item.year}` : ''}</p>}
-                  <p className="text-white/50 mt-0.5">
-                    {item.type && <span className="capitalize">{item.type}</span>}
-                    {item.galleryQuality !== undefined && <span> · {item.galleryQuality.toFixed(2)}</span>}
-                    {item.pageNumber > 0 && <span> · p.{item.pageNumber}</span>}
-                  </p>
-                  <button
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      if (excludedBooks.has(item.bookId)) return;
-                      try {
-                        const res = await fetch('/api/gallery/curate', {
-                          method: 'PATCH',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ bookId: item.bookId, galleryExclude: true }),
-                        });
-                        if (res.ok) {
-                          setExcludedBooks(prev => new Set(prev).add(item.bookId));
-                          toast.success(`Excluded: ${item.bookTitle}`);
-                        }
-                      } catch { toast.error('Failed to exclude book'); }
-                    }}
-                    className={`mt-1 text-[9px] px-1.5 py-0.5 rounded transition-colors ${
-                      excludedBooks.has(item.bookId)
-                        ? 'bg-amber-500/30 text-amber-300'
-                        : 'bg-white/10 text-white/50 hover:bg-amber-500/20 hover:text-amber-300'
-                    }`}
-                  >
-                    {excludedBooks.has(item.bookId) ? 'Excluded from showcase' : 'Exclude book from showcase'}
-                  </button>
-                </div>
-              )}
-
-              {/* Quality badge — tiny, bottom-right */}
-              {item.galleryQuality !== undefined && !infoId && (
-                <span className="absolute bottom-0.5 right-0.5 text-[9px] font-mono text-white/70 bg-black/40 px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  {item.galleryQuality.toFixed(2)}
-                </span>
-              )}
-            </div>
-          );
-        })}
+      {/* Virtualized image grid (win #3) */}
+      <div ref={containerRef} className={gridSize === 'lg' ? 'max-w-5xl mx-auto' : ''} style={{ height: 'calc(100vh - 60px)' }}>
+        {containerWidth > 0 && displayImages.length > 0 && (
+          <Grid<GridCellProps>
+            columnCount={columnCount}
+            columnWidth={Math.floor(containerWidth / columnCount)}
+            rowCount={rowCount}
+            rowHeight={Math.floor(containerWidth / columnCount)}
+            overscanCount={4}
+            cellComponent={GridCell}
+            cellProps={cellProps}
+            style={{ overflowX: 'hidden' }}
+          />
+        )}
       </div>
 
       {/* Loading indicator */}
@@ -842,7 +986,7 @@ export default function CurateClient() {
         </div>
       )}
 
-      {/* Infinite scroll sentinel */}
+      {/* Infinite scroll sentinel (fallback for non-virtualized path) */}
       {!showLikedOnly && !showDownvotedOnly && <div ref={sentinelRef} className="h-1" />}
 
       {/* Lightbox */}
@@ -902,7 +1046,6 @@ export default function CurateClient() {
 
             {/* Image + nav */}
             <div className="flex-1 flex items-center justify-center relative overflow-hidden" onClick={e => e.stopPropagation()}>
-              {/* Left arrow */}
               {lightboxIndex > 0 && (
                 <button
                   onClick={() => setLightboxIndex(lightboxIndex - 1)}
@@ -920,7 +1063,6 @@ export default function CurateClient() {
                 onClick={() => setLightboxIndex(null)}
               />
 
-              {/* Right arrow */}
               {lightboxIndex < displayImages.length - 1 && (
                 <button
                   onClick={() => setLightboxIndex(lightboxIndex + 1)}
