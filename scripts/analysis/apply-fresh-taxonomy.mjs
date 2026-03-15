@@ -75,7 +75,22 @@ async function main() {
   );
   console.log(`  Cleared taxonomy from ${clearResult.modifiedCount} books`);
 
-  // Step 3: Write new taxonomy
+  // Load subcluster mapping
+  const mappingPath = join(OUTPUT_DIR, 'taxonomy-mapping.json');
+  let mapping;
+  try {
+    mapping = JSON.parse(readFileSync(mappingPath, 'utf-8'));
+  } catch (e) {
+    console.error(`Missing ${mappingPath}`);
+    process.exit(1);
+  }
+  const subMap = {};
+  for (const m of mapping.books) {
+    subMap[m.book_id] = m;
+  }
+  console.log(`Loaded ${mapping.books.length} subcluster mappings (${mapping.stats.subclusters} subclusters)`);
+
+  // Step 3: Write new taxonomy with subclusters
   console.log(`\nWriting new taxonomy for ${data.assignments.length} books...`);
   const bulkOps = [];
   for (const a of data.assignments) {
@@ -86,6 +101,12 @@ async function main() {
     };
     if (a.method) {
       taxonomy.method = a.method;
+    }
+    // Add subcluster from mapping
+    const sub = subMap[a.id];
+    if (sub && sub.subcluster) {
+      taxonomy.subcluster = sub.subcluster;
+      taxonomy.subcluster_idx = sub.subcluster_idx;
     }
     bulkOps.push({
       updateOne: {
@@ -116,11 +137,20 @@ async function main() {
     { $count: 'n' },
   ]).toArray();
 
+  const withSub = await books.countDocuments({ 'taxonomy.subcluster': { $exists: true }, hidden: { $ne: true } });
+  const subclusters = await books.aggregate([
+    { $match: { 'taxonomy.subcluster': { $exists: true }, hidden: { $ne: true } } },
+    { $group: { _id: { cluster: '$taxonomy.cluster', sub: '$taxonomy.subcluster' } } },
+    { $count: 'n' },
+  ]).toArray();
+
   console.log(`\nTaxonomy coverage:`);
   console.log(`  HDBSCAN (core): ${hdbscan}`);
   console.log(`  Nearest-centroid (noise): ${nearest}`);
   console.log(`  Total: ${totalWithTax}`);
   console.log(`  Distinct clusters: ${clusters[0]?.n || 0}`);
+  console.log(`  With subcluster: ${withSub}`);
+  console.log(`  Distinct subclusters: ${subclusters[0]?.n || 0}`);
 
   await client.close();
   console.log('Done.');

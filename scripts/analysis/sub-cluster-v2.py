@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Sub-cluster v2: More aggressive splitting.
-- Lower min_cluster_size (6-8) to find finer structure
-- Target ALL clusters, not just >80 books
-- Skip only clusters <15 books
-- Output structured JSON + human-readable review
+Sub-cluster v2: Split each of the 52 clusters into finer sub-groups.
+Uses UMAP+HDBSCAN within each cluster's embedding subspace.
+
+Reads: complete-taxonomy.json, book-embeddings.npy, book-embed-ids.json, book-features.json
+Outputs: sub-cluster-v2.json
 """
 
 import json
@@ -15,63 +15,74 @@ import hdbscan
 
 OUTPUT_DIR = Path(__file__).parent.parent / "output"
 
-# Every raw cluster we want to try splitting
-# (raw_id, curated_name)
-ALL_CLUSTERS = [
-    (21, "Western Alchemy"),
-    (35, "Hermeticism & Theurgy"),
-    (27, "Grimoires & Ceremonial Magic"),
-    (25, "Demonology & Witchcraft"),
-    (4, "Christian Kabbalah"),
-    (12, "Freemasonry & Secret Societies"),
-    (11, "Rosicrucian Fraternity Defenses"),
-    (30, "Early Modern Rosicrucianism"),
-    (18, "Animal Magnetism & Mesmerism"),
-    (19, "New Thought & Self-Improvement"),
-    (47, "Continental Christian Mysticism"),
-    (45, "Biblical Scholarship"),
-    (41, "Syriac & Armenian Christianity"),
-    (44, "Early Christian Apologetics"),
-    (46, "Religious Persecution & Toleration"),
-    (43, "Early Modern Eschatology"),
-    (36, "Classical Greek & Latin Texts"),
-    (32, "Renaissance Philosophy"),
-    (31, "Astrology & Astronomy"),
-    (15, "Botany & Herbals"),
-    (34, "Early Optics & Natural Philosophy"),
-    (22, "Baconian Natural Philosophy"),
-    (38, "Renaissance Anatomy & Engineering"),
-    (37, "Ancient Mechanical Engineering"),
-    (0, "Music Theory & Harmony"),
-    (20, "Medical Philosophy"),
-    (6, "Chinese Religion & Cosmology"),
-    (9, "Wubei Zhi"),
-    (13, "Hai Guo Tu Zhi"),
-    (2, "Chinese Materia Medica"),
-    (3, "Chinese Medical Texts"),
-    (10, "Chinese Celestial & Terrestrial Lore"),
-    (8, "Sanskrit Jyotisha"),
-    (5, "Sanskrit Astronomical Treatises"),
-    (17, "Hindu Philosophy & Indology"),
-    (28, "Islamic Mysticism & Philosophy"),
-    (29, "Early Modern Moral Philosophy"),
-    (33, "Early Modern Philosophy"),
-    (23, "Legal & Political Treatises"),
-    (42, "Thirty Years' War Pamphlets"),
-    (1, "African & Indigenous Studies"),
-    (7, "Celtic & Irish Traditions"),
-]
+# All 52 clusters from the fresh clustering
+CURATED_NAMES = {
+    0:  "Ethnography & Indigenous Studies",
+    1:  "Music Theory & Harmony",
+    2:  "Celtic & Irish Traditions",
+    3:  "Sanskrit Astronomical Treatises",
+    4:  "Rosicrucianism",
+    5:  "Freemasonry & Secret Societies",
+    6:  "Chinese Materia Medica",
+    7:  "Chinese Maritime & Defense",
+    8:  "Chinese Military Treatises",
+    9:  "Chinese Cosmology & Divination",
+    10: "East Asian Encyclopedic Works",
+    11: "Sanskrit Jyotisha",
+    12: "Hindu Philosophy & Tantra",
+    13: "Baconian Natural Philosophy",
+    14: "Classical Greek Texts",
+    15: "Arabic & Persian Manuscripts",
+    16: "French Vernacular Literature",
+    17: "Dutch Scholarly Traditions",
+    18: "Italian Literary Traditions",
+    19: "Neoplatonism & Renaissance Philosophy",
+    20: "Ancient Mechanical Engineering",
+    21: "Renaissance Anatomy & Engineering",
+    22: "Hermeticism & Theurgy",
+    23: "Mathematics & Geometry",
+    24: "Early Modern Physics",
+    25: "Comparative Mythology & Religion",
+    26: "Platonic Philosophy",
+    27: "Astrology & Astronomy",
+    28: "Medieval Astrology & Divination",
+    29: "Western Alchemy",
+    30: "Medical Philosophy",
+    31: "Natural History & Experiment",
+    32: "Botany & Herbals",
+    33: "Renaissance Occult Philosophy",
+    34: "New Thought & Self-Improvement",
+    35: "Book History & Provenance",
+    36: "Christian Kabbalah",
+    37: "Grimoires & Ceremonial Magic",
+    38: "Demonology & Witchcraft",
+    39: "Renaissance Natural Philosophy",
+    40: "German Alchemical Tradition",
+    41: "Syriac & Armenian Christianity",
+    42: "Enlightenment Philosophy",
+    43: "Continental Christian Mysticism",
+    44: "Early Modern Prophecy & Apocalypse",
+    45: "Lexicography & Etymology",
+    46: "Classical Greek & Latin Texts",
+    47: "Renaissance Encyclopedism",
+    48: "Legal & Political Treatises",
+    49: "Classical Antiquity & Bibliography",
+    50: "Early Christianity & Apologetics",
+    51: "Biblical Scholarship",
+}
 
-MIN_SIZE_FOR_SPLIT = 20  # Don't try to split clusters smaller than this
+MIN_SIZE_FOR_SPLIT = 20
 
 
 def load_data():
+    with open(OUTPUT_DIR / "complete-taxonomy.json") as f:
+        taxonomy = json.load(f)
     with open(OUTPUT_DIR / "book-features.json") as f:
         all_books = json.load(f)
-    with open(OUTPUT_DIR / "cluster-results.json") as f:
-        results = json.load(f)
     embeddings = np.load(str(OUTPUT_DIR / "book-embeddings.npy"))
-    return all_books, results, embeddings
+    with open(OUTPUT_DIR / "book-embed-ids.json") as f:
+        embed_ids = json.load(f)
+    return taxonomy, all_books, embeddings, embed_ids
 
 
 def sub_cluster(embeddings_subset, min_cluster_size=6, min_samples=2):
@@ -100,42 +111,75 @@ def sub_cluster(embeddings_subset, min_cluster_size=6, min_samples=2):
     return labels
 
 
+def format_book(book):
+    return {
+        "id": book.get("id", ""),
+        "title": (book.get("title") or "?")[:80],
+        "author": (book.get("author") or "")[:40],
+        "year": book.get("year", ""),
+        "lang": book.get("language", ""),
+    }
+
+
 def main():
     print("Loading data...")
-    all_books, results, embeddings = load_data()
+    taxonomy, all_books, embeddings, embed_ids = load_data()
     book_lookup = {b["id"]: b for b in all_books}
-    assignments = results["book_assignments"]
+    embed_id_to_idx = {bid: i for i, bid in enumerate(embed_ids)}
+
+    # Group assignments by cluster
+    cluster_books = {}
+    for a in taxonomy["assignments"]:
+        cid = a["cluster"]
+        if cid not in cluster_books:
+            cluster_books[cid] = []
+        cluster_books[cid].append(a)
 
     all_results = []
 
-    for raw_id, curated_name in ALL_CLUSTERS:
-        # Get books in this cluster
-        indices = [i for i, a in enumerate(assignments) if a["cluster"] == raw_id]
-        n = len(indices)
+    for cid in sorted(CURATED_NAMES.keys()):
+        curated_name = CURATED_NAMES[cid]
+        books_in_cluster = cluster_books.get(cid, [])
+        n = len(books_in_cluster)
 
         if n < MIN_SIZE_FOR_SPLIT:
             print(f"\n  SKIP: {curated_name} ({n} books) — too small")
+            book_list = []
+            for a in books_in_cluster:
+                book = book_lookup.get(a["id"], {})
+                book_list.append(format_book(book))
             all_results.append({
-                "raw_id": raw_id,
+                "cluster_id": cid,
                 "name": curated_name,
                 "total": n,
                 "split": False,
                 "reason": "too small",
-                "subclusters": [{
-                    "size": n,
-                    "books": get_book_list(indices, assignments, book_lookup),
-                }],
+                "subclusters": [{"size": n, "books": book_list}],
             })
             continue
 
-        emb_subset = embeddings[indices]
+        # Get embeddings for these books
+        valid_indices = []
+        valid_assignments = []
+        for a in books_in_cluster:
+            idx = embed_id_to_idx.get(a["id"])
+            if idx is not None:
+                valid_indices.append(idx)
+                valid_assignments.append(a)
+
+        if len(valid_indices) < 15:
+            print(f"\n  SKIP: {curated_name} ({n} books, {len(valid_indices)} with embeddings) — too few")
+            continue
+
+        emb_subset = embeddings[valid_indices]
 
         # Adaptive parameters
-        if n > 200:
+        nv = len(valid_indices)
+        if nv > 200:
             mcs, ms = 10, 3
-        elif n > 100:
+        elif nv > 100:
             mcs, ms = 8, 3
-        elif n > 50:
+        elif nv > 50:
             mcs, ms = 6, 2
         else:
             mcs, ms = 6, 2
@@ -146,8 +190,7 @@ def main():
         groups = {}
         noise = []
         for j, lab in enumerate(labels):
-            orig_idx = indices[j]
-            book_id = assignments[orig_idx]["id"]
+            book_id = valid_assignments[j]["id"]
             book = book_lookup.get(book_id, {})
             entry = format_book(book)
             if lab == -1:
@@ -156,13 +199,13 @@ def main():
                 groups.setdefault(int(lab), []).append(entry)
 
         n_clusters = len(groups)
-        noise_pct = len(noise) / n * 100 if n > 0 else 0
+        noise_pct = len(noise) / nv * 100 if nv > 0 else 0
 
         # Decide if the split is meaningful
         meaningful = n_clusters >= 2 and noise_pct < 40
 
         result = {
-            "raw_id": raw_id,
+            "cluster_id": cid,
             "name": curated_name,
             "total": n,
             "split": meaningful,
@@ -202,7 +245,7 @@ def main():
             sizes = [s["size"] for s in result["subclusters"]]
             print(f"\n  SPLIT: {curated_name} ({n}) → {sizes} + {len(noise)} noise ({noise_pct:.0f}%)")
         else:
-            print(f"\n  KEEP:  {curated_name} ({n}) — {'only 1 cluster found' if n_clusters < 2 else f'{noise_pct:.0f}% noise'}")
+            print(f"\n  KEEP:  {curated_name} ({n}) — {'only 1 found' if n_clusters < 2 else f'{noise_pct:.0f}% noise'}")
 
         all_results.append(result)
 
@@ -213,32 +256,13 @@ def main():
     print(f"\nSaved to {out_path}")
 
     # Summary stats
-    splits = [r for r in all_results if r["split"]]
-    keeps = [r for r in all_results if not r["split"]]
-    total_leaf = sum(r["n_subclusters"] for r in splits) + len(keeps)
+    splits = [r for r in all_results if r.get("split")]
+    keeps = [r for r in all_results if not r.get("split")]
+    total_leaf = sum(r.get("n_subclusters", 1) for r in splits) + len(keeps)
     print(f"\n{'='*60}")
-    print(f"Split: {len(splits)} clusters into {sum(r['n_subclusters'] for r in splits)} sub-clusters")
+    print(f"Split: {len(splits)} clusters into {sum(r.get('n_subclusters', 0) for r in splits)} sub-clusters")
     print(f"Kept intact: {len(keeps)} clusters")
     print(f"Total leaf nodes: {total_leaf}")
-
-
-def get_book_list(indices, assignments, book_lookup):
-    books = []
-    for i in indices:
-        book_id = assignments[i]["id"]
-        book = book_lookup.get(book_id, {})
-        books.append(format_book(book))
-    books.sort(key=lambda b: b["year"] if isinstance(b["year"], (int, float)) else 9999)
-    return books
-
-
-def format_book(book):
-    return {
-        "title": (book.get("title") or "?")[:80],
-        "author": (book.get("author") or "")[:40],
-        "year": book.get("year", ""),
-        "lang": book.get("language", ""),
-    }
 
 
 if __name__ == "__main__":

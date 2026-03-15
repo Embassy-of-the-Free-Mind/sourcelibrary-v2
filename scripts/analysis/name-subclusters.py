@@ -15,8 +15,9 @@ OUTPUT_DIR = Path(__file__).parent.parent / "output"
 from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent.parent.parent / ".env.production.local")
 
-import google.generativeai as genai
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+from google import genai
+
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
 
 def format_subcluster_for_prompt(sc):
@@ -55,8 +56,10 @@ For each sub-cluster below, propose a SHORT name (2-5 words) that captures what 
 Respond with ONLY a JSON array of strings, one name per sub-cluster, in order.
 Example: ["Paracelsian Medicine", "Chrysopoeia Manuals", "Arabic Alchemy"]"""
 
-    model = genai.GenerativeModel("gemini-2.0-flash")
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt,
+    )
     text = response.text.strip()
 
     # Parse JSON from response
@@ -82,7 +85,7 @@ def main():
     for cluster in data:
         if not cluster.get("split") or len(cluster["subclusters"]) < 2:
             results.append({
-                "raw_id": cluster["raw_id"],
+                "cluster_id": cluster["cluster_id"],
                 "parent": cluster["name"],
                 "total": cluster["total"],
                 "split": False,
@@ -102,7 +105,7 @@ def main():
                     "languages": sc.get("languages", {}),
                 })
             results.append({
-                "raw_id": cluster["raw_id"],
+                "cluster_id": cluster["cluster_id"],
                 "parent": cluster["name"],
                 "total": cluster["total"],
                 "split": True,
@@ -120,7 +123,7 @@ def main():
                     "size": sc["size"],
                 })
             results.append({
-                "raw_id": cluster["raw_id"],
+                "cluster_id": cluster["cluster_id"],
                 "parent": cluster["name"],
                 "total": cluster["total"],
                 "split": True,
