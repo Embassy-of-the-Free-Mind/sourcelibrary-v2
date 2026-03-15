@@ -146,6 +146,62 @@ export default function CurateClient() {
     }
   }, [minQuality, filterType, filterCollection]);
 
+  // Fetch ALL images (for sorting modes)
+  const fetchAll = useCallback(async () => {
+    if (loadingRef.current) return;
+    loadingRef.current = true;
+    setLoading(true);
+
+    try {
+      const allItems: GalleryItem[] = [];
+      let fetchOffset = 0;
+      let keepGoing = true;
+
+      while (keepGoing) {
+        const params = new URLSearchParams({
+          limit: '1000',
+          offset: fetchOffset.toString(),
+          minQuality: minQuality.toString(),
+          maxPerBook: '999',
+        });
+        if (filterType) params.append('type', filterType);
+        if (filterCollection) params.append('collection', filterCollection);
+
+        const res = await fetch(`/api/gallery?${params}`);
+        const data = await res.json();
+        const items = data.items || [];
+        allItems.push(...items);
+        fetchOffset += items.length;
+
+        if (items.length < 1000) keepGoing = false;
+
+        // Update total on first fetch
+        if (allItems.length === items.length) {
+          setTotal(data.total || 0);
+          if (data.filters?.types?.length && types.length === 0) {
+            setTypes(data.filters.types);
+          }
+        }
+      }
+
+      setImages(allItems);
+      setHasMore(false);
+      setOffset(allItems.length);
+    } catch (err) {
+      console.error('Failed to fetch all gallery:', err);
+    } finally {
+      setLoading(false);
+      loadingRef.current = false;
+    }
+  }, [minQuality, filterType, filterCollection]);
+
+  // When sort mode changes to non-default, load all images if we haven't yet
+  useEffect(() => {
+    if (sortMode !== 'default' && hasMore && images.length < total) {
+      fetchAll();
+    }
+  }, [sortMode]);
+
   // Load liked IDs + downvoted IDs on mount
   useEffect(() => {
     // Load downvotes from localStorage
