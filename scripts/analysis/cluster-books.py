@@ -35,10 +35,11 @@ def load_books():
     with open(OUTPUT_DIR / "book-features.json") as f:
         books = json.load(f)
 
-    # Keep books with summary OR (themes + several terms)
+    # Keep books with summary OR themes OR sufficient index terms
     good = [b for b in books if
             len(b.get("summary", "")) > 50 or
-            (len(b.get("themes", [])) > 0 and len(b.get("top_terms", [])) > 5)]
+            len(b.get("themes", [])) > 0 or
+            len(b.get("top_terms", [])) > 5]
 
     print(f"Loaded {len(books)} total, {len(good)} with good signal")
     return good
