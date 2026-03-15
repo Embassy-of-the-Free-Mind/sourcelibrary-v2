@@ -3,11 +3,11 @@
   "crons": [
     {
       "path": "/api/cron/post-import-pipeline",
-      "schedule": "*/10 * * * *"
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/enrich-books",
-      "schedule": "*/10 * * * *"
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/process-batches",
@@ -31,7 +31,7 @@
     },
     {
       "path": "/api/cron/social-post",
-      "schedule": "0 * * * *"
+      "schedule": "0 */3 * * *"
     },
     {
       "path": "/api/cron/social-reset",
@@ -39,7 +39,7 @@
     },
     {
       "path": "/api/cron/health-check",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/daily-pipeline-report",
