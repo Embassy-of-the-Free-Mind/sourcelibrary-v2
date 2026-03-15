@@ -1,6 +1,6 @@
-# How Much of the Renaissance Has Been Translated?
+# How Much of the Early Modern World Has Been Translated?
 
-## A First Census of English Translations of Early Modern European Printed Works
+## A First Census of English Translations of European Printed Works, 1450-1700
 
 James Derek Lomas, PhD
 
