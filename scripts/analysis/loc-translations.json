@@ -1,0 +1,6775 @@
+{
+  "timestamp": "2026-03-15T04:06:02.937Z",
+  "source": "Library of Congress SRU gateway",
+  "totalRaw": 836,
+  "totalRelevant": 396,
+  "totalDeduped": 389,
+  "byLanguage": {
+    "grc": 2,
+    "lat": 65,
+    "spa": 14,
+    "por": 3,
+    "gre": 1,
+    "ger": 20,
+    "eng": 2,
+    "fre": 24,
+    "wel": 1,
+    "chi": 1,
+    "mac": 1,
+    "urd": 1,
+    "yid": 2,
+    "ita": 18,
+    "roa": 1,
+    "heb": 1,
+    "dut": 3
+  },
+  "distinctAuthors": 144,
+  "topAuthors": [
+    {
+      "author": "unknown",
+      "works": 169
+    },
+    {
+      "author": "horace",
+      "works": 7
+    },
+    {
+      "author": "hrotsvitha",
+      "works": 5
+    },
+    {
+      "author": "painter, william",
+      "works": 5
+    },
+    {
+      "author": "ovid",
+      "works": 4
+    },
+    {
+      "author": "william",
+      "works": 3
+    },
+    {
+      "author": "virgil",
+      "works": 2
+    },
+    {
+      "author": "terence",
+      "works": 2
+    },
+    {
+      "author": "buchanan, george",
+      "works": 2
+    },
+    {
+      "author": "allen, john houghton",
+      "works": 2
+    },
+    {
+      "author": "dante alighieri",
+      "works": 2
+    },
+    {
+      "author": "farnell, ida",
+      "works": 2
+    },
+    {
+      "author": "resnick, seymour",
+      "works": 2
+    },
+    {
+      "author": "colledge, edmund,",
+      "works": 2
+    },
+    {
+      "author": "schoneveld, cornelis w",
+      "works": 2
+    },
+    {
+      "author": "ashmole, elias",
+      "works": 2
+    },
+    {
+      "author": "cotton, john",
+      "works": 2
+    },
+    {
+      "author": "pym, dora",
+      "works": 1
+    },
+    {
+      "author": "lucian",
+      "works": 1
+    },
+    {
+      "author": "bru&#x308;ggemann, ludwig wilhelm",
+      "works": 1
+    },
+    {
+      "author": "jones, earl",
+      "works": 1
+    },
+    {
+      "author": "levine, suzanne jill",
+      "works": 1
+    },
+    {
+      "author": "pulling, j. lee",
+      "works": 1
+    },
+    {
+      "author": "catullus, gaius valerius",
+      "works": 1
+    },
+    {
+      "author": "dabney, richard",
+      "works": 1
+    },
+    {
+      "author": "bovie, smith palmer",
+      "works": 1
+    },
+    {
+      "author": "lieberman, samuel,",
+      "works": 1
+    },
+    {
+      "author": "foxe, john",
+      "works": 1
+    },
+    {
+      "author": "bidermann, jakob",
+      "works": 1
+    },
+    {
+      "author": "ennius, quintus",
+      "works": 1
+    },
+    {
+      "author": "masen, jakob",
+      "works": 1
+    },
+    {
+      "author": "laberius, d",
+      "works": 1
+    },
+    {
+      "author": "foro-juliensis, titus livius de",
+      "works": 1
+    },
+    {
+      "author": "mahaney, william e.",
+      "works": 1
+    },
+    {
+      "author": "legge, thomas",
+      "works": 1
+    },
+    {
+      "author": "seneca, lucius annaeus",
+      "works": 1
+    },
+    {
+      "author": "apuleius",
+      "works": 1
+    },
+    {
+      "author": "livy",
+      "works": 1
+    },
+    {
+      "author": "di sciacca, claudia",
+      "works": 1
+    },
+    {
+      "author": "sallust",
+      "works": 1
+    },
+    {
+      "author": "haas, james d.,",
+      "works": 1
+    },
+    {
+      "author": "austin, sarah",
+      "works": 1
+    },
+    {
+      "author": "gerber, margy",
+      "works": 1
+    },
+    {
+      "author": "kopp, william lamarr",
+      "works": 1
+    },
+    {
+      "author": "mason, eudo colecestra",
+      "works": 1
+    },
+    {
+      "author": "chawner, edward",
+      "works": 1
+    },
+    {
+      "author": "chavannes, mary charlotte,",
+      "works": 1
+    },
+    {
+      "author": "guest, harry",
+      "works": 1
+    },
+    {
+      "author": "rus, vladimir",
+      "works": 1
+    },
+    {
+      "author": "goethe, johann wolfgang von",
+      "works": 1
+    },
+    {
+      "author": "kaufmann, walter arnold",
+      "works": 1
+    },
+    {
+      "author": "burt, mary anne",
+      "works": 1
+    },
+    {
+      "author": "schiller, friedrich",
+      "works": 1
+    },
+    {
+      "author": "dexter, charles",
+      "works": 1
+    },
+    {
+      "author": "ellesmere, francis egerton",
+      "works": 1
+    },
+    {
+      "author": "wireman, henry d.",
+      "works": 1
+    },
+    {
+      "author": "tilney, robert",
+      "works": 1
+    },
+    {
+      "author": "uhrig, alexander",
+      "works": 1
+    },
+    {
+      "author": "la rochefoucauld, franc&#x327;ois",
+      "works": 1
+    },
+    {
+      "author": "jackson, emilie",
+      "works": 1
+    },
+    {
+      "author": "guibert, herve&#x301;",
+      "works": 1
+    },
+    {
+      "author": "mason, eugene,",
+      "works": 1
+    },
+    {
+      "author": "la fontaine, jean de",
+      "works": 1
+    },
+    {
+      "author": "lockman, john",
+      "works": 1
+    },
+    {
+      "author": "stratford, philip",
+      "works": 1
+    },
+    {
+      "author": "se&#x301;guin, j. a. r",
+      "works": 1
+    },
+    {
+      "author": "taylor, simon watson",
+      "works": 1
+    },
+    {
+      "author": "vesce, thomas e",
+      "works": 1
+    },
+    {
+      "author": "sade",
+      "works": 1
+    },
+    {
+      "author": "cholakian, patricia francis",
+      "works": 1
+    },
+    {
+      "author": "shapiro, norman r.",
+      "works": 1
+    },
+    {
+      "author": "sylvester, josuah",
+      "works": 1
+    },
+    {
+      "author": "kizer, carolyn",
+      "works": 1
+    },
+    {
+      "author": "appelbaum, stanley",
+      "works": 1
+    },
+    {
+      "author": "savage, richard cloudesley,",
+      "works": 1
+    },
+    {
+      "author": "philalethes",
+      "works": 1
+    },
+    {
+      "author": "chawner, edward,",
+      "works": 1
+    },
+    {
+      "author": "swenson, birgit",
+      "works": 1
+    },
+    {
+      "author": "trevelyan, raleigh",
+      "works": 1
+    },
+    {
+      "author": "guercio, francis m",
+      "works": 1
+    },
+    {
+      "author": "guercio, francis michael",
+      "works": 1
+    },
+    {
+      "author": "shields, nancy (catchings)",
+      "works": 1
+    },
+    {
+      "author": "machiavelli, niccolo&#x300;",
+      "works": 1
+    },
+    {
+      "author": "polezzi, loredana",
+      "works": 1
+    },
+    {
+      "author": "costa, margherita",
+      "works": 1
+    },
+    {
+      "author": "guglielmin, stefano",
+      "works": 1
+    },
+    {
+      "author": "rebay, luciano",
+      "works": 1
+    },
+    {
+      "author": "rendel, romilda",
+      "works": 1
+    },
+    {
+      "author": "lucchi, lorna de'",
+      "works": 1
+    },
+    {
+      "author": "kay, george r.",
+      "works": 1
+    },
+    {
+      "author": "lucchi, lorna de',",
+      "works": 1
+    },
+    {
+      "author": "guenther, charles",
+      "works": 1
+    },
+    {
+      "author": "raiziss, sona",
+      "works": 1
+    },
+    {
+      "author": "singh, g.",
+      "works": 1
+    },
+    {
+      "author": "cudahy, sheila",
+      "works": 1
+    },
+    {
+      "author": "mari&#x301;as, javier",
+      "works": 1
+    },
+    {
+      "author": "mairena, ana",
+      "works": 1
+    },
+    {
+      "author": "maramba, asuncion david",
+      "works": 1
+    },
+    {
+      "author": "peers, edgar allison",
+      "works": 1
+    },
+    {
+      "author": "pane, remigio ugo",
+      "works": 1
+    }
+  ],
+  "records": [
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "13445961",
+      "originalLanguages": [],
+      "title": "The Internet classics archive",
+      "pubPlace": "[Cambridge, Mass.]",
+      "publisher": "D.C. Stevenson",
+      "pubYear": "",
+      "subjects": [
+        "Classical literature",
+        "Greek literature",
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "2019",
+      "language008": "eng",
+      "lccn": "21412497",
+      "originalLanguages": [
+        "grc",
+        "lat"
+      ],
+      "title": "Of Gods and men 100 stories from Ancient Greece &amp; Rome",
+      "pubPlace": "London",
+      "publisher": "Head of Zeus Ltd",
+      "pubYear": "2019",
+      "subjects": [
+        "Greek literature",
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1964",
+      "language008": "eng",
+      "lccn": "10325281",
+      "originalLanguages": [],
+      "title": "More Oxford compositions,",
+      "pubPlace": "Oxford,",
+      "publisher": "Clarendon Press",
+      "pubYear": "1964",
+      "subjects": [
+        "English literature",
+        "English literature"
+      ]
+    },
+    {
+      "pubDate": "2003",
+      "language008": "eng",
+      "lccn": "12685162",
+      "originalLanguages": [],
+      "title": "Literatures of Latin America from antiquity to the present",
+      "pubPlace": "Upper Saddle River, N.J.",
+      "publisher": "Prentice Hall",
+      "pubYear": "2003",
+      "subjects": [
+        "Latin American literature",
+        "Indian literature"
+      ]
+    },
+    {
+      "pubDate": "1880",
+      "language008": "eng",
+      "lccn": "6569001",
+      "originalLanguages": [],
+      "title": "Erotica The elegies of Propertius;",
+      "pubPlace": "London,",
+      "publisher": "G. Bell",
+      "pubYear": "1880",
+      "translator": "Sheridan, Richard Brinsley",
+      "subjects": [
+        "Erotic literature, Latin",
+        "Classical literature"
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "22880186",
+      "originalLanguages": [],
+      "title": "Classics of Roman literature from the literary beginnings to the end of the silver age",
+      "pubPlace": "Lanham",
+      "publisher": "Rowman &amp; Littlefield Publishers, Inc.",
+      "pubYear": "2014",
+      "subjects": [
+        "English literature",
+        "Latin literature",
+        "FICTION",
+        "English literature.",
+        "Latin literature."
+      ]
+    },
+    {
+      "pubDate": "1923",
+      "language008": "eng",
+      "lccn": "8260354",
+      "originalLanguages": [],
+      "author": "Pym, Dora",
+      "title": "Readings from the literature of Ancient Rome in English translations,",
+      "pubPlace": "New York,",
+      "publisher": "Harcourt, Brace",
+      "pubYear": "1923",
+      "subjects": [
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1922",
+      "language008": "eng",
+      "lccn": "6854477",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Pym, Dora",
+      "title": "Readings from the literature of Ancient Rome in English translations,",
+      "pubPlace": "London [etc.]",
+      "publisher": "G. G. Harrap &amp; co., ltd",
+      "pubYear": "1922",
+      "subjects": [
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1664",
+      "language008": "eng",
+      "lccn": "21228597",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Lucian",
+      "title": "Part of Lucian made English from the originall in the yeare 1638",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Oxford",
+      "publisher": "Printed by H. Hall, for R. Davis",
+      "pubYear": "1664",
+      "translator": "Mayne, Jasper",
+      "subjects": [
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1993",
+      "language008": "eng",
+      "lccn": "3023614",
+      "originalLanguages": [
+        "spa",
+        "por"
+      ],
+      "title": "Pleasure in the word erotic writings by Latin American women",
+      "pubPlace": "Fredonia, N.Y.",
+      "publisher": "White Pine Press",
+      "pubYear": "1993",
+      "subjects": [
+        "Erotic literature, Latin American",
+        "Latin American literature",
+        "Latin American literature"
+      ]
+    },
+    {
+      "pubDate": "1797",
+      "language008": "eng",
+      "lccn": "9144855",
+      "originalLanguages": [],
+      "author": "Bru&#x308;ggemann, Ludwig Wilhelm",
+      "authorDates": "1743-1817",
+      "title": "A view of the English editions, translations, and illustrations of the ancient Greek and Latin authors, with remarks,",
+      "pubPlace": "Stettin,",
+      "publisher": "Printed by J. S. Leich",
+      "pubYear": "1797",
+      "subjects": [
+        "Classical literature",
+        "Greek literature",
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1968",
+      "language008": "eng",
+      "lccn": "1720610",
+      "originalLanguages": [],
+      "author": "Jones, Earl",
+      "title": "Selected Latin American literature for youth.",
+      "pubPlace": "College Station,",
+      "publisher": "Texas A &amp; M University Press",
+      "pubYear": "1968",
+      "subjects": [
+        "Latin American literature"
+      ]
+    },
+    {
+      "pubDate": "1998",
+      "language008": "eng",
+      "lccn": "168069",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "The Croatian muses in Latin a trilingual anthology Latin-English-Croatian",
+      "pubPlace": "Zagreb",
+      "publisher": "The Croatian Writer's Association",
+      "pubYear": "1998",
+      "subjects": [
+        "Latin literature, Medieval and modern",
+        "Latin literature",
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "1477735",
+      "originalLanguages": [],
+      "title": "Seven unpublished works",
+      "pubPlace": "Kalamazoo, Mich.",
+      "publisher": "Cistercian Publications",
+      "pubYear": "1988",
+      "subjects": [
+        "Christian literature, Latin"
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "599469",
+      "originalLanguages": [],
+      "title": "Latin selections = Florilegium Latinum",
+      "pubPlace": "New York",
+      "publisher": "Dover Publications",
+      "pubYear": "1992",
+      "subjects": [
+        "Latin literature",
+        "Latin language",
+        "Latin literature."
+      ]
+    },
+    {
+      "pubDate": "2013",
+      "language008": "eng",
+      "lccn": "17461397",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "The Oxford anthology of literature in the Roman world",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2013",
+      "subjects": [
+        "Latin literature",
+        "Latin literature"
+      ]
+    },
+    {
+      "pubDate": "1922",
+      "language008": "eng",
+      "lccn": "7331863",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The Satires, Epistles and Ars poetica of Horace;",
+      "pubPlace": "London,",
+      "publisher": "G. Bell and sons, ltd.",
+      "pubYear": "1922",
+      "translator": "Conington, John",
+      "subjects": [
+        "Verse satire, Latin",
+        "Epistolary poetry, Latin",
+        "Literature"
+      ]
+    },
+    {
+      "pubDate": "1739",
+      "language008": "eng",
+      "lccn": "9075507",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "Horace's Satires, Epistles and Art of poetry done into English ...",
+      "pubPlace": "[n. p.],",
+      "publisher": "",
+      "pubYear": "1739",
+      "subjects": [
+        "Verse satire, Latin",
+        "Epistolary poetry, Latin",
+        "Literature"
+      ]
+    },
+    {
+      "pubDate": "1719",
+      "language008": "eng",
+      "lccn": "8139127",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "Horace's Satires, Epistles and Art of poetry done into English...",
+      "pubPlace": "[n.p.]",
+      "publisher": "",
+      "pubYear": "1719",
+      "subjects": [
+        "Verse satire, Latin",
+        "Epistolary poetry, Latin",
+        "Literature"
+      ]
+    },
+    {
+      "pubDate": "1970",
+      "language008": "eng",
+      "lccn": "3164120",
+      "originalLanguages": [],
+      "author": "Levine, Suzanne Jill",
+      "title": "Latin America fiction &amp; poetry in translation.",
+      "pubPlace": "New York,",
+      "publisher": "Center for Inter-American Relations",
+      "pubYear": "1970",
+      "subjects": [
+        "Latin American literature"
+      ]
+    },
+    {
+      "pubDate": "1939",
+      "language008": "eng",
+      "lccn": "6911812",
+      "originalLanguages": [],
+      "author": "Pulling, J. Lee",
+      "title": "Barbitos, experiments in verse-translation,",
+      "pubPlace": "Capetown [etc.]",
+      "publisher": "Melbourne University Press in association with Oxford University Press",
+      "pubYear": "1939",
+      "subjects": [
+        "Latin poetry",
+        "English poetry"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "756594",
+      "originalLanguages": [],
+      "author": "Ovid",
+      "authorDates": "43 B.C.-17 A.D. or 18 A.D",
+      "title": "On love: being the \"Ars amatoria\" (Skill in loving), and the \"Amores\" (The loves)",
+      "originalTitle": "Ars amatoria",
+      "translationLanguage": "English",
+      "pubPlace": "London,",
+      "publisher": "Skilton",
+      "pubYear": "1967",
+      "translator": "Saklatvala, Beram",
+      "subjects": [
+        "Didactic poetry, Latin",
+        "Elegiac poetry, Latin",
+        "Erotic poetry, Latin",
+        "Love poetry, Latin",
+        "Seduction"
+      ]
+    },
+    {
+      "pubDate": "1925",
+      "language008": "eng",
+      "lccn": "10315638",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Ovid",
+      "authorDates": "43 B.C.-17 A.D. or 18 A.D",
+      "title": "The love books of Ovid; being the Amores, Ars amatoria, Remedia amoris, and Medicamina faciei femineae.",
+      "originalTitle": "Works",
+      "translationLanguage": "English",
+      "pubPlace": "London,",
+      "publisher": "J. Lane, the Bodley Head",
+      "pubYear": "1925",
+      "subjects": [
+        "Love poetry, Latin",
+        "Erotic poetry, Latin",
+        "Didactic poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "20491021",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Latin lyric and elegiac poetry an anthology of new translations",
+      "pubPlace": "Abingdon, Oxon",
+      "publisher": "Routledge",
+      "pubYear": "2018",
+      "subjects": [
+        "Latin poetry",
+        "Elegiac poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "17811661",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Ovid",
+      "authorDates": "43 B.C.-17 A.D. or 18 A.D.",
+      "title": "Change me stories of sexual transformation from Ovid",
+      "pubPlace": "New York",
+      "publisher": "Oxford University Press",
+      "pubYear": "2014",
+      "subjects": [
+        "Erotic poetry, Latin",
+        "Latin poetry"
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "20489259",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Latin lyric and elegiac poetry an anthology of new translations",
+      "pubPlace": "London",
+      "publisher": "Routledge/Taylor &amp; Francis Group",
+      "pubYear": "2018",
+      "subjects": [
+        "Latin poetry",
+        "Elegiac poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "4827002",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "Cambridge, Mass.",
+      "publisher": "Harvard University Press",
+      "pubYear": "1988",
+      "subjects": [
+        "Latin poetry",
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "1864",
+      "language008": "eng",
+      "lccn": "3537891",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Horace",
+      "title": "The works of Horace",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "London",
+      "publisher": "Bell &amp; Daldy",
+      "pubYear": "1864",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin",
+        "Poetics"
+      ]
+    },
+    {
+      "pubDate": "1966",
+      "language008": "eng",
+      "lccn": "344634",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "Catullus, Tibullus, and Pervigilium Veneris.",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "London,",
+      "publisher": "W. Heinemann;",
+      "pubYear": "1966",
+      "translator": "Warre Cornish, Francis",
+      "subjects": [
+        "Latin poetry",
+        "Elegiac poetry, Latin",
+        "Latin poetry."
+      ]
+    },
+    {
+      "pubDate": "1812",
+      "language008": "eng",
+      "lccn": "12141335",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The satires, epistles, &amp;c. of Horace",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "London",
+      "publisher": "Suttaby, Evance, and Fox :",
+      "pubYear": "1812",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1845",
+      "language008": "eng",
+      "lccn": "9181706",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The Epodes, Satires, and Epistles of Horace.",
+      "pubPlace": "London,",
+      "publisher": "W. Pickering",
+      "pubYear": "1845",
+      "translator": "Howes, Francis",
+      "subjects": [
+        "Epistolary poetry, Latin",
+        "Laudatory poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1976",
+      "language008": "eng",
+      "lccn": "4073304",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The works of Horace ...",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "New York",
+      "publisher": "AMS Press",
+      "pubYear": "1976",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1983",
+      "language008": "eng",
+      "lccn": "2807618",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The essential Horace odes, epodes, satires, and epistles",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "San Francisco",
+      "publisher": "North Point Press",
+      "pubYear": "1983",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1835",
+      "language008": "eng",
+      "lccn": "7308547",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "Horace.",
+      "pubPlace": "New York,",
+      "publisher": "Harper &amp; brothers",
+      "pubYear": "1835",
+      "translator": "Francis, Philip",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Verse satire, Latin",
+        "Epistolary poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "1973",
+      "language008": "eng",
+      "lccn": "4551516",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "Horace: selected odes, epodes, satires, epistles.",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "New York,",
+      "publisher": "New American Library",
+      "pubYear": "1973",
+      "translator": "Raffel, Burton",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1983",
+      "language008": "eng",
+      "lccn": "1389561",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The complete works of Horace (Quintus Horatius Flaccus)",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "New York",
+      "publisher": "F. Ungar Pub. Co.",
+      "pubYear": "1983",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin",
+        "Poetics"
+      ]
+    },
+    {
+      "pubDate": "1978",
+      "language008": "eng",
+      "lccn": "2185311",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "The poems of Horace consisting of odes, satyres, and epistles",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "New York",
+      "publisher": "AMS Press",
+      "pubYear": "1978",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1961",
+      "language008": "eng",
+      "lccn": "3585052",
+      "originalLanguages": [],
+      "author": "Horace",
+      "title": "Collected works.",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "London,",
+      "publisher": "Dent;",
+      "pubYear": "1961",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Epistolary poetry, Latin",
+        "Verse satire, Latin"
+      ]
+    },
+    {
+      "pubDate": "1995",
+      "language008": "eng",
+      "lccn": "4907861",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Latin lyric and elegiac poetry an anthology of new translations",
+      "pubPlace": "New York",
+      "publisher": "Garland Pub.",
+      "pubYear": "1995",
+      "subjects": [
+        "Latin poetry",
+        "Elegiac poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "18107912",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Ovid",
+      "authorDates": "43 B.C.-17 A.D. or 18 A.D.",
+      "title": "Ovid's erotic poems \"Amores\" and \"Ars amatoria\"",
+      "originalTitle": "Amores",
+      "translationLanguage": "English",
+      "pubPlace": "Philadelphia",
+      "publisher": "University of Pennsylvania Press",
+      "pubYear": "2014",
+      "translator": "Krisak, Len",
+      "subjects": [
+        "Love poetry, Latin",
+        "Erotic poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "1979",
+      "language008": "eng",
+      "lccn": "4202878",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "[Omaha]",
+      "publisher": "Abattoir Editions, University of Nebraska at Omaha",
+      "pubYear": "1979",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "2002",
+      "language008": "eng",
+      "lccn": "12544734",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The complete poetry of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Madison",
+      "publisher": "University of Wisconsin Press",
+      "pubYear": "2002",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "2022",
+      "language008": "eng",
+      "lccn": "22277717",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Virgil",
+      "title": "Eclogues and Georgics",
+      "pubPlace": "Madison, Wisconsin",
+      "publisher": "The University of Wisconsin Press",
+      "pubYear": "2022",
+      "translator": "Wells, James Bradley",
+      "subjects": [
+        "Pastoral poetry, Latin",
+        "Didactic poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "2002",
+      "language008": "eng",
+      "lccn": "12537441",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Horace",
+      "title": "Odes",
+      "originalTitle": "Carmina",
+      "translationLanguage": "English &amp; Latin",
+      "pubPlace": "New York",
+      "publisher": "Modern Library",
+      "pubYear": "2002",
+      "subjects": [
+        "Laudatory poetry, Latin",
+        "Odes, Latin"
+      ]
+    },
+    {
+      "pubDate": "2009",
+      "language008": "eng",
+      "lccn": "15788112",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Virgil",
+      "title": "The Eclogues [and], The Georgics",
+      "originalTitle": "Bucolica",
+      "translationLanguage": "English",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2009",
+      "subjects": [
+        "Agriculture",
+        "Didactic poetry, Latin",
+        "Pastoral poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "2005",
+      "language008": "eng",
+      "lccn": "22429746",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "Berkeley",
+      "publisher": "University of California Press",
+      "pubYear": "2005",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1815",
+      "language008": "eng",
+      "lccn": "9198621",
+      "originalLanguages": [],
+      "author": "Dabney, Richard",
+      "authorDates": "1787?-1825",
+      "title": "Poems, original and translated.",
+      "pubPlace": "Philadelphia,",
+      "publisher": "Published by M. Carey, no. 121, Chestnut Street",
+      "pubYear": "1815",
+      "subjects": [
+        "Greek poetry",
+        "Latin poetry",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1944",
+      "language008": "eng",
+      "lccn": "6464278",
+      "originalLanguages": [],
+      "author": "Virgil",
+      "title": "The Eclogues and the Georgics,",
+      "originalTitle": "Bucolica",
+      "translationLanguage": "English [from old catalog]",
+      "pubPlace": "Cambridge [Eng.]",
+      "publisher": "The University press",
+      "pubYear": "1944",
+      "translator": "Trevelyan, R. C",
+      "subjects": [
+        "Pastoral poetry, Latin",
+        "Didactic poetry, Latin"
+      ]
+    },
+    {
+      "pubDate": "2005",
+      "language008": "eng",
+      "lccn": "13626380",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "Berkeley",
+      "publisher": "University of California Press",
+      "pubYear": "2005",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1999",
+      "language008": "eng",
+      "lccn": "12137461",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The shorter poems",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "Warminster, England",
+      "publisher": "Aris &amp; Phillips",
+      "pubYear": "1999",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "15566259",
+      "originalLanguages": [],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2008",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1990",
+      "language008": "eng",
+      "lccn": "3400637",
+      "originalLanguages": [],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Baltimore",
+      "publisher": "Johns Hopkins University Press",
+      "pubYear": "1990",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1972",
+      "language008": "eng",
+      "lccn": "4551076",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus.",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "New York,",
+      "publisher": "Norton",
+      "pubYear": "1972",
+      "translator": "Gregory, Horace",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1978",
+      "language008": "eng",
+      "lccn": "4178807",
+      "originalLanguages": [],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "London",
+      "publisher": "J. Cape",
+      "pubYear": "1978",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1969",
+      "language008": "eng",
+      "lccn": "3125899",
+      "originalLanguages": [],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus. A bilingual edition.",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "Berkeley,",
+      "publisher": "University of California Press",
+      "pubYear": "1969",
+      "translator": "Whigham, Peter",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1990",
+      "language008": "eng",
+      "lccn": "566756",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Oxford",
+      "publisher": "Clarendon Press ;",
+      "pubYear": "1990",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1981",
+      "language008": "eng",
+      "lccn": "495082",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "[London]",
+      "publisher": "The Folio Society",
+      "pubYear": "1981",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1971",
+      "language008": "eng",
+      "lccn": "2661345",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "The poems of Catullus.",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "New York,",
+      "publisher": "Vintage Books",
+      "pubYear": "1971",
+      "translator": "Michie, James",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1929",
+      "language008": "eng",
+      "lccn": "8280205",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Catullus, Gaius Valerius",
+      "title": "Catulli Carmina. The poems of Catullus, with complete verse translations and notes",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "London,",
+      "publisher": "The Piazza press, Issued to subscribers by P. Davies",
+      "pubYear": "1929",
+      "translator": "Hiley, Frederick Charles William",
+      "subjects": [
+        "Elegiac poetry, Latin",
+        "Love poetry, Latin",
+        "Epigrams, Latin"
+      ]
+    },
+    {
+      "pubDate": "1984",
+      "language008": "eng",
+      "lccn": "2825156",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Seven medieval Latin comedies",
+      "pubPlace": "New York",
+      "publisher": "Garland",
+      "pubYear": "1984",
+      "subjects": [
+        "Latin drama, Medieval and modern",
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "15343647",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Terence",
+      "title": "The comedies",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2008",
+      "subjects": [
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "2015",
+      "language008": "eng",
+      "lccn": "18123409",
+      "originalLanguages": [
+        "grc",
+        "lat"
+      ],
+      "title": "Hysterical laughter four ancient comedies about women : Lysistrata, Samia, Casina, Hecyra",
+      "pubPlace": "New York",
+      "publisher": "Oxford University Press",
+      "pubYear": "2015",
+      "subjects": [
+        "Greek drama (Comedy)",
+        "Latin drama (Comedy)",
+        "Women"
+      ]
+    },
+    {
+      "pubDate": "1970",
+      "language008": "eng",
+      "lccn": "4582496",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Bovie, Smith Palmer",
+      "title": "Five Roman comedies, in modern English verse translations,",
+      "pubPlace": "New York,",
+      "publisher": "Dutton",
+      "pubYear": "1970",
+      "subjects": [
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "1999",
+      "language008": "eng",
+      "lccn": "4982577",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Five comedies",
+      "pubPlace": "Indianapolis",
+      "publisher": "Hackett Pub. Co.",
+      "pubYear": "1999",
+      "subjects": [
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "2011",
+      "language008": "eng",
+      "lccn": "16480308",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Humanist tragedies",
+      "pubPlace": "Cambridge, Mass.",
+      "publisher": "Harvard University Press",
+      "pubYear": "2011",
+      "subjects": [
+        "Latin drama, Medieval and modern",
+        "Latin drama (Tragedy)",
+        "Latin drama, Medieval and modern.",
+        "Latin drama (Tragedy)",
+        "Humanism"
+      ]
+    },
+    {
+      "pubDate": "2005",
+      "language008": "eng",
+      "lccn": "13881355",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Humanist comedies",
+      "pubPlace": "Cambridge, Mass.",
+      "publisher": "Harvard University Press",
+      "pubYear": "2005",
+      "subjects": [
+        "Latin drama, Medieval and modern",
+        "Latin drama (Comedy)",
+        "Latin drama, Medieval and modern.",
+        "Latin drama (Comedy)",
+        "Humanists."
+      ]
+    },
+    {
+      "pubDate": "2003",
+      "language008": "eng",
+      "lccn": "13217770",
+      "originalLanguages": [
+        "spa",
+        "por"
+      ],
+      "title": "Holy terrors Latin American women perform",
+      "pubPlace": "Durham",
+      "publisher": "Duke University Press",
+      "pubYear": "2003",
+      "subjects": [
+        "Latin American drama",
+        "Latin American drama"
+      ]
+    },
+    {
+      "pubDate": "1965",
+      "language008": "eng",
+      "lccn": "7052568",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Roman drama. The plays of Plautus and Terence,",
+      "pubPlace": "Indianapolis,",
+      "publisher": "Bobbs-Merrill",
+      "pubYear": "1965",
+      "translator": "Copley, Frank Olin,",
+      "subjects": [
+        "Latin drama",
+        "Mythology, Classical"
+      ]
+    },
+    {
+      "pubDate": "1964",
+      "language008": "eng",
+      "lccn": "6112470",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Lieberman, Samuel,",
+      "title": "Roman drama.",
+      "pubPlace": "New York,",
+      "publisher": "Bantam Books",
+      "pubYear": "1964",
+      "translator": "Miller, Frank Justus",
+      "subjects": [
+        "Latin drama",
+        "Mythology, Classical"
+      ]
+    },
+    {
+      "pubDate": "2009",
+      "language008": "eng",
+      "lccn": "15736095",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Terence",
+      "title": "A Terence reader selections from six plays",
+      "originalTitle": "Works",
+      "translationLanguage": "English &amp; Latin.",
+      "pubPlace": "Mundelein, Ill.",
+      "publisher": "Bolchazy-Carducci",
+      "pubYear": "2009",
+      "subjects": [
+        "Latin drama (Comedy)",
+        "Latin language"
+      ]
+    },
+    {
+      "pubDate": "2003",
+      "language008": "eng",
+      "lccn": "13142257",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Four Roman comedies",
+      "pubPlace": "London",
+      "publisher": "Methuen Drama",
+      "pubYear": "2003",
+      "subjects": [
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "1973",
+      "language008": "eng",
+      "lccn": "3604828",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Foxe, John",
+      "authorDates": "1516-1587",
+      "title": "Two Latin comedies by John Foxe the martyrologist: Titus et Gesippus. Christus triumphans.",
+      "originalTitle": "Titus et Gesippus",
+      "translationLanguage": "English and Latin",
+      "pubPlace": "Ithaca,",
+      "publisher": "Published in association with the Renaissance Society of America by Cornell University Press",
+      "pubYear": "1973",
+      "subjects": [
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "1997",
+      "language008": "eng",
+      "lccn": "3541492",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "A comedy called Susenbrotus",
+      "pubPlace": "Ann Arbor",
+      "publisher": "University of Michigan Press",
+      "pubYear": "1997",
+      "subjects": [
+        "College and school drama, Latin (Medieval and modern)",
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "2019",
+      "language008": "eng",
+      "lccn": "21367707",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Terence",
+      "title": "The girl from Andros",
+      "pubPlace": "Liverpool",
+      "publisher": "Liverpool University Press",
+      "pubYear": "2019",
+      "translator": "Brown, Peter",
+      "subjects": [
+        "Latin drama (Comedy)",
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "1960",
+      "language008": "eng",
+      "lccn": "9362656",
+      "originalLanguages": [
+        "gre",
+        "lat"
+      ],
+      "title": "Masters of ancient comedy; selections from: Aristophanes, Menander, Plautus, [and] Terence.",
+      "pubPlace": "New York,",
+      "publisher": "Macmillan",
+      "pubYear": "1960",
+      "subjects": [
+        "Greek drama (Comedy)",
+        "Latin drama (Comedy)",
+        "Classical drama"
+      ]
+    },
+    {
+      "pubDate": "1923",
+      "language008": "eng",
+      "lccn": "7397008",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "Callimachus,",
+      "originalTitle": "Callimachus",
+      "translationLanguage": "English",
+      "pubPlace": "[Wembley Hill, Middlesex]",
+      "publisher": "The Stanton Press",
+      "pubYear": "1923",
+      "translator": "Lambert, R. S",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1916",
+      "language008": "eng",
+      "lccn": "10117529",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "Dulcitius, a mediaeval comedy",
+      "pubPlace": "[Elmira, N.Y.,",
+      "publisher": "Priv. print.",
+      "pubYear": "1916",
+      "translator": "McCann, Arthur Fillingham",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "2053052",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Nine medieval Latin plays",
+      "pubPlace": "Cambridge [England]",
+      "publisher": "Cambridge University Press",
+      "pubYear": "1994",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1974",
+      "language008": "eng",
+      "lccn": "2678364",
+      "originalLanguages": [],
+      "author": "Bidermann, Jakob",
+      "authorDates": "1577 or 1578-1639",
+      "title": "Cenodoxus",
+      "originalTitle": "Cenodoxus",
+      "translationLanguage": "English",
+      "pubPlace": "Austin",
+      "publisher": "University of Texas Press",
+      "pubYear": "1974",
+      "subjects": [
+        "Jesuit drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "3639732",
+      "originalLanguages": [],
+      "author": "Bidermann, Jakob",
+      "authorDates": "1577 or 1578-1639",
+      "title": "Cenodoxus",
+      "originalTitle": "Cenodoxus",
+      "translationLanguage": "English &amp; Latin",
+      "pubPlace": "Edinburgh",
+      "publisher": "University Press",
+      "pubYear": "1975",
+      "subjects": [
+        "Jesuit drama, Latin (Medieval and modern"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "15220868",
+      "originalLanguages": [
+        "spa",
+        "por"
+      ],
+      "title": "Stages of conflict a critical anthology of Latin American theater and performance",
+      "pubPlace": "Ann Arbor",
+      "publisher": "University of Michigan Press",
+      "pubYear": "2008",
+      "subjects": [
+        "Latin American drama"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "2651998",
+      "originalLanguages": [],
+      "title": "The play of Antichrist.",
+      "pubPlace": "Toronto,",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "pubYear": "1967",
+      "translator": "Wright, John",
+      "subjects": [
+        "Antichrist",
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "19600265",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Ennius, Quintus",
+      "title": "Fragmentary Republican Latin",
+      "pubPlace": "Cambridge, Massachsetts",
+      "publisher": "Harvard University Press",
+      "pubYear": "2018",
+      "translator": "Goldberg, Sander M.",
+      "subjects": [
+        "Latin poetry.",
+        "Latin poetry"
+      ]
+    },
+    {
+      "pubDate": "1987",
+      "language008": "eng",
+      "lccn": "3366469",
+      "originalLanguages": [],
+      "author": "Masen, Jakob",
+      "authorDates": "1606-1681",
+      "title": "The Jesuit theater of Jacob Masen three plays in translation with an introduction",
+      "originalTitle": "Plays",
+      "translationLanguage": "English",
+      "pubPlace": "New York",
+      "publisher": "P. Lang",
+      "pubYear": "1987",
+      "subjects": [
+        "Jesuit drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "2010",
+      "language008": "eng",
+      "lccn": "15906175",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Laberius, D",
+      "authorDates": "approximately 107 B.C.-43 B.C",
+      "title": "Decimus Laberius the fragments",
+      "originalTitle": "Fragments",
+      "translationLanguage": "English &amp; Latin",
+      "pubPlace": "Cambridge, UK",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2010",
+      "subjects": [
+        "Satire, Latin.",
+        "Satire, Latin",
+        "Latin drama",
+        "Mime."
+      ]
+    },
+    {
+      "pubDate": "1979",
+      "language008": "eng",
+      "lccn": "4174446",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "The plays of Hrotswitha of Gandersheim",
+      "originalTitle": "Plays",
+      "translationLanguage": "English",
+      "pubPlace": "New York",
+      "publisher": "New York University Press",
+      "pubYear": "1979",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1985",
+      "language008": "eng",
+      "lccn": "2887078",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "The dramas of Hrotsvit of Gandersheim",
+      "originalTitle": "Plays",
+      "translationLanguage": "English",
+      "pubPlace": "Saskatoon, Sask.",
+      "publisher": "Peregrina",
+      "pubYear": "1985",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1923",
+      "language008": "eng",
+      "lccn": "6386293",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "The plays of Roswitha",
+      "pubPlace": "London,",
+      "publisher": "Chatto &amp; Windus",
+      "pubYear": "1923",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1923",
+      "language008": "eng",
+      "lccn": "4601920",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "The plays of Roswitha",
+      "originalTitle": "Plays",
+      "translationLanguage": "English.",
+      "pubPlace": "Charing Cross",
+      "publisher": "Faith Press",
+      "pubYear": "1923",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1966",
+      "language008": "eng",
+      "lccn": "4060673",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "The plays of Roswitha.",
+      "originalTitle": "Plays",
+      "translationLanguage": "English.",
+      "pubPlace": "New York,",
+      "publisher": "Cooper Square Publishers",
+      "pubYear": "1966",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1989",
+      "language008": "eng",
+      "lccn": "4803358",
+      "originalLanguages": [],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "The plays of Hrotsvit of Gandersheim",
+      "originalTitle": "Plays",
+      "translationLanguage": "English",
+      "pubPlace": "New York",
+      "publisher": "Garland Pub.",
+      "pubYear": "1989",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "2003",
+      "language008": "eng",
+      "lccn": "13047892",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Foro-Juliensis, Titus Livius de",
+      "title": "Travel abroad Frulovisi's Peregrinatio",
+      "originalTitle": "Peregrinatio",
+      "translationLanguage": "English &amp; Latin",
+      "pubPlace": "Tempe, Ariz.",
+      "publisher": "Arizona Center for Medieval and Renaissance Studies",
+      "pubYear": "2003",
+      "subjects": [
+        "Latin drama (Comedy)"
+      ]
+    },
+    {
+      "pubDate": "2010",
+      "language008": "eng",
+      "lccn": "16908571",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Roman comedy five plays by Plautus and Terence",
+      "pubPlace": "Newburyport, MA",
+      "publisher": "Focus Pub./R. Pullins Co.",
+      "pubYear": "2010",
+      "subjects": [
+        "Latin drama (Comedy)",
+        "Latin drama (Comedy)",
+        "Theater"
+      ]
+    },
+    {
+      "pubDate": "1973",
+      "language008": "eng",
+      "lccn": "320659",
+      "originalLanguages": [],
+      "author": "Mahaney, William E.",
+      "title": "Two university Latin plays: Philip Parsons' Atalanta and Thomas Atkinson's Homo.",
+      "pubPlace": "Salzburg,",
+      "publisher": "Inst. f. Engl. Sprache u. Literatur, Univ. Salzburg",
+      "pubYear": "1973",
+      "subjects": [
+        "College and school drama, Latin (Medieval and modern)",
+        "Latin drama, Medieval and modern",
+        "College and school drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "2011",
+      "language008": "eng",
+      "lccn": "17806787",
+      "originalLanguages": [],
+      "title": "Spectacular bodies, dangerous borders three new Latin American plays",
+      "pubPlace": "Lawrence, Kan.",
+      "publisher": "LATR Books, University of Kansas",
+      "pubYear": "2011",
+      "subjects": [
+        "Latin American drama",
+        "Spanish American drama",
+        "Sex role in literature.",
+        "Marginality, Social"
+      ]
+    },
+    {
+      "pubDate": "1993",
+      "language008": "eng",
+      "lccn": "2016020",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Legge, Thomas",
+      "authorDates": "1535-1607",
+      "title": "The complete plays",
+      "pubPlace": "New York",
+      "publisher": "P. Lang",
+      "pubYear": "1993",
+      "subjects": [
+        "College and school drama, Latin (Medieval and modern)",
+        "College and school drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1983",
+      "language008": "eng",
+      "lccn": "3780381",
+      "originalLanguages": [],
+      "author": "Buchanan, George",
+      "authorDates": "1506-1582",
+      "title": "George Buchanan tragedies",
+      "pubPlace": "Edinburgh",
+      "publisher": "Scottish Academic Press",
+      "pubYear": "1983",
+      "subjects": [
+        "Mythology, Greek",
+        "Bible plays."
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "2488209",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Buchanan, George",
+      "authorDates": "1506-1582",
+      "title": "A critical edition of George Buchanan's Baptistes and of its anonymous seventeenth-century translation Tyrannicall-government anatomized",
+      "originalTitle": "Baptistes",
+      "translationLanguage": "English &amp; Latin",
+      "pubPlace": "New York",
+      "publisher": "Garland",
+      "pubYear": "1992",
+      "subjects": [
+        "Christian drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "1998",
+      "language008": "eng",
+      "lccn": "2127688",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Hrotsvitha",
+      "authorDates": "approximately 935-approximately 975",
+      "title": "Hrotsvit of Gandersheim a florilegium of her works",
+      "originalTitle": "Works",
+      "translationLanguage": "English",
+      "pubPlace": "Woodbridge, Suffolk",
+      "publisher": "D.S. Brewer",
+      "pubYear": "1998",
+      "subjects": [
+        "Christian literature, Latin (Medieval and modern)",
+        "Christian drama, Latin (Medieval and modern)",
+        "Epic poetry, Latin (Medieval and modern)",
+        "Women and literature",
+        "Christian saints"
+      ]
+    },
+    {
+      "pubDate": "1927",
+      "language008": "eng",
+      "lccn": "20445868",
+      "originalLanguages": [],
+      "author": "Seneca, Lucius Annaeus",
+      "authorDates": "approximately 4 B.C.-65 A.D",
+      "title": "Seneca's Tragedies",
+      "pubPlace": "London",
+      "publisher": "William Heinemann ;",
+      "pubYear": "1927",
+      "translator": "Miller, Frank Justus",
+      "subjects": [
+        "Latin drama (Tragedy)",
+        "Mythology, Classical",
+        "Latin drama (Tragedy)",
+        "Mythology, Classical."
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "1492752",
+      "originalLanguages": [],
+      "title": "A Critical edition of Silvanus and Hispanus",
+      "pubPlace": "New York",
+      "publisher": "Garland",
+      "pubYear": "1988",
+      "subjects": [
+        "College and school drama, Latin (Medieval and modern)",
+        "College and school drama, Latin (Medieval and modern)"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19344360",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Apuleius",
+      "title": "Apologia ; Florida ; De deo Socratis",
+      "pubPlace": "Cambridge, Massachusetts",
+      "publisher": "Harvard University Press",
+      "pubYear": "2017",
+      "translator": "Jones, C. P",
+      "subjects": [
+        "Magic",
+        "Magic."
+      ]
+    },
+    {
+      "pubDate": "1982",
+      "language008": "eng",
+      "lccn": "1844015",
+      "originalLanguages": [],
+      "title": "Shared harvest prose of medieval England in modern version",
+      "pubPlace": "Washington, D.C.",
+      "publisher": "University Press of America",
+      "pubYear": "1982",
+      "subjects": [
+        "British literature.",
+        "English prose literature",
+        "Latin prose literature, Medieval and modern",
+        "Anglo-Norman literature"
+      ]
+    },
+    {
+      "pubDate": "1987",
+      "language008": "eng",
+      "lccn": "532976",
+      "originalLanguages": [],
+      "title": "Three Old English prose texts in Ms. Cotton Vitellius A XV",
+      "pubPlace": "Millwood, N.Y.",
+      "publisher": "Kraus Reprint",
+      "pubYear": "1987",
+      "subjects": [
+        "English prose literature",
+        "Latin prose literature",
+        "Manuscripts, Medieval",
+        "Latin prose literature."
+      ]
+    },
+    {
+      "pubDate": "2000",
+      "language008": "eng",
+      "lccn": "12125030",
+      "originalLanguages": [],
+      "title": "Old English prose basic readings",
+      "pubPlace": "New York",
+      "publisher": "Garland Pub.",
+      "pubYear": "2000",
+      "subjects": [
+        "English prose literature",
+        "Christian literature, English (Old)",
+        "Latin prose literature"
+      ]
+    },
+    {
+      "pubDate": "1984",
+      "language008": "eng",
+      "lccn": "2825088",
+      "originalLanguages": [],
+      "title": "The rise of Gawain, nephew of Arthur = (De ortu Waluuanii nepotis Arturi)",
+      "pubPlace": "New York",
+      "publisher": "Garland Pub.",
+      "pubYear": "1984",
+      "subjects": [
+        "Latin prose literature, Medieval and modern",
+        "Knights and knighthood.",
+        "Arthurian romances."
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19344248",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Livy",
+      "title": "History of Rome",
+      "pubPlace": "Cambridge, Massachusetts",
+      "publisher": "Harvard University Press",
+      "pubYear": "2017",
+      "translator": "Yardley, John",
+      "subjects": []
+    },
+    {
+      "pubDate": "1999",
+      "language008": "eng",
+      "lccn": "11778580",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Latin treatises on poetry from Renaissance England",
+      "pubPlace": "Signal Mountain, Tenn.",
+      "publisher": "Published for the Library of Renaissance Humanism by Summertown",
+      "pubYear": "1999",
+      "subjects": [
+        "Poetics",
+        "Latin prose literature, Medieval and modern",
+        "Poetry",
+        "Renaissance"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "15668145",
+      "originalLanguages": [],
+      "author": "Di Sciacca, Claudia",
+      "title": "Finding the right words Isidore's Synonyma in Anglo-Saxon England",
+      "pubPlace": "Toronto",
+      "publisher": "University of Toronto Press",
+      "pubYear": "2008",
+      "subjects": [
+        "Devotional literature, Latin (Medieval and modern)",
+        "Devotional literature, Latin (Medieval and modern)",
+        "English prose literature",
+        "Spirituality"
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "18440769",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Sallust",
+      "authorDates": "86 B.C.-34 B.C.",
+      "title": "The famous cronycle of the warre which the Romayns had agaynst Iugurth, usurper of the Kyngdome of Numidy Alexander Barclay's translation of Sallust's Bellum Iugurthinum",
+      "originalTitle": "Bellum Jugurthinum",
+      "translationLanguage": "English",
+      "pubPlace": "Oxford, United Kingdom",
+      "publisher": "Published for the Early English Text Society by the Oxford University Press",
+      "pubYear": "2014",
+      "translator": "Barclay, Alexander",
+      "subjects": [
+        "Jugurthine War, 111-105 B.C."
+      ]
+    },
+    {
+      "pubDate": "1984",
+      "language008": "eng",
+      "lccn": "462643",
+      "originalLanguages": [],
+      "title": "German satirical writings",
+      "pubPlace": "New York",
+      "publisher": "Continuum",
+      "pubYear": "1984",
+      "subjects": [
+        "Satire, German",
+        "German literature",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1866",
+      "language008": "eng",
+      "lccn": "5902778",
+      "originalLanguages": [],
+      "title": "Masterpieces of foreign literature, comprising Schiller's tragedies,",
+      "pubPlace": "London,",
+      "publisher": "C. Griffin and company",
+      "pubYear": "1866",
+      "translator": "Coleridge, Samuel Taylor",
+      "subjects": [
+        "German drama",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1839",
+      "language008": "eng",
+      "lccn": "7300912",
+      "originalLanguages": [],
+      "author": "Haas, James D.,",
+      "title": "Gleanings from Germany",
+      "pubPlace": "London,",
+      "publisher": "J. S. Hodson",
+      "pubYear": "1839",
+      "subjects": [
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1969",
+      "language008": "eng",
+      "lccn": "1742667",
+      "originalLanguages": [],
+      "title": "Classical readings from German literature, from the Middle Ages to the present day",
+      "pubPlace": "Nairobi, Kenya",
+      "publisher": "East African Pub. House",
+      "pubYear": "1969",
+      "subjects": [
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1842",
+      "language008": "eng",
+      "lccn": "8326555",
+      "originalLanguages": [],
+      "title": "An hour's reading for the drawing-room: being selections from German literature;",
+      "pubPlace": "London,",
+      "publisher": "Pub. for the author by Darton and Clark",
+      "pubYear": "1842",
+      "subjects": [
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1995",
+      "language008": "eng",
+      "lccn": "697793",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "Blago bung, blago bung, bosso fataka! first texts of German Dada",
+      "pubPlace": "London",
+      "publisher": "Atlas Press",
+      "pubYear": "1995",
+      "subjects": [
+        "German literature",
+        "Dadaist literature, German"
+      ]
+    },
+    {
+      "pubDate": "1990",
+      "language008": "eng",
+      "lccn": "4344903",
+      "originalLanguages": [],
+      "title": "Bitter healing German women writers from 1700 to 1830 : an anthology",
+      "pubPlace": "Lincoln",
+      "publisher": "University of Nebraska Press",
+      "pubYear": "1990",
+      "subjects": [
+        "German literature",
+        "German literature",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1814",
+      "language008": "eng",
+      "lccn": "10117824",
+      "originalLanguages": [],
+      "title": "Illustrations of northern antiquities, from the earlier Teutonic and Scandinavian romances; being an abstract of the Book of heroes, and Nibelungen lay;",
+      "pubPlace": "Edinburgh,",
+      "publisher": "Printed by J. Ballantyne and co., for Longman, Hurst, Rees, Orme, and Brown, London [etc.]",
+      "pubYear": "1814",
+      "subjects": [
+        "Scandinavian literature",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1841",
+      "language008": "eng",
+      "lccn": "10114290",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Austin, Sarah",
+      "authorDates": "1793-1867",
+      "title": "Fragments from German prose writers.",
+      "pubPlace": "New York,",
+      "publisher": "D. Appleton and company",
+      "pubYear": "1841",
+      "subjects": [
+        "German prose literature"
+      ]
+    },
+    {
+      "pubDate": "1993",
+      "language008": "eng",
+      "lccn": "1579732",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "An Anthology of German literature of the romantic era and age of Goethe",
+      "pubPlace": "San Francisco",
+      "publisher": "EmText",
+      "pubYear": "1993",
+      "subjects": [
+        "German literature",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1962",
+      "language008": "eng",
+      "lccn": "6097504",
+      "originalLanguages": [],
+      "title": "Three Erfurt tales, 1497-1498.",
+      "pubPlace": "[North Hills, Pa.]",
+      "publisher": "Bird &amp; Bull Press",
+      "pubYear": "1962",
+      "translator": "Price, Arnold Hereward",
+      "subjects": [
+        "German literature",
+        "Tales",
+        "Tales, Medieval"
+      ]
+    },
+    {
+      "pubDate": "1983",
+      "language008": "eng",
+      "lccn": "3751794",
+      "originalLanguages": [],
+      "title": "German medieval tales",
+      "pubPlace": "New York",
+      "publisher": "Continuum",
+      "pubYear": "1983",
+      "subjects": [
+        "German literature",
+        "Tales",
+        "Tales, Medieval"
+      ]
+    },
+    {
+      "pubDate": "1984",
+      "language008": "eng",
+      "lccn": "3786653",
+      "originalLanguages": [],
+      "author": "Gerber, Margy",
+      "title": "Literature of the German Democratic Republic in English translation a bibliography : studies in GDR culture and society : a supplementary volume",
+      "pubPlace": "Lanham, MD",
+      "publisher": "University Press of America",
+      "pubYear": "1984",
+      "subjects": [
+        "German literature",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "2024",
+      "language008": "eng",
+      "lccn": "23551408",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "Three political tales from medieval Germany Duke Ernst, Henry of Kempten, Reynard the fox",
+      "pubPlace": "Rochester, NY",
+      "publisher": "Camden House",
+      "pubYear": "2024",
+      "translator": "Murdoch, Brian",
+      "subjects": [
+        "German literature",
+        "Tales",
+        "Tales, Medieval"
+      ]
+    },
+    {
+      "pubDate": "2024",
+      "language008": "eng",
+      "lccn": "23392540",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "Three political tales from medieval Germany Duke Ernst, Henry of Kempten, and Reynard the Fox",
+      "pubPlace": "Rochester, New York",
+      "publisher": "Camden House",
+      "pubYear": "2024",
+      "translator": "Murdoch, Brian",
+      "subjects": [
+        "German literature",
+        "Tales",
+        "Tales, Medieval"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "15385172",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "The black mirror and other stories an anthology of science fiction from Germany &amp; Austria",
+      "pubPlace": "Middletown, Conn.",
+      "publisher": "Wesleyan University Press",
+      "pubYear": "2008",
+      "subjects": [
+        "Science fiction.",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1964",
+      "language008": "eng",
+      "lccn": "398958",
+      "originalLanguages": [],
+      "title": "A Miscellany of tributes and translations presented to Professor August Closs, by his former students and his colleagues in the Department of German.",
+      "pubPlace": "[Bristol]",
+      "publisher": "University of Bristol",
+      "pubYear": "1964",
+      "subjects": [
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1980",
+      "language008": "eng",
+      "lccn": "429022",
+      "originalLanguages": [],
+      "title": "Writings beyond the wall literature from the German Democratic Republic",
+      "pubPlace": "London",
+      "publisher": "Artry Publications :",
+      "pubYear": "1979",
+      "subjects": [
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1998",
+      "language008": "eng",
+      "lccn": "233984",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "Fringe voices an anthology of minority writing in the Federal Republic of Germany",
+      "pubPlace": "Oxford",
+      "publisher": "Berg",
+      "pubYear": "1998",
+      "subjects": [
+        "German literature",
+        "German literature",
+        "Multiculturalism",
+        "Minorities"
+      ]
+    },
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "11435804",
+      "originalLanguages": [],
+      "title": "Dimension&#xB2; contemporary German-language literature.",
+      "pubPlace": "Kilgore, TX",
+      "publisher": "Ingo R. Stoer",
+      "pubYear": "9199",
+      "subjects": [
+        "German literature",
+        "German literature",
+        "German literature.",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "3592610",
+      "originalLanguages": [],
+      "author": "Kopp, William LaMarr",
+      "title": "German literature in the United States, 1945-1960,",
+      "pubPlace": "Chapel Hill,",
+      "publisher": "University of North Carolina Press",
+      "pubYear": "1967",
+      "subjects": [
+        "German literature",
+        "German literature"
+      ]
+    },
+    {
+      "pubDate": "2013",
+      "language008": "eng",
+      "lccn": "22474450",
+      "originalLanguages": [
+        "eng",
+        "ger"
+      ],
+      "title": "Translations of favorite German and English poems",
+      "pubPlace": "Mechanicsburg, PA",
+      "publisher": "Sunbury Press",
+      "pubYear": "2013",
+      "subjects": [
+        "German poetry",
+        "English poetry",
+        "English poetry.",
+        "German poetry."
+      ]
+    },
+    {
+      "pubDate": "1963",
+      "language008": "eng",
+      "lccn": "7978067",
+      "originalLanguages": [],
+      "author": "Mason, Eudo Colecestra",
+      "title": "A miscellany of German and French poetry",
+      "pubPlace": "Edinburgh",
+      "publisher": "Oliver and Boyd",
+      "pubYear": "1963",
+      "subjects": [
+        "German poetry",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1879",
+      "language008": "eng",
+      "lccn": "9175961",
+      "originalLanguages": [],
+      "author": "Chawner, Edward",
+      "title": "Gleanings from the German and French poets.",
+      "pubPlace": "London,",
+      "publisher": "Ward Lock, and co",
+      "pubYear": "1879",
+      "subjects": [
+        "German poetry",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1886",
+      "language008": "eng",
+      "lccn": "7044470",
+      "originalLanguages": [],
+      "author": "Chavannes, Mary Charlotte,",
+      "title": "A few translations from Victor Hugo and other poets.",
+      "pubPlace": "London,",
+      "publisher": "K. Paul, Trench",
+      "pubYear": "1886",
+      "subjects": [
+        "French poetry",
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "2009",
+      "language008": "eng",
+      "lccn": "15752362",
+      "originalLanguages": [
+        "fre",
+        "ger"
+      ],
+      "author": "Guest, Harry",
+      "title": "Comparisons &amp; conversions",
+      "pubPlace": "Exeter",
+      "publisher": "Shearsman",
+      "pubYear": "2009",
+      "subjects": [
+        "French poetry",
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "2001",
+      "language008": "eng",
+      "lccn": "13590433",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "Two hearts' rapture a collection of German medieval love lyrics and other songs",
+      "pubPlace": "Braamfontein (PO Box 32344, Braaamfontein 2017), South Africa",
+      "publisher": "Violet Aura Press",
+      "pubYear": "2001",
+      "subjects": [
+        "German poetry",
+        "German poetry."
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "2469829",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "German poetry from the beginnings to 1750",
+      "pubPlace": "New York",
+      "publisher": "Continuum",
+      "pubYear": "1992",
+      "subjects": [
+        "German poetry.",
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1966",
+      "language008": "eng",
+      "lccn": "8470633",
+      "originalLanguages": [],
+      "author": "Rus, Vladimir",
+      "title": "Selections from German poetry",
+      "pubPlace": "New York",
+      "publisher": "Harvey House",
+      "pubYear": "1966",
+      "subjects": [
+        "German poetry",
+        "German poetry."
+      ]
+    },
+    {
+      "pubDate": "1825",
+      "language008": "eng",
+      "lccn": "8714847",
+      "originalLanguages": [],
+      "author": "Goethe, Johann Wolfgang von",
+      "authorDates": "1749-1832",
+      "title": "Faust a drama,",
+      "originalTitle": "Faust",
+      "translationLanguage": "English.",
+      "pubPlace": "London,",
+      "publisher": "J. Murray",
+      "pubYear": "1825",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "1262436",
+      "originalLanguages": [],
+      "author": "Kaufmann, Walter Arnold",
+      "title": "Twenty-five German poets a bilingual collection",
+      "pubPlace": "New York",
+      "publisher": "Norton",
+      "pubYear": "1975",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1856",
+      "language008": "eng",
+      "lccn": "7302823",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Burt, Mary Anne",
+      "title": "Specimens of the choicest lyrical productions of the most celebrated German poets. From Klopstock to the present time. Containing selections from Klopstock, Schiller, Goethe [and others] ...",
+      "pubPlace": "London,",
+      "publisher": "Pub. for the author, by A. Hall, Virtue &amp; Co.",
+      "pubYear": "1856",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1850",
+      "language008": "eng",
+      "lccn": "9176530",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Schiller, Friedrich",
+      "authorDates": "1759-1805",
+      "title": "Schillers&#x315; Song of the Bell",
+      "pubPlace": "Philadelphia",
+      "publisher": "W.P. Hazard and Mitchell",
+      "pubYear": "1850",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1865",
+      "language008": "eng",
+      "lccn": "9667539",
+      "originalLanguages": [],
+      "author": "Dexter, Charles",
+      "title": "Versions and verses,",
+      "pubPlace": "Cambridge,",
+      "publisher": "Sever and Francis",
+      "pubYear": "1865",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1824",
+      "language008": "eng",
+      "lccn": "5899349",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Ellesmere, Francis Egerton",
+      "authorDates": "1800-1857",
+      "title": "Translations from the German; and original poems.",
+      "pubPlace": "London,",
+      "publisher": "J. Murray",
+      "pubYear": "1824",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1869",
+      "language008": "eng",
+      "lccn": "7771831",
+      "originalLanguages": [],
+      "author": "Wireman, Henry D.",
+      "title": "Gems of German lyrics consisting of selections from Rueckert, Lenau, Chamisso, Freiligrath and others.",
+      "pubPlace": "Philadelphia,",
+      "publisher": "Claxton, Remsen &amp; Haffelfinger",
+      "pubYear": "1869",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1895",
+      "language008": "eng",
+      "lccn": "6832689",
+      "originalLanguages": [
+        "ger"
+      ],
+      "title": "Flowers from foreign fields",
+      "pubPlace": "Buffalo",
+      "publisher": "The Peter Paul Book Company",
+      "pubYear": "1895",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1898",
+      "language008": "eng",
+      "lccn": "6889124",
+      "originalLanguages": [],
+      "author": "Tilney, Robert",
+      "title": "Gleanings from poetic fields;",
+      "pubPlace": "Philadelphia,",
+      "publisher": "J. C. Winston &amp; co.",
+      "pubYear": "1898",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1937",
+      "language008": "eng",
+      "lccn": "8306806",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Uhrig, Alexander",
+      "title": "A song cycle from the German,",
+      "pubPlace": "Oconomowoc, Wis.,",
+      "publisher": "",
+      "pubYear": "1937",
+      "subjects": [
+        "German poetry"
+      ]
+    },
+    {
+      "pubDate": "1794",
+      "language008": "eng",
+      "lccn": "1217962",
+      "originalLanguages": [
+        "fre"
+      ],
+      "author": "La Rochefoucauld, Franc&#x327;ois",
+      "authorDates": "1613-1680",
+      "title": "Maxims and moral reflections",
+      "originalTitle": "Maximes",
+      "translationLanguage": "English.",
+      "pubPlace": "Printed at Boston",
+      "publisher": "By I. Thomas and E.T. Andrews ...",
+      "pubYear": "1794",
+      "subjects": [
+        "Didactic literature, French",
+        "Maxims, French"
+      ]
+    },
+    {
+      "pubDate": "1945",
+      "language008": "eng",
+      "lccn": "8806945",
+      "originalLanguages": [],
+      "author": "Allen, John Houghton",
+      "title": "Translations",
+      "pubPlace": "[Dallas]",
+      "publisher": "Priv. print.",
+      "pubYear": "1945",
+      "subjects": [
+        "Spanish literature",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1874",
+      "language008": "eng",
+      "lccn": "8793563",
+      "originalLanguages": [],
+      "title": "Half-hours with the best French authors.",
+      "pubPlace": "London,",
+      "publisher": "Seeley, Jackson, and Halliday",
+      "pubYear": "1874",
+      "subjects": [
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1927",
+      "language008": "eng",
+      "lccn": "6399968",
+      "originalLanguages": [
+        "fre"
+      ],
+      "author": "Jackson, Emilie",
+      "title": "Three stories",
+      "pubPlace": "London",
+      "publisher": "G. Routledge &amp; sons, ltd",
+      "pubYear": "1927",
+      "subjects": [
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "2000",
+      "language008": "eng",
+      "lccn": "12746843",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Tales from the noir side",
+      "pubPlace": "Long Beach",
+      "publisher": "Dept. of Romance, German, Russian Languages and Literatures, California State University",
+      "pubYear": "2000",
+      "subjects": [
+        "Prose literature",
+        "Prose literature"
+      ]
+    },
+    {
+      "pubDate": "1966",
+      "language008": "eng",
+      "lccn": "3705097",
+      "originalLanguages": [],
+      "title": "Poems and short stories.",
+      "pubPlace": "[Saigon]",
+      "publisher": "Tin Sach",
+      "pubYear": "1966",
+      "subjects": [
+        "Vietnamese literature",
+        "Vietnamese literature"
+      ]
+    },
+    {
+      "pubDate": "1998",
+      "language008": "eng",
+      "lccn": "12746819",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Timeless voices. and, Voices in and out of time",
+      "pubPlace": "Long Beach",
+      "publisher": "Dept. of Romance, German, Russian Languages and Literatures, California State University",
+      "pubYear": "1998",
+      "subjects": [
+        "Prose literature",
+        "Prose literature"
+      ]
+    },
+    {
+      "pubDate": "19uu",
+      "language008": "eng",
+      "lccn": "12033742",
+      "originalLanguages": [],
+      "title": "French book news.",
+      "pubPlace": "London",
+      "publisher": "French Embassy in London, Bureau du livre",
+      "pubYear": "",
+      "subjects": [
+        "French literature",
+        "French literature."
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "23297154",
+      "originalLanguages": [
+        "fre"
+      ],
+      "author": "Guibert, Herve&#x301;",
+      "title": "Arthur's whims",
+      "originalTitle": "Lubies d'Arthur",
+      "translationLanguage": "English",
+      "pubPlace": "[Sacramento, California]",
+      "publisher": "Spurl Editions",
+      "pubYear": "2021",
+      "translator": "Lupo, Daniel",
+      "subjects": [
+        "Adventure stories, French",
+        "French fiction",
+        "French literature",
+        "French literature.",
+        "French fiction.",
+        "Adventure stories, French."
+      ]
+    },
+    {
+      "pubDate": "1931",
+      "language008": "eng",
+      "lccn": "6429510",
+      "originalLanguages": [],
+      "author": "Mason, Eugene,",
+      "title": "Aucassin &amp; Nicolette, and other mediaevel romances and legends,",
+      "pubPlace": "London,",
+      "publisher": "J.M. Dent &amp; sons, ltd;",
+      "pubYear": "1931",
+      "subjects": [
+        "Romances",
+        "Tales",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1839",
+      "language008": "eng",
+      "lccn": "7758982",
+      "originalLanguages": [],
+      "author": "La Fontaine, Jean de",
+      "authorDates": "1621-1695",
+      "title": "A present for the young.",
+      "originalTitle": "Fables",
+      "translationLanguage": "English",
+      "pubPlace": "Boston",
+      "publisher": "Weeks, Jordan and Company",
+      "pubYear": "1839",
+      "subjects": [
+        "Fables, French",
+        "Children's stories, French"
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "17906260",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Collected French Translations Prose",
+      "pubPlace": "New York",
+      "publisher": "Farrar, Straus and Giroux",
+      "pubYear": "2014",
+      "translator": "Ashbery, John",
+      "subjects": [
+        "French prose literature"
+      ]
+    },
+    {
+      "pubDate": "2024",
+      "language008": "eng",
+      "lccn": "23793550",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "The romance of the violet and other wager tales from medieval France",
+      "pubPlace": "Jefferson, North Carolina",
+      "publisher": "McFarland &amp; Company, Inc., Publishers",
+      "pubYear": "2024",
+      "translator": "Durling, Nancy Vine",
+      "subjects": [
+        "Romances",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "2002",
+      "language008": "eng",
+      "lccn": "12277484",
+      "originalLanguages": [],
+      "title": "Voices from Madagascar an anthology of contemporary francophone literature = Voix de Madagascar : anthologie de litte&#x301;rature francophone contemporaine",
+      "pubPlace": "Athens, Ohio",
+      "publisher": "Ohio University Center for International Studies",
+      "pubYear": "2002",
+      "subjects": [
+        "Malagasy literature (French)",
+        "Malagasy literature (French)"
+      ]
+    },
+    {
+      "pubDate": "1765",
+      "language008": "eng",
+      "lccn": "8793001",
+      "originalLanguages": [],
+      "author": "Lockman, John",
+      "authorDates": "1698-1771",
+      "title": "The entertaining instructor: in French and English. Being a collection of judicious sayings, smart repartees, short stories, &amp;c. extracted from the most celebrated French authors, and particularly the books in ana ...",
+      "pubPlace": "London,",
+      "publisher": "A. Millar",
+      "pubYear": "1765",
+      "subjects": [
+        "Commonplace books.",
+        "French literature.",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "21579078",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Popular literature from nineteenth-century France English translation",
+      "pubPlace": "New York",
+      "publisher": "The Modern Language Association of America",
+      "pubYear": "2021",
+      "translator": "Belenky, Masha",
+      "subjects": [
+        "French literature",
+        "Popular literature"
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "21611768",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Popular literature from nineteenth-century France English translation",
+      "pubPlace": "New York",
+      "publisher": "The Modern Language Association of America",
+      "pubYear": "2021",
+      "translator": "Belenky, Masha",
+      "subjects": [
+        "French literature",
+        "Popular literature"
+      ]
+    },
+    {
+      "pubDate": "2016",
+      "language008": "eng",
+      "lccn": "20722694",
+      "originalLanguages": [
+        "wel",
+        "fre"
+      ],
+      "title": "Dodos and dragons",
+      "pubPlace": "Trou d'Eau Douce, Ile Maurice",
+      "publisher": "L'Atelier d'e&#x301;criture",
+      "pubYear": "2016",
+      "subjects": [
+        "Mauritian literature (English)",
+        "Mauritian literature (French)",
+        "English literature",
+        "Welsh literature"
+      ]
+    },
+    {
+      "pubDate": "1977",
+      "language008": "eng",
+      "lccn": "4634684",
+      "originalLanguages": [],
+      "author": "Stratford, Philip",
+      "title": "Bibliography of Canadian books in translation, French to English and English to French = Bibliographie de livres candiens traduits de l'anglais au franc&#x327;ais et du franc&#x327;ais a&#x300; l'anglais",
+      "pubPlace": "Ottawa",
+      "publisher": "HRCC",
+      "pubYear": "1977",
+      "subjects": [
+        "Translations",
+        "Canadian literature",
+        "French-Canadian literature"
+      ]
+    },
+    {
+      "pubDate": "",
+      "language008": "eng",
+      "lccn": "6580062",
+      "originalLanguages": [],
+      "author": "Se&#x301;guin, J. A. R",
+      "title": "French works in English translation (1731-1799);",
+      "pubPlace": "Jersey City,",
+      "publisher": "R. Paxton, 1965-70 [v",
+      "pubYear": "1197",
+      "subjects": [
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1912",
+      "language008": "eng",
+      "lccn": "9171088",
+      "originalLanguages": [],
+      "title": "I. The oldest monuments of the French language (The Strasburg oaths, The prose of St Eulalie, The passion of Christ, The life of St Leger) II. The life of Saint Alexis.",
+      "pubPlace": "Oxford,",
+      "publisher": "J. Thornton &amp; son; [etc., etc.]",
+      "pubYear": "1912",
+      "subjects": [
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "2000",
+      "language008": "eng",
+      "lccn": "199855",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Writings by pre-revolutionary French women",
+      "pubPlace": "New York",
+      "publisher": "Garland Pub.",
+      "pubYear": "2000",
+      "subjects": [
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1969",
+      "language008": "eng",
+      "lccn": "11235717",
+      "originalLanguages": [],
+      "title": "Ellipse.",
+      "pubPlace": "[Sherbrooke, Que&#x301;.],",
+      "publisher": "[Universite&#x301; Sherbrooke, Faculte&#x301; des arts]",
+      "pubYear": "1969",
+      "subjects": [
+        "French-Canadian literature",
+        "Canadian literature",
+        "Canadian literature (French)",
+        "Litte&#x301;rature canadienne-franc&#x327;aise",
+        "Litte&#x301;rature canadienne-anglaise",
+        "Canadian literature",
+        "French-Canadian literature"
+      ]
+    },
+    {
+      "pubDate": "1947",
+      "language008": "eng",
+      "lccn": "9759143",
+      "originalLanguages": [],
+      "title": "Poe&#x301;sie, 39-45;",
+      "pubPlace": "London,",
+      "publisher": "Editions Poetry",
+      "pubYear": "1947",
+      "subjects": [
+        "French literature",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1969",
+      "language008": "eng",
+      "lccn": "2709181",
+      "originalLanguages": [],
+      "author": "Taylor, Simon Watson",
+      "title": "French writing today.",
+      "pubPlace": "New York,",
+      "publisher": "Grove Press",
+      "pubYear": "1969",
+      "subjects": [
+        "French literature",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1968",
+      "language008": "eng",
+      "lccn": "3124363",
+      "originalLanguages": [],
+      "author": "Taylor, Simon Watson",
+      "title": "French writing today.",
+      "pubPlace": "Harmondsworth,",
+      "publisher": "Penguin",
+      "pubYear": "1968",
+      "subjects": [
+        "French literature",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1989",
+      "language008": "eng",
+      "lccn": "3873891",
+      "originalLanguages": [
+        "fre"
+      ],
+      "author": "Vesce, Thomas E",
+      "title": "A medieval triptych",
+      "pubPlace": "[Ann Arbor, Mich.]",
+      "publisher": "Published for M.A.R.C., Medieval and Renaissance Collegium :",
+      "pubYear": "1989",
+      "subjects": [
+        "French literature",
+        "Didactic literature, French",
+        "Middle Ages",
+        "Didactic literature, French.",
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1987",
+      "language008": "eng",
+      "lccn": "1476757",
+      "originalLanguages": [],
+      "author": "Sade",
+      "authorDates": "1740-1814",
+      "title": "The 120 days of Sodom and other writings",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "New York",
+      "publisher": "Grove Press",
+      "pubYear": "1987",
+      "subjects": [
+        "Erotic literature, French"
+      ]
+    },
+    {
+      "pubDate": "1990",
+      "language008": "eng",
+      "lccn": "4359683",
+      "originalLanguages": [
+        "fre"
+      ],
+      "author": "Sade",
+      "authorDates": "1740-1814",
+      "title": "Justine, Philosophy in the bedroom, and other writings",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "New York",
+      "publisher": "Grove Weidenfeld",
+      "pubYear": "1990",
+      "subjects": [
+        "Erotic literature, French"
+      ]
+    },
+    {
+      "pubDate": "2023",
+      "language008": "eng",
+      "lccn": "22917363",
+      "originalLanguages": [],
+      "title": "Trial by Farce a dozen medieval french comedies in english for the modern stage",
+      "pubPlace": "Ann Arbor",
+      "publisher": "University of Michigan Press",
+      "pubYear": "2023",
+      "translator": "Enders, Jody",
+      "subjects": [
+        "French farces",
+        "French drama",
+        "Law in literature."
+      ]
+    },
+    {
+      "pubDate": "1972",
+      "language008": "eng",
+      "lccn": "1814410",
+      "originalLanguages": [
+        "fre"
+      ],
+      "author": "Cholakian, Patricia Francis",
+      "title": "The early French novella; an anthology of fifteenth and sixteenth century tales,",
+      "pubPlace": "Albany,",
+      "publisher": "State University of New York Press",
+      "pubYear": "1972",
+      "translator": "Cholakian, Rouben Charles",
+      "subjects": [
+        "Short stories, French",
+        "French literature",
+        "French literature",
+        "Novelle."
+      ]
+    },
+    {
+      "pubDate": "1980",
+      "language008": "eng",
+      "lccn": "573574",
+      "originalLanguages": [],
+      "title": "Vietnamese literature",
+      "pubPlace": "Hanoi",
+      "publisher": "Foreign Languages Pub. House",
+      "pubYear": "1980",
+      "subjects": [
+        "Vietnamese literature",
+        "Vietnamese literature",
+        "Vietnamese literature"
+      ]
+    },
+    {
+      "pubDate": "1901",
+      "language008": "eng",
+      "lccn": "8194038",
+      "originalLanguages": [],
+      "title": "French belles lettres from 1640 to 1870 ... humor, sentiment, romance;",
+      "pubPlace": "Washington &amp; London,",
+      "publisher": "M. W. Dunne",
+      "pubYear": "1901",
+      "subjects": [
+        "French literature"
+      ]
+    },
+    {
+      "pubDate": "1971",
+      "language008": "eng",
+      "lccn": "2741339",
+      "originalLanguages": [],
+      "author": "Shapiro, Norman R.",
+      "title": "The comedy of eros; medieval French guides to the art of love.",
+      "pubPlace": "Urbana,",
+      "publisher": "University of Illinois Press",
+      "pubYear": "1971",
+      "subjects": [
+        "French poetry",
+        "Didactic poetry, French",
+        "Love poetry, French"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "15862871",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Richesses Francophone songwriter poets",
+      "pubPlace": "Cork, Ireland",
+      "publisher": "Southword Editions",
+      "pubYear": "2008",
+      "subjects": [
+        "Songs, French",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "4363087",
+      "originalLanguages": [],
+      "title": "The Fabulists French verse fables of nine centuries",
+      "pubPlace": "Urbana",
+      "publisher": "University of Illinois Press",
+      "pubYear": "1992",
+      "subjects": [
+        "Fables, French",
+        "French poetry",
+        "Fables, French.",
+        "French poetry."
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "14953952",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "French women poets of nine centuries the distaff and the pen",
+      "pubPlace": "Baltimore",
+      "publisher": "Johns Hopkins University Press",
+      "pubYear": "2008",
+      "subjects": [
+        "French poetry",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1880",
+      "language008": "eng",
+      "lccn": "6793844",
+      "originalLanguages": [],
+      "author": "Sylvester, Josuah",
+      "authorDates": "1563-1618",
+      "title": "... The complete works of Joshuah Sylvester for the first time collected and edited : with memorial-introduction, notes and illustrations, glossarial index, &amp;c. &amp;c., portraits, and facsimiles, &amp; c",
+      "originalTitle": "Works",
+      "pubPlace": "Edinburgh,",
+      "publisher": "Printed for private circulation by T. and A. Constable",
+      "pubYear": "1880",
+      "subjects": [
+        "English poetry",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "534426",
+      "originalLanguages": [],
+      "title": "Conductors of the pit major works by Rimbaud, Vallejo, Ce&#x301;saire, Artaud and Holan",
+      "pubPlace": "New York",
+      "publisher": "Paragon House",
+      "pubYear": "1988",
+      "subjects": [
+        "Poetry, Modern",
+        "Spanish poetry",
+        "French poetry",
+        "Abyss"
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "3385479",
+      "originalLanguages": [
+        "chi",
+        "fre",
+        "mac",
+        "urd",
+        "yid"
+      ],
+      "author": "Kizer, Carolyn",
+      "title": "Carrying over poems from the Chinese, Urdu, Macedonian, Yiddish, and French African",
+      "pubPlace": "Port Townsend, WA",
+      "publisher": "Copper Canyon Press",
+      "pubYear": "1988",
+      "subjects": [
+        "Chinese poetry",
+        "Urdu poetry",
+        "Macedonian poetry",
+        "Yiddish poetry",
+        "African poetry (French)"
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "2237766",
+      "originalLanguages": [],
+      "title": "These loved, these hated lands",
+      "pubPlace": "Toronto",
+      "publisher": "Doubleday Canada",
+      "pubYear": "1975",
+      "subjects": [
+        "American poetry.",
+        "Canadian poetry.",
+        "French-Canadian poetry",
+        "English poetry"
+      ]
+    },
+    {
+      "pubDate": "2005",
+      "language008": "eng",
+      "lccn": "13894962",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Medieval love poetry",
+      "pubPlace": "Los Angeles",
+      "publisher": "J. Paul Getty Museum",
+      "pubYear": "2005",
+      "subjects": [
+        "French poetry",
+        "Love poetry, French"
+      ]
+    },
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "2544762",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "The muse spoke French selected poems",
+      "pubPlace": "Santa Maria, CA",
+      "publisher": "Asylum Arts",
+      "pubYear": "1994",
+      "subjects": [
+        "French poetry",
+        "French poetry."
+      ]
+    },
+    {
+      "pubDate": "1971",
+      "language008": "eng",
+      "lccn": "2759274",
+      "originalLanguages": [],
+      "author": "Appelbaum, Stanley",
+      "title": "French poetry, a selection",
+      "originalTitle": "Invitation to French poetry",
+      "pubPlace": "New York,",
+      "publisher": "Dover Publications",
+      "pubYear": "1971",
+      "subjects": [
+        "French poetry.",
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1991",
+      "language008": "eng",
+      "lccn": "1056140",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Gallic echoes a selection of poems",
+      "pubPlace": "Santa Maria, CA",
+      "publisher": "Asylum Arts",
+      "pubYear": "1991",
+      "subjects": [
+        "French poetry",
+        "French poetry."
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "348447",
+      "originalLanguages": [],
+      "title": "The Penguin book of French verse",
+      "pubPlace": "Harmondsworth",
+      "publisher": "Penguin",
+      "pubYear": "1975",
+      "subjects": [
+        "French poetry",
+        "French poetry."
+      ]
+    },
+    {
+      "pubDate": "1976",
+      "language008": "eng",
+      "lccn": "363622",
+      "originalLanguages": [],
+      "title": "Fifteen poems",
+      "pubPlace": "Edinburgh",
+      "publisher": "Tragara Press",
+      "pubYear": "1976",
+      "subjects": [
+        "French poetry",
+        "French poetry."
+      ]
+    },
+    {
+      "pubDate": "1996",
+      "language008": "eng",
+      "lccn": "2130384",
+      "originalLanguages": [
+        "fre",
+        "ger",
+        "ita"
+      ],
+      "title": "Selected verse translations",
+      "pubPlace": "London",
+      "publisher": "Enitharmon Press ;",
+      "pubYear": "1996",
+      "subjects": [
+        "French poetry",
+        "French poetry",
+        "Poetry"
+      ]
+    },
+    {
+      "pubDate": "2006",
+      "language008": "eng",
+      "lccn": "14105045",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "An anthology of medieval love debate poetry",
+      "pubPlace": "Gainsville, FL",
+      "publisher": "University Press of Florida",
+      "pubYear": "2006",
+      "subjects": [
+        "French poetry",
+        "Debate poetry, French",
+        "Love poetry, French",
+        "Debate poetry, English (Middle)",
+        "Love poetry, English (Middle)"
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "2962233",
+      "originalLanguages": [],
+      "title": "Fabliaux, fair and foul",
+      "pubPlace": "Binghamton, N.Y.",
+      "publisher": "Medieval &amp; Renaissance Texts &amp; Studies",
+      "pubYear": "1992",
+      "subjects": [
+        "French poetry",
+        "Narrative poetry, French",
+        "Tales, Medieval",
+        "Tales",
+        "Fabliaux"
+      ]
+    },
+    {
+      "pubDate": "1926",
+      "language008": "eng",
+      "lccn": "8268042",
+      "originalLanguages": [],
+      "author": "Savage, Richard Cloudesley,",
+      "title": "Casements,",
+      "pubPlace": "London &amp; Toronto,",
+      "publisher": "J. M. Dent and sons, ltd.",
+      "pubYear": "1926",
+      "subjects": [
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1836",
+      "language008": "eng",
+      "lccn": "7334156",
+      "originalLanguages": [],
+      "author": "Philalethes",
+      "title": "Sacred minstrelsy ...",
+      "pubPlace": "London,",
+      "publisher": "Hatchard and sons; [etc., etc.]",
+      "pubYear": "1836",
+      "subjects": [
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1889",
+      "language008": "eng",
+      "lccn": "9644694",
+      "originalLanguages": [],
+      "author": "Chawner, Edward,",
+      "title": "Selections from French poets.",
+      "pubPlace": "London,",
+      "publisher": "Printed for the author [by Eyre and Spottiswoode]",
+      "pubYear": "1889",
+      "subjects": [
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1973",
+      "language008": "eng",
+      "lccn": "2188837",
+      "originalLanguages": [],
+      "author": "Swenson, Birgit",
+      "title": "An anthology of modern French poetry from Baudelaire to Bonnefoy.",
+      "pubPlace": "New York,",
+      "publisher": "Astra Books",
+      "pubYear": "1973",
+      "subjects": [
+        "French poetry"
+      ]
+    },
+    {
+      "pubDate": "1890",
+      "language008": "eng",
+      "lccn": "5855260",
+      "originalLanguages": [],
+      "author": "Painter, William",
+      "authorDates": "1540?-1594",
+      "title": "The palace of pleasure; Elizabethan versions of Italian and French novels from Boccaccio, Bandello, Cinthio, Straparola, Queen Margaret of Navarre, and others;",
+      "pubPlace": "London,",
+      "publisher": "D. Nutt",
+      "pubYear": "1890",
+      "subjects": [
+        "Italian literature",
+        "Classical literature"
+      ]
+    },
+    {
+      "pubDate": "2006",
+      "language008": "eng",
+      "lccn": "14249983",
+      "originalLanguages": [],
+      "title": "Journal of Italian translation.",
+      "pubPlace": "Brooklyn, NY",
+      "publisher": "Dept. of Modern Languages and Literatures of Brooklyn College of the City University of New York",
+      "pubYear": "9200",
+      "subjects": [
+        "Italian literature",
+        "American literature",
+        "American literature",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1813",
+      "language008": "eng",
+      "lccn": "8265547",
+      "originalLanguages": [],
+      "author": "Painter, William",
+      "authorDates": "1540?-1594",
+      "title": "... The palace of pleasure beautified, adorned, and well furnished with pleasant histories and excellent novels.  Very requisite for delight and profit.  Chosen and selected out of divers good and commendable authors",
+      "pubPlace": "London,",
+      "publisher": "Reprinted for R. Triphook, by Harding and Wright",
+      "pubYear": "1813",
+      "subjects": [
+        "English literature",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1929",
+      "language008": "eng",
+      "lccn": "7810667",
+      "originalLanguages": [],
+      "author": "Painter, William",
+      "authorDates": "1540?-1594",
+      "title": "... The palace of pleasure,",
+      "pubPlace": "London,",
+      "publisher": "Cresset Press",
+      "pubYear": "1929",
+      "subjects": [
+        "English literature",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1960",
+      "language008": "eng",
+      "lccn": "8887167",
+      "originalLanguages": [
+        "fre"
+      ],
+      "title": "Pagine scelte dalle opere di Dante, Boccacio, Petrarca, Ariosto, Tasso, Goldini, Foscolo, Manzoni, Leopardi, Carducci",
+      "pubPlace": "New York",
+      "publisher": "Cortina",
+      "pubYear": "1960",
+      "subjects": [
+        "Italian literature.",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1951",
+      "language008": "eng",
+      "lccn": "9319219",
+      "originalLanguages": [],
+      "title": "An anthology of new Italian writers,",
+      "pubPlace": "London,",
+      "publisher": "J. Lehmann",
+      "pubYear": "1951",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1569",
+      "language008": "eng",
+      "lccn": "13753138",
+      "originalLanguages": [],
+      "author": "Painter, William",
+      "authorDates": "1540?-1594",
+      "title": "The palace of pleasure conteyning store of goodly histories, tragicall matters, and other morall argument : very requisite for delighte and profit",
+      "pubPlace": "[London",
+      "publisher": "Thomas Marshe]",
+      "pubYear": "1566",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "7542897",
+      "originalLanguages": [],
+      "author": "Trevelyan, Raleigh",
+      "title": "Italian writing today.",
+      "pubPlace": "Baltimore,",
+      "publisher": "Penguin Books",
+      "pubYear": "1967",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1961",
+      "language008": "eng",
+      "lccn": "7031350",
+      "originalLanguages": [],
+      "title": "Image of Italy. A special issue edited by William Arrow-smith,",
+      "pubPlace": "Austin,",
+      "publisher": "University of Texas",
+      "pubYear": "1961",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1950",
+      "language008": "eng",
+      "lccn": "8831178",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "An anthology of new Italian writers,",
+      "pubPlace": "[New York]",
+      "publisher": "Distributed by New Directions",
+      "pubYear": "1950",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "8016034",
+      "originalLanguages": [
+        "ita"
+      ],
+      "author": "Trevelyan, Raleigh",
+      "title": "Italian writing today.",
+      "pubPlace": "Harmondsworth,",
+      "publisher": "Penguin",
+      "pubYear": "1967",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1928",
+      "language008": "eng",
+      "lccn": "6867425",
+      "originalLanguages": [],
+      "author": "Painter, William",
+      "authorDates": "1540?-1594",
+      "title": "An Elizabethan story-book",
+      "pubPlace": "London,",
+      "publisher": "Longmans, Green and co. ltd.",
+      "pubYear": "1928",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1861",
+      "language008": "eng",
+      "lccn": "10068525",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "The Early Italian poets from Ciullo d'Alcamo to Dante Alighieri (1100-1200-1300) in the original metres, together with Dante's Vita nuova",
+      "pubPlace": "London",
+      "publisher": "Smith, Elder and Co.",
+      "pubYear": "1861",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "1966975",
+      "originalLanguages": [],
+      "title": "Italian writers of the seventeenth and eighteenth centuries a selection of the best literature",
+      "pubPlace": "Jefferson, N.C.",
+      "publisher": "McFarland",
+      "pubYear": "1988",
+      "subjects": [
+        "Italian literature",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1931",
+      "language008": "eng",
+      "lccn": "10156082",
+      "originalLanguages": [],
+      "author": "Guercio, Francis M",
+      "title": "Anthology of contemporary Italian prose,",
+      "pubPlace": "London,",
+      "publisher": "E. Partridge",
+      "pubYear": "1931",
+      "subjects": [
+        "Italian literature",
+        "Italian prose literature.",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1970",
+      "language008": "eng",
+      "lccn": "3229568",
+      "originalLanguages": [],
+      "author": "Guercio, Francis Michael",
+      "title": "Anthology of contemporary Italian prose,",
+      "pubPlace": "Port Washington, N.Y.,",
+      "publisher": "Kennikat Press",
+      "pubYear": "1970",
+      "subjects": [
+        "Italian literature",
+        "Italian prose-literature"
+      ]
+    },
+    {
+      "pubDate": "1970",
+      "language008": "eng",
+      "lccn": "4553711",
+      "originalLanguages": [],
+      "title": "An anthology of new Italian writers.",
+      "pubPlace": "Westport, Conn.,",
+      "publisher": "Greenwood Press",
+      "pubYear": "1970",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "2010",
+      "language008": "eng",
+      "lccn": "16148439",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "Secret transfusions the 1930 literary translations from Italian",
+      "pubPlace": "Toronto",
+      "publisher": "Guernica",
+      "pubYear": "2010",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "4868031",
+      "originalLanguages": [
+        "roa",
+        "lat"
+      ],
+      "title": "The Laude in the Middle Ages",
+      "pubPlace": "New York",
+      "publisher": "P. Lang",
+      "pubYear": "1994",
+      "subjects": [
+        "Religious poetry, Italian",
+        "Lauds (Literature)",
+        "Middle Ages"
+      ]
+    },
+    {
+      "pubDate": "1931",
+      "language008": "eng",
+      "lccn": "8751500",
+      "originalLanguages": [],
+      "author": "Shields, Nancy (Catchings)",
+      "title": "Italian translations in America,",
+      "pubPlace": "New York",
+      "publisher": "",
+      "pubYear": "1931",
+      "subjects": [
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "1999",
+      "language008": "eng",
+      "lccn": "740630",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "Mediterranean crossroads migration literature in Italy",
+      "pubPlace": "Madison, N.J.",
+      "publisher": "Fairleigh Dickinson University Press ;",
+      "pubYear": "1999",
+      "subjects": [
+        "Immigrants' writings, Italian",
+        "Italian literature",
+        "Immigrants"
+      ]
+    },
+    {
+      "pubDate": "1907",
+      "language008": "eng",
+      "lccn": "9617502",
+      "originalLanguages": [],
+      "author": "Machiavelli, Niccolo&#x300;",
+      "authorDates": "1469-1527",
+      "title": "The prince,",
+      "pubPlace": "[New York]",
+      "publisher": "The National alumni",
+      "pubYear": "1907",
+      "subjects": [
+        "Political science.",
+        "Political ethics.",
+        "Italian literature"
+      ]
+    },
+    {
+      "pubDate": "2019",
+      "language008": "eng",
+      "lccn": "21271558",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "The Penguin book of Italian short stories",
+      "pubPlace": "[London]",
+      "publisher": "Penguin Books",
+      "pubYear": "2019",
+      "translator": "Lahiri, Jhumpa",
+      "subjects": [
+        "Short stories, Italian",
+        "Short stories, Italian.",
+        "18.29 Italian literature."
+      ]
+    },
+    {
+      "pubDate": "2001",
+      "language008": "eng",
+      "lccn": "12377991",
+      "originalLanguages": [],
+      "author": "Polezzi, Loredana",
+      "title": "Translating travel contemporary Italian travel writing in English translation",
+      "pubPlace": "Aldershot, Hants, England",
+      "publisher": "Ashgate",
+      "pubYear": "2001",
+      "subjects": [
+        "Travelers' writings, Italian",
+        "Italian literature",
+        "Travel writing",
+        "Travel in literature."
+      ]
+    },
+    {
+      "pubDate": "1993",
+      "language008": "eng",
+      "lccn": "3493883",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "Italian landscape poems",
+      "pubPlace": "Newcastle upon Tyne",
+      "publisher": "Bloodaxe Books ;",
+      "pubYear": "1993",
+      "subjects": [
+        "Italian poetry",
+        "Nature in literature."
+      ]
+    },
+    {
+      "pubDate": "2015",
+      "language008": "eng",
+      "lccn": "18731489",
+      "originalLanguages": [
+        "ita"
+      ],
+      "author": "Costa, Margherita",
+      "authorDates": "active 17th century",
+      "title": "Voice of a virtuosa and courtesan selected poems of Margherita Costa : a bilingual edition",
+      "pubPlace": "New York, NY",
+      "publisher": "Bordighera Press",
+      "pubYear": "2015",
+      "translator": "Borrelli, Joan E",
+      "subjects": [
+        "Italian poetry",
+        "Italian poetry."
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "19893218",
+      "originalLanguages": [
+        "ita"
+      ],
+      "author": "Guglielmin, Stefano",
+      "title": "Maybe it's raining selected poems 1985-2014",
+      "pubPlace": "New York, NY",
+      "publisher": "Chelsea Editions",
+      "pubYear": "2014",
+      "translator": "Sutherland, Gray",
+      "subjects": [
+        "Italian poetry",
+        "Italian poetry."
+      ]
+    },
+    {
+      "pubDate": "1982",
+      "language008": "eng",
+      "lccn": "2807713",
+      "originalLanguages": [],
+      "title": "Italian poetry, 1960-1980 from Neo to Post Avant-garde",
+      "pubPlace": "San Francisco",
+      "publisher": "Red Hill Press",
+      "pubYear": "1982",
+      "subjects": [
+        "Italian poetry",
+        "English poetry",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1971",
+      "language008": "eng",
+      "lccn": "3164184",
+      "originalLanguages": [],
+      "author": "Rebay, Luciano",
+      "title": "Italian poetry a selection from St. Francis of Assisi to Salvatore Quasimodo, in Italian with English translation.",
+      "pubPlace": "New York,",
+      "publisher": "Dover",
+      "pubYear": "1971",
+      "subjects": [
+        "Italian poetry",
+        "Italian poetry."
+      ]
+    },
+    {
+      "pubDate": "1925",
+      "language008": "eng",
+      "lccn": "8266482",
+      "originalLanguages": [],
+      "author": "Rendel, Romilda",
+      "title": "An anthology of Italian lyrics from the thirteenth century to the present day;",
+      "pubPlace": "London,",
+      "publisher": "John Lane",
+      "pubYear": "1925",
+      "subjects": [
+        "Italian poetry",
+        "Italian poetry."
+      ]
+    },
+    {
+      "pubDate": "1925",
+      "language008": "eng",
+      "lccn": "10144674",
+      "originalLanguages": [],
+      "title": "Italian lyric poetry an anthology",
+      "pubPlace": "Girard, Kan.",
+      "publisher": "Haldeman-Julius Co.",
+      "pubYear": "1925",
+      "subjects": [
+        "Italian poetry.",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1778",
+      "language008": "eng",
+      "lccn": "9644778",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "Pieces selected from the Italian poets",
+      "pubPlace": "Cambridge",
+      "publisher": "Printed by J. Archdeacon ... and sold by J. Woodyer [and 7 others]",
+      "pubYear": "1778",
+      "subjects": [
+        "Italian poetry.",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1922",
+      "language008": "eng",
+      "lccn": "6852318",
+      "originalLanguages": [
+        "ita"
+      ],
+      "author": "Lucchi, Lorna de'",
+      "title": "An anthology of Italian poems, 13th-19th century",
+      "pubPlace": "London",
+      "publisher": "W. Heinemann",
+      "pubYear": "1922",
+      "subjects": [
+        "Italian poetry.",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1958",
+      "language008": "eng",
+      "lccn": "7949488",
+      "originalLanguages": [],
+      "author": "Kay, George R.",
+      "title": "The Penguin book of Italian Verse.",
+      "pubPlace": "[Hammondsworth, Eng.]",
+      "publisher": "Penguin Books",
+      "pubYear": "1958",
+      "subjects": [
+        "Italian poetry.",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "8726458",
+      "originalLanguages": [],
+      "author": "Lucchi, Lorna de',",
+      "title": "An anthology of Italian poems, 13th-19th century.",
+      "pubPlace": "New York,",
+      "publisher": "Biblo and Tannen",
+      "pubYear": "1967",
+      "subjects": [
+        "Italian poetry.",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1986",
+      "language008": "eng",
+      "lccn": "3351117",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "The Hidden Italy a bilingual edition of Italian dialect poetry",
+      "pubPlace": "Detroit",
+      "publisher": "Wayne State University Press",
+      "pubYear": "1986",
+      "subjects": [
+        "Italian poetry",
+        "Italian poetry",
+        "Dialect poetry, Italian",
+        "Dialect poetry, Italian.",
+        "Italian poetry."
+      ]
+    },
+    {
+      "pubDate": "1896",
+      "language008": "eng",
+      "lccn": "6322030",
+      "originalLanguages": [
+        "ita"
+      ],
+      "author": "Dante Alighieri",
+      "authorDates": "1265-1321",
+      "title": "Dante, Petrarch, Camoens",
+      "pubPlace": "London,",
+      "publisher": "J. Lane:",
+      "pubYear": "1896",
+      "translator": "Garnett, Richard",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1961",
+      "language008": "eng",
+      "lccn": "7025792",
+      "originalLanguages": [],
+      "author": "Guenther, Charles",
+      "title": "Modern Italian poets.",
+      "pubPlace": "[San Francisco,",
+      "publisher": "Inferno Press Editions",
+      "pubYear": "1961",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1962",
+      "language008": "eng",
+      "lccn": "5746605",
+      "originalLanguages": [],
+      "author": "Raiziss, Sona",
+      "title": "Sona Raiziss reading her poems, and her translations from Italian in the Recording Laboratory, May 22, 1962",
+      "pubPlace": "",
+      "publisher": "",
+      "pubYear": "1962",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1968",
+      "language008": "eng",
+      "lccn": "2655638",
+      "originalLanguages": [],
+      "author": "Singh, G.",
+      "title": "Contemporary Italian verse;",
+      "pubPlace": "London,",
+      "publisher": "London Magazine Editions",
+      "pubYear": "1968",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1986",
+      "language008": "eng",
+      "lccn": "4316841",
+      "originalLanguages": [],
+      "author": "Dante Alighieri",
+      "authorDates": "1265-1321",
+      "title": "The stone beloved six poems from Dante Alighieri",
+      "originalTitle": "Works",
+      "translationLanguage": "English.",
+      "pubPlace": "Austin",
+      "publisher": "Kairos Press",
+      "pubYear": "1986",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "3490728",
+      "originalLanguages": [
+        "ita"
+      ],
+      "author": "Cudahy, Sheila",
+      "title": "Presence",
+      "pubPlace": "Santa Fe, N.M.",
+      "publisher": "Paseo Press",
+      "pubYear": "1994",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1996",
+      "language008": "eng",
+      "lccn": "1648926",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "Italian poetry an anthology : from the beginnings to the present",
+      "pubPlace": "Wellfleet, Mass.",
+      "publisher": "Delphinium Press",
+      "pubYear": "1996",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "2011",
+      "language008": "eng",
+      "lccn": "16657250",
+      "originalLanguages": [],
+      "title": "A new map the poetry of migrant writers in Italy",
+      "pubPlace": "Mineola, NY",
+      "publisher": "Legas Logo",
+      "pubYear": "2011",
+      "subjects": [
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1997",
+      "language008": "eng",
+      "lccn": "1179323",
+      "originalLanguages": [
+        "ita"
+      ],
+      "title": "Women poets of the Italian Renaissance courtly ladies and courtesans",
+      "pubPlace": "New York",
+      "publisher": "Italica Press",
+      "pubYear": "1997",
+      "subjects": [
+        "Italian poetry",
+        "Italian poetry",
+        "Italian poetry"
+      ]
+    },
+    {
+      "pubDate": "1960",
+      "language008": "eng",
+      "lccn": "7489449",
+      "originalLanguages": [],
+      "title": "Literary gems from the works of Shakespeare [and others]",
+      "pubPlace": "New York,",
+      "publisher": "R.D. Cortina Co.",
+      "pubYear": "1960",
+      "subjects": [
+        "English literature",
+        "American literature"
+      ]
+    },
+    {
+      "pubDate": "2003",
+      "language008": "eng",
+      "lccn": "13246806",
+      "originalLanguages": [
+        "spa",
+        "heb",
+        "lat",
+        "yid"
+      ],
+      "title": "The scroll and the cross 1,000 years of Jewish-Hispanic literature",
+      "pubPlace": "New York, NY",
+      "publisher": "Routledge",
+      "pubYear": "2003",
+      "subjects": [
+        "Spanish American literature",
+        "Spanish literature",
+        "Spanish American literature",
+        "Spanish literature",
+        "Jews in literature."
+      ]
+    },
+    {
+      "pubDate": "2019",
+      "language008": "eng",
+      "lccn": "21746434",
+      "originalLanguages": [],
+      "title": "Translators' corner.",
+      "pubPlace": "Cambridge, MA",
+      "publisher": "Instituto Cervantes at Harvard University (FAS)",
+      "pubYear": "2019",
+      "subjects": [
+        "Spanish literature",
+        "Spanish American literature",
+        "Spanish American literature.",
+        "Spanish literature."
+      ]
+    },
+    {
+      "pubDate": "2006",
+      "language008": "eng",
+      "lccn": "14652418",
+      "originalLanguages": [],
+      "title": "Early Philippine literature from ancient times to 1940 with teaching notes and study guides",
+      "pubPlace": "Manila",
+      "publisher": "Published and exclusively distributed by Anvil",
+      "pubYear": "2006",
+      "subjects": [
+        "Tagalog literature",
+        "Philippine literature (Spanish)"
+      ]
+    },
+    {
+      "pubDate": "1976",
+      "language008": "eng",
+      "lccn": "799106",
+      "originalLanguages": [],
+      "title": "The Best of Spanish literature in translation",
+      "pubPlace": "New York",
+      "publisher": "Ungar",
+      "pubYear": "1976",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1959",
+      "language008": "eng",
+      "lccn": "7014101",
+      "originalLanguages": [],
+      "title": "Trozos escogidos de las obras de Lafuente ... [et al.]",
+      "pubPlace": "New York",
+      "publisher": "R. D. Cortina",
+      "pubYear": "1959",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1901",
+      "language008": "eng",
+      "lccn": "10066685",
+      "originalLanguages": [],
+      "title": "Moorish literature; comprising romantic ballads, tales of the Berbers, stories of the Kabylie, folk-lore and national traditions;",
+      "pubPlace": "New York,",
+      "publisher": "Colonial Press",
+      "pubYear": "1901",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "2013",
+      "language008": "eng",
+      "lccn": "18124598",
+      "originalLanguages": [
+        "spa"
+      ],
+      "author": "Mari&#x301;as, Javier",
+      "title": "A heart so white a novel",
+      "originalTitle": "Corazo&#x301;n tan blanco",
+      "translationLanguage": "English",
+      "pubPlace": "New York",
+      "publisher": "Vintage International",
+      "pubYear": "2013",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1969",
+      "language008": "eng",
+      "lccn": "766333",
+      "originalLanguages": [],
+      "title": "Two Spanish picaresque novels;",
+      "pubPlace": "Harmondsworth,",
+      "publisher": "Penguin",
+      "pubYear": "1969",
+      "subjects": [
+        "Spanish fiction",
+        "Picaresque literature"
+      ]
+    },
+    {
+      "pubDate": "1964",
+      "language008": "eng",
+      "lccn": "6638534",
+      "originalLanguages": [],
+      "author": "Mairena, Ana",
+      "title": "Majakuagymoukeia.",
+      "pubPlace": "Me&#x301;xico",
+      "publisher": "[El Corno Emplumado]",
+      "pubYear": "1964",
+      "subjects": [
+        "Cora literature",
+        "Cora literature"
+      ]
+    },
+    {
+      "pubDate": "1971",
+      "language008": "eng",
+      "lccn": "4178803",
+      "originalLanguages": [],
+      "author": "Maramba, Asuncion David",
+      "title": "Early Philippine literature from ancient times to 1940.",
+      "pubPlace": "Manila,",
+      "publisher": "Distributed by National Book Store",
+      "pubYear": "1971",
+      "subjects": [
+        "Tagalog literature",
+        "Philippine literature (Spanish)",
+        "Tagalog literature.",
+        "Philippine literature (English)",
+        "Philippine literature (Spanish)"
+      ]
+    },
+    {
+      "pubDate": "1924",
+      "language008": "eng",
+      "lccn": "9669466",
+      "originalLanguages": [],
+      "author": "Peers, Edgar Allison",
+      "title": "Spanish mysticism; a preliminary survey,",
+      "pubPlace": "London,",
+      "publisher": "Methuen &amp; co. ltd",
+      "pubYear": "1924",
+      "subjects": [
+        "Mysticism.",
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1943",
+      "language008": "eng",
+      "lccn": "9267909",
+      "originalLanguages": [],
+      "author": "Allen, John Houghton",
+      "title": "A Latin-American miscellany.",
+      "pubPlace": "[Dallas]",
+      "publisher": "Priv. Print. [Kaleidograph Press]",
+      "pubYear": "1943",
+      "subjects": [
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1942",
+      "language008": "eng",
+      "lccn": "8799083",
+      "originalLanguages": [],
+      "title": "The literature of Latin America.",
+      "pubPlace": "Washington, D.C.,",
+      "publisher": "Pan American union",
+      "pubYear": "1942",
+      "subjects": [
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1944",
+      "language008": "eng",
+      "lccn": "7403549",
+      "originalLanguages": [
+        "spa"
+      ],
+      "title": "The literature of Latin America ...",
+      "pubPlace": "Washington, D.C.,",
+      "publisher": "Pan American Union",
+      "pubYear": "1944",
+      "subjects": [
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1944",
+      "language008": "eng",
+      "lccn": "7399041",
+      "originalLanguages": [
+        "spa"
+      ],
+      "author": "Pane, Remigio Ugo",
+      "title": "English translations from the Spanish, 1484-1943, a bibliography",
+      "pubPlace": "New Brunswick,",
+      "publisher": "Rutgers University Press",
+      "pubYear": "1944",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1821",
+      "language008": "eng",
+      "lccn": "3107217",
+      "originalLanguages": [
+        "spa"
+      ],
+      "title": "The adventures of Lazarillo de Tormes.",
+      "pubPlace": "London,",
+      "publisher": "Benbow",
+      "pubYear": "1821",
+      "subjects": [
+        "Picaresque literature, Spanish"
+      ]
+    },
+    {
+      "pubDate": "1999",
+      "language008": "eng",
+      "lccn": "3089008",
+      "originalLanguages": [
+        "spa"
+      ],
+      "title": "Literature of Spain and the Americas.",
+      "pubPlace": "Lincolnwood, Ill.",
+      "publisher": "National Textbook Co.",
+      "pubYear": "1999",
+      "subjects": [
+        "Spanish literature",
+        "Spanish American literature",
+        "Spanish literature",
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "2214851",
+      "originalLanguages": [],
+      "author": "Rudder, Robert S",
+      "title": "The literature of Spain in English translation a bibliography",
+      "pubPlace": "New York",
+      "publisher": "Ungar",
+      "pubYear": "1975",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1985",
+      "language008": "eng",
+      "lccn": "2370806",
+      "originalLanguages": [],
+      "title": "From the Spanish morning",
+      "pubPlace": "New York",
+      "publisher": "Atheneum",
+      "pubYear": "1985",
+      "subjects": [
+        "Spanish literature",
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1950",
+      "language008": "eng",
+      "lccn": "6031855",
+      "originalLanguages": [],
+      "title": "Literature in Latin America.",
+      "pubPlace": "Washington",
+      "publisher": "",
+      "pubYear": "1950",
+      "subjects": [
+        "Spanish American literature.",
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1971",
+      "language008": "eng",
+      "lccn": "3600330",
+      "originalLanguages": [
+        "spa"
+      ],
+      "author": "Farnell, Ida",
+      "title": "Spanish prose and poetry, old and new,",
+      "pubPlace": "Freeport, N.Y.,",
+      "publisher": "Books for Libraries Press",
+      "pubYear": "1971",
+      "subjects": [
+        "Spanish literature",
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1920",
+      "language008": "eng",
+      "lccn": "10126456",
+      "originalLanguages": [
+        "spa"
+      ],
+      "author": "Farnell, Ida",
+      "title": "Spanish prose and poetry old and new,",
+      "pubPlace": "Oxford,",
+      "publisher": "Clarendon Press",
+      "pubYear": "1920",
+      "subjects": [
+        "Spanish literature",
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1963",
+      "language008": "eng",
+      "lccn": "1694846",
+      "originalLanguages": [],
+      "author": "Resnick, Seymour",
+      "title": "Highlights of Spanish literature; a bilingual anthology with Spanish and English on facing pages.",
+      "pubPlace": "New York,",
+      "publisher": "Ungar",
+      "pubYear": "1963",
+      "subjects": [
+        "Spanish literature.",
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "2007",
+      "language008": "eng",
+      "lccn": "14830307",
+      "originalLanguages": [],
+      "author": "Orero, Pilar",
+      "title": "The problem of translating \"Jabberwocky\" the nonsense literature of Lewis Carroll and Edward Lear and their Spanish translators",
+      "pubPlace": "Lewiston, NY",
+      "publisher": "The Edwin Mellen Press",
+      "pubYear": "2007",
+      "subjects": [
+        "Nonsense literature, English",
+        "Nonsense literature, English"
+      ]
+    },
+    {
+      "pubDate": "1996",
+      "language008": "eng",
+      "lccn": "1638279",
+      "originalLanguages": [],
+      "title": "Voices of Latino culture readings from Spain, Latin America, and the United States",
+      "pubPlace": "Dubuque, Iowa",
+      "publisher": "Kendall/Hunt Pub. Co.",
+      "pubYear": "1996",
+      "subjects": [
+        "Spanish American literature",
+        "Spanish literature",
+        "American literature",
+        "Civilization, Hispanic"
+      ]
+    },
+    {
+      "pubDate": "2008",
+      "language008": "eng",
+      "lccn": "14898964",
+      "originalLanguages": [],
+      "author": "Munday, Jeremy",
+      "title": "Style and ideology in translation Latin American writing in English",
+      "pubPlace": "New York",
+      "publisher": "Routledge",
+      "pubYear": "2008",
+      "subjects": [
+        "Spanish language",
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1997",
+      "language008": "eng",
+      "lccn": "2597115",
+      "originalLanguages": [
+        "spa"
+      ],
+      "title": "Cruel fictions, cruel realities short stories by Latin American women writers",
+      "pubPlace": "Pittsburgh, Pa.",
+      "publisher": "Latin American Literary Review Press",
+      "pubYear": "1997",
+      "subjects": [
+        "Short stories, Spanish American",
+        "Spanish American fiction",
+        "Spanish American fiction",
+        "Cruelty  in literature."
+      ]
+    },
+    {
+      "pubDate": "1958",
+      "language008": "eng",
+      "lccn": "3583967",
+      "originalLanguages": [
+        "spa"
+      ],
+      "author": "Resnick, Seymour",
+      "title": "An anthology of Spanish literature in English translation.",
+      "pubPlace": "London,",
+      "publisher": "J. Calder",
+      "pubYear": "1958",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "1961",
+      "language008": "eng",
+      "lccn": "8432880",
+      "originalLanguages": [
+        "spa"
+      ],
+      "title": "Image of Spain.",
+      "pubPlace": "Austin,",
+      "publisher": "University of Texas",
+      "pubYear": "1961",
+      "subjects": [
+        "Spanish literature"
+      ]
+    },
+    {
+      "pubDate": "",
+      "language008": "eng",
+      "lccn": "7881165",
+      "originalLanguages": [],
+      "title": "English translations of Latin American literature;",
+      "pubPlace": "",
+      "publisher": "",
+      "pubYear": "",
+      "subjects": [
+        "Spanish American literature"
+      ]
+    },
+    {
+      "pubDate": "1965",
+      "language008": "eng",
+      "lccn": "8928929",
+      "originalLanguages": [],
+      "author": "Colledge, Edmund,",
+      "title": "Mediaeval Netherlands religious literature.",
+      "pubPlace": "Leyden,",
+      "publisher": "Sythoff;",
+      "pubYear": "1965",
+      "subjects": [
+        "Christian literature, Dutch",
+        "Religious literature, Dutch",
+        "Dutch literature"
+      ]
+    },
+    {
+      "pubDate": "1945",
+      "language008": "eng",
+      "lccn": "6937257",
+      "originalLanguages": [
+        "dut"
+      ],
+      "title": "Harvest of the Lowlands an anthology in English translation of creative writing in the Dutch language, with a historical survey of the literary development",
+      "pubPlace": "New York",
+      "publisher": "Querido",
+      "pubYear": "1945",
+      "subjects": [
+        "Dutch literature",
+        "Flemish literature"
+      ]
+    },
+    {
+      "pubDate": "2000",
+      "language008": "eng",
+      "lccn": "12031695",
+      "originalLanguages": [
+        "dut"
+      ],
+      "title": "Dutch romances",
+      "pubPlace": "Woodbridge, Suffolk",
+      "publisher": "D.S. Brewer",
+      "pubYear": "2000",
+      "subjects": [
+        "Dutch literature",
+        "Romances, Dutch",
+        "Arthurian romances."
+      ]
+    },
+    {
+      "pubDate": "",
+      "language008": "eng",
+      "lccn": "10333914",
+      "originalLanguages": [],
+      "title": "The Busy bee review.",
+      "pubPlace": "[Amsterdam,",
+      "publisher": "Bezige Bij;",
+      "pubYear": "",
+      "subjects": [
+        "Dutch literature"
+      ]
+    },
+    {
+      "pubDate": "1978",
+      "language008": "eng",
+      "lccn": "3257185",
+      "originalLanguages": [],
+      "title": "Insulinde selected translations from Dutch writers of three centuries on the Indonesian Archipelago",
+      "pubPlace": "Canberra",
+      "publisher": "Australian National University Press",
+      "pubYear": "1978",
+      "subjects": [
+        "Indonesian prose literature (Dutch)"
+      ]
+    },
+    {
+      "pubDate": "1978",
+      "language008": "eng",
+      "lccn": "1790641",
+      "originalLanguages": [],
+      "title": "Insulinde selected translations from Dutch writers of three centuries on the Indonesian archipelago",
+      "pubPlace": "Honolulu",
+      "publisher": "Asian Studies Program, University of Hawaii, University Press of Hawaii",
+      "pubYear": "1978",
+      "subjects": [
+        "Indonesian prose literature (Dutch)"
+      ]
+    },
+    {
+      "pubDate": "1824",
+      "language008": "eng",
+      "lccn": "7310041",
+      "originalLanguages": [],
+      "author": "Bowring, John",
+      "authorDates": "1792-1872",
+      "title": "Batavian anthology; or, Specimens of the Dutch poets;",
+      "pubPlace": "London,",
+      "publisher": "Taylor and Hessey",
+      "pubYear": "1824",
+      "translator": "Van Dyk, Harry Stoe",
+      "subjects": [
+        "Dutch poetry",
+        "Dutch literature"
+      ]
+    },
+    {
+      "pubDate": "1998",
+      "language008": "eng",
+      "lccn": "4043632",
+      "originalLanguages": [],
+      "title": "Low leans the sky",
+      "pubPlace": "Rekkem, Flanders, Belgium",
+      "publisher": "Stichting Ons Erfdeel",
+      "pubYear": "1998",
+      "subjects": [
+        "Dutch literature",
+        "Flemish literature"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "8016619",
+      "originalLanguages": [],
+      "author": "Colledge, Edmund,",
+      "title": "Reynard the Fox and other mediaeval Netherlands secular literature.",
+      "pubPlace": "Leiden,",
+      "publisher": "A. W. Sijthoff",
+      "pubYear": "1967",
+      "subjects": [
+        "Dutch literature",
+        "Dutch literature"
+      ]
+    },
+    {
+      "pubDate": "2001",
+      "language008": "eng",
+      "lccn": "12356429",
+      "originalLanguages": [
+        "dut"
+      ],
+      "title": "Amsterdam",
+      "pubPlace": "San Francisco",
+      "publisher": "Whereabouts Press ;",
+      "pubYear": "2001",
+      "subjects": [
+        "Dutch fiction",
+        "Short stories, Dutch"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19482291",
+      "originalLanguages": [],
+      "title": "Amsterdam tales",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2017",
+      "translator": "Vincent, Paul",
+      "subjects": [
+        "Dutch literature",
+        "Dutch literature."
+      ]
+    },
+    {
+      "pubDate": "1996",
+      "language008": "eng",
+      "lccn": "3538109",
+      "originalLanguages": [],
+      "author": "Schoneveld, Cornelis W",
+      "title": "Sea-changes studies in three centuries of Anglo-Dutch cultural transmission",
+      "pubPlace": "Amsterdam",
+      "publisher": "Rodopi",
+      "pubYear": "1996",
+      "subjects": [
+        "English literature",
+        "English literature"
+      ]
+    },
+    {
+      "pubDate": "2010",
+      "language008": "eng",
+      "lccn": "16717973",
+      "originalLanguages": [],
+      "title": "Women's writing from the Low Countries 1200-1875 a bilingual anthology",
+      "pubPlace": "Amsterdam",
+      "publisher": "Amsterdam University Press",
+      "pubYear": "2010",
+      "subjects": [
+        "Women authors, Dutch.",
+        "Women authors, Flemish.",
+        "Women and literature",
+        "Dutch literature",
+        "Dutch literature",
+        "Flemish literature",
+        "Flemish literature"
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "2422149",
+      "originalLanguages": [],
+      "title": "Fugitive dreams an anthology of Dutch Colonial literature",
+      "pubPlace": "Amherst",
+      "publisher": "University of Massachusetts Press",
+      "pubYear": "1988",
+      "subjects": [
+        "Indonesian prose literature (Dutch)",
+        "Dutch"
+      ]
+    },
+    {
+      "pubDate": "1983",
+      "language008": "eng",
+      "lccn": "943042",
+      "originalLanguages": [],
+      "author": "Schoneveld, Cornelis W",
+      "title": "Intertraffic of the mind studies in seventeenth-century Anglo-Dutch translation with a checklist of books translated from English into Dutch, 1600-1700",
+      "pubPlace": "Leiden",
+      "publisher": "Published for the Sir Thomas Browne Institute [by] E.J. Brill/Leiden University Press",
+      "pubYear": "1983",
+      "subjects": [
+        "English literature",
+        "English literature",
+        "English literature",
+        "English literature",
+        "English literature",
+        "Translating and interpreting",
+        "Early printed books",
+        "English language",
+        "Dutch imprints."
+      ]
+    },
+    {
+      "pubDate": "1933",
+      "language008": "eng",
+      "lccn": "10163852",
+      "originalLanguages": [],
+      "author": "Scherpbier, Herman",
+      "title": "Milton in Holland; a study in the literary relations of England and Holland before 1730 ...",
+      "pubPlace": "Amsterdam,",
+      "publisher": "H. J. Paris",
+      "pubYear": "1933",
+      "subjects": [
+        "Comparative literature",
+        "Comparative literature",
+        "English literature"
+      ]
+    },
+    {
+      "pubDate": "1990",
+      "language008": "eng",
+      "lccn": "1547466",
+      "originalLanguages": [],
+      "title": "Something understood studies in Anglo-Dutch literary translation",
+      "pubPlace": "Amsterdam",
+      "publisher": "Rodopi",
+      "pubYear": "1990",
+      "subjects": [
+        "Dutch language",
+        "English language",
+        "Dutch literature",
+        "Dutch literature",
+        "English literature",
+        "American literature"
+      ]
+    },
+    {
+      "pubDate": "2006",
+      "language008": "eng",
+      "lccn": "14715762",
+      "originalLanguages": [],
+      "title": "Textual mobility and cultural transmission = Tekstmobiliteit en culturele overdracht",
+      "pubPlace": "Leuven, Belgium",
+      "publisher": "Leuven University Press",
+      "pubYear": "2006",
+      "subjects": [
+        "English literature",
+        "English literature",
+        "English literature",
+        "Translating and interpreting.",
+        "Language and culture."
+      ]
+    },
+    {
+      "pubDate": "1987",
+      "language008": "eng",
+      "lccn": "1013089",
+      "originalLanguages": [],
+      "author": "Alblas, Jacques B. H",
+      "title": "Johannes Boekholt (1656-1693) the first Dutch publisher of John Bunyan and other English authors",
+      "pubPlace": "Nieuwkoop [Netherlands]",
+      "publisher": "De Graaf",
+      "pubYear": "1987",
+      "subjects": [
+        "Publishers and publishing",
+        "Translations",
+        "English literature",
+        "English literature",
+        "Translating and interpreting",
+        "Literature publishing",
+        "English literature",
+        "English language"
+      ]
+    },
+    {
+      "pubDate": "1990",
+      "language008": "eng",
+      "lccn": "4878273",
+      "originalLanguages": [],
+      "author": "Clerkx. Lily E",
+      "title": "Living in Deli Its society as imaged in colonial fiction",
+      "pubPlace": "Amsterdam",
+      "publisher": "VU University Press",
+      "pubYear": "1991",
+      "subjects": [
+        "Dutch fiction",
+        "Plantation life"
+      ]
+    },
+    {
+      "pubDate": "2009",
+      "language008": "eng",
+      "lccn": "15865158",
+      "originalLanguages": [],
+      "title": "Crossing cultures nineteenth-century Anglophone literature in the Low Countries",
+      "pubPlace": "Leuven, Belgium",
+      "publisher": "Leuven University Press",
+      "pubYear": "2009",
+      "subjects": [
+        "English literature",
+        "English literature",
+        "English literature",
+        "English literature",
+        "Literatur",
+        "U&#x308;bersetzung",
+        "Frauenliteratur"
+      ]
+    },
+    {
+      "pubDate": "2020",
+      "language008": "eng",
+      "lccn": "21335121",
+      "originalLanguages": [],
+      "title": "The rise of the early Christian intellectual",
+      "pubPlace": "Berlin",
+      "publisher": "Walter de Gruyter GmbH",
+      "pubYear": "2020",
+      "subjects": [
+        "Church history",
+        "Fathers of the church.",
+        "Church history",
+        "Fathers of the church."
+      ]
+    },
+    {
+      "pubDate": "2015",
+      "language008": "eng",
+      "lccn": "18682100",
+      "originalLanguages": [],
+      "author": "Talbot, John Michael",
+      "title": "The ancient path old lessons from the church fathers for a new life today",
+      "pubPlace": "New York",
+      "publisher": "Image",
+      "pubYear": "2015",
+      "subjects": [
+        "Fathers of the church.",
+        "Church history",
+        "Church history",
+        "Fathers of the church."
+      ]
+    },
+    {
+      "pubDate": "2016",
+      "language008": "eng",
+      "lccn": "19738927",
+      "originalLanguages": [],
+      "author": "Adamiak, Stanis&#x142;aw",
+      "title": "Carthage, Constantinople and Rome imperial and papal interventions in the life of the Church in Byzantine Africa (533-698)",
+      "pubPlace": "Roma",
+      "publisher": "Gregorian &amp; Biblical Press",
+      "pubYear": "2016",
+      "subjects": [
+        "Church history",
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "2015",
+      "language008": "eng",
+      "lccn": "18350501",
+      "originalLanguages": [],
+      "author": "Neeleman, John",
+      "title": "Logos a novel of Christianity's origin",
+      "pubPlace": "Stonington, Connecticut",
+      "publisher": "Homebound Publications",
+      "pubYear": "2015",
+      "subjects": [
+        "Church history",
+        "Church history",
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "2010",
+      "language008": "eng",
+      "lccn": "16284415",
+      "originalLanguages": [],
+      "title": "Contemporary church and the early church case studies in ressourcement / edited by Paul A. Hartog.",
+      "pubPlace": "Eugene, Ore.",
+      "publisher": "PICKWICK Publications.",
+      "pubYear": "2010",
+      "subjects": [
+        "Church history",
+        "Church."
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "21950489",
+      "originalLanguages": [],
+      "author": "Hall, Claire",
+      "title": "Origen and prophecy fate, authority, allegory, and the structure of scripture",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2021",
+      "subjects": [
+        "Church history",
+        "Prophecy.",
+        "Church history",
+        "Prophecy."
+      ]
+    },
+    {
+      "pubDate": "2012",
+      "language008": "eng",
+      "lccn": "17184500",
+      "originalLanguages": [],
+      "title": "Evangelicals and the early church recovery, reform, renewal",
+      "pubPlace": "Eugene, Or.",
+      "publisher": "Cascade Books",
+      "pubYear": "2012",
+      "subjects": [
+        "Evangelicalism",
+        "Evangelicalism",
+        "Church history",
+        "Church."
+      ]
+    },
+    {
+      "pubDate": "2012",
+      "language008": "eng",
+      "lccn": "17336106",
+      "originalLanguages": [],
+      "author": "Gutenson, Charles E",
+      "title": "The right church live like the first Christians",
+      "pubPlace": "Nashville",
+      "publisher": "Abingdon Press",
+      "pubYear": "2012",
+      "subjects": [
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "18087057",
+      "originalLanguages": [],
+      "author": "Freyne, Sea&#x301;n",
+      "title": "The Jesus movement and its expansion meaning and mission",
+      "pubPlace": "Grand Rapids, Michigan",
+      "publisher": "William B. Eerdmans Publishing Company",
+      "pubYear": "2014",
+      "subjects": [
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19360909",
+      "originalLanguages": [
+        "eng",
+        "ger",
+        "ita"
+      ],
+      "author": "Destro, Adriana",
+      "title": "From Jesus to his first followers continuity and discontinuity : anthropological and historical perspectives",
+      "originalTitle": "Essays",
+      "translationLanguage": "English",
+      "pubPlace": "Leiden ; Boston",
+      "publisher": "Brill",
+      "pubYear": "2017",
+      "subjects": [
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "2005",
+      "language008": "eng",
+      "lccn": "14452484",
+      "originalLanguages": [],
+      "author": "Byrd, Alfred D",
+      "title": "Trinity, canon, and Constantine clear light on the early church",
+      "pubPlace": "New York",
+      "publisher": "iUniverse",
+      "pubYear": "2005",
+      "subjects": [
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "1865",
+      "language008": "eng",
+      "lccn": "7345264",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Neander, August",
+      "authorDates": "1789-1850",
+      "title": "History of the planting and training of the Christian church by the apostles.",
+      "pubPlace": "New York,",
+      "publisher": "Sheldon;",
+      "pubYear": "1865",
+      "translator": "Ryland, J. E",
+      "subjects": [
+        "Church history"
+      ]
+    },
+    {
+      "pubDate": "1987",
+      "language008": "eng",
+      "lccn": "3038281",
+      "originalLanguages": [],
+      "title": "The Glory of the world, and other alchemical tracts.",
+      "pubPlace": "Felinfach",
+      "publisher": "Llanerch Enterprises",
+      "pubYear": "1987",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1690",
+      "language008": "eng",
+      "lccn": "20665978",
+      "originalLanguages": [],
+      "author": "Urbigerus, Baro",
+      "title": "Aphorismi urbigerani, or, Certain rules, clearly demonstrating the three infallible ways of preparing the grand elixir or circulatum majus of the philosophers discovering the secret of secrets, and detecting the errors of vulgar chymists in their operations : contain'd in one hundred and one aphorisms : to which are added the three ways of preparing the vegetable elixer, or circulatum minus : all deduc'd from never-erring experience",
+      "pubPlace": "London",
+      "publisher": "Printed for Henry Faithorne",
+      "pubYear": "1690",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1658",
+      "language008": "eng",
+      "lccn": "8239385",
+      "originalLanguages": [],
+      "author": "Ashmole, Elias",
+      "authorDates": "1617-1692",
+      "title": "The way to bliss in three books",
+      "pubPlace": "London",
+      "publisher": "Printed by J. Grismond for N. Brook",
+      "pubYear": "1658",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1652",
+      "language008": "eng",
+      "lccn": "15076337",
+      "originalLanguages": [],
+      "title": "Five treatises of the philosophers stone two of Alphonso, king of Portugall, as it was written with his own hand, and taken out of his closset, translated out of the Portuguez into English : one of John Sawtre, a monke, translated into English : another written by Florianus Raudorff, a German philosopher, and translated out of the same language into English : also a treatise of the names of the philosophers stone, by William Gratacolle, translated into English : to which is added the Smaragdine table",
+      "pubPlace": "London",
+      "publisher": "Printed by Thomas Harper, and are to be sold by John Collins",
+      "pubYear": "1652",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1680",
+      "language008": "eng",
+      "lccn": "6258228",
+      "originalLanguages": [],
+      "title": "Aurifontina chymica: or A collection of fourteen small treatises concerning the first matter of philosophers for the discovery of their (hitherto so much concealed) mercury. Which many have studiously endeavoured to hide, but there to make manifest, for the befit of mankind in general.",
+      "pubPlace": "London",
+      "publisher": "Printed for William Cooper, at the Pelican in Little-Britain",
+      "pubYear": "1680",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1964",
+      "language008": "eng",
+      "lccn": "761999",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Ruland, Martin",
+      "authorDates": "1569-1611",
+      "title": "A lexicon of alchemy,",
+      "originalTitle": "Lexicon alchemiae",
+      "translationLanguage": "English",
+      "pubPlace": "London,",
+      "publisher": "J. M. Watkins",
+      "pubYear": "1964",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1684",
+      "language008": "eng",
+      "lccn": "20654236",
+      "originalLanguages": [
+        "lat"
+      ],
+      "title": "Collectanea chymica; A collection of ten several treatises in chymistry, concerning the liquor alkahest, the mercury of philosophers, and other curiosities worthy the perusal ...",
+      "pubPlace": "London,",
+      "publisher": "Printed for William Cooper",
+      "pubYear": "1684",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "281227",
+      "originalLanguages": [],
+      "author": "Ashmole, Elias",
+      "authorDates": "1617-1692",
+      "title": "Theatrum chemicum Britannicum.",
+      "pubPlace": "New York,",
+      "publisher": "Johnson Reprint Corp.",
+      "pubYear": "1967",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1894",
+      "language008": "eng",
+      "lccn": "8759024",
+      "originalLanguages": [],
+      "author": "Lover of Philaletha",
+      "title": "A short enquiry concerning the hermetic art",
+      "pubPlace": "London",
+      "publisher": "Thesophical Publishing Society ;",
+      "pubYear": "1894",
+      "subjects": [
+        "Alchemy"
+      ]
+    },
+    {
+      "pubDate": "1595",
+      "language008": "eng",
+      "lccn": "13804276",
+      "originalLanguages": [],
+      "author": "Perkins, William",
+      "authorDates": "1558-1602",
+      "title": "A treatise tending vnto a declaration, whether a man be in the estate of damnation, or in the estate of grace and if he be in the first, how he may in time come out of it : if in the second, how he may discerne it and perseuer in the same to the end",
+      "pubPlace": "At London",
+      "publisher": "Printed by the widdow Orwin for Iohn Porter and Iohn Legate",
+      "pubYear": "1595",
+      "subjects": [
+        "Theology, Practical",
+        "Christian ethics",
+        "Theology, Doctrinal",
+        "Grace (Theology)"
+      ]
+    },
+    {
+      "pubDate": "2020",
+      "language008": "eng",
+      "lccn": "21599628",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "William",
+      "authorDates": "approximately 1270-1333",
+      "title": "William of Alnwick questions on science and theology",
+      "pubPlace": "Mu&#x308;nster",
+      "publisher": "Aschendorff Verlag",
+      "pubYear": "2020",
+      "translator": "Scott, John",
+      "subjects": [
+        "Theology",
+        "Science",
+        "Science.",
+        "Theology."
+      ]
+    },
+    {
+      "pubDate": "1924",
+      "language008": "eng",
+      "lccn": "8729734",
+      "originalLanguages": [],
+      "author": "Pecock, Reginald",
+      "authorDates": "1395?-1460?",
+      "title": "The folewer to the Donet,",
+      "pubPlace": "London,",
+      "publisher": "Pub. for the Early English Text Society, by H. Milford, Oxford University Press",
+      "pubYear": "1924",
+      "subjects": [
+        "Theology, Doctrinal",
+        "Natural theology"
+      ]
+    },
+    {
+      "pubDate": "1740",
+      "language008": "eng",
+      "lccn": "7904255",
+      "originalLanguages": [],
+      "author": "Thomson, John",
+      "authorDates": "-1753",
+      "title": "An essay upon the faith of assurance being the substance of several sermons preached by the author to his own congregation. To which is added an appendix containing a modest resolution of two important cases relating to assurance",
+      "pubPlace": "Philadelphia",
+      "publisher": "Printed by B. Franklln [sic], for the author",
+      "pubYear": "1740",
+      "subjects": [
+        "Assurance (Theology)",
+        "Grace (Theology)"
+      ]
+    },
+    {
+      "pubDate": "1662",
+      "language008": "eng",
+      "lccn": "9765611",
+      "originalLanguages": [],
+      "author": "Cotton, John",
+      "authorDates": "1584-1652",
+      "title": "A treatise of the covenant of grace, as it is dispensed to the elect seed, effectually unto salvation being the substance of divers sermons preached upon Act 7. 8. The 2d ed., by a copy far larger than the forser; and corr. also by the authors own hand.",
+      "pubPlace": "London,",
+      "publisher": "Printed for W. Miller",
+      "pubYear": "1662",
+      "subjects": [
+        "Grace (Theology)",
+        "Covenant theology"
+      ]
+    },
+    {
+      "pubDate": "1671",
+      "language008": "eng",
+      "lccn": "7403925",
+      "originalLanguages": [],
+      "author": "Cotton, John",
+      "authorDates": "1584-1652",
+      "title": "A treatise of the covenant of grace, as it is dispensed to the elect seed, effectually unto salvation. Being the substance of divers sermons preached upon Act, 7. 8.",
+      "pubPlace": "London,",
+      "publisher": "P. Parker",
+      "pubYear": "1671",
+      "subjects": [
+        "Grace (Theology)",
+        "Covenant theology"
+      ]
+    },
+    {
+      "pubDate": "2016",
+      "language008": "eng",
+      "lccn": "18850983",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Coccejus, Johannes",
+      "authorDates": "1603-1669",
+      "title": "The Doctrine of the covenant and testament of God",
+      "originalTitle": "Summa Doctrinae de Foedere et Testamento Dei",
+      "translationLanguage": "English",
+      "pubPlace": "Grand Rapids, Michigan",
+      "publisher": "Reformation Heritage Books",
+      "pubYear": "2016",
+      "subjects": [
+        "Covenant theology",
+        "Salvation",
+        "Theology, Doctrinal"
+      ]
+    },
+    {
+      "pubDate": "2011",
+      "language008": "eng",
+      "lccn": "16760504",
+      "originalLanguages": [],
+      "author": "William",
+      "authorDates": "1180-1249",
+      "title": "Selected spiritual writings Why God became man; On grace; On faith",
+      "originalTitle": "Works",
+      "translationLanguage": "English",
+      "pubPlace": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "pubYear": "2011",
+      "subjects": [
+        "Sin, Original",
+        "Redemption",
+        "Faith",
+        "Grace (Theology)",
+        "Theology, Doctrinal"
+      ]
+    },
+    {
+      "pubDate": "1950",
+      "language008": "eng",
+      "lccn": "9305600",
+      "originalLanguages": [],
+      "author": "Tertullian",
+      "authorDates": "approximately 160-approximately 230",
+      "title": "Tertullian: Apologetical works, and Minucius Felix: Octavius;",
+      "pubPlace": "New York,",
+      "publisher": "Fathers of the Church, inc.",
+      "pubYear": "1950",
+      "subjects": [
+        "Theology",
+        "Apologetics"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19785602",
+      "originalLanguages": [],
+      "title": "Practice",
+      "pubPlace": "New York",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2017",
+      "subjects": [
+        "Theology, Practical",
+        "Theology",
+        "Christian literature, Early."
+      ]
+    },
+    {
+      "pubDate": "1994",
+      "language008": "eng",
+      "lccn": "4919325",
+      "originalLanguages": [],
+      "author": "Proclus",
+      "authorDates": "approximately 410-485",
+      "title": "Proclus' Elements of theology",
+      "originalTitle": "Elements of theology",
+      "translationLanguage": "English",
+      "pubPlace": "Frome, Somerset",
+      "publisher": "Prometheus Trust",
+      "pubYear": "1994",
+      "subjects": [
+        "Neoplatonism",
+        "Theology"
+      ]
+    },
+    {
+      "pubDate": "1964",
+      "language008": "eng",
+      "lccn": "7048358",
+      "originalLanguages": [],
+      "author": "Augustine",
+      "authorDates": "354-430",
+      "title": "Introduction to the philosophy of Saint Augustine; selected readings and commentaries",
+      "pubPlace": "University Park,",
+      "publisher": "Pennsylvania State University Press",
+      "pubYear": "1964",
+      "subjects": [
+        "Theology",
+        "Philosophy"
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "4400469",
+      "originalLanguages": [],
+      "author": "Trotter, Catharine",
+      "authorDates": "1679-1749",
+      "title": "The works of Mrs. Catharine Cockburn",
+      "originalTitle": "Works",
+      "pubPlace": "London",
+      "publisher": "Routledge/Thoemmes Press",
+      "pubYear": "1992",
+      "subjects": [
+        "Theology",
+        "Ethics"
+      ]
+    },
+    {
+      "pubDate": "1978",
+      "language008": "eng",
+      "lccn": "1777926",
+      "originalLanguages": [],
+      "author": "Marbeck, Pilgram",
+      "authorDates": "approximately 1495-1556",
+      "title": "The writings of Pilgram Marpeck",
+      "originalTitle": "Works",
+      "translationLanguage": "English",
+      "pubPlace": "Kitchener, Ont.",
+      "publisher": "Herald Press",
+      "pubYear": "1978",
+      "subjects": [
+        "Theology",
+        "Anabaptists"
+      ]
+    },
+    {
+      "pubDate": "2013",
+      "language008": "eng",
+      "lccn": "17677308",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Mastricht, Peter van",
+      "authorDates": "1630-1706",
+      "title": "The best method of preaching the use of theoretical-practical theology",
+      "originalTitle": "Theoretico-practica theologia",
+      "translationLanguage": "English.",
+      "pubPlace": "Grand Rapids, Michigan",
+      "publisher": "Reformation Heritage Books",
+      "pubYear": "2013",
+      "subjects": [
+        "Preaching",
+        "Theology"
+      ]
+    },
+    {
+      "pubDate": "2019",
+      "language008": "eng",
+      "lccn": "21245157",
+      "originalLanguages": [
+        "ger"
+      ],
+      "author": "Marbeck, Pilgram",
+      "authorDates": "approximately 1495-1556",
+      "title": "The writings of Pilgram Marpeck",
+      "originalTitle": "Works",
+      "translationLanguage": "English",
+      "pubPlace": "Walden, New York",
+      "publisher": "Plough Publishing House",
+      "pubYear": "2019",
+      "translator": "Klassen, William",
+      "subjects": [
+        "Theology",
+        "Anabaptists"
+      ]
+    },
+    {
+      "pubDate": "2023",
+      "language008": "eng",
+      "lccn": "23256927",
+      "originalLanguages": [],
+      "author": "Annas, Julia",
+      "title": "Ancient philosophy a very short introduction",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2023",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19235053",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Cicero, Marcus Tullius",
+      "title": "On life and death",
+      "pubPlace": "Oxford, United Kingdom",
+      "publisher": "Oxford University Press",
+      "pubYear": "2017",
+      "translator": "Davie, John",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "20465974",
+      "originalLanguages": [],
+      "title": "For a skeptical peripatetic Festschrift in honour of John Glucker",
+      "pubPlace": "Sankt Augustin",
+      "publisher": "Academia Verlag",
+      "pubYear": "2017",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Ethics, Ancient.",
+        "Ethics, Ancient.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2020",
+      "language008": "eng",
+      "lccn": "22735541",
+      "originalLanguages": [],
+      "author": "Plato",
+      "title": "In search of authenticity, happiness and the good a collection of readings in ancient Greek philosophy",
+      "pubPlace": "Dubuque, IA",
+      "publisher": "Kendall Hunt Publishing Company",
+      "pubYear": "2020",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophie ancienne.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2003",
+      "language008": "eng",
+      "lccn": "13681584",
+      "originalLanguages": [],
+      "title": "Gestures essays in ancient history, literature, and philosophy presented to Alan L. Boegehold : on the occasion of his retirement and his seventy-fifth birthday",
+      "pubPlace": "Oxford",
+      "publisher": "Oxbow ;",
+      "pubYear": "2003",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophy, Ancient, in literature.",
+        "History, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2024",
+      "language008": "eng",
+      "lccn": "23762825",
+      "originalLanguages": [],
+      "author": "Maly, Kenneth",
+      "title": "A refreshing and rethinking retrieval of Greek thinking",
+      "pubPlace": "Toronto",
+      "publisher": "University of Toronto Press",
+      "pubYear": "2024",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophie ancienne.",
+        "Philosophy, Ancient"
+      ]
+    },
+    {
+      "pubDate": "1996",
+      "language008": "eng",
+      "lccn": "4471695",
+      "originalLanguages": [],
+      "title": "Polyhistor studies in the history and historiography of ancient philosophy : presented to Jaap Mansfeld on his sixtieth birthday",
+      "pubPlace": "Leiden",
+      "publisher": "E.J. Brill",
+      "pubYear": "1996",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophy, Ancient"
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "20627336",
+      "originalLanguages": [],
+      "author": "Mansfeld, Jaap",
+      "title": "Studies in early Greek philosophy a collection of papers and one review",
+      "originalTitle": "Essays",
+      "pubPlace": "Leiden",
+      "publisher": "Brill",
+      "pubYear": "2018",
+      "subjects": [
+        "Philosophy, Ancient.",
+        "Philosophy, Ancient.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2010",
+      "language008": "eng",
+      "lccn": "16188115",
+      "originalLanguages": [],
+      "title": "Greek and Roman aesthetics",
+      "pubPlace": "New York, NY",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2010",
+      "subjects": [
+        "Aesthetics, Ancient.",
+        "Arts",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2013",
+      "language008": "eng",
+      "lccn": "18008869",
+      "originalLanguages": [],
+      "title": "Rhizomata a journal for ancient philosophy and science.",
+      "pubPlace": "Berlin, Germany",
+      "publisher": "De Gruyter",
+      "pubYear": "2013",
+      "subjects": [
+        "Philosophy, Ancient",
+        "Philosophy and science",
+        "Science, Ancient",
+        "Philosophy, Ancient.",
+        "Philosophy and science.",
+        "Science, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "22135337",
+      "originalLanguages": [],
+      "title": "Ancient ethics and the natural world",
+      "pubPlace": "Cambridge, United Kingdom",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2021",
+      "subjects": [
+        "Ancient philosophy.",
+        "Ethics, Ancient.",
+        "Philosophy of nature.",
+        "PHILOSOPHY / History &amp; Surveys / Ancient &amp; Classical"
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "22144173",
+      "originalLanguages": [],
+      "title": "Ancient ethics and the natural world",
+      "pubPlace": "Cambridge, United Kingdom",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2021",
+      "subjects": [
+        "Ancient philosophy.",
+        "Ethics, Ancient.",
+        "Philosophy of nature.",
+        "PHILOSOPHY / History &amp; Surveys / Ancient &amp; Classical"
+      ]
+    },
+    {
+      "pubDate": "2009",
+      "language008": "eng",
+      "lccn": "16083992",
+      "originalLanguages": [],
+      "author": "Co, Alfredo P",
+      "title": "Across the philosophical Silk Road a festschrift in honor of Alfredo P. Co",
+      "pubPlace": "Espan&#x303;a, Manila",
+      "publisher": "University of Santo Tomas Pub. House",
+      "pubYear": "2009",
+      "subjects": [
+        "Philosophy.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "1986",
+      "language008": "eng",
+      "lccn": "2878833",
+      "originalLanguages": [],
+      "author": "Katz, Ronald C",
+      "title": "The structure of ancient arguments rhetoric and its Near Eastern origin",
+      "pubPlace": "New York, N.Y.",
+      "publisher": "Shapolsky Publishers",
+      "pubYear": "1986",
+      "subjects": [
+        "Rhetoric, Ancient.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2014",
+      "language008": "eng",
+      "lccn": "18180378",
+      "originalLanguages": [],
+      "title": "Ancient ethics",
+      "pubPlace": "Go&#x308;ttingen",
+      "publisher": "V &amp; R Unipress",
+      "pubYear": "2014",
+      "subjects": [
+        "Ethics, Ancient.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "2007",
+      "language008": "eng",
+      "lccn": "14819627",
+      "originalLanguages": [],
+      "author": "Broadie, Sarah",
+      "title": "Aristotle and beyond essays on metaphysics and ethics",
+      "pubPlace": "Cambridge",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2007",
+      "subjects": [
+        "Philosophy.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "1991",
+      "language008": "eng",
+      "lccn": "2014793",
+      "originalLanguages": [],
+      "title": "Greek philosophy Thales to Aristotle",
+      "pubPlace": "New York",
+      "publisher": "Free Press ;",
+      "pubYear": "1991",
+      "subjects": [
+        "Philosophy.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "1985",
+      "language008": "eng",
+      "lccn": "2842743",
+      "originalLanguages": [],
+      "title": "Greek philosophy Thales to Aristotle",
+      "pubPlace": "New York",
+      "publisher": "Free Press",
+      "pubYear": "1985",
+      "subjects": [
+        "Philosophy.",
+        "Philosophy, Ancient."
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "2216762",
+      "originalLanguages": [],
+      "author": "Di Curcio, Robert A",
+      "title": "The natural philosophy of the Greeks an introduction to the history and philosophy of science",
+      "pubPlace": "Nantucket, Mass.",
+      "publisher": "Aeternium Pub.",
+      "pubYear": "1975",
+      "subjects": [
+        "Philosophy of nature.",
+        "Philosophy, Ancient.",
+        "Science, Ancient"
+      ]
+    },
+    {
+      "pubDate": "1979",
+      "language008": "eng",
+      "lccn": "11257620",
+      "originalLanguages": [],
+      "title": "The Etienne Gilson series.",
+      "pubPlace": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "pubYear": "1979",
+      "subjects": [
+        "Philosophy.",
+        "Philosophy, Medieval.",
+        "Philosophy.",
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "2019",
+      "language008": "eng",
+      "lccn": "21105474",
+      "originalLanguages": [],
+      "title": "Oxford studies in medieval philosophy.",
+      "pubPlace": "Oxford, United Kingdom",
+      "publisher": "Oxford University Press",
+      "pubYear": "2019",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "1942",
+      "language008": "eng",
+      "lccn": "11445675",
+      "originalLanguages": [],
+      "title": "Mediaeval philosophical texts in translation.",
+      "pubPlace": "Milwaukee, Wis.,",
+      "publisher": "Marquette University press",
+      "pubYear": "",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "20140955",
+      "originalLanguages": [],
+      "title": "Oxford studies in medieval philosophy.",
+      "pubPlace": "Oxford, United Kingdom",
+      "publisher": "Oxford University Press",
+      "pubYear": "2017",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "2015",
+      "language008": "eng",
+      "lccn": "19350721",
+      "originalLanguages": [],
+      "title": "Oxford studies in medieval philosophy.",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "2015",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Philosophy",
+        "Scholasticism."
+      ]
+    },
+    {
+      "pubDate": "1968",
+      "language008": "eng",
+      "lccn": "11186107",
+      "originalLanguages": [],
+      "title": "Studia scholastico-Scotistica.",
+      "pubPlace": "Rome,",
+      "publisher": "Societas Internationalis Scotistica",
+      "pubYear": "1968",
+      "subjects": [
+        "Scholasticism.",
+        "Philosophy, Medieval.",
+        "Philosophy, Medieval.",
+        "Scholasticism."
+      ]
+    },
+    {
+      "pubDate": "2013",
+      "language008": "eng",
+      "lccn": "18837300",
+      "originalLanguages": [],
+      "title": "Oxford studies in medieval philosophy.",
+      "pubPlace": "New York",
+      "publisher": "Oxford University Press",
+      "pubYear": "2013",
+      "subjects": [
+        "Philosophy, Medieval",
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "2016",
+      "language008": "eng",
+      "lccn": "21936805",
+      "originalLanguages": [],
+      "title": "Subjectivity and Selfhood in Medieval and Early Modern Philosophy",
+      "pubPlace": "Cham",
+      "publisher": "Springer International Publishing :",
+      "pubYear": "2016",
+      "subjects": [
+        "Medieval philosophy.",
+        "Philosophy of mind.",
+        "Philosophy.",
+        "History of Philosophy.",
+        "Medieval Philosophy.",
+        "Philosophy of Mind."
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "21660883",
+      "originalLanguages": [],
+      "title": "The Ontology, Psychology and Axiology of Habits (Habitus) in Medieval Philosophy",
+      "pubPlace": "Cham",
+      "publisher": "Springer International Publishing :",
+      "pubYear": "2018",
+      "subjects": [
+        "Philosophy.",
+        "Medieval philosophy.",
+        "Philosophy of mind.",
+        "History of Philosophy.",
+        "Medieval Philosophy.",
+        "Philosophy of Mind."
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "21936913",
+      "originalLanguages": [],
+      "author": "Imaguire, Guido",
+      "title": "Priority Nominalism Grounding Ostrich Nominalism as a Solution to the Problem of Universals",
+      "pubPlace": "Cham",
+      "publisher": "Springer International Publishing :",
+      "pubYear": "2018",
+      "subjects": [
+        "Language and languages",
+        "Literature, Medieval.",
+        "Medieval philosophy.",
+        "Metaphysics.",
+        "Ontology.",
+        "Metaphysics.",
+        "Medieval Literature.",
+        "Medieval Philosophy.",
+        "Ontology.",
+        "Philosophy of Language."
+      ]
+    },
+    {
+      "pubDate": "2021",
+      "language008": "eng",
+      "lccn": "21846358",
+      "originalLanguages": [],
+      "title": "State and Nature Studies in Ancient and Medieval Philosophy",
+      "pubPlace": "Berlin",
+      "publisher": "De Gruyter",
+      "pubYear": "2021",
+      "subjects": [
+        "Philosophy of nature.",
+        "Philosophy, Ancient.",
+        "Philosophy, Medieval.",
+        "Philosophy, Ancient.",
+        "Philosophy, Medieval.",
+        "Philosophy of nature."
+      ]
+    },
+    {
+      "pubDate": "1997",
+      "language008": "eng",
+      "lccn": "4471302",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "William",
+      "authorDates": "1080-approximately 1150",
+      "title": "A dialogue on natural philosophy = Dragmaticon philosophiae",
+      "originalTitle": "Dragmaticon philosophiae",
+      "translationLanguage": "English",
+      "pubPlace": "Notre Dame, Ind.",
+      "publisher": "University of Notre Dame Press",
+      "pubYear": "1997",
+      "subjects": [
+        "Science, Medieval.",
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "199u",
+      "language008": "eng",
+      "lccn": "2944345",
+      "originalLanguages": [],
+      "title": "Philosophy and science in the Middle Ages",
+      "pubPlace": "Dordrecht",
+      "publisher": "Kluwer Academic Publishers",
+      "pubYear": "1991",
+      "subjects": [
+        "Philosophy and science",
+        "Philosophy, Medieval.",
+        "Science, Medieval."
+      ]
+    },
+    {
+      "pubDate": "2022",
+      "language008": "eng",
+      "lccn": "22532231",
+      "originalLanguages": [],
+      "title": "Quantifying Aristotle the impact, spread, and decline of the Calculatores Tradition",
+      "pubPlace": "Leiden",
+      "publisher": "Brill",
+      "pubYear": "2022",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Science, Medieval.",
+        "Science"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "21819435",
+      "originalLanguages": [],
+      "author": "Carr, Allyson",
+      "title": "Story and Philosophy for Social Change in Medieval and Postmodern Writing Reading for Change",
+      "pubPlace": "Cham",
+      "publisher": "Springer International Publishing :",
+      "pubYear": "2017",
+      "subjects": [
+        "European literature.",
+        "Literature, Medieval.",
+        "Medieval philosophy.",
+        "Medieval Literature.",
+        "European Literature.",
+        "Medieval Philosophy."
+      ]
+    },
+    {
+      "pubDate": "1975",
+      "language008": "eng",
+      "lccn": "11219870",
+      "originalLanguages": [],
+      "title": "Medioevo.",
+      "pubPlace": "Padova,",
+      "publisher": "Antenore",
+      "pubYear": "",
+      "subjects": [
+        "Philosophy, Medieval",
+        "Philosophie me&#x301;die&#x301;vale",
+        "Philosophy, Medieval"
+      ]
+    },
+    {
+      "pubDate": "2022",
+      "language008": "eng",
+      "lccn": "22535319",
+      "originalLanguages": [],
+      "title": "Quantifying Aristotle the impact, spread, and decline of the Calculatores Tradition",
+      "pubPlace": "Leiden",
+      "publisher": "Brill",
+      "pubYear": "2022",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Science, Medieval.",
+        "Science"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "20404270",
+      "originalLanguages": [],
+      "title": "Performing medieval text",
+      "pubPlace": "Cambridge",
+      "publisher": "Legenda, an imprint of the Modern Humanities Research Association",
+      "pubYear": "2017",
+      "subjects": [
+        "Arts, Medieval.",
+        "Civilization, Medieval.",
+        "Performative (Philosophy)",
+        "Arts, Medieval.",
+        "Civilization, Medieval.",
+        "Performative (Philosophy)"
+      ]
+    },
+    {
+      "pubDate": "2018",
+      "language008": "eng",
+      "lccn": "21818107",
+      "originalLanguages": [],
+      "title": "The Parva naturalia in Greek, Arabic and Latin Aristotelianism Supplementing the Science of the Soul",
+      "pubPlace": "Cham",
+      "publisher": "Springer International Publishing :",
+      "pubYear": "2018",
+      "subjects": [
+        "Medieval philosophy.",
+        "Philosophy, Ancient.",
+        "Psychology.",
+        "Classical Philosophy.",
+        "History of Psychology.",
+        "Medieval Philosophy."
+      ]
+    },
+    {
+      "pubDate": "1997",
+      "language008": "eng",
+      "lccn": "3555516",
+      "originalLanguages": [],
+      "title": "Basic issues in medieval philosophy selected readings presenting the interactive discourses among the major figures",
+      "pubPlace": "Peterborough, Ont.",
+      "publisher": "Broadview Press",
+      "pubYear": "1997",
+      "subjects": [
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "2006",
+      "language008": "eng",
+      "lccn": "14401038",
+      "originalLanguages": [],
+      "title": "Basic issues in medieval philosophy selected readings presenting the interactive discourses among the major figures",
+      "pubPlace": "Peterborough, ON",
+      "publisher": "Broadview Press",
+      "pubYear": "2006",
+      "subjects": [
+        "Philosophy, Medieval."
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "3432515",
+      "originalLanguages": [],
+      "author": "Struever, Nancy S",
+      "title": "Theory as practice ethical inquiry in the Renaissance",
+      "pubPlace": "Chicago",
+      "publisher": "University of Chicago Press",
+      "pubYear": "1992",
+      "subjects": [
+        "Ethics, Renaissance.",
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "1992",
+      "language008": "eng",
+      "lccn": "1544253",
+      "originalLanguages": [],
+      "author": "Copenhaver, Brian P",
+      "title": "Renaissance philosophy",
+      "pubPlace": "Oxford",
+      "publisher": "Oxford University Press",
+      "pubYear": "1992",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "2012",
+      "language008": "eng",
+      "lccn": "16901547",
+      "originalLanguages": [
+        "lat"
+      ],
+      "author": "Valla, Lorenzo",
+      "authorDates": "1407-1457",
+      "title": "Dialectical disputations",
+      "originalTitle": "Dialecticae disputationes",
+      "translationLanguage": "English",
+      "pubPlace": "Cambridge, Mass.",
+      "publisher": "Harvard University Press",
+      "pubYear": "2012",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "2007",
+      "language008": "eng",
+      "lccn": "15153117",
+      "originalLanguages": [],
+      "title": "The Cambridge companion to Renaissance philosophy",
+      "pubPlace": "Cambridge, UK",
+      "publisher": "Cambridge University Press",
+      "pubYear": "2007",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "1988",
+      "language008": "eng",
+      "lccn": "4785194",
+      "originalLanguages": [],
+      "title": "The Cambridge history of Renaissance philosophy",
+      "pubPlace": "Cambridge [England]",
+      "publisher": "Cambridge University Press",
+      "pubYear": "1988",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "2002",
+      "language008": "eng",
+      "lccn": "12640664",
+      "originalLanguages": [],
+      "title": "Classical traditions in Renaissance philosophy",
+      "pubPlace": "Aldershot, Hampshire, England",
+      "publisher": "Ashgate",
+      "pubYear": "2002",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "1973",
+      "language008": "eng",
+      "lccn": "1715952",
+      "originalLanguages": [],
+      "title": "Renaissance philosophy.",
+      "pubPlace": "The Hague,",
+      "publisher": "Mouton",
+      "pubYear": "1973",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "2025",
+      "language008": "eng",
+      "lccn": "23987291",
+      "originalLanguages": [],
+      "title": "Dissident renaissance rewriting the history of early modern philosophy as political practice",
+      "pubPlace": "Boston, Massachusetts",
+      "publisher": "Brill",
+      "pubYear": "2025",
+      "subjects": [
+        "Philosophy, Renaissance",
+        "Philosophy, Renaissance"
+      ]
+    },
+    {
+      "pubDate": "2017",
+      "language008": "eng",
+      "lccn": "19101756",
+      "originalLanguages": [],
+      "title": "Routledge companion to sixteenth century philosophy",
+      "pubPlace": "New York",
+      "publisher": "Routledge, Taylor &amp; Francis Group",
+      "pubYear": "2017",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "1967",
+      "language008": "eng",
+      "lccn": "3589410",
+      "originalLanguages": [],
+      "author": "Fallico, Arturo B.",
+      "title": "Renaissance philosophy,",
+      "pubPlace": "New York",
+      "publisher": "[Random House",
+      "pubYear": "1967",
+      "translator": "Shapiro, Herman",
+      "subjects": [
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "2020",
+      "language008": "eng",
+      "lccn": "21996990",
+      "originalLanguages": [],
+      "title": "The Edinburgh critical history of Middle Ages and Renaissance philosophy",
+      "pubPlace": "Edinburgh",
+      "publisher": "Edinburgh University Press Ltd",
+      "pubYear": "2020",
+      "subjects": [
+        "Philosophy, Medieval.",
+        "Philosophy, Renaissance."
+      ]
+    },
+    {
+      "pubDate": "2025",
+      "language008": "eng",
+      "lccn": "23973145",
+      "originalLanguages": [],
+      "title": "Dissident renaissance rewriting the history of early modern philosophy as political practice",
+      "pubPlace": "Leiden",
+      "publisher": "Brill",
+      "pubYear": "2025",
+      "subjects": [
+        "Philosophy, Renaissance",
+        "Philosophy, Renaissance"
+      ]
+    }
+  ]
+}
