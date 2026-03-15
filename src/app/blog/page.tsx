@@ -26,8 +26,8 @@ interface BlogPost {
 const posts: BlogPost[] = [
   {
     slug: 'untranslated-renaissance',
-    title: 'Ninety-Nine Percent of the Renaissance Has Never Been Translated',
-    subtitle: 'We matched 500,000 Latin editions against every known English translation catalog. Of 362,000 distinct works, fewer than 3,600 have ever been translated. We counted.',
+    title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
+    subtitle: 'We matched 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
     date: '15 March 2026',
     readTime: '10 min read',
     tag: 'Deep dive',
