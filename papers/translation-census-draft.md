@@ -309,7 +309,24 @@ We propose that the translation census described in this paper should become a p
 
 The value of such a database increases with its completeness, and its completeness increases with community participation. Every scholar who reports a missing translation, every press that submits its catalog, every digital humanities project that contributes its data, narrows the gap between what we count and what exists.
 
-## 9. Conclusion
+## 9. Beyond the binary: the spectrum of accessibility
+
+The census as presented counts translations as a binary — translated or untranslated. But this obscures an important middle category. Our LLM verification, which evaluated 4,083 books individually, reveals a more nuanced picture:
+
+| Category | Books | % |
+|---|---|---|
+| Fully accessible — complete modern English translation exists | 1,449 | 35% |
+| Partially accessible — only excerpts, selections, anthology passages, or antiquated (pre-1900) translations exist | 749 | 18% |
+| Not accessible — never translated into English in any form | 1,741 | 42% |
+| Unclear | 170 | 4% |
+
+The 18% "partially accessible" category is significant. These are texts where a chapter appears in a scholarly anthology, a few passages are quoted in an article, or the only English translation is from the 19th century and uses archaic language. They are counted as "translated" in a binary census — but for a reader who wants to sit down and read the text from beginning to end, they are effectively untranslated.
+
+This finding suggests that our headline census figure — 4.5% of USTC works with a known translation — overstates true accessibility. If roughly one-third of "translated" works are only partially translated, then the percentage of works with a complete, usable English translation may be closer to 3%.
+
+We note that this granular data comes only from Source Library's collection, which skews toward rare and esoteric texts. The partial-translation rate may be lower for the canonical works that dominate the LOC MARC data. But the existence of this middle category — and its size — is itself an important finding. The question "has this been translated?" often has an answer more complicated than yes or no.
+
+## 10. Conclusion
 
 Between 3% and 8% of the early modern European printed record has been translated into English. The exact figure depends on assumptions about catalog completeness and title deduplication that we have tried to make transparent. Under any reasonable set of assumptions, more than 90% of the record remains untranslated.
 
