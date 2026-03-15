@@ -273,45 +273,44 @@ async function main() {
     return;
   }
 
-  const cursor = db.collection('books')
+  // Fetch all IDs upfront to avoid cursor timeout during long Gemini calls
+  const allBooks = await db.collection('books')
     .find(query, { projection: { id: 1, title: 1 } })
-    .sort({ pages_count: -1 }); // Process bigger books first
+    .sort({ pages_count: -1 })
+    .limit(limit || 0)
+    .toArray();
+
+  console.log(`Fetched ${allBooks.length} book IDs`);
 
   let processed = 0, succeeded = 0, failed = 0;
-  const batch = [];
 
-  for await (const book of cursor) {
-    if (limit && processed >= limit) break;
+  // Process in chunks
+  for (let i = 0; i < allBooks.length; i += concurrency) {
+    const chunk = allBooks.slice(i, i + concurrency);
+    const results = await Promise.allSettled(
+      chunk.map((book, j) => {
+        const keyIndex = (i + j) % apiKeys.length;
+        return scoreCollectionRelevanceRaw(db, book.id, apiKeys[keyIndex])
+          .then(r => {
+            if (r.success) {
+              succeeded++;
+              console.log(`✓ ${book.title?.slice(0, 50)} → ${r.primary} (${r.scores} collections${r.sacred ? ', ' + r.sacred : ''})`);
+            } else {
+              failed++;
+              console.log(`✗ ${book.title?.slice(0, 50)}: ${r.error}`);
+            }
+          });
+      })
+    );
+    processed += chunk.length;
 
-    const keyIndex = processed % apiKeys.length;
-    batch.push(scoreCollectionRelevanceRaw(db, book.id, apiKeys[keyIndex])
-      .then(r => {
-        if (r.success) {
-          succeeded++;
-          console.log(`✓ ${book.title?.slice(0, 50)} → ${r.primary} (${r.scores} collections${r.sacred ? ', ' + r.sacred : ''})`);
-        } else {
-          failed++;
-          console.log(`✗ ${book.title?.slice(0, 50)}: ${r.error}`);
-        }
-      }));
-
-    processed++;
-
-    // Process in batches
-    if (batch.length >= concurrency) {
-      await Promise.allSettled(batch);
-      batch.length = 0;
-      // Brief pause to avoid rate limits
-      await new Promise(r => setTimeout(r, 200));
+    if (processed % 100 === 0 || processed === allBooks.length) {
+      console.log(`--- Progress: ${processed}/${allBooks.length} (${succeeded} ok, ${failed} failed) ---`);
     }
 
-    if (processed % 100 === 0) {
-      console.log(`--- Progress: ${processed}/${Math.min(total, limit || total)} (${succeeded} ok, ${failed} failed) ---`);
-    }
+    // Brief pause to avoid rate limits
+    await new Promise(r => setTimeout(r, 200));
   }
-
-  // Flush remaining
-  if (batch.length > 0) await Promise.allSettled(batch);
 
   console.log(`\nDone: ${processed} processed, ${succeeded} succeeded, ${failed} failed`);
 

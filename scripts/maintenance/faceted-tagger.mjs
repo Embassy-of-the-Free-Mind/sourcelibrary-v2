@@ -22,7 +22,7 @@ import { MongoClient } from 'mongodb';
 const GEMINI_MODEL = 'gemini-3-flash-preview';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;
-const BATCH_SIZE = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--batch') || '10');
+const BATCH_SIZE = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--batch') || '30');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '0');
 const DRY_RUN = process.argv.includes('--dry-run');
 const RETAG = process.argv.includes('--retag');
@@ -175,8 +175,12 @@ async function callGemini(books) {
     return parts.join('\n');
   }).join('\n---\n');
 
-  const userPrompt = `Tag these ${books.length} books. Return a JSON array where each element has:
-{ "id": "book_id", "tradition": [...], "domain": [...], "form": [...], "sphere": [...], "era": [...], "mode": [...] }
+  const userPrompt = `Tag these ${books.length} books. Return a COMPACT JSON array of arrays:
+[[id, [tradition], [domain], [form], [sphere], [era], [mode]], ...]
+
+Example: [["abc123", ["alchemical"], ["medicine"], ["treatise"], ["latin"], ["renaissance"], ["practical"]]]
+
+Facet order: tradition, domain, form, sphere, era, mode. Use tag IDs only.
 
 ${bookEntries}`;
 
@@ -301,12 +305,24 @@ async function main() {
   await client.close();
 }
 
+const FACET_ORDER = ['tradition', 'domain', 'form', 'sphere', 'era', 'mode'];
+
 async function processBatch(batch, collection) {
   let saved = 0;
   let errors = 0;
 
   try {
-    const results = await callGemini(batch);
+    const rawResults = await callGemini(batch);
+
+    // Unpack compact format: [[id, [tradition], [domain], [form], [sphere], [era], [mode]], ...]
+    const results = rawResults.map(row => {
+      if (Array.isArray(row) && typeof row[0] === 'string') {
+        const obj = { id: row[0] };
+        FACET_ORDER.forEach((facet, i) => { obj[facet] = row[i + 1] || []; });
+        return obj;
+      }
+      return row; // already object format (backwards compat)
+    });
 
     for (const result of results) {
       const bookId = result.id;
