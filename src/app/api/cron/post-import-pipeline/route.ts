@@ -864,10 +864,11 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      // Check for completed image extraction jobs
+      // Check for completed image extraction jobs (bounded to 50 per cycle to avoid O(n) query storms)
       const imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })
         .project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 })
+        .limit(50)
         .toArray();
 
       for (const book of imagesPending) {
@@ -1407,9 +1408,12 @@ export async function GET(request: NextRequest) {
     // ── Phase 3: Check OCR completion (ocr_submitted -> ocr_complete) ──
     // Guard: don't advance past OCR when paused — books stay in ocr_submitted
     if (hasTimeBudget(startTime) && !ocrPaused) {
+      // Bounded to 50 per cycle — completion checking does 4-6 DB queries per book,
+      // so unbounded loops on thousands of books were consuming the entire 270s time budget.
       const ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
         .project({ id: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
+        .limit(50)
         .toArray();
 
       for (const book of ocrPending) {
@@ -1897,9 +1901,11 @@ export async function GET(request: NextRequest) {
     // ── Phase 5: Check translation completion (translate_submitted -> translate_complete) ──
     // Guard: don't advance past translation when paused — books stay in translate_submitted
     if (hasTimeBudget(startTime) && !translatePaused) {
+      // Bounded to 50 per cycle (same reasoning as Phase 3)
       const translatePending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted' })
         .project({ id: 1, 'pipeline_auto.translate_job_name': 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_loop_count': 1 })
+        .limit(50)
         .toArray();
 
       for (const book of translatePending) {
