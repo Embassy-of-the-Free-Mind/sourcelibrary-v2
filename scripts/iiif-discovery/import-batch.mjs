@@ -17,6 +17,7 @@
  *   --min-year=1400        Filter by earliest date
  *   --max-year=1800        Filter by latest date
  *   --min-pages=5          Skip books with fewer pages
+ *   --language=Latin,Greek  Only import specific languages (comma-separated)
  */
 
 import { ObjectId } from 'mongodb';
@@ -40,6 +41,7 @@ const DRY_RUN = 'dry-run' in args;
 const MIN_YEAR = parseInt(args['min-year']) || null;
 const MAX_YEAR = parseInt(args['max-year']) || 1800;
 const MIN_PAGES = parseInt(args['min-pages']) || 5;
+const LANGUAGES = args.language ? args.language.split(',').map(l => l.trim()) : null;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -48,6 +50,7 @@ await withMongo(async (db) => {
   console.log(`  Source: ${SOURCE || 'all'}`);
   console.log(`  Limit: ${LIMIT}`);
   console.log(`  Date range: ${MIN_YEAR || 'any'} - ${MAX_YEAR || 'any'}`);
+  console.log(`  Languages: ${LANGUAGES ? LANGUAGES.join(', ') : 'all'}`);
   console.log(`  Min pages: ${MIN_PAGES}`);
   console.log(`  Dry run: ${DRY_RUN}`);
   console.log('');
@@ -57,6 +60,7 @@ await withMongo(async (db) => {
     limit: LIMIT,
     minYear: MIN_YEAR,
     maxYear: MAX_YEAR,
+    languages: LANGUAGES,
   });
 
   console.log(`Found ${candidates.length} candidates to process.\n`);
@@ -146,7 +150,7 @@ await withMongo(async (db) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.ADMIN_API_KEY || process.env.NEXTAUTH_SECRET}`,
+          'Authorization': `Bearer ${process.env.CRON_SECRET}`,
         },
         body: JSON.stringify({
           manifest_url,

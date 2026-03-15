@@ -115,11 +115,18 @@ export async function insertCandidates(db, candidates) {
 /**
  * Get candidates ready for import.
  */
-export async function getCandidatesForImport(db, { source, limit = 100, minYear, maxYear } = {}) {
+export async function getCandidatesForImport(db, { source, limit = 100, minYear, maxYear, languages } = {}) {
   const filter = { status: 'discovered' };
   if (source) filter.source = source;
   if (minYear) filter.date_earliest = { $gte: minYear };
-  if (maxYear) filter.date_latest = { ...(filter.date_latest || {}), $lte: maxYear };
+  if (maxYear) {
+    // Include books with date <= maxYear OR unknown date
+    filter.$or = [
+      { date_earliest: { $lte: maxYear } },
+      { date_earliest: null },
+    ];
+  }
+  if (languages?.length) filter.language = { $in: languages };
 
   return db.collection('import_candidates')
     .find(filter)
