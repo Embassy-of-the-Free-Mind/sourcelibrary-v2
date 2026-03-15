@@ -189,7 +189,7 @@ export default async function FeaturedCollections() {
 
                   {/* Title */}
                   <h3
-                    className="text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-display"
+                    className="text-base sm:text-xl lg:text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-display"
                   >
                     {coll.shortTitle || coll.title.split(':')[0]}
                   </h3>
