@@ -30,6 +30,7 @@ interface BookItem {
   language?: string;
   pages_count?: number;
   pages_translated?: number;
+  read_count?: number;
   thumbnail?: string;
   taxonomy?: {
     cluster?: string;
@@ -100,6 +101,7 @@ async function fetchTopicData(slug: string) {
           language: 1,
           pages_count: 1,
           pages_translated: 1,
+          read_count: 1,
           thumbnail: 1,
           'taxonomy.subcluster': 1,
         },
@@ -121,6 +123,17 @@ async function fetchTopicData(slug: string) {
       uncategorized.push(book as unknown as BookItem);
     }
   }
+
+  // Sort books within each group: most-read and most-translated first
+  const sortBooks = (arr: BookItem[]) =>
+    arr.sort((a, b) => {
+      const scoreA = (a.read_count || 0) + (a.pages_translated || 0);
+      const scoreB = (b.read_count || 0) + (b.pages_translated || 0);
+      return scoreB - scoreA;
+    });
+
+  for (const [, books] of subclusters) sortBooks(books);
+  sortBooks(uncategorized);
 
   // Sort subclusters by size (largest first)
   const sortedSubclusters = Array.from(subclusters.entries()).sort(
