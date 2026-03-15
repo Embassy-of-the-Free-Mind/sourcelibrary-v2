@@ -20,9 +20,7 @@
  *   --language=Latin,Greek  Only import specific languages (comma-separated)
  */
 
-import { ObjectId } from 'mongodb';
-import { withMongo } from '../lib/mongo.mjs';
-import { getCandidatesForImport, updateCandidateStatus } from './lib/candidate-store.mjs';
+import { MongoClient } from 'mongodb';
 
 // Parse CLI args
 const args = Object.fromEntries(
@@ -45,161 +43,209 @@ const LANGUAGES = args.language ? args.language.split(',').map(l => l.trim()) : 
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-await withMongo(async (db) => {
-  console.log(`\nIIIF Batch Import`);
-  console.log(`  Source: ${SOURCE || 'all'}`);
-  console.log(`  Limit: ${LIMIT}`);
-  console.log(`  Date range: ${MIN_YEAR || 'any'} - ${MAX_YEAR || 'any'}`);
-  console.log(`  Languages: ${LANGUAGES ? LANGUAGES.join(', ') : 'all'}`);
-  console.log(`  Min pages: ${MIN_PAGES}`);
-  console.log(`  Dry run: ${DRY_RUN}`);
-  console.log('');
+const API_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
+const AUTH_TOKEN = process.env.CRON_SECRET;
 
-  const candidates = await getCandidatesForImport(db, {
-    source: SOURCE,
-    limit: LIMIT,
-    minYear: MIN_YEAR,
-    maxYear: MAX_YEAR,
-    languages: LANGUAGES,
-  });
+if (!AUTH_TOKEN) {
+  console.error('CRON_SECRET not set. Source .env.production.local first.');
+  process.exit(1);
+}
 
-  console.log(`Found ${candidates.length} candidates to process.\n`);
+// ── MongoDB with auto-reconnect ──────────────────────────────────────────
 
-  let imported = 0, skipped = 0, failed = 0;
+let client = null;
+let db = null;
 
-  for (const candidate of candidates) {
-    const { manifest_url, title, author, source, page_count } = candidate;
-
-    // Skip books with too few pages
-    if (page_count && page_count < MIN_PAGES) {
-      await updateCandidateStatus(db, manifest_url, 'skipped', { skip_reason: `Too few pages: ${page_count}` });
-      skipped++;
-      continue;
-    }
-
-    // Check dedup against existing books
-    const existingByManifest = await db.collection('books').findOne(
-      { 'image_source.iiif_manifest': manifest_url, hidden: { $ne: true } },
-      { projection: { id: 1, title: 1 } }
-    );
-    if (existingByManifest) {
-      await updateCandidateStatus(db, manifest_url, 'skipped', {
-        skip_reason: `Already imported: ${existingByManifest.id}`,
-        book_id: existingByManifest.id,
-      });
-      skipped++;
-      continue;
-    }
-
-    // Normalized title+author dedup
-    const normTitle = normalizeForDedup(title);
-    const normAuthor = normalizeForDedup(author);
-    if (normTitle.length >= 5) {
-      const titleMatch = await db.collection('books').findOne(
-        { normalized_title: normTitle, normalized_author: normAuthor, hidden: { $ne: true } },
-        { projection: { id: 1, title: 1 } }
-      );
-      if (titleMatch) {
-        await updateCandidateStatus(db, manifest_url, 'skipped', {
-          skip_reason: `Title/author match: "${titleMatch.title}" (${titleMatch.id})`,
-          book_id: titleMatch.id,
-        });
-        skipped++;
-        continue;
-      }
-    }
-
-    if (DRY_RUN) {
-      console.log(`[DRY RUN] Would import: ${title} (${author}) — ${source}`);
-      imported++;
-      continue;
-    }
-
-    // Mark as importing
-    await updateCandidateStatus(db, manifest_url, 'importing');
-
+async function getDb() {
+  if (client && db) {
     try {
-      // Fetch IIIF manifest
-      const manifestRes = await fetch(manifest_url, {
-        headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
-          'Accept': 'application/json, application/ld+json',
-        },
-        signal: AbortSignal.timeout(30000),
-      });
-
-      if (!manifestRes.ok) {
-        throw new Error(`Manifest fetch failed: ${manifestRes.status}`);
-      }
-
-      const manifest = await manifestRes.json();
-
-      // Extract canvases
-      const canvases = manifest.items || manifest.sequences?.[0]?.canvases || [];
-      if (canvases.length < MIN_PAGES) {
-        await updateCandidateStatus(db, manifest_url, 'skipped', {
-          skip_reason: `Too few canvases: ${canvases.length}`,
-        });
-        skipped++;
-        continue;
-      }
-
-      // Import via API
-      const apiUrl = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
-      const importRes = await fetch(`${apiUrl}/api/import/iiif`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.CRON_SECRET}`,
-        },
-        body: JSON.stringify({
-          manifest_url,
-          manifest_data: manifest, // pass pre-fetched manifest
-          title: candidate.title,
-          display_title: candidate.display_title,
-          author: candidate.author,
-          language: candidate.language,
-          published: candidate.date_text || 'Unknown',
-          categories: candidate.categories,
-          provider: candidate.provider_name,
-        }),
-        signal: AbortSignal.timeout(60000),
-      });
-
-      const result = await importRes.json();
-
-      if (importRes.ok && result.success) {
-        await updateCandidateStatus(db, manifest_url, 'imported', {
-          book_id: result.bookId,
-        });
-        imported++;
-        console.log(`[${imported}/${candidates.length}] ✓ ${title} — ${result.pagesCreated} pages`);
-      } else if (importRes.status === 409) {
-        await updateCandidateStatus(db, manifest_url, 'skipped', {
-          skip_reason: result.error,
-          book_id: result.existingId,
-        });
-        skipped++;
-      } else {
-        throw new Error(result.error || `Import failed: ${importRes.status}`);
-      }
-
-    } catch (err) {
-      await updateCandidateStatus(db, manifest_url, 'failed', {
-        skip_reason: err.message,
-      });
-      failed++;
-      console.error(`[FAIL] ${title}: ${err.message}`);
+      // Quick ping to check connection
+      await db.command({ ping: 1 });
+      return db;
+    } catch {
+      console.log('[DB] Connection lost, reconnecting...');
+      try { await client.close(); } catch {}
+      client = null;
+      db = null;
     }
-
-    // Rate limit
-    if (!DRY_RUN) await sleep(DELAY);
   }
 
-  console.log(`\n=== Import Complete ===`);
-  console.log(`Imported: ${imported} | Skipped: ${skipped} | Failed: ${failed}`);
+  const uri = process.env.MONGODB_URI;
+  if (!uri) { console.error('MONGODB_URI required'); process.exit(1); }
 
-}, { noTimeout: true });
+  client = new MongoClient(uri, {
+    maxPoolSize: 2,
+    serverSelectionTimeoutMS: 10000,
+    socketTimeoutMS: 30000,
+  });
+  await client.connect();
+  db = client.db('bookstore');
+  console.log('[DB] Connected');
+  return db;
+}
+
+async function safeUpdateCandidate(manifestUrl, status, extra = {}) {
+  try {
+    const d = await getDb();
+    await d.collection('import_candidates').updateOne(
+      { manifest_url: manifestUrl },
+      { $set: { status, ...extra, ...(status === 'imported' ? { imported_at: new Date() } : {}) } }
+    );
+  } catch (err) {
+    console.warn(`[DB] Status update failed (non-fatal): ${err.message}`);
+  }
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────
+
+console.log(`\nIIIF Batch Import`);
+console.log(`  Source: ${SOURCE || 'all'}`);
+console.log(`  Limit: ${LIMIT}`);
+console.log(`  Date range: ${MIN_YEAR || 'any'} - ${MAX_YEAR || 'any'}`);
+console.log(`  Languages: ${LANGUAGES ? LANGUAGES.join(', ') : 'all'}`);
+console.log(`  Min pages: ${MIN_PAGES}`);
+console.log(`  Dry run: ${DRY_RUN}`);
+console.log('');
+
+// Load candidates into memory upfront
+const d = await getDb();
+const filter = { status: 'discovered' };
+if (SOURCE) filter.source = SOURCE;
+if (LANGUAGES?.length) filter.language = { $in: LANGUAGES };
+if (MAX_YEAR) {
+  filter.$or = [
+    { date_earliest: { $lte: MAX_YEAR } },
+    { date_earliest: null },
+  ];
+}
+if (MIN_YEAR) filter.date_earliest = { ...(filter.date_earliest || {}), $gte: MIN_YEAR };
+
+const candidates = await d.collection('import_candidates')
+  .find(filter)
+  .sort({ date_earliest: 1 })
+  .limit(LIMIT)
+  .toArray();
+
+console.log(`Found ${candidates.length} candidates to process.\n`);
+
+// Load existing book title/author for local dedup (avoids API round-trips)
+const existingBooks = await d.collection('books')
+  .find({ hidden: { $ne: true }, normalized_title: { $exists: true } },
+    { projection: { normalized_title: 1, normalized_author: 1, id: 1 } })
+  .toArray();
+const titleAuthorSet = new Set(existingBooks.map(b => `${b.normalized_title}|||${b.normalized_author}`));
+console.log(`Loaded ${existingBooks.length} existing books for dedup.\n`);
+
+let imported = 0, skipped = 0, failed = 0;
+
+for (const candidate of candidates) {
+  const { manifest_url, title, author, source, page_count } = candidate;
+
+  // Skip books with too few pages (if known)
+  if (page_count && page_count < MIN_PAGES) {
+    await safeUpdateCandidate(manifest_url, 'skipped', { skip_reason: `Too few pages: ${page_count}` });
+    skipped++;
+    continue;
+  }
+
+  // Local dedup check (fast, no API call)
+  const normTitle = normalizeForDedup(title);
+  const normAuthor = normalizeForDedup(author);
+  if (normTitle.length >= 5 && titleAuthorSet.has(`${normTitle}|||${normAuthor}`)) {
+    await safeUpdateCandidate(manifest_url, 'skipped', { skip_reason: 'Title/author match (local dedup)' });
+    skipped++;
+    continue;
+  }
+
+  if (DRY_RUN) {
+    console.log(`[DRY RUN] Would import: ${title} (${author}) — ${source}`);
+    imported++;
+    continue;
+  }
+
+  // Mark as importing
+  await safeUpdateCandidate(manifest_url, 'importing');
+
+  try {
+    // Fetch IIIF manifest
+    const manifestRes = await fetch(manifest_url, {
+      headers: {
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+        'Accept': 'application/json, application/ld+json',
+      },
+      signal: AbortSignal.timeout(30000),
+    });
+
+    if (!manifestRes.ok) {
+      throw new Error(`Manifest fetch failed: ${manifestRes.status}`);
+    }
+
+    const manifest = await manifestRes.json();
+
+    // Extract canvases
+    const canvases = manifest.items || manifest.sequences?.[0]?.canvases || [];
+    if (canvases.length < MIN_PAGES) {
+      await safeUpdateCandidate(manifest_url, 'skipped', { skip_reason: `Too few canvases: ${canvases.length}` });
+      skipped++;
+      continue;
+    }
+
+    // Import via API
+    const importRes = await fetch(`${API_URL}/api/import/iiif`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${AUTH_TOKEN}`,
+      },
+      body: JSON.stringify({
+        manifest_url,
+        manifest_data: manifest,
+        title: candidate.title,
+        display_title: candidate.display_title,
+        author: candidate.author,
+        language: candidate.language,
+        published: candidate.date_text || 'Unknown',
+        categories: candidate.categories,
+        provider: candidate.provider_name,
+      }),
+      signal: AbortSignal.timeout(60000),
+    });
+
+    const result = await importRes.json();
+
+    if (importRes.ok && result.success) {
+      await safeUpdateCandidate(manifest_url, 'imported', { book_id: result.bookId });
+      // Add to local dedup set so we don't reimport in same run
+      if (normTitle.length >= 5) titleAuthorSet.add(`${normTitle}|||${normAuthor}`);
+      imported++;
+      console.log(`[${imported}/${candidates.length}] ✓ ${title} — ${result.pagesCreated} pages`);
+    } else if (importRes.status === 409) {
+      await safeUpdateCandidate(manifest_url, 'skipped', { skip_reason: result.error, book_id: result.existingId });
+      skipped++;
+    } else {
+      throw new Error(result.error || `Import failed: ${importRes.status}`);
+    }
+
+  } catch (err) {
+    await safeUpdateCandidate(manifest_url, 'failed', { skip_reason: err.message });
+    failed++;
+    console.error(`[FAIL] ${title}: ${err.message}`);
+  }
+
+  // Rate limit
+  await sleep(DELAY);
+
+  // Progress summary every 100 books
+  if ((imported + skipped + failed) % 100 === 0 && imported + skipped + failed > 0) {
+    console.log(`--- Progress: ${imported} imported, ${skipped} skipped, ${failed} failed ---`);
+  }
+}
+
+console.log(`\n=== Import Complete ===`);
+console.log(`Imported: ${imported} | Skipped: ${skipped} | Failed: ${failed}`);
+
+// Cleanup
+try { await client?.close(); } catch {}
 
 // Simplified dedup normalization (matches dedup.ts logic)
 function normalizeForDedup(str) {
