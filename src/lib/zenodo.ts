@@ -280,22 +280,33 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
   // Build InvenioRDM creators — original author first, then contributors
   const creators: { person_or_org: { name: string; type: 'personal' | 'organizational'; given_name?: string; family_name?: string }; role?: { id: string } }[] = [];
 
-  // Original author as primary creator
+  // Original author as primary creator — Zenodo requires family_name for personal type
   if (book.author) {
+    const nameParts = book.author.split(' ');
+    const familyName = nameParts.pop() || book.author;
+    const givenName = nameParts.join(' ') || undefined;
     creators.push({
-      person_or_org: { name: book.author, type: 'personal' as const },
+      person_or_org: {
+        name: book.author,
+        type: 'personal' as const,
+        family_name: familyName,
+        ...(givenName && { given_name: givenName }),
+      },
     });
   }
 
   // Source Library as translator (organizational)
+  // InvenioRDM only supports: contactperson, datacollector, datacurator, datamanager,
+  // distributor, editor, hostinginstitution, other, producer, projectleader,
+  // projectmanager, projectmember, registrationagency, registrationauthority,
+  // relatedperson, researcher, researchgroup, rightsholder, sponsor, supervisor, workpackageleader
   creators.push({
-    person_or_org: { name: 'Source Library', type: 'organizational' as const },
-    role: { id: 'translator' },
+    person_or_org: { name: 'Source Library (Translator)', type: 'organizational' as const },
+    role: { id: 'other' },
   });
 
   // Additional human contributors as personal, AI as organizational
   for (const c of edition.contributors) {
-    // Skip if already covered by Source Library entry
     if (c.name === 'Source Library') continue;
     const displayName = c.type === 'ai' ? `${c.name} (AI)` : c.name;
     creators.push({
@@ -303,7 +314,7 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
         name: displayName,
         type: c.type === 'human' ? 'personal' as const : 'organizational' as const,
       },
-      role: { id: c.role },
+      role: { id: 'other' },
     });
   }
 
@@ -435,7 +446,8 @@ export async function mintDoi(
 
   // Publish (mints DOI)
   const published = await publishDraft(draft.id);
-  const doi = published.pids?.doi?.identifier;
+  // InvenioRDM uses pids.doi.identifier; legacy API uses top-level doi field
+  const doi = published.pids?.doi?.identifier || (published as any).doi;
 
   return {
     doi: doi || '',
