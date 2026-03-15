@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -84,6 +84,7 @@ export default function CurateClient() {
   const [applying, setApplying] = useState(false);
   const [applied, setApplied] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [infoId, setInfoId] = useState<string | null>(null);
 
   // Filters
   const [minQuality, setMinQuality] = useState(0.5);
@@ -603,8 +604,35 @@ export default function CurateClient() {
                 </button>
               </div>
 
+              {/* Info button — bottom-left */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setInfoId(prev => prev === imageId ? null : imageId);
+                }}
+                className="absolute bottom-0.5 left-0.5 rounded-full p-0.5 bg-black/40 text-white/70 hover:text-white hover:bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+              >
+                <Info className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Info overlay */}
+              {infoId === imageId && (
+                <div
+                  className="absolute inset-x-0 bottom-0 bg-black/85 text-white p-2 text-[10px] leading-tight z-10"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <p className="font-medium line-clamp-2">{item.bookTitle}</p>
+                  {item.author && <p className="text-white/60 mt-0.5">{item.author}{item.year ? `, ${item.year}` : ''}</p>}
+                  <p className="text-white/50 mt-0.5">
+                    {item.type && <span className="capitalize">{item.type}</span>}
+                    {item.galleryQuality !== undefined && <span> · {item.galleryQuality.toFixed(2)}</span>}
+                    {item.pageNumber > 0 && <span> · p.{item.pageNumber}</span>}
+                  </p>
+                </div>
+              )}
+
               {/* Quality badge — tiny, bottom-right */}
-              {item.galleryQuality !== undefined && (
+              {item.galleryQuality !== undefined && !infoId && (
                 <span className="absolute bottom-0.5 right-0.5 text-[9px] font-mono text-white/70 bg-black/40 px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                   {item.galleryQuality.toFixed(2)}
                 </span>
@@ -672,8 +700,11 @@ export default function CurateClient() {
                 {item.galleryQuality !== undefined && (
                   <span className="text-white/60 text-xs font-mono">{item.galleryQuality.toFixed(2)}</span>
                 )}
-                {item.description && (
-                  <span className="text-white/50 text-xs max-w-xs truncate hidden sm:inline">{item.description}</span>
+                <span className="text-white/70 text-xs max-w-sm truncate hidden sm:inline">
+                  {item.bookTitle}{item.author ? ` — ${item.author}` : ''}{item.year ? ` (${item.year})` : ''}
+                </span>
+                {item.type && (
+                  <span className="text-white/40 text-xs capitalize hidden md:inline">· {item.type}</span>
                 )}
               </div>
               <div className="flex items-center gap-2">
