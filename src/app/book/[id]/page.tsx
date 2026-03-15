@@ -707,6 +707,18 @@ async function BookInfo({ id }: { id: string }) {
                 ) : book.author}
               </p>
 
+              {/* DOI badge */}
+              {book.doi && (
+                <a
+                  href={`https://doi.org/${book.doi}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 bg-white/10 hover:bg-white/20 text-stone-200 rounded-full text-xs font-mono transition-colors"
+                >
+                  DOI: {book.doi}
+                </a>
+              )}
+
               {/* Book metadata */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 mt-4 sm:mt-6 text-sm text-stone-400">
                 {book.language && (
@@ -815,6 +827,7 @@ async function BookInfo({ id }: { id: string }) {
                       placePublished={book.place_published}
                       language={book.language}
                       doi={book.doi}
+                      editionVersion={currentEdition?.version}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                     <DownloadButton
