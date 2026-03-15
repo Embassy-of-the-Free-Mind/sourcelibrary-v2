@@ -16,6 +16,16 @@ interface FeaturedBook {
   thumbnail_blob?: string;
 }
 
+interface GalleryImage {
+  id: string;
+  image_url: string;
+  type: string;
+  museum_description: string;
+  book_title: string;
+  book_id: string;
+  book_slug?: string;
+}
+
 interface FeaturedCollectionItem {
   collection: {
     slug: string;
@@ -26,6 +36,7 @@ interface FeaturedCollectionItem {
     hero_image: string | null;
   };
   books: FeaturedBook[];
+  galleryImages?: GalleryImage[];
 }
 
 interface FeaturedCollectionCarouselProps {
@@ -43,10 +54,12 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
   if (items.length === 0) return null;
 
   const current = items[index];
-  const { collection, books } = current;
+  const { collection, books, galleryImages = [] } = current;
 
   const prev = () => setIndex(i => i > 0 ? i - 1 : items.length - 1);
   const next = () => setIndex(i => i < items.length - 1 ? i + 1 : 0);
+
+  const hasGallery = galleryImages.length >= 3;
 
   return (
     <section className="bg-dark py-12 md:py-16 relative">
@@ -109,8 +122,60 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
             </div>
           </div>
 
-          {/* Right: book thumbnails grid */}
-          {books.length > 0 && (
+          {/* Right: gallery images (preferred) or book thumbnails (fallback) */}
+          {hasGallery ? (
+            <div className="lg:col-span-3 grid grid-cols-[3fr_2fr] gap-3 h-[380px]">
+              {/* Hero image — largest, most striking */}
+              <Link
+                href={`/gallery/image/${galleryImages[0].id}`}
+                className="relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group"
+              >
+                <Image
+                  src={galleryImages[0].image_url}
+                  alt={galleryImages[0].museum_description || galleryImages[0].book_title}
+                  fill
+                  quality={90}
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 1024px) 60vw, 35vw"
+                />
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4">
+                  {galleryImages[0].type && (
+                    <span className="text-[10px] uppercase tracking-wider text-white/60 mb-1 block">
+                      {galleryImages[0].type}
+                    </span>
+                  )}
+                  <p className="text-sm text-white/90 line-clamp-2 leading-snug">
+                    {galleryImages[0].book_title}
+                  </p>
+                </div>
+              </Link>
+
+              {/* Side stack — 2-3 smaller images */}
+              <div className="flex flex-col gap-3">
+                {galleryImages.slice(1, 4).map((img) => (
+                  <Link
+                    key={img.id}
+                    href={`/gallery/image/${img.id}`}
+                    className="relative flex-1 rounded-lg overflow-hidden bg-white/5 border border-white/10 group min-h-0"
+                  >
+                    <Image
+                      src={img.image_url}
+                      alt={img.museum_description || img.book_title}
+                      fill
+                      quality={85}
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 640px) 40vw, 15vw"
+                    />
+                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-[11px] text-white/80 line-clamp-1">
+                        {img.book_title}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : books.length > 0 ? (
             <div className="lg:col-span-3 grid grid-cols-4 sm:grid-cols-5 gap-3">
               {books.map((book) => {
                 const thumb = book.thumbnail || book.thumbnail_blob;
@@ -143,7 +208,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                 );
               })}
             </div>
-          )}
+          ) : null}
         </div>
 
         {/* Dots */}

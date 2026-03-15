@@ -131,6 +131,71 @@ async function getFeaturedCollections() {
     }
   }
 
+  // ---------- Fetch best gallery images for visual impact ----------
+  const allFeaturedBookIds = [...new Set([...booksBySlug.values()].flat().map(b => b.id))];
+  const galleryImagesBySlug = new Map<string, Array<{
+    id: string; image_url: string; type: string;
+    museum_description: string; book_title: string;
+    book_id: string; book_slug?: string;
+  }>>();
+
+  if (allFeaturedBookIds.length > 0) {
+    try {
+      const rawGallery = await db.collection('gallery_images')
+        .find({
+          book_id: { $in: allFeaturedBookIds },
+          gallery_quality: { $gte: 0.8 },
+          $or: [
+            { extracted_url: { $type: 'string', $gt: '' } },
+            { thumbnail_url: { $type: 'string', $gt: '' } },
+          ],
+        })
+        .sort({ gallery_quality: -1 })
+        .limit(200)
+        .toArray();
+
+      // Build book slug lookup
+      const bookSlugMap = new Map<string, string>();
+      for (const books of booksBySlug.values()) {
+        for (const b of books) {
+          if (b.slug) bookSlugMap.set(b.id, b.slug as string);
+        }
+      }
+
+      // Build reverse map: book_id -> collection slugs
+      const bookToSlugs = new Map<string, string[]>();
+      for (const [slug, books] of booksBySlug.entries()) {
+        for (const b of books) {
+          const s = bookToSlugs.get(b.id) || [];
+          if (!s.includes(slug)) s.push(slug);
+          bookToSlugs.set(b.id, s);
+        }
+      }
+
+      // Distribute best images to collections (max 5 per collection, max 2 per book)
+      for (const img of rawGallery) {
+        const slugs = bookToSlugs.get(img.book_id) || [];
+        for (const slug of slugs) {
+          const arr = galleryImagesBySlug.get(slug) || [];
+          if (arr.length >= 5) continue;
+          if (arr.filter(i => i.book_id === img.book_id).length >= 2) continue;
+          arr.push({
+            id: `${img.page_id}-${img.detection_index}`,
+            image_url: img.extracted_url || img.thumbnail_url,
+            type: img.type || '',
+            museum_description: img.museum_description || '',
+            book_title: img.book_title || '',
+            book_id: img.book_id,
+            book_slug: bookSlugMap.get(img.book_id),
+          });
+          galleryImagesBySlug.set(slug, arr);
+        }
+      }
+    } catch {
+      // Gallery images are an enhancement — fall back to book covers
+    }
+  }
+
   const results = collections.map((collection) => {
     const images = collection.featured_images || [];
     const hero = images.find(
@@ -152,6 +217,7 @@ async function getFeaturedCollections() {
         hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
+      galleryImages: JSON.parse(JSON.stringify(galleryImagesBySlug.get(collection.slug as string) || [])),
     };
   });
 
