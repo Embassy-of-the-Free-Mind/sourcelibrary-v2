@@ -131,70 +131,8 @@ async function getFeaturedCollections() {
     }
   }
 
-  // ---------- Fetch best gallery images for visual impact ----------
-  // Query ALL books in these collections (not just highlighted 10) for the richest images.
-  const galleryImagesBySlug = new Map<string, Array<{
-    id: string; image_url: string; type: string;
-    museum_description: string; book_title: string;
-    book_id: string; book_slug?: string;
-  }>>();
-
-  try {
-    // Step 1: Get book IDs + slugs for all books in the 5 collections (lightweight projection)
-    const collectionBooks = await db.collection('books').aggregate([
-      { $match: { collections: { $in: allSlugs }, hidden: { $ne: true } } },
-      { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, collections: 1, slug: 1 } },
-    ], { maxTimeMS: 5000 }).toArray();
-
-    // Map book_id -> { collections, slug }
-    const bookColMap = new Map<string, { collections: string[]; slug?: string }>();
-    const allCollectionBookIds: string[] = [];
-    for (const b of collectionBooks) {
-      bookColMap.set(b.id, { collections: b.collections || [], slug: b.slug });
-      allCollectionBookIds.push(b.id);
-    }
-
-    // Step 2: Fetch the very best gallery images from these books
-    if (allCollectionBookIds.length > 0) {
-      const rawGallery = await db.collection('gallery_images')
-        .find({
-          book_id: { $in: allCollectionBookIds },
-          gallery_quality: { $gte: 0.88 },
-          museum_description: { $exists: true, $ne: '' },
-          $or: [
-            { extracted_url: { $type: 'string', $gt: '' } },
-            { thumbnail_url: { $type: 'string', $gt: '' } },
-          ],
-        })
-        .sort({ gallery_quality: -1 })
-        .limit(300)
-        .toArray();
-
-      // Distribute best images to collections (max 5 per collection, max 1 per book for diversity)
-      for (const img of rawGallery) {
-        const bookInfo = bookColMap.get(img.book_id);
-        if (!bookInfo) continue;
-        for (const slug of allSlugs) {
-          if (!bookInfo.collections.includes(slug)) continue;
-          const arr = galleryImagesBySlug.get(slug) || [];
-          if (arr.length >= 5) continue;
-          if (arr.some(i => i.book_id === img.book_id)) continue; // 1 per book = max diversity
-          arr.push({
-            id: `${img.page_id}-${img.detection_index}`,
-            image_url: img.extracted_url || img.thumbnail_url,
-            type: img.type || '',
-            museum_description: img.museum_description || '',
-            book_title: img.book_title || '',
-            book_id: img.book_id,
-            book_slug: bookInfo.slug,
-          });
-          galleryImagesBySlug.set(slug, arr);
-        }
-      }
-    }
-  } catch {
-    // Gallery images are an enhancement — fall back to book covers
-  }
+  // ---------- Gallery images: read pre-curated data from collection docs ----------
+  // Curated by scripts/maintenance/curate-collection-gallery.mjs — no heavy joins needed.
 
   const results = collections.map((collection) => {
     const images = collection.featured_images || [];
@@ -217,7 +155,7 @@ async function getFeaturedCollections() {
         hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
-      galleryImages: JSON.parse(JSON.stringify(galleryImagesBySlug.get(collection.slug as string) || [])),
+      galleryImages: JSON.parse(JSON.stringify(collection.curated_gallery || [])),
     };
   });
 
