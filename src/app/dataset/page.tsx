@@ -185,25 +185,82 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* ── What this is (prose, not cards) ── */}
+      {/* ── Why this matters ── */}
       <section className="mb-32">
-        <Overline>The dataset</Overline>
+        <div className="max-w-3xl space-y-6">
+          <p className="font-serif text-2xl md:text-3xl text-primary leading-snug">
+            Most of what humanity has written is invisible to AI.
+          </p>
+          <p className="text-lg text-secondary leading-relaxed">
+            The intellectual foundations of civilizations &mdash; in Latin, Greek, Arabic, Sanskrit,
+            Chinese, Sumerian &mdash; are largely absent from training data. AI systems today
+            hallucinate about historical concepts, mistranslate classical languages, and can&apos;t
+            distinguish Hermetic from Neoplatonic thought. This is a gap in capability, and it
+            matters for anyone building models that need to reason about the full span of
+            human knowledge.
+          </p>
+          <p className="text-lg text-secondary leading-relaxed">
+            This dataset is the corrective.
+          </p>
+        </div>
+      </section>
+
+      {/* ── What people do with it ── */}
+      <section className="mb-32">
+        <Overline>Use</Overline>
+        <div className="max-w-3xl">
+          <div className="space-y-8">
+            <div>
+              <h3 className="font-medium text-primary mb-1">Improve multilingual and historical language capability</h3>
+              <p className="text-secondary leading-relaxed">
+                Fine-tune or evaluate models on parallel text in languages where structured training data
+                barely exists. Latin, Classical Chinese, Sanskrit, Sumerian &mdash; the aligned translations
+                teach models how these languages actually work, not how the internet guesses they work.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-medium text-primary mb-1">Train document understanding models</h3>
+              <p className="text-secondary leading-relaxed">
+                Page-level alignment between original text and translation, with full book metadata,
+                provides the structure that document AI models need to learn from historical typography,
+                manuscript layouts, and non-Latin scripts.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-medium text-primary mb-1">Build scholarly and cultural heritage tools</h3>
+              <p className="text-secondary leading-relaxed">
+                Cross-language search, automatic translation of newly digitized texts,
+                citation-aware research assistants, educational tools for reading ancient authors.
+                The provenance chain and citation URLs make every result verifiable.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-medium text-primary mb-1">Benchmark and evaluate</h3>
+              <p className="text-secondary leading-relaxed">
+                Test how well your model handles low-resource historical languages with
+                real parallel text, not synthetic benchmarks. The Translation Commons
+                provides an ongoing, human-verified quality baseline.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── What it is ── */}
+      <section className="mb-32">
+        <Overline>The collection</Overline>
         <div className="max-w-3xl space-y-6">
           <p className="text-lg text-secondary leading-relaxed">
-            Source Library holds {formatNumber(stats.totalBooks)} texts from thirty cultural institutions &mdash;
-            manuscripts, printed books, and cuneiform tablets spanning four millennia.
-            We have transcribed them with OCR and translated them, page by page, into English.
-          </p>
-          <p className="text-lg text-secondary leading-relaxed">
+            {formatNumber(stats.totalBooks)} texts from thirty cultural institutions &mdash;
+            manuscripts, printed books, and cuneiform tablets spanning four millennia,
+            transcribed and translated page by page into English.
             Each record carries its original text, its translation, and a provenance chain
-            back to the holding institution. The translations pass through an open scholarly
-            review we call the <em>Translation Commons</em> &mdash; language specialists
-            contribute corrections continuously, and the collection improves with each quarter.
+            back to the holding institution.
           </p>
           <p className="text-lg text-secondary leading-relaxed">
-            No other structured, page-aligned, parallel-text dataset exists for historical
-            and low-resource languages. This is new ground &mdash; and it is now available
-            as a streaming API.
+            The translations pass through an open scholarly review we call the{' '}
+            <em>Translation Commons</em>. Language specialists contribute corrections
+            continuously, and the collection improves with each quarterly update.
           </p>
         </div>
       </section>
