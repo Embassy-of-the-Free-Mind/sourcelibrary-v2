@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, ArrowUpDown } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -86,6 +86,9 @@ export default function CurateClient() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [infoId, setInfoId] = useState<string | null>(null);
   const [excludedBooks, setExcludedBooks] = useState<Set<string>>(new Set());
+
+  // Grid size
+  const [gridSize, setGridSize] = useState<'sm' | 'md' | 'lg'>('md');
 
   // Sort
   const [sortMode, setSortMode] = useState<'default' | 'random' | 'likes' | 'time'>('default');
@@ -503,6 +506,26 @@ export default function CurateClient() {
               Filters
             </button>
 
+            {/* Grid size toggle */}
+            <div className="inline-flex rounded-md border border-border-light overflow-hidden">
+              {([['sm', Grid3X3, 'Small'], ['md', LayoutGrid, 'Medium'], ['lg', Square, 'Large']] as const).map(([size, Icon, label]) => (
+                <button
+                  key={size}
+                  onClick={() => setGridSize(size)}
+                  title={label}
+                  className={`
+                    p-1.5 transition-colors
+                    ${gridSize === size
+                      ? 'bg-accent-rust/10 text-accent-rust'
+                      : 'text-text-secondary hover:bg-warm'
+                    }
+                  `}
+                >
+                  <Icon className="w-4 h-4" />
+                </button>
+              ))}
+            </div>
+
             {/* Sort buttons */}
             <button
               onClick={() => {
@@ -664,7 +687,11 @@ export default function CurateClient() {
       </div>
 
       {/* Image grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1 p-1">
+      <div className={`grid gap-1 p-1 ${
+        gridSize === 'sm' ? 'grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12' :
+        gridSize === 'md' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' :
+        'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto'
+      }`}>
         {displayImages.map((item, idx) => {
           const imageId = getImageId(item);
           const isLiked = likedIds.has(imageId);
