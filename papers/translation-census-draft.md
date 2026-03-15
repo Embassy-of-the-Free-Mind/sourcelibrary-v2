@@ -114,29 +114,77 @@ Several significant sources of translation data are not included in our catalog:
 
 The absence of these sources means our catalog is incomplete, and the extent of the incompleteness is itself uncertain. We return to this problem in Section 5.
 
-## 4. Methodology
+## 4. Building the translation catalog
 
-### 4.1 Matching strategy
+Before we could count what had been translated, we needed a catalog of translations. No such catalog existed in a form suitable for computational matching against the USTC. The UNESCO Index Translationum — the closest thing to a comprehensive record — covers only 1979-2009, includes only published books reported by national libraries, and has been frozen since approximately 2012. We therefore assembled our own catalog through three approaches, each with different strengths.
+
+### 4.1 Aggregation from institutional catalogs
+
+We manually ingested translation records from 46 publishers, series, and databases: UNESCO (3,191 records), Open Library (2,524), Internet Archive (472), the Loeb Classical Library, the I Tatti Renaissance Library, the Dumbarton Oaks Medieval Library, Penguin Classics, Brill, Cambridge University Press, and 35 others. Each source required its own parser and normalization pipeline. The result was 7,542 records with structured fields for author, title, translator, publication year, publisher, and (where available) the completeness of the translation.
+
+This catalog has the advantage of high precision — each record corresponds to a known, published translation — but limited recall. It captures what these specific catalogs contain and nothing else. As our Machiavelli spot-check later revealed, even major authors can fall through the gaps between catalogs.
+
+### 4.2 Extraction from Library of Congress MARC records
+
+The Library of Congress distributes its complete catalog in MARC21 binary format through the MDSConnect service [3]. We downloaded the full BooksAll dataset (41 files, 3 GB compressed, 10,091,977 records) and parsed each record for MARC field 041 with subfield $h, which encodes the original language of a translated work.
+
+This field is assigned by catalogers when a work is identified as a translation. We filtered for records where the item language is English and the source language is Latin, German, French, Italian, Dutch, Spanish, or Portuguese, and where the author's recorded dates indicate activity before 1800.
+
+This yielded 34,562 records — 4.6 times the size of our aggregated catalog. The LOC MARC data captures translations that individual publisher catalogs miss, because it reflects the holdings of the Library of Congress itself (and, through shared cataloging, many other research libraries).
+
+The 041$h field is not present on all translation records; the Library of Congress's own documentation notes that application has varied over time and across cataloging agencies [4]. Our MARC-derived count is therefore a lower bound on the translations held by LOC.
+
+### 4.3 LLM-assisted verification with function calling
+
+For the 10,199 books in Source Library's own collection, we developed a verification system that uses a large language model (Google Gemini) as a bibliographic research agent. For each book, the model is given the title, author, language, year, and OCR samples from the first pages. It then has access to five tools via function calling:
+
+1. **search_local_catalogs** — queries our aggregated translation catalog (7,542 records) by author surname
+2. **search_open_library** — queries the Open Library API for English editions
+3. **search_google_books** — queries the Google Books API for English translations
+4. **search_ustc** — queries our USTC enrichment database to verify the identity of the original work
+5. **make_determination** — a terminal tool where the model records its verdict with evidence
+
+The model is instructed to search the local catalogs first (free and fast), then external APIs if needed, and finally to call `make_determination` with a structured verdict: `confirmed_first` (no English translation found), `first_complete_translation` (only excerpts/selections exist), `first_modern_translation` (only pre-1900 translations exist), `translation_found` (a complete modern translation exists), or `needs_review` (evidence is conflicting).
+
+Critically, the model is required to cite only translations found through its tool calls, not from its own training data. This constraint ensures that every claimed translation has a verifiable evidence trail, rather than depending on the model's (potentially hallucinated) knowledge of publication history.
+
+We ran this verification on 4,083 non-English books. The results:
+
+| Disposition | Count | % |
+|---|---|---|
+| confirmed_first | 1,723 | 42% |
+| first_complete_translation | 609 | 15% |
+| first_modern_translation | 119 | 3% |
+| translation_found | 1,520 | 37% |
+| needs_review | 112 | 3% |
+
+This system serves two purposes in the census. First, it contributes 1,520 confirmed translation records (the `translation_found` results) to our catalog, adding translations that may not appear in the LOC MARC data or our institutional catalogs. Second, it provides ground-truth validation for the census methodology: the 42% `confirmed_first` rate in Source Library's collection — which skews toward rare, esoteric texts — is consistent with the 1-5% translation rate we find across the full USTC, given that Source Library's collection is deliberately selected for undertranslated material.
+
+The cost of running this verification was approximately $0.006 per book (Gemini 3 Flash), or roughly $25 for the full 4,083-book run.
+
+## 5. Matching USTC editions against the translation catalog
+
+### 5.1 Matching strategy
 
 We match the USTC against our translation catalog at the author level. For each distinct author surname in the USTC, we check whether that surname appears among the authors in our translation catalog. If it does, we count the number of distinct works by that author in the USTC, and the number of distinct translated works by that author in the catalog, and take the minimum of the two as an upper-bound estimate of translated works.
 
 This approach has three properties worth noting. First, it overstates translation coverage, because it assumes that every translated work by a matched author corresponds to a USTC work. In practice, a catalog entry may describe a translation of a work that is not in the USTC (e.g., a medieval manuscript tradition that was never printed, or a work printed after 1700). Second, it understates coverage for authors whose names appear in different forms in the two databases. Third, it operates at the surname level, which creates false matches for common surnames (e.g., "Thomas" matching both Thomas Aquinas and Thomas More).
 
-### 4.2 Name normalization
+### 5.2 Name normalization
 
 A significant challenge is that the USTC records authors in their Latin or original-language form ("Ovidius Naso, Publius"), while English-language translation catalogs use anglicized forms ("Ovid"). We constructed a hand-verified alias table mapping 120 Latin and vernacular author names to their English equivalents. This table covers all major classical, patristic, medieval, and Renaissance authors, but is not exhaustive for the long tail of minor figures.
 
 Without this normalization, major authors including Ovid, Virgil, Horace, Augustine, Thomas Aquinas, and Terence are missed entirely, producing a Latin coverage estimate of 0.74%. With normalization, the estimate rises to approximately 1% (using the existing catalog alone) and approximately 5% (with LOC MARC data included).
 
-### 4.3 Deduplication
+### 5.3 Deduplication
 
 Both the USTC and the translation catalog contain duplicate entries. The USTC records multiple editions of the same work; we address this by counting distinct (author, title) pairs rather than editions. The translation catalog records multiple editions of the same translation (e.g., seven different publications of Ovid's *Metamorphoses*); we address this by counting distinct works per author rather than total catalog entries.
 
 Deduplication between the LOC MARC data and our supplementary catalogs is more difficult, because the same translation may appear under slightly different titles, author name forms, or publication dates. We deduplicate on (author surname, title substring) pairs, accepting that some duplicates will survive and some distinct works will be incorrectly merged.
 
-## 5. Results and validation
+## 6. Results and validation
 
-### 5.1 Main results
+### 6.1 Main results
 
 | Language | USTC editions | Distinct works | Known translations | % translated |
 |---|---|---|---|---|
@@ -150,7 +198,7 @@ Deduplication between the LOC MARC data and our supplementary catalogs is more d
 
 [Note: These ranges are preliminary and will be refined after deduplication and cross-matching are complete. The ranges reflect uncertainty in the deduplication process and in the catalog's completeness.]
 
-### 5.2 Author-level findings
+### 6.2 Author-level findings
 
 Of 49,306 distinct author surnames in the USTC's Latin editions:
 - 1,076 (2.2%) have any known English translation in our combined catalog
@@ -176,7 +224,7 @@ Among authors with translations, coverage varies enormously:
 
 Thomas Aquinas has the highest coverage of any major author at approximately 31%, reflecting centuries of sustained theological interest. Cicero, the most published Latin author in the USTC, is at approximately 9%. Melanchthon — the intellectual architect of the Protestant Reformation, author of over 1,200 distinct works in the USTC — has approximately 1% coverage.
 
-### 5.3 Spot-check validation
+### 6.3 Spot-check validation
 
 To assess the accuracy of our catalog, we performed spot-checks against authors whose English translation history is well documented.
 
@@ -190,13 +238,13 @@ To assess the accuracy of our catalog, we performed spot-checks against authors 
 
 These spot-checks suggest that the catalog is reasonably complete for major authors (after the LOC data is included), genuinely incomplete for minor authors (where many small-press and dissertation translations may be uncounted), and correct in identifying famous untranslated works.
 
-### 5.4 Sensitivity analysis
+### 6.4 Sensitivity analysis
 
 The central uncertainty in our census is the completeness of the translation catalog. If the catalog captures only 50% of actual translations — a plausible estimate given the missing sources enumerated in Section 3.4 — then the true number of translated works would be approximately double our count, and the percentage translated would rise from roughly 5% to roughly 10%. If the catalog captures 30% (a pessimistic assumption), the figure would be approximately 15%.
 
 Under any of these assumptions, the untranslated fraction remains above 85%. The qualitative conclusion — that the vast majority of the early modern printed record has never been translated into English — is robust to large errors in the translation catalog.
 
-## 6. Limitations
+## 7. Limitations
 
 We enumerate the known limitations of this census, both to aid interpretation and to identify priorities for future work.
 
@@ -214,9 +262,9 @@ We enumerate the known limitations of this census, both to aid interpretation an
 
 7. **The LOC data is from a 2014/2016 retrospective snapshot.** Translations published after 2016 are not captured. Given that our period of interest ends in 1700, this is unlikely to affect the results significantly, but a small number of recent translations will be missing.
 
-## 7. Discussion
+## 8. Discussion
 
-### 7.1 Why the gap exists
+### 8.1 Why the gap exists
 
 The translation gap is not the result of indifference. It is the structural consequence of a task whose magnitude exceeds the capacity of the institutions designed to perform it.
 
@@ -228,7 +276,7 @@ And the scale is prohibitive. The three major institutional translation series f
 
 The gap, in other words, is not going to be closed by traditional means.
 
-### 7.2 What AI translation changes
+### 8.2 What AI translation changes
 
 Large language models can now produce readable translations of Neolatin, early modern German, and other historical languages at a speed and cost that would have been inconceivable a decade ago. Source Library, a project of the Embassy of the Free Mind, has used AI (Google's Gemini models) to translate over 5,000 pre-modern books, producing nearly 2,000 first English translations — more than twice the output of the three major institutional series combined.
 
@@ -236,7 +284,7 @@ These translations are not critical scholarly editions. They do not include appa
 
 Whether AI translation constitutes "real" translation in the scholarly sense is a question we do not attempt to resolve here. What our data shows is that the alternative, for the vast majority of these texts, is not a better translation. It is no translation at all.
 
-### 7.3 The census as infrastructure
+### 8.3 The census as infrastructure
 
 We propose that the translation census described in this paper should become a permanent, publicly maintained resource — a living database that records which pre-modern works have been translated into English and which have not. Such a database would serve several functions:
 
@@ -247,7 +295,7 @@ We propose that the translation census described in this paper should become a p
 
 The value of such a database increases with its completeness, and its completeness increases with community participation. Every scholar who reports a missing translation, every press that submits its catalog, every digital humanities project that contributes its data, narrows the gap between what we count and what exists.
 
-## 8. Conclusion
+## 9. Conclusion
 
 Between 3% and 8% of the early modern European printed record has been translated into English. The exact figure depends on assumptions about catalog completeness and title deduplication that we have tried to make transparent. Under any reasonable set of assumptions, more than 90% of the record remains untranslated.
 
