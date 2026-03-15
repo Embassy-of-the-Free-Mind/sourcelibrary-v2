@@ -25,7 +25,11 @@ export default function FoundingDonorsPage() {
     >
       <div className="max-w-none">
 
-        {/* ── The Problem ── */}
+        {/* ── The Claim ── */}
+        <p className="text-accent-rust text-sm tracking-[0.2em] uppercase mb-4">
+          The world&rsquo;s largest collection of translated ancient texts
+        </p>
+
         <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-6">
           95% of what the Renaissance wrote has never been translated.
         </h2>
