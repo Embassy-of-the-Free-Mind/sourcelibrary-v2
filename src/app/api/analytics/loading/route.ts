@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { LoadingMetric } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { anonymizeIp } from '@/lib/anonymize-ip';
 
 interface AnalyticsPayload {
   metrics: LoadingMetric[];
@@ -24,9 +25,9 @@ export async function POST(request: NextRequest) {
     // Add server-side metadata
     const enrichedMetrics = payload.metrics.map((metric) => ({
       ...metric,
-      received_at: Date.now(),
+      received_at: new Date(),
       user_agent: request.headers.get('user-agent') || 'unknown',
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      ip: anonymizeIp(request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'),
     }));
 
     const dbWrite = (async () => {

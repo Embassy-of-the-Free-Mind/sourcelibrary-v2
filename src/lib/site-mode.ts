@@ -21,7 +21,7 @@ export const LIBRARY_CONFIG: SiteModeConfig = {
   isSociety: false,
   isLibrary: true,
   siteName: 'Source Library',
-  siteDescription: 'Digitizing and translating rare Hermetic and esoteric texts',
+  siteDescription: 'Digitizing and translating ancient texts for scholars, seekers and AI systems',
 };
 
 /**

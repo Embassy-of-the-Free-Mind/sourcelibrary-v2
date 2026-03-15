@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" font-family="Georgia, serif">
+<rect width="600" height="380" fill="white"/>
+<text x="300" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">Works vs. Translations by Language</text>
+<text x="82" y="84" text-anchor="end" font-size="13" fill="#333">Latin</text>
+<rect x="90" y="60" width="410" height="19" rx="2" fill="#b87333" opacity="0.2"/>
+<text x="505" y="73" font-size="10" fill="#999">362,263 works</text>
+<rect x="90" y="80" width="5.658872145375045" height="19" rx="2" fill="#b87333" opacity="0.8"/>
+<text x="100.65887214537504" y="93" font-size="10" fill="#b87333" font-weight="bold">5,000 translated (1.4%)</text>
+<text x="82" y="132" text-anchor="end" font-size="13" fill="#333">German</text>
+<rect x="90" y="108" width="140.78594833035666" height="19" rx="2" fill="#8b6914" opacity="0.2"/>
+<text x="235.78594833035666" y="121" font-size="10" fill="#999">124,394 works</text>
+<rect x="90" y="128" width="11.883631505287596" height="19" rx="2" fill="#8b6914" opacity="0.8"/>
+<text x="106.8836315052876" y="141" font-size="10" fill="#8b6914" font-weight="bold">10,500 translated (8.4%)</text>
+<text x="82" y="180" text-anchor="end" font-size="13" fill="#333">Italian</text>
+<rect x="90" y="156" width="79.54563397310794" height="19" rx="2" fill="#2d6a4f" opacity="0.2"/>
+<text x="174.54563397310795" y="169" font-size="10" fill="#999">70,284 works</text>
+<rect x="90" y="176" width="5.092984930837541" height="19" rx="2" fill="#2d6a4f" opacity="0.8"/>
+<text x="100.09298493083755" y="189" font-size="10" fill="#2d6a4f" font-weight="bold">4,500 translated (6.4%)</text>
+<text x="82" y="228" text-anchor="end" font-size="13" fill="#333">French</text>
+<rect x="90" y="204" width="73.86638988800954" height="19" rx="2" fill="#4a6fa5" opacity="0.2"/>
+<text x="168.86638988800954" y="217" font-size="10" fill="#999">65,266 works</text>
+<rect x="90" y="224" width="14.713067577975115" height="19" rx="2" fill="#4a6fa5" opacity="0.8"/>
+<text x="109.71306757797511" y="237" font-size="10" fill="#4a6fa5" font-weight="bold">13,000 translated (19.9%)</text>
+<text x="82" y="276" text-anchor="end" font-size="13" fill="#333">Spanish</text>
+<rect x="90" y="252" width="42.42343269944764" height="19" rx="2" fill="#9c4dcc" opacity="0.2"/>
+<text x="137.42343269944763" y="265" font-size="10" fill="#999">37,484 works</text>
+<rect x="90" y="272" width="5.092984930837541" height="19" rx="2" fill="#9c4dcc" opacity="0.8"/>
+<text x="100.09298493083755" y="285" font-size="10" fill="#9c4dcc" font-weight="bold">4,500 translated (12.0%)</text>
+<text x="82" y="324" text-anchor="end" font-size="13" fill="#333">Dutch</text>
+<rect x="90" y="300" width="33.555980047644944" height="19" rx="2" fill="#d45d00" opacity="0.2"/>
+<text x="128.55598004764494" y="313" font-size="10" fill="#999">29,649 works</text>
+<rect x="90" y="320" width="2.48990374396502" height="19" rx="2" fill="#d45d00" opacity="0.8"/>
+<text x="97.48990374396502" y="333" font-size="10" fill="#d45d00" font-weight="bold">2,200 translated (7.4%)</text>
+<text x="82" y="372" text-anchor="end" font-size="13" fill="#333">Portuguese</text>
+<rect x="90" y="348" width="4.295083958339659" height="19" rx="2" fill="#666" opacity="0.2"/>
+<text x="99.29508395833966" y="361" font-size="10" fill="#999">3,795 works</text>
+<rect x="90" y="368" width="2" height="19" rx="2" fill="#666" opacity="0.8"/>
+<text x="97" y="381" font-size="10" fill="#666" font-weight="bold">700 translated (18.4%)</text>
+</svg>

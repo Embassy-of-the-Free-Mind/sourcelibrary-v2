@@ -1,0 +1,2339 @@
+{
+  "timestamp": "2026-03-15T02:24:28.780Z",
+  "totalLatinEditionsScanned": 494371,
+  "totalDistinctAuthors": 49129,
+  "totalDistinctWorks": 360885,
+  "authorsWithKnownTranslation": 1025,
+  "authorsWithNoKnownTranslation": 48104,
+  "pctAuthorsWithTranslation": 2.1,
+  "pctEditionsByTranslatedAuthor": 10.5,
+  "estimatedWorksTranslated": 2681,
+  "pctWorksTranslated": 0.74,
+  "topMatchedAuthors": [
+    {
+      "surname": "cicero",
+      "ustcEditions": 4519,
+      "ustcDistinctWorks": 3426,
+      "catalogTranslations": 719,
+      "catalogDistinctWorks": 284,
+      "sampleUstcTitles": [
+        "cato maior de senectute; somnium scipionis",
+        "de oratore",
+        "epistolae ad familiares",
+        "paradoxa stoicorum",
+        "de officiis"
+      ],
+      "sampleCatalogWorks": [
+        "letters to atticus",
+        "letters to his friends",
+        "poems",
+        "cato maior de senectute discourse on old age",
+        "a short guide to electioneering"
+      ]
+    },
+    {
+      "surname": "erasmus",
+      "ustcEditions": 2704,
+      "ustcDistinctWorks": 1945,
+      "catalogTranslations": 375,
+      "catalogDistinctWorks": 106,
+      "sampleUstcTitles": [
+        "de casa natalitia jesu",
+        "ad illustrissimum principe philippum archiducem austriae ducem burgundiae de triumphali perfectione hispaniensi ideque foelici ejusdem in patriam reditu gratulatorius panegyricus",
+        "lucubratiunculae aliquot perquam utiles adolescentibus",
+        "collectanea adagiorum",
+        "veterum maxime insignium paroemiarium id est adagiorum collectanea rursus recognita atque aucta"
+      ],
+      "sampleCatalogWorks": [
+        "moriae encomium",
+        "educational writings",
+        "enchiridion militis christiani",
+        "collected works correspondence",
+        "adages"
+      ]
+    },
+    {
+      "surname": "aristoteles",
+      "ustcEditions": 1884,
+      "ustcDistinctWorks": 1302,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "ethica ad nicomachum. politica; oeconomica.  leonardus brunus aretinus: epistola ad dominos senenses (with reply)",
+        "ethica ad nicomachum",
+        "physica",
+        "ethica ad nicomachum. add: politica; oeconomica (tr: leonardus brunus aretinus)",
+        "parva naturalia. averroes: de substantia orbis"
+      ],
+      "sampleCatalogWorks": [
+        "eudemian ethics",
+        "on the parts of animals"
+      ]
+    },
+    {
+      "surname": "melanchthon",
+      "ustcEditions": 1611,
+      "ustcDistinctWorks": 1222,
+      "catalogTranslations": 5,
+      "catalogDistinctWorks": 5,
+      "sampleUstcTitles": [
+        "sermo habitus apud juventut? academiae wittenberg. de corrigendis adulescentiae studiis. rodolphus agricola phrisius de studiorum omnium colluuie, videlicet juris medicinae, physices, &theologiae.",
+        "de nota pythagorica, qua hospitem hirundinem recipi nolebant elegantissima quaedam opuscula edita. sermo habitus apud juventutem academiae wittemberg. de corrigendis adulescentiae studiis. luciani samosatensis sophistae in calumniam oratio, latine reddita de nota pythagorica, qua hospitem hirundinem recipi nolebant, ex plutarcho chaeronensi. in calumniam oratio oratio adversus calumniam",
+        "oratio funebris dicta divo maximiliano caes. vuitt?bergae à philippo melanch. anno m. d. xix. mense februario.",
+        "oratio funebris dicta divo maximiliano ces. vuittenberge a philippo melanch. anno m. d. xix. men: febrvario.",
+        "defensio contra joannem ekium theologiae professorem."
+      ],
+      "sampleCatalogWorks": [
+        "selected writings",
+        "the justification of man by faith only",
+        "commentary on romans",
+        "loci communes commonplaces of theology",
+        "annotations on first corinthians"
+      ]
+    },
+    {
+      "surname": "gerhard",
+      "ustcEditions": 1034,
+      "ustcDistinctWorks": 915,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "panegyrice laudationes stephani gerhardi regiomontani de illustri domo saxonie ad dominum dominum fredericum theotonici ordinis summum magistrum: ducem saxonie: lantgrauium thuringie: et marchionem misne.",
+        "in nuptias secundas, quas clarissimimus et consultissimus vir d. hieronymus gerhardus",
+        "quaestionum politicarum decas ... , ... ampliß. facultate philosophica in illustri salana approbante sub praesidio m. johannis gerhardi quedlinburgensis ... teil: 9: , ... exercitii gratia pro virili defendet paulus trane stavangrius nortvegus. 31.03. ...",
+        "quaestionum politicarum decas ... , ... ampliß. facultate philosophica in illustri salana approbante sub praesidio m. johannis gerhardi quedlinburgensis ... teil: 6: , ... exercitii gratia pro virili defendet elias khrön austriacus 9. februarii. horis mat",
+        "theoremata de philosophiae constitutione , quae ... in inclyta ienensi, praeside m. johanne gerhardi quedlinburgensi saxone, collegis suis examinanda [et] discutienda proponit johannes fridericus stromerus vinariensis. ad diem 13.08...."
+      ],
+      "sampleCatalogWorks": [
+        "theological commonplaces"
+      ]
+    },
+    {
+      "surname": "donatus",
+      "ustcEditions": 785,
+      "ustcDistinctWorks": 318,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "ars minor",
+        "de octo partibus orationis",
+        "ars maior, parts 1-3. grammaticus servius: de finalibus",
+        "de barbarismo",
+        "ars maior, partes 2-3"
+      ],
+      "sampleCatalogWorks": [
+        "rule of donatus"
+      ]
+    },
+    {
+      "surname": "schmidt",
+      "ustcEditions": 755,
+      "ustcDistinctWorks": 691,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "carmen gratiarum actionem pro redemtionis generis humani opere, perfecta jesu christi, dei et mariae filii obedientia in terris absoluto, continens, ad imitationem orationis ciceronianae pro m. marcello, dedicatumque reverendis viris, d. henrico à postern, electo numburgensis, citzensisque diaeceseos decano, nec non reliquis gubernationis illius praefectis, dn. patronis, ac moecenatibus suis omni observantiae cultu colendiss. ab athanasio schmidt citzense.",
+        "epithalamion in honorem coniugii, et festivam nuptiarum solennitatem honesti et praeclari viri, justi obbershusii, in matrimonium suscipientis honestissimam virginem mariam schnitkers, scriptum à reinero fabricio hildesiano, scholae cellensis cantore.",
+        "gratulationes i. ex psalmo 128. paraphrastice desumpta, et scripta in honorem conjugii d. johannis coccaei, ecclesiae mindensis ad d. martinum pastoris ducentis uxorem virginem adelheidam johannis averbergii senatoris mind. filiam. ii, consecrata est nuptiarum solennitati d. hannibalis nullaei, scholae hamelensis rectoris in matrimonium suscipientis virginem catharinam, d. othonis domhovii, evangelici ministerii apud hamelenses senioris filiam",
+        "epithalamion felicis auspicii loco transmissum ornatissimo juveni joanni bexio, cum honestissimâ virgine salome tappen, matrimonium hildesiae contrahentis, mense novembri, anno 1589. scriptum à reinero fabricio hildesiano, scholae cellensis cantore.",
+        "carmen de salutari nativitate nostri domini ac salvatoris jesu christi filii dei et mariae, felicis strenae loco humiliter consecratum à reinero fabricio hildesiano, scholae cellensis cantore."
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "luther",
+      "ustcEditions": 740,
+      "ustcDistinctWorks": 621,
+      "catalogTranslations": 15,
+      "catalogDistinctWorks": 8,
+      "sampleUstcTitles": [
+        "disputatio et excusatio adversus criminationes d. johannis eccii.",
+        "resolutio lutheriana super propositione sua tertiadecima de potestate papae.",
+        "sermo de virtute exconicationis fratri martino luther augustiniano a linguis terciis tand euerberatus.",
+        "acta f. martini luther august: apud d.legatum aplícum auguste.",
+        "sermo de penitentia"
+      ],
+      "sampleCatalogWorks": [
+        "theologia germanica translationcommentary",
+        "commentary on galatians",
+        "commentary on the epistles of peter and jude",
+        "selected works",
+        "ninetyfive theses"
+      ]
+    },
+    {
+      "surname": "seneca",
+      "ustcEditions": 674,
+      "ustcDistinctWorks": 469,
+      "catalogTranslations": 143,
+      "catalogDistinctWorks": 52,
+      "sampleUstcTitles": [
+        "de moribus",
+        "de quattuor virtutibus cardinalibus, sive de formula honestae vitae. de moribus. demosthenes (pseudo-) orationes duae de alexandro magno habitae in senatu atheniensi;(pseudo-) aeschines: exhortatio ad athenienses; (pseudo-) demades: dehortatio adversus ex",
+        "de quattuor virtutibus cardinalibus, sive de formula honestae vitae. demosthenes (pseudo-) orationes duae de alexandro magno habitae in senatu atheniensi;(pseudo-) aeschines: exhortatio ad athenienses; (pseudo-) demades: dehortatio adversus exhortationem",
+        "de remediis fortuitorum",
+        "de remediis fortuitorum. pseudo- seneca: de quattuor virtutibus cardinalibus. de moribus. demosthenes (pseudo-) orationes duae de alexandro magno habitae in senatu atheniensi;(pseudo-) aeschines: exhortatio ad athenienses; (pseudo-) demades: dehortatio ad"
+      ],
+      "sampleCatalogWorks": [
+        "apocolocyntosis divi claudii the deification of claudius",
+        "naturales quaestiones",
+        "thyestes",
+        "phaedra",
+        "moral epistles"
+      ]
+    },
+    {
+      "surname": "lipsius",
+      "ustcEditions": 590,
+      "ustcDistinctWorks": 427,
+      "catalogTranslations": 4,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "epistolarum selectarum chilias nunc centuria nova poematis indicibusq[ue] absolutissimis auctior [et] locupletior",
+        "variarum lectionum libri iiii",
+        "leges regiae et leges decem virales",
+        "epistolicarum quaestionum libri v. in quis ad varios scriptores, pleraeque ad titium livium, notae",
+        "oratio in funere illustrissimi principis ac domini d. joannis guilielmi, ducis saxonie, landgravii thuringiae, marchionis misniae, habita ienae a. d. xii. kal: april. m d lxxiii"
+      ],
+      "sampleCatalogWorks": [
+        "principles of letter writing"
+      ]
+    },
+    {
+      "surname": "conring",
+      "ustcEditions": 509,
+      "ustcDistinctWorks": 412,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "de pace civili inter imperii ordines religione dissidentes perpetuo conservanda libri duo : quorum posteriore iura et pax imperii ab innocentii x papae criminationibus vindicantur ; accesserunt eiusdem argumenti alia",
+        "de civili prudentia liber unus. quo prudentiæ politicæ, cum universalis philosophicæ, tum singularis pragmaticæ, omnis propædia acroamatice traditur.",
+        "aristotelis laudatio : orationes duae quarum prior habita in acad. iulia xx. septembr. ann. mdcxxxii. quum publicam naturalis philosophiae profeßionem aggrederetur",
+        "gratulatio epica : novis honoribus vorir praeclariss. [et] consultißimor. hermanni meieri, et zachariae sithmanni, quum in academia iulia i.u.d. solemni ritu crearentur, consecrata",
+        "aristotelis laudatio: orationes duae quarum prior habita in acad. julia xx. septembr. ann. mdcxxxii. quum publicam naturalis philosophiae profeßionem aggrederetur"
+      ],
+      "sampleCatalogWorks": [
+        "new discourse on the romangerman emperor"
+      ]
+    },
+    {
+      "surname": "hoffmann",
+      "ustcEditions": 504,
+      "ustcDistinctWorks": 475,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "de ratisbona metropoli boioariae et subita ibidem judaeorum proscriptione. christophorus ostrofrancus",
+        "de poenitentia commentariorum libri tres",
+        "contra theologiam scholasticam de poenitentia, libri tres, in quibus omnes fere loci doctrinae christianas comprehenduntur, et multa perniciosa sophistarum commenta refutantur, ex quibus deprehendes errores thomae et aliorum sententiariorum.",
+        "carmen de natali salvatoris nostri jesu christi scriptum ad venerandum virum georgium klet, pastorem ecclesiae radebergensis, a bartolemaeo hoffmanno radebergensi. 1551.",
+        "carmen de resurrectione salvatoris christi."
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "galenus",
+      "ustcEditions": 495,
+      "ustcDistinctWorks": 416,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "opera.",
+        "secunda impressio galieni que cunque in prima continebantur apprehendens: cui plurima variarum traductionum eidem in fine duplicata: novaque annectentur galieni opera. summis impensis ac laboribus correcta emendataque",
+        "therapeutica [greek]",
+        "de differentiis foebrium libri duo",
+        "si sanctitatem si temperantiam si modestiam si prudentiam si castam beatamque vitam ducere cupis si tandem ad celorum regnum pervenire optas pauli apostoli petri et johannis jacobis et jude epistolas legito"
+      ],
+      "sampleCatalogWorks": [
+        "on the properties of foodstuffs",
+        "on antecedent causes"
+      ]
+    },
+    {
+      "surname": "praetorius",
+      "ustcEditions": 458,
+      "ustcDistinctWorks": 436,
+      "catalogTranslations": 4,
+      "catalogDistinctWorks": 3,
+      "sampleUstcTitles": [
+        "godescalci praetorii oratio de necessitate rei scholasticae recitata in ludo literario magdeburgensi anno 1553.",
+        "oratio funebris de joachimo wolterstorpio recitata in schola magdeburgensi. anno 1554. ianvarii 28.",
+        "ludi literarii magdeburgensis ordo, leges ac statuta, anutore godescalco peaetorio.",
+        "propositiones de sacramento disputandae in ludo magdeburgensi, ultimo augusti, anno 1554. godescalcus praetorius.",
+        "declaratio dicti ad hebraeos xiii. honorabile connvbium in omnibus, et thorus immaculatus, scortatores autem et adulteros judicabut deus"
+      ],
+      "sampleCatalogWorks": [
+        "syntagma musicum",
+        "de organographia",
+        "syntagma musicum volume 2 de organographia"
+      ]
+    },
+    {
+      "surname": "thomasius",
+      "ustcEditions": 457,
+      "ustcDistinctWorks": 393,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "historia salis , quam in academia lipsiensi permissu inclytae facultatis philosophicae pro loco in ea consequendo primum xvi. calend. decembr. publice examinandam sistit m. jacobus thomasius lipsiensis",
+        "diatribe philosophica de cooperatione dei cum causis creatis naturaliter agentibus: , quam ... inclutae facultatis philosophicae autoritate ad iv. 09.... sub praesidio m. jacobi thomasii, lipsiens. facultatis philosoph. ibid. adsessoris ... publice exponi",
+        "contemplatio luminis, quam in academia lipsiensi secundum v. calend: octobr: publice examinandam sistit m. jacobus thomasius lipsiensis",
+        "lemnisci, quos ad laureas magistrales, publico philosophorum decreto in alma philurea, rectore magnifico ... quirino schachero, i. u. d. consistorii [et] curiae electoralis, nec non facultatis iuridicae assessore; procancellario ... hieronymo kromayero, s",
+        "theses meteoro-philologicae de marinis ignibus, quos stellas castores vocavit antiquitas , ad disputandum propositae a m. jacobo thomasio ... et cornelio cunighamo ..."
+      ],
+      "sampleCatalogWorks": [
+        "essays on church and state",
+        "larva legis aquiliae"
+      ]
+    },
+    {
+      "surname": "cato",
+      "ustcEditions": 429,
+      "ustcDistinctWorks": 268,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "disticha de moribus",
+        "disticha de moribus (comm: anonymous)",
+        "disticha de moribus.",
+        "disticha de moribus. \"summi deus largitor praemii\". glosulae",
+        "disticha de moribus. de contemptu mundi"
+      ],
+      "sampleCatalogWorks": [
+        "marcus porcius cato on agriculture  marcus terentius varro on agriculture"
+      ]
+    },
+    {
+      "surname": "wolf",
+      "ustcEditions": 420,
+      "ustcDistinctWorks": 403,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 3,
+      "sampleUstcTitles": [
+        "in psalmum tercium et trigesimum expositio",
+        "miserere dum morbo gallico laboraret ad deum non sine lachrymis effusum.",
+        "in psalmum. domine quis habitabt in tabernaculo tvo.",
+        "in psalmum. domine quis habitaiibt n tabernaculo tvo.",
+        "rudimenta arithmetices"
+      ],
+      "sampleCatalogWorks": [
+        "prolegomena ad homerum",
+        "prolegomena to homer",
+        "romische inquisition und indexkongregation"
+      ]
+    },
+    {
+      "surname": "cellarius",
+      "ustcEditions": 418,
+      "ustcDistinctWorks": 383,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "isagogicon in hebraeas literas.",
+        "opuscula quatuor",
+        "responsio nullius ad excusationem neminis wittenbergensis.",
+        "isagogicon joannis cellarii gnostopolitane, in hebraeas literas, omnibus hebraicarum literarum candidatis non minus utile quam necessarium.",
+        "nullus lipsensis respondet nemini wittenbergensi. nullus me genuit pater: mater mihi nulla hoc commune mihi de joue pallas habet."
+      ],
+      "sampleCatalogWorks": [
+        "harmonia macrocosmica"
+      ]
+    },
+    {
+      "surname": "junius",
+      "ustcEditions": 405,
+      "ustcDistinctWorks": 373,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "philippeis, seu, in nuptias divi philippi, aug. pii, max. & heroinae mariae aug. felicis, invictae, regum angliae, franciae, neapolis, hierosolymorum, & hiberniae, fidei defensorum, hispaniae & siciliae principum, archiducum austriae, ducum mediolani, burgundiae, & brabantiae, comitum habspurgi, flandriae, & tirolis, carmen heroicum, hadriano junio hornano medico auctore",
+        "de anno & mensibus commentarius, cui adiungitur fastorum liber quo quicquid peculiariter apud graecos, hebreos, romanos, aliasque exoticas nationes, memorabile quolibet die actum fuerit & observatum. compendio commonstratur, autore hadriano junio medico. item calendarius in quo totius anni dies articulatim ad calculum vocati fastorum liber",
+        "philippeis, seu, in nuptias divi philippi, aug. pii, max. & heroinae mariae aug. felicis, invictae, regum angliae, franciae, neapolis, herosolymorum, & hiberniae, fidei defensorum hispanie & siciliae principum, archiducum austriae, ducum mediolani, burgundiae & brabantiae, comitum habspurgi, flandriae & tirolis carmen heroicum hadriano junio hornano medico auctore",
+        "de coma commentarium hadriani junii hornani medici animadversorum libri sex, omnigenae lectionis thesaurus, in quibus infiniti penè autorum loci corriguntur & declarantur, nunc primum & nati, & in lucem aediti. eiusdem de coma commentarium quo haud scio an quicquam extet in eo genere vel eruditius vel locupletius",
+        "adagiorum centuriae viii . cum dimidia: opus novum & nunc primum in lucem editum."
+      ],
+      "sampleCatalogWorks": [
+        "the literature of classical art",
+        "correspondence"
+      ]
+    },
+    {
+      "surname": "vossius",
+      "ustcEditions": 401,
+      "ustcDistinctWorks": 314,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "victoria invictissimi romanorum imperatoris caroli v transscripta ad henricum viii",
+        "ad antiquam religionem, vereque cristianam brevis isagoge, in qua praecipua christianae profeßionis capita, in usum herderuicenae juventutis, sunt pertractata",
+        "artis rhetoricae methodus, in qua per erotemata, sive quaestiones universae praeceptione rhetorices tractantur & revocantur",
+        "theses de internis morborum causis, earumque indicatis quas pro doctoratus laurea & insignibus in sacra medicina consequendis, publicè disputandi ergo proponit henricus vossius geldrensis, vi. calend. iulii",
+        "ad doctissimum juvenem, abraham aurelium londinensem, cum de medio demonstrationis responderet, scazontes ex metris jambis, 07.02.1596"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "eck",
+      "ustcEditions": 399,
+      "ustcDistinctWorks": 315,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "almanac 1487, for leipzig",
+        "almanac 1489",
+        "almanac 1486, for leipzig",
+        "almanach 1489",
+        "praesagium astrologicum pro anno 1489"
+      ],
+      "sampleCatalogWorks": [
+        "enchiridion locorum communium manual of common topics against luther"
+      ]
+    },
+    {
+      "surname": "bonaventura",
+      "ustcEditions": 388,
+      "ustcDistinctWorks": 266,
+      "catalogTranslations": 21,
+      "catalogDistinctWorks": 12,
+      "sampleUstcTitles": [
+        "meditationes vitae christi",
+        "de triplici via",
+        "breviloquium",
+        "psalterium maius beatae virginis mariae",
+        "diaeta salutis"
+      ],
+      "sampleCatalogWorks": [
+        "speculum beatae virginis",
+        "disputed questions on the mystery of the trinity",
+        "itinerarium mentis in deum",
+        "mystical theology",
+        "commentary on the gospel of luke"
+      ]
+    },
+    {
+      "surname": "vives",
+      "ustcEditions": 388,
+      "ustcDistinctWorks": 315,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 4,
+      "sampleUstcTitles": [
+        "opuscula duo, christi jesu liberatoris nostri triumphus et mariae parentis eius ovatio",
+        "opuscula varia. meditationes in septem psalmos poenitentiae",
+        "opuscula varia",
+        "adversus pseudodialecticos. eiusdem pompeius fugiens. pompeius fugiens",
+        "de institutione foeminae christianae, libri tres"
+      ],
+      "sampleCatalogWorks": [
+        "de causis corruptarum artium against the pseudodialecticians",
+        "de anima et vita",
+        "on assistance to the poor",
+        "the instruction of a christian woman"
+      ]
+    },
+    {
+      "surname": "faber",
+      "ustcEditions": 378,
+      "ustcDistinctWorks": 336,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "speculu exemplorum omnibus christicolis salubriter inspicidu ut explis discant disciplinam",
+        "speculu exemplorum : omnibus christicolis salubriter inspicidu: ut explis discant disciplinam",
+        "instructio summaria pro executõne negotii indulgentiarum sanctissimi jubilei in fauorem fabrice ecclesie fratru predicatorum auguste concessaru.",
+        "speculu exemplorum omnibus christicolis salubriter inspiciendu: ut exemplis discant disciplinam.",
+        "ad carolum hispaniarum regem post obitum avi oratio quae in hoc codice continentur. oratio funebris in depositione gloriosis. imp. caes. maximiliani aug in oppido vuelss austriae per fratrem joannem fabrum augustanum, theologum ordinis fratrum praedicatorum georgii sauromanni, ad carolum hispaniarum regem post obitum aui, oratio. threnodia seum lamentatio petri aegidii in obitum max. caes. aug. et in hanc scholia jacobi spiegel selestadieñ. threnodia seum lamentatio in obitum max. caes. aug."
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "ames",
+      "ustcEditions": 372,
+      "ustcDistinctWorks": 339,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "biblia sacrosancta veteris et novi instrumenti, juxta vulgatam et consuetam aeditionem, tum as hebraicam veritatem, tum ad vetustissimorum simul et emendatissimorum voluminum fidem",
+        "coronis ad collationem hagiensem, qu^a argumenta pastorum hollandiæ adversus remonstrantium quinque articulos de divina prædestinatione producta vindicantur",
+        "rescriptio scholastica & brevis. ad nicolai grevinchovii responsum illud prolixum, quod opposuit dissertationi, de redemptione generali, & electione ex fide prævisa",
+        "dissertatio theologica de duabus quaestionibus hoc tempore controversis",
+        "ad responsum nic. grevinchovii rescriptio contracta"
+      ],
+      "sampleCatalogWorks": [
+        "technometry",
+        "the marrow of theology"
+      ]
+    },
+    {
+      "surname": "hieronymus",
+      "ustcEditions": 371,
+      "ustcDistinctWorks": 308,
+      "catalogTranslations": 8,
+      "catalogDistinctWorks": 6,
+      "sampleUstcTitles": [
+        "epistolae. prelim: aristeas: de lxx interpretibus.",
+        "epistolae.",
+        "epistolae",
+        "de essentia divinitatis. thomas aquinas: de articulis fidei",
+        "ordo, seu regula vivendi deo ad eustochium"
+      ],
+      "sampleCatalogWorks": [
+        "prefatory epistles middle english bible",
+        "letters and writings",
+        "jankyns book of wikked wyves",
+        "chronicon",
+        "hebrew questions on genesis"
+      ]
+    },
+    {
+      "surname": "chemnitz",
+      "ustcEditions": 371,
+      "ustcDistinctWorks": 322,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 6,
+      "sampleUstcTitles": [
+        "theologiae jesuvitarum praecipva capita. ex quadam ipsorum censura, quae coloniae anno 60. edita est, annotata per martinum kemnicium.",
+        "repetitio sanae doctrinae de vera praesentia corporis et sanguinis domini in coena. per martinum kemnicium in ecclesia brunsvigensi. additus est tractatus complectens doctrinam de communicatione idiomatum eodem autore. cum indice capitum",
+        "anatome propositionum alberti hardenbergii de coena domini, quas exhibuit ordinibus saxoniae inferioris in conventu brunsvigensi. additae sunt etiam propositiones ministrorum ecclesiae bremensis. et declaratio articuli decimi in confeßione augustana de coena domini, sumpta ex publicis confeßionibus et historiis nostrorum temporum. per martinum kemnicium ministrum ecclesiae brunsvigensis. adiuncta sunt alia quaedam eiusdem argumenti à d. joachimo morlino. declaratio articuli decimi in confessione augustana de cena domini propositiones ministrorum ecclesiae bremensis",
+        "theologiae ievvitarum praecipva capita. ex quadam ipsorum censura, quae coloniae anno 60. edita est, annotata per martinum kemnicium.",
+        "examen decretorum concilii tridentini. in quo ex sacrae scripturae norma, collatis etiam orthodoxis verae et purioris antiquitatis testimoniis ostenditur, qualia sint illa decreta, et quo artificio sint composita"
+      ],
+      "sampleCatalogWorks": [
+        "ministry word and sacraments an enchiridion",
+        "examination of the council of trent",
+        "loci theologici on justification",
+        "loci theologici",
+        "de duabus naturis in christo"
+      ]
+    },
+    {
+      "surname": "toledo",
+      "ustcEditions": 350,
+      "ustcDistinctWorks": 289,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "oratio illustriss. d.d. francisci a toleto oratoris cæsarei ad synodum habita die octavo aprilis mdxlvi una cum responsione eiusdem synodi",
+        "introductio in dialecticam aristotelis. per magistrum franciscum toledum sacerdotem societatis jesu ac philosophie in romano eiusdem soeietatis collegio professorem.",
+        "compendium privilegiorum ordinis divi hieronymi",
+        "indroductio in dialecticam aristotelis. per magistrum franciscum toledum sacerdotem societatis iesu",
+        "introductio in dialecticam aristotelis. per magistrum franciscum toletum sacerdotem societatis iesu"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "plutarchus",
+      "ustcEditions": 332,
+      "ustcDistinctWorks": 290,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "de liberis educandis.",
+        "de liberis educandis (tr: guarinus veronensis). add: s. hieronymus: de officiis liberorum erga parentes admonitio",
+        "de liberis educandis",
+        "de liberis educandis. hieronymus: de officiis liberorum erga parentes",
+        "de liberis educandis . s. hieronymus: de officiis liberorum erga parentes admonitio. basilius magnus: de legendis antiquorum libris sive de liberalibus studiis"
+      ],
+      "sampleCatalogWorks": [
+        "lives of the noble greeks and romans"
+      ]
+    },
+    {
+      "surname": "mylius",
+      "ustcEditions": 330,
+      "ustcDistinctWorks": 318,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "de plusquam miranda servatoris nostri jesu christi nativitate, carmen sapphicum, in gratiam magnificorum et generosorum baronum, d. d. czenkonis à lippa, d. bernhardi, friderici, barptolomaei, et joannis à zerotin, etc. iam viennae apud clariss. atque doctiss. virum, d. franciscum emericum, medicae artis doctorem, degentium, dominorum suorum clementiss. ipso salutiferae christi nativitatis die scriptum à m. joanne mylio bornensi.",
+        "carmen panegyricum, in augustissimum reditum viennam, generosissimi ac illustrissimi principis divi maximiliani, regis bôemiae, archiducis austriae etc. scriptum obiter à joanne mylio bornensi, liberalium artium magistro.",
+        "elegiarum georgii mylii bornensis liber primus, ad generosissimum principem, ducem saxoniae augustum.",
+        "elegiarum georgii mylii bornensis liber secundus. ad vigilantissimum et prudentissimum senatum civitatis bornae.",
+        "aliquot elegiae lugubres, afflictae, ac exvlantis ecclesiae scriptae à georgio mylio, ad illustrißimum principem augustum saxoniae electorem etc."
+      ],
+      "sampleCatalogWorks": [
+        "the twelve grades of alchemy"
+      ]
+    },
+    {
+      "surname": "valla",
+      "ustcEditions": 328,
+      "ustcDistinctWorks": 259,
+      "catalogTranslations": 10,
+      "catalogDistinctWorks": 7,
+      "sampleUstcTitles": [
+        "de mysterio eucharistiae",
+        "elegantiae linguae latinae. de pronomine sui",
+        "elegantiae linguae latinae. prelim: lucidus aristophilus surroneus: in laudem impressorum",
+        "elegantiae linguae latinae. invectiva in errores antonii raudensis",
+        "elegantiae linguae latinae"
+      ],
+      "sampleCatalogWorks": [
+        "on the falsely believed and forged donation of constantine",
+        "de falso credita et ementita constantini donatione",
+        "on the donation of constantine",
+        "dialectical disputations volume 1 book i",
+        "correspondence"
+      ]
+    },
+    {
+      "surname": "livius",
+      "ustcEditions": 327,
+      "ustcDistinctWorks": 271,
+      "catalogTranslations": 216,
+      "catalogDistinctWorks": 94,
+      "sampleUstcTitles": [
+        "historiae romanae decades.",
+        "historiae romanae decades",
+        "historiae romanae decades. lucius annaeus florus: epitome",
+        "titi liuii decadis [!].",
+        "tris titi liuii patavini orationes lactei eloquentie fluminis luculentissime."
+      ],
+      "sampleCatalogWorks": [
+        "ab urbe condita books vix",
+        "history of rome",
+        "history of rome from its foundation",
+        "ab urbe condita",
+        "titus livius roman history"
+      ]
+    },
+    {
+      "surname": "alberti",
+      "ustcEditions": 321,
+      "ustcDistinctWorks": 298,
+      "catalogTranslations": 9,
+      "catalogDistinctWorks": 7,
+      "sampleUstcTitles": [
+        "de re aedificatoria. angelus politianus: epistola ad laurentium medicem. baptista siculus: carmen ad lectorem",
+        "de omnibus ingeniis augendae memoriae",
+        "opera.",
+        "comoedia philodoxeos",
+        "libri de re aedificatoria decem. opus integrum et absolutum diligenterque recognitum"
+      ],
+      "sampleCatalogWorks": [
+        "de re aedificatoria on the art of building",
+        "dinner pieces",
+        "de bibliothecis",
+        "momus",
+        "humanist comedies"
+      ]
+    },
+    {
+      "surname": "agricola",
+      "ustcEditions": 321,
+      "ustcDistinctWorks": 279,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "anna mater. epicedion ad mauricium comitem spegelbergensem. epitaphium mauricii comitis spegelbergensis. epigrammata",
+        "mauricio comiti spegelbergi epicedion anna mater incipit",
+        "impetrata prius licentia a magnifico ac generoso domino hieronymo tigrino de bagnacavallo: artistarum et medicorum alme universitate bononiensis rectore dignissimo. henricus agricula germanus frisius, minimus inter scolares artium et medicinae infra dubium cum suis conclusionibus et corelariis: sub excellentissimo artium et medicinae doctore magistro galeoto de beccadellis: substinere conabit",
+        "anna mater. add: epicedion ad mauricium comitem spegelbergensem. epitaphium mauricii comitis spegelbergensis. epigrammata",
+        "carmina in divae annae laudem. anna mater"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "chrysostomus",
+      "ustcEditions": 305,
+      "ustcDistinctWorks": 228,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "accipe candidissime lector opera diui ioannis chrisostomi archiepiscopi constantinopolitani.",
+        "sermones praeclarissimi. liber primus de compunctione cordis. liber secundus de compunctione cordis. de reparatione lapsi. sermo de penitentia",
+        "sermones preclarissimi",
+        "tomus vi operum",
+        "tomus quintus"
+      ],
+      "sampleCatalogWorks": [
+        "on virginity against remarriage",
+        "commentary on isaiah 18"
+      ]
+    },
+    {
+      "surname": "caesar",
+      "ustcEditions": 303,
+      "ustcDistinctWorks": 222,
+      "catalogTranslations": 265,
+      "catalogDistinctWorks": 96,
+      "sampleUstcTitles": [
+        "commentarii.",
+        "commentarii de bello gallico",
+        "commentarii",
+        "commentarii. raimundus marlianus: index commentariorum c. julii caesaris",
+        "commentarii caesaris recogniti per philippum beroaldum"
+      ],
+      "sampleCatalogWorks": [
+        "commentarii de bello gallico the battle for gaul",
+        "commentarii de bello gallico",
+        "commentarii de bello civili",
+        "gallic wars",
+        "commentaries on gallic war"
+      ]
+    },
+    {
+      "surname": "canisius",
+      "ustcEditions": 300,
+      "ustcDistinctWorks": 240,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "summa doctrinae christianae, per quaestiones tradita & in vsum christianae pueritiae nu[n]c primùm edita.",
+        "summa doctrinae christianae. in usum christianae pueritiae per quaestiones",
+        "summa doctrinae christianae. in usum christianae pueritiae per quaestiones recens conscripta, et nunc denuo edita. jussu & authoritate philippi, hispaniarum, angliae regis",
+        "summa doctrinae christianae: in usum christianae pueritiae per quaestiones recens conscripta, & nun denuò edita: issu & authoritate invictiss. ac sereniss. d. philippi",
+        "catechismus catholicus"
+      ],
+      "sampleCatalogWorks": [
+        "opus catechisticum"
+      ]
+    },
+    {
+      "surname": "martialis",
+      "ustcEditions": 291,
+      "ustcDistinctWorks": 202,
+      "catalogTranslations": 45,
+      "catalogDistinctWorks": 18,
+      "sampleUstcTitles": [
+        "epigrammata.epistola ad angelum adrianum. raphael zovenzonius: carmen.",
+        "epigrammata",
+        "epigrammata. prelim: gaius caecilius plinius secundus: epistola ad cornelium priscum",
+        "xenia et apophoreta.",
+        "epigrammata."
+      ],
+      "sampleCatalogWorks": [
+        "epigrams",
+        "epigrammata",
+        "select epigrams from martial for english readers",
+        "extracts from martial",
+        "the epigrams of martial"
+      ]
+    },
+    {
+      "surname": "bruno",
+      "ustcEditions": 282,
+      "ustcDistinctWorks": 266,
+      "catalogTranslations": 14,
+      "catalogDistinctWorks": 4,
+      "sampleUstcTitles": [
+        "de maximiliani coronatione gratulatio",
+        "tractatus novus de statutis feminas et cognatorum lineam a successionibus excludentibus",
+        "de obitu serenissime et catholice domine helisabeth hispaniarum et utriusque sicilie ac hierusalem regine oratio xxvi febrnarii [!] anno domini mcccccv",
+        "solemnis tractatus de augumento rebus que additis: clarissimi iuris interpretis domini alberti bruni astensis: multas materias incognitas & quottidianas in xxvi conclusionibus suo loco situatas continens. tractatus ipsius domini auctoris de augumento & diminutione monetarum: & de monetis: conclusione finali. tractatus martini de laude in materia monetarum. tractatus francisci curtii in materia monetarum. consilium collegii papie in materia solutionis diu facte de moneta currente tempore cuiuslibet solutionis. disputatio domini iacobi de puteo in materia monetarum",
+        "tractatus de statutis feminas et cognatorum lineam a successionibus excludentibus tractatus georgii natte super eadem materia. tractatus joan. campezii super eadem materia"
+      ],
+      "sampleCatalogWorks": [
+        "on the composition of images signs and ideas",
+        "the heroic frenzies",
+        "giordano brunos the heroic frenzies",
+        "the ash wednesday supper"
+      ]
+    },
+    {
+      "surname": "drexel",
+      "ustcEditions": 282,
+      "ustcDistinctWorks": 234,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "zodiacus christianus seu signa 12. divinae praedestinationis : una cum 12. symbolis quibus signa illa adumbrantur , [jeremias drexel]. a raphaele sadelero imaginibus exornatus ...",
+        "de aeternitate considerationes : coram ser.mis utriusq[ue] bavariae principibus maximiliano et elisabetha explicatae: eisdem inscriptae et dedicatae , ab hieremia drexelio ...",
+        "zodiacus christianus, locupletatus: seu signa xii. divinae praedestinationis , totidem symbolis explicata ab hieremia drexelio, e societate jesu",
+        "nicetas seu triumphata incontinentia , auctore hieremia drexelio ...",
+        "horologium auxiliaris tutelaris angeli , auctore hieremia drexelio ..."
+      ],
+      "sampleCatalogWorks": [
+        "christian zodiak"
+      ]
+    },
+    {
+      "surname": "calvin",
+      "ustcEditions": 281,
+      "ustcDistinctWorks": 204,
+      "catalogTranslations": 37,
+      "catalogDistinctWorks": 22,
+      "sampleUstcTitles": [
+        "institutio christianae religionis nunc verè demum suo titulo respondens",
+        "epistola de christiani hominis officio in sacerdotiis papalis ecclesiae vel administrandis vel abiciendis joannis calvini, sacrarum literarum in ecclesia geneuensi professoris, epistolae duae, de rebus hoc saeculo cognitu apprime necessariis. prior, de fugiendis impiorum illicitis sacris, & puritate christianae religionis observanda. altera, de christiani hominis officio in sacerdotiis papalis ecclesiae vel administrandis, vel abiiciendis.`",
+        "catechismus, sive christianae religionis institutio, communibus renatae nuper in evangelio geneuensis ecclesiae suffragiis recepta, & vulgari quidem prius idiomate, nunc verò latinè etiam, quo de fidei illius synceritate passim aliis etiam ecclesiis constet, in lucem edita",
+        "bildtniis eins neuwen propheté auss franckreich herbracht",
+        "christianae religionis institutio, totam ferè pietatis summã, & quicquid est in doctrina salutis cognitu necessarium, complectens: omnibus pietatis studiosis lectu dignissimum opus, ac recens editum. praefatio ad christianißimum regem franciae, qua hic ei liber pro confeßione fidei offertur."
+      ],
+      "sampleCatalogWorks": [
+        "concerning scandals",
+        "sermons from job",
+        "commentaries on the psalms",
+        "institutes of the christian religion",
+        "institutes of christian religion"
+      ]
+    },
+    {
+      "surname": "quenstedt",
+      "ustcEditions": 263,
+      "ustcDistinctWorks": 247,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "auspicatis nuptiis quas vir reverendus [et] præclarus dn. leiopoldus quenstedt, i. v. cand. & canonicus eccles. b. mariæ virg. quæ est halberstadii, sponsvs cum lectißima virgine lvcia hedwige viri amplißimi [et] spectatißimi dn. andreæ crausen/ hereditar",
+        "propempticon viris iuvenibus generosis [et] nobilißimis, cunrado ascanio à marenholtz et hildebrando christophoro ab hardenbergk, equit. brunsv. &c. in belgium abire parantibus exhibitum [et] concinnatum à iohanne andrea quenstedt quedlinb.",
+        "de causae primae cum secundis in genere causae efficientis cooperatione et ad harum effectus concursu : disputatio philosophica , ... in illustri wittebergensi academia pro loco in amplißima facultate philosophica ... publicae disquisitioni exposita a m.",
+        "disputatio philosophica de natura et constitutione metaphysices , quam ... in illustri wittebergensi academia praeside ... dn. m. johanne andrea quenstedt quedl. facult. philosoph. adiuncto. publicae disquisitioni subiicit henricus balthasar wilhelmi ultz",
+        "sepultura veterum. sive de antiquis ritibus sepulchralibus romanorum, graecorum, judaeorum [et] christianorum disputatio ... , quam ... praeside m. joh. andr. quenstedt ... teil: 2: , publicae disquisitioni submittit. johannes kienscherff, spandoa-march."
+      ],
+      "sampleCatalogWorks": [
+        "theologia didacticopolemica"
+      ]
+    },
+    {
+      "surname": "juvenalis",
+      "ustcEditions": 256,
+      "ustcDistinctWorks": 152,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "satyrae",
+        "satyrae. persius flaccus: satyrae",
+        "satyrae.",
+        "satyrae. domitius calderinus: defensio adversus brotheum",
+        "satyrae. defensio adversus brotheum"
+      ],
+      "sampleCatalogWorks": [
+        "satires"
+      ]
+    },
+    {
+      "surname": "plautus",
+      "ustcEditions": 253,
+      "ustcDistinctWorks": 200,
+      "catalogTranslations": 229,
+      "catalogDistinctWorks": 74,
+      "sampleUstcTitles": [
+        "comoediae (ed: georgius merula)",
+        "comoediae.",
+        "comoediae (ed: georgius merula. rev: eusebius scutarius)",
+        "plautus diligenter recognitus per philippum beroladum.",
+        "amphitryo plautina."
+      ],
+      "sampleCatalogWorks": [
+        "comedies",
+        "five comedies",
+        "amphitryon",
+        "asinaria",
+        "roman comedies"
+      ]
+    },
+    {
+      "surname": "muret",
+      "ustcEditions": 250,
+      "ustcDistinctWorks": 198,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "de dignitate, ac praestantia studii theologici oratio",
+        "juvenilia: tragoedia jullius caesar. elegiae. satyrae ii. epigrammata. epistolae iii. odae vi",
+        "in andriam terentii annotationes",
+        "in eunuchum terentii annotationes",
+        "juvenilia et elenchium sequens pagella continet"
+      ],
+      "sampleCatalogWorks": [
+        "juvenilia"
+      ]
+    },
+    {
+      "surname": "boethius",
+      "ustcEditions": 249,
+      "ustcDistinctWorks": 149,
+      "catalogTranslations": 89,
+      "catalogDistinctWorks": 33,
+      "sampleUstcTitles": [
+        "de consolatione philosophiae",
+        "de consolatione philosophiae (with commentary ascribed in the text to thomas aquinas). johannes gerson, de consolatione theologiae",
+        "de consolatione philosophiae. de disciplina scholarium",
+        "de consolatione philosophiae.",
+        "de disciplina scholarium."
+      ],
+      "sampleCatalogWorks": [
+        "consolatio philosophiae the consolation of philosophy",
+        "commentary on ciceros topica",
+        "de institutione musica",
+        "consolation of philosophy",
+        "commentary on the hebdomads of boethius"
+      ]
+    },
+    {
+      "surname": "florus",
+      "ustcEditions": 247,
+      "ustcDistinctWorks": 190,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 3,
+      "sampleUstcTitles": [
+        "epitomae rerum romanarum",
+        "epitomae rerum romanarum. ad lectores",
+        "epitomae rerum romanarum. jordanus osnabrugensis: de prerogativa romani imperii; alexander de roes: memoriale de praerogativa romani imperii",
+        "epitomae rerum romanarum. (ed: philippus beroaldus)",
+        "epitomae rerum romanarum."
+      ],
+      "sampleCatalogWorks": [
+        "epitome of roman history",
+        "epitome of roman history res gestae divi augusti",
+        "lucius annaeus florus epitome of roman history cornelius nepos"
+      ]
+    },
+    {
+      "surname": "wagner",
+      "ustcEditions": 238,
+      "ustcDistinctWorks": 229,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "[amnon incestuosus. tragoedia]",
+        "prima rudimenta christianae religionis. in usum pueritiae coronensis.",
+        "odium calvinianorum]",
+        "praecepta vitae christianae",
+        "elegia in pientissimorum et illustrissimorum principum saxoniae ducum fratrum etc. d. joannis friderici ii. d. johannis wilhelmi, et d. joannis friderici iii. calumniatorem et flagellatorem i.m. et s.vv. infamantem ecclesias eorundem, et traducentem theologos in eis authores praesentis schismatis."
+      ],
+      "sampleCatalogWorks": [
+        "the works of publius virgilius maro"
+      ]
+    },
+    {
+      "surname": "hutter",
+      "ustcEditions": 236,
+      "ustcDistinctWorks": 221,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "carmen ad dei genitricem gloriosam",
+        "disputabuntur hec sub joan: eckio canonico eistetensi ingolstadii magistro georgio pilegio respondente die aprilis m.d.xix",
+        "carmen de tristissimo ac miserrimo interitu primae aetatis mundi hominum in diluuio universali, eiusdemque nostrj, ad prioris seculi statum, brevis accommodatio, scriptum",
+        "prodromos disputationum theologicarum collegii privati. de confessionis augustanae, gnesios ac proprie sic appellatae autore, intellectu, mutatione, autoritate. falsis sacramentariorum narrationibus oppositus. praeside leonharto huttero s. theologiae d. et in academia witebergensi professore publico respondebit m. christophorus zecherus, norimbergensis. die 25. junii: quo ipso die ante annos 67. confessio haec caesari carolo v. augustae fuit exhibita.",
+        "disputatio ix. ex articulo tertio confeßionis augustanae, de officio christi sacerdotali et statu humiliationis: in qua praeside leonharto huttero ss. theologiae doctore, et professore in academia witebergensi publico, respondebit samuel cnuppius hertzbergensis, saxo."
+      ],
+      "sampleCatalogWorks": [
+        "compendium locorum theologicorum"
+      ]
+    },
+    {
+      "surname": "cramer",
+      "ustcEditions": 236,
+      "ustcDistinctWorks": 225,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "hymni sacri ex evangeliis dierum dominicalium et festivalium, ac historiis de vocatione, vita et morte apostolorum christi: serie annva, carmine partim sapphico, partim jambico dimetro conscripti",
+        "aretevgenia de aretino et evgenia, quod nobiles artes et virtus premantur, non opprimantur; fabula. ficta et comicè descripta à m. daniele cramero.",
+        "isagoge in metaphysicam aristotelis; quaestionibus rotunde et dilucide comprehensa: ad tychonem brahe danum: in astronomia facile principem.",
+        "oratio de aboriginibus scientiarum. h. e. ex quibus principiis et caussis artes et scientiae inveniri et educi potuerint. habita à m. daniele cramero kalen. nouembr. quando ipsi professio extraordinaria publica philosophiae aristotelicae in academiâ witebergensi demandaretur.",
+        "in natalitiam memoria r. patris d. martini lutheri, oratio, qualenam animal sit papa romanus, eiusque devotorii, ex capite nono apocalypseos: opposita bellarmino, quiex eodem loco scripturae, qualenam animal sit lutheranus, monstrose fingit. habita à daniele cramero, witebergae, in collegio novo die 18. novembr."
+      ],
+      "sampleCatalogWorks": [
+        "rosicrucian emblems",
+        "rosicrucian emblems of daniel cramer"
+      ]
+    },
+    {
+      "surname": "savonarola",
+      "ustcEditions": 235,
+      "ustcDistinctWorks": 175,
+      "catalogTranslations": 5,
+      "catalogDistinctWorks": 3,
+      "sampleUstcTitles": [
+        "de febribus",
+        "de balneis et thermis naturalibus omnibus italiae",
+        "de pulsibus, urinis et egestionibus",
+        "practica medicinae, sive de aegritudinibus",
+        "regulae quae ad omnes religiosos pertinent"
+      ],
+      "sampleCatalogWorks": [
+        "prison meditations on psalms",
+        "apologetic writings",
+        "meditations on psalm li  part of psalm xxxi in latin with an english translation by eh perowne"
+      ]
+    },
+    {
+      "surname": "ramus",
+      "ustcEditions": 225,
+      "ustcDistinctWorks": 196,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "elegiarum de rebus gestis archiducum austrias libri ii",
+        "lachrymae in funere illustrissimi principis, d. nicolai comitis à sallm et neopyrgi ad oenum, reg. mai. per hungariam belli ducis",
+        "institutionum dialecticarum libri tres. audomari talaei praelectionibus illustrati. castigatius multò quàm antéhac excusi. ad carolum lotharingum cardinalem guisianum.",
+        "elegiarum libri duo, quorum posterior epigrammata quaedam, recens è graeco versa, continet.",
+        "archiducum austriae ex habspurgensi familia historiae et res gestae, ex optimis quibusque autoribus magno studio collectae, et numeris elegiacis comprehensae. joanne ramo, grecae linguae apud austriacorum viennam professore publico, autore."
+      ],
+      "sampleCatalogWorks": [
+        "arguments in rhetoric against quintilian"
+      ]
+    },
+    {
+      "surname": "justinus",
+      "ustcEditions": 223,
+      "ustcDistinctWorks": 163,
+      "catalogTranslations": 5,
+      "catalogDistinctWorks": 3,
+      "sampleUstcTitles": [
+        "epitomae in trogi pompeii historias",
+        "epitomae in trogi pompeii historias.",
+        "iustini historici clarissimi in trogi pompeii historias exordium.",
+        "historia ex trogo pompeio, quattuor et triginta epithomatis collecta. lucii flori epithomata quattuor quam cultissima in decem titi livii decadas. sexti ruffi, consularis viri, ad valentianum augustum de historia romana opus dignissimum",
+        "iustini historici in pompeii trogi historias libri 44."
+      ],
+      "sampleCatalogWorks": [
+        "philippic history",
+        "on baptism and eucharist",
+        "philippic history epitome"
+      ]
+    },
+    {
+      "surname": "tacitus",
+      "ustcEditions": 216,
+      "ustcDistinctWorks": 164,
+      "catalogTranslations": 318,
+      "catalogDistinctWorks": 113,
+      "sampleUstcTitles": [
+        "opera",
+        "opera.",
+        "cornelii taciti. de origine et situm germanorum liber incipit",
+        "cornelii taciti illustrissimi hystorici de situ. moribus. et populis germanie aureus libellus.",
+        "cornelii taciti illustrissimi hystorici de situ. moribus. et populis germanie. aureus libellus."
+      ],
+      "sampleCatalogWorks": [
+        "annals and histories",
+        "annals",
+        "agricola germania dialogue on orators",
+        "annales et historiae",
+        "agricola and germania"
+      ]
+    },
+    {
+      "surname": "bellarmino",
+      "ustcEditions": 214,
+      "ustcDistinctWorks": 166,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "institutiones linguae hebraicae, ex optimis quibusque auctoribus collectae, et quanta fieri potvit brevitate, ac perspicuitate in commodissimum ordinem digestae, a roberto bellarmino societatis jesu.",
+        "disputationes roberti bellarmini politiani, societatis jesu, de controversiis christianae fidei, adversus huius temporis haereticos, tribus tomis comprehensae.",
+        "disputationes roberti bellarmini politiani, societatis jesu, de controversiis christianae fidei, adversus huius temporis haereticos, tribus -+is comprehensae. ad s. d. n.sixtum v.pont.max.",
+        "disputationes roberti bellarmini politiani societatis jesu, de controversiis christianae fidei, adversus huius temporis haereticos, tribus tomis comprehensae. editio secunda priore correctior. ad s. d. n. sixtum v. pont. max.",
+        "ivdicium roberti bellarmini politiani, societatis jesu theologi, de libro, quem lutherani vocant, concordiae."
+      ],
+      "sampleCatalogWorks": [
+        "spiritual writings"
+      ]
+    },
+    {
+      "surname": "kempis",
+      "ustcEditions": 207,
+      "ustcDistinctWorks": 115,
+      "catalogTranslations": 39,
+      "catalogDistinctWorks": 10,
+      "sampleUstcTitles": [
+        "imitatio christi",
+        "de perfecta imitatione christi, & contemptu omnium vanitatum hujus mundi, opus plane evangelicum, omnibus christusamantibus utilissimum, in quatuor divisum libros",
+        "libellus vere aureus de christo imitando ex fontibus sacrae potissimum scriptura excerptus",
+        "libellus vere aureus de christo imitando. de meditatione cordis",
+        "libellus vere aureus de christo imitando, ex fontibus sacrae potissimum scripturae excerptus. accessit opus de cordis meditatione, cum speculo evangelici sermonis"
+      ],
+      "sampleCatalogWorks": [
+        "imitatio christi",
+        "the imitation of christ",
+        "meditations for holy communion",
+        "on the love of god",
+        "imitation of christ"
+      ]
+    },
+    {
+      "surname": "forster",
+      "ustcEditions": 207,
+      "ustcDistinctWorks": 202,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "tomus tertius psalmorum selectorum quatuor & quinque, & quidam plurium uocum. tenor.",
+        "carmen gratulatorium, scriptum in honorem reverendi viri,domini m. pauli eberi, patris ao praeceptoris benè de se meriti, cum renunciaretur pastor ecclesiae witebergensis 4.die septemb. anni 1558. à johanne forstero augustano juniore.",
+        "de historia juris civilis romani libri tres.ll in quibus traditur ortus romani imperii: subiiciuntur mutationes insignes magistratuum in repub. rom. & caussae: initia & progressus juris civilis: nec non secundum seriem annorum catalogus legum denique. vitae veterum jureconsultorum",
+        "de successionibus quae ab intestato deperuntur, libri quinque. in quibus ea quae ad hanc successionum tractationem tam ex civili quàam feudorum jure pertinent explicantur adiunctum est in fine, quid saxonum moribus in successione viri & uxoris observetur index.",
+        "ephemerides meteorographicae richardi forsteri londinensis artium ac medicine doctoris, ad annum domini 1575. & positum finitoris londini emporii totius angliae nobiliss. diligenter examinatae, cuius"
+      ],
+      "sampleCatalogWorks": [
+        "aeneid of virgil"
+      ]
+    },
+    {
+      "surname": "grotius",
+      "ustcEditions": 201,
+      "ustcDistinctWorks": 130,
+      "catalogTranslations": 8,
+      "catalogDistinctWorks": 5,
+      "sampleUstcTitles": [
+        "epithalamion viri clarissimi, amplissimíque casparis kinschotii, & mariæ de chantraines dictæ brovxavx",
+        "batavia, sive epithalamion cornelio mylio & mariæ oldenbarneveldiæ dictum",
+        "sacra in quibus adamus exul tragoedia aliorumque eiusdem generis carminum cumulus",
+        "carmen in domumductionem nobilissimæ lectissimæque mariæ van der duyn viro prelustri reginaldo brederodio noviter nuptæ",
+        "mare liberum sive de jure quod batavis competit ad indicana commercia dissertatio"
+      ],
+      "sampleCatalogWorks": [
+        "de jure belli ac pacis the rights of war and peace",
+        "mare liberum the freedom of the seas",
+        "de jure praedae commentarius",
+        "de iure praedae commentarius",
+        "commentary on the law of prize and booty"
+      ]
+    },
+    {
+      "surname": "comenius",
+      "ustcEditions": 201,
+      "ustcDistinctWorks": 181,
+      "catalogTranslations": 13,
+      "catalogDistinctWorks": 8,
+      "sampleUstcTitles": [
+        "inscriptiones antique totius orbis romani in corpus redactae",
+        "christophori pflugii, epistola monitoria, sive praefatio ad lectorem, novae editioni plauti, quae adornatur modo, praeponenda, in qua potissimum fatuitas apologiae j. p. parei contra j. gruterum, ejusque item fides in emendando plauto detegitur",
+        "aureae januae linguarum reseratae : sive seminarii linguarum scientiarum et artium omnium",
+        "ianua linguarum reserata. sive seminarium linguarum, et scientiarum omnium. hoc est: compendiosa latinam ... linguam …",
+        "ianua linguarum reserata. sive seminarium linguarum et scientiarum omnium. hoc est, compendiosa latinam (& quamlibet aliam) linguam, una cum scientiarum artiumq[ue] fundamentis, perdiscendi methodus, sub titulis centum, periodis mille, comprehensa , ["
+      ],
+      "sampleCatalogWorks": [
+        "pampaedia",
+        "orbis sensualium pictus",
+        "panaugia",
+        "panglottia",
+        "pansophia"
+      ]
+    },
+    {
+      "surname": "schneider",
+      "ustcEditions": 200,
+      "ustcDistinctWorks": 183,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "carmen gratulatorium ad optimae indolis adolescentes. hilarium porstorsium. johannem apianum. samuelem mosbachium. adamum arnoldum. johannem amdor, et andream nitnerum. quid primo liberalium artium gradu inter alios ornati, 4. id: martii pronunciabantur. scriptum ab erasmo schneider martispyrgensi.",
+        "carmen de passione et morte jesu christi, filii dei, salvatoris ac redemptoris hominum unici. ad amplissimos viros, pietate, prudentia, doctrina, omnique virtutum genere ornatissimos consules, et caeteros reipub. ortrantiensis senatores, dominos patronos ac mecoenates suos perpetua observantia colendissimos. scriptum à m. andrea schneider lipsiensi.",
+        "versus epithalamii, in nuptias doctrinae eruditione, pietatis et virtutis laude ornatissimi viri, dn. christophori rudigeri, scholae in maioribus salinis saxonicis moderatoris, et margaritae andreae rudeburgeri, civis seruestensis, piae memoriae, filiae, compositi ab affine et amicis.",
+        "inauguralia theoremata de syncope , quae jehovae opt. max. dio adfulgente praesidio, consensu, decreto iussuq[ue] amplissimorum, magnifici [et] celeberrimi, in incluta basileensium academia, senatus medici, procerum, pro doctorali laurea, insignibus ac pr",
+        "disputatio de natura logicae aristotelicae : 1. appellationibus sc: 2. causis. 3. definitione. 4. divisione. 5. ordine didascalico , quam ... ad diem 5. 10. ... examinandam proponit m. johannes schneider crimmizensis. respondente francisco uranio isennace"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "textor",
+      "ustcEditions": 192,
+      "ustcDistinctWorks": 168,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "sermo de passione christi",
+        "sermo de passione christi. anselmus: dialogus de passione christi. bernardus: de planctu b.v.m",
+        "praeparamentum christiani hominis ad mortem",
+        "institutiones succincte in rite faciendam ex vera penitentia confessionem sacramentalem et pro mortiferis criminibus perfectam plenamque satisfactionem ad comunem utilitatem: piuque profectum scholastice juuentutis gymnasii. erphurdieñ emaculantur hic que in priore erant libello labecule: adiectis plerisque ex sacrario litterarum sacrarum",
+        "oratio habita erphurdie pro jurisconsultorum ornatissimo collegio in solennibus sacris divi tutelaris juonis: per judocum textoris winshemium."
+      ],
+      "sampleCatalogWorks": [
+        "ecclesia a dialogue"
+      ]
+    },
+    {
+      "surname": "andreae",
+      "ustcEditions": 185,
+      "ustcDistinctWorks": 174,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "quaestiones super xii libros metaphysicae aristotelis.",
+        "de officio missae",
+        "quaestiones super xii libros metaphysicae aristotelis",
+        "quaestiones de tribus principiis rerum naturalium. with additions by laurentius ruscius. franciscus de maioranis: expositio super octo libros physicorum aristotelis; tractatus formalitatum; de principio complexo; de terminis theologicis. thomas aquinas: d",
+        "scriptum in artem veterem aristotelis et in divisiones boethii."
+      ],
+      "sampleCatalogWorks": [
+        "confessio fraternitatis"
+      ]
+    },
+    {
+      "surname": "hartmann",
+      "ustcEditions": 184,
+      "ustcDistinctWorks": 173,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "psalmus secundus. quare fremverunt gentes etc. sapphico carmine redditus, ad integerrimos viros, virtute et pietate praestantes, senatores oppidi mysnici delicii",
+        "dvo psalmi. lxxx viii . domine deus salutis meae. et xci. qui habitat in abdito altissimi etc. hoc praecipuè tempore saepe repetendi, elegiaco carmine redditi, ad integerrimum virum, virtute et pietate praestantem d. valerianum kvhn, senatorem vuittebergensem atque affinem meum omni observantia colendum",
+        "carmen eucharisticum pro exoptato et felici reditu clarisimi et reverendisimi viri christophori stymmelii sacrae theologiae doctoris, martispyrgo ab illustrissimis principibus pomeraniae ad ecclesiam et scholam stettinensium revocati",
+        "epithalamium in nuptias clarissimi ac praestantissimi viri, d. heliae ab ofenbach, ll. licentiati, et honestissimae virginis marthae à francken, ampliss. viri d. sebastiani à francken filiae sponse. scriptum à m. chunrado hartmanno groenenbergense.",
+        "carmen. in honorem coniugii benedicti fuchsii cum catharina framholts."
+      ],
+      "sampleCatalogWorks": [
+        "practika"
+      ]
+    },
+    {
+      "surname": "antoninus",
+      "ustcEditions": 183,
+      "ustcDistinctWorks": 123,
+      "catalogTranslations": 8,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "confessionale: defecerunt scrutantes scrutinio. johannes chrysostomus: sermo de poenitentia",
+        "confessionale: defecerunt scrutantes scrutinio",
+        "confessionale: defecerunt scrutantes scrutinio. johannes chrysostomus, sermo de poenitentia",
+        "de censuris ecclesiasticis, sive de excommunicationibus. de sponsalibus et matrimonio. paulus ii: bulla 11 may 1465, \"cum omnibus iudiciis\". paulus ii: bulla 23 nov. 1464, \"cum detestabile scelus\". bulla 3 mar. 1469, \"etsi dominici gregis\". pius ii: const",
+        "confessionale: defecerunt scrutantes scrutinio."
+      ],
+      "sampleCatalogWorks": [
+        "meditations"
+      ]
+    },
+    {
+      "surname": "granada",
+      "ustcEditions": 182,
+      "ustcDistinctWorks": 141,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "explicatio copiosior concionis habitae in consecratione reverendissimi d. antonii pinarii viri laudatissimi de officio et moribus episcoporum aliorumque praelatorum",
+        "stymulus pastorum ex gravissimis sanctorum patrum sententiis concinnatus. in quo agitur de vita et moribus episcorumque praelatorum d. d. bartholomeu a martyribus, de officio et moribus episcoporum f. ludovici granatensis",
+        "de officio et moribus episcoporum habita olyssip. in consecratione reverendissi d. antonii pinarii episcopi mirandeae",
+        "sequuntur quinque de poenitentia conciones",
+        "memoriale della vita christiana, nel quale si tratta tutto quello, che deve fare un christiano dal principio della conversione, fin'alla perfettione, et particolarmente si tratta della confessione, & communione. composto dal reverendo padre fra luigi di granata, alquale habbiamo aggiunte le auttorità & luoghi della sacra scrittura"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "quintilianus",
+      "ustcEditions": 181,
+      "ustcDistinctWorks": 139,
+      "catalogTranslations": 6,
+      "catalogDistinctWorks": 5,
+      "sampleUstcTitles": [
+        "institutiones oratoriae.",
+        "declamationes minores.",
+        "quintilianus cum commento",
+        "declamationes cxxxvi",
+        "institutionum oratoriarum libri duodecim quam emendatissimi sine vllis commentariis"
+      ],
+      "sampleCatalogWorks": [
+        "the minor declamations",
+        "major declamations",
+        "institutio oratoria",
+        "institutio oratoria orators education",
+        "declamations"
+      ]
+    },
+    {
+      "surname": "durand",
+      "ustcEditions": 180,
+      "ustcDistinctWorks": 132,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "rationale divinorum officiorum",
+        "speculum judiciale",
+        "rationale divinorum officiorum.",
+        "speculum judiciale. with the additions of johannes andreae. berengarius fredoli: inventarium speculi judicialis",
+        "speculum judiciale. additiones ad duranti speculum judiciale."
+      ],
+      "sampleCatalogWorks": [
+        "rationale divinorum officiorum"
+      ]
+    },
+    {
+      "surname": "weber",
+      "ustcEditions": 174,
+      "ustcDistinctWorks": 167,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "disputatio de ordine , quam ... consentiente senatu philosophico in electorali witeberga publice proponit m. johannes weberus ohrdruffio-thuringus, respondente daniele fabro, stetino-pomerano. iv. iduum ianuar. ...",
+        "diaskepseōn anthrōpologinōn exercitatio quarta de arteriis, nervis, carne, adipe, cute et partibus consimilibus non viventibus, aspirante ac patrocinante trin-uno in illustri lipsensi academia proposita a m. anania webero lindenhaynensi respondente johanne georgio krieg, meinung. fr. ad diem 28. octob.",
+        "diaskepseōn anthrōpologikōn exercitatio quinta de ventre infimo eiusque partibus tam nutritioni quam generationi ancillantibus, ut et pedibus proxime cum eodem cohaerentibus , aspirante ac patrocinante trin-uno ... in illustri lipsensi academia ... propos",
+        "de cohaerentia liberi arbitrii et contingentiae rerum, cum scientia et praedestinatione divina. disputatio theologica quam in auspicio anni etc. octogesimi octaui die ianuarii publicé in academia moguntina, pro licentia in ss. theologia consequenda, proponet ac tuebitur christophorus vveberus ss. theologiae baccalaureus formatus, canonicus ecclesiae ss. petri et alexandri, apud aschaffenburgum etc. praeside sibi á facultate theologica ibidem designato.",
+        "de cohaerentia liberiarbitrii et contingentiae rerum, cum scientia et praedestinatione divina. disputatio theologica quam deo bené propitio, in auspicio anni etc. octogesimi octaui, die ianuarii, publicé in academia moguntina, pro licentia in ss. theologia consequenda, proponet ac tuebitur. christophorus vveberus ss. theologiae baccalaureus formatus, canonicus ecclesiae ss. petri et alexandri, apud aschaffenburgum etc. praeside sibi á facultate theologica ibidem designato."
+      ],
+      "sampleCatalogWorks": [
+        "the sense of touch",
+        "on the tactile senses"
+      ]
+    },
+    {
+      "surname": "isocrates",
+      "ustcEditions": 173,
+      "ustcDistinctWorks": 148,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "praecepta ad demonicum. plutarchus: de liberis educandis ( s. hieronymus: de officiis liberorum erga parentes",
+        "oratio de laudibus helenae historiae",
+        "orationes [greek]. ed: demetrius chalcondylas",
+        "praecepta ad demonicum",
+        "oratio de laudibus helenae. historiae."
+      ],
+      "sampleCatalogWorks": [
+        "isocrates loeb classical library vol iii only"
+      ]
+    },
+    {
+      "surname": "barclay",
+      "ustcEditions": 168,
+      "ustcDistinctWorks": 119,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "in gratiam lectissimi juvenis, veteris et veri amici sui, d. andrea vaes, publicum singularis doctrinae testimonium accipientis",
+        "ad melchiorem moretum carmen, lovanii, 12.1597",
+        "oratio pro eloquentia ad v. cl. ludovicum servinum",
+        "in publ. statii papinii thebaidis libros iiii commentarii et in totidem sequentes notae, cum argumentis, authore jeanne barclaio.",
+        "maximo potentissimoque monarchae iacobo primo, britanniarum regi semper augusto: carmen gratulatorium /"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "gratianus",
+      "ustcEditions": 166,
+      "ustcDistinctWorks": 110,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "decretum (cum apparatu bartholomaei brixiensis). johannes diaconus: summarium, seu flos decreti",
+        "decretum.",
+        "rubricae decreti",
+        "decretum (cum apparatu bartholomaei brixiensis)",
+        "decretum abbreviatum; stilus et practica curiarum"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "heinsius",
+      "ustcEditions": 162,
+      "ustcDistinctWorks": 152,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "carmen in honorem jacobis corenii cum juris utriusque doctor publice renunciaretur",
+        "apotheosis georgii paludani rerum per zelandiam bellicarum legati, apud wallachos, ulissingae mortui",
+        "elegia in discessum ornatissimi doctissimiique juvenis josiae heynsii, cognati carissimi",
+        "carmen honori nuptiarum eximii virtute, juvenis petri coenensis et virginis sarae petri merhauthani dedicatum",
+        "carmen nuptiale petro schriverio ab yverendeel sponso et annae guilelmiae ab ara sponsae"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "pontano",
+      "ustcEditions": 158,
+      "ustcDistinctWorks": 138,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 5,
+      "sampleUstcTitles": [
+        "[singularia iuris]",
+        "singularia juris",
+        "singularia iuris",
+        "consilia et allegationes; oratio habita in concilio basiliensi; sermo editus in die s. thomae in basilea. with table by baptista de brendis",
+        "repetitio rubricae de arbitriis"
+      ],
+      "sampleCatalogWorks": [
+        "baiae",
+        "dialogues volume 1 charon and antoninus",
+        "on married life eridanus",
+        "the virtues and vices of speech",
+        "eclogues garden of the hesperides"
+      ]
+    },
+    {
+      "surname": "lucanus",
+      "ustcEditions": 153,
+      "ustcDistinctWorks": 105,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "pharsalia.",
+        "pharsalia",
+        "pharsalia.  rev: johannes taberius",
+        "pharsalia. prelim: petrus de windsheim (eolicus). johannes sulpitius verulanus: poemata",
+        "pharsalia. rev: johannes taberius"
+      ],
+      "sampleCatalogWorks": [
+        "pharsalia"
+      ]
+    },
+    {
+      "surname": "meyer",
+      "ustcEditions": 152,
+      "ustcDistinctWorks": 151,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "oratio habita in nova achademia franckfordiana cis oderam per venerabilem virum petrum meyer de dhurñ artium et sacretheologie profossorem in dectoratu eiusdem.",
+        "almi confessoris et anachorete beati: helueci orum primi evangeliste et apostoli: a sancto petro missi vita: iam pridem exarata.",
+        "compendium chronicorum flandriae, per jacobum meyerum balliolanum. opus nunc recens aeditum",
+        "compendium chronicorum flandriae, per jacobum meyerum balliolensem. opus nunc recens aeditum",
+        "in utranque d. pauli epistolam ad corinthios, commentarii d. sebastiani meieri, ad expositionem patru orthodoxorum d. chrysostomi, augustini, ambrosii, aliorumque accommodati."
+      ],
+      "sampleCatalogWorks": [
+        "philosophy as interpreter of scripture"
+      ]
+    },
+    {
+      "surname": "boyle",
+      "ustcEditions": 151,
+      "ustcDistinctWorks": 140,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "summa veneratio deo ab humano intellectu debita, ob sapientiam praesertim ac potentiam",
+        "tentamina quædam physiologica diversis temporibus & occasionibus conscripta à roberto boyle nobili anglo, ex anglico in latinum sermonem translata.",
+        "nova experimenta physico-mechanica de vi aeris elastica, & ejusdem effectibus, facta maximam partem in nova machina pneumatica, et ad (nepotem suum) nobilissimum dnum carolum vicecomitem de dungarvan, illustrissimi comitis de corke snmmi [sic] regni hyberniæ thesaurarii filium primo-genitum, literis pridem transmissa. ab honoratissimo dno roberto boyle, armig. ex anglico in latinum noviter conversa.",
+        "tentamina quædam physiologica diversis temporibus & occasionibus conscripta à roberto boyle ... ; ex anglico in latinum sermonem translata.",
+        "specimen unum atque alterum, e quibus constet, quantoperè experimenta chymica philosophiæ corpuscularis illustrationi inserviant"
+      ],
+      "sampleCatalogWorks": [
+        "phaedra",
+        "works"
+      ]
+    },
+    {
+      "surname": "gentili",
+      "ustcEditions": 150,
+      "ustcDistinctWorks": 149,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "theoremata ad varias disciplinas pertinentia patavii discutienda a francisco gentili siculo proposita. defendet franciscus gentilis preasidio sui eccellentissimi praeceptoris d.d. francisci piccolominei, anno a christo nato 1570",
+        "lectionum & epistolarum quae ad ius civile pertinent",
+        "scipii gentilis in xxv. davidis psalmos epicae paraphrases",
+        "de juris interpretibus dialogi sex",
+        "paraphrasis aliquot psalmorum davidis, carmine heroico. scipio gentili italo auctore"
+      ],
+      "sampleCatalogWorks": [
+        "de legationibus libri tres"
+      ]
+    },
+    {
+      "surname": "buchanan",
+      "ustcEditions": 149,
+      "ustcDistinctWorks": 118,
+      "catalogTranslations": 13,
+      "catalogDistinctWorks": 7,
+      "sampleUstcTitles": [
+        "jephthes sive votum tragoedia",
+        "de caleto nuper ab henrico ii francorum rege invictissimo recepta, carmen",
+        "georgii buchanani scoti poetae eximii franciscanus & fratres, quibus accessere varia eiusdem et aliorum poëmata",
+        "varia poemata",
+        "psalmorum davidis paraphrasis poetica, nunc primum edita."
+      ],
+      "sampleCatalogWorks": [
+        "baptistes the baptist",
+        "de iure regni",
+        "the franciscan friar a satire",
+        "translation of buchanans latin psalms into english verse",
+        "the sacred dramas of george buchanan"
+      ]
+    },
+    {
+      "surname": "nepos",
+      "ustcEditions": 147,
+      "ustcDistinctWorks": 120,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 4,
+      "sampleUstcTitles": [
+        "super arte et compendio, mri iohannis de pastrana materies",
+        "materies grammaticae",
+        "libellus de viris illustribus",
+        "de vita catonis senioris. sextus aurelius de vitis caesarum. benvenutus imolensis de eadem re",
+        "cornelius nepos qui contra fidem veteris inscriptionis plinius aut svetonius appellabatur"
+      ],
+      "sampleCatalogWorks": [
+        "lives",
+        "collected works",
+        "on great generals on historians",
+        "three lives"
+      ]
+    },
+    {
+      "surname": "groot",
+      "ustcEditions": 147,
+      "ustcDistinctWorks": 127,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "pro veritate religionis christianae batavie",
+        "epistolae",
+        "theses de praediis et aliis rebus minorum sine decreto non alienandis vel. obligandis. 09.09",
+        "disputatio trigesima quinta de vulgari et pupillari substitutione. die 03.05",
+        "theses medicae de morbis mesenterii, et pancreatis. 08.12"
+      ],
+      "sampleCatalogWorks": [
+        "imitatio christi"
+      ]
+    },
+    {
+      "surname": "romanus",
+      "ustcEditions": 146,
+      "ustcDistinctWorks": 128,
+      "catalogTranslations": 5,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "elegia gratulatoria, ad reverendissimum, illustrissimumque principem, ac dominum, dominum ernestum administratorem episcopatus frisingensis, comitem palatinum rheni, superioris, et inferioris boiariae ducem, etc. dominum suum clementissi.mum. a ludovico romano juris utriusque doctore, consiliario, et secretario frisingensi conscripta.",
+        "elegia gratulatoria, ad reverendissimum, illustrissimumque principem, ac dominum, dominum ernestum administratorem episcopatus frisingensis, comitem palatinum rheni, superioris, et inferioris boiariae ducem et c. dominum suum clementissimum. a ludovico romano juris utriusque doctore, consiliario, et secretario frisingensi conscripta.",
+        "de arte rethorica ad illustriss. principem alexandrum, ducem slucensen et copeliensem, libri quatuor m. nicolai romani pruteni.",
+        "praeside deo opt. max. conclusiones subsequentes de mora tam creditorum qua'm debitorum, pro impetranda suprema laurea in v.i. in alma basiliensium academia publicè defendere conabitur franciscus romanus anhaltinus. disputabuntur in aula i.c.ad xiii. julii, hora consueta.",
+        "deo dante themata de vero sanguinis missionem indicante et indicati recta administratione. pro loco in facultate medica consequendo ad disputandum in inclyta lipsiensium academia publicè proponet: gulielmus romanus philosophiae et medicinae doctor. mense martio d. 23. hora et loco consuetis."
+      ],
+      "sampleCatalogWorks": [
+        "de ecclesiastica potestate",
+        "de regimine principum"
+      ]
+    },
+    {
+      "surname": "pufendorf",
+      "ustcEditions": 143,
+      "ustcDistinctWorks": 115,
+      "catalogTranslations": 8,
+      "catalogDistinctWorks": 6,
+      "sampleUstcTitles": [
+        "carmen seculare, quo defunctorum illustrissimorum principum ducum saxoniae, ut et clarissimorum praeceptorum electoralis gymnasii grimmensis piis umbris more solenni parentavit anno jubilaeo primo mdcl. xviii. kal. 10. samuel pufendörffer, chemnicensis",
+        "de igne nativo disquisitio , quam inclutae facultatis philosophicae permissu p.p. in alma philuraea praeses m. esaias pufendörffer, chemnicensis; [et] respondens adam calisius, wola-silesius. xvi. calend. decembr. ... anno ... mdcl.",
+        "de druidibus dissertatio , quam inclutae facultatis philosophicae permissu p.p. in alma philuraea praeses m. esaias pufendörffer, chemnicensis [et] respondens johann. christianus stolbergk, gaudicensis misn. iii. non. 10. h.l.q.c. anno dionysiano mdcl.",
+        "de temperamentis disquisitio, quam permissu inclutae facultatis philosophicae in alma philurea praeside m. esaia pufendörffern, chemnic. p. p. johann-jacobus krause, landshut-siles. h.l.q.s. anno mdclii. xvi. calend. februar",
+        "dissertatio de legibus salicis, pro loco in inclyta facultate philosophica, quae lipsiae est, obtinendo, p. p. m. esaias pufendörffer, chemnicensis anno mdcli. quarto nonas octobreis."
+      ],
+      "sampleCatalogWorks": [
+        "de statu naturali hominum",
+        "de officio hominis et civis iuxta legem naturalem",
+        "of the nature and qualification of religion",
+        "de iure naturae et gentium",
+        "present state of germany"
+      ]
+    },
+    {
+      "surname": "caesarius",
+      "ustcEditions": 138,
+      "ustcDistinctWorks": 118,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "apologia in mali consulentes dialectica in decem tractatus digesta",
+        "dialectica johannis caesarii in decem tractatus digesta, omnia ferè eius artis praecepta non tam breviter quàm luculenter complectens, ab eodem nuper recognita, et adamussim castigata, necnon et locis aliquot locupletata, sed paucis, ut in quib. id operae pretiu videbatur. adiecta est praeterea in calce operis breviuscula appdix, in qua ex alcinoo philosopho platonico declarat quid sit philosophia, et quid item phus, et qualem illum esse oporteat: tu ex marsi. fici. quot sint apud phons disserendi genera.",
+        "dialectica. tractatus digesta, omnia fere eius artis praecepta tam breviter qua luculenter complectens",
+        "compendiaria artis grammaticae institutio per joannem caesarium nuper congesta, autoribus cullprimis aspero juniore, aelio donato et phoca, cum epitome de constructione partium orationis, et de figuris constructionis",
+        "dialectica in decem tractatus digesta nuper recognita et locupleta. item ex alcinoo quid sit philosophia tum ex marsilio ficino philosophorum differendi genera quod sint"
+      ],
+      "sampleCatalogWorks": [
+        "sermons"
+      ]
+    },
+    {
+      "surname": "descartes",
+      "ustcEditions": 136,
+      "ustcDistinctWorks": 76,
+      "catalogTranslations": 18,
+      "catalogDistinctWorks": 6,
+      "sampleUstcTitles": [
+        "de homine figuris et latinitate donatus a florentio schuyl",
+        "epistola renati des-cartes ad gisbertum voetium. in qua examinantur duo libri unus de confraternitate marianâ, alter de philosophiâ cartesianâ",
+        "meditationes de prima philosophia",
+        "objectiones septimae in meditationes de prima philosophia",
+        "principia philosophiæ"
+      ],
+      "sampleCatalogWorks": [
+        "meditationes de prima philosophia",
+        "discourse on method and meditations on first philosophy",
+        "philosophical writings ethics",
+        "meditations on first philosophy",
+        "principia philosophiae"
+      ]
+    },
+    {
+      "surname": "claudianus",
+      "ustcEditions": 134,
+      "ustcDistinctWorks": 95,
+      "catalogTranslations": 7,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "de raptu proserpinae",
+        "de raptu proserpinae.",
+        "opera.",
+        "commentarius primus in raptum proserpinae cl. claudiani",
+        "claudianus de raptu proserpinae."
+      ],
+      "sampleCatalogWorks": [
+        "panegyric on the fourth consulate of honorius"
+      ]
+    },
+    {
+      "surname": "gellius",
+      "ustcEditions": 122,
+      "ustcDistinctWorks": 60,
+      "catalogTranslations": 24,
+      "catalogDistinctWorks": 8,
+      "sampleUstcTitles": [
+        "noctes atticae.",
+        "noctes atticae",
+        "noctium atticarum commentarii",
+        "noctium atticarum libri xx. summa accuratione ad recognitionem beroaldinam repositi cum alphabetico indice",
+        "noctium atticarum libri xx"
+      ],
+      "sampleCatalogWorks": [
+        "attic nights volume i books 15",
+        "attic nights volume ii books 613",
+        "attic nights volume iii books 1420",
+        "stories from aulus gellius",
+        "stories selections  adaptions from the noctes atticae"
+      ]
+    },
+    {
+      "surname": "petrarca",
+      "ustcEditions": 122,
+      "ustcDistinctWorks": 96,
+      "catalogTranslations": 23,
+      "catalogDistinctWorks": 13,
+      "sampleUstcTitles": [
+        "historia griseldis",
+        "septem psalmi poenitentiales. pseudo- petrarca: novem psalmi confessionales",
+        "de remediis utriusque fortunae",
+        "vita julii caesaris",
+        "secretum de contemptu mundi. de vita solitaria"
+      ],
+      "sampleCatalogWorks": [
+        "songs and sonnets",
+        "the life of solitude",
+        "petrarchs secret",
+        "rerum familiarium libri",
+        "remedies for fortune fair and foul"
+      ]
+    },
+    {
+      "surname": "filelfo",
+      "ustcEditions": 119,
+      "ustcDistinctWorks": 74,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "epistolae",
+        "epistola ad nicolaum tronum",
+        "de sacerdotio salvatoris nostri jesu christi",
+        "novum epistolarium (ed: ludovicus mondellus)",
+        "novum epistolarium"
+      ],
+      "sampleCatalogWorks": [
+        "odes",
+        "on exile"
+      ]
+    },
+    {
+      "surname": "bidermann",
+      "ustcEditions": 119,
+      "ustcDistinctWorks": 97,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "votum cum illustris et generosus comes d. d. albertus e comitibus imperii sacri quatemvir, comes in svvartzburgk, dominus in arnstadt, sondershausen et leutenbergk celebraret solennitatem nuptialem cum illustri et generosa sponsa juliana, nata è illustri familia nassauiensi 19. februarii arnstadii. scriptum â m. philippo biderman ecclesiae blanckenburgensis pastore.",
+        "oratio manassae xiiii. regis in regno judae, quam captus amerodacho assyriorum rege, et in babylonem abductus, in carceris custodia inter catastas et catenas ferreas veris ad deum gemitibus edidit, et peccatorum remissionem in oculis dei invenit. 2. paralip. 33",
+        "assertiones juridicae, desumtae ex c. quo ties, ext. de testib. & l. ubi numerus.ff. eod. tit. adeoque traditis ibi per dd. quas, deo opt. max. auspice, ex decreto amplißimi jurisconsultorum collegii, in inclyta basiliensium academia, pro supremo in utroque jure consequendo gradu, defendere conabitur, m. laurentius bidermannus, servestanus, ad diem 11. maii. hora & loco. consuetis.",
+        "theses theologicae, ex omnibus d. thomae partibus : in academia ingolstadiensi, ad disputationem publicam, anno m.dc.vi. die 26. 06.propositae , respondente jacobo bidermano societatis jesu, ss. theologiae studioso",
+        "tragoediae de d. adriano nicomediae bithyniae passo sub gal. maximiano aug. christ anno cccxi. : monaci in ducali societatis jesu gymnasio datae, periochae , [jakob bidermann]"
+      ],
+      "sampleCatalogWorks": [
+        "cosmarchia"
+      ]
+    },
+    {
+      "surname": "vergilius",
+      "ustcEditions": 116,
+      "ustcDistinctWorks": 85,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "falconia] proba. centona virgilii vetus & novum testamentum continens",
+        "proverbiorum libellus",
+        "de inventoribus rerum",
+        "de inventoribus rerum libri tres",
+        "de inventoribus rerum libri tres nuper emendati"
+      ],
+      "sampleCatalogWorks": [
+        "de inventoribus rerum"
+      ]
+    },
+    {
+      "surname": "zabarella",
+      "ustcEditions": 115,
+      "ustcDistinctWorks": 96,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "lectura super clementinis",
+        "repetitio super capitulo perpendimus de sententia excommunicationis",
+        "consilia",
+        "super clementinis, cum annotationibus et additionibus philippi de' franchis et nicolai superantii. bernardinus benalius, nicolaus superantius, epistolae ad hieronymum trivisanum abbatem",
+        "consilia, responsiones et allegationes. preceded by: felinus sandeus: epistola laurentio cybo"
+      ],
+      "sampleCatalogWorks": [
+        "on methods volume 1 books iii"
+      ]
+    },
+    {
+      "surname": "bullinger",
+      "ustcEditions": 114,
+      "ustcDistinctWorks": 103,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "de origine erroris, in divorum ac simulachrorum cultv. per heinrychum bullingerum.",
+        "de origine erroris, in negocio eucharistiae, ac missae. appendix. de romani pontificis authoritata, quandó, à quibus quae arte, in tantam imperii gloriam subuectus sit.",
+        "de hebdomadis, quae apud danielem sunt, opusculum.",
+        "de prophetae officio, et quomodo digne administrari poßit, oratio",
+        "de testamento seu foedere dei unico & aeterno heinrychi bullingeri brevis expositio."
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "molina",
+      "ustcEditions": 114,
+      "ustcDistinctWorks": 98,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "de hispanorum primogeniis libri quatuor",
+        "de hispanorum primogeniorum origine ac natura libri quatuor. nunc secunda ac postrema editione ab ipso authore antequam vita functus esset correcti, aucti et emendati cum indice tum capitum et locorum juris, tum rerum et sententiarum locupletissimo",
+        "de hispanorum primogeniorum origine ac natura libri quatuor, authore ludovico de molina jurisconsulto hispano, in summo regnorum castellae senatu, gratiae et justitiae consiliario nunc tertia ac postrema editione expurgati. cum indice",
+        "concordia liberi arbitrii cum gratiae donis, divina praescientia, providentia, praedestinatione, et reprobatione, ad nonnullos primae partis d. thomae articulos",
+        "appendix ad concordiam liberi arbitrii cum gratiae donis, divina praescentia, providentia, praedestinatione, et reprobatione"
+      ],
+      "sampleCatalogWorks": [
+        "concordia"
+      ]
+    },
+    {
+      "surname": "turrettini",
+      "ustcEditions": 114,
+      "ustcDistinctWorks": 97,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 0,
+      "sampleUstcTitles": [
+        "theses theologicae de purgatorio",
+        "disputatio theologica de christo servatore, id est, cur & quaratione servator sit",
+        "disputatio theologica de peccato originali",
+        "index librorum prohibitorum et expurgatorum bernardi de sandoval et roxas auctoritate et iussu editus de consilio supremi senatus s. generalis inquisitionis hispaniarum",
+        "index librorum prohibitorum et expurgatorum illms. ac r.d.d. bernardi de sandoval auctoritate & jussu editus, de consilio supremi senatus s. generalis inquisitionis hispaniarum"
+      ],
+      "sampleCatalogWorks": []
+    },
+    {
+      "surname": "huygens",
+      "ustcEditions": 113,
+      "ustcDistinctWorks": 104,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 2,
+      "sampleUstcTitles": [
+        "constantinus hughenius, illustrissimæ consæderatarum belgii provinciarum legationi à secretis, academiæ oxoniensi perpetuum florere. [in verse.]\",,,",
+        "otiorum libri sex",
+        "fr. henrici celsissimi arausionum principis, anni triumphalis",
+        "momenta desultoria. poëmatum libri xi",
+        "monumenta desultoria"
+      ],
+      "sampleCatalogWorks": [
+        "the pendulum clock",
+        "epigrammatic observations on england"
+      ]
+    },
+    {
+      "surname": "reuchlin",
+      "ustcEditions": 112,
+      "ustcDistinctWorks": 84,
+      "catalogTranslations": 2,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "vocabularius breviloquus. guarinus: ars diphthongandi. johannes de lapide: de arte punctandi; de accentu",
+        "vocabularius breviloquus. ars diphthongandi. de arte punctandi; de accentu",
+        "vocabularius breviloquus. guarinus veronensis: ars diphthongandi; johannes de lapide: de arte punctandi; de accentu",
+        "vocabularius breviloquus. add: guarinus: ars diphthongandi. johannes de lapide: de arte punctandi; de accentu",
+        "de verbo mirifico"
+      ],
+      "sampleCatalogWorks": [
+        "on the art of kabbalah"
+      ]
+    },
+    {
+      "surname": "werenfels",
+      "ustcEditions": 111,
+      "ustcDistinctWorks": 111,
+      "catalogTranslations": 1,
+      "catalogDistinctWorks": 1,
+      "sampleUstcTitles": [
+        "agenda: hoc est, formulae et ritus ecclesiastici, basileae in inauguratione neogamorum, paedobaptismo, ut & coena domini observari & peragi soliti: una cum instructione de administratione s. coenae apud aegrotos [lat. per petrum werenfels]",
+        "ode gratulatoria, ad ornatiß. & doctiß. iuvenem, dn. jo. jacobum werenfelsium, basileensem: cum a dn. m. ludovico lucio in philosophia magister solemniter crearetur, amoris ergo & honoris scripta a m. johan. jacobo werenfelsio basil. philo-theol.",
+        "ode gratulatoria, ad ornatiß. & doctiß. iuvenem, dn. jo. jacobum werenfelsium, basileensem : cum a ... dn. m. ludovico lucio ... in philosophia magister solemniter crearetur / amoris ergo & honoris scripta a m. johan. jacobo werenfelsio basil. philo-theol",
+        "melos alcaicum: ornatissimorum iuvenum pari, dn. christophoro hagenbachio, dn. johanni buxtorffio, basil. & clarorum parentum nomine, & propriae indolis atque expectationis commendatiori: cum laurea philosophica inaugurato contributa, in procinctu sacri starent studii, modulatum a m. joh. jacobo werenfelsio, basiliense, sacro-sanctae theol. st.",
+        "iambicum: virtute & doctrina ornatissimo iuveni, dn. hulderico scherbio basil.: cum bono suo merito, in patria academia, magisterii philosophici titulum & insignia nancisceretur, dedicatum, j. werenfels, s.t."
+      ],
+      "sampleCatalogWorks": [
+        "a dissertation concerning meteors of style"
+      ]
+    },
+    {
+      "surname": "lactantius",
+      "ustcEditions": 110,
+      "ustcDistinctWorks": 90,
+      "catalogTranslations": 33,
+      "catalogDistinctWorks": 13,
+      "sampleUstcTitles": [
+        "opera",
+        "opera. de resurrectione christi carmen",
+        "opera. s. venantius honorius clementianus fortunatus: de resurrectione christi carmen",
+        "opera.",
+        "de phoenice carmen. carmen de dolo et astutia mulierum"
+      ],
+      "sampleCatalogWorks": [
+        "apocalyptic writings",
+        "divine institutes",
+        "de ave phoenice",
+        "the works of lactantius",
+        "the works"
+      ]
+    },
+    {
+      "surname": "catullus",
+      "ustcEditions": 110,
+      "ustcDistinctWorks": 81,
+      "catalogTranslations": 148,
+      "catalogDistinctWorks": 57,
+      "sampleUstcTitles": [
+        "carmina. statius: sylvae.",
+        "carmina.",
+        "pelei et thetidis nuptiae (carmen lxiv)",
+        "carmina",
+        "epithalamium (carmen lxii). laurentius corvinus: in iovis natalem lucem. with additions by gregorius breitkopf"
+      ],
+      "sampleCatalogWorks": [
+        "poems",
+        "poems to lesbia",
+        "complete poetic works",
+        "complete poetry",
+        "carmina"
+      ]
+    },
+    {
+      "surname": "trithemius",
+      "ustcEditions": 110,
+      "ustcDistinctWorks": 85,
+      "catalogTranslations": 3,
+      "catalogDistinctWorks": 3,
+      "sampleUstcTitles": [
+        "de laudibus sanctissimae annae",
+        "institutio vitae sacerdotalis",
+        "de statu et ruina monastici ordinis",
+        "collatio de republica ecclesiae",
+        "de laudibus ordinis fratrum carmelitarum"
+      ],
+      "sampleCatalogWorks": [
+        "steganographia",
+        "the steganographia books iiv",
+        "antipalus maleficiorum"
+      ]
+    }
+  ],
+  "topUnmatchedAuthors": [
+    {
+      "surname": "ovidius naso",
+      "editions": 1432,
+      "works": 1066
+    },
+    {
+      "surname": "martini",
+      "editions": 1368,
+      "works": 1299
+    },
+    {
+      "surname": "vergilius maro",
+      "editions": 1262,
+      "works": 832
+    },
+    {
+      "surname": "müller",
+      "editions": 1262,
+      "works": 1192
+    },
+    {
+      "surname": "terentius afer",
+      "editions": 1018,
+      "works": 704
+    },
+    {
+      "surname": "augustinus",
+      "editions": 975,
+      "works": 746
+    },
+    {
+      "surname": "justinianus i",
+      "editions": 943,
+      "works": 677
+    },
+    {
+      "surname": "horatius flaccus",
+      "editions": 912,
+      "works": 632
+    },
+    {
+      "surname": "thomas aquinas",
+      "editions": 879,
+      "works": 704
+    },
+    {
+      "surname": "fabricius",
+      "editions": 813,
+      "works": 763
+    },
+    {
+      "surname": "stryk",
+      "editions": 792,
+      "works": 742
+    },
+    {
+      "surname": "meisner",
+      "editions": 750,
+      "works": 686
+    },
+    {
+      "surname": "deutschmann",
+      "editions": 723,
+      "works": 678
+    },
+    {
+      "surname": "bartolus de saxoferrato",
+      "editions": 647,
+      "works": 467
+    },
+    {
+      "surname": "strauch",
+      "editions": 593,
+      "works": 552
+    },
+    {
+      "surname": "bechmann",
+      "editions": 586,
+      "works": 515
+    },
+    {
+      "surname": "goclenius",
+      "editions": 584,
+      "works": 565
+    },
+    {
+      "surname": "aesopus",
+      "editions": 580,
+      "works": 344
+    },
+    {
+      "surname": "hunnius",
+      "editions": 570,
+      "works": 534
+    },
+    {
+      "surname": "schröter",
+      "editions": 561,
+      "works": 502
+    },
+    {
+      "surname": "struve",
+      "editions": 544,
+      "works": 474
+    },
+    {
+      "surname": "major",
+      "editions": 541,
+      "works": 493
+    },
+    {
+      "surname": "calov",
+      "editions": 533,
+      "works": 506
+    },
+    {
+      "surname": "sagittarius",
+      "editions": 528,
+      "works": 487
+    },
+    {
+      "surname": "villa dei",
+      "editions": 517,
+      "works": 131
+    },
+    {
+      "surname": "sennert",
+      "editions": 515,
+      "works": 468
+    },
+    {
+      "surname": "carpzov",
+      "editions": 510,
+      "works": 470
+    },
+    {
+      "surname": "coccejus",
+      "editions": 502,
+      "works": 490
+    },
+    {
+      "surname": "catholic church",
+      "editions": 496,
+      "works": 406
+    },
+    {
+      "surname": "despautère",
+      "editions": 492,
+      "works": 311
+    },
+    {
+      "surname": "nebrija",
+      "editions": 488,
+      "works": 261
+    },
+    {
+      "surname": "wedel",
+      "editions": 481,
+      "works": 401
+    },
+    {
+      "surname": "calixt",
+      "editions": 472,
+      "works": 405
+    },
+    {
+      "surname": "chyträus",
+      "editions": 464,
+      "works": 379
+    },
+    {
+      "surname": "hoornbeek",
+      "editions": 462,
+      "works": 457
+    },
+    {
+      "surname": "richter",
+      "editions": 450,
+      "works": 424
+    },
+    {
+      "surname": "sallustius crispus",
+      "editions": 436,
+      "works": 319
+    },
+    {
+      "surname": "baptista mantuanus",
+      "editions": 432,
+      "works": 253
+    },
+    {
+      "surname": "gueinz",
+      "editions": 430,
+      "works": 424
+    },
+    {
+      "surname": "leyser",
+      "editions": 430,
+      "works": 386
+    },
+    {
+      "surname": "kirchmaier",
+      "editions": 426,
+      "works": 392
+    },
+    {
+      "surname": "osiander",
+      "editions": 423,
+      "works": 382
+    },
+    {
+      "surname": "meier",
+      "editions": 420,
+      "works": 398
+    },
+    {
+      "surname": "revius",
+      "editions": 419,
+      "works": 419
+    },
+    {
+      "surname": "maresius",
+      "editions": 415,
+      "works": 408
+    },
+    {
+      "surname": "tedeschi",
+      "editions": 410,
+      "works": 336
+    },
+    {
+      "surname": "hofmann",
+      "editions": 409,
+      "works": 397
+    },
+    {
+      "surname": "rolfinck",
+      "editions": 402,
+      "works": 367
+    },
+    {
+      "surname": "besold",
+      "editions": 402,
+      "works": 377
+    },
+    {
+      "surname": "reusner",
+      "editions": 397,
+      "works": 378
+    },
+    {
+      "surname": "matthaeus",
+      "editions": 395,
+      "works": 372
+    },
+    {
+      "surname": "schurzfleisch",
+      "editions": 390,
+      "works": 345
+    },
+    {
+      "surname": "lauterbach",
+      "editions": 388,
+      "works": 356
+    },
+    {
+      "surname": "hahn",
+      "editions": 387,
+      "works": 346
+    },
+    {
+      "surname": "sebisch",
+      "editions": 373,
+      "works": 356
+    },
+    {
+      "surname": "camerarius",
+      "editions": 372,
+      "works": 334
+    },
+    {
+      "surname": "pius v",
+      "editions": 367,
+      "works": 318
+    },
+    {
+      "surname": "nicolai",
+      "editions": 363,
+      "works": 350
+    },
+    {
+      "surname": "scharf",
+      "editions": 363,
+      "works": 346
+    },
+    {
+      "surname": "del maino",
+      "editions": 360,
+      "works": 293
+    },
+    {
+      "surname": "bertius",
+      "editions": 360,
+      "works": 333
+    },
+    {
+      "surname": "schotanus",
+      "editions": 355,
+      "works": 340
+    },
+    {
+      "surname": "caselius",
+      "editions": 340,
+      "works": 329
+    },
+    {
+      "surname": "maccovius",
+      "editions": 336,
+      "works": 331
+    },
+    {
+      "surname": "senguerdius",
+      "editions": 335,
+      "works": 330
+    },
+    {
+      "surname": "sturm",
+      "editions": 325,
+      "works": 293
+    },
+    {
+      "surname": "himmel",
+      "editions": 325,
+      "works": 305
+    },
+    {
+      "surname": "musaeus",
+      "editions": 324,
+      "works": 301
+    },
+    {
+      "surname": "dannhauer",
+      "editions": 323,
+      "works": 309
+    },
+    {
+      "surname": "leusden",
+      "editions": 321,
+      "works": 311
+    },
+    {
+      "surname": "albinus",
+      "editions": 320,
+      "works": 302
+    },
+    {
+      "surname": "hippocrates",
+      "editions": 319,
+      "works": 288
+    },
+    {
+      "surname": "walther",
+      "editions": 316,
+      "works": 300
+    },
+    {
+      "surname": "mayer",
+      "editions": 316,
+      "works": 288
+    },
+    {
+      "surname": "ubaldi",
+      "editions": 315,
+      "works": 277
+    },
+    {
+      "surname": "pontanus",
+      "editions": 314,
+      "works": 259
+    },
+    {
+      "surname": "slevogt",
+      "editions": 311,
+      "works": 291
+    },
+    {
+      "surname": "essenius",
+      "editions": 310,
+      "works": 310
+    },
+    {
+      "surname": "dionysius carthusianus",
+      "editions": 308,
+      "works": 174
+    },
+    {
+      "surname": "voetius",
+      "editions": 308,
+      "works": 306
+    },
+    {
+      "surname": "bocer",
+      "editions": 302,
+      "works": 295
+    },
+    {
+      "surname": "valerius maximus",
+      "editions": 301,
+      "works": 181
+    },
+    {
+      "surname": "felwinger",
+      "editions": 301,
+      "works": 275
+    },
+    {
+      "surname": "spanheim",
+      "editions": 300,
+      "works": 274
+    },
+    {
+      "surname": "murmellius",
+      "editions": 296,
+      "works": 204
+    },
+    {
+      "surname": "petraeus",
+      "editions": 296,
+      "works": 267
+    },
+    {
+      "surname": "meibom",
+      "editions": 294,
+      "works": 269
+    },
+    {
+      "surname": "horst",
+      "editions": 290,
+      "works": 285
+    },
+    {
+      "surname": "titelmans",
+      "editions": 288,
+      "works": 192
+    },
+    {
+      "surname": "manuzio",
+      "editions": 286,
+      "works": 215
+    },
+    {
+      "surname": "godefroy",
+      "editions": 286,
+      "works": 251
+    },
+    {
+      "surname": "sixtus v",
+      "editions": 286,
+      "works": 250
+    },
+    {
+      "surname": "köber",
+      "editions": 285,
+      "works": 280
+    },
+    {
+      "surname": "sperling",
+      "editions": 284,
+      "works": 260
+    },
+    {
+      "surname": "clemens viii",
+      "editions": 283,
+      "works": 255
+    },
+    {
+      "surname": "dieterich",
+      "editions": 282,
+      "works": 252
+    },
+    {
+      "surname": "bartholin",
+      "editions": 280,
+      "works": 245
+    },
+    {
+      "surname": "bohemus",
+      "editions": 279,
+      "works": 277
+    },
+    {
+      "surname": "dilherr",
+      "editions": 273,
+      "works": 261
+    },
+    {
+      "surname": "bonacina",
+      "editions": 273,
+      "works": 220
+    }
+  ]
+}

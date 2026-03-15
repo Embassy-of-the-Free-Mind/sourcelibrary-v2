@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 15;
 
@@ -9,7 +9,7 @@ export const maxDuration = 15;
  * Fast snapshot of what's happening right now in the pipeline.
  * Designed for polling every 10-30s.
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const db = await getDb();
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);

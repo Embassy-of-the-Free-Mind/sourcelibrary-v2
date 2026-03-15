@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -84,13 +84,16 @@ export default function CurateClient() {
   const [applying, setApplying] = useState(false);
   const [applied, setApplied] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [infoId, setInfoId] = useState<string | null>(null);
 
   // Filters
   const [minQuality, setMinQuality] = useState(0.5);
   const [filterType, setFilterType] = useState('');
+  const [filterCollection, setFilterCollection] = useState('');
   const [showLikedOnly, setShowLikedOnly] = useState(false);
   const [showDownvotedOnly, setShowDownvotedOnly] = useState(false);
   const [types, setTypes] = useState<string[]>([]);
+  const [collections, setCollections] = useState<{ slug: string; name: string }[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -111,6 +114,7 @@ export default function CurateClient() {
         maxPerBook: '999',
       });
       if (filterType) params.append('type', filterType);
+      if (filterCollection) params.append('collection', filterCollection);
 
       const res = await fetch(`/api/gallery?${params}`);
       const data = await res.json();
@@ -135,7 +139,7 @@ export default function CurateClient() {
       setLoading(false);
       loadingRef.current = false;
     }
-  }, [minQuality, filterType, types.length]);
+  }, [minQuality, filterType, filterCollection]);
 
   // Load liked IDs + downvoted IDs on mount
   useEffect(() => {
@@ -154,6 +158,16 @@ export default function CurateClient() {
       }
     }
     setLikedIds(initialLiked);
+
+    // Load collections for filter dropdown
+    fetch('/api/collections')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setCollections(data.map((c: { slug: string; name: string }) => ({ slug: c.slug, name: c.name })).sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)));
+        }
+      })
+      .catch(() => {});
 
     // Then fetch from server for accuracy
     fetch(`/api/likes/mine?visitor_id=${visitorId}&type=image&limit=5000`)
@@ -184,7 +198,7 @@ export default function CurateClient() {
     setHasMore(true);
     fetchImages(0, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [minQuality, filterType]);
+  }, [minQuality, filterType, filterCollection]);
 
   // Infinite scroll
   useEffect(() => {
@@ -485,6 +499,21 @@ export default function CurateClient() {
               <span className="font-mono text-xs w-8">{minQuality.toFixed(2)}</span>
             </label>
 
+            {/* Collection filter */}
+            <label className="flex items-center gap-2 text-sm text-text-secondary">
+              Collection
+              <select
+                value={filterCollection}
+                onChange={e => setFilterCollection(e.target.value)}
+                className="px-2 py-1 text-sm border border-border-light rounded bg-white"
+              >
+                <option value="">All</option>
+                {collections.map(c => (
+                  <option key={c.slug} value={c.slug}>{c.name}</option>
+                ))}
+              </select>
+            </label>
+
             {/* Type filter */}
             <label className="flex items-center gap-2 text-sm text-text-secondary">
               Type
@@ -575,8 +604,35 @@ export default function CurateClient() {
                 </button>
               </div>
 
+              {/* Info button — bottom-left */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setInfoId(prev => prev === imageId ? null : imageId);
+                }}
+                className="absolute bottom-0.5 left-0.5 rounded-full p-0.5 bg-black/40 text-white/70 hover:text-white hover:bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+              >
+                <Info className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Info overlay */}
+              {infoId === imageId && (
+                <div
+                  className="absolute inset-x-0 bottom-0 bg-black/85 text-white p-2 text-[10px] leading-tight z-10"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <p className="font-medium line-clamp-2">{item.bookTitle}</p>
+                  {item.author && <p className="text-white/60 mt-0.5">{item.author}{item.year ? `, ${item.year}` : ''}</p>}
+                  <p className="text-white/50 mt-0.5">
+                    {item.type && <span className="capitalize">{item.type}</span>}
+                    {item.galleryQuality !== undefined && <span> · {item.galleryQuality.toFixed(2)}</span>}
+                    {item.pageNumber > 0 && <span> · p.{item.pageNumber}</span>}
+                  </p>
+                </div>
+              )}
+
               {/* Quality badge — tiny, bottom-right */}
-              {item.galleryQuality !== undefined && (
+              {item.galleryQuality !== undefined && !infoId && (
                 <span className="absolute bottom-0.5 right-0.5 text-[9px] font-mono text-white/70 bg-black/40 px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                   {item.galleryQuality.toFixed(2)}
                 </span>
@@ -644,8 +700,11 @@ export default function CurateClient() {
                 {item.galleryQuality !== undefined && (
                   <span className="text-white/60 text-xs font-mono">{item.galleryQuality.toFixed(2)}</span>
                 )}
-                {item.description && (
-                  <span className="text-white/50 text-xs max-w-xs truncate hidden sm:inline">{item.description}</span>
+                <span className="text-white/70 text-xs max-w-sm truncate hidden sm:inline">
+                  {item.bookTitle}{item.author ? ` — ${item.author}` : ''}{item.year ? ` (${item.year})` : ''}
+                </span>
+                {item.type && (
+                  <span className="text-white/40 text-xs capitalize hidden md:inline">· {item.type}</span>
                 )}
               </div>
               <div className="flex items-center gap-2">

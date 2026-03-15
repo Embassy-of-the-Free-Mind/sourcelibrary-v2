@@ -5,6 +5,7 @@ import { mintDoi, isZenodoConfigured } from '@/lib/zenodo';
 import { notifyEditionPublished } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { generateKdpEpub } from '@/lib/kdp-epub';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -86,19 +87,16 @@ export const POST = withAuth(async (request, session, context) => {
         : previousEdition?.zenodo_id ? parseInt(previousEdition.zenodo_id) : undefined;
     }
 
-    // Fetch scholarly EPUB for Zenodo upload
+    // Generate scholarly EPUB directly (avoid fragile self-fetch)
     let epubBuffer: Buffer | undefined;
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
-      const epubResp = await fetch(`${baseUrl}/api/books/${bookId}/download?format=epub-scholarly`);
-      if (epubResp.ok) {
-        epubBuffer = Buffer.from(await epubResp.arrayBuffer());
-        console.log(`Scholarly EPUB fetched: ${(epubBuffer.length / 1024 / 1024).toFixed(1)}MB`);
-      } else {
-        console.warn('Could not fetch scholarly EPUB, uploading text only:', epubResp.status);
-      }
+      epubBuffer = await generateKdpEpub(book, pages, {
+        introduction: edition.front_matter?.introduction,
+        methodology: edition.front_matter?.methodology,
+      });
+      console.log(`Scholarly EPUB generated: ${(epubBuffer.length / 1024 / 1024).toFixed(1)}MB`);
     } catch (e) {
-      console.warn('EPUB fetch failed, uploading text only:', e);
+      console.warn('EPUB generation failed, uploading text only:', e);
     }
 
     // Mint DOI via Zenodo
@@ -108,9 +106,18 @@ export const POST = withAuth(async (request, session, context) => {
       epubFilename: `${(book as any).slug || book.id}-scholarly-v${edition.version}.epub`,
     });
 
-    // Update edition with DOI info
+    // Mark previous published editions as superseded
+    for (let i = 0; i < editions.length; i++) {
+      if (editions[i].status === 'published' && editions[i].id !== edition.id) {
+        editions[i] = { ...editions[i], status: 'superseded' };
+      }
+    }
+
+    // Update edition with DOI info and publish it
     editions[editionIndex] = {
       ...edition,
+      status: 'published',
+      published_at: new Date(),
       doi: result.doi,
       doi_url: result.doi_url,
       zenodo_id: result.zenodo_id,

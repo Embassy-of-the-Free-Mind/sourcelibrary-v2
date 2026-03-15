@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GlobalFooter from "@/components/layout/GlobalFooter";
 import Providers from "@/components/providers/Providers";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
 import PageTracker from "@/components/reader/PageTracker";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
+import CookieConsent from "@/components/providers/CookieConsent";
+import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
+import InputWidget from "@/components/InputWidget";
 
 
 export const metadata: Metadata = {
   title: "Source Library",
-  description: "Digitizing and translating rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.",
+  description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
     canonical: '/',
@@ -44,10 +45,11 @@ export const metadata: Metadata = {
   },
   other: {
     'msapplication-TileColor': '#1c1917',
+    'pinterest-rich-pin': 'true',
   },
   openGraph: {
     title: "Source Library",
-    description: "Rare Hermetic & Renaissance texts digitized and translated with AI",
+    description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
     siteName: "Source Library",
     locale: "en_US",
     type: "website",
@@ -55,18 +57,18 @@ export const metadata: Metadata = {
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Source Library — Unlock a New Renaissance of Ancient Knowledge',
+      alt: 'Source Library — Digitizing and translating ancient texts',
     }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Source Library",
-    description: "Rare Hermetic & Renaissance texts digitized and translated with AI",
+    description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
     images: [{
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Source Library — Unlock a New Renaissance of Ancient Knowledge',
+      alt: 'Source Library — Digitizing and translating ancient texts',
     }],
   },
 };
@@ -91,7 +93,7 @@ export default async function RootLayout({
           title="Source Library"
           href="/opensearch.xml"
         />
-        <Script src="https://analytics.ahrefs.com/analytics.js" data-key="rzuKlnvyAKd8TdooDnPSYg" strategy="lazyOnload" />
+        {/* Analytics scripts loaded conditionally via AnalyticsScripts (consent-gated) */}
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <a href="#main-content" className="skip-link">
@@ -105,9 +107,10 @@ export default async function RootLayout({
           <SiteModeIndicator />
         </Providers>
         <ClientToaster />
-
-        <GoogleAnalytics gaId="G-C1QJNTSZT2" />
+        <CookieConsent />
+        <AnalyticsScripts />
         <PageTracker />
+        <InputWidget allowedHosts={["localhost"]} />
       </body>
     </html>
   );

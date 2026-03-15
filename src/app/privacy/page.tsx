@@ -22,25 +22,38 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <div className="prose-content space-y-6 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-          <p><strong>Effective date:</strong> February 22, 2026</p>
+          <p><strong>Effective date:</strong> March 15, 2026</p>
 
           <p>
             Source Library is operated by the Ancient Wisdom Trust in partnership with the
             Embassy of the Free Mind, Amsterdam. We are committed to protecting your privacy.
           </p>
 
+          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Cookies and consent</h2>
+          <p>
+            We ask for your consent before setting any analytics cookies. If you decline,
+            no third-party tracking scripts are loaded and no cookies are set. The site
+            works identically either way.
+          </p>
+          <p>
+            Your choice is stored in your browser&rsquo;s local storage (not a cookie) and
+            can be changed at any time via the &ldquo;Cookie Settings&rdquo; link in the footer.
+          </p>
+
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>What we collect</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li><strong>Account information:</strong> Email address (required for registration). Name and profile image if you sign in with Google.</li>
-            <li><strong>Usage analytics:</strong> Pages visited, country (from IP), referrer, user agent. Used to understand how the library is used and improve the service.</li>
+            <li><strong>First-party analytics</strong> (always active): Pages visited, country (from IP), referrer domain, user agent. IP addresses are anonymized (last octet removed) before storage. Data is automatically deleted after 90 days.</li>
             <li><strong>Reading activity:</strong> Which books and pages you view, bookshelf selections. Used to personalize your experience.</li>
+            <li><strong>Local storage:</strong> A visitor ID (<code>sl_visitor_id</code>) for image likes deduplication. This never leaves your browser.</li>
           </ul>
 
-          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>What we don&rsquo;t collect</h2>
+          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>What we don&rsquo;t do</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>We do not sell your data to third parties.</li>
             <li>We do not use your data for advertising.</li>
             <li>We do not share personal data with AI model providers.</li>
+            <li>We do not store full IP addresses.</li>
           </ul>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>How we use your data</h2>
@@ -51,16 +64,25 @@ export default function PrivacyPage() {
           </ul>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Third-party services</h2>
+          <p>The following services are only loaded if you accept analytics cookies:</p>
           <ul className="list-disc pl-5 space-y-2">
-            <li><strong>Google Analytics:</strong> Anonymous usage statistics. <a href="https://policies.google.com/privacy" className="underline" target="_blank" rel="noopener noreferrer">Google&rsquo;s privacy policy</a>.</li>
+            <li><strong>Google Analytics:</strong> Usage statistics with IP anonymization enabled. Sets cookies to distinguish visitors. <a href="https://policies.google.com/privacy" className="underline" target="_blank" rel="noopener noreferrer">Google&rsquo;s privacy policy</a>.</li>
+            <li><strong>Ahrefs Analytics:</strong> Aggregate traffic statistics. <a href="https://ahrefs.com/privacy" className="underline" target="_blank" rel="noopener noreferrer">Ahrefs&rsquo; privacy policy</a>.</li>
+          </ul>
+          <p className="mt-3">The following services are always active (no cookies):</p>
+          <ul className="list-disc pl-5 space-y-2">
             <li><strong>Google OAuth:</strong> If you sign in with Google, we receive your name, email, and profile image. We do not access any other Google data.</li>
             <li><strong>Vercel:</strong> Hosting provider. <a href="https://vercel.com/legal/privacy-policy" className="underline" target="_blank" rel="noopener noreferrer">Vercel&rsquo;s privacy policy</a>.</li>
             <li><strong>MongoDB Atlas:</strong> Database hosting. Data stored in EU (Frankfurt).</li>
           </ul>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Data retention</h2>
+          <ul className="list-disc pl-5 space-y-2">
+            <li>Analytics data (pageviews, events): automatically deleted after 90 days.</li>
+            <li>Performance metrics: automatically deleted after 30 days.</li>
+            <li>Account data: retained as long as your account is active.</li>
+          </ul>
           <p>
-            Account data is retained as long as your account is active.
             You can request deletion of your account and associated data at any time
             by contacting us.
           </p>

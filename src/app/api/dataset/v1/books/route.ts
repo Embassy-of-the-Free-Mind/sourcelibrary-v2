@@ -1,0 +1,96 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import { validateApiKey } from '@/lib/dataset/api-keys';
+
+export const maxDuration = 15;
+
+/**
+ * GET /api/dataset/v1/books
+ *
+ * Book-level metadata endpoint.
+ * Requires API key via Authorization: Bearer sl_data_...
+ *
+ * Query params:
+ *   language     - filter by book language
+ *   cluster      - filter by taxonomy cluster
+ *   from_year    - minimum publication year
+ *   to_year      - maximum publication year
+ *   has_translation - only books with translated pages
+ *   offset       - pagination offset (default: 0)
+ *   limit        - max records (default: 100, max: 1000)
+ */
+export async function GET(request: NextRequest) {
+  const apiKey = await validateApiKey(request.headers.get('authorization'));
+  if (!apiKey) {
+    return NextResponse.json(
+      { error: 'Invalid or missing API key. Get one at https://sourcelibrary.org/dataset' },
+      { status: 401 }
+    );
+  }
+
+  const { searchParams } = new URL(request.url);
+  const language = searchParams.get('language');
+  const cluster = searchParams.get('cluster');
+  const fromYear = searchParams.get('from_year');
+  const toYear = searchParams.get('to_year');
+  const hasTranslation = searchParams.get('has_translation') === 'true';
+  const offset = Math.max(0, parseInt(searchParams.get('offset') || '0'));
+  const limit = Math.min(1000, Math.max(1, parseInt(searchParams.get('limit') || '100')));
+
+  // Check permissions
+  if (language && apiKey.permissions.languages !== '*' &&
+      !apiKey.permissions.languages.includes(language)) {
+    return NextResponse.json(
+      { error: `Your API key does not have access to "${language}".` },
+      { status: 403 }
+    );
+  }
+
+  const db = await getDb();
+  const filter: any = { hidden: { $ne: true } };
+  if (language) filter.language = language;
+  if (cluster) filter['taxonomy.cluster'] = cluster;
+  if (fromYear || toYear) {
+    filter.year = {};
+    if (fromYear) filter.year.$gte = parseInt(fromYear);
+    if (toYear) filter.year.$lte = parseInt(toYear);
+  }
+  if (hasTranslation) filter.pages_translated = { $gt: 0 };
+
+  const [books, total] = await Promise.all([
+    db.collection('books')
+      .find(filter)
+      .project({
+        _id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1,
+        pages_count: 1, pages_ocr: 1, pages_translated: 1,
+        'taxonomy.cluster': 1, 'taxonomy.subcluster': 1,
+        categories: 1, ia_identifier: 1,
+      })
+      .sort({ language: 1, year: 1 })
+      .skip(offset)
+      .limit(limit)
+      .toArray(),
+    db.collection('books').countDocuments(filter),
+  ]);
+
+  return NextResponse.json({
+    total,
+    offset,
+    limit,
+    books: books.map(b => ({
+      id: String(b._id),
+      title: b.title,
+      author: b.author,
+      year: b.year,
+      language: b.language,
+      slug: b.slug,
+      pages_count: b.pages_count || 0,
+      pages_ocr: b.pages_ocr || 0,
+      pages_translated: b.pages_translated || 0,
+      cluster: b.taxonomy?.cluster || null,
+      subcluster: b.taxonomy?.subcluster || null,
+      categories: b.categories || [],
+      url: `https://sourcelibrary.org/book/${b.slug || b._id}`,
+    })),
+  });
+}

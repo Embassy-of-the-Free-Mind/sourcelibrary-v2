@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { ImageSource, ImageSourceProvider } from '@/lib/types';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Bulk set image_source for books
@@ -20,7 +20,7 @@ import { withAuth } from '@/lib/auth-helpers';
  * Returns counts of books by image_source status
  */
 
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -77,7 +77,7 @@ export const GET = withAuth(async (request, session) => {
   }
 });
 
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { book_ids, filter, image_source } = body as {
@@ -162,7 +162,7 @@ export const POST = withAuth(async (request, session) => {
  * PATCH /api/admin/set-image-source
  * Body: { action: 'auto_fill_ia' | 'auto_detect' }
  */
-export const PATCH = withAuth(async (request, session) => {
+export const PATCH = withAdminAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { action } = body as { action: string };

@@ -5,10 +5,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
-import { Calendar, Globe, FileText, BookText, BookMarked, User, MapPin, Lightbulb, Images, Search } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
+import EarlyAccessGate from '@/components/book/EarlyAccessGate';
+import BookDedication from '@/components/book/BookDedication';
 import BookHistory from '@/components/book/BookHistory';
+import BookIndex from '@/components/book/BookIndex';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
@@ -71,7 +74,17 @@ interface CitedBook {
   shared_names?: string[];   // top entity names for shared type
 }
 
-const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
+// Entities too common to be meaningful shared-context signals
+const UBIQUITOUS_ENTITIES = new Set([
+  'Jesus Christ', 'God', 'The Devil', 'Satan', 'Lucifer',
+  'Moses', 'Abraham', 'Adam', 'Eve', 'Noah', 'David',
+  'Hermes Trismegistus', 'Hermes', 'Mercury',
+  'Aristotle', 'Plato', 'Socrates',
+  'The Holy Spirit', 'The Son of God', 'The Apostles',
+  'The Patriarchs', 'The Prophets',
+]);
+
+const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promise<CitedBook[]> => {
   try {
     const db = await Promise.race([
       getDb(),
@@ -102,32 +115,37 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
         entityNames.push({ names, entityName: entity.name });
       }
     }
+    // Build a single regex from all entity names and query MongoDB directly
+    // instead of fetching all ~5,000 books and looping in JS.
     if (entityNames.length > 0) {
+      const allNames: Array<{ pattern: string; entityName: string }> = [];
+      for (const { names, entityName } of entityNames) {
+        for (const name of names) {
+          // Escape regex special chars, use word boundaries
+          const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          allNames.push({ pattern: escaped, entityName });
+        }
+      }
+      // Combined regex: match any entity name with word boundaries
+      const combinedPattern = allNames.map(n => n.pattern).join('|');
+      const authorFilter: Record<string, unknown> = {
+        id: { $ne: bookId },
+        hidden: { $ne: true },
+        author: { $regex: combinedPattern, $options: 'i' },
+      };
       const candidateBooks = await db.collection('books').find(
-        { id: { $ne: bookId }, hidden: { $ne: true }, author: { $exists: true, $nin: [null, '', 'Unknown'] } },
+        authorFilter,
         { projection: { id: 1, author: 1 } },
       ).toArray();
+      // Verify word-boundary matches and map to entity names
       for (const doc of candidateBooks) {
-        const authorStr = doc.author as string;
-        const authorLower = authorStr.toLowerCase();
-        for (const { names, entityName } of entityNames) {
-          let matched = false;
-          for (const name of names) {
-            const nameLower = name.toLowerCase();
-            const idx = authorLower.indexOf(nameLower);
-            if (idx === -1) continue;
-            const charBefore = idx > 0 ? authorLower[idx - 1] : ' ';
-            const isWordStart = !/[a-z]/.test(charBefore);
-            const afterIdx = idx + nameLower.length;
-            const charAfter = afterIdx < authorLower.length ? authorLower[afterIdx] : ' ';
-            const isWordEnd = !/[a-z]/.test(charAfter);
-            if (isWordStart && isWordEnd) {
-              directCitationBookIds.set(doc.id as string, entityName);
-              matched = true;
-              break;
-            }
+        const authorLower = (doc.author as string).toLowerCase();
+        for (const { pattern, entityName } of allNames) {
+          const re = new RegExp(`(?<![a-z])${pattern}(?![a-z])`, 'i');
+          if (re.test(authorLower)) {
+            directCitationBookIds.set(doc.id as string, entityName);
+            break;
           }
-          if (matched) break;
         }
       }
     }
@@ -149,6 +167,20 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
           type: 'direct',
           cited_as: directCitationBookIds.get(doc.id as string),
         });
+      }
+    }
+
+    // Exclude same-author books (already covered by "More by Author" pill).
+    // Check both the matched book's author AND the cited entity name, since
+    // diacritics differ between author fields ("Jakob Böhme" vs "Boehme, Jacob")
+    // but entity names are standardized ("Jacob Boehme").
+    if (bookAuthor && bookAuthor !== 'Unknown') {
+      const surname = bookAuthor.split(/[,;]/)[0].trim().toLowerCase();
+      if (surname.length >= 4) {
+        directBooks = directBooks.filter(b =>
+          !b.author.toLowerCase().includes(surname) &&
+          !(b.cited_as || '').toLowerCase().includes(surname)
+        );
       }
     }
 
@@ -179,7 +211,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
           shared_entities: { $sum: 1 },
           shared_names: { $push: '$name' },
         }},
-        { $match: { shared_entities: { $gte: 3 } } },
+        { $match: { shared_entities: { $gte: 5 } } },
         { $sort: { shared_entities: -1 as const } },
         { $limit: sharedSlots },
         { $lookup: {
@@ -201,7 +233,9 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
         year: r.book_doc?.year as number | undefined,
         type: 'shared' as const,
         shared_entities: r.shared_entities as number,
-        shared_names: (r.shared_names as string[])?.slice(0, 3),
+        shared_names: (r.shared_names as string[])
+          ?.filter(n => !UBIQUITOUS_ENTITIES.has(n))
+          .slice(0, 3),
       }));
     }
 
@@ -233,7 +267,7 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
         { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
       ).sort({ published: 1 }).limit(20).toArray()
       : Promise.resolve([]),
-    getRelatedBooks(bookId),
+    getRelatedBooks(bookId, bookAuthor),
   ]);
 
   const topPeople = (bookIndex?.people || []).slice(0, 3);
@@ -410,7 +444,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
-  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
   const publishedDate = currentEdition?.published_at
     ? new Date(currentEdition.published_at).toISOString()
     : book.created_at
@@ -477,7 +511,6 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   ]);
 
   // Exclude heavy fields not used on the book detail page.
-  // index.*.pages arrays are ~100KB for well-indexed books but only .term is displayed.
   const bookProjection = {
     chapters: 0,
     reading_sections: 0,
@@ -485,10 +518,11 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     pipeline_auto: 0,
     split_check: 0,
     'index.sectionSummaries': 0,
-    'index.people.pages': 0,
-    'index.places.pages': 0,
-    'index.concepts.pages': 0,
-    'index.keyTerms.pages': 0,
+    // Legacy flat lists — no longer displayed
+    'index.people': 0,
+    'index.places': 0,
+    'index.concepts': 0,
+    'index.keyTerms': 0,
     pages_ocr: 0,
     translation_percent: 0,
   };
@@ -617,11 +651,14 @@ async function BookInfo({ id }: { id: string }) {
   const ocrCount = pages.filter(p => p.ocr).length;
   const translatedCount = pages.filter(p => p.translation).length;
   const imageCount = galleryImageCount;
-  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
   const hasTranslations = translatedCount > pages.length / 2; // >50% translated
+  // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
+  const imgLicense = (book as any).image_source?.license || 'unknown';
+  const imageRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
   const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
@@ -669,6 +706,18 @@ async function BookInfo({ id }: { id: string }) {
                   </Link>
                 ) : book.author}
               </p>
+
+              {/* DOI badge */}
+              {book.doi && (
+                <a
+                  href={`https://doi.org/${book.doi}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 bg-white/10 hover:bg-white/20 text-stone-200 rounded-full text-xs font-mono transition-colors"
+                >
+                  DOI: {book.doi}
+                </a>
+              )}
 
               {/* Book metadata */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 mt-4 sm:mt-6 text-sm text-stone-400">
@@ -726,6 +775,25 @@ async function BookInfo({ id }: { id: string }) {
                 </div>
               )}
 
+              {/* Source attribution — always visible */}
+              {(book.image_source?.provider_name || book.image_source?.contributing_library) && (
+                <p className="text-xs text-stone-500 mt-3">
+                  Images:{' '}
+                  {book.image_source.source_url ? (
+                    <a href={book.image_source.source_url} target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">
+                      {book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}
+                    </a>
+                  ) : (
+                    <span>{book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}</span>
+                  )}
+                </p>
+              )}
+
+              {/* Dedication */}
+              <div className="mt-3">
+                <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
+              </div>
+
               {/* Actions */}
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
@@ -759,13 +827,16 @@ async function BookInfo({ id }: { id: string }) {
                       placePublished={book.place_published}
                       language={book.language}
                       doi={book.doi}
+                      editionVersion={currentEdition?.version}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                     <DownloadButton
                       bookId={book.id}
+                      bookTitle={book.display_title || book.title}
                       hasTranslations={hasTranslations}
                       hasOcr={hasOcr}
                       hasImages={pages.length > 0}
+                      imageRestricted={imageRestricted}
                       variant="header"
                     />
                     <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
@@ -863,116 +934,21 @@ async function BookInfo({ id }: { id: string }) {
               />
             ) : null}
 
-            {/* Index — collapsed by default */}
+            {/* Index — tiered with filter */}
             {(() => {
-              const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; places?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
-              const people = index?.people || [];
-              const places = index?.places || [];
-              const concepts = index?.concepts || [];
-              const hasEntities = people.length > 0 || places.length > 0 || concepts.length > 0;
+              const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+              if (!allEntries || allEntries.length === 0) return null;
 
-              if (!hasEntities) return null;
-
-              const counts = [
-                people.length > 0 ? `${people.length} people` : '',
-                places.length > 0 ? `${places.length} places` : '',
-                concepts.length > 0 ? `${concepts.length} concepts` : '',
-              ].filter(Boolean).join(', ');
+              // Drop hapax (single-mention) entries server-side to keep serialization small
+              const entries = allEntries.filter(e => e.pages.length >= 2);
+              if (entries.length === 0) return null;
 
               return (
-                <details className="card mt-6">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Index</h2>
-                      <span className="text-xs text-stone-400">{counts}</span>
-                    </div>
-                    <Link
-                      href="/encyclopedia"
-                      className="text-sm text-accent-rust hover:text-accent-gold-dark"
-                    >
-                      Browse All &rarr;
-                    </Link>
-                  </summary>
-                  <div className="px-6 pb-6 space-y-4">
-                    {/* People */}
-                    {people.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <User className="w-4 h-4 text-accent-rust" />
-                          People ({people.length})
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {people.slice(0, 15).map((p) => (
-                            <Link
-                              key={p.term}
-                              href={`/encyclopedia/${encodeURIComponent(p.term)}`}
-                              className="px-2 py-1 text-xs bg-accent-rust/8 text-accent-rust rounded hover:bg-accent-rust/15 transition-colors"
-                            >
-                              {p.term}
-                            </Link>
-                          ))}
-                          {people.length > 15 && (
-                            <span className="px-2 py-1 text-xs text-stone-400">
-                              +{people.length - 15} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Places */}
-                    {places.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <MapPin className="w-4 h-4 text-accent-sage" />
-                          Places ({places.length})
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {places.slice(0, 15).map((p) => (
-                            <Link
-                              key={p.term}
-                              href={`/encyclopedia/${encodeURIComponent(p.term)}`}
-                              className="px-2 py-1 text-xs bg-accent-sage/12 text-accent-sage-dark rounded hover:bg-accent-sage/20 transition-colors"
-                            >
-                              {p.term}
-                            </Link>
-                          ))}
-                          {places.length > 15 && (
-                            <span className="px-2 py-1 text-xs text-stone-400">
-                              +{places.length - 15} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Concepts */}
-                    {concepts.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <Lightbulb className="w-4 h-4 text-accent-violet" />
-                          Concepts ({concepts.length})
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {concepts.slice(0, 15).map((c) => (
-                            <Link
-                              key={c.term}
-                              href={`/encyclopedia/${encodeURIComponent(c.term)}`}
-                              className="px-2 py-1 text-xs bg-accent-violet/8 text-accent-violet rounded hover:bg-accent-violet/15 transition-colors"
-                            >
-                              {c.term}
-                            </Link>
-                          ))}
-                          {concepts.length > 15 && (
-                            <span className="px-2 py-1 text-xs text-stone-400">
-                              +{concepts.length - 15} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </details>
+                <BookIndex
+                  entries={entries}
+                  bookSlug={book.slug || book.id}
+                  totalPages={pages.length}
+                />
               );
             })()}
 
@@ -992,7 +968,17 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+        {(() => {
+          const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
+          if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
+            return (
+              <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
+                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+              </EarlyAccessGate>
+            );
+          }
+          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+        })()}
         <AuthCheck>
           <BookHistory bookId={book.id} />
         </AuthCheck>

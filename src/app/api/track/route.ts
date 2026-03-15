@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { anonymizeIp } from '@/lib/anonymize-ip';
 
 const SITE_HOST = 'sourcelibrary.org';
 
@@ -54,7 +55,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const ip = anonymizeIp(rawIp);
 
     // Rate limit: same IP + path within 60s = skip
     if (path && isDuplicate(ip, path)) {

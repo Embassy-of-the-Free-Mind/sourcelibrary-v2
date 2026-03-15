@@ -11,6 +11,7 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'f
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { put } from '@vercel/blob';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 /**
  * Import a book from a PDF URL
@@ -99,6 +100,19 @@ export const POST = withAuth(async (request) => {
     if (existing) {
       return NextResponse.json(
         { error: 'Book already imported from this PDF', existingId: existing.id || existing._id.toString() },
+        { status: 409 },
+      );
+    }
+
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title, author,
+      image_source: { provider, identifier: identifier || undefined, pdf_url, source_url: source_url || pdf_url },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
         { status: 409 },
       );
     }
@@ -217,6 +231,9 @@ export const POST = withAuth(async (request) => {
       ...(catalog_metadata ? { catalog_metadata } : {}),
       page_count_source: 'pdf_extraction',
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ image_source: { provider, identifier: identifier || undefined, pdf_url } }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: now,
       updated_at: now,
     };

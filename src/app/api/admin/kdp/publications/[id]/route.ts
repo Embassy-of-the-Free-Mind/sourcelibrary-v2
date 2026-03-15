@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { computeQualityFlags } from '@/lib/kdp-scoring';
 
 /**
  * GET /api/admin/kdp/publications/[id] — Get single publication with book join + translation samples
  */
-export const GET = withAuth(async (request: NextRequest, session, { params }: { params: Promise<{ id: string }> }) => {
+export const GET = withAdminAuth(async (request: NextRequest, session, { params }: { params: Promise<{ id: string }> }) => {
   try {
     const db = await getDb();
     const { id } = await params;
@@ -62,7 +62,7 @@ export const GET = withAuth(async (request: NextRequest, session, { params }: { 
 /**
  * PATCH /api/admin/kdp/publications/[id] — Update publication fields
  */
-export const PATCH = withAuth(async (request: NextRequest, session, { params }: { params: Promise<{ id: string }> }) => {
+export const PATCH = withAdminAuth(async (request: NextRequest, session, { params }: { params: Promise<{ id: string }> }) => {
   try {
     const db = await getDb();
     const { id } = await params;

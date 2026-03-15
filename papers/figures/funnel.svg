@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 442" font-family="Georgia, serif">
+<rect width="600" height="442" fill="white"/>
+<text x="300" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">The Translation Funnel</text>
+<polygon points="50,130 550,130 530,138 70,138" fill="#e8e4df" opacity="0.3"/>
+<rect x="50" y="70" width="500" height="60" rx="4" fill="#e8e4df"/>
+<text x="300" y="92" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">1,628,578</text>
+<text x="300" y="110" text-anchor="middle" font-size="11" fill="#1a1a1a" opacity="0.85">USTC editions (1450-1700)</text>
+<polygon points="70,198 530,198 490,206 110,206" fill="#ddd8d0" opacity="0.3"/>
+<rect x="70" y="138" width="460" height="60" rx="4" fill="#ddd8d0"/>
+<text x="300" y="160" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">1,464,217</text>
+<text x="300" y="178" text-anchor="middle" font-size="11" fill="#1a1a1a" opacity="0.85">Non-English editions</text>
+<polygon points="110,266 490,266 360,274 240,274" fill="#c9c1b6" opacity="0.3"/>
+<rect x="110" y="206" width="380" height="60" rx="4" fill="#c9c1b6"/>
+<text x="300" y="228" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">~693,135</text>
+<text x="300" y="246" text-anchor="middle" font-size="11" fill="#1a1a1a" opacity="0.85">Distinct works</text>
+<polygon points="240,334 360,334 340,342 260,342" fill="#b87333" opacity="0.3"/>
+<rect x="240" y="274" width="120" height="60" rx="4" fill="#b87333"/>
+<text x="300" y="296" text-anchor="middle" font-size="13" fill="white" font-weight="bold">~31,361 (4.5%)</text>
+<text x="300" y="314" text-anchor="middle" font-size="11" fill="white" opacity="0.85">With any English translation</text>
+<rect x="260" y="342" width="80" height="60" rx="4" fill="#8b4513"/>
+<text x="300" y="364" text-anchor="middle" font-size="13" fill="white" font-weight="bold">~21,000 (3.0%)</text>
+<text x="300" y="382" text-anchor="middle" font-size="11" fill="white" opacity="0.85">With complete modern translation</text>
+</svg>

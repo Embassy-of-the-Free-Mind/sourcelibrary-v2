@@ -9,12 +9,18 @@ export const metadata: Metadata = {
   alternates: { canonical: '/research/atlas' },
 };
 
-export default function BookAtlasPage() {
+export default async function BookAtlasPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string }>;
+}) {
+  const { mode } = await searchParams;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data = dataRaw as any;
+  const initialColorMode = mode === 'taxonomy' ? 'taxonomy' : undefined;
   return (
     <main className="h-screen bg-black overflow-hidden">
-      <BookConstellationViz data={data} />
+      <BookConstellationViz data={data} initialColorMode={initialColorMode} />
     </main>
   );
 }

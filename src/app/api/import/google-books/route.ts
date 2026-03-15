@@ -6,6 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 export const maxDuration = 300;
 
@@ -88,6 +89,19 @@ export const POST = withAuth(async (request, session) => {
     if (existing) {
       return NextResponse.json(
         { error: 'Book already exists', existingId: existing.id || existing._id.toString() },
+        { status: 409 }
+      );
+    }
+
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title, author, display_title, ia_identifier, google_books_id,
+      image_source: { provider: 'google_books', identifier: google_books_id, source_url: `https://books.google.com/books?id=${google_books_id}` },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
         { status: 409 }
       );
     }
@@ -181,6 +195,9 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ ia_identifier, google_books_id }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: new Date(),
       updated_at: new Date(),
     };

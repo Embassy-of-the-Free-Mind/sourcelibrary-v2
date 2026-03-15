@@ -69,33 +69,70 @@ async function getFeaturedCollections() {
 
   if (collections.length === 0) return [];
 
-  // Batch-fetch books for ALL 5 collections in a single query instead of 5 separate queries.
-  // Each individual query was doing a full collection sort (no read_count index) → 5x full scan.
   const allSlugs = collections.map(c => c.slug);
-  const allBooks = await db.collection('books').aggregate([
-    {
-      $match: {
-        collections: { $in: allSlugs },
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-      },
-    },
-    { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 } },
-  ], { maxTimeMS: 8000 }).toArray();
+  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 };
 
-  // Group books by collection slug (a book can appear in multiple collections)
-  const booksBySlug = new Map<string, typeof allBooks>();
-  for (const book of allBooks) {
-    const bookCollections = Array.isArray(book.collections) ? book.collections : [];
-    for (const slug of allSlugs) {
-      if (bookCollections.includes(slug)) {
-        if (!booksBySlug.has(slug)) booksBySlug.set(slug, []);
-        const arr = booksBySlug.get(slug)!;
-        if (arr.length < 10) arr.push(book);
+  // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
+  const highlightedIdsBySlug = new Map<string, string[]>();
+  const allHighlightedIds: string[] = [];
+  for (const col of collections) {
+    const highlighted = (col.highlighted_books || [])
+      .filter((b: { tier?: number }) => !b.tier || b.tier <= 2)
+      .slice(0, 10)
+      .map((b: { book_id: string }) => b.book_id);
+    highlightedIdsBySlug.set(col.slug as string, highlighted);
+    allHighlightedIds.push(...highlighted);
+  }
+
+  // Fetch highlighted books by ID (these are curated, high-quality picks)
+  const highlightedBooks = allHighlightedIds.length > 0
+    ? await db.collection('books').aggregate([
+        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+        { $project: bookProjection },
+      ], { maxTimeMS: 8000 }).toArray()
+    : [];
+
+  // Index highlighted books by their ID for fast lookup
+  const highlightedById = new Map(highlightedBooks.map(b => [b.id, b]));
+
+  // Build book lists per collection from curated highlights
+  const booksBySlug = new Map<string, typeof highlightedBooks>();
+  for (const col of collections) {
+    const slug = col.slug as string;
+    const ids = highlightedIdsBySlug.get(slug) || [];
+    const books = ids.map(id => highlightedById.get(id)).filter(Boolean) as typeof highlightedBooks;
+    booksBySlug.set(slug, books);
+  }
+
+  // For collections with fewer than 10 highlighted books, backfill from general query
+  const slugsNeedingMore = allSlugs.filter(s => (booksBySlug.get(s)?.length || 0) < 10);
+  if (slugsNeedingMore.length > 0) {
+    const existingIds = new Set([...booksBySlug.values()].flat().map(b => b.id));
+    const backfillBooks = await db.collection('books').aggregate([
+      { $match: { collections: { $in: slugsNeedingMore }, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+      { $sort: { read_count: -1 } },
+      { $limit: slugsNeedingMore.length * 10 },
+      { $project: bookProjection },
+    ], { maxTimeMS: 8000 }).toArray();
+
+    for (const book of backfillBooks) {
+      if (existingIds.has(book.id)) continue;
+      const bookCollections = Array.isArray(book.collections) ? book.collections : [];
+      for (const slug of slugsNeedingMore) {
+        if (bookCollections.includes(slug)) {
+          const arr = booksBySlug.get(slug) || [];
+          if (arr.length < 10) {
+            arr.push(book);
+            booksBySlug.set(slug, arr);
+            existingIds.add(book.id);
+          }
+        }
       }
     }
   }
+
+  // ---------- Gallery images: read pre-curated data from collection docs ----------
+  // Curated by scripts/maintenance/curate-collection-gallery.mjs — no heavy joins needed.
 
   const results = collections.map((collection) => {
     const images = collection.featured_images || [];
@@ -118,6 +155,7 @@ async function getFeaturedCollections() {
         hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
+      galleryImages: JSON.parse(JSON.stringify(collection.curated_gallery || [])),
     };
   });
 
@@ -489,6 +527,16 @@ export default async function HomePage() {
         {/* From the Collection — image-heavy gallery showcase */}
         <FromTheCollection items={showcase} />
 
+        {/* Gallery attribution — connects beauty to community */}
+        <div className="bg-stone-900 px-6 md:px-12 pb-8 -mt-1">
+          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            From the collections of Source Library, preserved and translated with support from{' '}
+            <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors underline decoration-white/10">
+              Ficino Society members
+            </Link>
+          </p>
+        </div>
+
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
@@ -595,7 +643,7 @@ export default async function HomePage() {
                 The Source Library uses scholarship and AI systems to recover this knowledge and make it
                 accessible to all. We are building the world&apos;s largest open-access collection of translated
                 primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
-                the human intellectual tradition.
+                the human intellectual tradition. This work is sustained by the people who use and value it.
               </p>
               <p className="text-gray-500 text-base">
                 The Source Library is an initiative of the{' '}
@@ -607,26 +655,105 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Sign Up CTA — only shows for anonymous users */}
-        <SignUpCTA />
+        {/* Be part of this */}
+        <section className="py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
+          <div className="px-6 md:px-12 max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <p
+                className="text-sm uppercase tracking-[0.2em] mb-6"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                Be part of this
+              </p>
+              <h2
+                className="text-2xl md:text-3xl lg:text-4xl font-display mb-5 leading-snug"
+                style={{ color: '#f5f0e8' }}
+              >
+                Help recover the lost intellectual heritage of humanity
+              </h2>
+            </div>
 
-        {/* Search Section */}
-        <section className="bg-gradient-to-b from-white to-[#f6f3ee] py-16 md:py-20">
-          <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl text-gray-900 mb-3 font-display">
-              Search the collection
-            </h2>
-            <p className="text-stone-500 mb-6">
-              Search across books, translations, and AI-generated indexes
-            </p>
-            <form action="/search" method="get" className="relative max-w-lg mx-auto">
+            {/* Ficino Society — primary */}
+            <div className="max-w-2xl mx-auto mb-12">
+              <div className="rounded-xl p-8 text-center" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <h3 className="text-xl font-display mb-3" style={{ color: '#f5f0e8' }}>
+                  The Ficino Society
+                </h3>
+                <p className="leading-relaxed mb-6" style={{ color: '#a09a90' }}>
+                  Cosimo de&apos; Medici funded Ficino&apos;s translations and ignited the Renaissance.
+                  Members of the Ficino Society continue that tradition&mdash;funding the digitization
+                  and translation of ancient texts, with early access to new translations
+                  and their name on a book of their choosing.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    href="/ficino-society"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
+                    style={{ background: 'var(--accent-rust)', color: '#fff' }}
+                  >
+                    Learn more
+                  </Link>
+                  <Link
+                    href="/ficino-society/members"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
+                    style={{ background: 'rgba(255,255,255,0.08)', color: '#a09a90' }}
+                  >
+                    View members
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Other ways to participate */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <Link
+                href="/contribute"
+                className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <p className="text-sm font-medium mb-1" style={{ color: '#f5f0e8' }}>Contribute</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#6b6560' }}>
+                  Help translate, review, or improve the collection
+                </p>
+              </Link>
+              <Link
+                href="/scan-the-renaissance"
+                className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <p className="text-sm font-medium mb-1" style={{ color: '#f5f0e8' }}>Scan the Renaissance</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#6b6560' }}>
+                  Visit a library near you and help us digitize rare books
+                </p>
+              </Link>
+              <Link
+                href="/developers"
+                className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <p className="text-sm font-medium mb-1" style={{ color: '#f5f0e8' }}>Developers</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#6b6560' }}>
+                  MCP server, CLI, and API for research tools
+                </p>
+              </Link>
+            </div>
+
+            {/* Free account nudge — for anonymous users only */}
+            <SignUpCTA variant="inline" />
+          </div>
+        </section>
+
+        {/* Search — compact */}
+        <section className="bg-gradient-to-b from-[#1c1917] to-[#f6f3ee] py-12">
+          <div className="px-6 md:px-12 max-w-lg mx-auto">
+            <form action="/search" method="get" className="relative">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
                 type="text"
                 name="q"
-                placeholder="Hermes, alchemy, Ficino..."
+                placeholder="Search the collection..."
                 className="w-full pl-12 pr-4 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-rust/20 focus:border-accent-rust shadow-sm"
               />
             </form>

@@ -262,6 +262,15 @@ li {
   font-weight: bold;
   color: #333;
 }
+.folio-marker {
+  display: block;
+  font-size: 0.75em;
+  color: #888;
+  margin-top: 1.5em;
+  margin-bottom: 0.3em;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0.05em;
+}
 `;
 
 /**
@@ -337,6 +346,8 @@ export async function generateKdpEpub(
     let chapterHtml = `<h1>${escapeXml(group.title)}</h1>\n`;
     for (const page of group.pages) {
       if (page.translation?.data) {
+        // Insert folio marker so scholars can cite specific pages
+        chapterHtml += `<span class="folio-marker" id="p-${page.page_number}">[p.&nbsp;${page.page_number}]</span>\n`;
         chapterHtml += translationToHtml(page.translation.data) + '\n';
       }
     }

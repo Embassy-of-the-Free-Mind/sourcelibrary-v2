@@ -48,7 +48,7 @@ export async function GET() {
 
     return NextResponse.json({
       total: catalog.length,
-      description: 'Source Library: Digitizing and translating rare Hermetic, esoteric, and humanist texts',
+      description: 'Source Library: Digitizing and translating ancient texts for scholars, seekers and AI systems',
       website: 'https://sourcelibrary.org',
       catalog
     });

@@ -7,6 +7,7 @@ import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { createRevision } from '@/lib/page-revisions';
 import { createCronLogger } from '@/lib/cron-logger';
+import { contentHash } from '@/lib/steganographia';
 
 export const maxDuration = 300;
 
@@ -250,6 +251,7 @@ export async function GET(request: NextRequest) {
                   update: {
                     $set: {
                       'ocr.data': text,
+                      'ocr.content_hash': contentHash(text),
                       'ocr.updated_at': now,
                       'ocr.model': job.model,
                       'ocr.language': job.language,
@@ -289,6 +291,7 @@ export async function GET(request: NextRequest) {
                   update: {
                     $set: {
                       'translation.data': text,
+                      'translation.content_hash': contentHash(text),
                       'translation.updated_at': now,
                       'translation.model': job.model,
                       'translation.source_language': job.language,

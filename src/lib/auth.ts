@@ -183,7 +183,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn() {
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         // Check admin status on first sign-in
@@ -193,12 +193,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.role = 'reader';
         }
       }
+      // Check membership status on sign-in and session updates
+      if (token.id && (user || trigger === 'update')) {
+        try {
+          const client = await clientPromise;
+          const db = client.db(dbName);
+          const dbUser = await db.collection('users').findOne(
+            { _id: token.id as any },
+            { projection: { 'membership.active': 1, 'membership.plan': 1 } }
+          );
+          token.membership = dbUser?.membership?.active ? (dbUser.membership.plan || 'ficino') : null;
+        } catch {
+          // Don't block auth if membership check fails
+        }
+      }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
         (session.user as any).role = token.role as string;
+        (session.user as any).membership = token.membership || null;
       }
       return session;
     },

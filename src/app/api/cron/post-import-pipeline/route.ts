@@ -87,9 +87,9 @@ async function setPipelineStatus(
     upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget
   }
 
-  // When images complete, gallery quality data is available — try gallery fallback for covers
+  // When images complete, gallery descriptions + quality scores are available — pick the best cover
   if (status === 'images_complete' && prevStatus !== 'images_complete') {
-    upgradeThumbnailFromPageType(db, bookId).catch(() => {}); // fire-and-forget — includes gallery fallback
+    upgradeThumbnailFromGallery(db, bookId).catch(() => {}); // fire-and-forget
   }
 
   // Log transition to audit trail (fire-and-forget)
@@ -107,7 +107,7 @@ async function setPipelineStatus(
 function isExLibrisPage(ocrData?: string): boolean {
   if (!ocrData) return false;
   const start = ocrData.substring(0, 1000);
-  return /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
+  return /ex[\s\-.]?libris|bookplate|library\s+stamp|philosophia\s+hermetica|bibliotheca\s+philosophica|google\s+logo|digitized\s+by\s+google|bookplate.*pasted/i.test(start);
 }
 
 /**
@@ -256,6 +256,188 @@ async function upgradeThumbnailFromPageType(
   const update: Record<string, string> = { thumbnail: newUrl, thumbnail_source: 'auto' };
   if (bestPage.thumbnail_blob) update.thumbnail_blob = bestPage.thumbnail_blob;
   await db.collection('books').updateOne({ id: bookId }, { $set: update });
+}
+
+/**
+ * After image extraction, use gallery descriptions + quality scores to pick
+ * the most visually compelling cover page. Prefers beautiful illustrations,
+ * frontispieces, emblems, and allegorical scenes. Skips ex libris / bookplate pages.
+ *
+ * This replaces the simple page_type-based selection with description-aware scoring.
+ * Uses the full page image (not the cropped illustration) as the thumbnail.
+ */
+async function upgradeThumbnailFromGallery(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+) {
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { thumbnail: 1, thumbnail_source: 1 } }
+  );
+  if (!book?.thumbnail) return;
+  if (book.thumbnail_source === 'manual') return;
+
+  // Check if current thumbnail is already on a frontispiece/title-page — don't downgrade
+  const currentPage = await db.collection('pages').findOne({
+    book_id: bookId,
+    $or: [
+      { cropped_photo: book.thumbnail },
+      { archived_photo: book.thumbnail },
+      { photo: book.thumbnail },
+      { photo_original: book.thumbnail },
+    ]
+  }, { projection: { page_type: 1, page_number: 1, 'ocr.data': 1 } });
+
+  const currentIsGood = currentPage?.page_type === 'frontispiece' || currentPage?.page_type === 'title-page';
+
+  // Candidates: gallery images + title pages (title pages may not have gallery entries)
+  const galleryImages = await db.collection('gallery_images').find(
+    { book_id: bookId, gallery_quality: { $gte: 0.4 } },
+    {
+      projection: {
+        page_id: 1, page_number: 1, gallery_quality: 1, type: 1,
+        museum_description: 1, description: 1, metadata: 1,
+      },
+      sort: { gallery_quality: -1, page_number: 1 },
+      limit: 20,
+    }
+  ).toArray();
+
+  // Also consider title pages — they're often great covers even without gallery entries
+  const titlePage = await db.collection('pages').findOne(
+    { book_id: bookId, page_type: 'title-page', page_number: { $lte: 30 } },
+    { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } }
+  );
+
+  // Build unified candidate list
+  type CoverCandidate = { page_id: string; coverScore: number };
+  const candidates: CoverCandidate[] = [];
+
+  // Score gallery images
+  for (const img of galleryImages) {
+    if (isExLibrisGalleryImage(img)) continue;
+    candidates.push({
+      page_id: img.page_id,
+      coverScore: computeCoverScore(img),
+    });
+  }
+
+  // Add title page if not already represented and not ex libris
+  if (titlePage && !isExLibrisPage(titlePage.ocr?.data)) {
+    const alreadyIncluded = candidates.some(c => c.page_id === titlePage.id);
+    if (!alreadyIncluded) {
+      // Title pages get a strong base score even without gallery data
+      const pageNum = titlePage.page_number || 1;
+      let titleScore = 0.75; // strong base — title pages are reliably good covers
+      if (pageNum <= 10) titleScore += 0.08;
+      else if (pageNum <= 30) titleScore += 0.04;
+      candidates.push({ page_id: titlePage.id, coverScore: titleScore });
+    }
+  }
+
+  if (candidates.length === 0) return;
+
+  candidates.sort((a, b) => b.coverScore - a.coverScore);
+  const best = candidates[0];
+
+  // If current cover is already a frontispiece/title-page, require a high score to replace
+  const threshold = currentIsGood ? 0.75 : 0.5;
+  if (best.coverScore < threshold) return;
+
+  // Don't replace a good early-page cover with a deep-page gallery pick
+  if (currentIsGood && currentPage && best.page_id !== currentPage.id) {
+    const bestPageDoc = await db.collection('pages').findOne(
+      { id: best.page_id },
+      { projection: { page_number: 1 } }
+    );
+    // If the candidate is much deeper in the book, skip — frontispieces near the front are fine
+    if (bestPageDoc && currentPage.page_number && bestPageDoc.page_number > currentPage.page_number * 3) return;
+  }
+
+  // Get the full page image URL (not the cropped illustration)
+  const page = await db.collection('pages').findOne(
+    { id: best.page_id },
+    { projection: { cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1 } }
+  );
+  if (!page) return;
+
+  const newUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
+  if (!newUrl || newUrl === book.thumbnail) return;
+
+  const update: Record<string, string> = { thumbnail: newUrl, thumbnail_source: 'auto' };
+  if (page.thumbnail_blob) update.thumbnail_blob = page.thumbnail_blob;
+  await db.collection('books').updateOne({ id: bookId }, { $set: update });
+}
+
+/**
+ * Score a gallery image for cover suitability (0-1 scale).
+ * Factors: gallery quality, image type, page position, description richness.
+ *
+ * Position matters a lot — a cover should come from the front of the book.
+ * A beautiful illustration on page 200 is worse than a decent frontispiece on page 3.
+ */
+function computeCoverScore(img: Record<string, unknown>): number {
+  const quality = (img.gallery_quality as number) || 0;
+
+  // Quality contributes ~40% of the score
+  let score = quality * 0.4;
+
+  // Type bonuses (~20% weight) — frontispieces and emblems make the best covers
+  const type = (img.type as string) || '';
+  const typeBonus: Record<string, number> = {
+    frontispiece: 0.20,
+    emblem: 0.15,
+    portrait: 0.12,
+    engraving: 0.10,
+    woodcut: 0.10,
+    map: 0.05,
+    diagram: -0.05,
+    decorative: -0.10,
+    symbol: -0.05,
+  };
+  score += typeBonus[type] || 0;
+
+  // Position is heavily weighted (~30%) — covers belong at the front
+  const pageNum = (img.page_number as number) || 999;
+  if (pageNum <= 5) score += 0.30;
+  else if (pageNum <= 10) score += 0.25;
+  else if (pageNum <= 20) score += 0.20;
+  else if (pageNum <= 40) score += 0.12;
+  else if (pageNum <= 80) score += 0.05;
+  // pages 80+ get no position bonus — deep illustrations rarely make good covers
+
+  // Description richness — images with figures/subjects are more intriguing
+  const metadata = img.metadata as Record<string, string[]> | undefined;
+  if (metadata?.figures?.length) score += 0.05;
+  if (metadata?.symbols?.length) score += 0.03;
+
+  return Math.max(0, Math.min(1, score));
+}
+
+/**
+ * Detect ex libris / bookplate gallery images using description and metadata.
+ * These are ownership marks, not content — never good covers.
+ */
+function isExLibrisGalleryImage(img: Record<string, unknown>): boolean {
+  const desc = ((img.museum_description as string) || '') + ' ' + ((img.description as string) || '');
+  if (/ex[\s\-.]?libris|bookplate|ownership\s+(mark|stamp|inscription)|library\s+stamp/i.test(desc)) {
+    return true;
+  }
+  const metadata = img.metadata as Record<string, string[]> | undefined;
+  const subjects = metadata?.subjects || [];
+  if (subjects.some(s => /ex[\s\-.]?libris|bookplate|ownership/i.test(s))) {
+    return true;
+  }
+  // EFM / Bibliotheca Philosophica Hermetica bookplate — pelican emblem with "Philosophia Hermetica" text
+  if (/philosophia\s+hermetica/i.test(desc)) {
+    return true;
+  }
+  // Standalone pelican/bird emblems with no other content are often EFM bookplates
+  const type = (img.type as string) || '';
+  if (type === 'emblem' && /pelican|pelikan/i.test(desc) && !/allegori|alchemi/i.test(desc)) {
+    return true;
+  }
+  return false;
 }
 
 async function markFailed(
@@ -447,6 +629,7 @@ export async function GET(request: NextRequest) {
 
   const log = {
     enrolled: 0,
+    ft_early: 0,
     archived: 0,
     ocr_submitted: 0,
     ocr_advanced: 0,
@@ -550,7 +733,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime) && !imagesPaused) {
       const readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
-        .sort({ hidden: 1 })
+        .sort({ processing_priority: -1, hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
@@ -620,7 +803,7 @@ export async function GET(request: NextRequest) {
       if (activeImageJobs < limits.image_max) {
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
-          .sort({ hidden: 1 })
+          .sort({ processing_priority: -1, hidden: 1 })
           .project({ id: 1, title: 1 })
           .limit(limits.image_submit)
           .toArray();
@@ -862,6 +1045,25 @@ export async function GET(request: NextRequest) {
           }
         );
         log.enrolled++;
+
+        // Early FT verification — cheap ($0.001/book), sets is_first_translation
+        // before OCR/translation so we know the book's status from the start.
+        // Phase 3.7 will fast-track these as already verified.
+        if (hasTimeBudget(startTime)) {
+          try {
+            const bookDoc = await db.collection('books').findOne(
+              { id: book.id },
+              { projection: { language: 1 } },
+            );
+            const lang = ((bookDoc?.language || '') as string).toLowerCase();
+            if (lang && lang !== 'english') {
+              await verifyFirstTranslation(db, book.id);
+              log.ft_early++;
+            }
+          } catch {
+            // Non-blocking — Phase 3.7 will catch it later
+          }
+        }
       }
     }
 
@@ -874,7 +1076,7 @@ export async function GET(request: NextRequest) {
       // Move queued books to archiving
       const queuedBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'queued' })
-        .sort({ hidden: 1 }) // Visible books first
+        .sort({ processing_priority: -1, hidden: 1 }) // Highest priority first, then visible
         .project({ id: 1 })
         .limit(ARCHIVE_LIMIT)
         .toArray();
@@ -889,7 +1091,7 @@ export async function GET(request: NextRequest) {
       const ARCHIVE_TIMEOUT_MS = 24 * 60 * 60 * 1000; // 24h — OCR works on original IIIF URLs
       const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
-        .sort({ hidden: 1 }) // Visible books first
+        .sort({ processing_priority: -1, hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, 'pipeline_auto.last_updated': 1, 'pipeline_auto.started_at': 1 })
         .limit(100) // Just DB queries per book — can handle many
         .toArray();
@@ -964,11 +1166,17 @@ export async function GET(request: NextRequest) {
       }
 
       const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < limits.ocr_lambda_max) ? await db.collection('books')
-        .find({ 'pipeline_auto.status': 'archive_complete' })
-        .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(ocrLimit)
-        .toArray() : [];
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          { $addFields: {
+            _lang_priority: { $cond: [{ $eq: ['$language', 'Latin'] }, 2,
+              { $cond: [{ $in: ['$language', ['Greek', 'Arabic', 'Hebrew', 'Sanskrit']] }, 1, 0] }] },
+            _year_sort: { $ifNull: ['$year_published', 0] },
+          } },
+          { $sort: { processing_priority: -1, _lang_priority: -1, _year_sort: -1, hidden: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 } },
+          { $limit: ocrLimit },
+        ]).toArray() : [];
 
       let ocrQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let lambdaFallbackCount = 0;
@@ -1340,7 +1548,7 @@ export async function GET(request: NextRequest) {
             },
           ],
         })
-        .sort({ 'pipeline_auto.status': -1, hidden: 1 }) // ocr_complete first, then preview
+        .sort({ 'pipeline_auto.status': -1, processing_priority: -1, hidden: 1 }) // ocr_complete first, then priority
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.status': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
@@ -1387,7 +1595,7 @@ export async function GET(request: NextRequest) {
         .find({
           'pipeline_auto.status': 'metadata_enriched',
         })
-        .sort({ hidden: 1, pages_count: 1 })
+        .sort({ processing_priority: -1, hidden: 1, pages_count: 1 })
         .limit(FT_VERIFY_LIMIT)
         .project({ id: 1, title: 1, language: 1, 'pipeline_auto.retry_count': 1, translation_verification: 1 })
         .toArray();
@@ -1512,7 +1720,7 @@ export async function GET(request: NextRequest) {
               0, 1 // 0 = nearly done (sorts first), 1 = rest
             ]}
           }},
-          { $sort: { _isEfm: 1, _nearlyDone: 1, hidden: 1, pages_count: 1 } },
+          { $sort: { _isEfm: 1, _nearlyDone: 1, processing_priority: -1, hidden: 1, pages_count: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 } },
           { $limit: limits.translate_submit },
         ]).toArray() : [];

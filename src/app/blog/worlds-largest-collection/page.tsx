@@ -5,13 +5,13 @@ import BlogComments from '@/components/blog/BlogComments';
 import InputWidget from '@/components/InputWidget';
 
 export const metadata: Metadata = {
-  title: 'The World\'s Largest Collection of Translated Early Modern Texts — Source Library',
+  title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts — Source Library',
   description:
-    'With 3,300+ translated books and 780,000+ translated pages, Source Library is the world\'s largest collection of early modern texts translated into English — 30x larger than the I Tatti Renaissance Library and 6x larger than the Loeb Classical Library.',
+    'With 4,200+ translated books and 800,000+ translated pages, Source Library is the world\'s largest collection of ancient and early modern texts translated into English — including 2,400+ first-ever English translations.',
   openGraph: {
-    title: 'The World\'s Largest Collection of Translated Early Modern Texts',
+    title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts',
     description:
-      'With 3,300+ translated books, Source Library surpasses every comparable collection — Loeb, I Tatti, Dumbarton Oaks — by an order of magnitude. And it\'s free.',
+      'With 4,200+ translated books — 2,400+ for the first time ever — Source Library surpasses every comparable collection. And it\'s free.',
     images: [
       {
         url: 'https://sourcelibrary.org/og-image.png',
@@ -27,17 +27,17 @@ export const metadata: Metadata = {
 
 // Comparison data — scholarly print series
 const PRINT_SERIES = [
-  { name: 'Source Library', count: 3378, year: '2025–', access: 'Free & open', color: '#9e4a3a', type: 'AI translation' },
+  { name: 'Source Library', count: 4284, year: '2025–', access: 'Free & open', color: '#9e4a3a', type: 'AI translation' },
   { name: 'Loeb Classical Library', count: 540, year: '1911–', access: 'Paywall', color: '#7c5db5', type: 'Human scholarly' },
   { name: 'I Tatti Renaissance Library', count: 100, year: '2001–', access: 'Paywall', color: '#c9a86c', type: 'Human scholarly' },
   { name: 'Dumbarton Oaks Medieval Library', count: 75, year: '2010–', access: 'Paywall', color: '#8b9a7d', type: 'Human scholarly' },
   { name: 'Translated Texts for Historians', count: 60, year: '1985–', access: 'Paywall', color: '#7c5db5', type: 'Human scholarly' },
 ];
-const MAX_COUNT = 3378;
+const MAX_COUNT = 4284;
 
 // Comparison data — digital libraries
 const DIGITAL_LIBRARIES = [
-  { name: 'Source Library', translations: 3378, newTranslations: true, scope: '30+ languages, antiquity–1900', note: 'AI-generated, 2,400+ are first-ever English translations' },
+  { name: 'Source Library', translations: 4284, newTranslations: true, scope: '100+ languages, antiquity–1900', note: 'AI-generated, 2,400+ are first-ever English translations' },
   { name: 'Internet Archive', translations: null, newTranslations: false, scope: '40M+ texts total', note: 'General archive — hosts existing translations, does not produce new ones' },
   { name: 'Perseus Digital Library', translations: 1000, newTranslations: false, scope: 'Greek & Latin classics', note: 'Public domain Victorian-era translations (Loeb, etc.)' },
   { name: 'Sacred Texts Archive', translations: 1700, newTranslations: false, scope: 'Religious & mythological texts', note: 'Reprints of existing public domain translations' },
@@ -47,33 +47,40 @@ const DIGITAL_LIBRARIES = [
 ];
 
 const LANGUAGES = [
-  { lang: 'Latin', n: 868 },
-  { lang: 'German', n: 464 },
-  { lang: 'Sumerian', n: 374 },
-  { lang: 'English (modernized)', n: 337 },
-  { lang: 'Chinese', n: 258 },
-  { lang: 'Sanskrit', n: 208 },
-  { lang: 'French', n: 199 },
-  { lang: 'Greek', n: 136 },
-  { lang: 'Dutch', n: 125 },
-  { lang: 'Italian', n: 111 },
+  { lang: 'Latin', n: 961 },
+  { lang: 'German', n: 541 },
+  { lang: 'Chinese', n: 398 },
+  { lang: 'Sumerian', n: 373 },
+  { lang: 'Greek', n: 259 },
+  { lang: 'Sanskrit', n: 259 },
+  { lang: 'French', n: 247 },
+  { lang: 'Italian', n: 100 },
+  { lang: 'Dutch', n: 86 },
+  { lang: 'Hebrew', n: 31 },
 ];
-const MAX_LANG = 868;
+const MAX_LANG = 961;
 
-const IIIF_PROVIDERS = [
-  { name: 'Internet Archive', books: '2,800+' },
-  { name: 'Embassy of the Free Mind', books: '800+' },
-  { name: 'Bibliothèque nationale de France (Gallica)', books: '90+' },
-  { name: 'Bavarian State Library (MDZ)', books: '60+' },
-  { name: 'Vatican Library', books: '40+' },
-  { name: 'Cambridge University Library', books: '35+' },
-  { name: 'Bodleian Library, Oxford', books: '20+' },
-  { name: 'Library of Congress', books: '15+' },
-  { name: 'Herzog August Bibliothek', books: '10+' },
-  { name: 'Swiss e-rara', books: '10+' },
-  { name: 'Wellcome Collection', books: '5+' },
-  { name: 'Europeana (aggregator)', books: '5+' },
-  { name: 'Google Books (via IA mirror)', books: '30+' },
+// Top source institutions (contributing libraries, not intermediaries)
+const SOURCE_INSTITUTIONS = [
+  { name: 'Bavarian State Library (MDZ)', books: '1,380+', access: 'IIIF direct' },
+  { name: 'Embassy of the Free Mind', books: '1,090+', access: 'IIIF direct' },
+  { name: 'Electronic Text Corpus of Sumerian Literature', books: '370+', access: 'Direct' },
+  { name: 'University of Toronto', books: '450+', access: 'via Internet Archive' },
+  { name: 'Koninklijke Bibliotheek (Netherlands)', books: '200+', access: 'via Internet Archive' },
+  { name: 'Getty Research Institute', books: '170+', access: 'via Internet Archive' },
+  { name: 'Biblioth\u00e8que nationale de France (Gallica)', books: '170+', access: 'IIIF direct' },
+  { name: 'Biblioteca Nazionale Centrale di Firenze', books: '165+', access: 'via Internet Archive' },
+  { name: 'National Central Library of Rome', books: '160+', access: 'via Internet Archive' },
+  { name: 'Peking University Library', books: '135+', access: 'via CADAL' },
+  { name: 'Harvard University', books: '115+', access: 'via Internet Archive' },
+  { name: 'University of Michigan', books: '115+', access: 'via Internet Archive' },
+  { name: 'Wellcome Library', books: '105+', access: 'IIIF direct + via IA' },
+  { name: 'Biblioteca Medicea Laurenziana', books: '100+', access: 'IIIF direct' },
+  { name: 'Bodleian Library, Oxford', books: '90+', access: 'IIIF direct + via IA' },
+  { name: 'Biblioteca Apostolica Vaticana', books: '85+', access: 'IIIF direct' },
+  { name: 'Smithsonian Libraries', books: '65+', access: 'via Internet Archive' },
+  { name: 'Boston Public Library', books: '65+', access: 'via Internet Archive' },
+  { name: 'Library of Congress', books: '60+', access: 'IIIF direct' },
 ];
 
 export default function WorldsLargestCollectionPage() {
@@ -81,8 +88,8 @@ export default function WorldsLargestCollectionPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="The World&rsquo;s Largest Collection of Translated Early Modern Texts"
-          subtitle="3,300+ books, 780,000+ pages, 10+ languages &mdash; free and open to everyone"
+          title="The World&rsquo;s Largest Collection of Translated Ancient and Early Modern Texts"
+          subtitle="4,200+ books translated, 800,000+ pages, 100+ languages &mdash; free and open to everyone"
         >
           <p className="text-stone-400 text-sm mt-4">12 March 2026 &middot; 8 min read</p>
         </ContentHeader>
@@ -104,10 +111,11 @@ export default function WorldsLargestCollectionPage() {
       <article className="prose-content max-w-none">
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          Source Library now holds over 3,300 books translated into English, spanning Latin,
-          German, Sumerian, Chinese, Sanskrit, Greek, French, Dutch, Italian, and Arabic.
-          With more than 780,000 translated pages, it is &mdash; by a wide margin &mdash; the
-          world&rsquo;s largest collection of early modern texts made available in English.
+          Source Library now holds over 4,200 books translated into English &mdash; 1,300+ fully
+          translated, with the remainder in progress &mdash; spanning Latin, German, Chinese,
+          Sumerian, Sanskrit, Greek, French, and dozens of other languages across 100+ in total.
+          With more than 800,000 translated pages, it is the world&rsquo;s largest collection
+          of ancient and early modern texts made available in English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
@@ -115,7 +123,9 @@ export default function WorldsLargestCollectionPage() {
           The Loeb Classical Library, founded in 1911, has published roughly 540 volumes. The I Tatti
           Renaissance Library reached its 100th volume in 2025 after 24 years. Perseus hosts about
           1,000 public domain translations of Greek and Latin classics. Source Library has more
-          translated books than all of them combined &mdash; and every page is free.
+          translated books than all of them combined &mdash; and every page is free. Of these,
+          2,400+ are <em>first-ever</em> English translations &mdash; texts that have never
+          appeared in English before in any form.
         </p>
 
         {/* === Comparison chart: print series === */}
@@ -153,10 +163,10 @@ export default function WorldsLargestCollectionPage() {
         {/* === Stat block === */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-12">
           {[
-            { number: '3,378', label: 'Books translated' },
-            { number: '786,840', label: 'Pages translated' },
-            { number: '5,173', label: 'Total books' },
-            { number: '73,000+', label: 'Extracted illustrations' },
+            { number: '4,284', label: 'Books translated' },
+            { number: '800,000+', label: 'Pages translated' },
+            { number: '10,083', label: 'Total books' },
+            { number: '76,000+', label: 'Extracted illustrations' },
           ].map((stat) => (
             <div key={stat.label} className="text-center py-5 px-3 bg-warm rounded-lg border border-border-light">
               <div className="font-serif text-3xl md:text-4xl text-accent-rust mb-1">{stat.number}</div>
@@ -203,7 +213,7 @@ export default function WorldsLargestCollectionPage() {
           {/* Pull quote */}
           <div className="border-l-4 border-accent-rust pl-6 my-10">
             <p className="text-lg text-secondary italic font-body leading-relaxed">
-              For the vast majority of these books, the alternative is not a better translation.
+              For 2,400+ of these books, the alternative is not a better translation.
               The alternative is no translation at all.
             </p>
           </div>
@@ -244,7 +254,7 @@ export default function WorldsLargestCollectionPage() {
             holds over 40 million digitized texts, including thousands of English translations of
             classical, medieval, and early modern works &mdash; every old Bohn&rsquo;s Classical Library
             volume, the Sacred Books of the East, countless 19th-century renderings of Greek, Latin, and
-            Sanskrit texts. It is, in fact, Source Library&rsquo;s primary upstream source: over 2,800 of
+            Sanskrit texts. It is, in fact, Source Library&rsquo;s primary upstream source: over 5,600 of
             our books come from IA&rsquo;s digitized collections. But the Internet Archive is a general-purpose
             archive. It preserves and hosts what already exists. The translations it contains were published
             decades or centuries ago and happen to be in its collection. It does not produce new translations,
@@ -355,14 +365,15 @@ export default function WorldsLargestCollectionPage() {
         {/* === Section 3: Languages === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            Ten languages and counting
+            100+ languages and counting
           </h2>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
             The collection spans far more than the Latin and Greek of the classical tradition.
             German Fraktur manuscripts, Sumerian cuneiform tablets, Chinese rare books from the
-            Library of Congress, Sanskrit astrological treatises, Greek Church Fathers, Dutch
-            pamphlets, and Italian humanist texts all flow through the same pipeline.
+            Library of Congress, Sanskrit astrological treatises, Hebrew Kabbalistic texts, Greek
+            Church Fathers, Dutch pamphlets, and Italian humanist texts &mdash; across 104
+            languages in total &mdash; all flow through the same pipeline.
           </p>
 
           <div className="bg-warm rounded-lg border border-border-light p-6 md:p-8">
@@ -389,47 +400,54 @@ export default function WorldsLargestCollectionPage() {
         {/* === Section 4: IIIF === */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            How IIIF makes this possible
+            160+ libraries, one pipeline
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The scale of Source Library depends on a single infrastructural fact: the{' '}
+            Source Library draws on books from over 160 libraries and institutions worldwide.
+            Some &mdash; the Bavarian State Library, the Biblioth&egrave;que nationale de France,
+            the Bodleian, the Vatican &mdash; expose their collections directly through the{' '}
             <a href="https://iiif.io/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               International Image Interoperability Framework
             </a>{' '}
-            (IIIF). Because institutions like the Biblioth&egrave;que nationale de France, the
-            Bavarian State Library, the Bodleian Library, and the Vatican Library all expose their
-            digitized collections through IIIF manifests, Source Library can consume page images
-            from 13 different providers through a single, uniform input layer.
+            (IIIF). Others are accessible through the Internet Archive, which hosts digitized
+            books from hundreds of contributing libraries &mdash; the Getty Research Institute,
+            the Koninklijke Bibliotheek, the Biblioteca Nazionale in Florence, Harvard, and
+            many more.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Adding a new institutional source requires only a manifest parser. The entire downstream
-            pipeline &mdash; image archiving, Gemini vision OCR, automated translation, illustration
-            detection, metadata enrichment, and scholarly edition publishing with DOIs &mdash; works
-            unchanged regardless of whether the source is the Vatican, Cambridge, or a small Swiss
-            cantonal library.
+            IIIF is the infrastructural key. Because these institutions expose their digitized
+            pages through a standard protocol, Source Library can consume images from any of them
+            through a single, uniform input layer. Adding a new institutional source requires only
+            a manifest parser. The entire downstream pipeline &mdash; OCR, translation, illustration
+            detection, metadata enrichment, scholarly edition publishing &mdash; works unchanged
+            regardless of origin.
           </p>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
             IIIF was designed to make images interoperable for human viewers. It turns out to be
             even more transformative when the consumer is an AI model. A standardized way to access
             page images at arbitrary resolution from any institution is exactly what an automated
-            OCR and translation pipeline needs. The interoperability promise of IIIF &mdash; write
-            once, access anywhere &mdash; becomes a force multiplier for AI-powered scholarship.
+            translation pipeline needs. The interoperability promise of IIIF &mdash; write once,
+            access anywhere &mdash; becomes a force multiplier for AI-powered scholarship.
           </p>
 
-          {/* Provider table */}
+          {/* Institutional sources table */}
           <div className="bg-warm rounded-lg border border-border-light p-6 md:p-8">
-            <h3 className="font-serif text-xl text-primary mb-4">Institutional sources</h3>
+            <h3 className="font-serif text-xl text-primary mb-4">Largest source institutions</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-              {IIIF_PROVIDERS.map((p) => (
+              {SOURCE_INSTITUTIONS.map((p) => (
                 <div key={p.name} className="flex justify-between py-1.5 border-b border-border-light last:border-0">
                   <span className="text-sm text-secondary">{p.name}</span>
-                  <span className="text-xs text-muted">{p.books} books</span>
+                  <span className="text-xs text-muted">{p.books}</span>
                 </div>
               ))}
             </div>
+            <p className="text-xs text-muted mt-4">
+              160+ institutions total. Many contribute through the Internet Archive and Google Books
+              digitization programs. Counts reflect books currently in the collection.
+            </p>
           </div>
         </section>
 
@@ -511,7 +529,8 @@ export default function WorldsLargestCollectionPage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            3,300 books are now unlocked. The collection is growing every day. And every page is free.
+            Over 4,200 books are now unlocked &mdash; 2,400+ of them for the first time in English.
+            The collection is growing every day. And every page is free.
           </p>
         </section>
 

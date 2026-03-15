@@ -6,6 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 export const maxDuration = 300;
 
@@ -107,6 +108,19 @@ export const POST = withAuth(async (request, session) => {
       );
     }
 
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title, author, display_title, gallica_ark: ark,
+      image_source: { provider: 'gallica', identifier: ark, iiif_manifest: manifestUrl, source_url: `https://gallica.bnf.fr/ark:/12148/${ark}` },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
+        { status: 409 }
+      );
+    }
+
     // Create book
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
@@ -168,6 +182,9 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ gallica_ark: ark }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: new Date(),
       updated_at: new Date()
     };

@@ -167,12 +167,12 @@ export default function PressPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {[
-              { number: '4,400+', label: 'Rare books digitised' },
-              { number: '1.6M', label: 'Pages scanned' },
-              { number: '280K+', label: 'Pages translated to English' },
-              { number: '90+', label: 'Source languages' },
-              { number: '53K+', label: 'Illustrations extracted' },
-              { number: '13', label: 'Source libraries worldwide' },
+              { number: '10,000+', label: 'Rare books digitised' },
+              { number: '3.7M', label: 'Pages scanned' },
+              { number: '800K+', label: 'Pages translated to English' },
+              { number: '100+', label: 'Source languages' },
+              { number: '76K+', label: 'Illustrations extracted' },
+              { number: '160+', label: 'Source libraries worldwide' },
             ].map((stat) => (
               <div key={stat.label} className="bg-stone-50 rounded-xl p-5">
                 <div

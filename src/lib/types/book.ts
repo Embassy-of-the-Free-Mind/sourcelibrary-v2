@@ -2,6 +2,7 @@ import { DublinCoreMetadata } from "./dublin-core";
 import { ImageSource } from "./image-source";
 import { TranslationEdition } from "./edition";
 import { PipelineState } from "./pipeline";
+import type { FacetedTags } from "../taxonomy/faceted-vocabulary";
 
 export interface CdliWitness {
   p_number: string;        // e.g. "P271955"
@@ -40,6 +41,7 @@ export interface Book {
   thumbnail?: string;          // Original IIIF URL (from import)
   thumbnail_blob?: string;     // Vercel Blob CDN URL (fast, pre-generated)
   categories?: string[];
+  faceted_tags?: FacetedTags;
   pages_count?: number;
   pages_translated?: number;  // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
@@ -113,6 +115,19 @@ export interface Book {
       quotes?: Array<{ text: string; page: number; significance?: string }>;
       concepts?: string[];
     }>;
+    // Tag-extracted index entries with page references
+    entries?: Array<{
+      term: string;
+      pages: number[];
+      type: 'vocab' | 'term' | 'keyword';
+    }>;
+    // Legacy flat lists (from old AI extraction)
+    people?: Array<{ term: string; pages: number[] }>;
+    places?: Array<{ term: string; pages: number[] }>;
+    concepts?: Array<{ term: string; pages: number[] }>;
+    keyTerms?: Array<{ term: string; pages: number[] }>;
+    method?: 'tag-extraction' | 'ai-extraction';
+    pagesCovered?: number;
     generatedAt?: Date;
   };
 

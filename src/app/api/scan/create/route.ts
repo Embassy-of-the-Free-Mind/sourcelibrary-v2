@@ -7,6 +7,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { processImageUpload } from '@/lib/uploads/processing';
 import { updateBookAfterUpload } from '@/lib/uploads/utils';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { normalizeTitle, normalizeAuthor } from '@/lib/dedup';
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,6 +49,8 @@ export async function POST(request: NextRequest) {
         provider_name: 'Mobile Scan',
       },
       status: 'draft',
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author || 'Unknown'),
       created_at: new Date(),
       updated_at: new Date(),
     };

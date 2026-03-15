@@ -66,7 +66,26 @@ Sets `thumbnail_source: 'auto'` on upgrade.
 
 **Skips:** Books with `thumbnail_source: 'manual'`, or current thumbnail already on a frontispiece/title-page.
 
-### Stage 4: Manual Override (admin UI)
+### Stage 4: Post-Image-Extraction Upgrade (pipeline Phase 5)
+
+**Function:** `upgradeThumbnailFromGallery()` in `post-import-pipeline` cron
+**Trigger:** Book transitions to `images_complete`
+**Condition:** `thumbnail_source` is not `manual`
+
+Uses gallery image descriptions, quality scores, and metadata to pick the most visually compelling cover. Scores candidates with `computeCoverScore()`:
+
+- **Quality** (40%): `gallery_quality` 0–1
+- **Type** (20%): frontispiece +0.20, emblem +0.15, portrait +0.12, engraving/woodcut +0.10
+- **Position** (30%): pages 1–5 get +0.30, decaying to 0 past page 80
+- **Richness**: figures +0.05, symbols +0.03
+
+Also considers title pages (base score 0.75) and frontispiece pages even without gallery entries.
+
+**Ex libris filter:** Skips pages with BPH bookplate ("Philosophia Hermetica"), pelican emblems, Google scan pages, "bookplate pasted" OCR annotations, and standard ex libris/bookplate text.
+
+**Guard:** Won't replace an existing frontispiece/title-page cover with a deep-page gallery pick (candidate must be within 3x current page number).
+
+### Stage 5: Manual Override (admin UI)
 
 **Component:** `CoverImagePicker` in `src/components/book/CoverImagePicker.tsx`
 **Who:** Admin users on the book detail page
@@ -117,15 +136,14 @@ Click any page thumbnail to set it as the book's cover. Sets `thumbnail_source: 
 **Scale:** Two rounds of fixes — 36 books fixed Mar 2026 (`_tmp-check-covers.mjs`), then 71 more fixed Mar 11 2026 (bulk scan of all non-manual books with frontispiece/title-page available but not selected as cover).
 **Future:** Could add `ex_libris` or `bookplate` as a page_type to the OCR prompt, then exclude those from cover selection.
 
-### 5. Gallery Quality Not Used for Covers
+### 5. Gallery Quality Now Used for Covers (Fixed Mar 2026)
 
-**Impact:** Image extraction assigns gallery quality scores (0-1.0) to detected illustrations, but cover selection doesn't consider these scores.
-**Opportunity:** A frontispiece with quality 0.3 (faded, damaged) might be a worse cover than a high-quality illustration on page 15. Currently not factored in.
+**Status:** Resolved. `upgradeThumbnailFromGallery()` runs at `images_complete` and scores candidates using gallery quality (40%), type bonuses (20%), page position (30%), and description richness. Falls back to title pages even without gallery data.
 
-### 6. No Cover Selection for Books Without Frontispiece/Title-Page
+### 6. Orphaned Thumbnail URLs
 
-**Impact:** Some books genuinely don't have a frontispiece or decorative title page (e.g., manuscripts, modern reprints). Stage 3 falls through to "no upgrade" and keeps page 1.
-**Mitigation:** Could fall back to the highest-quality illustration from image extraction, but this runs later in the pipeline.
+**Impact:** ~71% of books have thumbnails pointing to old URLs (`/uploads/`, pre-archiving, etc.) that don't match any page's `cropped_photo`/`archived_photo`/`photo` fields. Any script that tries to match thumbnail URL → page will silently skip these books.
+**Lesson:** Always run cover selection from scratch (find best frontispiece/title-page/gallery image) rather than trying to evaluate the current thumbnail. The `_tmp-fix-all-covers.mjs` approach is the right pattern.
 
 ---
 

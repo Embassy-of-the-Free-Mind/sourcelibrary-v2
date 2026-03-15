@@ -109,7 +109,7 @@ export default function PublishEditionButton({
       <button
         onClick={() => setIsOpen(true)}
         className="flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg text-sm transition-colors"
-        title="Publish a citable edition"
+        title="Create a citable edition"
       >
         <BookMarked className="w-4 h-4" />
         Publish
@@ -121,7 +121,7 @@ export default function PublishEditionButton({
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-semibold text-stone-900">Publish Edition</h2>
+                <h2 className="text-xl font-semibold text-stone-900">Create Edition</h2>
                 <p className="text-sm text-stone-500 mt-1">
                   Create a citable, versioned snapshot of the translation
                 </p>
@@ -320,12 +320,12 @@ export default function PublishEditionButton({
 
               {/* Info */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
-                <p className="font-medium mb-1">What happens when you publish:</p>
+                <p className="font-medium mb-1">What happens when you create an edition:</p>
                 <ul className="list-disc list-inside space-y-1 text-blue-700">
                   <li>A snapshot of all translated pages is saved</li>
                   <li>A content hash is generated for verification</li>
-                  <li>Previous editions are marked as superseded</li>
-                  <li>You can later add a DOI for formal citation</li>
+                  <li>The edition starts as a draft for review</li>
+                  <li>Minting a DOI publishes the edition and supersedes previous ones</li>
                 </ul>
               </div>
             </div>
@@ -346,12 +346,12 @@ export default function PublishEditionButton({
                 {isPublishing ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Publishing...
+                    Creating...
                   </>
                 ) : (
                   <>
                     <BookMarked className="w-4 h-4" />
-                    Publish Edition
+                    Create Draft Edition
                   </>
                 )}
               </button>

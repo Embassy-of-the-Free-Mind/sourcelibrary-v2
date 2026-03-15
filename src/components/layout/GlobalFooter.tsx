@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import { clearConsent } from '@/lib/consent';
 
 const NAV_COLUMNS = [
   {
@@ -26,6 +27,7 @@ const NAV_COLUMNS = [
       { label: 'Blog', href: '/blog' },
       { label: 'Press', href: '/press' },
       { label: 'Privacy', href: '/privacy' },
+      { label: 'Cookie Settings', href: '#cookie-settings' },
       { label: 'Terms', href: '/terms' },
     ],
   },
@@ -33,6 +35,7 @@ const NAV_COLUMNS = [
     title: 'Participate',
     links: [
       { label: 'Contribute', href: '/contribute' },
+      { label: 'Ficino Society', href: '/ficino-society' },
       { label: 'Support', href: '/support' },
       { label: 'Scan the Renaissance', href: '/scan-the-renaissance' },
       { label: 'Developers', href: '/developers' },
@@ -84,7 +87,7 @@ export default function GlobalFooter() {
             />
           </Link>
           <p className="font-serif italic text-white/50 text-lg">
-            Ancient Wisdom for the Future
+            ad fontes
           </p>
         </div>
 
@@ -98,7 +101,17 @@ export default function GlobalFooter() {
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    {link.label === 'Support' ? (
+                    {link.label === 'Ficino Society' ? (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                      >
+                        {link.label}
+                        <span className="text-[10px] bg-accent-gold/20 text-accent-gold px-1.5 py-0.5 rounded-full font-medium">
+                          Join
+                        </span>
+                      </Link>
+                    ) : link.label === 'Support' ? (
                       <Link
                         href={link.href}
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
@@ -108,6 +121,13 @@ export default function GlobalFooter() {
                           Donate
                         </span>
                       </Link>
+                    ) : link.label === 'Cookie Settings' ? (
+                      <button
+                        onClick={() => clearConsent()}
+                        className="text-sm text-white/50 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </button>
                     ) : (
                       <Link
                         href={link.href}

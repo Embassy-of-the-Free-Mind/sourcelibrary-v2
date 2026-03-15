@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { randomUUID } from 'crypto';
 import { Document } from 'mongodb';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const preferredRegion = 'fra1';
 export const maxDuration = 60;
@@ -414,7 +415,7 @@ async function seedThematicCollections(
  * ?force=true to recreate even if slug exists.
  * ?slug=X to seed only one collection.
  */
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const dryRun = searchParams.get('dry_run') === 'true';
@@ -518,4 +519,4 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
+});

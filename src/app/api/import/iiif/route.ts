@@ -5,6 +5,7 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 export const maxDuration = 300;
 
@@ -251,6 +252,19 @@ export const POST = withAuth(async (request, session) => {
       );
     }
 
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title, author, display_title,
+      image_source: { provider: 'iiif', iiif_manifest: manifest_url, source_url: manifest_url },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
+        { status: 409 }
+      );
+    }
+
     // Create book
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
@@ -391,6 +405,9 @@ export const POST = withAuth(async (request, session) => {
         ...(shelfmark ? { shelfmark } : {}),
       },
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ image_source: { provider: 'iiif', iiif_manifest: manifest_url } }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: new Date(),
       updated_at: new Date()
     };

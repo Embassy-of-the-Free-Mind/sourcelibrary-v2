@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 180" font-family="Georgia, serif">
+<rect width="500" height="180" fill="white"/>
+<text x="250" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">The Spectrum of Accessibility</text>
+<text x="250" y="42" text-anchor="middle" font-size="11" fill="#666">Source Library's 4,083 verified books</text>
+<rect x="30" y="50" width="155.32" height="50" fill="#2d6a4f"/>
+<text x="107.66" y="71" text-anchor="middle" font-size="14" font-weight="bold" fill="white">35.3%</text>
+<text x="107.66" y="87" text-anchor="middle" font-size="9" fill="white" opacity="0.9">Complete translation</text>
+<rect x="185.32" y="50" width="80.08" height="50" fill="#b87333"/>
+<text x="225.35999999999999" y="71" text-anchor="middle" font-size="14" font-weight="bold" fill="white">18.2%</text>
+<text x="225.35999999999999" y="87" text-anchor="middle" font-size="9" fill="white" opacity="0.9">Partial only</text>
+<rect x="265.4" y="50" width="186.56" height="50" fill="#8b4513"/>
+<text x="358.67999999999995" y="71" text-anchor="middle" font-size="14" font-weight="bold" fill="white">42.4%</text>
+<text x="358.67999999999995" y="87" text-anchor="middle" font-size="9" fill="white" opacity="0.9">Never translated</text>
+<rect x="451.96" y="50" width="18.04" height="50" fill="#ccc"/>
+<rect x="30" y="130" width="12" height="12" fill="#2d6a4f" rx="2"/>
+<text x="46" y="140" font-size="10" fill="#333">Complete translation (35.3%)</text>
+<rect x="160" y="130" width="12" height="12" fill="#b87333" rx="2"/>
+<text x="176" y="140" font-size="10" fill="#333">Partial only (18.2%)</text>
+<rect x="290" y="130" width="12" height="12" fill="#8b4513" rx="2"/>
+<text x="306" y="140" font-size="10" fill="#333">Never translated (42.4%)</text>
+<rect x="420" y="130" width="12" height="12" fill="#ccc" rx="2"/>
+<text x="436" y="140" font-size="10" fill="#333">Unclear (4.1%)</text>
+</svg>

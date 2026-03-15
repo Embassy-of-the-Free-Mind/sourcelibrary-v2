@@ -22,7 +22,6 @@ import {
   type GalleryItem,
   type Collection,
 } from '@/lib/api-client';
-import { sendGAEvent } from '@/lib/ga';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -165,7 +164,6 @@ export default function SearchPage() {
         setIndexTotal(indexData.total || 0);
         setImageResults(imageData.items || []);
         setImageTotal(imageData.total || 0);
-        sendGAEvent({ action: 'search', category: 'engagement', label: q, value: (bookData.total || 0) + (indexData.total || 0) + (imageData.total || 0), search_term: q });
       } else if (mode === 'books') {
         const data = await searchApi.search(q, {
           language: language || undefined,

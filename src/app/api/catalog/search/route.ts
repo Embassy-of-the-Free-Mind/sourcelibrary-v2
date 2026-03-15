@@ -3,6 +3,11 @@ import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
+// Escape special regex characters to prevent ReDoS
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 interface CatalogResult {
   id: string;
   title: string;
@@ -39,14 +44,17 @@ export async function GET(request: NextRequest) {
     const words = query.split(/\s+/).filter(w => w.length >= 2);
 
     // Build query - each word must match in title, author, year, or description
-    const wordConditions = words.map(word => ({
-      $or: [
-        { title: { $regex: word, $options: 'i' } },
-        { author: { $regex: word, $options: 'i' } },
-        { year: { $regex: word, $options: 'i' } },
-        { description: { $regex: word, $options: 'i' } }
-      ]
-    }));
+    const wordConditions = words.map(word => {
+      const safe = escapeRegex(word);
+      return {
+        $or: [
+          { title: { $regex: safe, $options: 'i' } },
+          { author: { $regex: safe, $options: 'i' } },
+          { year: { $regex: safe, $options: 'i' } },
+          { description: { $regex: safe, $options: 'i' } }
+        ]
+      };
+    });
 
     const searchQuery: Record<string, unknown> = wordConditions.length > 0
       ? { $and: wordConditions }

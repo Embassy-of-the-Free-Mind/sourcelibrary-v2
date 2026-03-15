@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { EFM_COLLECTIONS, EXCLUDED_COLLECTIONS } from '@/lib/kdp-scoring';
 
 /**
  * GET /api/admin/kdp — Dashboard data: ranked candidates with scores + publication status
  */
-export const GET = withAuth(async (request: NextRequest) => {
+export const GET = withAdminAuth(async (request: NextRequest) => {
   try {
     const db = await getDb();
     const url = new URL(request.url);

@@ -25,6 +25,9 @@ interface Book {
   y: number;
   z: number;
   cluster: number;
+  taxonomy_cluster?: string;
+  taxonomy_cluster_id?: number;
+  taxonomy_subcluster?: string | null;
 }
 
 interface ClusterInfo {
@@ -46,6 +49,7 @@ interface ConstellationData {
     generated_at: string;
   };
   clusters: Record<string, ClusterInfo>;
+  taxonomy_clusters?: Record<string, ClusterInfo>;
   books: Book[];
 }
 
@@ -68,7 +72,21 @@ const LANGUAGE_COLORS: Record<string, string> = {
   Arabic: '#a067a0', Greek: '#5d7ab5',
 };
 
-type ColorMode = 'cluster' | 'language' | 'century';
+// Extended palette for 48 taxonomy clusters
+const TAXONOMY_COLORS = [
+  '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6',
+  '#1abc9c', '#e91e63', '#00bcd4', '#ff9800', '#673ab7',
+  '#4caf50', '#795548', '#607d8b', '#ff5722', '#009688',
+  '#8bc34a', '#c9a86c', '#5d8fb5', '#d4924a', '#a067a0',
+  '#5e6d52', '#b5835d', '#7c5db5', '#9e4a3a', '#4a9e7c',
+  '#d32f2f', '#1976d2', '#388e3c', '#f57c00', '#7b1fa2',
+  '#0097a7', '#c2185b', '#0288d1', '#e64a19', '#00796b',
+  '#689f38', '#a1887f', '#78909c', '#bf360c', '#00695c',
+  '#9e9d24', '#8d6e63', '#546e7a', '#d84315', '#004d40',
+  '#827717', '#5d4037', '#455a64',
+];
+
+type ColorMode = 'cluster' | 'language' | 'century' | 'taxonomy';
 
 function getCenturyColor(year: number | null): string {
   if (!year) return '#666';
@@ -87,6 +105,9 @@ function getCenturyColor(year: number | null): string {
 function getBookColor(book: Book, mode: ColorMode): string {
   switch (mode) {
     case 'cluster': return CLUSTER_COLORS[book.cluster % CLUSTER_COLORS.length];
+    case 'taxonomy': return book.taxonomy_cluster_id != null
+      ? TAXONOMY_COLORS[book.taxonomy_cluster_id % TAXONOMY_COLORS.length]
+      : '#444';
     case 'language': return LANGUAGE_COLORS[book.language] || '#666';
     case 'century': return getCenturyColor(book.year);
   }
@@ -117,7 +138,7 @@ const HOVER_SCALE = 2.8;
 // Component
 // ────────────────────────────────────────────────────────────
 
-export default function BookConstellationViz({ data }: { data: ConstellationData }) {
+export default function BookConstellationViz({ data, initialColorMode }: { data: ConstellationData; initialColorMode?: ColorMode }) {
   // Three.js refs
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -139,7 +160,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
   // State
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [selectedBookIdx, setSelectedBookIdx] = useState<number | null>(null);
-  const [colorMode, setColorMode] = useState<ColorMode>('cluster');
+  const [colorMode, setColorMode] = useState<ColorMode>(initialColorMode || 'cluster');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCluster, setSelectedCluster] = useState<number | null>(null);
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
@@ -167,12 +188,21 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
 
   const clusterBooks = useMemo(() => {
     if (selectedCluster === null) return [];
+    if (colorMode === 'taxonomy') {
+      return data.books
+        .filter((b) => b.taxonomy_cluster_id === selectedCluster)
+        .sort((a, b) => (a.year || 9999) - (b.year || 9999));
+    }
     return data.books
       .filter((b) => b.cluster === selectedCluster)
       .sort((a, b) => (a.year || 9999) - (b.year || 9999));
-  }, [selectedCluster, data.books]);
+  }, [selectedCluster, colorMode, data.books]);
 
-  const selectedClusterInfo = selectedCluster !== null ? data.clusters[String(selectedCluster)] : null;
+  const selectedClusterInfo = selectedCluster !== null
+    ? (colorMode === 'taxonomy'
+      ? (data.taxonomy_clusters || {})[String(selectedCluster)]
+      : data.clusters[String(selectedCluster)])
+    : null;
 
   const stats = useMemo(() => ({
     totalBooks: data.meta.total_books,
@@ -189,6 +219,17 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         .map((c) => ({
           label: c.label || c.label_keywords.slice(0, 2).join(', '),
           color: CLUSTER_COLORS[c.id % CLUSTER_COLORS.length],
+          count: c.size,
+        }));
+    }
+    if (colorMode === 'taxonomy') {
+      const tc = data.taxonomy_clusters || {};
+      return Object.values(tc)
+        .sort((a, b) => b.size - a.size)
+        .slice(0, 12)
+        .map((c) => ({
+          label: c.label,
+          color: TAXONOMY_COLORS[c.id % TAXONOMY_COLORS.length],
           count: c.size,
         }));
     }
@@ -306,11 +347,65 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     bookPosRef.current = positions;
     bookRotRef.current = rotations;
 
-    // ── Cluster label sprites ──
+    // ── Animation loop ── (labels are managed by a separate effect)
+
+    function animate() {
+      animFrameRef.current = requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // ── Resize ──
+    const onResize = () => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    const observer = new ResizeObserver(onResize);
+    observer.observe(container);
+
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      clearTimeout(rotationTimeout);
+      observer.disconnect();
+      controls.dispose();
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  // ── Update cluster labels when color mode changes ──
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+
+    // Remove old label group
+    const old = labelGroupRef.current;
+    if (old) {
+      old.children.forEach((child) => {
+        const sprite = child as THREE.Sprite;
+        sprite.material.map?.dispose();
+        sprite.material.dispose();
+      });
+      scene.remove(old);
+    }
+
+    // Pick the right cluster set
+    const clusters = colorMode === 'taxonomy' ? (data.taxonomy_clusters || {}) : data.clusters;
+
     const labelGroup = new THREE.Group();
     labelGroup.name = 'clusterLabels';
-    for (const [, cluster] of Object.entries(data.clusters)) {
-      const text = cluster.label || cluster.label_keywords.slice(0, 2).join(', ');
+    for (const [, cluster] of Object.entries(clusters)) {
+      const text = cluster.label || (cluster as ClusterInfo).label_keywords?.slice(0, 2).join(', ') || '';
       if (!text) continue;
 
       const canvas = document.createElement('canvas');
@@ -344,46 +439,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     }
     scene.add(labelGroup);
     labelGroupRef.current = labelGroup;
-
-    // ── Animation loop ──
-    function animate() {
-      animFrameRef.current = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // ── Resize ──
-    const onResize = () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      if (w === 0 || h === 0) return;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-    const observer = new ResizeObserver(onResize);
-    observer.observe(container);
-
-    return () => {
-      cancelAnimationFrame(animFrameRef.current);
-      clearTimeout(rotationTimeout);
-      observer.disconnect();
-      controls.dispose();
-      renderer.dispose();
-      geometry.dispose();
-      material.dispose();
-      labelGroup.children.forEach((child) => {
-        const sprite = child as THREE.Sprite;
-        sprite.material.map?.dispose();
-        sprite.material.dispose();
-      });
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [colorMode, data]);
 
   // ── Update instance visuals (colors + scales) ──
   useEffect(() => {
@@ -402,7 +458,9 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
     for (let i = 0; i < n; i++) {
       const b = data.books[i];
       const isSearchMatch = hasSearch ? searchMatches!.has(i) : true;
-      const isClusterMatch = hasCluster ? b.cluster === selectedCluster : true;
+      const isClusterMatch = hasCluster
+        ? (colorMode === 'taxonomy' ? b.taxonomy_cluster_id === selectedCluster : b.cluster === selectedCluster)
+        : true;
       const isHighlighted = isSearchMatch && isClusterMatch;
       const isHovered = i === hoveredIdx;
       const isSelected = i === selectedBookIdx;
@@ -610,17 +668,17 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
         </div>
 
         {/* Color mode */}
-        {(['cluster', 'language', 'century'] as ColorMode[]).map((mode) => (
+        {(['cluster', 'taxonomy', 'language', 'century'] as ColorMode[]).map((mode) => (
           <button
             key={mode}
-            onClick={() => setColorMode(mode)}
+            onClick={() => { setColorMode(mode); setSelectedCluster(null); }}
             className={`px-2.5 py-1 text-xs rounded border transition-colors ${
               colorMode === mode
                 ? 'bg-white/10 border-white/20 text-white/80'
                 : 'bg-transparent border-white/8 text-white/30 hover:text-white/50 hover:border-white/15'
             }`}
           >
-            {mode === 'cluster' ? 'Topic' : mode.charAt(0).toUpperCase() + mode.slice(1)}
+            {mode === 'cluster' ? 'Topic' : mode === 'taxonomy' ? 'Taxonomy' : mode.charAt(0).toUpperCase() + mode.slice(1)}
           </button>
         ))}
 
@@ -785,7 +843,7 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
       {/* ── Bottom: cluster pills ── */}
       <div className={`absolute bottom-3 left-5 z-10 ${selectedCluster !== null ? 'right-[370px]' : 'right-5'}`}>
         <ClusterPills
-          clusters={data.clusters}
+          clusters={colorMode === 'taxonomy' ? (data.taxonomy_clusters || {}) : data.clusters}
           selectedCluster={selectedCluster}
           onSelect={(id) => {
             setSelectedCluster(selectedCluster === id ? null : id);
@@ -836,9 +894,12 @@ export default function BookConstellationViz({ data }: { data: ConstellationData
                   {book.author !== 'Unknown' && book.year ? ' · ' : ''}
                   {book.year || ''}
                 </div>
-                <div className="flex gap-1 mt-1.5">
+                <div className="flex flex-wrap gap-1 mt-1.5">
                   <span className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-500">{book.language}</span>
-                  {book.keywords.slice(0, 2).map((kw) => (
+                  {colorMode === 'taxonomy' && book.taxonomy_subcluster && (
+                    <span className="px-1.5 py-0.5 text-xs rounded bg-blue-50 text-blue-600">{book.taxonomy_subcluster}</span>
+                  )}
+                  {colorMode !== 'taxonomy' && book.keywords.slice(0, 2).map((kw) => (
                     <span key={kw} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-400">{kw}</span>
                   ))}
                   {book.first_translation && (

@@ -9,6 +9,7 @@ import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
+import { contentHash } from '@/lib/steganographia';
 
 /**
  * Translation Processor - processes one page at a time
@@ -201,6 +202,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         $set: {
           translation: {
             data: translationResult.text,
+            content_hash: contentHash(translationResult.text),
             language: 'English',
             model: modelId,
             updated_at: new Date(),

@@ -7,7 +7,6 @@ import { History, BookOpen, Clock, Eye, ArrowRight, Trash2 } from 'lucide-react'
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { bookUrl } from '@/lib/slugify';
-import UserMenu from '@/components/layout/UserMenu';
 
 function timeAgo(dateStr: string): string {
   const now = Date.now();
@@ -73,26 +72,10 @@ export default function ReadingHistoryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      {/* Site nav */}
-      <header className="bg-stone-900 text-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3" aria-label="Source Library home">
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-            </svg>
-            <span className="text-lg uppercase tracking-wider">
-              <span className="font-semibold">Source</span>
-              <span className="font-light">Library</span>
-            </span>
-          </Link>
-          <UserMenu />
-        </div>
-
-        {/* Page title */}
-        <div className="border-t border-white/10">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      {/* Header */}
+      <header className="bg-stone-900 text-white py-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-serif">Reading History</h1>
               <p className="text-stone-400 text-sm mt-1">

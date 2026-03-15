@@ -45,6 +45,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
   // Authenticated user: show avatar + dropdown
   const isAdmin = (session.user as any)?.role === 'admin';
+  const isMember = (session.user as any)?.membership != null;
   const initials = session.user?.name
     ?.split(' ')
     .map(n => n[0])
@@ -63,10 +64,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
           <img
             src={session.user.image}
             alt={session.user.name || 'User'}
-            className="w-8 h-8 rounded-full border-2 border-white/30"
+            className="w-8 h-8 rounded-full border-2"
+            style={{ borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)' }}
           />
         ) : (
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-medium border-2 border-white/30">
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium border-2"
+            style={{
+              background: isMember ? 'rgba(201,168,108,0.2)' : 'rgba(255,255,255,0.2)',
+              borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)',
+            }}
+          >
             {initials}
           </div>
         )}
@@ -110,15 +118,45 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             >
               Reading History
             </Link>
-            {isAdmin && (
+            {!isMember && (
               <Link
-                href="/analytics"
-                className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
-                style={{ color: 'var(--text-primary)' }}
+                href="/ficino-society"
+                className="block px-4 py-2 text-sm font-medium hover:opacity-70 transition-opacity"
+                style={{ color: 'var(--accent-rust)' }}
                 onClick={() => setIsOpen(false)}
               >
-                Analytics
+                Join the Ficino Society
               </Link>
+            )}
+            {isMember && (
+              <Link
+                href="/ficino-society"
+                className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                style={{ color: 'var(--accent-sage)' }}
+                onClick={() => setIsOpen(false)}
+              >
+                Ficino Society Member
+              </Link>
+            )}
+            {isAdmin && (
+              <>
+                <Link
+                  href="/analytics"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Analytics
+                </Link>
+                <Link
+                  href="/admin/duplicates"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Duplicates
+                </Link>
+              </>
             )}
             <button
               onClick={() => signOut({ callbackUrl: '/' })}

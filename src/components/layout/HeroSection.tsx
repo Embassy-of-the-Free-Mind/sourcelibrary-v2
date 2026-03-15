@@ -59,7 +59,7 @@ function HeroSignUp() {
           className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
           style={{ background: 'var(--accent-rust)', color: '#fff' }}
         >
-          {loading ? 'Sending...' : 'Join free'}
+          {loading ? 'Sending...' : 'Join us'}
         </button>
       </form>
       <div className="flex items-center gap-4 mt-4">
@@ -132,6 +132,7 @@ export default function HeroSection() {
           <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
             <span className="font-semibold text-white">Source</span>
             <span className="font-light text-white">Library</span>
+            <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80 relative -top-[0.5em]">Beta</sup>
           </span>
         </Link>
         <UserMenu variant="hero" />
@@ -143,10 +144,10 @@ export default function HeroSection() {
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
           >
-            Unlock a New Renaissance of Ancient Knowledge
+            A New Renaissance of Ancient Wisdom
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            Five centuries of lost knowledge&mdash;in alchemy, Hermetica, Kabbalah, natural philosophy, and the roots of modern science&mdash;translated and freely accessible for the first time.
+            The world&rsquo;s largest library of translated ancient texts.
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}

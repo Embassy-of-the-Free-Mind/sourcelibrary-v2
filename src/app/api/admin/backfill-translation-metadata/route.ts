@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -15,7 +16,7 @@ export const maxDuration = 300;
  *   - limit: max pages to process (default 5000)
  *   - dry_run: if "true", count but don't write
  */
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('book_id');
@@ -96,4 +97,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -24,6 +24,48 @@ interface BlogPost {
 }
 
 const posts: BlogPost[] = [
+  {
+    slug: 'untranslated-renaissance',
+    title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
+    subtitle: 'We matched 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
+    date: '15 March 2026',
+    readTime: '10 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
+    slug: 'origin-story',
+    title: 'Where Source Library Came From',
+    subtitle: 'From one untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000 books and the ambition to translate the Renaissance — and why it matters for AI.',
+    date: '15 March 2026',
+    readTime: '8 min read',
+    tag: 'Origin',
+    tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg',
+    imageAlt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind',
+  },
+  {
+    slug: 'hieroglyph-ocr',
+    title: 'Can AI Read Hieroglyphs? (No.)',
+    subtitle: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash — direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
+    date: '14 March 2026',
+    readTime: '12 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg',
+    imageAlt: 'Page from Budge\'s Egyptian Reading Book showing hieroglyphic text and transliteration, 1896',
+  },
+  {
+    slug: 'clustering',
+    title: 'What Does a Library of 3,400 Rare Books Look Like?',
+    subtitle: 'We embedded 3,400 book summaries with a neural language model and let HDBSCAN find the structure. 48 natural clusters reveal six intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
+    date: '14 March 2026',
+    readTime: '10 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
+    imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being, 1617',
+  },
   // Hidden: needs rewrite with proper import session data
   // {
   //   slug: 'autonomous-agents',

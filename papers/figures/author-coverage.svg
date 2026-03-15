@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 440" font-family="Georgia, serif">
+<rect width="550" height="440" fill="white"/>
+<text x="275" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">Even the Famous Authors Are Barely Translated</text>
+<text x="275" y="42" text-anchor="middle" font-size="11" fill="#666">USTC works (light) vs. known English translations (dark)</text>
+<text x="92" y="76" text-anchor="end" font-size="12" fill="#333">Cicero</text>
+<rect x="100" y="60" width="410" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="60" width="35.672853828306266" height="24" rx="2" fill="#b87333"/>
+<text x="515" y="76" font-size="10" fill="#666">9%</text>
+<text x="92" y="104" text-anchor="end" font-size="12" fill="#333">Erasmus</text>
+<rect x="100" y="88" width="231.27900232018564" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="88" width="14.269141531322505" height="24" rx="2" fill="#b87333"/>
+<text x="336.27900232018567" y="104" font-size="10" fill="#666">6%</text>
+<text x="92" y="132" text-anchor="end" font-size="12" fill="#333">Aristotle</text>
+<rect x="100" y="116" width="156.72273781902553" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="116" width="11.890951276102088" height="24" rx="2" fill="#b87333"/>
+<text x="261.7227378190255" y="132" font-size="10" fill="#666">8%</text>
+<text x="92" y="160" text-anchor="end" font-size="12" fill="#333">Melanchthon</text>
+<rect x="100" y="144" width="145.3074245939675" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="144" width="2" height="24" rx="2" fill="#b87333"/>
+<text x="250.3074245939675" y="160" font-size="10" fill="#666">1%</text>
+<text x="92" y="188" text-anchor="end" font-size="12" fill="#333">Ovid</text>
+<rect x="100" y="172" width="127.82772621809745" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="172" width="14.269141531322505" height="24" rx="2" fill="#b87333"/>
+<text x="232.82772621809744" y="188" font-size="10" fill="#666">11%</text>
+<text x="92" y="216" text-anchor="end" font-size="12" fill="#333">Virgil</text>
+<rect x="100" y="200" width="99.40835266821345" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="200" width="8.323665893271462" height="24" rx="2" fill="#b87333"/>
+<text x="204.40835266821347" y="216" font-size="10" fill="#666">8%</text>
+<text x="92" y="244" text-anchor="end" font-size="12" fill="#333">Augustine</text>
+<rect x="100" y="228" width="90.72795823665894" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="228" width="17.836426914153133" height="24" rx="2" fill="#b87333"/>
+<text x="195.72795823665894" y="244" font-size="10" fill="#666">20%</text>
+<text x="92" y="272" text-anchor="end" font-size="12" fill="#333">Aquinas</text>
+<rect x="100" y="256" width="85.85266821345708" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="256" width="26.635730858468676" height="24" rx="2" fill="#b87333"/>
+<text x="190.8526682134571" y="272" font-size="10" fill="#666">31%</text>
+<text x="92" y="300" text-anchor="end" font-size="12" fill="#333">Horace</text>
+<rect x="100" y="284" width="75.26972157772622" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="284" width="10.70185614849188" height="24" rx="2" fill="#b87333"/>
+<text x="180.26972157772622" y="300" font-size="10" fill="#666">14%</text>
+<text x="92" y="328" text-anchor="end" font-size="12" fill="#333">Luther</text>
+<rect x="100" y="312" width="73.84280742459397" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="312" width="2.3781902552204177" height="24" rx="2" fill="#b87333"/>
+<text x="178.84280742459396" y="328" font-size="10" fill="#666">3%</text>
+<text x="92" y="356" text-anchor="end" font-size="12" fill="#333">Seneca</text>
+<rect x="100" y="340" width="56.00638051044084" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="340" width="7.134570765661253" height="24" rx="2" fill="#b87333"/>
+<text x="161.00638051044083" y="356" font-size="10" fill="#666">13%</text>
+<text x="92" y="384" text-anchor="end" font-size="12" fill="#333">Lipsius</text>
+<rect x="100" y="368" width="50.774361948955914" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="368" width="2" height="24" rx="2" fill="#b87333"/>
+<text x="155.7743619489559" y="384" font-size="10" fill="#666">1%</text>
+<text x="92" y="412" text-anchor="end" font-size="12" fill="#333">Galen</text>
+<rect x="100" y="396" width="49.46635730858468" height="24" rx="2" fill="#e8e4df"/>
+<rect x="100" y="396" width="2" height="24" rx="2" fill="#b87333"/>
+<text x="154.4663573085847" y="412" font-size="10" fill="#666">1%</text>
+</svg>

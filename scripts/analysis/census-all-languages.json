@@ -1,0 +1,445 @@
+{
+  "timestamp": "2026-03-15T03:02:44.392Z",
+  "grandTotal": {
+    "editions": 1388051,
+    "works": 693135,
+    "estimatedTranslated": 7440,
+    "pctTranslated": 1.07
+  },
+  "byLanguage": [
+    {
+      "language": "Latin",
+      "editions": 499607,
+      "distinctWorks": 362263,
+      "distinctAuthors": 49306,
+      "authorsWithTranslation": 1061,
+      "estimatedWorksTranslated": 3501,
+      "pctWorksTranslated": 0.97,
+      "pctAuthorsTranslated": 2.2,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "martini",
+          "editions": 1368,
+          "works": 1299
+        },
+        {
+          "surname": "müller",
+          "editions": 1262,
+          "works": 1192
+        },
+        {
+          "surname": "fabricius",
+          "editions": 813,
+          "works": 763
+        },
+        {
+          "surname": "stryk",
+          "editions": 792,
+          "works": 742
+        },
+        {
+          "surname": "meisner",
+          "editions": 750,
+          "works": 686
+        },
+        {
+          "surname": "deutschmann",
+          "editions": 723,
+          "works": 678
+        },
+        {
+          "surname": "bartolus de saxoferrato",
+          "editions": 707,
+          "works": 477
+        },
+        {
+          "surname": "strauch",
+          "editions": 593,
+          "works": 552
+        },
+        {
+          "surname": "bechmann",
+          "editions": 586,
+          "works": 515
+        },
+        {
+          "surname": "goclenius",
+          "editions": 584,
+          "works": 565
+        }
+      ]
+    },
+    {
+      "language": "German",
+      "editions": 340205,
+      "distinctWorks": 124394,
+      "distinctAuthors": 17999,
+      "authorsWithTranslation": 471,
+      "estimatedWorksTranslated": 1032,
+      "pctWorksTranslated": 0.83,
+      "pctAuthorsTranslated": 2.6,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "müller",
+          "editions": 715,
+          "works": 704
+        },
+        {
+          "surname": "sachs",
+          "editions": 713,
+          "works": 628
+        },
+        {
+          "surname": "spangenberg",
+          "editions": 615,
+          "works": 554
+        },
+        {
+          "surname": "olearius",
+          "editions": 454,
+          "works": 448
+        },
+        {
+          "surname": "dach",
+          "editions": 387,
+          "works": 384
+        },
+        {
+          "surname": "mayer",
+          "editions": 365,
+          "works": 324
+        },
+        {
+          "surname": "richter",
+          "editions": 348,
+          "works": 335
+        },
+        {
+          "surname": "lange",
+          "editions": 348,
+          "works": 345
+        },
+        {
+          "surname": "arndt",
+          "editions": 338,
+          "works": 302
+        },
+        {
+          "surname": "osiander",
+          "editions": 337,
+          "works": 311
+        }
+      ]
+    },
+    {
+      "language": "French",
+      "editions": 233563,
+      "distinctWorks": 65266,
+      "distinctAuthors": 12699,
+      "authorsWithTranslation": 442,
+      "estimatedWorksTranslated": 1223,
+      "pctWorksTranslated": 1.87,
+      "pctAuthorsTranslated": 3.5,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "corneille",
+          "editions": 611,
+          "works": 377
+        },
+        {
+          "surname": "estienne",
+          "editions": 450,
+          "works": 173
+        },
+        {
+          "surname": "lassus",
+          "editions": 449,
+          "works": 292
+        },
+        {
+          "surname": "marot",
+          "editions": 440,
+          "works": 141
+        },
+        {
+          "surname": "arnauld",
+          "editions": 401,
+          "works": 314
+        },
+        {
+          "surname": "ronsard",
+          "editions": 384,
+          "works": 187
+        },
+        {
+          "surname": "du moulin",
+          "editions": 365,
+          "works": 246
+        },
+        {
+          "surname": "ovidius naso",
+          "editions": 310,
+          "works": 178
+        },
+        {
+          "surname": "molière [=poquelin",
+          "editions": 259,
+          "works": 181
+        },
+        {
+          "surname": "augustinus",
+          "editions": 253,
+          "works": 175
+        }
+      ]
+    },
+    {
+      "language": "Italian",
+      "editions": 110333,
+      "distinctWorks": 70284,
+      "distinctAuthors": 12741,
+      "authorsWithTranslation": 264,
+      "estimatedWorksTranslated": 642,
+      "pctWorksTranslated": 0.91,
+      "pctAuthorsTranslated": 2.1,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "croce",
+          "editions": 949,
+          "works": 909
+        },
+        {
+          "surname": "segneri",
+          "editions": 340,
+          "works": 291
+        },
+        {
+          "surname": "cicognini",
+          "editions": 329,
+          "works": 304
+        },
+        {
+          "surname": "bartoli",
+          "editions": 310,
+          "works": 290
+        },
+        {
+          "surname": "pulci",
+          "editions": 254,
+          "works": 185
+        },
+        {
+          "surname": "pallavicino",
+          "editions": 229,
+          "works": 195
+        },
+        {
+          "surname": "guarini",
+          "editions": 215,
+          "works": 178
+        },
+        {
+          "surname": "aretino",
+          "editions": 214,
+          "works": 168
+        },
+        {
+          "surname": "guevara",
+          "editions": 208,
+          "works": 163
+        },
+        {
+          "surname": "marino",
+          "editions": 188,
+          "works": 167
+        }
+      ]
+    },
+    {
+      "language": "Dutch",
+      "editions": 113839,
+      "distinctWorks": 29649,
+      "distinctAuthors": 6865,
+      "authorsWithTranslation": 327,
+      "estimatedWorksTranslated": 683,
+      "pctWorksTranslated": 2.3,
+      "pctAuthorsTranslated": 4.8,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "vondel",
+          "editions": 434,
+          "works": 293
+        },
+        {
+          "surname": "nierop",
+          "editions": 337,
+          "works": 229
+        },
+        {
+          "surname": "goes",
+          "editions": 286,
+          "works": 279
+        },
+        {
+          "surname": "teellinck",
+          "editions": 246,
+          "works": 212
+        },
+        {
+          "surname": "cats",
+          "editions": 239,
+          "works": 173
+        },
+        {
+          "surname": "joris",
+          "editions": 156,
+          "works": 147
+        },
+        {
+          "surname": "vos",
+          "editions": 138,
+          "works": 73
+        },
+        {
+          "surname": "wtenbogaert",
+          "editions": 135,
+          "works": 121
+        },
+        {
+          "surname": "hazart",
+          "editions": 125,
+          "works": 109
+        },
+        {
+          "surname": "pietersz",
+          "editions": 115,
+          "works": 71
+        }
+      ]
+    },
+    {
+      "language": "Spanish",
+      "editions": 83510,
+      "distinctWorks": 37484,
+      "distinctAuthors": 9690,
+      "authorsWithTranslation": 167,
+      "estimatedWorksTranslated": 323,
+      "pctWorksTranslated": 0.86,
+      "pctAuthorsTranslated": 1.7,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "calderón de la barca",
+          "editions": 429,
+          "works": 294
+        },
+        {
+          "surname": "vega carpio",
+          "editions": 280,
+          "works": 178
+        },
+        {
+          "surname": "guevara",
+          "editions": 268,
+          "works": 130
+        },
+        {
+          "surname": "salazar",
+          "editions": 253,
+          "works": 213
+        },
+        {
+          "surname": "vega",
+          "editions": 243,
+          "works": 190
+        },
+        {
+          "surname": "nieremberg",
+          "editions": 202,
+          "works": 169
+        },
+        {
+          "surname": "pellicer de ossau y tovar",
+          "editions": 192,
+          "works": 188
+        },
+        {
+          "surname": "palafox y mendoza",
+          "editions": 177,
+          "works": 153
+        },
+        {
+          "surname": "rojas",
+          "editions": 173,
+          "works": 99
+        },
+        {
+          "surname": "lópez",
+          "editions": 171,
+          "works": 151
+        }
+      ]
+    },
+    {
+      "language": "Portuguese",
+      "editions": 6994,
+      "distinctWorks": 3795,
+      "distinctAuthors": 975,
+      "authorsWithTranslation": 35,
+      "estimatedWorksTranslated": 36,
+      "pctWorksTranslated": 0.95,
+      "pctAuthorsTranslated": 3.6,
+      "topUntranslatedAuthors": [
+        {
+          "surname": "vieira",
+          "editions": 94,
+          "works": 87
+        },
+        {
+          "surname": "carvalho",
+          "editions": 82,
+          "works": 79
+        },
+        {
+          "surname": "camões",
+          "editions": 56,
+          "works": 25
+        },
+        {
+          "surname": "almeida",
+          "editions": 51,
+          "works": 47
+        },
+        {
+          "surname": "ribeiro",
+          "editions": 50,
+          "works": 47
+        },
+        {
+          "surname": "dias",
+          "editions": 46,
+          "works": 37
+        },
+        {
+          "surname": "sá",
+          "editions": 43,
+          "works": 39
+        },
+        {
+          "surname": "castro",
+          "editions": 42,
+          "works": 41
+        },
+        {
+          "surname": "chagas",
+          "editions": 42,
+          "works": 39
+        },
+        {
+          "surname": "graça",
+          "editions": 40,
+          "works": 39
+        }
+      ]
+    }
+  ]
+}

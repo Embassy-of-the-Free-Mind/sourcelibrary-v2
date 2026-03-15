@@ -119,13 +119,26 @@ export async function resolveIdentity(request: NextRequest): Promise<ResolvedIde
 }
 
 /**
- * Wrapper for API routes requiring admin role
- * Returns 401 if not authenticated, 403 if not admin
+ * Wrapper for API routes requiring admin role.
+ * Accepts NextAuth admin sessions OR CRON_SECRET bearer tokens
+ * (pipeline crons need to call admin routes too).
+ * Returns 401 if not authenticated, 403 if not admin.
  */
 export function withAdminAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
 ): (request: NextRequest, context?: any) => Promise<NextResponse> {
   return async (request: NextRequest, context?: any) => {
+    // Check for CRON_SECRET bearer token (internal service-to-service calls)
+    const cronSecret = process.env.CRON_SECRET;
+    const authHeader = request.headers.get('authorization');
+    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
+      const cronSession: Session = {
+        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
+        expires: new Date(Date.now() + 3600000).toISOString(),
+      };
+      return handler(request, cronSession, context);
+    }
+
     const session = await auth();
     if (!session?.user) {
       return NextResponse.json(

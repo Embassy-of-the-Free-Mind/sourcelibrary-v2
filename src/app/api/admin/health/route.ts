@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { QUEUE_URLS, getQueueDepth } from '@/lib/sqs-client';
 
 export const maxDuration = 30;
@@ -18,7 +18,7 @@ export const maxDuration = 30;
  *
  * Overall `healthy` flag is true when no checks are in `critical` status.
  */
-export const GET = withAuth(async () => {
+export const GET = withAdminAuth(async () => {
   const started = Date.now();
   const checks: Record<string, CheckResult> = {};
 

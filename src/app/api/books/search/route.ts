@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+// Escape special regex characters to prevent ReDoS
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
@@ -19,11 +24,12 @@ export async function GET(request: NextRequest) {
   try {
     const db = await getDb();
 
+    const safeQuery = escapeRegex(query);
     const filter = {
       $or: [
-        { title: { $regex: query, $options: 'i' } },
-        { display_title: { $regex: query, $options: 'i' } },
-        { author: { $regex: query, $options: 'i' } }
+        { title: { $regex: safeQuery, $options: 'i' } },
+        { display_title: { $regex: safeQuery, $options: 'i' } },
+        { author: { $regex: safeQuery, $options: 'i' } }
       ]
     };
 

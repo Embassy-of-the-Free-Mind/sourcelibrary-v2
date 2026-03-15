@@ -6,6 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 /**
  * Import a book from Internet Archive
@@ -138,6 +139,30 @@ export const POST = withAuth(async (request, session) => {
       );
     }
 
+    // Cross-source dedup check
+    const dedupResult = await checkDuplicate(db, {
+      title,
+      author,
+      display_title,
+      ia_identifier,
+      image_source: {
+        provider: 'internet_archive',
+        identifier: ia_identifier,
+        source_url: `https://archive.org/details/${ia_identifier}`,
+      },
+    });
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
+      return NextResponse.json(
+        {
+          error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`,
+          existingId: best.matchedBookId,
+          matches: dedupResult.matches,
+        },
+        { status: 409 }
+      );
+    }
+
     // Create book
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
@@ -194,6 +219,9 @@ export const POST = withAuth(async (request, session) => {
       },
       page_count_source: pageCountSource,
       status: 'draft',
+      source_fingerprint: sourceFingerprint({ ia_identifier }),
+      normalized_title: normalizeTitle(title),
+      normalized_author: normalizeAuthor(author),
       created_at: new Date(),
       updated_at: new Date()
     };

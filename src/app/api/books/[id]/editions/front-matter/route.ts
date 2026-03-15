@@ -25,9 +25,12 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get pages for context
+    // Get pages for context — only fields needed for front matter generation
     const pages = await db.collection('pages')
-      .find({ book_id: bookId })
+      .find(
+        { book_id: bookId },
+        { projection: { page_number: 1, summary: 1, 'translation.model': 1, 'translation.prompt_name': 1, 'ocr.model': 1, 'ocr.prompt_name': 1 } }
+      )
       .sort({ page_number: 1 })
       .toArray() as unknown as Page[];
 

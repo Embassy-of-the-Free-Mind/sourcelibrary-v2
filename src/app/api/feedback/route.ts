@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 // POST /api/feedback — save feedback
 export async function POST(request: NextRequest) {
@@ -37,8 +38,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET /api/feedback — list feedback
-export async function GET(request: NextRequest) {
+// GET /api/feedback — list feedback (admin only — contains PII: IPs, emails)
+export const GET = withAdminAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
@@ -65,4 +66,4 @@ export async function GET(request: NextRequest) {
     console.error('Feedback list error:', error);
     return NextResponse.json({ error: 'Failed to load feedback' }, { status: 500 });
   }
-}
+});

@@ -13,44 +13,49 @@ interface CiteButtonProps {
   placePublished?: string;
   language?: string;
   doi?: string;
+  pageNumber?: number;
+  editionVersion?: string;
   className?: string;
 }
 
 function generateApa(props: CiteButtonProps): string {
-  const { author, title, displayTitle, year, doi, bookId } = props;
+  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
   const url = `https://sourcelibrary.org/book/${bookId}`;
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';
+  const authorStr = author || 'Anonymous';
+  const version = editionVersion ? `, v${editionVersion}` : '';
+  const page = pageNumber ? `, p. ${pageNumber}` : '';
 
-  // APA: Author. (Year). Title. Publisher. URL
-  let citation = `${author}. (${yearStr}). ${displayName}. Source Library. ${url}`;
   if (doi) {
-    citation = `${author}. (${yearStr}). ${displayName}. Source Library. https://doi.org/${doi}`;
+    return `${authorStr}. ${displayName}, trans. Source Library (${yearStr})${version}${page}. https://doi.org/${doi}`;
   }
-  return citation;
+  return `${authorStr}. (${yearStr}). ${displayName}. Source Library${page}. ${url}`;
 }
 
 function generateBibtex(props: CiteButtonProps): string {
-  const { author, title, year, doi, bookId, language, publisher, placePublished } = props;
+  const { author, title, year, doi, bookId, language, pageNumber, editionVersion } = props;
+  const authorStr = author || 'Anonymous';
 
-  // Create a clean cite key: author_year_firstwords
-  const authorKey = author.split(',')[0].split(' ').pop()?.toLowerCase().replace(/[^a-z]/g, '') || 'unknown';
+  const authorKey = authorStr.split(',')[0].split(' ').pop()?.toLowerCase().replace(/[^a-z]/g, '') || 'unknown';
   const yearKey = year || 'nd';
   const titleWords = title.split(/\s+/).slice(0, 3).join('_').toLowerCase().replace(/[^a-z_]/g, '');
   const citeKey = `${authorKey}_${yearKey}_${titleWords}`;
 
   const lines = [
     `@book{${citeKey},`,
-    `  author = {${author}},`,
+    `  author = {${authorStr}},`,
     `  title = {${title}},`,
+    `  translator = {{Source Library}},`,
   ];
   if (year) lines.push(`  year = {${year}},`);
-  if (publisher) lines.push(`  publisher = {${publisher}},`);
-  if (placePublished) lines.push(`  address = {${placePublished}},`);
+  lines.push(`  publisher = {Source Library},`);
+  if (editionVersion) lines.push(`  edition = {${editionVersion}},`);
   if (language) lines.push(`  language = {${language}},`);
   if (doi) lines.push(`  doi = {${doi}},`);
+  if (pageNumber) lines.push(`  pages = {${pageNumber}},`);
   lines.push(`  url = {https://sourcelibrary.org/book/${bookId}},`);
-  lines.push(`  note = {AI-assisted OCR and English translation via Source Library}`);
+  lines.push(`  note = {AI-assisted English translation via Source Library}`);
   lines.push(`}`);
   return lines.join('\n');
 }
@@ -65,12 +70,14 @@ export default function CiteButton({
   placePublished,
   language,
   doi,
+  pageNumber,
+  editionVersion,
   className = '',
 }: CiteButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const props = { bookId, title, displayTitle, author, year, publisher, placePublished, language, doi };
+  const props = { bookId, title, displayTitle, author, year, publisher, placePublished, language, doi, pageNumber, editionVersion };
 
   const copyToClipboard = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
