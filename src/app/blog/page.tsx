@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'untranslated-renaissance',
+    title: 'Ninety Percent of the Renaissance Has Never Been Translated',
+    subtitle: 'There are roughly 140,000 Latin editions from the Renaissance. Harvard\'s flagship translation series has published 100 in 20 years. At that pace, finishing would take 28,000 years.',
+    date: '15 March 2026',
+    readTime: '10 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
     slug: 'origin-story',
     title: 'Where Source Library Came From',
     subtitle: 'From one untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000 books and the ambition to translate the Renaissance — and why it matters for AI.',
