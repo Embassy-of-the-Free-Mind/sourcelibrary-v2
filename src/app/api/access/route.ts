@@ -16,6 +16,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Missing type or itemId' }, { status: 400 });
   }
 
+  // Payments not configured — everything is free
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ allowed: true, reason: 'free' });
+  }
+
   const userId = session?.user?.id || null;
   const isMember = (session?.user as any)?.membership != null;
 

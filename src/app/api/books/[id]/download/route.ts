@@ -2344,14 +2344,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     }
 
     // Access check: must be a member or have purchased this book
-    const session = await auth();
-    const userId = session?.user?.id || null;
-    const allowed = await canDownload(userId, 'book', id);
-    if (!allowed) {
-      return NextResponse.json(
-        { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
-        { status: 402 }
-      );
+    // Skip gating entirely if Stripe isn't configured (monetization dormant)
+    if (process.env.STRIPE_SECRET_KEY) {
+      const session = await auth();
+      const userId = session?.user?.id || null;
+      const allowed = await canDownload(userId, 'book', id);
+      if (!allowed) {
+        return NextResponse.json(
+          { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
+          { status: 402 }
+        );
+      }
     }
 
     // Get optional edition_id for scholarly format

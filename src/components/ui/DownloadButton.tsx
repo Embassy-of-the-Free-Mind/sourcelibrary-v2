@@ -27,22 +27,34 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isMember) {
+    // Check if payments are enabled; if not, everyone gets free access
+    fetch('/api/config').then(r => r.json()).then(cfg => {
+      if (!cfg.payments) {
+        setHasAccess(true);
+        setAccessChecked(true);
+        return;
+      }
+      if (isMember) {
+        setHasAccess(true);
+        setAccessChecked(true);
+        return;
+      }
+      if (session?.user) {
+        fetch(`/api/access?type=book&itemId=${bookId}`)
+          .then(r => r.json())
+          .then(data => {
+            setHasAccess(data.allowed);
+            setAccessChecked(true);
+          })
+          .catch(() => setAccessChecked(true));
+      } else {
+        setAccessChecked(true);
+      }
+    }).catch(() => {
+      // Config fetch failed — default to free access
       setHasAccess(true);
       setAccessChecked(true);
-      return;
-    }
-    if (session?.user) {
-      fetch(`/api/access?type=book&itemId=${bookId}`)
-        .then(r => r.json())
-        .then(data => {
-          setHasAccess(data.allowed);
-          setAccessChecked(true);
-        })
-        .catch(() => setAccessChecked(true));
-    } else {
-      setAccessChecked(true);
-    }
+    });
   }, [bookId, session, isMember]);
 
   useEffect(() => {

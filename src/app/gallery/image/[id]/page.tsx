@@ -34,6 +34,7 @@ import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
 import { useSession } from 'next-auth/react';
+import { sendGAEvent } from '@/lib/ga';
 
 interface BookImage {
   id: string;
@@ -111,6 +112,7 @@ export default function ImageDetailPage({
         preload.onload = () => requestAnimationFrame(() => setImageOpacity(1));
         preload.onerror = () => requestAnimationFrame(() => setImageOpacity(1));
         preload.src = json.imageUrl;
+        sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {
@@ -246,6 +248,7 @@ export default function ImageDetailPage({
       isNavigatingRef.current = true;
       setImageId(img.id);
       setData(json);
+      sendGAEvent({ action: 'view_item', category: 'gallery', label: img.id, content_type: 'image' });
       requestAnimationFrame(() => setImageOpacity(1));
     } catch {
       // On error, fade back in with old content
@@ -411,15 +414,23 @@ export default function ImageDetailPage({
 
   const isMember = (session?.user as any)?.membership != null;
   const [imagePurchased, setImagePurchased] = useState(false);
+  const [paymentsEnabled, setPaymentsEnabled] = useState(false);
+
+  // Check if payments are enabled
+  useEffect(() => {
+    fetch('/api/config').then(r => r.json()).then(cfg => {
+      setPaymentsEnabled(!!cfg.payments);
+    }).catch(() => {});
+  }, []);
 
   // Check if user has purchased this specific image
   useEffect(() => {
-    if (isMember || !session?.user || !imageId) return;
+    if (!paymentsEnabled || isMember || !session?.user || !imageId) return;
     fetch(`/api/access?type=image&itemId=${imageId}`)
       .then(r => r.json())
       .then(d => { if (d.allowed) setImagePurchased(true); })
       .catch(() => {});
-  }, [isMember, session, imageId]);
+  }, [paymentsEnabled, isMember, session, imageId]);
 
   // Also check after returning from purchase
   useEffect(() => {
@@ -428,7 +439,8 @@ export default function ImageDetailPage({
     }
   }, []);
 
-  const canDownloadImage = isMember || imagePurchased;
+  // No payments = everyone can download; payments on = need membership or purchase
+  const canDownloadImage = !paymentsEnabled || isMember || imagePurchased;
 
   const purchaseImage = async () => {
     if (!data || !imageId) return;
@@ -477,6 +489,7 @@ export default function ImageDetailPage({
       a.download = `source-library-${bookSlug}-p${data.pageNumber}.jpg`;
       a.click();
       URL.revokeObjectURL(a.href);
+      sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
     } catch {
       // Last resort: open in new tab
       window.open(sourceUrl, '_blank');
