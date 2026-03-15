@@ -57,21 +57,41 @@ Three periods overlap in this discussion and should be distinguished:
 
 This census measures the early modern period as captured by the USTC (1450-1700). It does not cover Renaissance manuscripts before 1450, Enlightenment printing after 1700, or the medieval manuscript tradition. Each of these represents a substantial additional body of material that is similarly undertranslated but would require different data sources to census.
 
-### 2.3 Why counting is difficult
+### 2.3 The digitization layer
 
-### 2.4 What counts as a "work"?
+Between "printed" and "translated" there is an intermediate step that bears on the practical implications of this census: digitization. A pre-modern book can only be translated at scale (whether by humans or AI) if it has been photographed or scanned. The USTC tells us what was printed; a separate question is how much of that has been made available as digital images.
+
+Through a IIIF (International Image Interoperability Framework) discovery project, we have surveyed five major European digital libraries and identified approximately 740,000 digitized pre-1800 books with machine-accessible page images:
+
+| Source | Digitized pre-1800 books | API |
+|---|---|---|
+| BSB Munich (VD16/17/18) | ~443,000 | OAI-PMH |
+| Gallica (BnF) | ~260,000 | SRU |
+| Biblissima | ~155,000 est. | Wikibase |
+| Berlin SBB | ~100,000 est. | OAI-PMH |
+| e-rara.ch | ~94,000 | OAI-PMH |
+| **Total (before deduplication)** | **~1,050,000** | |
+| **After estimated overlap** | **~740,000** | |
+
+This number represents an lower bound on digitization — many other libraries (Bayerische Staatsbibliothek collections beyond VD16/17/18, the Bodleian, the Vatican Library, university libraries across Europe) also hold digitized collections not yet surveyed. But it establishes that a substantial fraction of the USTC's 1.6 million editions already exists as page images accessible via standard APIs.
+
+The relationship between the three layers — printed, digitized, translated — defines the scale of the opportunity. Roughly 740,000 books are already digitized and accessible. Roughly 31,000 have been translated. The gap between the two — approximately 700,000 digitized books with no English translation — is the actionable corpus for AI-assisted translation. It requires no new scanning, no new photography, no negotiation with holding libraries. The images are already online.
+
+### 2.4 Why counting is difficult
+
+### 2.5 What counts as a "work"?
 
 The USTC records *editions* — individual printings of a text. A popular work might have dozens of editions: Ovid's *Metamorphoses* appears in over 1,000 USTC records. A single English translation of the *Metamorphoses* renders all of those editions accessible to English readers, in the sense that the intellectual content is now available. But counting at the edition level would massively overstate the gap, because it treats each printing as a separate item that needs its own translation.
 
 We therefore count *distinct works*, defined operationally as unique title-author combinations in the USTC. This is an imperfect proxy. Title variants of the same text — *De Rerum Natura* appearing as "De Rerum Natura," "T. Lucretii Cari De Rerum Natura Libri Sex," and "De Natura Rerum" — will be counted separately. Our distinct-work count is therefore an upper bound on the true number of unique intellectual works in the USTC. We discuss the magnitude of this inflation in Section 6.
 
-### 2.5 What counts as a "translation"?
+### 2.6 What counts as a "translation"?
 
 An English translation can take many forms. It can be a published book from a major press, a chapter in an edited volume, an appendix to a dissertation, a journal article containing a translated passage, or an online publication by a digital humanities project. Our catalog captures published books well, journal articles and dissertations poorly, and online-only translations unevenly. We can count translations that were cataloged by the Library of Congress, recorded in the UNESCO Index Translationum, or published by presses whose catalogs we have ingested. We cannot count translations that exist only in unpublished form, in out-of-print editions not held by major libraries, or in formats that escape bibliographic control.
 
 This means our translation count is a lower bound. The true number of existing English translations is higher than what we report. The question is how much higher — a question we address through spot-checking in Section 5.
 
-### 2.6 Temporal scope
+### 2.7 Temporal scope
 
 We adopt the USTC's temporal coverage: printed works from approximately 1450 to 1700. This spans the invention of movable type, the full Renaissance, the Reformation, the Wars of Religion, the Scientific Revolution, and the beginning of the Enlightenment. The USTC is expanding its coverage, and its data for the seventeenth century is less complete than for the fifteenth and sixteenth centuries. Our results should be read accordingly.
 
