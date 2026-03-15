@@ -167,7 +167,7 @@ export default async function FeaturedCollections() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {collections.map(coll => {
             const category = categoryMap.get(coll.id) || '';
             const colors = getColors(category);
@@ -189,7 +189,7 @@ export default async function FeaturedCollections() {
 
                   {/* Title */}
                   <h3
-                    className="text-base sm:text-xl lg:text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-display"
+                    className="text-base sm:text-xl md:text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-display"
                   >
                     {coll.shortTitle || coll.title.split(':')[0]}
                   </h3>
