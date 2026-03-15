@@ -132,6 +132,7 @@ export default function HeroSection() {
           <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
             <span className="font-semibold text-white">Source</span>
             <span className="font-light text-white">Library</span>
+            <sup className="text-[0.5em] font-light tracking-normal normal-case ml-1 opacity-80">Beta</sup>
           </span>
         </Link>
         <UserMenu variant="hero" />
@@ -146,7 +147,7 @@ export default function HeroSection() {
             Unlock a New Renaissance of Ancient Knowledge
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            Five centuries of lost knowledge&mdash;in alchemy, Hermetica, Kabbalah, natural philosophy, and the roots of modern science&mdash;translated and freely accessible for the first time.
+            The world&rsquo;s largest library of translations of ancient texts.{status !== 'authenticated' && ' Membership is free.'}
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}
