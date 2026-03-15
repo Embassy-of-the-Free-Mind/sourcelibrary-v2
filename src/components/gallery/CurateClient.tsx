@@ -85,6 +85,7 @@ export default function CurateClient() {
   const [applied, setApplied] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [infoId, setInfoId] = useState<string | null>(null);
+  const [excludedBooks, setExcludedBooks] = useState<Set<string>>(new Set());
 
   // Filters
   const [minQuality, setMinQuality] = useState(0.5);
@@ -628,6 +629,30 @@ export default function CurateClient() {
                     {item.galleryQuality !== undefined && <span> · {item.galleryQuality.toFixed(2)}</span>}
                     {item.pageNumber > 0 && <span> · p.{item.pageNumber}</span>}
                   </p>
+                  <button
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      if (excludedBooks.has(item.bookId)) return;
+                      try {
+                        const res = await fetch('/api/gallery/curate', {
+                          method: 'PATCH',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ bookId: item.bookId, galleryExclude: true }),
+                        });
+                        if (res.ok) {
+                          setExcludedBooks(prev => new Set(prev).add(item.bookId));
+                          toast.success(`Excluded: ${item.bookTitle}`);
+                        }
+                      } catch { toast.error('Failed to exclude book'); }
+                    }}
+                    className={`mt-1 text-[9px] px-1.5 py-0.5 rounded transition-colors ${
+                      excludedBooks.has(item.bookId)
+                        ? 'bg-amber-500/30 text-amber-300'
+                        : 'bg-white/10 text-white/50 hover:bg-amber-500/20 hover:text-amber-300'
+                    }`}
+                  >
+                    {excludedBooks.has(item.bookId) ? 'Excluded from showcase' : 'Exclude book from showcase'}
+                  </button>
                 </div>
               )}
 

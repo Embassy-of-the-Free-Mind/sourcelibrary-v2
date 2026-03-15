@@ -2,17 +2,41 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 /**
- * POST /api/gallery/curate
+ * POST /api/gallery/curate — Batch apply curation decisions to gallery images.
+ * PATCH /api/gallery/curate — Exclude a book from gallery showcase.
  *
- * Batch apply curation decisions to gallery images.
- *
- * Body: {
- *   upvoteIds?: string[]    — boost gallery_quality by 0.1, set curated: true
- *   downvoteIds?: string[]  — reduce gallery_quality by 0.15, set curated_down: true
- * }
- *
- * Image IDs are in "pageId:detectionIndex" format.
+ * POST Body: { upvoteIds?: string[], downvoteIds?: string[] }
+ * PATCH Body: { bookId: string, galleryExclude: boolean }
  */
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const { bookId, galleryExclude } = await request.json();
+    if (!bookId) {
+      return NextResponse.json({ error: 'bookId required' }, { status: 400 });
+    }
+
+    const db = await getDb();
+    await db.collection('books').updateOne(
+      { $or: [{ id: bookId }, { _id: bookId }] },
+      { $set: { gallery_exclude: !!galleryExclude, gallery_exclude_at: new Date() } }
+    );
+
+    // Also mark all gallery_images from this book so they don't surface
+    await db.collection('gallery_images').updateMany(
+      { book_id: bookId },
+      { $set: { book_gallery_excluded: true } }
+    );
+
+    return NextResponse.json({ success: true, bookId, galleryExclude: !!galleryExclude });
+  } catch (error) {
+    console.error('Gallery exclude error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed' },
+      { status: 500 }
+    );
+  }
+}
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
