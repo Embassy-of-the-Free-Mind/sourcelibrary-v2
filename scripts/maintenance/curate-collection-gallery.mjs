@@ -25,7 +25,7 @@ async function main() {
 
     // Get all book IDs in this collection
     const books = await db.collection('books').find(
-      { collections: slug, hidden: { $ne: true } },
+      { collections: slug, hidden: { $ne: true }, gallery_exclude: { $ne: true } },
       { projection: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1 } }
     ).toArray();
 
