@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -13,7 +14,7 @@ export const maxDuration = 300;
  *   - dry_run=true: count matching images without writing
  *   - since=ISO: only sync pages updated after this timestamp (incremental)
  */
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
   const dryRun = searchParams.get('dry_run') === 'true';
   const since = searchParams.get('since');
@@ -224,14 +225,14 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/admin/sync-gallery-images
  *
  * Check stats on the gallery_images collection.
  */
-export async function GET() {
+export const GET = withAdminAuth(async () => {
   try {
     const db = await getDb();
     const total = await db.collection('gallery_images').countDocuments();
@@ -272,4 +273,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

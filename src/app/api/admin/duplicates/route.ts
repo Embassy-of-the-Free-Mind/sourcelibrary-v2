@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { normalizeTitle, normalizeAuthor } from '@/lib/dedup';
 
@@ -80,7 +80,7 @@ function pickKeeper(group: Record<string, unknown>[]): Record<string, unknown> {
  * Hide duplicate books.
  * Body: { bookIds: string[], reason?: string }
  */
-export const GET = withAuth(async (request) => {
+export const GET = withAdminAuth(async (request) => {
   const url = new URL(request.url);
   const tierFilter = url.searchParams.get('tier') || 'all';
 
@@ -227,7 +227,7 @@ export const GET = withAuth(async (request) => {
  * Hide specified books as duplicates.
  * Body: { bookIds: string[], keeperId?: string }
  */
-export const POST = withAuth(async (request) => {
+export const POST = withAdminAuth(async (request) => {
   const body = await request.json();
   const { bookIds, keeperId } = body;
 

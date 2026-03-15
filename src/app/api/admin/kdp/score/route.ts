@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { scoreBooksKdp } from '@/lib/kdp-scoring';
 
 /**
  * POST /api/admin/kdp/score — Batch compute KDP scores
  */
-export const POST = withAuth(async (request: NextRequest) => {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const db = await getDb();
     const body = await request.json().catch(() => ({}));

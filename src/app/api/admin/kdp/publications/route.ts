@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { generateKdpMetadata, computeQualityFlags } from '@/lib/kdp-scoring';
 import crypto from 'crypto';
 
 /**
  * GET /api/admin/kdp/publications — List publications with optional status filter
  */
-export const GET = withAuth(async (request: NextRequest) => {
+export const GET = withAdminAuth(async (request: NextRequest) => {
   try {
     const db = await getDb();
     const url = new URL(request.url);
@@ -53,7 +53,7 @@ export const GET = withAuth(async (request: NextRequest) => {
 /**
  * POST /api/admin/kdp/publications — Create a publication record
  */
-export const POST = withAuth(async (request: NextRequest) => {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const db = await getDb();
     const body = await request.json();

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { purgeAIQueues } from '@/lib/sqs-client';
 
@@ -21,7 +21,7 @@ export const maxDuration = 60;
  *   ?dry_run=true — show what would be cancelled without doing it
  *   ?resume=true  — clear the pause flag (re-enable processing)
  */
-export const POST = withAuth(async (request: NextRequest) => {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   const db = await getDb();
   const url = new URL(request.url);
   const dryRun = url.searchParams.get('dry_run') === 'true';

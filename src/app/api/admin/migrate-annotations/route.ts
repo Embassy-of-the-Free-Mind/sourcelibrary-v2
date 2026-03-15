@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Migrate annotation syntax from [[tag:content]] to <tag>content</tag>
@@ -52,7 +52,7 @@ function migrateText(text: string): { migrated: string; changesCount: number } {
   return { migrated: result, changesCount };
 }
 
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const body = await request.json().catch(() => ({}));
     const { bookId, dryRun = true } = body;
@@ -144,7 +144,7 @@ export const POST = withAuth(async (request, session) => {
 });
 
 // GET endpoint to check migration status
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const db = await getDb();
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
@@ -49,7 +49,7 @@ export interface ProcessingRow {
  *   ?language=Latin       — filter by language
  *   ?sort=ocr_pct_asc    — sort order (default: title_asc)
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const format = searchParams.get('format') || 'csv';

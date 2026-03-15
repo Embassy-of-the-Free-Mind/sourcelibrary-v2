@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { setAdaptiveLimits, LIMIT_RANGES, type LimitKey, type AdaptiveLimits } from '@/lib/adaptive-limits';
 
@@ -9,7 +9,7 @@ export const maxDuration = 10;
  * GET /api/admin/adaptive-limits
  * Return current limits + health state
  */
-export const GET = withAuth(async () => {
+export const GET = withAdminAuth(async () => {
   const db = await getDb();
   const doc = await db.collection('system_config').findOne({ _id: 'adaptive_limits' as any });
 
@@ -37,7 +37,7 @@ export const GET = withAuth(async () => {
  *
  * Body: { limits?: Partial<AdaptiveLimits>, locked?: boolean }
  */
-export const PATCH = withAuth(async (request: NextRequest) => {
+export const PATCH = withAdminAuth(async (request: NextRequest) => {
   const db = await getDb();
   const body = await request.json();
 
@@ -81,7 +81,7 @@ export const PATCH = withAuth(async (request: NextRequest) => {
  * POST /api/admin/adaptive-limits (with ?reset=true)
  * Reset to defaults and unlock
  */
-export const POST = withAuth(async (request: NextRequest) => {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   const db = await getDb();
   const url = new URL(request.url);
 

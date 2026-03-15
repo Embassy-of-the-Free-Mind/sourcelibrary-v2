@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/books/[id]/visibility
@@ -7,12 +8,14 @@ import { getDb } from '@/lib/mongodb';
  * Toggle book visibility for curation.
  * Body: { hidden: boolean, reason?: string }
  */
-export async function POST(
+export const POST = withAdminAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
-    const { id } = await params;
+    // Extract book ID from URL path: /api/books/[id]/visibility
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.indexOf('books') + 1];
     const body = await request.json();
     const { hidden, reason } = body;
 
@@ -69,4 +72,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

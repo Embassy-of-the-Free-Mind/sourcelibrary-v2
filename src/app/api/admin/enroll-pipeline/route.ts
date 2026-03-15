@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -10,7 +10,7 @@ export const maxDuration = 300;
  *
  * Pipeline status overview — counts per status.
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   const db = await getDb();
 
   const statusCounts = await db.collection('books').aggregate([
@@ -53,7 +53,7 @@ export const GET = withAuth(async (request, session) => {
  * Enroll books into the auto pipeline.
  * Body: { bookIds?: string[], limit?: number, dryRun?: boolean, reEnrollFailed?: boolean }
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   const db = await getDb();
   const body = await request.json().catch(() => ({}));
   const { bookIds, limit = 50, dryRun = false, reEnrollFailed = false, reEnrollCompleted = false } = body as {

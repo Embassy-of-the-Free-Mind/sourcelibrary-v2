@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { scoreBooksProcessingPriority } from '@/lib/processing-priority';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
@@ -8,7 +9,7 @@ export const maxDuration = 300;
 /**
  * GET /api/admin/processing-priority — View priority distribution
  */
-export async function GET() {
+export const GET = withAdminAuth(async () => {
   try {
     const db = await getDb();
 
@@ -65,7 +66,7 @@ export async function GET() {
     console.error('Error fetching priority distribution:', error);
     return NextResponse.json({ error: 'Failed to fetch distribution' }, { status: 500 });
   }
-}
+});
 
 /**
  * POST /api/admin/processing-priority — Batch score books
@@ -74,7 +75,7 @@ export async function GET() {
  *   { bookIds?: string[] }  — score specific books
  *   { all: true }           — score all books
  */
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const body = await request.json().catch(() => ({}));
     const db = await getDb();
@@ -98,4 +99,4 @@ export async function POST(request: NextRequest) {
     console.error('Error batch scoring:', error);
     return NextResponse.json({ error: 'Failed to batch score' }, { status: 500 });
   }
-}
+});

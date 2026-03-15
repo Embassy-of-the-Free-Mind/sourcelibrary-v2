@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { withAuth } from '@/lib/auth-helpers';
 import { z } from 'zod';
 
 // Validation schema for chat messages
@@ -175,13 +176,15 @@ Total Pages: ${totalPages}
   return { context, pageCount: totalPages };
 }
 
-// POST /api/books/[id]/chat - Chat with the book
-export async function POST(
+// POST /api/books/[id]/chat - Chat with the book (auth required to prevent Gemini API abuse)
+export const POST = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
-    const { id } = await params;
+    // Extract book ID from URL path: /api/books/[id]/chat
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.indexOf('books') + 1];
     const rawBody = await request.json();
 
     // Validate request body
@@ -260,9 +263,9 @@ This helps readers verify and explore further.`;
       { status: 500 }
     );
   }
-}
+});
 
-// GET /api/books/[id]/chat - Get initial greeting with summary
+// GET /api/books/[id]/chat - Get initial greeting with summary (no auth needed, just returns greeting)
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

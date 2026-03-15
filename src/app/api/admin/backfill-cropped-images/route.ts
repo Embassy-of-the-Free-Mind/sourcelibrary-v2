@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client';
 import { cropAndUploadHalf, generateAndUploadThumbnail } from '@/lib/page-split/split-processing';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -13,7 +13,7 @@ export const maxDuration = 300;
  * POST - Execute: generates cropped images + thumbnails inline
  */
 
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('bookId');
@@ -66,7 +66,7 @@ export const GET = withAuth(async (request, session) => {
   }
 });
 
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const body = await request.json().catch(() => ({}));
     const { bookId, limit = 100, clearStaleOcr = false, force = false } = body;

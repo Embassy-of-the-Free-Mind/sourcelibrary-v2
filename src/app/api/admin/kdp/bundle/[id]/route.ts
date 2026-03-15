@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { generateKdpCover } from '@/lib/kdp-cover';
 import { generateKdpEpub } from '@/lib/kdp-epub';
 import type { Book, Page } from '@/lib/types';
@@ -17,7 +17,7 @@ export const maxDuration = 120;
  * - metadata.json — Machine-readable KDP metadata
  * - metadata.txt — Human-readable copy-paste version
  */
-export const GET = withAuth(async (request: NextRequest, session, { params }: { params: Promise<{ id: string }> }) => {
+export const GET = withAdminAuth(async (request: NextRequest, session, { params }: { params: Promise<{ id: string }> }) => {
   try {
     const db = await getDb();
     const { id } = await params;
