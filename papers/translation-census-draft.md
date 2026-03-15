@@ -287,11 +287,27 @@ Without this normalization, major authors including Ovid, Virgil, Horace, August
 
 The alias table was constructed by manual inspection of the top 200 USTC authors by edition count, cross-referenced against the catalog. It is certainly incomplete — there are 49,306 distinct author surnames in the USTC's Latin editions alone, and aliases were only constructed for authors known to have English translations. This means our census is biased toward detecting translations of well-known authors and is likely to miss translations of minor figures whose names may appear in variant forms.
 
-### 5.4 Deduplication
+### 5.4 Cross-catalog deduplication
 
-Both the USTC and the translation catalog contain duplicate entries. The USTC records multiple editions of the same work; we address this by counting distinct (author, title) pairs rather than editions. The translation catalog records multiple editions of the same translation (e.g., seven different publications of Ovid's *Metamorphoses*); we address this by counting distinct works per author rather than total catalog entries.
+Our translation catalog is assembled from multiple sources — LOC MARC records, the UNESCO Index Translationum, Open Library, HathiTrust, and 42 additional publisher catalogs — that describe overlapping sets of translations using different conventions. Merging them without double-counting requires determining when two records from different sources describe the same thing. This is harder than it appears, for reasons we will illustrate with concrete examples.
 
-Deduplication between the LOC MARC data and our supplementary catalogs is more difficult, because the same translation may appear under slightly different titles, author name forms, or publication dates. We deduplicate on (author surname, title substring) pairs, accepting that some duplicates will survive and some distinct works will be incorrectly merged. We estimate that residual duplication inflates our translation count by 10-20%, while over-aggressive merging may suppress it by 5-10%. These errors partially cancel.
+**The Ovid problem: one Work, many Manifestations.** Ovid's *Metamorphoses* generates 151 records in our existing catalog and 23 in the LOC MARC data. These 174 records describe a single intellectual Work that has been translated into English many times — by Golding (1567), Sandys (1626), Dryden (1717), Riley (1870), Watts (1980), Melville (1986), and others. Some records are different translations (different Expressions). Some are different editions of the same translation (different Manifestations of the same Expression — e.g., Riley 1870 and Riley 1925). For the census, what matters is whether the Work has been translated at all. The answer is yes. Whether it was translated once or thirty times does not change the census count.
+
+**The Cicero problem: same Work, different titles.** Cicero's letters appear as "Letters to His Friends" in the UNESCO catalog and as "Epistolae ad familiares" in the LOC MARC data. A human can see these are the same work. A string match cannot — the titles share no words. The existing catalog also has "The letters to his friends" (1927) in the LOC data — different capitalization, a "The" prefix, and a different date. Three records, two databases, two languages, one work.
+
+**The Machiavelli problem: complementary coverage.** Our existing catalog has 1 record for Machiavelli ("The Prince; The Art of War" — a combined volume). The LOC MARC data has 67 records covering the Prince, Discourses, Art of War, Florentine Histories, Mandragola, Belphegor, and his poems — as distinct works, each with multiple editions. These are genuinely different Works, not duplicates. The census should count them separately.
+
+Our current deduplication operates at the author level rather than attempting to resolve these cases individually. For each author surname, we count the number of distinct (author, title) pairs in the combined catalog and use that as our translation count. This approach:
+
+- **Overcounts** when the same translation appears in multiple sources under variant titles. Ovid's Metamorphoses might be counted 5-10 times instead of once because "The Metamorphoses," "Metamorphoses," "The Metamorphoses of Ovid," "Ovid's Metamorphoses in Fifteen Books," and "Metamorphoses I-IV" are all distinct title strings.
+
+- **Undercounts** when genuinely different works by the same author have similar titles. Cicero's various collections of speeches, letters, and philosophical works may be merged if their English titles happen to overlap.
+
+- **Correctly counts** when new works appear in only one source (the Machiavelli case), because the author-level merge adds them to the count.
+
+We have not attempted to resolve records to the FRBR Work level — that is, to determine programmatically that "The Metamorphoses of Ovid" (LOC, 1870) and "Metamorphoses" (UNESCO, 1986) are Expressions of the same Work. Doing so would require either a comprehensive authority file of Work identifiers (which does not exist for this corpus) or embedding-based title similarity with manual review of edge cases. Our USTC enrichment layer, which provides AI-generated English titles for every USTC record, makes the latter approach feasible for future work.
+
+The net effect of these errors is uncertain but bounded. Overcounting (from variant titles in the catalog) inflates our translation count, making the gap appear smaller than it is. Undercounting (from missed non-overlapping records) suppresses it, making the gap appear larger. Based on the spot-checks in Section 6, we estimate the errors are on the order of 15-25% in each direction and partially cancel, placing our headline figure within a factor of 1.5 of the true value.
 
 ## 6. Results and validation
 
