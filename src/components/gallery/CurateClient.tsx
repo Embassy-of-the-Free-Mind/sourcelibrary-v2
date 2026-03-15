@@ -88,9 +88,11 @@ export default function CurateClient() {
   // Filters
   const [minQuality, setMinQuality] = useState(0.5);
   const [filterType, setFilterType] = useState('');
+  const [filterCollection, setFilterCollection] = useState('');
   const [showLikedOnly, setShowLikedOnly] = useState(false);
   const [showDownvotedOnly, setShowDownvotedOnly] = useState(false);
   const [types, setTypes] = useState<string[]>([]);
+  const [collections, setCollections] = useState<{ slug: string; name: string }[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -111,6 +113,7 @@ export default function CurateClient() {
         maxPerBook: '999',
       });
       if (filterType) params.append('type', filterType);
+      if (filterCollection) params.append('collection', filterCollection);
 
       const res = await fetch(`/api/gallery?${params}`);
       const data = await res.json();
@@ -135,7 +138,7 @@ export default function CurateClient() {
       setLoading(false);
       loadingRef.current = false;
     }
-  }, [minQuality, filterType, types.length]);
+  }, [minQuality, filterType, filterCollection]);
 
   // Load liked IDs + downvoted IDs on mount
   useEffect(() => {
@@ -154,6 +157,16 @@ export default function CurateClient() {
       }
     }
     setLikedIds(initialLiked);
+
+    // Load collections for filter dropdown
+    fetch('/api/collections')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setCollections(data.map((c: { slug: string; name: string }) => ({ slug: c.slug, name: c.name })).sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)));
+        }
+      })
+      .catch(() => {});
 
     // Then fetch from server for accuracy
     fetch(`/api/likes/mine?visitor_id=${visitorId}&type=image&limit=5000`)
@@ -184,7 +197,7 @@ export default function CurateClient() {
     setHasMore(true);
     fetchImages(0, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [minQuality, filterType]);
+  }, [minQuality, filterType, filterCollection]);
 
   // Infinite scroll
   useEffect(() => {
@@ -483,6 +496,21 @@ export default function CurateClient() {
                 className="w-32 accent-accent-rust"
               />
               <span className="font-mono text-xs w-8">{minQuality.toFixed(2)}</span>
+            </label>
+
+            {/* Collection filter */}
+            <label className="flex items-center gap-2 text-sm text-text-secondary">
+              Collection
+              <select
+                value={filterCollection}
+                onChange={e => setFilterCollection(e.target.value)}
+                className="px-2 py-1 text-sm border border-border-light rounded bg-white"
+              >
+                <option value="">All</option>
+                {collections.map(c => (
+                  <option key={c.slug} value={c.slug}>{c.name}</option>
+                ))}
+              </select>
             </label>
 
             {/* Type filter */}
