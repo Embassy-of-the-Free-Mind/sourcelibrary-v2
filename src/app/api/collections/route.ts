@@ -14,7 +14,7 @@ export async function GET() {
     const db = await getDb();
     const collections = await db
       .collection('collections')
-      .find({})
+      .find({ parent: { $exists: false } })
       .sort({ order: 1 })
       .toArray();
 
