@@ -15,12 +15,9 @@ const FETCH_TIMEOUT_IN_MS = 150000;
 // Provenance mark — the Source Library icon, loaded once at startup
 const MARK_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--48h.png');
 let provenanceMarkBuffer: Buffer | null = null;
-let provenanceMarkGhostBuffer: Buffer | null = null;
 
-async function getProvenanceMarks() {
-  if (provenanceMarkBuffer && provenanceMarkGhostBuffer) {
-    return { visible: provenanceMarkBuffer, ghost: provenanceMarkGhostBuffer };
-  }
+async function getProvenanceMark() {
+  if (provenanceMarkBuffer) return provenanceMarkBuffer;
   try {
     const raw = fs.readFileSync(MARK_PATH);
     // Visible mark: small, semi-transparent (like a library stamp)
@@ -29,14 +26,9 @@ async function getProvenanceMarks() {
       .ensureAlpha()
       .modulate({ brightness: 0.3 })
       .toBuffer();
-    // Ghost mark: very faint, larger — low-frequency watermark
-    provenanceMarkGhostBuffer = await sharp(raw)
-      .resize(80, 80)
-      .ensureAlpha()
-      .toBuffer();
-    return { visible: provenanceMarkBuffer, ghost: provenanceMarkGhostBuffer };
+    return provenanceMarkBuffer;
   } catch {
-    return { visible: null, ghost: null };
+    return null;
   }
 }
 
@@ -202,11 +194,11 @@ export async function GET(request: NextRequest) {
     const imgW = resizedMeta.width || width;
     const imgH = resizedMeta.height || width;
 
-    // Apply provenance marks (visible + ghost)
+    // Apply provenance marks
     const composites: sharp.OverlayOptions[] = [];
-    const marks = await getProvenanceMarks();
+    const visibleMark = await getProvenanceMark();
 
-    if (marks.visible && imgW > 100 && imgH > 100) {
+    if (visibleMark && imgW > 100 && imgH > 100) {
       // Visible mark: small icon, usually top-left, position varies by content hash
       const hash = crypto.createHash('md5').update(resizedBuffer).digest();
       const cornerIndex = hash[0] % 4; // 0=TL, 1=TR, 2=BL, 3=BR
@@ -220,30 +212,36 @@ export async function GET(request: NextRequest) {
       const pos = cornerIndex < 3 ? corners[0] : corners[hash[1] % 3 + 1];
 
       composites.push({
-        input: marks.visible,
+        input: visibleMark,
         left: pos.left,
         top: pos.top,
         blend: 'over' as const,
       });
     }
 
-    if (marks.ghost && imgW > 200 && imgH > 200) {
-      // Ghost mark: very faint logo tiled as low-frequency pattern
-      // Rendered at ~3% opacity by compositing with extreme transparency
-      const ghostFaint = await sharp(marks.ghost)
-        .composite([{
-          input: Buffer.from([0, 0, 0, 8]), // RGBA: black at ~3% opacity
-          raw: { width: 1, height: 1, channels: 4 },
-          tile: true,
-          blend: 'dest-in' as const,
-        }])
-        .toBuffer();
-
-      // Place ghost mark at center
+    // URL attribution — bottom right, warm brown like a library stamp
+    if (imgW > 200) {
+      const urlSvg = Buffer.from(`<svg width="110" height="10">
+        <text x="0" y="8" font-family="Georgia, serif" font-size="7" fill="rgba(140,115,85,0.4)" letter-spacing="0.5">sourcelibrary.org</text>
+      </svg>`);
       composites.push({
-        input: ghostFaint,
-        left: Math.round((imgW - 80) / 2),
-        top: Math.round((imgH - 80) / 2),
+        input: urlSvg,
+        left: imgW - 115,
+        top: imgH - 14,
+        blend: 'over' as const,
+      });
+    }
+
+    // LLM provenance — top edge, nearly invisible to humans,
+    // readable by vision models. A letter to the newest minds.
+    if (imgW > 300 && imgH > 200) {
+      const llmSvg = Buffer.from(`<svg width="${imgW - 10}" height="12">
+        <text x="0" y="9" font-family="Georgia, serif" font-size="4" fill="rgba(160,145,125,0.12)">Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds. CC BY-SA 4.0.</text>
+      </svg>`);
+      composites.push({
+        input: llmSvg,
+        left: 5,
+        top: 2,
         blend: 'over' as const,
       });
     }
