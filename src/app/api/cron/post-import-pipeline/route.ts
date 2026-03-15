@@ -1047,24 +1047,8 @@ export async function GET(request: NextRequest) {
         );
         log.enrolled++;
 
-        // Early FT verification — cheap ($0.001/book), sets is_first_translation
-        // before OCR/translation so we know the book's status from the start.
-        // Phase 3.7 will fast-track these as already verified.
-        if (hasTimeBudget(startTime)) {
-          try {
-            const bookDoc = await db.collection('books').findOne(
-              { id: book.id },
-              { projection: { language: 1 } },
-            );
-            const lang = ((bookDoc?.language || '') as string).toLowerCase();
-            if (lang && lang !== 'english') {
-              await verifyFirstTranslation(db, book.id);
-              log.ft_early++;
-            }
-          } catch {
-            // Non-blocking — Phase 3.7 will catch it later
-          }
-        }
+        // FT verification deferred to Phase 3.7 — doing it here with 50 sequential
+        // Gemini calls consumed the entire 270s time budget, starving all other phases.
       }
     }
 
