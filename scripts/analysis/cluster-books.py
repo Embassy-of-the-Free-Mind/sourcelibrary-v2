@@ -87,13 +87,13 @@ def embed_books(texts):
     embeddings = model.encode(
         texts,
         show_progress_bar=True,
-        batch_size=64,
+        batch_size=16,
         normalize_embeddings=True,
     )
     return np.array(embeddings)
 
 
-def cluster_embeddings(embeddings, min_cluster_size=15, min_samples=5):
+def cluster_embeddings(embeddings, min_cluster_size=30, min_samples=5):
     """Run UMAP dimensionality reduction + HDBSCAN clustering."""
     print(f"\nRunning UMAP on {embeddings.shape} embeddings...")
     reducer = umap.UMAP(
