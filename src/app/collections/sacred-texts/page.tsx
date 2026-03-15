@@ -11,11 +11,11 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',
   description:
-    'The books humanity has called holy. Ten traditions, thousands of years, translated and freely accessible. From the Psalms to the Upanishads, from Zoroastrian hymns to Mandaean scripture.',
+    'The books humanity has called holy. Twenty-eight traditions, thousands of years, translated and freely accessible. From the Epic of Gilgamesh to the Guru Granth Sahib, from the Orphic Hymns to the Popol Vuh.',
   openGraph: {
     title: 'Sacred Texts - Source Library',
     description:
-      'The books humanity has called holy. Ten traditions, thousands of years, translated and freely accessible.',
+      'The books humanity has called holy. Twenty-eight traditions, thousands of years, translated and freely accessible.',
     type: 'website',
     url: 'https://sourcelibrary.org/collections/sacred-texts',
   },
