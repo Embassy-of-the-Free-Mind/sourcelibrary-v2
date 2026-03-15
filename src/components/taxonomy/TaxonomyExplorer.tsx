@@ -264,9 +264,17 @@ export function TaxonomyExplorer() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-light text-stone-100 mb-2">
-          Taxonomy Explorer
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-light text-stone-100 mb-2">
+            Taxonomy Explorer
+          </h1>
+          <Link
+            href="/research/atlas?mode=taxonomy"
+            className="text-stone-500 text-sm hover:text-stone-300 transition-colors border border-stone-800 rounded px-3 py-1.5"
+          >
+            View in 3D Atlas
+          </Link>
+        </div>
         <p className="text-stone-500 text-sm">
           {data.total_clusters} clusters &middot; {data.total_subclusters}{' '}
           subclusters &middot; {data.total_books.toLocaleString()} books
