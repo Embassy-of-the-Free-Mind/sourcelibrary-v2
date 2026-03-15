@@ -56,6 +56,18 @@ export function parseDateRange(dateStr) {
 
   const s = dateStr.toString().trim();
 
+  // e-rara approximate decade format: "190u" = 1900-1909, "18uu" = 1800-1899
+  const eraraDecade = s.match(/^(\d{3})u$/);
+  if (eraraDecade) {
+    const base = parseInt(eraraDecade[1]) * 10;
+    return { earliest: base, latest: base + 9 };
+  }
+  const eraraCentury = s.match(/^(\d{2})uu$/);
+  if (eraraCentury) {
+    const base = parseInt(eraraCentury[1]) * 100;
+    return { earliest: base, latest: base + 99 };
+  }
+
   // Direct year: "1550" or "[1550]"
   const directYear = s.match(/\b(\d{4})\b/);
   if (directYear) {
