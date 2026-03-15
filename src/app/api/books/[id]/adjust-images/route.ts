@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
+import { storagePut } from '@/lib/storage';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { adjustBrightness, compress_photo } from '@/lib/image-manipulation';
@@ -73,7 +73,7 @@ export const POST = withAuth(async (request, session, context) => {
 
             // Upload adjusted image to Vercel Blob (overwrite)
             const filename = `archived/${bookId}/${page.page_number}.jpg`;
-            const blob = await put(filename, adjustedBuffer, {
+            const blob = await storagePut(filename, adjustedBuffer, {
               access: 'public',
               contentType: 'image/jpeg',
               addRandomSuffix: false,
@@ -85,7 +85,7 @@ export const POST = withAuth(async (request, session, context) => {
             try {
               const thumbBuffer = await compress_photo(adjustedBuffer, 150, 60);
               const thumbFilename = `thumbnails/${bookId}/${page.page_number}.jpg`;
-              const thumbBlob = await put(thumbFilename, thumbBuffer, {
+              const thumbBlob = await storagePut(thumbFilename, thumbBuffer, {
                 access: 'public',
                 contentType: 'image/jpeg',
                 addRandomSuffix: false,

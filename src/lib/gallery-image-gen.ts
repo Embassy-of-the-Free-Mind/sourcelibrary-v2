@@ -8,7 +8,7 @@
  */
 
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
 
 interface GenerateGalleryImagesInput {
@@ -107,20 +107,16 @@ export async function generateGalleryImages(
     .jpeg({ quality: 70 })
     .toBuffer();
 
-  // Upload both to Vercel Blob
+  // Upload both to storage (R2 or Vercel Blob)
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
 
   const [extractedBlob, thumbnailBlob] = await Promise.all([
-    put(`${blobPrefix}.jpg`, extractedBuffer, {
-      access: 'public',
+    storagePut(`${blobPrefix}.jpg`, extractedBuffer, {
       contentType: 'image/jpeg',
-      addRandomSuffix: false,
       allowOverwrite: true,
     }),
-    put(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
-      access: 'public',
+    storagePut(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
       contentType: 'image/jpeg',
-      addRandomSuffix: false,
       allowOverwrite: true,
     }),
   ]);

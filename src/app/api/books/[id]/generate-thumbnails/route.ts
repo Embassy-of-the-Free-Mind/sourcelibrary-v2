@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
+import { storagePut } from '@/lib/storage';
 import sharp from 'sharp';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
@@ -139,7 +139,7 @@ export const POST = withAuth(async (request, session, context) => {
 
             // Upload to Vercel Blob
             const filename = `thumbnails/${bookId}/${page.page_number}.jpg`;
-            const blob = await put(filename, thumbBuffer, {
+            const blob = await storagePut(filename, thumbBuffer, {
               access: 'public',
               contentType: 'image/jpeg',
               addRandomSuffix: false,

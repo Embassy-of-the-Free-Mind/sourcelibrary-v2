@@ -18,7 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { storagePut } from '../../src/lib/storage';
 
 const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '20', 10);
 const PAGE_LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
@@ -70,7 +70,7 @@ async function generateThumbnail(page: any, db: any): Promise<boolean> {
     let blob;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        blob = await put(
+        blob = await storagePut(
           `thumbnails/${page.book_id}/${page.page_number}.jpg`,
           thumbBuffer,
           { access: 'public', contentType: 'image/jpeg', addRandomSuffix: false, allowOverwrite: true }

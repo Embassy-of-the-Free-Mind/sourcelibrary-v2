@@ -32,7 +32,7 @@
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { storagePut } from '../../src/lib/storage';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -326,7 +326,7 @@ async function bulkArchiveBook(
         let blob;
         for (let attempt = 0; attempt < 3; attempt++) {
           try {
-            blob = await put(filename, buffer, {
+            blob = await storagePut(filename, buffer, {
               access: 'public',
               contentType: 'image/jpeg',
               addRandomSuffix: false,
@@ -362,7 +362,7 @@ async function bulkArchiveBook(
               .jpeg({ quality: 60, progressive: true })
               .toBuffer();
             const thumbFilename = `thumbnails/${page.book_id}/${page.page_number}.jpg`;
-            const thumbBlob = await put(thumbFilename, thumbBuffer, {
+            const thumbBlob = await storagePut(thumbFilename, thumbBuffer, {
               access: 'public',
               contentType: 'image/jpeg',
               addRandomSuffix: false,
@@ -492,7 +492,7 @@ async function archivePage(page: any, db: any): Promise<boolean> {
       let blob;
       for (let attempt = 0; attempt < 3; attempt++) {
         try {
-          blob = await put(filename, buffer, {
+          blob = await storagePut(filename, buffer, {
             access: 'public',
             contentType: mimeType,
             addRandomSuffix: false,
@@ -555,7 +555,7 @@ async function archivePage(page: any, db: any): Promise<boolean> {
           let thumbBlob;
           for (let attempt = 0; attempt < 3; attempt++) {
             try {
-              thumbBlob = await put(thumbFilename, thumbBuffer, {
+              thumbBlob = await storagePut(thumbFilename, thumbBuffer, {
                 access: 'public',
                 contentType: 'image/jpeg',
                 addRandomSuffix: false,

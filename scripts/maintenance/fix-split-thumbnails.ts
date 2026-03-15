@@ -21,7 +21,7 @@
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { storagePut } from '../../src/lib/storage';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '20', 10);
@@ -48,7 +48,7 @@ async function fixThumbnail(page: any, db: any): Promise<boolean> {
     let blob;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        blob = await put(
+        blob = await storagePut(
           `thumbnails/${page.book_id}/${page.page_number}.jpg`,
           thumbBuffer,
           { access: 'public', contentType: 'image/jpeg', addRandomSuffix: false, allowOverwrite: true }
