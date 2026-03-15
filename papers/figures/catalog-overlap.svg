@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" font-family="Georgia, serif">
+<rect width="500" height="320" fill="white"/>
+<text x="250" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">Catalog Overlap by Author</text>
+<circle cx="190" cy="160" r="120" fill="#b87333" opacity="0.25" stroke="#b87333" stroke-width="2"/>
+<circle cx="310" cy="160" r="120" fill="#4a6fa5" opacity="0.25" stroke="#4a6fa5" stroke-width="2"/>
+<text x="145" y="145" text-anchor="middle" font-size="28" font-weight="bold" fill="#8b4513">1,669</text>
+<text x="145" y="168" text-anchor="middle" font-size="11" fill="#8b4513">only in existing</text>
+<text x="145" y="182" text-anchor="middle" font-size="11" fill="#8b4513">catalogs</text>
+<text x="250" y="145" text-anchor="middle" font-size="28" font-weight="bold" fill="#333">718</text>
+<text x="250" y="168" text-anchor="middle" font-size="11" fill="#333">in both</text>
+<text x="355" y="145" text-anchor="middle" font-size="28" font-weight="bold" fill="#2c5282">12,612</text>
+<text x="355" y="168" text-anchor="middle" font-size="11" fill="#2c5282">only in</text>
+<text x="355" y="182" text-anchor="middle" font-size="11" fill="#2c5282">LOC MARC</text>
+<text x="190" y="300" text-anchor="middle" font-size="12" fill="#8b4513">UNESCO + 45 catalogs</text>
+<text x="310" y="300" text-anchor="middle" font-size="12" fill="#2c5282">Library of Congress</text>
+</svg>
