@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 
@@ -89,65 +89,54 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
 }
 
 function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
-  const thumbnails = tradition.sample_books
+  const heroThumb = tradition.sample_books
     .map(b => sanitizeThumbnail(b.thumbnail))
-    .filter((t): t is string => !!t)
-    .slice(0, 4);
+    .find((t): t is string => !!t);
 
-  const topLanguages = tradition.languages
-    .slice(0, 3)
-    .map(l => l.lang)
-    .join(', ');
+  const heroImage = tradition.featured_images?.[0]?.extracted_url
+    || tradition.featured_images?.[0]?.image_url
+    || tradition.featured_images?.[0]?.thumbnail_url
+    || heroThumb;
+
+  const isDataUrl = heroImage?.startsWith('data:');
 
   return (
     <Link
       href={`/collections/${tradition.slug}`}
-      className="group block rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-lg transition-all overflow-hidden"
+      className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
     >
-      {/* Thumbnail strip */}
-      {thumbnails.length > 0 && (
-        <div className="flex h-32 sm:h-36 overflow-hidden bg-warm">
-          {thumbnails.map((thumb, i) => {
-            const isDataUrl = thumb.startsWith('data:');
-            return (
-              <div key={i} className="relative flex-1 min-w-0">
-                {isDataUrl ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={thumb} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                ) : (
-                  <Image
-                    src={thumb}
-                    alt=""
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(min-width: 1024px) 150px, (min-width: 640px) 120px, 80px"
-                  />
-                )}
-              </div>
-            );
-          })}
-          {thumbnails.length < 4 && (
-            <div className="relative flex-1 min-w-0 bg-warm flex items-center justify-center">
-              <BookOpen className="w-6 h-6 text-muted" />
-            </div>
-          )}
-        </div>
+      {heroImage ? (
+        isDataUrl ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        ) : (
+          <Image
+            src={heroImage}
+            alt={`Illustration from ${tradition.name}`}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            unoptimized
+          />
+        )
+      ) : (
+        <div className="absolute inset-0 bg-warm" />
       )}
 
-      <div className="p-5">
-        <h2 className="text-xl font-semibold text-primary group-hover:text-accent-rust transition-colors font-display mb-1">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+      <div className="absolute inset-0 flex flex-col justify-end p-4">
+        <p className="text-white/50 text-xs mb-1">
+          {tradition.book_count} texts
+        </p>
+        <h2 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {tradition.name}
         </h2>
-        <p className="text-sm text-muted italic mb-3">
-          {tradition.subtitle}
-        </p>
-        <p className="text-sm text-secondary leading-relaxed line-clamp-3 mb-4">
-          {tradition.description}
-        </p>
-        <div className="flex items-center justify-between text-xs text-muted">
-          <span>{tradition.book_count} texts</span>
-          {topLanguages && <span>{topLanguages}</span>}
-        </div>
+        {tradition.subtitle && (
+          <p className="text-white/60 text-xs mt-1 line-clamp-1">
+            {tradition.subtitle}
+          </p>
+        )}
       </div>
     </Link>
   );
@@ -209,7 +198,7 @@ export default async function SacredTextsPortal() {
 
       {/* Traditions grid */}
       <div className="max-w-6xl mx-auto px-6 py-10">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
           {traditionsWithBooks.map(tradition => (
             <TraditionCard key={tradition.slug} tradition={tradition} />
           ))}
