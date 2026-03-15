@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Dataset API — Source Library',
     description:
-      'The only structured parallel-text dataset for historical languages. Page-aligned original text, English translation, and metadata for AI training.',
+      'Ten thousand historical texts in 90+ languages, translated and structured for the first time. From the Bodleian to the Vatican, now available as a single API.',
   },
 };
 
@@ -98,18 +98,23 @@ function Overline({ children }: { children: string }) {
   );
 }
 
-/* ── Source institution logos (trust signals) ── */
+/* ── Source institutions ── */
 const SOURCE_INSTITUTIONS = [
   'Internet Archive',
-  'Bodleian Library',
   'Bavarian State Library',
-  'Biblioteca Apostolica Vaticana',
-  'British Library',
-  'Wellcome Collection',
-  'Cambridge Digital Library',
-  'Library of Congress',
   'Embassy of the Free Mind',
   'Gallica (BnF)',
+  'Biblioteca Medicea Laurenziana',
+  'Bodleian Library, Oxford',
+  'Biblioteca Apostolica Vaticana',
+  'Library of Congress',
+  'Cambridge Digital Library',
+  'Leiden University Library',
+  'British Library',
+  'Wellcome Collection',
+  'Allard Pierson, Amsterdam',
+  'e-codices',
+  'Bibliotheca Klossiana',
 ];
 
 const SAMPLE_JSONL = `{"book_id":"694f49d3...","page_number":12,"language":"Latin","original_text":"Omnia ab uno, & in unum omnia...","english_translation":"All things from one, and into one all things...","book_title":"Tabula Smaragdina","author":"Hermes Trismegistus","year":800,"cluster":"Western Alchemy","source_url":"https://sourcelibrary.org/book/tabula-smaragdina?page=12"}`;
@@ -128,7 +133,7 @@ const VALUE_PROPS = [
   {
     title: 'Translation Commons',
     description:
-      'Every translation passes through our open review process. Hundreds of language specialists contribute corrections continuously. The dataset improves with every update.',
+      'Every translation passes through an open scholarly review. Language specialists contribute corrections continuously. The collection improves with each quarter.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z" />
@@ -156,9 +161,9 @@ const VALUE_PROPS = [
     ),
   },
   {
-    title: 'Living dataset',
+    title: 'A living collection',
     description:
-      'New books, corrections, and translations added continuously. Quarterly updates with changelogs. Your license grows more valuable over time.',
+      'New acquisitions, corrections, and translations are added continuously. Quarterly updates with changelogs. The collection grows; your license grows with it.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
@@ -166,9 +171,9 @@ const VALUE_PROPS = [
     ),
   },
   {
-    title: 'No comparable alternative',
+    title: 'First of its kind',
     description:
-      'The only structured, page-aligned, parallel-text dataset for historical and low-resource languages. This data did not exist before Source Library.',
+      'No other structured, page-aligned, parallel-text dataset exists for historical and low-resource languages. This is new ground.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
@@ -211,8 +216,8 @@ export default async function DatasetPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Dataset API"
-          subtitle="Structured parallel-text training data from 10,000+ historical texts in 90+ languages. The only dataset of its kind."
+          title="The Collection, Structured"
+          subtitle="Ten thousand historical texts from thirty institutions, translated into English and aligned page by page. Now available as a single API."
         />
       }
       maxWidth="wide"
@@ -238,21 +243,22 @@ export default async function DatasetPage() {
 
       {/* ── Source institutions (trust bar) ── */}
       <section className="mb-16">
-        <Overline>Sourced from</Overline>
-        <div className="flex flex-wrap gap-x-6 gap-y-2 items-center">
+        <Overline>Held by</Overline>
+        <div className="flex flex-wrap gap-x-6 gap-y-2.5 items-center">
           {SOURCE_INSTITUTIONS.map((name) => (
-            <span key={name} className="text-sm text-stone-400 font-medium whitespace-nowrap">
+            <span key={name} className="text-[13px] text-stone-400 whitespace-nowrap" style={{ fontWeight: 400 }}>
               {name}
             </span>
           ))}
+          <span className="text-[13px] text-stone-300 italic">and 20 more institutions</span>
         </div>
       </section>
 
       {/* ── Why this dataset ── */}
       <section className="mb-16">
-        <Overline>Why this data</Overline>
+        <Overline>The dataset</Overline>
         <h2 className="font-serif text-2xl text-primary mb-8">
-          Your models are weak on historical languages because this data didn&apos;t exist
+          What makes this collection unusual
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {VALUE_PROPS.map((vp) => (
@@ -267,63 +273,63 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* ── Cost comparison ── */}
+      {/* ── What it took ── */}
       <section className="mb-16">
-        <Overline>The alternative</Overline>
-        <h2 className="font-serif text-2xl text-primary mb-6">Build it yourself?</h2>
+        <Overline>Provenance</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-6">What it took to build this</h2>
         <div className="bg-white rounded-xl border border-border-light overflow-hidden">
           <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border-light">
             <div className="p-6 md:p-8">
-              <h3 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Do it yourself</h3>
+              <h3 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">The work behind the dataset</h3>
               <div className="space-y-3 text-secondary text-sm">
                 <div className="flex justify-between">
-                  <span>Identify &amp; acquire 10,000+ rare texts</span>
-                  <span className="text-stone-400 tabular-nums">2+ years</span>
+                  <span>Identifying &amp; acquiring 10,000+ rare texts</span>
+                  <span className="text-stone-400 tabular-nums">30 institutions</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>OCR 1.2M pages of historical print</span>
+                  <span>OCR of 1.2 million pages of historical print</span>
                   <span className="text-stone-400 tabular-nums">~$120,000</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Translate 800K pages across 90+ languages</span>
+                  <span>Translation of 800K pages across 90+ languages</span>
                   <span className="text-stone-400 tabular-nums">~$800,000</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Human review &amp; correction</span>
+                  <span>Scholarly review &amp; correction</span>
                   <span className="text-stone-400 tabular-nums">~$200,000</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Taxonomy, metadata, alignment</span>
+                  <span>Taxonomy, metadata, page alignment</span>
                   <span className="text-stone-400 tabular-nums">~$80,000</span>
                 </div>
                 <div className="flex justify-between border-t border-border-light pt-3 font-medium text-primary">
-                  <span>Total</span>
-                  <span className="tabular-nums">~$1.2M + 2 years</span>
+                  <span>Investment to date</span>
+                  <span className="tabular-nums">~$1.2M over 2 years</span>
                 </div>
               </div>
             </div>
             <div className="p-6 md:p-8 bg-stone-50/50">
-              <h3 className="text-sm font-medium text-accent-rust uppercase tracking-wide mb-4">Source Library Dataset API</h3>
+              <h3 className="text-sm font-medium text-accent-rust uppercase tracking-wide mb-4">Access via API</h3>
               <div className="space-y-3 text-secondary text-sm">
                 <div className="flex justify-between">
-                  <span>Full collection access</span>
-                  <span className="text-accent-rust tabular-nums font-medium">$49,990/yr</span>
+                  <span>Full collection</span>
+                  <span className="text-accent-rust tabular-nums font-medium">from $49,990/yr</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Quarterly updates included</span>
-                  <span className="text-stone-400">Yes</span>
+                  <span>Single language corpus</span>
+                  <span className="text-stone-500 tabular-nums">from $4,990/yr</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Human-verified quality</span>
-                  <span className="text-stone-400">Yes</span>
+                  <span>Quarterly updates &amp; changelogs</span>
+                  <span className="text-stone-400">Included</span>
                 </div>
                 <div className="flex justify-between">
                   <span>EU AI Act provenance chain</span>
-                  <span className="text-stone-400">Yes</span>
+                  <span className="text-stone-400">Included</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Ready today, not in 2 years</span>
-                  <span className="text-stone-400">Yes</span>
+                  <span>Ongoing scholarly review</span>
+                  <span className="text-stone-400">Included</span>
                 </div>
                 <div className="flex justify-between border-t border-border-light pt-3">
                   <span className="font-medium text-primary">Time to first data</span>
@@ -388,11 +394,11 @@ export default async function DatasetPage() {
 
       {/* ── Sample data + download ── */}
       <section className="mb-16" id="api">
-        <Overline>Data format</Overline>
-        <h2 className="font-serif text-2xl text-primary mb-3">Streaming JSONL</h2>
+        <Overline>Format</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-3">One page, one record</h2>
         <p className="text-secondary mb-4 max-w-2xl">
-          Every record is a single page with parallel text, metadata, and a citation URL.
-          One JSON object per line, ready for your training pipeline.
+          Each record contains the original text, its English translation, book metadata,
+          taxonomy classification, and a citation URL. Delivered as streaming JSONL.
         </p>
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-4">
           <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
@@ -417,7 +423,7 @@ export default async function DatasetPage() {
       {/* ── API quickstart ── */}
       <section className="mb-16">
         <Overline>Quickstart</Overline>
-        <h2 className="font-serif text-2xl text-primary mb-6">Three lines to first data</h2>
+        <h2 className="font-serif text-2xl text-primary mb-6">Getting started</h2>
         <div className="space-y-4">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
@@ -464,10 +470,11 @@ for line in resp.iter_lines():
 
       {/* ── Pricing ── */}
       <section className="mb-10" id="pricing">
-        <Overline>Pricing</Overline>
-        <h2 className="font-serif text-2xl text-primary mb-3">Self-serve API access</h2>
+        <Overline>Access</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-3">Plans</h2>
         <p className="text-secondary mb-8 max-w-2xl">
-          All paid plans include quarterly dataset updates with changelogs. Annual plans save two months.
+          All paid plans include quarterly updates with changelogs. Annual plans save two months.
+          Enterprise partnerships are arranged separately.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tierKeys.map(({ key, cta, ctaStyle }) => {
@@ -702,12 +709,12 @@ for line in resp.iter_lines():
       {/* ── Enterprise CTA ── */}
       <section className="mb-16">
         <div className="bg-gradient-to-br from-[#2a1f17] to-[#1a1612] rounded-xl p-8 md:p-12 text-white">
-          <Overline>Enterprise</Overline>
-          <h2 className="font-serif text-3xl mb-4 text-white">Managed partnership</h2>
+          <Overline>Partnership</Overline>
+          <h2 className="font-serif text-3xl mb-4 text-white">For foundation model teams</h2>
           <p className="text-stone-300 max-w-2xl mb-6 leading-relaxed">
-            For AI labs training foundation models. Custom terms including exclusive access windows,
-            Parquet bulk exports, dedicated stewardship reports, and SLAs. Segmented by language,
-            domain, or the full collection.
+            Dedicated access with custom terms. Exclusive windows on new translations,
+            Parquet bulk exports, stewardship reports, and SLAs. The collection can be segmented
+            by language, domain, time period, or delivered whole.
           </p>
           <div className="flex flex-wrap gap-3">
             <a
