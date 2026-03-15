@@ -28,29 +28,52 @@ In this paper, we bring these two datasets together for the first time. The resu
 
 This finding has implications for how we understand the accessibility of the European intellectual heritage, for the prioritization of translation efforts (whether human or machine), and for the representativeness of AI training corpora that depend on the English-language record.
 
-## 2. The problem of counting
+## 2. Scope and framing
 
-Before describing our methodology, it is worth explaining why this question is difficult.
+### 2.1 The funnel
 
-### 2.1 What counts as a "work"?
+The full body of pre-copyright European intellectual heritage is vast and layered. Our census addresses one well-defined slice of it. It is useful to see where that slice sits in the larger picture:
+
+| Level | Scope | Estimated size |
+|---|---|---|
+| Surviving medieval manuscripts | Western Europe, 6th-15th centuries | ~2.9 million [Buringh 2011] |
+| European printed works (USTC) | 1450-1700, all languages | 1,628,578 editions |
+| Non-English printed works | Excluding 164,361 English-language editions | 1,464,217 editions |
+| Distinct non-English works | Deduplicated by author-title pair | ~693,135 works |
+| With any known English translation | Our combined catalog | ~31,361 (4.5%) |
+| With complete modern English translation | Excluding partials and antiquated versions | ~21,000 (3.0%) |
+
+Each step narrows the scope. Our census measures the bottom two rows: what has been translated, and in what form. But the rows above remind us that the USTC itself is not the totality. The manuscript tradition before printing — including the early Italian Renaissance (Petrarch, Bruni, Poggio, Traversari, the Greek revival of the early 1400s) — predates the USTC's coverage. And European printing after 1700, which likely produced two to three times the output of the preceding 250 years, is not yet included.
+
+### 2.2 Periodization
+
+Three periods overlap in this discussion and should be distinguished:
+
+- **The Renaissance** (approximately 1350-1600): a cultural and intellectual movement centered on the recovery of classical antiquity. It begins with Petrarch and the early Italian humanists, predating printing by a century. Source Library's mission — to "translate the Renaissance" — refers to this tradition, broadly construed. Many Renaissance texts from 1350-1450 survive only as manuscripts and are not in the USTC.
+
+- **The early modern period** (approximately 1450-1800): a periodization used in historical scholarship, roughly coextensive with the hand-press era of European printing. Our USTC data covers the first 250 years of this period (1450-1700). The eighteenth century, which falls within the early modern period but outside our data, is a significant gap.
+
+- **The pre-copyright public domain** (before approximately 1928 in U.S. law, or life-of-author plus 70 years in most jurisdictions): all of the texts discussed in this paper are in the public domain. They are legally free to digitize, translate, and distribute without restriction. The translation gap is not a legal barrier — it is a labor barrier.
+
+This census measures the early modern period as captured by the USTC (1450-1700). It does not cover Renaissance manuscripts before 1450, Enlightenment printing after 1700, or the medieval manuscript tradition. Each of these represents a substantial additional body of material that is similarly undertranslated but would require different data sources to census.
+
+### 2.3 Why counting is difficult
+
+### 2.4 What counts as a "work"?
 
 The USTC records *editions* — individual printings of a text. A popular work might have dozens of editions: Ovid's *Metamorphoses* appears in over 1,000 USTC records. A single English translation of the *Metamorphoses* renders all of those editions accessible to English readers, in the sense that the intellectual content is now available. But counting at the edition level would massively overstate the gap, because it treats each printing as a separate item that needs its own translation.
 
 We therefore count *distinct works*, defined operationally as unique title-author combinations in the USTC. This is an imperfect proxy. Title variants of the same text — *De Rerum Natura* appearing as "De Rerum Natura," "T. Lucretii Cari De Rerum Natura Libri Sex," and "De Natura Rerum" — will be counted separately. Our distinct-work count is therefore an upper bound on the true number of unique intellectual works in the USTC. We discuss the magnitude of this inflation in Section 6.
 
-### 2.2 What counts as a "translation"?
+### 2.5 What counts as a "translation"?
 
 An English translation can take many forms. It can be a published book from a major press, a chapter in an edited volume, an appendix to a dissertation, a journal article containing a translated passage, or an online publication by a digital humanities project. Our catalog captures published books well, journal articles and dissertations poorly, and online-only translations unevenly. We can count translations that were cataloged by the Library of Congress, recorded in the UNESCO Index Translationum, or published by presses whose catalogs we have ingested. We cannot count translations that exist only in unpublished form, in out-of-print editions not held by major libraries, or in formats that escape bibliographic control.
 
 This means our translation count is a lower bound. The true number of existing English translations is higher than what we report. The question is how much higher — a question we address through spot-checking in Section 5.
 
-### 2.3 What counts as "pre-modern"?
+### 2.6 Temporal scope
 
-We adopt the USTC's temporal scope: printed works from approximately 1450 (the beginning of European printing) to 1700. This includes the full Renaissance, the Reformation, the Wars of Religion, the Scientific Revolution, and the early Enlightenment. It excludes medieval manuscripts (which survive in the hundreds of thousands but are not systematically cataloged in a single database comparable to the USTC) and works printed after 1700 (which are covered by other national bibliographies but not yet integrated into the USTC).
-
-The USTC is expanding its coverage toward 1700 and beyond, and its data for the seventeenth century is less complete than for the fifteenth and sixteenth centuries. Our results should be read with this caveat in mind.
-
-The early modern period is conventionally dated from approximately 1450 to 1800. Our census covers 1450-1700, the period for which the USTC provides comprehensive data. The eighteenth century — which saw a dramatic expansion in European printing, possibly producing 2-3 times the output of the seventeenth century — is excluded. This means our census addresses roughly half the early modern period by chronological span and perhaps a third by total volume of printed output. The 18th century is likely the period with the highest English translation rate, given the growing role of English as a scholarly language from the late 1600s onward. Extending the census to 1800 would require integrating additional national bibliographies — the ESTC (English Short Title Catalogue, ~480,000 entries for 1473-1800), VD18 (German, 1701-1800), and equivalent catalogs for French, Italian, and other European printing. This is a natural next step but beyond the scope of the present paper.
+We adopt the USTC's temporal coverage: printed works from approximately 1450 to 1700. This spans the invention of movable type, the full Renaissance, the Reformation, the Wars of Religion, the Scientific Revolution, and the beginning of the Enlightenment. The USTC is expanding its coverage, and its data for the seventeenth century is less complete than for the fifteenth and sixteenth centuries. Our results should be read accordingly.
 
 ## 3. Data sources
 
