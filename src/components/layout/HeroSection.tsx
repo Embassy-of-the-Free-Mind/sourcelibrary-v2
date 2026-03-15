@@ -147,7 +147,7 @@ export default function HeroSection() {
             A New Renaissance of Ancient Wisdom
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            The world&rsquo;s largest library of translations of ancient texts.{status !== 'authenticated' && ' Membership is free.'}
+            The world&rsquo;s largest library of translations of ancient texts.{status !== 'authenticated' && ' Join us.'}
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}
