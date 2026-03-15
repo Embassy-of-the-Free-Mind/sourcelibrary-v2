@@ -95,6 +95,8 @@ The USTC is maintained by the University of St Andrews and is the most comprehen
 
 "Distinct works" are counted as unique (author surname, title) pairs within each language. As noted above, this is an upper bound on the true number of unique works due to title variation.
 
+Our copy of the USTC has been supplemented with an AI-enrichment layer that provides, for each edition, a machine-generated English translation of the title, a detected language classification, a work-type tag (legal, religious, treatise, letter, etc.), and subject tags. This enrichment was produced using Google Gemini and enables English-language search and cross-referencing against English-language translation catalogs. We discuss the implications for title-level matching in Section 5.
+
 ### 3.2 The Library of Congress MARC records
 
 The Library of Congress distributes its full catalog in MARC21 binary format through the MDSConnect service [3]. We downloaded the complete BooksAll dataset (41 files, approximately 3 GB compressed, 10,091,977 records) and parsed each record for the presence of MARC field 041 with subfield $h, which indicates the original language of a translated work. This field is assigned by catalogers when a work is identified as a translation, and contains a three-letter language code (e.g., "lat" for Latin, "fre" for French).
@@ -251,7 +253,11 @@ This approach has known limitations:
 
 - It **produces false matches for common surnames** (e.g., "Thomas" matching both Thomas Aquinas and Thomas More, "William" matching multiple authors).
 
-A more rigorous approach would use title-level matching — comparing USTC titles against catalog titles using fuzzy string matching, embedding similarity, or FRBR-style work clustering. We have not implemented this because the title normalization problem (matching "Metamorphoseon libri XV" to "Metamorphoses") is itself non-trivial across languages and centuries of bibliographic convention. We consider this the most important area for methodological improvement in future work.
+A more rigorous approach would use title-level matching — comparing USTC titles against catalog titles using fuzzy string matching, embedding similarity, or FRBR-style work clustering.
+
+We have partially prepared for this. Our copy of the USTC includes an **enrichment layer**: an AI-generated English translation of every USTC title, along with detected language, work type classification (legal, religious, treatise, letter, etc.), and subject tags. This enrichment was produced using Google Gemini and is stored alongside the original USTC records. It converts the cross-language title matching problem — matching "Metamorphoseon libri XV" to "Metamorphoses" — into an English-English matching problem: matching "Metamorphoses in Fifteen Books" to "Metamorphoses." The latter is tractable with standard fuzzy string matching.
+
+We have not yet implemented title-level matching using this enrichment layer, and we consider this the most important area for methodological improvement. With English titles available on both sides of the match, embedding-based similarity (using a sentence transformer model to compare USTC enriched titles against catalog titles) could produce work-level alignment at scale. This would replace the current author-level estimate with a direct, work-level census: for each USTC work, does a corresponding English translation exist in our catalog? We leave this for future work.
 
 ### 5.3 Name normalization
 
