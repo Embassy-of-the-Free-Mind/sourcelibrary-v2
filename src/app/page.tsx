@@ -578,7 +578,7 @@ export default async function HomePage() {
               </div>
               <Link
                 href="/blog"
-                className="text-sm text-accent-rust hover:underline hidden md:block"
+                className="text-sm text-accent-rust hover:underline"
               >
                 All posts
               </Link>
