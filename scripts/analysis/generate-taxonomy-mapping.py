@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Generate book_id → cluster/subcluster mapping from pre-computed results.
+Generate book_id → cluster/subcluster mapping from restored taxonomy.
 
 Reads:
-  - complete-taxonomy.json (all 5,993 books with cluster assignments)
-  - sub-cluster-v2.json (subcluster book lists)
-  - named-subclusters.json (subcluster names)
+  - reviewed-taxonomy-restored.json (all 5,993 books with 48-cluster assignments)
+  - restored-subclusters.json (subcluster book lists)
+  - restored-named-subclusters.json (subcluster names)
 
 Outputs: scripts/output/taxonomy-mapping.json
 """
@@ -19,27 +19,26 @@ OUTPUT_DIR = Path(__file__).parent.parent / "output"
 def main():
     print("Loading data...")
 
-    with open(OUTPUT_DIR / "complete-taxonomy.json") as f:
+    with open(OUTPUT_DIR / "reviewed-taxonomy-restored.json") as f:
         taxonomy = json.load(f)
 
-    with open(OUTPUT_DIR / "sub-cluster-v2.json") as f:
+    with open(OUTPUT_DIR / "restored-subclusters.json") as f:
         subclusters = json.load(f)
 
-    with open(OUTPUT_DIR / "named-subclusters.json") as f:
+    with open(OUTPUT_DIR / "restored-named-subclusters.json") as f:
         named = json.load(f)
 
-    # Build book_id → subcluster mapping from sub-cluster-v2.json
-    # Each subcluster has a "books" array with book IDs
-    book_to_sub = {}  # book_id → (cluster_id, subcluster_idx)
+    # Build book_id → subcluster mapping from restored-subclusters.json
+    book_to_sub = {}  # book_id → (raw_id, subcluster_idx)
     for sc_data in subclusters:
-        cid = sc_data["cluster_id"]
+        cid = sc_data["raw_id"]
         if not sc_data.get("split"):
             continue
         for sc_idx, sc in enumerate(sc_data["subclusters"]):
             for book in sc.get("books", []):
                 book_to_sub[book["id"]] = (cid, sc_idx)
 
-    # Build subcluster names from named-subclusters.json
+    # Build subcluster names from restored-named-subclusters.json
     sub_names = {}  # (cluster_id, sc_idx) → name
     for ns in named:
         cid = ns["cluster_id"]
@@ -48,7 +47,7 @@ def main():
         for sc_idx, sc in enumerate(ns["subclusters"]):
             sub_names[(cid, sc_idx)] = sc["name"]
 
-    # Generate mapping for all 5,993 books
+    # Generate mapping for all books
     mapping_entries = []
     stats = {"with_subcluster": 0, "cluster_only": 0}
 
@@ -64,7 +63,6 @@ def main():
             "probability": a.get("probability"),
         }
 
-        # Check if this book has a subcluster assignment
         if book_id in book_to_sub:
             _, sc_idx = book_to_sub[book_id]
             sc_name = sub_names.get((cluster_id, sc_idx), f"Sub-cluster {sc_idx}")
@@ -78,7 +76,6 @@ def main():
 
         mapping_entries.append(entry)
 
-    # Count distinct clusters and subclusters
     clusters = set(e["cluster"] for e in mapping_entries)
     subclusters_set = set(
         (e["cluster_id"], e["subcluster_idx"])
@@ -88,6 +85,7 @@ def main():
 
     output = {
         "generated": "2026-03-15",
+        "method": "restored-reviewed-taxonomy",
         "stats": {
             "total_books": len(mapping_entries),
             "with_subcluster": stats["with_subcluster"],

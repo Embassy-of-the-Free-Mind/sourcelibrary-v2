@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Apply fresh taxonomy to MongoDB — replaces ALL existing taxonomy with
- * new clustering results from complete-taxonomy.json.
+ * Apply taxonomy to MongoDB — replaces ALL existing taxonomy with
+ * restored reviewed taxonomy from reviewed-taxonomy-restored.json.
  *
  * Steps:
  * 1. Clear taxonomy from ALL books
@@ -21,13 +21,13 @@ const OUTPUT_DIR = join(__dirname, '..', 'output');
 async function main() {
   const dryRun = process.argv.includes('--dry-run');
 
-  const taxonomyPath = join(OUTPUT_DIR, 'complete-taxonomy.json');
+  const taxonomyPath = join(OUTPUT_DIR, 'reviewed-taxonomy-restored.json');
   let data;
   try {
     data = JSON.parse(readFileSync(taxonomyPath, 'utf-8'));
   } catch (e) {
     console.error(`Missing ${taxonomyPath}`);
-    console.error('Run: python3 scripts/analysis/finalize-taxonomy.py');
+    console.error('Run: python3 scripts/analysis/restore-reviewed-taxonomy.py');
     process.exit(1);
   }
 
