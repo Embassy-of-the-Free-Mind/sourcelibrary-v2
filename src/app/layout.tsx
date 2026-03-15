@@ -7,6 +7,7 @@ import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
 import CookieConsent from "@/components/providers/CookieConsent";
 import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
+import InputWidget from "@/components/InputWidget";
 
 
 export const metadata: Metadata = {
@@ -109,6 +110,7 @@ export default async function RootLayout({
         <CookieConsent />
         <AnalyticsScripts />
         <PageTracker />
+        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
       </body>
     </html>
   );
