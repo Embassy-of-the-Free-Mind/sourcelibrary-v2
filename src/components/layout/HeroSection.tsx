@@ -144,7 +144,7 @@ export default function HeroSection() {
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
           >
-            Unlock a New Renaissance of Ancient Knowledge
+            A New Renaissance of Ancient Wisdom
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
             The world&rsquo;s largest library of translations of ancient texts.{status !== 'authenticated' && ' Membership is free.'}
