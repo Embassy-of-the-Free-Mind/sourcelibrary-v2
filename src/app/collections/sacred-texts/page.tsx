@@ -11,7 +11,7 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',
   description:
-    'The books humanity has called holy. Eleven traditions, thousands of years, translated and freely accessible. From the Psalms to the Upanishads, from Zoroastrian hymns to Manichaean texts.',
+    'The books humanity has called holy. Nineteen traditions, thousands of years, translated and freely accessible. From the Psalms to the Upanishads, from the Orphic hymns to the Poetic Edda.',
   openGraph: {
     title: 'Sacred Texts - Source Library',
     description:
