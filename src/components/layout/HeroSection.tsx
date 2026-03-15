@@ -146,7 +146,6 @@ export default function HeroSection() {
           >
             A New Renaissance of Ancient Wisdom
           </h1>
-          <p className="font-serif italic text-white/70 text-lg md:text-xl tracking-wide mb-4">ad fontes</p>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
             The world&rsquo;s largest library of translations of ancient texts.
           </p>
