@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getDb } from '@/lib/mongodb';
-import { DATASET_TIERS } from '@/lib/dataset/types';
+import { DATASET_TIERS, DatasetTier } from '@/lib/dataset/types';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 15;
@@ -79,7 +79,7 @@ async function fetchDatasetStats() {
     totalPages: totals.pages,
     pagesOcr: totals.ocr,
     pagesTranslated: totals.translated,
-    estimatedTokens: Math.round(totals.translated * 1000), // ~1000 tokens per translated page
+    estimatedTokens: Math.round(totals.translated * 1000),
     languages: languagesAgg.map((l) => ({
       language: l._id,
       books: l.count,
@@ -88,6 +88,29 @@ async function fetchDatasetStats() {
     clusters: clustersAgg.map((c) => ({ cluster: c._id, books: c.count })),
   };
 }
+
+/* ── Section overline label ── */
+function Overline({ children }: { children: string }) {
+  return (
+    <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-accent-rust/70 mb-3 block">
+      {children}
+    </span>
+  );
+}
+
+/* ── Source institution logos (trust signals) ── */
+const SOURCE_INSTITUTIONS = [
+  'Internet Archive',
+  'Bodleian Library',
+  'Bavarian State Library',
+  'Biblioteca Apostolica Vaticana',
+  'British Library',
+  'Wellcome Collection',
+  'Cambridge Digital Library',
+  'Library of Congress',
+  'Embassy of the Free Mind',
+  'Gallica (BnF)',
+];
 
 const SAMPLE_JSONL = `{"book_id":"694f49d3...","page_number":12,"language":"Latin","original_text":"Omnia ab uno, & in unum omnia...","english_translation":"All things from one, and into one all things...","book_title":"Tabula Smaragdina","author":"Hermes Trismegistus","year":800,"cluster":"Western Alchemy","source_url":"https://sourcelibrary.org/book/tabula-smaragdina?page=12"}`;
 
@@ -103,9 +126,9 @@ const VALUE_PROPS = [
     ),
   },
   {
-    title: 'Human-verified quality',
+    title: 'Translation Commons',
     description:
-      'Crowdsourced translation critique catches errors that automated quality metrics miss. The dataset improves continuously — your license includes updates.',
+      'Every translation passes through our open review process. Hundreds of language specialists contribute corrections continuously. The dataset improves with every update.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z" />
@@ -123,9 +146,9 @@ const VALUE_PROPS = [
     ),
   },
   {
-    title: 'EU-compliant provenance',
+    title: 'Full provenance chain',
     description:
-      'Every record traces back to a specific page in a specific book held by a specific institution. Full provenance chain for EU AI Act disclosure.',
+      'Every record traces to a specific page, in a specific book, held by a named institution. EU AI Act disclosure-ready out of the box.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -135,7 +158,7 @@ const VALUE_PROPS = [
   {
     title: 'Living dataset',
     description:
-      'New books, corrections, and translations added continuously. Your annual stewardship fee includes quarterly dataset updates with changelogs.',
+      'New books, corrections, and translations added continuously. Quarterly updates with changelogs. Your license grows more valuable over time.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
@@ -145,7 +168,7 @@ const VALUE_PROPS = [
   {
     title: 'No comparable alternative',
     description:
-      'The only structured, page-aligned, parallel-text dataset for historical and low-resource languages. Your models are weak on these texts because this data didn\'t exist until now.',
+      'The only structured, page-aligned, parallel-text dataset for historical and low-resource languages. This data did not exist before Source Library.',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
@@ -154,17 +177,34 @@ const VALUE_PROPS = [
   },
 ];
 
+/* ── Feature comparison data ── */
+const COMPARISON_FEATURES = [
+  { feature: 'Page records', explorer: '100/day', language: 'Unlimited', domain: 'Unlimited', full: 'Unlimited', enterprise: 'Unlimited' },
+  { feature: 'Languages', explorer: 'All (sample)', language: '1 language', domain: 'All in cluster', full: 'All 90+', enterprise: 'All 90+' },
+  { feature: 'Domains', explorer: 'All (sample)', language: 'All', domain: '1 cluster', full: 'All 48', enterprise: 'All 48' },
+  { feature: 'Original text (OCR)', explorer: 'Yes', language: 'Yes', domain: 'Yes', full: 'Yes', enterprise: 'Yes' },
+  { feature: 'English translation', explorer: 'Yes', language: 'Yes', domain: 'Yes', full: 'Yes', enterprise: 'Yes' },
+  { feature: 'Book metadata', explorer: 'Yes', language: 'Yes', domain: 'Yes', full: 'Yes', enterprise: 'Yes' },
+  { feature: 'Taxonomy classification', explorer: 'Yes', language: 'Yes', domain: 'Yes', full: 'Yes', enterprise: 'Yes' },
+  { feature: 'Rate limit', explorer: '10 req/min', language: '60 req/min', domain: '120 req/min', full: '300 req/min', enterprise: 'Custom' },
+  { feature: 'Quarterly updates', explorer: 'No', language: 'Yes', domain: 'Yes', full: 'Yes', enterprise: 'Yes' },
+  { feature: 'Parquet bulk export', explorer: 'No', language: 'No', domain: 'No', full: 'No', enterprise: 'Yes' },
+  { feature: 'Stewardship reports', explorer: 'No', language: 'No', domain: 'No', full: 'No', enterprise: 'Yes' },
+  { feature: 'Exclusive access window', explorer: 'No', language: 'No', domain: 'No', full: 'No', enterprise: 'Yes' },
+  { feature: 'SLA', explorer: 'No', language: 'No', domain: 'No', full: '99.9%', enterprise: 'Custom' },
+];
+
 export default async function DatasetPage() {
   const stats = await fetchDatasetStats();
   const topLanguages = stats.languages.slice(0, 12);
   const maxLangBooks = topLanguages[0]?.books ?? 1;
 
-  const tiers = [
-    { key: 'explorer' as const, cta: 'Get Free API Key', ctaStyle: 'secondary' },
-    { key: 'language' as const, cta: 'Subscribe', ctaStyle: 'secondary' },
-    { key: 'domain' as const, cta: 'Subscribe', ctaStyle: 'secondary' },
-    { key: 'full' as const, cta: 'Subscribe', ctaStyle: 'primary' },
-    { key: 'enterprise' as const, cta: 'Contact Sales', ctaStyle: 'secondary' },
+  const tierKeys: Array<{ key: DatasetTier; cta: string; ctaStyle: 'primary' | 'secondary' }> = [
+    { key: 'explorer', cta: 'Get Free API Key', ctaStyle: 'secondary' },
+    { key: 'language', cta: 'Get Started', ctaStyle: 'secondary' },
+    { key: 'domain', cta: 'Get Started', ctaStyle: 'secondary' },
+    { key: 'full', cta: 'Get Started', ctaStyle: 'primary' },
+    { key: 'enterprise', cta: 'Talk to an Expert', ctaStyle: 'secondary' },
   ];
 
   return (
@@ -177,8 +217,8 @@ export default async function DatasetPage() {
       }
       maxWidth="wide"
     >
-      {/* Headline stats */}
-      <section className="mb-16">
+      {/* ── Headline stats ── */}
+      <section className="mb-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { value: formatNumber(stats.totalBooks), label: 'Historical texts' },
@@ -196,9 +236,24 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* Why this dataset */}
+      {/* ── Source institutions (trust bar) ── */}
       <section className="mb-16">
-        <h2 className="font-serif text-2xl text-primary mb-8">Why this dataset</h2>
+        <Overline>Sourced from</Overline>
+        <div className="flex flex-wrap gap-x-6 gap-y-2 items-center">
+          {SOURCE_INSTITUTIONS.map((name) => (
+            <span key={name} className="text-sm text-stone-400 font-medium whitespace-nowrap">
+              {name}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Why this dataset ── */}
+      <section className="mb-16">
+        <Overline>Why this data</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-8">
+          Your models are weak on historical languages because this data didn&apos;t exist
+        </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {VALUE_PROPS.map((vp) => (
             <div key={vp.title} className="bg-white rounded-xl p-6 border border-border-light">
@@ -212,9 +267,78 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* Available corpora — by language */}
+      {/* ── Cost comparison ── */}
+      <section className="mb-16">
+        <Overline>The alternative</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-6">Build it yourself?</h2>
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+          <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border-light">
+            <div className="p-6 md:p-8">
+              <h3 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Do it yourself</h3>
+              <div className="space-y-3 text-secondary text-sm">
+                <div className="flex justify-between">
+                  <span>Identify &amp; acquire 10,000+ rare texts</span>
+                  <span className="text-stone-400 tabular-nums">2+ years</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>OCR 1.2M pages of historical print</span>
+                  <span className="text-stone-400 tabular-nums">~$120,000</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Translate 800K pages across 90+ languages</span>
+                  <span className="text-stone-400 tabular-nums">~$800,000</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Human review &amp; correction</span>
+                  <span className="text-stone-400 tabular-nums">~$200,000</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Taxonomy, metadata, alignment</span>
+                  <span className="text-stone-400 tabular-nums">~$80,000</span>
+                </div>
+                <div className="flex justify-between border-t border-border-light pt-3 font-medium text-primary">
+                  <span>Total</span>
+                  <span className="tabular-nums">~$1.2M + 2 years</span>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 md:p-8 bg-stone-50/50">
+              <h3 className="text-sm font-medium text-accent-rust uppercase tracking-wide mb-4">Source Library Dataset API</h3>
+              <div className="space-y-3 text-secondary text-sm">
+                <div className="flex justify-between">
+                  <span>Full collection access</span>
+                  <span className="text-accent-rust tabular-nums font-medium">$49,990/yr</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Quarterly updates included</span>
+                  <span className="text-stone-400">Yes</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Human-verified quality</span>
+                  <span className="text-stone-400">Yes</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>EU AI Act provenance chain</span>
+                  <span className="text-stone-400">Yes</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Ready today, not in 2 years</span>
+                  <span className="text-stone-400">Yes</span>
+                </div>
+                <div className="flex justify-between border-t border-border-light pt-3">
+                  <span className="font-medium text-primary">Time to first data</span>
+                  <span className="text-accent-rust tabular-nums font-medium">5 minutes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Available corpora — by language ── */}
       <section className="mb-16" id="corpora">
-        <h2 className="font-serif text-2xl text-primary mb-6">Available corpora</h2>
+        <Overline>The corpus</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-6">Available languages</h2>
         <div className="bg-white rounded-xl p-6 border border-border-light">
           <div className="space-y-3">
             {topLanguages.map((l) => (
@@ -243,9 +367,10 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* By domain */}
+      {/* ── By domain ── */}
       <section className="mb-16">
-        <h2 className="font-serif text-2xl text-primary mb-6">By domain</h2>
+        <Overline>Domains</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-6">Taxonomy clusters</h2>
         <div className="bg-white rounded-xl p-6 border border-border-light">
           <div className="flex flex-wrap gap-2">
             {stats.clusters.map((c) => (
@@ -261,27 +386,38 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* Sample data */}
+      {/* ── Sample data + download ── */}
       <section className="mb-16" id="api">
-        <h2 className="font-serif text-2xl text-primary mb-6">Data format</h2>
+        <Overline>Data format</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-3">Streaming JSONL</h2>
         <p className="text-secondary mb-4 max-w-2xl">
           Every record is a single page with parallel text, metadata, and a citation URL.
-          Delivered as streaming JSONL — one JSON object per line, ready for your training pipeline.
+          One JSON object per line, ready for your training pipeline.
         </p>
-        <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-4">
           <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-            <span className="text-sm font-medium text-stone-700">JSONL record (one per page)</span>
+            <span className="text-sm font-medium text-stone-700">Sample record</span>
             <code className="text-xs text-muted">application/x-ndjson</code>
           </div>
           <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100 leading-relaxed">
             {JSON.stringify(JSON.parse(SAMPLE_JSONL), null, 2)}
           </pre>
         </div>
+        <a
+          href="/api/dataset/v1/stats"
+          className="inline-flex items-center gap-2 text-sm text-accent-rust hover:underline"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Try the stats endpoint (no auth required)
+        </a>
       </section>
 
-      {/* API quickstart */}
+      {/* ── API quickstart ── */}
       <section className="mb-16">
-        <h2 className="font-serif text-2xl text-primary mb-6">Quickstart</h2>
+        <Overline>Quickstart</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-6">Three lines to first data</h2>
         <div className="space-y-4">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
@@ -326,15 +462,15 @@ for line in resp.iter_lines():
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="mb-16" id="pricing">
-        <h2 className="font-serif text-2xl text-primary mb-3">Pricing</h2>
+      {/* ── Pricing ── */}
+      <section className="mb-10" id="pricing">
+        <Overline>Pricing</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-3">Self-serve API access</h2>
         <p className="text-secondary mb-8 max-w-2xl">
           All paid plans include quarterly dataset updates with changelogs. Annual plans save two months.
-          Enterprise includes dedicated stewardship reports and exclusive access windows.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tiers.map(({ key, cta, ctaStyle }) => {
+          {tierKeys.map(({ key, cta, ctaStyle }) => {
             const tier = DATASET_TIERS[key];
             const isFeatured = key === 'full';
             return (
@@ -345,7 +481,7 @@ for line in resp.iter_lines():
                 } flex flex-col`}
               >
                 {isFeatured && (
-                  <span className="text-xs font-medium text-accent-rust uppercase tracking-wide mb-2">
+                  <span className="text-[11px] font-medium text-accent-rust uppercase tracking-[0.15em] mb-2">
                     Most popular
                   </span>
                 )}
@@ -412,9 +548,53 @@ for line in resp.iter_lines():
         </div>
       </section>
 
-      {/* Endpoints reference */}
+      {/* ── Feature comparison table ── */}
       <section className="mb-16">
-        <h2 className="font-serif text-2xl text-primary mb-6">API Reference</h2>
+        <div className="bg-white rounded-xl border border-border-light overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light">
+                <th className="text-left py-3 px-4 font-medium text-muted w-48">Feature</th>
+                <th className="text-center py-3 px-3 font-medium text-stone-500">Explorer</th>
+                <th className="text-center py-3 px-3 font-medium text-stone-500">Language</th>
+                <th className="text-center py-3 px-3 font-medium text-stone-500">Domain</th>
+                <th className="text-center py-3 px-3 font-medium text-accent-rust">Full</th>
+                <th className="text-center py-3 px-3 font-medium text-stone-500">Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARISON_FEATURES.map((row, i) => (
+                <tr key={row.feature} className={i < COMPARISON_FEATURES.length - 1 ? 'border-b border-stone-100' : ''}>
+                  <td className="py-2.5 px-4 text-secondary">{row.feature}</td>
+                  {(['explorer', 'language', 'domain', 'full', 'enterprise'] as const).map((tier) => {
+                    const val = row[tier];
+                    const isCheck = val === 'Yes';
+                    const isNo = val === 'No';
+                    return (
+                      <td key={tier} className={`py-2.5 px-3 text-center ${tier === 'full' ? 'bg-accent-rust/[0.03]' : ''}`}>
+                        {isCheck ? (
+                          <svg className="w-4 h-4 text-accent-sage-dark mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                          </svg>
+                        ) : isNo ? (
+                          <span className="text-stone-300">&mdash;</span>
+                        ) : (
+                          <span className="text-stone-600">{val}</span>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* ── API Reference ── */}
+      <section className="mb-16">
+        <Overline>API Reference</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-4">Endpoints</h2>
         <div className="bg-stone-100 rounded-lg px-4 py-2 mb-6 inline-block">
           <code className="text-stone-700">
             Base URL: <span className="text-accent-rust">https://sourcelibrary.org/api/dataset/v1</span>
@@ -484,17 +664,17 @@ for line in resp.iter_lines():
         </div>
       </section>
 
-      {/* Legal & provenance */}
+      {/* ── Legal & provenance ── */}
       <section className="mb-16">
-        <h2 className="font-serif text-2xl text-primary mb-6">Legal framework</h2>
+        <Overline>Legal framework</Overline>
+        <h2 className="font-serif text-2xl text-primary mb-6">Provenance &amp; compliance</h2>
         <div className="bg-white rounded-xl p-6 border border-border-light space-y-4">
           <div>
-            <h3 className="font-semibold text-primary mb-1">Database rights</h3>
+            <h3 className="font-semibold text-primary mb-1">EU Database Directive (96/9/EC)</h3>
             <p className="text-secondary text-sm">
-              Source Library is protected under the EU Database Directive (96/9/EC) sui generis database right.
-              The underlying historical texts are public domain; the curated, structured, translated dataset
+              The underlying historical texts are public domain. The curated, structured, translated dataset
               — including OCR, English translations, taxonomy, and metadata — represents substantial investment
-              in compilation and is separately protectable.
+              in compilation and is protected under the EU sui generis database right.
             </p>
           </div>
           <div>
@@ -502,7 +682,7 @@ for line in resp.iter_lines():
             <p className="text-secondary text-sm">
               Every API response includes provenance metadata traceable to specific pages in specific books
               held by identified cultural institutions. Licensed access provides the documentation chain
-              required by the EU AI Act&apos;s training data transparency obligations.
+              required by the EU AI Act&apos;s training data transparency obligations (effective August 2025).
             </p>
           </div>
           <div>
@@ -519,10 +699,11 @@ for line in resp.iter_lines():
         </div>
       </section>
 
-      {/* Enterprise CTA */}
+      {/* ── Enterprise CTA ── */}
       <section className="mb-16">
         <div className="bg-gradient-to-br from-[#2a1f17] to-[#1a1612] rounded-xl p-8 md:p-12 text-white">
-          <h2 className="font-serif text-3xl mb-4">Enterprise licensing</h2>
+          <Overline>Enterprise</Overline>
+          <h2 className="font-serif text-3xl mb-4 text-white">Managed partnership</h2>
           <p className="text-stone-300 max-w-2xl mb-6 leading-relaxed">
             For AI labs training foundation models. Custom terms including exclusive access windows,
             Parquet bulk exports, dedicated stewardship reports, and SLAs. Segmented by language,
@@ -533,7 +714,7 @@ for line in resp.iter_lines():
               href="mailto:data@sourcelibrary.org?subject=Enterprise%20Dataset%20License"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors font-medium"
             >
-              Contact sales
+              Talk to an expert
             </a>
             <a
               href="/api/dataset/v1/stats"
@@ -545,7 +726,7 @@ for line in resp.iter_lines():
         </div>
       </section>
 
-      {/* Footer links */}
+      {/* ── Footer links ── */}
       <section className="border-t border-border-light pt-8">
         <div className="flex flex-wrap gap-4">
           <Link
