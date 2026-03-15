@@ -127,7 +127,7 @@ async function getFeaturedCollections() {
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({}).toArray();
+  const docs = await db.collection('collections').find({ parent: { $exists: false } }).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
