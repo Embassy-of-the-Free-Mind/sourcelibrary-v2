@@ -11,11 +11,11 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',
   description:
-    'The books humanity has called holy. Twenty-eight traditions, thousands of years, translated and freely accessible. From the Epic of Gilgamesh to the Guru Granth Sahib, from the Orphic Hymns to the Popol Vuh.',
+    'The foundational scriptures of the world\'s spiritual traditions — translated and freely accessible. From the Vedas to the Quran, from the Pali Canon to the Zend-Avesta.',
   openGraph: {
     title: 'Sacred Texts - Source Library',
     description:
-      'The books humanity has called holy. Twenty-eight traditions, thousands of years, translated and freely accessible.',
+      'The foundational scriptures of the world\'s spiritual traditions — translated and freely accessible.',
     type: 'website',
     url: 'https://sourcelibrary.org/collections/sacred-texts',
   },
@@ -180,7 +180,7 @@ export default async function SacredTextsPortal() {
           </h1>
 
           <p className="text-lg sm:text-xl text-white/60 max-w-2xl leading-relaxed mb-8">
-            The books humanity has called holy. Translated and freely accessible.
+            The foundational scriptures of the world&rsquo;s spiritual traditions — translated and freely accessible.
           </p>
 
           <div className="flex flex-wrap gap-8 text-sm text-white/40">
@@ -204,12 +204,12 @@ export default async function SacredTextsPortal() {
           ))}
         </div>
 
-        {/* A note on non-exclusivity */}
+        {/* A note on scope */}
         <div className="mt-12 max-w-2xl mx-auto text-center">
           <p className="text-sm text-muted leading-relaxed">
-            Many texts belong to more than one tradition. Source Library does not claim
-            exclusive ownership of any text for any single tradition — boundaries between
-            traditions are porous, and always have been.
+            Each tradition page collects its foundational scriptures and core commentaries — not
+            every text produced within that tradition. Broader theological, philosophical, and
+            mystical works appear in their own collections across the library.
           </p>
         </div>
       </div>
