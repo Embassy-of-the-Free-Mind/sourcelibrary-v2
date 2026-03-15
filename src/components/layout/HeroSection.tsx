@@ -132,7 +132,7 @@ export default function HeroSection() {
           <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
             <span className="font-semibold text-white">Source</span>
             <span className="font-light text-white">Library</span>
-            <sup className="text-[0.5em] font-light tracking-normal normal-case ml-1 opacity-80">Beta</sup>
+            <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80">Beta</sup>
           </span>
         </Link>
         <UserMenu variant="hero" />
