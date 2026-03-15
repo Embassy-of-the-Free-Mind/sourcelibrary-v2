@@ -296,13 +296,15 @@ export async function scoreCollectionRelevance(
     const durationMs = Date.now() - startMs;
 
     // Log the Gemini call
-    await logGeminiCall(db, {
+    await logGeminiCall({
+      type: 'other',
+      mode: 'realtime',
       model: MODEL,
-      purpose: 'collection-relevance',
-      inputTokens: result.response.usageMetadata?.promptTokenCount || 0,
-      outputTokens: result.response.usageMetadata?.candidatesTokenCount || 0,
-      durationMs,
-      bookId,
+      book_id: bookId,
+      input_tokens: result.response.usageMetadata?.promptTokenCount || 0,
+      output_tokens: result.response.usageMetadata?.candidatesTokenCount || 0,
+      duration_ms: durationMs,
+      status: 'success',
     }).catch(() => {});
 
     const parsed = JSON.parse(text);
