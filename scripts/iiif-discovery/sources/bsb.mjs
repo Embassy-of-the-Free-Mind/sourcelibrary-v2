@@ -256,11 +256,6 @@ function parseOAIResponse(xml) {
     const recordXml = match[1];
     if (recordXml.includes('status="deleted"')) continue;
 
-    const idMatch = recordXml.match(/<identifier>[^:]+:[^:]+:([^<]+)<\/identifier>/);
-    if (!idMatch) continue;
-    const id = idMatch[1].trim();
-    if (!id.startsWith('bsb')) continue;
-
     const getField = (tag) => {
       const m = recordXml.match(new RegExp(`<dc:${tag}>([^<]*)<\\/dc:${tag}>`));
       return m ? m[1].trim() : null;
@@ -273,8 +268,16 @@ function parseOAIResponse(xml) {
       return results;
     };
 
+    // BSB OAI identifiers: oai:bdr.oai.bsb-muenchen.de:vd16:BDR-BV000451064-11369
+    // BSB IDs are in dc:identifier URNs: urn:nbn:de:bvb:12-bsb10804119-1
+    const identifiers = getAllFields('identifier');
+    const urnId = identifiers.find(i => i.includes('bsb'));
+    const bsbMatch = urnId?.match(/(bsb\d+)/);
+    if (!bsbMatch) continue;
+    const id = bsbMatch[1];
+
     const title = getField('title');
-    const creator = getField('creator');
+    const creator = getField('creator') || getField('contributor');
     const date = getField('date');
     const languages = getAllFields('language');
     const { earliest, latest } = parseDateRange(date);
