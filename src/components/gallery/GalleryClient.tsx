@@ -9,6 +9,7 @@ import {
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
+import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import UserMenu from '@/components/layout/UserMenu';
@@ -75,6 +76,7 @@ function shuffle<T>(arr: T[]): T[] {
 export default function GalleryClient({ initialData, initialCollections }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const identity = useIdentity();
 
   // Shuffle initial items client-side so order varies each visit
   const [data, setData] = useState<GalleryResponse>(() => ({
@@ -152,6 +154,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+          visitorId: identity.id || undefined,
         });
         // Preserve filters from initial page load on pagination
         if (page > 0 && data?.filters && (!json.filters?.types?.length)) {
@@ -166,7 +169,8 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
     };
 
     fetchGallery();
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive, identity.id]);
 
   // Book search with debounce
   useEffect(() => {
@@ -660,6 +664,8 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           <LikeButton
             targetType="image"
             targetId={galleryImageId}
+            initialCount={item.likeCount ?? 0}
+            initialLiked={item.likedByVisitor ?? false}
             size="sm"
             showCount={true}
           />

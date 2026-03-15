@@ -161,27 +161,54 @@ export async function GET(request: NextRequest) {
       db.collection('gallery_images').countDocuments(filter),
     ]);
 
+    // Fetch like counts (and visitor's liked status) for these images
+    const visitorId = searchParams.get('visitor_id');
+    const imageIds = items.map(doc => `${doc.page_id}-${doc.detection_index}`);
+    let likesMap: Record<string, { count: number; liked: boolean }> = {};
+    if (imageIds.length > 0) {
+      try {
+        const likeDocs = await db.collection('likes').aggregate([
+          { $match: { target_type: 'image', target_id: { $in: imageIds } } },
+          { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
+        ]).toArray();
+        for (const ld of likeDocs) {
+          likesMap[ld._id as string] = {
+            count: ld.count as number,
+            liked: visitorId ? (ld.visitors as string[]).includes(visitorId) : false,
+          };
+        }
+      } catch {
+        // Non-critical — proceed without like data
+      }
+    }
+
     // Map to GalleryItem format (camelCase for API consumers)
-    const mappedItems = items.map(doc => ({
-      pageId: doc.page_id,
-      bookId: doc.book_id,
-      pageNumber: doc.page_number,
-      detectionIndex: doc.detection_index,
-      imageUrl: doc.image_url,
-      bookTitle: doc.book_title,
-      author: doc.book_author,
-      year: doc.book_year,
-      description: doc.description,
-      type: doc.type,
-      bbox: doc.bbox,
-      rotation: doc.rotation,
-      extractedUrl: doc.extracted_url,
-      thumbnailUrl: doc.thumbnail_url,
-      galleryQuality: doc.gallery_quality,
-      confidence: doc.confidence,
-      museumDescription: doc.museum_description,
-      metadata: doc.metadata,
-    }));
+    const mappedItems = items.map(doc => {
+      const likeKey = `${doc.page_id}-${doc.detection_index}`;
+      const likeData = likesMap[likeKey];
+      return {
+        pageId: doc.page_id,
+        bookId: doc.book_id,
+        pageNumber: doc.page_number,
+        detectionIndex: doc.detection_index,
+        imageUrl: doc.image_url,
+        bookTitle: doc.book_title,
+        author: doc.book_author,
+        year: doc.book_year,
+        description: doc.description,
+        type: doc.type,
+        bbox: doc.bbox,
+        rotation: doc.rotation,
+        extractedUrl: doc.extracted_url,
+        thumbnailUrl: doc.thumbnail_url,
+        galleryQuality: doc.gallery_quality,
+        confidence: doc.confidence,
+        museumDescription: doc.museum_description,
+        metadata: doc.metadata,
+        likeCount: likeData?.count ?? 0,
+        likedByVisitor: likeData?.liked ?? false,
+      };
+    });
 
     // Get filters (cached for 30 min, only compute on first page)
     let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };

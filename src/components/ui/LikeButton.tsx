@@ -89,7 +89,9 @@ export default memo(function LikeButton({
   }, [cacheKey, initialCount]);
 
   // Fetch real like status from API on mount/target change
+  // Skip if parent already provided like data (e.g. gallery API includes likes)
   useEffect(() => {
+    if (initialCount > 0 || initialLiked) return; // Parent provided data, no need to fetch
     if (!identity.id || !targetId || identity.loading) return;
     let cancelled = false;
 
@@ -107,7 +109,7 @@ export default memo(function LikeButton({
     }).catch(() => {});
 
     return () => { cancelled = true; };
-  }, [targetType, targetId, identity.id, identity.loading]);
+  }, [targetType, targetId, identity.id, identity.loading, initialCount, initialLiked]);
 
   const handleClick = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();

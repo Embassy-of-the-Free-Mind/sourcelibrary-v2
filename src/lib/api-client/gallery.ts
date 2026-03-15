@@ -38,6 +38,7 @@ export const gallery = {
     if (params?.includeArchive) queryParams.append('includeArchive', 'true');
     if (params?.maxPerBook) queryParams.append('maxPerBook', params.maxPerBook.toString());
     if (params?.sort) queryParams.append('sort', params.sort);
+    if (params?.visitorId) queryParams.append('visitor_id', params.visitorId);
 
     const query = queryParams.toString();
     return await apiClient.get(`/api/gallery${query ? `?${query}` : ''}`);
