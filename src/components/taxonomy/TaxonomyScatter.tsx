@@ -341,30 +341,29 @@ export default function TaxonomyScatter({ data }: { data: ScatterData }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, size, yMode, selectedCluster, getY, dataToCanvas, clusterColors, clusterCentroids, viewVersion, atlasLoaded]);
 
-  // ── WHEEL ZOOM ──
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault();
-    const v = viewRef.current;
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    const { w, h } = size;
-
-    // Zoom toward cursor
-    const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
-    const newScale = Math.max(1, Math.min(50, v.scale * factor));
-    const ratio = newScale / v.scale;
-
-    // Adjust offset so zoom centers on cursor
-    const cx = w / 2;
-    const cy = h / 2;
-    v.ox = (v.ox - (mx - cx)) * ratio + (mx - cx);
-    v.oy = (v.oy - (my - cy)) * ratio + (my - cy);
-    v.scale = newScale;
-
-    setViewVersion((ver) => ver + 1);
+  // ── WHEEL ZOOM (native listener to allow preventDefault on non-passive) ──
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      const v = viewRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const { w, h } = size;
+      const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      const newScale = Math.max(1, Math.min(50, v.scale * factor));
+      const ratio = newScale / v.scale;
+      const cx = w / 2;
+      const cy = h / 2;
+      v.ox = (v.ox - (mx - cx)) * ratio + (mx - cx);
+      v.oy = (v.oy - (my - cy)) * ratio + (my - cy);
+      v.scale = newScale;
+      setViewVersion((ver) => ver + 1);
+    };
+    canvas.addEventListener('wheel', handler, { passive: false });
+    return () => canvas.removeEventListener('wheel', handler);
   }, [size]);
 
   // ── DRAG PAN ──
@@ -503,8 +502,7 @@ export default function TaxonomyScatter({ data }: { data: ScatterData }) {
           width={size.w}
           height={size.h}
           style={{ width: size.w, height: size.h, touchAction: 'none' }}
-          className={isDraggingRef.current ? 'cursor-grabbing' : 'cursor-grab'}
-          onWheel={handleWheel}
+          className="cursor-grab active:cursor-grabbing"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
