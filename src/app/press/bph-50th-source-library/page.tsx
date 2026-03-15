@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Marking a milestone for the Bibliotheca Philosophica Hermetica, the Embassy of the Free Mind announces Source Library: a free digital library of over 10,000 ancient and early modern texts translated into English.',
   openGraph: {
-    title: 'Embassy of the Free Mind Launches the World\'s Largest Free Collection of Translated Ancient Texts',
+    title: 'Embassy of the Free Mind Launches the World\'s Largest Collection of Translated Ancient Texts',
     description:
       'Source Library: 10,000+ books in 100+ languages, 800,000+ pages translated into English. Free and open to all.',
     images: [{ url: 'https://sourcelibrary.org/og-image.png', width: 1200, height: 630 }],
@@ -37,7 +37,7 @@ export default function PressReleasePage() {
         {/* ── Headline ── */}
         <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-4">
           Embassy of the Free Mind Launches Source Library: the World&rsquo;s Largest
-          Free Collection of Translated Ancient and Early Modern Texts
+          Collection of Translated Ancient Texts
         </h2>
 
         <p className="font-body text-xl text-secondary leading-relaxed mb-12 italic">
