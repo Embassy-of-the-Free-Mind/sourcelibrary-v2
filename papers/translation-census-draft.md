@@ -134,9 +134,15 @@ This yielded 34,562 records — 4.6 times the size of our aggregated catalog. Th
 
 The 041$h field is not present on all translation records; the Library of Congress's own documentation notes that application has varied over time and across cataloging agencies [4]. Our MARC-derived count is therefore a lower bound on the translations held by LOC.
 
-### 4.3 LLM-assisted verification with function calling
+### 4.3 LLM-assisted verification: identifying first translations
 
-For the 10,199 books in Source Library's own collection, we developed a verification system that uses a large language model (Google Gemini) as a bibliographic research agent. For each book, the model is given the title, author, language, year, and OCR samples from the first pages. It then has access to five tools via function calling:
+For the 10,199 books in Source Library's own collection, we developed a two-stage verification system to determine whether each book represents a first English translation.
+
+**Stage 1: AI classification from OCR text.** After optical character recognition, the system reads the first 25 pages of transcribed text and asks a large language model (Google Gemini) to classify the book's first-translation status. The model acts as a "rare books librarian and translation scholar," assessing the prior probability of an English translation based on the text's language, subject matter, author, date, and degree of obscurity. This classification uses six values: `confirmed_first`, `likely_first`, `uncertain`, `has_partial`, `has_translation`, and `not_applicable`. Each classification includes reasoning and a confidence rating.
+
+This first stage relies on the model's training data — its exposure to library catalogs, bibliographic databases, scholarly articles, and publisher listings. For obscure texts (a 1621 German alchemical pamphlet, a 15th-century Sanskrit jyotish manuscript), the model's inability to recall any English translation is itself informative: if a text is so obscure that a model trained on the internet has never encountered a reference to a translation, the probability that one exists and has escaped notice is very low.
+
+**Stage 2: Tool-augmented verification against real databases.** To move from AI intuition to evidence-backed claims, every non-English book passes through a second stage that uses Gemini with function calling as a bibliographic research agent. The model is given the title, author, language, year, and OCR samples. It then has access to five tools:
 
 1. **search_local_catalogs** — queries our aggregated translation catalog (7,542 records) by author surname
 2. **search_open_library** — queries the Open Library API for English editions
@@ -146,9 +152,11 @@ For the 10,199 books in Source Library's own collection, we developed a verifica
 
 The model is instructed to search the local catalogs first (free and fast), then external APIs if needed, and finally to call `make_determination` with a structured verdict: `confirmed_first` (no English translation found), `first_complete_translation` (only excerpts/selections exist), `first_modern_translation` (only pre-1900 translations exist), `translation_found` (a complete modern translation exists), or `needs_review` (evidence is conflicting).
 
-Critically, the model is required to cite only translations found through its tool calls, not from its own training data. This constraint ensures that every claimed translation has a verifiable evidence trail, rather than depending on the model's (potentially hallucinated) knowledge of publication history.
+Two design decisions are worth noting. First, the model decides which tools to call and in what order, typically running 3-5 searches per book. It evaluates results semantically — not just checking whether a title appears, but whether the result is actually a translation of the specific work in question, as opposed to a book *about* the work, a translation of a *different* work by the same author, or a secondary study with a similar title. This semantic evaluation is something that simple string matching cannot do.
 
-We ran this verification on 4,083 non-English books. The results:
+Second, the model is required to cite only translations found through its tool calls, not from its own training data. This constraint ensures that every claimed translation has a verifiable evidence trail, rather than depending on the model's (potentially hallucinated) knowledge of publication history. If the model believes a translation exists based on its training but cannot find it in any catalog, it must flag the book as `needs_review` rather than asserting a translation exists.
+
+We ran this two-stage verification on 4,083 non-English books. The results:
 
 | Disposition | Count | % |
 |---|---|---|
@@ -158,9 +166,15 @@ We ran this verification on 4,083 non-English books. The results:
 | translation_found | 1,520 | 37% |
 | needs_review | 112 | 3% |
 
-This system serves two purposes in the census. First, it contributes 1,520 confirmed translation records (the `translation_found` results) to our catalog, adding translations that may not appear in the LOC MARC data or our institutional catalogs. Second, it provides ground-truth validation for the census methodology: the 42% `confirmed_first` rate in Source Library's collection — which skews toward rare, esoteric texts — is consistent with the 1-5% translation rate we find across the full USTC, given that Source Library's collection is deliberately selected for undertranslated material.
+This system serves three purposes in the census.
 
-The cost of running this verification was approximately $0.006 per book (Gemini 3 Flash), or roughly $25 for the full 4,083-book run.
+First, it contributes 1,520 confirmed translation records (the `translation_found` results) to our catalog, adding translations that may not appear in the LOC MARC data or our institutional catalogs. These are translations the LLM found via live API searches — translations that exist in Open Library or Google Books but were not in our pre-assembled catalog.
+
+Second, the five disposition categories — `confirmed_first`, `first_complete_translation`, `first_modern_translation`, `translation_found`, and `needs_review` — capture important distinctions that a simple translated/untranslated binary misses. A text that has been partially excerpted in an anthology is in a different category from a text that has never been rendered into English at all. Of Source Library's verified books, 609 (15%) fall into the `first_complete_translation` category — texts where selections exist but no complete translation has been published. These are neither fully translated nor fully untranslated by the usual definitions.
+
+Third, the verification results provide ground-truth validation for the census methodology. The 42% `confirmed_first` rate in Source Library's collection — which skews toward rare, esoteric texts — is consistent with the 1-5% translation rate we find across the full USTC, given that Source Library's collection is deliberately selected for undertranslated material. The 37% `translation_found` rate confirms that even in a collection biased toward obscurity, more than a third of pre-modern books have existing English translations — which in turn suggests our census methodology is not dramatically undercounting.
+
+The cost of running this verification was approximately $0.006 per book (Gemini 3 Flash), or roughly $25 for the full 4,083-book run. The full verification code, prompts, and tool definitions are open source.
 
 ## 5. Matching USTC editions against the translation catalog
 
