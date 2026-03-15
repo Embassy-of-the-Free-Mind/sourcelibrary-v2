@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'counting-the-gap',
+    title: 'We Spent a Day Counting What Hasn\'t Been Translated',
+    subtitle: 'Downloaded the Library of Congress catalog, scraped a Renaissance bibliography, matched it against 1.6 million editions. A working session that got out of hand.',
+    date: '15 March 2026',
+    readTime: '8 min read',
+    tag: 'Behind the scenes',
+    tagColor: 'bg-stone-100 text-stone-600',
+  },
+  {
     slug: 'untranslated-renaissance',
     title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
     subtitle: 'We matched 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
