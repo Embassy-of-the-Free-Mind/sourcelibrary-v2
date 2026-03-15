@@ -53,7 +53,6 @@ async function fetchDatasetStats() {
           },
         },
         { $sort: { count: -1 } },
-        { $limit: 15 },
       ])
       .toArray(),
   ]);
@@ -133,9 +132,11 @@ export default async function DatasetPage() {
 
       {/* ── Languages ── */}
       <section className="mb-24">
-        <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Languages</p>
+        <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">
+          {stats.languages.length} languages
+        </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-4">
-          {stats.languages.map((l) => (
+          {stats.languages.slice(0, 21).map((l) => (
             <div key={l.language} className="flex justify-between items-baseline border-b border-[#e8e6e3] pb-2">
               <span className="text-[#1a1a18] text-[15px]">{l.language}</span>
               <span className="text-[#999] text-sm tabular-nums">
@@ -144,6 +145,11 @@ export default async function DatasetPage() {
             </div>
           ))}
         </div>
+        {stats.languages.length > 21 && (
+          <p className="text-[#999] text-sm mt-4">
+            and {stats.languages.length - 21} more
+          </p>
+        )}
       </section>
 
       {/* ── What the data looks like ── */}
