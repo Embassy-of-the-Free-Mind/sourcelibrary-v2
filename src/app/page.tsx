@@ -69,30 +69,64 @@ async function getFeaturedCollections() {
 
   if (collections.length === 0) return [];
 
-  // Batch-fetch books for ALL 5 collections in a single query instead of 5 separate queries.
-  // Each individual query was doing a full collection sort (no read_count index) → 5x full scan.
   const allSlugs = collections.map(c => c.slug);
-  const allBooks = await db.collection('books').aggregate([
-    {
-      $match: {
-        collections: { $in: allSlugs },
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-      },
-    },
-    { $project: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 } },
-  ], { maxTimeMS: 8000 }).toArray();
+  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 };
 
-  // Group books by collection slug (a book can appear in multiple collections)
-  const booksBySlug = new Map<string, typeof allBooks>();
-  for (const book of allBooks) {
-    const bookCollections = Array.isArray(book.collections) ? book.collections : [];
-    for (const slug of allSlugs) {
-      if (bookCollections.includes(slug)) {
-        if (!booksBySlug.has(slug)) booksBySlug.set(slug, []);
-        const arr = booksBySlug.get(slug)!;
-        if (arr.length < 10) arr.push(book);
+  // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
+  const highlightedIdsBySlug = new Map<string, string[]>();
+  const allHighlightedIds: string[] = [];
+  for (const col of collections) {
+    const highlighted = (col.highlighted_books || [])
+      .filter((b: { tier?: number }) => !b.tier || b.tier <= 2)
+      .slice(0, 10)
+      .map((b: { book_id: string }) => b.book_id);
+    highlightedIdsBySlug.set(col.slug as string, highlighted);
+    allHighlightedIds.push(...highlighted);
+  }
+
+  // Fetch highlighted books by ID (these are curated, high-quality picks)
+  const highlightedBooks = allHighlightedIds.length > 0
+    ? await db.collection('books').aggregate([
+        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+        { $project: bookProjection },
+      ], { maxTimeMS: 8000 }).toArray()
+    : [];
+
+  // Index highlighted books by their ID for fast lookup
+  const highlightedById = new Map(highlightedBooks.map(b => [b.id, b]));
+
+  // Build book lists per collection from curated highlights
+  const booksBySlug = new Map<string, typeof highlightedBooks>();
+  for (const col of collections) {
+    const slug = col.slug as string;
+    const ids = highlightedIdsBySlug.get(slug) || [];
+    const books = ids.map(id => highlightedById.get(id)).filter(Boolean) as typeof highlightedBooks;
+    booksBySlug.set(slug, books);
+  }
+
+  // For collections with fewer than 10 highlighted books, backfill from general query
+  const slugsNeedingMore = allSlugs.filter(s => (booksBySlug.get(s)?.length || 0) < 10);
+  if (slugsNeedingMore.length > 0) {
+    const existingIds = new Set([...booksBySlug.values()].flat().map(b => b.id));
+    const backfillBooks = await db.collection('books').aggregate([
+      { $match: { collections: { $in: slugsNeedingMore }, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+      { $sort: { read_count: -1 } },
+      { $limit: slugsNeedingMore.length * 10 },
+      { $project: bookProjection },
+    ], { maxTimeMS: 8000 }).toArray();
+
+    for (const book of backfillBooks) {
+      if (existingIds.has(book.id)) continue;
+      const bookCollections = Array.isArray(book.collections) ? book.collections : [];
+      for (const slug of slugsNeedingMore) {
+        if (bookCollections.includes(slug)) {
+          const arr = booksBySlug.get(slug) || [];
+          if (arr.length < 10) {
+            arr.push(book);
+            booksBySlug.set(slug, arr);
+            existingIds.add(book.id);
+          }
+        }
       }
     }
   }
