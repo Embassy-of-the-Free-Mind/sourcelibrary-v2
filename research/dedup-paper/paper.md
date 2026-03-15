@@ -1,4 +1,4 @@
-# When Is a Book the Same Book? Deduplicating 828,000 Digitized Pre-Modern Texts Across European Libraries
+# Probabilistic Deduplication of Pre-Modern Book Records Across Heterogeneous IIIF Digital Libraries
 
 **Authors:** Derek Lomas, [collaborators TBD]
 **Affiliation:** Source Library / Embassy of the Free Mind
@@ -8,294 +8,354 @@
 
 ## Abstract
 
-European research libraries have spent two decades digitizing their collections — photographing millions of pages from manuscripts, incunabula, and early printed books, and publishing them online through a shared standard called IIIF. But no one has assembled a complete list of what's been digitized. Each library has its own catalog. When you search across them, you find the same book listed multiple times: different libraries scanned their own copy, or the same library listed the same book under multiple catalog entries.
+European research libraries have digitized millions of pre-modern books and made them freely available through IIIF (International Image Interoperability Framework). But no unified catalog tells you what has been digitized. Each library maintains its own records. The same book can appear in multiple catalogs — sometimes under different titles, in different languages, with different author name forms.
 
-We collected 827,928 records from four major European digital library systems and asked a simple question: how many of these are actually unique books? The answer turns out to be surprisingly hard, because "the same book" can mean different things. Is a 1556 printing of Agricola's *De Re Metallica* held in Munich the "same book" as a 1556 printing held in Zurich? What about a 1561 reprint? What about the German translation, *Vom Bergkwerck*?
+We harvested 827,928 records from four major IIIF sources and asked: how many of these are actually unique books? To answer this, we needed to identify duplicates at three levels — the same scan appearing twice in a catalog, the same edition held by different libraries, and different editions of the same work. Each level requires different treatment: identical scans should be merged, parallel editions should be linked, and different editions of the same work should be grouped but preserved.
 
-We tested five different methods for detecting duplicates — from simple string matching to probabilistic models to AI-powered semantic comparison — and evaluated them against a human-labeled set of 752 book pairs. We report which methods work, which fail, and why pre-modern books are harder to deduplicate than modern ones. We also release the unified catalog itself as an open resource: the first comprehensive, queryable database of digitized pre-modern texts across European IIIF repositories.
+We compare five deduplication methods against a human-labeled gold standard of 1,000 record pairs and report which methods work best for which level of duplication. Our findings suggest that simple string matching catches most within-library duplicates, but cross-library and cross-language matching requires either authority file enrichment or embedding-based approaches.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The Problem
+In 1556, Georg Agricola published *De Re Metallica* in Basel — the most important work on mining and metallurgy of the Renaissance. Today, digitized copies of this book exist in at least three of the repositories we studied. In our dataset, we found it under these titles:
 
-Over the past twenty years, research libraries across Europe have digitized vast quantities of their pre-modern holdings — books printed before 1800, medieval manuscripts, Renaissance scientific treatises, Reformation theological tracts. These digital images are published online through IIIF (International Image Interoperability Framework), an open standard that lets any software display page images from any participating library.
+| Source | Title in catalog | Language |
+|--------|-----------------|----------|
+| e-rara | Georgii Agricolae De re metallica libri XII : quibus officia, instrumenta, machi... | Latin |
+| BSB | Georgii Agricolae De Re Metallica Libri XII : Qvibus Officia, Instrumenta, Machi... | Latin |
+| BSB (different copy) | Vom Bergkwerck XII Bücher Darin[n] alle Empter, Instrument, Gezeuge... | German |
+| Gallica | Georgii Agricolae... Bermannus, sive de re metallica | Latin |
 
-The scale is remarkable. The Bavarian State Library alone has digitized over 3 million items. The Bibliothèque nationale de France offers 10 million documents through Gallica. Swiss libraries collectively provide 160,000 titles through e-rara. The Biblissima portal aggregates over 100,000 manuscript descriptions from dozens of institutions.
+The first two are the same Latin edition (1556) at different libraries — clearly duplicates at the edition level. The third is the German translation (1557) — a different edition but the same work. The fourth is a different, earlier text by the same author (*Bermannus*, 1530) — a related but distinct work.
 
-But there is no master list. No one can answer the question: *how many unique pre-modern books have been digitized and are freely available online?* Each library maintains its own catalog in its own format, with its own conventions for recording titles, authors, and dates. Aggregators like Biblissima and Europeana provide partial coverage. Bibliographic databases like the Universal Short Title Catalogue (USTC) track what was *printed* in the early modern period, but not what has been *digitized*.
+A human reader recognizes these relationships immediately. An algorithm must work from inconsistent metadata: different capitalization and punctuation (the first two), a completely different language (the third), and a different title entirely (the fourth). This paper asks: which algorithms handle which of these cases, and how well?
 
-Source Library (sourcelibrary.org) set out to build this missing catalog. We wrote software to harvest book records from major European IIIF repositories, collecting 827,928 records from four sources. But harvesting is only the first step. The harder problem is figuring out which of those 828,000 records refer to the same book.
+### The problem
 
-### 1.2 Why "Same Book" Is Complicated
+IIIF is an open standard that lets libraries publish digitized books in a uniform way. A growing number of European libraries use it. But while the *image delivery* is standardized, the *catalog metadata* is not. Each library describes its books in its own language, its own format, and its own level of detail. When you harvest records from multiple libraries, you get a pile of records with no shared identifiers and no way to tell, automatically, which records refer to the same book.
 
-Consider Georg Agricola's *De Re Metallica*, one of the most important books on mining and metallurgy ever written, first published in 1556 in Basel. In our dataset, it appears:
+This matters for two reasons. First, anyone trying to build a comprehensive catalog of digitized pre-modern books (as Source Library is doing) needs to know the actual count. Our initial harvest yielded 827,928 records; the true number of unique books is substantially lower. Second, downstream processing — OCR, translation, indexing — is expensive. Processing the same book twice wastes resources.
 
-- **7 times in e-rara** (Swiss libraries) — the 1556 first edition, a 1561 reprint, a 1621 edition, a 1657 edition, and the 1557 German translation *Vom Bergkwerck*, each scanned from a different Swiss library's copy
-- **5 times in BSB** (Bavarian State Library) — including two copies of the same 1546 edition (different physical books on different shelves, both digitized) plus later editions
-- **4 times in Gallica** (French national library) — French-language cataloging: "Georgii Agricolae... Bermannus, sive de re metallica"
-- **At least once in Biblissima** — pointing to yet another library's copy
+### What makes pre-modern books harder than modern ones
 
-That's 16+ records for what a reader would consider "the same book." But are they the same? A library scientist would say no — some are different *editions* (1556 vs 1561), some are different *copies* of the same edition (two BSB copies of the 1546 printing), and some are different *works* entirely (the Latin original vs the German translation). Each distinction matters for different purposes:
+Modern books have ISBNs. Pre-modern books do not. Modern books have standardized author names in authority files. Pre-modern authors are known by Latin, vernacular, and anglicized forms of their names — sometimes all three in different catalogs. Modern book titles are short and standardized. Pre-modern titles can run to hundreds of words and vary significantly between catalogs, even for the same edition.
 
-- A reader looking for Agricola's ideas only needs one copy. The duplicates are noise.
-- A scholar studying the printing history needs every edition. The 1556 and 1561 are distinct.
-- A conservator comparing physical copies needs every digitized item. Even two scans of the "same" edition may show different marginalia, binding damage, or hand-coloring.
+We identified five specific challenges (illustrated in Figure 1):
 
-Library science has a formal model for these distinctions, called FRBR (Functional Requirements for Bibliographic Records). It defines four levels of identity:
+1. **Cross-language cataloging.** BSB catalogs in German, Gallica in French, e-rara in the original language. The same work appears as "De Re Metallica," "Vom Bergkwerck," or "Douze livres de la métallique."
 
-| Level | FRBR term | Example | What makes it distinct |
-|-------|-----------|---------|----------------------|
-| The idea | **Work** | *De Re Metallica* by Agricola | The intellectual content |
-| A realization | **Expression** | The Latin text; the German translation | Language, revision |
-| A publication | **Manifestation** | The 1556 Basel edition | Publisher, date, format |
-| A physical object | **Item** | BSB's copy, shelf mark Res/4 Oec. 8 | Specific physical book |
+2. **Unstable author names.** "Georgius Agricola" (Latin), "Georg Bauer" (German birth name), "George Agricola" (anglicized). All refer to the same person.
 
-Our deduplication problem is: given 828,000 catalog records, can we automatically determine which ones refer to the same Work, the same Manifestation, or the same Item?
+3. **Generic titles.** In BSB alone, we found 76 records titled "Gedichte" (Poems), 42 titled "Opera" (Works), and 30 titled "Epistolae" (Letters) — all by different authors.
 
-### 1.3 Why This Is Hard for Old Books
+4. **Multi-copy digitizations.** BSB lists a separate record for each physical copy it holds. Virgil's *Opera* has 10 BSB records — 10 different scans of similar editions of the same work.
 
-Deduplication of modern books is largely a solved problem. Every book published since 1970 has an ISBN. Library catalogs use standardized formats (MARC records). Author names are controlled by international authority files. OCLC's WorldCat has been merging records from thousands of libraries for decades.
+5. **The edition/work distinction.** A 1556 edition and a 1561 edition are bibliographically distinct (different printings, potentially different text) but intellectually the same work. Whether they should be "deduplicated" depends on the question being asked.
 
-Pre-modern books have none of these advantages:
+### Our contributions
 
-**1. No standard identifiers.** A 1556 Basel printing has no ISBN. Some are tracked in bibliographic databases (VD16 for 16th-century German prints, ESTC for early English books, USTC for European prints before 1601), but coverage is incomplete, and these identifiers aren't always recorded in the IIIF metadata we harvest.
-
-**2. Titles are transcribed, not standardized.** The full title of Agricola's book, as printed on its title page, runs to several sentences in Latin. Each library transcribes it slightly differently: one writes "De Re Metallica Libri XII," another writes "De re metallica libri XII" (different capitalization), another includes the full subtitle, another abbreviates. String matching on these titles requires tolerance for variation.
-
-**3. The same book has different titles in different languages.** BSB catalogs in German, Gallica in French, e-rara uses the language of the original text. The same work might be listed as "De Re Metallica" (Latin), "Vom Bergkwerck" (German), or "Douze livres de métallique" (French). No string-matching algorithm can detect that these are the same book — the words share zero characters.
-
-**4. Authors have multiple names.** The author of *De Re Metallica* was born Georg Pawer (or Bauer) in Saxony, Latinized his name to Georgius Agricola, and appears in various catalogs as "Agricola, Georg," "Agricola, Georgius," "Agricola, George," or occasionally "Bauer, Georg." Some catalogs attribute the German translation to a different person entirely (the translator, Philipp Bechius).
-
-**5. Many books have the same title.** Our dataset contains 76 books titled simply "Gedichte" (Poems), 42 titled "Opera" (Works), 30 titled "Epistolae" (Letters), and 20 titled "Catechismus." Each is by a different author — Virgil's *Opera* is not Horace's *Opera* — but if the author field is missing or misspelled, they look identical.
-
-**6. Libraries digitize multiple copies of the same edition.** BSB's VD16 bibliography lists every surviving copy of every 16th-century German-language publication. If BSB holds three copies of a 1556 book, all three are digitized and appear as separate catalog records with identical titles but different shelf marks. Our dataset contains approximately 133,000 such internal duplicates from BSB alone.
-
-### 1.4 What We Did
-
-We built crawlers to harvest IIIF metadata from four major sources, normalized the records into a common format, and then tested five methods for detecting duplicates:
-
-1. **Exact match** — do the titles and authors match character-for-character after normalization?
-2. **Fuzzy string matching** — how similar are the titles, measured by Jaro-Winkler distance?
-3. **Probabilistic linkage** — what is the statistical likelihood that two records refer to the same book, given the observed patterns of agreement and disagreement across fields?
-4. **Token-based matching** — do the titles contain the same words, regardless of order?
-5. **Semantic matching** — do the titles mean the same thing, even in different languages?
-
-We evaluated each method against a set of 752 record pairs that were labeled by humans as "same book" or "different book" at each FRBR level. We report precision (how often a detected duplicate is a real duplicate), recall (how many real duplicates are detected), and the tradeoffs between them.
-
-### 1.5 Contributions
-
-- **A unified catalog** of 827,928 digitized pre-modern books across four major European IIIF sources — the first of its kind
-- **A human-labeled evaluation set** of 752 record pairs annotated at three FRBR levels
-- **A comparative evaluation** of five deduplication methods, with precision/recall analysis and failure-mode categorization
-- **Open-source harvesting and deduplication tools** released for the digital humanities community
-- **A corrected estimate** of the number of unique digitized pre-modern books available through these sources: approximately 665,000 (down from the naive count of 828,000)
+- A unified dataset of 827,928 IIIF manifest records from four major European sources
+- A human-labeled gold standard of record pairs annotated at multiple levels of bibliographic identity
+- A comparative evaluation of five deduplication methods, from simple string matching to semantic embeddings
+- An analysis of which failure modes affect which methods
+- Open-source harvesting and deduplication tools
 
 ---
 
-## 2. Related Work
+## 2. Background and Related Work
 
-### 2.1 How Libraries Think About Book Identity
+### 2.1 What counts as a "duplicate"? The FRBR model
 
-The question "is this the same book?" has been debated by librarians for over a century. The most influential modern framework is FRBR — Functional Requirements for Bibliographic Records — published by IFLA in 1998. FRBR introduces the four-level hierarchy described above (Work, Expression, Manifestation, Item) and has shaped how library systems organize and display records.
+The library science community has a standard answer to the question "when are two catalog records about the same thing?" The IFLA Functional Requirements for Bibliographic Records (FRBR, 1998) defines four nested levels of identity:
 
-For modern books, FRBR is relatively straightforward: *Harry Potter and the Philosopher's Stone* is a Work; the UK English edition is one Expression, the US English edition (*Sorcerer's Stone*) is another; the 1997 Bloomsbury hardcover is a Manifestation; your personal copy is an Item.
+```
+                    ┌─────────────────────────────────────────────┐
+                    │  WORK                                       │
+                    │  Agricola's treatise on mining               │
+                    │                                             │
+                    │  ┌──────────────────┐ ┌──────────────────┐  │
+                    │  │ EXPRESSION       │ │ EXPRESSION       │  │
+                    │  │ Latin original   │ │ German transl.   │  │
+                    │  │                  │ │                  │  │
+                    │  │ ┌──────────┐     │ │ ┌──────────┐     │  │
+                    │  │ │MANIFEST. │     │ │ │MANIFEST. │     │  │
+                    │  │ │Basel 1556│     │ │ │Basel 1557│     │  │
+                    │  │ │          │     │ │ │          │     │  │
+                    │  │ │ ┌──┐┌──┐ │     │ │ │ ┌──┐     │     │  │
+                    │  │ │ │  ││  │ │     │ │ │ │  │     │     │  │
+                    │  │ │ │e-││BS│ │     │ │ │ │BS│     │     │  │
+                    │  │ │ │ra││B │ │     │ │ │ │B │     │     │  │
+                    │  │ │ │ra││  │ │     │ │ │ │  │     │     │  │
+                    │  │ │ │  ││  │ │     │ │ │ │  │     │     │  │
+                    │  │ │ └──┘└──┘ │     │ │ │ └──┘     │     │  │
+                    │  │ │  ITEMS   │     │ │ │  ITEM    │     │  │
+                    │  │ └──────────┘     │ │ └──────────┘     │  │
+                    │  └──────────────────┘ └──────────────────┘  │
+                    └─────────────────────────────────────────────┘
 
-For pre-modern books, the model is both essential and strained. Stein et al. (2006) observe that individual copies of early printed books retain "striking uniqueness" — hand-colored illustrations, manuscript annotations, variant bindings, even different type settings within the same print run. The Item level matters more than for modern publications. Meanwhile, the Work level is harder to define: texts circulated in multiple versions, abridgements, translations, and commentaries without a stable "canonical" form. A 1556 *De Re Metallica* with extensive commentary is arguably a different Work from a 1530 *Bermannus* that covers similar material in dialogue form, yet both are "by Agricola" and "about metallurgy."
+Figure 1. FRBR hierarchy for Agricola's De Re Metallica.
+The e-rara and BSB copies of the 1556 Latin edition are different
+Items of the same Manifestation. The 1557 German translation is a
+different Expression of the same Work.
+```
 
-FRBR was refined into IFLA-LRM (Library Reference Model, 2017) and operationalized as BIBFRAME by the Library of Congress, but the conceptual challenge remains the same.
+- **Work**: the abstract intellectual creation — "Agricola's treatise on mining and metallurgy"
+- **Expression**: a particular realization — the Latin text, the German translation
+- **Manifestation**: a specific publication — the Basel 1556 edition, the Basel 1561 reprint
+- **Item**: a single physical copy — BSB's copy with shelfmark Res/4 Oec. 123
 
-### 2.2 Algorithms for Matching Library Records
+For modern books, the Manifestation level maps cleanly to an ISBN. For pre-modern books, there are no ISBNs. The Manifestation must be identified by a combination of title, author, place, date, and printer — all of which vary in how they are recorded across catalogs.
 
-The most widely deployed approach to bibliographic matching is the **OCLC Work-Set Algorithm**, developed by Thomas Hickey, Edward O'Neill, and Jenny Toves at OCLC Research (2002, refined 2009). The algorithm works in three steps:
+For deduplication purposes, what we need depends on the goal:
 
-1. Extract the author's surname and the "uniform title" (a standardized form of the title) from each catalog record
-2. Normalize both strings: lowercase, strip diacritics, remove articles and punctuation
-3. Concatenate them into a "work key" — records with the same work key are grouped as the same Work
+| Goal | FRBR level | Action |
+|------|-----------|--------|
+| Avoid processing the same scan twice | Item | Merge — keep one record |
+| Link copies at different libraries | Manifestation | Link — keep both, mark as same edition |
+| Group all editions of a text | Work | Group — keep all, cluster under a work ID |
 
-This approach is simple and fast. Applied to WorldCat's 48 million records, it successfully clustered most modern publications. But it has known weaknesses: it fails when author names vary (Agricola vs Bauer), when uniform titles aren't recorded (many catalog records only have the transcribed title, not a standardized form), and when works are anonymous.
+### 2.2 How others have done this
 
-The algorithm was extended by GLIMIR (O'Neill et al., 2012), which adds publisher, date, and physical description fields to distinguish Manifestations within a Work cluster. More recently, OCLC deployed a machine learning model in 2025, trained with input from 300 cataloging professionals, that removed 5.4 million duplicate records from WorldCat. OCLC describes this as a "hybrid approach" — the AI proposes merges, human experts review them.
+**The OCLC Work-Set Algorithm** (Hickey, O'Neill & Toves, 2002; refined 2009) is the most widely used approach. It works by constructing a "work key" from a normalized author name and a "uniform title" (a canonical form of the title), then grouping all records that share the same key. Applied to WorldCat's 48 million records, it achieved high accuracy — especially when author names were looked up in authority files (VIAF, GND) rather than just normalized from the catalog record. The key insight: **authority file lookup is the single most effective improvement to bibliographic clustering.**
 
-A comprehensive survey of all FRBRization techniques (Riva & Žumer, 2015) concludes that "no single approach works well across all record types and languages."
+**OCLC's 2025 AI deduplication** used a machine learning model trained with input from 300 cataloging professionals. Catalogers labeled pairs of records as "same" or "different," and the model learned to generalize. This removed 5.4 million duplicate records from WorldCat, primarily English-language print books. OCLC describes it as a "hybrid approach" — AI processes the volume, humans ensure the quality.
 
-### 2.3 The Mathematics of Record Matching
+**HathiTrust** (17 million digitized volumes) uses OCLC numbers as its primary dedup key: if two contributing libraries assign the same OCLC number, the books are considered the same manifestation. For records without OCLC numbers, they found that "metadata quality is the single largest factor" in dedup accuracy — consistent cataloging practices matter more than sophisticated algorithms.
 
-The formal theory behind probabilistic record matching was established by Ivan Fellegi and Alan Sunter in 1969. Their insight: instead of asking "do these records match?" as a yes/no question, ask "how likely is it that these records refer to the same entity, given what we observe about their fields?"
+**The Fellegi-Sunter model** (1969) provides the theoretical foundation for probabilistic record linkage. For each pair of records, you compare fields (title, author, date) and compute how much more likely the observed similarity pattern is under the hypothesis "these are the same book" versus "these are different books." The ratio of these likelihoods gives a match weight. Modern implementations like Splink (Linacre, 2022) estimate these probabilities automatically from the data using expectation-maximization.
 
-The model works by comparing records field by field. For each field comparison (title, author, date), two probabilities are estimated:
-- **m**: the probability that the field values agree, given that the records truly are a match
-- **u**: the probability that the field values agree by coincidence, given that the records are NOT a match
+### 2.3 What's missing
 
-The ratio m/u gives the "weight of evidence" for each field agreement. These weights are combined across fields to produce a composite score. A pair with a high composite score is likely a true match; a pair with a low score is likely a non-match; pairs in between are uncertain.
+No published work addresses deduplication across heterogeneous IIIF catalogs for pre-modern materials. The key differences from prior work:
 
-This framework remains the foundation of modern record linkage. Implementations include the Python Record Linkage Toolkit (de Bruin, 2019), Splink (Linacre, 2022), and dedupe (Gregg & Eder, 2015). Splink in particular has been applied to datasets of hundreds of millions of records and uses expectation-maximization to estimate the m and u probabilities automatically from the data, without requiring pre-labeled training pairs.
-
-### 2.4 Digital Library Deduplication at Scale
-
-The HathiTrust Digital Library, which holds 17 million digitized volumes from over 100 contributing libraries, relies primarily on shared identifiers (OCLC numbers) for deduplication. When two libraries contribute the same book, their catalog records typically share the same OCLC number, and HathiTrust links them. For records without shared identifiers, HathiTrust falls back to title/author matching. A 2012 report found approximately 75,000 titles with three or more duplicate scans.
-
-The SaDDL project (Similarities and Duplicates in Digital Libraries) took a different approach: instead of comparing metadata, it compared the actual text content of HathiTrust's volumes using machine learning. This can detect duplicates even when the metadata is completely different — but requires the books to be OCR'd first.
-
-Early English Books Online (EEBO) and its successor the Text Creation Partnership (TCP) use curated bibliographic identifiers — STC numbers for pre-1641 books, Wing numbers for 1641–1700 — as primary dedup keys. These identifiers are assigned by human editors, not algorithms.
-
-### 2.5 The Gap This Paper Addresses
-
-No published work addresses deduplication specifically across heterogeneous IIIF digital library catalogs for pre-modern materials. Existing approaches either assume standardized MARC records with shared identifiers (OCLC, HathiTrust), focus on modern publications with ISBNs, or rely on curated bibliographic databases that don't cover all digitized materials.
-
-Our situation is different in several ways:
-- Our metadata comes from OAI-PMH, SRU, and Wikibase APIs — sparser and less standardized than MARC
-- Our records span four countries and at least six cataloging languages
-- We have no shared identifiers across most of our sources
-- Our materials are pre-modern, with all the title/author instability that entails
-- We need to work at the scale of 828,000 records without manual review of each pair
+- **No shared identifiers.** OCLC numbers and ISBNs don't exist for most of our records. Each library uses its own identifier scheme (BSB IDs, BnF ARK identifiers, e-rara DOIs, Biblissima Q-numbers).
+- **Sparser metadata.** Our records come from OAI-PMH Dublin Core and Wikibase entities, not full MARC records. Many fields that OCLC relies on (publisher, pagination, physical description) are absent.
+- **Multilingual cataloging.** OCLC primarily handles English records. Our dataset spans German, French, Latin, Italian, and more — with the same work sometimes cataloged in different languages by different libraries.
+- **Pre-modern materials.** Author names, title conventions, and publication practices of the 15th–18th centuries are fundamentally different from modern publishing.
 
 ---
 
 ## 3. Dataset
 
-### 3.1 How We Collected the Data
+### 3.1 How we harvested 827,928 records
 
-We wrote four source-specific crawlers to harvest IIIF metadata from major European digital library systems, using each system's standard discovery API:
+We built crawlers for four major European IIIF sources, each with a different discovery API:
 
-| Source | What it is | How we accessed it | Records harvested |
-|--------|-----------|-------------------|-------------------|
-| **BSB Munich** | Bavarian State Library — one of Europe's largest libraries, with extensive holdings of German-language printed works. VD16, VD17, and VD18 are curated bibliographies of German prints by century. | OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting) with Dublin Core metadata | 432,113 |
-| **e-rara** | A consortium of Swiss research libraries providing digitized rare books | OAI-PMH with Dublin Core | 160,639 |
-| **Gallica** | The digital library of the Bibliothèque nationale de France | SRU (Search/Retrieve via URL), a search protocol for library catalogs | 123,439 |
-| **Biblissima** | A French aggregator that catalogs medieval and early modern manuscripts from dozens of European institutions | Wikibase API (the same technology behind Wikidata) | 111,737 |
-| | | **Total** | **827,928** |
+```
+  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+  │  BSB Munich  │     │   e-rara    │     │   Gallica   │     │ Biblissima  │
+  │  (432,113)   │     │  (160,639)  │     │  (123,439)  │     │  (111,737)  │
+  │              │     │             │     │             │     │             │
+  │  OAI-PMH     │     │  OAI-PMH    │     │  SRU API    │     │  Wikibase   │
+  │  VD16/17/18  │     │  Dublin Core│     │  Dublin Core│     │  P196 prop  │
+  └──────┬───────┘     └──────┬──────┘     └──────┬──────┘     └──────┬──────┘
+         │                    │                    │                    │
+         └─────────┬──────────┴──────────┬─────────┴──────────┬────────┘
+                   │                     │                    │
+                   ▼                     ▼                    ▼
+           ┌──────────────────────────────────────────────────────┐
+           │           import_candidates (MongoDB)                │
+           │                                                      │
+           │  Normalized schema:                                  │
+           │  title, author, language, date_earliest, date_latest │
+           │  manifest_url, source, source_id, metadata{}         │
+           │                                                      │
+           │  827,928 records                                     │
+           └──────────────────────────────────────────────────────┘
 
-Each record was normalized to a common schema with six fields: title, author, language, date (parsed from free text into a year or year range), IIIF manifest URL (the direct link to the digitized page images), and source identifier.
+Figure 2. Data harvesting pipeline. Each source uses a different
+discovery API but records are normalized to a common schema.
+```
 
-### 3.2 What the Data Looks Like
+| Source | Discovery API | Records | Scope | What it catalogs |
+|--------|--------------|---------|-------|-----------------|
+| BSB Munich | OAI-PMH (VD16, VD17, VD18 sets) | 432,113 | German-speaking prints, 1501–1800 | One record per physical copy (Exemplar) |
+| e-rara | OAI-PMH (Dublin Core) | 160,639 | Swiss rare books, all dates | One record per title |
+| Gallica (BnF) | SRU search API | 123,439 | French pre-1800 monographs | One record per bibliographic entity |
+| Biblissima | Wikibase API (property P196) | 111,737 | Medieval & early modern manuscripts, aggregated from 40+ libraries | One record per shelfmark |
 
-The four sources catalog books in strikingly different ways. Here is the same type of record — a 16th-century Latin scientific text — as it appears from each source:
+Each record was normalized to a common schema: title, author, language (mapped to standard names), date (parsed from free text like "[1556]" or "ca. 1550" into earliest/latest year), IIIF manifest URL, and source metadata.
 
-**BSB:** `title: "Georgii Agricolae Medici Bermannvs, Sive De Re Metallica"` / `author: "Agricola, Georg"` / `language: "lat"` / `date: "1546"`
+### 3.2 What the metadata looks like
 
-**e-rara:** `title: "Georgii Agricolae De re metallica libri XII : quibus officia, instrumenta, machinae..."` / `author: "Agricola, Georg"` / `language: "lat"` / `date: "1556"`
-
-**Gallica:** `title: "Georgii Agricolae... Bermannus, sive de re metallica"` / `author: "Agricola, Georgius (1494-1555). Auteur du texte"` / `language: "lat"` / `date: "1541"`
-
-**Biblissima:** `title: "Reg.lat.195"` / `author: "Unknown"` / `language: "Unknown"` / `date: null`
-
-Note that Gallica appends the author's life dates and role ("Auteur du texte") to the author field. BSB uses the German form of the name. Biblissima often has only a shelf mark, not a title. These inconsistencies are typical, not exceptional.
-
-**Field completeness varies widely:**
+The quality and completeness of metadata varies dramatically across sources:
 
 | Field | BSB | e-rara | Gallica | Biblissima |
 |-------|-----|--------|---------|------------|
-| Title | 100% | 100% | 100% | ~40% (rest are shelf marks) |
-| Author | ~90% | ~85% | ~95% | ~5% |
-| Date | ~95% | ~95% | ~90% | ~0% |
-| Language | ~80% | ~90% | ~85% | ~0% |
+| Title | Always present, in original language | Always present | Always present | Sometimes a shelfmark only |
+| Author | Often "Unknown" for VD18 | Usually present | Usually present, with dates | Rarely present |
+| Language | ISO 639 code | ISO 639 code | ISO 639 code | Not stored |
+| Date | Free text: "[1556]", "ca. 1550" | Free text | Free text | Not stored on entity |
+| Identifier | BSB ID (bsb00029099) | DOI (10.3931/e-rara-N) | ARK (ark:/12148/bptN) | Wikibase Q-ID + shelfmark |
 
-[TODO: verify these percentages from actual data]
+This heterogeneity is the core challenge. The same book at BSB and e-rara will have:
+- Near-identical titles (but different punctuation and capitalization)
+- Similar author names (but in different formats — "Agricola, Georg" vs "Agricola, Georgius")
+- The same date (if both parse correctly)
+- Completely different identifiers (no shared key)
 
-### 3.3 Duplication Patterns We Observed
+### 3.3 Duplication patterns we observed
 
-Before running any deduplication algorithm, we identified three distinct patterns of duplication:
+Before running any algorithms, we examined the data to understand what kinds of duplicates exist:
 
-**Pattern 1: Multiple copies within BSB (133,000 excess records)**
+**Within BSB (the biggest source of duplication):**
+BSB's VD16/VD17/VD18 bibliographies are catalogs of *copies*, not *editions*. When BSB holds three copies of the 1556 *De Re Metallica*, each gets its own record with its own BSB ID, even though the title, author, and date are identical. We found 432,113 BSB records but only 299,149 unique titles — a 31% duplication rate from multi-copy listings alone.
 
-BSB's VD16/VD17/VD18 bibliographies are designed to track every surviving physical copy of every German-language publication from the 16th, 17th, and 18th centuries. When BSB holds three copies of Virgil's *Opera* from a 1561 printing, each copy gets its own catalog entry with its own BSB identifier. All three have the same title, the same author, the same date — but they are different physical books. We found that BSB has 432,113 total records but only 299,149 unique titles — a 31% internal duplication rate.
+**Across sources:**
+The same edition at BSB and e-rara typically has near-identical but not byte-identical titles. Differences include: punctuation ("Libri XII" vs "Libri XII."), capitalization (original vs normalized), diacritical marks, and minor transcription variations.
 
-**Pattern 2: The same edition at different libraries (12,000 cross-source pairs)**
+**Biblissima as aggregator:**
+Biblissima doesn't digitize books itself — it aggregates manifest URLs from partner libraries. Of its 111,737 records, we found:
+- 29,054 pointing to IRHT/CNRS (French manuscripts — not in our other sources)
+- 22,766 pointing to the Vatican Library (not in our other sources)
+- 13,753 pointing to Gallica (overlaps with our Gallica crawl)
+- 12,186 pointing to BSB (overlaps with our BSB crawl)
+- 5,433 pointing to the Bodleian Library (not in our other sources)
+- 28,545 pointing to other institutions (Leiden, Portugal, Karlsruhe, etc.)
 
-When both BSB and e-rara have digitized a copy of the same 1556 Basel edition, the records are nearly identical but not byte-for-byte the same. One might write "De Re Metallica Libri XII" where the other writes "De re metallica libri XII." Our preliminary fuzzy matching found approximately 12,000 such cross-source pairs.
-
-**Pattern 3: Biblissima overlaps with direct sources (26,000 records)**
-
-Biblissima aggregates manifests from many institutions, including some that we also crawled directly. Of Biblissima's 111,737 records, we found that 12,186 point to BSB and 13,753 point to Gallica — institutions already represented in our direct harvests. The remaining ~86,000 Biblissima records point to institutions we did NOT crawl directly (Vatican Library, IRHT, Bodleian, and others), making them genuinely new additions to the catalog.
+So roughly 26,000 Biblissima records overlap with sources we crawled directly, while 86,000 bring in manifests from libraries we didn't crawl — Vatican, IRHT, Bodleian, and dozens of smaller collections.
 
 ---
 
-## 4. Gold Standard Construction
+## 4. Gold Standard
 
-To evaluate our deduplication methods, we need a "ground truth" — a set of record pairs where humans have decided whether each pair is or is not the same book. We constructed this gold standard by sampling 752 pairs across multiple difficulty levels.
+To evaluate deduplication methods, we need ground truth: a set of record pairs where a human has determined whether they refer to the same book. We constructed a gold standard of 752 pairs (targeting 1,000; ongoing) using stratified sampling to cover the full range of difficulty.
 
-### 4.1 Sampling Strategy
+### 4.1 Sampling strategy
 
-We sampled pairs from four categories, designed to test different aspects of the deduplication problem:
+We sampled pairs from four strata, ensuring the gold standard includes easy cases (to measure baseline accuracy), typical cases (to measure practical performance), and hard cases (to reveal method limitations):
 
-**Easy positives (292 pairs):** Pairs that our preliminary algorithm identified as matches, where we expect human labelers to agree. These include BSB internal duplicates (identical titles from the same library) and cross-source matches where the titles are nearly identical.
+```
+                            Gold Standard Pairs
+                            ┌───────────────────┐
+                            │                   │
+                 ┌──────────┴──────────┐  ┌─────┴──────────┐
+                 │  Expected matches   │  │ Expected non-  │
+                 │  (from clusters)    │  │ matches        │
+                 │                     │  │ (same block,   │
+                 │                     │  │  not clustered) │
+                 ├─────────────────────┤  ├────────────────┤
+                 │ Same-source copies  │  │ Same author,   │
+                 │ (BSB internal) 150  │  │ diff work  150 │
+                 ├─────────────────────┤  ├────────────────┤
+                 │ Cross-source same   │  │ Generic title, │
+                 │ edition         100 │  │ diff author  10│
+                 ├─────────────────────┤  ├────────────────┤
+                 │ Related editions    │  │ Same block,    │
+                 │ (diff year)     100 │  │ random     150 │
+                 ├─────────────────────┤  ├────────────────┤
+                 │ Borderline (large   │  │ Hard cases:    │
+                 │ clusters)        50 │  │ anon, multi-   │
+                 └─────────────────────┘  │ volume      52 │
+                                          └────────────────┘
 
-**Easy negatives (308 pairs):** Pairs that share a surface similarity — same author, or same generic title, or same decade — but are clearly different books. For example, two different theological dissertations by different authors that both happen to be titled "Theses theologicae."
+Figure 3. Gold standard stratification.
+```
 
-**Hard positives (100 pairs):** Same author, different dates — are these different editions of the same work, or different works entirely? For example, two books by Erasmus from 1516 and 1522.
+### 4.2 Labeling protocol
 
-**Hard cases (52 pairs):** Multi-volume works (is volume 2 the "same book" as the complete work?), anonymous works with similar titles, and other edge cases that test the boundaries of what "same book" means.
+Each pair is labeled with one of four FRBR-based categories:
 
-### 4.2 How We Labeled
+- **Same Item**: same digitized object appearing under different catalog entries (e.g., two BSB records for the same physical copy — rare, but it happens)
+- **Same Manifestation**: same edition, possibly different physical copies or different catalogs (e.g., BSB and e-rara both holding a 1556 Basel edition)
+- **Same Work**: same intellectual content, different edition or translation (e.g., the 1556 Latin and 1557 German editions of *De Re Metallica*)
+- **Different Work**: unrelated despite surface similarity (e.g., "Gedichte" by Hölty vs "Gedichte" by Bürger)
 
-Each pair was labeled with one of four categories, corresponding to FRBR levels:
-
-- **Same Item:** These are literally the same digitized object, listed under different catalog entries. (Example: the same BSB scan appearing in both VD16 and VD17 bibliographies.)
-- **Same Manifestation:** These are different physical copies of the same edition — same text, same publisher, same year. (Example: BSB's copy and e-rara's copy of the 1556 Basel *De Re Metallica*.)
-- **Same Work:** These are different editions or translations of the same intellectual content. (Example: the 1556 Latin edition and the 1557 German translation.)
-- **Different Work:** These are unrelated books that happen to share a surface similarity. (Example: Virgil's *Opera* and Horace's *Opera*.)
-
-[TODO: report inter-annotator agreement, labeling interface details]
+[TODO: complete labeling, report inter-annotator agreement]
 
 ---
 
 ## 5. Methods
 
-We tested five approaches to detecting duplicates, ranging from the simplest possible method to state-of-the-art AI techniques. All methods were applied to the full dataset of 827,928 records and evaluated against the gold standard.
+We evaluate five approaches, from simple to complex. Each uses the same input (the 827,928 normalized records) and produces clusters of records it considers duplicates. We then evaluate each method's clusters against the gold standard.
 
-### 5.1 Method 1: Exact Match (Baseline)
+### 5.1 Method 1: Exact String Match (Baseline)
 
-The simplest possible approach: two records are duplicates if and only if their normalized titles and normalized authors are identical strings.
+The simplest possible approach. Normalize titles and authors (strip diacritics, lowercase, remove articles and punctuation, collapse whitespace), then cluster records with exactly matching normalized title AND normalized author.
 
-**Normalization:** Strip diacritics (ü → u, é → e), lowercase everything, remove common articles ("the," "der," "le," "la"), remove punctuation, collapse whitespace.
+**Strengths:** No false positives — if two normalized strings are identical, the records almost certainly refer to the same work.
 
-This method is fast and has zero false positives (if the strings match exactly, the records almost certainly refer to the same book). But it misses any pair where the titles differ even slightly — a missing comma, a different abbreviation, or a word in a different order.
+**Weaknesses:** Misses any variation at all. "Georgii Agricolae De re metallica libri XII" and "Georgii Agricolae De Re Metallica Libri XII" normalize identically (good), but "De Re Metallica Libri XII" with a different prefix does not match (bad).
 
-### 5.2 Method 2: Jaro-Winkler Similarity with Blocking
+### 5.2 Method 2: Jaro-Winkler with Blocking
 
-Instead of requiring exact string equality, we measure how *similar* two strings are using the Jaro-Winkler metric — a number between 0 (completely different) and 1 (identical). Two records are considered a match if:
+Our initial approach, already deployed. Three steps:
 
-- Their title similarity exceeds 0.90 (90% similar)
-- Their author similarity exceeds 0.82
-- A composite score (title × 0.55 + author × 0.30 + date agreement × 0.15) exceeds 0.85
+**Step 1 — Blocking.** Group records by decade of publication and first four characters of the normalized author surname. This means a 1556 book by Agricola only compares against other 1550s books by authors starting with "agri." This reduces the number of comparisons from 343 billion (all pairs) to about 18 million (within-block pairs).
 
-**Why Jaro-Winkler?** It was designed for comparing names and short strings. It gives extra credit for matching prefixes, which is useful for book titles that share long Latin openings ("Georgii Agricolae De re metallica...") but may diverge in subtitles.
+```
+  828K records ──► Block by decade+author ──► 57K blocks
+                                               │
+                   ┌───────────────────────────┘
+                   │
+                   ▼
+        Within each block (avg 14.5 records):
 
-**Blocking:** Comparing all 828,000 records against each other would require 343 billion pairwise comparisons — far too many. Instead, we group records into "blocks" by decade and first four characters of the author's surname. Records can only match within their block. An Agricola book from the 1550s only compares against other 1550s books by authors starting with "agri." This reduces comparisons from 343 billion to about 18 million.
+        Compare every pair:
+        ┌─────────────────────────────────────────┐
+        │  title_sim = JaroWinkler(norm_title_a,  │
+        │                          norm_title_b)  │
+        │  author_sim = JaroWinkler(norm_author_a,│
+        │                           norm_author_b)│
+        │  date_sim = exact_match ? 1.0 :         │
+        │             within_2_years ? 0.9 : 0.7  │
+        │                                         │
+        │  score = title_sim × 0.55               │
+        │        + author_sim × 0.30              │
+        │        + date_sim × 0.15                │
+        │                                         │
+        │  if score ≥ 0.85: MATCH                 │
+        └─────────────────────────────────────────┘
+                   │
+                   ▼
+        Union-Find clustering:
+        if A matches B and B matches C → {A, B, C}
 
-**Known weakness:** This method cannot detect cross-language duplicates. "De Re Metallica" and "Vom Bergkwerck" have zero string similarity at any threshold.
+Figure 4. The blocking + comparison + clustering pipeline.
+```
 
-### 5.3 Method 3: Fellegi-Sunter Probabilistic Linkage
+**Strengths:** Catches most within-source duplicates and many cross-source duplicates where titles are similar. The blocking makes it feasible at scale.
 
-Instead of hand-tuning thresholds, we let the data tell us how to weight each field.
+**Weaknesses:** Cannot match across languages ("De Re Metallica" vs "Vom Bergkwerck" have 0% string similarity). The blocking means records must share the same decade AND author prefix to be compared — an author cataloged as "Agricola" at BSB and "Bauer" at Gallica would never be compared.
 
-The Fellegi-Sunter model (1969) estimates two probabilities for each field comparison:
-- **m:** If two records truly are the same book, what is the probability that this field agrees? (High for title, lower for date, because dates are sometimes recorded differently.)
-- **u:** If two records are NOT the same book, what is the probability that this field agrees by coincidence? (Low for long titles, high for short common titles like "Opera.")
+### 5.3 Method 3: Fellegi-Sunter Probabilistic (via Splink)
 
-The ratio m/u gives the *evidence weight* for each field. Fields where agreement is informative (long, specific titles) get high weights. Fields where agreement is common by chance (generic titles) get low weights. The model learns these weights automatically from the data using expectation-maximization — no hand-tuning required.
+Instead of hand-tuning weights (0.55 for title, 0.30 for author, 0.15 for date), let the data determine what each field is worth. The Fellegi-Sunter model estimates two probabilities for each field comparison:
 
-We use Splink (Linacre, 2022), an open-source implementation that scales to large datasets.
+- **m-probability**: if two records really are the same book, how likely is it that their titles would match at this similarity level?
+- **u-probability**: if two records are different books, how likely is it that their titles would appear this similar by chance?
+
+The ratio m/u gives a weight: high when a match is informative (rare among random pairs but common among true matches), low when it's not (common among random pairs too). Splink estimates these probabilities automatically using expectation-maximization — no labeled training data needed.
+
+**Strengths:** Learns from the data which fields are most informative. Automatically handles the fact that matching on "Gedichte" (common title) is less informative than matching on "Georgii Agricolae De Re Metallica" (rare title).
+
+**Weaknesses:** Still operates on string comparisons — cannot handle cross-language matching.
 
 ### 5.4 Method 4: Token-Set Ratio
 
-Jaro-Winkler compares strings character by character, which means word order matters. "De Re Metallica Libri XII" and "Libri XII De Re Metallica" would get a lower Jaro-Winkler score despite containing exactly the same words.
+Instead of Jaro-Winkler (which measures character-level similarity), use token-set ratio, which measures word-level overlap regardless of order. The algorithm:
 
-Token-set ratio decomposes each string into a set of words (tokens) and compares the sets. It computes the similarity as the ratio of shared tokens to total tokens. This handles reordering, as well as titles where one version includes extra words (a subtitle) that the other omits.
+1. Tokenize both titles into sets of words
+2. Find the intersection (words in common)
+3. Compute: `ratio(intersection, intersection + remainder_a)` and `ratio(intersection, intersection + remainder_b)`
+4. Take the maximum
+
+This handles word reordering ("Metallica, De Re" vs "De Re Metallica" → perfect match) and partial overlap ("De Re Metallica Libri XII" vs "De Re Metallica" → high match because the shared tokens are the meaningful ones).
+
+**Strengths:** Robust to word order differences, which are common in catalog titles. Handles the case where one catalog includes a subtitle and the other doesn't.
+
+**Weaknesses:** Like Jaro-Winkler, operates on surface forms only. Cannot cross the language barrier.
 
 ### 5.5 Method 5: Embedding-Based Semantic Matching
 
-All of the above methods compare the *characters* or *words* in a title. None of them can recognize that "De Re Metallica" and "Vom Bergkwerck" mean the same thing — they share zero characters and zero words.
+Compute a vector representation (embedding) of each title using a multilingual sentence transformer, then measure cosine similarity between embeddings. The key hypothesis: a multilingual model trained on parallel text might place "De Re Metallica" and "Vom Bergkwerck" near each other in embedding space, even though they share no characters.
 
-Semantic matching uses a neural network (a multilingual sentence transformer) to convert each title into a dense numerical vector — an "embedding" — that captures its *meaning*. Titles with similar meanings have similar embeddings, regardless of language. We measure similarity between embeddings using cosine similarity.
+We use `paraphrase-multilingual-MiniLM-L12-v2`, a sentence transformer trained on parallel data in 50+ languages. The same blocking strategy applies — we only compare embeddings within blocks.
 
-We use `paraphrase-multilingual-MiniLM-L12-v2`, a model trained on parallel texts in 50+ languages. It has not been specifically trained on early modern book titles, so its performance on Latin and Early Modern German is an open question.
+**Strengths:** Can potentially handle cross-language matching, which all string-based methods fail at completely.
 
-**Potential:** This is the only method that could detect cross-language duplicates without external authority files.
-
-**Risk:** The model may conflate thematically similar but distinct works (two different Latin treatises on alchemy might embed similarly), producing false positives.
+**Weaknesses:** Embedding models are trained on modern text, not Renaissance Latin titles. The model may not understand that "Libri XII" means "twelve books" or that "De Re Metallica" is about metallurgy. Performance on this domain is an open question — and one of the most interesting things we can measure.
 
 ---
 
@@ -305,71 +365,104 @@ We use `paraphrase-multilingual-MiniLM-L12-v2`, a model trained on parallel text
 
 [TODO: implement each method, run on full dataset, evaluate against gold standard]
 
-For each method, we report:
-- **Precision:** Of the pairs the method labeled as duplicates, how many were true duplicates according to our gold standard?
-- **Recall:** Of the true duplicates in our gold standard, how many did the method detect?
-- **F1 score:** The harmonic mean of precision and recall — a single number that balances both.
+For each method, we measure:
 
-We report these metrics separately for each FRBR level (same item, same manifestation, same work), because a method that excels at finding identical copies may fail at recognizing different editions of the same work, or vice versa.
+- **Precision**: of the pairs the method says are duplicates, what fraction actually are? (High precision = few false positives)
+- **Recall**: of the pairs that actually are duplicates, what fraction does the method find? (High recall = few false negatives)
+- **F1**: the harmonic mean of precision and recall (balances both concerns)
+
+We report these metrics separately at each FRBR level:
+- Item-level: merging catalog records for the same scan
+- Manifestation-level: linking copies of the same edition
+- Work-level: grouping editions of the same intellectual work
 
 ### 6.2 Results
 
-[TODO: precision, recall, F1 table for each method at each FRBR level]
+[TODO: precision, recall, F1 table]
 
 ### 6.3 Threshold Sensitivity
 
-For methods that use a similarity threshold (Jaro-Winkler, token-set ratio, embedding cosine similarity), we plot precision-recall curves showing how performance changes as the threshold is tightened or relaxed. A higher threshold catches fewer duplicates (lower recall) but makes fewer mistakes (higher precision). The "best" threshold depends on whether false positives or false negatives are more costly for the application.
-
-[TODO: precision-recall curves]
+[TODO: precision-recall curves across different threshold values for Methods 2–5]
 
 ### 6.4 Error Analysis
 
-We categorize errors (both false positives and false negatives) by failure mode:
-
-- **Cross-language titles:** Same work, different language → missed by string methods
-- **Cataloging-language variation:** Same title, different transcription → caught or missed depending on threshold
-- **Generic titles:** "Opera," "Epistolae" → false positive risk
-- **Anonymous works:** Missing author → reduced discriminating power
-- **Multi-volume vs complete works:** Volume 2 of a 3-volume set → unclear whether "same" or "different"
-- **Variant author names:** Agricola vs Bauer → missed without authority file
-
-[TODO: counts and examples for each category]
+[TODO: categorize false positives and false negatives by the five challenge types identified in Section 1]
 
 ---
 
 ## 7. Discussion
 
-### 7.1 Which Method for Which Purpose?
+### 7.1 Which method for which level?
 
-[TODO: practical guidance — if you need to avoid false positives, use exact match; if you need to catch cross-language duplicates, use embeddings; if you need a good all-around approach, use Fellegi-Sunter]
+[TODO: analyze which methods work best at item/manifestation/work levels]
 
-### 7.2 The Cross-Language Problem
+We expect:
+- Exact match and Jaro-Winkler to dominate at the Item level (identical or near-identical titles)
+- Fellegi-Sunter to outperform hand-tuned Jaro-Winkler at the Manifestation level (better calibrated weights)
+- Embeddings to be the only method with non-trivial recall at the Work level for cross-language cases
 
-[TODO: Can embeddings actually detect "De Re Metallica" = "Vom Bergkwerck"? Results and analysis.]
+### 7.2 The cross-language problem
 
-### 7.3 What This Means for Digital Libraries
+[TODO: analyze embedding method's performance on cross-language pairs vs string methods]
 
-[TODO: Practical recommendations. If major IIIF libraries coordinated on shared identifiers (like VD16 numbers or VIAF IDs in their IIIF metadata), most of the dedup problem would disappear. The root cause is not bad algorithms but missing linked data.]
+This is the paper's most interesting question. If a multilingual embedding model can reliably match "De Re Metallica" with "Vom Bergkwerck," that would be a significant finding for digital humanities. If it cannot — if the model doesn't generalize to Renaissance Latin and Early Modern German — that's also a significant finding, pointing to the need for domain-specific training data or authority file enrichment.
+
+### 7.3 Practical implications
+
+[TODO: recommendations for digital library practitioners building unified catalogs]
+
+Key questions to address:
+- When should you invest in authority file enrichment vs algorithmic matching?
+- How much does metadata quality matter vs algorithm sophistication?
+- What's the minimum viable dedup approach for a project like ours?
 
 ### 7.4 Limitations
 
-- Our gold standard was labeled by a small team, not professional catalogers. Inter-annotator agreement should be measured but has not been yet.
-- We tested only four IIIF sources. The methods may perform differently on other sources with different metadata conventions.
-- Embedding models are trained primarily on modern text. Their ability to encode the meaning of 16th-century Latin and Early Modern German titles is uncertain.
-- We deduplicate based on metadata only. Content-based methods (comparing the actual page images or OCR text) are out of scope but would likely improve recall for cross-language cases.
-- Our "blocking" strategy (grouping by decade + author prefix) means we can only detect duplicates within the same block. Two records that disagree on the decade (one says 1499, the other says 1500) will never be compared.
+- Our gold standard is labeled by the project team, not professional catalogers. Inter-annotator agreement will be reported but may not match expert-level consistency.
+- The dataset covers four sources. Adding more (Bodleian directly, Heidelberg, POLONA) would increase cross-source overlap and might change the dedup landscape.
+- Embedding models were not trained on early modern bibliographic metadata. Domain-adapted models might perform differently.
+- We evaluate metadata-only dedup. Content-based methods — comparing actual OCR text from the books — could be more accurate but require processing all 828K manifests, which is impractical at this stage.
+- Our Biblissima data lacks title and author for many records (only shelfmarks). These records participate in manifest-URL-based dedup but not in metadata-based methods.
 
 ---
 
 ## 8. Conclusion
 
-[TODO — to be written after experiments are complete]
+[TODO — pending experimental results]
 
-We collected 827,928 records of digitized pre-modern books from four European IIIF sources and found that approximately 20% are duplicates, reducing the unique count from 828,000 to approximately 665,000. The largest source of duplication is internal to BSB (multiple copies of the same edition), not cross-source overlap, which was surprisingly low (~12,000 pairs).
+---
 
-Of the five methods we tested, [TODO: which performed best overall, which was best for which FRBR level, and what the practical recommendation is].
+## Appendix A: Preliminary Results
 
-The dataset itself — a unified catalog of 665,000 unique digitized pre-modern books, with normalized metadata and IIIF manifest links — is our most concrete contribution. It answers, for the first time, the question: *what has been digitized?* We release it as an open resource.
+Before the full experimental evaluation, we ran our Jaro-Winkler method (Method 2) on the complete dataset. These preliminary results motivated the paper and informed the gold standard design:
+
+| Metric | Value |
+|--------|-------|
+| Total records | 827,928 |
+| Duplicate clusters found | 73,009 |
+| Records in duplicate clusters | 235,789 |
+| Estimated unique records | 665,148 |
+| Overall reduction | 19.7% |
+
+**Match types:**
+| Type | Count |
+|------|-------|
+| Same-edition copies (within source) | 394,315 |
+| Related editions (different year/place) | 343,691 |
+| Cross-source same edition | 12,009 |
+
+**Cluster sizes:**
+| Size | Clusters |
+|------|----------|
+| 2 | 42,315 |
+| 3 | 14,575 |
+| 4 | 6,973 |
+| 5 | 3,097 |
+| 6–10 | 4,608 |
+| 11–20 | 1,059 |
+| 21+ | 382 |
+
+The 19.7% reduction is dominated by BSB internal duplicates (135,347 of BSB's 432,113 records were marked as duplicates). Cross-source deduplication accounted for only 12,009 matches — suggesting that cross-source overlap is surprisingly low, at least at the title-string-similarity level. The cross-language duplicates that our method cannot detect (same work cataloged in different languages) remain to be quantified.
 
 ---
 
@@ -384,5 +477,4 @@ The dataset itself — a unified catalog of 665,000 unique digitized pre-modern 
 - OCLC. (2025). Implementing AI to further scale and accelerate WorldCat de-duplication.
 - O'Neill, E. T., Hickey, T. B., & Toves, J. (2012). GLIMIR: Manifestation and content clustering within WorldCat. *Code4Lib Journal*, 19.
 - Riva, P., & Žumer, M. (2015). A survey of FRBRization techniques. *HAL Archives*.
-- Stein, A., et al. (2006). Early printed books as material objects. *IFLA Journal*.
 - Toves, J., Hickey, T. B., & O'Neill, E. T. (2015). Collected work clustering in WorldCat. *Code4Lib Journal*, 30.
