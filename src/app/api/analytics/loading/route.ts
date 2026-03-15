@@ -26,7 +26,10 @@ export async function POST(request: NextRequest) {
       ...metric,
       received_at: Date.now(),
       user_agent: request.headers.get('user-agent') || 'unknown',
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      ip: (() => {
+        const raw = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+        return raw.includes(':') ? raw.replace(/:[^:]*$/, ':0') : raw.replace(/\.\d+$/, '.0');
+      })(),
     }));
 
     const dbWrite = (async () => {

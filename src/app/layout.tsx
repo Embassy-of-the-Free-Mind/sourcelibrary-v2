@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GlobalFooter from "@/components/layout/GlobalFooter";
 import Providers from "@/components/providers/Providers";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
 import PageTracker from "@/components/reader/PageTracker";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
@@ -92,7 +90,6 @@ export default async function RootLayout({
           title="Source Library"
           href="/opensearch.xml"
         />
-        <Script src="https://analytics.ahrefs.com/analytics.js" data-key="rzuKlnvyAKd8TdooDnPSYg" strategy="lazyOnload" />
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <a href="#main-content" className="skip-link">
@@ -106,8 +103,6 @@ export default async function RootLayout({
           <SiteModeIndicator />
         </Providers>
         <ClientToaster />
-
-        <GoogleAnalytics gaId="G-C1QJNTSZT2" />
         <PageTracker />
       </body>
     </html>

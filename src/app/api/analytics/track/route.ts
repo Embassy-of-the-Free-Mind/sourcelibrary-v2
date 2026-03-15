@@ -34,9 +34,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Get client IP for deduplication
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
       || request.headers.get('x-real-ip')
       || 'unknown';
+    // Anonymize: truncate last octet (IPv4) or last 80 bits (IPv6) — GDPR compliance
+    const ip = rawIp.includes(':')
+      ? rawIp.replace(/:[^:]*$/, ':0')
+      : rawIp.replace(/\.\d+$/, '.0');
 
     // Race all DB work against a short timeout
     const dbWork = (async () => {

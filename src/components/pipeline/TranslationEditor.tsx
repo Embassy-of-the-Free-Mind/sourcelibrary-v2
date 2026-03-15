@@ -30,7 +30,6 @@ import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import ShareButton from '@/components/ui/ShareButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
-import { sendGAEvent } from '@/lib/ga';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
@@ -675,7 +674,6 @@ export default function TranslationEditor({
         page_id: page.id
       }
     ).catch(() => { }); // Fire and forget
-    sendGAEvent({ action: 'page_read', category: 'engagement', label: book.id, value: page.page_number });
   }, [book.id, page.id]);
 
   // Prefetch adjacent page images for faster navigation

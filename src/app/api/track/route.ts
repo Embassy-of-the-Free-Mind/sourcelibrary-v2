@@ -54,7 +54,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    // Anonymize: truncate last octet (IPv4) or last 80 bits (IPv6) — GDPR compliance
+    const ip = rawIp.includes(':')
+      ? rawIp.replace(/:[^:]*$/, ':0')
+      : rawIp.replace(/\.\d+$/, '.0');
 
     // Rate limit: same IP + path within 60s = skip
     if (path && isDuplicate(ip, path)) {

@@ -34,7 +34,6 @@ import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
 import { useSession } from 'next-auth/react';
-import { sendGAEvent } from '@/lib/ga';
 
 interface BookImage {
   id: string;
@@ -112,7 +111,6 @@ export default function ImageDetailPage({
         preload.onload = () => requestAnimationFrame(() => setImageOpacity(1));
         preload.onerror = () => requestAnimationFrame(() => setImageOpacity(1));
         preload.src = json.imageUrl;
-        sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {
@@ -248,7 +246,6 @@ export default function ImageDetailPage({
       isNavigatingRef.current = true;
       setImageId(img.id);
       setData(json);
-      sendGAEvent({ action: 'view_item', category: 'gallery', label: img.id, content_type: 'image' });
       requestAnimationFrame(() => setImageOpacity(1));
     } catch {
       // On error, fade back in with old content
@@ -480,7 +477,6 @@ export default function ImageDetailPage({
       a.download = `source-library-${bookSlug}-p${data.pageNumber}.jpg`;
       a.click();
       URL.revokeObjectURL(a.href);
-      sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
     } catch {
       // Last resort: open in new tab
       window.open(sourceUrl, '_blank');
