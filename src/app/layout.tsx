@@ -110,7 +110,7 @@ export default async function RootLayout({
         <CookieConsent />
         <AnalyticsScripts />
         <PageTracker />
-        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
+        <InputWidget allowedHosts={["localhost"]} />
       </body>
     </html>
   );
