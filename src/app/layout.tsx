@@ -5,6 +5,8 @@ import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
+import CookieConsent from "@/components/providers/CookieConsent";
+import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
 
 
 export const metadata: Metadata = {
@@ -90,6 +92,7 @@ export default async function RootLayout({
           title="Source Library"
           href="/opensearch.xml"
         />
+        {/* Analytics scripts loaded conditionally via AnalyticsScripts (consent-gated) */}
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <a href="#main-content" className="skip-link">
@@ -103,6 +106,8 @@ export default async function RootLayout({
           <SiteModeIndicator />
         </Providers>
         <ClientToaster />
+        <CookieConsent />
+        <AnalyticsScripts />
         <PageTracker />
       </body>
     </html>

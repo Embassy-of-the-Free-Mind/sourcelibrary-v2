@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { anonymizeIp } from '@/lib/anonymize-ip';
 
 /**
  * Track analytics events (book reads, page reads, page edits)
@@ -33,14 +34,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get client IP for deduplication
+    // Get client IP for deduplication (anonymized — last octet zeroed)
     const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
       || request.headers.get('x-real-ip')
       || 'unknown';
-    // Anonymize: truncate last octet (IPv4) or last 80 bits (IPv6) — GDPR compliance
-    const ip = rawIp.includes(':')
-      ? rawIp.replace(/:[^:]*$/, ':0')
-      : rawIp.replace(/\.\d+$/, '.0');
+    const ip = anonymizeIp(rawIp);
 
     // Race all DB work against a short timeout
     const dbWork = (async () => {

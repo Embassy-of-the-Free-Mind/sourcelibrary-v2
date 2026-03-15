@@ -29,33 +29,31 @@ export default function PrivacyPage() {
             Embassy of the Free Mind, Amsterdam. We are committed to protecting your privacy.
           </p>
 
+          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Cookies and consent</h2>
+          <p>
+            We ask for your consent before setting any analytics cookies. If you decline,
+            no third-party tracking scripts are loaded and no cookies are set. The site
+            works identically either way.
+          </p>
+          <p>
+            Your choice is stored in your browser&rsquo;s local storage (not a cookie) and
+            can be changed at any time via the &ldquo;Cookie Settings&rdquo; link in the footer.
+          </p>
+
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>What we collect</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li><strong>Account information:</strong> Email address (required for registration). Name and profile image if you sign in with Google.</li>
-            <li>
-              <strong>Usage analytics (first-party only):</strong> Pages visited, anonymized IP address (last octet truncated),
-              referrer domain, country, and user agent. No third-party analytics services are used.
-              This data is retained for 90 days and then automatically deleted.
-            </li>
-            <li><strong>Reading activity:</strong> Which books and pages you view, bookshelf selections. Retained for 90 days.</li>
-            <li><strong>Performance metrics:</strong> Page load times and related technical metrics. Retained for 30 days.</li>
+            <li><strong>First-party analytics</strong> (always active): Pages visited, country (from IP), referrer domain, user agent. IP addresses are anonymized (last octet removed) before storage. Data is automatically deleted after 90 days.</li>
+            <li><strong>Reading activity:</strong> Which books and pages you view, bookshelf selections. Used to personalize your experience.</li>
+            <li><strong>Local storage:</strong> A visitor ID (<code>sl_visitor_id</code>) for image likes deduplication. This never leaves your browser.</li>
           </ul>
 
-          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Cookies and local storage</h2>
-          <p>
-            Source Library does not set any cookies for analytics or tracking purposes.
-            We use <code>localStorage</code> for a single item (<code>sl_visitor_id</code>) used
-            solely to prevent duplicate &ldquo;like&rdquo; actions. This identifier never leaves your browser
-            and is not used for cross-site tracking.
-          </p>
-
-          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>What we don&rsquo;t collect</h2>
+          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>What we don&rsquo;t do</h2>
           <ul className="list-disc pl-5 space-y-2">
-            <li>We set no tracking cookies and use no third-party analytics.</li>
             <li>We do not sell your data to third parties.</li>
             <li>We do not use your data for advertising.</li>
             <li>We do not share personal data with AI model providers.</li>
-            <li>We do not perform cross-site tracking of any kind.</li>
+            <li>We do not store full IP addresses.</li>
           </ul>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>How we use your data</h2>
@@ -65,15 +63,13 @@ export default function PrivacyPage() {
             <li>To generate aggregate statistics about library usage.</li>
           </ul>
 
-          <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Legal basis (GDPR)</h2>
-          <p>
-            We process anonymized analytics data under the <strong>legitimate interest</strong> basis
-            (Article 6(1)(f) GDPR). Because IP addresses are truncated before storage,
-            the data we retain does not constitute personal data under GDPR.
-            Account data is processed on the basis of <strong>contractual necessity</strong>.
-          </p>
-
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Third-party services</h2>
+          <p>The following services are only loaded if you accept analytics cookies:</p>
+          <ul className="list-disc pl-5 space-y-2">
+            <li><strong>Google Analytics:</strong> Usage statistics with IP anonymization enabled. Sets cookies to distinguish visitors. <a href="https://policies.google.com/privacy" className="underline" target="_blank" rel="noopener noreferrer">Google&rsquo;s privacy policy</a>.</li>
+            <li><strong>Ahrefs Analytics:</strong> Aggregate traffic statistics. <a href="https://ahrefs.com/privacy" className="underline" target="_blank" rel="noopener noreferrer">Ahrefs&rsquo; privacy policy</a>.</li>
+          </ul>
+          <p className="mt-3">The following services are always active (no cookies):</p>
           <ul className="list-disc pl-5 space-y-2">
             <li><strong>Google OAuth:</strong> If you sign in with Google, we receive your name, email, and profile image. We do not access any other Google data.</li>
             <li><strong>Vercel:</strong> Hosting provider. <a href="https://vercel.com/legal/privacy-policy" className="underline" target="_blank" rel="noopener noreferrer">Vercel&rsquo;s privacy policy</a>.</li>
@@ -82,8 +78,8 @@ export default function PrivacyPage() {
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Data retention</h2>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Analytics pageviews and events: <strong>90 days</strong>, then automatically deleted.</li>
-            <li>Performance metrics: <strong>30 days</strong>, then automatically deleted.</li>
+            <li>Analytics data (pageviews, events): automatically deleted after 90 days.</li>
+            <li>Performance metrics: automatically deleted after 30 days.</li>
             <li>Account data: retained as long as your account is active.</li>
           </ul>
           <p>

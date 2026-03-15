@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import { clearConsent } from '@/lib/consent';
 
 const NAV_COLUMNS = [
   {
@@ -26,6 +27,7 @@ const NAV_COLUMNS = [
       { label: 'Blog', href: '/blog' },
       { label: 'Press', href: '/press' },
       { label: 'Privacy', href: '/privacy' },
+      { label: 'Cookie Settings', href: '#cookie-settings' },
       { label: 'Terms', href: '/terms' },
     ],
   },
@@ -119,6 +121,13 @@ export default function GlobalFooter() {
                           Donate
                         </span>
                       </Link>
+                    ) : link.label === 'Cookie Settings' ? (
+                      <button
+                        onClick={() => clearConsent()}
+                        className="text-sm text-white/50 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </button>
                     ) : (
                       <Link
                         href={link.href}
