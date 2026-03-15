@@ -2,29 +2,32 @@
 /**
  * Biblissima Discovery Crawler
  *
- * Harvests pre-1800 IIIF manifests from Biblissima's IIIF Collections.
- * Biblissima aggregates 60,000+ manifests from dozens of European libraries,
- * already filtered for medieval and early modern texts. This is the single
- * most efficient source for our target era.
+ * Harvests IIIF manifests from Biblissima's Wikibase knowledge graph.
+ * Property P196 contains IIIF manifest URLs for ~60K+ items across
+ * dozens of European libraries, all pre-1800.
  *
- * IIIF Collections: https://iiif.biblissima.fr/collections/
- * API: https://portail.biblissima.fr/api/
+ * Wikibase API: https://data.biblissima.fr/w/api.php
+ * IIIF Collections (HTML): https://iiif.biblissima.fr/collections/
+ *
+ * Strategy: Sweep entity Q-IDs in batches of 50, extracting P196
+ * (manifeste IIIF) values. Entities in the "cote" (shelfmark) referential
+ * span roughly Q90000-Q300000+.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/iiif-discovery/sources/biblissima.mjs
  *
  * Options:
  *   --max-records=50000    Stop after N records
- *   --page=1               Start page (for resumption)
+ *   --start=90000          Start Q-ID number (default: 90000)
+ *   --end=350000           End Q-ID number (default: 350000)
+ *   --batch=50             Entities per API call (max 50)
  */
 
 import { withMongo } from '../../lib/mongo.mjs';
 import { ensureIndexes, insertCandidates } from '../lib/candidate-store.mjs';
-import { parseDateRange, normalizeLanguage, extractLabel } from '../lib/iiif-metadata.mjs';
 
 const SOURCE = 'biblissima';
-// Biblissima portal API for searching manuscripts and printed books
-const API_BASE = 'https://portail.biblissima.fr/api';
+const API_BASE = 'https://data.biblissima.fr/w/api.php';
 
 const args = Object.fromEntries(
   process.argv.slice(2)
@@ -36,144 +39,153 @@ const args = Object.fromEntries(
 );
 
 const MAX_RECORDS = parseInt(args['max-records']) || Infinity;
-const START_PAGE = parseInt(args.page) || 1;
+const START_QID = parseInt(args.start) || 90000;
+const END_QID = parseInt(args.end) || 350000;
+const BATCH_SIZE = Math.min(parseInt(args.batch) || 50, 50);
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-/**
- * Strategy: Biblissima has multiple discovery paths:
- *
- * 1. IIIF Collection manifests — nested collections of manifests
- *    https://iiif.biblissima.fr/collections/manifest-list.json
- *
- * 2. Portal search API — structured search with facets
- *    https://portail.biblissima.fr/api/documents?type=manifest&page=1
- *
- * 3. Data dumps / SPARQL endpoint
- *    https://data.biblissima.fr/sparql
- *
- * We'll try the IIIF Collection approach first (most direct), falling back
- * to the portal API, and finally SPARQL if needed.
- */
+// Property IDs in Biblissima Wikibase
+const P_IIIF_MANIFEST = 'P196';   // manifeste IIIF
+const P_SHELFMARK = 'P195';       // cote (shelfmark)
+const P_HELD_BY = 'P194';         // institution
+const P_DIGITIZATION_URL = 'P197'; // numérisation disponible
 
 /**
- * Attempt 1: Walk IIIF Collection manifests
+ * Fetch a batch of entities from Biblissima Wikibase.
  */
-async function discoverViaIIIFCollection(db) {
-  // Biblissima publishes top-level collection manifests that contain
-  // references to individual manifests from partner libraries
-  const collectionUrls = [
-    'https://iiif.biblissima.fr/collections/manifest-list.json',
-    'https://iiif.biblissima.fr/collections/top.json',
-  ];
+async function fetchEntities(qids) {
+  const params = new URLSearchParams({
+    action: 'wbgetentities',
+    ids: qids.join('|'),
+    format: 'json',
+    props: 'claims|labels|descriptions',
+    languages: 'en|fr|la|de',
+  });
 
-  for (const collUrl of collectionUrls) {
-    try {
-      console.log(`Trying IIIF Collection: ${collUrl}`);
-      const res = await fetch(collUrl, {
-        headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
-          'Accept': 'application/json, application/ld+json',
-        },
-        signal: AbortSignal.timeout(30000),
-      });
+  const res = await fetch(`${API_BASE}?${params}`, {
+    headers: {
+      'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly library crawler)',
+    },
+    signal: AbortSignal.timeout(30000),
+  });
 
-      if (!res.ok) {
-        console.log(`  → ${res.status} (skipping)`);
-        continue;
-      }
-
-      const collection = await res.json();
-      console.log(`  → Got collection with ${collection.manifests?.length || collection.items?.length || 0} entries`);
-      return collection;
-    } catch (err) {
-      console.log(`  → Failed: ${err.message}`);
-    }
+  if (!res.ok) {
+    throw new Error(`Wikibase API failed: ${res.status}`);
   }
-  return null;
+
+  return res.json();
 }
 
 /**
- * Attempt 2: Use Biblissima Portal search API
+ * Extract IIIF manifest and metadata from a Wikibase entity.
  */
-async function discoverViaPortalAPI(db, startPage) {
-  console.log('Using Biblissima Portal API...\n');
+function extractManifestFromEntity(qid, entity) {
+  if (!entity || entity.missing !== undefined) return null;
 
-  let page = startPage;
+  const claims = entity.claims || {};
+
+  // P196 = IIIF manifest URL
+  const iiifClaim = claims[P_IIIF_MANIFEST]?.[0];
+  if (!iiifClaim) return null;
+
+  const manifestUrl = iiifClaim.mainsnak?.datavalue?.value;
+  if (!manifestUrl || typeof manifestUrl !== 'string') return null;
+
+  // P195 = shelfmark
+  const shelfmark = claims[P_SHELFMARK]?.[0]?.mainsnak?.datavalue?.value || null;
+
+  // P197 = digitization URL
+  const digitizationUrl = claims[P_DIGITIZATION_URL]?.[0]?.mainsnak?.datavalue?.value || null;
+
+  // P194 = held by (institution Q-ID)
+  const institutionQid = claims[P_HELD_BY]?.[0]?.mainsnak?.datavalue?.value?.id || null;
+
+  // Labels
+  const labels = entity.labels || {};
+  const label = labels.en?.value || labels.fr?.value || labels.la?.value || labels.de?.value || null;
+
+  // Descriptions
+  const descriptions = entity.descriptions || {};
+  const description = descriptions.en?.value || descriptions.fr?.value || null;
+
+  // Try to extract title from label or shelfmark
+  const title = label || shelfmark || `Biblissima ${qid}`;
+
+  // Determine origin library from manifest URL patterns
+  let originLibrary = 'Biblissima partner';
+  if (manifestUrl.includes('vatlib.it')) originLibrary = 'Vatican Library';
+  else if (manifestUrl.includes('gallica.bnf.fr')) originLibrary = 'Bibliothèque nationale de France';
+  else if (manifestUrl.includes('bodleian.ox.ac.uk')) originLibrary = 'Bodleian Library (Oxford)';
+  else if (manifestUrl.includes('bsb-muenchen.de') || manifestUrl.includes('digitale-sammlungen.de')) originLibrary = 'Bayerische Staatsbibliothek';
+  else if (manifestUrl.includes('bl.uk')) originLibrary = 'British Library';
+  else if (manifestUrl.includes('e-codices.unifr.ch')) originLibrary = 'e-codices (Swiss manuscripts)';
+  else if (manifestUrl.includes('nli.org.il')) originLibrary = 'National Library of Israel';
+  else if (manifestUrl.includes('bvmm.irht.cnrs.fr')) originLibrary = 'IRHT (CNRS)';
+  else if (manifestUrl.includes('polona.pl')) originLibrary = 'National Library of Poland';
+  else if (manifestUrl.includes('hab.de')) originLibrary = 'Herzog August Bibliothek';
+
+  return {
+    manifest_url: manifestUrl,
+    source: SOURCE,
+    origin_library: originLibrary,
+    title,
+    author: 'Unknown', // Wikibase cote entities don't store author
+    language: 'Unknown',
+    date_text: null,
+    date_earliest: null,
+    date_latest: null,
+    page_count: null,
+    categories: [],
+    provider_name: `Biblissima (${originLibrary})`,
+    source_url: digitizationUrl || `https://data.biblissima.fr/w/Item:${qid}`,
+    source_id: qid,
+    metadata: {
+      biblissima_qid: qid,
+      shelfmark,
+      institution_qid: institutionQid,
+      description,
+    },
+  };
+}
+
+await withMongo(async (db) => {
+  await ensureIndexes(db);
+
+  console.log(`\n=== Biblissima Wikibase IIIF Discovery ===`);
+  console.log(`Entity range: Q${START_QID} → Q${END_QID}`);
+  console.log(`Batch size: ${BATCH_SIZE}`);
+  console.log('');
+
   let totalDiscovered = 0;
   let totalSkipped = 0;
-  let totalRecords = null;
+  let totalEmpty = 0;
+  let batchNum = 0;
+  let current = START_QID;
+  const totalRange = END_QID - START_QID;
 
-  while (totalDiscovered < MAX_RECORDS) {
-    // The portal API returns documents with IIIF manifest links
-    const url = `${API_BASE}/documents?type=manifest&page=${page}&per_page=100`;
+  while (current < END_QID && totalDiscovered < MAX_RECORDS) {
+    batchNum++;
+
+    // Build batch of Q-IDs
+    const qids = [];
+    for (let i = 0; i < BATCH_SIZE && current + i < END_QID; i++) {
+      qids.push(`Q${current + i}`);
+    }
 
     try {
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
-          'Accept': 'application/json',
-        },
-        signal: AbortSignal.timeout(30000),
-      });
-
-      if (!res.ok) {
-        if (res.status === 404 || res.status === 422) {
-          console.log('No more pages.');
-          break;
-        }
-        console.error(`API request failed: ${res.status}`);
-        await sleep(5000);
-        continue;
-      }
-
-      const data = await res.json();
-      const documents = data.data || data.documents || data.results || data;
-
-      if (!Array.isArray(documents) || documents.length === 0) {
-        console.log('No more results.');
-        break;
-      }
-
-      if (data.total && !totalRecords) {
-        totalRecords = data.total;
-        console.log(`Total documents: ${totalRecords.toLocaleString()}\n`);
-      }
+      const data = await fetchEntities(qids);
+      const entities = data.entities || {};
 
       const candidates = [];
-      for (const doc of documents) {
-        const manifestUrl = doc.manifest_url || doc.iiif_manifest || doc.manifest;
-        if (!manifestUrl) continue;
-
-        const title = doc.title || doc.label || 'Unknown';
-        const author = doc.author || doc.creator || 'Unknown';
-        const date = doc.date || doc.year || null;
-        const { earliest, latest } = parseDateRange(date);
-        const language = normalizeLanguage(doc.language);
-        const originLib = doc.institution || doc.repository || doc.library || 'Biblissima partner';
-
-        candidates.push({
-          manifest_url: manifestUrl,
-          source: SOURCE,
-          origin_library: originLib,
-          title,
-          author,
-          language,
-          date_text: date?.toString() || null,
-          date_earliest: earliest,
-          date_latest: latest,
-          page_count: null,
-          categories: [],
-          provider_name: `Biblissima (${originLib})`,
-          source_url: doc.url || doc.permalink || manifestUrl,
-          source_id: doc.id?.toString() || manifestUrl,
-          metadata: {
-            biblissima_id: doc.id,
-            institution: doc.institution,
-            shelfmark: doc.shelfmark,
-            type: doc.type,
-          },
-        });
+      for (const qid of qids) {
+        const entity = entities[qid];
+        const candidate = extractManifestFromEntity(qid, entity);
+        if (candidate) {
+          candidates.push(candidate);
+        } else {
+          totalEmpty++;
+        }
       }
 
       if (candidates.length > 0) {
@@ -182,140 +194,27 @@ async function discoverViaPortalAPI(db, startPage) {
         totalSkipped += skipped;
       }
 
-      const pct = totalRecords ? ` (${(page * 100 / totalRecords * 100).toFixed(1)}%)` : '';
-      console.log(`Page ${page}: ${documents.length} documents → ${candidates.length} with manifests${pct} | Total: ${totalDiscovered.toLocaleString()}`);
-
-      page++;
-      await sleep(1500);
+      // Progress every 20 batches
+      if (batchNum % 20 === 0) {
+        const pct = ((current - START_QID) / totalRange * 100).toFixed(1);
+        console.log(`[${pct}%] Q${current}: ${totalDiscovered} manifests found, ${totalEmpty} empty entities`);
+      }
 
     } catch (err) {
-      console.error(`Page ${page} failed: ${err.message}`);
-      console.log(`Resume with: --page=${page}`);
-      await sleep(10000);
+      console.error(`Batch ${batchNum} (Q${current}): ${err.message}`);
+      await sleep(5000);
     }
+
+    current += BATCH_SIZE;
+
+    // Rate limit: 1 req/sec (standard MediaWiki courtesy)
+    await sleep(1000);
   }
-
-  return { totalDiscovered, totalSkipped, page };
-}
-
-/**
- * Attempt 3: Use SPARQL endpoint for precise queries
- */
-async function discoverViaSPARQL(db) {
-  console.log('Trying SPARQL endpoint...');
-
-  // Biblissima SPARQL endpoint
-  const sparqlEndpoint = 'https://data.biblissima.fr/sparql';
-
-  // Query for all items with IIIF manifests
-  const query = `
-    PREFIX dcterms: <http://purl.org/dc/terms/>
-    PREFIX sc: <http://iiif.io/api/presentation/2#>
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-    SELECT ?item ?label ?manifest ?date ?creator
-    WHERE {
-      ?item sc:hasManifest ?manifest .
-      OPTIONAL { ?item rdfs:label ?label }
-      OPTIONAL { ?item dcterms:date ?date }
-      OPTIONAL { ?item dcterms:creator ?creator }
-    }
-    LIMIT 100
-  `;
-
-  try {
-    const res = await fetch(sparqlEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
-      },
-      body: `query=${encodeURIComponent(query)}`,
-      signal: AbortSignal.timeout(30000),
-    });
-
-    if (!res.ok) {
-      console.log(`  → SPARQL failed: ${res.status}`);
-      return null;
-    }
-
-    const data = await res.json();
-    console.log(`  → Got ${data.results?.bindings?.length || 0} results`);
-    return data;
-  } catch (err) {
-    console.log(`  → SPARQL failed: ${err.message}`);
-    return null;
-  }
-}
-
-await withMongo(async (db) => {
-  await ensureIndexes(db);
-
-  console.log(`\n=== Biblissima IIIF Discovery ===\n`);
-
-  // Try IIIF Collection first
-  const collection = await discoverViaIIIFCollection(db);
-
-  if (collection) {
-    // Process IIIF Collection manifest
-    const manifests = collection.manifests || collection.items || collection.members || [];
-
-    if (manifests.length > 0) {
-      console.log(`\nProcessing ${manifests.length} manifests from IIIF Collection...\n`);
-
-      const candidates = [];
-      for (const item of manifests) {
-        const manifestUrl = item['@id'] || item.id;
-        if (!manifestUrl) continue;
-
-        const label = extractLabel(item.label) || 'Unknown';
-
-        candidates.push({
-          manifest_url: manifestUrl,
-          source: SOURCE,
-          origin_library: 'Biblissima partner',
-          title: label,
-          author: 'Unknown', // IIIF collections usually don't include author
-          language: 'Unknown',
-          date_text: null,
-          date_earliest: null,
-          date_latest: null,
-          page_count: null,
-          categories: [],
-          provider_name: 'Biblissima',
-          source_url: manifestUrl,
-          source_id: manifestUrl,
-          metadata: { from_collection: true },
-        });
-
-        // Insert in batches of 500
-        if (candidates.length >= 500) {
-          const { inserted, skipped } = await insertCandidates(db, candidates.splice(0, 500));
-          console.log(`  Inserted ${inserted}, skipped ${skipped}`);
-        }
-      }
-
-      if (candidates.length > 0) {
-        const { inserted, skipped } = await insertCandidates(db, candidates);
-        console.log(`  Final batch: Inserted ${inserted}, skipped ${skipped}`);
-      }
-
-      return;
-    }
-  }
-
-  // Fall back to Portal API
-  const { totalDiscovered, totalSkipped, page } = await discoverViaPortalAPI(db, START_PAGE);
 
   console.log(`\n=== Discovery Complete ===`);
-  console.log(`New candidates: ${totalDiscovered.toLocaleString()}`);
+  console.log(`Manifests found: ${totalDiscovered.toLocaleString()}`);
   console.log(`Already known: ${totalSkipped.toLocaleString()}`);
-
-  if (totalDiscovered === 0 && totalSkipped === 0) {
-    // Try SPARQL as last resort
-    console.log('\nPortal API returned no results. Trying SPARQL...');
-    await discoverViaSPARQL(db);
-  }
+  console.log(`Empty entities: ${totalEmpty.toLocaleString()}`);
+  console.log(`Entity range scanned: Q${START_QID} → Q${current}`);
 
 }, { noTimeout: true });
