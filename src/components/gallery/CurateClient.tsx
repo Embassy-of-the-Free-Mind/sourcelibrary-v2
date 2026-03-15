@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, ArrowUpDown } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -86,6 +86,10 @@ export default function CurateClient() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [infoId, setInfoId] = useState<string | null>(null);
   const [excludedBooks, setExcludedBooks] = useState<Set<string>>(new Set());
+
+  // Sort
+  const [sortMode, setSortMode] = useState<'default' | 'random' | 'likes' | 'time'>('default');
+  const [randomSeed, setRandomSeed] = useState(0);
 
   // Filters
   const [minQuality, setMinQuality] = useState(0.5);
@@ -355,12 +359,33 @@ export default function CurateClient() {
     }
   }, [likedIds, downvotedIds]);
 
-  // Filter displayed images
-  const displayImages = showLikedOnly
+  // Filter and sort displayed images
+  const filteredImages = showLikedOnly
     ? images.filter(img => likedIds.has(getImageId(img)))
     : showDownvotedOnly
     ? images.filter(img => downvotedIds.has(getImageId(img)))
     : images;
+
+  const displayImages = (() => {
+    if (sortMode === 'default') return filteredImages;
+    const sorted = [...filteredImages];
+    if (sortMode === 'random') {
+      // Seeded shuffle so it's stable until user clicks again
+      for (let i = sorted.length - 1; i > 0; i--) {
+        const j = Math.floor(((Math.sin(i + randomSeed) + 1) / 2) * (i + 1));
+        [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
+      }
+    } else if (sortMode === 'likes') {
+      sorted.sort((a, b) => {
+        const aLiked = likedIds.has(getImageId(a)) ? 1 : 0;
+        const bLiked = likedIds.has(getImageId(b)) ? 1 : 0;
+        return bLiked - aLiked;
+      });
+    } else if (sortMode === 'time') {
+      sorted.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+    }
+    return sorted;
+  })();
 
   // Lightbox keyboard navigation
   useEffect(() => {
@@ -420,6 +445,55 @@ export default function CurateClient() {
             >
               <Filter className="w-3.5 h-3.5" />
               Filters
+            </button>
+
+            {/* Sort buttons */}
+            <button
+              onClick={() => {
+                setSortMode('random');
+                setRandomSeed(s => s + 1);
+              }}
+              className={`
+                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
+                border transition-colors
+                ${sortMode === 'random'
+                  ? 'border-accent-rust/30 bg-accent-rust/5 text-accent-rust'
+                  : 'border-border-light text-text-secondary hover:border-border-medium'
+                }
+              `}
+            >
+              <Shuffle className="w-3.5 h-3.5" />
+              Random
+            </button>
+
+            <button
+              onClick={() => setSortMode(s => s === 'likes' ? 'default' : 'likes')}
+              className={`
+                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
+                border transition-colors
+                ${sortMode === 'likes'
+                  ? 'border-accent-rust/30 bg-accent-rust/5 text-accent-rust'
+                  : 'border-border-light text-text-secondary hover:border-border-medium'
+                }
+              `}
+            >
+              <Heart className="w-3.5 h-3.5" />
+              By likes
+            </button>
+
+            <button
+              onClick={() => setSortMode(s => s === 'time' ? 'default' : 'time')}
+              className={`
+                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
+                border transition-colors
+                ${sortMode === 'time'
+                  ? 'border-accent-rust/30 bg-accent-rust/5 text-accent-rust'
+                  : 'border-border-light text-text-secondary hover:border-border-medium'
+                }
+              `}
+            >
+              <Clock className="w-3.5 h-3.5" />
+              By year
             </button>
 
             {/* Show liked only toggle */}
