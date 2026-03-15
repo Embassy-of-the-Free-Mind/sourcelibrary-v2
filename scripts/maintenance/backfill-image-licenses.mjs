@@ -24,18 +24,16 @@ let skipped = 0;
 let errors = 0;
 
 // ── 1. EFM books: set to publicdomain ──
-const efmResult = await books.updateMany(
-  { 'image_source.license': 'unknown', 'image_source.provider': 'efm' },
-  DRY_RUN ? [{ $set: {} }] : [{ $set: { 'image_source.license': 'publicdomain', 'image_source.license_url': '' } }],
-);
 const efmCount = await books.countDocuments({ 'image_source.license': 'unknown', 'image_source.provider': 'efm' });
-console.log(`EFM books: ${DRY_RUN ? efmCount + ' would be set to publicdomain' : efmResult.modifiedCount + ' updated to publicdomain'}`);
-if (!DRY_RUN) {
-  const efmActual = await books.updateMany(
+if (DRY_RUN) {
+  console.log(`EFM books: ${efmCount} would be set to publicdomain`);
+} else {
+  const efmResult = await books.updateMany(
     { 'image_source.license': 'unknown', 'image_source.provider': 'efm' },
     { $set: { 'image_source.license': 'publicdomain' } },
   );
-  updated += efmActual.modifiedCount;
+  updated += efmResult.modifiedCount;
+  console.log(`EFM books: ${efmResult.modifiedCount} updated to publicdomain`);
 }
 
 // ── 2. IIIF books: check manifest rights field ──
@@ -84,7 +82,14 @@ for (let i = 0; i < iiifBooks.length; i++) {
       || manifest.attribution;
 
     if (rights) {
-      const license = RIGHTS_MAP[rights] || rights;
+      let license = RIGHTS_MAP[rights] || rights;
+      // Handle text-based rights statements
+      if (typeof license === 'string') {
+        if (/public.?domain/i.test(license)) license = 'publicdomain';
+        // Strip HTML tags from embedded rights strings
+        license = license.replace(/<[^>]+>/g, '').trim();
+        if (license.length > 100) license = license.substring(0, 100); // truncate verbose statements
+      }
       const licenseUrl = typeof rights === 'string' && rights.startsWith('http') ? rights : '';
 
       if (!DRY_RUN) {
