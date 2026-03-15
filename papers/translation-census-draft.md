@@ -203,23 +203,69 @@ The cost of running this verification was approximately $0.006 per book (Gemini 
 
 ## 5. Matching USTC editions against the translation catalog
 
-### 5.1 Matching strategy
+### 5.1 The alignment problem
 
-We match the USTC against our translation catalog at the author level. For each distinct author surname in the USTC, we check whether that surname appears among the authors in our translation catalog. If it does, we count the number of distinct works by that author in the USTC, and the number of distinct translated works by that author in the catalog, and take the minimum of the two as an upper-bound estimate of translated works.
+The central methodological challenge of this census is matching records across two databases — the USTC (what was printed) and our translation catalog (what has been translated) — that describe the same intellectual works using different naming conventions, different title forms, different dates, and different levels of granularity.
 
-This approach has three properties worth noting. First, it overstates translation coverage, because it assumes that every translated work by a matched author corresponds to a USTC work. In practice, a catalog entry may describe a translation of a work that is not in the USTC (e.g., a medieval manuscript tradition that was never printed, or a work printed after 1700). Second, it understates coverage for authors whose names appear in different forms in the two databases. Third, it operates at the surname level, which creates false matches for common surnames (e.g., "Thomas" matching both Thomas Aquinas and Thomas More).
+Consider a concrete example:
 
-### 5.2 Name normalization
+- **USTC record:** "Ovidius Naso, Publius" / "Metamorphoseon libri XV" / Latin / 1502 / Venice
+- **LOC MARC record:** "Ovid, 43 B.C.-17 or 18 A.D." / "Metamorphoses" / English / translated from Latin / 1955 / Penguin
 
-A significant challenge is that the USTC records authors in their Latin or original-language form ("Ovidius Naso, Publius"), while English-language translation catalogs use anglicized forms ("Ovid"). We constructed a hand-verified alias table mapping 120 Latin and vernacular author names to their English equivalents. This table covers all major classical, patristic, medieval, and Renaissance authors, but is not exhaustive for the long tail of minor figures.
+These obviously describe the same intellectual work. But the author names are in different forms, the titles are in different languages, and the publication dates are 453 years apart. A naive string match would fail entirely.
+
+The problem goes deeper than name normalization. Library science distinguishes four levels of bibliographic identity, formalized in the FRBR framework (Functional Requirements for Bibliographic Records) [7]:
+
+- **Work:** the abstract intellectual creation (Ovid's *Metamorphoses*)
+- **Expression:** a specific realization of the work (the original Latin text; Golding's 1567 English translation; Dryden's 1717 English translation)
+- **Manifestation:** a specific published edition (the 1502 Venice printing; the 1955 Penguin paperback)
+- **Item:** a specific physical copy (the one in the Bodleian Library)
+
+Both the USTC and our translation catalog operate at the **Manifestation** level — they record specific editions and printings. But the question we want to answer ("has this work been translated?") operates at the **Work** level. Bridging this gap — determining which Manifestations are Expressions of the same Work — is a well-known unsolved problem in library science, sometimes called the "work identification problem."
+
+Several cases make this particularly difficult for our census:
+
+1. **Partial translations.** "Selected Letters of Cicero" translates some but not all of Cicero's letters. Which of Cicero's 3,448 USTC title records does this cover? The answer is indeterminate without reading both the translation and the USTC records.
+
+2. **Commentaries.** Cristoforo Landino's commentary on Dante's *Commedia* (USTC) is a distinct intellectual work from Dante's *Commedia* itself. The *Commedia* has been translated into English over 100 times; Landino's commentary has never been translated. A census that matches "Dante" in the USTC to "Dante" in the catalog would incorrectly mark the commentary as translated.
+
+3. **Translations of translations.** Marsilio Ficino's Latin translation of Plato is itself a distinct work — a Renaissance intellectual product with its own scholarly significance. An English translation of Jowett's Plato (from the Greek) does not make Ficino's Latin Plato "translated." Our LLM verification system handles this case explicitly, instructing the model that "a translation from a different source language does NOT count."
+
+4. **Compilations.** A single USTC volume may contain multiple works by different authors. The 1497 Aldine edition that includes Ficino's *Liber de Voluptate* also contains works by Iamblichus, Proclus, Porphyry, Synesius, and others. One catalog record; thirteen works.
+
+5. **Title variation.** The USTC records the same work under dozens of variant titles. Lucretius's *De Rerum Natura* appears as "De Rerum Natura," "T. Lucretii Cari De Rerum Natura Libri Sex," "De Natura Rerum," and other forms. Each counts as a "distinct work" in our methodology, inflating the denominator.
+
+### 5.2 Our approach and its limitations
+
+We do not attempt to solve the work identification problem in general. Instead, we match at the **author level** and estimate work-level coverage from the ratio of catalog entries to USTC entries per author.
+
+For each distinct author surname in the USTC, we check whether that surname appears in our translation catalog (after name normalization — see below). If it does, we count the number of distinct works by that author in each database and take the minimum as an upper-bound estimate of translated works for that author.
+
+This approach has known limitations:
+
+- It **overstates coverage** for prolific authors, because it assumes every catalog entry corresponds to a distinct USTC work. In practice, multiple catalog entries may describe different editions of the same translation (the Erasmus problem: 167 catalog entries for ~35 distinct works).
+
+- It **cannot detect partial coverage** at the work level. If Cicero has 284 catalog entries and 3,448 USTC entries, we count 284 as translated — but we cannot determine which 284 of the 3,448 USTC works those correspond to.
+
+- It **misses the commentary/compilation distinction entirely.** A translation of Dante's *Commedia* is counted as evidence that "Dante" has been translated, which the census then incorrectly applies to Landino's Dante commentary.
+
+- It **produces false matches for common surnames** (e.g., "Thomas" matching both Thomas Aquinas and Thomas More, "William" matching multiple authors).
+
+A more rigorous approach would use title-level matching — comparing USTC titles against catalog titles using fuzzy string matching, embedding similarity, or FRBR-style work clustering. We have not implemented this because the title normalization problem (matching "Metamorphoseon libri XV" to "Metamorphoses") is itself non-trivial across languages and centuries of bibliographic convention. We consider this the most important area for methodological improvement in future work.
+
+### 5.3 Name normalization
+
+The USTC records authors in their Latin or original-language form ("Ovidius Naso, Publius"), while English-language translation catalogs use anglicized forms ("Ovid"). We constructed a hand-verified alias table mapping 120 Latin and vernacular author names to their English equivalents. This table covers all major classical, patristic, medieval, and Renaissance authors, but is not exhaustive for the long tail of minor figures.
 
 Without this normalization, major authors including Ovid, Virgil, Horace, Augustine, Thomas Aquinas, and Terence are missed entirely, producing a Latin coverage estimate of 0.74%. With normalization, the estimate rises to approximately 1% (using the existing catalog alone) and approximately 5% (with LOC MARC data included).
 
-### 5.3 Deduplication
+The alias table was constructed by manual inspection of the top 200 USTC authors by edition count, cross-referenced against the catalog. It is certainly incomplete — there are 49,306 distinct author surnames in the USTC's Latin editions alone, and aliases were only constructed for authors known to have English translations. This means our census is biased toward detecting translations of well-known authors and is likely to miss translations of minor figures whose names may appear in variant forms.
+
+### 5.4 Deduplication
 
 Both the USTC and the translation catalog contain duplicate entries. The USTC records multiple editions of the same work; we address this by counting distinct (author, title) pairs rather than editions. The translation catalog records multiple editions of the same translation (e.g., seven different publications of Ovid's *Metamorphoses*); we address this by counting distinct works per author rather than total catalog entries.
 
-Deduplication between the LOC MARC data and our supplementary catalogs is more difficult, because the same translation may appear under slightly different titles, author name forms, or publication dates. We deduplicate on (author surname, title substring) pairs, accepting that some duplicates will survive and some distinct works will be incorrectly merged.
+Deduplication between the LOC MARC data and our supplementary catalogs is more difficult, because the same translation may appear under slightly different titles, author name forms, or publication dates. We deduplicate on (author surname, title substring) pairs, accepting that some duplicates will survive and some distinct works will be incorrectly merged. We estimate that residual duplication inflates our translation count by 10-20%, while over-aggressive merging may suppress it by 5-10%. These errors partially cancel.
 
 ## 6. Results and validation
 
