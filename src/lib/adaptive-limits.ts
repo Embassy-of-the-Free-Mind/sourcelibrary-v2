@@ -111,18 +111,22 @@ function gradeCronDuration(ms: number): HealthGrade {
   return 'healthy';
 }
 
-/** Grade combined SQS queue depth (OCR + translate) */
-function gradeSqsDepth(combined: number): HealthGrade {
-  if (combined > 8000) return 'critical';
-  if (combined > 4000) return 'degraded';
-  return 'healthy';
-}
-
 /** Composite: worst of four signals */
 function compositeGrade(latency: HealthGrade, jobs: HealthGrade, cron: HealthGrade, sqs: HealthGrade): HealthGrade {
   const grades = [latency, jobs, cron, sqs];
   if (grades.includes('critical')) return 'critical';
   if (grades.includes('degraded')) return 'degraded';
+  return 'healthy';
+}
+
+/** Grade OCR and translation SQS queues independently */
+function gradeSqsDepthByQueue(depth: number, type: 'ocr' | 'translate'): HealthGrade {
+  // Per-queue thresholds (lower than combined since they're independent)
+  const thresholds = type === 'ocr'
+    ? { degraded: 3000, critical: 6000 }
+    : { degraded: 2000, critical: 5000 };
+  if (depth > thresholds.critical) return 'critical';
+  if (depth > thresholds.degraded) return 'degraded';
   return 'healthy';
 }
 
@@ -208,22 +212,29 @@ export async function getAdaptiveLimits(
   } catch { /* non-critical */ }
 
   // ── Signal 4: SQS queue depth (passed in from cron) ──
-  const sqsCombined = (sqsDepths?.ocr ?? 0) + (sqsDepths?.translate ?? 0);
+  // Grade each queue independently so OCR backlog doesn't starve translation
+  const sqsOcrDepth = sqsDepths?.ocr ?? 0;
+  const sqsTranslateDepth = sqsDepths?.translate ?? 0;
+  const sqsCombined = sqsOcrDepth + sqsTranslateDepth;
+  const sqsOcrGrade = gradeSqsDepthByQueue(sqsOcrDepth, 'ocr');
+  const sqsTranslateGrade = gradeSqsDepthByQueue(sqsTranslateDepth, 'translate');
+  // For the overall grade, use the worse of the two queue grades
+  const sqsGrade = compositeGrade(sqsOcrGrade, sqsTranslateGrade, 'healthy', 'healthy');
 
   // ── Grade ──
   const grade = compositeGrade(
     gradeLatency(findMs, countMs),
     gradeJobs(activeJobs),
     gradeCronDuration(lastCronMs),
-    gradeSqsDepth(sqsCombined),
+    sqsGrade,
   );
 
   const consecutiveHealthy = grade === 'healthy' ? (prevHealth?.consecutive_healthy ?? 0) + 1 : 0;
   const consecutiveDegraded = grade === 'degraded' ? (prevHealth?.consecutive_degraded ?? 0) + 1 : 0;
 
-  // ── Active cancel: kill pending jobs on degraded/critical to reduce in-flight pressure ──
+  // ── Active cancel: kill pending jobs only on critical (not degraded — proportional reduction is enough) ──
   let jobsCancelled = 0;
-  if (!locked && (grade === 'critical' || grade === 'degraded')) {
+  if (!locked && grade === 'critical') {
     jobsCancelled = await cancelPendingJobs(db, logger);
   }
 
@@ -246,22 +257,32 @@ export async function getAdaptiveLimits(
   let adjustment = 'none';
 
   if (!locked) {
-    if (grade === 'critical' || grade === 'degraded') {
-      // Slam to minimums — both degraded and critical get aggressive response.
-      // Mar 10 outage showed 50% cuts were too slow to prevent cascading failure.
+    if (grade === 'critical') {
+      // Slam to minimums — critical means DB is at risk of saturation.
+      // Mar 10 outage showed this level needs aggressive response.
       for (const [key, range] of Object.entries(LIMIT_RANGES)) {
         newLimits[key as LimitKey] = range.min;
       }
-      adjustment = grade === 'critical' ? 'critical_slam_to_min' : 'degraded_slam_to_min';
-    } else if (grade === 'healthy' && consecutiveHealthy >= 2) {
-      // Ramp up by 30%
+      adjustment = 'critical_slam_to_min';
+    } else if (grade === 'degraded') {
+      // Proportional reduction: cut by 50% instead of slamming to min.
+      // This lets the system find a steady equilibrium rather than
+      // oscillating between burst and flatline.
       for (const key of Object.keys(LIMIT_RANGES) as LimitKey[]) {
-        newLimits[key] = Math.round(currentLimits[key] * 1.3);
+        newLimits[key] = Math.round(currentLimits[key] * 0.5);
       }
       newLimits = clampLimits(newLimits);
-      adjustment = 'healthy_ramp_30pct';
+      adjustment = 'degraded_reduce_50pct';
+    } else if (grade === 'healthy' && consecutiveHealthy >= 1) {
+      // Ramp up by 20% after 1 healthy cycle (was 30% after 2 cycles).
+      // Smaller step + faster trigger = smoother ramp without overshooting.
+      for (const key of Object.keys(LIMIT_RANGES) as LimitKey[]) {
+        newLimits[key] = Math.round(currentLimits[key] * 1.2);
+      }
+      newLimits = clampLimits(newLimits);
+      adjustment = 'healthy_ramp_20pct';
     }
-    // else: healthy but first cycle → hold steady
+    // else: healthy first cycle → hold steady (observation period)
   }
 
   // ── Persist ──
@@ -285,9 +306,10 @@ export async function getAdaptiveLimits(
 
   // Log decision
   if (logger && adjustment !== 'none') {
-    logger.decision('backpressure', `adaptive: ${adjustment} (grade=${grade}, find=${findMs}ms, count=${countMs}ms, jobs=${activeJobs}, cron=${lastCronMs}ms, sqs=${sqsCombined}${jobsCancelled ? `, cancelled=${jobsCancelled}` : ''})`, {
+    logger.decision('backpressure', `adaptive: ${adjustment} (grade=${grade}, find=${findMs}ms, count=${countMs}ms, jobs=${activeJobs}, cron=${lastCronMs}ms, sqs_ocr=${sqsOcrDepth}, sqs_translate=${sqsTranslateDepth}${jobsCancelled ? `, cancelled=${jobsCancelled}` : ''})`, {
       grade, find_ms: findMs, count_ms: countMs, active_jobs: activeJobs, last_cron_duration_ms: lastCronMs,
-      sqs_combined_depth: sqsCombined, jobs_cancelled: jobsCancelled, adjustment,
+      sqs_ocr_depth: sqsOcrDepth, sqs_translate_depth: sqsTranslateDepth, sqs_combined_depth: sqsCombined,
+      jobs_cancelled: jobsCancelled, adjustment,
     });
   }
 
