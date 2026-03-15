@@ -59,7 +59,7 @@ function HeroSignUp() {
           className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
           style={{ background: 'var(--accent-rust)', color: '#fff' }}
         >
-          {loading ? 'Sending...' : 'Join free'}
+          {loading ? 'Sending...' : 'Join us'}
         </button>
       </form>
       <div className="flex items-center gap-4 mt-4">
@@ -146,8 +146,9 @@ export default function HeroSection() {
           >
             A New Renaissance of Ancient Wisdom
           </h1>
+          <p className="font-serif italic text-white/70 text-lg md:text-xl tracking-wide mb-4">ad fontes</p>
           <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            The world&rsquo;s largest library of translations of ancient texts.{status !== 'authenticated' && ' Join us.'}
+            The world&rsquo;s largest library of translations of ancient texts.
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}

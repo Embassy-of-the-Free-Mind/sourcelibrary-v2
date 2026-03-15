@@ -85,7 +85,7 @@ export default function GlobalFooter() {
             />
           </Link>
           <p className="font-serif italic text-white/50 text-lg">
-            Ancient Wisdom for the Future
+            ad fontes
           </p>
         </div>
 
