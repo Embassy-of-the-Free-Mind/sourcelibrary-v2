@@ -42,65 +42,59 @@ function translationToTypst(text) {
   // Remove AI preambles
   out = out.replace(/^(?:Okay,?\s*)?(?:Here(?:'s| is) (?:the|my) (?:translation|modernization|transcription)[\s\S]*?:\s*\n+)/i, '');
 
-  // Helper: clean raw tag content for use in footnotes
-  function cleanForFootnote(text) {
-    let s = text.trim();
-    s = s.replace(/<unclear>[\s\S]*?<\/unclear>/gi, '[?]');
-    s = s.replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
-    s = s.replace(/<note>([\s\S]*?)<\/note>/gi, '($1)');
-    s = s.replace(/<\/?[a-z][a-z0-9-]*\s*\/?>/gi, '');
-    s = s.replace(/->([\s\S]*?)<-/g, '$1');
-    s = s.replace(/\*\*(.+?)\*\*/g, '$1');
-    s = s.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');
-    s = s.replace(/\n+/g, ' ');
-    return s.trim();
-  }
+  // Escape Typst special characters FIRST (before adding Typst markup)
+  // Characters that need escaping in Typst: # * _ @ $ \ < > ~
+  // But we need to preserve our tag processing, so escape after tag conversion
+  // Actually, let's process tags first, then escape the remaining text
 
-  // Extract margin notes FIRST (they may contain <note> tags)
-  // Process margins before notes so inner <note> tags get flattened
+  // Convert <note>...</note> to footnote markers
+  // We'll use a placeholder, then escape, then convert back
   const footnotes = [];
+  out = out.replace(/<note>([\s\S]*?)<\/note>/gi, (_, content) => {
+    const id = `%%FN${footnotes.length}%%`;
+    footnotes.push(content.trim());
+    return id;
+  });
+
+  // Convert <margin>...</margin> to footnotes too
+  // Process inner notes first, then wrap the whole margin as a footnote
   out = out.replace(/<margin>([\s\S]*?)<\/margin>/gi, (_, content) => {
-    const clean = cleanForFootnote(content);
+    let clean = content.trim().replace(/\n+/g, ' ');
+    clean = clean.replace(/<unclear>[\s\S]*?<\/unclear>/gi, '[?]');
+    // Strip any <note> tags inside margins — flatten them into the margin text
+    clean = clean.replace(/<note>([\s\S]*?)<\/note>/gi, '($1)');
+    // Remove remaining tags
+    clean = clean.replace(/<\/?[a-z][a-z0-9-]*\s*\/?>/gi, '');
     if (!clean || clean.length < 3) return '';
     const id = `%%FN${footnotes.length}%%`;
     footnotes.push(`Marginal note: ${clean}`);
     return id;
   });
 
-  // Extract <note>...</note> as footnotes
-  out = out.replace(/<note>([\s\S]*?)<\/note>/gi, (_, content) => {
-    const clean = cleanForFootnote(content);
-    if (!clean) return '';
-    const id = `%%FN${footnotes.length}%%`;
-    footnotes.push(clean);
-    return id;
-  });
-
   // Convert <unclear>...</unclear>
   out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[?$1]');
 
-  // Strip <term> tags (just keep content, no formatting)
-  out = out.replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
+  // Convert <term>...</term> to italic
+  out = out.replace(/<term>([\s\S]*?)<\/term>/gi, '_$1_');
 
   // Remove <column-break/>
   out = out.replace(/<column-break\s*\/?>/gi, '\n\n');
 
-  // Remove arrow tags (paired and unpaired)
+  // Remove arrow tags
   out = out.replace(/->([\s\S]*?)<-/g, '$1');
-  out = out.replace(/->\s*/g, '');
-  out = out.replace(/\s*<-/g, '');
 
   // Remove any remaining XML tags
   out = out.replace(/<\/?[a-z][a-z0-9-]*\s*\/?>/gi, '');
 
-  // Strip all markdown formatting
-  out = out.replace(/^#{1,6}\s+/gm, '');
-  out = out.replace(/^\s*[-*]{3,}\s*$/gm, '');
-  out = out.replace(/\*\*(.+?)\*\*/g, '$1');
-  out = out.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');
-  out = out.replace(/^[_]{3,}.*$/gm, '');
+  // Strip all markdown formatting from translations
+  out = out.replace(/^#{1,6}\s+/gm, '');                                         // heading markers
+  out = out.replace(/^\s*[-*]{3,}\s*$/gm, '');                                   // horizontal rules
+  out = out.replace(/\*\*(.+?)\*\*/g, '$1');                                     // bold
+  out = out.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');               // italic
+  out = out.replace(/^[_]{3,}.*$/gm, '');                                        // lines of underscores
+  out = out.replace(/->([\s\S]*?)<-/g, '$1');                                    // arrow tags
 
-  // Now escape Typst special chars (but not our %%FN%% placeholders)
+  // Now escape Typst special chars in the text (but not in our placeholders)
   out = escapeTypst(out);
 
   // Convert footnote placeholders to Typst footnotes
@@ -176,22 +170,8 @@ function isContentPage(page) {
   if (!page.translation?.data) return false;
   if (page.page_type && SKIP_PAGE_TYPES.has(page.page_type)) return false;
   const text = page.translation.data;
-  // Skip physical descriptions of covers, spines, blank pages
   const isPhysicalDescription = /\b(blank\s+(page|sheet)|book\s+spine|front\s+cover|back\s+cover|binding\s+(is|shows|has)|no\s+text\s+(is\s+)?visible|devoid\s+of\s+(any\s+)?text|leather\s+sections|marbled\s+pattern)\b/i.test(text);
-  if (isPhysicalDescription && text.length < 800) return false;
-  // Skip corrupted/hallucinated pages (repetitive text)
-  // Check for repeated n-grams (catches "the page of the title of the page...")
-  const words = text.split(/\s+/);
-  if (words.length > 30) {
-    // Check bigram repetition
-    const bigrams = {};
-    for (let i = 0; i < words.length - 1; i++) {
-      const bg = `${words[i]} ${words[i+1]}`.toLowerCase();
-      bigrams[bg] = (bigrams[bg] || 0) + 1;
-    }
-    const maxBigram = Math.max(...Object.values(bigrams));
-    if (maxBigram > 10 && maxBigram / (words.length / 2) > 0.15) return false;
-  }
+  if (isPhysicalDescription && text.length < 500) return false;
   return true;
 }
 
