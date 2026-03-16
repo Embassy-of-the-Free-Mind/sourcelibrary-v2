@@ -2,30 +2,6 @@
   "regions": ["fra1"],
   "crons": [
     {
-      "path": "/api/cron/post-import-pipeline",
-      "schedule": "0 * * * *"
-    },
-    {
-      "path": "/api/cron/enrich-books",
-      "schedule": "0 * * * *"
-    },
-    {
-      "path": "/api/cron/process-batches",
-      "schedule": "0 */2 * * *"
-    },
-    {
-      "path": "/api/cron/submit-batch-ocr",
-      "schedule": "0 3 * * *"
-    },
-    {
-      "path": "/api/cron/sync-page-counts",
-      "schedule": "0 */6 * * *"
-    },
-    {
-      "path": "/api/cron/sync-gallery-images",
-      "schedule": "0 */6 * * *"
-    },
-    {
       "path": "/api/cron/archive-ocr",
       "schedule": "0 */4 * * *"
     },
