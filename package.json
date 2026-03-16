@@ -43,6 +43,7 @@
     "next-auth": "^5.0.0-beta.30",
     "nodemailer": "^8.0.1",
     "openai": "^6.10.0",
+    "pdfkit": "^0.18.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-leaflet": "^5.0.0",

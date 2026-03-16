@@ -23,6 +23,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
+import { generateScholarlyPdf } from '../lib/scholarly-pdf.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -478,7 +479,21 @@ async function mintOneBook(db, book) {
     .join('\n\n\n');
   const txtFilename = `${book.id}-translation-v${edition.version}.txt`;
   await zenodoUploadFile(draft.id, txtFilename, translationText);
-  steps.push(`zenodo: uploaded ${txtFilename}`);
+  steps.push(`zenodo: uploaded txt`);
+
+  // Generate and upload scholarly PDF
+  try {
+    const pdfBuffer = await generateScholarlyPdf(book, translatedPages, {
+      introduction: edition.front_matter?.introduction,
+      methodology: edition.front_matter?.methodology,
+    });
+    const pdfFilename = `${book.slug || book.id}-scholarly-v${edition.version}.pdf`;
+    await zenodoUploadFile(draft.id, pdfFilename, pdfBuffer);
+    steps.push(`zenodo: uploaded pdf (${(pdfBuffer.length / 1024 / 1024).toFixed(1)}MB)`);
+  } catch (pdfErr) {
+    steps.push(`pdf: failed (${pdfErr.message})`);
+    // Non-fatal — DOI still valid with just the txt
+  }
 
   // Publish (mints DOI)
   const published = await zenodoPublish(draft.id);
