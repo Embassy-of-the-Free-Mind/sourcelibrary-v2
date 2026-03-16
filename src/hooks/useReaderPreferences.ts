@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEY = 'sl_reader_prefs';
 const MIN_SIZE = 14;
-const MAX_SIZE = 24;
+const MAX_SIZE = 32;
 const STEP = 2;
 const DEFAULT_SIZE = 18;
 
