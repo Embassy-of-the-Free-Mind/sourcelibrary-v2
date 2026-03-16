@@ -229,9 +229,57 @@ export default function HistoryOfClassificationPage() {
           of these as first-class dimensions. Our faceted system has six.
         </p>
 
-        {/* --- Phase 6: The Cognitive Tree --- */}
+        {/* --- Phase 6: The Dichotomous Method --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          6. The Cognitive Tree: Francis Bacon (1623)
+          6. The Dichotomous Method: Peter Ramus (1543)
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Two years before Gessner&rsquo;s catalog, a Parisian professor launched a frontal assault
+          on Aristotelian logic. Peter Ramus published{' '}
+          <Link href="/book/dialecticae-institutiones-ramus" className="text-accent-rust hover:underline">
+            <em>Dialecticae Institutiones</em>
+          </Link>{' '}
+          (1543), proposing that all knowledge could be organized through <strong>dichotomous
+          division</strong>: take any subject, split it into two parts, split each part into two,
+          and continue until you reach indivisible units.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Where Porphyry&rsquo;s tree was metaphysical (Substance &rarr; Corporeal &rarr; Living...),
+          Ramus&rsquo;s tree was <em>pedagogical</em>. He wasn&rsquo;t classifying reality &mdash;
+          he was classifying <em>how to teach</em> reality. Every field of knowledge gets a branching
+          outline, moving from the most general definition to the most specific applications.
+          These &ldquo;Ramist tables&rdquo; became the dominant format for organizing textbooks across
+          Protestant Europe.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We have nine Ramus texts in the collection, including the{' '}
+          <Link href="/book/dialecticae-institutiones-ramus" className="text-accent-rust hover:underline">
+            <em>Dialecticae Institutiones</em>
+          </Link>{' '}
+          (320 pages), the expanded{' '}
+          <Link href="/book/p-rami-dialectica-ramus" className="text-accent-rust hover:underline">
+            <em>Dialectica</em>
+          </Link>{' '}
+          (612 pages), and his{' '}
+          <Link href="/book/p-rami-arithmeticae-libri-duo-geometriae-septem-et-viginti-ramus" className="text-accent-rust hover:underline">
+            <em>Arithmeticae</em> and <em>Geometriae</em>
+          </Link>{' '}
+          &mdash; all untranslated, all applying the same dichotomous method to different subjects.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-12">
+          The Ramist method was controversial &mdash; Ramus was murdered in the St. Bartholomew&rsquo;s Day
+          Massacre &mdash; but it conquered the curriculum. It became the standard way knowledge was
+          organized in English and Dutch universities, and from there it crossed the Atlantic.
+          More on that shortly.
+        </p>
+
+        {/* --- Phase 7: The Cognitive Tree --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          7. The Cognitive Tree: Francis Bacon (1623)
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -269,9 +317,45 @@ export default function HistoryOfClassificationPage() {
           embedding analysis reveals what the library doesn&rsquo;t have, and that drives curation.
         </p>
 
-        {/* --- Phase 7: The Pedagogical Ladder --- */}
+        {/* --- Phase 8: The Empirical Superstructure --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          7. The Pedagogical Ladder: Comenius (1651)
+          8. The Empirical Superstructure: Robert Hooke (1705)
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Bacon drew the tree. Robert Hooke tried to fill it in. In his{' '}
+          <Link href="/book/the-posthumous-works-of-robert-hooke-hooke" className="text-accent-rust hover:underline">
+            <em>Posthumous Works</em>
+          </Link>{' '}
+          (1705, 594 pages, 10 translated), Hooke included &ldquo;A General Scheme, or Idea of the Present
+          State of Natural Philosophy&rdquo; &mdash; an attempt to build what he called the &ldquo;superstructure&rdquo;
+          on Bacon&rsquo;s foundation.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Where Bacon organized knowledge by <em>cognitive faculty</em>, Hooke organized nature by
+          <strong> observational method</strong>: what instruments you need, what senses are involved,
+          what scale of phenomena you&rsquo;re investigating. It&rsquo;s the first attempt at what we&rsquo;d
+          now call a <em>scientific ontology</em> &mdash; a systematic catalog of everything that can be
+          observed, measured, and investigated, organized by the methodology required to study it.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Hooke&rsquo;s classification covered light, sound, motion, gravity, magnetism, weather,
+          the properties of materials, and the structures of living things. Each domain was broken
+          down by the type of experiment needed to investigate it. This is a different axis than
+          any of his predecessors: not <em>what</em> knowledge is about (Porphyry), not <em>what
+          the mind does</em> (Bacon), but <em>what tools you need</em>.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-12">
+          The &ldquo;General Scheme&rdquo; section remains mostly untranslated in our collection &mdash;
+          a priority for OCR and translation.
+        </p>
+
+        {/* --- Phase 9: The Pedagogical Ladder --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          9. The Pedagogical Ladder: Comenius (1651)
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -295,9 +379,47 @@ export default function HistoryOfClassificationPage() {
           a <em>prerequisite</em> dimension: this text makes sense only after you&rsquo;ve read something more basic.
         </p>
 
-        {/* --- Phase 8: Modern Library Classification --- */}
+        {/* --- Phase 10: The American Curriculum --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          8. The Decimal System: Melvil Dewey (1876)
+          10. The American Curriculum: Samuel Johnson of Yale (1752)
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Remember those Ramist tables? They crossed the Atlantic. Samuel Johnson (1696&ndash;1772) &mdash;
+          not the English lexicographer, but the first Anglican minister in Connecticut and first
+          president of King&rsquo;s College (now Columbia University) &mdash; created an{' '}
+          <em>Encyclopaedia of Philosophy</em> that organized all knowledge into a systematic tree
+          blending Ramist dichotomy with Lockean empiricism and Berkeleyan idealism.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Johnson&rsquo;s encyclopaedia, published in his{' '}
+          <Link href="/book/samuel-johnson-president-of-kings-college-his-career-and-schneider" className="text-accent-rust hover:underline">
+            <em>Career and Writings</em>
+          </Link>{' '}
+          (3 volumes, ~1,700 pages), was used as a textbook at King&rsquo;s College and shaped how
+          an entire generation of colonial Americans organized knowledge. His classification moved
+          from Technologia (the arts of reasoning) through Natural Philosophy (the world) to Moral
+          Philosophy (how to live) &mdash; a structure that became the template for American college curricula.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The connection to the founding of the republic is not metaphorical. The men who wrote
+          the Constitution were products of this educational system. The way they organized government &mdash;
+          separate powers, enumerated rights, hierarchical jurisdiction &mdash; reflects the Ramist-Johnsonian
+          habit of dividing any complex subject into a branching structure of named parts.
+          Classification shaped not just libraries but institutions.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-12">
+          The chain: Ramus (1543) &rarr; Protestant universities &rarr; Samuel Johnson at Yale/King&rsquo;s
+          (1752) &rarr; colonial curriculum &rarr; the founding generation&rsquo;s mental models.
+          All three volumes of Johnson&rsquo;s <em>Career and Writings</em> are in our collection, untranslated.
+        </p>
+
+        {/* --- Phase 11: Modern Library Classification --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          11. The Decimal System: Melvil Dewey (1876)
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -320,9 +442,9 @@ export default function HistoryOfClassificationPage() {
           is for anyone &mdash; human or machine &mdash; to pick the right one.
         </p>
 
-        {/* --- Phase 9: Faceted Classification --- */}
+        {/* --- Phase 12: Faceted Classification --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          9. The Faceted Revolution: S.R. Ranganathan (1933)
+          12. The Faceted Revolution: S.R. Ranganathan (1933)
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -355,9 +477,9 @@ export default function HistoryOfClassificationPage() {
           Ranganathan&rsquo;s idea.
         </p>
 
-        {/* --- Phase 10: Embeddings --- */}
+        {/* --- Phase 13: Embeddings --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          10. The Embedding: Vector Clustering (2020s)
+          13. The Embedding: Vector Clustering (2020s)
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -383,9 +505,9 @@ export default function HistoryOfClassificationPage() {
           but revealing as a neighborhood.
         </p>
 
-        {/* --- Phase 11: LLM Faceted Tags --- */}
+        {/* --- Phase 14: LLM Faceted Tags --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          11. The Synthesis: LLM-Assigned Faceted Tags (2026)
+          14. The Synthesis: LLM-Assigned Faceted Tags (2026)
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -469,21 +591,24 @@ export default function HistoryOfClassificationPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Alexandria &rarr; Porphyry &rarr; Dionysius &rarr; Llull &rarr; Gessner &rarr; Bacon &rarr;
-          Comenius &rarr; Dewey &rarr; Ranganathan &rarr; embeddings &rarr; LLM facets.
+          Alexandria &rarr; Porphyry &rarr; Dionysius &rarr; Llull &rarr; Gessner &rarr; Ramus &rarr;
+          Bacon &rarr; Hooke &rarr; Comenius &rarr; Samuel Johnson &rarr; Dewey &rarr; Ranganathan &rarr;
+          embeddings &rarr; LLM facets.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           What strikes us about this sequence is how slow the real breakthroughs were. The tree model
           lasted 1,200 years (Porphyry to Bacon). The enumerative model lasted 140 years (Dewey to
-          embeddings). Llull&rsquo;s combinatorial insight was 700 years ahead of Ranganathan. The ideas
-          were there in the primary sources all along &mdash; they just took centuries to be heard.
+          embeddings). Llull&rsquo;s combinatorial insight was 700 years ahead of Ranganathan. Ramus&rsquo;s
+          pedagogical trees shaped how an entire nation organized its government, and nobody in library
+          science seems to have noticed. The ideas were there in the primary sources all along &mdash;
+          they just took centuries to be heard.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          There&rsquo;s something fitting about a library that contains Porphyry, Llull, Bacon, Gessner,
-          Comenius, and Kircher using their ideas to organize itself. The books taught us how to
-          classify the books.
+          There&rsquo;s something fitting about a library that contains Porphyry, Llull, Ramus, Gessner,
+          Bacon, Hooke, Comenius, Kircher, and Samuel Johnson using their ideas to organize itself.
+          The books taught us how to classify the books.
         </p>
 
         {/* --- CTA --- */}
@@ -502,9 +627,15 @@ export default function HistoryOfClassificationPage() {
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/bibliotheca-universalis-gessner" className="text-accent-rust hover:underline">Gessner, Bibliotheca Universalis</Link>
             <span className="text-stone-300">&middot;</span>
+            <Link href="/book/dialecticae-institutiones-ramus" className="text-accent-rust hover:underline">Ramus, Dialecticae Institutiones</Link>
+            <span className="text-stone-300">&middot;</span>
             <Link href="/book/de-augmentis-scientiarum-bacon" className="text-accent-rust hover:underline">Bacon, De Augmentis Scientiarum</Link>
             <span className="text-stone-300">&middot;</span>
+            <Link href="/book/the-posthumous-works-of-robert-hooke-hooke" className="text-accent-rust hover:underline">Hooke, Posthumous Works</Link>
+            <span className="text-stone-300">&middot;</span>
             <Link href="/book/naturall-philosophie-reformed" className="text-accent-rust hover:underline">Comenius, Naturall Philosophie Reformed</Link>
+            <span className="text-stone-300">&middot;</span>
+            <Link href="/book/samuel-johnson-president-of-kings-college-his-career-and-schneider" className="text-accent-rust hover:underline">Samuel Johnson, Career and Writings</Link>
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/kircher-ars-magna-sciendi-1669" className="text-accent-rust hover:underline">Kircher, Ars Magna Sciendi</Link>
           </div>
