@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
 interface DownloadButtonProps {
@@ -221,6 +221,16 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             <FormatOption format="epub-parallel" label="Parallel Text" desc="Facing pages"
               icon={<Columns className="w-4 h-4 text-accent-rust" />}
               onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
+          )}
+          {hasTranslations && (
+            <FormatOption format="epub-scholarly" label="Scholarly Edition" desc="With introduction & apparatus"
+              icon={<GraduationCap className="w-4 h-4 text-stone-700" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+          {hasTranslations && hasOcr && (
+            <FormatOption format="epub-bilingual" label="Bilingual Scholarly" desc="Original + translation with apparatus"
+              icon={<GraduationCap className="w-4 h-4 text-accent-rust" />}
+              onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation"
