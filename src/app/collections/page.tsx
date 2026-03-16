@@ -99,6 +99,8 @@ function CollectionCard({ col }: { col: CollectionDoc }) {
   );
 }
 
+
+
 export default async function CollectionsPage() {
   const categories = await fetchCollections();
   const totalBooks = categories.reduce((s, c) => s + c.book_count, 0);
