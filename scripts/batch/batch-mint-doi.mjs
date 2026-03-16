@@ -23,7 +23,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { generateScholarlyPdf } from '../lib/scholarly-pdf.mjs';
+import { generateScholarlyPdf } from '../lib/scholarly-typst.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
