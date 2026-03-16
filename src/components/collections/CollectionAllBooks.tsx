@@ -74,7 +74,7 @@ export default function CollectionAllBooks({
 
   const handleExpand = useCallback(() => {
     setExpanded(true);
-    fetchBooks('popular', '', 0);
+    fetchBooks('relevance', '', 0);
   }, [fetchBooks]);
 
   const handleSort = useCallback((newSort: string) => {
