@@ -60,18 +60,33 @@ export default function PageEditorClient({
     }
   }, []);
 
-  // Prefetch pages around the current index (5 ahead, 2 behind)
+  // Prefetch pages around the current index (5 ahead, 2 behind) in a single batch request
   const prefetchAround = useCallback((index: number, pages: Page[]) => {
     const start = Math.max(0, index - 2);
     const end = Math.min(pages.length - 1, index + 5);
 
+    const uncachedIds: string[] = [];
     for (let i = start; i <= end; i++) {
       if (i === index) continue;
       const pageId = pages[i].id;
       if (!pageCacheRef.current.has(pageId)) {
-        fetchPageData(pageId);
+        uncachedIds.push(pageId);
       }
     }
+
+    if (uncachedIds.length === 0) return;
+
+    // Single batch request instead of N individual requests
+    pagesApi.getBatch(uncachedIds).then((batchPages) => {
+      for (const page of batchPages) {
+        pageCacheRef.current.set(page.id, page);
+      }
+    }).catch(() => {
+      // Fallback: fetch individually if batch fails
+      for (const id of uncachedIds) {
+        fetchPageData(id);
+      }
+    });
   }, [fetchPageData]);
 
   // Prefetch nearby pages on initial mount

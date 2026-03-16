@@ -27,6 +27,15 @@ export const pages = {
   },
 
   /**
+   * Get multiple pages by ID in a single request.
+   * Used by the reader to prefetch adjacent pages without triggering rate limits.
+   */
+  getBatch: async (ids: string[]): Promise<Page[]> => {
+    const data = await apiClient.post('/api/pages/batch', { ids }) as unknown as { pages: Page[] };
+    return data.pages;
+  },
+
+  /**
    * Update page content (OCR, translation, summary)
    */
   update: async (id: string, updates: PageUpdateRequest): Promise<PageUpdateResponse> => {
