@@ -3,7 +3,7 @@ import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { TranslationWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
 import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
+import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
@@ -127,8 +127,12 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   }
 
   // Skip pages with no meaningful text content (blank, illustration, etc.)
-  if (page.page_type && SKIP_TRANSLATION_PAGE_TYPES.includes(page.page_type)) {
-    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${page.page_type})`);
+  // Check both the stored page_type AND the OCR text's <page-type> tag.
+  // The tag check catches race conditions where OCR was saved but page_type
+  // wasn't written yet (e.g., write-processor hadn't run).
+  const effectivePageType = page.page_type || extractPageType(page.ocr.data);
+  if (effectivePageType && SKIP_TRANSLATION_PAGE_TYPES.includes(effectivePageType)) {
+    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${effectivePageType})`);
     await sendWriteResult({
       type: 'translation',
       bookId, pageId, jobId, targetPageIds,
