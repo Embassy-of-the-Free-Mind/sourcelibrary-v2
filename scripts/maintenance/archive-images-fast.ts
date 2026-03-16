@@ -628,7 +628,8 @@ async function archivePage(page: any, db: any): Promise<boolean> {
 }
 
 // Circuit breaker: stop after this many consecutive failures (e.g. rate limits)
-const MAX_CONSECUTIVE_FAILURES = 50;
+// Set high enough to survive a dead book (~500 pages) without tripping
+const MAX_CONSECUTIVE_FAILURES = 500;
 let consecutiveFailures = 0;
 let circuitBroken = false;
 
@@ -823,6 +824,9 @@ async function main() {
 
     if (pages.length === 0) break;
 
+    // Reset circuit breaker per chunk (one dead book shouldn't kill the run)
+    consecutiveFailures = 0;
+    circuitBroken = false;
     console.log(`\nChunk: ${pages.length} pages (${processed} done so far)`);
     const { success, failed } = await runPool(pages, db);
     totalSuccess += success;
