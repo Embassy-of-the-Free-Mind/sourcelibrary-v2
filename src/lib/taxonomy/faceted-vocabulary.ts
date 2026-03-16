@@ -103,6 +103,9 @@ export const FORM: Facet = {
     { id: 'anthology', label: 'Anthology / Collection', differentia: 'Compiled shorter works — fragments, excerpts, opera omnia' },
     { id: 'polemic', label: 'Polemic / Manifesto', differentia: 'Argument for or against a position, often combative' },
     { id: 'scripture', label: 'Sacred Text / Scripture', differentia: 'Revelation, canon, or text with liturgical/devotional authority' },
+    { id: 'biography', label: 'Biography / Hagiography', differentia: 'Life of a named person — saints\' lives, intellectual biographies, vitae' },
+    { id: 'history', label: 'History / Chronicle', differentia: 'Narrative account of events — annals, chronicles, histories of wars or peoples' },
+    { id: 'catalog', label: 'Catalog / Bibliography', differentia: 'Systematic list of books, manuscripts, specimens, or objects' },
   ],
 };
 

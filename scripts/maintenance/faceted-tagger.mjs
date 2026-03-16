@@ -22,7 +22,7 @@ import { MongoClient } from 'mongodb';
 const GEMINI_MODEL = 'gemini-3-flash-preview';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;
-const BATCH_SIZE = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--batch') || '30');
+const BATCH_SIZE = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--batch') || '20');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '0');
 const DRY_RUN = process.argv.includes('--dry-run');
 const RETAG = process.argv.includes('--retag');
@@ -40,7 +40,7 @@ const VALID_TAGS = {
   domain: ['medicine','astronomy','astrology','natural-philosophy','mathematics','music',
     'theology','ethics','magic','language','history','natural-history','art','military','bibliography'],
   form: ['treatise','encyclopedia','commentary','manual','letters','poetry','dialogue',
-    'anthology','polemic','scripture'],
+    'anthology','polemic','scripture','biography','history','catalog'],
   sphere: ['latin','greek','arabic','hebrew','sanskrit','chinese','syriac',
     'vernacular-european','celtic','ancient-near-east','african'],
   era: ['ancient','late-antique','medieval','renaissance','early-modern','enlightenment','modern'],
@@ -112,6 +112,9 @@ Pick 1–2 values.
   - anthology: Anthology / Collection — Compiled shorter works — fragments, excerpts, opera omnia
   - polemic: Polemic / Manifesto — Argument for or against a position, often combative
   - scripture: Sacred Text / Scripture — Revelation, canon, or text with liturgical/devotional authority
+  - biography: Biography / Hagiography — Life of a named person — saints' lives, intellectual biographies, vitae
+  - history: History / Chronicle — Narrative account of events — annals, chronicles, histories of wars or peoples
+  - catalog: Catalog / Bibliography — Systematic list of books, manuscripts, specimens, or objects
 
 ### Cultural Sphere (What linguistic-cultural world does this come from?)
 Pick 1–2 values.
@@ -175,12 +178,8 @@ async function callGemini(books) {
     return parts.join('\n');
   }).join('\n---\n');
 
-  const userPrompt = `Tag these ${books.length} books. Return a COMPACT JSON array of arrays:
-[[id, [tradition], [domain], [form], [sphere], [era], [mode]], ...]
-
-Example: [["abc123", ["alchemical"], ["medicine"], ["treatise"], ["latin"], ["renaissance"], ["practical"]]]
-
-Facet order: tradition, domain, form, sphere, era, mode. Use tag IDs only.
+  const userPrompt = `Tag these ${books.length} books. Return a JSON array where each element has:
+{ "id": "book_id", "tradition": [...], "domain": [...], "form": [...], "sphere": [...], "era": [...], "mode": [...] }
 
 ${bookEntries}`;
 

@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'history-of-classification',
+    title: 'Ten Thousand Years of Tagging',
+    subtitle: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have.',
+    date: '16 March 2026',
+    readTime: '14 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
     slug: 'counting-the-gap',
     title: 'We Spent a Day Counting What Hasn\'t Been Translated',
     subtitle: 'We matched 1.6 million early modern editions against translation catalogs. It started as a quick check and turned into an all-day rabbit hole.',
