@@ -14,7 +14,7 @@ test.describe('Navigation Flow', () => {
 
     // 3. Verify book detail page
     await expect(page).toHaveURL(/\/book\//);
-    await expect(page.getByRole('heading', { name: /Musaeum hermeticum/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /The Hermetic Museum/i })).toBeVisible();
     await measurePerf(page, 'nav-flow: book detail');
 
     // 4. Click first page link (format: /book/{bookId}/page/{pageId})

@@ -12,13 +12,13 @@ test.describe('Book Detail', () => {
   });
 
   test('book title heading is visible', async ({ page }) => {
-    const heading = page.getByRole('heading', { name: /Musaeum hermeticum/i });
+    const heading = page.getByRole('heading', { name: /The Hermetic Museum/i });
     await expect(heading).toBeVisible();
   });
 
   test('language metadata is visible', async ({ page }) => {
     // Wait for page to fully load beyond Suspense boundary
-    await expect(page.getByRole('heading', { name: /Musaeum hermeticum/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /The Hermetic Museum/i })).toBeVisible();
     await expect(page.getByTestId('language-metadata')).toContainText(BOOK.language);
   });
 
