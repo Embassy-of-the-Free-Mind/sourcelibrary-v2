@@ -1,0 +1,1394 @@
+[
+  {
+    "author": "Sucro, Christoph Joseph",
+    "record_a": {
+      "source": "bsb",
+      "title": "Christoph Joseph Sucro, ... Versuche aus verschiedenen Theilen der Gelehrsamkeit",
+      "date": "[um 1755]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Versuche in Lehrgedichten und Fabeln : nebst Abhandlung von philosophischen Gedi",
+      "date": "1747"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by Christoph Joseph Sucro, but the titles and dates are different, suggesting different publications of his work, though the subject matter seems related."
+  },
+  {
+    "author": "Felden, Johann von",
+    "record_a": {
+      "source": "erara",
+      "title": "Herrn D. Joannis von Felden Observationes vnd Judicium, von Deme im Decembri deß",
+      "date": "1653"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Observationes und iudicium von deme im December des 1652. Jahres erschienenen ne",
+      "date": "1653"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Pilgram, Anton",
+    "record_a": {
+      "source": "bsb",
+      "title": "Calendarium Chronologicum Medii Potissimum Aevi Monumentis Accommodatum",
+      "date": "1781"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Anton Pilgrams Untersuchungen über das Wahrscheinliche der Wetterkunde durch vie",
+      "date": "1788"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author, Anton Pilgram, but they have different titles, dates, and languages, indicating different publications of his work."
+  },
+  {
+    "author": "Peschel, Johann",
+    "record_a": {
+      "source": "erara",
+      "title": "Garten Ordnung, darinnen ordentliche warhaftige Beschreibung, wie man aus rechte",
+      "date": "1597"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Garten Ordnung : darinnen ordentliche warhaftige Beschreibung, wie man aus recht",
+      "date": "1597"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, indicating they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Gründlich, Gottlieb",
+    "record_a": {
+      "source": "erara",
+      "title": "Der  in sieben Kapiteln entlarvte Eybel, oder Beweise aus zwey Büchern seiner ei",
+      "date": "1783"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Der in sieben Capiteln entlarvte Eybel",
+      "date": "1783"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Owen, John",
+    "record_a": {
+      "source": "bsb",
+      "title": "Epigrammatum libri tres",
+      "date": "1608"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Ioannis Owen Oxoniensis Angli Epigrammatum",
+      "date": "1644"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are for works by John Owen written in Latin, and the titles are similar enough to suggest they are different editions of the same work, despite the different dates."
+  },
+  {
+    "author": "Volder, Willem de",
+    "record_a": {
+      "source": "bsb",
+      "title": "Acolastvs : De Filio Prodigo Comædia Acolasti titulo inscripta",
+      "date": "[um 1530]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Acolastus : ein Comoedia von dem verlornen Sun",
+      "date": "1535"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to Willem de Volder's play *Acolastus*, but one is in Latin and the other in German, indicating a translation of the same work rather than the same edition."
+  },
+  {
+    "author": "Pindarus",
+    "record_a": {
+      "source": "bsb",
+      "title": "Pindari Olympia, Pythiae, Nemea, Isthmia : Graece",
+      "date": "1542"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Aristologia Pindarikē Ellēnikolatinē : en autē de spoudaiōs synkomisthenta estin",
+      "date": "1556"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records relate to the works of Pindar, but they are different editions or selections of his works, published at different dates and with different titles, suggesting different editorial projects."
+  },
+  {
+    "author": "Ettmüller, Michael",
+    "record_a": {
+      "source": "bsb",
+      "title": "Diss. med. de chirurgia infusoria",
+      "date": "1668"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Epitome Totius Medicinæ, Institutiones, Pyrotechniam, Commentarium Pharmaceuticu",
+      "date": "1706"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records list Michael Ettmüller as the author, and while the titles are different, Record B describes an epitome of his work, and the dates are different, suggesting different editions or printings of the same underlying work."
+  },
+  {
+    "author": "Ulloa, Antonio de",
+    "record_a": {
+      "source": "erara",
+      "title": "Karte von der gemessenen Mittagslinie in dem Koenigreiche Quito : Auf Befehl Sr.",
+      "date": "1751"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Allgemeine Historie der Reisen zu Wasser und Lande; oder Sammlung aller Reisebes",
+      "date": "1751"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records list Antonio de Ulloa as the author, are in German, and published in 1751; while the titles are different, the second record explicitly mentions Ulloa's South American travels, suggesting the first record is a component part or extract from the larger work described in the second record."
+  },
+  {
+    "author": "Du Roi, Johann Philipp",
+    "record_a": {
+      "source": "erara",
+      "title": "Die  Harbkesche wilde Baumzucht : theils nordamerikanischer und anderer fremder,",
+      "date": "1772"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "D. Joh. Phil. Dü Roi Harbkesche wilde Baumzucht theils Nordamerikanischer und an",
+      "date": "1795."
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author and a very similar title, suggesting they represent the same intellectual work, but the dates differ, indicating different editions or printings."
+  },
+  {
+    "author": "Suffren, Jean",
+    "record_a": {
+      "source": "bsb",
+      "title": "Ioh. Suffreni Circus perfectionis",
+      "date": "1648"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Manuel de devotion extraict des saincts devoirs de l'ame devote : &amp; [et] des",
+      "date": "1655"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by Jean Suffren, but the titles, dates, and language differ, suggesting different editions or translations of the same underlying work."
+  },
+  {
+    "author": "Patin, Charles",
+    "record_a": {
+      "source": "erara",
+      "title": "Introduction à la connoissance des médailles /",
+      "date": null
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "De Numismatibus Quibusdam Abstrusis Imp. Neronis Disquisitio",
+      "date": "1681"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by Charles Patin on the topic of numismatics, but the titles and languages are different, suggesting different editions or translations of the same underlying work."
+  },
+  {
+    "author": "La Roche, Sophie von",
+    "record_a": {
+      "source": "erara",
+      "title": "Les  caprices de l'amour et de l'amitié : anecdote angloise suivie d'une petite ",
+      "date": "1772"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Der Eigensinn der Liebe und Freundschaft : Eine engländische Erzählung. Nebst ",
+      "date": "1772"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records describe the same work by La Roche, but one is in French and the other in German, indicating a translation, and the titles are translations of each other."
+  },
+  {
+    "author": "Francisco",
+    "record_a": {
+      "source": "bsb",
+      "title": "S. Francisci Xaverii E Societate Jesu, Indiarum Apostoli Epistolæ : Veteres Per ",
+      "date": "Anno M DC. XCII."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Leben und Wunderwerck Dess Jndianischen Apostels S. Francisci Xaverii Auss der S",
+      "date": "1654"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to works about St. Francis Xavier by Francisco, but they are in different languages (Latin and German) and were published at different dates (1692 and 1654), indicating different editions or translations of the same underlying work."
+  },
+  {
+    "author": "Prior, Matthew",
+    "record_a": {
+      "source": "erara",
+      "title": "Poems On Several Occasions",
+      "date": "1751"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Salamo : ein Gedicht über die Eitelkeit der Welt",
+      "date": "1773"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records list Matthew Prior as the author, but the titles are different and the languages are different, suggesting a translation or adaptation of the same underlying work, and the dates are different."
+  },
+  {
+    "author": "Dörffurt, August Ferdinand Ludwig",
+    "record_a": {
+      "source": "erara",
+      "title": "Abhandlung über den Kampher, worinn dessen Naturgeschichte, Reinigung, Verhalten",
+      "date": "1793"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Abhandlung über den Kampher, worinn dessen Naturgeschichte, Reinigung, Verhalten",
+      "date": "1793"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Bracken, Henry",
+    "record_a": {
+      "source": "erara",
+      "title": "The  traveller's pocket-farrier : or a treatise upon the distempers and common i",
+      "date": "1743"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "The Traveller's Pocket-Farrier : or treatise upon the distempers ... happening",
+      "date": "1751"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author and a very similar title, suggesting the same intellectual work, but the dates differ, indicating different editions or printings."
+  },
+  {
+    "author": "Dante",
+    "record_a": {
+      "source": "erara",
+      "title": "L' amoroso convivio di Dante",
+      "date": "1531"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Monarchey : Oder daß das Keyserthumb ... den Römern billich zugehört, und Gott d",
+      "date": "1559"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by Dante, but the titles, dates, and languages are different, indicating different editions or translations of his works."
+  },
+  {
+    "author": "Pordage, John",
+    "record_a": {
+      "source": "erara",
+      "title": "Ein  gründlich philosophisch Sendschreiben vom rechten und wahren Steine der Wei",
+      "date": "1698"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Vier Tractätlein Des Seeligen Johannes Pordädschens M.D. In Manuscriptis hinterl",
+      "date": "Gedruckt im Heyl-Jahre Jesu Christi, 1704."
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by John Pordage in German, but have different titles and publication dates, suggesting different editions or collections of his works."
+  },
+  {
+    "author": "Quevedo y Villegas, Francisco Gómez de",
+    "record_a": {
+      "source": "erara",
+      "title": "Extract oder Außzug Fürwitziger Thräumen Francisci di Quevedo eines Spanniers De",
+      "date": "1703"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Lustige und sinnreiche Schriften",
+      "date": "1704"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author, and the titles suggest a similar work, but the dates are slightly different (1703 vs 1704), and the languages are different (German vs und), suggesting different editions or translations."
+  },
+  {
+    "author": "Gernold, Wolf",
+    "record_a": {
+      "source": "bsb",
+      "title": "Ein schön new lied, genannt Des Hymels strassen heyß ich ... : In der weyß Wol",
+      "date": "[ca. 1545]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Die  Himmel-Strasse : In der Weiß/ Wolauff gut Gesell von hinnen/ [et]c. Oder in",
+      "date": "1634"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "The titles are similar, the author is the same, and both are German songs, but the dates differ significantly (ca. 1545 vs. 1634), suggesting different editions or printings of the same work."
+  },
+  {
+    "author": "Sheffield, John",
+    "record_a": {
+      "source": "erara",
+      "title": "Die  Veste Burg eines guten Gewissens : Oder Ein Trattat handlend ins gemein, vo",
+      "date": "1675"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Die Veste Burg eines guten Gewissens. Oder Ein Trattat handlend ins gemein, vo",
+      "date": "1675"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, indicating the same edition, but come from different sources (digital libraries), suggesting different physical copies or catalog entries for the same edition."
+  },
+  {
+    "author": "Snoy, Reinier",
+    "record_a": {
+      "source": "bsb",
+      "title": "Psalterivm Davidicvm",
+      "date": "1536"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Der  Gantze Psalter dess heiligen und Königklichen Propheten Davids : mit beyges",
+      "date": "1644"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are for works by Reinier Snoy based on the Psalms of David, but they are in different languages (Latin and German) and published in different years (1536 and 1644), indicating different editions or translations of the same underlying work."
+  },
+  {
+    "author": "Lambrecht, Matthias Georg",
+    "record_a": {
+      "source": "erara",
+      "title": "Der  alte Junggeselle : ein Lustspiel in fünf Aufzügen",
+      "date": "1785"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Der alte Junggeselle : Lustsp. in 5 Aufz.",
+      "date": "1785"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records have the same author, title, and date, suggesting they are the same edition, but from different sources."
+  },
+  {
+    "author": "Cats, Jacob",
+    "record_a": {
+      "source": "erara",
+      "title": "J. Cats Houwelyck : dat is het gantsche Ghelegentheydt des Echten-Staets",
+      "date": "1650"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Tim. Ritzschens Verteutschter Jungfer-Marck",
+      "date": "[1655]"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records list Jacob Cats as the author, and while the titles are different, one is in Dutch and the other in German, suggesting a translation of the same underlying work, published at slightly different dates."
+  },
+  {
+    "author": "Ivernois, Francis d'",
+    "record_a": {
+      "source": "erara",
+      "title": "Lettre d'un citoyen de Genève à M...",
+      "date": "1779"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Tableau historique et politique des révolutions de Genève dans le dix-huitième s",
+      "date": "1782"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author (Francis d'Ivernois) in French, and while the titles are different, they both concern Geneva in the late 18th century, suggesting they are related works by the same author on the same subject."
+  },
+  {
+    "author": "Newton, Isaac",
+    "record_a": {
+      "source": "erara",
+      "title": "Philosophiae Naturalis Principia Mathematica",
+      "date": null
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Optice, Sive De Reflexionibus, Refractionibus, Inflexionibus Et Coloribus Lucis ",
+      "date": "MDCCXL"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are for works by Isaac Newton in Latin, but they have different titles and dates, indicating different works by the same author."
+  },
+  {
+    "author": "Martialis, Marcus Valerius",
+    "record_a": {
+      "source": "bsb",
+      "title": "M. Val. Martialis Epigrammaton libri XII : Xeniorvm lib. I., Apophoretorvm lib. ",
+      "date": "M.DC.XIIX."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "M. Val.Martialis Epigrammaton Libri XII. ... Accessit Geminvs Index Musarum ...",
+      "date": "1613"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, a very similar title, language, and a date that is likely the same (M.DC.XIIX. is 1618, a typo for 1613), indicating they are the same edition but cataloged by different libraries."
+  },
+  {
+    "author": "Ebert, Andreas",
+    "record_a": {
+      "source": "erara",
+      "title": "Wunderbare zeytung von einem gelt tüfel, ein seltzame unglöubliche, doch warhaff",
+      "date": "1538"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Wunderzeitung von einem Geldteufel zu Frankfurt an der Oder",
+      "date": "1538"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Bödiker, Johann",
+    "record_a": {
+      "source": "erara",
+      "title": "Johann Bödikers Grundsätze der teutschen Sprache : mit dessen eigenen und Johann",
+      "date": "1746"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Johann Bödikers Grundsäze Der Teutschen Sprache",
+      "date": "1746"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Gabriel, Steffan",
+    "record_a": {
+      "source": "erara",
+      "title": "Ilg ver sulaz da pievel giuvan : quei eis unna curta summa da la cardientscha ..",
+      "date": "1625"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Glaubens Wage nach der Richtschnur des h. Wort Gottes gerichtet",
+      "date": "1648"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "The author is the same, but the titles are different and the languages are different (one is Romansh, the other is undetermined), suggesting different editions or translations of the same work."
+  },
+  {
+    "author": "Kaschube, Johann Wenceslaus",
+    "record_a": {
+      "source": "bsb",
+      "title": "Ioh. Wenceslai Kaschvbii Elementa Physicae Mechanico-Perceptivæ : Vna Cvm Append",
+      "date": "MDCCXIIX."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Cursus Mathematicus Oder Deutlicher Begrief Der Mathematischen Wissenschaften ..",
+      "date": "1718"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author (Johann Wenceslaus Kaschube) and published in the same year (1718), but have different titles and languages, suggesting they are different editions or translations of the same underlying work or related works."
+  },
+  {
+    "author": "Hoyer, Johann Gottfried von",
+    "record_a": {
+      "source": "erara",
+      "title": "Versuch eines Handbuches der Pontonnier-Wissenschaften in Absicht ihrer Anwendun",
+      "date": "1793"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Versuch eines Handbuches der Pontonnier-Wissenschaften in Absicht ihrer Anwendun",
+      "date": "(1793)"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records have the same author, title, and date, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Gugl, Matthäus",
+    "record_a": {
+      "source": "bsb",
+      "title": "Fundamenta partiturae in compendio data : Das ist: Kurtzer und gründlicher Unter",
+      "date": "1719"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Fundamenta partiturae in compendio data. Das ist: Kurtzer und gründlicher Unterr",
+      "date": "1727"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "The records share the same author and a very similar title, suggesting the same intellectual work, but the dates differ by 8 years, indicating different editions or printings."
+  },
+  {
+    "author": "Bilguer, Johann Ulrich",
+    "record_a": {
+      "source": "bsb",
+      "title": "Johann Ulrich Bilguers, der Arznei und Wundarznei Doctors und General-Chirurgi b",
+      "date": "1761"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Sopra l'inutilità dell'amputazione de membri",
+      "date": "1775"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author (Johann Ulrich Bilguer) and concern the same topic (avoidance of amputation), but they are in different languages (German and Italian) and have different publication dates (1761 and 1775), indicating different editions or translations of the same work."
+  },
+  {
+    "author": "Philo",
+    "record_a": {
+      "source": "bsb",
+      "title": "Liber de nobilitate",
+      "date": "1564"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Philōnos Ioudaiou Exēgētika Syngrammata ... : Philonis Iudæi Opera Exegetica In ",
+      "date": "1613"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are for works by Philo, but the titles are different and the dates are different, suggesting different editions or collections of his works."
+  },
+  {
+    "author": "Pope, Alexander",
+    "record_a": {
+      "source": "erara",
+      "title": "Allgemeines Gebeth",
+      "date": "17uu"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Alexandri Pope Eqvitis Anglicani Et Poetae Incomparabilis Commentatio De Homine ",
+      "date": "MDCCLXIII"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by Alexander Pope, and while the titles are different, they both appear to be related to his work, likely a translation or commentary on his work, and the dates are different."
+  },
+  {
+    "author": "Cook, James",
+    "record_a": {
+      "source": "erara",
+      "title": "Meerkarten der Ozeane oder Weltmeere : nord- und südatlantischer Ozean, ostindis",
+      "date": "1781"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Capitain Cook's dritte und letzte Reise, oder Geschichte einer Entdeckungsreise ",
+      "date": "1794"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records refer to James Cook's voyages, but one is a collection of maps and the other is a German translation of the account of his third voyage, published at different dates, indicating different editions or related materials based on the same core subject matter."
+  },
+  {
+    "author": "Habermann, Johann",
+    "record_a": {
+      "source": "erara",
+      "title": "D. Joh. Habermanns Bättbüchlein, Morgen- und Abends auf alle Tage der Wochen zug",
+      "date": "17uu"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Christliches Kleinod vnd Geschmeide, zur Andacht vnd Gebet, für alle Noth vnnd S",
+      "date": "M.DC.XXXII."
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are for devotional works by Johann Habermann in German, likely different editions of his popular prayer book, as the titles are similar but not identical and the dates differ."
+  },
+  {
+    "author": "Woellner, Johann Christoph von",
+    "record_a": {
+      "source": "erara",
+      "title": "Johann Christoph Wöllners ... Unterricht zu einer kleinen aber auserlesenen oeko",
+      "date": "1764"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Johann Christoph Wöllners Canonici zu Halberstadt, Unterricht zu einer kleinen a",
+      "date": "(1764)"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Cotes, Roger",
+    "record_a": {
+      "source": "bsb",
+      "title": "Aestimatio errorvm in mixta Mathesi : per variationes partivm triangvli plani et",
+      "date": "1768"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Hydrostatical and pneumatical lectures",
+      "date": "1775"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author, but the titles, dates, and languages are different, suggesting different editions or translations of the author's work."
+  },
+  {
+    "author": "Quintus",
+    "record_a": {
+      "source": "bsb",
+      "title": "Koïntu Kalabru ... paraleipomenōn homēru biblia tessareskaideka : = Qvinti Cala",
+      "date": "1569"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Quinti Smyrnaei, Tryphiodori, Ioannis Tzetzae et Coluthi carmina de rebus Troian",
+      "date": "1829"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to works by Quintus (of Smyrna/Calabria) concerning the Trojan War, but the dates and titles indicate different editions or collections of his work."
+  },
+  {
+    "author": "Righini, Vincenzo",
+    "record_a": {
+      "source": "bsb",
+      "title": "Aeneas in Latium : ein heroisch-tragisches Singspiel mit Chören und zu der Handl",
+      "date": "[1793]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "[Enea nel Lazio] : [2 Arien mit Pianoforte] aus Aeneas in Latium",
+      "date": "1812"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to Righini's opera *Aeneas in Latium*, but Record B is a later publication of selected arias, indicating different editions of the same underlying work."
+  },
+  {
+    "author": "Andry, Charles Louis François",
+    "record_a": {
+      "source": "erara",
+      "title": "Beobachtungen und Untersuchungen über den Gebrauch des Magnets in der Arzneykuns",
+      "date": "1785"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Beobachtungen und Untersuchungen über den Gebrauch des Magnets in der Arzneykuns",
+      "date": "1785"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Pillichody, Jean Georges",
+    "record_a": {
+      "source": "erara",
+      "title": "Dissertatio inauguralis de iure naturali, gentium et civili",
+      "date": "1734"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Die Abschaffung der Kuppelhuhte, oder gemeinschaftlichen Nutzung der Grundstüc",
+      "date": "1767"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records list Jean Georges Pillichody as the author, but the titles, dates, and languages are different, indicating different works by the same author."
+  },
+  {
+    "author": "Pflaum, Jakob",
+    "record_a": {
+      "source": "erara",
+      "title": "Kalender 1477-1552",
+      "date": "1478"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Practica, Das kunfftig ist und geschehen soll",
+      "date": "[ca. 1522]"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author (Jakob Pflaum) in German, but the titles and dates are different, suggesting different editions or related works by the same author."
+  },
+  {
+    "author": "Hartmann, Daniel",
+    "record_a": {
+      "source": "erara",
+      "title": "Burgerliche Wohnungs Baw-Kunst, Oder: Gründlicher Bericht, Wie auff einem vorgeg",
+      "date": "1688"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Bürgerliche Baukunst : oder Gründlicher Bericht wie Bürgerliche Wohn-Häußer, wie",
+      "date": "1688"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records describe the same book by Daniel Hartmann, printed in 1688, with very similar titles and in German, suggesting they are the same edition held by different libraries (erara and bsb)."
+  },
+  {
+    "author": "Windisch, Karl Gottlieb von",
+    "record_a": {
+      "source": "bsb",
+      "title": "Politisch- geographisch- und historische Beschreibung des Königreichs Hungarn",
+      "date": "1772"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Lettres De M. Charles Gottlieb De Windisch Sur Le Joueur D'Echecs De M. De Kempe",
+      "date": "1783"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author, but have different titles, dates, and languages, indicating different editions or translations of the author's work."
+  },
+  {
+    "author": "Gerhardt, Paul",
+    "record_a": {
+      "source": "bsb",
+      "title": "... Dutzet Geistlicher Andacht-Lieder Herrn Paul Gerhards : mit neuen Melodeyen,",
+      "date": "1666"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Paulus Gerhardts geistliche Lieder : getreu nach der bei seinen Lebzeiten erschi",
+      "date": "1843"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are for works by Paul Gerhardt in German, but the dates of publication (1666 and 1843) are significantly different, indicating different editions of his works."
+  },
+  {
+    "author": "Kippis, Andrew",
+    "record_a": {
+      "source": "erara",
+      "title": "The  Life Of Captain James Cook",
+      "date": "1788"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "The life of Captain James Cook / Vol. 1",
+      "date": "1788"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records describe the same edition of Kippis's biography of Captain Cook, published in 1788, but are from different sources (erara and bsb)."
+  },
+  {
+    "author": "Rollin, Charles",
+    "record_a": {
+      "source": "bsb",
+      "title": "Historie alter Zeiten und Völker, der Aegyptier, Carthaginenser, Assyrer, Babylo",
+      "date": "1750"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Des berühmten Herren Carl Rollins Natur-Lehre für die Kinder, oder, Anleitung, w",
+      "date": "1762"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by Charles Rollin in German, but the titles and dates are different, suggesting different works or editions of his works."
+  },
+  {
+    "author": "Du Buat, Pierre Louis Georges",
+    "record_a": {
+      "source": "bsb",
+      "title": "Des Herrn von Buat Grundlehren der Hydraulik : Aus dem Französischen übersetzt /",
+      "date": "1796."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Principes d'hydraulique et de pyrodynamique, vérifiés par un grand nombre d'expé",
+      "date": "1816"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author, concern hydraulics, and have similar titles, but they are in different languages and have different publication dates, suggesting a translation or a later edition."
+  },
+  {
+    "author": "Boileau Despréaux, Nicolas",
+    "record_a": {
+      "source": "bsb",
+      "title": "Satires du Sieur D...",
+      "date": "1672"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Oeuvres de Nicolas Boileau Despréaux : avec des éclaircissemens historiques, don",
+      "date": "1729"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author, Nicolas Boileau Despréaux, and the titles suggest a collection of his works, but the dates differ significantly (1672 vs. 1729), indicating different editions."
+  },
+  {
+    "author": "Reinstein, Johannes",
+    "record_a": {
+      "source": "bsb",
+      "title": "Prognosticon astrologicum auf die 4 Zeiten des jars 1573",
+      "date": "[1572]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Schlüssel der newen durch Johannem Reinstein gestelleten und im Jhar Jhesu Chris",
+      "date": "1584"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author (Reinstein) in German, and the titles suggest astrological/astronomical content, but the dates are different enough to suggest different publications rather than the same edition."
+  },
+  {
+    "author": "Gemeiner, Carl Theodor",
+    "record_a": {
+      "source": "erara",
+      "title": "Carl Theodor Gemeiners Nachrichten von den in der regensburgischen Stadtbiblioth",
+      "date": "1785"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Carl Theodor Gemeiners Nachrichten von den in der Regensburgischen Stadtbiblioth",
+      "date": "1785"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and publication date, suggesting they are the same edition, but come from different sources (digital libraries)."
+  },
+  {
+    "author": "Jonas, ...",
+    "record_a": {
+      "source": "erara",
+      "title": "Das  Glück Helvetiens",
+      "date": "1794"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Das Glück Helvetiens",
+      "date": "1794"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same title, author, and date, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Mayer, Andreas Ulrich",
+    "record_a": {
+      "source": "bsb",
+      "title": "Nichtige, ungegründete, eitle, kahle und lächerliche Verantwortung des H.P. Ange",
+      "date": "1767."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Beweis dass die Ordensgeistlichen und Mönche zur Seelensorge unfähig, und von de",
+      "date": "1769"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author (Andreas Ulrich Mayer) in German, and while the titles are different, they both appear to be religious polemics from the late 1760s, suggesting the same intellectual content but different publications."
+  },
+  {
+    "author": "Aberlin, Joachim",
+    "record_a": {
+      "source": "bsb",
+      "title": "Ain kurtzer begriff ... der gantzen Bibel in drey Lieder zu singen gestellt",
+      "date": "1534"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Bibel oder heilige Geschrifft gsangsweyss in drü Lieder uffs kürtzest zuosamen v",
+      "date": "1551"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records describe the same work by Joachim Aberlin summarizing the Bible in three songs, but they are from different years (1534 and 1551), indicating different editions or printings."
+  },
+  {
+    "author": "Schwencke, Martin Wilhelm",
+    "record_a": {
+      "source": "erara",
+      "title": "Kruidkundige beschryving der in-en uit-landische gewassen, welke heedendaagsch m",
+      "date": "1766"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "D. M. W. Schwenkens Abhandlung von dem großen Wasserschierling, desselben Kennze",
+      "date": "1776"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author and appear to describe the same botanical subject matter, but are in different languages (Dutch and German) and have different publication dates, suggesting different editions or translations of the same work."
+  },
+  {
+    "author": "Diebold, Caspar",
+    "record_a": {
+      "source": "erara",
+      "title": "Europeische Kern-Histori: Oder Sum[m]arischer und begreiflicher Außzug der vorne",
+      "date": "1701"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Europäische Kern-Historie",
+      "date": "1701"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Bouterwek, Friedrich",
+    "record_a": {
+      "source": "bsb",
+      "title": "Fünf kosmopolitische Briefe",
+      "date": "1794"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Schweizerbriefe an Cäcilie, geschrieben im Sommer 1794",
+      "date": "1795"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "The author is the same, the titles are similar and the dates are close, suggesting they are related works by the same author, but not the same edition."
+  },
+  {
+    "author": "Geiler von Kaysersberg, Johannes",
+    "record_a": {
+      "source": "bsb",
+      "title": "Die Emeis Dis ist das buch von der Omeissen, vnnd auch. Her der künnig ich di",
+      "date": "M.d.xvi."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "[Eine  heilsame Lehre und Predigt]",
+      "date": "1490"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author (Johannes Geiler von Kaysersberg) and in German, but the titles and dates are different, suggesting different editions or works by the same author."
+  },
+  {
+    "author": "Dietrichstein, Franz von",
+    "record_a": {
+      "source": "bsb",
+      "title": "Predig an ... unser L. Frawen Geburts Tag",
+      "date": "1619"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Predig am hohen Fest unser lieben Frawen Geburts Tag unnd freudenreichen Verkünd",
+      "date": "1620"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are sermons by Franz von Dietrichstein, delivered around the same time, concerning the Feast of the Nativity of the Virgin Mary, but Record B includes additional information about the election of Ferdinand II, suggesting a slightly different context or a later printing of the same sermon, making them the same work but not the same edition."
+  },
+  {
+    "author": "Lead, Jane",
+    "record_a": {
+      "source": "bsb",
+      "title": "Offenbahrung der Offenbahrungen",
+      "date": "1695"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Der himmlische Bottschaffter eines allgemeinen Friedens: oder eine dritte Bottsc",
+      "date": "1698"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by Jane Lead and in German, but the titles are different and the dates are close, suggesting different editions or related works."
+  },
+  {
+    "author": "Pagnini, Sante",
+    "record_a": {
+      "source": "bsb",
+      "title": "Biblia Veteris Ac Novi Testamenti, Svmma Fide Ac Stvdio Singulari, Cum Aliorum D",
+      "date": "M.D.LXIIII."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Sefer tehilim : = Liber Psalmorum, Hebraice",
+      "date": "1648"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are associated with Sante Pagnini and relate to biblical texts (Psalms and the entire Bible), but they are in different languages (Latin and Hebrew) and were published in different years, indicating different editions or translations of his work."
+  },
+  {
+    "author": "Dalberg, Dietrich von",
+    "record_a": {
+      "source": "bsb",
+      "title": "Ain Christlich vnderricht, ob vnd vß welcher vrsach, auch zu wem, was vnd wara",
+      "date": "1524"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Christlicher unnderricht unnd anzeige, wie der mensch ... das Vatter unser mit r",
+      "date": "1543"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "The records share the same author, language, and a very similar title and subject matter, but the dates differ, suggesting different editions of the same work."
+  },
+  {
+    "author": "Olearius, Adam",
+    "record_a": {
+      "source": "bsb",
+      "title": "Traum Gesicht Gespräche : Gehalten von einer alten Teutschen Seel, so da erschie",
+      "date": "[ca. 1650?]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Grundtlicher Bericht von dem dapferen, lobreichen Todt Johann Rodolphen Stadlers",
+      "date": "1648"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by Adam Olearius in German, but the titles and dates are different, suggesting different works by the same author."
+  },
+  {
+    "author": "Martini, Friedrich Heinrich Wilhelm",
+    "record_a": {
+      "source": "bsb",
+      "title": "Neues systematisches Conchylien-Cabinet / 1.",
+      "date": "(1767)"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Neues Systematisches Conchylien-Cabinet",
+      "date": "1769"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to the same multi-volume work by Martini on conchology, but the dates differ slightly, suggesting different volumes or editions of the same work."
+  },
+  {
+    "author": "Dionis du Séjour, Achille Pierre",
+    "record_a": {
+      "source": "erara",
+      "title": "Recherches sur la gnomonique, les rétrogradations des planetes, et les éclipses ",
+      "date": "1761"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Des Herrn Dionysius du Sejour analytische Abhandlung von den Sonnenfinsterniss",
+      "date": "1793"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author and subject matter, but differ in date, language, and title, indicating a translation or later edition of the same work."
+  },
+  {
+    "author": "Lang, Heinrich Gottlob",
+    "record_a": {
+      "source": "bsb",
+      "title": "Heinrich Gottl. Lang's Verzeichniss seiner Schmetterlinge, meistens in den Gegen",
+      "date": "1782."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Heinrich Gottlob Langs Verzeichniss seiner Schmetterlinge, in den Gegenden um Au",
+      "date": "1789"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The author and subject matter are the same, but the dates are different (1782 vs 1789) and the titles have slight variations, suggesting different editions of the same work."
+  },
+  {
+    "author": "Schönheintz, Jakob",
+    "record_a": {
+      "source": "erara",
+      "title": "Apologia astrologie",
+      "date": "1502"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Apolog[ia] astrologie Jacobi Schonheintz ostrofranci, arciu[m] liberalium ac utr",
+      "date": "1502"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Heron",
+    "record_a": {
+      "source": "erara",
+      "title": "De gli avtomati : overo machine se moventi, libri due",
+      "date": "1589"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Heronis Ctesibii Belopoeeca",
+      "date": "1616"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by Heron, but the titles are different, the dates are different, and the languages are different, suggesting different editions or translations of the same underlying work."
+  },
+  {
+    "author": "Donati, Vitaliano",
+    "record_a": {
+      "source": "erara",
+      "title": "Della Storia Naturale Marina Dell'Adriatico : Giuntavi Una Lettera Del Signor Do",
+      "date": "1750"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Vitaliano Donati Auszug seiner Natur-Geschichte des Adriatischen Meers den Boden",
+      "date": "1753"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to Vitaliano Donati's work on the natural history of the Adriatic Sea, with the BSB record being a German translation that also includes Sesler's appendix, indicating the same intellectual content but a different edition and language."
+  },
+  {
+    "author": "Hues, Robert",
+    "record_a": {
+      "source": "erara",
+      "title": "Traicté Des Globes Et De Levr Vsage",
+      "date": "1618"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Tractatus Duo Mathematici. Quorum Primus De Globis Coelesti Et Terrestri, eorum ",
+      "date": "1627"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author and a very similar title referring to globes, but differ in language and date, suggesting different editions or translations of the same work."
+  },
+  {
+    "author": "Cardano, Girolamo",
+    "record_a": {
+      "source": "erara",
+      "title": "Offenbarung der Natur vnnd Natürlicher Dingen, auch mancherley subtiler würckung",
+      "date": null
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Hieronymi Cardani ... De Sapientia : Libri quinq[ue]",
+      "date": "1544"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by Girolamo Cardano, but the titles, dates, and languages are different, suggesting different editions or translations of his works."
+  },
+  {
+    "author": "Boureau-Deslandes, André François",
+    "record_a": {
+      "source": "bsb",
+      "title": "Sammlung vermischter Gedanken über grose Leute welche scherzend gestorben sind",
+      "date": "[ca. 1750]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Pigmalion, Oder Die belebte Statüe",
+      "date": "1748"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author in German, but have different titles and publication dates, suggesting different editions or translations of the author's works."
+  },
+  {
+    "author": "Wiebeking, Carl Friedrich von",
+    "record_a": {
+      "source": "erara",
+      "title": "Beiträge zum praktischen Wasserbau und zur Maschienenlehre",
+      "date": "1792"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Beiträge zum praktischen Wasserbau und zur Maschienenlehre",
+      "date": "1792"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same title, author, and date, suggesting they are the same edition, but come from different sources (erara and bsb), indicating different physical copies or catalog entries."
+  },
+  {
+    "author": "Schmidlin, Johannes",
+    "record_a": {
+      "source": "erara",
+      "title": "Singendes und spielendes Vergnügen reiner Andacht, oder, Geistreiche Gesänge",
+      "date": "1752"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Singendes und Spielendes Vergnügen Reiner Andacht : Oder Geistreiche Gesänge, Na",
+      "date": "1752"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Kindermann, Joseph Karl",
+    "record_a": {
+      "source": "bsb",
+      "title": "Historischer und geographischer Abriß des Herzogthums Steyermark",
+      "date": "1780"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Austria interior - Stiria ducatus : Generalkarten : Sammelband der Ryhiner-Karte",
+      "date": "1789"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author, in the same language, and concern Styria (Steiermark), but the titles and dates are different, suggesting different editions or parts of a larger work."
+  },
+  {
+    "author": "Bianchi, Antonio",
+    "record_a": {
+      "source": "bsb",
+      "title": "Der Kapellmeister : ein musikalisches Intermezzo in einem Akte",
+      "date": "[ca. 1795]"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Aria \"Una vaga Giovinetta buona buona schietta\" : = (\"Eine liebenswürd'ge Schöne",
+      "date": "1800"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "medium",
+    "llm_reasoning": "Both records are by the same author (Antonio Bianchi), but the titles are different, and the dates are close but not identical, suggesting different editions or arrangements of the same musical work."
+  },
+  {
+    "author": "Bridel, Philippe Sirice",
+    "record_a": {
+      "source": "erara",
+      "title": "Course De Bale A Bienne Par Les Vallées Du Jura",
+      "date": "1789"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Reise durch einige der romantischsten Gegenden der Schweiz : Nebst einer Charte",
+      "date": "1789"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records have the same author and date, but different titles and languages, suggesting they are translations of the same work."
+  },
+  {
+    "author": "Aristeas",
+    "record_a": {
+      "source": "bsb",
+      "title": "De Legis divinae",
+      "date": "1561"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Historia Aristææ, Ptolemæi Philadelphi, Aegyptiorum Regis ad Eleazarum pontifice",
+      "date": "1578"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records refer to Aristeas's work concerning the Septuagint, but they are different editions due to the different dates and the more descriptive title of Record B, which suggests a later, possibly annotated, edition in Latin."
+  },
+  {
+    "author": "Müller, Franz Joseph von",
+    "record_a": {
+      "source": "erara",
+      "title": "Joseph Müller's ... Nachricht von den in Tyrol entdeckten Turmalinen oder Aschen",
+      "date": "1778"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Joseph Müller's k. k. Bergwesens Direktoratsraths, und Vicefaktors zu Schwaz in ",
+      "date": "1778"
+    },
+    "llm_classification": "SAME_EDITION",
+    "llm_confidence": "high",
+    "llm_reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but come from different sources (erara and bsb)."
+  },
+  {
+    "author": "Paccassi, Johann von",
+    "record_a": {
+      "source": "bsb",
+      "title": "Ueber die Gesandtschaftsrechte",
+      "date": "1775."
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Theorie der Planeten und Cometen von Johann Freyherrn von Paccassi übersetzt ...",
+      "date": "1781"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by the same author (Johann von Paccassi) in German, but have different titles and dates, suggesting different works by the same author."
+  },
+  {
+    "author": "Rist, Johann",
+    "record_a": {
+      "source": "bsb",
+      "title": "Johannis Ristii Holsati Musa Teutonica Das ist: Teutscher Poetischer Miscellanee",
+      "date": "1637"
+    },
+    "record_b": {
+      "source": "erara",
+      "title": "Zwey schöne newe geistliche Lieder",
+      "date": "1659"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "Both records are by Johann Rist in German, but the titles and dates are different, suggesting different works by the same author."
+  },
+  {
+    "author": "Zaccaria",
+    "record_a": {
+      "source": "erara",
+      "title": "Spieghel de devotiun : diviis enten siis partz",
+      "date": "1665"
+    },
+    "record_b": {
+      "source": "bsb",
+      "title": "Spieghel De Devotitun Diviis Enten Siis Partz : Cavaus Ordt Divers Cudeschs Spir",
+      "date": "1676"
+    },
+    "llm_classification": "SAME_WORK",
+    "llm_confidence": "high",
+    "llm_reasoning": "The titles are very similar, the author is the same, and the language is the same, suggesting they are the same work, but the dates differ slightly, indicating different editions or printings."
+  }
+]

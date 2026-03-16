@@ -1,0 +1,1802 @@
+[
+  {
+    "cluster_id": "cluster_45785",
+    "cluster_size": 267,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although the documents are similar in form (decrees from Dukes of Wurttemberg), they are issued by different Dukes (Karl Eugen vs. Friedrich Eugen) and concern different subject matter, making them distinct works."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both records are from the same source and are proclamations by Dukes of Wurttemberg, the different titles, authors (Karl Eugen vs. Ludwig Eugen), and dates indicate they are distinct works addressing different subjects."
+    },
+    "first_title": "Von Gottes Gnaden, Carl, Herzog zu Würtemberg und Teck ... Unsern Gruß zuvor, Li",
+    "last_title": "Von Gottes Gnaden Friedrich Eugen, Herzog zu Wirtemberg und Tek ... Unsern Gruß ",
+    "mid_title": "Von Gottes Gnaden Ludwig Eugen, Herzog zu Wirtemberg und Tek ... Unsern Gruß zuv",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_69562",
+    "cluster_size": 255,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "While both records share the same author and language, and have similar titles (both begin with \"Von Gottes Gnaden...\"), they have different dates and different specific content within the title, indicating different decrees or publications by different Dukes of Württemberg."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from Württemberg, in German, and are similar official decrees from 1736 and 1737 respectively, suggesting they are different but related publications from the same source."
+    },
+    "first_title": "Von Gottes Gnaden, Carl Rudolph, Hertzog zu Würtemberg und Teck, ... Lieber Getr",
+    "last_title": "Von Gottes Gnaden, Wir Carl Alexander, Hertzog zu Würtemberg und Teck, Graff zu ",
+    "mid_title": "Von Gottes Gnaden, Carl Alexander, Hertzog zu Würtemberg und Teck, [etc.] [et]c.",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_1037",
+    "cluster_size": 190,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, a very similar title, and language, but have slightly different publication dates (1586 and 1587), suggesting they are part of the same edition, possibly with additions or corrections in the later printing."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for Theodor Zwinger's \"Theatrum Humanae Vitae\" from 1586, in Latin, and from the same source (BSB), but Record B specifies volume 15, suggesting it's a specific volume within the larger set described in Record A, indicating they are part of the same edition."
+    },
+    "first_title": "Theatrvm Hvmanæ Vitæ Theodori Zuingeri Bas. Tertiatione : Nouem Volvminibvs locu",
+    "last_title": "Theatrvm Hvmanæ Vitæ Theodori Zuingeri Bas. Tertiatione : Nouem Volvminibvs locu",
+    "mid_title": "Theatrvm Hvmanæ Vitæ Theodori Zuingeri Bas. Tertiatione : Nouem Volvminibvs locu",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_71973",
+    "cluster_size": 179,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records share the same author (Württemberg) and similar titles, indicating they are likely different decrees or proclamations issued by the same authority, but with different dates (1753 and 1759) and distinct subject matter, suggesting they are different works within the same body of work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Württemberg) and are edicts/decrees issued by Carl, Herzog zu Würtemberg, but they concern different subject matters and were published in different years (1753 and 1755), indicating different publications of the same issuing authority."
+    },
+    "first_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, Graf zu Mömpelgart, Herr ",
+    "last_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, Graf zu Mömpelgart, Herr ",
+    "mid_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, Graf zu Mömpelgart, Herr ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_22990",
+    "cluster_size": 179,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author (Johann Jacob Moser) and deal with related subject matter (law and governance), but they have different titles and publication dates, suggesting different works within the same author's oeuvre."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by Johann Jacob Moser, in German, and deal with related topics of governance and law, but they have different titles and publication dates, indicating different works on similar subjects."
+    },
+    "first_title": "Johann Jacob Mosers, Königlich-Dänischen Etats-Raths, Beyträge zu Reichsrittersc",
+    "last_title": "Johann Jacob Moser, Königlich-Dänischer Etats-Rath, von der Landes-Hoheit in Jus",
+    "mid_title": "Johann Jacob Moser, Königlich-Dänischer Etats-Rath, von der Landeshoheit in Regi",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_50700",
+    "cluster_size": 177,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are sentences issued by the city of Paris, authored by 'Paris. Auteur du texte,' and written in French, indicating they are related legal documents from the same source, but concern different cases and were issued in different years."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "Both records are sentences from the city of Paris, authored by 'Paris. Auteur du texte,' and in French, suggesting they are part of a series or collection of similar legal documents, but they concern different cases and dates, indicating different editions or printings of the same type of work."
+    },
+    "first_title": "Sentence (du bureau de la ville) qui condamne la veuve Labbé, gravoyeuse, en 20 ",
+    "last_title": "Sentence (du bureau de la ville) qui condamne solidairement les nommés Milsant, ",
+    "mid_title": "Sentence (du bureau de la ville) qui condamne la veuve Jubline en 3000 livres d'",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_28927",
+    "cluster_size": 176,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Genève (République)) and are similar official publications, but they have different titles and dates, indicating different publications of the same governmental body."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "These are both proclamations from the government of Geneva, likely part of a series, and thus the same author and subject, but different dates indicate different editions or printings."
+    },
+    "first_title": "De la part de nos magnifiques et très honorés seigneurs syndics et conseil : don",
+    "last_title": "De la part de nos magnifiques et très honorés Seigneurs Syndics et Conseils : se",
+    "mid_title": "De la part de nos magnifiques et très-honorés Seigneurs : donné le 9 février 178",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_24469",
+    "cluster_size": 171,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for Voltaire's complete works in French, published around the same time (1784 and 1785), suggesting they are likely the same edition, with the BSB record possibly being a later printing or a volume from the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for Voltaire's collected works in French, but the dates differ slightly (1784 vs 1787), suggesting different editions or printings of the same overall work."
+    },
+    "first_title": "Oeuvres complètes de Voltaire",
+    "last_title": "Oeuvres Complètes De Voltaire / Tome Soixante-Seizieme : Corresp. générale",
+    "mid_title": "Oeuvres completes de Voltaire / 51 : Commentaires Sur Corneille ; 2",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_40654",
+    "cluster_size": 170,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "Both records are for vignettes by the same author from the same year, likely created for different publications but representing the same artistic style and period."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "The records are for different vignettes, even though they are by the same author and from the same year."
+    },
+    "first_title": "[Vignette zur Idylle \"An Daphnen\"]",
+    "last_title": "[Vignette zu \"Swifts Schriften\"]",
+    "mid_title": "[Vignette zu \"Der Tod Abels\"]",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_66771",
+    "cluster_size": 167,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by Maximilian III Joseph, Elector of Bavaria, but they concern different subject matter and were issued in different years, indicating they are distinct publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by Maximilian III Joseph, Elector of Bavaria, but they were issued in different years (1760 and 1766) and concern different subject matter, indicating they are distinct publications of the same author."
+    },
+    "first_title": "Von Gottes Gnaden Wir Maximilian Joseph, in Ober- und Niedern-Bayrn, auch der Ob",
+    "last_title": "Von Gottes Gnaden Wir Maximilian Joseph, in Ober- und Nieder-Bajern, auch der Ob",
+    "mid_title": "Von Gottes Gnaden Wir Maximilian Joseph, In Ober- und Nieder-Bayrn, auch der Obe",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_72940",
+    "cluster_size": 157,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts issued by Carl, Duke of Württemberg, in German, but they concern different subject matter and were issued in different years (1760 and 1763), indicating different publications of the same issuing authority."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Württemberg) and are similar legal documents, but they have different titles and dates, indicating they are distinct publications of the same issuing body."
+    },
+    "first_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, Graf zu Mömpelgart, Herr ",
+    "last_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck ... Es ist bereits durch d",
+    "mid_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck [et]c . [et]c. Unsern Gruß",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_69574",
+    "cluster_size": 152,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for \"Allgemeine Weltgeschichte\" by Guthrie in German, published in the 1780s, and are likely part of the same multi-volume edition, with different volume numbers (1 and 79) indicating different parts of the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "These are volumes 1 and 21 of the same multi-volume history by Guthrie, indicating the same work but different parts of it."
+    },
+    "first_title": "Allgemeine Weltgeschichte / 1",
+    "last_title": "Allgemeine Weltgeschichte / 79",
+    "mid_title": "Allgemeine Weltgeschichte / 21",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_8297",
+    "cluster_size": 135,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are part of Fassmann's \"Gespräche In dem Reiche derer Todten\" series, sharing the same author and a similar title structure, but they are different volumes published in different years."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are part of Fassmann's *Gespräche In Dem Reiche derer Todten* series, published in consecutive years, and share a similar structure and title format, indicating they are different volumes within the same larger work."
+    },
+    "first_title": "Gespräche In Dem Reiche derer Todten, Acht und zwantzigste Entrevuë, Zwischen De",
+    "last_title": "Gespräche In dem Reiche derer Todten, Fünff und Siebzigste Entrevuë, Bestehende,",
+    "mid_title": "Gespräche In Dem Reiche derer Todten, Zwey und Viertzigste Entrevuë, Zwischen Fr",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_72978",
+    "cluster_size": 129,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Württemberg) and are similar official decrees, but they have different dates (1720 and 1729) and slightly different titles, indicating different decrees within the same series of official publications."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by Eberhard Ludwig of Württemberg in German, but they concern different specific issues and were issued in different years (1720 and 1725), indicating different printings of different decrees, thus the same work but different editions."
+    },
+    "first_title": "Von Gottes Gnaden Eberhard Ludwig, Hertzog zu Würtemberg und Teck, [et]c. Der Rö",
+    "last_title": "Von Gottes Gnaden, Eberhard Ludwig, Hertzog zu Würtemberg und Teck [et]c. Der Rö",
+    "mid_title": "Von Gottes Gnaden Eberhard Ludwig, Herzog zu Württemberg und Teck [et]c. Der Röm",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_18809",
+    "cluster_size": 125,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by David Fassmann, in German, and titled \"Gespräche Jn dem Reiche derer Todten,\" indicating they are part of the same series, but the dates and specific \"Entrevuë\" numbers differ, suggesting different volumes or parts of the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for Fassmann's *Gespräche in dem Reiche derer Todten* from 1733, but they are different 'Entrevue' (dialogues), indicating they are parts of the same larger work, not the same edition or item."
+    },
+    "first_title": "Gespräche Jn dem Reiche derer Todten  ... : Hundert sieben und Siebtzigste Entre",
+    "last_title": "Gespräche In Dem Reiche derer Todten, Zweyhundert und Viertzigste Entrevuë, Best",
+    "mid_title": "Gespräche In Dem Reiche derer Todten, Hundert Vier und Siebtzigste Entrevuë, Zwi",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_14044",
+    "cluster_size": 122,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author, have very similar titles, and are in the same language, but they have different dates and volume numbers, suggesting they are parts of the same larger work published over time."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author, have very similar titles, and are in the same language, but have different dates and volume numbers, suggesting they are parts of the same larger work published over time."
+    },
+    "first_title": "Curieuses Bücher-Cabinet Oder Nachricht von Historischen, Staats- und galanten S",
+    "last_title": "Curieuses Bücher-Cabinet Oder Nachricht von Historischen, Staats- und galanten S",
+    "mid_title": "Curieuses Bücher-Cabinet Oder Nachricht von Historischen, Staats- und galanten S",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_66538",
+    "cluster_size": 122,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by the same author (Karl Eugen) in German, with similar titles indicating they are both proclamations, but they were issued in different years (1780 and 1789), indicating different editions of similar works."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are decrees by Karl Eugen, Duke of Württemberg, in German, but issued in different years (1780 and 1784), indicating different decrees on different subjects, thus the same author and general subject but different specific works."
+    },
+    "first_title": "Von Gottes Gnaden Carl, Herzog zu Wirtemberg und Teck, ... Liebe Getreue! Nachde",
+    "last_title": "Von Gottes Gnaden Carl, Herzog zu Wirtemberg und Teck, ... Unsern Gruß zuvor, Li",
+    "mid_title": "Von Gottes Gnaden Carl, Herzog zu Wirtemberg und Teck, ... Unsern gn. Gruß zuvor",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_49371",
+    "cluster_size": 121,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although the author, date, and language are the same, the titles are different enough to suggest these are different prints within the same collection, especially given the 'Les bâtiments de Paris' part of Record B's title."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe items with the same author, title, date, and language, suggesting they are from the same edition, but the differing identifiers (17/B vs 36/A) within the title indicate they are distinct items within a larger collection."
+    },
+    "first_title": "Pläne und Prospekte von Versailles : Sammelband der Ryhiner-Kartensammlung / 17/",
+    "last_title": "Pläne und Prospekte - Les bâtiments de Paris : Sammelband der Ryhiner-Kartensamm",
+    "mid_title": "Pläne und Prospekte von Versailles : Sammelband der Ryhiner-Kartensammlung / 36/",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_72938",
+    "cluster_size": 119,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for official decrees issued by Carl Friderich, Herzog zu Württemberg, in German, with similar titles and authorship, but different dates (1740 and 1743), indicating different decrees concerning different matters, thus the same work but different editions."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records have the same author, similar titles, are in the same language, and are published within a year of each other, suggesting they are the same edition of a decree, but the content differs slightly, indicating they are not the same physical item."
+    },
+    "first_title": "Von Gottes Gnaden, Carl Friderich, Hertzog zu Würtemberg und Teck, auch in Schle",
+    "last_title": "Von Gottes Gnaden Carl Friderich, Hertzog zu Würtemberg und Teck, auch in Schles",
+    "mid_title": "Von Gottes Gnaden Carl Friderich, Hertzog zu Würtemberg und Teck, auch in Schles",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_63821",
+    "cluster_size": 119,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are decrees by Maximilian III of Bavaria in German, but they were issued in different years (1754 and 1759) and address different subjects, indicating they are distinct publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are decrees by Maximilian III of Bavaria in German, but they were issued on different dates (1754 and 1759) and have different content, indicating they are separate publications of the same author."
+    },
+    "first_title": "Von Gottes Gnaden Wir Maximilian Joseph, in Ober- und Niedern-Bayrn, auch der Ob",
+    "last_title": "Von Gottes Gnaden Wir Maximilian Joseph, In Ober- und Nidern Bayern, auch der Ob",
+    "mid_title": "Von Gottes Gnaden Wir Maximilian Joseph, In Ob- und Niedern-Bayrn, auch der Ober",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_34425",
+    "cluster_size": 118,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records share the same author, title, date, and language, suggesting they are the same edition, but they are distinct entries within the same source (erara) and have different specific content within the larger collection, indicating they are not the same physical item."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records have the same author, title, date, and language, suggesting they are the same edition, but the different specific title details (8/A vs 7/G) indicate they are likely different items within the same Sammelband."
+    },
+    "first_title": "Anhang oder Allerlei : Kriegskarten, Kriegsgeschichten und -sachen : Sammelband ",
+    "last_title": "Anhang oder Allerlei : Kriegskarten, Kriegsgeschichten und -sachen : Sammelband ",
+    "mid_title": "Anhang oder Allerlei : Kriegskarten, Kriegsgeschichten und -sachen : Sammelband ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_46859",
+    "cluster_size": 118,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for Voltaire's complete works in French, published around the same time, suggesting they are likely the same edition, although the BSB record specifies a volume of letters and has a slightly different date."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for Voltaire's complete works in French, published around the same time, suggesting they are likely the same edition, despite the slight title variation and different dates (likely a publication span)."
+    },
+    "first_title": "Oeuvres Complètes De M. De Voltaire",
+    "last_title": "Oeuvres Complètes De M. De Voltaire / 98 : Lettres De M. De Voltaire Et De M. D'",
+    "mid_title": "Oeuvres Complètes De M. De Voltaire / 56 : Dictionnaire Philosophique ; T. 5",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_310",
+    "cluster_size": 117,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe parts of the same Sammelband (collection) by the same author, but focus on different cantons and have slightly different dates, indicating they are distinct parts of a larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are part of the same series of collected plans and prospects by the same author, Herrliberger, and concern the same general subject (Helvetia occidentalis), but they focus on different regions and were published in consecutive years, suggesting different installments of the same project."
+    },
+    "first_title": "Helvetia occidentalis - Pläne und Prospekte (Luzern, Aargau) : Sammelband der Ry",
+    "last_title": "Helvetia occidentalis - Pläne und Prospekte (Basel, Solothurn) : Sammelband der ",
+    "mid_title": "Helvetia occidentalis - Pläne und Prospekte (Basel, Solothurn) : Sammelband der ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_48247",
+    "cluster_size": 115,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records share the same author, date, and language, and while the titles are similar, they are not identical, suggesting they are different printings or issues of official decrees from the same year, thus the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Karl Albrecht of Bavaria, written in German, but issued in different years (1730 and 1734) and concerning different matters (luxury goods vs. military preparedness), indicating different editions of the same type of work."
+    },
+    "first_title": "Von Gottes Genaden, Wür Carl Albrecht, in Obern: und Nidern-Bayrn, auch der Ober",
+    "last_title": "Von Gottes Genaden Wür Carl Albrecht, in Ob- und Nidern-Bayrn, auch der Obern-Pf",
+    "mid_title": "Von Gottes Genaden, Wür Carl Albrecht, in Ob: und Nidern-Bayrn, auch der Obern-P",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_38571",
+    "cluster_size": 110,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "While the author, date, and language are the same, the titles are different enough to indicate distinct dissertations, even if both are medical and by the same author at the same time."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "The titles are different, indicating different dissertations, despite the same author and similar subject matter."
+    },
+    "first_title": "Dissertatio Inauguralis Medica, De Atrophia Infantum",
+    "last_title": "Dissertatio Inauguralis Medica, De Adstringentium Perverso In Haemorrhagiis Usu ",
+    "mid_title": "Dissertatio Inauguralis Medica, De Resuscitatione Semi Mortuorum Medica",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_64132",
+    "cluster_size": 107,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Maximilian III of Bavaria, but they concern different subjects and were issued in different years, indicating different editions of the same type of work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Maximilian III Joseph, with similar titles and the same author, but different dates (1770 and 1772), indicating different decrees or editions of his pronouncements."
+    },
+    "first_title": "Von Gottes Gnaden Wir Maximilian Joseph, in Ober- und Niedern Bajern, auch der o",
+    "last_title": "Von Gottes Gnaden Wir Maximilian Joseph, In Ober- und NiedernBajern, auch der Ob",
+    "mid_title": "Von Gottes Gnaden Wir Maximilian Joseph, in Ober- und Niederbajern auch der ober",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_64196",
+    "cluster_size": 101,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Maximilian III Joseph, Elector of Bavaria, but they concern different subject matter and were issued in different years, indicating different publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by the same ruler (Maximilian III) with similar opening formulas, but different dates (1745 and 1747) and different subject matter, indicating they are distinct publications of the same author."
+    },
+    "first_title": "Von Gottes Gnaden Wir Maximilian Joseph, in Ob- und Nidern Bayrn, auch der Obern",
+    "last_title": "Von Gottes Gnaden Maximilian Joseph, in Ober- und Nidern-Bayrn, auch der Obern P",
+    "mid_title": "Von Gottes Gnaden Maximilian Joseph, in Ober- und Niedern-Bayern, auch der Obern",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_72939",
+    "cluster_size": 101,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Württemberg) and are similar official decrees, but they have different dates (1744 and 1748) and different content, indicating different printings of similar administrative documents."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author and written in German, but they were published in different years (1744 and 1747) and have different content as indicated by their titles, suggesting they are different publications of the same author."
+    },
+    "first_title": "Von Gottes Gnaden Carl, Hertzog zu Würtemberg und Teck, Graf zu Mömpelgardt, Her",
+    "last_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, Graf zu Mömpelgart, Herr ",
+    "mid_title": "Von Gottes Gnaden Carl, Hertzog zu Würtemberg und Teck, Graf zu Mömpelgart, Herr",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_45869",
+    "cluster_size": 101,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are decrees by Carl Eugen, Duke of Württemberg, in German, but they are from different years (1770 and 1779) and concern different matters, indicating they are distinct publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although the author and general format are the same, the documents have different dates and different specific subject matter as indicated by the titles, indicating different publications by the same author."
+    },
+    "first_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, [et]c. [et]c. Unsern Gruß",
+    "last_title": "Von Gottes Gnaden, Carl, Herzog zu Würtemberg und Teck, ... Unsern Gruß zuvor, L",
+    "mid_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck, [et]c. Unsern Gruß zuvor,",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_41736",
+    "cluster_size": 100,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (France. Conseil d'État), in the same language (French), and concern arrêt du conseil d'état, but they have different titles and dates, indicating different decrees."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although the author is the same (French Conseil d'État) and the title structure is similar ('Arrêt du conseil d'état...'), the specific subject matter and dates are different, indicating distinct decrees."
+    },
+    "first_title": "Arrêt du conseil d'état qui ordonne que les secrétaires du roi, audienciers et c",
+    "last_title": "Arrêt du conseil d'Etat qui ordonne que la recette des sommes portées à la loter",
+    "mid_title": "Arrêt du conseil d'Etat qui donne cours aux léopolds d'or et écus de Lorraine du",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_27846",
+    "cluster_size": 95,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records refer to Buffon's Histoire Naturelle, specifically the section on birds (Oiseaux), and while the dates differ slightly (1785 vs. 1787), they are likely different editions or printings of the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe the same work by Buffon, in French, published in 1785, indicating they are likely the same edition held by different libraries (erara and bsb)."
+    },
+    "first_title": "Histoire naturelle générale et particulière : par ... de Buffon / Oiseaux",
+    "last_title": "Histoire Naturelle, Générale Et Particulière / [3],18 : Oiseaux ; T. 18",
+    "mid_title": "Histoire Naturelle, Générale Et Particulière / [1],2",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_39319",
+    "cluster_size": 89,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records have the same author, title, date, and language, suggesting they are the same edition, but the slight variation in the title and the different identifiers suggest they are different physical copies or catalog entries of the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but the different identifiers (11/D Buchorn vs. 5/E Meckmül) within the title indicate different physical copies or items within the same collection."
+    },
+    "first_title": "Circuli Suevici : Pläne und Prospekte : Sammelband der Ryhiner-Kartensammlung / ",
+    "last_title": "Circuli Suevici : Pläne und Prospekte der Reichsstädte : Sammelband der Ryhiner-",
+    "mid_title": "Circuli Suevici : Pläne und Prospekte : Sammelband der Ryhiner-Kartensammlung / ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_26274",
+    "cluster_size": 88,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same multi-volume history by the same author, with different dates indicating different volumes within the series."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author, in the same language, and are volumes of a history of Germany, but they cover different time periods and were published in different years, indicating different volumes of the same work."
+    },
+    "first_title": "Michael Ignaz Schmidts Kais. Königl. wirklichen Hofraths, ... Geschichte der Deu",
+    "last_title": "Michael Ignaz Schmidts Kaiserl. Königl. wirklichen Hofraths, Directors des Kaise",
+    "mid_title": "Michael Ignaz Schmidts Kais. Königl. wirklichen Hofraths, Directors des Kais. Kö",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_11213",
+    "cluster_size": 86,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both records are by Karl Theodor and in German, they have different titles and dates, indicating they are distinct proclamations or decrees rather than the same edition of a single work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by Karl Theodor, Elector of Bavaria, in German, but issued in different years (1780 and 1784), indicating different decrees on different subjects, though with a similar opening formula."
+    },
+    "first_title": "Wir Karl Theodor Von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nied",
+    "last_title": "WIR CARL THEODOR von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nied",
+    "mid_title": "Wir Karl Theodor von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nied",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_25242",
+    "cluster_size": 84,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author and share a very similar title, but they have different dates and slightly different wording, indicating they are different editions or printings of the same work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records share the same author and a very similar title, indicating they are likely different decrees or edicts issued by the same ruler, Maximilian Emanuel, but in different years (1690 and 1694), thus representing the same intellectual content but different editions or printings."
+    },
+    "first_title": "Von Gottes Genaden, Wir Maximilian Emanuel in Ober- und Nidern Bayrn auch der Ob",
+    "last_title": "Von Gottes Genaden, Wir Maximilian Emanuel, in Ob: und Nidern Bayrn, auch der Ob",
+    "mid_title": "Von Gottes Genaden, Wir Maximilian Emanuel in Ober- und Nidern Bayrn auch der Ob",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_35879",
+    "cluster_size": 81,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records refer to the same author and a German translation of the same historical work, but they have slightly different titles and publication dates, suggesting different volumes or editions within the same translation."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe German translations of Millot's Universal History, published close together in time, suggesting different volumes or parts of the same larger work."
+    },
+    "first_title": "Des Herrn Abt Millot, Mitglieds der Academie zu Lion [et]c. Universalhistorie ",
+    "last_title": "Des Herrn Abt Millot, Mitglieds der Academie zu Lyon [et]c. Universalhistorie ",
+    "mid_title": "Des Herrn Abt Millot, Mitglieds der Academie zu Lyon [et]c. Universalhistorie ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_30768",
+    "cluster_size": 79,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe parts of the same atlas by the same author and date, but have different identifiers within the Ryhiner collection, suggesting they are distinct items within the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe maps from the same atlas by the same author, but they are different maps within that atlas and have slightly different dates, indicating they are part of the same larger work but not identical editions or items."
+    },
+    "first_title": "Germania universa : Grand atlas d'Allemagne von Jäger : Sammelband der Ryhiner-K",
+    "last_title": "Germania universa : Grand atlas d'Allemagne von Jäger : Sammelband der Ryhiner-K",
+    "mid_title": "Germania universa : Grand atlas d'Allemagne von Jäger : Sammelband der Ryhiner-K",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_16892",
+    "cluster_size": 78,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are decrees by Ferdinand Maria, Elector of Bavaria, in German, concerning matters of governance, but issued in different years (1670 and 1675), indicating different publications of the same underlying work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Ferdinand Maria, Elector of Bavaria, in German, concerning matters of governance, but they were issued in different years (1670 and 1678), indicating different printings of similar legal documents."
+    },
+    "first_title": "Von Gottes Genaden Ferdinand Maria, in Ober: vnnd Nidern Bayrn, auch der Obern P",
+    "last_title": "Von Gottes Genaden, Wir Ferdinandt Maria, in Obern vnd Nidern Bayrn, auch der Ob",
+    "mid_title": "Von Gottes Genaden Wir Ferdinand Maria in Obern und Nidern Bayrn auch der Obern ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_8930",
+    "cluster_size": 76,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both records are from the Parlement de Paris and are in French, the titles and dates are different, indicating different decrees or rulings, thus different works."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both records are from the Parlement de Paris and in French, and both are 'Arrêt de parlement', the titles and dates are different, indicating different decrees on different subjects."
+    },
+    "first_title": "Arrêt de parlement qui ordonne l'exécution des édits et déclarations concernant ",
+    "last_title": "Arrêt de parlement qui homologue une ordonnance rendue par les officiers du bure",
+    "mid_title": "Arrêt de parlement qui homologue une ordonnance rendue par les officiers du bail",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_49049",
+    "cluster_size": 75,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the Châtelet de Paris, written in French, and concern police sentences related to bakers and bread sales, suggesting they are related legal documents from the same court, but issued in different years (1726 and 1727), thus different editions."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are sentences issued by the Châtelet de Paris in the 1720s concerning food supply issues, indicating they are related works from the same authority, though different specific sentences."
+    },
+    "first_title": "Sentence de police qui condamne la nommée Poiry, boulangère, en 3000 livres d'am",
+    "last_title": "Sentence de police qui condamne Cl.-Philbert Cousin, boulanger, en 100 liv. d'am",
+    "mid_title": "Sentence de police qui condamne les nommés Puthomme, laboureurs, en 1000 livres ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_42878",
+    "cluster_size": 74,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for letters patent issued by Louis XVI in 1790, but they concern different decrees of the National Assembly, indicating different subject matter despite the similar title structure and author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for letters patent issued by Louis XVI in 1790, dealing with decrees of the National Assembly, suggesting they are related legal documents from the same period and authority, but the titles indicate different specific decrees are being addressed."
+    },
+    "first_title": "Lettres patentes du Roi, sur un décret de l'Assemblée nationale pour la constitu",
+    "last_title": "Lettres patentes sur un décret de l'Assemblée nationale qui abolit le retrait li",
+    "mid_title": "Lettres patentes sur le décret de l'Assemblée nationale portant que les impositi",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_61379",
+    "cluster_size": 72,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records share the same author, title, date, and language, suggesting they are parts of the same edition of a multi-volume work, with different volume numbers and coverage (years)."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes of the same multi-volume work (Rinaldi's continuation of Baronius's *Annales Ecclesiastici*), with different volume numbers and date ranges covered, published around the same time and by the same author."
+    },
+    "first_title": "Annales Ecclesiastici : Ab Anno quo desinit Card. Caes. Baronius M.C.XC.VIII. us",
+    "last_title": "Annales Ecclesiastici : Ab Anno quo desinit Card. Caes. Baronius M.C.XC.VIII. us",
+    "mid_title": "Annales Ecclesiastici : Ab Anno quo desinit Card. Caes. Baronius M.C.XC.VIII. us",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_18931",
+    "cluster_size": 72,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same multi-volume work by Johann Jacob Moser, 'Teutsches Staats-Recht,' published in German, but they are different volumes (Dritter Theil vs. Sechster Theil) and published in different years (1740 vs. 1742), indicating different editions within the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author (Johann Jacob Moser) and have very similar titles ('Teutsches Staats-Recht'), but they are different volumes (Dritter Theil vs. Drey und zwanzigster Theil) published in different years, indicating they are parts of the same larger work."
+    },
+    "first_title": "Johann Jacob Mosers Königlich-Preusischen Geheimen Raths, der Universität zu Fra",
+    "last_title": "Johann Jacob Mosers Königlich-Preusischen Geheimen Raths, der Universität zu Fra",
+    "mid_title": "Johann Jacob Mosers Königlich-Preusischen Geheimen Raths, der Universität zu Fra",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_50235",
+    "cluster_size": 71,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe sections of the same Ordnance Survey of Ireland, published in the same year by the same author, suggesting they are part of the same edition, but cover different geographical areas."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe Ordnance Survey maps of Ireland by the same author, but for different regions and published in different years, indicating different sheets within the same series."
+    },
+    "first_title": "Ordnance survey of Ireland 1:63 360 / 12 Donegal &amp; Londonderry : Limavady",
+    "last_title": "Ordnance survey of Ireland 1:63 360 / 8 Antrim : Ballycastle",
+    "mid_title": "Ordnance survey of Ireland 1:63 360 / 66 Leitrim, Roscommon &amp; Slico : Boyle",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_39323",
+    "cluster_size": 71,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but the different identifiers (6/F Bleÿstein vs. 12/A Kemmat) within the Ryhiner-Kartensammlung indicate they are likely different physical copies within the same collection."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but the slight difference in the 'Sammelband' identifier indicates they are likely different physical copies within the same collection."
+    },
+    "first_title": "Electoratus Bavariae : Prospekte : Sammelband der Ryhiner-Kartensammlung / 6/F B",
+    "last_title": "Electoratus Bavariae : Prospekte : Sammelband der Ryhiner-Kartensammlung / 12/A ",
+    "mid_title": "Electoratus Bavariae : Prospekte : Sammelband der Ryhiner-Kartensammlung / 5/E R",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_72973",
+    "cluster_size": 71,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by Eberhard Ludwig, Duke of Württemberg, in German, but they concern different matters (establishment of an orphanage vs. levying taxes) and were issued in different years, indicating different publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "While both records share the same author and similar titles (both beginning with a standard ducal formula), the content and specific details within the titles and the body of the texts indicate they are distinct decrees or proclamations issued by the same authority at different times, thus representing different works."
+    },
+    "first_title": "Von Gottes Gnaden, Eberhard Ludwig, Hertzog zu Würtemberg und Teck, [et]c. Der R",
+    "last_title": "Von Gottes Gnaden Eberhard Ludwig, Hertzog zu Würtemberg und Teck, [et]c. Der Rö",
+    "mid_title": "Von Gottes Gnaden, Eberhard Ludwig, Hertzog zu Würtemberg und Teck [et]c. Der Rö",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_32061",
+    "cluster_size": 69,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are German translations of Shakespeare's plays, published close in time and likely part of the same collected works, but not the same edition because they are different volumes (1 and 19)."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for German translations of Shakespeare's plays, published around the same time as part of a multi-volume set, but are different volumes, indicating different editions of the same work."
+    },
+    "first_title": "Willhelm Shakespears Schauspiele / 1 : [Der Sturm. Ein Sommernachtstraum]",
+    "last_title": "Willhelm Shakespears Schauspiele / 19",
+    "mid_title": "Willhelm Shakespears Schauspiele / 14",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_14094",
+    "cluster_size": 69,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title stem, date, and language, suggesting they are part of the same series or publication from the same edition, but the 'troisième division' vs 'quatrième division' indicates they are distinct parts of that edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "The records share the same author and similar titles, suggesting they are related publications from the same governing body, but the different dates indicate different editions or related publications within a series."
+    },
+    "first_title": "De la part de nos magnifiques et très-honorés Seigneurs Sindics et Conseil : tro",
+    "last_title": "De la part de nos magnifiques et très-honorés Seigneurs Sindics et Conseil : qua",
+    "mid_title": "De la part de nos magnifiques et très-honorés seigneurs",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_26278",
+    "cluster_size": 69,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records have the same author, title, date, and language, suggesting they are the same edition of the work, but come from different sources."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author, have very similar titles, and are in German, but they cover different time periods within the larger 'Geschichte der Deutschen' and were published in different years, indicating different volumes or editions of the same work."
+    },
+    "first_title": "Michael Ignaz Schmidts Hochfürstl. Wirzburgischen geistlichen Raths, und ordentl",
+    "last_title": "Michael Ignaz Schmidts Hochfürstl. Wirzburgischen geistlichen Raths, und ordentl",
+    "mid_title": "Michael Ignaz Schmidts Hochfürstl. Wirzburgischen geistlichen Raths, und ordentl",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_30751",
+    "cluster_size": 68,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author and have very similar titles, suggesting they are parts of the same larger work, but the dates and volume numbering indicate different parts or editions of that work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "The records share the same author and a very similar title, suggesting they are the same work, but the dates differ by one year, indicating different volumes or editions of the same work."
+    },
+    "first_title": "Geschichte des gegenwärtigen Kriegs zwischen Rußland, Polen und der Ottomannisch",
+    "last_title": "Geschichte des gegenwärtigen Kriegs zwischen Rußland, Polen und der Ottomannisch",
+    "mid_title": "Geschichte des gegenwärtigen Kriegs zwischen Rußland, Polen und der Ottomannisch",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_25185",
+    "cluster_size": 68,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records share the same author and language, and the titles suggest legal disputations, but the dates are different, indicating different disputations or editions."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author (Stryk, Samuel) and in Latin, and the titles suggest legal disputations, but the titles are different and the dates are different, indicating different publications of related works."
+    },
+    "first_title": "Disputatio Inauguralis De Causa Incidente",
+    "last_title": "Disputatio Inauguralis De Altiori Indagine",
+    "mid_title": "Disputatio Inauguralis, De Jure Uxoris In Bona Mariti",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_47816",
+    "cluster_size": 66,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title stem, date, and language, suggesting they are part of the same geological survey series, likely different sheets within the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are geological maps of Prussia by the same author, Konrad Keilhack, but they cover different areas and were published in different years, indicating different sheets within a larger series."
+    },
+    "first_title": "Geologische Karte von Preussen und benachbarten deutschen Ländern 1:25 000 / 443",
+    "last_title": "Geologische Karte von Preussen und benachbarten deutschen Ländern 1:25 000 / 444",
+    "mid_title": "Geologische Karte von Preussen und benachbarten deutschen Ländern 1:25 000 / 143",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_48231",
+    "cluster_size": 65,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe maps from the Ordnance Survey of Ireland at the same scale, suggesting they are part of the same series of maps, although different sheets and dates indicate different items within the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe maps from the Ordnance Survey of Ireland, likely part of the same series, sharing a similar title structure and subject matter, but differing in specific location and date, indicating different sheets within the same larger work."
+    },
+    "first_title": "Ordnance survey of Ireland 1:63 360 / 173 Kerry : Killarney",
+    "last_title": "Ordnance survey of Ireland 1:63 360 / 2 Donegal : Glengad Head",
+    "mid_title": "Ordnance survey of Ireland 1:63 360 / 155 Tipperary : Cashel",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_41282",
+    "cluster_size": 64,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both records are from the Parlement de Paris and concern legal decrees, the titles indicate different subjects (chapel concessions vs. archival regulations) and different dates, suggesting distinct legal acts."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "Both records are from the Parlement de Paris, in French, and concern legal decrees, but the dates (1711 and 1712) are different, suggesting different decrees on similar topics."
+    },
+    "first_title": "Arrêt de la Cour de Parlement rendu en faveur des fabriques des paroisses pour l",
+    "last_title": "Arrêt de la Cour de Parlement servant de règlement pour la sureté et conservatio",
+    "mid_title": "Arrest de la cour de Parlement. Du 19. aoust 1712.",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_20034",
+    "cluster_size": 64,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "Both records are from the Parlement de Paris, in French, and concern legal decrees, but they have different titles and dates, suggesting different decrees from the same body."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both records share the same author, date, and source, the titles indicate distinct legal cases or decrees issued by the Parlement de Paris, suggesting different subject matter and content."
+    },
+    "first_title": "Arrêt de la Cour du Parlement qui condamne Louise de Lars, Cantienne Pichard, Ma",
+    "last_title": "Arrêt de la Cour du Parlement qui ordonne que dans huitaine à compter du jour de",
+    "mid_title": "Arrêt de la Cour du Parlement qui reçoit le procureur général du Roi appelant co",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_43348",
+    "cluster_size": 64,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe the same multi-volume work by Amat de Graveson, published in Latin in 1727, suggesting they are the same edition held by different libraries (erara and bsb)."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe the same work by Amat de Graveson, published in 1727 in Latin, with nearly identical titles, suggesting they are the same edition held by different libraries (erara and bsb)."
+    },
+    "first_title": "Historia Ecclesiastica Variis Colloquiis Digesta, [Tomus Primus]-Tomus Nonus Et ",
+    "last_title": "Historia Ecclesiastica, Variis Colloquiis Digesta : Ubi Pro Theologiae Candidati",
+    "mid_title": "Historia Ecclesiastica, Variis Colloquiis Digesta : Ubi Pro Theologiae Candidati",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_40235",
+    "cluster_size": 63,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same multi-volume history by Fleury, but they cover different time periods and were published in different years, indicating different volumes within the same work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes of Claude Fleury's *Historia Ecclesiastica* in Latin, but they cover different time periods and were published in different years, indicating different volumes within the same larger work."
+    },
+    "first_title": "Claudii Fleurii Abbatis Historia Ecclesiastica / 9 : Ab Anno 633. Usque Ad Annum",
+    "last_title": "Claudii Fleurii Abbatis Historia Ecclesiastica / 21 : Ab Anno Christi 1248. Usqu",
+    "mid_title": "Claudii Fleurii Abbatis Historia Ecclesiastica / 30 = 6 : Ab anno Christi 1479. ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_28413",
+    "cluster_size": 62,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are edicts by Karl Theodor with similar titles, indicating the same author and subject matter, but they were issued in different years (1790 and 1799), suggesting different editions or printings of his decrees."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "The documents share the same author and very similar titles, indicating they are proclamations or decrees by the same ruler, but they were issued in different years (1790 and 1793), suggesting different editions or printings of the same underlying work."
+    },
+    "first_title": "Wir Carl Theodor, von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nie",
+    "last_title": "Wir Carl Theodor, von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nie",
+    "mid_title": "Wir Carl Theodor, von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nie",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_24441",
+    "cluster_size": 62,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, and language, and are published within a year of each other, suggesting they are the same edition, but potentially different printings or copies."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for German translations of Hume's history, published in 1787, and appear to be different volumes within the same set, indicating the same edition."
+    },
+    "first_title": "David Hume, Esq. Geschichte von Großbritannien : Aus dem Englischen übersetzt / ",
+    "last_title": "David Hume, Esq. Geschichte von Großbritannien : Aus dem Englischen übersetzt / ",
+    "mid_title": "David Hume, Esq. Geschichte von Großbritannien : Aus dem Englischen übersetzt / ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_33461",
+    "cluster_size": 62,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "The records share the same author and a very similar title, suggesting they are part of the same series or larger work, but the volume number and date differ, indicating different volumes or editions."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "The records share the same author and a very similar title, suggesting they are part of the same multi-volume work, but the dates (1786 vs 1784) and volume numbers (28 vs 10) indicate different volumes within the series."
+    },
+    "first_title": "Neueste Sammlung jener Schriften, die von einigen Jahren her über verschiedene w",
+    "last_title": "Neueste Sammlung jener Schriften, die von einigen Jahren her über verschiedene w",
+    "mid_title": "Neueste Sammlung jener Schriften, die von einigen Jahren her über verschiedene w",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_40660",
+    "cluster_size": 61,
+    "first_vs_last": {
+      "classification": "SAME_ITEM",
+      "confidence": "high",
+      "reasoning": "The records have the same title, author, date, and source, indicating they are likely the same digitized item."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_ITEM",
+      "confidence": "high",
+      "reasoning": "The records have the same title, author, date, and source, indicating they are likely the same digitized item."
+    },
+    "first_title": "[Vignette]",
+    "last_title": "[Vignette]",
+    "mid_title": "[Vignette]",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_31844",
+    "cluster_size": 60,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Maximilian Emanuel, II, but they are from different years (1680 and 1689) and have different content, indicating different publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Maximilian Emanuel II, with similar titles and the same author, but different dates (1680 and 1687), indicating different instances of the same type of work."
+    },
+    "first_title": "Von Gottes Genaden, Wir Maximilian Emmanuel in Obern und Nidern Bayrn auch der O",
+    "last_title": "Von Gottes Genaden Wir Maximilian Emanuel in Ob: und Nidern Bayrn auch der Obern",
+    "mid_title": "Von Gottes Gnaden, Wir Maximilian Emanuel in Ober- und Nidern Bayrn auch der Obe",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_21151",
+    "cluster_size": 59,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes from the same edition of Cicero's works published in 1780, with different volume numbers and contents, indicating they are part of the same multi-volume set."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for Cicero's works published by the Societas Bipontina, with similar titles and authors, and dates that are only one year apart, suggesting they are volumes from the same edition."
+    },
+    "first_title": "M. Tullii Ciceronis Opera : Ad Optimas Editiones Collata Studiis Societatis Bipo",
+    "last_title": "M. Tullii Ciceronis Opera : Ad Optimas Editiones Collata Studiis Societatis Bipo",
+    "mid_title": "M. Tullii Ciceronis Opera : Ad Optimas Editiones Collata Studiis Societatis Bipo",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_28341",
+    "cluster_size": 59,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from Michael Ignaz Schmidt's 'Geschichte der Deutschen,' published in German, but they cover different time periods and were published in different years, indicating different volumes within the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same multi-volume history by Schmidt, indicated by the similar titles, author, and language, but different dates and volume numbers suggest different volumes within the same work."
+    },
+    "first_title": "Michael Ignaz Schmidts Kais. Königl. wirklichen Hofraths, ... Geschichte der Deu",
+    "last_title": "Michael Ignaz Schmidts Kaiserl. Königl. wirklichen Hofraths, Directors des Kaise",
+    "mid_title": "Michael Ignaz Schmidts Kaiserl. Königl. wirklichen Hofraths, ... Geschichte der ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_32338",
+    "cluster_size": 57,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes of Fabricius's *Bibliotheca Graeca*, but they are different volumes published in different years (1705 and 1708), indicating different parts of the same multi-volume work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from Fabricius's Bibliotheca Graeca, sharing the same author and overall title, but published in different years (1705 and 1726) and with different volume numbers and content descriptions, indicating different editions or volumes within the same multi-volume work."
+    },
+    "first_title": "Jo. Alberti Fabricii, Ss. Theologiæ D. &amp; Prof. Publ. Bibliotheca Græca, Sive",
+    "last_title": "Jo. Alberti Fabricii, Ss. Theologiæ D. &amp; Prof. Publ. Bibliotheca Græca, Sive",
+    "mid_title": "Jo. Alberti Fabricii, Ss. Theologiæ D. &amp; Prof. Publ. Bibliotheca Græca, Sive",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_64914",
+    "cluster_size": 56,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "While the author is the same and the titles share some words, the core subject matter indicated by the titles is different, suggesting distinct dissertations published in different years."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "While the author and language are the same, and the titles share a common structure ('Dissertatio Inauguralis Iuridica De...'), the specific subjects indicated by the unique phrases in the titles ('Exceptione Metvs Inivsti In Statv Natvrali Et Civili' vs. 'Vsv Ivramenti Pvrgatorii In Criminalibvs') and the different dates indicate different dissertations by the same author."
+    },
+    "first_title": "Dissertatio Inavgvralis Ivridica De Exceptione Metvs Inivsti In Statv Natvrali E",
+    "last_title": "Dissertatio Inavgvralis Ivridica De Statv Excommvnicatorvm Civili Ex Mente Prote",
+    "mid_title": "Dissertatio Inavgvralis Ivridica De Vsv Ivramenti Pvrgatorii In Criminalibvs",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_37272",
+    "cluster_size": 55,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes of Claude Fleury's *Historia Ecclesiastica* in Latin, but they cover different time periods and were published in different years, indicating different editions or printings of the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes of the same edition of Fleury's *Historia Ecclesiastica* printed a couple of years apart, with different volume numbers, indicating they are part of the same larger set."
+    },
+    "first_title": "Claudii Fleurii Abbatis Historia Ecclesiastica / 36 = 12 : Ab anno Christi 1530.",
+    "last_title": "Claudii Fleurii Abbatis Historia Ecclesiastica / 55 = 31 : Ab anno Christi 1611.",
+    "mid_title": "Claudii Fleurii Abbatis Historia Ecclesiastica / 50 = 26 : Ab anno Christi 1581.",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_24439",
+    "cluster_size": 55,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, and date, suggesting they are the same edition, but the volume numbers (5 and 12) indicate they are different physical volumes within the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records share the same author, title, date, and language, suggesting they are the same edition, but the slight difference in the title (inclusion of chapter numbers in Record B) indicates they might be different physical copies or catalog entries of the same edition."
+    },
+    "first_title": "The History Of England : From The Invasion Of Julius Caesar To The Revolution ",
+    "last_title": "The History Of England : From The Invasion Of Julius Caesar To The Revolution ",
+    "mid_title": "The history of England : from the invasion of Julius Caesar to the revolution ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_50170",
+    "cluster_size": 54,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes from the same collected works of Martin Luther, published in German, but they are different volumes (11 and 21) published in different years (1731 and 1733), indicating different parts of the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes from the same edition of Luther's collected works, published in German in 1730 and 1731 respectively, with similar titles and the same author, suggesting they are part of the same multi-volume set."
+    },
+    "first_title": "Des Theuren Mannes Gottes, D. Martin Luthers Sämtliche Theils von Ihm selbst D",
+    "last_title": "Des Theuren Mannes Gottes, D. Martin Luthers Sämtliche Theils von Ihm selbst D",
+    "mid_title": "Des Theuren Mannes Gottes, D. Martin Luthers Sämtliche Theils von Ihm selbst D",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_8928",
+    "cluster_size": 54,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the Parlement de Paris, in French, and concern regulations for the administration of parish property, but for different parishes (Torcy and Floing) and different years (1785 and 1784), indicating different decrees addressing similar issues."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are from Gallica, have the same author and date, and the titles are very similar, suggesting they are both decrees from the Parlement de Paris in 1785 concerning church administration, but for different parishes."
+    },
+    "first_title": "Arrêt de parlement portant règlement pour l'administration des biens et revenus ",
+    "last_title": "Arrêt de parlement portant règlement pour l'administration des biens et revenus ",
+    "mid_title": "Arrêt de parlement portant règlement pour l'administration des biens et revenus ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_43120",
+    "cluster_size": 54,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe the same volume (likely volume 5) of the same edition of Busenbaum's *Theologia Moralis* printed in 1710, and are from the same source (BSB), suggesting different catalog entries for different copies of the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for Hermann Busenbaum's *Theologia Moralis*, but they are different volumes (9 and 6) and published in different years (1710 and 1712), indicating different editions or printings within the same larger work."
+    },
+    "first_title": "Theologia Moralis / 9",
+    "last_title": "Theologia Moralis / Tomulus V.",
+    "mid_title": "Theologia Moralis / Tomulus VI.",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_45628",
+    "cluster_size": 53,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe parts of the same edition of Augustine's works, printed in 1506, with the same author and similar titles, but they are different volumes within that edition, as indicated by the volume numbers (1 and 11) and the specific content listed in each title."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are from the same library (bsb), have the same author, title, and date, suggesting they are parts of the same edition of Augustine's works, possibly different volumes or copies within the same library."
+    },
+    "first_title": "Prima [- Undecima] pars librorum divi Aurelii Augustini ... / 1 : Quos edidit ca",
+    "last_title": "Prima [- Undecima] pars librorum divi Aurelii Augustini ... / 11 : Quoru[m] ment",
+    "mid_title": "Prima [- Undecima] pars librorum divi Aurelii Augustini ... / 5 : Quos scripsit ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_72967",
+    "cluster_size": 53,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Württemberg) and share a very similar title structure, indicating they are both official decrees or announcements, but they have different dates (1772 and 1779) and different specific content, suggesting they are distinct publications within the same series of official pronouncements."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are decrees issued by Carl, Duke of Württemberg, in German, concerning matters of governance, but they are from different years (1772 and 1775) and address different specific issues, indicating they are distinct publications within the same body of work."
+    },
+    "first_title": "Von Gottes Gnaden Carl, Herzog zu Würtemberg und Teck ... Unsern Gruß zuvor, Lie",
+    "last_title": "Von Gottes Gnaden Carl, Herzog zu Wirtemberg und Teck, ... Unsern Gruß zuvor, Li",
+    "mid_title": "Von Gottes Gnaden, Carl, Herzog zu Würtemberg und Teck, ... Unsern Gruß zuvor, L",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_58956",
+    "cluster_size": 49,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Ferdinand Maria, Elector of Bavaria, in German, addressing different issues (hunting regulations vs. population decline after the Thirty Years' War) but sharing a similar opening formula and author, indicating different publications of the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Ferdinand Maria, Elector of Bavaria, in German, concerning matters of governance; while the dates are different (1663 and 1664), and the full titles vary slightly, they represent different enactments by the same ruler, thus the same work but different editions."
+    },
+    "first_title": "Von Gottes Gnaden, Wir Ferdinand Maria, in Obern vnd Nidern Bayrn, auch der Ober",
+    "last_title": "Von Gottes Genaden Ferdinand Maria in Ob: und Nidern Bayrn: auch der Obern Pfalt",
+    "mid_title": "Von Gottes Genaden Wir Ferdinand Maria in Ob: und Nidern Bayrn auch der Obern Pf",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_64528",
+    "cluster_size": 49,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Bayern) and are similar proclamations issued a year apart, indicating they are different editions of similar works."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Maximilian Emanuel of Bavaria, in German, concerning matters of governance (taxes in 1715 and tobacco trade in 1716), indicating they are distinct publications from the same larger body of work."
+    },
+    "first_title": "Von Gottes Gnaden Wir Maximilian Emanuel, in Ober- und Nidern Bayrn, auch der Ob",
+    "last_title": "Von Gottes Gnaden Wir Maximilian Emmanuel, in Ob- und Nidern Bayrn, auch der Obe",
+    "mid_title": "Von Gottes Genaden Wir Maximilian Emmanuel, in Ob- und Nidern Bayrn, auch der Ob",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_40326",
+    "cluster_size": 49,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are part of the same multi-volume work by the same author, with similar titles, but published in different years (1764 and 1769), suggesting different volumes or parts of the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, a very similar title, and are published close in time, suggesting they are volumes from the same multi-volume edition of the same work."
+    },
+    "first_title": "Subsidia Eloquentiae Sacrae : In Quibus Sylvulae Concionum In Annos VIII, Ars Co",
+    "last_title": "Subsidia Eloquentiae Sacrae : In Quibus Sylvulae Concionum In Annos VIII, Ars Co",
+    "mid_title": "Subsidia Eloquentiae Sacrae : In Quibus Sylvulae Concionum In Annos VIII, Ars Co",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_31570",
+    "cluster_size": 48,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for Laurence Sterne's *Tristram Shandy* in German, but they are different volumes and/or editions published at slightly different dates."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records refer to German translations of Laurence Sterne's *Tristram Shandy*, but they are different volumes/parts and were published in different years, indicating different editions or printings within the same translation."
+    },
+    "first_title": "Tristram Schandis Leben und Meynungen / Vierter Theil",
+    "last_title": "Tristram Schandis Leben und Meynungen / 1",
+    "mid_title": "Tristram Schandis Leben und Meynungen / 6",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_25917",
+    "cluster_size": 48,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records share the same author and a very similar title, suggesting they are the same work, but the dates differ slightly (1752 vs 1754) and Record B specifies volume 13, indicating a multi-volume work published over time."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but the volume numbers (1 and 7) indicate they are different physical copies or parts of a multi-volume set."
+    },
+    "first_title": "Abrégé De L'Histoire Ecclésiastique : Contenant Les événemens considérables de c",
+    "last_title": "Abrégé De L'Histoire Ecclésiastique : Contenant Les événemens considérables de c",
+    "mid_title": "Abrégé De L'Histoire Ecclésiastique : Contenant Les événemens considérables de c",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_32746",
+    "cluster_size": 47,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same title, author, date, and language, suggesting they are the same edition, but come from different sources and have slightly different identifiers (1 (Pta. Roncudo) (Cabo S. Adrian) : Coruña vs 55 [Titelblatt 3])."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same title, author, date, and language, suggesting they are the same edition, but the differing details (1 (Pta. Roncudo) (Cabo S. Adrian) : Coruña vs 21 Soria Logroño : Zaragoza) indicate they are likely different physical copies or parts of a larger work."
+    },
+    "first_title": "Mapa geologica de Espana : Que por orden del Ministerio de Fomento. Ha formado y",
+    "last_title": "Mapa geologica de Espana : Que por orden del Ministerio de Fomento. Ha formado y",
+    "mid_title": "Mapa geologica de Espana : Que por orden del Ministerio de Fomento. Ha formado y",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_33903",
+    "cluster_size": 47,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for works by Anselm Desing in German with very similar titles concerning historical knowledge, but they have different publication dates (1741 and 1747), suggesting different editions of the same work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for works by Anselm Desing in German with very similar titles and on historical subjects, but the dates differ (1741 vs. 1747), suggesting different editions or printings of the same work."
+    },
+    "first_title": "Auxilia historica, oder Behülff zu den historischen und dazu erforderlichen Wiss",
+    "last_title": "Auxilia Historia, Oder Behülff Zu denen Historischen und dazu erforderlichen Wis",
+    "mid_title": "Auxilia Historica, Oder Behülff Zu denen Historischen und dazu erforderlichen Wi",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_19408",
+    "cluster_size": 47,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author (Stahl), in the same language (Latin), and on medical topics, but have different titles and publication dates, indicating different dissertations within the same body of work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "Both records are by the same author (Stahl) and have similar titles relating to medical dissertations, but the dates are different (1710 and 1711), suggesting different editions or printings of related works."
+    },
+    "first_title": "Dissertatio Inauguralis Medica, Qva Adfectus Pectoris",
+    "last_title": "Dissertatio Inauguralis Medica, De Deo, Autore Veræ Medicinæ",
+    "mid_title": "Dissertatio inauguralis medica de sterilitate foeminarum",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_37878",
+    "cluster_size": 46,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Joseph I) and in German, with similar titles indicating they are proclamations or decrees, but they have different publication dates and slightly different titles, suggesting different editions or printings of related works."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Joseph I in German, concerning different matters (Parma/Piacenza vs. tobacco monopoly), but issued within a year of each other, suggesting different official pronouncements from the same reign."
+    },
+    "first_title": "Josephus, von Gottes Gnaden, erwählter Römischer Kayser, zu allen Zeiten Mehrer ",
+    "last_title": "Josephus von Gottes Gnaden erwöhlter Römischer Käyser, zu allen Zeiten Mehrer de",
+    "mid_title": "Josephus von Gottes Gnaden Erwöhlter Römischer Käyser, zu allen Zeiten Mehrer de",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_16123",
+    "cluster_size": 46,
+    "first_vs_last": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "The titles are different, and the dates are different, suggesting different works by the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author (Augustin von Leyser) and share similar titles, suggesting they are related works, but the dates (1741 and 1744) and the presence of \"Volvmen VII\" in the second record indicate they are different publications within the same body of work."
+    },
+    "first_title": "Avgvstini a Leyser JCti In Regis Poloniarvm Et Principis Electoris Saxonis Avla ",
+    "last_title": "Avgvstini Leyseri In Regis Poloniarvm Et Principis Electoris Saxonis Avla Consil",
+    "mid_title": "Avgvstini Leyseri In Regis Poloniarvm Et Principis Electoris Saxonis Avla Consil",
+    "verdict": "FALSE_POSITIVE_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_38364",
+    "cluster_size": 45,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Maximilian I, with similar titles indicating related subject matter, but different dates (1622 and 1625) suggest different printings or issues of his decrees, thus the same intellectual work but different editions."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records have the same author, similar titles, and the same date, suggesting they are the same edition, but they have slightly different titles and are from different sources, indicating they are not the same digitized object."
+    },
+    "first_title": "Von Gottes Gnaden Maximilian Pfaltzgrave bey Rheyn Hertzog in Obern und Nidern B",
+    "last_title": "Von Gottes Gnaden, Wir Maximilian, Pfaltzgraf bey Rhein, Hertzog in obern vnd ni",
+    "mid_title": "Von Gottes gnaden Maximilian Pfaltzgraf bey Rhein Hertzog in obern und nidern Ba",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_20357",
+    "cluster_size": 45,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records share the same author, title (with volume number), date, and language, suggesting they are part of the same edition of a multi-volume work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same multi-volume work, 'Histoire Universelle, Depuis Le Commencement Du Monde Jusqu'a Présent,' published by the Société des Gens de Lettres, but they are different volumes (51 and 36) with different publication dates (1783 and 1782), indicating they are part of the same larger work but distinct editions."
+    },
+    "first_title": "Histoire Universelle, Depuis Le Commencement Du Monde Jusqu'a Présent / 51 : Con",
+    "last_title": "Histoire Universelle, Depuis Le Commencement Du Monde Jusqu'a Présent / 39 : Tab",
+    "mid_title": "Histoire Universelle, Depuis Le Commencement Du Monde Jusqu'a Présent / 36 : Con",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_24606",
+    "cluster_size": 44,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records have the same author, title, date, and language, but the first record includes '[Valence]' and '12/1', suggesting they are different physical copies of the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but the slight variation in the location (Valence vs. Bourges) indicates they are likely different physical copies of the same map sheet within the larger edition."
+    },
+    "first_title": "Carte géologique de la France 1:500 000 : dressée sur la carte du dépôt des fort",
+    "last_title": "Carte géologique de la France 1:500 000 : dressée sur la carte du dépôt des fort",
+    "mid_title": "Carte géologique de la France 1:500 000 : dressée sur la carte du dépôt des fort",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_29478",
+    "cluster_size": 44,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, a very similar title, language, and a date within a few years of each other, suggesting they are the same edition of the Encyclopédie."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records describe the same edition of Diderot's Encyclopédie, published around the same time in French, but the BSB record specifies a particular volume, suggesting they are different physical copies of the same edition."
+    },
+    "first_title": "Encyclopédie ou dictionnaire raisonné des sciences, des arts et des métiers",
+    "last_title": "Encyclopédie, ou dictionnaire raisonné des sciences, des arts et des métiers / [",
+    "mid_title": "Encyclopédie, ou dictionnaire raisonné des sciences, des arts et des métiers / 2",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_54587",
+    "cluster_size": 44,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for works by Rétif de La Bretonne titled \"Les Contemporaines, ou Avantures des plus jolies Femmes de l'âge présent,\" but they are different volumes within the series and have different publication dates, indicating different parts of the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for installments of Rétif de La Bretonne's *Les Contemporaines*, published in consecutive years, indicating they are part of the same larger work but distinct publications."
+    },
+    "first_title": "Les Contemporaines, ou Avantures des plus jolies Femmes de l'âge présent / 37 ",
+    "last_title": "Les Contemporaines, ou Avantures des plus jolies Femmes de l'âge présent / 4",
+    "mid_title": "Les Contemporaines, ou Avantures des plus jolies Femmes de l'âge présent / 29",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_55019",
+    "cluster_size": 44,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Maximilian I, with similar titles and the same author, but different dates (1600 and 1609), indicating different publications of similar content."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Maximilian I, Elector of Bavaria, but they are from different years (1600 and 1609), indicating different printings of similar decrees."
+    },
+    "first_title": "Von Gottes Gnaden Maximilian Pfaltzgrave bey Rheyn, Hertzog in Obern und Nidern ",
+    "last_title": "Von Gottes Genaden Maximilian Pfaltzgrave bey Rheyn Hertzog in Obern und Nidern ",
+    "mid_title": "Von Gottes Genaden Maximilian Pfaltzgrave bey Rhein Hertzog in Obern und Nidern ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_50703",
+    "cluster_size": 43,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "medium",
+      "reasoning": "Both records are ordinances from the same Bureau des Finances in Paris, authored by the same entity, in French, but issued in different years (1758 and 1754), suggesting different ordinances on related subjects."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by the same Bureau des Finances in Paris, concerning regulations, and published within a year of each other, suggesting they are related administrative acts rather than the same edition of a single work."
+    },
+    "first_title": "Ordonnance du Bureau des Finances de la généralité de Paris portant tres express",
+    "last_title": "Ordonnance du Bureau des Finances concernant la police générale des chemins dans",
+    "mid_title": "Ordonnance du Bureau des Finances de la généralité de Paris concernant les propr",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_47390",
+    "cluster_size": 43,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records refer to edicts by Maximilian I, with similar titles and language, but different publication dates (1643 and 1649), indicating different printings of the same underlying work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are from the same author (Maximilian I), share a very similar title format indicating official decrees, and are in German, but they have different dates (1643 and 1646), suggesting different decrees issued at different times."
+    },
+    "first_title": "Von Gottes Genaden, Wir Maximilian Pfaltzgrave bey Rheyn, Hertzog in Obern und N",
+    "last_title": "Von Gottes Gnaden Wir Maximilian Pfaltzgraf bey Rhein Hertzog in Obern und Nider",
+    "mid_title": "Von Gottes Genaden Maximilian Pfaltzgrave bey Rhein Hertzog in Ober: und Nidern ",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_36058",
+    "cluster_size": 42,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are by the same author (Jean Baptiste Massillon) and in German, but they have different titles and publication dates, suggesting they are different works by the same author."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, a very similar title, and are in the same language, but have different publication years and volume numbers, suggesting they are parts of the same edition published over multiple years."
+    },
+    "first_title": "Johann Baptist Massillon, Königl. Hofpredigers und Bischofs zu Clermont, Fastenp",
+    "last_title": "Johann Baptist Massillon, Königl. Hofpredigers und Bischofs zu Clermont, Reden, ",
+    "mid_title": "Johann Baptist Massillon, Königl. Hofpredigers und Bischofs zu Clermont, Fastenp",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_64811",
+    "cluster_size": 42,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same collected works of Martin Luther, published in German, but different volumes and years."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are volumes from the same collected works of Martin Luther, published in German, but they are different volumes with different publication dates (1740 and 1742), indicating they are part of a multi-volume set."
+    },
+    "first_title": "D. Martin Luthers sowol in Deutscher als Lateinischer Sprache verfertigte und au",
+    "last_title": "D. Martin Luthers sowol in Deutscher als Lateinischer Sprache verfertigte und au",
+    "mid_title": "D. Martin Luthers sowol in Deutscher als Lateinischer Sprache verfertigte und au",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_42879",
+    "cluster_size": 42,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Louis XVI in 1790, but they concern different decrees of the National Assembly (one about colonies, the other about tribunals), indicating different publications of the same author in the same year."
+    },
+    "first_vs_mid": {
+      "classification": "DIFFERENT_WORK",
+      "confidence": "high",
+      "reasoning": "Although both proclamations are by Louis XVI in 1790, they concern different decrees of the National Assembly (concerning colonies vs. trade with India), indicating distinct subject matter and therefore different works."
+    },
+    "first_title": "Proclamation du Roi, sur le décret de l'Assemblée nationale, concernant les colo",
+    "last_title": "Proclamation du Roi sur le décret de l'Assemblée Nationale, qui désigne les vill",
+    "mid_title": "Proclamation du Roi sur le décret de l'Assemblée Nationale du 3 avril, pour la l",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_26620",
+    "cluster_size": 42,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "The records describe German translations of the same historical work by Rollin, published a year apart, suggesting different editions or printings of the same translation."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "The records share the same author, title, date, and language, suggesting they are the same edition, but the volume numbers (3 and 14) indicate they are different parts of a multi-volume set."
+    },
+    "first_title": "Römische Historie von Erbauung der Stadt Rom, bis auf die Schlacht bey Actium, o",
+    "last_title": "Römische Historie : von Erbauung der Stadt Rom bis auf die Schlacht bei Actium o",
+    "mid_title": "Römische Historie von Erbauung der Stadt Rom, bis auf die Schlacht bey Actium, o",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_23908",
+    "cluster_size": 41,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are proclamations by Karl Theodor in German, concerning governance, but issued in different years (1777 and 1779), indicating different publications of the same author and general subject."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are ordinances issued by Karl Theodor in German, dealing with different subjects (mulberry trees/silk production vs. judicial processes), but issued by the same authority within a short time frame, indicating different publications of the same author."
+    },
+    "first_title": "Wir Carl Theodor von Gottes Gnaden Pfalzgraf bei Rhein, des heiligen Röm. Reichs",
+    "last_title": "Wir Carl Theodor, Von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nie",
+    "mid_title": "Wir Carl Theodor Von Gottes Gnaden Pfalzgraf bey Rhein, Herzog in Ober- und Nied",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_29487",
+    "cluster_size": 41,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe German translations of Buffon's *Histoire naturelle*, but they are from different years (1791 and 1799), indicating different editions or printings within the same larger work."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are German translations of Buffon's natural history, but they cover different volumes (quadrupeds vs. birds) and were published in different years, indicating different parts of the same larger work."
+    },
+    "first_title": "Herrn von Buffons Naturgeschichte der vierfüßigen Thiere / 14",
+    "last_title": "Herrn von Buffons Naturgeschichte der vierfüßigen Thiere / 21",
+    "mid_title": "Herrn von Buffons Naturgeschichte der Vögel / 20",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_7063",
+    "cluster_size": 41,
+    "first_vs_last": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records share the same author, title, date, and language, suggesting they are the same edition, but the differing volume information (1 vs. 3) indicates they are distinct physical items within the same edition."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "The records share the same author and a very similar title, but have different dates and the second record specifies a volume number and a more specific subject, suggesting they are parts of the same multi-volume work published over time."
+    },
+    "first_title": "Jakob Lauffers Profess. Eloq. et Histor. Genaue und umständliche Beschreibung He",
+    "last_title": "Jakob Lauffers Profess. Eloq. et Histor. Genaue und umständliche Beschreibung He",
+    "mid_title": "Jakob Lauffers Profess. Eloq. et Histor. Genaue und umständliche Beschreibung He",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_63569",
+    "cluster_size": 41,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are for different parts (VIII and XIII) of the same multi-volume work by Joseph Biner, sharing the same overall title and author, but published in different years (1762 and 1766) as part of a larger series."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records are parts of the same multi-volume work by the same author, with similar titles and in the same language, but published in different years and representing different parts (Pars VIII and Pars VII respectively)."
+    },
+    "first_title": "Apparatus Eruditionis Ad Jurisprudentiam Præsertim Ecclesiasticam : In quo revis",
+    "last_title": "Apparatus Eruditionis Ad Jurisprudentiam Præsertim Ecclesiasticam : In quo revis",
+    "mid_title": "Apparatus Eruditionis Ad Jurisprudentiam, Præsertim Ecclesiasticam : In quo revi",
+    "verdict": "VALID_CLUSTER"
+  },
+  {
+    "cluster_id": "cluster_55306",
+    "cluster_size": 41,
+    "first_vs_last": {
+      "classification": "SAME_WORK",
+      "confidence": "high",
+      "reasoning": "Both records describe volumes from the same multi-volume work by Julietti, published in German in the early 1780s, but they are different parts/volumes of that work, indicating different editions or printings within the same overall project."
+    },
+    "first_vs_mid": {
+      "classification": "SAME_EDITION",
+      "confidence": "high",
+      "reasoning": "Both records are for volumes of the same multi-volume work by the same author, with publication dates only one year apart, suggesting they are parts of the same edition."
+    },
+    "first_title": "Vollständige Predigerbibliothek, oder Sammlung der auserlesensten Predigten, übe",
+    "last_title": "Vollständige Predigerbibliothek, oder Sammlung der auserlesensten Predigten, übe",
+    "mid_title": "Vollständige Predigerbibliothek, oder Sammlung der auserlesensten Predigten, übe",
+    "verdict": "VALID_CLUSTER"
+  }
+]
