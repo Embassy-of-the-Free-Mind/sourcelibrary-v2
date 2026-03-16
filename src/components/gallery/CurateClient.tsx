@@ -510,8 +510,9 @@ export default function CurateClient() {
     fetch('/api/collections')
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) {
-          setCollections(data.map((c: { slug: string; name: string }) => ({ slug: c.slug, name: c.name })).sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)));
+        const arr = Array.isArray(data) ? data : data?.collections;
+        if (Array.isArray(arr)) {
+          setCollections(arr.map((c: { slug: string; name: string }) => ({ slug: c.slug, name: c.name })).sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)));
         }
       })
       .catch(() => {});
