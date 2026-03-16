@@ -25,13 +25,22 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'visualizing-classification',
+    title: 'Visualizing 20,000 Books Across Six Dimensions',
+    subtitle: 'Four interactive D3 visualizations of our faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram.',
+    date: '16 March 2026',
+    readTime: '6 min read',
+    tag: 'AI research report',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+  },
+  {
     slug: 'history-of-classification',
     title: 'Ten Thousand Years of Tagging',
     subtitle: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have.',
     date: '16 March 2026',
-    readTime: '14 min read',
-    tag: 'Deep dive',
-    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    readTime: '20 min read',
+    tag: 'AI research report',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
   },
   {
     slug: 'counting-the-gap',
