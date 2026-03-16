@@ -62,6 +62,31 @@ function formatNumber(n: number): string {
   return n.toLocaleString('en-US');
 }
 
+function pct(part: number, whole: number): string {
+  if (whole === 0) return '0%';
+  return `${((part / whole) * 100).toFixed(1)}%`;
+}
+
+/* ── pipeline status labels and ordering ── */
+
+const PIPELINE_STATUS_ORDER = [
+  'queued', 'archiving', 'archive_complete', 'ocr_submitted', 'ocr_complete',
+  'metadata_enriched', 'translate_submitted', 'translate_complete',
+  'enriching', 'enriched', 'chapters', 'chapters_complete',
+  'images_submitted', 'images_complete', 'complete', 'needs_attention', 'failed',
+] as const;
+
+const PIPELINE_STATUS_COLORS: Record<string, string> = {
+  queued: 'bg-stone-200', archiving: 'bg-amber-200', archive_complete: 'bg-amber-300',
+  ocr_submitted: 'bg-sky-200', ocr_complete: 'bg-sky-300', metadata_enriched: 'bg-sky-400',
+  translate_submitted: 'bg-violet-200', translate_complete: 'bg-violet-300',
+  enriching: 'bg-violet-400', enriched: 'bg-violet-500',
+  chapters: 'bg-emerald-200', chapters_complete: 'bg-emerald-300',
+  images_submitted: 'bg-amber-400', images_complete: 'bg-amber-500',
+  complete: 'bg-emerald-500', needs_attention: 'bg-orange-400', failed: 'bg-red-400',
+  'no pipeline': 'bg-stone-300',
+};
+
 /* ── data fetching ── */
 
 interface LibraryData {
@@ -75,36 +100,103 @@ interface LibraryData {
   categories: Array<{ slug: string; name: string; count: number }>;
   providers: Array<{ name: string; count: number }>;
   collections: Array<{ slug: string; name: string; book_count: number }>;
+  // Admin-only fields (only populated when showAdmin=true)
+  hiddenCount?: number;
+  totalOcr?: number;
+  pipelineStatuses?: Array<{ status: string; count: number }>;
+  hasSummary?: number;
+  hasIndex?: number;
+  hasChapters?: number;
+  hasSourceDates?: number;
+  hasEditions?: number;
+  ocrTiers?: Array<{ tier: string; count: number }>;
+  translationTiers?: Array<{ tier: string; count: number }>;
+  emptyShells?: number;
 }
 
-async function fetchLibraryData(): Promise<LibraryData> {
+function buildCoverageTiers(field: string) {
+  return [
+    {
+      $facet: {
+        zero: [
+          { $match: { pages_count: { $gt: 0 }, [field]: { $in: [0, null, undefined] } } },
+          { $count: 'n' },
+        ],
+        low: [
+          {
+            $match: {
+              pages_count: { $gt: 0 },
+              [field]: { $gt: 0 },
+              $expr: { $lt: [{ $divide: [`$${field}`, '$pages_count'] }, 0.5] },
+            },
+          },
+          { $count: 'n' },
+        ],
+        mid: [
+          {
+            $match: {
+              pages_count: { $gt: 0 },
+              $expr: {
+                $and: [
+                  { $gte: [{ $divide: [`$${field}`, '$pages_count'] }, 0.5] },
+                  { $lt: [{ $divide: [`$${field}`, '$pages_count'] }, 1] },
+                ],
+              },
+            },
+          },
+          { $count: 'n' },
+        ],
+        full: [
+          {
+            $match: {
+              pages_count: { $gt: 0 },
+              $expr: { $gte: [{ $divide: [`$${field}`, '$pages_count'] }, 1] },
+            },
+          },
+          { $count: 'n' },
+        ],
+      },
+    },
+  ];
+}
+
+function extractTiers(
+  result: Array<{
+    zero: Array<{ n: number }>;
+    low: Array<{ n: number }>;
+    mid: Array<{ n: number }>;
+    full: Array<{ n: number }>;
+  }>
+): Array<{ tier: string; count: number }> {
+  const r = result[0] ?? { zero: [], low: [], mid: [], full: [] };
+  return [
+    { tier: '0%', count: r.zero[0]?.n ?? 0 },
+    { tier: '1–49%', count: r.low[0]?.n ?? 0 },
+    { tier: '50–99%', count: r.mid[0]?.n ?? 0 },
+    { tier: '100%', count: r.full[0]?.n ?? 0 },
+  ];
+}
+
+async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
   const db = await getDb();
   const books = db.collection('books');
   const visible = { hidden: { $ne: true } };
+  const filter = showAdmin ? {} : visible;
 
-  const [
-    totalBooks,
-    firstTranslations,
-    languagesAgg,
-    centuriesAgg,
-    categoriesAgg,
-    providersAgg,
-    pageTotalsAgg,
-    pagesWithIllustrations,
-    collectionsAgg,
-  ] = await Promise.all([
-    books.countDocuments(visible),
-    books.countDocuments({ ...visible, is_first_translation: true }),
+  // Base queries (always run)
+  const baseQueries = [
+    books.countDocuments(filter),
+    books.countDocuments({ ...filter, is_first_translation: true }),
     books
       .aggregate<{ _id: string; count: number }>([
-        { $match: visible },
+        { $match: filter },
         { $group: { _id: '$language', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ])
       .toArray(),
     books
       .aggregate<{ _id: number; count: number }>([
-        { $match: { ...visible, year: { $exists: true, $type: 'number' } } },
+        { $match: { ...filter, year: { $exists: true, $type: 'number' } } },
         {
           $addFields: {
             century: { $multiply: [{ $floor: { $divide: ['$year', 100] } }, 100] },
@@ -116,28 +208,29 @@ async function fetchLibraryData(): Promise<LibraryData> {
       .toArray(),
     books
       .aggregate<{ _id: string; count: number }>([
-        { $match: { ...visible, categories: { $exists: true } } },
+        { $match: { ...filter, categories: { $exists: true } } },
         { $unwind: '$categories' },
         { $group: { _id: '$categories', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
-        { $limit: 20 },
+        ...(showAdmin ? [] : [{ $limit: 20 }]),
       ])
       .toArray(),
     books
       .aggregate<{ _id: string; count: number }>([
-        { $match: { ...visible, 'image_source.provider_name': { $exists: true } } },
+        { $match: { ...filter, 'image_source.provider_name': { $exists: true } } },
         { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ])
       .toArray(),
     books
-      .aggregate<{ _id: null; pages: number; translated: number }>([
-        { $match: visible },
+      .aggregate<{ _id: null; pages: number; ocr: number; translated: number }>([
+        { $match: filter },
         {
           $group: {
             _id: null,
-            pages: { $sum: '$pages_count' },
-            translated: { $sum: '$pages_translated' },
+            pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+            ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
           },
         },
       ])
@@ -149,16 +242,92 @@ async function fetchLibraryData(): Promise<LibraryData> {
       .sort({ order: 1 })
       .project({ slug: 1, name: 1, book_count: 1, _id: 0 })
       .toArray(),
+  ] as const;
+
+  if (!showAdmin) {
+    const [totalBooks, firstTranslations, languagesAgg, centuriesAgg, categoriesAgg, providersAgg, pageTotalsAgg, pagesWithIllustrations, collectionsAgg] = await Promise.all(baseQueries);
+    const pageTotals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };
+
+    return {
+      totalBooks,
+      totalPages: pageTotals.pages,
+      totalTranslated: pageTotals.translated,
+      totalIllustrations: pagesWithIllustrations,
+      firstTranslations,
+      languages: languagesAgg
+        .filter((l) => l._id && l._id !== 'Unknown')
+        .map((l) => ({ language: l._id, count: l.count })),
+      centuries: centuriesAgg.map((c) => ({
+        century: c._id,
+        label: formatCentury(c._id),
+        count: c.count,
+      })),
+      categories: categoriesAgg.map((c) => ({
+        slug: c._id,
+        name: formatCategory(c._id),
+        count: c.count,
+      })),
+      providers: providersAgg
+        .filter((p) => p._id)
+        .map((p) => ({ name: p._id, count: p.count })),
+      collections: collectionsAgg as Array<{ slug: string; name: string; book_count: number }>,
+    };
+  }
+
+  // Admin mode: run extra queries
+  const [totalBooks, firstTranslations, languagesAgg, centuriesAgg, categoriesAgg, providersAgg, pageTotalsAgg, pagesWithIllustrations, collectionsAgg, hiddenCount, pipelineAgg, hasSummary, hasIndex, hasChapters, hasSourceDates, hasEditions, ocrTiersAgg, translationTiersAgg, emptyShells] = await Promise.all([
+    ...baseQueries,
+    books.countDocuments({ hidden: true }),
+    books
+      .aggregate<{ _id: string | null; count: number }>([
+        { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+      ])
+      .toArray(),
+    books.countDocuments({ 'reading_summary.overview': { $exists: true } }),
+    books.countDocuments({ 'index.generatedAt': { $exists: true } }),
+    books.countDocuments({ 'chapters.0': { $exists: true } }),
+    books.countDocuments({ 'source_work_dates.0': { $exists: true } }),
+    db.collection('editions').estimatedDocumentCount(),
+    books.aggregate(buildCoverageTiers('pages_ocr')).toArray(),
+    books.aggregate(buildCoverageTiers('pages_translated')).toArray(),
+    books.countDocuments({ $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }),
   ]);
 
-  const pageTotals = pageTotalsAgg[0] ?? { pages: 0, translated: 0 };
+  const pageTotals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };
+
+  // Build pipeline status array in canonical order
+  const pipelineMap = new Map<string, number>();
+  for (const p of pipelineAgg) {
+    pipelineMap.set(p._id ?? 'no pipeline', p.count);
+  }
+  const pipelineStatuses: Array<{ status: string; count: number }> = [];
+  for (const s of PIPELINE_STATUS_ORDER) {
+    const count = pipelineMap.get(s);
+    if (count) pipelineStatuses.push({ status: s, count });
+  }
+  const noPipeline = pipelineMap.get('no pipeline');
+  if (noPipeline) pipelineStatuses.push({ status: 'no pipeline', count: noPipeline });
 
   return {
     totalBooks,
+    hiddenCount,
     totalPages: pageTotals.pages,
+    totalOcr: pageTotals.ocr,
     totalTranslated: pageTotals.translated,
     totalIllustrations: pagesWithIllustrations,
     firstTranslations,
+    pipelineStatuses,
+    hasSummary,
+    hasIndex,
+    hasChapters,
+    hasSourceDates,
+    hasEditions,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ocrTiers: extractTiers(ocrTiersAgg as any),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    translationTiers: extractTiers(translationTiersAgg as any),
+    emptyShells,
     languages: languagesAgg
       .filter((l) => l._id && l._id !== 'Unknown')
       .map((l) => ({ language: l._id, count: l.count })),
@@ -181,8 +350,14 @@ async function fetchLibraryData(): Promise<LibraryData> {
 
 /* ── page ── */
 
-export default async function DataPage() {
-  const data = await fetchLibraryData();
+export default async function DataPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const showAdmin = params.admin === 'true';
+  const data = await fetchLibraryData(showAdmin);
 
   const uniqueLanguages = data.languages.length;
   const earliestCentury = data.centuries[0]?.label ?? '';
@@ -193,25 +368,40 @@ export default async function DataPage() {
     y: c.count,
   }));
 
-  const topLanguages = data.languages.slice(0, 15);
-  const remainingLanguages = data.languages.length - 15;
+  const topLanguages = showAdmin ? data.languages : data.languages.slice(0, 15);
+  const remainingLanguages = showAdmin ? 0 : data.languages.length - 15;
   const maxLangCount = topLanguages[0]?.count ?? 1;
 
-  const stats = [
-    { value: formatNumber(data.totalBooks), label: 'Rare books' },
-    { value: formatNumber(data.totalPages), label: 'Digitised pages' },
-    { value: formatNumber(data.totalTranslated), label: 'Pages translated' },
-    { value: String(uniqueLanguages), label: 'Languages' },
-    { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
-    { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
-  ];
+  const stats = showAdmin
+    ? [
+        { value: formatNumber(data.totalBooks), label: 'Total books', sub: `${formatNumber(data.hiddenCount ?? 0)} hidden` },
+        { value: formatNumber(data.totalPages), label: 'Total pages' },
+        { value: formatNumber(data.totalOcr ?? 0), label: 'Pages with OCR', sub: pct(data.totalOcr ?? 0, data.totalPages) },
+        { value: formatNumber(data.totalTranslated), label: 'Pages translated', sub: pct(data.totalTranslated, data.totalPages) },
+        { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
+        { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
+      ]
+    : [
+        { value: formatNumber(data.totalBooks), label: 'Rare books' },
+        { value: formatNumber(data.totalPages), label: 'Digitised pages' },
+        { value: formatNumber(data.totalTranslated), label: 'Pages translated' },
+        { value: String(uniqueLanguages), label: 'Languages' },
+        { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
+        { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
+      ];
+
+  const TIER_COLORS = ['var(--status-error)', 'var(--status-warning)', 'var(--accent-gold)', 'var(--status-success)'];
 
   return (
     <ContentPageLayout
       header={
         <ContentHeader
-          title="The Collection"
-          subtitle={`${formatNumber(data.totalBooks)} books across ${uniqueLanguages} languages, from the ${earliestCentury} to the ${latestCentury}`}
+          title={showAdmin ? 'The Full Collection' : 'The Collection'}
+          subtitle={
+            showAdmin
+              ? `${formatNumber(data.totalBooks)} books (${formatNumber(data.hiddenCount ?? 0)} hidden) across ${uniqueLanguages} languages, from the ${earliestCentury} to the ${latestCentury}`
+              : `${formatNumber(data.totalBooks)} books across ${uniqueLanguages} languages, from the ${earliestCentury} to the ${latestCentury}`
+          }
         />
       }
       maxWidth="wide"
@@ -231,10 +421,130 @@ export default async function DataPage() {
                 {s.value}
               </div>
               <div className="text-muted text-sm">{s.label}</div>
+              {'sub' in s && s.sub && <div className="text-faint text-xs mt-0.5">{s.sub}</div>}
             </div>
           ))}
         </div>
       </section>
+
+      {/* ── Pipeline Status (admin only) ── */}
+      {showAdmin && data.pipelineStatuses && (() => {
+        const maxPipelineCount = Math.max(...data.pipelineStatuses.map((p) => p.count), 1);
+        return (
+          <section className="mb-16">
+            <h2 className="font-serif text-2xl text-primary mb-6">Pipeline Status</h2>
+            <div className="bg-white rounded-xl p-6 border border-border-light">
+              <div className="space-y-2">
+                {data.pipelineStatuses.map((p) => (
+                  <div key={p.status} className="flex items-center gap-3">
+                    <span className="text-xs text-secondary w-40 shrink-0 text-right font-mono">
+                      {p.status}
+                    </span>
+                    <div className="flex-1 bg-stone-100 rounded-full h-5 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${PIPELINE_STATUS_COLORS[p.status] ?? 'bg-stone-400'}`}
+                        style={{
+                          width: `${Math.max(2, (p.count / maxPipelineCount) * 100)}%`,
+                        }}
+                      />
+                    </div>
+                    <span className="text-sm text-muted w-12 shrink-0 tabular-nums text-right">
+                      {p.count}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* ── Enrichment Coverage (admin only) ── */}
+      {showAdmin && (
+        <section className="mb-16">
+          <h2 className="font-serif text-2xl text-primary mb-6">Enrichment Coverage</h2>
+          <div className="bg-white rounded-xl p-6 border border-border-light">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { label: 'Reading summary', count: data.hasSummary ?? 0 },
+                { label: 'AI index', count: data.hasIndex ?? 0 },
+                { label: 'Chapters', count: data.hasChapters ?? 0 },
+                { label: 'Original source dates', count: data.hasSourceDates ?? 0 },
+                { label: 'Published editions', count: data.hasEditions ?? 0 },
+              ].map((e) => (
+                <div
+                  key={e.label}
+                  className="flex items-baseline justify-between gap-2 py-2 px-3 rounded-lg bg-stone-50"
+                >
+                  <span className="text-sm text-secondary">{e.label}</span>
+                  <span className="text-sm font-medium tabular-nums">
+                    {formatNumber(e.count)}{' '}
+                    <span className="text-faint">/ {formatNumber(data.totalBooks)}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Coverage Tiers (admin only) ── */}
+      {showAdmin && data.ocrTiers && data.translationTiers && (
+        <section className="mb-16">
+          <h2 className="font-serif text-2xl text-primary mb-6">Coverage Tiers</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl p-6 border border-border-light">
+              <h3 className="text-sm font-medium text-secondary mb-4">OCR Coverage (by book)</h3>
+              <div className="space-y-3">
+                {data.ocrTiers.map((t, i) => (
+                  <div key={t.tier} className="flex items-center gap-3">
+                    <span className="text-sm text-muted w-14 shrink-0 text-right">{t.tier}</span>
+                    <div className="flex-1 bg-stone-100 rounded-full h-5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${Math.max(2, (t.count / data.totalBooks) * 100)}%`,
+                          backgroundColor: TIER_COLORS[i],
+                        }}
+                      />
+                    </div>
+                    <span className="text-sm text-muted w-12 shrink-0 tabular-nums text-right">
+                      {t.count}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              {(data.emptyShells ?? 0) > 0 && (
+                <p className="text-xs text-faint mt-3">
+                  {data.emptyShells} books with 0 pages (empty shells)
+                </p>
+              )}
+            </div>
+            <div className="bg-white rounded-xl p-6 border border-border-light">
+              <h3 className="text-sm font-medium text-secondary mb-4">Translation Coverage (by book)</h3>
+              <div className="space-y-3">
+                {data.translationTiers.map((t, i) => (
+                  <div key={t.tier} className="flex items-center gap-3">
+                    <span className="text-sm text-muted w-14 shrink-0 text-right">{t.tier}</span>
+                    <div className="flex-1 bg-stone-100 rounded-full h-5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${Math.max(2, (t.count / data.totalBooks) * 100)}%`,
+                          backgroundColor: TIER_COLORS[i],
+                        }}
+                      />
+                    </div>
+                    <span className="text-sm text-muted w-12 shrink-0 tabular-nums text-right">
+                      {t.count}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── By Century ── */}
       <section className="mb-16">

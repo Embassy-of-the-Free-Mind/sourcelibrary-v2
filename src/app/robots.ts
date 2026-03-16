@@ -21,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
           '/jobs',
           '/processing',
           '/qa',
-          '/fulldata',
+          '/data?admin=true',
           '/upload',
           '/auth/',
           '/beta/',
