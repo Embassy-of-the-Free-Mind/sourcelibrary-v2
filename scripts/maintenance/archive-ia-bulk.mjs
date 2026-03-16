@@ -21,7 +21,10 @@
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-import { execSync, exec } from 'child_process';
+import { execSync } from 'child_process';
+import { execFile as execFileCb } from 'child_process';
+import { promisify } from 'util';
+const execFileAsync = promisify(execFileCb);
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -183,32 +186,31 @@ function extractJp2Zip(zipPath, destDir) {
  * Convert a single JP2 file to JPEG buffer using opj_decompress + sharp.
  */
 async function jp2ToJpeg(jp2Path) {
-  // Use PNG output (smaller than BMP, lossless)
-  const pngPath = jp2Path + '.out.png';
+  // Use BMP output — opj_decompress writes it directly, no PNG encode overhead
+  const bmpPath = jp2Path + '.out.bmp';
   try {
-    execSync(`opj_decompress -i "${jp2Path}" -o "${pngPath}" -threads ALL_CPUS`, {
+    await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', 'ALL_CPUS'], {
       timeout: 120000,
-      stdio: 'pipe',
     });
   } catch (err) {
     // opj_decompress exits non-zero even on success sometimes, check if output exists
-    if (!fs.existsSync(pngPath)) {
-      throw new Error(`opj_decompress failed: ${err.stderr?.toString().slice(0, 200) || err.message}`);
+    if (!fs.existsSync(bmpPath)) {
+      throw new Error(`opj_decompress failed: ${err.stderr?.slice(0, 200) || err.message}`);
     }
   }
 
-  let sharpPipeline = sharp(pngPath);
+  let sharpPipeline = sharp(bmpPath);
 
   // Get dimensions and cap if too large
   const meta = await sharpPipeline.metadata();
   if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-    sharpPipeline = sharp(pngPath).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+    sharpPipeline = sharp(bmpPath).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
   }
 
   const jpegBuffer = await sharpPipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
 
-  // Clean up intermediate PNG (JP2 cleaned up with tmpDir)
-  try { fs.unlinkSync(pngPath); } catch {}
+  // Clean up intermediate BMP
+  try { fs.unlinkSync(bmpPath); } catch {}
 
   return jpegBuffer;
 }
