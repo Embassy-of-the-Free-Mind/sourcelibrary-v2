@@ -570,10 +570,10 @@ export default async function HomePage() {
             <div className="flex items-baseline justify-between mb-10">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">
-                  From the Blog
+                  Research Notes
                 </h2>
                 <p className="text-muted mt-2">
-                  Essays on the history behind the collection
+                  AI-assisted research on the collection and its history
                 </p>
               </div>
               <Link

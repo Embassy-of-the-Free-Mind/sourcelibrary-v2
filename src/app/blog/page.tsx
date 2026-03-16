@@ -4,8 +4,8 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Blog - Source Library',
-  description: 'Essays on the history and translation of rare philosophical, esoteric, and scientific texts from the Western and Eastern traditions.',
+  title: 'Research Notes - Source Library',
+  description: 'Research notes on the history and translation of rare philosophical, esoteric, and scientific texts. AI-assisted analysis directed by Derek Lomas.',
   alternates: {
     canonical: '/blog',
   },
@@ -301,8 +301,8 @@ export default function BlogPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Blog"
-          subtitle="Essays on recovering and translating rare texts from the world's philosophical traditions."
+          title="Research Notes"
+          subtitle="AI-assisted research on rare texts, classification, and the history of knowledge. Derek Lomas directs the questions; Claude (Anthropic) builds the analysis. Every claim is grounded in primary sources from the collection."
           image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
         />

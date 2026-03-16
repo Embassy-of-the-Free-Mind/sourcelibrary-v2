@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'Recovering the Chakra Tradition - Blog - Source Library',
+  title: 'Recovering the Chakra Tradition - Research Notes - Source Library',
   description: 'How Source Library is digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
   openGraph: {
     title: 'Recovering the Chakra Tradition',
@@ -37,7 +37,7 @@ export default function ChakraTraditionPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

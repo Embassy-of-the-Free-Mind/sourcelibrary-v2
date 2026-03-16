@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'How We Identify First Translations - Blog - Source Library',
+  title: 'How We Identify First Translations - Research Notes - Source Library',
   description: 'The methodology behind Source Library\'s first-translation classification: how AI enrichment, bibliographic heuristics, and human review work together to identify books that have never been translated into English.',
   openGraph: {
     title: 'How We Identify First Translations',
@@ -37,7 +37,7 @@ export default function FirstTranslationMethodologyPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

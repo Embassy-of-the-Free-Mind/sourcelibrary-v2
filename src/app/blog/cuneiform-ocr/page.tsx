@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'Can AI Read Cuneiform? - Blog - Source Library',
+  title: 'Can AI Read Cuneiform? - Research Notes - Source Library',
   description: 'We ran eight experiments testing Gemini and Claude on 107 cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling, a contamination test proves genuine visual analysis, and temperature tuning reveals opposite preferences across model families.',
   openGraph: {
     title: 'Can AI Read Cuneiform?',
@@ -37,7 +37,7 @@ export default function CuneiformOcrPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Blog - Source Library',
+  title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Research Notes - Source Library',
   description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers" — a mathematical board game played across Europe for six centuries. Now translated for the first time.',
   openGraph: {
     title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
@@ -43,7 +43,7 @@ export default function RithmomachiaPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

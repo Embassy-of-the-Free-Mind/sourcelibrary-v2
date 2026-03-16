@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'What Does a Library of 3,400 Rare Books Look Like? - Blog - Source Library',
+  title: 'What Does a Library of 3,400 Rare Books Look Like? - Research Notes - Source Library',
   description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 34 curated groupings spanning seven intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
   openGraph: {
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
@@ -36,7 +36,7 @@ export default function ClusteringPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'A History of Astrology Across Traditions - Blog - Source Library',
+  title: 'A History of Astrology Across Traditions - Research Notes - Source Library',
   description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos, astrology was one of the longest-running intellectual projects in human history — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions. Source Library holds the primary texts.',
   openGraph: {
     title: 'A History of Astrology Across Traditions',
@@ -37,7 +37,7 @@ export default function HistoryOfAstrologyPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

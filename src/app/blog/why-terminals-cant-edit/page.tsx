@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'Why You Can\'t Click to Place Your Cursor in a Terminal - Blog - Source Library',
+  title: 'Why You Can\'t Click to Place Your Cursor in a Terminal - Research Notes - Source Library',
   description:
     'Terminal emulators don\'t know what\'s on screen. They draw characters on a grid and forward keystrokes. That architectural decision from 1978 is why basic text editing feels broken in 2026.',
   openGraph: {
@@ -43,7 +43,7 @@ export default function WhyTerminalsCantEditPage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 
