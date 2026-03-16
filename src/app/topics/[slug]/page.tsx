@@ -5,20 +5,12 @@ import { Metadata } from 'next';
 import { BookOpen, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
+import { FACETS } from '@/lib/taxonomy/faceted-vocabulary';
 
 export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;
-}
-
-function topicSlug(name: string): string {
-  return name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 }
 
 interface BookItem {
@@ -30,32 +22,59 @@ interface BookItem {
   language?: string;
   pages_count?: number;
   pages_translated?: number;
+  pages_ocr?: number;
   read_count?: number;
   thumbnail?: string;
-  taxonomy?: {
-    cluster?: string;
-    subcluster?: string;
-  };
+  thumbnail_blob?: string;
+  faceted_tags?: Record<string, string[]>;
+  taxonomy?: { cluster?: string; subcluster?: string };
 }
 
-// ---------- Metadata ----------
+// ─── Parse slug ──────────────────────────────────────────────────
+
+function parseFacetSlug(slug: string): { facetId: string; valueId: string } | null {
+  const parts = slug.split('--');
+  if (parts.length !== 2) return null;
+  const [facetId, valueId] = parts;
+  const facet = FACETS.find((f) => f.id === facetId);
+  if (!facet) return null;
+  const value = facet.values.find((v) => v.id === valueId);
+  if (!value) return null;
+  return { facetId, valueId };
+}
+
+function topicSlug(name: string): string {
+  return name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+// ─── Metadata ────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+
+  // Try facet slug first
+  const facetParsed = parseFacetSlug(slug);
+  if (facetParsed) {
+    const facet = FACETS.find((f) => f.id === facetParsed.facetId)!;
+    const value = facet.values.find((v) => v.id === facetParsed.valueId)!;
+    return {
+      title: `${value.label} — ${facet.label} | Source Library`,
+      description: `Browse Source Library books tagged "${value.label}" in the ${facet.label} facet. ${value.differentia}`,
+      alternates: { canonical: `/topics/${slug}` },
+    };
+  }
+
+  // Fall back to old cluster slug
   const db = await getDb();
-
-  // Find one book with this topic slug to get the cluster name
-  const sample = await db.collection('books').findOne(
-    { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true } },
-    { projection: { 'taxonomy.cluster': 1 } },
-  );
-
-  // We need to find the actual cluster name from the slug
   const allClusters = await db.collection('books').aggregate([
     { $match: { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true, $ne: null } } },
     { $group: { _id: '$taxonomy.cluster' } },
   ]).toArray();
-
   const match = allClusters.find((c) => topicSlug(c._id) === slug);
   if (!match) return { title: 'Topic Not Found - Source Library' };
 
@@ -66,12 +85,105 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// ---------- Data ----------
+// ─── Data fetching ───────────────────────────────────────────────
 
-async function fetchTopicData(slug: string) {
+async function fetchFacetData(facetId: string, valueId: string) {
+  const db = await getDb();
+  const facet = FACETS.find((f) => f.id === facetId)!;
+  const value = facet.values.find((v) => v.id === valueId)!;
+
+  const query = {
+    hidden: { $ne: true },
+    [`faceted_tags.${facetId}`]: valueId,
+  };
+
+  const books = await db
+    .collection('books')
+    .find(query, {
+      projection: {
+        _id: 0,
+        id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
+        pages_count: 1, pages_translated: 1, pages_ocr: 1, read_count: 1,
+        thumbnail: 1, thumbnail_blob: 1, faceted_tags: 1,
+      },
+    })
+    .sort({ read_count: -1, pages_translated: -1, title: 1 })
+    .toArray();
+
+  // Group by the most interesting cross-facet
+  // E.g., if browsing a tradition, group by domain; if browsing a domain, group by tradition
+  const crossFacetId = facetId === 'tradition' ? 'domain'
+    : facetId === 'domain' ? 'tradition'
+    : facetId === 'sphere' ? 'tradition'
+    : facetId === 'era' ? 'tradition'
+    : facetId === 'form' ? 'domain'
+    : facetId === 'mode' ? 'domain'
+    : 'tradition';
+
+  const crossFacet = FACETS.find((f) => f.id === crossFacetId)!;
+
+  const groups = new Map<string, BookItem[]>();
+  const ungrouped: BookItem[] = [];
+
+  for (const book of books) {
+    const crossValues = (book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined;
+    const tags = crossValues?.[crossFacetId] || [];
+    if (tags.length > 0) {
+      const primary = tags[0];
+      if (!groups.has(primary)) groups.set(primary, []);
+      groups.get(primary)!.push(book as unknown as BookItem);
+    } else {
+      ungrouped.push(book as unknown as BookItem);
+    }
+  }
+
+  // Sort groups by size
+  const sortedGroups = Array.from(groups.entries())
+    .sort((a, b) => b[1].length - a[1].length);
+
+  // Get languages
+  const languages = new Map<string, number>();
+  for (const book of books) {
+    const lang = (book as Record<string, unknown>).language as string || 'Unknown';
+    languages.set(lang, (languages.get(lang) || 0) + 1);
+  }
+
+  // Get other facet tag counts for the "Refine" sidebar
+  const refineFacets: Array<{ facetId: string; label: string; values: Array<{ id: string; label: string; count: number }> }> = [];
+  for (const f of FACETS) {
+    if (f.id === facetId) continue;
+    const counts = new Map<string, number>();
+    for (const book of books) {
+      const tags = ((book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined)?.[f.id] || [];
+      for (const t of tags) counts.set(t, (counts.get(t) || 0) + 1);
+    }
+    const sorted = Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([id, count]) => {
+        const v = f.values.find((fv) => fv.id === id);
+        return { id, label: v?.label || id, count };
+      });
+    if (sorted.length > 0) {
+      refineFacets.push({ facetId: f.id, label: f.label, values: sorted });
+    }
+  }
+
+  return {
+    facet,
+    value,
+    totalBooks: books.length,
+    groups: sortedGroups,
+    crossFacet,
+    ungrouped,
+    languages: Array.from(languages.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6),
+    refineFacets,
+  };
+}
+
+async function fetchClusterData(slug: string) {
   const db = await getDb();
 
-  // Get all distinct cluster names and find the one matching this slug
   const allClusters = await db.collection('books').aggregate([
     { $match: { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true, $ne: null } } },
     { $group: { _id: '$taxonomy.cluster', cluster_id: { $first: '$taxonomy.cluster_id' } } },
@@ -82,38 +194,18 @@ async function fetchTopicData(slug: string) {
 
   const clusterName = match._id;
 
-  // Fetch all books in this cluster
-  const books = await db
-    .collection('books')
-    .find(
-      {
-        hidden: { $ne: true },
-        'taxonomy.cluster': clusterName,
+  const books = await db.collection('books')
+    .find({ hidden: { $ne: true }, 'taxonomy.cluster': clusterName }, {
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
+        pages_count: 1, pages_translated: 1, read_count: 1, thumbnail: 1, 'taxonomy.subcluster': 1,
       },
-      {
-        projection: {
-          _id: 0,
-          id: 1,
-          slug: 1,
-          title: 1,
-          display_title: 1,
-          author: 1,
-          language: 1,
-          pages_count: 1,
-          pages_translated: 1,
-          read_count: 1,
-          thumbnail: 1,
-          'taxonomy.subcluster': 1,
-        },
-      },
-    )
+    })
     .sort({ pages_translated: -1, title: 1 })
     .toArray();
 
-  // Group by subcluster
   const subclusters = new Map<string, BookItem[]>();
   const uncategorized: BookItem[] = [];
-
   for (const book of books) {
     const sub = book.taxonomy?.subcluster;
     if (sub) {
@@ -124,49 +216,35 @@ async function fetchTopicData(slug: string) {
     }
   }
 
-  // Sort books within each group: most-read and most-translated first
   const sortBooks = (arr: BookItem[]) =>
-    arr.sort((a, b) => {
-      const scoreA = (a.read_count || 0) + (a.pages_translated || 0);
-      const scoreB = (b.read_count || 0) + (b.pages_translated || 0);
-      return scoreB - scoreA;
-    });
-
+    arr.sort((a, b) => ((b.read_count || 0) + (b.pages_translated || 0)) - ((a.read_count || 0) + (a.pages_translated || 0)));
   for (const [, books] of subclusters) sortBooks(books);
   sortBooks(uncategorized);
 
-  // Sort subclusters by size (largest first)
-  const sortedSubclusters = Array.from(subclusters.entries()).sort(
-    (a, b) => b[1].length - a[1].length,
-  );
-
-  // Get languages
   const languages = new Map<string, number>();
   for (const book of books) {
     const lang = book.language || 'Unknown';
     languages.set(lang, (languages.get(lang) || 0) + 1);
   }
-  const topLanguages = Array.from(languages.entries())
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 6);
 
   return {
     clusterName,
     totalBooks: books.length,
-    subclusters: sortedSubclusters,
+    subclusters: Array.from(subclusters.entries()).sort((a, b) => b[1].length - a[1].length),
     uncategorized,
-    languages: topLanguages,
+    languages: Array.from(languages.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6),
   };
 }
 
-// ---------- Components ----------
+// ─── Components ──────────────────────────────────────────────────
 
 function BookCard({ book }: { book: BookItem }) {
   const title = book.display_title || book.title;
-  const thumb = book.thumbnail?.startsWith('http') ? book.thumbnail : null;
+  const thumb = book.thumbnail_blob || (book.thumbnail?.startsWith('http') ? book.thumbnail : null);
+  const pagesOcr = book.pages_ocr || book.pages_count || 0;
   const translationPercent =
-    book.pages_count && book.pages_translated
-      ? Math.round((book.pages_translated / book.pages_count) * 100)
+    pagesOcr && book.pages_translated
+      ? Math.round((book.pages_translated / pagesOcr) * 100)
       : 0;
 
   return (
@@ -210,26 +288,140 @@ function BookCard({ book }: { book: BookItem }) {
   );
 }
 
-// ---------- Page ----------
+// ─── Page ────────────────────────────────────────────────────────
 
 export default async function TopicDetailPage({ params }: Props) {
   const { slug } = await params;
-  const data = await fetchTopicData(slug);
-  if (!data) notFound();
 
-  const { clusterName, totalBooks, subclusters, uncategorized, languages } = data;
+  // Try facet route first
+  const facetParsed = parseFacetSlug(slug);
+
+  if (facetParsed) {
+    const data = await fetchFacetData(facetParsed.facetId, facetParsed.valueId);
+
+    return (
+      <div className="min-h-screen bg-cream">
+        {/* Hero */}
+        <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
+          <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
+            <Link
+              href="/topics"
+              className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Browse
+            </Link>
+
+            <p className="text-sm text-white/40 mb-2">{data.facet.label}</p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">
+              {data.value.label}
+            </h1>
+            <p className="text-white/60 text-sm max-w-xl mb-4">
+              {data.value.differentia}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
+              <span>{data.totalBooks.toLocaleString()} books</span>
+              {data.languages.length > 0 && (
+                <>
+                  <span className="w-px h-4 bg-white/20" />
+                  <span>
+                    {data.languages.map(([lang]) => lang).join(', ')}
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="max-w-5xl mx-auto px-6 py-10">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Main content */}
+            <div className="flex-1 min-w-0">
+              {data.groups.map(([groupValue, books]) => {
+                const crossValue = data.crossFacet.values.find((v) => v.id === groupValue);
+                return (
+                  <div key={groupValue} className="mb-10">
+                    <div className="flex items-center gap-3 mb-4">
+                      <h2 className="text-lg font-display font-semibold text-primary">
+                        {crossValue?.label || groupValue}
+                      </h2>
+                      <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded-full">
+                        {books.length}
+                      </span>
+                    </div>
+                    <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                      {books.slice(0, 20).map((book) => (
+                        <BookCard key={book.id || book.slug} book={book} />
+                      ))}
+                    </div>
+                    {books.length > 20 && (
+                      <p className="text-xs text-muted mt-3">
+                        + {books.length - 20} more
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+
+              {data.ungrouped.length > 0 && (
+                <div className="mb-10">
+                  <h2 className="text-lg font-display font-semibold text-primary mb-4">Other</h2>
+                  <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                    {data.ungrouped.slice(0, 20).map((book) => (
+                      <BookCard key={book.id || book.slug} book={book} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Refine sidebar */}
+            <div className="lg:w-64 flex-shrink-0">
+              <div className="sticky top-8">
+                <h3 className="text-sm font-semibold text-primary mb-4">Refine</h3>
+                {data.refineFacets.map((rf) => (
+                  <div key={rf.facetId} className="mb-6">
+                    <p className="text-xs text-muted mb-2 uppercase tracking-wide">{rf.label}</p>
+                    <div className="space-y-1">
+                      {rf.values.map((v) => (
+                        <Link
+                          key={v.id}
+                          href={`/topics/${rf.facetId}--${v.id}`}
+                          className="flex items-center justify-between text-sm text-secondary hover:text-accent-rust transition-colors py-0.5"
+                        >
+                          <span className="truncate">{v.label}</span>
+                          <span className="text-xs text-muted ml-2">{v.count}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Fall back to old cluster view
+  const clusterData = await fetchClusterData(slug);
+  if (!clusterData) notFound();
+
+  const { clusterName, totalBooks, subclusters, uncategorized, languages } = clusterData;
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Hero */}
       <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
         <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
           <Link
-            href="/topics"
+            href="/topics/clusters"
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            All Topics
+            All Clusters
           </Link>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">
@@ -247,46 +439,34 @@ export default async function TopicDetailPage({ params }: Props) {
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
-                <span>{languages.map(([l]) => l).join(', ')}</span>
+                <span>{languages.map(([lang]) => lang).join(', ')}</span>
               </>
             )}
           </div>
         </div>
       </div>
 
-      {/* Content */}
       <div className="max-w-5xl mx-auto px-6 py-10">
-        {/* Subclusters */}
-        {subclusters.map(([subName, books]) => (
-          <div key={subName} className="mb-10">
-            <div className="flex items-baseline justify-between mb-4">
-              <h2 className="text-xl font-display font-semibold text-primary">
-                {subName}
-              </h2>
-              <span className="text-sm text-muted">{books.length} books</span>
+        {subclusters.map(([name, books]) => (
+          <div key={name} className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <h2 className="text-lg font-display font-semibold text-primary">{name}</h2>
+              <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded-full">{books.length}</span>
             </div>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {books.map((book) => (
-                <BookCard key={book.id} book={book} />
+                <BookCard key={book.id || book.slug} book={book} />
               ))}
             </div>
           </div>
         ))}
 
-        {/* Uncategorized (no subcluster) */}
-        {uncategorized.length > 0 && (
+        {uncategorized.length > 0 && subclusters.length > 0 && (
           <div className="mb-10">
-            {subclusters.length > 0 && (
-              <div className="flex items-baseline justify-between mb-4">
-                <h2 className="text-xl font-display font-semibold text-primary">
-                  Other
-                </h2>
-                <span className="text-sm text-muted">{uncategorized.length} books</span>
-              </div>
-            )}
+            <h2 className="text-lg font-display font-semibold text-primary mb-4">Other</h2>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {uncategorized.map((book) => (
-                <BookCard key={book.id} book={book} />
+                <BookCard key={book.id || book.slug} book={book} />
               ))}
             </div>
           </div>
