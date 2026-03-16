@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { toast } from 'sonner';
 import { Grid, type CellComponentProps } from 'react-window';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square, BookOpen, RotateCcw, Copy } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square, BookOpen, RotateCcw } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -179,18 +179,13 @@ const ImageTile = memo(function ImageTile({
         <button
           onClick={(e) => onDuplicate(item, e)}
           className={`
-            rounded-full p-1.5 transition-all duration-150
-            ${isDuplicate ? '' : 'bg-black/30 hover:bg-black/50'}
+            rounded-full px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide leading-none
+            transition-all duration-150 drop-shadow-md
+            ${isDuplicate ? 'text-amber-400 scale-110' : 'bg-black/30 hover:bg-black/50 text-white'}
           `}
           title="Flag as duplicate"
         >
-          <Copy
-            className={`
-              w-4 h-4 drop-shadow-md transition-transform duration-150
-              ${isDuplicate ? 'text-amber-400 scale-110' : 'text-white'}
-            `}
-            strokeWidth={isDuplicate ? 2.5 : 2}
-          />
+          dupe
         </button>
       </div>
 
@@ -836,7 +831,7 @@ export default function CurateClient() {
                   {' / '}
                   <span className="text-amber-500 font-medium">{duplicateCount}</span>
                   {' '}
-                  <Copy className="w-3 h-3 inline text-amber-500" />
+                  <span className="text-[10px] font-bold uppercase text-amber-500">dupe</span>
                 </>
               )}
               {' / '}
