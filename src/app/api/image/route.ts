@@ -77,7 +77,8 @@ export async function GET(request: NextRequest) {
         'archive.org',
         'vercel-storage.com',
         'blob.vercel-storage.com',
-        'r2.dev',                      // Cloudflare R2
+        'r2.dev',                      // Cloudflare R2 (public bucket)
+        'images.sourcelibrary.org',    // Cloudflare R2 (custom domain)
         // IIIF sources
         'gallica.bnf.fr',
         'api.digitale-sammlungen.de',  // MDZ/BSB
