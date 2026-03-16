@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl } from '@/lib/shortlinks';
+import { markForExport } from '@/lib/provenance';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -168,7 +169,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     // Build response
     const response: QuoteResponse = {
       quote: {
-        translation: page.translation.data,
+        translation: markForExport(page.translation.data, book.id),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,
@@ -204,9 +205,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
         }),
       ]);
 
+      const prevText = (prevPage as unknown as Page | null)?.translation?.data;
+      const nextText = (nextPage as unknown as Page | null)?.translation?.data;
       response.context = {
-        previous_page: (prevPage as unknown as Page | null)?.translation?.data,
-        next_page: (nextPage as unknown as Page | null)?.translation?.data,
+        previous_page: prevText ? markForExport(prevText, book.id) : undefined,
+        next_page: nextText ? markForExport(nextText, book.id) : undefined,
       };
     }
 

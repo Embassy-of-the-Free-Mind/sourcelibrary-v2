@@ -10,6 +10,7 @@ import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
+import { markForExport } from '@/lib/provenance';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -71,6 +72,11 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
   lines.push('');
+  lines.push('This edition carries a Trithemian imprimatur — an invisible');
+  lines.push('provenance mark in the tradition of the printer\'s device,');
+  lines.push('asserting that this translation was produced by Source Library.');
+  lines.push('It does not identify you or track your usage.');
+  lines.push('');
 
   // Divider before content
   lines.push('─'.repeat(60));
@@ -111,9 +117,9 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
       }
       
       if(page.translation && page.translation.data) {
-        lines.push(page.translation?.data);
+        lines.push(markForExport(page.translation.data, book.id));
       }
-      
+
       lines.push('');
     }
 
@@ -396,7 +402,7 @@ async function generateEpubDownload(
         content += '<h2>Translation</h2>';
       }
       if(page.translation && page.translation.data) {
-        content += markdownToHtml(page.translation.data);
+        content += markdownToHtml(markForExport(page.translation.data, book.id));
       }
     }
 
@@ -421,6 +427,9 @@ async function generateEpubDownload(
     <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+    <p><em>This edition carries a Trithemian imprimatur — an invisible provenance mark
+    in the tradition of the printer's device, asserting that this translation was produced
+    by Source Library. It does not identify you or track your usage.</em></p>
   `;
   chapters.push({ title: 'About This Edition', content: colophon });
 
@@ -715,7 +724,7 @@ p:first-of-type {
       if(!page) continue;
 
       const ocrText = page.ocr ? page.ocr.data : "";
-      const translationText = page.translation ? page.translation.data : "";
+      const translationText = page.translation ? markForExport(page.translation.data, book.id) : "";
 
       const ocrHtml = markdownToHtml(ocrText);
       const translationHtml = markdownToHtml(translationText);
@@ -1018,7 +1027,7 @@ p:first-of-type { text-indent: 0; }
     for (const { page, imageBuffer } of pageImages) {
       if(!page) continue;
       
-      const translatedText = page.translation ? page.translation.data : "";
+      const translatedText = page.translation ? markForExport(page.translation.data, book.id) : "";
       const translationHtml = markdownToHtml(translatedText);
       const transSizeClass = getTextSizeClass(translatedText);
 
@@ -2180,7 +2189,7 @@ async function generateScholarlyEpubDownload(
             ? markdownToHtml(page.ocr.data, { stripNotes: false })
             : `<p class="no-ocr"><em>[Original text not available]</em></p>`;
           const translationHtml = page.translation?.data
-            ? markdownToHtml(page.translation.data, { stripNotes: true })
+            ? markdownToHtml(markForExport(page.translation.data, book.id), { stripNotes: true })
             : `<p class="no-translation"><em>[Translation not available]</em></p>`;
 
           chapterBody += `<div class="bilingual-page" id="p${page.page_number}">
@@ -2198,7 +2207,7 @@ async function generateScholarlyEpubDownload(
           chapterBody += `<span class="page-marker" id="p${page.page_number}">[p.${page.page_number}]</span>\n`;
 
           const translationHtml = markdownToHtml(
-            page.translation ? page.translation.data : '',
+            page.translation ? markForExport(page.translation.data, book.id) : '',
             { stripNotes: true }
           );
           if (translationHtml.trim()) {
