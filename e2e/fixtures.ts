@@ -2,7 +2,7 @@
 
 export const BOOK = {
   id: '695203a5ab34727b1f041c53',
-  title: 'Musaeum hermeticum',
+  title: 'The Hermetic Museum, Restored and Enlarged',
   language: 'Latin',
   year: 1678,
   pageCount: 882,
