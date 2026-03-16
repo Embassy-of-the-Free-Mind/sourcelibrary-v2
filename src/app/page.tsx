@@ -63,7 +63,7 @@ async function getFeaturedCollections() {
 
   // Pick 5 random collections that have enough books
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 5 } } },
+    { $match: { book_count: { $gte: 5 }, parent: { $exists: false } } },
     { $sample: { size: 5 } },
   ]).toArray();
 
