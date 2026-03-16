@@ -182,26 +182,32 @@ function extractJp2Zip(zipPath, destDir) {
  * Convert a single JP2 file to JPEG buffer using opj_decompress + sharp.
  */
 async function jp2ToJpeg(jp2Path) {
-  // opj_decompress outputs BMP which sharp can read
-  const bmpPath = jp2Path.replace('.jp2', '.bmp');
-  execSync(`opj_decompress -i "${jp2Path}" -o "${bmpPath}" -threads ALL_CPUS 2>/dev/null`, {
-    timeout: 60000,
-    stdio: 'pipe',
-  });
-
-  let pipeline = sharp(bmpPath);
-
-  // Get dimensions and cap if too large
-  const meta = await pipeline.metadata();
-  if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-    pipeline = pipeline.resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+  // Use PNG output (smaller than BMP, lossless)
+  const pngPath = jp2Path + '.out.png';
+  try {
+    execSync(`opj_decompress -i "${jp2Path}" -o "${pngPath}" -threads ALL_CPUS`, {
+      timeout: 120000,
+      stdio: 'pipe',
+    });
+  } catch (err) {
+    // opj_decompress exits non-zero even on success sometimes, check if output exists
+    if (!fs.existsSync(pngPath)) {
+      throw new Error(`opj_decompress failed: ${err.stderr?.toString().slice(0, 200) || err.message}`);
+    }
   }
 
-  const jpegBuffer = await pipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
+  let sharpPipeline = sharp(pngPath);
 
-  // Clean up intermediate files
-  try { fs.unlinkSync(bmpPath); } catch {}
-  try { fs.unlinkSync(jp2Path); } catch {}
+  // Get dimensions and cap if too large
+  const meta = await sharpPipeline.metadata();
+  if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
+    sharpPipeline = sharp(pngPath).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+  }
+
+  const jpegBuffer = await sharpPipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
+
+  // Clean up intermediate PNG (JP2 cleaned up with tmpDir)
+  try { fs.unlinkSync(pngPath); } catch {}
 
   return jpegBuffer;
 }
@@ -273,6 +279,9 @@ async function processBook(book, db) {
       stats.booksFailed++;
       return;
     }
+
+    console.log(`    ${pageFiles.length} ${download.format} files extracted (first: ${path.basename(pageFiles[0])}, last: ${path.basename(pageFiles[pageFiles.length - 1])})`);
+
 
     // Build leaf-number → file-index mapping
     // IA URLs: /page/nN/ where N is 0-based leaf number
