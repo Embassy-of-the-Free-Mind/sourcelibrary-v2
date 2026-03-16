@@ -262,6 +262,9 @@ async function fetchCollectionData(id: string) {
       db.collection('gallery_collections')
         .findOne({ book_collection_slug: id, type: 'thematic' })
         .then(async (thematicCol) => {
+          if (thematicCol?.slug) {
+            galleryCollectionSlug = thematicCol.slug as string;
+          }
           const thematicIds = thematicCol?.image_ids as string[] | undefined;
           if (thematicIds && thematicIds.length > 0) {
             // Resolve image IDs to full gallery_images docs for rendering
@@ -351,6 +354,7 @@ async function fetchCollectionData(id: string) {
     galleryImages: galleryImages as any[],
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
     parentCollection,
+    galleryCollectionSlug,
   };
 }
 
@@ -378,7 +382,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
 
   // Group curated highlights by tier
@@ -543,13 +547,15 @@ export default async function CollectionDetailPage({ params }: Props) {
                   </Link>
                 );
               })}
-              <Link
-                href={`/gallery/collections/collection-${id}`}
-                className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
-              >
-                <Images className="w-7 h-7" />
-                <span className="text-xs font-medium">Browse gallery</span>
-              </Link>
+              {galleryCollectionSlug && (
+                <Link
+                  href={`/gallery/collections/${galleryCollectionSlug}`}
+                  className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
+                >
+                  <Images className="w-7 h-7" />
+                  <span className="text-xs font-medium">Browse gallery</span>
+                </Link>
+              )}
             </div>
           )}
         </div>

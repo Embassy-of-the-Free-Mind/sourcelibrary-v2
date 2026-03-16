@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
@@ -43,7 +44,7 @@ export async function GET() {
  * Update a collection by slug.
  * Body: { slug, ...fields to update }
  */
-export async function PATCH(request: NextRequest) {
+export const PATCH = withAuth(async (request) => {
   try {
     const body = await request.json();
     const { slug, addBookIds, ...updates } = body;
@@ -95,9 +96,9 @@ export async function PATCH(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request) => {
   try {
     const body = await request.json();
     const { slug, name, subtitle, description, color, order, bookIds } = body;
@@ -184,4 +185,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
