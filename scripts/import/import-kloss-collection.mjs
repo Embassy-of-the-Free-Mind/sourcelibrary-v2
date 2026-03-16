@@ -25,7 +25,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
-import { put } from '@vercel/blob';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { execSync, execFileSync } from 'child_process';
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
@@ -34,9 +34,30 @@ import { join } from 'path';
 // ── Config ────────────────────────────────────────────────────────────
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
-if (!BLOB_TOKEN) { console.error('BLOB_READ_WRITE_TOKEN not set'); process.exit(1); }
+
+const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
+const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
+const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
+  console.error('R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY must be set'); process.exit(1);
+}
+
+const r2 = new S3Client({
+  region: 'auto',
+  endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
+});
+
+async function storagePut(key, body, contentType = 'application/octet-stream') {
+  const k = key.replace(/^\//, '');
+  await r2.send(new PutObjectCommand({
+    Bucket: R2_BUCKET, Key: k, Body: body,
+    ContentType: contentType,
+    CacheControl: 'public, max-age=86400, s-maxage=86400',
+  }));
+  return { url: `${R2_PUBLIC_URL}/${k}`, pathname: k };
+}
 
 // Check pdftoppm
 try {
@@ -196,11 +217,7 @@ async function importRecord(db, record, index, total) {
         const pageIdx = batch + idx;
         const imgBuffer = readFileSync(join(pagesDir, file));
         const blobPath = `books/${bookIdStr}/pages/${String(pageIdx).padStart(4, '0')}.jpg`;
-        const blob = await put(blobPath, imgBuffer, {
-          access: 'public',
-          contentType: 'image/jpeg',
-          token: BLOB_TOKEN,
-        });
+        const blob = await storagePut(blobPath, imgBuffer, 'image/jpeg');
         return { pageIdx, photo: blob.url, bytes: imgBuffer.length };
       }));
 

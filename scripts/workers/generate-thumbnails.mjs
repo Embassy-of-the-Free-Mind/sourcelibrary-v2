@@ -2,11 +2,11 @@
 /**
  * Batch Gallery Thumbnail Generator
  *
- * Generates pre-cropped gallery images + 300px thumbnails, uploads to Vercel Blob.
+ * Generates pre-cropped gallery images + 300px thumbnails, uploads to Cloudflare R2.
  * Eliminates on-the-fly /api/crop-image calls for 20k+ gallery images.
  *
  * Designed for Hetzner (no timeout limits, high bandwidth).
- * Also runs locally — just needs MONGODB_URI and BLOB_READ_WRITE_TOKEN.
+ * Also runs locally — just needs MONGODB_URI and R2 env vars.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/workers/generate-thumbnails.mjs
@@ -20,15 +20,35 @@
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 // ── Config ──
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
-if (!BLOB_TOKEN) { console.error('BLOB_READ_WRITE_TOKEN not set'); process.exit(1); }
+
+const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
+const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
+const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
+  console.error('R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY must be set'); process.exit(1);
+}
+
+const r2 = new S3Client({
+  region: 'auto',
+  endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
+});
+
+async function storagePut(key, body, contentType = 'application/octet-stream') {
+  const k = key.replace(/^\//, '');
+  await r2.send(new PutObjectCommand({
+    Bucket: R2_BUCKET, Key: k, Body: body,
+    ContentType: contentType,
+    CacheControl: 'public, max-age=86400, s-maxage=86400',
+  }));
+  return { url: `${R2_PUBLIC_URL}/${k}`, pathname: k };
+}
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -113,17 +133,11 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
     .jpeg({ quality: 70 })
     .toBuffer();
 
-  // Upload to Vercel Blob
+  // Upload to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
   const [extractedBlob, thumbnailBlob] = await Promise.all([
-    put(`${blobPrefix}.jpg`, extractedBuffer, {
-      access: 'public', contentType: 'image/jpeg', addRandomSuffix: false,
-      allowOverwrite: true, token: BLOB_TOKEN,
-    }),
-    put(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
-      access: 'public', contentType: 'image/jpeg', addRandomSuffix: false,
-      allowOverwrite: true, token: BLOB_TOKEN,
-    }),
+    storagePut(`${blobPrefix}.jpg`, extractedBuffer, 'image/jpeg'),
+    storagePut(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, 'image/jpeg'),
   ]);
 
   const cacheBust = `?v=${Date.now()}`;
