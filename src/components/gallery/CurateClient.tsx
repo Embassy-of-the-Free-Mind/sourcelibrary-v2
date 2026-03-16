@@ -383,6 +383,7 @@ export default function CurateClient() {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const loadingRef = useRef(false);
   const initialLoadDone = useRef(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Stable refs for callbacks (win #4 — avoids useCallback re-creation)
   const likedIdsRef = useRef(likedIds);
@@ -396,7 +397,15 @@ export default function CurateClient() {
 
   // Fetch images from gallery API
   const fetchImages = useCallback(async (newOffset: number, reset: boolean) => {
-    if (loadingRef.current) return;
+    // For reset fetches (filter changes), abort any in-flight request
+    if (reset) {
+      abortRef.current?.abort();
+    } else if (loadingRef.current) {
+      return;
+    }
+
+    const controller = new AbortController();
+    abortRef.current = controller;
     loadingRef.current = true;
     setLoading(true);
 
@@ -410,7 +419,7 @@ export default function CurateClient() {
       if (filterType) params.append('type', filterType);
       if (filterCollection) params.append('collection', filterCollection);
 
-      const res = await fetch(`/api/gallery?${params}`);
+      const res = await fetch(`/api/gallery?${params}`, { signal: controller.signal });
       const data = await res.json();
 
       if (reset) {
@@ -428,6 +437,7 @@ export default function CurateClient() {
         setTypes(data.filters.types);
       }
     } catch (err) {
+      if ((err as Error).name === 'AbortError') return;
       console.error('Failed to fetch gallery:', err);
     } finally {
       setLoading(false);
