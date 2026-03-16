@@ -4,8 +4,8 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
 
-// ISR: rebuild at most every 2 minutes
-export const revalidate = 120;
+// ISR: rebuild at most every hour (content changes infrequently)
+export const revalidate = 3600;
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;

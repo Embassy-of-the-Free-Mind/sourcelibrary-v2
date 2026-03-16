@@ -30,7 +30,7 @@ import { authorUrl } from '@/lib/slugify';
 import UserMenu from '@/components/layout/UserMenu';
 
 // ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
-export const revalidate = 120;
+export const revalidate = 3600;
 
 // Allow any [id] — paths not pre-generated will use ISR on first request
 export const dynamicParams = true;
