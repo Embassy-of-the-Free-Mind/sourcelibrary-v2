@@ -61,15 +61,16 @@ export default function ImageWithMagnifier({
   const getResizedUrl = (url: string, width: number = 400) => {
     // Don't wrap API endpoint URLs
     if (url.startsWith('/api/')) return url;
-    // Blob CDN URLs are already optimized — serve directly
-    if (url.includes('blob.vercel-storage.com')) return url;
+    // Blob CDN URLs: resize via proxy for display sizes
+    if (url.includes('blob.vercel-storage.com')) {
+      return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=70`;
+    }
     // External URLs get resized via proxy
     return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=70`;
   };
   const activeSrc = useFallback && fallbackSrc ? fallbackSrc : src;
   const isApiUrl = activeSrc.startsWith('/api/');
-  const isBlobUrl = activeSrc.includes('blob.vercel-storage.com');
-  const displaySrc = thumbnail || (isApiUrl || isBlobUrl ? activeSrc : getResizedUrl(activeSrc, 400));
+  const displaySrc = thumbnail || (isApiUrl ? activeSrc : getResizedUrl(activeSrc, 400));
   // Use high-res version for magnifier if available, otherwise use standard src
   const magnifierSrc = highResSrc || activeSrc;
 

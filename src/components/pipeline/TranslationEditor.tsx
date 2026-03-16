@@ -528,9 +528,12 @@ export default function TranslationEditor({
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // Archived images: serve directly from Blob CDN (skip proxy)
+    // Archived images: full quality direct from Blob CDN, display/thumbnail via proxy for resize
     if (p.archived_photo) {
-      return p.archived_photo;
+      if (tier === 'full') {
+        return p.archived_photo;
+      }
+      return `/api/image?url=${encodeURIComponent(p.archived_photo)}&w=${width}&q=${quality}`;
     }
 
     // External sources: proxy for resize/optimization
@@ -680,7 +683,7 @@ export default function TranslationEditor({
   useEffect(() => {
     const getSmallImageUrl = (p: Page) => {
       if (p.thumbnail) return p.thumbnail;
-      if (p.archived_photo) return p.archived_photo;
+      if (p.archived_photo) return `/api/image?url=${encodeURIComponent(p.archived_photo)}&w=150&q=60`;
       const baseUrl = p.photo_original || p.photo;
       return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60` : '';
     };
