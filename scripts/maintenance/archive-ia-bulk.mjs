@@ -35,6 +35,7 @@ const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[
 const hasFlag = (name) => args.includes(`--${name}`);
 
 const CONCURRENCY = parseInt(getArg('concurrency') || '3', 10); // book-level concurrency
+const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10); // page-level within each book
 const BOOK_LIMIT = parseInt(getArg('limit') || '0', 10);
 const BOOK_ID = getArg('book-id');
 const SKIP_THUMBNAILS = hasFlag('skip-thumbnails');
@@ -283,73 +284,83 @@ async function processBook(book, db) {
     console.log(`    ${pageFiles.length} ${download.format} files extracted (first: ${path.basename(pageFiles[0])}, last: ${path.basename(pageFiles[pageFiles.length - 1])})`);
 
 
-    // Build leaf-number → file-index mapping
-    // IA URLs: /page/nN/ where N is 0-based leaf number
-    // JP2 zip files are named like identifier_0000.jp2 (0-indexed)
-    // PDF pages via pdftoppm are 1-indexed: page-01.jpg
+    // Build work queue: map pages to their source files
     const needsArchiveIds = new Set(pages.map(p => (p.id || p._id.toString())));
-    let archived = 0;
-    let failed = 0;
+    const workItems = [];
 
     for (const page of allPages) {
       const pageId = page.id || page._id.toString();
       if (!needsArchiveIds.has(pageId)) continue;
 
-      // Extract leaf number from URL
       const photoUrl = page.photo_original || page.photo || '';
       const leafMatch = photoUrl.match(/\/page\/n(\d+)/);
-      if (!leafMatch) { failed++; continue; }
+      if (!leafMatch) continue;
 
       const leafNum = parseInt(leafMatch[1]);
-      if (leafNum >= pageFiles.length) { failed++; continue; }
+      if (leafNum >= pageFiles.length) continue;
 
-      const srcFile = pageFiles[leafNum];
+      workItems.push({ page, srcFile: pageFiles[leafNum], format: download.format });
+    }
 
-      try {
-        let jpegBuffer;
-        if (download.format === 'jp2') {
-          jpegBuffer = await jp2ToJpeg(srcFile);
-        } else {
-          // PDF pages are already JPEG — just resize if needed
-          let pipeline = sharp(srcFile);
-          const meta = await pipeline.metadata();
-          if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-            pipeline = pipeline.resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+    // Process pages with parallel workers
+    let workIdx = 0;
+    let archived = 0;
+    let failed = 0;
+
+    async function pageWorker() {
+      while (workIdx < workItems.length) {
+        const idx = workIdx++;
+        if (idx >= workItems.length) break;
+        const { page, srcFile, format } = workItems[idx];
+
+        try {
+          let jpegBuffer;
+          if (format === 'jp2') {
+            jpegBuffer = await jp2ToJpeg(srcFile);
+          } else {
+            let sharpInst = sharp(srcFile);
+            const meta = await sharpInst.metadata();
+            if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
+              sharpInst = sharp(srcFile).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+            }
+            jpegBuffer = await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();
           }
-          jpegBuffer = await pipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
+
+          // Upload to R2
+          const key = `archived/${page.book_id}/${page.page_number}.jpg`;
+          const url = await uploadToR2(key, jpegBuffer);
+          stats.bytesUploaded += jpegBuffer.length;
+
+          // Generate thumbnail
+          let thumbnailUrl;
+          if (!SKIP_THUMBNAILS) {
+            const thumbBuffer = await sharp(jpegBuffer).resize(150, 150, { fit: 'inside' }).jpeg({ quality: 70 }).toBuffer();
+            const thumbKey = `thumbnails/${page.book_id}/${page.page_number}.jpg`;
+            thumbnailUrl = await uploadToR2(thumbKey, thumbBuffer);
+            stats.bytesUploaded += thumbBuffer.length;
+          }
+
+          // Update MongoDB
+          const update = { $set: { archived_photo: url } };
+          if (thumbnailUrl) update.$set.thumbnail_blob = thumbnailUrl;
+          await db.collection('pages').updateOne({ _id: page._id }, update);
+
+          archived++;
+        } catch (err) {
+          failed++;
+          if (failed <= 3) console.log(`    [FAIL] page ${page.page_number}: ${err.message?.slice(0, 80)}`);
         }
-
-        // Upload to R2
-        const key = `archived/${page.book_id}/${page.page_number}.jpg`;
-        const url = await uploadToR2(key, jpegBuffer);
-        stats.bytesUploaded += jpegBuffer.length;
-
-        // Generate thumbnail
-        let thumbnailUrl;
-        if (!SKIP_THUMBNAILS) {
-          const thumbBuffer = await sharp(jpegBuffer).resize(150, 150, { fit: 'inside' }).jpeg({ quality: 70 }).toBuffer();
-          const thumbKey = `thumbnails/${page.book_id}/${page.page_number}.jpg`;
-          thumbnailUrl = await uploadToR2(thumbKey, thumbBuffer);
-          stats.bytesUploaded += thumbBuffer.length;
-        }
-
-        // Update MongoDB
-        const update = { $set: { archived_photo: url } };
-        if (thumbnailUrl) update.$set.thumbnail_blob = thumbnailUrl;
-        await db.collection('pages').updateOne({ _id: page._id }, update);
-
-        archived++;
-      } catch (err) {
-        failed++;
-        if (failed <= 3) console.log(`    [FAIL] page ${page.page_number}: ${err.message?.slice(0, 80)}`);
       }
     }
+
+    const numWorkers = Math.min(PAGE_CONCURRENCY, workItems.length);
+    await Promise.all(Array.from({ length: numWorkers }, () => pageWorker()));
 
     stats.pagesArchived += archived;
     stats.pagesFailed += failed;
     stats.booksProcessed++;
 
-    console.log(`    ${archived} archived, ${failed} failed`);
+    console.log(`    ${archived} archived, ${failed} failed (${numWorkers} workers)`);
 
   } catch (err) {
     console.log(`  [ERROR] ${book.title?.slice(0, 50)}: ${err.message?.slice(0, 100)}`);
@@ -361,7 +372,7 @@ async function processBook(book, db) {
 }
 
 async function main() {
-  console.log(`IA Bulk Archiver — concurrency: ${CONCURRENCY} books, quality: ${JPEG_QUALITY}, max-dim: ${MAX_DIMENSION}`);
+  console.log(`IA Bulk Archiver — ${CONCURRENCY} books × ${PAGE_CONCURRENCY} pages concurrent, quality: ${JPEG_QUALITY}, max-dim: ${MAX_DIMENSION}`);
   console.log(`  R2 bucket: ${R2_BUCKET_NAME}, URL: ${R2_PUBLIC_URL}`);
   console.log(`  User-Agent: ${USER_AGENT}`);
 
