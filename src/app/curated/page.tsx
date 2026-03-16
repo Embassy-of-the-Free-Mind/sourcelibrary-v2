@@ -141,21 +141,20 @@ export default async function CuratedCollectionsPage() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Hero */}
-      <div className="relative bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
-        <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
+      <div className="bg-warm border-b border-border-light">
+        <div className="max-w-6xl mx-auto px-6 pt-8 pb-10 sm:pb-12">
           <Link
             href="/#library"
-            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             Library
           </Link>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-primary font-semibold leading-tight mb-3 font-display">
             Curated Collections
           </h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-3xl leading-relaxed">
+          <p className="text-lg sm:text-xl text-secondary max-w-3xl leading-relaxed">
             Thematic exhibitions across the library — stories that cut across
             traditions and centuries.
           </p>
