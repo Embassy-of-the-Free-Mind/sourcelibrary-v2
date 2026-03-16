@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { extractChaptersForBook } from '@/lib/chapter-extraction';
 import { scoreBookQuality } from '@/lib/quality-scoring';
+import { scoreCollectionRelevance } from '@/lib/collection-relevance';
 import { createCronLogger } from '@/lib/cron-logger';
 import { performTransliteration } from '@/lib/ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -13,6 +14,7 @@ const TIME_BUDGET_MS = 270_000;
 const ENRICH_LIMIT = 30;
 const CHAPTER_LIMIT = 20;
 const MAX_RETRIES = 3;
+const CLASSIFY_LIMIT = 10;           // Books per run for collection scoring
 const TRANSLIT_LIMIT = 10;           // Books per run
 const TRANSLIT_PAGES_PER_RUN = 200;  // Max pages total per run
 const TRANSLIT_CONCURRENCY = 10;     // Concurrent Gemini calls
@@ -80,6 +82,8 @@ export async function GET(request: NextRequest) {
     enriched_failed: 0,
     chapters_extracted: 0,
     chapters_skipped: 0,
+    classified: 0,
+    classified_failed: 0,
     translit_books: 0,
     translit_pages: 0,
     errors: [] as string[],
@@ -244,7 +248,43 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 3: Transliteration for non-Latin books ──
+    // ── Phase 3: Collection classification ──
+    // Score newly enriched books into thematic collections using Gemini.
+    // Runs on books that have chapters_complete but no collection_scores yet.
+    const classifyPaused = control?.paused_phases?.includes('classification');
+    if (classifyPaused) {
+      logger.decision('skip', 'Classification paused via processing_control.paused_phases');
+    }
+    if (hasTimeBudget() && !classifyPaused) {
+      const unclassified = await db.collection('books')
+        .find({
+          pages_ocr: { $gt: 0 },
+          collection_scores: { $exists: false },
+          status: { $ne: 'deleted' },
+        })
+        .sort({ created_at: -1 }) // Newest first
+        .project({ id: 1, title: 1 })
+        .limit(CLASSIFY_LIMIT)
+        .toArray();
+
+      for (const book of unclassified) {
+        if (!hasTimeBudget()) break;
+        try {
+          const result = await scoreCollectionRelevance(db, book.id);
+          if (result.success) {
+            log.classified++;
+          } else {
+            log.classified_failed++;
+            log.errors.push(`Classify ${book.id}: ${result.error}`);
+          }
+        } catch (err) {
+          log.classified_failed++;
+          log.errors.push(`Classify ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+        }
+      }
+    }
+
+    // ── Phase 4: Transliteration for non-Latin books ──
     // Not tied to pipeline state — runs on any book with OCR'd pages missing transliteration.
     // Non-critical: failures don't block anything.
     const translitPaused = control?.paused_phases?.includes('transliteration');
@@ -384,6 +424,8 @@ export async function GET(request: NextRequest) {
       enriched_failed: log.enriched_failed,
       chapters_extracted: log.chapters_extracted,
       chapters_skipped: log.chapters_skipped,
+      classified: log.classified,
+      classified_failed: log.classified_failed,
       translit_books: log.translit_books,
       translit_pages: log.translit_pages,
     });
