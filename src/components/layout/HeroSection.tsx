@@ -139,19 +139,19 @@ export default function HeroSection() {
       </header>
 
       {/* Hero Content */}
-      <div className="relative z-10 h-full flex items-center justify-center">
-        <div className="px-6 md:px-12 w-full max-w-4xl text-center">
+      <div className="relative z-10 h-full flex items-center">
+        <div className="px-6 md:px-12 w-full max-w-4xl">
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
           >
             A New Renaissance of Ancient Wisdom
           </h1>
-          <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mx-auto mb-8">
+          <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
             The world&rsquo;s largest library of translated ancient texts.
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}
-          <div className="min-h-[120px] flex justify-center">
+          <div className="min-h-[120px]">
             {status === 'loading' ? (
               <div className="max-w-xl opacity-0">
                 {/* Invisible placeholder matching sign-up form height */}
@@ -159,7 +159,7 @@ export default function HeroSection() {
                 <div className="h-[24px] mt-4" />
               </div>
             ) : status === 'authenticated' ? (
-              <div className="max-w-xl w-full animate-fade-in">
+              <div className="max-w-xl animate-fade-in">
                 <UnifiedSearch />
               </div>
             ) : (
