@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { X } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 
 interface ImageWithMagnifierProps {
@@ -230,12 +231,29 @@ export default function ImageWithMagnifier({
       isDraggingRef.current = false;
       setIsTouchDragging(false);
 
-      // Snap back if zoomed out
+      // Snap back if zoomed out (pinch back to ~1x)
       if (touchScaleRef.current <= 1.05) {
         touchScaleRef.current = 1;
         touchPositionRef.current = { x: 0, y: 0 };
         setTouchScale(1);
         setTouchPosition({ x: 0, y: 0 });
+        return;
+      }
+
+      // Auto-exit zoom if user pans past the bottom edge of the zoomed image
+      // (natural "I'm done looking" gesture — swipe down past content)
+      if (touchScaleRef.current > 1) {
+        const rect = container.getBoundingClientRect();
+        const scaledHeight = rect.height * touchScaleRef.current;
+        const maxPanY = (scaledHeight - rect.height) / 2;
+        // If panned well past the bottom edge, exit zoom
+        if (touchPositionRef.current.y < -(maxPanY + 60)) {
+          touchScaleRef.current = 1;
+          touchPositionRef.current = { x: 0, y: 0 };
+          setTouchScale(1);
+          setTouchPosition({ x: 0, y: 0 });
+          return;
+        }
       }
 
       // Double-tap to zoom / reset
@@ -339,6 +357,13 @@ export default function ImageWithMagnifier({
     }
   };
 
+  const resetZoom = useCallback(() => {
+    touchScaleRef.current = 1;
+    touchPositionRef.current = { x: 0, y: 0 };
+    setTouchScale(1);
+    setTouchPosition({ x: 0, y: 0 });
+  }, []);
+
   // Tap/click to open fullscreen (skip when zoomed inline on mobile)
   const handleClick = () => {
     if (isLoaded && touchScale <= 1) {
@@ -399,11 +424,15 @@ export default function ImageWithMagnifier({
           }}
         />
 
-        {/* Mobile: zoom level indicator */}
+        {/* Mobile: zoom exit button */}
         {isTouchDevice && touchScale > 1 && (
-          <div className="absolute top-2 right-2 z-10 bg-black/60 text-white text-xs px-2 py-1 rounded-full pointer-events-none">
-            {Math.round(touchScale * 100)}%
-          </div>
+          <button
+            onClick={(e) => { e.stopPropagation(); resetZoom(); }}
+            className="absolute top-2 right-2 z-10 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 shadow-lg active:scale-95 transition-all"
+            aria-label="Exit zoom"
+          >
+            <X className="w-6 h-6" />
+          </button>
         )}
 
         {/* Desktop: Magnifier lens - uses full resolution image */}
