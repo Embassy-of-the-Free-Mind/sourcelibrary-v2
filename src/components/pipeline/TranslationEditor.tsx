@@ -35,6 +35,7 @@ import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
+import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 
 // Languages that use non-Latin scripts and benefit from transliteration
 const NON_LATIN_LANGUAGES = new Set([
@@ -1364,6 +1365,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText ? (
+                      <>
                       <HighlightSelection
                         bookId={book.id}
                         pageId={page.id}
@@ -1375,6 +1377,13 @@ export default function TranslationEditor({
                       >
                         <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
                       </HighlightSelection>
+                      <TranslationFeedbackPrompt
+                        bookId={book.id}
+                        bookTitle={book.display_title || book.title}
+                        pageNumber={page.page_number}
+                        pageId={page.id}
+                      />
+                      </>
                     ) : (book.language === 'English' && ocrText) ? (
                       <HighlightSelection
                         bookId={book.id}

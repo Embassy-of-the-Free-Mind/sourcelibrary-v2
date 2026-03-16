@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import FeedbackCallout from '@/components/feedback/FeedbackCallout';
 import { clearConsent } from '@/lib/consent';
 
 const NAV_COLUMNS = [
@@ -70,6 +71,8 @@ export default function GlobalFooter() {
   }, []);
 
   return (
+    <>
+    <FeedbackCallout />
     <footer className="bg-dark text-white/60 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -191,5 +194,6 @@ export default function GlobalFooter() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
