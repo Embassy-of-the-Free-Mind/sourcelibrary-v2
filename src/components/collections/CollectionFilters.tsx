@@ -6,6 +6,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Search, X } from 'lucide-react';
 
 const SORT_OPTIONS = [
+  { value: 'relevance', label: 'Most relevant' },
   { value: 'popular', label: 'Most popular' },
   { value: 'year_asc', label: 'Oldest first' },
   { value: 'year_desc', label: 'Newest first' },
@@ -26,7 +27,7 @@ export default function CollectionFilters({ collectionId, languages, basePath, s
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const sort = searchParams.get('sort') || 'popular';
+  const sort = searchParams.get('sort') || 'relevance';
   const language = searchParams.get('language') || '';
   const initialQ = searchParams.get('q') || '';
   const [searchQuery, setSearchQuery] = useState(initialQ);

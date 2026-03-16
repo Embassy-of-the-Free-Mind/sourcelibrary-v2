@@ -15,6 +15,7 @@ export interface CollectionImageProps {
   thumbnailUrl?: string;
   extractedUrl?: string;
   galleryQuality?: number;
+  likeCount?: number;
 }
 
 export default function CollectionImageCard({ item }: { item: CollectionImageProps }) {
@@ -69,6 +70,7 @@ export default function CollectionImageCard({ item }: { item: CollectionImagePro
           <LikeButton
             targetType="image"
             targetId={item.id}
+            initialCount={item.likeCount ?? 0}
             size="sm"
             showCount={true}
           />

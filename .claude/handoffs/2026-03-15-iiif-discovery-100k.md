@@ -89,6 +89,26 @@ IIIF imports store no images. Pages reference source library IIIF servers. All 7
 5. Import remaining pre-1800 candidates by language tier
 6. Begin OCR/translation processing (budget-dependent)
 
+## Dedup Results (applied)
+
+Probabilistic dedup (Jaro-Winkler + blocking + union-find) applied to all 828K candidates:
+- 160,703 duplicates marked as skipped
+- 665,148 estimated unique
+- 19.7% reduction, dominated by BSB internal multi-copy dupes (135K)
+
+LLM validation experiments (Gemini Flash):
+- Gold standard (752 pairs): 75.5% agreement, 96% high confidence
+- Cluster validation (100 clusters size 10+): 9% false positive rate
+- Missed match detection (200 cross-source groups): **43.5% had matches string methods missed**
+- Cross-language matches invisible to string methods: Latin↔German, French↔German translations
+
+Key finding: hybrid approach (string methods for speed + LLM for accuracy on edge cases) is the right architecture. Paper documents this at `research/dedup-paper/`.
+
+## Research Paper
+
+`research/dedup-paper/paper.md` — draft with lit review, 5 methods, Agricola running example, 4 SVG figures.
+Three experiments complete with results. Targeting DHQ or JCDL.
+
 ## GitHub Issue
 https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/190
 

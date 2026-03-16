@@ -91,18 +91,18 @@ export async function GET() {
 
   // 5. Cron health — any cron not running in last 30 min?
   try {
-    const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000);
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
     const recentCrons = await db.collection('cron_runs')
       .aggregate([
-        { $match: { timestamp: { $gte: thirtyMinAgo } } },
+        { $match: { timestamp: { $gte: twoHoursAgo } } },
         { $group: { _id: '$cron', lastRun: { $max: '$timestamp' }, failures: { $sum: { $cond: [{ $eq: ['$status', 'failed'] }, 1, 0] } } } },
       ], { maxTimeMS: 10000 })
       .toArray();
 
-    // Check if pipeline cron is missing (runs every 10 min, should always appear in 30 min window)
+    // Check if pipeline cron is missing (runs hourly, should appear in 2h window)
     const pipelineCron = recentCrons.find(c => c._id === 'post-import-pipeline');
     if (!pipelineCron) {
-      issues.push({ check: 'cron_missing', detail: 'post-import-pipeline has not run in 30 minutes', severity: 'warning' });
+      issues.push({ check: 'cron_missing', detail: 'post-import-pipeline has not run in 2 hours', severity: 'warning' });
     }
 
     // Check for high failure rate

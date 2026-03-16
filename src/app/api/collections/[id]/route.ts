@@ -50,6 +50,7 @@ export async function GET(
       title: { title: 1 },
       recent: { created_at: -1 },
       popular: { read_count: -1, title: 1 },
+      relevance: { [`collection_scores.${id}.relevance`]: -1, read_count: -1 },
     };
     const sortObj = sortMap[sort] || sortMap.year_asc;
 

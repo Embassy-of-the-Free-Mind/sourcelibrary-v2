@@ -232,15 +232,27 @@ async function fetchCollectionData(id: string) {
   // The client component re-fetches the accurate filtered total when expanded.
   const total = collection.book_count || 0;
 
+  // Track gallery collection slug for linking (captured in the gallery query below)
+  let galleryCollectionSlug: string | null = null;
+
   // All queries run in parallel with timeouts. Cold MongoDB connections from
   // Mumbai→Virginia can take 15-20s, so even "critical" queries need protection.
   const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
     withTimeout(
       db.collection('books')
-        .find(filter, { projection })
+        .find(filter, { projection: { ...projection, collection_scores: 1 } })
         .sort({ read_count: -1, title: 1 })
         .limit(COMPACT_LIMIT)
-        .toArray(),
+        .toArray()
+        .then(docs => {
+          // Re-sort by collection relevance score if available
+          return docs.sort((a, b) => {
+            const aScore = a.collection_scores?.[id]?.relevance ?? 0;
+            const bScore = b.collection_scores?.[id]?.relevance ?? 0;
+            if (bScore !== aScore) return bScore - aScore;
+            return (b.read_count || 0) - (a.read_count || 0);
+          }).map(({ collection_scores, ...rest }) => rest);
+        }),
       15000, [],
     ),
     curatedBookIds.length > 0
@@ -259,6 +271,9 @@ async function fetchCollectionData(id: string) {
       db.collection('gallery_collections')
         .findOne({ book_collection_slug: id, type: 'thematic' })
         .then(async (thematicCol) => {
+          if (thematicCol?.slug) {
+            galleryCollectionSlug = thematicCol.slug as string;
+          }
           const thematicIds = thematicCol?.image_ids as string[] | undefined;
           if (thematicIds && thematicIds.length > 0) {
             // Resolve image IDs to full gallery_images docs for rendering
@@ -297,6 +312,21 @@ async function fetchCollectionData(id: string) {
       : Promise.resolve([]),
   ]);
 
+  // Fetch parent collection if this is a subcollection
+  let parentCollection: { slug: string; name: string } | null = null;
+  if (collection.parent) {
+    const parentDoc = await withTimeout(
+      db.collection('collections').findOne(
+        { slug: collection.parent },
+        { projection: { slug: 1, name: 1 } },
+      ),
+      5000, null,
+    );
+    if (parentDoc) {
+      parentCollection = { slug: parentDoc.slug, name: parentDoc.name };
+    }
+  }
+
   const { _id, ...collectionClean } = collection;
 
   // Sanitize thumbnails to prevent /api/image wrapper URLs from crashing Next.js Image
@@ -332,6 +362,8 @@ async function fetchCollectionData(id: string) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
+    parentCollection,
+    galleryCollectionSlug,
   };
 }
 
@@ -359,7 +391,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
 
   // Group curated highlights by tier
@@ -409,6 +441,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         name={collection.name}
         description={collection.expanded_description || collection.description}
         bookCount={total}
+        parentCollection={parentCollection}
         books={books.map(b => ({
           id: b.id,
           slug: b.slug,
@@ -439,11 +472,11 @@ export default async function CollectionDetailPage({ params }: Props) {
 
         <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <Link
-            href="/#library"
+            href={parentCollection ? `/collections/${parentCollection.slug}` : '/#library'}
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            Library
+            {parentCollection ? parentCollection.name : 'Library'}
           </Link>
 
           <h1
@@ -523,13 +556,15 @@ export default async function CollectionDetailPage({ params }: Props) {
                   </Link>
                 );
               })}
-              <Link
-                href={`/gallery/collections/collection-${id}`}
-                className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
-              >
-                <Images className="w-7 h-7" />
-                <span className="text-xs font-medium">Browse gallery</span>
-              </Link>
+              {galleryCollectionSlug && (
+                <Link
+                  href={`/gallery/collections/${galleryCollectionSlug}`}
+                  className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
+                >
+                  <Images className="w-7 h-7" />
+                  <span className="text-xs font-medium">Browse gallery</span>
+                </Link>
+              )}
             </div>
           )}
         </div>

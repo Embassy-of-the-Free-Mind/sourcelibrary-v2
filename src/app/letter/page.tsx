@@ -436,7 +436,7 @@ export default function LetterPage() {
 
         <p className="font-body text-lg text-secondary leading-relaxed mb-6">
           The Source Library connects to{' '}
-          <a href="https://sourcelibrary.org/fulldata" className="text-accent-rust hover:underline">13 digital library sources</a>{' '}
+          <a href="https://sourcelibrary.org/data?admin=true" className="text-accent-rust hover:underline">13 digital library sources</a>{' '}
           worldwide &mdash;{' '}
           <a href="https://archive.org" className="text-accent-rust hover:underline">Internet Archive</a>,{' '}
           <a href="https://gallica.bnf.fr" className="text-accent-rust hover:underline">Gallica</a>,{' '}
@@ -741,7 +741,7 @@ export default function LetterPage() {
             Developers / MCP
           </Link>
           <Link
-            href="/fulldata"
+            href="/data?admin=true"
             className="px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
             Full Collection Data

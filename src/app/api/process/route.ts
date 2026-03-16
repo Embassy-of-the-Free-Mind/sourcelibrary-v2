@@ -9,7 +9,7 @@ import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { contentHash } from '@/lib/steganographia';
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { storagePut } from '@/lib/storage';
 
 // Increase timeout for AI processing (max 60s for Pro, 10s for Hobby)
 export const maxDuration = 60;
@@ -178,8 +178,7 @@ export const POST = withAuth(async (request: NextRequest) => {
 
           // Upload cropped image in background for future use
           const filename = `cropped/${currentPage.book_id}/${pageId}.jpg`;
-          put(filename, croppedBuffer, {
-            access: 'public',
+          storagePut(filename, croppedBuffer, {
             contentType: 'image/jpeg',
             allowOverwrite: true,
           }).then(blob => {

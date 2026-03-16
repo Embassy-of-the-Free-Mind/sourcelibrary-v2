@@ -9,7 +9,7 @@
  * - Return page records ready for DB insertion
  */
 
-import { put } from '@vercel/blob';
+import { storagePut } from '../storage';
 import type { Db } from 'mongodb';
 import type { Page } from '../types/page';
 import { compress_photo, convertToJpeg } from '../image-manipulation';
@@ -75,7 +75,7 @@ export async function processImageUpload(
   
   // STEP 1: Upload original image to Vercel Blob (now JPEG if it was JP2)  
   const originalBlobPath = `uploads/${bookId}/${filename}`;
-  const originalBlob = await put(originalBlobPath, buffer, {
+  const originalBlob = await storagePut(originalBlobPath, buffer, {
     access: 'public',
     contentType,
     addRandomSuffix: false
@@ -109,7 +109,7 @@ export async function processImageUpload(
   // Generate thumbnail from original buffer
   const thumbnailBuffer = await compress_photo(buffer, 150, 60);
   const thumbnailBlobPath = `uploads/${bookId}/thumbnails/${filename}`;
-  const thumbnailBlob = await put(thumbnailBlobPath, thumbnailBuffer, {
+  const thumbnailBlob = await storagePut(thumbnailBlobPath, thumbnailBuffer, {
     access: 'public',
     contentType,
     addRandomSuffix: false

@@ -10,7 +10,7 @@ import { execFileSync } from 'child_process';
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { put } from '@vercel/blob';
+import { storagePut } from '@/lib/storage';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 /**
@@ -172,7 +172,7 @@ export const POST = withAuth(async (request) => {
         const pageIdx = batch + idx;
         const imgBuffer = readFileSync(join(pagesDir, file));
         const blobPath = `books/${bookIdStr}/pages/${String(pageIdx).padStart(4, '0')}.jpg`;
-        const blob = await put(blobPath, imgBuffer, {
+        const blob = await storagePut(blobPath, imgBuffer, {
           access: 'public',
           contentType: 'image/jpeg',
         });

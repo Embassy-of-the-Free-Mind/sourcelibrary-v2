@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="Georgia, 'Times New Roman', serif" font-size="12">
+  <defs>
+    <style>
+      .header { font-size: 14px; font-weight: bold; fill: #1a1a1a; }
+      .pos-box { fill: #e8f0fe; stroke: #2563eb; stroke-width: 1.2; rx: 4; }
+      .neg-box { fill: #fce8e6; stroke: #c62828; stroke-width: 1.2; rx: 4; }
+      .hard-box { fill: #fff3e0; stroke: #e65100; stroke-width: 1.2; rx: 4; }
+      .box-text { font-size: 12px; fill: #333; }
+      .count { font-weight: bold; fill: #2563eb; }
+      .count-neg { font-weight: bold; fill: #c62828; }
+      .count-hard { font-weight: bold; fill: #e65100; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="310" y="30" text-anchor="middle" font-size="15" font-weight="bold">Gold Standard: 752 Labeled Record Pairs</text>
+
+  <!-- Column headers -->
+  <text x="155" y="65" text-anchor="middle" class="header" fill="#2563eb">Expected Matches</text>
+  <text x="465" y="65" text-anchor="middle" class="header" fill="#c62828">Expected Non-Matches</text>
+
+  <!-- Positive column -->
+  <rect x="30" y="80" width="250" height="50" class="pos-box"/>
+  <text x="45" y="102" class="box-text">Same-source copies (BSB internal)</text>
+  <text x="240" y="102" class="count" text-anchor="end">150</text>
+
+  <rect x="30" y="140" width="250" height="50" class="pos-box"/>
+  <text x="45" y="162" class="box-text">Cross-source same edition</text>
+  <text x="240" y="162" class="count" text-anchor="end">100</text>
+
+  <rect x="30" y="200" width="250" height="50" class="pos-box"/>
+  <text x="45" y="222" class="box-text">Related editions (diff. year)</text>
+  <text x="240" y="222" class="count" text-anchor="end">100</text>
+
+  <rect x="30" y="260" width="250" height="50" class="pos-box"/>
+  <text x="45" y="282" class="box-text">Borderline (large clusters)</text>
+  <text x="240" y="282" class="count" text-anchor="end">50</text>
+
+  <!-- Negative column -->
+  <rect x="340" y="80" width="250" height="50" class="neg-box"/>
+  <text x="355" y="102" class="box-text">Same author, different work</text>
+  <text x="550" y="102" class="count-neg" text-anchor="end">150</text>
+
+  <rect x="340" y="140" width="250" height="50" class="neg-box"/>
+  <text x="355" y="162" class="box-text">Generic title, different author</text>
+  <text x="550" y="162" class="count-neg" text-anchor="end">10</text>
+
+  <rect x="340" y="200" width="250" height="50" class="neg-box"/>
+  <text x="355" y="222" class="box-text">Same block, random non-match</text>
+  <text x="550" y="222" class="count-neg" text-anchor="end">150</text>
+
+  <rect x="340" y="260" width="250" height="50" class="hard-box"/>
+  <text x="355" y="278" class="box-text">Hard: anonymous, multi-volume</text>
+  <text x="550" y="278" class="count-hard" text-anchor="end">52</text>
+  <text x="355" y="296" font-size="10" fill="#888" font-style="italic">edge cases that test method limits</text>
+
+  <!-- Subtotals -->
+  <line x1="30" y1="325" x2="280" y2="325" stroke="#2563eb" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="155" y="345" text-anchor="middle" font-size="13" font-weight="bold" fill="#2563eb">400 pairs</text>
+
+  <line x1="340" y1="325" x2="590" y2="325" stroke="#c62828" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="465" y="345" text-anchor="middle" font-size="13" font-weight="bold" fill="#c62828">352 pairs</text>
+
+  <!-- Total -->
+  <line x1="100" y1="365" x2="520" y2="365" stroke="#333" stroke-width="1.5"/>
+  <text x="310" y="388" text-anchor="middle" font-size="14" font-weight="bold">Total: 752 pairs for evaluation</text>
+
+  <!-- Labels: FRBR levels on matches -->
+  <text x="15" y="102" font-size="9" fill="#888" transform="rotate(-90, 15, 102)">Item/Manifest.</text>
+  <text x="15" y="222" font-size="9" fill="#888" transform="rotate(-90, 15, 222)">Work level</text>
+</svg>

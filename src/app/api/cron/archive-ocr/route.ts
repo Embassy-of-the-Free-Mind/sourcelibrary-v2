@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { put } from '@vercel/blob';
+import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { createCronLogger } from '@/lib/cron-logger';
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
 
             // Upload to Vercel Blob
             const filename = `archived/${page.book_id}/${page.page_number}.jpg`;
-            const blob = await put(filename, buffer, {
+            const blob = await storagePut(filename, buffer, {
               access: 'public',
               contentType: mimeType,
               addRandomSuffix: false,

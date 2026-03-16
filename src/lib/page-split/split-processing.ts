@@ -4,7 +4,7 @@
  */
 
 import sharp from 'sharp';
-import { put } from '@vercel/blob';
+import { storagePut } from '../storage';
 import type { Db } from 'mongodb';
 import { ObjectId } from 'mongodb';
 
@@ -170,7 +170,7 @@ export async function cropAndUploadHalf(
     .toBuffer();
 
   // Upload to Vercel Blob
-  const blob = await put(
+  const blob = await storagePut(
     `cropped/${bookId}/${pageId}.jpg`,
     croppedBuffer,
     {
@@ -192,7 +192,7 @@ export async function generateAndUploadThumbnail(
   pageId: string
 ): Promise<{ url: string }> {
   const thumbnailBuffer = await compress_photo(croppedBuffer, 150, 60);
-  const thumbnailBlob = await put(
+  const thumbnailBlob = await storagePut(
     `uploads/${bookId}/thumbnails/${pageId}.jpg`,
     thumbnailBuffer,
     {

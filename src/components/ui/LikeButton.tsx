@@ -52,15 +52,17 @@ export default memo(function LikeButton({
   targetType,
   targetId,
   bookId,
-  initialCount = 0,
-  initialLiked = false,
+  initialCount,
+  initialLiked,
   size = 'md',
   showCount = true,
   className = '',
 }: LikeButtonProps) {
+  // If parent explicitly passed initialCount (even 0), server provided the data
+  const serverProvidedLikes = initialCount !== undefined;
   const identity = useIdentity();
-  const [liked, setLiked] = useState(initialLiked);
-  const [count, setCount] = useState(initialCount);
+  const [liked, setLiked] = useState(initialLiked ?? false);
+  const [count, setCount] = useState(initialCount ?? 0);
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
@@ -85,11 +87,13 @@ export default memo(function LikeButton({
     setMounted(true);
     const cache = getLikesCache();
     setLiked(!!cache[cacheKey]);
-    setCount(initialCount);
+    setCount(initialCount ?? 0);
   }, [cacheKey, initialCount]);
 
   // Fetch real like status from API on mount/target change
+  // Skip if parent already provided like data (e.g. gallery API includes likes)
   useEffect(() => {
+    if (serverProvidedLikes) return; // Parent provided like data, no need to fetch
     if (!identity.id || !targetId || identity.loading) return;
     let cancelled = false;
 
@@ -107,7 +111,7 @@ export default memo(function LikeButton({
     }).catch(() => {});
 
     return () => { cancelled = true; };
-  }, [targetType, targetId, identity.id, identity.loading]);
+  }, [targetType, targetId, identity.id, identity.loading, serverProvidedLikes]);
 
   const handleClick = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();

@@ -25,9 +25,27 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'history-of-classification',
+    title: 'Ten Thousand Years of Tagging',
+    subtitle: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have.',
+    date: '16 March 2026',
+    readTime: '14 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
+    slug: 'counting-the-gap',
+    title: 'We Spent a Day Counting What Hasn\'t Been Translated',
+    subtitle: 'We matched 1.6 million early modern editions against translation catalogs. It started as a quick check and turned into an all-day rabbit hole.',
+    date: '15 March 2026',
+    readTime: '8 min read',
+    tag: 'Behind the scenes',
+    tagColor: 'bg-stone-100 text-stone-600',
+  },
+  {
     slug: 'untranslated-renaissance',
-    title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
-    subtitle: 'We matched 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
+    title: 'How Much of the Renaissance Has Been Translated?',
+    subtitle: '1.4 million editions, every English translation catalog we could find. The numbers are rough, but the gap is enormous.',
     date: '15 March 2026',
     readTime: '10 min read',
     tag: 'Deep dive',
@@ -36,7 +54,7 @@ const posts: BlogPost[] = [
   {
     slug: 'origin-story',
     title: 'Where Source Library Came From',
-    subtitle: 'From one untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000 books and the ambition to translate the Renaissance — and why it matters for AI.',
+    subtitle: 'One untranslated Ficino manuscript at the Embassy of the Free Mind, 5,000 books later.',
     date: '15 March 2026',
     readTime: '8 min read',
     tag: 'Origin',
@@ -47,7 +65,7 @@ const posts: BlogPost[] = [
   {
     slug: 'hieroglyph-ocr',
     title: 'Can AI Read Hieroglyphs? (No.)',
-    subtitle: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash — direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
+    subtitle: 'Four approaches to hieroglyphic OCR, four failures. The Unicode block has 1,071 characters and Gemini can\'t reliably pick the right ones.',
     date: '14 March 2026',
     readTime: '12 min read',
     tag: 'Technical',
@@ -58,7 +76,7 @@ const posts: BlogPost[] = [
   {
     slug: 'clustering',
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
-    subtitle: 'We embedded 3,400 book summaries with a neural language model and let HDBSCAN find the structure. 48 natural clusters reveal six intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
+    subtitle: 'Embedding summaries and letting HDBSCAN find the structure. 48 clusters, six intellectual traditions, from alchemy to Sanskrit astronomy.',
     date: '14 March 2026',
     readTime: '10 min read',
     tag: 'Methodology',
@@ -80,8 +98,8 @@ const posts: BlogPost[] = [
   // },
   {
     slug: 'progress-studies',
-    title: 'The Missing Library: What Progress Studies Can\'t Read',
-    subtitle: 'Progress studies asks why innovation happens — but most primary sources from before 1750 have never been in English. 5,000 books contain the pre-industrial origins of experimental science, hidden inside alchemy, natural magic, and mystical philosophy.',
+    title: 'The Deeper Roots of Progress',
+    subtitle: 'Mokyr, Howes, and Crawford ask why innovation happens. 5,000 newly translated books show where the experimental mindset came from.',
     date: '8 March 2026',
     readTime: '15 min read',
     tag: 'Deep dive',
@@ -92,7 +110,7 @@ const posts: BlogPost[] = [
   {
     slug: 'ocr-consistency',
     title: 'How Consistent Is AI OCR?',
-    subtitle: 'A digitization error gave us 1,448 natural experiments — two photographs of the same page, OCR\'d independently by Gemini. Character-level comparison reveals a 1.8% median disagreement rate across six languages.',
+    subtitle: 'A digitization error gave us 1,448 natural experiments: two photos of the same page, OCR\'d independently. Median disagreement: 1.8%.',
     date: '7 March 2026',
     readTime: '12 min read',
     tag: 'Methodology',
@@ -103,7 +121,7 @@ const posts: BlogPost[] = [
   {
     slug: 'cuneiform-ocr',
     title: 'Can AI Read Cuneiform?',
-    subtitle: 'We tested Gemini 3 Flash on cuneiform tablets from the oldest writing system on Earth. It correctly identified Law 196 of the Code of Hammurabi and detected a 2,500-year-old forgery — but also hallucinated an entire document.',
+    subtitle: 'Gemini identified the Code of Hammurabi and caught a 2,500-year-old forgery. It also hallucinated an entire document.',
     date: '7 March 2026',
     readTime: '20 min read',
     tag: 'Technical',
@@ -114,7 +132,7 @@ const posts: BlogPost[] = [
   {
     slug: 'rithmomachia',
     title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
-    subtitle: 'Five treatises in five languages document a mathematical board game played across Europe for six centuries — where you capture by arithmetic and win by creating harmony.',
+    subtitle: 'A mathematical board game played for six centuries. You capture by arithmetic and win by creating harmony.',
     date: '2 March 2026',
     readTime: '18 min read',
     tag: 'Collection',
@@ -124,8 +142,8 @@ const posts: BlogPost[] = [
   },
   {
     slug: 'hidden-engineers',
-    title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
-    subtitle: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy. A 16th-century manuscript binds Hero\'s steam engines with the Corpus Hermeticum.',
+    title: 'The Hidden Engineers',
+    subtitle: 'Before engineering was a discipline, its knowledge lived inside spell books and alchemy. One 16th-century manuscript binds Hero\'s steam engines with the Corpus Hermeticum.',
     date: '27 February 2026',
     readTime: '22 min read',
     tag: 'Deep dive',
@@ -135,8 +153,8 @@ const posts: BlogPost[] = [
   },
   {
     slug: 'philosophers-stone',
-    title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
-    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
+    title: "What Is the Philosopher's Stone?",
+    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb. Eight primary sources, eight different answers.',
     date: '27 February 2026',
     readTime: '20 min read',
     tag: 'Deep dive',
@@ -147,7 +165,7 @@ const posts: BlogPost[] = [
   {
     slug: 'first-translation-methodology',
     title: 'How We Identify First Translations',
-    subtitle: 'The methodology behind Source Library\'s first-translation classification: AI enrichment, six-level status system, bibliographic heuristics, deep verification, and known limitations.',
+    subtitle: 'AI enrichment, bibliographic heuristics, six-level status system, and the limitations we know about.',
     date: '23 February 2026',
     readTime: '10 min read',
     tag: 'Methodology',
@@ -157,8 +175,8 @@ const posts: BlogPost[] = [
   },
   {
     slug: 'astrological-diagrams',
-    title: 'Reading the Stars: Astrological Diagrams from Nine Centuries',
-    subtitle: 'A visual tour from the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics — the original diagrams that mapped humanity\'s relationship to the heavens.',
+    title: 'Astrological Diagrams from Nine Centuries',
+    subtitle: 'From the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics.',
     date: '22 February 2026',
     readTime: '15 min read',
     tag: 'Visual essay',
@@ -169,7 +187,7 @@ const posts: BlogPost[] = [
   {
     slug: 'demonology',
     title: 'What Are Demons? Five Answers from the Primary Sources',
-    subtitle: 'The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel. Source Library holds the texts that document this extraordinary reversal.',
+    subtitle: 'The Hermetic daemon is your cosmic guardian. The Christian demon is a fallen angel. The same word, reversed.',
     date: '21 February 2026',
     readTime: '18 min read',
     tag: 'Deep dive',
@@ -180,7 +198,7 @@ const posts: BlogPost[] = [
   {
     slug: 'history-of-astrology',
     title: 'A History of Astrology Across Traditions',
-    subtitle: 'From Babylonian omen tablets to Kepler\'s geometrical cosmos — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions.',
+    subtitle: 'Babylonian omen tablets to Kepler\'s geometrical cosmos, independently across five civilizations.',
     date: '21 February 2026',
     readTime: '22 min read',
     tag: 'Deep dive',
@@ -191,7 +209,7 @@ const posts: BlogPost[] = [
   {
     slug: 'first-translations',
     title: 'Over 500 First English Translations',
-    subtitle: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — all previously inaccessible in English.',
+    subtitle: 'Lab manuals, radical theology, women alchemists, Sanskrit astrology, founding texts of biblical criticism. Never before in English.',
     date: '20 February 2026',
     readTime: '14 min read',
     tag: 'Collection',
@@ -202,7 +220,7 @@ const posts: BlogPost[] = [
   {
     slug: 'mcp-server',
     title: 'Claude Can Now Read Thousands of Rare Books',
-    subtitle: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations.',
+    subtitle: 'An MCP server giving Claude direct access to Source Library: historical texts, translations, entity graph, and 50,000+ illustrations.',
     date: '18 February 2026',
     readTime: '8 min read',
     tag: 'Technical',
@@ -213,7 +231,7 @@ const posts: BlogPost[] = [
   {
     slug: 'fire-horse',
     title: 'The Year of the Fire Horse',
-    subtitle: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology — from the sexagenary cycle to the I Ching.',
+    subtitle: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology.',
     date: '17 February 2026',
     readTime: '16 min read',
     tag: 'Deep dive',
@@ -224,7 +242,7 @@ const posts: BlogPost[] = [
   {
     slug: 'indigenous-traditions',
     title: 'The Sacred Texts That Were Never \'Texts\'',
-    subtitle: '90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas.',
+    subtitle: '90+ volumes: Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas. Every inhabited continent.',
     date: '16 February 2026',
     readTime: '18 min read',
     tag: 'Collection',
@@ -235,7 +253,7 @@ const posts: BlogPost[] = [
   {
     slug: 'fechner-bohme',
     title: 'The Mystic Who Invented Psychophysics',
-    subtitle: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works reveal the mysticism behind the Weber-Fechner law.',
+    subtitle: 'Fechner founded experimental psychology. His real goal was proving the universe has a soul.',
     date: '16 February 2026',
     readTime: '15 min read',
     tag: 'Deep dive',
@@ -246,7 +264,7 @@ const posts: BlogPost[] = [
   {
     slug: 'invisible-hand',
     title: 'The Invisible Hand Has a History',
-    subtitle: 'Before Adam Smith, Florentine merchants, Salamanca theologians, and Cambridge Platonists built the intellectual foundations of market theory.',
+    subtitle: 'Before Adam Smith: Florentine merchants, Salamanca theologians, Cambridge Platonists.',
     date: '15 February 2026',
     readTime: '20 min read',
     tag: 'Deep dive',
@@ -257,7 +275,7 @@ const posts: BlogPost[] = [
   {
     slug: 'chakra-tradition',
     title: 'Recovering the Chakra Tradition',
-    subtitle: 'Digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
+    subtitle: 'The primary tantric sources on chakras, nadis, and kundalini. Many translated for the first time.',
     date: '15 February 2026',
     readTime: '12 min read',
     tag: 'Collection',

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="Georgia, 'Times New Roman', serif" font-size="13">
+  <defs>
+    <style>
+      .level-label { font-size: 11px; font-variant: small-caps; letter-spacing: 1px; fill: #666; }
+      .box-label { font-weight: bold; font-size: 13px; }
+      .box-detail { font-size: 12px; fill: #444; font-style: italic; }
+      .item-label { font-size: 11px; fill: #333; }
+    </style>
+  </defs>
+
+  <!-- WORK level -->
+  <rect x="80" y="20" width="620" height="380" rx="6" fill="#f8f9fa" stroke="#1a1a1a" stroke-width="2"/>
+  <text x="95" y="48" class="box-label">WORK</text>
+  <text x="95" y="66" class="box-detail">Agricola's treatise on mining and metallurgy</text>
+
+  <!-- Level labels on left -->
+  <text x="10" y="48" class="level-label" text-anchor="start">Work</text>
+  <text x="10" y="128" class="level-label" text-anchor="start">Expression</text>
+  <text x="10" y="228" class="level-label" text-anchor="start">Manifestation</text>
+  <text x="10" y="340" class="level-label" text-anchor="start">Item</text>
+
+  <!-- Dashed guide lines -->
+  <line x1="70" y1="48" x2="80" y2="48" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="70" y1="128" x2="100" y2="128" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="70" y1="228" x2="120" y2="228" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="70" y1="340" x2="140" y2="340" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- EXPRESSION: Latin original -->
+  <rect x="100" y="90" width="370" height="295" rx="5" fill="#f0f4f8" stroke="#444" stroke-width="1.5"/>
+  <text x="115" y="115" class="box-label" fill="#2563eb">EXPRESSION</text>
+  <text x="115" y="133" class="box-detail">Latin original</text>
+
+  <!-- EXPRESSION: German translation -->
+  <rect x="490" y="90" width="195" height="295" rx="5" fill="#f0f4f8" stroke="#444" stroke-width="1.5"/>
+  <text x="505" y="115" class="box-label" fill="#2563eb">EXPRESSION</text>
+  <text x="505" y="133" class="box-detail">German translation</text>
+
+  <!-- MANIFESTATION: Basel 1556 -->
+  <rect x="120" y="150" width="330" height="220" rx="4" fill="#e8edf2" stroke="#666" stroke-width="1.2"/>
+  <text x="135" y="175" class="box-label">MANIFESTATION</text>
+  <text x="135" y="193" class="box-detail">Basel, 1556 edition</text>
+
+  <!-- MANIFESTATION: Basel 1557 -->
+  <rect x="505" y="150" width="165" height="220" rx="4" fill="#e8edf2" stroke="#666" stroke-width="1.2"/>
+  <text x="515" y="175" class="box-label">MANIFESTATION</text>
+  <text x="515" y="193" class="box-detail">Basel, 1557 edition</text>
+
+  <!-- ITEM: e-rara copy -->
+  <rect x="140" y="210" width="140" height="140" rx="3" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="155" y="240" class="box-label" fill="#2563eb">ITEM</text>
+  <text x="155" y="262" class="item-label">e-rara copy</text>
+  <text x="155" y="280" class="item-label" font-size="10" fill="#888">ETH-Bibliothek Zurich</text>
+  <text x="155" y="298" class="item-label" font-size="10" fill="#888">DOI: 10.3931/e-rara-...</text>
+  <text x="155" y="316" class="item-label" font-size="10" fill="#888">IIIF manifest at</text>
+  <text x="155" y="330" class="item-label" font-size="10" fill="#888">www.e-rara.ch</text>
+
+  <!-- ITEM: BSB copy -->
+  <rect x="300" y="210" width="140" height="140" rx="3" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="315" y="240" class="box-label" fill="#2563eb">ITEM</text>
+  <text x="315" y="262" class="item-label">BSB copy</text>
+  <text x="315" y="280" class="item-label" font-size="10" fill="#888">Bayerische Staats-</text>
+  <text x="315" y="298" class="item-label" font-size="10" fill="#888">bibliothek, Munich</text>
+  <text x="315" y="316" class="item-label" font-size="10" fill="#888">ID: bsb00029099</text>
+  <text x="315" y="330" class="item-label" font-size="10" fill="#888">IIIF at digitale-</text>
+  <text x="315" y="344" class="item-label" font-size="10" fill="#888">sammlungen.de</text>
+
+  <!-- ITEM: BSB German copy -->
+  <rect x="520" y="210" width="135" height="140" rx="3" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="535" y="240" class="box-label" fill="#2563eb">ITEM</text>
+  <text x="535" y="262" class="item-label">BSB copy</text>
+  <text x="535" y="280" class="item-label" font-size="10" fill="#888">Bayerische Staats-</text>
+  <text x="535" y="298" class="item-label" font-size="10" fill="#888">bibliothek, Munich</text>
+  <text x="535" y="316" class="item-label" font-size="10" fill="#888">"Vom Bergkwerck</text>
+  <text x="535" y="330" class="item-label" font-size="10" fill="#888">XII Bücher"</text>
+
+  <!-- Caption -->
+  <text x="360" y="412" text-anchor="middle" font-size="11" fill="#666" font-style="italic">
+    Figure 1. FRBR hierarchy for Agricola's De Re Metallica, showing records from our dataset.
+  </text>
+</svg>

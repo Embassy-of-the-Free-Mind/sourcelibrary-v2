@@ -6,6 +6,7 @@ interface CollectionSchemaProps {
   description?: string;
   bookCount: number;
   books?: Array<{ id: string; slug?: string; title: string; author?: string; year?: number }>;
+  parentCollection?: { slug: string; name: string } | null;
 }
 
 /**
@@ -18,6 +19,7 @@ export default function CollectionSchema({
   description,
   bookCount,
   books,
+  parentCollection,
 }: CollectionSchemaProps) {
   const pageUrl = `${BASE_URL}/collections/${slug}`;
 
@@ -54,13 +56,25 @@ export default function CollectionSchema({
     };
   }
 
+  const breadcrumbItems = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Collections', item: `${BASE_URL}/collections` },
+  ];
+  if (parentCollection) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: parentCollection.name,
+      item: `${BASE_URL}/collections/${parentCollection.slug}`,
+    });
+    breadcrumbItems.push({ '@type': 'ListItem', position: 4, name, item: pageUrl });
+  } else {
+    breadcrumbItems.push({ '@type': 'ListItem', position: 3, name, item: pageUrl });
+  }
+
   const breadcrumbList = {
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Collections', item: `${BASE_URL}/collections` },
-      { '@type': 'ListItem', position: 3, name, item: pageUrl },
-    ],
+    itemListElement: breadcrumbItems,
   };
 
   const jsonLd = {

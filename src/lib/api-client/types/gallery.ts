@@ -36,6 +36,8 @@ export interface GalleryItem {
   galleryQuality?: number;
   museumDescription?: string;
   metadata?: ImageMetadata;
+  likeCount?: number;
+  likedByVisitor?: boolean;
 }
 
 export interface BookInfo {
@@ -83,6 +85,7 @@ export interface GallerySearchParams {
   includeArchive?: boolean;
   maxPerBook?: number;
   sort?: string;
+  visitorId?: string;
 }
 
 export interface GalleryImageUpdateRequest {

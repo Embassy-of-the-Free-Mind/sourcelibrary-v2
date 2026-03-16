@@ -30,20 +30,9 @@ interface TraditionCollection {
   subtitle: string;
   description: string;
   book_count: number;
+  scripture_count: number;
   order: number;
-  sample_books: {
-    id: string;
-    title: string;
-    author: string;
-    year: number;
-    thumbnail: string | null;
-  }[];
-  languages: { lang: string; count: number }[];
-  featured_images?: {
-    extracted_url?: string;
-    thumbnail_url?: string;
-    image_url?: string;
-  }[];
+  hero_image: string | null;
 }
 
 function sanitizeThumbnail(url: string | undefined | null): string | undefined {
@@ -54,7 +43,6 @@ function sanitizeThumbnail(url: string | undefined | null): string | undefined {
     return undefined;
   }
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  // Accept data: URLs (thumbnail_blob) and relative paths
   if (url.startsWith('data:') || url.startsWith('/')) return url;
   return undefined;
 }
@@ -68,37 +56,75 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
     .sort({ order: 1 })
     .toArray();
 
-  // Get the parent for total count
-  const parent = await db.collection('collections').findOne({ slug: 'sacred-texts' });
-  const totalBooks = parent?.book_count || traditions.reduce((sum, t) => sum + (t.book_count || 0), 0);
+  // For each tradition, count scripture/commentary books and find a hero image
+  const enriched: TraditionCollection[] = await Promise.all(
+    traditions.map(async (t) => {
+      // Count books that are scripture or canonical commentary
+      const scriptureCount = await db.collection('books').countDocuments({
+        collections: t.slug,
+        'sacred_text_type.type': { $in: ['scripture', 'canonical_commentary', 'liturgical'] },
+        status: { $ne: 'deleted' },
+        pages_count: { $gt: 0 },
+      });
 
-  return {
-    traditions: traditions.map(t => ({
-      slug: t.slug,
-      name: t.name,
-      subtitle: t.subtitle || '',
-      description: t.description || '',
-      book_count: t.book_count || 0,
-      order: t.order || 99,
-      sample_books: t.sample_books || [],
-      languages: t.languages || [],
-      featured_images: t.featured_images || [],
-    })) as TraditionCollection[],
-    totalBooks,
-  };
+      // Find a hero image: best gallery image from this tradition's books
+      let heroImage: string | null = null;
+
+      // Try gallery images first
+      const traditionBooks = await db.collection('books')
+        .find({ collections: t.slug, status: { $ne: 'deleted' } }, { projection: { id: 1 } })
+        .limit(50)
+        .toArray();
+      const bookIds = traditionBooks.map(b => b.id);
+
+      if (bookIds.length > 0) {
+        const galleryImg = await db.collection('gallery_images')
+          .findOne(
+            {
+              book_id: { $in: bookIds },
+              gallery_quality: { $gte: 0.7 },
+              type: { $nin: ['decorative', 'symbol', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+            },
+            { sort: { gallery_quality: -1 } },
+          );
+        if (galleryImg) {
+          heroImage = galleryImg.extracted_url || galleryImg.thumbnail_url || galleryImg.image_url || null;
+        }
+      }
+
+      // Fallback to book thumbnail
+      if (!heroImage && bookIds.length > 0) {
+        const bookWithThumb = await db.collection('books')
+          .findOne(
+            { id: { $in: bookIds }, thumbnail: { $exists: true, $ne: null, $not: /^data:/ } },
+            { projection: { thumbnail: 1 } },
+          );
+        if (bookWithThumb) {
+          heroImage = sanitizeThumbnail(bookWithThumb.thumbnail) || null;
+        }
+      }
+
+      return {
+        slug: t.slug,
+        name: t.name,
+        subtitle: t.subtitle || '',
+        description: t.description || '',
+        book_count: t.book_count || 0,
+        scripture_count: scriptureCount,
+        order: t.order || 99,
+        hero_image: heroImage,
+      };
+    }),
+  );
+
+  // Total across all traditions (scripture + commentary only)
+  const totalBooks = enriched.reduce((sum, t) => sum + t.scripture_count, 0);
+
+  return { traditions: enriched, totalBooks };
 }
 
 function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
-  const heroThumb = tradition.sample_books
-    .map(b => sanitizeThumbnail(b.thumbnail))
-    .find((t): t is string => !!t);
-
-  const heroImage = tradition.featured_images?.[0]?.extracted_url
-    || tradition.featured_images?.[0]?.image_url
-    || tradition.featured_images?.[0]?.thumbnail_url
-    || heroThumb;
-
-  const isDataUrl = heroImage?.startsWith('data:');
+  const heroImage = tradition.hero_image;
 
   return (
     <Link
@@ -106,37 +132,29 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
       className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
     >
       {heroImage ? (
-        isDataUrl ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        ) : (
-          <Image
-            src={heroImage}
-            alt={`Illustration from ${tradition.name}`}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            unoptimized
-          />
-        )
+        <Image
+          src={heroImage}
+          alt={`Illustration from ${tradition.name}`}
+          fill
+          sizes="(max-width: 640px) 50vw, 25vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          unoptimized
+        />
       ) : (
         <div className="absolute inset-0 bg-warm" />
       )}
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-      <div className="absolute inset-0 flex flex-col justify-end p-4">
-        <p className="text-white/50 text-xs mb-1">
-          {tradition.book_count} texts
+      <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
+        <p className="text-white/50 text-xs mb-1 hidden sm:block">
+          {tradition.scripture_count > 0
+            ? `${tradition.scripture_count} core texts`
+            : `${tradition.book_count} texts`}
         </p>
-        <h2 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
+        <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {tradition.name}
         </h2>
-        {tradition.subtitle && (
-          <p className="text-white/60 text-xs mt-1 line-clamp-1">
-            {tradition.subtitle}
-          </p>
-        )}
       </div>
     </Link>
   );
@@ -160,7 +178,9 @@ export default async function SacredTextsPortal() {
   }
 
   const { traditions, totalBooks } = data;
-  const traditionsWithBooks = traditions.filter(t => t.book_count > 0);
+  const traditionsWithBooks = traditions
+    .filter(t => t.book_count > 0)
+    .sort((a, b) => b.scripture_count - a.scripture_count || b.book_count - a.book_count);
 
   return (
     <div className="min-h-screen bg-cream">
@@ -186,7 +206,7 @@ export default async function SacredTextsPortal() {
           <div className="flex flex-wrap gap-8 text-sm text-white/40">
             <div>
               <span className="text-2xl font-semibold text-white/80 block">{totalBooks.toLocaleString()}</span>
-              texts
+              core texts
             </div>
             <div>
               <span className="text-2xl font-semibold text-white/80 block">{traditionsWithBooks.length}</span>

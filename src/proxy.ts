@@ -179,38 +179,14 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  // --- Rate limiting ---
-  const cronSecret = process.env.CRON_SECRET;
-  const authHeader = request.headers.get('authorization');
-  const isInternalCall = cronSecret && authHeader === `Bearer ${cronSecret}`;
-
-  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/') && !isInternalCall) {
-    const ip = getClientIp(request);
-    const isBot = looksLikeBot(request);
-    const isExpensive =
-      pathname.includes('/batch-ocr') ||
-      pathname.includes('/batch-translate') ||
-      pathname.includes('/queue-books') ||
-      pathname.includes('/admin/') ||
-      pathname.startsWith('/api/analytics/usage');
-
-    // Separate buckets: bots get 10/min, browsers get 60/min, expensive routes get 10/min
-    let limit: number;
-    let key: string;
-    if (isExpensive) {
-      limit = 10;
-      key = `${ip}:expensive`;
-    } else if (isBot) {
-      limit = 10;
-      key = `${ip}:bot`;
-    } else {
-      limit = 60;
-      key = `${ip}:browser`;
-    }
-
-    if (!checkLimit(key, limit, 60)) {
-      // Bots that exhaust their limit get the pitch
-      if (isBot) {
+  // --- Bot rate limiting (soft) ---
+  // Browser rate limiting is handled by Vercel WAF (dashboard config).
+  // This in-memory limiter only applies to bots as a defense-in-depth layer.
+  // It's per-instance so not reliable, but cheap to keep for bots.
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/')) {
+    if (looksLikeBot(request)) {
+      const ip = getClientIp(request);
+      if (!checkLimit(`${ip}:bot`, 10, 60)) {
         return new NextResponse(BOT_RESPONSE, {
           status: 429,
           headers: {
@@ -220,10 +196,6 @@ export function proxy(request: NextRequest) {
           },
         });
       }
-      return NextResponse.json(
-        { error: 'Rate limit exceeded. Please try again later.' },
-        { status: 429, headers: { 'Retry-After': '60' } }
-      );
     }
   }
 
