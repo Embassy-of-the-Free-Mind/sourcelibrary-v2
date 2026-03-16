@@ -977,7 +977,8 @@ async function syncBookEntities(
     concepts: ConceptEntry[];
     vocabulary: ConceptEntry[];
     keywords: ConceptEntry[];
-  }
+  },
+  bookYear?: number | null
 ) {
   const now = new Date();
 
@@ -996,6 +997,7 @@ async function syncBookEntities(
           book_id: bookId,
           book_title: bookTitle,
           book_author: bookAuthor,
+          ...(bookYear ? { book_year: bookYear } : {}),
           pages: pages
         },
       } as Record<string, unknown>,
@@ -1232,7 +1234,7 @@ export async function GET(
     );
 
     // Sync entities to cross-book entity collection (non-blocking)
-    syncBookEntities(db, id, bookTitle, bookAuthor, conceptIndex).catch(err => {
+    syncBookEntities(db, id, bookTitle, bookAuthor, conceptIndex, book.year || null).catch(err => {
       console.error('Entity sync failed:', err);
     });
 
