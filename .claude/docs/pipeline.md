@@ -1,6 +1,6 @@
 # Processing Pipeline
 
-Single source of truth for the full processing pipeline — from import to complete. Last updated: March 9, 2026.
+Single source of truth for the full processing pipeline — from import to complete. Last updated: March 16, 2026.
 
 ## End-to-End Overview
 
@@ -16,7 +16,7 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 | Archive | Hetzner script + cron check | Free (bandwidth) | Minutes-hours | Yes |
 | OCR | Lambda workers (SQS) or Gemini Batch API | ~$0.10-0.50 | Minutes-hours | Yes |
 | Metadata enrich | Gemini realtime (text analysis) | ~$0.005 | Seconds | Yes |
-| FT verify | Gemini realtime (LLM knowledge check) | ~$0.0003 | Seconds | Yes |
+| FT verify | Gemini realtime (LLM knowledge check) | ~$0.007 | Seconds | Yes |
 | Translate | Lambda workers (SQS FIFO) | ~$0.10-0.50 | Minutes-hours | Yes |
 | Enrich | Gemini realtime (summary + index) | ~$0.05-0.15 | Seconds | Yes |
 | Chapters | Gemini realtime | ~$0.02 | Seconds | Yes |
@@ -46,7 +46,7 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | Status | What's happening | Who drives it |
 |--------|-----------------|---------------|
 | `queued` | Book enrolled, waiting to start | Pipeline cron Phase 0 (auto-enroll) or admin |
-| `archiving` | Pages being archived to Vercel Blob | Hetzner script (external) |
+| `archiving` | Pages being archived to Cloudflare R2 | Hetzner script (external) |
 | `archive_complete` | All pages archived or no archivable sources | Pipeline cron Phase 1 |
 | `ocr_submitted` | Lambda OCR jobs enqueued (or Batch API submitted) | Pipeline cron Phase 2 |
 | `ocr_complete` | OCR finished, results saved | Pipeline cron Phase 3 + process-batches cron |
@@ -75,14 +75,35 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 
 ### Backpressure Limits
 
+Most submission limits are now **adaptive** — managed by `src/lib/adaptive-limits.ts` and stored in `system_config._id: 'adaptive_limits'`. The system probes DB health every cron cycle and adjusts limits automatically.
+
+**Adaptive limits** (dynamic, stored in MongoDB):
+
+| Resource | Min | Default | Max | Key |
+|----------|-----|---------|-----|-----|
+| OCR books per run | 2 | 10 | 20 | `ocr_submit` |
+| OCR Lambda concurrency | 3 | 10 | 20 | `ocr_lambda_max` |
+| Translation books per run | 2 | 20 | 50 | `translate_submit` |
+| Translation Lambda concurrency | 3 | 15 | 30 | `translate_lambda_max` |
+| Global active jobs | 5 | 20 | 40 | `global_active_max` |
+| Image extraction per run | 3 | 10 | 20 | `image_submit` |
+| Image max active | 5 | 25 | 50 | `image_max` |
+| SQS OCR depth threshold | 100 | 300 | 500 | `sqs_ocr_depth` |
+| SQS translation depth threshold | 200 | 500 | 1000 | `sqs_translate_depth` |
+| Pages enqueued per run | 200 | 2000 | 5000 | `pages_per_run` |
+
+**Adaptive behavior:**
+- **Healthy** (1+ consecutive): ramp all limits up by 20%
+- **Degraded** (any signal): reduce all limits by 50%
+- **Critical** (any signal): slam to minimums, cancel pending jobs
+- Health signals: DB query latency, active job count, cron duration, SQS queue depth (per-queue)
+- Admin override: `PATCH /api/admin/adaptive-limits` with `locked: true` to freeze
+
+**Static limits** (hardcoded constants in cron files):
+
 | Resource | Limit | Constant |
 |----------|-------|----------|
-| Lambda OCR jobs | 20 active | `MAX_ACTIVE_LAMBDA_OCR` |
-| Lambda translation jobs | 100 active | `MAX_ACTIVE_LAMBDA_TRANSLATE` |
 | Gemini Batch OCR jobs | 200 active | `MAX_ACTIVE_BATCH_OCR` |
-| Image extraction jobs | 50 active | `MAX_ACTIVE_IMAGE_JOBS` |
-| OCR books per run | 20 | `OCR_SUBMIT_LIMIT` |
-| Translation books per run | 50 | `TRANSLATE_SUBMIT_LIMIT` |
 | Metadata enrichment per run | 20 | `METADATA_ENRICH_LIMIT` |
 | FT verification per run | 10 | `FT_VERIFY_LIMIT` |
 | Enrichment per run | 30 | `ENRICH_LIMIT` (enrich-books cron) |
@@ -90,10 +111,10 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | Transliteration books per run | 10 | `TRANSLIT_LIMIT` (enrich-books cron) |
 | Transliteration pages per run | 200 | `TRANSLIT_PAGES_PER_RUN` (enrich-books cron) |
 | Transliteration concurrency | 10 | `TRANSLIT_CONCURRENCY` (enrich-books cron) |
-| Image extraction per run | 20 | `IMAGE_SUBMIT_LIMIT` |
 | Finalization per run | 50 | `FINALIZE_LIMIT` |
 | Auto-enroll per run | 50 | `ENROLL_LIMIT` |
 | Lambda OCR fallback per run | 10 | `LAMBDA_FALLBACK_LIMIT` |
+| Completion check per cycle | 50 | `.limit(50)` on Phase 3/5/image loops |
 
 ### Pause Controls
 
@@ -136,11 +157,16 @@ Stored on `book.pipeline_auto`:
   error?: string;
   retry_count?: number;
   ocr_job_name?: string;        // Gemini Batch API job name
+  ocr_job_id?: string;          // Lambda jobs collection ID
   translate_job_name?: string;   // Gemini Batch API job name
+  translate_job_id?: string;     // Lambda jobs collection ID
   ocr_batch_id?: string;        // batch_jobs collection ID
   translate_batch_id?: string;   // batch_jobs collection ID
   image_extraction_job_id?: string; // jobs collection ID
+  ocr_loop_count?: number;      // How many times OCR has looped for remaining pages
+  translate_loop_count?: number; // How many times translation has looped
   last_updated?: Date;
+  last_stale_check?: Date;      // When stale translation check last ran
 }
 ```
 
@@ -158,7 +184,7 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 | 2 | Image submission | `chapters_complete` → `images_submitted` | Creates Lambda jobs. Blocked by `imagesPaused`. |
 | 3 | Image completion | `images_submitted` → `images_complete` | Checks jobs collection. |
 | 4 | Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `ft_verifying`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
-| 5 | Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >24h. |
+| 5 | Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >2h (Lambda max runtime is 15 min). |
 
 **Staleness rollback map:**
 - `ocr_submitted` → `archive_complete`
@@ -172,8 +198,8 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 
 | Order | Phase | Transition | Notes |
 |-------|-------|-----------|-------|
-| 6 | Phase 0: Auto-enroll | new → `queued` | Books imported within 7 days without `pipeline_auto`. |
-| 7 | Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner does archiving. 24h timeout. Fixes stale thumbnails. |
+| 6 | Phase 0: Auto-enroll | new → `queued` | Books imported within 7 days without `pipeline_auto`. FT verification deferred to Phase 3.7. |
+| 7 | Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. 24h timeout — advances anyway since OCR works on original IIIF URLs. |
 | 8 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Lambda workers (Batch API available but not default). See "OCR Routing" below. |
 | 9 | Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks both Lambda jobs and batch_jobs. Loops if un-OCR'd pages remain (up to MAX_RETRIES). Blocked by `ocrPaused`. |
 | 10 | Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls `enrichBookMetadata()`. Detects language, categories, year, description, display_title, source_work_dates. Non-blocking: failures skip ahead. |
@@ -233,7 +259,7 @@ Romanizes OCR text for non-Latin scripts (Greek, Hebrew, Arabic, etc.). **Not ti
 
 ## OCR Routing
 
-The pipeline cron has two OCR backends. Currently, Lambda is the default (hardcoded `ocrQuotaExhausted = true` at line 788 forces Lambda fallback).
+The pipeline cron has two OCR backends. Currently, Lambda is the default (hardcoded `ocrQuotaExhausted = true` forces Lambda fallback).
 
 ### Lambda Workers (current default)
 
@@ -262,7 +288,7 @@ If 3+ consecutive batch submissions return HTTP 500, the cron automatically swit
 **CRITICAL: Translation ALWAYS uses Lambda workers (SQS FIFO queue). NEVER use Gemini Batch API for translation.** Batch API lacks cross-page context continuity which is critical for translation quality.
 
 - Translation worker uses FIFO queue (sequential per job) — fetches previous page's translation for context
-- Hardcoded `translateQuotaExhausted = true` at line 1161 forces Lambda
+- Hardcoded `translateQuotaExhausted = true` forces Lambda
 - Concurrency: max 100 active Lambda translation jobs (`MAX_ACTIVE_LAMBDA_TRANSLATE`)
 - Current temporary filter: only translates books >=90% done (based on `pages_translated / pages_ocr`)
 
@@ -309,8 +335,8 @@ Image extraction workers do NOT write to MongoDB directly. Results go to a write
 
 ### Current State (Mar 2026)
 
-- 1,552 books have gallery images
-- 73,732 total gallery images extracted
+- ~1,500+ books have gallery images
+- ~73,000+ total gallery images extracted (growing as pipeline processes new imports)
 - Gallery sync cron (`sync-gallery-images`, every 6h) keeps gallery metadata fresh
 
 ### No Dedicated Handoff Documentation
@@ -491,7 +517,7 @@ Nine crons, all defined in `vercel.json`:
 | `submit-batch-ocr` | Daily 3 AM UTC | Campaign-driven batch OCR submission (15 books, 100 pages each) | Batch processing |
 | `sync-page-counts` | Every 6 hours | Refreshes `pages_count`, `pages_ocr`, `pages_translated` caches on books | Data integrity |
 | `sync-gallery-images` | Every 6 hours | Syncs gallery image metadata from pages to gallery_images | Gallery |
-| `archive-ocr` | Every 4 hours | Archives page images to Vercel Blob for OCR'd pages | Data safety |
+| `archive-ocr` | Every 4 hours | Archives page images to Cloudflare R2 for OCR'd pages | Data safety |
 | `social-post` | Every hour | Posts queued tweets | Social media |
 | `social-reset` | Daily midnight UTC | Resets daily tweet counter | Social media |
 
@@ -543,7 +569,7 @@ Before marking a book `complete`, the pipeline checks:
 | Field | When Present |
 |-------|-------------|
 | `editions` | If a scholarly edition has been published |
-| `pages[].archived_photo` | If images were archived to Vercel Blob |
+| `pages[].archived_photo` | If images were archived to Cloudflare R2 (e.g. `https://images.sourcelibrary.org/archived/...`) |
 | `pages[].page_type` | If OCR was done with v4+ prompt |
 | `pages[].columns` | If page has 2+ text columns |
 | `source_work_dates` | Compositional timeline layers (set by Phase 3.5 metadata enrichment) |
@@ -649,20 +675,28 @@ Skill definition: `.claude/skills/curator/SKILL.md`
 
 ## Cost Estimates
 
-Based on `gemini-3-flash-preview` pricing ($0.50/1M input, $3.00/1M output):
+Based on `gemini-3-flash-preview` actual measured costs from `gemini_usage` collection (4.1M records, all-time):
 
-| Step | Input tokens/page | Output tokens/page | Cost/page | 300-page book |
-|------|-------------------|-------------------|-----------|---------------|
-| OCR | ~1,500 (image) | ~500 | $0.0023 | $0.68 |
-| OCR (batch) | ~1,500 | ~500 | $0.0011 | $0.34 |
-| Translation | ~800 | ~600 | $0.0022 | $0.66 |
-| Summary + Index | ~50k (all text) | ~5k | $0.040 | $0.04 |
-| Chapter extraction | ~10k (headings) | ~2k | $0.011 | $0.01 |
-| Image extraction | ~1,500/page | ~300 | $0.0016 | $0.49 |
+| Step | Avg input tokens | Avg output tokens | Measured $/call | 300-page book |
+|------|-----------------|-------------------|----------------|---------------|
+| OCR | ~31,600 (image) | ~30,000 | $0.0022/page | $0.66 |
+| Translation | ~2,200 | ~1,050 | $0.0035/page | $1.05 |
+| Metadata enrichment | ~7,500 | ~760 | $0.007/book | $0.007 |
+| FT verification | ~12,500 | ~330 | $0.007/book | $0.007 |
+| Summary + Index | ~3,300 | ~2,000 | $0.008/book | $0.008 |
+| Chapter extraction | ~6,400 | ~1,200 | $0.007/book | $0.007 |
+| Image extraction | ~1,300 | ~80 | $0.0009/page | $0.27 |
+| Transliteration | ~1,900 | ~1,200 | $0.0017/page | $0.51 (non-Latin only) |
 
-**Typical full pipeline cost for a 300-page book (Lambda):** ~$1.90
+**Typical full pipeline cost for a 300-page Latin book (Lambda):** ~$1.73
+- OCR: $0.66, Translation: $1.05, Image extraction: $0.27 if visual content
+- Per-book phases (metadata, FT, summary, chapters): ~$0.03
 
-**Budget planning:** At ~$0.006/page average across all steps, 1,000 pages costs roughly $6.
+**Budget planning:** At ~$0.006/page average across OCR + translation, 1,000 pages costs roughly $6. Image extraction adds ~$0.001/page for pages with visual content.
+
+**Implied Gemini 3 Flash Preview rates:** ~$0.59/1M input, ~$2.87/1M output (back-calculated from actual translation call data).
+
+**Batch translation proposal (issue #217):** Sending 5 pages per Gemini call instead of 1 would reduce translation API calls by 80% and save ~12% on cost (~$2.5K at scale), with the primary benefit being 5x throughput at the same Lambda concurrency.
 
 ---
 
