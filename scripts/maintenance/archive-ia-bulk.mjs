@@ -285,7 +285,6 @@ async function processBook(book, db) {
 
     console.log(`    ${pageFiles.length} ${download.format} files extracted (first: ${path.basename(pageFiles[0])}, last: ${path.basename(pageFiles[pageFiles.length - 1])})`);
 
-
     // Build work queue: map pages to their source files
     const needsArchiveIds = new Set(pages.map(p => (p.id || p._id.toString())));
     const workItems = [];
@@ -301,7 +300,12 @@ async function processBook(book, db) {
       const leafNum = parseInt(leafMatch[1]);
       if (leafNum >= pageFiles.length) continue;
 
-      workItems.push({ page, srcFile: pageFiles[leafNum], format: download.format });
+      const srcFile = pageFiles[leafNum];
+      if (!fs.existsSync(srcFile)) {
+        console.log(`    [WARN] Missing file for leaf ${leafNum}: ${srcFile}`);
+        continue;
+      }
+      workItems.push({ page, srcFile, format: download.format });
     }
 
     // Process pages with parallel workers
@@ -350,7 +354,7 @@ async function processBook(book, db) {
           archived++;
         } catch (err) {
           failed++;
-          if (failed <= 3) console.log(`    [FAIL] page ${page.page_number}: ${err.message?.slice(0, 80)}`);
+          if (failed <= 5) console.log(`    [FAIL] page ${page.page_number} (${path.basename(srcFile)}): ${err.stderr?.slice(0, 150) || err.message?.slice(0, 120)}`);
         }
       }
     }
