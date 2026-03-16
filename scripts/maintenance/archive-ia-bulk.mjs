@@ -372,7 +372,7 @@ async function main() {
 
   const iaBooks = await db.collection('books')
     .find(bookQuery, { projection: { _id: 1, id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1 } })
-    .sort({ pages_count: -1 }) // biggest books first (more efficient)
+    .sort({ created_at: -1 }) // newest books first (likely unarchived)
     .limit(BOOK_LIMIT || 0)
     .toArray();
 
