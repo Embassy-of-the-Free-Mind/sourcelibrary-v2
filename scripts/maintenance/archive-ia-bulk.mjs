@@ -354,7 +354,12 @@ async function processBook(book, db) {
           archived++;
         } catch (err) {
           failed++;
-          if (failed <= 5) console.log(`    [FAIL] page ${page.page_number} (${path.basename(srcFile)}): ${err.stderr?.slice(0, 150) || err.message?.slice(0, 120)}`);
+          if (failed <= 5) {
+            const exists = fs.existsSync(srcFile);
+            const size = exists ? fs.statSync(srcFile).size : 0;
+            const head = exists ? fs.readFileSync(srcFile).slice(0, 16).toString('hex') : 'N/A';
+            console.log(`    [FAIL] page ${page.page_number} (${path.basename(srcFile)}, exists=${exists}, size=${size}, magic=${head}): ${err.stderr?.slice(0, 150) || err.message?.slice(0, 120)}`);
+          }
         }
       }
     }
