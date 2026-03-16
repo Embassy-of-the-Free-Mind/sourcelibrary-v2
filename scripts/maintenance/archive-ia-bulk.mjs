@@ -53,7 +53,7 @@ if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
 // Verify opj_decompress is available
-try { execSync('opj_decompress -h 2>&1', { stdio: 'pipe' }); }
+try { execSync('which opj_decompress', { stdio: 'pipe' }); }
 catch { console.error('opj_decompress not found. Install: apt-get install libopenjp2-tools'); process.exit(1); }
 
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
