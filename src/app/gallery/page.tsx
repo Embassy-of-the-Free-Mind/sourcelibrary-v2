@@ -11,9 +11,10 @@ export const dynamic = 'force-dynamic';
  * and passes it to the client component for instant rendering.
  */
 export default async function GalleryPage() {
-  const [initialData, initialCollections] = await Promise.all([
+  const [initialData, initialCollections, bookCollections] = await Promise.all([
     fetchInitialGalleryData(),
     fetchFeaturedCollections(),
+    fetchBookCollections(),
   ]);
 
   return (
@@ -22,6 +23,7 @@ export default async function GalleryPage() {
         <GalleryClient
           initialData={initialData}
           initialCollections={initialCollections}
+          bookCollections={bookCollections}
         />
       </Suspense>
       <SignUpCTA />
@@ -126,6 +128,24 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
       bookInfo: null,
       filters: { types: [], subjects: [], yearRange: { minYear: null, maxYear: null } },
     };
+  }
+}
+
+/**
+ * Fetch book collections for the collection filter dropdown.
+ */
+async function fetchBookCollections() {
+  try {
+    const db = await getDb();
+    const collections = await db.collection('collections')
+      .find({ book_count: { $gte: 1 } })
+      .sort({ parent: 1, order: 1, name: 1 })
+      .project({ _id: 0, slug: 1, name: 1, book_count: 1, parent: 1 })
+      .toArray();
+    return collections as Array<{ slug: string; name: string; book_count: number; parent?: string }>;
+  } catch (error) {
+    console.error('Failed to fetch book collections:', error);
+    return [];
   }
 }
 

@@ -30,6 +30,13 @@ interface BookSearchResult {
   author?: string;
 }
 
+interface BookCollectionOption {
+  slug: string;
+  name: string;
+  book_count: number;
+  parent?: string;
+}
+
 interface GalleryClientProps {
   initialData: GalleryResponse;
   initialCollections?: Array<{
@@ -41,6 +48,7 @@ interface GalleryClientProps {
     featured: boolean;
     coverImage: { url: string; description: string } | null;
   }>;
+  bookCollections?: BookCollectionOption[];
 }
 
 /** Downsize a IIIF URL for gallery thumbnails (400px wide instead of full) */
@@ -73,7 +81,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export default function GalleryClient({ initialData, initialCollections }: GalleryClientProps) {
+export default function GalleryClient({ initialData, initialCollections, bookCollections = [] }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const identity = useIdentity();
@@ -440,6 +448,25 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                   ))}
                 </select>
               </div>
+
+              {/* Collection */}
+              {bookCollections.length > 0 && (
+                <div>
+                  <label className="block text-xs font-medium text-stone-500 mb-2">Collection</label>
+                  <select
+                    value={collectionFilter}
+                    onChange={(e) => updateParams({ collection: e.target.value })}
+                    className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
+                  >
+                    <option value="">All collections</option>
+                    {bookCollections.filter(c => !c.parent).map((c) => (
+                      <option key={c.slug} value={c.slug}>
+                        {c.name} ({c.book_count})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {/* Image Type */}
               <div>
