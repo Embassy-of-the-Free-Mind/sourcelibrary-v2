@@ -249,66 +249,88 @@ async function generateFrontMatter(book, pages) {
 
 function buildBookContext(book, pages) {
   const parts = [];
+
+  // Bibliographic facts
+  parts.push('=== BIBLIOGRAPHIC DATA (verified from title page) ===');
   parts.push(`Title: ${book.title}`);
   if (book.display_title) parts.push(`English Title: ${book.display_title}`);
   parts.push(`Author: ${book.author}`);
   parts.push(`Language: ${book.language}`);
   parts.push(`Published: ${book.published}`);
-  if (book.place_published) parts.push(`Place: ${book.place_published}`);
-  if (book.publisher) parts.push(`Publisher: ${book.publisher}`);
-  if (book.ustc_id) parts.push(`USTC ID: ${book.ustc_id}`);
+  if (book.place_published) parts.push(`Place of publication: ${book.place_published}`);
+  if (book.publisher) parts.push(`Printer/Publisher: ${book.publisher}`);
+  if (book.ustc_id) parts.push(`USTC catalog number: ${book.ustc_id}`);
+  if (book.is_first_translation) parts.push('NOTE: This is believed to be the FIRST English translation of this work.');
+  if (book.ia_identifier) parts.push(`Source scan: Internet Archive (${book.ia_identifier})`);
 
-  if (book.index?.bookSummary?.detailed) {
-    parts.push(`\nBook Summary:\n${book.index.bookSummary.detailed}`);
-  } else if (book.index?.bookSummary?.abstract) {
-    parts.push(`\nBook Summary:\n${book.index.bookSummary.abstract}`);
+  // Categories / tradition
+  if (book.categories?.length) {
+    parts.push(`\nTradition/categories: ${book.categories.join(', ')}`);
   }
 
-  const samplePages = [...pages.slice(0, 5), ...pages.slice(-3)];
-  const summaries = samplePages.filter(p => p.summary?.data).map(p => `Page ${p.page_number}: ${p.summary.data.slice(0, 300)}...`);
-  if (summaries.length > 0) parts.push(`\nSample Page Summaries:\n${summaries.join('\n')}`);
+  // AI-generated summary (from our own index pipeline)
+  if (book.index?.bookSummary?.detailed) {
+    parts.push(`\n=== BOOK SUMMARY (AI-generated from the translation) ===\n${book.index.bookSummary.detailed}`);
+  } else if (book.index?.bookSummary?.abstract) {
+    parts.push(`\n=== BOOK SUMMARY (AI-generated from the translation) ===\n${book.index.bookSummary.abstract}`);
+  }
 
-  if (book.index?.people) parts.push(`\nKey People: ${book.index.people.slice(0, 10).map(p => p.term).join(', ')}`);
-  if (book.index?.concepts) parts.push(`\nKey Concepts: ${book.index.concepts.slice(0, 15).map(c => c.term).join(', ')}`);
+  // Chapter structure
+  if (book.chapters?.length) {
+    const chapterList = book.chapters
+      .filter(c => c.confidence === 'high')
+      .slice(0, 15)
+      .map(c => `  p.${c.pageNumber}: ${c.titleEn || c.title}`)
+      .join('\n');
+    parts.push(`\n=== TABLE OF CONTENTS ===\n${chapterList}`);
+  }
+
+  // Key figures and concepts from the index
+  if (book.index?.people?.length) {
+    parts.push(`\nKey people mentioned: ${book.index.people.slice(0, 15).map(p => p.term).join(', ')}`);
+  }
+  if (book.index?.concepts?.length) {
+    parts.push(`Key concepts: ${book.index.concepts.slice(0, 15).map(c => c.term).join(', ')}`);
+  }
+
+  // Sample page summaries for flavor
+  const samplePages = [...pages.slice(0, 5), ...pages.slice(-3)];
+  const summaries = samplePages.filter(p => p.summary?.data).map(p => `  Page ${p.page_number}: ${p.summary.data.slice(0, 200)}`);
+  if (summaries.length > 0) parts.push(`\n=== SAMPLE PAGE SUMMARIES ===\n${summaries.join('\n')}`);
 
   return parts.join('\n');
 }
 
 async function generateIntroduction(model, book, context) {
-  const prompt = `You are a scholarly editor writing an introduction for a digital edition of a historical text.
+  const prompt = `You are writing the introduction for a scholarly digital edition published by Source Library, a project of the Embassy of the Free Mind in Amsterdam — one of the world's foremost collections of Hermetic, alchemical, Kabbalistic, and early modern philosophical texts.
 
-Write a comprehensive but accessible introduction (800-1200 words) for this work:
+Source Library's mission is to make these texts readable for the first time in centuries by producing AI-assisted English translations of works that have never been translated, or whose only translations are rare, incomplete, or inaccessible. The collection spans the Western esoteric tradition from antiquity through the early modern period — the Corpus Hermeticum, Paracelsian medicine, Rosicrucian manifestos, Christian Kabbalah, natural philosophy, and the roots of modern science.
+
+Write an introduction (800-1200 words) for this edition:
 
 ${context}
 
-The introduction should include:
+Structure:
 
-1. **Historical Context** (2-3 paragraphs)
-   - When and where was this written?
-   - What was happening in the intellectual/cultural world at this time?
-   - Who was the author and what do we know about them?
+## The Author and the Work
+Ground this in verifiable facts. Use the bibliographic data above. If you know specific, well-documented facts about the author (birth/death dates, city of activity, patrons, documented controversies), include them. If you are uncertain about a biographical detail, omit it — do not guess. Describe what the text actually contains, drawing on the table of contents and summary provided above. Name specific chapters or sections.
 
-2. **The Work Itself** (2-3 paragraphs)
-   - What is this text about?
-   - What genre does it belong to (natural philosophy, alchemy, etc.)?
-   - How does it relate to other works of its period?
+## Historical Significance
+This is where your knowledge of intellectual history matters. Place this work in its documented tradition — who influenced the author, who was influenced by them, what debates or movements was this text part of? Be specific: name other authors, cite known connections, reference documented events. For example, if the author corresponded with known figures, or if the work was banned, praised, or plagiarized — say so, but only if you are confident it is true.
 
-3. **Significance** (1-2 paragraphs)
-   - Why does this text matter today?
-   - What can modern readers learn from it?
-   - How does it fit into the history of science/philosophy?
+If the work is obscure and you cannot confidently place it in a broader intellectual context, say so honestly: "This work has received limited scholarly attention" or "The author is not well documented beyond what appears on the title page."
 
-4. **This Edition** (1 paragraph)
-   - Note that this is a new English translation produced by Source Library
-   - Mention the digital format allows side-by-side facsimile + translation viewing
-   - State clearly that the translation was produced using AI (large language models) and has NOT been reviewed by human editors
-   - Point readers to the Methodology section for details
+## This Edition
+This is a new English translation produced by Source Library using AI (large language models). The original ${book.language || 'source language'} text was transcribed from page scans using OCR, then translated page by page with contextual continuity. This translation has NOT been reviewed or verified by human editors. Readers should treat it as a working translation — useful for access and orientation, but not a substitute for expert scholarship. The digital edition at sourcelibrary.org allows side-by-side viewing of the original page images alongside the translation. See the Methodology section for technical details.
 
-Write in clear, scholarly prose accessible to educated general readers. Use markdown formatting with ## headings. Do not use bullet points in the main text. Include specific historical details where possible.
-
-CRITICAL: Do NOT claim that human editors reviewed, refined, or verified the translation. This is an AI-generated translation that has not undergone human editorial review. Be honest and transparent about this.
-
-Do NOT include any preamble like "Here is an introduction..." - start directly with the first heading.`;
+Rules:
+- Write in clear, scholarly prose for educated general readers
+- Use ## markdown headings
+- Do NOT use vague praise like "groundbreaking," "seminal," "masterpiece," or "profoundly influential" — let specific facts speak
+- Do NOT fabricate biographical details, publication histories, or scholarly reception you are not confident about
+- Do NOT claim human editorial review occurred
+- Do NOT include any preamble — start directly with the first heading
+- If you include a claim about historical influence or reception, it should be something a scholar could verify`;
 
   const result = await model.generateContent(prompt);
   return result.response.text();
@@ -316,39 +338,49 @@ Do NOT include any preamble like "Here is an introduction..." - start directly w
 
 async function generateMethodology(model, book, pages) {
   const models = new Set();
-  const promptNames = new Set();
   pages.forEach(p => {
     if (p.ocr?.model) models.add(p.ocr.model);
     if (p.translation?.model) models.add(p.translation.model);
-    if (p.ocr?.prompt_name) promptNames.add(p.ocr.prompt_name);
-    if (p.translation?.prompt_name) promptNames.add(p.translation.prompt_name);
   });
 
-  const prompt = `You are a scholarly editor writing a methodology section for a digital edition that uses AI-assisted translation.
+  const prompt = `Write a concise methodology section (400-600 words) for this AI-translated scholarly edition.
 
-Write a clear methodology section (500-800 words) explaining how this translation was produced:
-
-**Source Text:**
+**Facts about how this book was produced:**
 - Title: ${book.title}
-- Language: ${book.language}
+- Original language: ${book.language}
 - Published: ${book.published}
-- Total pages: ${pages.length}
+- Total pages processed: ${pages.length}
+- AI models used: ${Array.from(models).join(', ') || 'Google Gemini'}
+- Source scan: ${book.ia_identifier ? `Internet Archive (${book.ia_identifier})` : 'digitized page images from a European digital library'}
 
-**Technical Details:**
-- AI Models used: ${Array.from(models).join(', ')}
-- Processing pipeline: Import → Image archiving → OCR → Translation → Enrichment (summary, index, chapters) → Scholarly EPUB
+**The actual pipeline (describe exactly this, no more):**
+1. Page images were imported from a digital library and archived
+2. Each page image was processed through an AI vision model for OCR, producing a transcription in the original ${book.language || 'source'} language
+3. Each page was then translated into English by a large language model, with the previous page's translation provided as context for continuity
+4. After translation, AI generated a reading summary, subject index, and chapter structure
+5. The edition was assembled into this PDF with front matter and apparatus
 
-The methodology section should include:
-1. **Pipeline Overview** - digitized page images imported from digital library sources, archived, then processed through sequential AI stages
-2. **OCR Process** - vision AI models, source language preserved, multi-column detection
-3. **Translation Process** - AI-generated, NOT reviewed by human translators, sequential with context
-4. **Enrichment** - summary, index, chapters, illustration detection
-5. **Editorial Conventions** - <note>, <margin>, <unclear>, <term> tags
-6. **Limitations & Future Work** - honest about AI limitations, versioned with DOI, community feedback welcome
+**What to include:**
+- ## How This Translation Was Produced — the pipeline above, stated plainly
+- ## Editorial Conventions — explain what these inline tags mean in the translation text:
+  - [Note: ...] = translator's explanatory comment
+  - [Margin: ...] = marginalia from the original page
+  - [?...] = uncertain or unclear reading
+  - Technical terms are sometimes given with original language equivalents
+- ## Limitations — be direct:
+  - No human has reviewed this translation
+  - AI may misread damaged or faded pages
+  - Technical terminology, abbreviations, and wordplay are common failure points
+  - ${book.language === 'Latin' ? 'Early modern Latin spelling and abbreviations differ from classical Latin and may cause errors' : book.language === 'German' ? 'Early modern German (Frühneuhochdeutsch) differs significantly from modern German' : `Early modern ${book.language || 'source language'} orthography may cause transcription errors`}
+  - This edition is versioned and assigned a DOI — future improvements will be published as new versions
+  - Corrections are welcome at sourcelibrary.org
 
-CRITICAL: Do NOT claim human editors, reviewers, or translators were involved. Be transparent about AI generation.
-
-Write in clear, professional prose. Use ## markdown headings. Do NOT include any preamble.`;
+**Rules:**
+- Do NOT add steps or processes that aren't listed above
+- Do NOT claim human review, editorial boards, or quality assurance processes
+- Do NOT pad with filler — short and honest is better than long and vague
+- Use ## markdown headings
+- Start directly with the first heading`;
 
   const result = await model.generateContent(prompt);
   return result.response.text();
