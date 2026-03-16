@@ -134,54 +134,41 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
 }
 
 async function searchIndex(db: any, query: string, limit: number) {
-  // Use MongoDB aggregation to filter server-side instead of loading all indexes into memory
+  // Query entities collection directly (indexed on name + aliases) instead of
+  // $concatArrays + $unwind on book index arrays
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const queryRegex = new RegExp(escapedQuery, 'i');
 
-  const results = await db.collection('books').aggregate([
-    // Pre-filter: only books with at least one matching term
-    { $match: {
-        'index.generatedAt': { $exists: true },
-        hidden: { $ne: true },
-        $or: [
-          { 'index.concepts.term': queryRegex },
-          { 'index.people.term': queryRegex },
-          { 'index.places.term': queryRegex },
-          { 'index.keywords.term': queryRegex }
-        ]
-      }
-    },
-    // Merge all index arrays with type labels
-    { $project: {
-        id: 1,
-        slug: 1,
-        book_title: { $ifNull: ['$display_title', '$title'] },
-        entries: { $concatArrays: [
-          { $map: { input: { $ifNull: ['$index.concepts', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'concept' } } },
-          { $map: { input: { $ifNull: ['$index.people', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'person' } } },
-          { $map: { input: { $ifNull: ['$index.places', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'place' } } },
-          { $map: { input: { $ifNull: ['$index.keywords', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'keyword' } } }
-        ] }
-      }
-    },
-    { $unwind: '$entries' },
-    { $match: { 'entries.term': queryRegex } },
-    { $addFields: { _termLen: { $strLenCP: '$entries.term' } } },
-    { $sort: { _termLen: 1 } },
-    { $limit: limit },
-    { $project: {
-        _id: 0,
-        type: '$entries.type',
-        term: '$entries.term',
-        book_id: '$id',
-        book_slug: '$slug',
-        book_title: 1,
-        pages: '$entries.pages'
-      }
-    }
-  ], { maxTimeMS: 5000 }).toArray();
+  const entities = await db.collection('entities')
+    .find({
+      $or: [
+        { name: queryRegex },
+        { aliases: queryRegex },
+      ],
+    })
+    .project({ name: 1, type: 1, books: 1 })
+    .sort({ book_count: -1 })
+    .limit(limit * 3) // fetch extra since we'll expand per-book
+    .maxTimeMS(5000)
+    .toArray();
 
-  return { results: results as IndexResult[], total: results.length };
+  // Expand each entity into per-book results (matching the IndexResult shape)
+  const results: IndexResult[] = [];
+  for (const entity of entities) {
+    for (const book of (entity.books || []).slice(0, 2)) { // top 2 books per entity
+      results.push({
+        type: entity.type === 'person' ? 'person' : entity.type === 'place' ? 'place' : 'concept',
+        term: entity.name,
+        book_id: book.book_id,
+        book_title: book.book_title || '',
+        pages: book.pages?.slice(0, 10),
+      });
+      if (results.length >= limit) break;
+    }
+    if (results.length >= limit) break;
+  }
+
+  return { results, total: results.length };
 }
 
 async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {

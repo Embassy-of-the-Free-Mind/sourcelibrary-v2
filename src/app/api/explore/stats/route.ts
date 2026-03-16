@@ -3,6 +3,10 @@ import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
+// In-memory cache (1 hour TTL, matches CDN s-maxage)
+const CACHE_TTL_MS = 60 * 60 * 1000;
+let cachedResult: { data: unknown; timestamp: number } | null = null;
+
 /**
  * GET /api/explore/stats
  *
@@ -14,6 +18,13 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET() {
   try {
+    // Return cached result if fresh
+    if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_TTL_MS) {
+      return NextResponse.json(cachedResult.data, {
+        headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
+      });
+    }
+
     const db = await getDb();
 
     const [
@@ -193,7 +204,7 @@ export async function GET() {
       },
     };
 
-    return NextResponse.json({
+    const data = {
       totals: {
         entities: totalEntities,
         with_dates: withDates,
@@ -205,7 +216,11 @@ export async function GET() {
       heatmap,
       top_entities_by_era: topEntitiesByEra,
       data_sources: dataSources,
-    }, {
+    };
+
+    cachedResult = { data, timestamp: Date.now() };
+
+    return NextResponse.json(data, {
       headers: {
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
       },
