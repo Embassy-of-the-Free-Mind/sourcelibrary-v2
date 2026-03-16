@@ -20,26 +20,33 @@ export async function GET() {
   const db = await getDb();
 
   // Find the 50 most recent high-quality gallery images from materialized collection
-  const images = await db.collection('gallery_images')
+  const rawImages = await db.collection('gallery_images')
     .find({ gallery_quality: { $gte: 0.7 } })
     .sort({ updated_at: -1 })
     .limit(50)
     .project({
-      pageId: '$page_id',
-      bookId: '$book_id',
-      pageNumber: '$page_number',
-      detectionIndex: '$detection_index',
-      description: 1,
-      type: 1,
-      extractedUrl: '$extracted_url',
-      thumbnailUrl: '$thumbnail_url',
-      galleryQuality: '$gallery_quality',
-      bookTitle: '$book_title',
-      bookAuthor: '$book_author',
-      bookYear: '$book_year',
-      updatedAt: '$updated_at',
+      page_id: 1, book_id: 1, page_number: 1, detection_index: 1,
+      description: 1, type: 1, extracted_url: 1, thumbnail_url: 1,
+      gallery_quality: 1, book_title: 1, book_author: 1, book_year: 1, updated_at: 1,
     })
     .toArray();
+
+  // Map to field names used by the feed template
+  const images = rawImages.map((img: any) => ({
+    pageId: img.page_id,
+    bookId: img.book_id,
+    pageNumber: img.page_number,
+    detectionIndex: img.detection_index,
+    description: img.description,
+    type: img.type,
+    extractedUrl: img.extracted_url,
+    thumbnailUrl: img.thumbnail_url,
+    galleryQuality: img.gallery_quality,
+    bookTitle: img.book_title,
+    bookAuthor: img.book_author,
+    bookYear: img.book_year,
+    updatedAt: img.updated_at,
+  }));
 
   const now = new Date().toISOString();
   const latestUpdate = images.length > 0 && images[0].updatedAt
