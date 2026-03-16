@@ -69,36 +69,9 @@ We identified five specific challenges (illustrated in Figure 1):
 
 The library science community has a standard answer to the question "when are two catalog records about the same thing?" The IFLA Functional Requirements for Bibliographic Records (FRBR, 1998) defines four nested levels of identity:
 
-```
-                    ┌─────────────────────────────────────────────┐
-                    │  WORK                                       │
-                    │  Agricola's treatise on mining               │
-                    │                                             │
-                    │  ┌──────────────────┐ ┌──────────────────┐  │
-                    │  │ EXPRESSION       │ │ EXPRESSION       │  │
-                    │  │ Latin original   │ │ German transl.   │  │
-                    │  │                  │ │                  │  │
-                    │  │ ┌──────────┐     │ │ ┌──────────┐     │  │
-                    │  │ │MANIFEST. │     │ │ │MANIFEST. │     │  │
-                    │  │ │Basel 1556│     │ │ │Basel 1557│     │  │
-                    │  │ │          │     │ │ │          │     │  │
-                    │  │ │ ┌──┐┌──┐ │     │ │ │ ┌──┐     │     │  │
-                    │  │ │ │  ││  │ │     │ │ │ │  │     │     │  │
-                    │  │ │ │e-││BS│ │     │ │ │ │BS│     │     │  │
-                    │  │ │ │ra││B │ │     │ │ │ │B │     │     │  │
-                    │  │ │ │ra││  │ │     │ │ │ │  │     │     │  │
-                    │  │ │ │  ││  │ │     │ │ │ │  │     │     │  │
-                    │  │ │ └──┘└──┘ │     │ │ │ └──┘     │     │  │
-                    │  │ │  ITEMS   │     │ │ │  ITEM    │     │  │
-                    │  │ └──────────┘     │ │ └──────────┘     │  │
-                    │  └──────────────────┘ └──────────────────┘  │
-                    └─────────────────────────────────────────────┘
+![Figure 1. FRBR hierarchy for Agricola's De Re Metallica](figures/fig1-frbr-hierarchy.svg)
 
-Figure 1. FRBR hierarchy for Agricola's De Re Metallica.
-The e-rara and BSB copies of the 1556 Latin edition are different
-Items of the same Manifestation. The 1557 German translation is a
-different Expression of the same Work.
-```
+*Figure 1. FRBR hierarchy for Agricola's De Re Metallica, showing actual records from our dataset. The e-rara and BSB copies of the 1556 Latin edition are different Items of the same Manifestation. The 1557 German translation is a different Expression of the same Work.*
 
 - **Work**: the abstract intellectual creation — "Agricola's treatise on mining and metallurgy"
 - **Expression**: a particular realization — the Latin text, the German translation
@@ -142,31 +115,9 @@ No published work addresses deduplication across heterogeneous IIIF catalogs for
 
 We built crawlers for four major European IIIF sources, each with a different discovery API:
 
-```
-  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-  │  BSB Munich  │     │   e-rara    │     │   Gallica   │     │ Biblissima  │
-  │  (432,113)   │     │  (160,639)  │     │  (123,439)  │     │  (111,737)  │
-  │              │     │             │     │             │     │             │
-  │  OAI-PMH     │     │  OAI-PMH    │     │  SRU API    │     │  Wikibase   │
-  │  VD16/17/18  │     │  Dublin Core│     │  Dublin Core│     │  P196 prop  │
-  └──────┬───────┘     └──────┬──────┘     └──────┬──────┘     └──────┬──────┘
-         │                    │                    │                    │
-         └─────────┬──────────┴──────────┬─────────┴──────────┬────────┘
-                   │                     │                    │
-                   ▼                     ▼                    ▼
-           ┌──────────────────────────────────────────────────────┐
-           │           import_candidates (MongoDB)                │
-           │                                                      │
-           │  Normalized schema:                                  │
-           │  title, author, language, date_earliest, date_latest │
-           │  manifest_url, source, source_id, metadata{}         │
-           │                                                      │
-           │  827,928 records                                     │
-           └──────────────────────────────────────────────────────┘
+![Figure 2. Data harvesting and deduplication pipeline](figures/fig2-data-pipeline.svg)
 
-Figure 2. Data harvesting pipeline. Each source uses a different
-discovery API but records are normalized to a common schema.
-```
+*Figure 2. Data harvesting pipeline. Four sources with different discovery APIs are harvested into a unified catalog with a normalized schema, then deduplicated to identify unique digitized books.*
 
 | Source | Discovery API | Records | Scope | What it catalogs |
 |--------|--------------|---------|-------|-----------------|
@@ -226,32 +177,9 @@ To evaluate deduplication methods, we need ground truth: a set of record pairs w
 
 We sampled pairs from four strata, ensuring the gold standard includes easy cases (to measure baseline accuracy), typical cases (to measure practical performance), and hard cases (to reveal method limitations):
 
-```
-                            Gold Standard Pairs
-                            ┌───────────────────┐
-                            │                   │
-                 ┌──────────┴──────────┐  ┌─────┴──────────┐
-                 │  Expected matches   │  │ Expected non-  │
-                 │  (from clusters)    │  │ matches        │
-                 │                     │  │ (same block,   │
-                 │                     │  │  not clustered) │
-                 ├─────────────────────┤  ├────────────────┤
-                 │ Same-source copies  │  │ Same author,   │
-                 │ (BSB internal) 150  │  │ diff work  150 │
-                 ├─────────────────────┤  ├────────────────┤
-                 │ Cross-source same   │  │ Generic title, │
-                 │ edition         100 │  │ diff author  10│
-                 ├─────────────────────┤  ├────────────────┤
-                 │ Related editions    │  │ Same block,    │
-                 │ (diff year)     100 │  │ random     150 │
-                 ├─────────────────────┤  ├────────────────┤
-                 │ Borderline (large   │  │ Hard cases:    │
-                 │ clusters)        50 │  │ anon, multi-   │
-                 └─────────────────────┘  │ volume      52 │
-                                          └────────────────┘
+![Figure 3. Gold standard pair sampling](figures/fig3-gold-standard.svg)
 
-Figure 3. Gold standard stratification.
-```
+*Figure 3. Gold standard stratification. 752 pairs sampled across expected matches (from dedup clusters) and expected non-matches (same block but not clustered), with hard cases to test method limits.*
 
 ### 4.2 Labeling protocol
 
@@ -284,36 +212,9 @@ Our initial approach, already deployed. Three steps:
 
 **Step 1 — Blocking.** Group records by decade of publication and first four characters of the normalized author surname. This means a 1556 book by Agricola only compares against other 1550s books by authors starting with "agri." This reduces the number of comparisons from 343 billion (all pairs) to about 18 million (within-block pairs).
 
-```
-  828K records ──► Block by decade+author ──► 57K blocks
-                                               │
-                   ┌───────────────────────────┘
-                   │
-                   ▼
-        Within each block (avg 14.5 records):
+![Figure 4. Blocking, comparison, and clustering pipeline](figures/fig4-dedup-pipeline.svg)
 
-        Compare every pair:
-        ┌─────────────────────────────────────────┐
-        │  title_sim = JaroWinkler(norm_title_a,  │
-        │                          norm_title_b)  │
-        │  author_sim = JaroWinkler(norm_author_a,│
-        │                           norm_author_b)│
-        │  date_sim = exact_match ? 1.0 :         │
-        │             within_2_years ? 0.9 : 0.7  │
-        │                                         │
-        │  score = title_sim × 0.55               │
-        │        + author_sim × 0.30              │
-        │        + date_sim × 0.15                │
-        │                                         │
-        │  if score ≥ 0.85: MATCH                 │
-        └─────────────────────────────────────────┘
-                   │
-                   ▼
-        Union-Find clustering:
-        if A matches B and B matches C → {A, B, C}
-
-Figure 4. The blocking + comparison + clustering pipeline.
-```
+*Figure 4. The dedup pipeline. Records are blocked by decade and author prefix to reduce comparison space, then pairwise Jaro-Winkler similarity is computed within each block. Matches above the threshold are linked via union-find into clusters.*
 
 **Strengths:** Catches most within-source duplicates and many cross-source duplicates where titles are similar. The blocking makes it feasible at scale.
 
