@@ -19,53 +19,27 @@ function escapeXml(text: string): string {
 export async function GET() {
   const db = await getDb();
 
-  // Find the 50 most recent high-quality gallery images
-  const pipeline = [
-    {
-      $match: {
-        'detected_images': { $exists: true, $ne: [] },
-        'detected_images.gallery_quality': { $gte: 0.7 },
-      },
-    },
-    { $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } },
-    { $match: { 'detected_images.gallery_quality': { $gte: 0.7 } } },
-    {
-      $lookup: {
-        from: 'books',
-        let: { bookId: '$book_id' },
-        pipeline: [
-          { $match: { $expr: { $eq: ['$id', '$$bookId'] } } },
-          { $project: { title: 1, display_title: 1, author: 1, year: 1, hidden: 1 } },
-        ],
-        as: 'book',
-      },
-    },
-    { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-    { $match: { 'book.hidden': { $ne: true } } },
-    { $sort: { updated_at: -1 as const } },
-    { $limit: 50 },
-    {
-      $project: {
-        pageId: '$id',
-        bookId: '$book_id',
-        pageNumber: '$page_number',
-        detectionIndex: 1,
-        description: '$detected_images.description',
-        museumDescription: '$detected_images.museum_description',
-        type: '$detected_images.type',
-        extractedUrl: '$detected_images.extracted_url',
-        thumbnailUrl: '$detected_images.thumbnail_url',
-        metadata: '$detected_images.metadata',
-        galleryQuality: '$detected_images.gallery_quality',
-        bookTitle: { $ifNull: ['$book.display_title', '$book.title'] },
-        bookAuthor: '$book.author',
-        bookYear: '$book.year',
-        updatedAt: '$updated_at',
-      },
-    },
-  ];
-
-  const images = await db.collection('pages').aggregate(pipeline).toArray();
+  // Find the 50 most recent high-quality gallery images from materialized collection
+  const images = await db.collection('gallery_images')
+    .find({ gallery_quality: { $gte: 0.7 } })
+    .sort({ updated_at: -1 })
+    .limit(50)
+    .project({
+      pageId: '$page_id',
+      bookId: '$book_id',
+      pageNumber: '$page_number',
+      detectionIndex: '$detection_index',
+      description: 1,
+      type: 1,
+      extractedUrl: '$extracted_url',
+      thumbnailUrl: '$thumbnail_url',
+      galleryQuality: '$gallery_quality',
+      bookTitle: '$book_title',
+      bookAuthor: '$book_author',
+      bookYear: '$book_year',
+      updatedAt: '$updated_at',
+    })
+    .toArray();
 
   const now = new Date().toISOString();
   const latestUpdate = images.length > 0 && images[0].updatedAt
@@ -80,12 +54,10 @@ export async function GET() {
       ? `From "${img.bookTitle}"${img.bookAuthor ? ` by ${img.bookAuthor}` : ''}${img.bookYear ? ` (${img.bookYear})` : ''}`
       : '';
 
-    const subjects = img.metadata?.subjects?.join(', ') || '';
     const contentParts = [
-      img.museumDescription || img.description || '',
+      img.description || '',
       bookInfo,
       img.type ? `Type: ${img.type}` : '',
-      subjects ? `Subjects: ${subjects}` : '',
     ].filter(Boolean);
 
     const thumbnailUrl = img.extractedUrl || img.thumbnailUrl;

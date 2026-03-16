@@ -7,24 +7,17 @@ export async function GET() {
   try {
     const db = await getDb();
 
-    // Get all books sorted by title
-    const books = await db.collection('books').find({}).sort({ title: 1 }).toArray();
-
-    // Get page counts for all books
-    const pageCounts = await db.collection('pages').aggregate([
-      { $group: { _id: '$book_id', count: { $sum: 1 } } }
-    ]).toArray();
-
-    const pageCountMap = new Map(pageCounts.map(p => [p._id, p.count]));
-
-    // Get first available summary for each book
-    const summaries = await db.collection('pages').aggregate([
-      { $match: { 'summary.data': { $exists: true, $ne: '' } } },
-      { $sort: { page_number: 1 } },
-      { $group: { _id: '$book_id', summary: { $first: '$summary.data' } } }
-    ]).toArray();
-
-    const summaryMap = new Map(summaries.map(s => [s._id, s.summary]));
+    // Get all books with projection (use cached pages_count and reading_summary)
+    const books = await db.collection('books')
+      .find({}, {
+        projection: {
+          id: 1, title: 1, display_title: 1, author: 1, published: 1,
+          language: 1, tenant: 1, thumbnail: 1, pages_count: 1,
+          'reading_summary.overview': 1,
+        },
+      })
+      .sort({ title: 1 })
+      .toArray();
 
     const catalog = books.map(book => {
       const tenant = book.tenant;
@@ -39,9 +32,9 @@ export async function GET() {
         year: book.published || 'Unknown',
         language: book.language || 'Unknown',
         location,
-        pages: pageCountMap.get(bookId) || 0,
+        pages: book.pages_count || 0,
         thumbnail: book.thumbnail || '',
-        summary: summaryMap.get(bookId)?.substring(0, 500) || '',
+        summary: (book.reading_summary?.overview || '').substring(0, 500),
         url: `https://sourcelibrary.org/book/${bookId}`
       };
     });

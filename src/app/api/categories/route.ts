@@ -188,9 +188,20 @@ export interface CategoryWithCount {
   book_count: number;
 }
 
+// In-memory cache for categories (refreshed every 30 minutes)
+const CACHE_TTL_MS = 30 * 60 * 1000;
+let cachedResult: { data: unknown; timestamp: number } | null = null;
+
 // GET /api/categories - List all categories with book counts
 export async function GET() {
   try {
+    // Return cached result if fresh
+    if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_TTL_MS) {
+      return NextResponse.json(cachedResult.data, {
+        headers: { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' },
+      });
+    }
+
     const db = await getDb();
 
     // Get category counts from books
@@ -231,9 +242,15 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json({
+    const data = {
       categories,
       total_categorized: categoryCounts.reduce((sum, c) => sum + (c.count as number), 0),
+    };
+
+    cachedResult = { data, timestamp: Date.now() };
+
+    return NextResponse.json(data, {
+      headers: { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' },
     });
   } catch (error) {
     console.error('Error fetching categories:', error);
