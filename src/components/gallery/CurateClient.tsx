@@ -712,7 +712,20 @@ export default function CurateClient() {
       });
       const data = await res.json();
       if (data.success) {
-        setApplied(true);
+        // Clear all ratings so the curator can start fresh
+        setLikedIds(new Set());
+        likedIdsRef.current = new Set();
+        setDownvotedIds(new Set());
+        downvotedIdsRef.current = new Set();
+        setDuplicateIds(new Set());
+        duplicateIdsRef.current = new Set();
+        // Clear localStorage caches
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem(LIKES_CACHE_KEY);
+          localStorage.removeItem(DOWNVOTES_KEY);
+          localStorage.removeItem(DUPLICATES_KEY);
+        }
+        setApplied(false);
         toast.success(`Applied: ${data.upvotes.modified} boosted, ${data.downvotes.modified} penalized`);
       } else {
         toast.error(data.error || 'Failed to apply curation');
