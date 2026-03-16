@@ -9,7 +9,7 @@ export const maxDuration = 15;
 export const metadata: Metadata = {
   title: 'Dataset — Source Library',
   description:
-    'Structured training data from 10,000+ historical texts in 90+ languages. The only parallel-text dataset for historical languages.',
+    'Structured parallel-text training data from 5,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
     title: 'Dataset — Source Library',
@@ -80,7 +80,7 @@ export default async function DatasetPage() {
       header={
         <ContentHeader
           title="The Dataset"
-          subtitle="Structured parallel text for historical languages, available for licensing."
+          subtitle="Page-aligned parallel text for historical languages. OCR, English translation, and scholarly metadata — ready for training."
         />
       }
       maxWidth="medium"
@@ -89,24 +89,22 @@ export default async function DatasetPage() {
       {/* ── Opening statement ── */}
       <section className="mb-24">
         <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.5] max-w-[640px]">
-          {formatNumber(stats.totalBooks)} historical texts. {formatNumber(stats.pagesTranslated)} pages
-          translated into English. {stats.languages.length} languages, from Sumerian to Renaissance Latin.
-          Page-aligned, structured, and available via API.
+          {formatNumber(stats.totalBooks)} texts. {formatNumber(stats.pagesTranslated)} pages
+          translated into English. {stats.languages.length} languages — Sumerian to Renaissance Latin.
+          Available via streaming API.
         </p>
       </section>
 
       {/* ── The problem, in prose ── */}
       <section className="mb-24 max-w-[640px]">
         <p className="text-[#444] leading-[1.75] mb-6">
-          Large language models perform poorly on historical languages because structured training data
-          for them has never existed. The texts have been digitized — millions of pages sit in the archives
-          of the Bodleian Library, the Vatican, the Bavarian State Library, the British Library — but
-          a scan of a 16th-century Latin alchemical treatise is not training data.
+          Millions of pages of pre-modern text have been digitized by the world&apos;s great libraries.
+          But a scan of a 16th-century Latin treatise is not training data. It requires OCR,
+          translation, page-level alignment, classification, and quality verification.
         </p>
         <p className="text-[#444] leading-[1.75]">
-          Training data requires OCR, translation, page-level alignment, scholarly classification,
-          and quality verification. That curation takes years and cannot be fully automated.
-          We have done it for {formatNumber(stats.totalBooks)} texts across {stats.languages.length} languages.
+          We have done that work for {formatNumber(stats.totalBooks)} texts
+          across {stats.languages.length} languages — and the dataset grows every week.
         </p>
       </section>
 
@@ -177,20 +175,17 @@ export default async function DatasetPage() {
         </div>
       </section>
 
-      {/* ── Translation Commons ── */}
+      {/* ── Quality ── */}
       <section className="mb-24 max-w-[640px]">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Quality</p>
-        <p className="font-serif text-xl text-[#1a1a18] leading-[1.6] mb-4">
-          The Translation Commons
-        </p>
         <p className="text-[#444] leading-[1.75] mb-4">
-          This is not a static dataset. Every translation is subject to ongoing review
-          by scholars and language specialists. Corrections flow back into the data continuously.
-          Paid licenses include quarterly updates with changelogs documenting every improvement.
+          Not a static dump. Translations are continuously reviewed and corrected
+          by language specialists. Licensed access includes quarterly updates
+          with changelogs documenting every improvement.
         </p>
         <p className="text-[#444] leading-[1.75]">
-          The stewardship fee in each plan funds this process — AI-assisted translation
-          verified by human expertise. The dataset improves every quarter.
+          Each record traces back to its source institution via a permanent citation URL.
+          Provenance documentation meets EU AI Act training data transparency requirements.
         </p>
       </section>
 
@@ -200,10 +195,8 @@ export default async function DatasetPage() {
 
         <div className="max-w-[640px] mb-10">
           <p className="text-[#444] leading-[1.75] mb-6">
-            The dataset is available through a tiered API. A free key gives access to 100 pages
-            per day for evaluation. Paid plans unlock full corpora by language or domain.
-            Enterprise partnerships include Parquet exports, exclusive access windows, and
-            dedicated stewardship reports.
+            Available through a streaming JSONL API. Free tier for evaluation.
+            Paid plans unlock full corpora by language or domain.
           </p>
         </div>
 
@@ -231,17 +224,17 @@ export default async function DatasetPage() {
         </div>
 
         <div className="flex flex-wrap gap-4 mt-8">
-          <Link
-            href="/auth/signin?callbackUrl=/dataset/dashboard"
+          <a
+            href="mailto:data@sourcelibrary.org?subject=Dataset%20Access%20Request"
             className="px-6 py-3 bg-[#1a1a18] text-white rounded-full text-sm font-medium hover:bg-[#333] transition-colors"
           >
-            Get API key
-          </Link>
+            Request access
+          </a>
           <a
-            href="mailto:data@sourcelibrary.org?subject=Dataset%20License%20Inquiry"
+            href="/api/dataset/v1/stats"
             className="px-6 py-3 border border-[#ccc] text-[#444] rounded-full text-sm font-medium hover:border-[#999] transition-colors"
           >
-            Talk to an expert
+            View corpus stats
           </a>
         </div>
       </section>
@@ -260,29 +253,18 @@ export default async function DatasetPage() {
       {/* ── Legal ── */}
       <section className="mb-24 max-w-[640px]">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Legal</p>
-        <p className="text-[#444] leading-[1.75] mb-4">
-          The dataset is protected under the EU Database Directive (96/9/EC).
-          The underlying texts are in the public domain; the curated compilation —
-          OCR, translations, taxonomy, and metadata — is separately protectable.
-        </p>
         <p className="text-[#444] leading-[1.75]">
-          Licensed access provides the provenance documentation required by the
-          EU AI Act&apos;s training data transparency obligations. Licenses are
-          non-exclusive and cover training, fine-tuning, and evaluation.{' '}
-          <Link href="/terms" className="text-[#1a1a18] underline underline-offset-2 decoration-[#ccc] hover:decoration-[#1a1a18] transition-colors">
-            Terms
-          </Link>
+          Source texts are public domain. The curated compilation — OCR, translations,
+          taxonomy, and metadata — is protected under the EU Database Directive (96/9/EC).
+          Licenses are non-exclusive and cover training, fine-tuning, and evaluation.
         </p>
       </section>
 
       {/* ── Footer ── */}
       <section className="border-t border-[#e8e6e3] pt-10">
         <div className="flex flex-wrap gap-6">
-          <Link href="/data" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
-            The collection
-          </Link>
-          <Link href="/developers" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
-            Developers
+          <Link href="/" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
+            Browse the collection
           </Link>
           <a href="/api/dataset/v1/stats" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
             Corpus stats (JSON)
