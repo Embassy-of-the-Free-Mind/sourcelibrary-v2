@@ -516,6 +516,23 @@ export default async function HomePage() {
                 </Link>
               )}
             </div>
+
+            {/* Curated exhibitions link */}
+            <div className="mt-6 flex items-center justify-between">
+              <Link
+                href="/curated"
+                className="group inline-flex items-center gap-2 text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
+              >
+                Browse curated exhibitions
+                <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+              </Link>
+              <Link
+                href="/collections"
+                className="text-sm text-muted hover:text-accent-rust transition-colors"
+              >
+                All collections &rarr;
+              </Link>
+            </div>
           </div>
         </section>
 
