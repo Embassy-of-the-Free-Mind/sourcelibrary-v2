@@ -32,6 +32,7 @@
     "@vercel/blob": "^2.0.0",
     "archiver": "^7.0.1",
     "axios": "^1.13.2",
+    "botid": "^1.5.11",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "epub-gen-memory": "^1.1.2",
