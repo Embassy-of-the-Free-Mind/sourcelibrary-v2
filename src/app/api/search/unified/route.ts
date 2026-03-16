@@ -168,6 +168,45 @@ async function searchIndex(db: any, query: string, limit: number) {
     if (results.length >= limit) break;
   }
 
+  // Fallback: if entities returned nothing, check book keyword indexes
+  // (covers multi-word phrases like "sky people" not synced to entities)
+  if (results.length === 0 && query.length >= 4) {
+    const books = await db.collection('books').find({
+      'index.generatedAt': { $exists: true },
+      hidden: { $ne: true },
+      $or: [
+        { 'index.concepts.term': queryRegex },
+        { 'index.people.term': queryRegex },
+        { 'index.places.term': queryRegex },
+        { 'index.keywords.term': queryRegex },
+      ],
+    }).project({
+      id: 1, slug: 1, title: 1, display_title: 1,
+      'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keywords': 1,
+    }).limit(limit).maxTimeMS(5000).toArray();
+
+    for (const book of books) {
+      const allEntries = [
+        ...(book.index?.concepts || []).map((e: any) => ({ ...e, type: 'concept' as const })),
+        ...(book.index?.people || []).map((e: any) => ({ ...e, type: 'person' as const })),
+        ...(book.index?.places || []).map((e: any) => ({ ...e, type: 'place' as const })),
+        ...(book.index?.keywords || []).map((e: any) => ({ ...e, type: 'keyword' as const })),
+      ];
+      const match = allEntries.find(e => queryRegex.test(e.term));
+      if (match) {
+        results.push({
+          type: match.type,
+          term: match.term,
+          book_id: book.id,
+          book_slug: book.slug,
+          book_title: book.display_title || book.title || '',
+          pages: match.pages?.slice(0, 10),
+        });
+      }
+      if (results.length >= limit) break;
+    }
+  }
+
   return { results, total: results.length };
 }
 
