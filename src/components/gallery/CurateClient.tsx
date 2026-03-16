@@ -3,12 +3,13 @@
 import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { toast } from 'sonner';
 import { Grid, type CellComponentProps } from 'react-window';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square, BookOpen, RotateCcw, Copy } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
 const LIKES_CACHE_KEY = 'sl_likes_cache';
 const DOWNVOTES_KEY = 'sl_curate_downvotes';
+const DUPLICATES_KEY = 'sl_curate_duplicates';
 const BATCH_SIZE = 200;
 
 function getVisitorId(): string {
@@ -65,6 +66,25 @@ function saveDownvotesCache(ids: Set<string>) {
   }
 }
 
+function getDuplicatesCache(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const cached = localStorage.getItem(DUPLICATES_KEY);
+    return cached ? new Set(JSON.parse(cached)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveDuplicatesCache(ids: Set<string>) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(DUPLICATES_KEY, JSON.stringify([...ids]));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 function getImageId(item: GalleryItem): string {
   return `${item.pageId}:${item.detectionIndex}`;
 }
@@ -79,21 +99,23 @@ interface ImageTileProps {
   imageId: string;
   isLiked: boolean;
   isDownvoted: boolean;
+  isDuplicate: boolean;
   isToggling: boolean;
   infoOpen: boolean;
   isExcluded: boolean;
   onLike: (item: GalleryItem, e: React.MouseEvent) => void;
   onDownvote: (item: GalleryItem, e: React.MouseEvent) => void;
+  onDuplicate: (item: GalleryItem, e: React.MouseEvent) => void;
   onClickTile: () => void;
   onToggleInfo: (imageId: string) => void;
   onExcludeBook: (item: GalleryItem) => void;
 }
 
 const ImageTile = memo(function ImageTile({
-  item, imageId, isLiked, isDownvoted, isToggling, infoOpen, isExcluded,
-  onLike, onDownvote, onClickTile, onToggleInfo, onExcludeBook,
+  item, imageId, isLiked, isDownvoted, isDuplicate, isToggling, infoOpen, isExcluded,
+  onLike, onDownvote, onDuplicate, onClickTile, onToggleInfo, onExcludeBook,
 }: ImageTileProps) {
-  const hasRating = isLiked || isDownvoted;
+  const hasRating = isLiked || isDownvoted || isDuplicate;
 
   return (
     <div
@@ -153,7 +175,31 @@ const ImageTile = memo(function ImageTile({
             strokeWidth={isDownvoted ? 0 : 2.5}
           />
         </button>
+
+        <button
+          onClick={(e) => onDuplicate(item, e)}
+          className={`
+            rounded-full p-1.5 transition-all duration-150
+            ${isDuplicate ? '' : 'bg-black/30 hover:bg-black/50'}
+          `}
+          title="Flag as duplicate"
+        >
+          <Copy
+            className={`
+              w-4 h-4 drop-shadow-md transition-transform duration-150
+              ${isDuplicate ? 'text-amber-400 scale-110' : 'text-white'}
+            `}
+            strokeWidth={isDuplicate ? 2.5 : 2}
+          />
+        </button>
       </div>
+
+      {/* Duplicate badge */}
+      {isDuplicate && (
+        <span className="absolute top-0.5 right-0.5 text-[9px] font-medium text-amber-300 bg-black/50 px-1 rounded z-10">
+          DUP
+        </span>
+      )}
 
       {/* Info button — bottom-left */}
       <button
@@ -211,11 +257,13 @@ interface GridCellProps {
   columnCount: number;
   likedIds: Set<string>;
   downvotedIds: Set<string>;
+  duplicateIds: Set<string>;
   toggling: Set<string>;
   infoId: string | null;
   excludedBooks: Set<string>;
   onLike: (item: GalleryItem, e: React.MouseEvent) => void;
   onDownvote: (item: GalleryItem, e: React.MouseEvent) => void;
+  onDuplicate: (item: GalleryItem, e: React.MouseEvent) => void;
   onClickTile: (idx: number) => void;
   onToggleInfo: (imageId: string) => void;
   onExcludeBook: (item: GalleryItem) => void;
@@ -223,7 +271,7 @@ interface GridCellProps {
 }
 
 function GridCell({ columnIndex, rowIndex, style, ...cellProps }: CellComponentProps<GridCellProps>) {
-  const { displayImages, columnCount, likedIds, downvotedIds, toggling, infoId, excludedBooks, onLike, onDownvote, onClickTile, onToggleInfo, onExcludeBook, gap } = cellProps;
+  const { displayImages, columnCount, likedIds, downvotedIds, duplicateIds, toggling, infoId, excludedBooks, onLike, onDownvote, onDuplicate, onClickTile, onToggleInfo, onExcludeBook, gap } = cellProps;
   const idx = rowIndex * columnCount + columnIndex;
   if (idx >= displayImages.length) return <div style={style} />;
 
@@ -237,11 +285,13 @@ function GridCell({ columnIndex, rowIndex, style, ...cellProps }: CellComponentP
         imageId={imageId}
         isLiked={likedIds.has(imageId)}
         isDownvoted={downvotedIds.has(imageId)}
+        isDuplicate={duplicateIds.has(imageId)}
         isToggling={toggling.has(imageId)}
         infoOpen={infoId === imageId}
         isExcluded={excludedBooks.has(item.bookId)}
         onLike={onLike}
         onDownvote={onDownvote}
+        onDuplicate={onDuplicate}
         onClickTile={() => onClickTile(idx)}
         onToggleInfo={onToggleInfo}
         onExcludeBook={onExcludeBook}
@@ -290,6 +340,7 @@ export default function CurateClient() {
   const [images, setImages] = useState<GalleryItem[]>([]);
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
   const [downvotedIds, setDownvotedIds] = useState<Set<string>>(new Set());
+  const [duplicateIds, setDuplicateIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
@@ -305,7 +356,7 @@ export default function CurateClient() {
   const [gridSize, setGridSize] = useState<'sm' | 'md' | 'lg'>('md');
 
   // Sort
-  const [sortMode, setSortMode] = useState<'default' | 'random' | 'likes' | 'time'>('default');
+  const [sortMode, setSortMode] = useState<'default' | 'random' | 'likes' | 'time' | 'book'>('default');
   const [randomSeed, setRandomSeed] = useState(0);
 
   // Filters
@@ -343,6 +394,8 @@ export default function CurateClient() {
   likedIdsRef.current = likedIds;
   const downvotedIdsRef = useRef(downvotedIds);
   downvotedIdsRef.current = downvotedIds;
+  const duplicateIdsRef = useRef(duplicateIds);
+  duplicateIdsRef.current = duplicateIds;
   const toggledRef = useRef(toggling);
   toggledRef.current = toggling;
 
@@ -445,6 +498,7 @@ export default function CurateClient() {
   // Load liked IDs + downvoted IDs on mount
   useEffect(() => {
     setDownvotedIds(getDownvotesCache());
+    setDuplicateIds(getDuplicatesCache());
 
     const visitorId = getVisitorId();
     if (!visitorId) return;
@@ -609,6 +663,18 @@ export default function CurateClient() {
     setInfoId(prev => prev === imageId ? null : imageId);
   }, []);
 
+  const handleToggleDuplicate = useCallback((item: GalleryItem, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const imageId = getImageId(item);
+    setDuplicateIds(prev => {
+      const next = new Set(prev);
+      if (next.has(imageId)) next.delete(imageId);
+      else next.add(imageId);
+      saveDuplicatesCache(next);
+      return next;
+    });
+  }, []);
+
   const handleExcludeBook = useCallback(async (item: GalleryItem) => {
     if (excludedBooks.has(item.bookId)) return;
     try {
@@ -628,11 +694,13 @@ export default function CurateClient() {
   const handleApplyCurated = useCallback(async () => {
     const upCount = likedIdsRef.current.size;
     const downCount = downvotedIdsRef.current.size;
-    if (upCount === 0 && downCount === 0) return;
+    const dupCount = duplicateIdsRef.current.size;
+    if (upCount === 0 && downCount === 0 && dupCount === 0) return;
 
     const parts = [];
     if (upCount > 0) parts.push(`${upCount} upvoted (+0.1 quality)`);
     if (downCount > 0) parts.push(`${downCount} downvoted (-0.15 quality)`);
+    if (dupCount > 0) parts.push(`${dupCount} flagged as duplicates`);
     if (!confirm(`Apply curation? ${parts.join(', ')}`)) return;
 
     setApplying(true);
@@ -643,6 +711,7 @@ export default function CurateClient() {
         body: JSON.stringify({
           upvoteIds: [...likedIdsRef.current],
           downvoteIds: [...downvotedIdsRef.current],
+          duplicateIds: [...duplicateIdsRef.current],
         }),
       });
       const data = await res.json();
@@ -687,6 +756,12 @@ export default function CurateClient() {
       });
     } else if (sortMode === 'time') {
       sorted.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+    } else if (sortMode === 'book') {
+      sorted.sort((a, b) => {
+        const cmp = (a.bookTitle || '').localeCompare(b.bookTitle || '');
+        if (cmp !== 0) return cmp;
+        return (a.pageNumber || 0) - (b.pageNumber || 0);
+      });
     }
     return sorted;
   }, [images, likedIds, downvotedIds, showLikedOnly, showDownvotedOnly, sortMode, randomSeed]);
@@ -709,6 +784,7 @@ export default function CurateClient() {
 
   const heartedCount = likedIds.size;
   const downvotedCount = downvotedIds.size;
+  const duplicateCount = duplicateIds.size;
 
   // --- Win #3: Virtualized grid ---
   const rowCount = Math.ceil(displayImages.length / columnCount);
@@ -723,16 +799,18 @@ export default function CurateClient() {
     columnCount,
     likedIds,
     downvotedIds,
+    duplicateIds,
     toggling,
     infoId,
     excludedBooks,
     onLike: handleToggleLike,
     onDownvote: handleToggleDownvote,
+    onDuplicate: handleToggleDuplicate,
     onClickTile: handleClickTile,
     onToggleInfo: handleToggleInfo,
     onExcludeBook: handleExcludeBook,
     gap,
-  }), [displayImages, columnCount, likedIds, downvotedIds, toggling, infoId, excludedBooks, handleToggleLike, handleToggleDownvote, handleClickTile, handleToggleInfo, handleExcludeBook]);
+  }), [displayImages, columnCount, likedIds, downvotedIds, duplicateIds, toggling, infoId, excludedBooks, handleToggleLike, handleToggleDownvote, handleToggleDuplicate, handleClickTile, handleToggleInfo, handleExcludeBook]);
 
   return (
     <div className="max-w-[2000px] mx-auto">
@@ -751,6 +829,14 @@ export default function CurateClient() {
                   <span className="text-blue-500 font-medium">{downvotedCount}</span>
                   {' '}
                   <ThumbsDown className="w-3 h-3 inline text-blue-500" fill="currentColor" />
+                </>
+              )}
+              {duplicateCount > 0 && (
+                <>
+                  {' / '}
+                  <span className="text-amber-500 font-medium">{duplicateCount}</span>
+                  {' '}
+                  <Copy className="w-3 h-3 inline text-amber-500" />
                 </>
               )}
               {' / '}
@@ -844,6 +930,33 @@ export default function CurateClient() {
               By year
             </button>
 
+            <button
+              onClick={() => setSortMode(s => s === 'book' ? 'default' : 'book')}
+              className={`
+                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
+                border transition-colors
+                ${sortMode === 'book'
+                  ? 'border-accent-rust/30 bg-accent-rust/5 text-accent-rust'
+                  : 'border-border-light text-text-secondary hover:border-border-medium'
+                }
+              `}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              By book
+            </button>
+
+            {/* Reset sort */}
+            {sortMode !== 'default' && (
+              <button
+                onClick={() => setSortMode('default')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-border-light text-text-secondary hover:border-border-medium transition-colors"
+                title="Reset to default sort (quality)"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                Reset
+              </button>
+            )}
+
             {/* Show liked only toggle */}
             <button
               onClick={() => { setShowLikedOnly(v => !v); setShowDownvotedOnly(false); }}
@@ -879,7 +992,7 @@ export default function CurateClient() {
             )}
 
             {/* Apply curated button */}
-            {(heartedCount > 0 || downvotedCount > 0) && (
+            {(heartedCount > 0 || downvotedCount > 0 || duplicateCount > 0) && (
               <button
                 onClick={handleApplyCurated}
                 disabled={applying || applied}
@@ -898,7 +1011,7 @@ export default function CurateClient() {
                 ) : applied ? (
                   <Check className="w-3.5 h-3.5" />
                 ) : null}
-                {applied ? 'Applied' : `Apply ${heartedCount + downvotedCount} ratings`}
+                {applied ? 'Applied' : `Apply ${heartedCount + downvotedCount + duplicateCount} ratings`}
               </button>
             )}
           </div>
