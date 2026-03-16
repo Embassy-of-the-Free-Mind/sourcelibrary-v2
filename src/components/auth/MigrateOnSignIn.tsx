@@ -7,7 +7,7 @@ import { getStoredVisitorId, clearStoredVisitorId } from '@/hooks/useIdentity';
 const MIGRATED_KEY = 'sl_migration_done';
 
 /**
- * Runs once after sign-in: migrates anonymous likes/bookshelf to the authenticated account.
+ * Runs once after sign-in: migrates anonymous likes to the authenticated account.
  * Fire-and-forget — doesn't block rendering or show UI.
  */
 export default function MigrateOnSignIn() {

@@ -230,12 +230,12 @@ export default function AccountClient({ user }: AccountClientProps) {
           style={{ background: 'white', border: '1px solid var(--border-light)', borderColor: 'var(--border-light)' }}
         >
           <Link
-            href="/bookshelf"
+            href="/reading-history"
             className="flex items-center gap-3 px-6 py-4 hover:opacity-70 transition-opacity"
             style={{ color: 'var(--text-primary)' }}
           >
             <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
-            <span>Bookshelf</span>
+            <span>Reading History</span>
           </Link>
           <Link
             href="/favorites"

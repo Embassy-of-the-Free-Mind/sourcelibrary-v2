@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { useState, useCallback, useRef } from 'react';
+import { ArrowRight, Search, X } from 'lucide-react';
+import { useDebouncedCallback } from 'use-debounce';
 import CollectionBookCard from '@/components/CollectionBookCard';
-import CollectionFilters from '@/components/collections/CollectionFilters';
 
 const PER_PAGE = 60;
 
@@ -50,13 +50,16 @@ export default function CollectionAllBooks({
   const [fetchedTotal, setFetchedTotal] = useState(total);
   const [sort, setSort] = useState('relevance');
   const [language, setLanguage] = useState('');
+  const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  const fetchBooks = useCallback(async (s: string, lang: string, off: number) => {
+  const fetchBooks = useCallback(async (s: string, lang: string, off: number, q: string = '') => {
     setLoading(true);
     try {
       const params = new URLSearchParams({ sort: s, offset: String(off), limit: String(PER_PAGE) });
       if (lang) params.set('language', lang);
+      if (q) params.set('q', q);
       const res = await fetch(`/api/collections/${collectionId}?${params}`);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
@@ -78,18 +81,26 @@ export default function CollectionAllBooks({
   }, [fetchBooks]);
 
   const handleSort = useCallback((newSort: string) => {
-    fetchBooks(newSort, language, 0);
-  }, [fetchBooks, language]);
+    fetchBooks(newSort, language, 0, query);
+  }, [fetchBooks, language, query]);
 
   const handleLanguage = useCallback((newLang: string) => {
-    fetchBooks(sort, newLang, 0);
-  }, [fetchBooks, sort]);
+    fetchBooks(sort, newLang, 0, query);
+  }, [fetchBooks, sort, query]);
+
+  const debouncedSearch = useDebouncedCallback((q: string) => {
+    fetchBooks(sort, language, 0, q);
+  }, 300);
+
+  const handleSearch = useCallback((value: string) => {
+    setQuery(value);
+    debouncedSearch(value);
+  }, [debouncedSearch]);
 
   const handlePage = useCallback((newOffset: number) => {
-    fetchBooks(sort, language, newOffset);
-    // Scroll to top of books section
+    fetchBooks(sort, language, newOffset, query);
     document.getElementById('collection-all-books')?.scrollIntoView({ behavior: 'smooth' });
-  }, [fetchBooks, sort, language]);
+  }, [fetchBooks, sort, language, query]);
 
   const showSeeAllCard = !expanded && total > compactBooks.length;
   const displayBooks = expanded ? books : compactBooks;
@@ -110,12 +121,32 @@ export default function CollectionAllBooks({
         </div>
 
         {expanded && (
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+              <input
+                ref={searchRef}
+                type="text"
+                value={query}
+                onChange={(e) => handleSearch(e.target.value)}
+                placeholder="Search within..."
+                className="text-sm border border-border-light rounded-lg pl-8 pr-8 py-1.5 bg-white text-primary w-44 focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
+              />
+              {query && (
+                <button
+                  onClick={() => handleSearch('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
             <select
               value={sort}
               onChange={(e) => handleSort(e.target.value)}
               className="text-sm border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary"
             >
+              <option value="relevance">Most Relevant</option>
               <option value="popular">Most Popular</option>
               <option value="year_asc">Oldest First</option>
               <option value="year_desc">Newest First</option>

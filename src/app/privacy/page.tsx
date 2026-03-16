@@ -44,7 +44,7 @@ export default function PrivacyPage() {
           <ul className="list-disc pl-5 space-y-2">
             <li><strong>Account information:</strong> Email address (required for registration). Name and profile image if you sign in with Google.</li>
             <li><strong>First-party analytics</strong> (always active): Pages visited, country (from IP), referrer domain, user agent. IP addresses are anonymized (last octet removed) before storage. Data is automatically deleted after 90 days.</li>
-            <li><strong>Reading activity:</strong> Which books and pages you view, bookshelf selections. Used to personalize your experience.</li>
+            <li><strong>Reading activity:</strong> Which books and pages you view, reading history. Used to personalize your experience.</li>
             <li><strong>Local storage:</strong> A visitor ID (<code>sl_visitor_id</code>) for image likes deduplication. This never leaves your browser.</li>
           </ul>
 
