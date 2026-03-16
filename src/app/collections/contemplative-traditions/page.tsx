@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ObjectId } from 'mongodb';
+import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
-import { BookOpen, ArrowLeft, Languages, ScrollText } from 'lucide-react';
+
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: 'The Contemplative Traditions - Source Library',
@@ -28,369 +29,212 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = 'force-dynamic';
+/* ── Color mappings for tradition styling ── */
 
-/* ── Tradition definitions with book IDs ── */
-
-interface Tradition {
-  id: string;
-  name: string;
-  subtitle: string;
-  description: string;
-  color: string;           // tailwind color prefix
+const TRADITION_STYLES: Record<string, {
   borderColor: string;
   bgColor: string;
   accentColor: string;
-  originals: string[];     // MongoDB ObjectId strings
-  translations: string[];
-}
-
-const TRADITIONS: Tradition[] = [
-  {
-    id: 'taoism',
-    name: 'Taoism',
-    subtitle: 'The Way and Its Power',
-    description:
-      'Chinese woodblock prints from the Ming and Qing dynasties alongside the Victorian translations that introduced the Tao Te Ching and Chuang Tzu to the West. The LOC rare books include a 1595 compilation of four Daoist classics and a 1740 annotated Daodejing.',
-    color: 'emerald',
+  hoverBg: string;
+}> = {
+  emerald: {
     borderColor: 'border-emerald-300',
     bgColor: 'bg-emerald-50',
     accentColor: 'text-emerald-700',
-    originals: [
-      '69935b6f2c63944063134103', // Four Daoist Classics 1595
-      '6993575f8ed86e583b7b8703', // San zi yin yi ~1600
-      '69935b6c2c6394406313403a', // Zhuangzi 1635
-      '69935b692c63944063133f67', // Dao de jing 1740
-    ],
-    translations: [
-      '6993569a83378b7aed7ce5b7', // Giles Chuang Tzu 1889
-      '6993569383378b7aed7ce400', // Legge SBE Vol. 39 1891
-      '69592bc6b89ab99ff513c08b', // Balfour Taoist Texts 1884
-    ],
+    hoverBg: 'hover:bg-emerald-50',
   },
-  {
-    id: 'sufism',
-    name: 'Sufism',
-    subtitle: 'The Path of the Heart',
-    description:
-      'Original Persian and Arabic texts paired with their English translations. Includes Nicholson\'s critical edition of Rumi\'s Mathnawi in Persian, Zhukovsky\'s scholarly edition of Hujwiri, and a Ghazali manuscript copied just four years after the philosopher\'s death in 1111 CE.',
-    color: 'cyan',
+  cyan: {
     borderColor: 'border-cyan-300',
     bgColor: 'bg-cyan-50',
     accentColor: 'text-cyan-700',
-    originals: [
-      '69935b348e28d8f4c5d3cb86', // Ghazali Three Treatises 1115 CE
-      '69935b318e28d8f4c5d3c9da', // Ghazali Ihya Arabic 1888
-      '69935b2b8e28d8f4c5d3c6f6', // Ghazali Kimiya Persian
-      '69935b198e28d8f4c5d3c249', // Rumi Mathnawi Persian
-      '69935b208e28d8f4c5d3c445', // Hujwiri Kashf al-Mahjub Persian
-    ],
-    translations: [
-      '699356ad83378b7aed7ce878', // Al-Ghazali Alchemy of Happiness
-      '699356a38e28d8f4c5d3b69f', // Hujwiri Kashf al-Mahjub (Nicholson)
-      '699356a983378b7aed7ce7b9', // Shabistari Gulshan-i Raz
-      '6993575c8e28d8f4c5d3bdd3', // Rumi Mathnawi (Nicholson English)
-      '699357738e28d8f4c5d3c1a2', // Jami Lawa'ih
-    ],
+    hoverBg: 'hover:bg-cyan-50',
   },
-  {
-    id: 'buddhism',
-    name: 'Buddhism & Zen',
-    subtitle: 'Seeing Into One\'s Nature',
-    description:
-      'Song dynasty woodblock sutras from the Library of Congress — including a 975 AD Dharani Sutra, one of the earliest surviving printed Buddhist texts — alongside English translations of key Mahayana works and the first Zen teachings published in English.',
-    color: 'amber',
+  amber: {
     borderColor: 'border-accent-gold/20',
     bgColor: 'bg-accent-gold/8',
     accentColor: 'text-accent-rust',
-    originals: [
-      '699356c28ed86e583b7b8320', // Dharani Sutra 975 AD
-      '699356c58ed86e583b7b8334', // Lotus Sutra Song dynasty
-      '699356cb8ed86e583b7b86cc', // Wu deng hui yuan
-    ],
-    translations: [
-      '699258c38812793469fdd7e0', // Ashvaghosha Awakening of Faith
-      '699356bc8e28d8f4c5d3b879', // SBE Vol. 49 Mahayana
-      '6993576f8e28d8f4c5d3c0a0', // Soyen Shaku Sermons
-    ],
+    hoverBg: 'hover:bg-accent-gold/8',
   },
-  {
-    id: 'vedanta',
-    name: 'Advaita Vedanta',
-    subtitle: 'Non-Dual Reality',
-    description:
-      'Sanskrit originals in Devanagari script — the Bhagavad Gita with eight classical commentaries, fifteen principal Upanishads, Patanjali\'s Yoga Sutras with three commentaries, and Shankara\'s Vivekachudamani — alongside the landmark English translations that shaped Western understanding of Hindu philosophy.',
-    color: 'orange',
+  orange: {
     borderColor: 'border-orange-300',
     bgColor: 'bg-orange-50',
     accentColor: 'text-orange-700',
-    originals: [
-      '69935b458e28d8f4c5d3cbd3', // Bhagavad Gita Sanskrit
-      '69935b4a8e28d8f4c5d3cf8c', // 15 Upanishads Sanskrit
-      '69935b4d8e28d8f4c5d3cfaa', // Patanjali Yoga Sutras Sanskrit
-      '69935b538e28d8f4c5d3d0cc', // Vivekachudamani Sanskrit
-    ],
-    translations: [
-      '6993571783378b7aed7ce8f6', // Wilkins Bhagavad Gita 1785
-      '699356d28e28d8f4c5d3ba61', // Duperron Oupnek'hat Latin
-      '6993571d83378b7aed7ce92b', // Hume Upanishads
-      '6993572283378b7aed7ceb65', // Vivekananda Raja Yoga
-      '699357648e28d8f4c5d3bf8e', // Vivekachudamani English
-    ],
+    hoverBg: 'hover:bg-orange-50',
   },
-  {
-    id: 'depth-psychology',
-    name: 'Depth Psychology',
-    subtitle: 'The Unconscious and the Sacred',
-    description:
-      'The bridge between contemplative traditions and modern psychology. Jung\'s foundational works in their original German alongside English translations, plus William James on religious experience, Silberer on mystical symbolism, and G.R.S. Mead\'s recovery of Gnostic texts.',
-    color: 'violet',
+  violet: {
     borderColor: 'border-violet-300',
     bgColor: 'bg-violet-50',
     accentColor: 'text-violet-700',
-    originals: [
-      '6990541238e1fdee57b36a6e', // Jung Wandlungen German
-      '69935b5f2afc33235052333b', // Jung Psychologische Typen German
-    ],
-    translations: [
-      '6955957b7bd6d2cd1d61f2c4', // William James Varieties
-      '6993572983378b7aed7ced01', // Silberer Problems of Mysticism
-      '6993573783378b7aed7ceee1', // Jung Psychology of the Unconscious
-      '6993574783378b7aed7cf169', // Jung Psychological Types English
-      '6993574e83378b7aed7cf419', // Mead Pistis Sophia
-      '6993575683378b7aed7cf5b1', // Mead Fragments
-    ],
+    hoverBg: 'hover:bg-violet-50',
   },
-];
+};
+
+const DEFAULT_STYLE = {
+  borderColor: 'border-stone-300',
+  bgColor: 'bg-stone-50',
+  accentColor: 'text-stone-700',
+  hoverBg: 'hover:bg-stone-50',
+};
+
+/* ── Types ── */
+
+interface TraditionCollection {
+  slug: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  book_count: number;
+  order: number;
+  color?: string;
+  languages: { lang: string; count: number }[];
+  sample_books: {
+    id: string;
+    title: string;
+    author: string;
+    year: number | null;
+    thumbnail: string | null;
+  }[];
+}
 
 /* ── Data fetching ── */
 
-interface BookDoc {
-  _id: ObjectId;
-  title: string;
-  display_title?: string;
-  author?: string;
-  published?: string;
-  year?: number;
-  language?: string;
-  original_language?: string;
-  pages_count?: number;
-  pages_ocr?: number;
-  pages_translated?: number;
-  thumbnail?: string;
-  thumbnail_blob?: string;
-}
-
-async function getBooks() {
-  const allIds = TRADITIONS.flatMap(t => [...t.originals, ...t.translations]);
-  const objectIds = allIds.map(id => new ObjectId(id));
-
+async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
   const db = await getDb();
-  const docs = await db
-    .collection('books')
-    .find(
-      { _id: { $in: objectIds } },
-      {
-        projection: {
-          title: 1,
-          display_title: 1,
-          author: 1,
-          published: 1,
-          year: 1,
-          language: 1,
-          original_language: 1,
-          pages_count: 1,
-          pages_ocr: 1,
-          pages_translated: 1,
-          thumbnail: 1,
-          thumbnail_blob: 1,
-        },
-      }
-    )
+
+  const traditions = await db
+    .collection('collections')
+    .find({ parent: 'contemplative-traditions' })
+    .sort({ order: 1 })
     .toArray();
 
-  const map = new Map<string, BookDoc>();
-  for (const doc of docs) {
-    map.set(doc._id.toString(), doc as unknown as BookDoc);
+  const parent = await db.collection('collections').findOne({ slug: 'contemplative-traditions' });
+  const totalBooks = parent?.book_count || traditions.reduce((sum, t) => sum + (t.book_count || 0), 0);
+
+  return {
+    traditions: traditions.map(t => ({
+      slug: t.slug,
+      name: t.name,
+      subtitle: t.subtitle || '',
+      description: t.description || '',
+      book_count: t.book_count || 0,
+      order: t.order || 99,
+      color: t.color,
+      languages: t.languages || [],
+      sample_books: t.sample_books || [],
+    })) as TraditionCollection[],
+    totalBooks,
+  };
+}
+
+function sanitizeThumbnail(url: string | undefined | null): string | undefined {
+  if (!url) return undefined;
+  if (url.startsWith('/api/image')) {
+    const match = url.match(/[?&]url=([^&]+)/);
+    if (match) return decodeURIComponent(match[1]);
+    return undefined;
   }
-  return map;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('data:') || url.startsWith('/')) return url;
+  return undefined;
 }
 
 /* ── Components ── */
 
-function BookCard({
-  book,
-  isOriginal,
-}: {
-  book: BookDoc;
-  isOriginal: boolean;
-}) {
-  const id = book._id.toString();
-  const thumb = book.thumbnail || book.thumbnail_blob;
-  const rawLang = book.original_language || book.language || '';
-  const lang = rawLang === 'Unknown' ? '' : rawLang;
-  const parsedYear = book.published ? parseInt(book.published) : NaN;
-  const year = book.year || (Number.isFinite(parsedYear) ? parsedYear : null);
+function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
+  const style = TRADITION_STYLES[tradition.color || ''] || DEFAULT_STYLE;
+  const languages = tradition.languages.map(l => l.lang);
+
+  // Pick a thumbnail from sample books
+  const heroThumb = tradition.sample_books
+    .map(b => sanitizeThumbnail(b.thumbnail))
+    .find((t): t is string => !!t);
 
   return (
-    <Link href={`/book/${id}`} className="group block">
-      <div className="h-full rounded-lg border border-stone-200 hover:border-accent-gold/30 hover:shadow-lg transition-all overflow-hidden bg-white">
-        <div className="relative aspect-[3/4] bg-stone-100 overflow-hidden">
-          {thumb ? (
-            <Image
-              src={thumb}
-              alt={book.display_title || book.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 768px) 45vw, (max-width: 1024px) 22vw, 180px"
-              loading="lazy"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <BookOpen className="w-10 h-10 text-stone-300" />
-            </div>
-          )}
-          {isOriginal && (
-            <div className="absolute top-2 left-2 z-10">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-stone-900/80 text-accent-gold text-[10px] font-semibold uppercase tracking-wider rounded">
-                <ScrollText className="w-3 h-3" />
-                Original
-              </span>
-            </div>
-          )}
-          {!isOriginal && (
-            <div className="absolute top-2 left-2 z-10">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white/90 text-stone-600 text-[10px] font-semibold uppercase tracking-wider rounded border border-stone-200">
-                <Languages className="w-3 h-3" />
-                Translation
-              </span>
-            </div>
-          )}
+    <Link
+      href={`/collections/${tradition.slug}`}
+      className={`group block rounded-2xl border-2 ${style.borderColor} overflow-hidden hover:shadow-lg transition-all`}
+    >
+      <div className={`${style.bgColor} px-6 py-5`}>
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
+          <h2 className={`text-2xl sm:text-3xl font-bold ${style.accentColor} font-display group-hover:underline decoration-2 underline-offset-4`}>
+            {tradition.name}
+          </h2>
+          <span className="text-sm text-stone-500 italic">
+            {tradition.subtitle}
+          </span>
         </div>
-        <div className="p-3">
-          <h3
-            className="text-sm font-bold text-stone-900 group-hover:text-accent-rust transition-colors leading-tight line-clamp-2 mb-1 font-display"
-          >
-            {book.display_title || book.title}
-          </h3>
-          <p className="text-xs text-stone-500 line-clamp-1 mb-1">
-            {book.author}
-          </p>
-          <div className="flex items-center gap-2 text-[11px] text-stone-400">
-            {year && <span>{year < 0 ? `${Math.abs(year)} BCE` : year}</span>}
-            {lang && (
-              <>
-                <span>&middot;</span>
-                <span>{lang}</span>
-              </>
-            )}
-          </div>
+        <p className="text-stone-600 mt-2 max-w-3xl text-sm leading-relaxed">
+          {tradition.description}
+        </p>
+        <div className="flex gap-4 mt-3 text-xs text-stone-500">
+          <span>{tradition.book_count} texts</span>
+          {languages.length > 0 && (
+            <>
+              <span>&middot;</span>
+              <span>{languages.join(', ')}</span>
+            </>
+          )}
         </div>
       </div>
+
+      {/* Sample book thumbnails */}
+      {tradition.sample_books.length > 0 && (
+        <div className="bg-white px-6 py-4 border-t border-stone-100">
+          <div className="flex gap-3 overflow-hidden">
+            {tradition.sample_books.slice(0, 5).map(book => {
+              const thumb = sanitizeThumbnail(book.thumbnail);
+              return (
+                <div key={book.id} className="w-16 flex-shrink-0">
+                  <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-stone-100">
+                    {thumb ? (
+                      <Image
+                        src={thumb}
+                        alt={book.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="64px"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <BookOpen className="w-5 h-5 text-stone-300" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </Link>
-  );
-}
-
-function TraditionSection({
-  tradition,
-  bookMap,
-}: {
-  tradition: Tradition;
-  bookMap: Map<string, BookDoc>;
-}) {
-  const originals = tradition.originals
-    .map(id => bookMap.get(id))
-    .filter((b): b is BookDoc => !!b);
-  const translations = tradition.translations
-    .map(id => bookMap.get(id))
-    .filter((b): b is BookDoc => !!b);
-
-  const total = originals.length + translations.length;
-  const languages = [
-    ...new Set(
-      [...originals, ...translations]
-        .map(b => b.original_language || b.language)
-        .filter(l => l && l !== 'Unknown')
-    ),
-  ];
-
-  return (
-    <section id={tradition.id} className="scroll-mt-20">
-      <div className={`rounded-2xl border-2 ${tradition.borderColor} overflow-hidden`}>
-        {/* Section header */}
-        <div className={`${tradition.bgColor} px-6 py-6 sm:px-8`}>
-          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-            <h2
-              className={`text-2xl sm:text-3xl font-bold ${tradition.accentColor} font-display`}
-            >
-              {tradition.name}
-            </h2>
-            <span className="text-sm text-stone-500 italic">
-              {tradition.subtitle}
-            </span>
-          </div>
-          <p className="text-stone-600 mt-2 max-w-3xl text-sm leading-relaxed">
-            {tradition.description}
-          </p>
-          <div className="flex gap-4 mt-3 text-xs text-stone-500">
-            <span>{total} texts</span>
-            <span>&middot;</span>
-            <span>{languages.join(', ')}</span>
-          </div>
-        </div>
-
-        {/* Books */}
-        <div className="bg-white px-6 py-6 sm:px-8 space-y-6">
-          {originals.length > 0 && (
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-3">
-                Original Language
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {originals.map(book => (
-                  <BookCard
-                    key={book._id.toString()}
-                    book={book}
-                    isOriginal={true}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-          {translations.length > 0 && (
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-3">
-                English Translations
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {translations.map(book => (
-                  <BookCard
-                    key={book._id.toString()}
-                    book={book}
-                    isOriginal={false}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
   );
 }
 
 /* ── Page ── */
 
 export default async function ContemplativeTraditionsPage() {
-  const bookMap = await getBooks();
-  const totalBooks = bookMap.size;
+  let data: { traditions: TraditionCollection[]; totalBooks: number };
+  try {
+    data = await getTraditions();
+  } catch (err) {
+    console.error('[Contemplative Traditions portal] Failed to load:', err instanceof Error ? err.message : err);
+    return (
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+        <div className="text-center max-w-md px-6">
+          <h1 className="text-2xl font-display text-stone-900 mb-3">Temporarily Unavailable</h1>
+          <p className="text-stone-600 mb-6">Please try again in a moment.</p>
+          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const { traditions, totalBooks } = data;
+  const traditionsWithBooks = traditions.filter(t => t.book_count > 0);
 
   const allLanguages = [
-    ...new Set(
-      Array.from(bookMap.values())
-        .map(b => b.original_language || b.language)
-        .filter(l => l && l !== 'Unknown')
-    ),
+    ...new Set(traditions.flatMap(t => t.languages.map(l => l.lang))),
   ];
 
   return (
@@ -446,31 +290,34 @@ export default async function ContemplativeTraditionsPage() {
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Years</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-accent-gold">5</div>
+              <div className="text-3xl font-bold text-accent-gold">{traditionsWithBooks.length}</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Traditions</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Quick nav */}
+      {/* Sticky tradition nav */}
       <div className="bg-white border-b border-stone-200 sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-6">
           <nav className="flex gap-1 overflow-x-auto py-2 -mx-2 px-2 scrollbar-hide">
-            {TRADITIONS.map(t => (
-              <a
-                key={t.id}
-                href={`#${t.id}`}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium ${t.accentColor} hover:${t.bgColor} transition-colors`}
-              >
-                {t.name}
-              </a>
-            ))}
+            {traditionsWithBooks.map(t => {
+              const style = TRADITION_STYLES[t.color || ''] || DEFAULT_STYLE;
+              return (
+                <a
+                  key={t.slug}
+                  href={`#${t.slug}`}
+                  className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium ${style.accentColor} ${style.hoverBg} transition-colors`}
+                >
+                  {t.name}
+                </a>
+              );
+            })}
           </nav>
         </div>
       </div>
 
-      {/* Standout callout */}
+      {/* Standout callout cards */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-4">
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="bg-gradient-to-br from-accent-gold/8 to-orange-50 rounded-xl p-5 border border-accent-gold/20">
@@ -495,14 +342,12 @@ export default async function ContemplativeTraditionsPage() {
         </div>
       </div>
 
-      {/* Tradition sections */}
+      {/* Tradition cards */}
       <main className="max-w-6xl mx-auto px-6 py-8 space-y-10">
-        {TRADITIONS.map(tradition => (
-          <TraditionSection
-            key={tradition.id}
-            tradition={tradition}
-            bookMap={bookMap}
-          />
+        {traditionsWithBooks.map(tradition => (
+          <section key={tradition.slug} id={tradition.slug} className="scroll-mt-20">
+            <TraditionCard tradition={tradition} />
+          </section>
         ))}
       </main>
 
