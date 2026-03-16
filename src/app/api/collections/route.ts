@@ -10,12 +10,30 @@ export const maxDuration = 30;
  *
  * List all book collections from MongoDB, ordered by display order.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get('type'); // 'category' | 'curated' | null (all)
+    const includeUnpublished = searchParams.get('unpublished') === 'true';
+
     const db = await getDb();
+    const filter: Record<string, unknown> = { parent: { $exists: false } };
+
+    if (type) {
+      filter.type = type;
+    }
+
+    // Curated collections have a published flag — hide unpublished by default
+    if (!includeUnpublished) {
+      filter.$or = [
+        { type: { $ne: 'curated' } },
+        { type: 'curated', published: true },
+      ];
+    }
+
     const collections = await db
       .collection('collections')
-      .find({ parent: { $exists: false } })
+      .find(filter)
       .sort({ order: 1 })
       .toArray();
 
