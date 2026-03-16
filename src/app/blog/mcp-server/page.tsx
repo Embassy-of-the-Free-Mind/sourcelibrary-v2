@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'Claude Can Now Read Thousands of Rare Books - Blog - Source Library',
+  title: 'Claude Can Now Read Thousands of Rare Books - Research Notes - Source Library',
   description: 'We shipped an MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations. One command to install.',
   openGraph: {
     title: 'Claude Can Now Read Thousands of Rare Books',
@@ -37,7 +37,7 @@ export default function McpServerPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'First English Translations - Blog - Source Library',
+  title: 'First English Translations - Research Notes - Source Library',
   description: 'Nearly 2,000 books in Source Library are first-ever English translations — over 900 now fully translated. Alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
   openGraph: {
     title: 'Nearly 2,000 First English Translations — Over 900 Now Complete',
@@ -37,7 +37,7 @@ export default function FirstTranslationsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

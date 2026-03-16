@@ -13,7 +13,7 @@ const WELCOME_HTML = `
     <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
     <h1 style="font-size: 26px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">Welcome to Source Library</h1>
     <p style="color: #6b6560; font-size: 15px; line-height: 1.6; margin: 0;">
-      Your account is ready. Your likes and bookshelf will sync across all your devices.
+      Your account is ready. Your likes and reading history will sync across all your devices.
     </p>
   </div>
   <div style="background: #f5f0e8; border-radius: 12px; padding: 24px; margin-bottom: 24px;">

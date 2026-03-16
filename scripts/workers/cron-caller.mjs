@@ -1,24 +1,9 @@
 #!/usr/bin/env node
-/**
- * Hetzner cron caller — triggers Vercel API cron endpoints via HTTP.
- *
- * Usage:
- *   node cron-caller.mjs <cron-name>
- *
- * Examples:
- *   node cron-caller.mjs archive-ocr
- *   node cron-caller.mjs social-post
- *   node cron-caller.mjs social-reset
- *   node cron-caller.mjs daily-pipeline-report
- *
- * Requires env vars: BASE_URL, CRON_SECRET
- *
- * Crontab entries for Hetzner:
- *   0 */4 * * *  set -a; source /root/.env.cron; set +a; node /root/cron-caller.mjs archive-ocr >> /root/logs/cron-caller.log 2>&1
- *   0 */3 * * *  set -a; source /root/.env.cron; set +a; node /root/cron-caller.mjs social-post >> /root/logs/cron-caller.log 2>&1
- *   0 0 * * *    set -a; source /root/.env.cron; set +a; node /root/cron-caller.mjs social-reset >> /root/logs/cron-caller.log 2>&1
- *   0 6 * * *    set -a; source /root/.env.cron; set +a; node /root/cron-caller.mjs daily-pipeline-report >> /root/logs/cron-caller.log 2>&1
- */
+// Hetzner cron caller — triggers Vercel API cron endpoints via HTTP.
+//
+// Usage: node cron-caller.mjs <cron-name>
+// Examples: archive-ocr, social-post, social-reset, daily-pipeline-report
+// Requires env vars: BASE_URL, CRON_SECRET
 
 const cronName = process.argv[2];
 if (!cronName) {
@@ -39,15 +24,18 @@ const timestamp = new Date().toISOString();
 
 console.log(`[${timestamp}] Calling ${url}`);
 
+const headers = {
+  'Authorization': `Bearer ${CRON_SECRET}`,
+  'Content-Type': 'application/json',
+};
+const signal = AbortSignal.timeout(300_000);
+
 try {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${CRON_SECRET}`,
-      'Content-Type': 'application/json',
-    },
-    signal: AbortSignal.timeout(300_000), // 5 min timeout
-  });
+  // Try POST first (most cron routes), fall back to GET if 405
+  let res = await fetch(url, { method: 'POST', headers, signal });
+  if (res.status === 405) {
+    res = await fetch(url, { method: 'GET', headers, signal });
+  }
 
   const body = await res.text();
   let parsed;

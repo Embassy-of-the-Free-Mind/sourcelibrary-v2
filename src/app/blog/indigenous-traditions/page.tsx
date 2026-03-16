@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'The Sacred Texts That Were Never "Texts" - Blog - Source Library',
+  title: 'The Sacred Texts That Were Never "Texts" - Research Notes - Source Library',
   description: 'Source Library now holds 90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas, Polynesian creation chants, and more. Most were recorded in the field by ethnographers who knew the traditions were vanishing.',
   openGraph: {
     title: 'The Sacred Texts That Were Never "Texts"',
@@ -37,7 +37,7 @@ export default function IndigenousTraditionsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

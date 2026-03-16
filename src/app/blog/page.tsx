@@ -4,8 +4,8 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Blog - Source Library',
-  description: 'Essays on the history and translation of rare philosophical, esoteric, and scientific texts from the Western and Eastern traditions.',
+  title: 'Research Notes - Source Library',
+  description: 'Research notes on the history and translation of rare philosophical, esoteric, and scientific texts. AI-assisted analysis directed by Derek Lomas.',
   alternates: {
     canonical: '/blog',
   },
@@ -25,13 +25,22 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'visualizing-classification',
+    title: 'Visualizing 20,000 Books Across Six Dimensions',
+    subtitle: 'Four interactive D3 visualizations of our faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram.',
+    date: '16 March 2026',
+    readTime: '6 min read',
+    tag: 'AI research report',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+  },
+  {
     slug: 'history-of-classification',
     title: 'Ten Thousand Years of Tagging',
     subtitle: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have.',
     date: '16 March 2026',
-    readTime: '14 min read',
-    tag: 'Deep dive',
-    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    readTime: '20 min read',
+    tag: 'AI research report',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
   },
   {
     slug: 'counting-the-gap',
@@ -292,8 +301,8 @@ export default function BlogPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Blog"
-          subtitle="Essays on recovering and translating rare texts from the world's philosophical traditions."
+          title="Research Notes"
+          subtitle="AI-assisted research on rare texts, classification, and the history of knowledge. Derek Lomas directs the questions; Claude (Anthropic) builds the analysis. Every claim is grounded in primary sources from the collection."
           image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
         />

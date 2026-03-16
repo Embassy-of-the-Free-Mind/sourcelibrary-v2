@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'The Mystic Who Invented Psychophysics - Blog - Source Library',
+  title: 'The Mystic Who Invented Psychophysics - Research Notes - Source Library',
   description: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works, now in Source Library, reveal the Böhmean mysticism behind the Weber-Fechner law.',
   openGraph: {
     title: 'The Mystic Who Invented Psychophysics',
@@ -37,7 +37,7 @@ export default function FechnerBohmePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

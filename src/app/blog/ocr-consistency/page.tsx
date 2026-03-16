@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'How Consistent Is AI OCR? - Blog - Source Library',
+  title: 'How Consistent Is AI OCR? - Research Notes - Source Library',
   description: 'A library\'s digitization error gave us 1,448 natural experiments. Two photographs of the same page, OCR\'d independently by Gemini — character-level comparison reveals a 1.8% median disagreement rate across six languages and four centuries of printed text.',
   openGraph: {
     title: 'How Consistent Is AI OCR?',
@@ -37,7 +37,7 @@ export default function OcrConsistencyPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

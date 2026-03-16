@@ -26,7 +26,7 @@ export default function robots(): MetadataRoute.Robots {
           '/auth/',
           '/beta/',
           '/unauthorized',
-          '/bookshelf',
+          '/reading-history',
           '/highlights',
           '/favorites',
         ],

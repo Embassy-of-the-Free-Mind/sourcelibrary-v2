@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Source Library — Faceted Classification Visualizations</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf8f4;
+    color: #2a1f17;
+    overflow-x: hidden;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 12px 16px;
+    background: #f0ebe3;
+    border-bottom: 1px solid #e0d8cc;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #8a7a6a;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: #2a1f17; background: rgba(255,255,255,0.5); }
+  .tab.active {
+    color: #2a1f17;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  /* Panel */
+  .panel { display: none; padding: 16px; }
+  .panel.active { display: block; }
+  .panel-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2a1f17;
+    margin-bottom: 4px;
+  }
+  .panel-sub {
+    font-size: 13px;
+    color: #8a7a6a;
+    margin-bottom: 16px;
+  }
+
+  /* Scatter controls */
+  .controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .control-btn {
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8a7a6a;
+    background: white;
+    border: 1px solid #e0d8cc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .control-btn:hover { border-color: #b8a898; color: #2a1f17; }
+  .control-btn.active {
+    background: #2a1f17;
+    color: #faf8f4;
+    border-color: #2a1f17;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: #2a1f17;
+    color: #faf8f4;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 320px;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .tooltip.visible { opacity: 1; }
+  .tooltip .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .tooltip .meta { color: #b8a898; font-size: 11px; }
+  .tooltip .tags { margin-top: 6px; }
+  .tooltip .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 2px;
+    font-size: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0d8cc;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #5a4a3a;
+  }
+  .legend-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* SVG */
+  svg { width: 100%; display: block; }
+  svg text { font-family: 'Inter', sans-serif; }
+
+  /* Heatmap */
+  .heatmap-cell { stroke: #faf8f4; stroke-width: 1; }
+  .heatmap-label { font-size: 11px; fill: #5a4a3a; }
+  .heatmap-count { font-size: 10px; fill: #faf8f4; pointer-events: none; }
+
+  /* Sankey */
+  .sankey-link { fill: none; stroke-opacity: 0.3; }
+  .sankey-link:hover { stroke-opacity: 0.6; }
+  .sankey-node rect { stroke: none; }
+  .sankey-label { font-size: 11px; fill: #2a1f17; }
+
+  /* Chord */
+  .chord-ribbon { fill-opacity: 0.5; }
+  .chord-ribbon:hover { fill-opacity: 0.8; }
+  .chord-label { font-size: 11px; fill: #2a1f17; }
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab active" data-panel="scatter">Map</button>
+  <button class="tab" data-panel="heatmap">Heatmap</button>
+  <button class="tab" data-panel="sankey">Flow</button>
+  <button class="tab" data-panel="chord">Connections</button>
+</div>
+
+<div id="scatter" class="panel active">
+  <div class="panel-header">The Library in Two Dimensions</div>
+  <div class="panel-sub">Each dot is a book. Position from semantic similarity. Color toggles between facets.</div>
+  <div class="controls" id="scatter-controls"></div>
+  <div id="scatter-chart"></div>
+  <div class="legend" id="scatter-legend"></div>
+</div>
+
+<div id="heatmap" class="panel">
+  <div class="panel-header">Tradition × Domain</div>
+  <div class="panel-sub">Darker cells = more books at that intersection. White = a gap in the collection.</div>
+  <div id="heatmap-chart"></div>
+</div>
+
+<div id="sankey" class="panel">
+  <div class="panel-header">How Traditions Flow into Domains</div>
+  <div class="panel-sub">Width of each ribbon = number of books connecting that tradition to that domain.</div>
+  <div id="sankey-chart"></div>
+</div>
+
+<div id="chord" class="panel">
+  <div class="panel-header">Tradition Co-occurrence</div>
+  <div class="panel-sub">When two traditions appear on the same book, they share a ribbon. Thicker = more overlap.</div>
+  <div id="chord-chart"></div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ─── Color Palettes (warm, manuscript-inspired) ─────────────────
+
+const PALETTE = {
+  tradition: {
+    'hermetic': '#8b4513', 'alchemical': '#b8860b', 'kabbalistic': '#4a0080',
+    'neoplatonic': '#1a5276', 'rosicrucian': '#c0392b', 'masonic': '#2c3e50',
+    'theosophical': '#6c3483', 'gnostic': '#7d3c98', 'pythagorean': '#0e6655',
+    'paracelsian': '#a04000', 'sufi': '#117864', 'vedic': '#d4ac0d',
+    'buddhist': '#e67e22', 'daoist': '#1a8a5c', 'classical': '#2e4053',
+    'christian-mystical': '#922b21', 'new-thought': '#7f8c8d',
+  },
+  domain: {
+    'medicine': '#c0392b', 'astronomy': '#1a5276', 'astrology': '#6c3483',
+    'natural-philosophy': '#0e6655', 'mathematics': '#2c3e50', 'music': '#b8860b',
+    'theology': '#922b21', 'ethics': '#7d6608', 'magic': '#4a235a',
+    'language': '#5d6d7e', 'history': '#7e5109', 'natural-history': '#1e8449',
+    'art': '#a04000', 'military': '#616a6b', 'bibliography': '#839192',
+  },
+  form: {
+    'treatise': '#2e4053', 'encyclopedia': '#1a5276', 'commentary': '#6c3483',
+    'manual': '#b8860b', 'letters': '#7e5109', 'poetry': '#c0392b',
+    'dialogue': '#0e6655', 'anthology': '#922b21', 'polemic': '#a04000',
+    'scripture': '#4a235a', 'biography': '#7d6608', 'history': '#5d6d7e',
+    'catalog': '#839192',
+  },
+  sphere: {
+    'latin': '#2e4053', 'greek': '#1a5276', 'arabic': '#0e6655',
+    'hebrew': '#4a235a', 'sanskrit': '#d4ac0d', 'chinese': '#c0392b',
+    'syriac': '#922b21', 'vernacular-european': '#7e5109',
+    'celtic': '#1e8449', 'ancient-near-east': '#b8860b', 'african': '#a04000',
+  },
+  era: {
+    'ancient': '#1a5276', 'late-antique': '#6c3483', 'medieval': '#922b21',
+    'renaissance': '#b8860b', 'early-modern': '#0e6655',
+    'enlightenment': '#2c3e50', 'modern': '#7f8c8d',
+  },
+  mode: {
+    'empirical': '#1a5276', 'speculative': '#6c3483', 'revelatory': '#922b21',
+    'practical': '#b8860b', 'compilatory': '#0e6655',
+  },
+};
+
+const FACET_LABELS = {
+  tradition: 'Tradition', domain: 'Domain', form: 'Form',
+  sphere: 'Cultural Sphere', era: 'Era', mode: 'Epistemic Mode',
+};
+
+const VALUE_LABELS = {};
+// Will be populated from data
+
+let DATA = null;
+let currentFacet = 'tradition';
+
+// ─── Load Data ──────────────────────────────────────────────────
+
+fetch('facet-viz-data.json')
+  .then(r => r.json())
+  .then(data => {
+    DATA = data;
+    buildScatter();
+    buildHeatmap();
+    buildSankey();
+    buildChord();
+  });
+
+// ─── Tabs ───────────────────────────────────────────────────────
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.panel).classList.add('active');
+  });
+});
+
+// ─── Tooltip ────────────────────────────────────────────────────
+
+const tooltip = document.getElementById('tooltip');
+function showTooltip(evt, html) {
+  tooltip.innerHTML = html;
+  tooltip.classList.add('visible');
+  const x = Math.min(evt.clientX + 12, window.innerWidth - 340);
+  const y = Math.min(evt.clientY - 10, window.innerHeight - 120);
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+}
+
+// ─── 1. SCATTER ─────────────────────────────────────────────────
+
+function buildScatter() {
+  const container = document.getElementById('scatter-chart');
+  const controlsEl = document.getElementById('scatter-controls');
+  const legendEl = document.getElementById('scatter-legend');
+
+  const W = container.clientWidth;
+  const H = Math.min(600, W * 0.65);
+  const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet');
+
+  const points = DATA.scatter;
+
+  const x = d3.scaleLinear()
+    .domain(d3.extent(points, d => d.x)).nice()
+    .range([margin.left, W - margin.right]);
+
+  const y = d3.scaleLinear()
+    .domain(d3.extent(points, d => d.y)).nice()
+    .range([H - margin.bottom, margin.top]);
+
+  const dots = svg.append('g')
+    .selectAll('circle')
+    .data(points)
+    .join('circle')
+    .attr('cx', d => x(d.x))
+    .attr('cy', d => y(d.y))
+    .attr('r', 2.5)
+    .attr('fill', d => getColor(d, currentFacet))
+    .attr('fill-opacity', 0.7)
+    .attr('stroke', 'none')
+    .on('mouseover', (evt, d) => {
+      d3.select(evt.target).attr('r', 6).attr('fill-opacity', 1);
+      const tags = [d.tradition, d.domain, d.form, d.sphere, d.era, d.mode]
+        .filter(Boolean)
+        .map(t => `<span class="tag">${t}</span>`)
+        .join('');
+      showTooltip(evt, `
+        <div class="title">${d.title}</div>
+        <div class="meta">${d.author || 'Unknown'} · ${d.year || '?'} · ${d.language || '?'}</div>
+        ${d.translated > 0 ? `<div class="meta">${d.translated}% translated</div>` : ''}
+        <div class="tags">${tags}</div>
+      `);
+    })
+    .on('mouseout', (evt) => {
+      d3.select(evt.target).attr('r', 2.5).attr('fill-opacity', 0.7);
+      hideTooltip();
+    })
+    .on('click', (evt, d) => {
+      if (d.slug) window.open(`https://sourcelibrary.org/book/${d.slug}`, '_blank');
+    })
+    .style('cursor', 'pointer');
+
+  // Controls
+  const facets = ['tradition', 'domain', 'form', 'sphere', 'era', 'mode'];
+  facets.forEach(f => {
+    const btn = document.createElement('button');
+    btn.className = 'control-btn' + (f === currentFacet ? ' active' : '');
+    btn.textContent = FACET_LABELS[f];
+    btn.addEventListener('click', () => {
+      currentFacet = f;
+      controlsEl.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      dots.transition().duration(400)
+        .attr('fill', d => getColor(d, f));
+      updateLegend(f);
+    });
+    controlsEl.appendChild(btn);
+  });
+
+  function getColor(d, facet) {
+    const val = d[facet];
+    if (!val) return '#d5c8b8';
+    return PALETTE[facet]?.[val] || '#8a7a6a';
+  }
+
+  function updateLegend(facet) {
+    legendEl.innerHTML = '';
+    const palette = PALETTE[facet] || {};
+    // Count occurrences to sort
+    const counts = {};
+    points.forEach(d => { const v = d[facet]; if (v) counts[v] = (counts[v] || 0) + 1; });
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    sorted.forEach(([val, count]) => {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML = `<div class="legend-swatch" style="background:${palette[val] || '#8a7a6a'}"></div>
+        <span>${val} (${count})</span>`;
+      legendEl.appendChild(item);
+    });
+  }
+
+  updateLegend(currentFacet);
+}
+
+// ─── 2. HEATMAP ─────────────────────────────────────────────────
+
+function buildHeatmap() {
+  const container = document.getElementById('heatmap-chart');
+  const heatData = DATA.heatmap.filter(d => d.tradition !== '(none)' && d.domain !== '(none)');
+
+  const traditions = [...new Set(heatData.map(d => d.tradition))];
+  const domains = [...new Set(heatData.map(d => d.domain))];
+
+  // Sort by total count
+  const tradTotals = {};
+  const domTotals = {};
+  heatData.forEach(d => {
+    tradTotals[d.tradition] = (tradTotals[d.tradition] || 0) + d.count;
+    domTotals[d.domain] = (domTotals[d.domain] || 0) + d.count;
+  });
+  traditions.sort((a, b) => (tradTotals[b] || 0) - (tradTotals[a] || 0));
+  domains.sort((a, b) => (domTotals[b] || 0) - (domTotals[a] || 0));
+
+  const W = container.clientWidth;
+  const cellSize = Math.max(24, Math.min(40, (W - 140) / domains.length));
+  const labelW = 140;
+  const labelH = 80;
+  const H = labelH + traditions.length * cellSize + 20;
+
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', `0 0 ${W} ${H}`);
+
+  const maxCount = d3.max(heatData, d => d.count);
+  const color = d3.scaleSequential()
+    .domain([0, maxCount])
+    .interpolator(d => d3.interpolateRgb('#f0ebe3', '#4a1a0a')(Math.pow(d, 0.5)));
+
+  const lookup = {};
+  heatData.forEach(d => { lookup[d.tradition + '|' + d.domain] = d.count; });
+
+  // Domain labels (top)
+  svg.append('g')
+    .selectAll('text')
+    .data(domains)
+    .join('text')
+    .attr('class', 'heatmap-label')
+    .attr('x', (d, i) => labelW + i * cellSize + cellSize / 2)
+    .attr('y', labelH - 6)
+    .attr('text-anchor', 'end')
+    .attr('transform', (d, i) => `rotate(-45, ${labelW + i * cellSize + cellSize / 2}, ${labelH - 6})`)
+    .text(d => d);
+
+  // Tradition labels (left)
+  svg.append('g')
+    .selectAll('text')
+    .data(traditions)
+    .join('text')
+    .attr('class', 'heatmap-label')
+    .attr('x', labelW - 8)
+    .attr('y', (d, i) => labelH + i * cellSize + cellSize / 2 + 4)
+    .attr('text-anchor', 'end')
+    .text(d => d);
+
+  // Cells
+  traditions.forEach((trad, ti) => {
+    domains.forEach((dom, di) => {
+      const count = lookup[trad + '|' + dom] || 0;
+      const g = svg.append('g');
+      g.append('rect')
+        .attr('class', 'heatmap-cell')
+        .attr('x', labelW + di * cellSize)
+        .attr('y', labelH + ti * cellSize)
+        .attr('width', cellSize - 1)
+        .attr('height', cellSize - 1)
+        .attr('rx', 2)
+        .attr('fill', count > 0 ? color(count) : '#f5f0ea')
+        .on('mouseover', evt => showTooltip(evt,
+          `<div class="title">${trad} × ${dom}</div><div class="meta">${count} books</div>`))
+        .on('mouseout', hideTooltip);
+
+      if (count > 0 && cellSize >= 28) {
+        g.append('text')
+          .attr('class', 'heatmap-count')
+          .attr('x', labelW + di * cellSize + cellSize / 2 - 0.5)
+          .attr('y', labelH + ti * cellSize + cellSize / 2 + 4)
+          .attr('text-anchor', 'middle')
+          .attr('fill', count > maxCount * 0.4 ? '#faf8f4' : '#5a4a3a')
+          .text(count);
+      }
+    });
+  });
+}
+
+// ─── 3. SANKEY ──────────────────────────────────────────────────
+
+function buildSankey() {
+  const container = document.getElementById('sankey-chart');
+  const W = container.clientWidth;
+  const H = 600;
+
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', `0 0 ${W} ${H}`);
+
+  const { nodes, links } = DATA.sankey;
+
+  // d3-sankey needs numeric node indices
+  const nodeIndex = {};
+  nodes.forEach((n, i) => { nodeIndex[n.id] = i; });
+
+  const sankeyGen = d3.sankey()
+    .nodeId(d => d.index)
+    .nodeWidth(16)
+    .nodePadding(8)
+    .nodeSort(null)
+    .extent([[20, 20], [W - 20, H - 20]]);
+
+  const graph = sankeyGen({
+    nodes: nodes.map((n, i) => ({ ...n, index: i })),
+    links: links.map(l => ({
+      source: nodeIndex[l.source],
+      target: nodeIndex[l.target],
+      value: l.value,
+    })),
+  });
+
+  // Links
+  svg.append('g')
+    .selectAll('path')
+    .data(graph.links)
+    .join('path')
+    .attr('class', 'sankey-link')
+    .attr('d', d3.sankeyLinkHorizontal())
+    .attr('stroke-width', d => Math.max(1, d.width))
+    .attr('stroke', d => {
+      const sourceNode = graph.nodes[d.source.index || d.source];
+      const id = sourceNode?.id || '';
+      const trad = id.replace('t:', '');
+      return PALETTE.tradition[trad] || '#b8a898';
+    })
+    .on('mouseover', (evt, d) => {
+      const sLabel = graph.nodes[d.source.index ?? d.source]?.label || '?';
+      const tLabel = graph.nodes[d.target.index ?? d.target]?.label || '?';
+      showTooltip(evt, `<div class="title">${sLabel} → ${tLabel}</div><div class="meta">${d.value} books</div>`);
+    })
+    .on('mouseout', hideTooltip);
+
+  // Nodes
+  svg.append('g')
+    .selectAll('rect')
+    .data(graph.nodes)
+    .join('rect')
+    .attr('class', 'sankey-node')
+    .attr('x', d => d.x0)
+    .attr('y', d => d.y0)
+    .attr('width', d => d.x1 - d.x0)
+    .attr('height', d => Math.max(1, d.y1 - d.y0))
+    .attr('fill', d => {
+      const trad = d.id?.replace('t:', '');
+      const dom = d.id?.replace('d:', '');
+      return PALETTE.tradition[trad] || PALETTE.domain[dom] || '#5a4a3a';
+    })
+    .attr('rx', 2);
+
+  // Labels
+  svg.append('g')
+    .selectAll('text')
+    .data(graph.nodes)
+    .join('text')
+    .attr('class', 'sankey-label')
+    .attr('x', d => d.x0 < W / 2 ? d.x0 - 6 : d.x1 + 6)
+    .attr('y', d => (d.y0 + d.y1) / 2 + 4)
+    .attr('text-anchor', d => d.x0 < W / 2 ? 'end' : 'start')
+    .text(d => d.label)
+    .attr('font-size', '11px');
+}
+
+// ─── 4. CHORD ───────────────────────────────────────────────────
+
+function buildChord() {
+  const container = document.getElementById('chord-chart');
+  const W = container.clientWidth;
+  const size = Math.min(W, 600);
+  const outerR = size / 2 - 60;
+  const innerR = outerR - 20;
+
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', `0 0 ${size} ${size}`)
+    .append('g')
+    .attr('transform', `translate(${size/2},${size/2})`);
+
+  const { traditions, links } = DATA.chord;
+
+  // Build matrix
+  const n = traditions.length;
+  const matrix = Array.from({ length: n }, () => Array(n).fill(0));
+  const idxMap = {};
+  traditions.forEach((t, i) => { idxMap[t] = i; });
+
+  links.forEach(l => {
+    const i = idxMap[l.source];
+    const j = idxMap[l.target];
+    if (i !== undefined && j !== undefined) {
+      matrix[i][j] = l.value;
+      matrix[j][i] = l.value;
+    }
+  });
+
+  const chord = d3.chord()
+    .padAngle(0.04)
+    .sortSubgroups(d3.descending)(matrix);
+
+  const arc = d3.arc().innerRadius(innerR).outerRadius(outerR);
+  const ribbon = d3.ribbon().radius(innerR);
+
+  // Arcs
+  svg.append('g')
+    .selectAll('path')
+    .data(chord.groups)
+    .join('path')
+    .attr('d', arc)
+    .attr('fill', d => PALETTE.tradition[traditions[d.index]] || '#8a7a6a')
+    .attr('stroke', '#faf8f4')
+    .attr('stroke-width', 1);
+
+  // Ribbons
+  svg.append('g')
+    .selectAll('path')
+    .data(chord)
+    .join('path')
+    .attr('class', 'chord-ribbon')
+    .attr('d', ribbon)
+    .attr('fill', d => PALETTE.tradition[traditions[d.source.index]] || '#8a7a6a')
+    .on('mouseover', (evt, d) => {
+      showTooltip(evt, `
+        <div class="title">${traditions[d.source.index]} + ${traditions[d.target.index]}</div>
+        <div class="meta">${matrix[d.source.index][d.target.index]} books share both traditions</div>
+      `);
+    })
+    .on('mouseout', hideTooltip);
+
+  // Labels
+  svg.append('g')
+    .selectAll('text')
+    .data(chord.groups)
+    .join('text')
+    .attr('class', 'chord-label')
+    .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+    .attr('dy', '0.35em')
+    .attr('transform', d =>
+      `rotate(${(d.angle * 180 / Math.PI - 90)}) translate(${outerR + 8}) ${d.angle > Math.PI ? 'rotate(180)' : ''}`)
+    .attr('text-anchor', d => d.angle > Math.PI ? 'end' : 'start')
+    .text(d => traditions[d.index])
+    .attr('font-size', '11px');
+}
+</script>
+</body>
+</html>

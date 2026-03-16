@@ -89,7 +89,7 @@ export interface ResolvedIdentity {
 /**
  * Resolve the identity of the request sender.
  * Checks NextAuth session first, falls back to X-Visitor-ID header.
- * Used by engagement APIs (likes, bookshelf) that accept both auth modes.
+ * Used by engagement APIs (likes) that accept both auth modes.
  */
 export async function resolveIdentity(request: NextRequest): Promise<ResolvedIdentity | null> {
   // Try NextAuth session first

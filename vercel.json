@@ -2,10 +2,6 @@
   "regions": ["fra1"],
   "crons": [
     {
-      "path": "/api/cron/archive-ocr",
-      "schedule": "0 */4 * * *"
-    },
-    {
       "path": "/api/cron/social-post",
       "schedule": "0 */3 * * *"
     },

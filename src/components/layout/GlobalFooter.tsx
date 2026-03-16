@@ -25,7 +25,7 @@ const NAV_COLUMNS = [
     title: 'About',
     links: [
       { label: 'About', href: '/about' },
-      { label: 'Blog', href: '/blog' },
+      { label: 'Research Notes', href: '/blog' },
       { label: 'Press', href: '/press' },
       { label: 'Privacy', href: '/privacy' },
       { label: 'Cookie Settings', href: '#cookie-settings' },
@@ -51,17 +51,9 @@ const PARTNERS = [
 ];
 
 export default function GlobalFooter() {
-  const [hasBookshelf, setHasBookshelf] = useState(false);
   const [hasFavorites, setHasFavorites] = useState(false);
 
   useEffect(() => {
-    try {
-      const cache = localStorage.getItem('sl_bookshelf_cache');
-      if (cache && Object.keys(JSON.parse(cache)).length > 0) {
-        setHasBookshelf(true);
-      }
-    } catch { /* ignore */ }
-
     try {
       const likes = localStorage.getItem('sl_visitor_likes');
       if (likes && JSON.parse(likes).length > 0) {
@@ -142,13 +134,6 @@ export default function GlobalFooter() {
                   </li>
                 ))}
                 {/* Conditional personal links under Library */}
-                {col.title === 'Library' && hasBookshelf && (
-                  <li>
-                    <Link href="/bookshelf" className="text-sm text-white/50 hover:text-white transition-colors">
-                      My Bookshelf
-                    </Link>
-                  </li>
-                )}
                 {col.title === 'Library' && hasFavorites && (
                   <li>
                     <Link href="/favorites" className="text-sm text-white/50 hover:text-white transition-colors">

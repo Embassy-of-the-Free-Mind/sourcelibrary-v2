@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'We Spent a Day Counting What Hasn\'t Been Translated - Blog - Source Library',
+  title: 'We Spent a Day Counting What Hasn\'t Been Translated - Research Notes - Source Library',
   description: 'We downloaded the entire Library of Congress catalog, scraped a Renaissance bibliography, and matched it all against 1.6 million early modern editions. Here\'s what happened.',
   openGraph: {
     title: 'We Spent a Day Counting What Hasn\'t Been Translated',
@@ -36,7 +36,7 @@ export default function CountingTheGapPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 

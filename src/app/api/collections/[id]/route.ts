@@ -23,6 +23,7 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const sort = searchParams.get('sort') || 'year_asc';
     const language = searchParams.get('language');
+    const q = searchParams.get('q')?.trim();
     const limit = Math.min(parseInt(searchParams.get('limit') || '60'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -42,6 +43,15 @@ export async function GET(
       pages_count: { $gt: 0 },
     };
     if (language) filter.language = language;
+    if (q) {
+      // Search title, author, display_title with case-insensitive regex
+      const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      filter.$or = [
+        { title: { $regex: escaped, $options: 'i' } },
+        { display_title: { $regex: escaped, $options: 'i' } },
+        { author: { $regex: escaped, $options: 'i' } },
+      ];
+    }
 
     // Sort
     const sortMap: Record<string, Record<string, 1 | -1>> = {
@@ -67,8 +77,10 @@ export async function GET(
       quality_score: 1,
     };
 
-    // Use cached book_count from collection doc instead of expensive countDocuments
-    const total = (collection.book_count as number) || 0;
+    // Use cached count unless filtering narrows results
+    const total = (q || language)
+      ? await db.collection('books').countDocuments(filter)
+      : (collection.book_count as number) || 0;
 
     const [books, highlights] = await Promise.all([
       db.collection('books')

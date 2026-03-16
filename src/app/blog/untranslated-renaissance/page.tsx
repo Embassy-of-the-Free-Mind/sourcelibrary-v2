@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Blog - Source Library',
+  title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Research Notes - Source Library',
   description: 'We built the first draft of a translation census — matching 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
   openGraph: {
     title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
@@ -36,7 +36,7 @@ export default function UntranslatedRenaissancePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All posts
+          All notes
         </Link>
       </div>
 
