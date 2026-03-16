@@ -63,7 +63,7 @@ async function getFeaturedCollections() {
 
   // Pick 5 random collections that have enough books
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 5 } } },
+    { $match: { book_count: { $gte: 5 }, parent: { $exists: false }, type: { $ne: 'curated' } } },
     { $sample: { size: 5 } },
   ]).toArray();
 
@@ -165,7 +165,7 @@ async function getFeaturedCollections() {
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({ parent: { $exists: false } }).toArray();
+  const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' } }).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];

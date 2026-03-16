@@ -38,7 +38,10 @@ const PINNED_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance
 
 async function fetchCollections(): Promise<CollectionDoc[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({ parent: { $exists: false } }).toArray();
+  const docs = await db.collection('collections').find({
+    parent: { $exists: false },
+    type: { $ne: 'curated' },
+  }).toArray();
   const all = docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
 
   const pinned = PINNED_SLUGS.map(s => all.find(c => c.slug === s)).filter(Boolean) as CollectionDoc[];
