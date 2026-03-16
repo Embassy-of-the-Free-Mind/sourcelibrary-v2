@@ -240,10 +240,19 @@ async function fetchCollectionData(id: string) {
   const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
     withTimeout(
       db.collection('books')
-        .find(filter, { projection })
+        .find(filter, { projection: { ...projection, collection_scores: 1 } })
         .sort({ read_count: -1, title: 1 })
         .limit(COMPACT_LIMIT)
-        .toArray(),
+        .toArray()
+        .then(docs => {
+          // Re-sort by collection relevance score if available
+          return docs.sort((a, b) => {
+            const aScore = a.collection_scores?.[id]?.relevance ?? 0;
+            const bScore = b.collection_scores?.[id]?.relevance ?? 0;
+            if (bScore !== aScore) return bScore - aScore;
+            return (b.read_count || 0) - (a.read_count || 0);
+          }).map(({ collection_scores, ...rest }) => rest);
+        }),
       15000, [],
     ),
     curatedBookIds.length > 0

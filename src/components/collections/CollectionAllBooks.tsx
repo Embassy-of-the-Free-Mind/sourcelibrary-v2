@@ -48,7 +48,7 @@ export default function CollectionAllBooks({
   const [books, setBooks] = useState<BookItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetchedTotal, setFetchedTotal] = useState(total);
-  const [sort, setSort] = useState('popular');
+  const [sort, setSort] = useState('relevance');
   const [language, setLanguage] = useState('');
   const [offset, setOffset] = useState(0);
 
