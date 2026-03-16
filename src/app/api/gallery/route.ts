@@ -138,23 +138,24 @@ export async function GET(request: NextRequest) {
     }
 
     if (searchQuery) {
-      const pattern = escapeAndNormalizeRegex(searchQuery);
-      filter.$or = [
-        { description: { $regex: pattern, $options: 'i' } },
-        { museum_description: { $regex: pattern, $options: 'i' } },
-        { 'metadata.subjects': { $regex: pattern, $options: 'i' } },
-        { 'metadata.figures': { $regex: pattern, $options: 'i' } },
-        { 'metadata.symbols': { $regex: pattern, $options: 'i' } },
-        { book_title: { $regex: pattern, $options: 'i' } },
-        { book_author: { $regex: pattern, $options: 'i' } },
-      ];
+      // Use $text index (covers description, book_title, book_author)
+      // instead of 7-branch regex scan across 73k docs
+      filter.$text = { $search: searchQuery };
     }
+
+    // When text searching, sort by relevance first, then quality
+    const sortOrder: Record<string, any> = searchQuery
+      ? { score: { $meta: 'textScore' }, gallery_quality: -1 }
+      : { gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 };
+    const projection: Record<string, any> = searchQuery
+      ? { _id: 0, score: { $meta: 'textScore' } }
+      : { _id: 0 };
 
     // Run query and count in parallel
     const [items, total] = await Promise.all([
       db.collection('gallery_images')
-        .find(filter, { projection: { _id: 0 } })
-        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+        .find(filter, { projection })
+        .sort(sortOrder)
         .skip(offset)
         .limit(limit)
         .toArray(),
