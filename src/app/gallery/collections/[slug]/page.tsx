@@ -62,6 +62,14 @@ async function resolveImages(db: any, imageIds: string[]): Promise<CollectionIma
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const docMap = new Map<string, any>(docs.map((d: any) => [d.id, d]));
 
+  // Batch-fetch like counts for all images
+  const likeDocs = await db.collection('likes').aggregate([
+    { $match: { target_type: 'image', target_id: { $in: imageIds } } },
+    { $group: { _id: '$target_id', count: { $sum: 1 } } },
+  ]).toArray();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const likesMap = new Map<string, number>(likeDocs.map((ld: any) => [ld._id as string, ld.count as number]));
+
   const results: CollectionImageProps[] = [];
   for (const id of imageIds) {
     const doc = docMap.get(id);
@@ -75,6 +83,7 @@ async function resolveImages(db: any, imageIds: string[]): Promise<CollectionIma
       thumbnailUrl: doc.thumbnail_url,
       extractedUrl: doc.extracted_url,
       galleryQuality: doc.gallery_quality,
+      likeCount: likesMap.get(doc.id) ?? 0,
     });
   }
   return results;
