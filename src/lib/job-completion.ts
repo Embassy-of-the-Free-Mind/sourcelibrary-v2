@@ -11,6 +11,7 @@
 import { getDb } from '@/lib/mongodb';
 import type { PageJobType } from '@/lib/types/job';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
+import { queuePreviewTranslation } from '@/lib/preview-translate';
 
 /** Type alias for the Db returned by getDb() */
 type Db = Awaited<ReturnType<typeof getDb>>;
@@ -150,6 +151,17 @@ async function handleJobCompletion(
       );
 
       console.log(`${logPrefix} Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
+
+      // If this was a preview OCR job, automatically queue preview translation
+      const completedJob = await jobs.findOne({ id: jobId }, { projection: { config: 1, book_title: 1 } });
+      if (completedJob?.config?.preview) {
+        console.log(`${logPrefix} Preview OCR complete for ${bookId} — triggering preview translation`);
+        // Non-blocking — fire and forget
+        queuePreviewTranslation(db, bookId, completedJob.book_title || '').catch(err => {
+          console.error(`${logPrefix} Preview translation trigger failed for ${bookId}:`, err);
+        });
+      }
+
       break;
     }
 
