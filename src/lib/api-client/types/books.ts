@@ -195,5 +195,7 @@ export type BookDownloadFormats =
   'epub-both' |
   'epub-parallel' |
   'epub-facsimile' |
+  'epub-scholarly' |
+  'epub-bilingual' |
   'epub-images' |
   'images-zip'

@@ -29,6 +29,7 @@ import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import ShareButton from '@/components/ui/ShareButton';
+import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
@@ -1046,7 +1047,7 @@ export default function TranslationEditor({
                 </div>
               </AuthCheck>
 
-              {/* Like + Share */}
+              {/* Like + Share + Cite */}
               <div className="flex items-center">
                 <LikeButton
                   targetType="page"
@@ -1063,6 +1064,19 @@ export default function TranslationEditor({
                   url={`https://sourcelibrary.org/book/${(book as any).slug || book.id}?page=${page.page_number}`}
                   doi={book.doi}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full"
+                />
+                <CiteButton
+                  bookId={book.id}
+                  title={book.title}
+                  displayTitle={book.display_title}
+                  author={book.author || 'Anonymous'}
+                  year={book.published}
+                  publisher={book.publisher}
+                  placePublished={book.place_published}
+                  language={book.language}
+                  doi={book.doi}
+                  pageNumber={page.page_number}
+                  className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full text-sm"
                 />
               </div>
             </div>
