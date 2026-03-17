@@ -1410,10 +1410,10 @@ export default function TranslationEditor({
                       >
                         <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
                       </HighlightSelection>
-                    ) : ocrText && ['blank', 'cover', 'illustration', 'map', 'diagram'].includes(page.page_type || '') ? (
+                    ) : ocrText && ['blank', 'cover', 'illustration', 'frontispiece', 'map', 'diagram'].includes(page.page_type || '') ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
-                          {page.page_type === 'blank' ? 'Blank page' : `${(page.page_type || '').charAt(0).toUpperCase() + (page.page_type || '').slice(1)} page`} — no translation needed.
+                          {page.page_type === 'blank' ? 'Blank page' : `${(page.page_type || '').charAt(0).toUpperCase() + (page.page_type || '').slice(1)}`}
                         </p>
                       </div>
                     ) : ocrText ? (
