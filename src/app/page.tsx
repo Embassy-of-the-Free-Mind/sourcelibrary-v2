@@ -323,10 +323,10 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: number; firstTranslationCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number }> {
   // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
   // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-17 (post-curation).
-  return { totalBooks: 4469, translatedCount: 4469, firstTranslationCount: 1977 };
+  return { totalBooks: 4469, translatedToEnglish: 3746, firstTranslationCount: 1977 };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
@@ -446,7 +446,7 @@ export default async function HomePage() {
   return (
     <SocietyGate>
       <div className="min-h-screen">
-        <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedCount} />
+        <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedToEnglish} />
 
         {/* Video Hero — same as current homepage */}
         <HeroSection />
@@ -460,7 +460,7 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  {counts.translatedCount.toLocaleString('en-US')} books translated &middot; {counts.firstTranslationCount.toLocaleString('en-US')} translated for the first time
+                  {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.translatedToEnglish.toLocaleString('en-US')} translated to English &middot; {counts.firstTranslationCount.toLocaleString('en-US')} for the first time
                 </p>
               </div>
               <Link
