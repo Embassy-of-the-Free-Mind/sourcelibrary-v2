@@ -555,6 +555,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           'translation.updated_at': 1,
           'summary.updated_at': 1,
           display_brightness: 1,
+          page_type: 1,
         },
         maxTimeMS: 8000,
       })

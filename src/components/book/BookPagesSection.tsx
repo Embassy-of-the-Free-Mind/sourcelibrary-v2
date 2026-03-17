@@ -593,9 +593,13 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       {/* Reorder Mode Info */}
       {reorderMode && <ReorderModePanel />}
 
-      {/* Pages Grid */}
+      {/* Pages Grid — hide leading blank pages in normal browsing mode */}
       <PagesGrid
-        pages={pages}
+        pages={batchMode || reorderMode ? pages : (() => {
+          // Skip leading blank pages (before first substantive content)
+          const firstSubstantive = pages.findIndex(p => p.page_type !== 'blank');
+          return firstSubstantive > 0 ? pages.slice(firstSubstantive) : pages;
+        })()}
         bookId={bookId}
         batchMode={batchMode}
         reorderMode={reorderMode}

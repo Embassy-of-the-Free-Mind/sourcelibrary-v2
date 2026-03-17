@@ -89,6 +89,19 @@ export default function PageEditorClient({
     });
   }, [fetchPageData]);
 
+  // Auto-skip leading blank pages: if landed on a blank page before any substantive content,
+  // navigate to the first non-blank page (mirrors Google Books / IA behavior)
+  useEffect(() => {
+    if (initialPage.page_type !== 'blank') return;
+    const firstSubstantive = pageList.findIndex(p => p.page_type !== 'blank');
+    if (firstSubstantive <= 0) return;
+    const currentIdx = pageList.findIndex(p => p.id === initialPage.id);
+    if (currentIdx >= 0 && currentIdx < firstSubstantive) {
+      handleNavigate(pageList[firstSubstantive].id);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Prefetch nearby pages on initial mount
   useEffect(() => {
     const idx = pageList.findIndex(p => p.id === initialPage.id);
