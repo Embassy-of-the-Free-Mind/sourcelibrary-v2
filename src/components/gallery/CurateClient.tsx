@@ -517,7 +517,7 @@ export default function CurateClient() {
     }
     setLikedIds(initialLiked);
 
-    fetch('/api/collections')
+    fetch('/api/collections?includeChildren=true')
       .then(res => res.json())
       .then(data => {
         const arr = Array.isArray(data) ? data : data?.collections;
