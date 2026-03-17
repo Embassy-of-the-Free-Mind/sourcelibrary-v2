@@ -31,6 +31,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const CRON_SECRET = process.env.CRON_SECRET;
 const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 const SQS_TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
+const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL;
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -1621,10 +1622,15 @@ async function run() {
       });
       console.log(`  Active image jobs: ${activeImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
-      if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+      if (!SQS_IMAGE_EXTRACTION_QUEUE_URL) {
+        console.log('  SKIP: SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL not configured');
+      } else if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+        const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
-          .sort({ hidden: 1 })
+          .sort({ processing_priority: -1, hidden: 1 })
           .project({ id: 1, title: 1 })
           .limit(IMAGE_SUBMIT_LIMIT)
           .toArray();
@@ -1633,29 +1639,68 @@ async function run() {
 
         for (const book of readyForImages) {
           try {
-            if (DRY_RUN) {
-              console.log(`  Would submit image extraction: ${book.title}`);
+            // Find pages with image candidates (same logic as Vercel cron)
+            const bookPages = await db.collection('pages')
+              .find({
+                book_id: book.id,
+                $or: [
+                  { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+                  { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>' } },
+                ],
+              }, { projection: { id: 1 } })
+              .toArray();
+
+            if (bookPages.length === 0) {
+              // No image candidates — skip straight to images_complete
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+              log.images_advanced++;
+              console.log(`  No image candidates, skipped: ${book.title}`);
               continue;
             }
 
-            // Use the queue-books API endpoint (needs SQS access)
-            const res = await fetch(`${BASE_URL}/api/jobs/queue-books`, {
-              method: 'POST',
-              headers: headers(),
-              body: JSON.stringify({ bookIds: [book.id], action: 'image_extraction' }),
+            if (DRY_RUN) {
+              console.log(`  Would submit image extraction: ${book.title} (${bookPages.length} pages)`);
+              continue;
+            }
+
+            const pageIds = bookPages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            // Create job record
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'image_extraction',
+              status: 'pending',
+              book_id: book.id,
+              book_title: book.title,
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: { page_ids: pageIds },
+              created_at: new Date(),
+              updated_at: new Date(),
             });
 
-            if (res.ok) {
-              const data = await res.json();
-              const jobId = data.jobs?.[0]?.jobId || data.jobId;
-              await setPipelineStatus(db, book.id, 'images_submitted', {
-                image_extraction_job_id: jobId,
-              });
-              log.images_submitted++;
-              console.log(`  Image extraction submitted: ${book.title}`);
-            } else {
-              log.errors.push(`Images submit ${book.id}: HTTP ${res.status}`);
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { job: { type: 'image_extraction', job_id: jobId } } }
+            );
+
+            // Enqueue pages to SQS in batches of 10
+            for (let i = 0; i < pageIds.length; i += 10) {
+              const batch = pageIds.slice(i, i + 10);
+              await sqsClient.send(new SendMessageBatchCommand({
+                QueueUrl: SQS_IMAGE_EXTRACTION_QUEUE_URL,
+                Entries: batch.map((pageId, idx) => ({
+                  Id: String(idx),
+                  MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
+                })),
+              }));
             }
+
+            await setPipelineStatus(db, book.id, 'images_submitted', {
+              image_extraction_job_id: jobId,
+            });
+            log.images_submitted++;
+            console.log(`  Image extraction submitted: ${book.title} (${pageIds.length} pages)`);
 
             await sleep(API_DELAY_MS);
           } catch (err) {
