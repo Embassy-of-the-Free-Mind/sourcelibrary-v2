@@ -43,8 +43,10 @@ async function run() {
   let noImages = 0;
   let noBooks = 0;
 
+  // Phase 1: Collect candidate images for each collection
+  const pending = []; // { slug, name, images: [] }
+
   for (const col of collections) {
-    // Get book IDs in this collection
     const bookIds = await db.collection('books').distinct('id', {
       collections: col.slug,
       deleted: { $ne: true },
@@ -96,7 +98,7 @@ async function run() {
     ]).toArray();
 
     if (images.length === 0) {
-      // Fallback: use book thumbnails as featured images
+      // Fallback: use book thumbnails
       const booksWithThumbs = await db.collection('books').find({
         id: { $in: bookIds },
         thumbnail: { $exists: true, $ne: null, $ne: '' },
@@ -106,20 +108,17 @@ async function run() {
         .toArray();
 
       if (booksWithThumbs.length > 0) {
-        const fallbackImages = booksWithThumbs.map(b => ({
-          image_url: b.thumbnail,
-          book_id: b.id,
-          book_title: b.title,
-          type: 'thumbnail-fallback',
-        }));
-
-        if (!DRY_RUN) {
-          await db.collection('collections').updateOne(
-            { slug: col.slug },
-            { $set: { featured_images: fallbackImages } }
-          );
-        }
-        console.log(`  ${col.name}: ${fallbackImages.length} fallback thumbnails (no gallery images)`);
+        pending.push({
+          slug: col.slug,
+          name: col.name,
+          images: booksWithThumbs.map(b => ({
+            image_url: b.thumbnail,
+            book_id: b.id,
+            book_title: b.title,
+            type: 'thumbnail-fallback',
+          })),
+        });
+        console.log(`  ${col.name}: ${booksWithThumbs.length} fallback thumbnails`);
         populated++;
       } else {
         console.log(`  ${col.name}: no images at all (${bookIds.length} books)`);
@@ -128,20 +127,57 @@ async function run() {
       continue;
     }
 
-    if (!DRY_RUN) {
-      await db.collection('collections').updateOne(
-        { slug: col.slug },
-        { $set: { featured_images: images } }
-      );
-    }
+    pending.push({ slug: col.slug, name: col.name, images });
     console.log(`  ${col.name}: ${images.length} gallery images`);
     populated++;
+  }
+
+  // Phase 2: Deduplicate hero images across collections.
+  // Each collection's first image is the thumbnail shown on /collections.
+  // Reorder so every collection gets a unique hero where possible.
+  console.log('\n--- Deduplicating hero images ---');
+  const getUrl = (img) => img?.extracted_url || img?.image_url || img?.thumbnail_url || null;
+
+  // Sort by fewest candidates first (most constrained pick first)
+  pending.sort((a, b) => a.images.length - b.images.length);
+
+  const usedHeroUrls = new Set();
+  let reordered = 0;
+
+  for (const col of pending) {
+    const urls = col.images.map(getUrl).filter(Boolean);
+    // Find first unused URL
+    let chosenIdx = urls.findIndex(u => !usedHeroUrls.has(u));
+    if (chosenIdx === -1) chosenIdx = 0; // all taken, keep first
+
+    if (chosenIdx > 0) {
+      // Move chosen image to front
+      const [chosen] = col.images.splice(chosenIdx, 1);
+      col.images.unshift(chosen);
+      reordered++;
+    }
+
+    const heroUrl = getUrl(col.images[0]);
+    if (heroUrl) usedHeroUrls.add(heroUrl);
+  }
+
+  console.log(`Reordered ${reordered} collections to avoid duplicate thumbnails`);
+
+  // Phase 3: Write to DB
+  if (!DRY_RUN) {
+    for (const col of pending) {
+      await db.collection('collections').updateOne(
+        { slug: col.slug },
+        { $set: { featured_images: col.images } }
+      );
+    }
   }
 
   console.log('\n--- Results ---');
   console.log(`Populated: ${populated}${DRY_RUN ? ' (dry run)' : ''}`);
   console.log(`No images available: ${noImages}`);
   console.log(`No books assigned: ${noBooks}`);
+  console.log(`Hero images reordered: ${reordered}`);
 
   await client.close();
 }
