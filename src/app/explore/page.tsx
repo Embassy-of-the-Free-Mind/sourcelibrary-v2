@@ -45,7 +45,7 @@ async function fetchExploreStats() {
     db.collection('entities').countDocuments({
       wikidata_id: { $exists: true, $ne: null },
     }),
-    db.collection('books').countDocuments({ hidden: { $ne: true } }),
+    db.collection('books').countDocuments({ hidden: { $ne: true }, pages_translated: { $gt: 0 } }),
     db.collection('entities').aggregate([
       { $group: { _id: '$type', count: { $sum: 1 } } },
     ]).toArray(),

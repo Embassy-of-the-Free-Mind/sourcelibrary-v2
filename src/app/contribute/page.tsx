@@ -16,7 +16,7 @@ async function getStats() {
   try {
     const db = await getDb();
     const [totalBooks, translatedCount, totalPages, galleryCount, languageResult] = await Promise.all([
-      db.collection('books').countDocuments(),
+      db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
       db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
       db.collection('pages').estimatedDocumentCount(),
       db.collection('gallery_images').estimatedDocumentCount(),

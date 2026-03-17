@@ -80,6 +80,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
     status: { $ne: 'deleted' },
     hidden: { $ne: true },
     pages_count: { $gt: 0 },
+    pages_translated: { $gt: 0 },
   };
   if (language) filter.language = language;
   if (q && q.length >= 2) {
@@ -109,6 +110,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
     status: { $ne: 'deleted' },
     hidden: { $ne: true },
     pages_count: { $gt: 0 },
+    pages_translated: { $gt: 0 },
   };
 
   // Get a sample of book IDs for gallery image lookup

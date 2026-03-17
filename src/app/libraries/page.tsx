@@ -40,6 +40,7 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
         'image_source.provider': { $exists: true, $nin: ['user_upload', 'other', 'library', 'iiif'] },
         status: { $ne: 'deleted' },
         pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
       },
     },
     {

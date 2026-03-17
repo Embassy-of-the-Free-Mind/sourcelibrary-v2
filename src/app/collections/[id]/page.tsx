@@ -212,6 +212,7 @@ async function fetchCollectionData(id: string) {
     status: { $ne: 'deleted' },
     hidden: { $ne: true },
     pages_count: { $gt: 0 },
+    pages_translated: { $gt: 0 },
   };
 
   const projection = {

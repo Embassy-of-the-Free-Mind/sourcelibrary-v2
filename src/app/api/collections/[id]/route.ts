@@ -41,6 +41,7 @@ export async function GET(
       status: { $ne: 'deleted' },
       hidden: { $ne: true },
       pages_count: { $gt: 0 },
+      pages_translated: { $gt: 0 },
     };
     if (language) filter.language = language;
     if (q) {
