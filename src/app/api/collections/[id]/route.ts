@@ -78,10 +78,8 @@ export async function GET(
       quality_score: 1,
     };
 
-    // Use cached count unless filtering narrows results
-    const total = (q || language)
-      ? await db.collection('books').countDocuments(filter)
-      : (collection.book_count as number) || 0;
+    // Always count from filtered query — cached book_count includes untranslated
+    const total = await db.collection('books').countDocuments(filter);
 
     const [books, highlights] = await Promise.all([
       db.collection('books')

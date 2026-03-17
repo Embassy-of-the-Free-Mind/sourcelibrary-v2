@@ -65,6 +65,7 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
         'sacred_text_type.type': { $in: ['scripture', 'canonical_commentary', 'liturgical'] },
         status: { $ne: 'deleted' },
         pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
       });
 
       // Find a hero image: best gallery image from this tradition's books

@@ -229,9 +229,11 @@ async function fetchCollectionData(id: string) {
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // Use collection doc's book_count instead of expensive countDocuments.
-  // The client component re-fetches the accurate filtered total when expanded.
-  const total = collection.book_count || 0;
+  // Count translated books only — cached book_count includes untranslated.
+  const total = await withTimeout(
+    db.collection('books').countDocuments(filter),
+    8000, collection.book_count || 0,
+  );
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
@@ -306,7 +308,7 @@ async function fetchCollectionData(id: string) {
     mentionedBookIds.length > 0
       ? withTimeout(
           db.collection('books')
-            .find({ id: { $in: mentionedBookIds } }, { projection })
+            .find({ id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 } }, { projection })
             .toArray(),
           8000, [],
         )
