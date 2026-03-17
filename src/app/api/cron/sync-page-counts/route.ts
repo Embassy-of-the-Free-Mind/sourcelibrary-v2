@@ -147,6 +147,7 @@ export async function GET(request: NextRequest) {
         status: { $ne: 'deleted' },
         hidden: { $ne: true },
         pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
       });
       if ((col.book_count || 0) !== liveCount) {
         collectionOps.push({

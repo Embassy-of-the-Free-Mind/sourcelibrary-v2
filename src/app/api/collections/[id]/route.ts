@@ -78,8 +78,11 @@ export async function GET(
       quality_score: 1,
     };
 
-    // Always count from filtered query — cached book_count includes untranslated
-    const total = await db.collection('books').countDocuments(filter);
+    // Use cached book_count — sync-page-counts cron keeps this in sync.
+    // Only do a live count when user is filtering by search or language.
+    const total = (q || language)
+      ? await db.collection('books').countDocuments(filter)
+      : (collection.book_count as number) || 0;
 
     const [books, highlights] = await Promise.all([
       db.collection('books')

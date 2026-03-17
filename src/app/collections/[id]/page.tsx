@@ -229,11 +229,9 @@ async function fetchCollectionData(id: string) {
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // Count translated books only — cached book_count includes untranslated.
-  const total = await withTimeout(
-    db.collection('books').countDocuments(filter),
-    8000, collection.book_count || 0,
-  );
+  // Use cached book_count — sync-page-counts cron updates this every 6h
+  // to reflect only translated books (pages_translated > 0).
+  const total = collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
