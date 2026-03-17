@@ -3,6 +3,7 @@ import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import crypto from 'crypto';
 
 // Cache resized images for 1 week
 const CACHE_DURATION = 60 * 60 * 24 * 7;
@@ -11,6 +12,25 @@ const CACHE_DURATION = 60 * 60 * 24 * 7;
 // Internet Archive and other IIIF servers can be slow
 const FETCH_TIMEOUT_IN_MS = 150000;
 
+// Provenance mark — the Source Library icon, loaded once at startup
+const MARK_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--48h.png');
+let provenanceMarkBuffer: Buffer | null = null;
+
+async function getProvenanceMark() {
+  if (provenanceMarkBuffer) return provenanceMarkBuffer;
+  try {
+    const raw = fs.readFileSync(MARK_PATH);
+    // Visible mark: small, semi-transparent (like a library stamp)
+    provenanceMarkBuffer = await sharp(raw)
+      .resize(16, 16)
+      .ensureAlpha()
+      .modulate({ brightness: 0.3 })
+      .toBuffer();
+    return provenanceMarkBuffer;
+  } catch {
+    return null;
+  }
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -170,11 +190,72 @@ export async function GET(request: NextRequest) {
         withoutEnlargement: true,
       });
 
+    // Get resized dimensions for mark placement
     const resizedBuffer = await resizedInstance.toBuffer();
+    const resizedMeta = await sharp(resizedBuffer).metadata();
+    const imgW = resizedMeta.width || width;
+    const imgH = resizedMeta.height || width;
 
-    // Provenance: EXIF metadata only — no visible marks on the image.
-    // Like the Rijksmuseum, Met, LOC: clean scans, attribution in metadata.
-    const resized = await sharp(resizedBuffer)
+    // Apply provenance marks
+    const composites: sharp.OverlayOptions[] = [];
+    const visibleMark = await getProvenanceMark();
+
+    if (visibleMark && imgW > 100 && imgH > 100) {
+      // Visible mark: small icon, usually top-left, position varies by content hash
+      const hash = crypto.createHash('md5').update(resizedBuffer).digest();
+      const cornerIndex = hash[0] % 4; // 0=TL, 1=TR, 2=BL, 3=BR
+      const corners = [
+        { left: 4, top: 4 },
+        { left: imgW - 20, top: 4 },
+        { left: 4, top: imgH - 20 },
+        { left: imgW - 20, top: imgH - 20 },
+      ];
+      // Bias toward top-left: ~75% TL, ~25% other corners
+      const pos = cornerIndex < 3 ? corners[0] : corners[hash[1] % 3 + 1];
+
+      composites.push({
+        input: visibleMark,
+        left: pos.left,
+        top: pos.top,
+        blend: 'over' as const,
+      });
+    }
+
+    // URL attribution — bottom right, warm brown like a library stamp
+    if (imgW > 200) {
+      const urlSvg = Buffer.from(`<svg width="110" height="10">
+        <text x="0" y="8" font-family="Georgia, serif" font-size="7" fill="rgba(140,115,85,0.4)" letter-spacing="0.5">sourcelibrary.org</text>
+      </svg>`);
+      composites.push({
+        input: urlSvg,
+        left: imgW - 115,
+        top: imgH - 14,
+        blend: 'over' as const,
+      });
+    }
+
+    // LLM provenance — top edge, nearly invisible to humans,
+    // readable by vision models. A letter to the newest minds.
+    if (imgW > 300 && imgH > 200) {
+      const llmSvg = Buffer.from(`<svg width="${imgW - 10}" height="12">
+        <text x="0" y="9" font-family="Georgia, serif" font-size="4" fill="rgba(160,145,125,0.12)">Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds. CC BY-SA 4.0.</text>
+      </svg>`);
+      composites.push({
+        input: llmSvg,
+        left: 5,
+        top: 2,
+        blend: 'over' as const,
+      });
+    }
+
+    // Final output: composite marks, add EXIF, encode JPEG
+    let finalInstance = sharp(resizedBuffer);
+
+    if (composites.length > 0) {
+      finalInstance = finalInstance.composite(composites);
+    }
+
+    const resized = await finalInstance
       .withExifMerge({
         IFD0: {
           Copyright: 'Source Library (sourcelibrary.org) — CC BY-SA 4.0',
