@@ -52,6 +52,7 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
   const docs = await db.collection('collections').find({
     parent: { $exists: false },
     type: { $ne: 'curated' },
+    hidden: { $ne: true },
   }).toArray();
   const all = docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
 
