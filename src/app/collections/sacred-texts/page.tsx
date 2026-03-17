@@ -11,11 +11,11 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',
   description:
-    'The foundational scriptures of the world\'s spiritual traditions — translated and freely accessible. From the Vedas to the Quran, from the Pali Canon to the Zend-Avesta.',
+    'The foundational scriptures of the world\'s spiritual traditions — from the Vedas and Upanishads to the Bible and Quran, from Sumerian hymns to Buddhist sutras and Zoroastrian texts.',
   openGraph: {
     title: 'Sacred Texts - Source Library',
     description:
-      'The foundational scriptures of the world\'s spiritual traditions — translated and freely accessible.',
+      'The foundational scriptures of the world\'s spiritual traditions — from Sumerian hymns to the Vedas, Bible, Quran, and beyond.',
     type: 'website',
     url: 'https://sourcelibrary.org/collections/sacred-texts',
   },
@@ -200,7 +200,7 @@ export default async function SacredTextsPortal() {
           </h1>
 
           <p className="text-lg sm:text-xl text-white/60 max-w-2xl leading-relaxed mb-8">
-            The foundational scriptures of the world&rsquo;s spiritual traditions — translated and freely accessible.
+            The foundational scriptures of the world&rsquo;s spiritual traditions — from Sumerian hymns to the Vedas, Bible, Quran, and beyond.
           </p>
 
           <div className="flex flex-wrap gap-8 text-sm text-white/40">
