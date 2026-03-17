@@ -20,6 +20,8 @@ export interface IIIFManifest {
   attribution?: string | { '@value'?: string; '@language'?: string }[];
   requiredStatement?: { label?: Record<string, string[]>; value?: Record<string, string[]> }; // v3
   logo?: string | { '@id'?: string };
+  navDate?: string; // v3 date
+  metadata?: Array<{ label: string | Record<string, string[]>; value: string | Record<string, string[]> }>; // v2/v3
   sequences?: Array<{
     canvases?: Array<IIIFCanvas>;
   }>;
@@ -80,6 +82,37 @@ export function extractAttribution(
     const vals = requiredStatement.value['en'] || Object.values(requiredStatement.value)[0];
     if (Array.isArray(vals) && vals[0]) return vals[0].replace(/<[^>]*>/g, '').trim();
   }
+  return null;
+}
+
+/**
+ * Extract a publication date from a IIIF manifest.
+ * Checks navDate (v3), then metadata array entries like "Date", "Publication date", etc.
+ */
+export function extractDate(manifest: IIIFManifest): string | null {
+  // v3 navDate (ISO 8601, e.g. "1665-01-01T00:00:00Z")
+  if (manifest.navDate) {
+    const year = manifest.navDate.match(/^(\d{4})/);
+    if (year) return year[1];
+  }
+
+  // metadata array — look for date-like labels
+  if (Array.isArray(manifest.metadata)) {
+    const dateLabels = ['date', 'publication date', 'date of publication', 'year', 'issued', 'created'];
+    for (const entry of manifest.metadata) {
+      const label = extractLabel(entry.label as string | Record<string, string[]>)?.toLowerCase();
+      if (label && dateLabels.some(d => label.includes(d))) {
+        const value = extractLabel(entry.value as string | Record<string, string[]>);
+        if (value) {
+          // Extract a 4-digit year from the value
+          const yearMatch = value.match(/\b(\d{4})\b/);
+          if (yearMatch) return yearMatch[1];
+          return value.trim();
+        }
+      }
+    }
+  }
+
   return null;
 }
 
@@ -269,6 +302,7 @@ export async function importBookFromIIIF(
   const pageImages = canvases.map(extractCanvasImage);
 
   // Extract metadata from manifest
+  const manifestDate = extractDate(manifest);
   const manifestLabel = extractLabel(manifest.label);
   const rawLicenseUrl = manifest.rights
     || (Array.isArray(manifest.license) ? manifest.license[0] : manifest.license)
@@ -298,7 +332,7 @@ export async function importBookFromIIIF(
     display_title: config.display_title || manifestLabel || null,
     author: config.author,
     language: config.language || 'Unknown',
-    published: config.published || 'Unknown',
+    published: config.published || manifestDate || 'Unknown',
     categories: config.categories || [],
     ...(config.identifier_field || {}),
     ...(config.work_id ? { work_id: config.work_id } : {}),

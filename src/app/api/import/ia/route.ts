@@ -193,7 +193,7 @@ export const POST = withAuth(async (request, session) => {
       display_title: display_title || null,
       author,
       language: language || 'Unknown',
-      published: published || 'Unknown',
+      published: published || iaMetadataRaw.date || 'Unknown',
       categories: categories || [],
       ...(work_id ? { work_id } : {}),
       ia_identifier,
