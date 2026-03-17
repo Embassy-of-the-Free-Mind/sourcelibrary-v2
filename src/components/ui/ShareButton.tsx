@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Share2, Twitter, Link2, Check, MessageCircle } from 'lucide-react';
+import { Share2, Twitter, Link2, Check, MessageCircle, Phone } from 'lucide-react';
 
 interface ShareButtonProps {
   // What to share
@@ -86,6 +86,15 @@ export default function ShareButton({
     setShowMenu(false);
   };
 
+  const shareToWhatsApp = () => {
+    const waText = text
+      ? `"${text.substring(0, 500)}"\n\n— ${citation}\n\n${shareUrl}`
+      : `${citation}\n${shareUrl}`;
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(waText)}`;
+    window.open(waUrl, '_blank');
+    setShowMenu(false);
+  };
+
   const copyLink = async () => {
     const textToCopy = text
       ? `"${text}"\n\n— ${citation}\n${doi ? `DOI: ${doi}\n` : ''}${shareUrl}`
@@ -141,6 +150,13 @@ export default function ShareButton({
               >
                 <MessageCircle className="w-4 h-4 text-stone-700" />
                 <span>Share on Bluesky</span>
+              </button>
+              <button
+                onClick={shareToWhatsApp}
+                className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
+              >
+                <Phone className="w-4 h-4 text-stone-700" />
+                <span>Share on WhatsApp</span>
               </button>
               <hr className="my-1 border-stone-100" />
               {text && (

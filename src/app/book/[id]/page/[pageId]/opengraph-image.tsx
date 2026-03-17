@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { getDb } from '@/lib/mongodb';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Book, Page } from '@/lib/types';
 
 export const alt = 'Page from Source Library';
@@ -21,25 +22,14 @@ async function getPageData(bookId: string, pageId: string): Promise<{ book: Book
   try {
     const db = await getDb();
 
-    const [book, page] = await Promise.all([
-      db.collection('books').findOne({ id: bookId }, { projection: OG_BOOK_PROJECTION }),
+    const [bookResult, page] = await Promise.all([
+      findBookByIdOrSlug(db, bookId, OG_BOOK_PROJECTION),
       db.collection('pages').findOne({ id: pageId }, { projection: OG_PAGE_PROJECTION }),
     ]);
 
-    if (!book) {
-      const { ObjectId } = await import('mongodb');
-      if (ObjectId.isValid(bookId)) {
-        const bookByOid = await db.collection('books').findOne(
-          { _id: new ObjectId(bookId) },
-          { projection: OG_BOOK_PROJECTION }
-        );
-        return { book: bookByOid as unknown as Book | null, page: page as unknown as Page | null };
-      }
-    }
-
     return {
-      book: book as unknown as Book,
-      page: page as unknown as Page | null
+      book: bookResult ? (bookResult.book as unknown as Book) : null,
+      page: page as unknown as Page | null,
     };
   } catch {
     return { book: null, page: null };
