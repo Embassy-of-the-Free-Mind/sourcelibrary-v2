@@ -1315,7 +1315,7 @@ async function run() {
       console.log('\n--- Phase 4: Direct translation (Gemini realtime) ---');
 
       const readyForTranslate = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'metadata_enriched' })
+        .find({ 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
