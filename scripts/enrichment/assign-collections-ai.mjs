@@ -83,8 +83,8 @@ const COLLECTIONS = [
   {
     slug: 'sacred-texts',
     name: 'Sacred Texts',
-    subtitle: 'Scripture, Church Fathers & Liturgy',
-    description: 'Biblical manuscripts and editions, patristic writings (Augustine, Origen, Chrysostom), the Church Fathers, liturgical texts, psalters, and the foundational religious texts of Western civilization.',
+    subtitle: 'Foundational Scriptures of the World\'s Traditions',
+    description: 'The foundational scriptures of the world\'s spiritual traditions — the Bible, Quran, Vedas, Upanishads, Buddhist sutras, Daoist classics, Sumerian hymns, Zoroastrian texts, and sacred literature from all traditions. Includes Church Fathers, liturgical texts, and core commentaries.',
     color: 'gold',
     order: 9,
   },
@@ -107,7 +107,7 @@ const COLLECTIONS = [
   {
     slug: 'renaissance-philosophy',
     name: 'Renaissance Philosophy',
-    subtitle: 'Florentine Platonism & Humanist Thought',
+    subtitle: 'Humanism, Neoplatonism & the Dignity of Man',
     description: 'The philosophical revival of the 15th-17th centuries — Ficino, Pico della Mirandola, Bruno, Campanella, the Florentine Academy, Renaissance Neoplatonism, and the humanist recovery of ancient learning.',
     color: 'violet',
     order: 12,
@@ -123,7 +123,7 @@ const COLLECTIONS = [
   {
     slug: 'medicine',
     name: 'Medicine & Natural History',
-    subtitle: 'Herbalism, Anatomy & the Living World',
+    subtitle: 'From Hippocrates to Paracelsus',
     description: 'Medical treatises (Galen, Paracelsus, Vesalius), herbals, pharmacopoeia, anatomical atlases, botany, zoology, and the practical knowledge of healing and the natural world.',
     color: 'sage',
     order: 14,
@@ -155,7 +155,7 @@ const COLLECTIONS = [
   {
     slug: 'literature',
     name: 'Literature & Poetry',
-    subtitle: 'Epic, Allegory & Early Fiction',
+    subtitle: 'From Gilgamesh to the Divine Comedy',
     description: 'Literary works from classical epic to early modern prose — Homer, Virgil, Dante, alchemical allegories, utopian fiction, courtly romance, and the literary imagination.',
     color: 'sage',
     order: 18,
