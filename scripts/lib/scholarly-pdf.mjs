@@ -252,7 +252,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   doc.moveDown(1);
 
   // Filter out non-content pages (covers, blanks, illustrations-only)
-  const SKIP_PAGE_TYPES = new Set(['blank', 'illustration', 'map', 'frontispiece', 'diagram']);
+  const SKIP_PAGE_TYPES = new Set(['blank']);
   const translatedPages = pages.filter(p => {
     if (!p.translation?.data) return false;
     if (p.page_type && SKIP_PAGE_TYPES.has(p.page_type)) return false;

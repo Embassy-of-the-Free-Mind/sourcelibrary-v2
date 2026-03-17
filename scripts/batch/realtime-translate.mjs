@@ -30,7 +30,7 @@ import { MongoClient } from 'mongodb';
 const TARGET_MODEL = 'gemini-3-flash-preview';
 const TARGET_PROMPT = 'v5.2026-02';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
-const SKIP_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
+const SKIP_PAGE_TYPES = ['blank'];
 
 // --- Parse args ---
 const args = process.argv.slice(2);

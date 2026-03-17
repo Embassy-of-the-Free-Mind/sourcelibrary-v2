@@ -10,7 +10,7 @@ import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 
 // Page types where the entire "translation" is AI-generated description (no original text)
-const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'illustration', 'map', 'frontispiece', 'diagram']);
+const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank']);
 
 interface NotesRendererProps {
   text: string;

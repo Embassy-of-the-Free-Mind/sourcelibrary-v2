@@ -12,7 +12,7 @@ const VALID_PAGE_TYPES = new Set([
 
 // Page types that should be skipped during translation — no meaningful text content
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'illustration', 'map', 'frontispiece', 'diagram', 'digitizer-insert',
+  'blank',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)

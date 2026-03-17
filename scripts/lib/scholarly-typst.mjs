@@ -170,7 +170,7 @@ function markdownToTypst(md) {
 
 // ── Page filtering ──────────────────────────────────────────────────
 
-const SKIP_PAGE_TYPES = new Set(['blank', 'illustration', 'map', 'frontispiece', 'diagram']);
+const SKIP_PAGE_TYPES = new Set(['blank']);
 
 function isContentPage(page) {
   if (!page.translation?.data) return false;

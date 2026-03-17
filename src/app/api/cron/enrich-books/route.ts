@@ -27,7 +27,7 @@ const NON_LATIN_LANGUAGES = new Set([
   'russian', 'church slavonic',
 ]);
 
-const SKIP_TRANSLIT_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
+const SKIP_TRANSLIT_PAGE_TYPES = ['blank'];
 
 function languageToScript(language?: string): string {
   if (!language) return 'Unknown';

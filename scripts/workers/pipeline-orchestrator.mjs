@@ -72,7 +72,7 @@ const API_DELAY_MS = 500;
 
 // Page types to skip for translation (mirrors defaults.ts)
 const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'illustration', 'map', 'frontispiece', 'diagram',
+  'blank',
 ];
 
 // Non-Latin languages that need transliteration

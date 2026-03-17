@@ -65,7 +65,7 @@ async function getCategoryBooks(id: string): Promise<Book[]> {
                     { $ne: ['$$page.translation.data', null] },
                     { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
                   ]},
-                  { $in: [{ $ifNull: ['$$page.page_type', ''] }, ['blank', 'illustration', 'map', 'frontispiece', 'diagram']] }
+                  { $eq: [{ $ifNull: ['$$page.page_type', ''] }, 'blank'] }
                 ]
               }
             }
