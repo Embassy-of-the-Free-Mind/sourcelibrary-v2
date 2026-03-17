@@ -539,7 +539,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // All queries have maxTimeMS to fail fast during DB degradation
   const [pagesRaw, totalBooks, galleryImageCount] = await Promise.all([
     db.collection('pages')
-      .find({ book_id: bookId }, {
+      .find({ book_id: bookId, page_type: { $ne: 'digitizer-insert' } }, {
         projection: {
           _id: 0,
           id: 1,
