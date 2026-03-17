@@ -1156,9 +1156,14 @@ export async function GET(request: NextRequest) {
           { $addFields: {
             _lang_priority: { $cond: [{ $eq: ['$language', 'Latin'] }, 2,
               { $cond: [{ $in: ['$language', ['Greek', 'Arabic', 'Hebrew', 'Sanskrit']] }, 1, 0] }] },
-            _year_sort: { $ifNull: ['$year_published', 0] },
+            _year_sort: { $ifNull: ['$year_published', 9999] },
+            // Deprioritize christian-mystical tradition
+            _tradition_priority: { $cond: [
+              { $and: [{ $isArray: '$faceted_tags.tradition' }, { $in: ['christian-mystical', '$faceted_tags.tradition'] }] },
+              0, 1 // 1 = non-Christian (prioritized), 0 = christian-mystical
+            ] },
           } },
-          { $sort: { processing_priority: -1, _lang_priority: -1, _year_sort: -1, hidden: 1 } },
+          { $sort: { processing_priority: -1, _tradition_priority: -1, _lang_priority: -1, _year_sort: 1, pages_count: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 } },
           { $limit: ocrLimit },
         ]).toArray() : [];
@@ -1697,7 +1702,7 @@ export async function GET(request: NextRequest) {
         logger.backpressure('translate_lambda_limit', { active: activeLambdaTranslate, max: limits.translate_lambda_max });
       }
 
-      // Priority: finish 90%+ books first (close to done), then everything else by size
+      // Priority: finish 90%+ books first, then non-Christian Latin/Greek, oldest, shortest
       const readyForTranslate = activeLambdaTranslate < limits.translate_lambda_max ? await db.collection('books')
         .aggregate([
           { $match: { 'pipeline_auto.status': 'ft_verified' } },
@@ -1706,9 +1711,16 @@ export async function GET(request: NextRequest) {
             _nearlyDone: { $cond: [
               { $and: [{ $gt: ['$pages_count', 0] }, { $gte: [{ $divide: ['$pages_translated', '$pages_count'] }, 0.9] }] },
               0, 1 // 0 = nearly done (sorts first), 1 = rest
-            ]}
+            ]},
+            _tradition_priority: { $cond: [
+              { $and: [{ $isArray: '$faceted_tags.tradition' }, { $in: ['christian-mystical', '$faceted_tags.tradition'] }] },
+              0, 1 // 1 = non-Christian (prioritized)
+            ] },
+            _lang_priority: { $cond: [{ $eq: ['$language', 'Latin'] }, 2,
+              { $cond: [{ $in: ['$language', ['Greek', 'Arabic', 'Hebrew', 'Sanskrit']] }, 1, 0] }] },
+            _year_sort: { $ifNull: ['$year_published', 9999] },
           }},
-          { $sort: { _isEfm: 1, _nearlyDone: 1, processing_priority: -1, hidden: 1, pages_count: 1 } },
+          { $sort: { _isEfm: 1, _nearlyDone: 1, processing_priority: -1, _tradition_priority: -1, _lang_priority: -1, _year_sort: 1, pages_count: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, 'pipeline_auto.retry_count': 1 } },
           { $limit: limits.translate_submit },
         ]).toArray() : [];
