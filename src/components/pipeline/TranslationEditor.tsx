@@ -1018,8 +1018,8 @@ export default function TranslationEditor({
               </div>
 
 
-              {/* Mode Toggle - always visible */}
-              <AuthCheck>
+              {/* Mode Toggle - admin only */}
+              <AuthCheck role="admin">
                 <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
                   <button
                     onClick={() => setMode('read')}
@@ -1410,6 +1410,12 @@ export default function TranslationEditor({
                       >
                         <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
                       </HighlightSelection>
+                    ) : ocrText && ['blank', 'cover', 'illustration', 'map', 'frontispiece', 'diagram'].includes(page.page_type || '') ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
+                          {page.page_type === 'blank' ? 'Blank page' : `${(page.page_type || '').charAt(0).toUpperCase() + (page.page_type || '').slice(1)} page`} — no translation needed.
+                        </p>
+                      </div>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>

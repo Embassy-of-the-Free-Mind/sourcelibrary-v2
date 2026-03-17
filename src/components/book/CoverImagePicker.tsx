@@ -95,8 +95,8 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
   return (
     <>
-      {/* Cover Image - Clickable only for authenticated users */}
-      <AuthCheck
+      {/* Cover Image - Clickable only for admin users */}
+      <AuthCheck role="admin"
         fallback={
           // Non-authenticated users see the cover image but cannot click
           <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">

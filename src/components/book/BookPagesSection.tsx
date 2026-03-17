@@ -520,7 +520,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             lastOcrDate={lastOcrDate}
             lastTranslationDate={lastTranslationDate}
           />
-          <AuthCheck>
+          <AuthCheck role="admin">
             <BookPagesActions
               bookId={bookId}
               batchMode={batchMode}

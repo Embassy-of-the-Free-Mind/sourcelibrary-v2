@@ -798,7 +798,7 @@ async function BookInfo({ id }: { id: string }) {
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
                   {/* Publish — admin only */}
-                  <AuthCheck>
+                  <AuthCheck role="admin">
                     {isComplete ? (
                       <PublishEditionButton
                         bookId={book.id}
@@ -979,7 +979,7 @@ async function BookInfo({ id }: { id: string }) {
           }
           return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
-        <AuthCheck>
+        <AuthCheck role="admin">
           <BookHistory bookId={book.id} />
         </AuthCheck>
       </main>

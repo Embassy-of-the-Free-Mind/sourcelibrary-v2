@@ -177,7 +177,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
           {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           Bibliographic Info
         </button>
-        <AuthCheck>
+        <AuthCheck role="admin">
           <button
             onClick={() => setShowEditModal(true)}
             className="flex items-center gap-1.5 text-sm text-accent-gold hover:text-accent-gold transition-colors"
