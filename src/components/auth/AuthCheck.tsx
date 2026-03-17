@@ -5,26 +5,30 @@ import { useSession } from 'next-auth/react';
 interface AuthCheckProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
+  /** Require a specific role. 'admin' = whitelist only. Default: any authenticated user. */
+  role?: 'admin' | 'reader';
 }
 
 /**
- * Client component that conditionally renders children only for authenticated users
+ * Client component that conditionally renders children based on auth status and role.
  *
  * @example
- * <AuthCheck>
- *   <Button onClick={handleDelete}>Delete Book</Button>
- * </AuthCheck>
+ * <AuthCheck>              // Any logged-in user
+ * <AuthCheck role="admin"> // Admin-only (whitelist)
  */
-export function AuthCheck({ children, fallback = null }: AuthCheckProps) {
+export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
   const { data: session, status } = useSession();
 
-  // Don't render while loading to avoid flicker
   if (status === 'loading') {
     return <>{fallback}</>;
   }
 
-  // Only render for authenticated users (who are all admins via whitelist)
   if (!session?.user) {
+    return <>{fallback}</>;
+  }
+
+  // If a specific role is required, check it
+  if (role && (session.user as any).role !== role) {
     return <>{fallback}</>;
   }
 

@@ -539,7 +539,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // All queries have maxTimeMS to fail fast during DB degradation
   const [pagesRaw, totalBooks, galleryImageCount] = await Promise.all([
     db.collection('pages')
-      .find({ book_id: bookId }, {
+      .find({ book_id: bookId, page_type: { $ne: 'digitizer-insert' } }, {
         projection: {
           _id: 0,
           id: 1,
@@ -555,6 +555,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           'translation.updated_at': 1,
           'summary.updated_at': 1,
           display_brightness: 1,
+          page_type: 1,
         },
         maxTimeMS: 8000,
       })
@@ -798,7 +799,7 @@ async function BookInfo({ id }: { id: string }) {
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
                   {/* Publish — admin only */}
-                  <AuthCheck>
+                  <AuthCheck role="admin">
                     {isComplete ? (
                       <PublishEditionButton
                         bookId={book.id}
@@ -979,7 +980,7 @@ async function BookInfo({ id }: { id: string }) {
           }
           return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
-        <AuthCheck>
+        <AuthCheck role="admin">
           <BookHistory bookId={book.id} />
         </AuthCheck>
       </main>

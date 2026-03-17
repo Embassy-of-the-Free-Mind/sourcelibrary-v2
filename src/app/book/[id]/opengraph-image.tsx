@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { getDb } from '@/lib/mongodb';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Book } from '@/lib/types';
 
 export const alt = 'Book from Source Library';
@@ -12,14 +13,11 @@ export const contentType = 'image/png';
 async function getBookForOG(id: string): Promise<Book | null> {
   try {
     const db = await getDb();
-    let book = await db.collection('books').findOne({ id });
-    if (!book) {
-      const { ObjectId } = await import('mongodb');
-      if (ObjectId.isValid(id)) {
-        book = await db.collection('books').findOne({ _id: new ObjectId(id) });
-      }
-    }
-    return book as unknown as Book | null;
+    const result = await findBookByIdOrSlug(db, id, {
+      _id: 0, id: 1, title: 1, display_title: 1, author: 1,
+      published: 1, language: 1, thumbnail: 1, slug: 1,
+    });
+    return result ? (result.book as unknown as Book) : null;
   } catch {
     return null;
   }

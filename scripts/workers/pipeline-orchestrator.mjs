@@ -22,12 +22,16 @@
 
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
+import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
+import { createHash } from 'crypto';
 
 // ── Config ──
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const CRON_SECRET = process.env.CRON_SECRET;
 const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
+const SQS_TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
+const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL;
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -1308,145 +1312,127 @@ async function run() {
       console.log(`  Transliterated: ${log.transliterated} books, ${log.transliterate_pages} pages`);
     }
 
-    // ── Phase 4: Direct translation (metadata_enriched -> translate_complete) ──
-    // Calls Gemini realtime directly, FIFO per book (sequential pages with context).
-    // No Lambda/SQS — Hetzner has no time budget so we translate inline.
+    // ── Phase 4: Dispatch translation to Lambda via SQS FIFO ──
+    // Hetzner focuses on OCR; Lambdas scale out translation.
+    // Creates a job record, enqueues pages to SQS FIFO, Lambdas process sequentially per book.
     if (shouldRun(4)) {
-      console.log('\n--- Phase 4: Direct translation (Gemini realtime) ---');
+      console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
-      const readyForTranslate = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'metadata_enriched' })
-        .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(TRANSLATE_SUBMIT_LIMIT)
-        .toArray();
+      if (!SQS_TRANSLATION_QUEUE_URL) {
+        console.log('  SKIP: SQS_PAGE_TRANSLATION_QUEUE_URL not configured');
+      } else {
+        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
-      console.log(`  Books ready for translation: ${readyForTranslate.length}`);
+        const readyForTranslate = await db.collection('books')
+          .find({ 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } })
+          .sort({ hidden: 1 })
+          .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
+          .limit(TRANSLATE_SUBMIT_LIMIT)
+          .toArray();
 
-      for (const book of readyForTranslate) {
-        const retries = book.pipeline_auto?.retry_count || 0;
-        try {
-          // Find pages with OCR but no translation (skip non-content page types)
-          const pages = await db.collection('pages')
-            .find({
+        console.log(`  Books ready for translation: ${readyForTranslate.length}`);
+
+        for (const book of readyForTranslate) {
+          try {
+            const pages = await db.collection('pages')
+              .find({
+                book_id: book.id,
+                'ocr.data': { $exists: true, $nin: [null, ''] },
+                page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+                $or: [
+                  { 'translation.data': { $exists: false } },
+                  { 'translation.data': null },
+                  { 'translation.data': '' },
+                  { $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] } },
+                ],
+              })
+              .sort({ page_number: 1 })
+              .project({ id: 1 })
+              .toArray();
+
+            if (pages.length === 0) {
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
+              log.translate_advanced++;
+              console.log(`  No pages need translation: ${book.title}`);
+              continue;
+            }
+
+            const label = (book.title || '').substring(0, 50);
+            const pageIds = pages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            if (DRY_RUN) {
+              console.log(`  Would dispatch: ${label} — ${pageIds.length} pages via Lambda`);
+              continue;
+            }
+
+            // Create job record
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'translation',
               book_id: book.id,
-              'ocr.data': { $exists: true, $nin: [null, ''] },
-              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
-              $or: [
-                { 'translation.data': { $exists: false } },
-                { 'translation.data': null },
-                { 'translation.data': '' },
-              ],
-            })
-            .sort({ page_number: 1 })
-            .project({ id: 1, book_id: 1, page_number: 1, ocr: 1 })
-            .toArray();
+              book_title: book.title,
+              status: 'pending',
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: {
+                page_ids: pageIds,
+                model: 'gemini-3-flash-preview',
+                language: book.language || 'auto-detect',
+              },
+              initiated_by: 'pipeline_orchestrator',
+              created_at: new Date(),
+              updated_at: new Date(),
+            });
 
-          if (pages.length === 0) {
-            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
-            log.translate_advanced++;
-            console.log(`  No pages need translation: ${book.title}`);
-            continue;
-          }
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { job: { type: 'realtime', job_id: jobId } } },
+            );
 
-          const label = (book.title || '').substring(0, 50);
-          const sourceLanguage = book.language || 'Unknown';
+            // Enqueue pages to SQS FIFO in batches of 10
+            for (let i = 0; i < pageIds.length; i += 10) {
+              const batch = pageIds.slice(i, i + 10);
+              const entries = batch.map((pageId, idx) => ({
+                Id: `msg-${idx}`,
+                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
+                MessageGroupId: jobId,
+                MessageDeduplicationId: createHash('sha256')
+                  .update(`${book.id}:${pageId}:${jobId}`)
+                  .digest('hex').slice(0, 128),
+              }));
 
-          if (DRY_RUN) {
-            console.log(`  Would translate: ${label} (${sourceLanguage}) — ${pages.length} pages`);
-            continue;
-          }
+              const result = await sqsClient.send(new SendMessageBatchCommand({
+                QueueUrl: SQS_TRANSLATION_QUEUE_URL,
+                Entries: entries,
+              }));
 
-          console.log(`  Translating: ${label} (${sourceLanguage}) — ${pages.length} pages...`);
-          await setPipelineStatus(db, book.id, 'translate_submitted', { retry_count: 0 });
-          log.translate_submitted++;
-
-          // FIFO: translate pages sequentially, carrying previous translation for context
-          let previousTranslation = null;
-          let pagesDone = 0;
-          let pagesFailed = 0;
-          let totalCost = 0;
-          let consecutiveErrors = 0;
-
-          // Seed context: get the last translated page before this batch (for continuity)
-          const lastTranslatedPage = await db.collection('pages').findOne(
-            {
-              book_id: book.id,
-              'translation.data': { $exists: true, $nin: [null, ''] },
-              page_number: { $lt: pages[0].page_number },
-            },
-            { sort: { page_number: -1 }, projection: { 'translation.data': 1 } }
-          );
-          if (lastTranslatedPage?.translation?.data) {
-            previousTranslation = lastTranslatedPage.translation.data;
-          }
-
-          for (const page of pages) {
-            try {
-              const result = await translatePage(db, page, sourceLanguage, previousTranslation);
-              previousTranslation = result.text;
-              totalCost += result.costUsd;
-              pagesDone++;
-              consecutiveErrors = 0;
-
-              if (pagesDone % 25 === 0) {
-                console.log(`    ${label}: ${pagesDone}/${pages.length} ($${totalCost.toFixed(3)})`);
-              }
-            } catch (err) {
-              pagesFailed++;
-              consecutiveErrors++;
-              const msg = err.message || '';
-
-              if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')) {
-                console.log(`    Rate limited at page ${pagesDone + pagesFailed}/${pages.length} — waiting 60s...`);
-                await sleep(60000);
-                consecutiveErrors = 0; // Rate limit is recoverable
-              }
-
-              // Circuit breaker: 5 consecutive non-rate-limit errors = stop this book
-              if (consecutiveErrors >= 5) {
-                console.log(`    Stopping ${label}: ${consecutiveErrors} consecutive errors`);
-                log.errors.push(`Translate ${book.id}: stopped after ${consecutiveErrors} consecutive errors at page ${pagesDone + pagesFailed}`);
-                break;
+              if (result.Failed?.length) {
+                console.error(`    SQS batch failed: ${result.Failed.length} messages`);
               }
             }
-          }
 
-          // Determine outcome
-          if (pagesDone === pages.length) {
-            await setPipelineStatus(db, book.id, 'translate_complete');
-            log.translate_advanced++;
-          } else if (pagesDone > 0) {
-            // Partial success — send back to metadata_enriched for retry on next run
-            await setPipelineStatus(db, book.id, 'metadata_enriched', {
-              retry_count: retries + 1,
-              error: `Partial: ${pagesDone}/${pages.length} pages, ${pagesFailed} failed`,
+            await setPipelineStatus(db, book.id, 'translate_submitted', {
+              translate_job_id: jobId,
+              retry_count: 0,
             });
-          } else {
-            // Total failure
+            log.translate_submitted++;
+            console.log(`  Dispatched: ${label} — ${pageIds.length} pages (job ${jobId})`);
+          } catch (err) {
+            const retries = book.pipeline_auto?.retry_count || 0;
             if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Translation: 0/${pages.length} pages translated`, retries);
+              await markFailed(db, book.id, `Translate dispatch: ${err.message}`, retries);
             } else {
               await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
             }
+            log.errors.push(`Translate ${book.id}: ${err.message}`);
           }
-
-          console.log(`  Done: ${label} — ${pagesDone}/${pages.length} pages, $${totalCost.toFixed(3)}`);
-        } catch (err) {
-          if (retries >= MAX_RETRIES) {
-            await markFailed(db, book.id, `Translate exception: ${err.message}`, retries);
-          } else {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
-          }
-          log.errors.push(`Translate ${book.id}: ${err.message}`);
         }
+        console.log(`  Translate dispatched: ${log.translate_submitted}, advanced: ${log.translate_advanced}`);
       }
-      console.log(`  Translate submitted: ${log.translate_submitted}, advanced: ${log.translate_advanced}`);
     }
 
-    // ── Phase 5: Legacy translation completion (translate_submitted -> translate_complete) ──
-    // Drains any books still in translate_submitted from old Lambda jobs.
-    // New Phase 4 translates inline and goes directly to translate_complete.
+    // ── Phase 5: Translation completion check (translate_submitted -> translate_complete) ──
+    // Checks Lambda job progress — advances completed books, recycles partial failures.
     if (shouldRun(5)) {
       console.log('\n--- Phase 5: Legacy translation completion check ---');
 
@@ -1636,10 +1622,15 @@ async function run() {
       });
       console.log(`  Active image jobs: ${activeImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
-      if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+      if (!SQS_IMAGE_EXTRACTION_QUEUE_URL) {
+        console.log('  SKIP: SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL not configured');
+      } else if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+        const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
-          .sort({ hidden: 1 })
+          .sort({ processing_priority: -1, hidden: 1 })
           .project({ id: 1, title: 1 })
           .limit(IMAGE_SUBMIT_LIMIT)
           .toArray();
@@ -1648,29 +1639,68 @@ async function run() {
 
         for (const book of readyForImages) {
           try {
-            if (DRY_RUN) {
-              console.log(`  Would submit image extraction: ${book.title}`);
+            // Find pages with image candidates (same logic as Vercel cron)
+            const bookPages = await db.collection('pages')
+              .find({
+                book_id: book.id,
+                $or: [
+                  { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+                  { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>' } },
+                ],
+              }, { projection: { id: 1 } })
+              .toArray();
+
+            if (bookPages.length === 0) {
+              // No image candidates — skip straight to images_complete
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+              log.images_advanced++;
+              console.log(`  No image candidates, skipped: ${book.title}`);
               continue;
             }
 
-            // Use the queue-books API endpoint (needs SQS access)
-            const res = await fetch(`${BASE_URL}/api/jobs/queue-books`, {
-              method: 'POST',
-              headers: headers(),
-              body: JSON.stringify({ bookIds: [book.id], action: 'image_extraction' }),
+            if (DRY_RUN) {
+              console.log(`  Would submit image extraction: ${book.title} (${bookPages.length} pages)`);
+              continue;
+            }
+
+            const pageIds = bookPages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            // Create job record
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'image_extraction',
+              status: 'pending',
+              book_id: book.id,
+              book_title: book.title,
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: { page_ids: pageIds },
+              created_at: new Date(),
+              updated_at: new Date(),
             });
 
-            if (res.ok) {
-              const data = await res.json();
-              const jobId = data.jobs?.[0]?.jobId || data.jobId;
-              await setPipelineStatus(db, book.id, 'images_submitted', {
-                image_extraction_job_id: jobId,
-              });
-              log.images_submitted++;
-              console.log(`  Image extraction submitted: ${book.title}`);
-            } else {
-              log.errors.push(`Images submit ${book.id}: HTTP ${res.status}`);
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { job: { type: 'image_extraction', job_id: jobId } } }
+            );
+
+            // Enqueue pages to SQS in batches of 10
+            for (let i = 0; i < pageIds.length; i += 10) {
+              const batch = pageIds.slice(i, i + 10);
+              await sqsClient.send(new SendMessageBatchCommand({
+                QueueUrl: SQS_IMAGE_EXTRACTION_QUEUE_URL,
+                Entries: batch.map((pageId, idx) => ({
+                  Id: String(idx),
+                  MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
+                })),
+              }));
             }
+
+            await setPipelineStatus(db, book.id, 'images_submitted', {
+              image_extraction_job_id: jobId,
+            });
+            log.images_submitted++;
+            console.log(`  Image extraction submitted: ${book.title} (${pageIds.length} pages)`);
 
             await sleep(API_DELAY_MS);
           } catch (err) {

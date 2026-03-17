@@ -7,12 +7,16 @@ export const PROMPT_VERSION = 'v5.2026-02';
 const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
   'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
+  'digitizer-insert',
 ]);
 
 // Page types that should be skipped during translation — no meaningful text content
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'illustration', 'map', 'frontispiece', 'diagram',
+  'blank', 'illustration', 'map', 'frontispiece', 'diagram', 'digitizer-insert',
 ];
+
+// Page types hidden from the reader navigation (still accessible via direct URL)
+export const HIDDEN_PAGE_TYPES = new Set(['digitizer-insert']);
 
 // Page types likely to contain images worth extracting
 export const IMAGE_CANDIDATE_PAGE_TYPES = [

@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
 import type { Page } from '@/lib/types';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 
 function PageImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const [loaded, setLoaded] = useState(false);
@@ -183,23 +184,25 @@ export default function PagesGrid({
                     )}
                   </div>
                 </a>
-                {/* Set as Cover button */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onSetCover(page);
-                  }}
-                  disabled={settingCover === page.id}
-                  className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 disabled:opacity-50"
-                  title="Set as cover image"
-                >
-                  {settingCover === page.id ? (
-                    <Loader2 className="w-3 h-3 animate-spin" />
-                  ) : (
-                    <ImageIcon className="w-3 h-3" />
-                  )}
-                </button>
+                {/* Set as Cover button — admin only */}
+                <AuthCheck role="admin">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSetCover(page);
+                    }}
+                    disabled={settingCover === page.id}
+                    className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 disabled:opacity-50"
+                    title="Set as cover image"
+                  >
+                    {settingCover === page.id ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <ImageIcon className="w-3 h-3" />
+                    )}
+                  </button>
+                </AuthCheck>
                 <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
               </div>
             );

@@ -63,7 +63,7 @@ async function getFeaturedCollections() {
 
   // Pick 5 random collections that have enough books
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 5 }, parent: { $exists: false }, type: { $ne: 'curated' } } },
+    { $match: { book_count: { $gte: 5 }, parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } } },
     { $sample: { size: 5 } },
   ]).toArray();
 
@@ -165,7 +165,7 @@ async function getFeaturedCollections() {
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' } }).toArray();
+  const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } }).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
@@ -323,10 +323,10 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: number; firstTranslationCount: number }> {
   // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
   // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-17 (post-curation).
-  return { totalBooks: 4466, translatedCount: 4466 };
+  return { totalBooks: 4469, translatedCount: 4469, firstTranslationCount: 1977 };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
@@ -460,7 +460,7 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.translatedCount.toLocaleString('en-US')} with translations
+                  {counts.translatedCount.toLocaleString('en-US')} books translated &middot; {counts.firstTranslationCount.toLocaleString('en-US')} translated for the first time
                 </p>
               </div>
               <Link

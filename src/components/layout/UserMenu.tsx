@@ -51,7 +51,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     .map(n => n[0])
     .join('')
     .toUpperCase()
-    .slice(0, 2) || '?';
+    .slice(0, 2) || session.user?.email?.[0]?.toUpperCase() || '?';
 
   return (
     <div ref={menuRef} className="relative">
