@@ -87,9 +87,9 @@ async function getFeaturedCollections() {
   // Fetch highlighted books by ID (these are curated, high-quality picks)
   const highlightedBooks = allHighlightedIds.length > 0
     ? await db.collection('books').aggregate([
-        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
-        { $project: bookProjection },
-      ], { maxTimeMS: 8000 }).toArray()
+      { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+      { $project: bookProjection },
+    ], { maxTimeMS: 8000 }).toArray()
     : [];
 
   // Index highlighted books by their ID for fast lookup
@@ -553,7 +553,6 @@ export default async function HomePage() {
             </Link>
           </p>
         </div>
-
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
