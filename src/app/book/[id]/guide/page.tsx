@@ -174,7 +174,7 @@ export default function GuidePage({ params }: GuidePageProps) {
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       {/* Header */}
       <header className="sticky top-0 z-10 px-4 py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between">
             <Link
               href="/"
@@ -222,7 +222,7 @@ export default function GuidePage({ params }: GuidePageProps) {
 
       {/* Book Title Section with Poster */}
       <div className="py-10 sm:py-14 border-b" style={{ borderColor: 'var(--border-light)' }}>
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-2xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row gap-8 items-start">
             {/* Poster Image */}
             {book.thumbnail && (
@@ -293,7 +293,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         </div>
       </div>
 
-      <main className="max-w-3xl mx-auto px-4 py-8">
+      <main className="max-w-2xl mx-auto px-4 py-8">
         {/* Summary Section */}
         <section className="mb-8">
           {summary ? (

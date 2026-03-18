@@ -126,7 +126,7 @@ export default function SupportPage() {
 
       {/* Why Now */}
       <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-4xl mx-auto">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2
             className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display"
           >
@@ -232,7 +232,7 @@ export default function SupportPage() {
 
       {/* Give Once */}
       <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
+        <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
           <h2
             className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight font-display"
           >
@@ -300,7 +300,7 @@ export default function SupportPage() {
 
       {/* How It All Connects */}
       <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-4xl mx-auto">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2
             className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight font-display"
           >
@@ -324,7 +324,7 @@ export default function SupportPage() {
 
       {/* Scan the Renaissance */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-4xl mx-auto text-center">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
             Scan the Renaissance
           </h2>

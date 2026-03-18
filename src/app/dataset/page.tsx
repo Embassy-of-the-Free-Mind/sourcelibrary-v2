@@ -88,7 +88,7 @@ export default async function DatasetPage() {
     >
       {/* ── Opening statement ── */}
       <section className="mb-24">
-        <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.5] max-w-[640px]">
+        <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.5] max-w-2xl">
           {formatNumber(stats.totalBooks)} texts. {formatNumber(stats.pagesTranslated)} pages
           translated into English. {stats.languages.length} languages — Sumerian to Renaissance Latin.
           Available via streaming API.
@@ -96,7 +96,7 @@ export default async function DatasetPage() {
       </section>
 
       {/* ── The problem, in prose ── */}
-      <section className="mb-24 max-w-[640px]">
+      <section className="mb-24 max-w-2xl">
         <p className="text-[#444] leading-[1.75] mb-6">
           Millions of pages of pre-modern text have been digitized by the world&apos;s great libraries.
           But a scan of a 16th-century Latin treatise is not training data. It requires OCR,
@@ -153,7 +153,7 @@ export default async function DatasetPage() {
       {/* ── What the data looks like ── */}
       <section className="mb-24">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Data format</p>
-        <p className="text-[#444] leading-[1.75] mb-6 max-w-[640px]">
+        <p className="text-[#444] leading-[1.75] mb-6 max-w-2xl">
           Each record is a single page. Original-language text and English translation,
           with author, date, language, and a citation URL traceable to the holding institution.
           Delivered as streaming JSONL.
@@ -176,7 +176,7 @@ export default async function DatasetPage() {
       </section>
 
       {/* ── Quality ── */}
-      <section className="mb-24 max-w-[640px]">
+      <section className="mb-24 max-w-2xl">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Quality</p>
         <p className="text-[#444] leading-[1.75] mb-4">
           Not a static dump. Translations are continuously reviewed and corrected
@@ -193,7 +193,7 @@ export default async function DatasetPage() {
       <section className="mb-24">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Access</p>
 
-        <div className="max-w-[640px] mb-10">
+        <div className="max-w-2xl mb-10">
           <p className="text-[#444] leading-[1.75] mb-6">
             Available through a streaming JSONL API. Free tier for evaluation.
             Paid plans unlock full corpora by language or domain.
@@ -251,7 +251,7 @@ export default async function DatasetPage() {
       </section>
 
       {/* ── Legal ── */}
-      <section className="mb-24 max-w-[640px]">
+      <section className="mb-24 max-w-2xl">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Legal</p>
         <p className="text-[#444] leading-[1.75]">
           Source texts are public domain. The curated compilation — OCR, translations,

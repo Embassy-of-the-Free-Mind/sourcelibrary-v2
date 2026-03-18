@@ -885,7 +885,7 @@ async function BookInfo({ id }: { id: string }) {
       {/* Book Summary */}
       {(() => {
         return (
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="card p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>About This Book</h2>

@@ -567,7 +567,7 @@ export default function MockupsPage() {
   return (
     <div className="min-h-screen bg-stone-50">
       <header className="bg-[#1a1612] text-white">
-        <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="flex items-center gap-3 mb-4">
             <a href="/brand" className="text-stone-400 hover:text-white text-sm transition-colors">&larr; Brand Kit</a>
           </div>
@@ -579,7 +579,7 @@ export default function MockupsPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-6 py-12">
 
         {/* Summary */}
         <div className="mb-12 p-5 bg-white border border-stone-200 rounded-lg">

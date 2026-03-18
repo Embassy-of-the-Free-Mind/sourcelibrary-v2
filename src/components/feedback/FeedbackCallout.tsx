@@ -23,7 +23,7 @@ export default function FeedbackCallout() {
         borderColor: 'var(--border-light, #e8e5e0)',
       }}
     >
-      <div className="max-w-3xl mx-auto px-6 py-12 text-center">
+      <div className="max-w-2xl mx-auto px-6 py-12 text-center">
         <p
           className="font-serif text-xl sm:text-2xl leading-relaxed mb-2"
           style={{ color: 'var(--text-primary, #2c2824)' }}

@@ -10,7 +10,7 @@ export default function HermeticTraditionPress() {
   return (
     <div className="min-h-screen bg-white">
       <header className="bg-stone-900 text-white py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
           <Link href="/press" className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4 inline-block hover:text-accent-gold transition-colors">
             &larr; Press
           </Link>
@@ -25,7 +25,7 @@ export default function HermeticTraditionPress() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 md:px-12 py-16">
+      <div className="max-w-5xl mx-auto px-6 md:px-12 py-16">
         <p className="text-sm text-stone-500 uppercase tracking-wider mb-8">
           FOR IMMEDIATE RELEASE
         </p>
@@ -164,7 +164,7 @@ export default function HermeticTraditionPress() {
       </div>
 
       <footer className="bg-stone-900 text-white/60 py-8">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+        <div className="max-w-5xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <span>&copy; {new Date().getFullYear()} Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
           <Link href="/press" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
             All Press Releases

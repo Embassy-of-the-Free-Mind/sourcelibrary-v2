@@ -40,7 +40,7 @@ export default function EncyclopediaFilters() {
 
   return (
     <div className={`bg-white border-b border-stone-200 sticky top-0 z-10 ${isPending ? 'opacity-70' : ''}`}>
-      <div className="max-w-6xl mx-auto px-4 py-4">
+      <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex flex-wrap items-center gap-4">
           {/* Search */}
           <form onSubmit={handleSearch} className="flex-1 min-w-[200px] relative">

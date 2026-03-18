@@ -166,7 +166,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-3">
+        <div className="max-w-5xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <Link
               href={`/book/${bookId}`}
@@ -201,7 +201,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Title */}
         <div className="mb-8">
           <h1 className="text-2xl font-serif font-bold text-stone-900">QA Review</h1>

@@ -187,7 +187,7 @@ export default function BrandPage() {
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-[#1a1612] text-white">
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center gap-4 mb-6">
             <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
@@ -210,7 +210,7 @@ export default function BrandPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-12 space-y-20">
+      <main className="max-w-7xl mx-auto px-6 py-12 space-y-20">
 
         {/* ─── LOGOS ─── */}
         <section id="logos">

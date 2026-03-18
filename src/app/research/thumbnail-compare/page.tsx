@@ -111,7 +111,7 @@ export default function ThumbnailComparePage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-6 py-10">
         <h1 className="text-3xl font-display text-primary mb-2">Gallery Image Quality Comparison</h1>
         <p className="text-muted mb-10 max-w-3xl">
           Diverse gallery images across types (frontispiece, emblem, woodcut, diagram, engraving, portrait) and bounding box sizes.

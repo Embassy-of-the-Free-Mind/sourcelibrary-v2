@@ -53,7 +53,7 @@ export default async function EntityDetailPage({
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-5xl mx-auto px-4 py-4">
           <Link
             href="/encyclopedia"
             className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
@@ -66,7 +66,7 @@ export default async function EntityDetailPage({
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-4">
           <div className="flex items-start gap-4">
             <div className={`p-3 rounded-xl ${ENTITY_TYPE_STYLES[entity.type as EntityType].badgeBordered}`}>
               <Icon className="w-8 h-8" />
@@ -98,7 +98,7 @@ export default async function EntityDetailPage({
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
         {/* Description */}
         {(entity.description || (entity.type === 'place' && entity.wikidata_coordinates)) && (
           <div className="bg-white rounded-lg border border-stone-200 p-6">

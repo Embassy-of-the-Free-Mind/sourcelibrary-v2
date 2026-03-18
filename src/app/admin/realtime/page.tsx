@@ -153,7 +153,7 @@ export default function RealtimeDashboard() {
         className="sticky top-0 z-20 px-4 py-3 border-b"
         style={{ background: 'var(--bg-cream)', borderColor: 'var(--border-light)' }}
       >
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center gap-3">
             <Link href="/admin/processing" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
@@ -198,7 +198,7 @@ export default function RealtimeDashboard() {
       {!data ? (
         <div className="py-24"><BookLoader size="xs" /></div>
       ) : (
-        <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">
+        <main className="max-w-7xl mx-auto px-4 py-6 space-y-6">
           {/* Top stats row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <StatCard

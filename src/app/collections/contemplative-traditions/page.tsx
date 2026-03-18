@@ -241,7 +241,7 @@ export default async function ContemplativeTraditionsPage() {
     <div className="min-h-screen bg-stone-50">
       {/* Nav */}
       <header className="bg-gradient-to-r from-stone-800 via-stone-900 to-stone-800 border-b border-accent-gold-dark/30">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <Link
             href="/collections"
             className="inline-flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors text-sm"
@@ -260,7 +260,7 @@ export default async function ContemplativeTraditionsPage() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='white' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='20' fill='none' stroke='white' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='none' stroke='white' stroke-width='0.5'/%3E%3C/svg%3E")`,
           }}
         />
-        <div className="relative max-w-6xl mx-auto px-6 py-16 sm:py-20">
+        <div className="relative max-w-7xl mx-auto px-6 py-16 sm:py-20">
           <p className="text-xs uppercase tracking-[0.3em] text-accent-gold font-semibold mb-4">
             Curated Collection
           </p>
@@ -299,7 +299,7 @@ export default async function ContemplativeTraditionsPage() {
 
       {/* Sticky tradition nav */}
       <div className="bg-white border-b border-stone-200 sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
           <nav className="flex gap-1 overflow-x-auto py-2 -mx-2 px-2 scrollbar-hide">
             {traditionsWithBooks.map(t => {
               const style = TRADITION_STYLES[t.color || ''] || DEFAULT_STYLE;
@@ -318,7 +318,7 @@ export default async function ContemplativeTraditionsPage() {
       </div>
 
       {/* Standout callout cards */}
-      <div className="max-w-6xl mx-auto px-6 pt-10 pb-4">
+      <div className="max-w-7xl mx-auto px-6 pt-10 pb-4">
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="bg-gradient-to-br from-accent-gold/8 to-orange-50 rounded-xl p-5 border border-accent-gold/20">
             <p className="text-xs font-semibold uppercase tracking-wider text-accent-rust mb-1">
@@ -343,7 +343,7 @@ export default async function ContemplativeTraditionsPage() {
       </div>
 
       {/* Tradition cards */}
-      <main className="max-w-6xl mx-auto px-6 py-8 space-y-10">
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-10">
         {traditionsWithBooks.map(tradition => (
           <section key={tradition.slug} id={tradition.slug} className="scroll-mt-20">
             <TraditionCard tradition={tradition} />
@@ -353,7 +353,7 @@ export default async function ContemplativeTraditionsPage() {
 
       {/* Footer CTA */}
       <div className="bg-stone-100 border-t border-stone-200 mt-8">
-        <div className="max-w-6xl mx-auto px-6 py-12 text-center">
+        <div className="max-w-7xl mx-auto px-6 py-12 text-center">
           <p className="text-stone-600 mb-4">
             These texts are part of a growing collection of 1,200+ digitized
             primary sources spanning alchemy, Hermetica, Kabbalah, natural

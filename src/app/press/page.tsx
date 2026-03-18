@@ -66,7 +66,7 @@ export default function PressPage() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-stone-900 text-white py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
           <p className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4">
             Press
           </p>
@@ -82,7 +82,7 @@ export default function PressPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 space-y-16">
+      <div className="max-w-5xl mx-auto px-6 md:px-12 py-16 space-y-16">
         {/* Launch Press Release */}
         <section>
           <p className="text-sm text-stone-500 uppercase tracking-wider mb-2">
@@ -297,7 +297,7 @@ export default function PressPage() {
 
       {/* Footer */}
       <footer className="bg-stone-900 text-white/60 py-8">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+        <div className="max-w-5xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <span>&copy; {new Date().getFullYear()} Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
           <Link href="/" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
             Back to Source Library

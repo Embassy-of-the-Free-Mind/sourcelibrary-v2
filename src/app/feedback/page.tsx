@@ -38,7 +38,7 @@ export default function FeedbackPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
+        <div className="max-w-5xl mx-auto flex items-center gap-4">
           <Link href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
             <ChevronLeft className="w-5 h-5" />
           </Link>
@@ -51,7 +51,7 @@ export default function FeedbackPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-5xl mx-auto px-6 py-8">
         {loading ? (
           <div className="py-12"><BookLoader size="xs" /></div>
         ) : items.length === 0 ? (

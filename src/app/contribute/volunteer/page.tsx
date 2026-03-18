@@ -15,7 +15,7 @@ export default function VolunteerPage() {
     <div className="min-h-screen bg-cream">
       {/* Nav */}
       <header className="bg-white border-b border-border-light">
-        <div className="max-w-3xl mx-auto px-6 py-4">
+        <div className="max-w-2xl mx-auto px-6 py-4">
           <Link
             href="/contribute"
             className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
@@ -28,7 +28,7 @@ export default function VolunteerPage() {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+      <div className="max-w-2xl mx-auto px-6 py-12 md:py-16">
         <h1 className="font-serif text-3xl md:text-4xl text-primary mb-3">
           Volunteer with us
         </h1>

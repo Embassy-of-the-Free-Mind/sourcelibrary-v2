@@ -34,7 +34,7 @@ export default function AnalyticsPage() {
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       {/* Header */}
       <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
@@ -121,7 +121,7 @@ export default function AnalyticsPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8">
         {activeTab === 'usage' && <UsageTab key={refreshKey} days={days} />}
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}

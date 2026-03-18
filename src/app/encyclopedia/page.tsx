@@ -153,7 +153,7 @@ export default async function EncyclopediaPage({
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <Link href="/" className="text-stone-600 hover:text-stone-900 text-sm">
             &larr; Back to Library
           </Link>
@@ -162,7 +162,7 @@ export default async function EncyclopediaPage({
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12">
-        <div className="max-w-6xl mx-auto px-4 text-center">
+        <div className="max-w-7xl mx-auto px-4 text-center">
           <BookOpen className="w-12 h-12 text-accent-gold mx-auto mb-4" />
           <h1 className="text-3xl font-serif font-bold mb-2">Encyclopedia</h1>
           <p className="text-stone-300 max-w-xl mx-auto">
@@ -177,7 +177,7 @@ export default async function EncyclopediaPage({
         <EncyclopediaFilters />
       </Suspense>
 
-      <div className="max-w-6xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">

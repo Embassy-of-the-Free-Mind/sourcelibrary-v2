@@ -98,7 +98,7 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <Link

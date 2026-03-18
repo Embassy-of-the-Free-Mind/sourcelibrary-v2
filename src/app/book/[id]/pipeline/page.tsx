@@ -66,7 +66,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <Link
               href={`/book/${bookId}`}
@@ -114,7 +114,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
 
       {/* Book info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl sm:text-3xl font-serif font-bold">{bookTitle}</h1>
           <div className="flex items-center gap-4 mt-2 text-stone-400 text-sm">
             <span>{language}</span>
@@ -137,7 +137,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
       </div>
 
       {/* Main content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
         {/* Status banner */}
         {isCompleted && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">

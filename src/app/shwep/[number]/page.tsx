@@ -46,7 +46,7 @@ export default async function EpisodePage({ params }: Props) {
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-4">
+        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors">
             <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
@@ -64,7 +64,7 @@ export default async function EpisodePage({ params }: Props) {
 
       {/* Caveat */}
       <div className="bg-stone-100 border-b border-stone-200">
-        <div className="max-w-4xl mx-auto px-6 py-2.5 text-sm text-stone-500">
+        <div className="max-w-5xl mx-auto px-6 py-2.5 text-sm text-stone-500">
           Source Library provides the primary texts — we are not affiliated with{' '}
           <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">SHWEP</a>.
         </div>
@@ -72,7 +72,7 @@ export default async function EpisodePage({ params }: Props) {
 
       {/* Episode header */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12 md:py-16">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-4 text-sm text-stone-400">
             <span>Episode {episode.number}</span>
             {episode.publishDate && (
@@ -118,7 +118,7 @@ export default async function EpisodePage({ params }: Props) {
       </div>
 
       {/* Books */}
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-5xl mx-auto px-6 py-8">
         {episode.bookCount > 0 ? (
           <>
             <h2 className="text-xl font-serif text-stone-800 mb-6">

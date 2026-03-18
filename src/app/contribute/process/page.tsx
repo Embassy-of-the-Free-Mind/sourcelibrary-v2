@@ -182,7 +182,7 @@ export default function ProcessPage() {
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       {/* Header */}
       <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/contribute" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
@@ -202,7 +202,7 @@ export default function ProcessPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-5xl mx-auto px-6 py-8">
 
         {/* ── Step 1: Generosity ── */}
         {step === 'generosity' && (

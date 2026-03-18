@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 export default function TaxonomyPage() {
   return (
     <div className="min-h-screen bg-stone-950 text-stone-200">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         <TaxonomyExplorer />
       </div>
     </div>

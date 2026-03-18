@@ -58,7 +58,7 @@ export default function HighlightsPage() {
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-5xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link
               href="/"
@@ -73,7 +73,7 @@ export default function HighlightsPage() {
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-accent-gold/8 to-accent-gold/5 border-b border-accent-gold/15">
-        <div className="max-w-4xl mx-auto px-4 py-8 text-center">
+        <div className="max-w-5xl mx-auto px-4 py-8 text-center">
           <Highlighter className="w-10 h-10 text-accent-rust mx-auto mb-3" />
           <h1 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
             What People Are Reading
@@ -90,7 +90,7 @@ export default function HighlightsPage() {
       </div>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-8">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <BookLoader size="sm" />
