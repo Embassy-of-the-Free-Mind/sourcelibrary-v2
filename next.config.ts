@@ -46,6 +46,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'babel.hathitrust.org' },
       // British Library (IIIF via Digirati)
       { protocol: 'https', hostname: 'bl.digirati.io' },
+      // Wikimedia Commons (Wikipedia images for collection thumbnails)
+      { protocol: 'https', hostname: 'upload.wikimedia.org' },
       // Cambridge University Library
       { protocol: 'https', hostname: 'images.lib.cam.ac.uk' },
       // e-codices (Swiss manuscripts)
