@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
@@ -57,22 +57,39 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
     if (fadingRef.current) return;
     fadingRef.current = true;
     setFading(true);
+    // Wait for full fade-out before swapping content
     setTimeout(() => {
       setIndex(nextIndex);
+      // Small delay for new images to start loading, then fade back in
       setTimeout(() => {
         setFading(false);
         fadingRef.current = false;
-      }, 80);
-    }, 250);
+      }, 150);
+    }, 400);
   }, []);
+
+  const prev = useCallback(() => {
+    goTo(index > 0 ? index - 1 : items.length - 1);
+  }, [goTo, index, items.length]);
+
+  const next = useCallback(() => {
+    goTo(index < items.length - 1 ? index + 1 : 0);
+  }, [goTo, index, items.length]);
+
+  // Keyboard left/right arrow support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [prev, next]);
 
   if (items.length === 0) return null;
 
   const current = items[index];
   const { collection, books, galleryImages = [] } = current;
-
-  const prev = () => goTo(index > 0 ? index - 1 : items.length - 1);
-  const next = () => goTo(index < items.length - 1 ? index + 1 : 0);
 
   // Hero: prefer a gallery image (illustration/engraving), fall back to book thumbnail
   const heroGallery = galleryImages[0] || null;
@@ -107,7 +124,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
         </div>
 
         <div
-          className="grid grid-cols-1 lg:grid-cols-[2fr_auto_1fr] gap-8 lg:gap-10 transition-opacity duration-250 ease-in-out"
+          className="grid grid-cols-1 lg:grid-cols-[2fr_auto_1fr] gap-8 lg:gap-10 transition-opacity duration-400 ease-in-out"
           style={{ opacity: fading ? 0 : 1 }}
         >
           {/* Left: text + description */}
@@ -226,7 +243,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
         {/* Mobile layout */}
         <div
-          className="lg:hidden mt-6 transition-opacity duration-250 ease-in-out"
+          className="lg:hidden mt-6 transition-opacity duration-400 ease-in-out"
           style={{ opacity: fading ? 0 : 1 }}
         >
           <div className="flex gap-4">
