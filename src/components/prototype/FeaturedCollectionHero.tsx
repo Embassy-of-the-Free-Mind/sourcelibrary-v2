@@ -193,7 +193,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
           {books.length > 0 ? (
             <div className="min-w-0 flex flex-col gap-0.5 justify-center max-h-[420px] overflow-hidden">
               <p className="text-[10px] uppercase tracking-[0.15em] text-white/30 mb-2">In this collection</p>
-              {books.slice(0, 9).map((book) => {
+              {books.slice(0, 7).map((book) => {
                 const thumb = book.thumbnail_blob || book.thumbnail;
                 return (
                   <Link
@@ -229,12 +229,12 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                   </Link>
                 );
               })}
-              {collection.book_count > 9 && (
+              {collection.book_count > 7 && (
                 <Link
                   href={`/collections/${collection.slug}`}
                   className="text-xs text-white/30 hover:text-white/50 transition-colors mt-1 pl-1.5"
                 >
-                  + {collection.book_count - 9} more
+                  + {collection.book_count - 7} more
                 </Link>
               )}
             </div>
