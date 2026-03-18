@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Search, Image as ImageIcon, BookOpen, X, ChevronLeft, ChevronRight,
+  Search, Image as ImageIcon, BookOpen, X,
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
@@ -91,9 +91,12 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     ...initialData,
     items: shuffle(initialData.items),
   }));
+  // Accumulated items for "Load More" pattern
+  const [allItems, setAllItems] = useState<GalleryItem[]>(() => shuffle(initialData.items));
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(0);
+  const [currentOffset, setCurrentOffset] = useState(initialData.items.length);
   const [showFilters, setShowFilters] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
@@ -137,7 +140,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     router.push(`/gallery?${params.toString()}`);
   }, [searchParams, router]);
 
-  // Fetch gallery data (skip on initial load only if no URL filters — server data is unfiltered)
+  // Fetch gallery data when filters change (resets items) — skip on initial load if no URL filters
   useEffect(() => {
     const hasUrlFilters = bookId || collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
     if (isInitialLoad && !hasUrlFilters) {
@@ -152,7 +155,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
       try {
         const json = await gallery.list({
           limit,
-          offset: page * limit,
+          offset: 0,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
           library: libraryFilter || undefined,
@@ -164,11 +167,9 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
           visitorId: identity.id || undefined,
         });
-        // Preserve filters from initial page load on pagination
-        if (page > 0 && data?.filters && (!json.filters?.types?.length)) {
-          json.filters = data.filters;
-        }
         setData(json);
+        setAllItems(json.items);
+        setCurrentOffset(json.items.length);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
       } finally {
@@ -178,7 +179,39 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive, identity.id]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id]);
+
+  // Load more handler — appends next batch to accumulated items
+  const handleLoadMore = useCallback(async () => {
+    if (loadingMore || !data) return;
+    setLoadingMore(true);
+    try {
+      const json = await gallery.list({
+        limit,
+        offset: currentOffset,
+        bookId: bookId || undefined,
+        collection: collectionFilter || undefined,
+        library: libraryFilter || undefined,
+        query: imageSearchQuery || undefined,
+        type: typeFilter || undefined,
+        subject: subjectFilter || undefined,
+        yearFrom: yearStart ? parseInt(yearStart) : undefined,
+        yearTo: yearEnd ? parseInt(yearEnd) : undefined,
+        minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+        visitorId: identity.id || undefined,
+      });
+      setAllItems(prev => [...prev, ...json.items]);
+      setCurrentOffset(prev => prev + json.items.length);
+      // Keep filters/total from the response
+      if (json.total) {
+        setData(prev => prev ? { ...prev, total: json.total } : json);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load more images');
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, identity.id, limit]);
 
   // Book search with debounce
   useEffect(() => {
@@ -218,7 +251,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const totalPages = data ? Math.ceil(data.total / limit) : 0;
+  const hasMore = data ? currentOffset < data.total : false;
+  const remainingCount = data ? data.total - currentOffset : 0;
 
   const handleBookSelect = (book: BookSearchResult) => {
     setBookSearchQuery('');
@@ -246,7 +280,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   };
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery;
-  const showCollections = !hasFilters && page === 0;
+  const showCollections = !hasFilters;
 
   return (
     <>
@@ -536,12 +570,12 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         )}
 
         {/* Empty State for Book with No Images */}
-        {!loading && data?.bookInfo && data.items.length === 0 && (
+        {!loading && data?.bookInfo && allItems.length === 0 && (
           <BookEmptyState bookInfo={data.bookInfo} />
         )}
 
         {/* Empty State for Search with No Results */}
-        {!loading && !data?.bookInfo && data?.items.length === 0 && (
+        {!loading && !data?.bookInfo && allItems.length === 0 && (
           <div className="text-center py-20">
             <ImageIcon className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <p className="text-stone-500 mb-2">No images found</p>
@@ -552,7 +586,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         )}
 
         {/* Image Grid */}
-        {!loading && data && data.items.length > 0 && (
+        {!loading && data && allItems.length > 0 && (
           <>
             {!hasFilters && (
               <div className="mb-4">
@@ -563,32 +597,27 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               </div>
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {data.items.map((item, idx) => (
+              {allItems.map((item, idx) => (
                 <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
               ))}
             </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-8">
+            {/* Load More */}
+            {hasMore && (
+              <div className="mt-10 text-center">
                 <button
-                  onClick={() => setPage(p => Math.max(0, p - 1))}
-                  disabled={page === 0}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full text-sm font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors shadow-sm disabled:opacity-50"
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  Previous
-                </button>
-                <span className="text-stone-600 text-sm">
-                  Page {page + 1} of {totalPages}
-                </span>
-                <button
-                  onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-                  disabled={page >= totalPages - 1}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Next
-                  <ChevronRight className="w-4 h-4" />
+                  {loadingMore ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
+                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString()} remaining)`}
                 </button>
               </div>
             )}
@@ -648,7 +677,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
           <p className="text-sm text-white font-medium line-clamp-2 mb-0.5">
